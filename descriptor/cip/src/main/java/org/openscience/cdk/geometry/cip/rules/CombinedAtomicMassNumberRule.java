@@ -44,6 +44,7 @@ class CombinedAtomicMassNumberRule implements ISequenceSubRule<ILigand> {
 
     /** {@inheritDoc} */
     @TestMethod("testCompare,testCompare_Identity,testOrder")
+    @Override
     public int compare(ILigand ligand1, ILigand ligand2) {
         int atomicNumberComp = atomicNumberRule.compare(ligand1, ligand2);
         if (atomicNumberComp != 0) return atomicNumberComp;

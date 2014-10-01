@@ -76,6 +76,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
 
     /** {@inheritDoc} */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#acidicGroupCount", this.getClass()
@@ -84,6 +85,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
 
     /** {@inheritDoc} */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
             throw new CDKException("AcidicGroupCountDescriptor requires 1 parameter.");
@@ -99,6 +101,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         Object params[] = new Object[1];
         params[0] = this.checkAromaticity;
@@ -107,12 +110,14 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
 
     /** {@inheritDoc} */
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
 
     /** {@inheritDoc} */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
 
         if (tools.isEmpty()) {
@@ -143,12 +148,14 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
 
     /** {@inheritDoc} */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResultType();
     }
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -158,6 +165,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         Object object = null;
         if (name.equals("checkAromaticity")) object = true;

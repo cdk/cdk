@@ -89,6 +89,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
      */
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount", this
@@ -106,6 +107,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
      *@see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
             throw new CDKException("AromaticBondsCountDescriptor expects one parameter");
@@ -124,6 +126,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
      *@see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -132,6 +135,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -147,6 +151,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
      *@see #setParameters
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
@@ -195,6 +200,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
     }
@@ -205,6 +211,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
      *@return    The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -218,6 +225,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
      *@return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return true;
     }

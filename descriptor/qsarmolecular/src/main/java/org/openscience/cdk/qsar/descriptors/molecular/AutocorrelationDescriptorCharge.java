@@ -72,6 +72,7 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
     }
 
     @TestMethod("test1")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer container;
         try {
@@ -120,26 +121,31 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
     }
 
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
 
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }
 
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge", this
@@ -147,11 +153,13 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
     }
 
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }
 
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
 
     }

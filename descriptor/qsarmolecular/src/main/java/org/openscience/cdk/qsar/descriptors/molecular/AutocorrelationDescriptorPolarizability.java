@@ -81,6 +81,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
      * This method calculate the ATS Autocorrelation descriptor.
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer molecule;
         try {
@@ -163,26 +164,31 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
     }
 
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return null;
     }
 
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }
 
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability",
@@ -190,11 +196,13 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
     }
 
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }
 
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
 
     }

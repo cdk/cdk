@@ -99,6 +99,7 @@ public class MACCSFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @TestMethod("testFingerprint,testfp2")
+    @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
 
         MaccsKey[] keys = keys(container.getBuilder());
@@ -150,12 +151,14 @@ public class MACCSFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @TestMethod("testGetRawFingerprint")
+    @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
 
     /** {@inheritDoc} */
     @TestMethod("getsize")
+    @Override
     public int getSize() {
         if (keys != null)
             return keys.length;

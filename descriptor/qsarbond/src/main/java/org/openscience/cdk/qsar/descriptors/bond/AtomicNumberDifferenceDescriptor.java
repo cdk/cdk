@@ -66,6 +66,7 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
     }
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance", this
@@ -73,19 +74,23 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
     }
 
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return descriptorName;
     }
 
     @TestMethod(value = "testCalculate_IBond_IAtomContainer,testDescriptor1," + "testDescriptor2")
+    @Override
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
         ensureIsotopeFactory();
         if (bond.getAtomCount() != 2) {
@@ -101,11 +106,13 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
     }
 
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
 
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

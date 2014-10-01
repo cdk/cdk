@@ -38,6 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new SubstructureFingerprinter();
     }
@@ -49,6 +50,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
+    @Override
     public void testBug706786() throws Exception {
 
         IAtomContainer superStructure = bug706786_1();

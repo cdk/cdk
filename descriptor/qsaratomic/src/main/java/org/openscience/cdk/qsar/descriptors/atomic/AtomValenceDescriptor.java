@@ -58,6 +58,7 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
      * @return The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence", this.getClass()
@@ -68,6 +69,7 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
      * This descriptor does have any parameter.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
@@ -77,11 +79,13 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
      * @see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"val"};
     }
@@ -95,6 +99,7 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
      */
 
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         int atomValence = AtomValenceTool.getValence(atom);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
@@ -107,6 +112,7 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -118,6 +124,7 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

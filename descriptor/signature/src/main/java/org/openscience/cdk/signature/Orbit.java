@@ -68,12 +68,14 @@ public class Orbit implements Iterable<Integer>, Cloneable {
 
     /** {@inheritDoc} */
     @TestMethod("iteratorTest")
+    @Override
     public Iterator<Integer> iterator() {
         return this.atomIndices.iterator();
     }
 
     /** {@inheritDoc} */
     @TestMethod("testClone")
+    @Override
     public Object clone() {
         Orbit orbit = new Orbit(this.label, this.height);
         for (Integer i : this.atomIndices) {
@@ -185,6 +187,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
 
     /** {@inheritDoc} */
     @TestMethod("toStringTest")
+    @Override
     public String toString() {
         return label + " " + Arrays.deepToString(atomIndices.toArray());
     }

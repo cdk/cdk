@@ -144,6 +144,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @return An object containing the descriptor specification
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
                 this.getClass().getName(), "The Chemistry Development Kit");
@@ -159,6 +160,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // none
     }
@@ -170,11 +172,13 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -188,6 +192,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      */
 
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
 
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
@@ -213,6 +218,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(19);
     }
@@ -370,6 +376,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @return The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return null;
     }
@@ -381,6 +388,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @return An Object whose class is that of the parameter requested
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

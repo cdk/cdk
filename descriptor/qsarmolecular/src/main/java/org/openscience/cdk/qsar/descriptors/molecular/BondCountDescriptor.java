@@ -83,6 +83,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *@return    The specification value
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount", this.getClass()
@@ -96,6 +97,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *@exception  CDKException  Description of the Exception
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("BondCount only expects one parameter");
@@ -117,6 +119,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *@return    The parameters value
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -125,6 +128,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         if (order.equals(""))
             return new String[]{"nB"};
@@ -139,6 +143,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *@return            The number of bonds of a certain type.
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (order.equals("")) {
             int bondCount = 0;
@@ -191,6 +196,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
     }
@@ -201,6 +207,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *@return    The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "order";
@@ -214,6 +221,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *@return       The parameterType value
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         if ("order".equals(name)) return "";
         return null;

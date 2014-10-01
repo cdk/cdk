@@ -97,6 +97,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialTCharge", this
@@ -107,6 +108,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
      * This descriptor does have any parameter.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 3) throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
 
@@ -131,6 +133,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
      * @see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[3];
@@ -141,6 +144,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
@@ -158,6 +162,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
      *@return                   return the sigma electronegativity
      */
     @TestMethod(value = "testCalculate_IBond_IAtomContainer,testBondTElectronegativityDescriptor,testBondTElectronegativityDescriptor_Allyl_bromide")
+    @Override
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
         // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
         Double originalCharge1 = bond.getAtom(0).getCharge();
@@ -236,6 +241,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
     * @return    The parameterNames value
     */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[3];
         params[0] = "maxIterations";
@@ -251,6 +257,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         if ("maxIterations".equals(name)) return Integer.MAX_VALUE;
         if ("lpeChecker".equals(name)) return Boolean.TRUE;

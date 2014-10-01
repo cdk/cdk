@@ -115,6 +115,7 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period",
                 this.getClass().getName(), "The Chemistry Development Kit");
@@ -124,6 +125,7 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      * This descriptor does not have any parameter to be set.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
     }
@@ -135,11 +137,13 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      *@see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -153,6 +157,7 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      */
 
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         int period;
         String symbol = atom.getSymbol();
@@ -167,6 +172,7 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -178,6 +184,7 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      *@return       The parameterType value
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

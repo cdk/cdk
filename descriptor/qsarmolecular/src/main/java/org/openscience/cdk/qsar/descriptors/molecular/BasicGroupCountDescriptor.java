@@ -72,6 +72,7 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
 
     /** {@inheritDoc} */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount", this.getClass()
@@ -80,22 +81,26 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
 
     /** {@inheritDoc} */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     /** {@inheritDoc} */
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
 
     /** {@inheritDoc} */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
 
         if (tools.isEmpty()) {
@@ -116,12 +121,14 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
 
     /** {@inheritDoc} */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResultType();
     }
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
 
@@ -129,6 +136,7 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

@@ -80,6 +80,7 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
     public PetitjeanShapeIndexDescriptor() {}
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex", this
@@ -94,6 +95,7 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
      *          Description of the Exception
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -104,12 +106,14 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
      * @return The parameters value
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         // no parameters to return
         return (null);
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -120,6 +124,7 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
      * @return The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -132,6 +137,7 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
      * @return The parameterType value
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return (null);
     }
@@ -144,6 +150,7 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
      */
 
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
 
@@ -205,6 +212,7 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(2);
     }

@@ -72,6 +72,7 @@ public class EStateFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @TestMethod("testFingerprint")
+    @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
 
         int bitsetLength = PATTERNS.length;
@@ -88,12 +89,14 @@ public class EStateFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @TestMethod("testGetRawFingerprint")
+    @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
 
     /** {@inheritDoc} */
     @TestMethod("testGetSize")
+    @Override
     public int getSize() {
         return PATTERNS.length;
     }

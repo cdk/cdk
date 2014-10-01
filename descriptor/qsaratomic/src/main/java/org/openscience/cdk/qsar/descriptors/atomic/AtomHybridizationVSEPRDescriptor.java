@@ -102,6 +102,7 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridizationVSEPR", this
@@ -112,6 +113,7 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      * This descriptor does have any parameter.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
@@ -121,11 +123,13 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      * @see       #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"hybr"};
     }
@@ -139,6 +143,7 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      */
 
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         IAtomType atomType;
         try {
@@ -172,6 +177,7 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -183,6 +189,7 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

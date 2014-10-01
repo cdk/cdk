@@ -61,6 +61,7 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
      *@return    The specification value
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex", this.getClass()
@@ -75,6 +76,7 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
          *@see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -86,12 +88,14 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
          *@see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return (null);
         // no parameters to return
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -103,6 +107,7 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
      *@return                   zagreb index
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         double zagreb = 0;
         for (IAtom atom : atomContainer.atoms()) {
@@ -132,6 +137,7 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
     }
@@ -142,6 +148,7 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
      *@return    The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -154,6 +161,7 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
      *@return       The parameterType value
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return (null);
     }

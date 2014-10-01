@@ -77,6 +77,7 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability", this
@@ -87,6 +88,7 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      * This descriptor does have any parameter.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
@@ -97,11 +99,13 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      * @see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"effAtomPol"};
     }
@@ -115,6 +119,7 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *@return                   return the efective polarizability
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         double polarizability;
         try {
@@ -152,6 +157,7 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -164,6 +170,7 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *@return       The parameterType value
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

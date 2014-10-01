@@ -56,6 +56,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      * @return    The specification value
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/"
                 + "chemoinformatics-algorithms/#mannholdLogP", this.getClass().getName(),
@@ -72,6 +73,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      * @see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params != null && params.length > 0) {
             throw new CDKException("MannholdLogPDescriptor has no parameters.");
@@ -85,11 +87,13 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      * @see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return new Object[0];
     }
 
     @TestMethod("testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -107,6 +111,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      * @return A descriptor value wrapping a {@link DoubleResult}.
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac = null;
         try {
@@ -138,6 +143,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      * @return returns a {@link DoubleResult}.
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
     }
@@ -148,6 +154,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      * @return    A zero-length String array.
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -160,6 +167,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      * @return       The parameterType of the given parameter.
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

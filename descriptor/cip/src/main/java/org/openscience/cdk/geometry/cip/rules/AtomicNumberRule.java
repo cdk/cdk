@@ -38,6 +38,7 @@ class AtomicNumberRule implements ISequenceSubRule<ILigand> {
 
     /** {@inheritDoc} */
     @TestMethod("testCompare_Identity,testCompare,testOrder")
+    @Override
     public int compare(ILigand ligand1, ILigand ligand2) {
         return getAtomicNumber(ligand1).compareTo(getAtomicNumber(ligand2));
     }

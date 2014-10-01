@@ -89,6 +89,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ip",
                 this.getClass().getName(), "The Chemistry Development Kit");
@@ -101,6 +102,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *@exception  CDKException  Description of the Exception
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) throw new CDKException("One parameter expected");
         if (!(params[0] instanceof Boolean)) throw new CDKException("Boolean parameter expected");
@@ -113,11 +115,13 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      * @return The parameters value
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return new Object[]{addlp};
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -129,6 +133,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *@return                   The first ionization energy
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer local;
         if (addlp) {
@@ -229,6 +234,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
     }
@@ -239,6 +245,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[]{"addlp"};
     }
@@ -250,6 +257,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *@return       The parameterType value
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return addlp;
     }

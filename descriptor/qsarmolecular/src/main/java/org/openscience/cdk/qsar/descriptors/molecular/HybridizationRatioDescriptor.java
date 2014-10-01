@@ -65,6 +65,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @return An object containing the descriptor specification
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio", this.getClass()
@@ -81,6 +82,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
@@ -92,11 +94,13 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return new Object[0];
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"HybRatio"};
     }
@@ -119,6 +123,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @return The ratio of sp3 to sp2 carbons
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         try {
             IAtomContainer clone = (IAtomContainer) container.clone();
@@ -153,6 +158,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      *         the actual type of values returned by the descriptor in the {@link DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
     }
@@ -165,6 +171,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @return The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -178,6 +185,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @return An Object whose class is that of the parameter requested
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return "";
     }

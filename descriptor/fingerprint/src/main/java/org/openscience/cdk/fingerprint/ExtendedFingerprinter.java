@@ -91,12 +91,14 @@ public class ExtendedFingerprinter implements IFingerprinter {
      *@return a bit fingerprint for the given <code>IAtomContainer</code>.
      */
     @TestMethod("testgetBitFingerprint_IAtomContainer")
+    @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
         return this.getBitFingerprint(container, null, null);
     }
 
     /** {@inheritDoc} */
     @TestMethod("testGetRawFingerprint")
+    @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
@@ -158,6 +160,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @TestMethod("testGetSize")
+    @Override
     public int getSize() {
         return fingerprinter.getSize() + RESERVED_BITS;
     }

@@ -63,6 +63,7 @@ import java.util.List;
 public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree", this.getClass()
@@ -73,6 +74,7 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
      * This descriptor does not have any parameter to be set.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
     }
@@ -84,11 +86,13 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
      *@see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"aNeg"};
     }
@@ -101,6 +105,7 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
      * @return   The number of bonds on the shortest path between two atoms
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         int atomDegree = 0;
         List<IAtom> neighboors = container.getConnectedAtomsList(atom);
@@ -117,6 +122,7 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
      * @return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -128,6 +134,7 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

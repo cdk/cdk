@@ -68,6 +68,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      *         calculated FMF descriptor value as well as specification details
      */
     @TestMethod("testCarbinoxamine,testIsamoltane,testPirenperone")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 3);
         DoubleResult result;
@@ -106,6 +107,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      *
      * @return an instance of the {@link org.openscience.cdk.qsar.result.DoubleResultType}
      */
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
     }
@@ -125,6 +127,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      *
      * @return An object containing the descriptor specification
      */
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
                 this.getClass().getName(), "The Chemistry Development Kit");
@@ -137,6 +140,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      *
      * @return null, since there are no parameters
      */
+    @Override
     public String[] getParameterNames() {
         return null;
     }
@@ -149,6 +153,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @param name The name of the parameter whose type is requested
      * @return null, since this descriptor has no parameters
      */
+    @Override
     public Object getParameterType(String name) {
         return null;
     }
@@ -163,6 +168,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      *          if invalid number of type of parameters are passed to it
      * @see #getParameters
      */
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
@@ -172,6 +178,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @return null, since there are no parameters
      * @see #setParameters
      */
+    @Override
     public Object[] getParameters() {
         return null;
     }
@@ -183,6 +190,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      * viz., "FMF"
      * @return A 1-element string array, with the value "FMF"
      */
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"FMF"};
     }

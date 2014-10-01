@@ -395,6 +395,7 @@ public class SubstructureFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @TestMethod("testUserFunctionalGroups,testFingerprint")
+    @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
         if (smarts == null) {
             throw new CDKException("No substructures were defined");
@@ -416,12 +417,14 @@ public class SubstructureFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @TestMethod("testGetRawFingerprint")
+    @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
 
     /** {@inheritDoc} */
     @TestMethod("testSize")
+    @Override
     public int getSize() {
         return smarts.length;
     }

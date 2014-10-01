@@ -70,6 +70,7 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom", this.getClass()
@@ -83,6 +84,7 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
      * @exception  CDKException  Description of the Exception
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("BondsToAtomDescriptor only expects one parameters");
@@ -99,6 +101,7 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
      *@return    The parameters value
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         Object[] params = new Object[1];
         params[0] = focusPosition;
@@ -106,6 +109,7 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"bondsToAtom"};
     }
@@ -119,6 +123,7 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
      */
 
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
 
         IAtom focus = container.getAtom(focusPosition);
@@ -137,6 +142,7 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "focusPosition";
@@ -150,6 +156,7 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
      *@return       The parameterType value
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return 0;
     }

@@ -59,12 +59,14 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
     public FractionalPSADescriptor() {}
 
     @TestMethod("nop")
+    @Override
     public void initialise(IChemObjectBuilder builder) {}
 
     /**
      * {@inheritDoc}
      */
     @TestMethod("nop")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA", this.getClass()
@@ -73,6 +75,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
 
     /** {@inheritDoc} */
     @TestMethod("nop")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 0) {
             throw new CDKException("The FractionalPSADescriptor expects zero parameters");
@@ -81,11 +84,13 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
 
     /** {@inheritDoc} */
     @TestMethod("nop")
+    @Override
     public Object[] getParameters() {
         return new Object[0];
     }
 
     @TestMethod("nop")
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"tpsaEfficiency"};
     }
@@ -103,6 +108,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
      * @return descriptor(s) retaining to polar surface area
      */
     @TestMethod("testDescriptors")
+    @Override
     public DescriptorValue calculate(IAtomContainer mol) {
         try {
             mol = mol.clone();
@@ -141,18 +147,21 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
 
     /** {@inheritDoc} */
     @TestMethod("nop")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
     }
 
     /** {@inheritDoc} */
     @TestMethod("nop")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
 
     /** {@inheritDoc} */
     @TestMethod("nop")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

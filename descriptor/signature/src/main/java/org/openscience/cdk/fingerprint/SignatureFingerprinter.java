@@ -61,11 +61,13 @@ public class SignatureFingerprinter implements IFingerprinter {
     }
 
     @TestMethod("testBitFingerprint")
+    @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
         return new IntArrayFingerprint(getRawFingerprint(atomContainer));
     }
 
     @TestMethod("testGetRawFingerprint")
+    @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (IAtom atom : atomContainer.atoms()) {
@@ -80,6 +82,7 @@ public class SignatureFingerprinter implements IFingerprinter {
     }
 
     @TestMethod("testGetSize")
+    @Override
     public int getSize() {
         return -1;
     }

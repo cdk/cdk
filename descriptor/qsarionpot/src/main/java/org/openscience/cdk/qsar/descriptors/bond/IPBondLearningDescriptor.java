@@ -76,6 +76,7 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential", this
@@ -86,6 +87,7 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      * This descriptor does have any parameter.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
@@ -95,11 +97,13 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      * @see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
@@ -116,6 +120,7 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      *@return                   The ionization potential
      */
     @TestMethod(value = "testCalculate_IBond_IAtomContainer,testIPDescriptor_1,testIPDescriptor_2,testIPDescriptor_3")
+    @Override
     public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) {
         double value = 0;
         // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
@@ -172,6 +177,7 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
     * @return    The parameterNames value
     */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -183,6 +189,7 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

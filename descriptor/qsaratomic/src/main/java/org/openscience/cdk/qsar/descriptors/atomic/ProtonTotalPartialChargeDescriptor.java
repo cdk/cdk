@@ -66,6 +66,7 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#protonPartialCharge", this
@@ -76,6 +77,7 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      * This descriptor does not have any parameter to be set.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
     }
@@ -88,11 +90,13 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      *@see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         String[] labels = new String[MAX_PROTON_COUNT];
         for (int i = 0; i < MAX_PROTON_COUNT; i++) {
@@ -118,6 +122,7 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         neighboors = ac.getConnectedAtomsList(atom);
 
@@ -169,6 +174,7 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      * @return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -181,6 +187,7 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

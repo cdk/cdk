@@ -92,6 +92,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
     }
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol",
                 this.getClass().getName(), "The Chemistry Development Kit");
@@ -104,6 +105,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@exception  CDKException  Description of the Exception
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -114,12 +116,14 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@return    The parameters value
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         // no parameters for this descriptor
         return (null);
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -133,6 +137,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      */
 
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
 
         double bpol = 0;
@@ -192,6 +197,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
     }
@@ -202,6 +208,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@return    The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -214,6 +221,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@return       The parameterType value
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return (null);
     }

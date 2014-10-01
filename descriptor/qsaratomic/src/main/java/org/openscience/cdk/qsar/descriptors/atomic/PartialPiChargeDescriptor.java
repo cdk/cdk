@@ -87,6 +87,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialPiCharge", this.getClass()
@@ -102,6 +103,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@exception  CDKException  Description of the Exception
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 3) throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
 
@@ -125,6 +127,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@return    The parameters value
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[3];
@@ -135,6 +138,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -154,6 +158,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@return                   Value of the alpha partial charge
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
         Double originalCharge = atom.getCharge();
@@ -213,6 +218,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[3];
         params[0] = "maxIterations";
@@ -229,6 +235,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@return       The parameterType value
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         if ("maxIterations".equals(name)) return Integer.MAX_VALUE;
         if ("lpeChecker".equals(name)) return Boolean.TRUE;

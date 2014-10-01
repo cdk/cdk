@@ -96,6 +96,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
      * @return    The specification value
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors", this.getClass()
@@ -109,6 +110,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
      * @exception  CDKException  Description of the Exception
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
             throw new CDKException("HBondAcceptorCountDescriptor expects a single parameter");
@@ -126,6 +128,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
      * @return    The parameters value
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -134,6 +137,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -150,6 +154,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
      * @return                   number of H bond acceptors
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         int hBondAcceptors = 0;
 
@@ -219,6 +224,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
     }
@@ -229,6 +235,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
      * @return    The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -242,6 +249,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
      * @return       The parameterType value
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return false;
     }
