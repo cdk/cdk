@@ -71,6 +71,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return 1.0 */
+        @Override
         public Double getDefault() {
             return 1.0;
         }
@@ -85,6 +86,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return 2.0. */
+        @Override
         public Double getDefault() {
             return 2.0;
         }
@@ -99,6 +101,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return Color.BLACK */
+        @Override
         public Color getDefault() {
             return Color.BLACK;
         }
@@ -113,6 +116,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return 2.0 */
+        @Override
         public Double getDefault() {
             return 2.0;
         }
@@ -127,6 +131,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return 0.15 */
+        @Override
         public Double getDefault() {
             return 0.15;
         }
@@ -249,6 +254,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** {@inheritDoc} */
+    @Override
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup group = new ElementGroup();
         this.ringSet = this.getRingSet(container);
@@ -505,6 +511,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameters")
+    @Override
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(new IGeneratorParameter<?>[]{bondWidth, defaultBondColor, wedgeWidth, bondDistance,
                 ringCenterProportion});

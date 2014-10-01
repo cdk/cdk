@@ -138,6 +138,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> impl
      * @param atomContainer the atom container to use in the setup
      * @param screen the area to draw on
      */
+    @Override
     public void setup(IAtomContainer atomContainer, Rectangle screen) {
         this.setScale(atomContainer);
         Rectangle2D bounds = BoundsCalculator.calculateBounds(atomContainer);
@@ -163,6 +164,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> impl
      *
      * @param atomContainer the atom container that will be drawn
      */
+    @Override
     public void setScale(IAtomContainer atomContainer) {
         double bondLength = GeometryUtil.getBondLengthAverage(atomContainer);
         rendererModel.getParameter(Scale.class).setValue(this.calculateScaleForBondLength(bondLength));
@@ -171,6 +173,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> impl
     /**
      * {@inheritDoc}
      */
+    @Override
     public Rectangle paint(IAtomContainer atomContainer, IDrawVisitor drawVisitor) {
         // the bounds of the model
         Rectangle2D modelBounds = BoundsCalculator.calculateBounds(atomContainer);
@@ -219,6 +222,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> impl
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
+    @Override
     public void paint(IAtomContainer atomContainer, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         if (atomContainer.getBondCount() > 0 || atomContainer.getAtomCount() == 1) {
@@ -246,6 +250,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> impl
     /**
      * {@inheritDoc}
      */
+    @Override
     public Rectangle calculateDiagramBounds(IAtomContainer atomContainer) {
         return calculateScreenBounds(BoundsCalculator.calculateBounds(atomContainer));
     }
@@ -257,6 +262,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> impl
      * @param modelBondLength the average bond length of the model
      * @return the scale necessary to transform this to a screen bond
      */
+    @Override
     public double calculateScaleForBondLength(double modelBondLength) {
         if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return DEFAULT_SCALE;
@@ -268,6 +274,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> impl
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<IGenerator<IAtomContainer>> getGenerators() {
         return new ArrayList<IGenerator<IAtomContainer>>(generators);
     }

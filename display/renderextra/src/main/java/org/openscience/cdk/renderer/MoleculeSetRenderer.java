@@ -142,6 +142,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet> imp
      * @param moleculeSet the {@link IAtomContainerSet} for what to set the scale
      * @param screen      the {@link Rectangle} for which to calculate the scale
      */
+    @Override
     public void setup(IAtomContainerSet moleculeSet, Rectangle screen) {
         this.setScale(moleculeSet);
         Rectangle2D bounds = BoundsCalculator.calculateBounds(moleculeSet);
@@ -162,6 +163,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet> imp
      *            the bounds of the diagram
      * @return the shape that the screen should be
      */
+    @Override
     public Rectangle shift(Rectangle screenBounds, Rectangle diagramBounds) {
         int screenMaxX = screenBounds.x + screenBounds.width;
         int screenMaxY = screenBounds.y + screenBounds.height;
@@ -208,6 +210,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet> imp
      *
      * @param moleculeSet the {@link IAtomContainerSet} for what to set the scale
      */
+    @Override
     public void setScale(IAtomContainerSet moleculeSet) {
         double bondLength = AverageBondLengthCalculator.calculateAverageBondLength(moleculeSet);
         double scale = this.calculateScaleForBondLength(bondLength);
@@ -240,6 +243,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet> imp
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
+    @Override
     public void paint(IAtomContainerSet molecules, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // total up the bounding boxes
@@ -277,6 +281,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet> imp
      * @return returns the scale that causes the drawn bond lengths in pixels to match
      *         the given model bond length
      */
+    @Override
     public double calculateScaleForBondLength(double modelBondLength) {
         if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return rendererModel.getParameter(Scale.class).getDefault();

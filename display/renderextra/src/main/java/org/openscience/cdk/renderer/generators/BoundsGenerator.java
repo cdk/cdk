@@ -52,6 +52,7 @@ public class BoundsGenerator implements IGenerator<IReaction> {
     public static class BoundsColor extends AbstractGeneratorParameter<Color> {
 
         /** {@inheritDoc} */
+        @Override
         public Color getDefault() {
             return Color.LIGHT_GRAY;
         }

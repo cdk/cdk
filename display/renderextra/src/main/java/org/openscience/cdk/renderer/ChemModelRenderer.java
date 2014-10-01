@@ -154,6 +154,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
      * @param chemModel
      * @param screen
      */
+    @Override
     public void setup(IChemModel chemModel, Rectangle screen) {
         this.setScale(chemModel);
         Rectangle2D bounds = BoundsCalculator.calculateBounds(chemModel);
@@ -169,6 +170,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
      *
      * @param chemModel
      */
+    @Override
     public void setScale(IChemModel chemModel) {
         double bondLength = AverageBondLengthCalculator.calculateAverageBondLength(chemModel);
         double scale = this.calculateScaleForBondLength(bondLength);
@@ -187,6 +189,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
      *            the visitor used to draw with
      * @return the rectangular area that the diagram will occupy on screen
      */
+    @Override
     public Rectangle paint(IChemModel chemModel, IDrawVisitor drawVisitor) {
 
         IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
@@ -273,6 +276,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
      * @param resetCenter
      *     if true, set the modelCenter to the center of the ChemModel's bounds.
      */
+    @Override
     public void paint(IChemModel chemModel, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
         // check for an empty model
         IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
@@ -305,6 +309,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
      *
      * @param drawVisitor the wrapper for the graphics object that draws
      */
+    @Override
     public void repaint(IDrawVisitor drawVisitor) {
         this.paint(drawVisitor, cachedDiagram);
     }
@@ -315,6 +320,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
      * @param model the model to draw.
      * @return a rectangle in screen space.
      */
+    @Override
     public Rectangle calculateDiagramBounds(IChemModel model) {
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
         IReactionSet reactionSet = model.getReactionSet();
@@ -350,6 +356,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
      * @return returns the scale that causes the drawn bond lengths in pixels to match
      *         the given model bond length
      */
+    @Override
     public double calculateScaleForBondLength(double modelBondLength) {
         if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return rendererModel.getParameter(Scale.class).getDefault();

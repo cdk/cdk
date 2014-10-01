@@ -67,6 +67,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Before
+    @Override
     public void setup() {
         super.setup();
         this.generator = new ExtendedAtomGenerator();
@@ -75,6 +76,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void generateElementTest() {
         IAtom atom = super.builder.newInstance(IAtom.class, "C");
         atom.setPoint2d(new Point2d(2, 3));
@@ -91,6 +93,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void hasCoordinatesTest() {
         IAtom atomWithCoordinates = super.builder.newInstance(IAtom.class);
         atomWithCoordinates.setPoint2d(new Point2d(0, 0));
@@ -105,6 +108,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void canDrawTest() {
         IAtom drawableCAtom = super.builder.newInstance(IAtom.class, "C");
         drawableCAtom.setPoint2d(new Point2d(0, 0));
@@ -122,6 +126,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void invisibleHydrogenTest() {
         IAtom hydrogen = super.builder.newInstance(IAtom.class, "H");
         model.set(ShowExplicitHydrogens.class, false);
@@ -139,6 +144,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void invisibleCarbonTest() {
         // NOTE : just testing the element symbol here, see showCarbonTest
         // for the full range of possibilities...
@@ -152,6 +158,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void showCarbon_KekuleTest() {
         IAtomContainer atomContainer = super.makeCCC();
         IAtom carbon = atomContainer.getAtom(1);
@@ -161,6 +168,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void showCarbon_FormalChargeTest() {
         IAtomContainer atomContainer = super.makeCCC();
         IAtom carbon = atomContainer.getAtom(1);
@@ -170,6 +178,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void showCarbon_SingleCarbonTest() {
         IAtomContainer atomContainer = super.makeSingleAtom("C");
         IAtom carbon = atomContainer.getAtom(0);
@@ -178,6 +187,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void showCarbon_ShowEndCarbonsTest() {
         IAtomContainer atomContainer = super.makeCCC();
         IAtom carbon = atomContainer.getAtom(0);
@@ -186,6 +196,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void showCarbon_ErrorMarker() {
         IAtomContainer atomContainer = super.makeCCC();
         IAtom carbon = atomContainer.getAtom(1);
@@ -194,6 +205,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void showCarbon_ConnectedSingleElectrons() {
         IAtomContainer atomContainer = super.makeCCC();
         IAtom carbon = atomContainer.getAtom(1);
@@ -202,6 +214,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void ovalShapeTest() {
         IAtomContainer singleAtom = makeSingleAtom();
         model.set(CompactShape.class, Shape.OVAL);
@@ -212,6 +225,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void squareShapeTest() {
         IAtomContainer singleAtom = makeSingleAtom();
         model.set(CompactShape.class, Shape.SQUARE);
@@ -222,6 +236,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void getAtomColorTest() {
         Color testColor = Color.RED;
         IAtomContainer singleAtom = makeSingleAtom("O");
@@ -236,6 +251,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void atomColorerTest() {
         IAtomContainer cnop = makeSNOPSquare();
         final Map<String, Color> colorMap = new HashMap<String, Color>();
@@ -245,6 +261,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         colorMap.put("P", Color.MAGENTA);
         IAtomColorer atomColorer = new IAtomColorer() {
 
+            @Override
             public Color getAtomColor(IAtom atom) {
                 String symbol = atom.getSymbol();
                 if (colorMap.containsKey(symbol)) {
@@ -254,6 +271,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
                 }
             }
 
+            @Override
             public Color getAtomColor(IAtom atom, Color defaultColor) {
                 Color color = getAtomColor(atom);
                 if (color == null) {
@@ -275,6 +293,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void colorByTypeTest() {
         IAtomContainer snop = makeSNOPSquare();
         model.set(ColorByType.class, false);
@@ -287,6 +306,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void showExplicitHydrogensTest() {
         IAtomContainer methane = makeMethane();
         // don't generate elements for hydrogens
@@ -301,6 +321,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void kekuleTest() {
         IAtomContainer singleBond = makeSingleBond();
         model.set(KekuleStructure.class, true);
@@ -310,6 +331,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void showEndCarbonsTest() {
         IAtomContainer singleBond = makeCCC();
         model.set(ShowEndCarbons.class, true);
@@ -319,6 +341,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void testSingleAtom() {
         IAtomContainer singleAtom = makeSingleAtom();
 
@@ -329,6 +352,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void testSingleBond() {
         IAtomContainer container = makeSingleBond();
         model.set(CompactAtom.class, true);
@@ -347,6 +371,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void testSquare() {
         IAtomContainer square = makeSquare();
         model.set(KekuleStructure.class, true);
@@ -361,6 +386,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Test
+    @Override
     public void getParametersTest() {
         List<IGeneratorParameter<?>> parameters = generator.getParameters();
         containsParameterType(parameters, AtomColor.class);

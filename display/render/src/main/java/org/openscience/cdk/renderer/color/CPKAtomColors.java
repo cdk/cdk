@@ -138,6 +138,7 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable {
      * @return A color for the atom.
      */
     @TestMethod("testGetAtomColor")
+    @Override
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, DEEP_PINK);
     }
@@ -151,6 +152,7 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable {
      *         found for the atom.
      */
     @TestMethod("testGetDefaultAtomColor")
+    @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         String symbol = atom.getSymbol().toUpperCase();

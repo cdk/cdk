@@ -57,6 +57,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Color}.BLACK */
+        @Override
         public Color getDefault() {
             return Color.BLACK;
         }
@@ -70,6 +71,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link CDK2DAtomColors} */
+        @Override
         public IAtomColorer getDefault() {
             return new CDK2DAtomColors();
         }
@@ -84,6 +86,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Boolean}.TRUE */
+        @Override
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -98,6 +101,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Boolean}.TRUE */
+        @Override
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -112,6 +116,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return 8.0 */
+        @Override
         public Double getDefault() {
             return 8.0;
         }
@@ -127,6 +132,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Boolean}.FALSE */
+        @Override
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -143,6 +149,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Boolean}.FALSE */
+        @Override
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -171,6 +178,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return Shape.SQUARE */
+        @Override
         public Shape getDefault() {
             return Shape.SQUARE;
         }
@@ -188,6 +196,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Boolean}.FALSE */
+        @Override
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -206,6 +215,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
     /** {@inheritDoc} */
     @TestMethod("testSingleBond,testSquare")
+    @Override
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup elementGroup = new ElementGroup();
         for (IAtom atom : container.atoms()) {
@@ -416,6 +426,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
     /** {@inheritDoc} */
     @TestMethod("getParametersTest")
+    @Override
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(new IGeneratorParameter<?>[]{atomColor, atomColorer, atomRadius, colorByType,
                 compactShape, isCompact, isKekule, showEndCarbons, showExplicitHydrogens});

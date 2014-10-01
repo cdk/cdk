@@ -53,6 +53,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
     public static class AtomAtomMappingLineColor extends AbstractGeneratorParameter<Color> {
 
         /** {@inheritDoc} */
+        @Override
         public Color getDefault() {
             return Color.gray;
         }
@@ -66,6 +67,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
     public static class MappingLineWidth extends AbstractGeneratorParameter<Double> {
 
         /** {@inheritDoc} */
+        @Override
         public Double getDefault() {
             return 1.0;
         }
@@ -77,6 +79,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
     public static class ShowAtomAtomMapping extends AbstractGeneratorParameter<Boolean> {
 
         /** {@inheritDoc} */
+        @Override
         public Boolean getDefault() {
             return Boolean.TRUE;
         }

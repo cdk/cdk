@@ -122,6 +122,7 @@ public class GeneralPath implements IRenderingElement {
 
     /** {@inheritDoc} */
     @TestMethod("testAccept")
+    @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }

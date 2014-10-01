@@ -64,6 +64,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
     }
 
     @Before
+    @Override
     public void setup() {
         super.setup();
         this.generator = new BasicAtomGenerator();
@@ -242,6 +243,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
         colorMap.put("P", Color.MAGENTA);
         IAtomColorer atomColorer = new IAtomColorer() {
 
+            @Override
             public Color getAtomColor(IAtom atom) {
                 String symbol = atom.getSymbol();
                 if (colorMap.containsKey(symbol)) {
@@ -251,6 +253,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
                 }
             }
 
+            @Override
             public Color getAtomColor(IAtom atom, Color defaultColor) {
                 Color color = getAtomColor(atom);
                 if (color == null) {

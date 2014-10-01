@@ -28,6 +28,7 @@ public class BasicBondGeneratorTest extends AbstractGeneratorTest {
     }
 
     @Before
+    @Override
     public void setup() {
         super.setup();
         this.generator = new BasicBondGenerator();

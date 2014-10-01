@@ -50,6 +50,7 @@ public class CDKAtomColors implements IAtomColorer {
      * @return             the atom's color according to this coloring scheme.
      */
     @TestMethod("testGetAtomColor")
+    @Override
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, DEFAULT);
     }
@@ -64,6 +65,7 @@ public class CDKAtomColors implements IAtomColorer {
      * @return             the atom's color according to this coloring scheme.
      */
     @TestMethod("testGetDefaultAtomColor")
+    @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         if (atom.getAtomicNumber() == null) return defaultColor;

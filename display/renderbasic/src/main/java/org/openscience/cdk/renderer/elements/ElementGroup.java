@@ -47,6 +47,7 @@ public class ElementGroup implements IRenderingElement, Iterable<IRenderingEleme
     }
 
     /** {@inheritDoc} */
+    @Override
     public Iterator<IRenderingElement> iterator() {
         return elements.iterator();
     }
@@ -74,6 +75,7 @@ public class ElementGroup implements IRenderingElement, Iterable<IRenderingEleme
 
     /** {@inheritDoc} */
     @TestMethod("testAccept")
+    @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }

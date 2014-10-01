@@ -90,6 +90,7 @@ public class OvalElement implements IRenderingElement {
 
     /** {@inheritDoc} **/
     @TestMethod("testAccept")
+    @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
     }

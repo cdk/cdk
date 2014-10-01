@@ -46,6 +46,7 @@ public class PartialAtomicChargeColors implements IAtomColorer {
      * @return             the color for the given atom.
      */
     @TestMethod("testGetAtomColor")
+    @Override
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, Color.white);
     }
@@ -60,6 +61,7 @@ public class PartialAtomicChargeColors implements IAtomColorer {
      * @return             the color for the given atom.
      */
     @TestMethod("testGetDefaultAtomColor")
+    @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         if (atom.getCharge() == null) return defaultColor;

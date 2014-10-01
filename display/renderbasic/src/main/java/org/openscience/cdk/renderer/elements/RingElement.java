@@ -30,6 +30,7 @@ public class RingElement extends OvalElement implements IRenderingElement {
 
     /** {@inheritDoc} */
     @TestMethod("testAccept")
+    @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }

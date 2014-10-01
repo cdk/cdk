@@ -57,6 +57,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     public static class AtomNumberTextColor extends AbstractGeneratorParameter<Color> {
 
         /** {@inheritDoc} */
+        @Override
         public Color getDefault() {
             return Color.BLACK;
         }
@@ -69,6 +70,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     public static class WillDrawAtomNumbers extends AbstractGeneratorParameter<Boolean> {
 
         /** {@inheritDoc} */
+        @Override
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -81,6 +83,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     public static class AtomColorer extends AbstractGeneratorParameter<IAtomColorer> {
 
         /** {@inheritDoc} */
+        @Override
         public IAtomColorer getDefault() {
             return new CDK2DAtomColors();
         }
@@ -92,6 +95,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     public static class ColorByType extends AbstractGeneratorParameter<Boolean> {
 
         /** {@inheritDoc} */
+        @Override
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -106,6 +110,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     public static class Offset extends AbstractGeneratorParameter<Vector2d> {
 
         /** {@inheritDoc} */
+        @Override
         public Vector2d getDefault() {
             return new Vector2d();
         }

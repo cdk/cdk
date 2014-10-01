@@ -44,6 +44,7 @@ public class ReactionArrowGeneratorTest extends AbstractGeneratorTest {
     }
 
     @Before
+    @Override
     public void setup() {
         super.setup();
         model.registerParameters(new ReactionSceneGenerator());

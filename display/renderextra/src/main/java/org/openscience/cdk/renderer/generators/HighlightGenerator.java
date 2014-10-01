@@ -428,6 +428,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
          *
          * @return 10.0
          */
+        @Override
         public Double getDefault() {
             return 10.0;
         }
@@ -444,6 +445,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
          *
          * @return an auto-generating palette
          */
+        @Override
         public Palette getDefault() {
             return DEFAULT_PALETTE;
         }

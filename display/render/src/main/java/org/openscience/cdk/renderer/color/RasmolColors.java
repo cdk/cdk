@@ -88,6 +88,7 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
      * @return     the atom's color according to this coloring scheme.
      */
     @TestMethod("testGetAtomColor")
+    @Override
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, DEFAULT);
     }
@@ -102,6 +103,7 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
      * @return             the atom's color according to this coloring scheme.
      */
     @TestMethod("testGetDefaultAtomColor")
+    @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         String symbol = atom.getSymbol();
