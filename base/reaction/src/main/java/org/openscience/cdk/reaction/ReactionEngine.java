@@ -1,4 +1,6 @@
-/* Copyright (C) 2008 Miguel Rojas <miguelrojasch@users.sf.net>
+/* 
+ * Copyright (C) 2008  Miguel Rojas <miguelrojasch@users.sf.net>
+ *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

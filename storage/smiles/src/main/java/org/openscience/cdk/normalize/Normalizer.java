@@ -1,4 +1,6 @@
-/*  Copyright (C) 2004-2010  The Chemistry Development Kit (CDK) project
+/*  
+ *  Copyright (C) 2004-2010  The Chemistry Development Kit (CDK) project
+ *                     2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

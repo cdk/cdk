@@ -1,4 +1,5 @@
-/* Copyright (c) 2014 Collaborative Drug Discovery, Inc. <alex@collaborativedrug.com>
+/* Copyright (c) 2014  Collaborative Drug Discovery, Inc. <alex@collaborativedrug.com>
+ *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  * Implemented by Alex M. Clark, produced by Collaborative Drug Discovery, Inc.
  * Made available to the CDK community under the terms of the GNU LGPL.

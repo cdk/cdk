@@ -1,5 +1,7 @@
-/* Copyright (C) 2003  University of Manchester
- *   Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) Project
+/* 
+ * Copyright (C) 2003  University of Manchester
+ *          2003-2007  The Chemistry Development Kit (CDK) Project
+ *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  *   This library is free software; you can redistribute it and/or
  *   modify it under the terms of the GNU Lesser General Public
