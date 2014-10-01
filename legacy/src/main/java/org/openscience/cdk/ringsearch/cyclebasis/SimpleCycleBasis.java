@@ -584,6 +584,7 @@ public class SimpleCycleBasis {
         SimpleCycle[] cyclesArray = cycles.toArray(new SimpleCycle[cycles.size()]);
         Arrays.sort(cyclesArray, new Comparator<SimpleCycle>() {
 
+            @Override
             public int compare(SimpleCycle o1, SimpleCycle o2) {
                 if (o1.weight() > o2.weight()) return +1;
                 if (o1.weight() < o2.weight()) return -1;
@@ -776,6 +777,7 @@ public class SimpleCycleBasis {
             this.u = u;
         }
 
+        @Override
         public List edgesOf(Object auxVertex) {
 
             Object vertex = auxVertexMap.get(auxVertex);
@@ -910,6 +912,7 @@ public class SimpleCycleBasis {
             return vertexMap11.get(vertex);
         }
 
+        @Override
         public List edgesOf(Object auxVertex) {
 
             Object vertex = auxVertexMap.get(auxVertex);

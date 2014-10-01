@@ -88,6 +88,7 @@ public final class BFSShortestPath {
             super(g, startVertex);
         }
 
+        @Override
         protected void encounterVertex(Object vertex, Edge edge) {
             super.encounterVertex(vertex, edge);
             putSeenData(vertex, edge);
