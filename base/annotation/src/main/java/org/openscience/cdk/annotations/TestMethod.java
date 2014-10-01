@@ -22,7 +22,11 @@
  */
 package org.openscience.cdk.annotations;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * An annotation for source classes to indicate the specific test class and method that tests the source class.

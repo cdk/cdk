@@ -18,11 +18,11 @@
  */
 package org.openscience.cdk.renderer.color;
 
+import java.awt.Color;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
-
-import java.awt.*;
 
 /**
  * Gives a short table of atom colors for 2D display.

@@ -21,9 +21,11 @@
  */
 package org.openscience.cdk.smsd.global;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+
 import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Unit testing for the {@link TimeOut} class.

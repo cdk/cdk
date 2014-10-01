@@ -22,15 +22,18 @@
  */
 package org.openscience.cdk.smsd.ring;
 
-import java.util.List;
-import org.openscience.cdk.exception.CDKException;
+import static org.junit.Assert.assertEquals;
+
 import java.util.Collection;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Before;
+import java.util.List;
+
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.algorithm.vflib.Molecules;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Syed Asad Rahman <asad@ebi.ac.uk>

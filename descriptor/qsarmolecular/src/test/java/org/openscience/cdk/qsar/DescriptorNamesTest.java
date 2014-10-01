@@ -18,10 +18,15 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.ChemFile;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.config.Isotopes;
@@ -31,8 +36,8 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import java.io.InputStream;
-import java.util.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * TestSuite that runs all tests for the DescriptorEngine.

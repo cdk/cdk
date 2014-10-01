@@ -28,14 +28,16 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.*;
-import org.openscience.cdk.qsar.*;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.tools.*;
 
 /**
  * Test for fractional PSA descriptor.

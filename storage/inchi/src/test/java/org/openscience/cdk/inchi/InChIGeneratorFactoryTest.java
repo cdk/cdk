@@ -20,26 +20,27 @@
  */
 package org.openscience.cdk.inchi;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.jniinchi.INCHI_OPTION;
-import net.sf.jniinchi.INCHI_RET;
-
-import org.junit.Assert;
-import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import net.sf.jniinchi.INCHI_OPTION;
+import net.sf.jniinchi.INCHI_RET;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @cdk.module test-inchi

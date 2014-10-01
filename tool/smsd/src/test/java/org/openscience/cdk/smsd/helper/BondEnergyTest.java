@@ -22,13 +22,15 @@
  */
 package org.openscience.cdk.smsd.helper;
 
+import static org.junit.Assert.assertEquals;
+
+import org.openscience.cdk.interfaces.IBond.Order;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  * @author Syed Asad Rahman <asad@ebi.ac.uk>

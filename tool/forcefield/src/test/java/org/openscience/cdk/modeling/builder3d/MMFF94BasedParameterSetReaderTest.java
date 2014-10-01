@@ -22,17 +22,18 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
-import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType;
+
+import org.junit.Test;
 
 /**
  * This class is for testing the MMFF94 based parameter
