@@ -1,4 +1,5 @@
 /* Copyright (C) 2009  Egon Willighagen <egonw@users.sf.net>
+ *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  * Contact: jchempaint-devel@lists.sourceforge.net
  *

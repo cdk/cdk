@@ -1,5 +1,6 @@
 /* Copyright (C) 2007  Todd Martin (Environmental Protection Agency)  <Martin.Todd@epamail.epa.gov>
  * Copyright (C) 2007  Nikolay Kochev <nick@argon.acad.bg>
+ *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

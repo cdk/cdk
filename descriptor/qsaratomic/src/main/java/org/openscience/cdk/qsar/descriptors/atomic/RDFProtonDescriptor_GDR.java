@@ -1,5 +1,6 @@
 /* Copyright (C) 2004-2007  Matteo Floris <mfe4@users.sf.net>
  * Copyright (C) 2006-2007  Federico
+ *                    2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

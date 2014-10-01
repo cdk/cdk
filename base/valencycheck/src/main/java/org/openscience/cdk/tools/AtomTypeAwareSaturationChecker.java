@@ -1,4 +1,6 @@
-/*  Copyright (C) 2012  Klas Jönsson <klas.joensson@gmail.com>
+/*  
+ * Copyright (C) 2012  Klas Jönsson <klas.joensson@gmail.com>
+ *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

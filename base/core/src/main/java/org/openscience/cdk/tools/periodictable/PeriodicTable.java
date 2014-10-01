@@ -1,5 +1,6 @@
 /* Copyright (C) 2008  Rajarshi Guha <rajarshi@users.sf.net>
  *               2011  Jonathan Alvarsson <jonalv@users.sf.net>
+ *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  * Contact: cdk-devel@lists.sf.net
  *

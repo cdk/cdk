@@ -1,4 +1,5 @@
 /* Copyright (C) 2007-2008  Egon Willighagen <egonw@users.sf.net>
+ *                    2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

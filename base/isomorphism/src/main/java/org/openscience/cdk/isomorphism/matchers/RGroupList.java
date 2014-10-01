@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2010  Mark Rijnbeek <mark_rynbeek@users.sf.net>
+ *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
