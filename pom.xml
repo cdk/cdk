@@ -569,7 +569,7 @@
                         <ruleset>/pmd/custom.xml</ruleset>
                     </rulesets>
                     <excludeRoots>
-                        <excludeRoot>target/generated-sources/</excludeRoot>
+                        <excludeRoot>${basedir}/target/generated-sources/javacc</excludeRoot>
                     </excludeRoots>
                 </configuration>
                 <dependencies>
