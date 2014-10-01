@@ -311,6 +311,7 @@ public class GridGenerator {
         writer.close();
     }
 
+    @Override
     public String toString() {
         return "Dim:" + dim + " SizeX:" + grid.length + " SizeY:" + grid[0].length + " SizeZ:" + grid[0][0].length
                 + "\nminx:" + minx + " maxx:" + maxx + "\nminy:" + miny + " maxy:" + maxy + "\nminz:" + minz + " maxz:"

@@ -308,14 +308,17 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
             this.atomTypeList = atomTypeList;
         }
 
+        @Override
         public void error(SAXParseException arg0) throws SAXException {
             Assert.fail(atomTypeList + " is not valid on line " + arg0.getLineNumber() + ": " + arg0.getMessage());
         }
 
+        @Override
         public void fatalError(SAXParseException arg0) throws SAXException {
             Assert.fail(atomTypeList + " is not valid on line " + arg0.getLineNumber() + ": " + arg0.getMessage());
         }
 
+        @Override
         public void warning(SAXParseException arg0) throws SAXException {
             // warnings are fine
         }

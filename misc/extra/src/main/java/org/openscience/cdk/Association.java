@@ -122,6 +122,7 @@ public class Association extends ElectronContainer implements java.io.Serializab
      * @return The number of electrons in a Association.
      */
     @TestMethod("testGetAtomAt")
+    @Override
     public Integer getElectronCount() {
         return 0;
     }
@@ -176,6 +177,7 @@ public class Association extends ElectronContainer implements java.io.Serializab
      * @return    The string representation of this Container
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("Association(");

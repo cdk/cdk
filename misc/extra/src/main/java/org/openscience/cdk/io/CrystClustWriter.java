@@ -83,10 +83,12 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return CrystClustFormat.getInstance();
     }
 
+    @Override
     public void setWriter(Writer out) throws CDKException {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
@@ -95,11 +97,13 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         }
     }
 
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         setWriter(new OutputStreamWriter(output));
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (Class<?> anInterface : interfaces) {
@@ -114,6 +118,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      *
      * @param object A Molecule of MoleculeSet object
      */
+    @Override
     public void write(IChemObject object) throws UnsupportedChemObjectException {
         if (object instanceof ICrystal) {
             writeCrystal((ICrystal) object);
@@ -128,6 +133,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         writer.close();
     }

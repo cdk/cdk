@@ -194,6 +194,7 @@ public class LoggingTool implements ILoggingTool {
      * and java.vendor.
      */
     @TestMethod("testDumpSystemProperties")
+    @Override
     public void dumpSystemProperties() {
         debug("os.name        : " + System.getProperty("os.name"));
         debug("os.version     : " + System.getProperty("os.version"));
@@ -212,6 +213,7 @@ public class LoggingTool implements ILoggingTool {
      * @see #DEFAULT_STACK_LENGTH
      */
     @TestMethod("testSetStackLength_int")
+    @Override
     public void setStackLength(int length) {
         this.stackLength = length;
     }
@@ -220,6 +222,7 @@ public class LoggingTool implements ILoggingTool {
      * Outputs the system property for java.class.path.
      */
     @TestMethod("testDumpClasspath")
+    @Override
     public void dumpClasspath() {
         debug("java.class.path: " + System.getProperty("java.class.path"));
     }
@@ -232,6 +235,7 @@ public class LoggingTool implements ILoggingTool {
      * @param object Object to apply toString() too and output
      */
     @TestMethod("testDebug_Object")
+    @Override
     public void debug(Object object) {
         if (doDebug) {
             if (object instanceof Throwable) {
@@ -258,6 +262,7 @@ public class LoggingTool implements ILoggingTool {
      * @param objects Object[] to apply toString() too and output
      */
     @TestMethod("testDebug_Object_int")
+    @Override
     public void debug(Object object, Object... objects) {
         if (doDebug) {
             StringBuilder result = new StringBuilder();
@@ -312,6 +317,7 @@ public class LoggingTool implements ILoggingTool {
      * @param object Object to apply toString() too and output
      */
     @TestMethod("testError_Object")
+    @Override
     public void error(Object object) {
         if (doDebug) {
             errorString("" + object);
@@ -326,6 +332,7 @@ public class LoggingTool implements ILoggingTool {
      * @param objects Object[] to apply toString() too and output
      */
     @TestMethod("testError_Object_int")
+    @Override
     public void error(Object object, Object... objects) {
         if (doDebug) {
             StringBuilder result = new StringBuilder();
@@ -351,6 +358,7 @@ public class LoggingTool implements ILoggingTool {
      * @param object Object to apply toString() too and output
      */
     @TestMethod("testFatal_Object")
+    @Override
     public void fatal(Object object) {
         if (doDebug) {
             if (toSTDOUT) {
@@ -367,6 +375,7 @@ public class LoggingTool implements ILoggingTool {
      * @param object Object to apply toString() too and output
      */
     @TestMethod("testInfo_Object")
+    @Override
     public void info(Object object) {
         if (doDebug) {
             infoString("" + object);
@@ -381,6 +390,7 @@ public class LoggingTool implements ILoggingTool {
      * @param objects Object[] to apply toString() too and output
      */
     @TestMethod("testInfo_Object_int")
+    @Override
     public void info(Object object, Object... objects) {
         if (doDebug) {
             StringBuilder result = new StringBuilder();
@@ -406,6 +416,7 @@ public class LoggingTool implements ILoggingTool {
      * @param object Object to apply toString() too and output
      */
     @TestMethod("testWarn_Object")
+    @Override
     public void warn(Object object) {
         if (doDebug) {
             warnString("" + object);
@@ -428,6 +439,7 @@ public class LoggingTool implements ILoggingTool {
      * @param objects Object[] to apply toString() too and output
      */
     @TestMethod("testWarn_Object_int")
+    @Override
     public void warn(Object object, Object... objects) {
         if (doDebug) {
             StringBuilder result = new StringBuilder();
@@ -452,6 +464,7 @@ public class LoggingTool implements ILoggingTool {
      * @return true, if debug is enabled
      */
     @TestMethod("testIsDebugEnabled")
+    @Override
     public boolean isDebugEnabled() {
         return doDebug;
     }

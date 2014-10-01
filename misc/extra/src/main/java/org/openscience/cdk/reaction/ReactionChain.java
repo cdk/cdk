@@ -87,6 +87,7 @@ public class ReactionChain extends ReactionSet {
      *
      */
     @TestMethod(value = "testGetReaction_int")
+    @Override
     public IReaction getReaction(int position) {
 
         if (hashMapChain.containsKey(position)) return null;

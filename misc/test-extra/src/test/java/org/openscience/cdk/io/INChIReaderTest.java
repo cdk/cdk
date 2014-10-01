@@ -86,6 +86,7 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test(expected = CDKException.class)
+    @Override
     public void testSetReader_Reader() throws Exception {
         // CDKException expected as these INChI files are XML, which must
         // be read via InputStreams

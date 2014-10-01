@@ -34,10 +34,12 @@ public class CDKValidator extends AbstractValidator {
 
     public CDKValidator() {}
 
+    @Override
     public ValidationReport validateChemFile(IChemFile subject) {
         return validateChemFileNulls(subject);
     }
 
+    @Override
     public ValidationReport validateChemSequence(IChemSequence subject) {
         return validateChemSequenceNulls(subject);
     }

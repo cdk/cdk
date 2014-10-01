@@ -77,6 +77,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     @TestMethod("testFindMatchingAtomType_IAtomContainer")
+    @Override
     public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
         int typeCounter = 0;
@@ -97,6 +98,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
      * @exception CDKException Description of the Exception
      * @return                 the matching AtomType (AtomType class)
      */
+    @Override
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atomInterface) throws CDKException {
         if (factory == null) {
             try {

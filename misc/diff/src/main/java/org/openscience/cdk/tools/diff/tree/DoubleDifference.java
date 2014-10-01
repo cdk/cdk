@@ -71,6 +71,7 @@ public class DoubleDifference implements IDifference {
      * @return a {@link String}
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return name + ":" + (first == null ? "NA" : first) + "/" + (second == null ? "NA" : second);
     }

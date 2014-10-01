@@ -70,11 +70,13 @@ public class CrystClustReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return CrystClustFormat.getInstance();
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader reader) throws CDKException {
         if (reader instanceof BufferedReader) {
             this.input = (BufferedReader) reader;
@@ -84,11 +86,13 @@ public class CrystClustReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
@@ -100,6 +104,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
         return false;
     }
 
+    @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
             IChemFile cf = readChemFile((IChemFile) object);
@@ -235,6 +240,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         input.close();
     }

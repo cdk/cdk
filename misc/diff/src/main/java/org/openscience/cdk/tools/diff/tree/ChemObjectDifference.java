@@ -47,6 +47,7 @@ public class ChemObjectDifference extends AbstractDifferenceList implements IDif
      * @return a {@link String}
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         if (differences.size() == 0) return "";
 

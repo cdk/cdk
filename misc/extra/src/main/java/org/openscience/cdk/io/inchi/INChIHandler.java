@@ -75,6 +75,7 @@ public class INChIHandler extends DefaultHandler {
         logger.info("DocType root SYSTEM: " + systemId);
     }
 
+    @Override
     public void startDocument() {
         chemFile = new ChemFile();
         chemSequence = new ChemSequence();
@@ -82,10 +83,12 @@ public class INChIHandler extends DefaultHandler {
         setOfMolecules = new AtomContainerSet();
     }
 
+    @Override
     public void endDocument() {
         chemFile.addChemSequence(chemSequence);
     }
 
+    @Override
     public void endElement(String uri, String local, String raw) {
         logger.debug("end element: ", raw);
         if ("identifier".equals(local)) {
@@ -124,6 +127,7 @@ public class INChIHandler extends DefaultHandler {
      * @param raw       the complete element name (with namespace part)
      * @param atts      the attributes of this element
      */
+    @Override
     public void startElement(String uri, String local, String raw, Attributes atts) {
         currentChars = "";
         logger.debug("startElement: ", raw);
@@ -148,6 +152,7 @@ public class INChIHandler extends DefaultHandler {
      *
      * @param ch        characters to handle
      */
+    @Override
     public void characters(char ch[], int start, int length) {
         logger.debug("character data");
         currentChars += new String(ch, start, length);

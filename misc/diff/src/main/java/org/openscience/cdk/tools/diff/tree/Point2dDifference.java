@@ -69,6 +69,7 @@ public class Point2dDifference extends AbstractDifferenceList implements IDiffer
      * @return a {@link String}
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         if (differences.size() == 0) return "";
 

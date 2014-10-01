@@ -95,11 +95,13 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return INChIPlainTextFormat.getInstance();
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader input) {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader) input;
@@ -109,6 +111,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
@@ -119,6 +122,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     private void init() {}
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
@@ -137,6 +141,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
      * @param  object type of requested IChemObject
      * @return the content in a ChemFile object
      */
+    @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
             return (T) readChemFile((IChemFile) object);
@@ -191,6 +196,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         input.close();
     }

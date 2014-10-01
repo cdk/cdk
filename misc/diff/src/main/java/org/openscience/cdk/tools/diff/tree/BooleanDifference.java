@@ -63,6 +63,7 @@ public class BooleanDifference implements IDifference {
      * @return a {@link String}
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return name + ":" + (first == null ? "NA" : (first == true ? "T" : "F")) + "/"
                 + (second == null ? "NA" : (second == true ? "T" : "F"));
