@@ -129,14 +129,17 @@ public class SimpleCycle extends UndirectedSubgraph {
         return vertices;
     }
 
+    @Override
     public boolean equals(Object obj) {
         return (obj instanceof SimpleCycle && edgeSet().equals(((SimpleCycle) obj).edgeSet()));
     }
 
+    @Override
     public String toString() {
         return vertexList().toString();
     }
 
+    @Override
     public int hashCode() {
         return edgeSet().hashCode();
     }

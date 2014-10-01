@@ -124,6 +124,7 @@ public class Complex {
     /**
      * Create a string of the content of this class
      */
+    @Override
     public String toString() {
         return "(" + real + "+i*" + imag + ")";
     }

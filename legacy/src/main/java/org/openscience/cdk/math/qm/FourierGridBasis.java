@@ -62,39 +62,48 @@ public class FourierGridBasis implements IBasis {
          */
     }
 
+    @Override
     public int getSize() {
         return N;
     }
 
+    @Override
     public double getMinX() {
         return minx;
     }
 
+    @Override
     public double getMaxX() {
         return maxx;
     }
 
+    @Override
     public double getMinY() {
         return -1d;
     }
 
+    @Override
     public double getMaxY() {
         return +1d;
     }
 
+    @Override
     public double getMinZ() {
         return -1d;
     }
 
+    @Override
     public double getMaxZ() {
         return +1d;
     }
 
+    @Override
     public double getValue(int index, double x, double y, double z) {
         if ((index * dx + minx <= x) && (x <= index * dx + maxx + dx)) return 1d;
         return 0d;
     }
 
+    @Override
     public Vector getValues(int index, Matrix m) {
         if (m.columns < 1) return null;
 
@@ -108,6 +117,7 @@ public class FourierGridBasis implements IBasis {
         return result;
     }
 
+    @Override
     public double calcS(int i, int j) {
         if (i == j) return 1d;
         return 0d;
@@ -119,6 +129,7 @@ public class FourierGridBasis implements IBasis {
      * S.matrix[i][j] = 0d; return S; }
      */
 
+    @Override
     public double calcJ(int i, int j) {
         double result = 0d;
         for (int l = 1; l <= N2; l++)
@@ -134,6 +145,7 @@ public class FourierGridBasis implements IBasis {
      * T.matrix[i][j] *= 2d/N; } return T; }
      */
 
+    @Override
     public double calcV(int i, int j) {
         if (i == j) return potential.getValue(minx + dx * i, 0d, 0d);
         return 0d;
@@ -150,6 +162,7 @@ public class FourierGridBasis implements IBasis {
      * public Matrix getV() { return V; }
      */
 
+    @Override
     public double calcI(int i, int j, int k, int l) {
         return 0d;
     }

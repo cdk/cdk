@@ -184,6 +184,7 @@ public class MinimalPathIterator implements Iterator {
     //	}
 
     @TestMethod("testMinimalPathIterator")
+    @Override
     public boolean hasNext() {
 
         if (next == null) {
@@ -219,6 +220,7 @@ public class MinimalPathIterator implements Iterator {
     }
 
     @TestMethod("testMinimalPathIterator")
+    @Override
     public Object next() {
         if (hasNext()) {
             Object result = next;
@@ -230,6 +232,7 @@ public class MinimalPathIterator implements Iterator {
     }
 
     @TestMethod("testRemove")
+    @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }
@@ -257,6 +260,7 @@ public class MinimalPathIterator implements Iterator {
         int            level = -1;
         private Object firstVertexOfNextLevel;
 
+        @Override
         protected void encounterVertex(Object vertex, Edge edge) {
             super.encounterVertex(vertex, edge);
             if (firstVertexOfNextLevel == null) {
@@ -264,6 +268,7 @@ public class MinimalPathIterator implements Iterator {
             }
         }
 
+        @Override
         protected Object provideNextVertex() {
             Object nextVertex = super.provideNextVertex();
             if (firstVertexOfNextLevel == nextVertex) {

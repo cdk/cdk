@@ -89,6 +89,7 @@ public class AttachedGroup {
     /**
      * A debug string which represents the contents of the class.
      */
+    @Override
     public String toString() {
         String returnString = name + ": ";
 

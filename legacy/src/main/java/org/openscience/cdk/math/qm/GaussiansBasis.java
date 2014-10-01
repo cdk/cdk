@@ -164,6 +164,7 @@ public class GaussiansBasis implements IBasis {
     /**
      * Gets the number of base vectors.
      */
+    @Override
     public int getSize() {
         return count;
     }
@@ -171,6 +172,7 @@ public class GaussiansBasis implements IBasis {
     /**
      * Gets the dimension of the volume, which describes the base.
      */
+    @Override
     public double getMinX() {
         return minx;
     }
@@ -178,6 +180,7 @@ public class GaussiansBasis implements IBasis {
     /**
      * Gets the dimension of the volume, which describes the base.
      */
+    @Override
     public double getMaxX() {
         return maxx;
     }
@@ -185,6 +188,7 @@ public class GaussiansBasis implements IBasis {
     /**
      * Gets the dimension of the volume, which describes the base.
      */
+    @Override
     public double getMinY() {
         return miny;
     }
@@ -192,6 +196,7 @@ public class GaussiansBasis implements IBasis {
     /**
      * Gets the dimension of the volume, which describes the base.
      */
+    @Override
     public double getMaxY() {
         return maxy;
     }
@@ -199,6 +204,7 @@ public class GaussiansBasis implements IBasis {
     /**
      * Gets the dimension of the volume, which describes the base.
      */
+    @Override
     public double getMinZ() {
         return minz;
     }
@@ -206,6 +212,7 @@ public class GaussiansBasis implements IBasis {
     /**
      * Gets the dimension of the volume, which describes the base.
      */
+    @Override
     public double getMaxZ() {
         return maxz;
     }
@@ -214,6 +221,7 @@ public class GaussiansBasis implements IBasis {
      * Calculates the function value an (x,y,z).
      * @param index The number of the base
      */
+    @Override
     public double getValue(int index, double x, double y, double z) {
         double dx = (x * 1.8897) - r[index].vector[0];
         double dy = (y * 1.8897) - r[index].vector[1];
@@ -233,6 +241,7 @@ public class GaussiansBasis implements IBasis {
      * Calculates the function values.
      * @param index The number of the base
      */
+    @Override
     public Vector getValues(int index, Matrix m) {
         if (m.rows != 3) return null;
 
@@ -349,6 +358,7 @@ public class GaussiansBasis implements IBasis {
         return I[nj][ni];
     }
 
+    @Override
     public double calcS(int i, int j) {
         //logger.debug("S: i="+i+" j="+j+" r[i]="+r[i]+" r[j]="+r[j]);
         return calcD(norm[i], norm[j], alpha[i], alpha[j], r[i], r[j])
@@ -375,6 +385,7 @@ public class GaussiansBasis implements IBasis {
         return Double.NaN; // Falls fehlerhafte Parameter
     }
 
+    @Override
     public double calcJ(int i, int j) {
         return calcD(norm[i], norm[j], alpha[i], alpha[j], r[i], r[j])
                 * (calcJ(nx[i], nx[j], alpha[i], alpha[j], r[i].vector[0], r[j].vector[0])
@@ -498,6 +509,7 @@ public class GaussiansBasis implements IBasis {
      * @param i Index of the first base
      * @param j Index of the second base
      */
+    @Override
     public double calcV(int i, int j) {
         double result = 0d;
         for (int k = 0; k < count_atoms; k++) {
@@ -583,6 +595,7 @@ public class GaussiansBasis implements IBasis {
         return Double.NaN;
     }
 
+    @Override
     public double calcI(int i, int j, int k, int l) {
         double f, t;
 

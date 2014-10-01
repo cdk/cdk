@@ -250,6 +250,7 @@ public class Matrix {
     /**
      *  Return a matrix as a String.
      */
+    @Override
     public String toString() {
         if ((rows <= 0) || (columns <= 0)) return "[]";
         int i, j;

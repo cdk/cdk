@@ -189,6 +189,7 @@ public class Vector {
     /**
      *  Return a vector as a string
      */
+    @Override
     public String toString() {
         int i;
         StringBuffer str = new StringBuffer();

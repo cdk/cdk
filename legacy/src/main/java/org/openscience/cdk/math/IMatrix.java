@@ -355,6 +355,7 @@ public class IMatrix {
     /**
      *  Return a matrix as a string
      */
+    @Override
     public String toString() {
         if ((rows <= 0) || (columns <= 0)) return "[]";
         int i, j;
