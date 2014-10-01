@@ -154,6 +154,7 @@ public class DebugChemObject extends ChemObject implements IChemObject {
     }
 
     /** @inheritDoc */
+    @Override
     public void setProperties(Map<Object, Object> properties) {
         logger.debug("Setting properties: ", properties);
         super.setProperties(properties);

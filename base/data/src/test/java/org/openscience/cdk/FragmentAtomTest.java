@@ -37,6 +37,7 @@ public class FragmentAtomTest extends AbstractFragmentAtomTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new FragmentAtom();
             }

@@ -34,6 +34,7 @@ public class DebugSubstanceTest extends AbstractSubstanceTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new DebugSubstance();
             }

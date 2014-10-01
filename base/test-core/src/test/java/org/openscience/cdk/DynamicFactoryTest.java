@@ -407,6 +407,7 @@ public class DynamicFactoryTest {
         // register ICDKObject with an mock instantiator
         factory.register(key(ICDKObject.class, IAtom[].class), new DynamicFactory.BasicCreator<IAtom>(null) {
 
+            @Override
             public IAtom create(Object[] objects) {
                 return mock(IAtom.class);
             }

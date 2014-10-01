@@ -47,22 +47,27 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
         isExpanded = false;
     }
 
+    @Override
     public boolean isExpanded() {
         return isExpanded;
     }
 
+    @Override
     public void setExpanded(boolean bool) {
         this.isExpanded = bool;
     }
 
+    @Override
     public IAtomContainer getFragment() {
         return fragment;
     }
 
+    @Override
     public void setFragment(IAtomContainer fragment) {
         this.fragment = fragment;
     }
 
+    @Override
     public void setExactMass(Double mass) {
         throw new IllegalAccessError("Cannot set the mass of a IFragmentAtom.");
     }
@@ -71,6 +76,7 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
      * The exact mass of an FragmentAtom is defined as the sum of exact masses
      * of the IAtom's in the fragment.
      */
+    @Override
     public Double getExactMass() {
         double totalMass = 0.0;
         for (IAtom atom : fragment.atoms()) {
@@ -79,6 +85,7 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
         return totalMass;
     }
 
+    @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("FragmentAtom{").append(hashCode());

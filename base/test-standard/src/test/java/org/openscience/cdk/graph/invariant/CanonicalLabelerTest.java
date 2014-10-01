@@ -153,6 +153,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
      *
      * @param container to which implicit hydrogens are added.
      */
+    @Override
     protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
         Iterator<IAtom> atoms = container.atoms().iterator();

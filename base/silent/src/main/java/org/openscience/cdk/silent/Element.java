@@ -122,6 +122,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      *
      * @see    #setAtomicNumber
      */
+    @Override
     public Integer getAtomicNumber() {
         return this.atomicNumber;
     }
@@ -133,6 +134,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      *
      * @see    #getAtomicNumber
      */
+    @Override
     public void setAtomicNumber(Integer atomicNumber) {
         this.atomicNumber = atomicNumber;
     }
@@ -144,6 +146,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      *
      * @see    #setSymbol
      */
+    @Override
     public String getSymbol() {
         return this.symbol;
     }
@@ -155,10 +158,12 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      *
      * @see    #getSymbol
      */
+    @Override
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
 
+    @Override
     public String toString() {
         StringBuffer resultString = new StringBuffer(32);
         resultString.append("Element(").append(hashCode());
@@ -175,6 +180,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
         return resultString.toString();
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
@@ -185,6 +191,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * @param  object Object of type AtomType
      * @return        true if the atom types are equal
      */
+    @Override
     public boolean compare(Object object) {
         if (!(object instanceof Element)) {
             return false;

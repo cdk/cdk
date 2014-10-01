@@ -60,10 +60,12 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
         secondaryStructures = new ArrayList<IPDBStructure>();
     }
 
+    @Override
     public void addStructure(IPDBStructure structure) {
         secondaryStructures.add(structure);
     }
 
+    @Override
     public Collection<IPDBStructure> getStructures() {
         //		don't return the original
         return new ArrayList<IPDBStructure>(secondaryStructures);
@@ -76,6 +78,7 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
      *
      * @param oAtom  The {@link IPDBAtom} to add
      */
+    @Override
     public void addAtom(IPDBAtom oAtom) {
         super.addAtom(oAtom);
     }
@@ -100,6 +103,7 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
      * @param oAtom  The IPDBAtom to add
      * @param oMonomer  The monomer the atom belongs to
      */
+    @Override
     public void addAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand) {
         super.addAtom(oAtom, oMonomer, oStrand);
         if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
@@ -124,6 +128,7 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
         return (IPDBPolymer) super.clone();
     }
 
+    @Override
     public String toString() {
         StringBuilder stringContent = new StringBuilder();
         stringContent.append("PDBPolymer(");

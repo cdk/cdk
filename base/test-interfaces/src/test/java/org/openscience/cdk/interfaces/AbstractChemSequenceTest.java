@@ -113,6 +113,7 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
     }
 
     @Test
+    @Override
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemSequence chemObject = (IChemSequence) newChemObject();
@@ -131,6 +132,7 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         }
 
         @Test
+        @Override
         public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
@@ -142,6 +144,7 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IChemSequence sequence = (IChemSequence) newChemObject();
         Object clone = sequence.clone();

@@ -69,6 +69,7 @@ public class CTFileQueryBond extends QueryBond implements IQueryBond {
         return type;
     }
 
+    @Override
     public boolean matches(IBond bond) {
         return false;
     }

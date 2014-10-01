@@ -189,6 +189,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *
      * @see    #getCharge
      */
+    @Override
     public void setCharge(Double charge) {
         this.charge = charge;
         notifyChanged();
@@ -203,6 +204,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *
      * @see    #setCharge
      */
+    @Override
     public Double getCharge() {
         return this.charge;
     }
@@ -214,6 +216,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *
      * @see    #getImplicitHydrogenCount
      */
+    @Override
     public void setImplicitHydrogenCount(Integer hydrogenCount) {
         this.hydrogenCount = hydrogenCount;
         notifyChanged();
@@ -226,6 +229,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *
      * @see       #setImplicitHydrogenCount
      */
+    @Override
     public Integer getImplicitHydrogenCount() {
         return this.hydrogenCount;
     }
@@ -239,6 +243,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *
      * @see    #getPoint2d
      */
+    @Override
     public void setPoint2d(Point2d point2d) {
         this.point2d = point2d;
         notifyChanged();
@@ -253,6 +258,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *
      * @see    #getPoint3d
      */
+    @Override
     public void setPoint3d(Point3d point3d) {
         this.point3d = point3d;
         notifyChanged();
@@ -267,6 +273,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @see    #getFractionalPoint3d
      * @see    org.openscience.cdk.Crystal
      */
+    @Override
     public void setFractionalPoint3d(Point3d point3d) {
         this.fractionalPoint3d = point3d;
         notifyChanged();
@@ -280,6 +287,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @see    org.openscience.cdk.CDKConstants for predefined values.
      * @see    #getStereoParity
      */
+    @Override
     public void setStereoParity(Integer stereoParity) {
         this.stereoParity = stereoParity;
         notifyChanged();
@@ -293,6 +301,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *
      * @see       #setPoint2d
      */
+    @Override
     public Point2d getPoint2d() {
         return this.point2d;
     }
@@ -305,6 +314,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *
      * @see       #setPoint3d
      */
+    @Override
     public Point3d getPoint3d() {
         return this.point3d;
     }
@@ -318,6 +328,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @see       #setFractionalPoint3d
      * @see       org.openscience.cdk.CDKConstants for predefined values.
      */
+    @Override
     public Point3d getFractionalPoint3d() {
         return this.fractionalPoint3d;
     }
@@ -331,6 +342,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @see       org.openscience.cdk.CDKConstants
      * @see       #setStereoParity
      */
+    @Override
     public Integer getStereoParity() {
         return this.stereoParity;
     }
@@ -341,6 +353,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @param     object of type Atom
      * @return    true, if the atoms are equal
      */
+    @Override
     public boolean compare(Object object) {
         if (!(object instanceof IAtom)) {
             return false;
@@ -364,6 +377,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *
      * @return  The string representation of this Atom
      */
+    @Override
     public String toString() {
         StringBuffer stringContent = new StringBuffer(64);
         stringContent.append("Atom(").append(hashCode());
@@ -398,6 +412,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      *
      * @return  The cloned object
      */
+    @Override
     public IAtom clone() throws CloneNotSupportedException {
         Object clone = super.clone();
         if (point2d != null) {

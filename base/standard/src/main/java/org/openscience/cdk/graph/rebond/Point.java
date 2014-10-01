@@ -41,6 +41,7 @@ public class Point implements Bspt.Tuple {
     }
 
     @TestMethod("testGetDimValue_int")
+    @Override
     public double getDimValue(int dim) {
         if (dim == 0) return x;
         if (dim == 1) return y;
@@ -48,6 +49,7 @@ public class Point implements Bspt.Tuple {
     }
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return "<" + x + "," + y + "," + z + ">";
     }

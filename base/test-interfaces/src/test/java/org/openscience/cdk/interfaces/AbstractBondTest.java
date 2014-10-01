@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
+    @Override
     public void testCompare_Object() {
         IBond b = (IBond) newChemObject();
         IAtom c = b.getBuilder().newInstance(IAtom.class, "C");
@@ -336,6 +337,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IBond bond = (IBond) newChemObject();
         Object clone = bond.clone();
@@ -386,6 +388,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
      * Test for RFC #9
      */
     @Test
+    @Override
     public void testToString() {
         IBond bond = (IBond) newChemObject();
         String description = bond.toString();

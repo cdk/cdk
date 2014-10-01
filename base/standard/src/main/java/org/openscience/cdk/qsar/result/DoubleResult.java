@@ -41,11 +41,13 @@ public class DoubleResult implements IDescriptorResult {
     }
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return Double.toString(value);
     }
 
     @TestMethod("testLength")
+    @Override
     public int length() {
         return 1;
     }

@@ -143,6 +143,7 @@ public class DisjointSetForest {
         return sets;
     }
 
+    @Override
     public String toString() {
         return Arrays.toString(forest);
     }

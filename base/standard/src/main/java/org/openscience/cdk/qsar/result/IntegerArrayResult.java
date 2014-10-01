@@ -62,11 +62,13 @@ public class IntegerArrayResult extends IntegerArrayResultType {
     }
 
     @TestMethod("testSize")
+    @Override
     public int length() {
         return Math.max(super.length(), this.array.size());
     }
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         StringBuilder buf = new StringBuilder();
         for (int i = 0; i < length(); i++) {

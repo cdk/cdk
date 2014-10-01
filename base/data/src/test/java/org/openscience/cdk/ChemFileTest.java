@@ -39,6 +39,7 @@ public class ChemFileTest extends AbstractChemFileTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new ChemFile();
             }

@@ -33,11 +33,13 @@ public class DoubleResultType implements IDescriptorResult {
     private static final long serialVersionUID = -6641147506132424322L;
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return "DoubleResultType";
     }
 
     @TestMethod("testLength")
+    @Override
     public int length() {
         return 1;
     }

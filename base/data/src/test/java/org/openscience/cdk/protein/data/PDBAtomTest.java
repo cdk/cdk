@@ -42,6 +42,7 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new PDBAtom("C");
             }
@@ -85,6 +86,7 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
      * Method to test the compare() method.
      */
     @Test
+    @Override
     public void testCompare_Object() {
         IPDBAtom someAtom = new PDBAtom("C");
         if (someAtom instanceof org.openscience.cdk.Atom) {

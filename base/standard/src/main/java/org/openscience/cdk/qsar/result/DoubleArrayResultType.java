@@ -39,11 +39,13 @@ public class DoubleArrayResultType implements IDescriptorResult {
     }
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return "DoubleArrayResultType";
     }
 
     @TestMethod("testLength")
+    @Override
     public int length() {
         return size;
     }

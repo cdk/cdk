@@ -68,5 +68,6 @@ public interface IReactionScheme extends IReactionSet {
      *
      * @return    The cloned object
      */
+    @Override
     public Object clone() throws CloneNotSupportedException;
 }

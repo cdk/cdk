@@ -78,6 +78,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
      *@return    Description of the Return Value
      */
     @Test
+    @Override
     public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
         /* ionize >C=C< , set the reactive center */
         IAtomContainer reactant = builder.newInstance(IAtomContainer.class);//Smiles("C=CCC(=O)CC")

@@ -27,6 +27,7 @@ package org.openscience.cdk.fingerprint;
  */
 public class HybridizationFingerprinterTest extends AbstractFingerprinterTest {
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new HybridizationFingerprinter();
     }

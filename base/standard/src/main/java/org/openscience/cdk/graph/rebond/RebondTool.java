@@ -134,6 +134,7 @@ public class RebondTool {
             this.atom = atom;
         }
 
+        @Override
         public double getDimValue(int dim) {
             if (dim == 0) return atom.getPoint3d().x;
             if (dim == 1) return atom.getPoint3d().y;
@@ -144,6 +145,7 @@ public class RebondTool {
             return this.atom;
         }
 
+        @Override
         public String toString() {
             return ("<" + atom.getPoint3d().x + "," + atom.getPoint3d().y + "," + atom.getPoint3d().z + ">");
         }

@@ -47,6 +47,7 @@ public interface IBioPolymer extends IPolymer {
      *
      * @param oAtom  The atom to add
      */
+    @Override
     public void addAtom(IAtom oAtom);
 
     /**
@@ -72,6 +73,7 @@ public interface IBioPolymer extends IPolymer {
      *
      * @return number of monomers
      */
+    @Override
     public int getMonomerCount();
 
     /**
@@ -93,6 +95,7 @@ public interface IBioPolymer extends IPolymer {
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
+    @Override
     public Collection<String> getMonomerNames();
 
     /**

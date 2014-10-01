@@ -42,10 +42,12 @@ public class DictionaryHandler extends DefaultHandler {
 
     public void doctypeDecl(String name, String publicId, String systemId) throws Exception {}
 
+    @Override
     public void startDocument() {
         dict = new Dictionary();
     }
 
+    @Override
     public void endElement(String uri, String local, String raw) {
         if ("entry".equals(local) && !"bibtex:entry".equals(raw) && inEntry) {
             dict.addEntry(entry);
@@ -55,6 +57,7 @@ public class DictionaryHandler extends DefaultHandler {
         }
     }
 
+    @Override
     public void startElement(String uri, String local, String raw, Attributes atts) {
         currentChars = "";
         if ("entry".equals(local) && !"bibtex:entry".equals(raw) && !inEntry) {
@@ -97,6 +100,7 @@ public class DictionaryHandler extends DefaultHandler {
         }
     }
 
+    @Override
     public void characters(char character[], int start, int length) {
         currentChars += new String(character, start, length);
     }

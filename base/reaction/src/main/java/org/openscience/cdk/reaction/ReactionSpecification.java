@@ -62,21 +62,25 @@ public class ReactionSpecification implements IImplementationSpecification {
     }
 
     @TestMethod(value = "testGetSpecificationReference")
+    @Override
     public String getSpecificationReference() {
         return this.specificationReference;
     };
 
     @TestMethod(value = "testGetImplementationTitle")
+    @Override
     public String getImplementationTitle() {
         return this.implementationTitle;
     };
 
     @TestMethod(value = "testGetImplementationIdentifier")
+    @Override
     public String getImplementationIdentifier() {
         return this.implementationIdentifier;
     };
 
     @TestMethod(value = "testGetImplementationVendor")
+    @Override
     public String getImplementationVendor() {
         return this.implementationVendor;
     };

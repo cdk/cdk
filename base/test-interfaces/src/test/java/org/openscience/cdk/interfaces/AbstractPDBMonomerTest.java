@@ -78,6 +78,7 @@ public abstract class AbstractPDBMonomerTest extends AbstractMonomerTest {
     }
 
     @Test
+    @Override
     public void testToString() {
         IPDBMonomer monomer = (IPDBMonomer) newChemObject();
         String description = monomer.toString();

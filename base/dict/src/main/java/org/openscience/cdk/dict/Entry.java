@@ -119,6 +119,7 @@ public class Entry {
     }
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return "Entry[" + getID() + "](" + getLabel() + ")";
     }

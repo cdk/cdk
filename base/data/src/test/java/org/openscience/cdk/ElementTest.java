@@ -41,6 +41,7 @@ public class ElementTest extends AbstractElementTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new Element();
             }

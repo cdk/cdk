@@ -50,6 +50,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
     }
 
     @Test
+    @Override
     public void testGetMonomerCount() {
         IPDBPolymer pdbPolymer = (IPDBPolymer) newChemObject();
         Assert.assertEquals(0, pdbPolymer.getMonomerCount());
@@ -79,6 +80,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
     }
 
     @Test
+    @Override
     public void testGetMonomerNames() {
         IPDBPolymer pdbPolymer = (IPDBPolymer) newChemObject();
         Assert.assertEquals(0, pdbPolymer.getMonomerNames().size());
@@ -110,6 +112,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
     }
 
     @Test
+    @Override
     public void testGetMonomer_String_String() {
         IPDBPolymer pdbPolymer = (IPDBPolymer) newChemObject();
 
@@ -196,6 +199,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
     }
 
     @Test
+    @Override
     public void testGetStrandCount() {
         IPDBPolymer pdbPolymer = (IPDBPolymer) newChemObject();
         IStrand oStrand1 = pdbPolymer.getBuilder().newInstance(IStrand.class);
@@ -209,6 +213,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
     }
 
     @Test
+    @Override
     public void testGetStrand_String() {
         IPDBPolymer pdbPolymer = (IPDBPolymer) newChemObject();
         IStrand oStrand1 = pdbPolymer.getBuilder().newInstance(IStrand.class);
@@ -222,6 +227,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
     }
 
     @Test
+    @Override
     public void testGetStrandNames() {
         IPDBPolymer pdbPolymer = (IPDBPolymer) newChemObject();
         IStrand oStrand1 = pdbPolymer.getBuilder().newInstance(IStrand.class);
@@ -244,6 +250,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
     }
 
     @Test
+    @Override
     public void testRemoveStrand_String() {
         IPDBPolymer pdbPolymer = (IPDBPolymer) newChemObject();
         IStrand oStrand1 = pdbPolymer.getBuilder().newInstance(IStrand.class);
@@ -261,6 +268,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
     }
 
     @Test
+    @Override
     public void testGetStrands() {
         IPDBPolymer pdbPolymer = (IPDBPolymer) newChemObject();
         IStrand oStrand1 = pdbPolymer.getBuilder().newInstance(IStrand.class);
@@ -286,6 +294,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         IPDBPolymer pdbPolymer = (IPDBPolymer) newChemObject();
         String description = pdbPolymer.toString();
@@ -299,6 +308,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
      * Method to test the clone() method
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IPDBPolymer polymer = (IPDBPolymer) newChemObject();
         Object clone = polymer.clone();

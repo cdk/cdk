@@ -33,11 +33,13 @@ public class IntegerResultType implements IDescriptorResult {
     private static final long serialVersionUID = -6643953534920216664L;
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return "IntegerResultType";
     }
 
     @TestMethod("testLength")
+    @Override
     public int length() {
         return 1;
     }

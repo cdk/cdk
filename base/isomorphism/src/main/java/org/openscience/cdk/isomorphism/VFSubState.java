@@ -112,6 +112,7 @@ final class VFSubState extends AbstractVFState {
      * @return the mapping is feasible
      */
     @TestMethod("infeasibleAtoms,infeasibleBonds")
+    @Override
     boolean feasible(int n, int m) {
 
         // verify atom semantic feasibility

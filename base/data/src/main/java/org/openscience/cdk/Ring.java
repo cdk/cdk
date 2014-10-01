@@ -97,6 +97,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
      * @return   The number of atoms\edges in this ring
      */
 
+    @Override
     public int getRingSize() {
         return this.atomCount;
     }
@@ -110,6 +111,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
      * @param   atom  A atom from the bond above to assign a search direction
      * @return  The next bond in the order given by the above assignment
      */
+    @Override
     public IBond getNextBond(IBond bond, IAtom atom) {
         IBond tempBond;
         for (int f = 0; f < getBondCount(); f++) {
@@ -124,6 +126,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
      *
      * @return the sum of all bond orders in the ring
      */
+    @Override
     public int getBondOrderSum() {
         int sum = 0;
         for (int i = 0; i < getBondCount(); i++) {
@@ -143,6 +146,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
         return (IRing) super.clone();
     }
 
+    @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("Ring(");

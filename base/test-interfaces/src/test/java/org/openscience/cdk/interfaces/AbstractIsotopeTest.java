@@ -71,6 +71,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
      * Method to test the clone() method
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IIsotope iso = (IIsotope) newChemObject();
         Object clone = iso.clone();
@@ -128,6 +129,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         IIsotope iso = (IIsotope) newChemObject();
         String description = iso.toString();

@@ -74,6 +74,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      *
      * @return The number of electrons in a LonePair.
      */
+    @Override
     public Integer getElectronCount() {
         return this.electronCount;
     }
@@ -85,6 +86,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      *
      * @see    #setAtom
      */
+    @Override
     public IAtom getAtom() {
         return this.atom;
     }
@@ -96,6 +98,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      *
      * @see    #getAtom
      */
+    @Override
     public void setAtom(IAtom atom) {
         this.atom = atom;
     }
@@ -106,6 +109,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this lone pair is associated with the atom
      */
+    @Override
     public boolean contains(IAtom atom) {
         return (this.atom == atom);
     }
@@ -116,6 +120,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      *
      * @return    The cloned object
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         LonePair clone = (LonePair) super.clone();
         // clone the Atom
@@ -131,6 +136,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      *
      * @return    The string representation of this LonePair
      */
+    @Override
     public String toString() {
         StringBuffer resultString = new StringBuffer();
         resultString.append("LonePair(");

@@ -82,6 +82,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #setMoleculeSet
      */
+    @Override
     public IAtomContainerSet getMoleculeSet() {
         return this.setOfMolecules;
     }
@@ -93,6 +94,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #getMoleculeSet
      */
+    @Override
     public void setMoleculeSet(IAtomContainerSet setOfMolecules) {
         this.setOfMolecules = setOfMolecules;
     }
@@ -104,6 +106,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #setRingSet
      */
+    @Override
     public IRingSet getRingSet() {
         return this.ringSet;
     }
@@ -115,6 +118,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #getRingSet
      */
+    @Override
     public void setRingSet(IRingSet ringSet) {
         this.ringSet = ringSet;
     }
@@ -126,6 +130,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #setCrystal
      */
+    @Override
     public ICrystal getCrystal() {
         return this.crystal;
     }
@@ -137,6 +142,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #getCrystal
      */
+    @Override
     public void setCrystal(ICrystal crystal) {
         this.crystal = crystal;
     }
@@ -148,6 +154,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #setReactionSet
      */
+    @Override
     public IReactionSet getReactionSet() {
         return this.setOfReactions;
     }
@@ -159,6 +166,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see       #getReactionSet
      */
+    @Override
     public void setReactionSet(IReactionSet sor) {
         this.setOfReactions = sor;
     }
@@ -169,6 +177,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @return String representation of content
      */
+    @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer(64);
         buffer.append("ChemModel(");
@@ -194,6 +203,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @return  The cloned object
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         ChemModel clone = (ChemModel) super.clone();
         // clone the content
@@ -226,6 +236,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      *@param  event  A change event pointing to the source of the change
      */
+    @Override
     public void stateChanged(IChemObjectChangeEvent event) {}
 
     /**

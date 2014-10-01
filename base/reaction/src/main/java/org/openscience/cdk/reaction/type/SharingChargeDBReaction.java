@@ -91,6 +91,7 @@ public class SharingChargeDBReaction extends ReactionEngine implements IReaction
      *@return    The specification value
      */
     @TestMethod("testGetSpecification")
+    @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
                 "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingChargeDB", this
@@ -108,6 +109,7 @@ public class SharingChargeDBReaction extends ReactionEngine implements IReaction
      *@exception  CDKException  Description of the Exception
      */
     @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
+    @Override
     public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
 
         logger.debug("initiate reaction: SharingChargeDBReaction");

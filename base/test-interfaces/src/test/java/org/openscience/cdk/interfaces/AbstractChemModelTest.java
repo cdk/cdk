@@ -92,6 +92,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IChemModel model = (IChemModel) newChemObject();
         Object clone = model.clone();
@@ -148,6 +149,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
     }
 
     @Test
+    @Override
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemModel chemObject = (IChemModel) newChemObject();
@@ -325,6 +327,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         }
 
         @Test
+        @Override
         public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }

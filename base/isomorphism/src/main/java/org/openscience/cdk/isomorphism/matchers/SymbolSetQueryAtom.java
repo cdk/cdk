@@ -57,6 +57,7 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
      *@param  atom  The atom to be matched by this QueryAtom
      *@return       true if Atom matched
      */
+    @Override
     public boolean matches(IAtom atom) {
         return symbols.contains(atom.getSymbol());
     }
@@ -103,6 +104,7 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
      *
      *@return    The String representation of this object.
      */
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("SymbolSetQueryAtom(");

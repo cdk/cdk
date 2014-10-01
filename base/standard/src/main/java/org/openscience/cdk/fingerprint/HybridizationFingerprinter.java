@@ -288,6 +288,7 @@ public class HybridizationFingerprinter implements IFingerprinter {
     }
 
     @TestMethod("testGetSize")
+    @Override
     public int getSize() {
         return size;
     }
@@ -295,6 +296,7 @@ public class HybridizationFingerprinter implements IFingerprinter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer container) {
         throw new UnsupportedOperationException();
     }

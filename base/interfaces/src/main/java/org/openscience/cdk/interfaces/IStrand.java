@@ -74,6 +74,7 @@ public interface IStrand extends IAtomContainer {
      *
      * @param oAtom  The atom to add
      */
+    @Override
     public void addAtom(IAtom oAtom);
 
     /**

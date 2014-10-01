@@ -38,6 +38,7 @@ public class DebugReactionTest extends AbstractReactionTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new DebugReaction();
             }

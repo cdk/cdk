@@ -40,12 +40,14 @@ public class SymbolAndChargeQueryAtom extends QueryAtom implements IQueryAtom {
 
     public void setOperator(String str) {}
 
+    @Override
     public boolean matches(IAtom atom) {
         int requiredCharge = this.getFormalCharge() == null ? 0 : this.getFormalCharge();
         int foundCharge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
         return this.getSymbol().equals(atom.getSymbol()) && requiredCharge == foundCharge;
     };
 
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("SymbolAndChargeQueryAtom(");

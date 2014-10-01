@@ -40,6 +40,7 @@ public class BondTest extends AbstractBondTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new Bond();
             }
@@ -130,6 +131,7 @@ public class BondTest extends AbstractBondTest {
     }
 
     @Test
+    @Override
     public void testCompare_Object() {
         IChemObject object = newChemObject();
         IAtom c = object.getBuilder().newInstance(IAtom.class, "C");

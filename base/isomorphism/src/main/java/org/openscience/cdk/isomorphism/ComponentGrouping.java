@@ -119,6 +119,7 @@ public final class ComponentGrouping implements Predicate<int[]> {
      * @return the mapping preserves the specified grouping
      */
     @TestMethod("ungrouped,grouped")
+    @Override
     public boolean apply(final int[] mapping) {
 
         // no grouping required

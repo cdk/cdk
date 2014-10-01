@@ -32,6 +32,7 @@ import org.junit.Test;
 public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 
     @Test
+    @Override
     public void testAdd_IAtomContainer() {
         ICrystal crystal = (ICrystal) newChemObject();
 
@@ -57,6 +58,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
     }
 
     @Test
+    @Override
     public void testAddAtom_IAtom() {
         ICrystal crystal = (ICrystal) newChemObject();
         IAtom c1 = crystal.getBuilder().newInstance(IAtom.class, "C");
@@ -158,6 +160,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         ICrystal crystal = (ICrystal) newChemObject();
         String description = crystal.toString();
@@ -168,6 +171,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         ICrystal crystal = (ICrystal) newChemObject();
         Object clone = crystal.clone();

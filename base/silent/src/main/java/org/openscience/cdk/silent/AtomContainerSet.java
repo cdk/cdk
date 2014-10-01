@@ -78,6 +78,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      *
      * @param  atomContainer  The atomContainer to be added to this container
      */
+    @Override
     public void addAtomContainer(IAtomContainer atomContainer) {
         addAtomContainer(atomContainer, 1.0);
         /*
@@ -90,6 +91,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      *
      * @param  atomContainer  The atomContainer to be removed from this container
      */
+    @Override
     public void removeAtomContainer(IAtomContainer atomContainer) {
         for (int i = atomContainerCount - 1; i >= 0; i--) {
             if (atomContainers[i] == atomContainer) removeAtomContainer(i);
@@ -99,6 +101,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
     /**
      * Removes all AtomContainer from this container.
      */
+    @Override
     public void removeAllAtomContainers() {
         for (int pos = atomContainerCount - 1; pos >= 0; pos--) {
             multipliers[pos] = 0.0;
@@ -112,6 +115,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      *
      * @param  pos  The position of the AtomContainer to be removed from this container
      */
+    @Override
     public void removeAtomContainer(int pos) {
         for (int i = pos; i < atomContainerCount - 1; i++) {
             atomContainers[i] = atomContainers[i + 1];
@@ -127,6 +131,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * @param position   position in array for AtomContainer
      * @param container  the replacement AtomContainer
      */
+    @Override
     public void replaceAtomContainer(int position, IAtomContainer container) {
         atomContainers[position] = container;
     }
@@ -139,6 +144,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * @return             true if multiplier has been set
      * @see                #getMultiplier(IAtomContainer)
      */
+    @Override
     public boolean setMultiplier(IAtomContainer container, Double multiplier) {
         for (int i = 0; i < atomContainers.length; i++) {
             if (atomContainers[i] == container) {
@@ -158,6 +164,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      *                    <code>position</code>
      * @see                #getMultiplier(int)
      */
+    @Override
     public void setMultiplier(int position, Double multiplier) {
         multipliers[position] = multiplier;
     }
@@ -169,6 +176,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * @return    The multipliers for the AtomContainer's in this set
      * @see       #setMultipliers
      */
+    @Override
     public Double[] getMultipliers() {
         Double[] returnArray = new Double[this.atomContainerCount];
         System.arraycopy(this.multipliers, 0, returnArray, 0, this.atomContainerCount);
@@ -182,6 +190,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * @return                 true if multipliers have been set.
      * @see                    #getMultipliers
      */
+    @Override
     public boolean setMultipliers(Double[] newMultipliers) {
         if (newMultipliers.length == atomContainerCount) {
             if (multipliers == null) {
@@ -201,6 +210,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * @param  atomContainer  The atomContainer to be added to this container
      * @param  multiplier     The multiplier of this atomContainer
      */
+    @Override
     public void addAtomContainer(IAtomContainer atomContainer, double multiplier) {
         if (atomContainerCount + 1 >= atomContainers.length) {
             growAtomContainerArray();
@@ -215,6 +225,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      *
      * @param  atomContainerSet  The AtomContainerSet
      */
+    @Override
     public void add(IAtomContainerSet atomContainerSet) {
         for (IAtomContainer iter : atomContainerSet.atomContainers()) {
             addAtomContainer(iter);
@@ -229,9 +240,11 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      *
      * @return A new Iterator for this AtomContainerSet.
      */
+    @Override
     public Iterable<IAtomContainer> atomContainers() {
         return new Iterable<IAtomContainer>() {
 
+            @Override
             public Iterator<IAtomContainer> iterator() {
                 return new AtomContainerIterator();
             }
@@ -246,14 +259,17 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 
         private int pointer = 0;
 
+        @Override
         public boolean hasNext() {
             return pointer < atomContainerCount;
         }
 
+        @Override
         public IAtomContainer next() {
             return atomContainers[pointer++];
         }
 
+        @Override
         public void remove() {
             removeAtomContainer(--pointer);
         }
@@ -266,6 +282,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * @param  number  The position of the AtomContainer to be returned.
      * @return         The AtomContainer at position <code>number</code> .
      */
+    @Override
     public IAtomContainer getAtomContainer(int number) {
         return atomContainers[number];
     }
@@ -278,6 +295,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * @return         The multiplier for the AtomContainer at position <code>number</code> .
      * @see            #setMultiplier(int, Double)
      */
+    @Override
     public Double getMultiplier(int number) {
         return multipliers[number];
     }
@@ -289,6 +307,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * @return            -1, if the given molecule is not a container in this set
      * @see               #setMultiplier(IAtomContainer, Double)
      */
+    @Override
     public Double getMultiplier(IAtomContainer container) {
         for (int i = 0; i < atomContainerCount; i++) {
             if (atomContainers[i].equals(container)) {
@@ -318,6 +337,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      *
      * @return    The number of AtomContainers in this Container
      */
+    @Override
     public int getAtomContainerCount() {
         return this.atomContainerCount;
     }
@@ -327,6 +347,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      *
      * @return    The String representation of this AtomContainerSet
      */
+    @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer(32);
         buffer.append("AtomContainerSet(");
@@ -346,6 +367,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      *
      * @return    the cloned Object
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         AtomContainerSet clone = (AtomContainerSet) super.clone();
         clone.atomContainers = new IAtomContainer[atomContainerCount];
@@ -363,6 +385,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      *
      * @param  event  A change event pointing to the source of the change
      */
+    @Override
     public void stateChanged(IChemObjectChangeEvent event) {}
 
     /**
@@ -370,6 +393,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * @param comparator defines the sorting method
      */
     @TestMethod("testSortAtomContainers_Comparator_Null,testSort_Coefficients,testSort_BrokenComparator,testSort_empty")
+    @Override
     public void sortAtomContainers(final Comparator<IAtomContainer> comparator) {
 
         // need to use boxed primitives as we can't customise sorting of int primitives

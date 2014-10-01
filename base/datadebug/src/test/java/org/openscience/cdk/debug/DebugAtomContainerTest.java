@@ -40,6 +40,7 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new DebugAtomContainer();
             }

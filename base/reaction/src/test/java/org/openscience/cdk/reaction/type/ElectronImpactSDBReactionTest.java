@@ -74,6 +74,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
      * @return    Description of the Return Value
      */
     @Test
+    @Override
     public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
         /* ionize(>C-C<): C=CCC -> C=C* + C+ , set the reactive center */
 

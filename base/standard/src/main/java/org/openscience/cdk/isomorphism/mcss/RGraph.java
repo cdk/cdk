@@ -503,6 +503,7 @@ public class RGraph {
      *  Returns a string representation of the RGraph.
      * @return the string representation of the RGraph
      */
+    @Override
     public String toString() {
         String message = "";
         int j = 0;

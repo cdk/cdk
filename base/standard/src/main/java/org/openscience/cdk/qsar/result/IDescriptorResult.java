@@ -34,6 +34,7 @@ public interface IDescriptorResult extends Serializable {
      *
      * @return A string representation.
      */
+    @Override
     public String toString();
 
     /**

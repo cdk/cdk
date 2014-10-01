@@ -92,6 +92,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
      * Only test whether the atoms are correctly cloned.
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IAtomContainer molecule = (IAtomContainer) newChemObject();
         Object clone = molecule.clone();
@@ -2162,6 +2163,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     }
 
     @Test
+    @Override
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IAtomContainer chemObject = (IAtomContainer) newChemObject();
@@ -2186,6 +2188,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         }
 
         @Test
+        @Override
         public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }

@@ -40,6 +40,7 @@ public class PDBMonomerTest extends AbstractPDBMonomerTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new PDBMonomer();
             }

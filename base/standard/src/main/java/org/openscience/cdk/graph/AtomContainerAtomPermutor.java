@@ -66,6 +66,7 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor {
      * @return the
      */
     @TestMethod("containerFromPermutationTest")
+    @Override
     public IAtomContainer containerFromPermutation(int[] permutation) {
         try {
             IAtomContainer permutedContainer = (IAtomContainer) atomContainer.clone();

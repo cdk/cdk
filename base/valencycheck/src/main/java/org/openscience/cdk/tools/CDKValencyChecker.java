@@ -60,6 +60,7 @@ public class CDKValencyChecker implements IValencyChecker {
     }
 
     @TestMethod("testIsSaturated_IAtomContainer,testIsSaturated_MissingHydrogens_Methane")
+    @Override
     public boolean isSaturated(IAtomContainer atomContainer) throws CDKException {
         for (IAtom atom : atomContainer.atoms()) {
             if (!isSaturated(atom, atomContainer)) return false;
@@ -68,6 +69,7 @@ public class CDKValencyChecker implements IValencyChecker {
     }
 
     @TestMethod("testIsSaturatedPerAtom")
+    @Override
     public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException {
         System.out.println(atom.getAtomTypeName());
         IAtomType type = atomTypeList.getAtomType(atom.getAtomTypeName());

@@ -243,6 +243,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
      * Method to test the clone() method
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IAtomType at = (IAtomType) newChemObject();
         Object clone = at.clone();
@@ -336,6 +337,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         IAtomType at = (IAtomType) newChemObject();
         String description = at.toString();

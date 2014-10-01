@@ -70,9 +70,11 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      *
      * @return An Iterable to two IChemObjects that define the mapping
      */
+    @Override
     public Iterable<IChemObject> relatedChemObjects() {
         return new Iterable<IChemObject>() {
 
+            @Override
             public Iterator<IChemObject> iterator() {
                 return new ChemObjectIterator();
             }
@@ -87,14 +89,17 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
 
         private int pointer = 0;
 
+        @Override
         public boolean hasNext() {
             return pointer < 2;
         }
 
+        @Override
         public IChemObject next() {
             return relation[pointer++];
         }
 
+        @Override
         public void remove() {}
 
     }
@@ -105,6 +110,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      * @param   pos  The position of the IChemObject.
      * @return  The IChemObject to retrieve.
      */
+    @Override
     public IChemObject getChemObject(int pos) {
         return relation[pos];
     }
@@ -114,6 +120,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      *
      * @return  The cloned object
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         Mapping clone = (Mapping) super.clone();
         // clone the related IChemObject's

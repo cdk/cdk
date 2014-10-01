@@ -51,6 +51,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     }
 
     @Test
+    @Override
     public void testToString() {
         IRingSet ringset = (IRingSet) newChemObject();
         String description = ringset.toString();
@@ -61,6 +62,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     }
 
     @Test
+    @Override
     public void testClone() throws CloneNotSupportedException {
         IRingSet ringset = (IRingSet) newChemObject();
         IRing ring = ringset.getBuilder().newInstance(IRing.class);
@@ -383,6 +385,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     }
 
     @Test
+    @Override
     public void testIsEmpty() {
 
         IRingSet ringSet = (IRingSet) newChemObject();

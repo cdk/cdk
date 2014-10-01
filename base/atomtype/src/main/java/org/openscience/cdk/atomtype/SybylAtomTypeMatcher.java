@@ -113,6 +113,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
      * @return               the atom type perceived from the given atom
      */
     @TestMethod("testFindMatchingAtomType_IAtomContainer_IAtom")
+    @Override
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
         if ("Cr".equals(atom.getSymbol())) {

@@ -153,6 +153,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see       #getNaturalAbundance
      */
+    @Override
     public void setNaturalAbundance(Double naturalAbundance) {
         this.naturalAbundance = naturalAbundance;
         notifyChanged();
@@ -165,6 +166,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see       #getExactMass
      */
+    @Override
     public void setExactMass(Double exactMass) {
         this.exactMass = exactMass;
         notifyChanged();
@@ -187,6 +189,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see       #setNaturalAbundance
      */
+    @Override
     public Double getNaturalAbundance() {
         return this.naturalAbundance;
     }
@@ -207,6 +210,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see       #setExactMass
      */
+    @Override
     public Double getExactMass() {
         return this.exactMass;
     }
@@ -228,6 +232,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see    #setMassNumber(Integer)
      */
+    @Override
     public Integer getMassNumber() {
         return this.massNumber;
     }
@@ -239,6 +244,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see    #getMassNumber
      */
+    @Override
     public void setMassNumber(Integer massNumber) {
         this.massNumber = massNumber;
         notifyChanged();
@@ -249,6 +255,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @return    A string representation of this isotope
      */
+    @Override
     public String toString() {
         StringBuffer resultString = new StringBuffer(32);
         resultString.append("Isotope(").append(hashCode());
@@ -274,6 +281,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      * @param  object Object of type AtomType
      * @return        true if the atom types are equal
      */
+    @Override
     public boolean compare(Object object) {
         if (!(object instanceof Isotope)) {
             return false;
@@ -300,6 +308,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
         return true;
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

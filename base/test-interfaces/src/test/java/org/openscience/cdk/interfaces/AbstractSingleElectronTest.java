@@ -32,6 +32,7 @@ import org.junit.Test;
 public abstract class AbstractSingleElectronTest extends AbstractElectronContainerTest {
 
     @Test
+    @Override
     public void testGetElectronCount() {
         ISingleElectron radical = (ISingleElectron) newChemObject();
         Assert.assertEquals(1, radical.getElectronCount().intValue());
@@ -63,6 +64,7 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         ISingleElectron radical = (ISingleElectron) newChemObject();
         Object clone = radical.clone();
@@ -83,6 +85,7 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
 
     /** Test for RFC #9 */
     @Test
+    @Override
     public void testToString() {
         ISingleElectron radical = (ISingleElectron) newChemObject();
         String description = radical.toString();
@@ -96,6 +99,7 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
      * The electron count of a single electron is always exactly 1.
      */
     @Test
+    @Override
     public void testSetElectronCount_Integer() {
         IElectronContainer ec = (IElectronContainer) newChemObject();
         ec.setElectronCount(3);

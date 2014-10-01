@@ -41,6 +41,7 @@ public class MappingTest extends AbstractMappingTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new Mapping(new Atom(), new Atom());
             }

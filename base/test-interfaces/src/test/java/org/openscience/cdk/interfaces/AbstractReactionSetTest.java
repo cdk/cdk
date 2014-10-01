@@ -32,6 +32,7 @@ import org.junit.Test;
 public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IReactionSet reactionSet = (IReactionSet) newChemObject();
         Object clone = reactionSet.clone();
@@ -157,6 +158,7 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
     }
 
     @Test
+    @Override
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IReactionSet chemObject = (IReactionSet) newChemObject();
@@ -199,6 +201,7 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
             changed = false;
         }
 
+        @Override
         public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }

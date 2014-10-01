@@ -39,14 +39,17 @@ abstract public class AbstractCDKAtomTypeTest extends AbstractAtomTypeTest {
                                                                          + ATOMTYPE_LIST,
                                                                          SilentChemObjectBuilder.getInstance());
 
+    @Override
     public String getAtomTypeListName() {
         return ATOMTYPE_LIST;
     };
 
+    @Override
     public AtomTypeFactory getFactory() {
         return factory;
     }
 
+    @Override
     public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
         return CDKAtomTypeMatcher.getInstance(builder);
     }

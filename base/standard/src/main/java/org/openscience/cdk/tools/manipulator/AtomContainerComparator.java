@@ -76,6 +76,7 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
      * argument is less than, equal to, or greater than the second.
      */
     @TestMethod("testCompare_Object_Object")
+    @Override
     public int compare(IAtomContainer o1, IAtomContainer o2) {
         // Check for nulls
         if (o1 == null && o2 == null) return 0;

@@ -44,6 +44,7 @@ public class BooleanResult extends BooleanResultType {
     }
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return Boolean.toString(value);
     }

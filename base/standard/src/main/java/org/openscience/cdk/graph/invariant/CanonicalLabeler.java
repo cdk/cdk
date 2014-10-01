@@ -177,6 +177,7 @@ public class CanonicalLabeler {
     private void sortArrayList(List<InvPair> v) {
         Collections.sort(v, new Comparator<InvPair>() {
 
+            @Override
             public int compare(InvPair o1, InvPair o2) {
                 if (o1.getCurr() > o2.getCurr()) return +1;
                 if (o1.getCurr() < o2.getCurr()) return -1;

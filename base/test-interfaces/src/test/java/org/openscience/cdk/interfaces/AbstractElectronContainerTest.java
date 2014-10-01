@@ -44,6 +44,7 @@ public abstract class AbstractElectronContainerTest extends AbstractChemObjectTe
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IElectronContainer ec = (IElectronContainer) newChemObject();
         ec.setElectronCount(2);

@@ -80,6 +80,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      * @return The name of the Strand object
      * @see #setStrandName
      */
+    @Override
     public String getStrandName() {
         return strandName;
     }
@@ -90,6 +91,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      * @return The type of the Strand object
      * @see #setStrandType
      */
+    @Override
     public String getStrandType() {
         return strandType;
     }
@@ -100,6 +102,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      * @param cStrandName  The new name for this strand
      * @see #getStrandName
      */
+    @Override
     public void setStrandName(String cStrandName) {
         strandName = cStrandName;
     }
@@ -110,6 +113,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      * @param cStrandType  The new type for this strand
      * @see #getStrandType
      */
+    @Override
     public void setStrandType(String cStrandType) {
         strandType = cStrandType;
     }
@@ -122,6 +126,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      * @param oAtom  The atom to add
      *
      */
+    @Override
     public void addAtom(IAtom oAtom) {
         addAtom(oAtom, getMonomer(""));
     }
@@ -134,6 +139,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      * @param oMonomer  The monomer the atom belongs to
      *
      */
+    @Override
     public void addAtom(IAtom oAtom, IMonomer oMonomer) {
 
         int atomCount = super.getAtomCount();
@@ -161,6 +167,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      * @return number of monomers
      *
      */
+    @Override
     public int getMonomerCount() {
         return monomers.size() - 1;
     }
@@ -173,6 +180,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      * @return The Monomer object which was asked for
      *
      */
+    @Override
     public IMonomer getMonomer(String cName) {
         return (Monomer) monomers.get(cName);
     }
@@ -183,6 +191,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
+    @Override
     public Collection<String> getMonomerNames() {
         return monomers.keySet();
     }
@@ -206,6 +215,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      *
      * @param name The name of the monomer to remove
      */
+    @Override
     public void removeMonomer(String name) {
         if (monomers.containsKey(name)) {
             Monomer monomer = (Monomer) monomers.get(name);
@@ -219,10 +229,12 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      *
      * @return hashtable containing the monomers in the strand.
      */
+    @Override
     public Map<String, IMonomer> getMonomers() {
         return monomers;
     }
 
+    @Override
     public String toString() {
         StringBuffer stringContent = new StringBuffer(32);
         stringContent.append("Strand(");
@@ -238,6 +250,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
         return stringContent.toString();
     }
 
+    @Override
     public IStrand clone() throws CloneNotSupportedException {
         Strand clone = (Strand) super.clone();
         clone.monomers.clear();

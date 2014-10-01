@@ -83,6 +83,7 @@ public abstract class AtomContainerPermutor extends Permutor implements Iterator
      * (non-Javadoc)
      * @see java.util.Iterator#next()
      */
+    @Override
     public IAtomContainer next() {
         if (!this.hasNext()) {
             throw new NoSuchElementException();
@@ -91,6 +92,7 @@ public abstract class AtomContainerPermutor extends Permutor implements Iterator
         }
     }
 
+    @Override
     public void remove() {
         // stupid method. not implemented.
     }

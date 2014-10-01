@@ -33,6 +33,7 @@ import org.junit.Test;
 public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 
     @Test
+    @Override
     public void testGetMonomerCount() {
         IBioPolymer oBioPolymer = (IBioPolymer) newChemObject();
         Assert.assertEquals(0, oBioPolymer.getMonomerCount());
@@ -62,6 +63,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
     }
 
     @Test
+    @Override
     public void testGetMonomerNames() {
         IBioPolymer oBioPolymer = (IBioPolymer) newChemObject();
         Assert.assertEquals(0, oBioPolymer.getMonomerNames().size());
@@ -116,6 +118,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
     }
 
     @Test
+    @Override
     public void testAddAtom_IAtom() {
         IBioPolymer oBioPolymer = (IBioPolymer) newChemObject();
 
@@ -254,6 +257,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         IBioPolymer bp = (IBioPolymer) newChemObject();
         String description = bp.toString();
@@ -267,6 +271,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
      * Method to test the clone() method
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IBioPolymer polymer = (IBioPolymer) newChemObject();
         Object clone = polymer.clone();

@@ -50,6 +50,7 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     @TestMethod("testFindMatchingAtomType_IAtomContainer")
+    @Override
     public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
         int typeCounter = 0;
@@ -61,6 +62,7 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     @TestMethod("testSP3Atoms,testNaCl,testNaphthalene,testSP2Atoms,testSPAtoms,testBenzeneFromSmiles")
+    @Override
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) {
 
         IAtomType atomType = null;

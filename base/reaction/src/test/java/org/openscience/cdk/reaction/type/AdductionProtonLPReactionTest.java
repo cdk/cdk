@@ -88,6 +88,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
      * @return    The test suite
      */
     @Test
+    @Override
     public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
 
         IReactionProcess type = new AdductionProtonLPReaction();

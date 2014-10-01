@@ -62,6 +62,7 @@ public abstract class AbstractElementTest extends AbstractChemObjectTest {
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IElement elem = (IElement) newChemObject();
         Object clone = elem.clone();

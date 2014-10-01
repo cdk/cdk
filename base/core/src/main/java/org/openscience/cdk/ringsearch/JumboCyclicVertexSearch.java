@@ -149,6 +149,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
      * @return vertex colors
      */
     @TestMethod("vertexColor")
+    @Override
     public int[] vertexColor() {
         int[] result = colors;
         if (result == null) {

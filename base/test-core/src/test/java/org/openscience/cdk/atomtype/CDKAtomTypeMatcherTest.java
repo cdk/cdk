@@ -4863,6 +4863,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     }
 
     @Test
+    @Override
     public void testForDuplicateDefinitions() {
         super.testForDuplicateDefinitions();
     }

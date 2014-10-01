@@ -143,6 +143,7 @@ public interface IAtom extends IAtomType {
     /**
      * @inheritDoc
      */
+    @Override
     public IAtom clone() throws CloneNotSupportedException;
 
 }

@@ -91,6 +91,7 @@ public class RearrangementCationReaction extends ReactionEngine implements IReac
      *@return    The specification value
      */
     @TestMethod("testGetSpecification")
+    @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
                 "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RearrangementCation", this
@@ -109,6 +110,7 @@ public class RearrangementCationReaction extends ReactionEngine implements IReac
     * @param  agents            agents of the reaction (Must be in this case null).
      */
     @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
+    @Override
     public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
 
         logger.debug("initiate reaction: RearrangementCationReaction");

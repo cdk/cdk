@@ -93,6 +93,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
      *@return    The specification value
      */
     @TestMethod("testGetSpecification")
+    @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
                 "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RearrangementRadical", this
@@ -111,6 +112,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
     * @param  agents            agents of the reaction (Must be in this case null).
      */
     @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
+    @Override
     public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
 
         logger.debug("initiate reaction: RearrangementRadicalReaction");

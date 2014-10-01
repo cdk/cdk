@@ -80,6 +80,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      *
      * @return The number of electrons in this SingleElectron.
      */
+    @Override
     public Integer getElectronCount() {
         return this.electronCount;
     }
@@ -91,6 +92,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      *
      * @see    #setAtom
      */
+    @Override
     public IAtom getAtom() {
         return (Atom) this.atom;
     }
@@ -102,6 +104,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      *
      * @see    #getAtom
      */
+    @Override
     public void setAtom(IAtom atom) {
         this.atom = atom;
     }
@@ -112,6 +115,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this SingleElectron is associated with the atom
      */
+    @Override
     public boolean contains(IAtom atom) {
         return (this.atom == atom) ? true : false;
     }
@@ -122,6 +126,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      *
      * @return    The string representation of this SingleElectron
      */
+    @Override
     public String toString() {
         StringBuffer stringContent = new StringBuffer();
         stringContent.append("SingleElectron(");
@@ -140,6 +145,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      *
      * @return    The cloned object
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         SingleElectron clone = (SingleElectron) super.clone();
         // clone the Atom

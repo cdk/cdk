@@ -193,11 +193,13 @@ public class Fingerprinter implements IFingerprinter {
      *@param container The AtomContainer for which a Fingerprint is generated
      */
     @TestMethod("testgetBitFingerprint_IAtomContainer")
+    @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
         return getBitFingerprint(container, null);
     }
 
     /** {@inheritDoc} */
+    @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
@@ -318,6 +320,7 @@ public class Fingerprinter implements IFingerprinter {
     }
 
     @TestMethod("testGetSize")
+    @Override
     public int getSize() {
         return size;
     }

@@ -93,6 +93,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      *
      * @see    #getA
      */
+    @Override
     public void setA(Vector3d newAxis) {
         aAxis = newAxis;
     }
@@ -105,6 +106,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      *
      * @see       #setA
      */
+    @Override
     public Vector3d getA() {
         return aAxis;
     }
@@ -116,6 +118,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      *
      * @see    #getB
      */
+    @Override
     public void setB(Vector3d newAxis) {
         bAxis = newAxis;
     }
@@ -128,6 +131,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      *
      * @see       #setB
      */
+    @Override
     public Vector3d getB() {
         return bAxis;
     }
@@ -139,6 +143,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      *
      * @see       #getC
      */
+    @Override
     public void setC(Vector3d newAxis) {
         cAxis = newAxis;
     }
@@ -151,6 +156,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      *
      * @see       #setC
      */
+    @Override
     public Vector3d getC() {
         return cAxis;
     }
@@ -162,6 +168,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      *
      * @see       #setSpaceGroup
      */
+    @Override
     public String getSpaceGroup() {
         return spaceGroup;
     }
@@ -173,6 +180,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      *
      * @see       #getSpaceGroup
      */
+    @Override
     public void setSpaceGroup(String group) {
         spaceGroup = group;
     }
@@ -183,6 +191,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      * @return the number of asymmetric parts in the unit cell
      * @see    #setZ
      */
+    @Override
     public Integer getZ() {
         return zValue;
     }
@@ -193,6 +202,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      * @param   value the number of asymmetric parts in the unit cell
      * @see           #getZ
      */
+    @Override
     public void setZ(Integer value) {
         this.zValue = value;
     }
@@ -202,6 +212,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      *
      * @return The cloned crystal.
      */
+    @Override
     public ICrystal clone() throws CloneNotSupportedException {
         Crystal clone = (Crystal) super.clone();
         // clone the axes
@@ -214,6 +225,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     /**
      * Returns a String representation of this crystal.
      */
+    @Override
     public String toString() {
         StringBuffer resultString = new StringBuffer(64);
         resultString.append("Crystal(").append(hashCode());

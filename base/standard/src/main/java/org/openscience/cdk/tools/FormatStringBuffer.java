@@ -499,6 +499,7 @@ public class FormatStringBuffer {
      * called from this method.
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
 
         if (index < format.length()) buffer.append(format.substring(index));

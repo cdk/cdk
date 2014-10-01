@@ -84,5 +84,6 @@ public interface IRingSet extends IAtomContainerSet {
      *
      * @return a boolean indicating if this ring set no atoms
      */
+    @Override
     public boolean isEmpty();
 }

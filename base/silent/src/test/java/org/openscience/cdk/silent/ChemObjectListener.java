@@ -37,6 +37,7 @@ public class ChemObjectListener implements IChemObjectListener {
         event = null;
     }
 
+    @Override
     public void stateChanged(IChemObjectChangeEvent e) {
         changed = true;
         event = e;

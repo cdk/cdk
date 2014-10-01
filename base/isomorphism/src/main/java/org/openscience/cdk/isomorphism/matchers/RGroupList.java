@@ -298,6 +298,7 @@ public class RGroupList {
         return validValues;
     }
 
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof RGroupList && this.rGroupNumber == ((RGroupList) obj).rGroupNumber)
             return true;
@@ -305,6 +306,7 @@ public class RGroupList {
             return false;
     }
 
+    @Override
     public int hashCode() {
         return this.rGroupNumber;
     }

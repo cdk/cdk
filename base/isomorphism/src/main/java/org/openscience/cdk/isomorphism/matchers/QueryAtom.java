@@ -147,6 +147,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #getCharge
      */
+    @Override
     public void setCharge(Double charge) {
         this.charge = charge;
         notifyChanged();
@@ -161,6 +162,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #setCharge
      */
+    @Override
     public Double getCharge() {
         return this.charge;
     }
@@ -172,6 +174,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #getImplicitHydrogenCount
      */
+    @Override
     public void setImplicitHydrogenCount(Integer hydrogenCount) {
         this.hydrogenCount = hydrogenCount;
         notifyChanged();
@@ -184,6 +187,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #setImplicitHydrogenCount
      */
+    @Override
     public Integer getImplicitHydrogenCount() {
         return this.hydrogenCount;
     }
@@ -197,6 +201,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     *
     * @see    #getPoint2d
     */
+    @Override
     public void setPoint2d(Point2d point2d) {
         this.point2d = point2d;
         notifyChanged();
@@ -211,6 +216,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #getPoint3d
      */
+    @Override
     public void setPoint3d(Point3d point3d) {
         this.point3d = point3d;
         notifyChanged();
@@ -225,6 +231,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * @see    #getFractionalPoint3d
      * @see    org.openscience.cdk.Crystal
      */
+    @Override
     public void setFractionalPoint3d(Point3d point3d) {
         this.fractionalPoint3d = point3d;
         notifyChanged();
@@ -238,6 +245,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * @see    org.openscience.cdk.CDKConstants for predefined values.
      * @see    #getStereoParity
      */
+    @Override
     public void setStereoParity(Integer stereoParity) {
         this.stereoParity = stereoParity;
         notifyChanged();
@@ -251,6 +259,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #setPoint2d
      */
+    @Override
     public Point2d getPoint2d() {
         return this.point2d;
     }
@@ -263,6 +272,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #setPoint3d
      */
+    @Override
     public Point3d getPoint3d() {
         return this.point3d;
     }
@@ -276,6 +286,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * @see       #setFractionalPoint3d
      * @see       org.openscience.cdk.CDKConstants for predefined values.
      */
+    @Override
     public Point3d getFractionalPoint3d() {
         return this.fractionalPoint3d;
     }
@@ -289,6 +300,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * @see       org.openscience.cdk.CDKConstants
      * @see       #setStereoParity
      */
+    @Override
     public Integer getStereoParity() {
         return this.stereoParity;
     }
@@ -300,6 +312,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #getAtomTypeName
      */
+    @Override
     public void setAtomTypeName(String identifier) {
         this.identifier = identifier;
         notifyChanged();
@@ -312,6 +325,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #getMaxBondOrder
      */
+    @Override
     public void setMaxBondOrder(IBond.Order maxBondOrder) {
         this.maxBondOrder = maxBondOrder;
         notifyChanged();
@@ -324,6 +338,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #getBondOrderSum
      */
+    @Override
     public void setBondOrderSum(Double bondOrderSum) {
         this.bondOrderSum = bondOrderSum;
         notifyChanged();
@@ -336,6 +351,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #setAtomTypeName
      */
+    @Override
     public String getAtomTypeName() {
         return this.identifier;
     }
@@ -347,6 +363,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #setMaxBondOrder
      */
+    @Override
     public IBond.Order getMaxBondOrder() {
         return maxBondOrder;
     }
@@ -358,6 +375,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #setBondOrderSum
      */
+    @Override
     public Double getBondOrderSum() {
         return bondOrderSum;
     }
@@ -369,6 +387,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #getFormalCharge
      */
+    @Override
     public void setFormalCharge(Integer charge) {
         this.formalCharge = charge;
         notifyChanged();
@@ -381,6 +400,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #setFormalCharge
      */
+    @Override
     public Integer getFormalCharge() {
         return this.formalCharge;
     }
@@ -392,6 +412,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #getFormalNeighbourCount
      */
+    @Override
     public void setFormalNeighbourCount(Integer count) {
         this.formalNeighbourCount = count;
         notifyChanged();
@@ -404,6 +425,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #setFormalNeighbourCount
      */
+    @Override
     public Integer getFormalNeighbourCount() {
         return this.formalNeighbourCount;
     }
@@ -415,6 +437,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #getHybridization
      */
+    @Override
     public void setHybridization(IAtomType.Hybridization hybridization) {
         this.hybridization = hybridization;
         notifyChanged();
@@ -427,6 +450,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #setHybridization
      */
+    @Override
     public IAtomType.Hybridization getHybridization() {
         return this.hybridization;
     }
@@ -438,6 +462,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #getNaturalAbundance
      */
+    @Override
     public void setNaturalAbundance(Double naturalAbundance) {
         this.naturalAbundance = naturalAbundance;
         notifyChanged();
@@ -450,6 +475,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #getExactMass
      */
+    @Override
     public void setExactMass(Double exactMass) {
         this.exactMass = exactMass;
         notifyChanged();
@@ -472,6 +498,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #setNaturalAbundance
      */
+    @Override
     public Double getNaturalAbundance() {
         return this.naturalAbundance;
     }
@@ -492,6 +519,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see       #setExactMass
      */
+    @Override
     public Double getExactMass() {
         return this.exactMass;
     }
@@ -513,6 +541,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #setMassNumber(Integer)
      */
+    @Override
     public Integer getMassNumber() {
         return this.massNumber;
     }
@@ -524,6 +553,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #getMassNumber
      */
+    @Override
     public void setMassNumber(Integer massNumber) {
         this.massNumber = massNumber;
         notifyChanged();
@@ -546,6 +576,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #setAtomicNumber
      */
+    @Override
     public Integer getAtomicNumber() {
         return this.atomicNumber;
     }
@@ -557,6 +588,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #getAtomicNumber
      */
+    @Override
     public void setAtomicNumber(Integer atomicNumber) {
         this.atomicNumber = atomicNumber;
         notifyChanged();
@@ -569,6 +601,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #setSymbol
      */
+    @Override
     public String getSymbol() {
         return this.symbol;
     }
@@ -580,6 +613,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @see    #getSymbol
      */
+    @Override
     public void setSymbol(String symbol) {
         this.symbol = symbol;
         notifyChanged();
@@ -591,6 +625,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * @param radius The covalent radius for this AtomType
      * @see    #getCovalentRadius
      */
+    @Override
     public void setCovalentRadius(Double radius) {
         this.covalentRadius = radius;
         notifyChanged();
@@ -602,6 +637,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * @return The covalent radius for this AtomType
      * @see    #setCovalentRadius
      */
+    @Override
     public Double getCovalentRadius() {
         return this.covalentRadius;
     }
@@ -613,6 +649,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * @see #getValency
      *
      */
+    @Override
     public void setValency(Integer valency) {
         this.electronValency = valency;
         notifyChanged();
@@ -625,6 +662,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * @see #setValency
      *
      */
+    @Override
     public Integer getValency() {
         return this.electronValency;
     }

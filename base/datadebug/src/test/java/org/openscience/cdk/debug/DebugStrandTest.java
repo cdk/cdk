@@ -40,6 +40,7 @@ public class DebugStrandTest extends AbstractStrandTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new DebugStrand();
             }

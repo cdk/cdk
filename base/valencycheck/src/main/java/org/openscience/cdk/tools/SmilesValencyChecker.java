@@ -67,6 +67,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
      *
      * @cdk.created 2003-10-03
      */
+    @Override
     public void saturate(IAtomContainer atomContainer) throws CDKException {
         logger.info("Saturating atomContainer by adjusting bond orders...");
         boolean allSaturated = allSaturated(atomContainer);
@@ -209,6 +210,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
     /**
      * Determines of all atoms on the AtomContainer are saturated.
      */
+    @Override
     public boolean isSaturated(IAtomContainer container) throws CDKException {
         return allSaturated(container);
     }
@@ -304,6 +306,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
      * Checks whether an Atom is saturated by comparing it with known AtomTypes.
      * It returns true if the atom is an PseudoAtom and when the element is not in the list.
      */
+    @Override
     public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException {
         if (atom instanceof IPseudoAtom) {
             logger.debug("don't figure it out... it simply does not lack H's");

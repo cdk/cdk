@@ -35,6 +35,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
      * Method to test the setFractional3D() methods.
      */
     @Test
+    @Override
     public void testSetFractionalPoint3d_Point3d() {
         IPDBAtom a = (IPDBAtom) newChemObject();
         a.setSymbol("C");
@@ -47,11 +48,13 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
     }
 
     @Test
+    @Override
     public void testGetFractionalPoint3d() {
         testSetFractionalPoint3d_Point3d();
     }
 
     @Test
+    @Override
     public void testGetPoint3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
@@ -62,6 +65,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
     }
 
     @Test
+    @Override
     public void testSetPoint3d_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
@@ -75,6 +79,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
      * Method to test the clone() method
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
@@ -86,6 +91,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
      * Method to test the clone() method
      */
     @Test
+    @Override
     public void testClone_Point3d() throws Exception {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
@@ -98,6 +104,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
      * Method to test the clone() method
      */
     @Test
+    @Override
     public void testClone_FractionalPoint3d() throws Exception {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
@@ -110,6 +117,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
@@ -124,6 +132,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
      * Checks that the default charge is set to NaN
      */
     @Test
+    @Override
     public void testDefaultChargeValue() {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");

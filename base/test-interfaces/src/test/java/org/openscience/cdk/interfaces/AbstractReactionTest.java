@@ -305,6 +305,7 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IReaction reaction = (IReaction) newChemObject();
         Object clone = reaction.clone();
