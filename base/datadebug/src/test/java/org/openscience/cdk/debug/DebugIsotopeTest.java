@@ -39,6 +39,7 @@ public class DebugIsotopeTest extends AbstractIsotopeTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new DebugIsotope("C");
             }

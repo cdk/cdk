@@ -69,6 +69,7 @@ public class GraphOnlyFingerprinter extends Fingerprinter {
      * @param  bond  Description of the Parameter
      * @return       The bondSymbol value
      */
+    @Override
     protected String getBondSymbol(IBond bond) {
         return "";
     }

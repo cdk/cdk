@@ -63,6 +63,7 @@ public class AdductionPBMechanism implements IReactionMechanism {
      *
      */
     @TestMethod(value = "testInitiate_IAtomContainerSet_ArrayList_ArrayList")
+    @Override
     public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
             throws CDKException {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());

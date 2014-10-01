@@ -86,6 +86,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @return          The IMolecularFormula
      */
     @TestMethod("testAdd_IMolecularFormula")
+    @Override
     public IMolecularFormula add(IMolecularFormula formula) {
         for (IIsotope newIsotope : formula.isotopes()) {
             addIsotope(newIsotope, formula.getIsotopeCount(newIsotope));
@@ -101,6 +102,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @see             #addIsotope(IIsotope, int)
      */
     @TestMethod("addIsotope_IIsotope")
+    @Override
     public IMolecularFormula addIsotope(IIsotope isotope) {
         return this.addIsotope(isotope, 1);
     }
@@ -113,6 +115,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @see             #addIsotope(IIsotope)
      */
     @TestMethod("testAddIsotope_IIsotope_int")
+    @Override
     public IMolecularFormula addIsotope(IIsotope isotope, int count) {
         boolean flag = false;
         for (IIsotope thisIsotope : isotopes()) {
@@ -138,6 +141,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @return          True, if the MolecularFormula contains the given isotope object
      */
     @TestMethod("testContains_IIsotope")
+    @Override
     public boolean contains(IIsotope isotope) {
         for (IIsotope thisIsotope : isotopes()) {
             if (isTheSame(thisIsotope, isotope)) {
@@ -156,6 +160,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @see    #setCharge
      */
     @TestMethod("testGetCharge")
+    @Override
     public Integer getCharge() {
         return charge;
     }
@@ -169,6 +174,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @see                      #getIsotopeCount()
      */
     @TestMethod("testGetIsotopeCount_IIsotope")
+    @Override
     public int getIsotopeCount(IIsotope isotope) {
         return !contains(isotope) ? 0 : isotopes.get(getIsotope(isotope));
     }
@@ -181,6 +187,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @see           #getIsotopeCount(IIsotope)
      */
     @TestMethod("testGetIsotopeCount")
+    @Override
     public int getIsotopeCount() {
         return isotopes.size();
     }
@@ -207,6 +214,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @return    An Iterator with the isotopes in this IMolecularFormula
      */
     @TestMethod("testIsotopes")
+    @Override
     public Iterable<IIsotope> isotopes() {
         return isotopes.keySet();
     }
@@ -219,6 +227,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @see    #getCharge
      */
     @TestMethod("testSetCharge_Integer")
+    @Override
     public void setCharge(Integer charge) {
         this.charge = charge;
     }
@@ -227,6 +236,7 @@ public class MolecularFormula implements IMolecularFormula {
      * Removes all isotopes of this molecular formula.
      */
     @TestMethod("testRemoveAllIsotopes")
+    @Override
     public void removeAllIsotopes() {
         isotopes.clear();
     }
@@ -237,6 +247,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @param isotope  The IIsotope to be removed
      */
     @TestMethod("testRemoveIsotope_IIsotope")
+    @Override
     public void removeIsotope(IIsotope isotope) {
         isotopes.remove(getIsotope(isotope));
     }
@@ -248,6 +259,7 @@ public class MolecularFormula implements IMolecularFormula {
      * @return    The cloned object
      */
     @TestMethod("testClone")
+    @Override
     public Object clone() throws CloneNotSupportedException {
 
         //		/* it is not a super class of chemObject */
@@ -293,6 +305,7 @@ public class MolecularFormula implements IMolecularFormula {
      *@see                 #removeProperty
      */
     @TestMethod("testSetProperty_Object_Object")
+    @Override
     public void setProperty(Object description, Object property) {
         lazyProperties().put(description, property);
     }
@@ -307,6 +320,7 @@ public class MolecularFormula implements IMolecularFormula {
      *@see                 #getProperty
      */
     @TestMethod("testRemoveProperty_Object")
+    @Override
     public void removeProperty(Object description) {
         if (properties == null) {
             return;
@@ -356,6 +370,7 @@ public class MolecularFormula implements IMolecularFormula {
      *@see       #setProperties
      */
     @TestMethod("testGetProperties")
+    @Override
     public Map<Object, Object> getProperties() {
         return lazyProperties();
     }
@@ -367,6 +382,7 @@ public class MolecularFormula implements IMolecularFormula {
      *@see                #getProperties
      */
     @TestMethod("testSetProperties_Hashtable")
+    @Override
     public void setProperties(Map<Object, Object> properties) {
 
         Iterator<Object> keys = properties.keySet().iterator();
@@ -403,6 +419,7 @@ public class MolecularFormula implements IMolecularFormula {
         return exactMass1.doubleValue() == exactMass2;
     }
 
+    @Override
     public IChemObjectBuilder getBuilder() {
         return DefaultChemObjectBuilder.getInstance();
     }

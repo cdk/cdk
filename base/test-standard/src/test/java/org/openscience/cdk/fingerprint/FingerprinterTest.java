@@ -55,6 +55,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
     boolean                     standAlone = false;
     private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new Fingerprinter();
     }

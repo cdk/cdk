@@ -37,6 +37,7 @@ public class DebugChemObjectTest extends AbstractChemObjectTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new DebugChemObject();
             }

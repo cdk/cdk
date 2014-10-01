@@ -78,6 +78,7 @@ public abstract class AbstractRingTest extends AbstractAtomContainerTest {
     }
 
     @Test
+    @Override
     public void testToString() {
         IChemObject object = newChemObject();
         IRing r = object.getBuilder().newInstance(IRing.class, 5, "C");

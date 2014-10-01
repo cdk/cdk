@@ -107,6 +107,7 @@ public final class Bspt {
     }
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return eleRoot.toString();
     }
@@ -140,10 +141,12 @@ public final class Bspt {
             i = 0;
         }
 
+        @Override
         public boolean hasMoreElements() {
             return (i < leaf.count) || (sp > 0);
         }
 
+        @Override
         public Object nextElement() {
             if (i == leaf.count) {
                 //        logger.debug("-->" + stack[sp-1].splitValue);
@@ -194,6 +197,7 @@ public final class Bspt {
             i = 0;
         }
 
+        @Override
         public boolean hasMoreElements() {
             if (i < leaf.count) return true;
             if (sp == 0) return false;
@@ -217,6 +221,7 @@ public final class Bspt {
             return true;
         }
 
+        @Override
         public Object nextElement() {
             return leaf.tuples[i++];
         }
@@ -293,6 +298,7 @@ public final class Bspt {
             return true;
         }
 
+        @Override
         public boolean hasMoreElements() {
             while (true) {
                 for (; i < leaf.count; ++i)
@@ -318,6 +324,7 @@ public final class Bspt {
             }
         }
 
+        @Override
         public Object nextElement() {
             return leaf.tuples[i++];
         }
@@ -357,6 +364,7 @@ public final class Bspt {
             this.eleGE = new Leaf(leafLE, dim, splitValue);
         }
 
+        @Override
         public boolean addTuple(Tuple tuple) {
             if (tuple.getDimValue(dim) < splitValue) {
                 if (eleLE.addTuple(tuple)) return true;
@@ -383,10 +391,12 @@ public final class Bspt {
             return true;
         }
 
+        @Override
         public String toString() {
             return eleLE.toString() + dim + ":" + splitValue + "\n" + eleGE.toString();
         }
 
+        @Override
         public void dump(int level) {
             System.out.println("");
             eleLE.dump(level + 1);
@@ -396,6 +406,7 @@ public final class Bspt {
             eleGE.dump(level + 1);
         }
 
+        @Override
         public boolean isLeafWithSpace() {
             return false;
         }
@@ -433,16 +444,19 @@ public final class Bspt {
             return (tuples[0].getDimValue(dim) + tuples[leafCount - 1].getDimValue(dim)) / 2;
         }
 
+        @Override
         public String toString() {
             return "leaf:" + count + "\n";
         }
 
+        @Override
         public boolean addTuple(Tuple tuple) {
             if (count == leafCount) return false;
             tuples[count++] = tuple;
             return true;
         }
 
+        @Override
         public void dump(int level) {
             for (int i = 0; i < count; ++i) {
                 Tuple t = tuples[i];
@@ -454,6 +468,7 @@ public final class Bspt {
             }
         }
 
+        @Override
         public boolean isLeafWithSpace() {
             return count < leafCount;
         }

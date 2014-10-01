@@ -114,6 +114,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     /**
      * Determines of all atoms on the AtomContainer are saturated.
      */
+    @Override
     public boolean isSaturated(IAtomContainer container) throws CDKException {
         return allSaturated(container);
     }
@@ -158,6 +159,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     /**
      * Checks whether an Atom is saturated by comparing it with known AtomTypes.
      */
+    @Override
     public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
         IAtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
         if (atomTypes.length == 0) return true;
@@ -427,6 +429,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
      * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
      *
      */
+    @Override
     public void saturate(IAtomContainer atomContainer) throws CDKException {
         /*
          * newSaturate(atomContainer); } public void oldSaturate(AtomContainer

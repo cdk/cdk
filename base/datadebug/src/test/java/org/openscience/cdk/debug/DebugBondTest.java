@@ -39,6 +39,7 @@ public class DebugBondTest extends AbstractBondTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new DebugBond();
             }

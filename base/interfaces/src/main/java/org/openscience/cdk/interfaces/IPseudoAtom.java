@@ -55,6 +55,7 @@ public interface IPseudoAtom extends IAtom {
     /**
      * @inheritDoc
      */
+    @Override
     public IPseudoAtom clone() throws CloneNotSupportedException;
 
 }

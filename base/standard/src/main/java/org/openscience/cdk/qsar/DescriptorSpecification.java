@@ -87,21 +87,25 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
     }
 
     @TestMethod("testGetSpecificationReference")
+    @Override
     public String getSpecificationReference() {
         return this.specificationReference;
     }
 
     @TestMethod("testGetImplementationTitle")
+    @Override
     public String getImplementationTitle() {
         return this.implementationTitle;
     }
 
     @TestMethod("testGetImplementationIdentifier")
+    @Override
     public String getImplementationIdentifier() {
         return this.implementationIdentifier;
     }
 
     @TestMethod("testGetImplementationVendor")
+    @Override
     public String getImplementationVendor() {
         return this.implementationVendor;
     }

@@ -224,6 +224,7 @@ final class BODRIsotope implements IIsotope {
     }
 
     @TestMethod("testNonclonable")
+    @Override
     public Object clone() {
         return this;
     }

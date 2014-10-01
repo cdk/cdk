@@ -40,6 +40,7 @@ public class AtomTypeTest extends AbstractAtomTypeTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new AtomType("C");
             }
@@ -78,6 +79,7 @@ public class AtomTypeTest extends AbstractAtomTypeTest {
     }
 
     @Test
+    @Override
     public void testCompare_Object() {
         IAtomType someAt = new AtomType("C");
         if (someAt instanceof org.openscience.cdk.AtomType) {

@@ -160,6 +160,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #getAtomTypeName
      */
+    @Override
     public void setAtomTypeName(String identifier) {
         this.identifier = identifier;
         notifyChanged();
@@ -172,6 +173,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #getMaxBondOrder
      */
+    @Override
     public void setMaxBondOrder(IBond.Order maxBondOrder) {
         this.maxBondOrder = maxBondOrder;
         notifyChanged();
@@ -184,6 +186,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #getBondOrderSum
      */
+    @Override
     public void setBondOrderSum(Double bondOrderSum) {
         this.bondOrderSum = bondOrderSum;
         notifyChanged();
@@ -196,6 +199,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #setAtomTypeName
      */
+    @Override
     public String getAtomTypeName() {
         return this.identifier;
     }
@@ -207,6 +211,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #setMaxBondOrder
      */
+    @Override
     public IBond.Order getMaxBondOrder() {
         return maxBondOrder;
     }
@@ -218,6 +223,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #setBondOrderSum
      */
+    @Override
     public Double getBondOrderSum() {
         return bondOrderSum;
     }
@@ -229,6 +235,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #getFormalCharge
      */
+    @Override
     public void setFormalCharge(Integer charge) {
         this.formalCharge = charge;
         notifyChanged();
@@ -241,6 +248,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #setFormalCharge
      */
+    @Override
     public Integer getFormalCharge() {
         return this.formalCharge;
     }
@@ -252,6 +260,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #getFormalNeighbourCount
      */
+    @Override
     public void setFormalNeighbourCount(Integer count) {
         this.formalNeighbourCount = count;
         notifyChanged();
@@ -264,6 +273,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #setFormalNeighbourCount
      */
+    @Override
     public Integer getFormalNeighbourCount() {
         return this.formalNeighbourCount;
     }
@@ -275,6 +285,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #getHybridization
      */
+    @Override
     public void setHybridization(IAtomType.Hybridization hybridization) {
         this.hybridization = hybridization;
         notifyChanged();
@@ -287,6 +298,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #setHybridization
      */
+    @Override
     public IAtomType.Hybridization getHybridization() {
         return this.hybridization;
     }
@@ -297,6 +309,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * @param  object Object of type AtomType
      * @return        true if the atom types are equal
      */
+    @Override
     public boolean compare(Object object) {
         if (!(object instanceof IAtomType)) {
             return false;
@@ -315,6 +328,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * @param radius The covalent radius for this AtomType
      * @see    #getCovalentRadius
      */
+    @Override
     public void setCovalentRadius(Double radius) {
         this.covalentRadius = radius;
         notifyChanged();
@@ -326,6 +340,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * @return The covalent radius for this AtomType
      * @see    #setCovalentRadius
      */
+    @Override
     public Double getCovalentRadius() {
         return this.covalentRadius;
     }
@@ -337,6 +352,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * @see #getValency
      *
      */
+    @Override
     public void setValency(Integer valency) {
         this.electronValency = valency;
         notifyChanged();
@@ -349,14 +365,17 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * @see #setValency
      *
      */
+    @Override
     public Integer getValency() {
         return this.electronValency;
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
+    @Override
     public String toString() {
         StringBuffer resultString = new StringBuffer(64);
         resultString.append("AtomType(").append(hashCode());

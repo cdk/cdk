@@ -153,6 +153,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         return false;
     }
 
+    @Override
     public boolean areSubstituentsDefined() {
         List<IAtom> allRgroupAtoms = getAllRgroupQueryAtoms();
         if (allRgroupAtoms == null) return false;
@@ -170,6 +171,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         return true;
     }
 
+    @Override
     public boolean areRootAtomsDefined() {
         for (Integer rgpNum : rGroupDefinitions.keySet()) {
             boolean represented = false;
@@ -192,6 +194,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         return true;
     }
 
+    @Override
     public List<IAtomContainer> getAllConfigurations() throws CDKException {
 
         if (!areSubstituentsDefined()) {
@@ -557,6 +560,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         return true;
     }
 
+    @Override
     public int getAtomContainerCount() {
         int retVal = 0;
         if (this.rootStructure != null) retVal++;
@@ -570,6 +574,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         return retVal;
     }
 
+    @Override
     public List<IAtomContainer> getSubstituents() {
         List<IAtomContainer> substitutes = new ArrayList<IAtomContainer>();
         for (Integer r : rGroupDefinitions.keySet()) {
@@ -581,26 +586,32 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         return substitutes;
     }
 
+    @Override
     public void setRootStructure(IAtomContainer rootStructure) {
         this.rootStructure = rootStructure;
     }
 
+    @Override
     public IAtomContainer getRootStructure() {
         return rootStructure;
     }
 
+    @Override
     public void setRootAttachmentPoints(Map<IAtom, Map<Integer, IBond>> rootAttachmentPoints) {
         this.rootAttachmentPoints = rootAttachmentPoints;
     }
 
+    @Override
     public Map<IAtom, Map<Integer, IBond>> getRootAttachmentPoints() {
         return rootAttachmentPoints;
     }
 
+    @Override
     public void setRGroupDefinitions(Map<Integer, RGroupList> rGroupDefinitions) {
         this.rGroupDefinitions = rGroupDefinitions;
     }
 
+    @Override
     public Map<Integer, RGroupList> getRGroupDefinitions() {
         return rGroupDefinitions;
     }

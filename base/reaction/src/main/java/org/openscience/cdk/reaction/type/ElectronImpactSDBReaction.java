@@ -87,6 +87,7 @@ public class ElectronImpactSDBReaction extends ReactionEngine implements IReacti
      *@return    The specification value
      */
     @TestMethod("testGetSpecification")
+    @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
                 "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#ElectronImpactSDB", this
@@ -105,6 +106,7 @@ public class ElectronImpactSDBReaction extends ReactionEngine implements IReacti
     * @param  agents            agents of the reaction (Must be in this case null).
      */
     @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
+    @Override
     public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
 
         logger.debug("initiate reaction: ElectronImpactSDBReaction");

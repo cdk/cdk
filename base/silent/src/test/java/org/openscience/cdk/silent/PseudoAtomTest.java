@@ -43,6 +43,7 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new PseudoAtom();
             }
@@ -69,6 +70,7 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
     }
 
     @Test
+    @Override
     public void testPseudoAtom_IAtom() {
         IAtom element = newChemObject().getBuilder().newInstance(IAtom.class, "C");
         IPseudoAtom a = new PseudoAtom(element);
@@ -116,61 +118,73 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
     // Overwrite default methods: no notifications are expected!
 
     @Test
+    @Override
     public void testNotifyChanged() {
         ChemObjectTestHelper.testNotifyChanged(newChemObject());
     }
 
     @Test
+    @Override
     public void testNotifyChanged_SetFlag() {
         ChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
     }
 
     @Test
+    @Override
     public void testNotifyChanged_SetFlags() {
         ChemObjectTestHelper.testNotifyChanged_SetFlags(newChemObject());
     }
 
     @Test
+    @Override
     public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
     }
 
     @Test
+    @Override
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
     }
 
     @Test
+    @Override
     public void testClone_ChemObjectListeners() throws Exception {
         ChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
     }
 
     @Test
+    @Override
     public void testAddListener_IChemObjectListener() {
         ChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
 
     @Test
+    @Override
     public void testGetListenerCount() {
         ChemObjectTestHelper.testGetListenerCount(newChemObject());
     }
 
     @Test
+    @Override
     public void testRemoveListener_IChemObjectListener() {
         ChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
     }
 
     @Test
+    @Override
     public void testSetNotification_true() {
         ChemObjectTestHelper.testSetNotification_true(newChemObject());
     }
 
     @Test
+    @Override
     public void testNotifyChanged_SetProperty() {
         ChemObjectTestHelper.testNotifyChanged_SetProperty(newChemObject());
     }
 
     @Test
+    @Override
     public void testNotifyChanged_RemoveProperty() {
         ChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }

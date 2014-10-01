@@ -29,6 +29,7 @@ import org.junit.Test;
 public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IAtomContainer molecule = (IAtomContainer) newChemObject();
         Object clone = molecule.clone();
@@ -38,6 +39,7 @@ public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
 
     /** Test for RFC #9 */
     @Test
+    @Override
     public void testToString() {
         IAtomContainer m = (IAtomContainer) newChemObject();
         String description = m.toString();

@@ -49,6 +49,7 @@ public class ElementComparator implements Comparator<String> {
      * after o2 in the formula.
      */
     @TestMethod("testCompare_Object_Object")
+    @Override
     public int compare(String o1, String o2) {
         if (C_ELEMENT_SYMBOL.equals(o1)) {
             if (C_ELEMENT_SYMBOL.equals(o2)) {

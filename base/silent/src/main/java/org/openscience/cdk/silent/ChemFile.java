@@ -77,6 +77,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      *@param  chemSequence  The chemSequence to be added to this container
      *@see                  #chemSequences
      */
+    @Override
     public void addChemSequence(IChemSequence chemSequence) {
         if (chemSequenceCount + 1 >= chemSequences.length) {
             growChemSequenceArray();
@@ -92,6 +93,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      * @see   #chemSequences
      * @see #addChemSequence(org.openscience.cdk.interfaces.IChemSequence)
      */
+    @Override
     public void removeChemSequence(int pos) {
         for (int i = pos; i < chemSequenceCount - 1; i++) {
             chemSequences[i] = chemSequences[i + 1];
@@ -106,9 +108,11 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      *@return    The Iterable to ChemSequences of this container
      *@see       #addChemSequence
      */
+    @Override
     public Iterable<IChemSequence> chemSequences() {
         return new Iterable<IChemSequence>() {
 
+            @Override
             public Iterator<IChemSequence> iterator() {
                 return new ChemSequenceIterator();
             }
@@ -123,14 +127,17 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
 
         private int pointer = 0;
 
+        @Override
         public boolean hasNext() {
             return pointer < chemSequenceCount;
         }
 
+        @Override
         public IChemSequence next() {
             return chemSequences[pointer++];
         }
 
+        @Override
         public void remove() {
             removeChemSequence(--pointer);
         }
@@ -144,6 +151,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      *@return         The ChemSequence at position <code>number</code>.
      *@see            #addChemSequence
      */
+    @Override
     public IChemSequence getChemSequence(int number) {
         return chemSequences[number];
     }
@@ -165,6 +173,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      *
      *@return    The number of ChemSequences in this Container
      */
+    @Override
     public int getChemSequenceCount() {
         return this.chemSequenceCount;
     }
@@ -175,6 +184,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      *
      *@return    String representation of the Object
      */
+    @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("ChemFile(#S=");
@@ -194,6 +204,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      *
      *@return    a clone of this object
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         ChemFile clone = (ChemFile) super.clone();
         // clone the chemModels
@@ -211,5 +222,6 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      *
      *@param  event  A change event pointing to the source of the change
      */
+    @Override
     public void stateChanged(IChemObjectChangeEvent event) {}
 }

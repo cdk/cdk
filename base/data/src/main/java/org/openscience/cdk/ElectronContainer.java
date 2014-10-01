@@ -63,6 +63,7 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
      *
      * @see     #setElectronCount
      */
+    @Override
     public Integer getElectronCount() {
         return this.electronCount;
     }
@@ -74,15 +75,18 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
      *
      * @see     #getElectronCount
      */
+    @Override
     public void setElectronCount(Integer electronCount) {
         this.electronCount = electronCount;
         notifyChanged();
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
+    @Override
     public String toString() {
         StringBuffer resultString = new StringBuffer(64);
         resultString.append("ElectronContainer(").append(hashCode());

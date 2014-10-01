@@ -67,6 +67,7 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
     }
 
     @Test
+    @Override
     public void testGetExactMass() {
         IFragmentAtom a = (IFragmentAtom) newChemObject();
         Assert.assertNotNull(a);
@@ -82,6 +83,7 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
 
     /** Test for RFC #9 */
     @Test
+    @Override
     public void testToString() {
         IFragmentAtom bond = (IFragmentAtom) newChemObject();
         String description = bond.toString();
@@ -95,12 +97,14 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
      * Overwrites the {@link AbstractPseudoAtomTest} version.
      */
     @Test(expected = IllegalAccessError.class)
+    @Override
     public void testSetExactMass_Double() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         atom.setExactMass(12.001);
     }
 
     @Test
+    @Override
     public void testClone_ExactMass() throws Exception {
         // do not test this, as the exact mass is a implicit
         // property calculated from the fragment

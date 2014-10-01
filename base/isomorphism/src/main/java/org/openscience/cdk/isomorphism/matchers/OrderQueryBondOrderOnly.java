@@ -41,6 +41,7 @@ public class OrderQueryBondOrderOnly extends QueryBond implements IQueryBond {
         super(atom1, atom2, order, builder);
     }
 
+    @Override
     public boolean matches(IBond bond) {
         if (this.getOrder() == bond.getOrder()) {
             // bond orders match
@@ -49,6 +50,7 @@ public class OrderQueryBondOrderOnly extends QueryBond implements IQueryBond {
         return false;
     };
 
+    @Override
     public void setAtoms(IAtom[] atoms) {
         if (atoms.length > 0 && atoms[0] instanceof IQueryAtom) {
             super.setAtoms(atoms);

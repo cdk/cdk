@@ -161,6 +161,7 @@ final class NaturalElement implements IElement {
         return atomicNumber;
     }
 
+    @Override
     public Object clone() {
         return this;
     }

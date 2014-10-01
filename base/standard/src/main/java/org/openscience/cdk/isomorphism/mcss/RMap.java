@@ -92,6 +92,7 @@ public class RMap {
      * @param  o  The object to compare.
      * @return    true=if both ids equal, else false.
      */
+    @Override
     public boolean equals(Object o) {
         if (((RMap) o).id1 == id1 && ((RMap) o).id2 == id2) {
             return (true);

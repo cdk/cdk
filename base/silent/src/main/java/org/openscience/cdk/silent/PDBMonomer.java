@@ -60,18 +60,22 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
         chainID = null;
     }
 
+    @Override
     public void setICode(String newICode) {
         iCode = newICode;
     }
 
+    @Override
     public String getICode() {
         return iCode;
     }
 
+    @Override
     public void setChainID(String newChainID) {
         chainID = newChainID;
     }
 
+    @Override
     public String getChainID() {
         return chainID;
     }
@@ -82,6 +86,7 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
      *
      * @return  The string representation of this Atom
      */
+    @Override
     public String toString() {
         StringBuilder description = new StringBuilder();
         description.append("PDBMonomer(");
@@ -93,6 +98,7 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
         return description.toString();
     }
 
+    @Override
     public String getResSeq() {
         return resSeq;
     }
@@ -105,6 +111,7 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
         return (IPDBMonomer) super.clone();
     }
 
+    @Override
     public void setResSeq(String resSeq) {
         this.resSeq = resSeq;
     }

@@ -42,6 +42,7 @@ public class AtomTest extends AbstractAtomTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new Atom();
             }
@@ -108,6 +109,7 @@ public class AtomTest extends AbstractAtomTest {
      * Method to test the compare() method.
      */
     @Test
+    @Override
     public void testCompare_Object() {
         IAtom someAtom = new Atom("C");
         if (someAtom instanceof org.openscience.cdk.Atom) {

@@ -55,6 +55,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
      * @return   A vector of all rings that this bond is part of
      */
 
+    @Override
     public IRingSet getRings(IBond bond) {
         IRingSet rings = bond.getBuilder().newInstance(IRingSet.class);
         Ring ring;
@@ -74,6 +75,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
      * @return   A vector of all rings that this bond is part of
      */
 
+    @Override
     public IRingSet getRings(IAtom atom) {
         IRingSet rings = new RingSet();
         IRing ring;
@@ -94,6 +96,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
      * @return  All the rings that share one or more atoms with a given ring.
      */
 
+    @Override
     public IRingSet getConnectedRings(IRing ring) {
         IRingSet connectedRings = ring.getBuilder().newInstance(IRingSet.class);
         IRing tempRing;
@@ -117,6 +120,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
      *
      * @param   ringSet  the ring set to be united with this one.
      */
+    @Override
     public void add(IRingSet ringSet) {
         for (int f = 0; f < ringSet.getAtomContainerCount(); f++) {
             if (!contains(ringSet.getAtomContainer(f))) {
@@ -132,6 +136,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
      * @param  atom Atom to check
      * @return      true, if the ringset contains the atom
      */
+    @Override
     public boolean contains(IAtom atom) {
         for (int i = 0; i < getAtomContainerCount(); i++) {
             if (getAtomContainer(i).contains(atom)) {
@@ -148,6 +153,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
      * @return  true if ring is part of RingSet
      *
      */
+    @Override
     public boolean contains(IAtomContainer ring) {
         for (int i = 0; i < getAtomContainerCount(); i++) {
             if (ring == getAtomContainer(i)) {
@@ -162,6 +168,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
      *
      * @return  The cloned object
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
@@ -171,6 +178,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
      *
      * @return The String representation of this RingSet
      */
+    @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer(32);
         buffer.append("RingSet(");

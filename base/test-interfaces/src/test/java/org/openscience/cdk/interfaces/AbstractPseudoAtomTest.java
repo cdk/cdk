@@ -51,12 +51,14 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     }
 
     @Test
+    @Override
     public void testGetFormalCharge() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         Assert.assertEquals(0, atom.getFormalCharge().intValue());
     }
 
     @Test
+    @Override
     public void testSetFormalCharge_Integer() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         atom.setFormalCharge(+5);
@@ -71,6 +73,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     }
 
     @Test
+    @Override
     public void testSetCharge_Double() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         atom.setCharge(0.78);
@@ -78,6 +81,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     }
 
     @Test
+    @Override
     public void testSetExactMass_Double() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         atom.setExactMass(12.001);
@@ -85,6 +89,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     }
 
     @Test
+    @Override
     public void testSetStereoParity_Integer() {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         atom.setStereoParity(-1);
@@ -112,6 +117,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
      * Method to test the clone() method
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IPseudoAtom atom = (IPseudoAtom) newChemObject();
         Object clone = atom.clone();
@@ -122,6 +128,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         IAtom atom = (IPseudoAtom) newChemObject();
         String description = atom.toString();
@@ -151,6 +158,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
      * expect zero hydrogen counts.
      */
     @Test
+    @Override
     public void testClone_HydrogenCount() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         atom.setImplicitHydrogenCount(3);
@@ -181,6 +189,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
      * expect zero stereo parity.
      */
     @Test
+    @Override
     public void testClone_StereoParity() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         atom.setStereoParity(3);

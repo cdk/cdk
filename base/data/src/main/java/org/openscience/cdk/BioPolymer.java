@@ -75,6 +75,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      * @param oAtom   The atom to add
      * @param oStrand The strand the atom belongs to
      */
+    @Override
     public void addAtom(IAtom oAtom, IStrand oStrand) {
 
         int atomCount = super.getAtomCount();
@@ -101,6 +102,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      * @param oMonomer
      * @param oStrand
      */
+    @Override
     public void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand) {
 
         int atomCount = super.getAtomCount();
@@ -134,6 +136,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      *
      * @return number of monomers
      */
+    @Override
     public int getMonomerCount() {
         Iterator<String> keys = strands.keySet().iterator();
         int number = 0;
@@ -157,6 +160,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      * @return The Monomer object which was asked for
      *
      */
+    @Override
     public IMonomer getMonomer(String monName, String strandName) {
         Strand strand = (Strand) strands.get(strandName);
 
@@ -183,6 +187,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
+    @Override
     public Collection<String> getMonomerNames() {
         Iterator<String> keys = strands.keySet().iterator();
         Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
@@ -204,6 +209,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      * @return number of strands
      *
      */
+    @Override
     public int getStrandCount() {
         return strands.size();
     }
@@ -216,6 +222,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      * @return The Monomer object which was asked for
      *
      */
+    @Override
     public IStrand getStrand(String cName) {
         return (Strand) strands.get(cName);
     }
@@ -226,6 +233,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      *
      * @return a <code>Collection</code> of all the strand names.
      */
+    @Override
     public Collection<String> getStrandNames() {
         return strands.keySet();
     }
@@ -235,6 +243,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      *
      * @param name name of the strand to remove
      */
+    @Override
     public void removeStrand(String name) {
         if (strands.containsKey(name)) {
             Strand strand = (Strand) strands.get(name);
@@ -246,10 +255,12 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     /**
      * @return hashtable containing the monomers in the strand.
      */
+    @Override
     public Map<String, IStrand> getStrands() {
         return strands;
     }
 
+    @Override
     public String toString() {
         StringBuffer stringContent = new StringBuffer();
         stringContent.append("BioPolymer(");
@@ -259,6 +270,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
         return stringContent.toString();
     }
 
+    @Override
     public IBioPolymer clone() throws CloneNotSupportedException {
         BioPolymer clone = (BioPolymer) super.clone();
         clone.strands.clear();

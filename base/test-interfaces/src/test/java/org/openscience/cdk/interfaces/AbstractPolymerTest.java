@@ -39,6 +39,7 @@ import org.junit.Test;
 public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
 
     @Test
+    @Override
     public void testAddAtom_IAtom() {
         IPolymer oPolymer = (IPolymer) newChemObject();
 
@@ -163,6 +164,7 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         IPolymer polymer = (IPolymer) newChemObject();
         IMonomer oMono1 = polymer.getBuilder().newInstance(IMonomer.class);
@@ -187,6 +189,7 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
      * Method to test the clone() method
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IPolymer polymer = (IPolymer) newChemObject();
         Object clone = polymer.clone();

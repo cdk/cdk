@@ -93,6 +93,7 @@ public interface IAdductFormula extends IMolecularFormulaSet {
      *
      * @return    The cloned object
      */
+    @Override
     public Object clone() throws CloneNotSupportedException;
 
 }

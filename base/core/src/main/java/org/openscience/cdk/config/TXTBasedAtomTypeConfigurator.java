@@ -68,6 +68,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * @return        A List with read IAtomType's.
      */
     @TestMethod("testReadAtomTypes_IChemObjectBuilder")
+    @Override
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException {
         List<IAtomType> atomTypes = new ArrayList<IAtomType>();
 

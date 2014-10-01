@@ -89,6 +89,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      * @return    The test suite
      */
     @Test
+    @Override
     public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
         //Smiles("CC=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);

@@ -48,6 +48,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @return the ending Chain identifier of this structure
      */
+    @Override
     public Character getEndChainID() {
         return endChainID;
     }
@@ -57,6 +58,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @param endChainID  the ending Chain identifier of this structure
      */
+    @Override
     public void setEndChainID(Character endChainID) {
         this.endChainID = endChainID;
     }
@@ -66,6 +68,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @return the ending Code for insertion of residues of this structure
      */
+    @Override
     public Character getEndInsertionCode() {
         return endInsertionCode;
     }
@@ -75,6 +78,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @param endInsertionCode  the ending Code for insertion of residues of this structure
      */
+    @Override
     public void setEndInsertionCode(Character endInsertionCode) {
         this.endInsertionCode = endInsertionCode;
     }
@@ -84,6 +88,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @return the ending sequence number of this structure
      */
+    @Override
     public Integer getEndSequenceNumber() {
         return endSequenceNumber;
     }
@@ -93,6 +98,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @param endSequenceNumber  the ending sequence number of this structure
      */
+    @Override
     public void setEndSequenceNumber(Integer endSequenceNumber) {
         this.endSequenceNumber = endSequenceNumber;
     }
@@ -102,6 +108,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @return the start Chain identifier of this structure
      */
+    @Override
     public Character getStartChainID() {
         return startChainID;
     }
@@ -111,6 +118,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @param startChainID  the start Chain identifier of this structure
      */
+    @Override
     public void setStartChainID(Character startChainID) {
         this.startChainID = startChainID;
     }
@@ -120,6 +128,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @return the start Code for insertion of residues of this structure
      */
+    @Override
     public Character getStartInsertionCode() {
         return startInsertionCode;
     }
@@ -129,6 +138,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @param startInsertionCode  the start Chain identifier of this structure
      */
+    @Override
     public void setStartInsertionCode(Character startInsertionCode) {
         this.startInsertionCode = startInsertionCode;
     }
@@ -138,6 +148,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @return the start sequence number of this structure
      */
+    @Override
     public Integer getStartSequenceNumber() {
         return startSequenceNumber;
     }
@@ -147,6 +158,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @param startSequenceNumber  the start sequence number of this structure
      */
+    @Override
     public void setStartSequenceNumber(Integer startSequenceNumber) {
         this.startSequenceNumber = startSequenceNumber;
     }
@@ -156,6 +168,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @return the Structure Type of this structure
      */
+    @Override
     public String getStructureType() {
         return structureType;
     }
@@ -165,6 +178,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      *
      * @param structureType  the Structure Type of this structure
      */
+    @Override
     public void setStructureType(String structureType) {
         this.structureType = structureType;
     }

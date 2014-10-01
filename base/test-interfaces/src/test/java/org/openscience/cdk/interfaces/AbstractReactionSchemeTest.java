@@ -49,6 +49,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
      * @return    The test suite
      */
     @Test
+    @Override
     public void testGetReactionCount() {
         IReactionScheme scheme = (IReactionScheme) newChemObject();
         scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
@@ -83,6 +84,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
      * @return    The test suite
      */
     @Test
+    @Override
     public void testReactions() {
         IReactionScheme scheme = (IReactionScheme) newChemObject();
         scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
@@ -141,6 +143,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
      * @return    The test suite
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IReactionScheme scheme = (IReactionScheme) newChemObject();
         Object clone = scheme.clone();

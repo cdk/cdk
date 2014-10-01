@@ -59,6 +59,7 @@ public class DictRef implements java.io.Serializable, Cloneable {
     }
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return "DictRef{T=" + this.type + ", R=" + reference + "}";
     }

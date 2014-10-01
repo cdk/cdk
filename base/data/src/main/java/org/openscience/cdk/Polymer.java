@@ -73,6 +73,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
      * @param oAtom  The atom to add
      * @param oMonomer  The monomer the atom belongs to
      */
+    @Override
     public void addAtom(IAtom oAtom, IMonomer oMonomer) {
 
         if (!contains(oAtom)) {
@@ -95,6 +96,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
      *
      * @return number of monomers
      */
+    @Override
     public int getMonomerCount() {
         return monomers.size();
     }
@@ -105,6 +107,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
      * @param cName  The name of the monomer to look for
      * @return The Monomer object which was asked for
      */
+    @Override
     public IMonomer getMonomer(String cName) {
         return monomers.get(cName);
     }
@@ -115,6 +118,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
+    @Override
     public Collection<String> getMonomerNames() {
         return monomers.keySet();
     }
@@ -124,6 +128,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
      *
      * @param name The name of the monomer to remove
      */
+    @Override
     public void removeMonomer(String name) {
         if (monomers.containsKey(name)) {
             Monomer monomer = (Monomer) monomers.get(name);
@@ -132,6 +137,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
         }
     }
 
+    @Override
     public String toString() {
         StringBuffer stringContent = new StringBuffer();
         stringContent.append("Polymer(");
@@ -145,6 +151,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
      * TODO it's not clear why we need to remove all elements after the clone
      * Looks like we should only clone the monomer related stuff
      */
+    @Override
     public IPolymer clone() throws CloneNotSupportedException {
         Polymer clone = (Polymer) super.clone();
         clone.removeAllElements();

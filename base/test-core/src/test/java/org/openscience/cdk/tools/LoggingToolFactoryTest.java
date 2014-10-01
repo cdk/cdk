@@ -69,32 +69,45 @@ public class LoggingToolFactoryTest {
             return new CustomLogger(sourceClass);
         }
 
+        @Override
         public void debug(Object object) {}
 
+        @Override
         public void debug(Object object, Object... objects) {}
 
+        @Override
         public void dumpClasspath() {}
 
+        @Override
         public void dumpSystemProperties() {}
 
+        @Override
         public void error(Object object) {}
 
+        @Override
         public void error(Object object, Object... objects) {}
 
+        @Override
         public void fatal(Object object) {}
 
+        @Override
         public void info(Object object) {}
 
+        @Override
         public void info(Object object, Object... objects) {}
 
+        @Override
         public boolean isDebugEnabled() {
             return true;
         }
 
+        @Override
         public void setStackLength(int length) {}
 
+        @Override
         public void warn(Object object) {}
 
+        @Override
         public void warn(Object object, Object... objects) {}
     }
 }

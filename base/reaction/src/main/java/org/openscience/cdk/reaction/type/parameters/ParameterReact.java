@@ -42,6 +42,7 @@ public class ParameterReact implements IParameterReact {
      * @param set True, if the parameter needs to take account
      */
     @TestMethod(value = "testSetParameter_boolean")
+    @Override
     public void setParameter(boolean set) {
         IS_SET_PARAMETER = set;
     }
@@ -52,6 +53,7 @@ public class ParameterReact implements IParameterReact {
      * @return True, if the parameter needs to take account
      */
     @TestMethod(value = "testIsSetParameter")
+    @Override
     public boolean isSetParameter() {
         return IS_SET_PARAMETER;
     }
@@ -62,6 +64,7 @@ public class ParameterReact implements IParameterReact {
      * @param value The value of the parameter
      */
     @TestMethod(value = "testSetValue_object")
+    @Override
     public void setValue(Object value) {
         VALUE = value;
     }
@@ -72,6 +75,7 @@ public class ParameterReact implements IParameterReact {
      * @return The value of the parameter
      */
     @TestMethod(value = "testGetValue")
+    @Override
     public Object getValue() {
         return VALUE;
     }

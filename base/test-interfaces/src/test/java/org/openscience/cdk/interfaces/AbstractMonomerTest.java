@@ -63,6 +63,7 @@ public abstract class AbstractMonomerTest extends AbstractAtomContainerTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         IMonomer oMonomer = (IMonomer) newChemObject();
         oMonomer.setMonomerType(new String("TRP"));
@@ -74,6 +75,7 @@ public abstract class AbstractMonomerTest extends AbstractAtomContainerTest {
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IMonomer oMonomer = (IMonomer) newChemObject();
         Object clone = oMonomer.clone();

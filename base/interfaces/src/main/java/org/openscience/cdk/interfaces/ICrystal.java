@@ -41,6 +41,7 @@ public interface ICrystal extends IAtomContainer {
      *
      * @param container The molecule to add
      */
+    @Override
     public void add(IAtomContainer container);
 
     /**
@@ -49,6 +50,7 @@ public interface ICrystal extends IAtomContainer {
      *
      * @param atom the atom to add
      */
+    @Override
     public void addAtom(IAtom atom);
 
     /**

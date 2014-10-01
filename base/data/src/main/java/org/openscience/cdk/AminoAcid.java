@@ -69,6 +69,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
      *
      * @see    #addNTerminus(IAtom)
      */
+    @Override
     public IAtom getNTerminus() {
         return nTerminus;
     }
@@ -80,6 +81,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
      *
      * @see    #getNTerminus
      */
+    @Override
     public void addNTerminus(IAtom atom) {
         super.addAtom(atom);
         nTerminus = atom;
@@ -104,6 +106,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
      *
      * @see    #addCTerminus(IAtom)
      */
+    @Override
     public IAtom getCTerminus() {
         return cTerminus;
     }
@@ -115,6 +118,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
      *
      * @see    #getCTerminus
      */
+    @Override
     public void addCTerminus(IAtom atom) {
         super.addAtom(atom);
         setCTerminus(atom);
@@ -137,6 +141,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
      *
      * @return    The cloned object
      */
+    @Override
     public IAminoAcid clone() throws CloneNotSupportedException {
         AminoAcid clone = (AminoAcid) super.clone();
         // copying the new N-terminus and C-terminus pointers
@@ -145,6 +150,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
         return clone;
     }
 
+    @Override
     public String toString() {
         StringBuffer stringContent = new StringBuffer(32);
         stringContent.append("AminoAcid(");

@@ -81,6 +81,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      *
      * @see            #getChemModel
      */
+    @Override
     public void addChemModel(IChemModel chemModel) {
         if (chemModelCount + 1 >= chemModels.length) {
             growChemModelArray();
@@ -94,6 +95,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      *
      * @param  pos  The position of the ChemModel to be removed.
      */
+    @Override
     public void removeChemModel(int pos) {
         for (int i = pos; i < chemModelCount - 1; i++) {
             chemModels[i] = chemModels[i + 1];
@@ -108,9 +110,11 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      * @return    The Iterable to ChemModels in this container
      * @see       #addChemModel
      */
+    @Override
     public Iterable<IChemModel> chemModels() {
         return new Iterable<IChemModel>() {
 
+            @Override
             public Iterator<IChemModel> iterator() {
                 return new ChemModelIterator();
             }
@@ -125,14 +129,17 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 
         private int pointer = 0;
 
+        @Override
         public boolean hasNext() {
             return pointer < chemModelCount;
         }
 
+        @Override
         public IChemModel next() {
             return chemModels[pointer++];
         }
 
+        @Override
         public void remove() {
             removeChemModel(--pointer);
         }
@@ -149,6 +156,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      *
      * @see            #addChemModel
      */
+    @Override
     public IChemModel getChemModel(int number) {
         return chemModels[number];
     }
@@ -169,10 +177,12 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      *
      * @return    The number of ChemModels in this Container
      */
+    @Override
     public int getChemModelCount() {
         return this.chemModelCount;
     }
 
+    @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer(32);
         buffer.append("ChemSequence(#M=");
@@ -187,6 +197,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
         return buffer.toString();
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
         ChemSequence clone = (ChemSequence) super.clone();
         // clone the chemModels
@@ -204,5 +215,6 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      *
      *@param  event  A change event pointing to the source of the change
      */
+    @Override
     public void stateChanged(IChemObjectChangeEvent event) {}
 }

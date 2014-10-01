@@ -69,6 +69,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      * @return an array of four {@link IAtom}s.
      */
     @TestMethod("testGetLigands")
+    @Override
     public IAtom[] getLigands() {
         IAtom[] arrayCopy = new IAtom[4];
         System.arraycopy(ligandAtoms, 0, arrayCopy, 0, 4);
@@ -81,6 +82,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      * @return the chiral {@link IAtom}.
      */
     @TestMethod("testGetChiralAtom")
+    @Override
     public IAtom getChiralAtom() {
         return chiralAtom;
     }
@@ -91,6 +93,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      * @return the {@link Stereo} for this stereo element.
      */
     @TestMethod("testGetStereo")
+    @Override
     public Stereo getStereo() {
         return stereo;
     }
@@ -108,6 +111,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
 
     /** {@inheritDoc} */
     @TestMethod("testBuilder")
+    @Override
     public IChemObjectBuilder getBuilder() {
         return builder;
     }
@@ -153,6 +157,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      * @return the String representation
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Tetrahedral{").append(this.hashCode()).append(", ");

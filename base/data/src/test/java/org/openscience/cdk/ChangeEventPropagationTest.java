@@ -67,6 +67,7 @@ public class ChangeEventPropagationTest extends CDKTestCase {
 
         ChemObject changedObject = null;
 
+        @Override
         public void stateChanged(IChemObjectChangeEvent evt) {
             changedObject = (ChemObject) evt.getSource();
         }

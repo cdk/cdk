@@ -37,6 +37,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testSize() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         Assert.assertEquals(0, mfS.size());
@@ -63,6 +64,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testAdd_IMolecularFormulaSet() {
         IAdductFormula adduct = getBuilder().newInstance(IAdductFormula.class);
         IMolecularFormulaSet mfSet = getBuilder().newInstance(IMolecularFormulaSet.class);
@@ -80,6 +82,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testIterator() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
@@ -105,6 +108,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testMolecularFormulas() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
@@ -144,6 +148,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testGetMolecularFormula_int() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
@@ -159,6 +164,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testAddMolecularFormula_IMolecularFormula() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         mfS.addMolecularFormula(getBuilder().newInstance(IMolecularFormula.class));
@@ -228,6 +234,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testContains_IMolecularFormula() {
         IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
 
@@ -279,6 +286,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         Object clone = mfS.clone();
@@ -292,6 +300,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testRemoveMolecularFormula_IMolecularFormula() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         IMolecularFormula mf1 = getBuilder().newInstance(IMolecularFormula.class);
@@ -309,6 +318,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testRemoveAllMolecularFormulas() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         IMolecularFormula mf1 = getBuilder().newInstance(IMolecularFormula.class);
@@ -327,6 +337,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testRemoveMolecularFormula_int() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         IMolecularFormula mf1 = getBuilder().newInstance(IMolecularFormula.class);
@@ -344,6 +355,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
      * @return    The test suite
      */
     @Test
+    @Override
     public void testReplaceMolecularFormula_int_IMolecularFormula() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         IMolecularFormula mf1 = getBuilder().newInstance(IMolecularFormula.class);
@@ -481,6 +493,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     }
 
     @Test
+    @Override
     public void testGetBuilder() {
         IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
         IChemObjectBuilder builder = add.getBuilder();

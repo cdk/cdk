@@ -74,6 +74,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     }
 
     @Test
+    @Override
     public void testAddAtom_IAtom() {
         IStrand oStrand = (IStrand) newChemObject();
         IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class, "C1");
@@ -202,6 +203,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         IStrand oStrand = (IStrand) newChemObject();
         IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
@@ -230,6 +232,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
      * Method to test the clone() method
      */
     @Test
+    @Override
     public void testClone() throws Exception {
         IStrand strand = (IStrand) newChemObject();
         Object clone = strand.clone();

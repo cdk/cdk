@@ -193,6 +193,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     }
 
     /** {@inheritDoc} */
+    @Override
     public void addStereoElement(IStereoElement element) {
         stereoElements.add(element);
     }
@@ -207,6 +208,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     }
 
     /** {@inheritDoc} */
+    @Override
     public Iterable<IStereoElement> stereoElements() {
         return Collections.unmodifiableSet(stereoElements);
     }
@@ -217,6 +219,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atoms  The array of atoms to be assigned to this AtomContainer
      *@see           #getAtom
      */
+    @Override
     public void setAtoms(IAtom[] atoms) {
         // unregister this as listener with the old atoms
         for (IAtom atom : this.atoms)
@@ -237,6 +240,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *                             this AtomContainer
      * @see  #getBond
      */
+    @Override
     public void setBonds(IBond[] bonds) {
         this.bonds = bonds;
         for (IBond bond : bonds) {
@@ -270,6 +274,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom    The atom to be stored at position <code>number</code>
      *@see            #getAtom(int)
      */
+    @Override
     public void setAtom(int number, IAtom atom) {
         atom.addListener(this);
         atoms[number] = atom;
@@ -285,6 +290,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * @see #setAtoms(org.openscience.cdk.interfaces.IAtom[])
      *
      */
+    @Override
     public IAtom getAtom(int number) {
         return atoms[number];
     }
@@ -295,6 +301,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  number  The position of the bond to be retrieved.
      *@return         The bondAt value
      */
+    @Override
     public IBond getBond(int number) {
         return bonds[number];
     }
@@ -305,6 +312,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  number  The position of the LonePair to be retrieved.
      *@return         The lone pair number
      */
+    @Override
     public ILonePair getLonePair(int number) {
         return lonePairs[number];
     }
@@ -315,6 +323,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  number  The position of the SingleElectron to be retrieved.
      *@return         The single electron number
      */
+    @Override
     public ISingleElectron getSingleElectron(int number) {
         return singleElectrons[number];
     }
@@ -363,9 +372,11 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    An Iterable with the atoms in this container
      */
+    @Override
     public Iterable<IAtom> atoms() {
         return new Iterable<IAtom>() {
 
+            @Override
             public Iterator<IAtom> iterator() {
                 return new AtomIterator();
             }
@@ -380,14 +391,17 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         private int pointer = 0;
 
+        @Override
         public boolean hasNext() {
             return pointer < atomCount;
         }
 
+        @Override
         public IAtom next() {
             return atoms[pointer++];
         }
 
+        @Override
         public void remove() {
             removeAtom(--pointer);
         }
@@ -399,9 +413,11 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    An Iterable with the bonds in this container
      */
+    @Override
     public Iterable<IBond> bonds() {
         return new Iterable<IBond>() {
 
+            @Override
             public Iterator<IBond> iterator() {
                 return new BondIterator();
             }
@@ -416,14 +432,17 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         private int pointer = 0;
 
+        @Override
         public boolean hasNext() {
             return pointer < bondCount;
         }
 
+        @Override
         public IBond next() {
             return bonds[pointer++];
         }
 
+        @Override
         public void remove() {
             removeBond(--pointer);
         }
@@ -435,9 +454,11 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    An Iterable with the lone pairs in this container
      */
+    @Override
     public Iterable<ILonePair> lonePairs() {
         return new Iterable<ILonePair>() {
 
+            @Override
             public Iterator<ILonePair> iterator() {
                 return new LonePairIterator();
             }
@@ -452,14 +473,17 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         private int pointer = 0;
 
+        @Override
         public boolean hasNext() {
             return pointer < lonePairCount;
         }
 
+        @Override
         public ILonePair next() {
             return lonePairs[pointer++];
         }
 
+        @Override
         public void remove() {
             removeLonePair(--pointer);
         }
@@ -471,9 +495,11 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    An Iterable with the single electrons in this container
      */
+    @Override
     public Iterable<ISingleElectron> singleElectrons() {
         return new Iterable<ISingleElectron>() {
 
+            @Override
             public Iterator<ISingleElectron> iterator() {
                 return new SingleElectronIterator();
             }
@@ -488,14 +514,17 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         private int pointer = 0;
 
+        @Override
         public boolean hasNext() {
             return pointer < singleElectronCount;
         }
 
+        @Override
         public ISingleElectron next() {
             return singleElectrons[pointer++];
         }
 
+        @Override
         public void remove() {
             removeSingleElectron(--pointer);
         }
@@ -507,9 +536,11 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    An Iterable with the electron containers in this container
      */
+    @Override
     public Iterable<IElectronContainer> electronContainers() {
         return new Iterable<IElectronContainer>() {
 
+            @Override
             public Iterator<IElectronContainer> iterator() {
                 return new ElectronContainerIterator();
             }
@@ -524,10 +555,12 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         private int pointer = 0;
 
+        @Override
         public boolean hasNext() {
             return pointer < (bondCount + lonePairCount + singleElectronCount);
         }
 
+        @Override
         public IElectronContainer next() {
             if (pointer < bondCount)
                 return bonds[pointer++];
@@ -538,6 +571,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
             return null;
         }
 
+        @Override
         public void remove() {
             if (pointer <= bondCount)
                 removeBond(--pointer);
@@ -554,6 +588,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    The atom at position 0 .
      */
+    @Override
     public IAtom getFirstAtom() {
         return atoms[0];
     }
@@ -563,6 +598,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    The atom at the last position
      */
+    @Override
     public IAtom getLastAtom() {
         return getAtomCount() > 0 ? (IAtom) atoms[getAtomCount() - 1] : null;
     }
@@ -574,6 +610,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  The atom to be sought
      *@return       The Position of the atom in the atoms array in [0,..].
      */
+    @Override
     public int getAtomNumber(IAtom atom) {
         for (int f = 0; f < atomCount; f++) {
             if (atoms[f] == atom) return f;
@@ -590,6 +627,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@return        The Position of the bond between a1 and a2 in the
      *               electronContainers array.
      */
+    @Override
     public int getBondNumber(IAtom atom1, IAtom atom2) {
         return (getBondNumber(getBond(atom1, atom2)));
     }
@@ -601,6 +639,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  bond  The bond to be sought
      *@return       The Position of the bond in the electronContainers array in [0,..].
      */
+    @Override
     public int getBondNumber(IBond bond) {
         for (int f = 0; f < bondCount; f++) {
             if (bonds[f] == bond) return f;
@@ -615,6 +654,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  lonePair  The lone pair to be sought
      *@return       The Position of the lone pair in the array..
      */
+    @Override
     public int getLonePairNumber(ILonePair lonePair) {
         for (int f = 0; f < lonePairCount; f++) {
             if (lonePairs[f] == lonePair) return f;
@@ -629,6 +669,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  singleElectron  The single electron to be sought
      *@return       The Position of the single electron in the array.
      */
+    @Override
     public int getSingleElectronNumber(ISingleElectron singleElectron) {
         for (int f = 0; f < singleElectronCount; f++) {
             if (singleElectrons[f] == singleElectron) return f;
@@ -643,6 +684,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * @param  number  The position of the ElectronContainer to be returned.
      * @return         The ElectronContainer at position <code>number</code>.
      */
+    @Override
     public IElectronContainer getElectronContainer(int number) {
         if (number < this.bondCount) return bonds[number];
         number -= this.bondCount;
@@ -659,6 +701,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * @param  atom2  The second atom
      * @return        The bond that connects the two atoms
      */
+    @Override
     public IBond getBond(IAtom atom1, IAtom atom2) {
         for (int i = 0; i < getBondCount(); i++) {
             if (bonds[i].contains(atom1) && bonds[i].getConnectedAtom(atom1) == atom2) {
@@ -673,6 +716,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    The number of Atoms in this Container
      */
+    @Override
     public int getAtomCount() {
         return this.atomCount;
     }
@@ -682,6 +726,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    The number of Bonds in this Container
      */
+    @Override
     public int getBondCount() {
         return this.bondCount;
     }
@@ -691,6 +736,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    The number of LonePairs in this Container
      */
+    @Override
     public int getLonePairCount() {
         return this.lonePairCount;
     }
@@ -700,6 +746,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return       The number of SingleElectron objects of this AtomContainer
      */
+    @Override
     public int getSingleElectronCount() {
         return this.singleElectronCount;
     }
@@ -709,6 +756,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      * @return    The number of ElectronContainers in this Container
      */
+    @Override
     public int getElectronContainerCount() {
         return this.bondCount + this.lonePairCount + this.singleElectronCount;
     }
@@ -719,6 +767,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  The atom the bond partners are searched of.
      *@return       The ArrayList with the connected atoms
      */
+    @Override
     public List<IAtom> getConnectedAtomsList(IAtom atom) {
         List<IAtom> atomsList = new ArrayList<IAtom>();
         for (int i = 0; i < bondCount; i++) {
@@ -733,6 +782,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  The atom the connected bonds are searched of
      *@return       The ArrayList with connected atoms
      */
+    @Override
     public List<IBond> getConnectedBondsList(IAtom atom) {
         List<IBond> bondsList = new ArrayList<IBond>();
         for (int i = 0; i < bondCount; i++) {
@@ -750,6 +800,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * @see #electronContainers()
      * @see #getBond
      */
+    @Override
     public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
         List<ILonePair> lps = new ArrayList<ILonePair>();
         for (int i = 0; i < lonePairCount; i++) {
@@ -764,6 +815,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  The atom on which the single electron is located
      *@return       The array of SingleElectron of this AtomContainer
      */
+    @Override
     public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
         List<ISingleElectron> lps = new ArrayList<ISingleElectron>();
         for (int i = 0; i < singleElectronCount; i++) {
@@ -778,6 +830,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  The atom the connected electronContainers are searched of
      *@return       The ArrayList with the  connected atoms
      */
+    @Override
     public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
         List<IElectronContainer> lps = new ArrayList<IElectronContainer>();
         for (int i = 0; i < bondCount; i++) {
@@ -798,6 +851,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  The atom the number of bond partners are searched of.
      *@return       The the size of connected atoms
      */
+    @Override
     public int getConnectedAtomsCount(IAtom atom) {
         int count = 0;
         for (int i = 0; i < bondCount; i++) {
@@ -812,6 +866,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  The atom
      *@return       The number of Bonds for this atom
      */
+    @Override
     public int getConnectedBondsCount(IAtom atom) {
         return getConnectedAtomsCount(atom);
     }
@@ -822,6 +877,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atomNumber  The atomnumber the degree is searched for
      *@return             The number of connected atoms (degree)
      */
+    @Override
     public int getConnectedBondsCount(int atomNumber) {
         return getConnectedAtomsCount(atoms[atomNumber]);
     }
@@ -832,6 +888,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  The atom
      *@return       The number of LonePairs for this atom
      */
+    @Override
     public int getConnectedLonePairsCount(IAtom atom) {
         int count = 0;
         for (int i = 0; i < lonePairCount; i++) {
@@ -846,6 +903,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  The atom on which the single electron is located
      *@return       The array of SingleElectron of this AtomContainer
      */
+    @Override
     public int getConnectedSingleElectronsCount(IAtom atom) {
         int count = 0;
         for (int i = 0; i < singleElectronCount; i++) {
@@ -862,6 +920,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      * @deprecated   Replaced by <code>AtomContainerManipulator#getBondOrderSum(IAtomContainer, IAtom)</code>
      */
+    @Override
     public double getBondOrderSum(IAtom atom) {
         double count = 0;
         for (int i = 0; i < bondCount; i++) {
@@ -882,6 +941,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * @param  atom  The atom
      * @return       The maximum bond order that this atom currently has
      */
+    @Override
     public Order getMaximumBondOrder(IAtom atom) {
         IBond.Order max = IBond.Order.SINGLE;
         for (int i = 0; i < bondCount; i++) {
@@ -899,6 +959,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  The atom
      *@return       The minimum bond order that this atom currently has
      */
+    @Override
     public Order getMinimumBondOrder(IAtom atom) {
         IBond.Order min = IBond.Order.QUADRUPLE;
         for (int i = 0; i < bondCount; i++) {
@@ -915,6 +976,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  atomContainer  The atomcontainer to be added
      */
+    @Override
     public void add(IAtomContainer atomContainer) {
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
             if (!contains(atomContainer.getAtom(f))) {
@@ -960,6 +1022,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  atom  The atom to be added to this container
      */
+    @Override
     public void addAtom(IAtom atom) {
         if (contains(atom)) {
             return;
@@ -979,6 +1042,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  bond  The bond to added to this container
      */
+    @Override
     public void addBond(IBond bond) {
         if (bondCount >= bonds.length) growBondArray();
         bonds[bondCount] = bond;
@@ -991,6 +1055,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  lonePair  The LonePair to added to this container
      */
+    @Override
     public void addLonePair(ILonePair lonePair) {
         if (lonePairCount >= lonePairs.length) growLonePairArray();
         lonePairs[lonePairCount] = lonePair;
@@ -1003,6 +1068,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  singleElectron  The SingleElectron to added to this container
      */
+    @Override
     public void addSingleElectron(ISingleElectron singleElectron) {
         if (singleElectronCount >= singleElectrons.length) growSingleElectronArray();
         singleElectrons[singleElectronCount] = singleElectron;
@@ -1015,6 +1081,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  electronContainer  The ElectronContainer to added to this container
      */
+    @Override
     public void addElectronContainer(IElectronContainer electronContainer) {
         if (electronContainer instanceof IBond) this.addBond((IBond) electronContainer);
         if (electronContainer instanceof ILonePair) this.addLonePair((ILonePair) electronContainer);
@@ -1027,6 +1094,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  atomContainer  The atomcontainer to be removed
      */
+    @Override
     public void remove(IAtomContainer atomContainer) {
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
             removeAtom(atomContainer.getAtom(f));
@@ -1049,6 +1117,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  position  The position of the atom to be removed.
      */
+    @Override
     public void removeAtom(int position) {
         atoms[position].removeListener(this);
         for (int i = position; i < atomCount - 1; i++) {
@@ -1066,6 +1135,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  atom  The atom to be removed
      */
+    @Override
     public void removeAtom(IAtom atom) {
         int position = getAtomNumber(atom);
         if (position != -1) {
@@ -1078,6 +1148,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  position  The position of the bond to be removed.
      */
+    @Override
     public IBond removeBond(int position) {
         IBond bond = bonds[position];
         bond.removeListener(this);
@@ -1097,6 +1168,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * @param  atom2  The second atom
      * @return        The bond that connects the two atoms
      */
+    @Override
     public IBond removeBond(IAtom atom1, IAtom atom2) {
         int pos = getBondNumber(atom1, atom2);
         IBond bond = null;
@@ -1112,6 +1184,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      * @param  bond   The bond to be removed.
      */
+    @Override
     public void removeBond(IBond bond) {
         int pos = getBondNumber(bond);
         if (pos != -1) removeBond(pos);
@@ -1122,6 +1195,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  position  The position of the LonePair to be removed.
      */
+    @Override
     public ILonePair removeLonePair(int position) {
         ILonePair lp = lonePairs[position];
         lp.removeListener(this);
@@ -1139,6 +1213,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  lonePair  The LonePair to be removed.
      */
+    @Override
     public void removeLonePair(ILonePair lonePair) {
         int pos = getLonePairNumber(lonePair);
         if (pos != -1) removeLonePair(pos);
@@ -1149,6 +1224,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  position  The position of the SingleElectron to be removed.
      */
+    @Override
     public ISingleElectron removeSingleElectron(int position) {
         ISingleElectron se = singleElectrons[position];
         se.removeListener(this);
@@ -1166,6 +1242,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  singleElectron  The SingleElectron to be removed.
      */
+    @Override
     public void removeSingleElectron(ISingleElectron singleElectron) {
         int pos = getSingleElectronNumber(singleElectron);
         if (pos != -1) removeSingleElectron(pos);
@@ -1177,6 +1254,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * @param  number  The position of the bond in the electronContainers array
      * @return           Bond that was removed
      */
+    @Override
     public IElectronContainer removeElectronContainer(int number) {
         if (number < this.bondCount) return removeBond(number);
         number -= this.bondCount;
@@ -1191,6 +1269,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      * @param electronContainer The electronContainer to be removed
      */
+    @Override
     public void removeElectronContainer(IElectronContainer electronContainer) {
         if (electronContainer instanceof IBond)
             removeBond((IBond) electronContainer);
@@ -1201,6 +1280,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     }
 
     /** @inheritDoc */
+    @Override
     public void removeAtomAndConnectedElectronContainers(IAtom atom) {
         int position = getAtomNumber(atom);
         if (position != -1) {
@@ -1250,6 +1330,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     /**
      *  Removes electronContainers from this container.
      */
+    @Override
     public void removeAllElectronContainers() {
         removeAllBonds();
         for (int f = 0; f < getLonePairCount(); f++) {
@@ -1268,6 +1349,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     /**
      *  Removes all Bonds from this container.
      */
+    @Override
     public void removeAllBonds() {
         for (int f = 0; f < getBondCount(); f++) {
             getBond(f).removeListener(this);
@@ -1285,6 +1367,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  order   Bondorder
      *@param  stereo  Stereochemical orientation
      */
+    @Override
     public void addBond(int atom1, int atom2, IBond.Order order, IBond.Stereo stereo) {
         IBond bond = getBuilder().newInstance(IBond.class, getAtom(atom1), getAtom(atom2), order, stereo);
         addBond(bond);
@@ -1300,6 +1383,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom2  Id of the second atom of the Bond in [0,..]
      *@param  order  Bondorder
      */
+    @Override
     public void addBond(int atom1, int atom2, IBond.Order order) {
         IBond bond = getBuilder().newInstance(IBond.class, getAtom(atom1), getAtom(atom2), order);
         addBond(bond);
@@ -1313,6 +1397,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  atomID  The atom number to which the LonePair is added in [0,..]
      */
+    @Override
     public void addLonePair(int atomID) {
         ILonePair lonePair = getBuilder().newInstance(ILonePair.class, atoms[atomID]);
         lonePair.addListener(this);
@@ -1328,6 +1413,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@param  atomID  The atom number to which the LonePair is added in [0,..]
      */
+    @Override
     public void addSingleElectron(int atomID) {
         ISingleElectron singleElectron = getBuilder().newInstance(ISingleElectron.class, atoms[atomID]);
         singleElectron.addListener(this);
@@ -1343,6 +1429,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  atom  the atom this AtomContainer is searched for
      *@return       true if the AtomContainer contains the given atom object
      */
+    @Override
     public boolean contains(IAtom atom) {
         for (int i = 0; i < getAtomCount(); i++) {
             if (atom == atoms[i]) return true;
@@ -1356,6 +1443,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  bond  the bond this AtomContainer is searched for
      *@return       true if the AtomContainer contains the given bond object
      */
+    @Override
     public boolean contains(IBond bond) {
         for (int i = 0; i < getBondCount(); i++) {
             if (bond == bonds[i]) return true;
@@ -1369,6 +1457,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  lonePair  the LonePair this AtomContainer is searched for
      *@return           true if the AtomContainer contains the given LonePair object
      */
+    @Override
     public boolean contains(ILonePair lonePair) {
         for (int i = 0; i < getLonePairCount(); i++) {
             if (lonePair == lonePairs[i]) return true;
@@ -1382,6 +1471,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  singleElectron  the LonePair this AtomContainer is searched for
      *@return           true if the AtomContainer contains the given LonePair object
      */
+    @Override
     public boolean contains(ISingleElectron singleElectron) {
         for (int i = 0; i < getSingleElectronCount(); i++) {
             if (singleElectron == singleElectrons[i]) return true;
@@ -1395,6 +1485,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *@param  electronContainer ElectronContainer that is searched for
      *@return                   true if the AtomContainer contains the given bond object
      */
+    @Override
     public boolean contains(IElectronContainer electronContainer) {
         if (electronContainer instanceof IBond) return contains((IBond) electronContainer);
         if (electronContainer instanceof ILonePair) return contains((ILonePair) electronContainer);
@@ -1408,6 +1499,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      *
      *@return    The string representation of this Container
      */
+    @Override
     public String toString() {
         StringBuffer stringContent = new StringBuffer(64);
         stringContent.append("AtomContainer(");
@@ -1453,6 +1545,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * @return    The cloned object
      * @see       #shallowCopy
      */
+    @Override
     public IAtomContainer clone() throws CloneNotSupportedException {
 
         // this is pretty wasteful as we need to delete most the data
@@ -1600,6 +1693,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     *
     *@param  event  A change event pointing to the source of the change
     */
+    @Override
     public void stateChanged(IChemObjectChangeEvent event) {
         notifyChanged(event);
     }

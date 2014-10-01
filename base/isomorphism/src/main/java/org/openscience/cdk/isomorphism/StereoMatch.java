@@ -104,6 +104,7 @@ final class StereoMatch implements Predicate<int[]> {
      * @return the stereo chemistry is value
      */
     @TestMethod("tetrahedral_match,tetraherdal_mismatch")
+    @Override
     public boolean apply(final int[] mapping) {
 
         // n.b. not true for unspecified queries e.g. [C@?H](*)(*)*

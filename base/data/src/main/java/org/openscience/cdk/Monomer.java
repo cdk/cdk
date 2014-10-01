@@ -73,6 +73,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
      *
      * @see    #setMonomerName
      */
+    @Override
     public String getMonomerName() {
         return monomerName;
     }
@@ -85,6 +86,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
      *
      * @see    #setMonomerType
      */
+    @Override
     public String getMonomerType() {
         return monomerType;
     }
@@ -97,6 +99,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
      *
      * @see    #getMonomerName
      */
+    @Override
     public void setMonomerName(String cMonomerName) {
         monomerName = cMonomerName;
         notifyChanged();
@@ -110,6 +113,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
      *
      * @see    #getMonomerType
      */
+    @Override
     public void setMonomerType(String cMonomerType) {
         monomerType = cMonomerType;
         notifyChanged();
@@ -123,6 +127,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
         return (IMonomer) super.clone();
     }
 
+    @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder();
         buffer.append("Monomer{").append(this.hashCode());

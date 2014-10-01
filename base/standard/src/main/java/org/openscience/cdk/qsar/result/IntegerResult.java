@@ -44,11 +44,13 @@ public class IntegerResult implements IDescriptorResult {
     }
 
     @TestMethod("testToString")
+    @Override
     public String toString() {
         return Integer.toString(value);
     }
 
     @TestMethod("testLength")
+    @Override
     public int length() {
         return 1;
     }

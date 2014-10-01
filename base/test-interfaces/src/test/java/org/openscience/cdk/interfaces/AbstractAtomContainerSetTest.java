@@ -485,6 +485,7 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         som.addAtomContainer(ac2);
         som.sortAtomContainers(new Comparator<IAtomContainer>() {
 
+            @Override
             public int compare(IAtomContainer o1, IAtomContainer o2) {
                 return 0;
             }
@@ -503,6 +504,7 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         ac2.setProperty("multiplierSortCode", "1");
         som.sortAtomContainers(new Comparator<IAtomContainer>() {
 
+            @Override
             public int compare(IAtomContainer o1, IAtomContainer o2) {
                 return ((String) o1.getProperty("multiplierSortCode")).compareTo((String) o2
                         .getProperty("multiplierSortCode"));
@@ -525,6 +527,7 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         }
 
         @Test
+        @Override
         public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }

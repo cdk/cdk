@@ -105,6 +105,7 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
     }
 
     @Test
+    @Override
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemFile chemObject = (IChemFile) newChemObject();
@@ -123,6 +124,7 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         }
 
         @Test
+        @Override
         public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
@@ -134,6 +136,7 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IChemFile file = (IChemFile) newChemObject();
         Object clone = file.clone();

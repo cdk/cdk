@@ -47,6 +47,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new GraphOnlyFingerprinter();
     }

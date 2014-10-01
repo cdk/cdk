@@ -124,6 +124,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@param  col  the ChemObjectListener
      *@see         #removeListener
      */
+    @Override
     public void addListener(IChemObjectListener col) {
         List<IChemObjectListener> listeners = lazyChemObjectListeners();
 
@@ -139,6 +140,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *
      *@return    the number of registered listeners.
      */
+    @Override
     public int getListenerCount() {
         if (chemObjectListeners == null) {
             return 0;
@@ -153,6 +155,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@param  col  The ChemObjectListener to be removed
      *@see         #addListener
      */
+    @Override
     public void removeListener(IChemObjectListener col) {
         if (chemObjectListeners == null) {
             return;
@@ -168,6 +171,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *  This should be triggered by an method that changes the content of an object
      *  to that the registered listeners can react to it.
      */
+    @Override
     public void notifyChanged() {
         if (getNotification() && getListenerCount() > 0) {
             List<IChemObjectListener> listeners = lazyChemObjectListeners();
@@ -186,6 +190,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@param  evt  A ChemObjectChangeEvent pointing to the source of where
      *		the change happened
      */
+    @Override
     public void notifyChanged(IChemObjectChangeEvent evt) {
         if (getNotification() && getListenerCount() > 0) {
             List<IChemObjectListener> listeners = lazyChemObjectListeners();
@@ -216,6 +221,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@see                 #getProperty
      *@see                 #removeProperty
      */
+    @Override
     public void setProperty(Object description, Object property) {
         lazyProperties().put(description, property);
         notifyChanged();
@@ -229,6 +235,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@see                 #setProperty
      *@see                 #getProperty
      */
+    @Override
     public void removeProperty(Object description) {
         if (properties == null) {
             return;
@@ -246,6 +253,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@see                 #setProperty
      *@see                 #removeProperty
      */
+    @Override
     public <T> T getProperty(Object description) {
         if (properties == null) return null;
         // can't check the type
@@ -283,6 +291,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@return    The object's properties as an Hashtable
      *@see       #addProperties
      */
+    @Override
     public Map<Object, Object> getProperties() {
         return lazyProperties();
     }
@@ -294,6 +303,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *
      *@return    The cloned object
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         ChemObject clone = (ChemObject) super.clone();
 
@@ -330,6 +340,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@return    a String representing the ID value
      *@see       #setID
      */
+    @Override
     public String getID() {
         return this.identifier;
     }
@@ -340,6 +351,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@param  identifier  a String representing the ID value
      *@see                #getID
      */
+    @Override
     public void setID(String identifier) {
         this.identifier = identifier;
         notifyChanged();
@@ -375,6 +387,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /** @inheritDoc */
+    @Override
     public void setProperties(Map<Object, Object> properties) {
         this.properties = null;
         if (properties != null) addProperties(properties);
@@ -386,6 +399,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@param  properties  a Hashtable specifying the property values
      *@see                #getProperties
      */
+    @Override
     public void addProperties(Map<Object, Object> properties) {
         if (properties == null) return;
         lazyProperties().putAll(properties);
@@ -398,6 +412,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      * @param  flagsNew    the new flags.
      * @see                #getFlags
      */
+    @Override
     public void setFlags(boolean[] flagsNew) {
         for (int i = 0; i < flagsNew.length; i++)
             setFlag(CDKConstants.FLAG_MASKS[i], flagsNew[i]);
@@ -410,6 +425,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *@return    the flags.
      *@see       #setFlags
      */
+    @Override
     public boolean[] getFlags() {
         // could use a list a invoke .toArray() on the return
         boolean[] flagArray = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
@@ -436,16 +452,19 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
         return copy;
     }
 
+    @Override
     public IChemObjectBuilder getBuilder() {
         return DefaultChemObjectBuilder.getInstance();
     }
 
     private boolean doNotification = true;
 
+    @Override
     public void setNotification(boolean bool) {
         this.doNotification = bool;
     }
 
+    @Override
     public boolean getNotification() {
         return this.doNotification;
     }

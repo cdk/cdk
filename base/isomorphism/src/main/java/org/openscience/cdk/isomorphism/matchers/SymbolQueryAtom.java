@@ -43,6 +43,7 @@ public class SymbolQueryAtom extends QueryAtom implements IQueryAtom {
         HCount = m_HCount;
     }
 
+    @Override
     public boolean matches(IAtom atom) {
         if (ID != null && HCount == 0)
             return this.getSymbol() != (atom.getSymbol());
@@ -57,6 +58,7 @@ public class SymbolQueryAtom extends QueryAtom implements IQueryAtom {
 
     }
 
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("SymbolQueryAtom(");

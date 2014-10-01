@@ -41,6 +41,7 @@ public class PolymerTest extends AbstractPolymerTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new Polymer();
             }

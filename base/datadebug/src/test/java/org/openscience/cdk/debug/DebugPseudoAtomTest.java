@@ -42,6 +42,7 @@ public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new DebugPseudoAtom();
             }

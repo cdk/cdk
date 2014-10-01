@@ -107,6 +107,7 @@ public class InvPair implements java.io.Serializable {
      * @return true if they are equal, false otherwise
      */
     @TestMethod("testEquals_Object")
+    @Override
     public boolean equals(Object object) {
         if (object instanceof InvPair) {
             InvPair o = (InvPair) object;
@@ -143,6 +144,7 @@ public class InvPair implements java.io.Serializable {
      * @return The string representation of the class.
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         StringBuilder buff = new StringBuilder();
         buff.append(curr);

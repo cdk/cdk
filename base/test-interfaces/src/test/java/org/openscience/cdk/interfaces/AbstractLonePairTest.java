@@ -49,6 +49,7 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
     }
 
     @Test
+    @Override
     public void testGetElectronCount() {
         ILonePair lp = (ILonePair) newChemObject();
         Assert.assertEquals(2, lp.getElectronCount().intValue());
@@ -66,6 +67,7 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         ILonePair lp = (ILonePair) newChemObject();
         Object clone = lp.clone();
@@ -85,6 +87,7 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
 
     /** Test for RFC #9 */
     @Test
+    @Override
     public void testToString() {
         ILonePair lp = (ILonePair) newChemObject();
         String description = lp.toString();
@@ -98,6 +101,7 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
      * The electron count of an LP is always exactly 2.
      */
     @Test
+    @Override
     public void testSetElectronCount_Integer() {
         IElectronContainer ec = (IElectronContainer) newChemObject();
         ec.setElectronCount(3);

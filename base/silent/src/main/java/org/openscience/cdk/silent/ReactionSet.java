@@ -93,6 +93,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      *
      * @param  reaction  The reaction to be added to this container
      */
+    @Override
     public void addReaction(IReaction reaction) {
         if (reactionCount + 1 >= reactions.length) growReactionArray();
         reactions[reactionCount] = reaction;
@@ -104,6 +105,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      *
      * @param  pos  The position of the reaction to be removed.
      */
+    @Override
     public void removeReaction(int pos) {
         for (int i = pos; i < reactionCount - 1; i++) {
             reactions[i] = reactions[i + 1];
@@ -120,6 +122,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      * @param  number  The position of the Reaction to be returned
      * @return         The Reaction at position <code>number</code>
      */
+    @Override
     public IReaction getReaction(int number) {
         return (IReaction) reactions[number];
     }
@@ -129,9 +132,11 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      *
      * @return A new Iterator for this ReactionSet.
      */
+    @Override
     public Iterable<IReaction> reactions() {
         return new Iterable<IReaction>() {
 
+            @Override
             public Iterator<IReaction> iterator() {
                 return new ReactionIterator();
             }
@@ -146,15 +151,18 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 
         private int pointer = 0;
 
+        @Override
         public boolean hasNext() {
             if (pointer < reactionCount) return true;
             return false;
         }
 
+        @Override
         public IReaction next() {
             return reactions[pointer++];
         }
 
+        @Override
         public void remove() {
             removeReaction(--pointer);
         }
@@ -178,10 +186,12 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      *
      * @return     The number of Reactions in this Container
      */
+    @Override
     public int getReactionCount() {
         return this.reactionCount;
     }
 
+    @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer(32);
         buffer.append("ReactionSet(");
@@ -200,6 +210,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      *
      * @return  The cloned ReactionSet
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         ReactionSet clone = (ReactionSet) super.clone();
         // clone the reactions
@@ -214,6 +225,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
     /**
      * Removes all Reactions from this container.
      */
+    @Override
     public void removeAllReactions() {
         for (int pos = this.reactionCount - 1; pos >= 0; pos--) {
             this.reactions[pos] = null;
@@ -221,10 +233,12 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         this.reactionCount = 0;
     }
 
+    @Override
     public void stateChanged(IChemObjectChangeEvent event) {
         notifyChanged(event);
     }
 
+    @Override
     public void removeReaction(IReaction relevantReaction) {
         for (int i = reactionCount - 1; i >= 0; i--) {
             if (reactions[i] == relevantReaction) removeReaction(i);

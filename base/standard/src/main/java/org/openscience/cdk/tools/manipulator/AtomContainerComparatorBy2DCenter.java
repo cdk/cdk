@@ -43,6 +43,7 @@ public class AtomContainerComparatorBy2DCenter implements Comparator<IAtomContai
      * Compare two AtomContainers based on their 2D position.
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
+    @Override
     public int compare(IAtomContainer a, IAtomContainer b) {
 
         Point2d p1 = center(a);

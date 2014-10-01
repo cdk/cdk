@@ -253,6 +253,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     }
 
     @Test
+    @Override
     public void testForDuplicateDefinitions() {
         super.testForDuplicateDefinitions();
     }

@@ -80,6 +80,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      * @return    Description of the Return Value
      */
     @Test
+    @Override
     public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
         /* ionize(>C=O): C=CCC(=O)CC -> C=CCC(=O*)CC , set the reactive center */
 

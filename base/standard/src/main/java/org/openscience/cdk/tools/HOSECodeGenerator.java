@@ -653,6 +653,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
          * @param  b  The second TreeNode
          * @return       -1,0,1
          */
+        @Override
         public int compare(TreeNode a, TreeNode b) {
             return label(a).compareTo(label(b));
         }
@@ -731,6 +732,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
          *@param  o  The object that we compare this TreeNode to
          *@return    True, if the this TreeNode's atom object equals the one of the other TreeNode
          */
+        @Override
         public boolean equals(Object o) {
             try {
                 if (this.atom == ((TreeNode) o).atom) {
@@ -747,6 +749,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
             return false;
         }
 
+        @Override
         public String toString() {
             String s = "";
             try {

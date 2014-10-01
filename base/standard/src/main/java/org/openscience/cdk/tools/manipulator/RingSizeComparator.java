@@ -53,6 +53,7 @@ public class RingSizeComparator implements Comparator<IRing> {
     }
 
     @TestMethod("testCompare")
+    @Override
     public int compare(IRing object1, IRing object2) throws ClassCastException {
         int size1 = object1.getAtomCount();
         int size2 = object2.getAtomCount();

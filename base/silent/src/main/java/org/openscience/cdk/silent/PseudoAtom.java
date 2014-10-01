@@ -117,6 +117,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
      * @return The label for this PseudoAtom
      * @see    #setLabel
      */
+    @Override
     public String getLabel() {
         return label;
     }
@@ -127,6 +128,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
      * @param label The new label for this PseudoAtom
      * @see   #getLabel
      */
+    @Override
     public void setLabel(String label) {
         this.label = label;
     }
@@ -134,6 +136,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
     /**
      * Dummy method: the stereo parity is undefined, final.
      */
+    @Override
     public void setStereoParity(Integer stereoParity) {
         // this is undefined, always
     }
@@ -144,6 +147,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
      *
      * @return  The string representation of this Atom
      */
+    @Override
     public String toString() {
         StringBuffer description = new StringBuffer();
         description.append("PseudoAtom(");
@@ -156,6 +160,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
         return description.toString();
     }
 
+    @Override
     public IPseudoAtom clone() throws CloneNotSupportedException {
         return (IPseudoAtom) super.clone();
     }

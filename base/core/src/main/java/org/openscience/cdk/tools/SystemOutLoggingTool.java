@@ -66,6 +66,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testDumpSystemProperties")
+    @Override
     public void dumpSystemProperties() {
         debug("os.name        : " + System.getProperty("os.name"));
         debug("os.version     : " + System.getProperty("os.version"));
@@ -76,18 +77,21 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testSetStackLength_int")
+    @Override
     public void setStackLength(int length) {
         this.stackLength = length;
     }
 
     /** {@inheritDoc} */
     @TestMethod("testDumpClasspath")
+    @Override
     public void dumpClasspath() {
         debug("java.class.path: " + System.getProperty("java.class.path"));
     }
 
     /** {@inheritDoc} */
     @TestMethod("testDebug_Object")
+    @Override
     public void debug(Object object) {
         if (doDebug) {
             if (object instanceof Throwable) {
@@ -104,6 +108,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testDebug_Object_Object")
+    @Override
     public void debug(Object object, Object... objects) {
         if (doDebug) {
             StringBuilder result = new StringBuilder();
@@ -155,6 +160,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testError_Object")
+    @Override
     public void error(Object object) {
         if (doDebug) {
             errorString("" + object);
@@ -163,6 +169,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testError_Object_int")
+    @Override
     public void error(Object object, Object... objects) {
         if (doDebug) {
             StringBuilder result = new StringBuilder();
@@ -180,6 +187,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testFatal_Object")
+    @Override
     public void fatal(Object object) {
         if (doDebug) {
             printToSTDOUT("FATAL", object.toString());
@@ -188,6 +196,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testInfo_Object")
+    @Override
     public void info(Object object) {
         if (doDebug) {
             infoString("" + object);
@@ -196,6 +205,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testInfo_Object_int")
+    @Override
     public void info(Object object, Object... objects) {
         if (doDebug) {
             StringBuilder result = new StringBuilder();
@@ -213,6 +223,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testWarn_Object")
+    @Override
     public void warn(Object object) {
         if (doDebug) {
             warnString("" + object);
@@ -225,6 +236,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testWarn_Object_int")
+    @Override
     public void warn(Object object, Object... objects) {
         if (doDebug) {
             StringBuilder result = new StringBuilder();
@@ -238,6 +250,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** {@inheritDoc} */
     @TestMethod("testIsDebugEnabled")
+    @Override
     public boolean isDebugEnabled() {
         return doDebug;
     }

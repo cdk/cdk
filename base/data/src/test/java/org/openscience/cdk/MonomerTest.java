@@ -44,6 +44,7 @@ public class MonomerTest extends AbstractMonomerTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new Monomer();
             }

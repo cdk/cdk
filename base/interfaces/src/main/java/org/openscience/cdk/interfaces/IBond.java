@@ -246,5 +246,6 @@ public interface IBond extends IElectronContainer {
     public boolean isConnectedTo(IBond bond);
 
     /** @inheritDoc */
+    @Override
     public IBond clone() throws CloneNotSupportedException;
 }

@@ -645,6 +645,7 @@ public class DynamicFactory {
         // return an instance handler that will throw an exception when invoked
         return new Creator<T>() {
 
+            @Override
             public T create(Object[] objects) {
                 throw new IllegalArgumentException(getSuggestionMessage(key));
             }
@@ -1266,6 +1267,7 @@ public class DynamicFactory {
         /**
          * @inheritDoc
          */
+        @Override
         public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
                 InstantiationException {
             return constructor.newInstance(objects);

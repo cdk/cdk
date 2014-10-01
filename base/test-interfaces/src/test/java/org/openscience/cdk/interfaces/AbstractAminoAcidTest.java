@@ -67,6 +67,7 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test
+    @Override
     public void testToString() {
         IAminoAcid m = (IAminoAcid) newChemObject();
         IAtom nTerminus = m.getBuilder().newInstance(IAtom.class, "N");
@@ -88,6 +89,7 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
     }
 
     @Test
+    @Override
     public void testClone() throws Exception {
         IAminoAcid aa = (IAminoAcid) newChemObject();
         Object clone = aa.clone();

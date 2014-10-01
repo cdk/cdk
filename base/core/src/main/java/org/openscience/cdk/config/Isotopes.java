@@ -94,6 +94,7 @@ public class Isotopes extends IsotopeFactory {
      *@return         An array of isotopes that matches the given element symbol
      */
     @TestMethod("testGetIsotopes_String")
+    @Override
     public IIsotope[] getIsotopes(String symbol) {
         if (isotopes.get(symbol) == null) return new IIsotope[0];
         ArrayList<IIsotope> list = new ArrayList<IIsotope>();
@@ -111,6 +112,7 @@ public class Isotopes extends IsotopeFactory {
      * @return         An array of all isotopes
      */
     @TestMethod("testGetIsotopes")
+    @Override
     public IIsotope[] getIsotopes() {
         ArrayList<IIsotope> list = new ArrayList<IIsotope>();
         for (String element : isotopes.keySet()) {
@@ -130,6 +132,7 @@ public class Isotopes extends IsotopeFactory {
      * @return            An array of all isotopes
      */
     @TestMethod("testGetIsotopes_double_double")
+    @Override
     public IIsotope[] getIsotopes(double exactMass, double difference) {
         ArrayList<IIsotope> list = new ArrayList<IIsotope>();
         for (String element : isotopes.keySet()) {
@@ -150,6 +153,7 @@ public class Isotopes extends IsotopeFactory {
      * @return the corresponding isotope
      */
     @TestMethod("testGetIsotope,testGetIsotope_NonElement")
+    @Override
     public IIsotope getIsotope(String symbol, int massNumber) {
         if (isotopes.get(symbol) == null) return null;
         for (IIsotope isotope : isotopes.get(symbol)) {
@@ -169,6 +173,7 @@ public class Isotopes extends IsotopeFactory {
      * @return the corresponding isotope
      */
     @TestMethod("testGetIsotopeFromExactMass,testGetIsotopeFromExactMass_NonElement")
+    @Override
     public IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
         if (isotopes.get(symbol) == null) return null;
         IIsotope ret = null;
@@ -197,6 +202,7 @@ public class Isotopes extends IsotopeFactory {
      * @see #getMajorIsotope(String symbol)
      */
     @TestMethod("testGetMajorIsotope_int")
+    @Override
     public IIsotope getMajorIsotope(int atomicNumber) {
         if (isotopes.get(PeriodicTable.getSymbol(atomicNumber)) == null) return null;
         IIsotope major = null;
@@ -218,6 +224,7 @@ public class Isotopes extends IsotopeFactory {
      *@return         The Major Isotope value
      */
     @TestMethod("testGetMajorIsotope_String")
+    @Override
     public IIsotope getMajorIsotope(String symbol) {
         IIsotope major = null;
         if (majorIsotopes.containsKey(symbol)) {

@@ -123,6 +123,7 @@ public class RNode {
      *
      *@return    the string representation of the RNode
      */
+    @Override
     public String toString() {
         return ("id1 : " + rMap.id1 + ", id2 : " + rMap.id2 + "\n" + "extension : " + extension + "\n" + "forbiden : " + forbidden);
     }

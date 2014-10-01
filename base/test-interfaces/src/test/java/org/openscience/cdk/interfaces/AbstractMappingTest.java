@@ -42,6 +42,7 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
         }
     }
 
+    @Override
     public void testClone() throws Exception {
         IMapping mapping = (IMapping) newChemObject();
         Object clone = mapping.clone();

@@ -42,6 +42,7 @@ public class DebugPDBAtomTest extends AbstractPDBAtomTest {
     public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
 
+            @Override
             public IChemObject newTestObject() {
                 return new DebugPDBAtom(new DebugElement());
             }
