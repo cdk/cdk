@@ -119,23 +119,23 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptorTest")
 public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool   logger    = LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class);
-    private Map<String, Double[]> TAEParams = new HashMap<String, Double[]>();
-    private int                   ndesc     = 147;
+    private static ILoggingTool          logger    = LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class);
+    private        Map<String, Double[]> taeParams = new HashMap<String, Double[]>();
+    private        int                   ndesc     = 147;
 
-    private Map<String, String>   nametrans = new HashMap<String, String>();
+    private Map<String, String> nametrans = new HashMap<String, String>();
 
     private List<IMonomer> getMonomers(IBioPolymer iBioPolymer) {
         List<IMonomer> monomList = new ArrayList<IMonomer>();
 
         Map<String, IStrand> strands = iBioPolymer.getStrands();
         Set<String> strandKeys = strands.keySet();
-        for (Iterator<String> iterator = strandKeys.iterator(); iterator.hasNext();) {
+        for (Iterator<String> iterator = strandKeys.iterator(); iterator.hasNext(); ) {
             String key = iterator.next();
             IStrand aStrand = strands.get(key);
             Map<String, IMonomer> tmp = aStrand.getMonomers();
             Set<String> keys = tmp.keySet();
-            for (Iterator<String> iterator1 = keys.iterator(); iterator1.hasNext();) {
+            for (Iterator<String> iterator1 = keys.iterator(); iterator1.hasNext(); ) {
                 String o1 = iterator1.next();
                 monomList.add(tmp.get(o1));
             }
@@ -149,7 +149,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
             logger.debug("Could not load the TAE peptide parameter data file");
-            TAEParams = null;
+            taeParams = null;
             return;
         }
         try {
@@ -166,19 +166,19 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
                 for (int j = 1; j < components.length; j++)
                     data[j - 1] = new Double(components[j]);
 
-                TAEParams.put(key, data);
+                taeParams.put(key, data);
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            TAEParams = null;
+            taeParams = null;
             return;
         } catch (CDKException e) {
             e.printStackTrace();
-            TAEParams = null;
+            taeParams = null;
             return;
         }
 
-        logger.debug("Loaded " + TAEParams.size() + " TAE parameters for amino acids");
+        logger.debug("Loaded " + taeParams.size() + " TAE parameters for amino acids");
     }
 
     public TaeAminoAcidDescriptor() {
@@ -211,7 +211,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                                                                                                       .getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -290,7 +290,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
     @TestMethod("testTaeAminoAcidDescriptor")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
-        if (TAEParams == null) return getDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
+        if (taeParams == null) return getDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
         if (!(container instanceof IBioPolymer))
             return getDummyDescriptorValue(new CDKException("The molecule should be of type IBioPolymer"));
 
@@ -318,7 +318,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
             logger.debug("Converted " + olc + " to " + tlc);
 
             // get the params for this AA
-            Double[] params = (Double[]) TAEParams.get(tlc);
+            Double[] params = (Double[]) taeParams.get(tlc);
 
             for (int i = 0; i < ndesc; i++)
                 desc[i] += params[i];
