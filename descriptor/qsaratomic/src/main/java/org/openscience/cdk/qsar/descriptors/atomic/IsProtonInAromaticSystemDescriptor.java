@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest")
 public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private static final String[] names            = {"protonInArmaticSystem"};
+    private static final String[] NAMES            = {"protonInArmaticSystem"};
 
     private boolean               checkAromaticity = false;
 
@@ -124,7 +124,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**
@@ -143,7 +143,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
             clonedAtomContainer = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                    (int) Double.NaN), names, e);
+                    (int) Double.NaN), NAMES, e);
         }
         IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
 
@@ -155,7 +155,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
                 Aromaticity.cdkLegacy().apply(mol);
             } catch (CDKException e) {
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                        (int) Double.NaN), names, e);
+                        (int) Double.NaN), NAMES, e);
             }
         }
         List<IAtom> neighboor = mol.getConnectedAtomsList(clonedAtom);
@@ -178,7 +178,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
             isProtonInAromaticSystem = 0;
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                isProtonInAromaticSystem), names);
+                isProtonInAromaticSystem), NAMES);
     }
 
     /**

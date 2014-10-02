@@ -85,7 +85,7 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
     private IRingSet                  varRingSet          = null;
     private IAtomContainerSet         varAtomContainerSet = null;
 
-    private final static ILoggingTool logger              = LoggingToolFactory
+    private final static ILoggingTool LOGGER              = LoggingToolFactory
                                                                   .createLoggingTool(RDFProtonDescriptor_GHR.class);
 
     private static String[]           descriptorNames;
@@ -422,7 +422,7 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
                 }
                 rdfProtonCalculatedValues.add(sum);
 
-                logger.debug("RDF gr distance prob.: " + sum + " at distance " + ghr);
+                LOGGER.debug("RDF gr distance prob.: " + sum + " at distance " + ghr);
             }
         } else {
             return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));

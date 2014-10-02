@@ -85,7 +85,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
     private IRingSet                  varRingSet          = null;
     private IAtomContainerSet         varAtomContainerSet = null;
 
-    private final static ILoggingTool logger              = LoggingToolFactory
+    private final static ILoggingTool LOGGER              = LoggingToolFactory
                                                                   .createLoggingTool(RDFProtonDescriptor_GSR.class);
 
     private final int                 gsr_desc_length     = 7;
@@ -399,10 +399,10 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
 
         ////////////////////////THE FOUTH DESCRIPTOR IS gS(r), WHICH TAKES INTO ACCOUNT SINGLE BONDS IN RIGID SYSTEMS
 
-        Vector3d a_a = new Vector3d();
-        Vector3d a_b = new Vector3d();
-        Vector3d b_a = new Vector3d();
-        Vector3d b_b = new Vector3d();
+        Vector3d aA = new Vector3d();
+        Vector3d aB = new Vector3d();
+        Vector3d bA = new Vector3d();
+        Vector3d bB = new Vector3d();
         Point3d middlePoint = new Point3d();
         double angle = 0;
 
@@ -431,19 +431,19 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
                     dist0 = calculateDistanceBetweenTwoAtoms(singleBondAtom0, atom);
                     dist1 = calculateDistanceBetweenTwoAtoms(singleBondAtom1, atom);
 
-                    a_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
+                    aA.set(middlePoint.x, middlePoint.y, middlePoint.z);
                     if (dist1 > dist0)
-                        a_b.set(singleBondAtom0.getPoint3d().x, singleBondAtom0.getPoint3d().y,
+                        aB.set(singleBondAtom0.getPoint3d().x, singleBondAtom0.getPoint3d().y,
                                 singleBondAtom0.getPoint3d().z);
                     else
-                        a_b.set(singleBondAtom1.getPoint3d().x, singleBondAtom1.getPoint3d().y,
+                        aB.set(singleBondAtom1.getPoint3d().x, singleBondAtom1.getPoint3d().y,
                                 singleBondAtom1.getPoint3d().z);
-                    b_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
-                    b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
+                    bA.set(middlePoint.x, middlePoint.y, middlePoint.z);
+                    bB.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
 
                     values = calculateDistanceBetweenAtomAndBond(atom, theSingleBond);
 
-                    angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
+                    angle = calculateAngleBetweenTwoLines(aA, aB, bA, bB);
                     //System.out.println("ANGLe: "+angle+ " "+ mol.getAtomNumber(atomsInSingleBond[0]) +" " +mol.getAtomNumber(atomsInSingleBond[1]));
 
                     partial = (1 / (Math.pow(values[0], 2))) * Math.exp(smooth * (Math.pow((ghs - angle), 2)));
@@ -451,7 +451,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
                 }
                 //gSr_function.add(new Double(sum));
                 rdfProtonCalculatedValues.add(sum);
-                logger.debug("RDF gSr prob.: " + sum + " at distance " + ghs);
+                LOGGER.debug("RDF gSr prob.: " + sum + " at distance " + ghs);
             }
         } else {
             return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));

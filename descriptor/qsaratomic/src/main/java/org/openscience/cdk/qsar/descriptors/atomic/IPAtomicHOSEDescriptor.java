@@ -74,7 +74,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptorTest")
 public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 
-    private static final String[] descriptorNames = {"ipAtomicHOSE"};
+    private static final String[] NAMES = {"ipAtomicHOSE"};
 
     /** Maximum spheres to use by the HoseCode model.*/
     int                           maxSpheresToUse = 10;
@@ -121,7 +121,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return descriptorNames;
+        return NAMES;
     }
 
     /**
@@ -150,7 +150,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
                 lpcheck.saturate(container);
             } catch (CDKException e) {
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                        Double.NaN), descriptorNames, e);
+                        Double.NaN), NAMES, e);
             }
 
         }
@@ -164,7 +164,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
         atom.setBondOrderSum(originalBondOrderSum);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),
-                descriptorNames);
+                                   NAMES);
 
     }
 

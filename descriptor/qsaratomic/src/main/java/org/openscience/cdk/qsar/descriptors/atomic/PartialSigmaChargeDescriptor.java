@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest")
 public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
 
-    private static final String[]          names = {"partialSigmaCharge"};
+    private static final String[]          NAMES = {"partialSigmaCharge"};
 
     private GasteigerMarsiliPartialCharges peoe  = null;
     /**Number of maximum iterations*/
@@ -123,7 +123,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**
@@ -152,13 +152,13 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
                 }
             } catch (Exception e) {
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                        Double.NaN), names, e);
+                        Double.NaN), NAMES, e);
             }
         }
         atom.setCharge(originalCharge);
 
         return getCachedDescriptorValue(atom) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), getCachedDescriptorValue(atom), names) : null;
+                getParameters(), getCachedDescriptorValue(atom), NAMES) : null;
     }
 
     /**

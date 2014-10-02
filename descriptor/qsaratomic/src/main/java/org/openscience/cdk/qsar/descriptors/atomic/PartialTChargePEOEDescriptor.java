@@ -71,7 +71,7 @@ import java.util.List;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest")
 public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
-    private static final String[]          names         = {"pepeT"};
+    private static final String[]          NAMES         = {"pepeT"};
 
     private GasteigerMarsiliPartialCharges peoe          = null;
     private GasteigerPEPEPartialCharges    pepe          = null;
@@ -147,7 +147,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**
@@ -174,7 +174,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
             } catch (CDKException e) {
                 new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                        Double.NaN), names, e);
+                        Double.NaN), NAMES, e);
             }
 
             if (lpeChecker) {
@@ -183,7 +183,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
                     lpcheck.saturate(ac);
                 } catch (CDKException e) {
                     new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                            Double.NaN), names, e);
+                            Double.NaN), NAMES, e);
                 }
             }
 
@@ -207,7 +207,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
             } catch (Exception e) {
                 new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                        Double.NaN), names, e);
+                        Double.NaN), NAMES, e);
             }
         }
         // restore original props
@@ -220,7 +220,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
         atom.setBondOrderSum(originalBondOrderSum);
 
         return getCachedDescriptorValue(atom) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), getCachedDescriptorValue(atom), names) : null;
+                getParameters(), getCachedDescriptorValue(atom), NAMES) : null;
     }
 
     /**

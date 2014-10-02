@@ -59,7 +59,7 @@ import java.util.Map;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest")
 public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private static final String[] names = {"periodicTablePosition"};
+    private static final String[] NAMES = {"periodicTablePosition"};
     public Map<String, Integer>   periodicTable;
 
     /**
@@ -145,7 +145,7 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**
@@ -163,7 +163,7 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
         String symbol = atom.getSymbol();
         period = periodicTable.get(symbol);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(period),
-                names);
+                                   NAMES);
     }
 
     /**

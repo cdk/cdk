@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptorTest")
 public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private static final String[] names            = {"protonInConjSystem"};
+    private static final String[] NAMES            = {"protonInConjSystem"};
     private boolean               checkAromaticity = false;
     private IAtomContainer        acold            = null;
     private IAtomContainerSet     acSet            = null;
@@ -124,7 +124,7 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**
@@ -142,7 +142,7 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
             clonedAtomContainer = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(
-                    false), names, e);
+                    false), NAMES, e);
         }
         IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
 
@@ -154,7 +154,7 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
                 Aromaticity.cdkLegacy().apply(mol);
             } catch (CDKException e) {
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(
-                        false), names, e);
+                        false), NAMES, e);
             }
         }
         if (atom.getSymbol().equals("H")) {
@@ -175,7 +175,7 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
             }
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(
-                isProtonInPiSystem), names);
+                isProtonInPiSystem), NAMES);
     }
 
     /**

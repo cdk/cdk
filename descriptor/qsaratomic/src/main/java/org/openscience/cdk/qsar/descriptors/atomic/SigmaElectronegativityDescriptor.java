@@ -65,7 +65,7 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
     /**Number of maximum iterations*/
     private int                   maxIterations   = 0;
 
-    private static final String[] descriptorNames = {"elecSigmA"};
+    private static final String[] NAMES = {"elecSigmA"};
 
     private Electronegativity     electronegativity;
 
@@ -128,7 +128,7 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return descriptorNames;
+        return NAMES;
     }
 
     /**
@@ -151,10 +151,10 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
         } catch (CDKException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), descriptorNames, e);
+                    Double.NaN), NAMES, e);
         } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), descriptorNames, e);
+                    Double.NaN), NAMES, e);
         }
 
         if (maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
@@ -162,7 +162,7 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
         double result = electronegativity.calculateSigmaElectronegativity(clone, localAtom);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result),
-                descriptorNames);
+                                   NAMES);
     }
 
     /**

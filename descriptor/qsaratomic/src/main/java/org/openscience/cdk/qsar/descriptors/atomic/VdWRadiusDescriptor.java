@@ -59,7 +59,7 @@ import java.io.IOException;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest")
 public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private static final String[] names = {"vdwRadius"};
+    private static final String[] NAMES = {"vdwRadius"};
 
     /**
      *  Constructor for the VdWRadiusDescriptor object.
@@ -114,7 +114,7 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**
@@ -130,7 +130,7 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
         String symbol = atom.getSymbol();
         double vdwradius = PeriodicTable.getVdwRadius(symbol);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(vdwradius), names);
+                new DoubleResult(vdwradius), NAMES);
 
     }
 

@@ -70,7 +70,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
     /** make a lone pair electron checker. Default true*/
     private boolean               lpeChecker      = true;
 
-    private static final String[] descriptorNames = {"elecPiA"};
+    private static final String[] NAMES = {"elecPiA"};
     private PiElectronegativity   electronegativity;
 
     /**
@@ -140,7 +140,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return descriptorNames;
+        return NAMES;
     }
 
     /**
@@ -166,10 +166,10 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
             localAtom = clone.getAtom(atomContainer.getAtomNumber(atom));
         } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), descriptorNames, null);
+                    Double.NaN), NAMES, null);
         } catch (CDKException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), descriptorNames, null);
+                    Double.NaN), NAMES, null);
         }
 
         if (maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
@@ -178,7 +178,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
         double result = electronegativity.calculatePiElectronegativity(clone, localAtom);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result),
-                descriptorNames);
+                                   NAMES);
     }
 
     /**
