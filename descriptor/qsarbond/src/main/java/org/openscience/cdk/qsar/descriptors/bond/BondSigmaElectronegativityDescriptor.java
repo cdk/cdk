@@ -62,11 +62,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor implements IBondDescriptor {
 
     /**Number of maximum iterations*/
-    private int                   maxIterations   = 6;
+    private int maxIterations = 6;
 
-    private Electronegativity     electronegativity;
+    private Electronegativity electronegativity;
 
-    private static final String[] descriptorNames = {"elecSigB"};
+    private static final String[] NAMES = {"elecSigB"};
 
     /**
      *  Constructor for the BondSigmaElectronegativityDescriptor object.
@@ -79,14 +79,14 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      *  Gets the specification attribute of the BondSigmaElectronegativityDescriptor
      *  object.
      *
-     *@return    The specification value
+     *@return The specification value
      */
     @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondSigmaElectronegativity", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                .getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -108,7 +108,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
     /**
      *  Gets the parameters attribute of the BondSigmaElectronegativityDescriptor object.
      *
-     *@return    The parameters value
+     *@return The parameters value
      * @see #setParameters
      */
     @TestMethod(value = "testGetParameters")
@@ -123,12 +123,12 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return descriptorNames;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), descriptorNames, e);
+                Double.NaN), NAMES, e);
     }
 
     /**
@@ -136,7 +136,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
      *@param  atomContainer                AtomContainer
-     *@return                   return the sigma electronegativity
+     *@return return the sigma electronegativity
      */
     @TestMethod(value = "testCalculate_IBond_IAtomContainer,testBondSigmaElectronegativityDescriptor,testBondSigmaElectronegativityDescriptor_Methyl_chloride")
     @Override
@@ -160,7 +160,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
         double electroAtom2 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(1));
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Math.abs(electroAtom1 - electroAtom2)), descriptorNames);
+                Math.abs(electroAtom1 - electroAtom2)), NAMES);
 
     }
 

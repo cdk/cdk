@@ -62,15 +62,15 @@ import java.util.Iterator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest")
 public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
 
-    private GasteigerMarsiliPartialCharges peoe            = null;
+    private GasteigerMarsiliPartialCharges peoe = null;
     /**Number of maximum iterations*/
-    private int                            maxIterations;
+    private int maxIterations;
 
-    private static final String[]          descriptorNames = {"peoeB"};
+    private static final String[] NAMES = {"peoeB"};
 
     /**
-    *  Constructor for the BondPartialSigmaChargeDescriptor object.
-    */
+     *  Constructor for the BondPartialSigmaChargeDescriptor object.
+     */
     public BondPartialSigmaChargeDescriptor() {
         peoe = new GasteigerMarsiliPartialCharges();
     }
@@ -79,14 +79,14 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
      *  Gets the specification attribute of the BondPartialSigmaChargeDescriptor
      *  object.
      *
-     *@return    The specification value
+     *@return The specification value
      */
     @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialSigmaCharge", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                .getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -107,7 +107,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
     /**
      *  Gets the parameters attribute of the BondPartialSigmaChargeDescriptor object.
      *
-     *@return    The parameters value
+     *@return The parameters value
      * @see #setParameters
      */
     @TestMethod(value = "testGetParameters")
@@ -122,12 +122,12 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return descriptorNames;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), descriptorNames, e);
+                Double.NaN), NAMES, e);
     }
 
     /**
@@ -135,7 +135,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
      *@param  ac                AtomContainer
-     *@return                   return the sigma electronegativity
+     *@return return the sigma electronegativity
      */
     @TestMethod(value = "testCalculate_IBond_IAtomContainer,testBondSigmaElectronegativityDescriptor,testBondSigmaElectronegativityDescriptor_Methyl_chloride")
     @Override
@@ -160,7 +160,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
         bond.getAtom(0).setCharge(originalCharge1);
         bond.getAtom(1).setCharge(originalCharge2);
         return getCachedDescriptorValue(bond) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), getCachedDescriptorValue(bond), descriptorNames) : null;
+                getParameters(), getCachedDescriptorValue(bond), NAMES) : null;
     }
 
     /**

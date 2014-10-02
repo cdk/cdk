@@ -66,15 +66,15 @@ import java.util.Iterator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest")
 public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 
-    private GasteigerPEPEPartialCharges pepe            = null;
+    private GasteigerPEPEPartialCharges pepe          = null;
     /**Number of maximum iterations*/
-    private int                         maxIterations   = -1;
+    private int                         maxIterations = -1;
     /**Number of maximum resonance structures*/
-    private int                         maxResonStruc   = -1;
+    private int                         maxResonStruc = -1;
     /** make a lone pair electron checker. Default true*/
-    private boolean                     lpeChecker      = true;
+    private boolean                     lpeChecker    = true;
 
-    private static final String[]       descriptorNames = {"pepeB"};
+    private static final String[] NAMES = {"pepeB"};
 
     /**
      *  Constructor for the BondPartialPiChargeDescriptor object.
@@ -87,14 +87,14 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
      *  Gets the specification attribute of the BondPartialPiChargeDescriptor
      *  object.
      *
-     *@return    The specification value
+     *@return The specification value
      */
     @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialPiCharge", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                .getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -103,18 +103,22 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
     @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 3) throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
+        if (params.length > 3)
+            throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
 
-        if (!(params[0] instanceof Integer)) throw new CDKException("The parameter must be of type Integer");
+        if (!(params[0] instanceof Integer))
+            throw new CDKException("The parameter must be of type Integer");
         maxIterations = (Integer) params[0];
 
         if (params.length > 1 && params[1] != null) {
-            if (!(params[1] instanceof Boolean)) throw new CDKException("The parameter must be of type Boolean");
+            if (!(params[1] instanceof Boolean))
+                throw new CDKException("The parameter must be of type Boolean");
             lpeChecker = (Boolean) params[1];
         }
 
         if (params.length > 2 && params[2] != null) {
-            if (!(params[2] instanceof Integer)) throw new CDKException("The parameter must be of type Integer");
+            if (!(params[2] instanceof Integer))
+                throw new CDKException("The parameter must be of type Integer");
             maxResonStruc = (Integer) params[2];
         }
     }
@@ -122,7 +126,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
     /**
      *  Gets the parameters attribute of the BondPartialPiChargeDescriptor object.
      *
-     *@return    The parameters value
+     *@return The parameters value
      * @see #setParameters
      */
     @TestMethod(value = "testGetParameters")
@@ -139,12 +143,12 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return descriptorNames;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), descriptorNames, e);
+                Double.NaN), NAMES, e);
     }
 
     /**
@@ -215,7 +219,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
         bond.getAtom(1).setBondOrderSum(originalBondOrderSum2);
 
         return getCachedDescriptorValue(bond) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), getCachedDescriptorValue(bond), descriptorNames) : null;
+                getParameters(), getCachedDescriptorValue(bond), NAMES) : null;
     }
 
     /**
