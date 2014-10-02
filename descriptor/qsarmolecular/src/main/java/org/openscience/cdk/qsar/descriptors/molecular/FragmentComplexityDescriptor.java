@@ -126,19 +126,19 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         //System.out.println("FragmentComplexityDescriptor");
-        int A = 0;
-        double H = 0;
+        int a = 0;
+        double h = 0;
         for (int i = 0; i < container.getAtomCount(); i++) {
             if (!container.getAtom(i).getSymbol().equals("H")) {
-                A++;
+                a++;
             }
             if (!container.getAtom(i).getSymbol().equals("H") & !container.getAtom(i).getSymbol().equals("C")) {
-                H++;
+                h++;
             }
         }
-        int B = container.getBondCount() + AtomContainerManipulator.getImplicitHydrogenCount(container);
-        double C = Math.abs(B * B - A * A + A) + (H / 100);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(C),
+        int b = container.getBondCount() + AtomContainerManipulator.getImplicitHydrogenCount(container);
+        double c = Math.abs(b * b - a * a + a) + (h / 100);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(c),
                 getDescriptorNames());
     }
 

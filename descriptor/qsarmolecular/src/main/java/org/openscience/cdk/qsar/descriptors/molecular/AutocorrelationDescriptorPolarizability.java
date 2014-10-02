@@ -124,7 +124,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
         try {
             double[] w = listpolarizability(molecule, distancematrix);
             int natom = molecule.getAtomCount();
-            double[] PolarizabilitySum = new double[5];
+            double[] polarizabilitySum = new double[5];
 
             for (int k = 0; k < 5; k++) {
                 for (int i = 0; i < natom; i++) {
@@ -132,16 +132,16 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
                     for (int j = 0; j < natom; j++) {
                         if (molecule.getAtom(j).getSymbol().equals("H")) continue;
                         if (distancematrix[i][j] == k) {
-                            PolarizabilitySum[k] += w[i] * w[j];
+                            polarizabilitySum[k] += w[i] * w[j];
                         } else
-                            PolarizabilitySum[k] += 0.0;
+                            polarizabilitySum[k] += 0.0;
                     }
                 }
-                if (k > 0) PolarizabilitySum[k] = PolarizabilitySum[k] / 2;
+                if (k > 0) polarizabilitySum[k] = polarizabilitySum[k] / 2;
 
             }
             DoubleArrayResult result = new DoubleArrayResult(5);
-            for (double aPolarizabilitySum : PolarizabilitySum) {
+            for (double aPolarizabilitySum : polarizabilitySum) {
                 result.add(aPolarizabilitySum);
 
             }
