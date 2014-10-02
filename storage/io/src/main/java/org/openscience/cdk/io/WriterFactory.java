@@ -25,6 +25,7 @@ package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,7 +121,7 @@ public class WriterFactory {
                     } catch (ClassNotFoundException exception) {
                         logger.error("Could not find this IResourceFormat: ", formatName);
                         logger.debug(exception);
-                    } catch (Exception exception) {
+                    } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
                         logger.error("Could not load this IResourceFormat: ", formatName);
                         logger.debug(exception);
                     }
@@ -151,7 +152,7 @@ public class WriterFactory {
                 } catch (ClassNotFoundException exception) {
                     logger.error("Could not find this ChemObjectWriter: ", writerClassName);
                     logger.debug(exception);
-                } catch (Exception exception) {
+                } catch (InstantiationException | IllegalAccessException exception) {
                     logger.error("Could not create this ChemObjectWriter: ", writerClassName);
                     logger.debug(exception);
                 }

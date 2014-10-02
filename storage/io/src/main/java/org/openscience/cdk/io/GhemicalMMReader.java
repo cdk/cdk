@@ -20,6 +20,7 @@
 package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -171,7 +172,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                             atoms[atomID] = Integer.parseInt(atomInfoFields.nextToken());
                             logger.debug("Set atomic number of atom (" + atomID + ") to: " + atoms[atomID]);
                         }
-                    } catch (Exception exception) {
+                    } catch (NumberFormatException | IOException exception) {
                         logger.error("Error while reading Atoms block");
                         logger.debug(exception);
                     }
@@ -202,7 +203,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                                 bondorder[i] = IBond.Order.SINGLE;
                             }
                         }
-                    } catch (Exception exception) {
+                    } catch (NumberFormatException | IOException exception) {
                         logger.error("Error while reading Bonds block");
                         logger.debug(exception);
                     }
@@ -220,7 +221,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                             atomys[atomID] = y;
                             atomzs[atomID] = z;
                         }
-                    } catch (Exception exception) {
+                    } catch (IOException | NumberFormatException exception) {
                         logger.error("Error while reading Coord block");
                         logger.debug(exception);
                     }
@@ -234,7 +235,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                             double charge = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
                             atomcharges[atomID] = charge;
                         }
-                    } catch (Exception exception) {
+                    } catch (IOException | NumberFormatException exception) {
                         logger.error("Error while reading Charges block");
                         logger.debug(exception);
                     }
@@ -251,7 +252,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                             atom.setCharge(atomcharges[i]);
                             container.addAtom(atom);
                             logger.debug("Stored atom: " + atom);
-                        } catch (Exception exception) {
+                        } catch (IOException | IllegalArgumentException exception) {
                             logger.error("Cannot create an atom with atomic number: " + atoms[i]);
                             logger.debug(exception);
                         }
@@ -273,7 +274,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
 
                 line = input.readLine();
             }
-        } catch (Exception exception) {
+        } catch (IOException | IllegalArgumentException exception) {
             logger.error("Error while reading file");
             logger.debug(exception);
         }

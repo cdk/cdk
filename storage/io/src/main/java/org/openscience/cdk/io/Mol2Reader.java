@@ -198,7 +198,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
             }
         } catch (CDKException cdkexc) {
             throw cdkexc;
-        } catch (Exception exception) {
+        } catch (IllegalArgumentException exception) {
             String error = "Error while parsing MOL2";
             logger.error(error);
             logger.debug(exception);

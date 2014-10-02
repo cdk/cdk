@@ -26,6 +26,7 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -252,7 +253,7 @@ public class TemplateExtractor {
                             // mdlw.write(new Molecule
                             // ((AtomContainer)RingSetManipulator.getAllInOneContainer(ringSet)));
                             mdlw.write(builder.newInstance(IAtomContainer.class, ac));
-                        } catch (Exception emdl) {
+                        } catch (IllegalArgumentException | CDKException emdl) {
                         }
 
                     }
@@ -294,7 +295,7 @@ public class TemplateExtractor {
             MDLV2000Writer mdlw = new MDLV2000Writer(fout);
             mdlw.write(som);
             mdlw.close();
-        } catch (Exception ex2) {
+        } catch (CDKException | IOException ex2) {
             System.out.println("IOError:cannot write file due to:" + ex2.toString());
         }
     }
@@ -328,7 +329,7 @@ public class TemplateExtractor {
             try {
 
                 data.add((String) smiles.create(builder.newInstance(IAtomContainer.class, m)));
-            } catch (Exception exc1) {
+            } catch (IllegalArgumentException | CDKException exc1) {
                 System.out.println("Could not create smile due to: " + exc1.getMessage());
             }
         }

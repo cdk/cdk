@@ -230,7 +230,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                 }
             }
             file.addChemSequence(seq);
-        } catch (Exception exception) {
+        } catch (IOException | IllegalArgumentException exception) {
             String message = "Error while parsing CrystClust file: " + exception.getMessage();
             logger.error(message);
             logger.debug(exception);

@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -255,7 +256,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                         reader.setReader(byteStream);
                         molecule = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
                         byteStream.close();
-                    } catch (Exception exception) {
+                    } catch (CDKException | IllegalArgumentException | IOException exception) {
                         logger.error("Error while reading next molecule: " + exception.getMessage());
                         logger.debug(exception);
                     }

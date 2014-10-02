@@ -71,7 +71,7 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
                     } catch (ClassNotFoundException exception) {
                         logger.error("Could not find this IResourceFormat: ", formatName);
                         logger.debug(exception);
-                    } catch (Exception exception) {
+                    } catch (InstantiationException | IllegalAccessException exception) {
                         logger.error("Could not load this IResourceFormat: ", formatName);
                         logger.debug(exception);
                     }
@@ -110,7 +110,7 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
         } catch (ClassNotFoundException exception) {
             logger.debug("Could not find this class: " + className);
             // but that's not error, it can mean that it is a Jmol based IO class, and no Jmol is in the classpath
-        } catch (Exception exception) {
+        } catch (InstantiationException | IllegalAccessException exception) {
             logger.debug(exception);
             Assert.fail("Could not instantiate this class: " + className);
         }

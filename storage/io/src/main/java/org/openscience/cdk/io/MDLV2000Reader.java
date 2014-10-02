@@ -260,7 +260,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
         } catch (CDKException e) {
             throw e;
-        } catch (Exception exception) {
+        } catch (IllegalArgumentException exception) {
             String error = "Error while parsing SDF";
             logger.error(error);
             logger.debug(exception);
@@ -483,7 +483,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             logger.error(error);
             throw exception;
-        } catch (Exception exception) {
+        } catch (IOException exception) {
             exception.printStackTrace();
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             logger.error(error);
@@ -1325,7 +1325,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         IIsotope major = Isotopes.getInstance().getMajorIsotope(element);
                         atom.setMassNumber(major.getMassNumber() + massDiff);
                     }
-                } catch (Exception exception) {
+                } catch (NumberFormatException | IOException exception) {
                     handleError("Could not parse mass difference field.", linecount, 35, 37, exception);
                 }
             } else {

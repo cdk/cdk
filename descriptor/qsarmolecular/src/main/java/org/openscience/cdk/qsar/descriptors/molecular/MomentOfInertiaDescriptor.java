@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.IOException;
+
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -188,7 +190,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
             clone = (IAtomContainer) container.clone();
             factory = Isotopes.getInstance();
             factory.configureAtoms(clone);
-        } catch (Exception e) {
+        } catch (CloneNotSupportedException | IOException e) {
             logger.debug(e);
             return getDummyDescriptorValue(e);
         }

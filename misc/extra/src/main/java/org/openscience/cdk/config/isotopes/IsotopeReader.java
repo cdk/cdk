@@ -27,12 +27,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -82,7 +85,7 @@ public class IsotopeReader {
                 parser = saxParser.getXMLReader();
                 logger.info("Using JAXP/SAX XML parser.");
                 success = true;
-            } catch (Exception exception) {
+            } catch (ParserConfigurationException | SAXException exception) {
                 logger.warn("Could not instantiate JAXP/SAX XML reader!");
                 logger.debug(exception);
             }
@@ -94,7 +97,7 @@ public class IsotopeReader {
                         .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 logger.warn("Could not instantiate Aelfred2 XML reader!");
                 logger.debug(e);
             }
@@ -106,7 +109,7 @@ public class IsotopeReader {
                         .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 logger.warn("Could not instantiate Xerces XML reader!");
                 logger.debug(e);
             }

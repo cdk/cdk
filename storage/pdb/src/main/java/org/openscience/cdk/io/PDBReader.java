@@ -490,7 +490,7 @@ public class PDBReader extends DefaultChemObjectReader {
                     } // ignore all other commands
                 }
             } while (_oInput.ready() && (cRead != null));
-        } catch (Exception e) {
+        } catch (IOException | IllegalArgumentException e) {
             logger.error("Found a problem at line:");
             logger.error(cRead);
             logger.error("01234567890123456789012345678901234567890123456789012345678901234567890123456789");
