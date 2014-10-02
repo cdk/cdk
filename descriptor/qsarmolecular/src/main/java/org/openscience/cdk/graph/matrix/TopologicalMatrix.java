@@ -27,8 +27,8 @@ public class TopologicalMatrix implements IGraphMatrix {
     @TestMethod("testTopologicalMatrix_IAtomContainer")
     public static int[][] getMatrix(IAtomContainer container) {
         int[][] conMat = AdjacencyMatrix.getMatrix(container);
-        int[][] TopolDistance = PathTools.computeFloydAPSP(conMat);
+        int[][] topolDistance = PathTools.computeFloydAPSP(conMat);
 
-        return TopolDistance;
+        return topolDistance;
     }
 }
