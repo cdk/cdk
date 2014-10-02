@@ -307,14 +307,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptorTest")
 public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static String[]       NAMES;
+    private static String[] names;
     private static final String[] SMARTS = EStateFragments.getSmarts();
 
     public KierHallSmartsDescriptor() {
         String[] tmp = EStateFragments.getNames();
-        NAMES = new String[tmp.length];
+        names = new String[tmp.length];
         for (int i = 0; i < tmp.length; i++)
-            NAMES[i] = "khs." + tmp[i];
+            names[i] = "khs." + tmp[i];
     }
 
     /**
@@ -369,7 +369,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return NAMES;
+        return names;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
