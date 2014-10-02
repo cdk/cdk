@@ -96,6 +96,9 @@
   <owl:Thing rdf:about="&cdkat;C.sp">
     <atm:equivalentAsType rdf:resource="&sybylat;C.1"/>
   </owl:Thing>
+  <owl:Thing rdf:about="&cdkat;C.allene">
+      <atm:equivalentAsType rdf:resource="&sybylat;C.1"/>
+    </owl:Thing>
   <owl:Thing rdf:about="&cdkat;C.sp2">
     <atm:equivalentAsType rdf:resource="&sybylat;C.2"/>
   </owl:Thing>
