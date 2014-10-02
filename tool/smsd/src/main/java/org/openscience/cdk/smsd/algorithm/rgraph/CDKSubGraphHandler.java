@@ -180,17 +180,17 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
         try {
             List<Map<Integer, Integer>> sol = FinalMappings.getInstance().getFinalMapping();
             int counter = 0;
-            for (Map<Integer, Integer> final_solution : sol) {
+            for (Map<Integer, Integer> finalSolution : sol) {
                 TreeMap<Integer, Integer> atomMappings = new TreeMap<Integer, Integer>();
-                for (Map.Entry<Integer, Integer> Solutions : final_solution.entrySet()) {
+                for (Map.Entry<Integer, Integer> solutions : finalSolution.entrySet()) {
 
-                    int IIndex = Solutions.getKey().intValue();
-                    int JIndex = Solutions.getValue().intValue();
+                    int iIndex = solutions.getKey().intValue();
+                    int jIndex = solutions.getValue().intValue();
 
                     if (rOnPFlag) {
-                        atomMappings.put(IIndex, JIndex);
+                        atomMappings.put(iIndex, jIndex);
                     } else {
-                        atomMappings.put(JIndex, IIndex);
+                        atomMappings.put(jIndex, iIndex);
                     }
                 }
                 if (!allMCS.contains(atomMappings)) {
@@ -208,18 +208,18 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
         List<Map<Integer, Integer>> sol = allMCS;
 
         int counter = 0;
-        for (Map<Integer, Integer> final_solution : sol) {
+        for (Map<Integer, Integer> finalSolution : sol) {
             Map<IAtom, IAtom> atomMappings = new HashMap<IAtom, IAtom>();
-            for (Map.Entry<Integer, Integer> Solutions : final_solution.entrySet()) {
+            for (Map.Entry<Integer, Integer> solutions : finalSolution.entrySet()) {
 
-                int IIndex = Solutions.getKey().intValue();
-                int JIndex = Solutions.getValue().intValue();
+                int iIndex = solutions.getKey().intValue();
+                int jIndex = solutions.getValue().intValue();
 
                 IAtom sourceAtom = null;
                 IAtom targetAtom = null;
 
-                sourceAtom = source.getAtom(IIndex);
-                targetAtom = target.getAtom(JIndex);
+                sourceAtom = source.getAtom(iIndex);
+                targetAtom = target.getAtom(jIndex);
                 atomMappings.put(sourceAtom, targetAtom);
 
             }

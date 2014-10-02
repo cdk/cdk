@@ -362,23 +362,23 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         IBond[] bonds = new IBond[bondCount];
         for (int index = 0; index < container.getBondCount(); index++) {
             bonds[index] = new Bond();
-            int IndexI = 999;
+            int indexI = 999;
             for (int i = 0; i < container.getAtomCount(); i++) {
                 if (container.getBond(index).getAtom(0) == container.getAtom(i)) {
-                    IndexI = i;
+                    indexI = i;
                     break;
                 }
             }
-            int IndexJ = 999;
+            int indexJ = 999;
             for (int j = 0; j < container.getAtomCount(); j++) {
                 if (container.getBond(index).getAtom(1) == container.getAtom(j)) {
-                    IndexJ = j;
+                    indexJ = j;
                     break;
                 }
             }
 
-            IAtom atom1 = atoms[IndexI];
-            IAtom atom2 = atoms[IndexJ];
+            IAtom atom1 = atoms[indexI];
+            IAtom atom2 = atoms[indexJ];
 
             Order order = container.getBond(index).getOrder();
             IBond.Stereo stereo = container.getBond(index).getStereo();

@@ -66,20 +66,20 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFlibTurboHandlerTest")
 public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBase {
 
-    private static List<Map<IAtom, IAtom>>     allAtomMCS      = null;
-    private static Map<IAtom, IAtom>           atomsMCS        = null;
-    private static List<Map<IAtom, IAtom>>     allAtomMCSCopy  = null;
-    private static Map<Integer, Integer>       firstMCS        = null;
-    private static List<Map<Integer, Integer>> allMCS          = null;
-    private static List<Map<Integer, Integer>> allMCSCopy      = null;
-    private IQueryAtomContainer                queryMol        = null;
-    private IAtomContainer                     mol1            = null;
-    private IAtomContainer                     mol2            = null;
-    private List<Map<INode, IAtom>>            vfLibSolutions  = null;
-    private int                                vfMCSSize       = -1;
-    private boolean                            bond_Match_Flag = false;
-    private final static ILoggingTool          Logger          = LoggingToolFactory
-                                                                       .createLoggingTool(VFlibSubStructureHandler.class);
+    private static       List<Map<IAtom, IAtom>>     allAtomMCS     = null;
+    private static       Map<IAtom, IAtom>           atomsMCS       = null;
+    private static       List<Map<IAtom, IAtom>>     allAtomMCSCopy = null;
+    private static       Map<Integer, Integer>       firstMCS       = null;
+    private static       List<Map<Integer, Integer>> allMCS         = null;
+    private static       List<Map<Integer, Integer>> allMCSCopy     = null;
+    private              IQueryAtomContainer         queryMol       = null;
+    private              IAtomContainer              mol1           = null;
+    private              IAtomContainer              mol2           = null;
+    private              List<Map<INode, IAtom>>     vfLibSolutions = null;
+    private              int                         vfMCSSize      = -1;
+    private              boolean                     bondMatchFlag  = false;
+    private final static ILoggingTool                LOGGER         = LoggingToolFactory
+            .createLoggingTool(VFlibSubStructureHandler.class);
 
     /**
      * Constructor for an extended VF Algorithm for the MCS search
@@ -226,7 +226,7 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
         }
     }
 
-    private void setVFMappings(boolean RONP, IQuery query) {
+    private void setVFMappings(boolean ronp, IQuery query) {
         int counter = 0;
         for (Map<INode, IAtom> solution : vfLibSolutions) {
             Map<IAtom, IAtom> atomatomMapping = new HashMap<IAtom, IAtom>();
@@ -240,7 +240,7 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
             for (Map.Entry<INode, IAtom> mapping : solution.entrySet()) {
                 IAtom qAtom = null;
                 IAtom tAtom = null;
-                if (RONP) {
+                if (ronp) {
                     qAtom = query.getAtom(mapping.getKey());
                     tAtom = mapping.getValue();
                 } else {
@@ -256,7 +256,7 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
                     try {
                         throw new CDKException("Atom index pointing to NULL");
                     } catch (CDKException ex) {
-                        Logger.error(Level.SEVERE, null, ex);
+                        LOGGER.error(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -281,9 +281,9 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
         //            try {
         //                searchMcGregorMapping();
         //            } catch (CDKException ex) {
-        //                Logger.error(Level.SEVERE, null, ex);
+        //                LOGGER.error(Level.SEVERE, null, ex);
         //            } catch (IOException ex) {
-        //                Logger.error(Level.SEVERE, null, ex);
+        //                LOGGER.error(Level.SEVERE, null, ex);
         //            }
         //
         //        } else
@@ -300,14 +300,14 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
      * @return the shouldMatchBonds
      */
     public boolean isBondMatchFlag() {
-        return bond_Match_Flag;
+        return bondMatchFlag;
     }
 
     /**
      * @param shouldMatchBonds the shouldMatchBonds to set
      */
     public void setBondMatchFlag(boolean shouldMatchBonds) {
-        this.bond_Match_Flag = shouldMatchBonds;
+        this.bondMatchFlag = shouldMatchBonds;
     }
 
     private IAtomContainer getReactantMol() {

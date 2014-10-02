@@ -127,10 +127,10 @@ public class SingleMapping {
                     Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();
                     if (smartAtom.matches(targetAtom)) {
                         mapAtoms.put(sourceAtom, targetAtom);
-                        List<IBond> Bonds = target.getConnectedBondsList(targetAtom);
+                        List<IBond> bonds = target.getConnectedBondsList(targetAtom);
 
                         double totalOrder = 0;
-                        for (IBond bond : Bonds) {
+                        for (IBond bond : bonds) {
                             Order order = bond.getOrder();
                             totalOrder += order.numeric() + be.getEnergies(bond);
                         }
@@ -156,10 +156,10 @@ public class SingleMapping {
                     Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();
                     if (sourceAtom.getSymbol().equalsIgnoreCase(targetAtom.getSymbol())) {
                         mapAtoms.put(sourceAtom, targetAtom);
-                        List<IBond> Bonds = target.getConnectedBondsList(targetAtom);
+                        List<IBond> bonds = target.getConnectedBondsList(targetAtom);
 
                         double totalOrder = 0;
-                        for (IBond bond : Bonds) {
+                        for (IBond bond : bonds) {
                             Order order = bond.getOrder();
                             totalOrder += order.numeric() + be.getEnergies(bond);
                         }
@@ -186,10 +186,10 @@ public class SingleMapping {
 
                     if (targetAtom.getSymbol().equalsIgnoreCase(sourceAtoms.getSymbol())) {
                         mapAtoms.put(sourceAtoms, targetAtom);
-                        List<IBond> Bonds = source.getConnectedBondsList(sourceAtoms);
+                        List<IBond> bonds = source.getConnectedBondsList(sourceAtoms);
 
                         double totalOrder = 0;
-                        for (IBond bond : Bonds) {
+                        for (IBond bond : bonds) {
                             Order order = bond.getOrder();
                             totalOrder += order.numeric() + be.getEnergies(bond);
                         }
