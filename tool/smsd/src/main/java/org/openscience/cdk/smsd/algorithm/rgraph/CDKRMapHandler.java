@@ -95,16 +95,16 @@ public class CDKRMapHandler {
 
     /**
      * This function calculates all the possible combinations of MCS
-     * @param Molecule1
-     * @param Molecule2
+     * @param molecule1
+     * @param molecule2
      * @param shouldMatchBonds
      * @throws CDKException
      */
-    public void calculateOverlapsAndReduce(IAtomContainer Molecule1, IAtomContainer Molecule2, boolean shouldMatchBonds)
+    public void calculateOverlapsAndReduce(IAtomContainer molecule1, IAtomContainer molecule2, boolean shouldMatchBonds)
             throws CDKException {
 
-        setSource(Molecule1);
-        setTarget(Molecule2);
+        setSource(molecule1);
+        setTarget(molecule2);
 
         setMappings(new ArrayList<Map<Integer, Integer>>());
 
@@ -145,16 +145,16 @@ public class CDKRMapHandler {
      * This function calculates only one solution (exact) because we are looking at the
      * molecules which are exactly same in terms of the bonds and atoms determined by the
      * Fingerprint
-     * @param Molecule1
-     * @param Molecule2
+     * @param molecule1
+     * @param molecule2
      * @param shouldMatchBonds
      * @throws CDKException
      */
-    public void calculateOverlapsAndReduceExactMatch(IAtomContainer Molecule1, IAtomContainer Molecule2,
+    public void calculateOverlapsAndReduceExactMatch(IAtomContainer molecule1, IAtomContainer molecule2,
             boolean shouldMatchBonds) throws CDKException {
 
-        setSource(Molecule1);
-        setTarget(Molecule2);
+        setSource(molecule1);
+        setTarget(molecule2);
 
         setMappings(new ArrayList<Map<Integer, Integer>>());
 
@@ -192,16 +192,16 @@ public class CDKRMapHandler {
      * This function calculates only one solution (exact) because we are looking at the
      * molecules which are exactly same in terms of the bonds and atoms determined by the
      * Fingerprint
-     * @param Molecule1
-     * @param Molecule2
+     * @param molecule1
+     * @param molecule2
      * @param shouldMatchBonds
      * @throws CDKException
      */
-    public void calculateSubGraphs(IAtomContainer Molecule1, IAtomContainer Molecule2, boolean shouldMatchBonds)
+    public void calculateSubGraphs(IAtomContainer molecule1, IAtomContainer molecule2, boolean shouldMatchBonds)
             throws CDKException {
 
-        setSource(Molecule1);
-        setTarget(Molecule2);
+        setSource(molecule1);
+        setTarget(molecule2);
 
         setMappings(new ArrayList<Map<Integer, Integer>>());
 
@@ -238,16 +238,16 @@ public class CDKRMapHandler {
      * This function calculates only one solution (exact) because we are looking at the
      * molecules which are exactly same in terms of the bonds and atoms determined by the
      * Fingerprint
-     * @param Molecule1
-     * @param Molecule2
+     * @param molecule1
+     * @param molecule2
      * @param shouldMatchBonds
      * @throws CDKException
      */
-    public void calculateIsomorphs(IAtomContainer Molecule1, IAtomContainer Molecule2, boolean shouldMatchBonds)
+    public void calculateIsomorphs(IAtomContainer molecule1, IAtomContainer molecule2, boolean shouldMatchBonds)
             throws CDKException {
 
-        setSource(Molecule1);
-        setTarget(Molecule2);
+        setSource(molecule1);
+        setTarget(molecule2);
 
         setMappings(new ArrayList<Map<Integer, Integer>>());
 

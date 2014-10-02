@@ -176,7 +176,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     private List<Double>                bEnergies              = null;
     private Algorithm                   algorithmType;
     private boolean                     removeHydrogen         = false;
-    private final static ILoggingTool   Logger                 = LoggingToolFactory
+    private final static ILoggingTool   LOGGER                 = LoggingToolFactory
                                                                        .createLoggingTool(Isomorphism.class);
     private double                      bondSensitiveTimeOut   = 0.15;                                        //mins
     private double                      bondInSensitiveTimeOut = 1.00;                                        //mins
@@ -583,7 +583,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      *
      * @param reactant
      * @param product
-     * @param removeHydrogen
      *
      */
     private void init(MolHandler reactant, MolHandler product) throws CDKException {
@@ -650,7 +649,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
                     chemFilter.sortResultsByStereoAndBondMatch();
                     this.stereoScore = chemFilter.getStereoMatches();
                 } catch (CDKException ex) {
-                    Logger.error(Level.SEVERE, null, ex);
+                    LOGGER.error(Level.SEVERE, null, ex);
                 }
             }
             if (fragmentFilter) {
@@ -662,7 +661,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
                     chemFilter.sortResultsByEnergies();
                     this.bEnergies = chemFilter.getSortedEnergy();
                 } catch (CDKException ex) {
-                    Logger.error(Level.SEVERE, null, ex);
+                    LOGGER.error(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -672,24 +671,24 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      */
     @Override
     @TestMethod("testGetFragmentSize")
-    public synchronized Integer getFragmentSize(int Key) {
-        return (fragmentSize != null && !fragmentSize.isEmpty()) ? fragmentSize.get(Key) : null;
+    public synchronized Integer getFragmentSize(int key) {
+        return (fragmentSize != null && !fragmentSize.isEmpty()) ? fragmentSize.get(key) : null;
     }
 
     /** {@inheritDoc}
      */
     @Override
     @TestMethod("testGetStereoScore")
-    public synchronized Integer getStereoScore(int Key) {
-        return (stereoScore != null && !stereoScore.isEmpty()) ? stereoScore.get(Key).intValue() : null;
+    public synchronized Integer getStereoScore(int key) {
+        return (stereoScore != null && !stereoScore.isEmpty()) ? stereoScore.get(key).intValue() : null;
     }
 
     /** {@inheritDoc}
      */
     @Override
     @TestMethod("testGetEnergyScore")
-    public synchronized Double getEnergyScore(int Key) {
-        return (bEnergies != null && !bEnergies.isEmpty()) ? bEnergies.get(Key) : null;
+    public synchronized Double getEnergyScore(int key) {
+        return (bEnergies != null && !bEnergies.isEmpty()) ? bEnergies.get(key) : null;
     }
 
     /** {@inheritDoc}
@@ -803,7 +802,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         boolean flag = false;
         IAtomContainer reactant = getReactantMolecule();
         IAtomContainer product = getProductMolecule();
-        int Score = 0;
+        int score = 0;
 
         for (Map.Entry<IAtom, IAtom> mappingI : firstAtomMCS.entrySet()) {
             IAtom indexI = mappingI.getKey();
@@ -824,12 +823,12 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
                     IBond pBond = product.getBond(targetAtom1, targetAtom2);
 
                     if ((rBond != null && pBond != null) && (rBond.getStereo() != pBond.getStereo())) {
-                        Score++;
+                        score++;
                     }
                 }
             }
         }
-        if (Score > 0) {
+        if (score > 0) {
             flag = true;
         }
         return flag;
