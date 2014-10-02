@@ -122,16 +122,16 @@ public class DebugReactionSet extends ReactionSet implements IReactionSet {
 
     /** {@inheritDoc} */
     @Override
-    public void setFlag(int flag_type, boolean flag_value) {
-        logger.debug("Setting flag: ", flag_type + "=" + flag_value);
-        super.setFlag(flag_type, flag_value);
+    public void setFlag(int flagType, boolean flagValue) {
+        logger.debug("Setting flag: ", flagType + "=" + flagValue);
+        super.setFlag(flagType, flagValue);
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean getFlag(int flag_type) {
-        logger.debug("Setting flag: ", flag_type + "=" + super.getFlag(flag_type));
-        return super.getFlag(flag_type);
+    public boolean getFlag(int flagType) {
+        logger.debug("Setting flag: ", flagType + "=" + super.getFlag(flag_type));
+        return super.getFlag(flagType);
     }
 
     /** {@inheritDoc} */
