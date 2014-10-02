@@ -48,7 +48,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.MannholdLogPDescriptorTest")
 public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"MLogP"};
+    private static final String[] NAMES = {"MLogP"};
 
     /**
      * Gets the specification attribute of the MannholdLogPDescriptor object.
@@ -95,7 +95,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
     @TestMethod("testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

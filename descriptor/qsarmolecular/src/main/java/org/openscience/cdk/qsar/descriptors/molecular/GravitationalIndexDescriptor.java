@@ -98,7 +98,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         }
     }
 
-    private static final String[] names = {"GRAV-1", "GRAV-2", "GRAV-3", "GRAVH-1", "GRAVH-2", "GRAVH-3", "GRAV-4",
+    private static final String[] NAMES = {"GRAV-1", "GRAV-2", "GRAV-3", "GRAVH-1", "GRAVH-2", "GRAVH-3", "GRAV-4",
             "GRAV-5", "GRAV-6"          };
 
     public GravitationalIndexDescriptor() {}
@@ -140,7 +140,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

@@ -75,7 +75,7 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
     private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(APolDescriptor.class);
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
     private static double[]       polarizabilities;
-    private static final String[] names  = {"apol"};
+    private static final String[] NAMES  = {"apol"};
 
     /**
      *  Constructor for the APolDescriptor object.
@@ -147,7 +147,7 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

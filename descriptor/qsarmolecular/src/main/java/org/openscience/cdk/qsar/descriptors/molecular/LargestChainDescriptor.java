@@ -77,7 +77,7 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
 
     private boolean               checkAromaticity = false;
     private boolean               checkRingSystem  = false;
-    private static final String[] names            = {"nAtomLC"};
+    private static final String[] NAMES            = {"nAtomLC"};
 
     /**
      * Constructor for the LargestChain object.
@@ -150,7 +150,7 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

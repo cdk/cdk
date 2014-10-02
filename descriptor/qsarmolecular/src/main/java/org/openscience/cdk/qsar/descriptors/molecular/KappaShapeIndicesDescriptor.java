@@ -63,7 +63,7 @@ import java.util.ArrayList;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.KappaShapeIndicesDescriptorTest")
 public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"Kier1", "Kier2", "Kier3"};
+    private static final String[] NAMES = {"Kier1", "Kier2", "Kier3"};
 
     /**
      * Constructor for the KappaShapeIndicesDescriptor object
@@ -113,7 +113,7 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

@@ -48,7 +48,7 @@ import java.util.List;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptorTest")
 public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"Zagreb"};
+    private static final String[] NAMES = {"Zagreb"};
 
     /**
      *  Constructor for the ZagrebIndexDescriptor object.
@@ -97,7 +97,7 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

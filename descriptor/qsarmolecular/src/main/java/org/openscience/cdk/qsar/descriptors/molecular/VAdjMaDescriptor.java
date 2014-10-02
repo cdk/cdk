@@ -61,7 +61,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.VAdjMaDescriptorTest")
 public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"VAdjMat"};
+    private static final String[] NAMES = {"VAdjMat"};
 
     /**
      *  Constructor for the VAdjMaDescriptor object
@@ -107,7 +107,7 @@ public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMo
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

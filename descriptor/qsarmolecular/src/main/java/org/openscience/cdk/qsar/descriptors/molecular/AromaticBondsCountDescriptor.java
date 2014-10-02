@@ -65,7 +65,7 @@ import java.util.Iterator;
 public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private boolean               checkAromaticity = false;
-    private static final String[] names            = {"nAromBond"};
+    private static final String[] NAMES            = {"nAromBond"};
 
     /**
      *  Constructor for the AromaticBondsCountDescriptor object.
@@ -137,7 +137,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

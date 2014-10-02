@@ -67,7 +67,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.PetitjeanNumberDescriptorTest")
 public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"PetitjeanNumber"};
+    private static final String[] NAMES = {"PetitjeanNumber"};
 
     /**
      *  Constructor for the PetitjeanNumberDescriptor object
@@ -114,7 +114,7 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

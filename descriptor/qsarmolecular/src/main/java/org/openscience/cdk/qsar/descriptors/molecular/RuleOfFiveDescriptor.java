@@ -67,7 +67,7 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
 
     private boolean               checkAromaticity = false;
 
-    private static final String[] names            = {"LipinskiFailures"};
+    private static final String[] NAMES            = {"LipinskiFailures"};
 
     /**
      *  Constructor for the RuleOfFiveDescriptor object.
@@ -139,7 +139,7 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

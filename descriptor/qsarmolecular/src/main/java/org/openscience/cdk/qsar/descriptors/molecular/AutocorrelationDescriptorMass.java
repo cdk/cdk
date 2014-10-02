@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorMassTest")
 public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private final static String[] names       = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};
+    private final static String[] NAMES       = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};
     private final static double   CARBON_MASS = 12.010735896788;
 
     private static double scaledAtomicMasses(IElement element) throws java.io.IOException, ClassNotFoundException {
@@ -148,7 +148,7 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     @TestMethod("testGetSpecification")

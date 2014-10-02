@@ -58,7 +58,7 @@ import java.util.Iterator;
 public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDescriptor implements
         IMolecularDescriptor {
 
-    private static final String[] names = {"ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5"};
+    private static final String[] NAMES = {"ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5"};
 
     private static double[] listpolarizability(IAtomContainer container, int[][] dmat) throws CDKException {
         int natom = container.getAtomCount();
@@ -184,7 +184,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     @TestMethod("testGetSpecification")

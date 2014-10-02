@@ -81,7 +81,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
     private boolean               checkAromaticity = false;
     private static HashMap        map;
-    private static final String[] names            = {"TopoPSA"};
+    private static final String[] NAMES            = {"TopoPSA"};
 
     /**
      * Constructor for the TPSADescriptor object.
@@ -200,7 +200,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

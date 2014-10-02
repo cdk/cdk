@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.result.IntegerArrayResult;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.SmallRingDescriptorTest")
 public class SmallRingDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"nSmallRings", // total number of small rings (of size 3 through 9)
+    private static final String[] NAMES = {"nSmallRings", // total number of small rings (of size 3 through 9)
             "nAromRings", // total number of small aromatic rings
             "nRingBlocks", // total number of distinct ring blocks
             "nAromBlocks", // total number of "aromatically connected components"
@@ -115,7 +115,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     @TestMethod("nop")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**
@@ -124,7 +124,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     @TestMethod("nop")
     @Override
     public IDescriptorResult getDescriptorResultType() {
-        return new IntegerArrayResult(names.length);
+        return new IntegerArrayResult(NAMES.length);
     }
 
     /**
@@ -209,7 +209,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
         result.add(nRings7);
         result.add(nRings8);
         result.add(nRings9);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result, names);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result, NAMES);
     }
 
     // analyze the molecule graph, and build up the desired properties
