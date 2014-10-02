@@ -58,14 +58,14 @@ public class PostFilter {
      */
     @TestMethod("testFilter")
     public static List<Map<Integer, Integer>> filter(List<List<Integer>> mappings) {
-        FinalMappings final_MAPPINGS = FinalMappings.getInstance();
+        FinalMappings finalMappings = FinalMappings.getInstance();
         if (mappings != null && !mappings.isEmpty()) {
-            final_MAPPINGS.set(removeRedundantMapping(mappings));
+            finalMappings.set(removeRedundantMapping(mappings));
             mappings.clear();
         } else {
-            final_MAPPINGS.set(new ArrayList<Map<Integer, Integer>>());
+            finalMappings.set(new ArrayList<Map<Integer, Integer>>());
         }
-        return final_MAPPINGS.getFinalMapping();
+        return finalMappings.getFinalMapping();
     }
 
     private static boolean hasMap(Map<Integer, Integer> newMap, List<Map<Integer, Integer>> nonRedundantMapping) {
@@ -79,13 +79,13 @@ public class PostFilter {
 
     /**
      *
-     * @param mapping_org
+     * @param mappingOrg
      * @return
      */
-    private static List<Map<Integer, Integer>> removeRedundantMapping(List<List<Integer>> mapping_org) {
+    private static List<Map<Integer, Integer>> removeRedundantMapping(List<List<Integer>> mappingOrg) {
         List<Map<Integer, Integer>> nonRedundantMapping = new ArrayList<Map<Integer, Integer>>();
-        for (List<Integer> M : mapping_org) {
-            Map<Integer, Integer> newMap = getMappingMapFromList(M);
+        for (List<Integer> mapping : mappingOrg) {
+            Map<Integer, Integer> newMap = getMappingMapFromList(mapping);
             if (!hasMap(newMap, nonRedundantMapping)) {
                 nonRedundantMapping.add(newMap);
             }

@@ -152,37 +152,37 @@ public class ChemicalFilters {
             Map<Integer, Map<IAtom, IAtom>> sortedAllAtomMCS, Map<Integer, Double> stereoScoreMap,
             Map<Integer, Integer> fragmentScoreMap, Map<Integer, Double> energySelectionMap) {
 
-        Integer Index = 0;
+        Integer index = 0;
         for (Map<IAtom, IAtom> atomsMCS : allAtomMCS) {
-            sortedAllAtomMCS.put(Index, atomsMCS);
-            fragmentScoreMap.put(Index, 0);
-            energySelectionMap.put(Index, 0.0);
-            stereoScoreMap.put(Index, 0.0);
-            Index++;
+            sortedAllAtomMCS.put(index, atomsMCS);
+            fragmentScoreMap.put(index, 0);
+            energySelectionMap.put(index, 0.0);
+            stereoScoreMap.put(index, 0.0);
+            index++;
         }
 
-        Index = 0;
-        for (Map<Integer, Integer> MCS : allMCS) {
-            sortedAllMCS.put(Index, MCS);
-            Index++;
+        index = 0;
+        for (Map<Integer, Integer> mcs : allMCS) {
+            sortedAllMCS.put(index, mcs);
+            index++;
         }
 
-        Index = 0;
+        index = 0;
         for (Double score : bEnergies) {
-            energySelectionMap.put(Index, score);
-            Index++;
+            energySelectionMap.put(index, score);
+            index++;
         }
 
-        Index = 0;
+        index = 0;
         for (Integer score : fragmentSize) {
-            fragmentScoreMap.put(Index, score);
-            Index++;
+            fragmentScoreMap.put(index, score);
+            index++;
         }
 
-        Index = 0;
+        index = 0;
         for (Double score : stereoScore) {
-            stereoScoreMap.put(Index, score);
-            Index++;
+            stereoScoreMap.put(index, score);
+            index++;
         }
 
     }
@@ -231,17 +231,17 @@ public class ChemicalFilters {
             /* Put back the sorted solutions */
 
             int counter = 0;
-            for (Integer I : stereoScoreMap.keySet()) {
-                //                System.out.println("Sorted Map Key " + I + " Sorted Value: " + stereoScoreMap.get(I));
+            for (Integer i : stereoScoreMap.keySet()) {
+                //                System.out.println("Sorted Map key " + I + " Sorted Value: " + stereoScoreMap.get(I));
                 //                System.out.println("Stereo MCS " + allStereoMCS.get(I) + " Stereo Value: "
                 //                        + stereoScoreMap.get(I));
-                if (higestStereoScore == stereoScoreMap.get(I).doubleValue()) {
+                if (higestStereoScore == stereoScoreMap.get(i).doubleValue()) {
                     //|| secondhigestStereoScore == stereoScoreMap.get(I).doubleValue()) {
-                    addSolution(counter, I, allStereoAtomMCS, allStereoMCS, stereoScoreMap, energyScoreMap,
+                    addSolution(counter, i, allStereoAtomMCS, allStereoMCS, stereoScoreMap, energyScoreMap,
                             fragmentScoreMap);
                     counter++;
 
-                    //                    System.out.println("Sorted Map Key " + I + " Sorted Value: " + stereoScoreMap.get(I));
+                    //                    System.out.println("Sorted Map key " + I + " Sorted Value: " + stereoScoreMap.get(I));
                     //                    System.out.println("Stereo MCS " + allStereoMCS.get(I) + " Stereo Value: "
                     //                            + stereoScoreMap.get(I));
                 }
@@ -271,27 +271,27 @@ public class ChemicalFilters {
 
         initializeMaps(allFragmentMCS, allFragmentAtomMCS, stereoScoreMap, fragmentScoreMap, energyScoreMap);
 
-        int _minFragmentScore = 9999;
-        for (Integer Key : allFragmentAtomMCS.keySet()) {
-            Map<IAtom, IAtom> mcsAtom = allFragmentAtomMCS.get(Key);
-            int FragmentCount = getMappedMoleculeFragmentSize(mcsAtom);
-            fragmentScoreMap.put(Key, FragmentCount);
-            if (_minFragmentScore > FragmentCount) {
-                _minFragmentScore = FragmentCount;
+        int minFragmentScore = 9999;
+        for (Integer key : allFragmentAtomMCS.keySet()) {
+            Map<IAtom, IAtom> mcsAtom = allFragmentAtomMCS.get(key);
+            int fragmentCount = getMappedMoleculeFragmentSize(mcsAtom);
+            fragmentScoreMap.put(key, fragmentCount);
+            if (minFragmentScore > fragmentCount) {
+                minFragmentScore = fragmentCount;
             }
         }
         boolean flag = false;
-        if (_minFragmentScore < 9999) {
+        if (minFragmentScore < 9999) {
             flag = true;
             clear();
         }
         int counter = 0;
         for (Map.Entry<Integer, Integer> map : fragmentScoreMap.entrySet()) {
-            if (_minFragmentScore == map.getValue().intValue()) {
+            if (minFragmentScore == map.getValue().intValue()) {
                 addSolution(counter, map.getKey(), allFragmentAtomMCS, allFragmentMCS, stereoScoreMap, energyScoreMap,
                         fragmentScoreMap);
                 counter++;
-                //                System.out.println("Fragment Key " + map.getKey() + " Size: " + fragmentScoreMap.get(map.getKey()));
+                //                System.out.println("Fragment key " + map.getKey() + " Size: " + fragmentScoreMap.get(map.getKey()));
                 //                System.out.println("Fragment MCS " + allFragmentMCS.get(map.getKey()) + " Stereo Value: "
                 //                        + stereoScoreMap.get(map.getKey()));
             }
@@ -323,10 +323,10 @@ public class ChemicalFilters {
 
         initializeMaps(allEnergyMCS, allEnergyAtomMCS, stereoScoreMap, fragmentScoreMap, energySelectionMap);
 
-        for (Integer Key : allEnergyMCS.keySet()) {
-            Map<Integer, Integer> mcsAtom = allEnergyMCS.get(Key);
-            Double Energies = getMappedMoleculeEnergies(mcsAtom);
-            energySelectionMap.put(Key, Energies);
+        for (Integer key : allEnergyMCS.keySet()) {
+            Map<Integer, Integer> mcsAtom = allEnergyMCS.get(key);
+            Double energies = getMappedMoleculeEnergies(mcsAtom);
+            energySelectionMap.put(key, energies);
         }
 
         energySelectionMap = sortMapByValueInAccendingOrder(energySelectionMap);
@@ -347,7 +347,7 @@ public class ChemicalFilters {
                         fragmentScoreMap);
                 counter++;
                 //
-                //                System.out.println("Energy Key " + map.getKey() + "Energy MCS " + allEnergyMCS.get(map.getKey()));
+                //                System.out.println("Energy key " + map.getKey() + "Energy MCS " + allEnergyMCS.get(map.getKey()));
                 //                System.out.println("Frag Size: " + fragmentScoreMap.get(map.getKey()) + " Stereo Value: "
                 //                        + stereoScoreMap.get(map.getKey()));
 
@@ -404,34 +404,34 @@ public class ChemicalFilters {
 
     }
 
-    private synchronized int getMappedMoleculeFragmentSize(Map<IAtom, IAtom> MCSAtomSolution) {
+    private synchronized int getMappedMoleculeFragmentSize(Map<IAtom, IAtom> mcsAtomSolution) {
 
         //      System.out.println("Mol Size Eorg: " + sourceMol.getMolecule().getAtomCount() + " , Mol Size Porg: " +
         //        targetMol.getMolecule().getAtomCount());
 
-        IAtomContainer Educt = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, rMol);
+        IAtomContainer educt = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, rMol);
         IAtomContainer product = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, pMol);
 
-        if (MCSAtomSolution != null) {
-            for (Map.Entry<IAtom, IAtom> map : MCSAtomSolution.entrySet()) {
+        if (mcsAtomSolution != null) {
+            for (Map.Entry<IAtom, IAtom> map : mcsAtomSolution.entrySet()) {
                 IAtom atomE = map.getKey();
                 IAtom atomP = map.getValue();
-                Educt.removeAtomAndConnectedElectronContainers(atomE);
+                educt.removeAtomAndConnectedElectronContainers(atomE);
                 product.removeAtomAndConnectedElectronContainers(atomP);
             }
         }
-        return getFragmentCount(Educt) + getFragmentCount(product);
+        return getfragmentCount(educt) + getfragmentCount(product);
     }
 
-    private synchronized Double getMappedMoleculeEnergies(Map<Integer, Integer> MCSAtomSolution) throws CDKException {
+    private synchronized Double getMappedMoleculeEnergies(Map<Integer, Integer> mcsAtomSolution) throws CDKException {
 
         //        System.out.println("\nSort By Energies");
         double totalBondEnergy = -9999.0;
 
-        IAtomContainer Educt = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, rMol);
+        IAtomContainer educt = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, rMol);
         IAtomContainer product = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, pMol);
 
-        for (IAtom eAtom : Educt.atoms()) {
+        for (IAtom eAtom : educt.atoms()) {
             eAtom.setFlag(CDKConstants.ISPLACED, false);
         }
 
@@ -439,21 +439,21 @@ public class ChemicalFilters {
             pAtom.setFlag(CDKConstants.ISPLACED, false);
         }
 
-        if (MCSAtomSolution != null) {
-            for (Map.Entry<Integer, Integer> map : MCSAtomSolution.entrySet()) {
-                int ENum = map.getKey();
-                int PNum = map.getValue();
+        if (mcsAtomSolution != null) {
+            for (Map.Entry<Integer, Integer> map : mcsAtomSolution.entrySet()) {
+                int eNum = map.getKey();
+                int pNum = map.getValue();
 
-                IAtom eAtom = Educt.getAtom(ENum);
-                IAtom pAtom = product.getAtom(PNum);
+                IAtom eAtom = educt.getAtom(eNum);
+                IAtom pAtom = product.getAtom(pNum);
 
                 eAtom.setFlag(CDKConstants.ISPLACED, true);
                 pAtom.setFlag(CDKConstants.ISPLACED, true);
             }
         }
 
-        if (MCSAtomSolution != null) {
-            totalBondEnergy = getEnergy(Educt, product);
+        if (mcsAtomSolution != null) {
+            totalBondEnergy = getEnergy(educt, product);
         }
         return totalBondEnergy;
     }
@@ -573,19 +573,19 @@ public class ChemicalFilters {
                 pHCount = pAtom.getImplicitHydrogenCount();
             }
 
-            int HScore = Math.abs(rHCount - pHCount);
-            double BOScore = Math.abs(rBO - pBO);
+            int hScore = Math.abs(rHCount - pHCount);
+            double boScore = Math.abs(rBO - pBO);
 
             if (rHCount != pHCount) {
-                score -= HScore;
+                score -= hScore;
             } else {
-                score += HScore;
+                score += hScore;
             }
 
             if (rBO != pBO) {
-                score -= BOScore;
+                score -= boScore;
             } else {
-                score += BOScore;
+                score += boScore;
             }
         }
         return score;
@@ -594,11 +594,11 @@ public class ChemicalFilters {
     private double getBondScore(double score, Map<IBond, IBond> bondMaps) {
         for (Map.Entry<IBond, IBond> matchedBonds : bondMaps.entrySet()) {
 
-            IBond RBond = matchedBonds.getKey();
-            IBond PBond = matchedBonds.getValue();
+            IBond rBond = matchedBonds.getKey();
+            IBond pBond = matchedBonds.getValue();
 
-            score += getBondFormalChargeMatches(RBond, PBond);
-            score += getBondTypeMatches(RBond, PBond);
+            score += getBondFormalChargeMatches(rBond, pBond);
+            score += getBondTypeMatches(rBond, pBond);
         }
         return score;
     }
@@ -726,11 +726,11 @@ public class ChemicalFilters {
         return lScore;
     }
 
-    private double getEnergy(IAtomContainer Educt, IAtomContainer product) throws CDKException {
+    private double getEnergy(IAtomContainer educt, IAtomContainer product) throws CDKException {
         Double eEnergy = 0.0;
         BondEnergies bondEnergy = BondEnergies.getInstance();
-        for (int i = 0; i < Educt.getBondCount(); i++) {
-            IBond bond = Educt.getBond(i);
+        for (int i = 0; i < educt.getBondCount(); i++) {
+            IBond bond = educt.getBond(i);
             eEnergy += getBondEnergy(bond, bondEnergy);
         }
         Double pEnergy = 0.0;
@@ -778,12 +778,12 @@ public class ChemicalFilters {
         Aromaticity.cdkLegacy().apply(reactant);
         Aromaticity.cdkLegacy().apply(product);
 
-        for (Integer Key : allStereoMCS.keySet()) {
+        for (Integer key : allStereoMCS.keySet()) {
             try {
                 double score = 0.0;
                 //            System.out.println("\nStart score " + score);
-                Map<Integer, Integer> atomsMCS = allStereoMCS.get(Key);
-                Map<IAtom, IAtom> atomMapMCS = allStereoAtomMCS.get(Key);
+                Map<Integer, Integer> atomsMCS = allStereoMCS.get(key);
+                Map<IAtom, IAtom> atomMapMCS = allStereoAtomMCS.get(key);
                 score = getAtomScore(score, atomMapMCS, reactant, product);
                 Map<IBond, IBond> bondMaps = makeBondMapsOfAtomMaps(rMol, pMol, atomsMCS);
 
@@ -800,7 +800,7 @@ public class ChemicalFilters {
                 if (!stereoMatchFlag) {
                     stereoMatchFlag = true;
                 }
-                stereoScoreMap.put(Key, score);
+                stereoScoreMap.put(key, score);
             } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(ChemicalFilters.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -808,7 +808,7 @@ public class ChemicalFilters {
         return stereoMatchFlag;
     }
 
-    private int getFragmentCount(IAtomContainer molecule) {
+    private int getfragmentCount(IAtomContainer molecule) {
         boolean fragmentFlag = true;
         IAtomContainerSet fragmentMolSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         int countFrag = 0;

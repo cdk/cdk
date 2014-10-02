@@ -244,7 +244,7 @@ public class BondEnergies {
      */
     @TestMethod("testGetEnergies")
     public int getEnergies(IAtom sourceAtom, IAtom targetAtom, Order bondOrder) {
-        int D_kJ_per_mol = -1;
+        int dKJPerMol = -1;
 
         for (Map.Entry<Integer, BondEnergy> entry : bondEngergies.entrySet()) {
             BondEnergy bondEnergy = entry.getValue();
@@ -256,11 +256,11 @@ public class BondEnergies {
 
                 Order order = bondEnergy.getBondOrder();
                 if (order.compareTo(bondOrder) == 0) {
-                    D_kJ_per_mol = bondEnergy.getEnergy();
+                    dKJPerMol = bondEnergy.getEnergy();
                 }
             }
         }
-        return D_kJ_per_mol;
+        return dKJPerMol;
     }
 
     /**
@@ -272,7 +272,7 @@ public class BondEnergies {
      */
     @TestMethod("testGetEnergies")
     public int getEnergies(String sourceAtom, String targetAtom, Order bondOrder) {
-        int D_kJ_per_mol = -1;
+        int dKJPerMol = -1;
 
         for (Map.Entry<Integer, BondEnergy> entry : bondEngergies.entrySet()) {
             BondEnergy bondEnergy = entry.getValue();
@@ -283,11 +283,11 @@ public class BondEnergies {
 
                 Order order = bondEnergy.getBondOrder();
                 if (order.compareTo(bondOrder) == 0) {
-                    D_kJ_per_mol = bondEnergy.getEnergy();
+                    dKJPerMol = bondEnergy.getEnergy();
                 }
             }
         }
-        return D_kJ_per_mol;
+        return dKJPerMol;
     }
 
     /**
@@ -297,14 +297,14 @@ public class BondEnergies {
      */
     @TestMethod("testGetEnergies")
     public int getEnergies(IBond bond) {
-        int D_kJ_per_mol = -1;
+        int dKJPerMol = -1;
         for (Map.Entry<Integer, BondEnergy> entry : bondEngergies.entrySet()) {
             BondEnergy bondEnergy = entry.getValue();
             if (bondEnergy.matches(bond)) {
-                D_kJ_per_mol = bondEnergy.getEnergy();
+                dKJPerMol = bondEnergy.getEnergy();
             }
         }
-        return D_kJ_per_mol;
+        return dKJPerMol;
     }
 
     private int setHydrogenBlock(int key) {
