@@ -307,14 +307,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptorTest")
 public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static String[]       names;
-    private static final String[] smarts = EStateFragments.getSmarts();
+    private static String[]       NAMES;
+    private static final String[] SMARTS = EStateFragments.getSmarts();
 
     public KierHallSmartsDescriptor() {
         String[] tmp = EStateFragments.getNames();
-        names = new String[tmp.length];
+        NAMES = new String[tmp.length];
         for (int i = 0; i < tmp.length; i++)
-            names[i] = "khs." + tmp[i];
+            NAMES[i] = "khs." + tmp[i];
     }
 
     /**
@@ -337,7 +337,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                                                                                                         .getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -369,15 +369,15 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         IntegerArrayResult result = new IntegerArrayResult();
-        for (String smart : smarts)
+        for (String smart : SMARTS)
             result.add((int) Double.NaN);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                getDescriptorNames(), e);
+                                   getDescriptorNames(), e);
     }
 
     /**
@@ -401,15 +401,16 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
             return getDummyDescriptorValue(new CDKException("Error during clone"));
         }
 
-        int[] counts = new int[smarts.length];
+        int[] counts = new int[SMARTS.length];
         try {
             SMARTSQueryTool sqt = new SMARTSQueryTool("C", container.getBuilder());
-            for (int i = 0; i < smarts.length; i++) {
-                sqt.setSmarts(smarts[i]);
+            for (int i = 0; i < SMARTS.length; i++) {
+                sqt.setSmarts(SMARTS[i]);
                 boolean status = sqt.matches(atomContainer);
                 if (status) {
                     counts[i] = sqt.getUniqueMatchingAtoms().size();
-                } else
+                }
+                else
                     counts[i] = 0;
             }
         } catch (CDKException e) {
@@ -421,7 +422,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
             result.add(i);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                getDescriptorNames());
+                                   getDescriptorNames());
     }
 
     /**
@@ -438,7 +439,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
-        return new IntegerArrayResult(smarts.length);
+        return new IntegerArrayResult(SMARTS.length);
     }
 
     /**
