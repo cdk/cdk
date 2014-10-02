@@ -61,20 +61,20 @@ public class MolHandler {
 
     /**
      * Creates a new instance of MolHandler
-     * @param MolFile atomContainer file name
+     * @param molFile atomContainer file name
      * @param cleanMolecule
      * @param removeHydrogen
      *
      */
     @TestMethod("MolHandlerTest")
-    public MolHandler(String MolFile, boolean removeHydrogen, boolean cleanMolecule) {
+    public MolHandler(String molFile, boolean removeHydrogen, boolean cleanMolecule) {
 
         MDLReader molRead = null;
         this.removeHydrogen = removeHydrogen;
         try {
             FileInputStream readMolecule = null;
 
-            readMolecule = new FileInputStream(MolFile);
+            readMolecule = new FileInputStream(molFile);
             molRead = new MDLReader(new InputStreamReader(readMolecule));
             this.atomContainer = (IAtomContainer) molRead.read(new AtomContainer());
             molRead.close();

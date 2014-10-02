@@ -82,10 +82,10 @@ public abstract class AbstractMCS {
      * from the target and query graph. Amongst the solutions, a solution
      * with lowest energy score is preferred.
      *
-     * @param Key Index of the mapping solution
+     * @param key Index of the mapping solution
      * @return Total bond breaking energy required to remove the mapped part
      */
-    public abstract Double getEnergyScore(int Key);
+    public abstract Double getEnergyScore(int key);
 
     /**
      * Returns number of fragment generated in the solution space,
@@ -93,10 +93,10 @@ public abstract class AbstractMCS {
      * Amongst the solutions, a solution with lowest fragment size
      * is preferred.
      *
-     * @param Key Index of the mapping solution
+     * @param key Index of the mapping solution
      * @return Fragment count(s) generated after removing the mapped parts
      */
-    public abstract Integer getFragmentSize(int Key);
+    public abstract Integer getFragmentSize(int key);
 
     /**
      *
@@ -120,11 +120,11 @@ public abstract class AbstractMCS {
      * Returns a number which denotes the quality of the mcs.
      * A solution with highest stereo score is preferred over other
      * scores.
-     * @param Key Index of the mapping solution
+     * @param key Index of the mapping solution
      * @return true if no stereo mismatch occurs
      * else false if stereo mismatch occurs
      */
-    public abstract Integer getStereoScore(int Key);
+    public abstract Integer getStereoScore(int key);
 
     /**
      *
