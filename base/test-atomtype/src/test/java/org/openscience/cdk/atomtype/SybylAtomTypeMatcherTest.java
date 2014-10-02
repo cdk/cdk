@@ -308,6 +308,22 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
         String[] expectedTypes = {"C.1", "C.1", "C.3"};
         assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
+    } 
+    
+    @Test
+    public void testAllene() throws Exception {
+        IAtomContainer mol = new AtomContainer();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(2, 1, IBond.Order.DOUBLE);
+
+        String[] expectedTypes = {"C.2", "C.1", "C.2"};
+        assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
     }
 
     @Test
