@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorChargeTest")
 public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5"};
+    private static final String[] NAMES = {"ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5"};
 
     private static double[] listcharges(IAtomContainer container) throws CDKException {
         int natom = container.getAtomCount();
@@ -109,13 +109,13 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
             for (double aChargeSum : chargeSum) {
                 result.add(aChargeSum);
             }
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result, names);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result, NAMES);
 
         } catch (Exception ex) {
             DoubleArrayResult result = new DoubleArrayResult(5);
             for (int i = 0; i < 5; i++)
                 result.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result, names,
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result, NAMES,
                     new CDKException("Error while calculating the ATS_charge descriptor: " + ex.getMessage(), ex));
         }
     }
@@ -141,7 +141,7 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     @TestMethod("testGetSpecification")

@@ -92,7 +92,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
 
     private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(MomentOfInertiaDescriptor.class);
 
-    private static final String[] names  = {"MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R"};
+    private static final String[] NAMES  = {"MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R"};
 
     @TestMethod("testGetSpecification")
     @Override
@@ -131,7 +131,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

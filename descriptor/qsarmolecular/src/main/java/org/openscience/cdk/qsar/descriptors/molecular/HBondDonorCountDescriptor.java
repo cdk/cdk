@@ -71,7 +71,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptorTest")
 public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"nHBDon"};
+    private static final String[] NAMES = {"nHBDon"};
 
     /**
      *  Constructor for the HBondDonorCountDescriptor object
@@ -119,7 +119,7 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

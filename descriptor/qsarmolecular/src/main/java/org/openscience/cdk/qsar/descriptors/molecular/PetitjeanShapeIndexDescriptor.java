@@ -75,7 +75,7 @@ import javax.vecmath.Point3d;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptorTest")
 public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"topoShape", "geomShape"};
+    private static final String[] NAMES = {"topoShape", "geomShape"};
 
     public PetitjeanShapeIndexDescriptor() {}
 
@@ -115,7 +115,7 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

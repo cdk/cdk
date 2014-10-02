@@ -71,7 +71,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
 
     private boolean               checkRingSystem = false;
 
-    private static final String[] names           = {"nAtomLAC"};
+    private static final String[] NAMES           = {"nAtomLAC"};
 
     /**
      *  Constructor for the LongestAliphaticChainDescriptor object.
@@ -142,7 +142,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

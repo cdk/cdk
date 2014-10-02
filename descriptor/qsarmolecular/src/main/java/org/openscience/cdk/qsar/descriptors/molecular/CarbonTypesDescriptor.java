@@ -76,7 +76,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.CarbonTypesDescriptorTest")
 public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private final static String[] names = {"C1SP1", "C2SP1", "C1SP2", "C2SP2", "C3SP2", "C1SP3", "C2SP3", "C3SP3",
+    private final static String[] NAMES = {"C1SP1", "C2SP1", "C1SP2", "C2SP2", "C3SP2", "C1SP3", "C2SP3", "C3SP3",
             "C4SP3"                     };
 
     public CarbonTypesDescriptor() {}
@@ -119,7 +119,7 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

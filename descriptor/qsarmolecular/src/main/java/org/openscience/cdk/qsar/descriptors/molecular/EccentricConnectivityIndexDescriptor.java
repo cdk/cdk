@@ -73,7 +73,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptorTest")
 public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"ECCEN"};
+    private static final String[] NAMES = {"ECCEN"};
 
     public EccentricConnectivityIndexDescriptor() {}
 
@@ -112,7 +112,7 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

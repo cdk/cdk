@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.FragmentComplexityDescriptorTest")
 public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"fragC"};
+    private static final String[] NAMES = {"fragC"};
 
     /**
      *  Constructor for the FragmentComplexityDescriptor object.
@@ -112,7 +112,7 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

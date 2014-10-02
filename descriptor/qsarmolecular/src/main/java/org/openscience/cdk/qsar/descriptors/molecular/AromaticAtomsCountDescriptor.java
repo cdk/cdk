@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private boolean               checkAromaticity = false;
-    private static final String[] names            = {"naAromAtom"};
+    private static final String[] NAMES            = {"naAromAtom"};
 
     /**
      *  Constructor for the AromaticAtomsCountDescriptor object.
@@ -133,7 +133,7 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

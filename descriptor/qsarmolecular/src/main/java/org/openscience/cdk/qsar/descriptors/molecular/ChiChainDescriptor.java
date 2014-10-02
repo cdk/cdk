@@ -90,7 +90,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
     private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class);
     private SmilesParser          sp;
 
-    private static final String[] names  = {"SCH-3", "SCH-4", "SCH-5", "SCH-6", "SCH-7", "VCH-3", "VCH-4", "VCH-5",
+    private static final String[] NAMES  = {"SCH-3", "SCH-4", "SCH-5", "SCH-6", "SCH-7", "VCH-3", "VCH-4", "VCH-5",
             "VCH-6", "VCH-7"             };
 
     public ChiChainDescriptor() {}
@@ -130,7 +130,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

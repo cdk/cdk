@@ -87,7 +87,7 @@ import java.util.List;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.WeightedPathDescriptorTest")
 public class WeightedPathDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5"};
+    private static final String[] NAMES = {"WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5"};
 
     public WeightedPathDescriptor() {}
 
@@ -127,7 +127,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

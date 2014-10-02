@@ -84,7 +84,7 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
     private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiPathClusterDescriptor.class);
     private SmilesParser          sp;
 
-    private static final String[] names  = {"SPC-4", "SPC-5", "SPC-6", "VPC-4", "VPC-5", "VPC-6"};
+    private static final String[] NAMES  = {"SPC-4", "SPC-5", "SPC-6", "VPC-4", "VPC-5", "VPC-6"};
 
     public ChiPathClusterDescriptor() {}
 
@@ -123,7 +123,7 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     @TestMethod("testCalculate_IAtomContainer")

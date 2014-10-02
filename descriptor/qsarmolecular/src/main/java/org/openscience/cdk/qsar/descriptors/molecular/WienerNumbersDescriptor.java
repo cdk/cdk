@@ -68,7 +68,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.WienerNumbersDescriptorTest")
 public class WienerNumbersDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names            = {"WPATH", "WPOL"};
+    private static final String[] NAMES            = {"WPATH", "WPOL"};
 
     double[][]                    matr             = null;
     DoubleArrayResult             wienerNumbers    = null;
@@ -138,7 +138,7 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**

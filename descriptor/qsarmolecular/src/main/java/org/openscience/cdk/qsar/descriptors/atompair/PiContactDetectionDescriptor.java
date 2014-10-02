@@ -73,7 +73,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class PiContactDetectionDescriptor extends AbstractAtomPairDescriptor implements IAtomPairDescriptor {
 
-    private static final String[] names            = {"piContact"};
+    private static final String[] NAMES            = {"piContact"};
 
     private boolean               checkAromaticity = false;
     IAtomContainerSet             acSet            = null;
@@ -130,12 +130,12 @@ public class PiContactDetectionDescriptor extends AbstractAtomPairDescriptor imp
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(false),
-                names, e);
+                NAMES, e);
     }
 
     /**

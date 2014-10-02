@@ -68,7 +68,7 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
 
     private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(LengthOverBreadthDescriptor.class);
 
-    private static final String[] names  = {"LOBMAX", "LOBMIN"};
+    private static final String[] NAMES  = {"LOBMAX", "LOBMIN"};
 
     /**
      * Constructor for the LengthOverBreadthDescriptor object.
@@ -116,7 +116,7 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

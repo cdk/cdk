@@ -54,7 +54,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
 
     private final static String[] SMARTS_STRINGS = {"[$([O;H1]-[C,S,P]=O)]", "[$([*;-;!$(*~[*;+])])]",
             "[$([NH](S(=O)=O)C(F)(F)F)]", "[$(n1nnnc1)]"};
-    private final static String[] names          = {"nAcid"};
+    private final static String[] NAMES          = {"nAcid"};
 
     private List<SMARTSQueryTool> tools          = new ArrayList<SMARTSQueryTool>();
     private boolean               checkAromaticity;
@@ -112,7 +112,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /** {@inheritDoc} */

@@ -85,7 +85,7 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
     private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class);
     private SmilesParser          sp;
 
-    private static final String[] names  = {"SC-3", "SC-4", "SC-5", "SC-6", "VC-3", "VC-4", "VC-5", "VC-6"};
+    private static final String[] NAMES  = {"SC-3", "SC-4", "SC-5", "SC-6", "VC-3", "VC-4", "VC-5", "VC-6"};
 
     public ChiClusterDescriptor() {}
 
@@ -124,7 +124,7 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

@@ -128,7 +128,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
 
     private boolean               checkAromaticity = false;
     private boolean               salicylFlag      = false;
-    private static final String[] names            = {"XLogP"};
+    private static final String[] NAMES            = {"XLogP"};
 
     /**
      *  Constructor for the XLogPDescriptor object.
@@ -189,7 +189,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

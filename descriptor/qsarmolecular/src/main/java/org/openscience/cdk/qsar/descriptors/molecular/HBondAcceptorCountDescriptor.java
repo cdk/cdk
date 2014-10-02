@@ -83,7 +83,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
 
     // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
     private boolean               checkAromaticity = false;
-    private static final String[] names            = {"nHBAcc"};
+    private static final String[] NAMES            = {"nHBAcc"};
 
     /**
      *  Constructor for the HBondAcceptorCountDescriptor object
@@ -139,7 +139,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {

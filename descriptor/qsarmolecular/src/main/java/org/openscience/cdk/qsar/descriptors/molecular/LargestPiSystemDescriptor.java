@@ -67,7 +67,7 @@ import java.util.List;
 public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private boolean               checkAromaticity = false;
-    private static final String[] names            = {"nAtomP"};
+    private static final String[] NAMES            = {"nAtomP"};
 
     /**
      * Constructor for the LargestPiSystemDescriptor object.
@@ -138,7 +138,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
