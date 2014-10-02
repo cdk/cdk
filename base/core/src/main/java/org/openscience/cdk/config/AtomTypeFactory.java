@@ -225,7 +225,7 @@ public class AtomTypeFactory {
                 return (IAtomTypeConfigurator) this.getClass().getClassLoader()
                         .loadClass("org.openscience.cdk.config.OWLBasedAtomTypeConfigurator").newInstance();
             }
-        } catch (Exception exc) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException exc) {
             logger.error("Could not get instance of AtomTypeConfigurator for format ", format);
             logger.debug(exc);
         }

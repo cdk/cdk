@@ -153,7 +153,7 @@ public class ReaderFactory {
                 } catch (ClassNotFoundException exception) {
                     logger.error("Could not find this ChemObjectReader: ", readerClassName);
                     logger.debug(exception);
-                } catch (Exception exception) {
+                } catch (InstantiationException | IllegalAccessException exception) {
                     logger.error("Could not create this ChemObjectReader: ", readerClassName);
                     logger.debug(exception);
                 }

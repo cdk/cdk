@@ -27,11 +27,14 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.OWLBasedAtomTypeConfigurator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -71,7 +74,7 @@ public class OWLAtomTypeMappingReader {
                 parser = saxParser.getXMLReader();
                 logger.info("Using JAXP/SAX XML parser.");
                 success = true;
-            } catch (Exception exception) {
+            } catch (ParserConfigurationException | SAXException exception) {
                 logger.warn("Could not instantiate JAXP/SAX XML reader!");
                 logger.debug(exception);
             }
@@ -83,7 +86,7 @@ public class OWLAtomTypeMappingReader {
                         .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
-            } catch (Exception exception) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException exception) {
                 logger.warn("Could not instantiate Xerces XML reader!");
                 logger.debug(exception);
             }

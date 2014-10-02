@@ -88,7 +88,7 @@ public class ReactionEngine {
         } catch (ClassNotFoundException exception) {
             logger.error("Could not find this IReactionMechanism: ", mechanismName);
             logger.debug(exception);
-        } catch (Exception exception) {
+        } catch (InstantiationException | IllegalAccessException exception) {
             logger.error("Could not load this IReactionMechanism: ", mechanismName);
             logger.debug(exception);
         }
@@ -131,7 +131,7 @@ public class ReactionEngine {
             } catch (ClassNotFoundException exception) {
                 logger.error("Could not find this IParameterReact: ", paramName);
                 logger.debug(exception);
-            } catch (Exception exception) {
+            } catch (InstantiationException | IllegalAccessException exception) {
                 logger.error("Could not load this IParameterReact: ", paramName);
                 logger.debug(exception);
             }

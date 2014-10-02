@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.IOException;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
@@ -115,7 +117,7 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
                     getDescriptorNames());
 
-        } catch (Exception ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             DoubleArrayResult result = new DoubleArrayResult(5);
             for (int i = 0; i < 5; i++)
                 result.add(Double.NaN);

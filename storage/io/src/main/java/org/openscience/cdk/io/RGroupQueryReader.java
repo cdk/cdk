@@ -436,7 +436,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
             logger.error(error);
             logger.debug(exception);
             throw exception;
-        } catch (Exception exception) {
+        } catch (IOException | IllegalArgumentException exception) {
             exception.printStackTrace();
             String error = exception.getClass() + "Error while parsing line " + lineCount + ": " + line + " -> "
                     + exception.getMessage();

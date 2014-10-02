@@ -218,7 +218,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
             logger.info("Expecting " + reactantCount + " reactants in file");
             productCount = Integer.valueOf(tokenizer.nextToken()).intValue();
             logger.info("Expecting " + productCount + " products in file");
-        } catch (Exception exception) {
+        } catch (IOException | NumberFormatException exception) {
             logger.debug(exception);
             throw new CDKException("Error while counts line of RXN file", exception);
         }
@@ -247,7 +247,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         } catch (CDKException exception) {
             // rethrow exception from MDLReader
             throw exception;
-        } catch (Exception exception) {
+        } catch (IOException | IllegalArgumentException exception) {
             logger.debug(exception);
             throw new CDKException("Error while reading reactant", exception);
         }
@@ -275,7 +275,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         } catch (CDKException exception) {
             // rethrow exception from MDLReader
             throw exception;
-        } catch (Exception exception) {
+        } catch (IOException | IllegalArgumentException exception) {
             logger.debug(exception);
             throw new CDKException("Error while reading products", exception);
         }

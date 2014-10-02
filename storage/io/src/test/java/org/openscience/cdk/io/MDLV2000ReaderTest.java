@@ -567,7 +567,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             reader.read(new ChemFile());
             reader.close();
             Assert.fail("Expected a CDKException");
-        } catch (Exception exception) {
+        } catch (CDKException | IOException exception) {
             // OK, that's what's is supposed to happen
         }
     }

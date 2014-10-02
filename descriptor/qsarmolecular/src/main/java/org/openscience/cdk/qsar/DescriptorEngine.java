@@ -679,7 +679,7 @@ public class DescriptorEngine {
             } catch (ClassNotFoundException exception) {
                 logger.error("Could not find this Descriptor: ", descriptorName);
                 logger.debug(exception);
-            } catch (Exception exception) {
+            } catch (IllegalAccessException | InvocationTargetException | InstantiationException exception) {
                 logger.error("Could not load this Descriptor: ", descriptorName);
                 logger.debug(exception);
             }

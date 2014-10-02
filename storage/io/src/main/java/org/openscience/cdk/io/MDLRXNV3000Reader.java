@@ -230,7 +230,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
                 // add reactant
                 reaction.addReactant(reactant);
-            } catch (Exception exception) {
+            } catch (IllegalArgumentException | CDKException | IOException exception) {
                 String error = "Error while reading reactant: " + exception.getMessage();
                 logger.error(error);
                 logger.debug(exception);
@@ -262,7 +262,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
                 // add product
                 reaction.addProduct(product);
-            } catch (Exception exception) {
+            } catch (IllegalArgumentException | CDKException | IOException exception) {
                 String error = "Error while reading product: " + exception.getMessage();
                 logger.error(error);
                 logger.debug(exception);

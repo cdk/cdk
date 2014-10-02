@@ -188,7 +188,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     cf.addChemSequence(sequence);
                 }
             }
-        } catch (Exception exception) {
+        } catch (IOException | IllegalArgumentException exception) {
             exception.printStackTrace();
             throw new CDKException("Error while reading INChI file: " + exception.getMessage(), exception);
         }

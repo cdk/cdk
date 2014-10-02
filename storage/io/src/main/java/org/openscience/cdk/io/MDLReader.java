@@ -285,7 +285,7 @@ public class MDLReader extends DefaultChemObjectReader {
             }
         } catch (CDKException cdkexc) {
             throw cdkexc;
-        } catch (Exception exception) {
+        } catch (IOException | IllegalArgumentException exception) {
             String error = "Error while parsing SDF";
             logger.error(error);
             logger.debug(exception);
@@ -451,7 +451,7 @@ public class MDLReader extends DefaultChemObjectReader {
                                 IIsotope major = Isotopes.getInstance().getMajorIsotope(element);
                                 atom.setAtomicNumber(major.getAtomicNumber() + massDiff);
                             }
-                        } catch (Exception exception) {
+                        } catch (NumberFormatException | IOException exception) {
                             logger.error("Could not parse mass difference field");
                         }
                     } else {
@@ -593,7 +593,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 molecule.addBond(newBond);
             }
 
-        } catch (Exception exception) {
+        } catch (IOException | CDKException | IllegalArgumentException exception) {
             exception.printStackTrace();
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             logger.error(error);

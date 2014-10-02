@@ -345,7 +345,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
                 for (IAtom a : mol.atoms())
                     Assert.assertNotNull(smiles[0] + " has unplaced atom", a.getPoint3d());
                 checkAverageBondLength(mol);
-            } catch (Exception e) {
+            } catch (CDKException | CloneNotSupportedException | IOException e) {
                 StringWriter stackTrace = new StringWriter();
                 e.printStackTrace(new PrintWriter(stackTrace));
                 Assert.fail("3D coordinated could not be generator for " + smiles[i] + ": " + stackTrace);

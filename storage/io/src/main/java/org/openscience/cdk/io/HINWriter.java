@@ -126,7 +126,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                 IAtomContainerSet som = object.getBuilder().newInstance(IAtomContainerSet.class);
                 som.addAtomContainer((IAtomContainer) object);
                 writeAtomContainer(som);
-            } catch (Exception ex) {
+            } catch (IllegalArgumentException | IOException ex) {
                 throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);
             }
         } else if (object instanceof IAtomContainerSet) {

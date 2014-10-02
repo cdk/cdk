@@ -28,6 +28,8 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.IOException;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -145,7 +147,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
                 Integer hcount = atom.getImplicitHydrogenCount();
                 if (hcount != CDKConstants.UNSET) weight += hcount * 1.00782504;
             }
-        } catch (Exception exception) {
+        } catch (CDKException | IOException exception) {
             return getDummyDescriptorValue(exception);
         }
 

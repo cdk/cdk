@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.templates;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.Map;
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.dict.DictRef;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -175,7 +177,7 @@ public class AminoAcids {
                 counter++;
             }
             reader.close();
-        } catch (Exception exception) {
+        } catch (CDKException | IOException exception) {
             logger.error("Failed reading file: ", exception.getMessage());
             logger.debug(exception);
         }

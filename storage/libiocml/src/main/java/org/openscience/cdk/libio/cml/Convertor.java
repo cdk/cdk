@@ -147,7 +147,7 @@ public class Convertor {
                     } catch (ClassNotFoundException exception) {
                         logger.info("Could not find this Customizer: ", customizerName);
                         logger.debug(exception);
-                    } catch (Exception exception) {
+                    } catch (InstantiationException | IllegalAccessException exception) {
                         logger.warn("Could not load this Customizer: ", customizerName);
                         logger.warn(exception.getMessage());
                         logger.debug(exception);

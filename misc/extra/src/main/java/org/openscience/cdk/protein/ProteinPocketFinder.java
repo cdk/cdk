@@ -32,6 +32,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -131,7 +132,7 @@ public class ProteinPocketFinder {
             IChemModel chemModel = chemSequence.getChemModel(0);
             IAtomContainerSet setOfMolecules = chemModel.getMoleculeSet();
             protein = (IBioPolymer) setOfMolecules.getAtomContainer(0);
-        } catch (Exception exc) {
+        } catch (IOException | CDKException exc) {
             logger.error("Could not read BioPolymer from file>" + biopolymerFile + " due to: " + exc.getMessage());
             logger.debug(exc);
         }
