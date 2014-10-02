@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest")
 public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
 
-    private static final String[] names = {"partialTCMMFF94"};
+    private static final String[] NAMES = {"partialTCMMFF94"};
 
     private MMFF94PartialCharges  mmff;
 
@@ -109,7 +109,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     /**
@@ -128,7 +128,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
             ac = (IAtomContainer) ac.clone();
         } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), names);
+                    Double.NaN), NAMES);
         }
         atom = ac.getAtom(position);
         String originalAtomtypeName = atom.getAtomTypeName();
@@ -149,7 +149,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
         atom.setValency(originalValency);
         atom.setHybridization(originalHybridization);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), aphaPartialCharge, names);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), aphaPartialCharge, NAMES);
     }
 
     /**

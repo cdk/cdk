@@ -81,16 +81,16 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GDRTest")
 public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private boolean                   checkAromaticity    = false;
-    private IAtomContainer            acold               = null;
-    private IRingSet                  varRingSet          = null;
-    private IAtomContainerSet         varAtomContainerSet = null;
+    private boolean           checkAromaticity    = false;
+    private IAtomContainer    acold               = null;
+    private IRingSet          varRingSet          = null;
+    private IAtomContainerSet varAtomContainerSet = null;
 
-    private final static ILoggingTool logger              = LoggingToolFactory
-                                                                  .createLoggingTool(RDFProtonDescriptor_GDR.class);
-    private final int                 gdr_desc_length     = 7;
+    private final static ILoggingTool LOGGER          = LoggingToolFactory
+            .createLoggingTool(RDFProtonDescriptor_GDR.class);
+    private final        int          gdr_desc_length = 7;
 
-    private static String[]           descriptorNames;
+    private static String[] descriptorNames;
 
     /**
      * Constructor for the RDFProtonDescriptor object
@@ -113,7 +113,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                .getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -161,7 +161,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
         for (int i = 0; i < gdr_desc_length; i++)
             result.add(Double.NaN);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                getDescriptorNames(), e);
+                                   getDescriptorNames(), e);
     }
 
     @TestMethod(value = "testCalculate_IAtomContainer")
@@ -403,10 +403,10 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
 
         ////////////////////////THE THIRD DESCRIPTOR IS gD(r) WITH DISTANCE AND RADIAN ANGLE BTW THE PROTON AND THE MIDDLE POINT OF DOUBLE BOND
 
-        Vector3d a_a = new Vector3d();
-        Vector3d a_b = new Vector3d();
-        Vector3d b_a = new Vector3d();
-        Vector3d b_b = new Vector3d();
+        Vector3d aA = new Vector3d();
+        Vector3d aB = new Vector3d();
+        Vector3d bA = new Vector3d();
+        Vector3d bB = new Vector3d();
         Point3d middlePoint = new Point3d();
         double angle;
 
@@ -439,21 +439,21 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
                     values = calculateDistanceBetweenAtomAndBond(atom, theDoubleBond);
 
                     if (theDoubleBond.contains(goodAtom0)) {
-                        a_a.set(goodAtom0.getPoint3d().x, goodAtom0.getPoint3d().y, goodAtom0.getPoint3d().z);
-                        a_b.set(goodAtom1.getPoint3d().x, goodAtom1.getPoint3d().y, goodAtom1.getPoint3d().z);
+                        aA.set(goodAtom0.getPoint3d().x, goodAtom0.getPoint3d().y, goodAtom0.getPoint3d().z);
+                        aB.set(goodAtom1.getPoint3d().x, goodAtom1.getPoint3d().y, goodAtom1.getPoint3d().z);
                     } else {
-                        a_a.set(goodAtom1.getPoint3d().x, goodAtom1.getPoint3d().y, goodAtom1.getPoint3d().z);
-                        a_b.set(goodAtom0.getPoint3d().x, goodAtom0.getPoint3d().y, goodAtom0.getPoint3d().z);
+                        aA.set(goodAtom1.getPoint3d().x, goodAtom1.getPoint3d().y, goodAtom1.getPoint3d().z);
+                        aB.set(goodAtom0.getPoint3d().x, goodAtom0.getPoint3d().y, goodAtom0.getPoint3d().z);
                     }
-                    b_b.set(middlePoint.x, middlePoint.y, middlePoint.z);
-                    b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
-                    angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
+                    bB.set(middlePoint.x, middlePoint.y, middlePoint.z);
+                    bB.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
+                    angle = calculateAngleBetweenTwoLines(aA, aB, bA, bB);
                     partial = ((1 / (Math.pow(values[0], 2))) * Math.exp(smooth * (Math.pow((ghd - angle), 2))));
                     sum += partial;
                 }
                 //gDr_function.add(new Double(sum));
                 rdfProtonCalculatedValues.add(sum);
-                logger.debug("GDR prob dist.: " + sum + " at distance " + ghd);
+                LOGGER.debug("GDR prob dist.: " + sum + " at distance " + ghd);
             }
         } else {
             return getDummyDescriptorValue(new CDKException("Some error occured. Please report"));

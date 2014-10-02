@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptorTest")
 public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 
-    private static final String[]       names         = {"pepe"};
+    private static final String[]       NAMES = {"pepe"};
 
     private GasteigerPEPEPartialCharges pepe          = null;
     /**Number of maximum iterations*/
@@ -84,14 +84,14 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *  Gets the specification attribute of the PartialPiChargeDescriptor
      *  object
      *
-     *@return    The specification value
+     *@return The specification value
      */
     @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialPiCharge", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                                                                                                          .getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -100,23 +100,27 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *
      *@param  params            1:Number of maximum iterations, 2: checking lone pair electrons, 3:
      *							number of maximum resonance structures to be searched.
-     *@exception  CDKException  Description of the Exception
+     *@exception CDKException  Description of the Exception
      */
     @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 3) throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
+        if (params.length > 3)
+            throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
 
-        if (!(params[0] instanceof Integer)) throw new CDKException("The parameter must be of type Integer");
+        if (!(params[0] instanceof Integer))
+            throw new CDKException("The parameter must be of type Integer");
         maxIterations = (Integer) params[0];
 
         if (params.length > 1 && params[1] != null) {
-            if (!(params[1] instanceof Boolean)) throw new CDKException("The parameter must be of type Boolean");
+            if (!(params[1] instanceof Boolean))
+                throw new CDKException("The parameter must be of type Boolean");
             lpeChecker = (Boolean) params[1];
         }
 
         if (params.length > 2 && params[2] != null) {
-            if (!(params[2] instanceof Integer)) throw new CDKException("The parameter must be of type Integer");
+            if (!(params[2] instanceof Integer))
+                throw new CDKException("The parameter must be of type Integer");
             maxResonStruc = (Integer) params[2];
         }
     }
@@ -124,7 +128,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     /**
      *  Gets the parameters attribute of the PartialPiChargeDescriptor object
      *
-     *@return    The parameters value
+     *@return The parameters value
      */
     @TestMethod(value = "testGetParameters")
     @Override
@@ -140,12 +144,12 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), names, e);
+                Double.NaN), NAMES, e);
     }
 
     /**
@@ -208,7 +212,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
         atom.setBondOrderSum(originalBondOrderSum);
 
         return getCachedDescriptorValue(atom) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), getCachedDescriptorValue(atom), names) : null;
+                getParameters(), getCachedDescriptorValue(atom), NAMES) : null;
     }
 
     /**

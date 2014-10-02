@@ -86,7 +86,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
     private IRingSet                  varRingSet            = null;
     private IAtomContainerSet         varAtomContainerSet   = null;
 
-    private final static ILoggingTool logger                = LoggingToolFactory
+    private final static ILoggingTool LOGGER                = LoggingToolFactory
                                                                     .createLoggingTool(RDFProtonDescriptor_GHR_topol.class);
     private final int                 ghr_topol_desc_length = 15;
 
@@ -434,7 +434,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
                 }
                 //gHr_topol_function.add(new Double(sum));
                 rdfProtonCalculatedValues.add(sum);
-                logger.debug("RDF gr-topol distance prob.: " + sum + " at distance " + ghrt);
+                LOGGER.debug("RDF gr-topol distance prob.: " + sum + " at distance " + ghrt);
             }
         } else {
             return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));

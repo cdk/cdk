@@ -80,29 +80,29 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_G3RTest")
 public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private static final int          g3r_desc_length     = 13;
+    private static final int G3R_DESC_LENGTH = 13;
 
-    private boolean                   checkAromaticity    = false;
+    private boolean checkAromaticity = false;
 
-    private IAtomContainer            acold               = null;
+    private IAtomContainer acold = null;
 
-    private IRingSet                  varRingSet          = null;
+    private IRingSet varRingSet = null;
 
-    private IAtomContainerSet         varAtomContainerSet = null;
+    private IAtomContainerSet varAtomContainerSet = null;
 
-    private final static ILoggingTool logger              = LoggingToolFactory
-                                                                  .createLoggingTool(RDFProtonDescriptor_G3R.class);
+    private final static ILoggingTool LOGGER = LoggingToolFactory
+            .createLoggingTool(RDFProtonDescriptor_G3R.class);
 
-    private static String[]           descriptorNames;
+    private static String[] names;
 
     /**
      * Constructor for the RDFProtonDescriptor object
      */
     public RDFProtonDescriptor_G3R() {
-        descriptorNames = new String[g3r_desc_length];
-        for (int i = 0; i < g3r_desc_length; i++) {
+        names = new String[G3R_DESC_LENGTH];
+        for (int i = 0; i < G3R_DESC_LENGTH; i++) {
 
-            descriptorNames[i] = "g3r_" + (i + 1);
+            names[i] = "g3r_" + (i + 1);
         }
     }
 
@@ -116,7 +116,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                .getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -157,15 +157,15 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return descriptorNames;
+        return names;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        DoubleArrayResult result = new DoubleArrayResult(g3r_desc_length);
-        for (int i = 0; i < g3r_desc_length; i++)
+        DoubleArrayResult result = new DoubleArrayResult(G3R_DESC_LENGTH);
+        for (int i = 0; i < G3R_DESC_LENGTH; i++)
             result.add(Double.NaN);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                getDescriptorNames(), e);
+                                   getDescriptorNames(), e);
     }
 
     @TestMethod(value = "testCalculate_IAtomContainer")
@@ -186,7 +186,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
         int atomPosition = atomContainer.getAtomNumber(atom);
         IAtom clonedAtom = varAtomContainer.getAtom(atomPosition);
-        DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(g3r_desc_length);
+        DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(G3R_DESC_LENGTH);
         if (!atom.getSymbol().equals("H")) {
             return getDummyDescriptorValue(new CDKException("Invalid atom specified"));
         }
@@ -421,10 +421,10 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
         // ////////////////////////LAST DESCRIPTOR IS g3(r), FOR PROTONS BONDED
         // TO LIKE-CYCLOEXANE RINGS:
 
-        Vector3d a_a = new Vector3d();
-        Vector3d a_b = new Vector3d();
-        Vector3d b_a = new Vector3d();
-        Vector3d b_b = new Vector3d();
+        Vector3d aA = new Vector3d();
+        Vector3d aB = new Vector3d();
+        Vector3d bA = new Vector3d();
+        Vector3d bB = new Vector3d();
         double angle = 0;
 
         if (bondsInCycloex.size() > 0) {
@@ -456,22 +456,22 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
                     }
 
                     if (ya_counter > 0) {
-                        a_a.set(cycloexBondAtom1.getPoint3d().x, cycloexBondAtom1.getPoint3d().y,
+                        aA.set(cycloexBondAtom1.getPoint3d().x, cycloexBondAtom1.getPoint3d().y,
                                 cycloexBondAtom1.getPoint3d().z);
-                        a_b.set(cycloexBondAtom0.getPoint3d().x, cycloexBondAtom0.getPoint3d().y,
+                        aB.set(cycloexBondAtom0.getPoint3d().x, cycloexBondAtom0.getPoint3d().y,
                                 cycloexBondAtom0.getPoint3d().z);
                     } else {
-                        a_a.set(cycloexBondAtom0.getPoint3d().x, cycloexBondAtom0.getPoint3d().y,
+                        aA.set(cycloexBondAtom0.getPoint3d().x, cycloexBondAtom0.getPoint3d().y,
                                 cycloexBondAtom0.getPoint3d().z);
-                        a_b.set(cycloexBondAtom1.getPoint3d().x, cycloexBondAtom1.getPoint3d().y,
+                        aB.set(cycloexBondAtom1.getPoint3d().x, cycloexBondAtom1.getPoint3d().y,
                                 cycloexBondAtom1.getPoint3d().z);
                     }
-                    b_a.set(neighbour0.getPoint3d().x, neighbour0.getPoint3d().y, neighbour0.getPoint3d().z);
-                    b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
+                    bA.set(neighbour0.getPoint3d().x, neighbour0.getPoint3d().y, neighbour0.getPoint3d().z);
+                    bB.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
 
-                    angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
+                    angle = calculateAngleBetweenTwoLines(aA, aB, bA, bB);
 
-                    // logger.debug("gcycr ANGLE: " + angle + " "
+                    // LOGGER.debug("gcycr ANGLE: " + angle + " "
                     // +mol.getAtomNumber(cycloexBondAtom0) + "
                     // "+mol.getAtomNumber(cycloexBondAtom1));
 
@@ -480,7 +480,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
                 }
                 // g3r_function.add(new Double(sum));
                 rdfProtonCalculatedValues.add(sum);
-                logger.debug("RDF g3r prob.: " + sum + " at distance " + g3r);
+                LOGGER.debug("RDF g3r prob.: " + sum + " at distance " + g3r);
             }
         } else {
             return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));

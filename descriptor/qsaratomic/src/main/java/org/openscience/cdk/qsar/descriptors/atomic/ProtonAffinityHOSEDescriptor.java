@@ -67,7 +67,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.ProtonAffinityHOSEDescriptorTest")
 public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 
-    private static final String[] descriptorNames = {"protonAffiHOSE"};
+    private static final String[] NAMES = {"protonAffiHOSE"};
 
     /** Maximum spheres to use by the HoseCode model.*/
     int                           maxSpheresToUse = 10;
@@ -114,7 +114,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return descriptorNames;
+        return NAMES;
     }
 
     /**
@@ -142,15 +142,15 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
             lpcheck.saturate(container);
         } catch (CDKException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), descriptorNames, null);
+                    Double.NaN), NAMES, null);
         } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), descriptorNames, null);
+                    Double.NaN), NAMES, null);
         }
 
         value = db.extractAffinity(container, atom);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),
-                descriptorNames);
+                                   NAMES);
 
     }
 

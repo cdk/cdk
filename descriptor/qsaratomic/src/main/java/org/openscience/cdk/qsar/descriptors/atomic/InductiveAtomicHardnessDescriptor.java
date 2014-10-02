@@ -90,7 +90,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptorTest")
 public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private static final String[] names   = {"indAtomHardnesss"};
+    private static final String[] NAMES   = {"indAtomHardnesss"};
 
     private static ILoggingTool   logger  = LoggingToolFactory
                                                   .createLoggingTool(InductiveAtomicHardnessDescriptor.class);
@@ -141,12 +141,12 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return names;
+        return NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), names, e);
+                Double.NaN), NAMES, e);
     }
 
     /**
@@ -216,7 +216,7 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
         atomicHardness = atomicHardness * 0.172;
         atomicHardness = 1 / atomicHardness;
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                atomicHardness), names);
+                atomicHardness), NAMES);
     }
 
     private double calculateSquareDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
