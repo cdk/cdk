@@ -91,27 +91,27 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
             "MDEC-24", "MDEC-33", "MDEC-34", "MDEC-44", "MDEO-11", "MDEO-12", "MDEO-22", "MDEN-11", "MDEN-12",
             "MDEN-13", "MDEN-22", "MDEN-23", "MDEN-33"};
 
-    public static final int       mdec11 = 0;
-    public static final int       mdec12 = 1;
-    public static final int       mdec13 = 2;
-    public static final int       mdec14 = 3;
-    public static final int       mdec22 = 4;
-    public static final int       mdec23 = 5;
-    public static final int       mdec24 = 6;
-    public static final int       mdec33 = 7;
-    public static final int       mdec34 = 8;
-    public static final int       mdec44 = 9;
+    public static final int       MDEC11 = 0;
+    public static final int       MDEC12 = 1;
+    public static final int       MDEC13 = 2;
+    public static final int       MDEC14 = 3;
+    public static final int       MDEC22 = 4;
+    public static final int       MDEC23 = 5;
+    public static final int       MDEC24 = 6;
+    public static final int       MDEC33 = 7;
+    public static final int       MDEC34 = 8;
+    public static final int       MDEC44 = 9;
 
-    public static final int       mdeo11 = 10;
-    public static final int       mdeo12 = 11;
-    public static final int       mdeo22 = 12;
+    public static final int       MDEO11 = 10;
+    public static final int       MDEO12 = 11;
+    public static final int       MDEO22 = 12;
 
-    public static final int       mden11 = 13;
-    public static final int       mden12 = 14;
-    public static final int       mden13 = 15;
-    public static final int       mden22 = 16;
-    public static final int       mden23 = 17;
-    public static final int       mden33 = 18;
+    public static final int       MDEN11 = 13;
+    public static final int       MDEN12 = 14;
+    public static final int       MDEN13 = 15;
+    public static final int       MDEN22 = 16;
+    public static final int       MDEN23 = 17;
+    public static final int       MDEN33 = 18;
 
     private static final int      C_1    = 1;
     private static final int      C_2    = 2;
@@ -230,91 +230,91 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
         int[][] atypes = null;
 
         switch (which) {
-            case mdec11:
-            case mdec12:
-            case mdec13:
-            case mdec14:
-            case mdec22:
-            case mdec23:
-            case mdec24:
-            case mdec33:
-            case mdec34:
-            case mdec44:
+            case MDEC11:
+            case MDEC12:
+            case MDEC13:
+            case MDEC14:
+            case MDEC22:
+            case MDEC23:
+            case MDEC24:
+            case MDEC33:
+            case MDEC34:
+            case MDEC44:
                 atypes = evalATable(atomContainer, 6);
                 break;
-            case mdeo11:
-            case mdeo12:
-            case mdeo22:
+            case MDEO11:
+            case MDEO12:
+            case MDEO22:
                 atypes = evalATable(atomContainer, 8);
                 break;
-            case mden11:
-            case mden12:
-            case mden13:
-            case mden22:
-            case mden23:
-            case mden33:
+            case MDEN11:
+            case MDEN12:
+            case MDEN13:
+            case MDEN22:
+            case MDEN23:
+            case MDEN33:
                 atypes = evalATable(atomContainer, 7);
                 break;
         }
         double retval = 0;
         switch (which) {
-            case mdec11:
+            case MDEC11:
                 retval = evalCValue(tdist, atypes, C_1, C_1);
                 break;
-            case mdec12:
+            case MDEC12:
                 retval = evalCValue(tdist, atypes, C_1, C_2);
                 break;
-            case mdec13:
+            case MDEC13:
                 retval = evalCValue(tdist, atypes, C_1, C_3);
                 break;
-            case mdec14:
+            case MDEC14:
                 retval = evalCValue(tdist, atypes, C_1, C_4);
                 break;
-            case mdec22:
+            case MDEC22:
                 retval = evalCValue(tdist, atypes, C_2, C_2);
                 break;
-            case mdec23:
+            case MDEC23:
                 retval = evalCValue(tdist, atypes, C_2, C_3);
                 break;
-            case mdec24:
+            case MDEC24:
                 retval = evalCValue(tdist, atypes, C_2, C_4);
                 break;
-            case mdec33:
+            case MDEC33:
                 retval = evalCValue(tdist, atypes, C_3, C_3);
                 break;
-            case mdec34:
+            case MDEC34:
                 retval = evalCValue(tdist, atypes, C_3, C_4);
                 break;
-            case mdec44:
+            case MDEC44:
                 retval = evalCValue(tdist, atypes, C_4, C_4);
                 break;
 
-            case mdeo11:
+            case MDEO11:
                 retval = evalCValue(tdist, atypes, O_1, O_1);
                 break;
-            case mdeo12:
+            case MDEO12:
                 retval = evalCValue(tdist, atypes, O_1, O_2);
                 break;
-            case mdeo22:
+            case MDEO22:
                 retval = evalCValue(tdist, atypes, O_2, O_2);
                 break;
 
-            case mden11:
+            case MDEN11:
                 retval = evalCValue(tdist, atypes, N_1, N_1);
                 break;
-            case mden12:
+            case MDEN12:
                 retval = evalCValue(tdist, atypes, N_1, N_2);
                 break;
-            case mden13:
+            case MDEN13:
                 retval = evalCValue(tdist, atypes, N_1, N_3);
                 break;
-            case mden22:
+            case MDEN22:
                 retval = evalCValue(tdist, atypes, N_2, N_2);
                 break;
-            case mden23:
+            case MDEN23:
                 retval = evalCValue(tdist, atypes, N_2, N_3);
                 break;
-            case mden33:
+            case MDEN33:
                 retval = evalCValue(tdist, atypes, N_3, N_3);
                 break;
         }
