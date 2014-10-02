@@ -121,9 +121,9 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
     private synchronized void setAllMapping() {
         try {
 
-            List<Map<Integer, Integer>> final_solution = FinalMappings.getInstance().getFinalMapping();
+            List<Map<Integer, Integer>> finalSolution = FinalMappings.getInstance().getFinalMapping();
             int counter = 0;
-            for (Map<Integer, Integer> solution : final_solution) {
+            for (Map<Integer, Integer> solution : finalSolution) {
                 //                System.out.println("Number of MCS solution: " + solution);
                 Map<Integer, Integer> validSolution = new TreeMap<Integer, Integer>();
                 if (!flagExchange) {
@@ -152,14 +152,14 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
                 Map<IAtom, IAtom> atomMappings = new HashMap<IAtom, IAtom>();
                 for (Map.Entry<Integer, Integer> map : solution.entrySet()) {
 
-                    int IIndex = map.getKey();
-                    int JIndex = map.getValue();
+                    int iIndex = map.getKey();
+                    int jIndex = map.getValue();
 
                     IAtom sourceAtom = null;
                     IAtom targetAtom = null;
 
-                    sourceAtom = source.getAtom(IIndex);
-                    targetAtom = target.getAtom(JIndex);
+                    sourceAtom = source.getAtom(iIndex);
+                    targetAtom = target.getAtom(jIndex);
                     atomMappings.put(sourceAtom, targetAtom);
                 }
                 allAtomMCS.add(counter++, atomMappings);

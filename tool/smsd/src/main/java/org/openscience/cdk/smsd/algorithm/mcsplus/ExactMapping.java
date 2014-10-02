@@ -41,46 +41,46 @@ public class ExactMapping {
     /**
      *
      * Extract atom mapping from the cliques and stores it in a List
-     * @param comp_graph_nodes
-     * @param clique_List_org
+     * @param compGraphNodes
+     * @param cliqueListOrg
      */
-    private static List<Integer> extractCliqueMapping(List<Integer> comp_graph_nodes, List<Integer> clique_List_org) {
+    private static List<Integer> extractCliqueMapping(List<Integer> compGraphNodes, List<Integer> cliqueListOrg) {
 
-        List<Integer> clique_mapping = new ArrayList<Integer>();
-        List<Integer> clique_List = new ArrayList<Integer>(clique_List_org);
-        int clique_siz = clique_List.size();
-        int vec_size = comp_graph_nodes.size();
+        List<Integer> cliqueMapping = new ArrayList<Integer>();
+        List<Integer> cliqueList = new ArrayList<Integer>(cliqueListOrg);
+        int cliqueSize = cliqueList.size();
+        int vecSize = compGraphNodes.size();
         //        System.out.println("VEC  SIZE " + vec_size);
-        for (int a = 0; a < clique_siz; a++) {
-            for (int b = 0; b < vec_size; b += 3) {
-                if (clique_List.get(a) == comp_graph_nodes.get(b + 2)) {
-                    clique_mapping.add(comp_graph_nodes.get(b));
-                    clique_mapping.add(comp_graph_nodes.get(b + 1));
+        for (int a = 0; a < cliqueSize; a++) {
+            for (int b = 0; b < vecSize; b += 3) {
+                if (cliqueList.get(a) == compGraphNodes.get(b + 2)) {
+                    cliqueMapping.add(compGraphNodes.get(b));
+                    cliqueMapping.add(compGraphNodes.get(b + 1));
                 }
             }
         }
 
-        return clique_mapping;
+        return cliqueMapping;
     }
 
     //extract atom mapping from the clique List and print it on the screen
     /**
      *
-     * @param _mappings
-     * @param comp_graph_nodes
-     * @param clique_List_org
+     * @param mappings
+     * @param compGraphNodes
+     * @param cliqueListOrg
      * @return mappings
      */
-    public static List<List<Integer>> extractMapping(List<List<Integer>> _mappings, List<Integer> comp_graph_nodes,
-            List<Integer> clique_List_org) {
+    public static List<List<Integer>> extractMapping(List<List<Integer>> mappings, List<Integer> compGraphNodes,
+            List<Integer> cliqueListOrg) {
         try {
-            List<Integer> clique_List = extractCliqueMapping(comp_graph_nodes, clique_List_org);
-            _mappings.add(clique_List);
+            List<Integer> cliqueList = extractCliqueMapping(compGraphNodes, cliqueListOrg);
+            mappings.add(cliqueList);
         } catch (Exception e) {
             System.err.println("Error in FinalMapping List: " + e.getCause());
             e.printStackTrace();
             System.exit(1);
         }
-        return _mappings;
+        return mappings;
     }
 }
