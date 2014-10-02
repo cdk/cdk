@@ -56,8 +56,8 @@ public class TargetProcessor {
      * @param cTab1Copy
      * @param cTab2Copy
      * @param signArray
-     * @param neighbor_bondnum_B
-     * @param set_bondnum_B
+     * @param neighborBondnumB
+     * @param setBondnumB
      * @param iBondNeighborsB
      * @param cBondNeighborsB
      * @param newNeighborNumA
@@ -65,14 +65,14 @@ public class TargetProcessor {
      * @param newCNeighborsA
      */
     protected TargetProcessor(List<String> cTab1Copy, List<String> cTab2Copy, String[] signArray,
-            int neighbor_bondnum_B, int set_bondnum_B, List<Integer> iBondNeighborsB, List<String> cBondNeighborsB,
+            int neighborBondnumB, int setBondnumB, List<Integer> iBondNeighborsB, List<String> cBondNeighborsB,
             int newNeighborNumA, List<Integer> newINeighborsA, List<String> newCNeighborsA) {
 
         this.cTab1Copy = cTab1Copy;
         this.cTab2Copy = cTab2Copy;
         this.signArray = signArray;
-        this.neighborBondNumB = neighbor_bondnum_B;
-        this.setBondNumB = set_bondnum_B;
+        this.neighborBondNumB = neighborBondnumB;
+        this.setBondNumB = setBondnumB;
         this.iBondNeighborsB = iBondNeighborsB;
         this.cBondNeighborsB = cBondNeighborsB;
         this.newNeighborNumA = newNeighborNumA;
@@ -80,12 +80,12 @@ public class TargetProcessor {
         this.newINeighborsA = newINeighborsA;
     }
 
-    protected void process(IAtomContainer target, List<Integer> unmapped_atoms_molB, int mappingSize,
-            List<Integer> i_bond_setB, List<String> c_bond_setB, List<Integer> mapped_atoms, int counter) {
+    protected void process(IAtomContainer target, List<Integer> unmappedAtomsMolB, int mappingSize,
+            List<Integer> iBondSetB, List<String> cBondSetB, List<Integer> mappedAtoms, int counter) {
 
-        int unmapped_numB = unmapped_atoms_molB.size();
-        boolean bond_considered = false;
-        boolean normal_bond = true;
+        int unmappedNumB = unmappedAtomsMolB.size();
+        boolean bondConsidered = false;
+        boolean normalBond = true;
 
         for (int atomIndex = 0; atomIndex < target.getBondCount(); atomIndex++) {
 
@@ -93,25 +93,25 @@ public class TargetProcessor {
             Integer indexJ = target.getAtomNumber(target.getBond(atomIndex).getAtom(1));
             Integer order = target.getBond(atomIndex).getOrder().numeric();
 
-            for (int b = 0; b < unmapped_numB; b++) {
-                if (unmapped_atoms_molB.get(b).equals(indexI)) {
-                    normal_bond = unMappedAtomsEqualsIndexI(target, mappingSize, atomIndex, counter, mapped_atoms,
+            for (int b = 0; b < unmappedNumB; b++) {
+                if (unmappedAtomsMolB.get(b).equals(indexI)) {
+                    normalBond = unMappedAtomsEqualsIndexI(target, mappingSize, atomIndex, counter, mappedAtoms,
                             indexI, indexJ, order);
-                    bond_considered = true;
-                } else if (unmapped_atoms_molB.get(b) == indexJ) {
-                    normal_bond = unMappedAtomsEqualsIndexJ(target, mappingSize, atomIndex, counter, mapped_atoms,
+                    bondConsidered = true;
+                } else if (unmappedAtomsMolB.get(b) == indexJ) {
+                    normalBond = unMappedAtomsEqualsIndexJ(target, mappingSize, atomIndex, counter, mappedAtoms,
                             indexI, indexJ, order);
-                    bond_considered = true;
+                    bondConsidered = true;
                 }
 
-                if (normal_bond && bond_considered) {
-                    markNormalBonds(atomIndex, i_bond_setB, c_bond_setB, indexI, indexJ, order);
-                    normal_bond = true;
+                if (normalBond && bondConsidered) {
+                    markNormalBonds(atomIndex, iBondSetB, cBondSetB, indexI, indexJ, order);
+                    normalBond = true;
                     break;
                 }
 
             }
-            bond_considered = false;
+            bondConsidered = false;
         }
 
     }
@@ -119,113 +119,113 @@ public class TargetProcessor {
     /**
      *
      * @param setNumB
-     * @param unmapped_atoms_molB
-     * @param newMapingSize
-     * @param i_bond_setB
-     * @param c_bond_setB
-     * @param new_Mapping
+     * @param unmappedAtomsMolB
+     * @param newMappingSize
+     * @param iBondSetB
+     * @param cBondSetB
+     * @param newMapping
      * @param counter
-     * @param new_i_bond_setB
-     * @param new_c_bond_setB
+     * @param newIBondSetB
+     * @param newCBondSetB
      */
-    protected void process(int setNumB, List<Integer> unmapped_atoms_molB, int newMapingSize,
-            List<Integer> i_bond_setB, List<String> c_bond_setB, List<Integer> new_Mapping, int counter,
-            List<Integer> new_i_bond_setB, List<String> new_c_bond_setB) {
+    protected void process(int setNumB, List<Integer> unmappedAtomsMolB, int newMappingSize,
+            List<Integer> iBondSetB, List<String> cBondSetB, List<Integer> newMapping, int counter,
+            List<Integer> newIBondSetB, List<String> newCBondSetB) {
 
         //The special signs must be transfered to the corresponding atoms of molecule A
 
-        boolean bond_considered = false;
-        boolean normal_bond = true;
+        boolean bondConsidered = false;
+        boolean normalBond = true;
         for (int atomIndex = 0; atomIndex < setNumB; atomIndex++) {
 
-            Integer indexI = i_bond_setB.get(atomIndex * 3 + 0);
-            Integer indexJ = i_bond_setB.get(atomIndex * 3 + 1);
-            Integer order = i_bond_setB.get(atomIndex * 3 + 2);
+            Integer indexI = iBondSetB.get(atomIndex * 3 + 0);
+            Integer indexJ = iBondSetB.get(atomIndex * 3 + 1);
+            Integer order = iBondSetB.get(atomIndex * 3 + 2);
 
-            for (Integer unMappedAtomIndex : unmapped_atoms_molB) {
+            for (Integer unMappedAtomIndex : unmappedAtomsMolB) {
                 if (unMappedAtomIndex.equals(indexI)) {
-                    normal_bond = unMappedAtomsEqualsIndexI(setNumB, i_bond_setB, newMapingSize, atomIndex, counter,
-                            new_Mapping, indexI, indexJ, order);
-                    bond_considered = true;
+                    normalBond = unMappedAtomsEqualsIndexI(setNumB, iBondSetB, newMappingSize, atomIndex, counter,
+                            newMapping, indexI, indexJ, order);
+                    bondConsidered = true;
                 } else if (unMappedAtomIndex.equals(indexJ)) {
-                    normal_bond = unMappedAtomsEqualsIndexJ(setNumB, i_bond_setB, newMapingSize, atomIndex, counter,
-                            new_Mapping, indexI, indexJ, order);
-                    bond_considered = true;
+                    normalBond = unMappedAtomsEqualsIndexJ(setNumB, iBondSetB, newMappingSize, atomIndex, counter,
+                            newMapping, indexI, indexJ, order);
+                    bondConsidered = true;
                 }
-                if (normal_bond && bond_considered) {
-                    markNormalBonds(atomIndex, new_i_bond_setB, new_c_bond_setB, indexI, indexJ, order);
-                    normal_bond = true;
+                if (normalBond && bondConsidered) {
+                    markNormalBonds(atomIndex, newIBondSetB, newCBondSetB, indexI, indexJ, order);
+                    normalBond = true;
                     break;
                 }
 
             }
-            bond_considered = false;
+            bondConsidered = false;
         }
     }
 
     private boolean unMappedAtomsEqualsIndexI(IAtomContainer target, int mappingSize, int atomIndex, int counter,
-            List<Integer> mapped_atoms, Integer indexI, Integer indexJ, Integer order) {
-        boolean normal_bond = true;
+            List<Integer> mappedAtoms, Integer indexI, Integer indexJ, Integer order) {
+        boolean normalBond = true;
         for (int c = 0; c < mappingSize; c++) {
-            if (mapped_atoms.get(c * 2 + 1).equals(indexJ)) {
+            if (mappedAtoms.get(c * 2 + 1).equals(indexJ)) {
                 setBondNeighbors(indexI, indexJ, order);
                 if (cTab2Copy.get(atomIndex * 4 + 3).compareToIgnoreCase("X") == 0) {
                     step1(atomIndex, counter);
                     McGregorChecks
                             .changeCharBonds(indexJ, signArray[counter], target.getBondCount(), target, cTab2Copy);
-                    int cor_atom = McGregorChecks.searchCorrespondingAtom(mappingSize, indexJ, 2, mapped_atoms);
+                    int corAtom = McGregorChecks.searchCorrespondingAtom(mappingSize, indexJ, 2, mappedAtoms);
                     //Commented by Asad
-                    McGregorChecks.changeCharBonds(cor_atom, signArray[counter], newNeighborNumA, newINeighborsA,
+                    McGregorChecks.changeCharBonds(corAtom, signArray[counter], newNeighborNumA, newINeighborsA,
                             newCNeighborsA);
-                    //                                changeCharBonds(cor_atom, signArray[counter], query.getBondCount(), query, cTab1Copy);
+                    //                                changeCharBonds(corAtom, signArray[counter], query.getBondCount(), query, cTab1Copy);
                     counter++;
                 } else {
                     step2(atomIndex);
                 }
-                normal_bond = false;
+                normalBond = false;
                 neighborBondNumB++;
             }
         }
-        return normal_bond;
+        return normalBond;
     }
 
     private boolean unMappedAtomsEqualsIndexJ(IAtomContainer target, int mappingSize, int atomIndex, int counter,
-            List<Integer> mapped_atoms, Integer indexI, Integer indexJ, Integer order) {
-        boolean normal_bond = true;
+            List<Integer> mappedAtoms, Integer indexI, Integer indexJ, Integer order) {
+        boolean normalBond = true;
         for (int c = 0; c < mappingSize; c++) {
-            if (mapped_atoms.get(c * 2 + 1).equals(indexI)) {
+            if (mappedAtoms.get(c * 2 + 1).equals(indexI)) {
                 setBondNeighbors(indexI, indexJ, order);
                 if (cTab2Copy.get(atomIndex * 4 + 2).compareToIgnoreCase("X") == 0) {
                     step3(atomIndex, counter);
                     McGregorChecks
                             .changeCharBonds(indexI, signArray[counter], target.getBondCount(), target, cTab2Copy);
-                    int cor_atom = McGregorChecks.searchCorrespondingAtom(mappingSize, indexI, 2, mapped_atoms);
-                    McGregorChecks.changeCharBonds(cor_atom, signArray[counter], newNeighborNumA, newINeighborsA,
+                    int corAtom = McGregorChecks.searchCorrespondingAtom(mappingSize, indexI, 2, mappedAtoms);
+                    McGregorChecks.changeCharBonds(corAtom, signArray[counter], newNeighborNumA, newINeighborsA,
                             newCNeighborsA);
-                    //                                changeCharBonds(cor_atom, signArray[counter], query.getBondCount(), query, cTab1Copy);
+                    //                                changeCharBonds(corAtom, signArray[counter], query.getBondCount(), query, cTab1Copy);
                     counter++;
                 } else {
                     step4(atomIndex);
                 }
-                normal_bond = false;
+                normalBond = false;
                 neighborBondNumB++;
             }
         }
 
-        return normal_bond;
+        return normalBond;
     }
 
-    private boolean unMappedAtomsEqualsIndexI(int setNumB, List<Integer> i_bond_setB, int newMappingSize,
-            int atomIndex, int counter, List<Integer> new_Mapping, Integer indexI, Integer indexJ, Integer order) {
-        boolean normal_bond = true;
+    private boolean unMappedAtomsEqualsIndexI(int setNumB, List<Integer> iBondSetB, int newMappingSize,
+            int atomIndex, int counter, List<Integer> newMapping, Integer indexI, Integer indexJ, Integer order) {
+        boolean normalBond = true;
         for (int c = 0; c < newMappingSize; c++) {
-            if (new_Mapping.get(c * 2 + 1).equals(indexJ)) {
+            if (newMapping.get(c * 2 + 1).equals(indexJ)) {
                 setBondNeighbors(indexI, indexJ, order);
                 if (cTab2Copy.get(atomIndex * 4 + 3).compareToIgnoreCase("X") == 0) {
                     step1(atomIndex, counter);
-                    McGregorChecks.changeCharBonds(indexJ, signArray[counter], setNumB, i_bond_setB, cTab2Copy);
-                    int cor_atom = McGregorChecks.searchCorrespondingAtom(newMappingSize, indexJ, 2, new_Mapping);
-                    McGregorChecks.changeCharBonds(cor_atom, signArray[counter], newNeighborNumA, newINeighborsA,
+                    McGregorChecks.changeCharBonds(indexJ, signArray[counter], setNumB, iBondSetB, cTab2Copy);
+                    int corAtom = McGregorChecks.searchCorrespondingAtom(newMappingSize, indexJ, 2, newMapping);
+                    McGregorChecks.changeCharBonds(corAtom, signArray[counter], newNeighborNumA, newINeighborsA,
                             newCNeighborsA);
                     counter++;
 
@@ -233,51 +233,51 @@ public class TargetProcessor {
                     step2(atomIndex);
                 }
 
-                normal_bond = false;
+                normalBond = false;
                 neighborBondNumB++;
 
             }
         }
-        return normal_bond;
+        return normalBond;
     }
 
-    private boolean unMappedAtomsEqualsIndexJ(int setNumB, List<Integer> i_bond_setB, int newMappingSize,
-            int atomIndex, int counter, List<Integer> new_Mapping, Integer indexI, Integer indexJ, Integer order) {
-        boolean normal_bond = true;
+    private boolean unMappedAtomsEqualsIndexJ(int setNumB, List<Integer> iBondSetB, int newMappingSize,
+            int atomIndex, int counter, List<Integer> newMapping, Integer indexI, Integer indexJ, Integer order) {
+        boolean normalBond = true;
         for (int c = 0; c < newMappingSize; c++) {
-            if (new_Mapping.get(c * 2 + 1).equals(indexI)) {
+            if (newMapping.get(c * 2 + 1).equals(indexI)) {
                 setBondNeighbors(indexI, indexJ, order);
 
                 if (cTab2Copy.get(atomIndex * 4 + 2).compareToIgnoreCase("X") == 0) {
 
                     step3(atomIndex, counter);
-                    McGregorChecks.changeCharBonds(indexI, signArray[counter], setNumB, i_bond_setB, cTab2Copy);
-                    int cor_atom = McGregorChecks.searchCorrespondingAtom(newMappingSize, indexI, 2, new_Mapping);
-                    McGregorChecks.changeCharBonds(cor_atom, signArray[counter], newNeighborNumA, newINeighborsA,
+                    McGregorChecks.changeCharBonds(indexI, signArray[counter], setNumB, iBondSetB, cTab2Copy);
+                    int corAtom = McGregorChecks.searchCorrespondingAtom(newMappingSize, indexI, 2, newMapping);
+                    McGregorChecks.changeCharBonds(corAtom, signArray[counter], newNeighborNumA, newINeighborsA,
                             newCNeighborsA);
                     counter++;
                 } else {
                     step4(atomIndex);
                 }
 
-                normal_bond = false;
+                normalBond = false;
                 neighborBondNumB++;
 
             }
         }
 
-        return normal_bond;
+        return normalBond;
     }
 
-    private void markNormalBonds(int atomIndex, List<Integer> i_bond_setB, List<String> c_bond_setB, Integer indexI,
+    private void markNormalBonds(int atomIndex, List<Integer> iBondSetB, List<String> cBondSetB, Integer indexI,
             Integer indexJ, Integer order) {
-        i_bond_setB.add(indexI);
-        i_bond_setB.add(indexJ);
-        i_bond_setB.add(order);
-        c_bond_setB.add(cTab2Copy.get(atomIndex * 4 + 0));
-        c_bond_setB.add(cTab2Copy.get(atomIndex * 4 + 1));
-        c_bond_setB.add("X");
-        c_bond_setB.add("X");
+        iBondSetB.add(indexI);
+        iBondSetB.add(indexJ);
+        iBondSetB.add(order);
+        cBondSetB.add(cTab2Copy.get(atomIndex * 4 + 0));
+        cBondSetB.add(cTab2Copy.get(atomIndex * 4 + 1));
+        cBondSetB.add("X");
+        cBondSetB.add("X");
         setBondNumB++;
     }
 

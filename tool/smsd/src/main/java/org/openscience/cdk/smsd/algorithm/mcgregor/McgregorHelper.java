@@ -38,8 +38,8 @@ import org.openscience.cdk.annotations.TestClass;
 @TestClass("org.openscience.cdk.smsd.algorithm.mcgregor.McgregorHelperTest")
 public class McgregorHelper {
 
-    private final List<String>  c_bond_setA;
-    private final List<String>  c_bond_setB;
+    private final List<String>  cBondSetA;
+    private final List<String>  cBondSetB;
     private final boolean       mappingCheckFlag;
     private final int           mappedAtomCount;
     private final List<Integer> mappedAtomsOrg;
@@ -51,8 +51,8 @@ public class McgregorHelper {
     private final List<String>  cBondNeighborsB;
     private final int           setNumA;
     private final int           setNumB;
-    private final List<Integer> i_bond_setA;
-    private final List<Integer> i_bond_setB;
+    private final List<Integer> iBondSetA;
+    private final List<Integer> iBondSetB;
 
     /**
      * Stores the variables
@@ -67,18 +67,18 @@ public class McgregorHelper {
      * @param cBondNeighborsB
      * @param setNumA
      * @param setNumB
-     * @param i_bond_setA
-     * @param i_bond_setB
-     * @param c_bond_setA
-     * @param c_bond_setB
+     * @param iBondSetA
+     * @param iBondSetB
+     * @param cBondSetA
+     * @param cBondSetB
      */
     protected McgregorHelper(boolean mappingCheckFlag, int mappedAtomCount, List<Integer> mappedAtomsOrg,
-            int neighborBondNumA, int neighborBondNumB, List<Integer> iBondNeighborAtomsA,
-            List<Integer> iBondNeighborAtomsB, List<String> cBondNeighborsA, List<String> cBondNeighborsB, int setNumA,
-            int setNumB, List<Integer> i_bond_setA, List<Integer> i_bond_setB, List<String> c_bond_setA,
-            List<String> c_bond_setB) {
-        this.c_bond_setA = c_bond_setA;
-        this.c_bond_setB = c_bond_setB;
+                             int neighborBondNumA, int neighborBondNumB, List<Integer> iBondNeighborAtomsA,
+                             List<Integer> iBondNeighborAtomsB, List<String> cBondNeighborsA, List<String> cBondNeighborsB, int setNumA,
+                             int setNumB, List<Integer> iBondSetA, List<Integer> iBondSetB, List<String> cBondSetA,
+                             List<String> cBondSetB) {
+        this.cBondSetA = cBondSetA;
+        this.cBondSetB = cBondSetB;
         this.mappingCheckFlag = mappingCheckFlag;
         this.mappedAtomCount = mappedAtomCount;
         this.mappedAtomsOrg = mappedAtomsOrg;
@@ -90,23 +90,23 @@ public class McgregorHelper {
         this.cBondNeighborsB = cBondNeighborsB;
         this.setNumA = setNumA;
         this.setNumB = setNumB;
-        this.i_bond_setA = i_bond_setA;
-        this.i_bond_setB = i_bond_setB;
+        this.iBondSetA = iBondSetA;
+        this.iBondSetB = iBondSetB;
 
     }
 
     /**
-     * @return the c_bond_setA
+     * @return the cBondSetA
      */
     protected List<String> getCBondSetA() {
-        return Collections.unmodifiableList(c_bond_setA);
+        return Collections.unmodifiableList(cBondSetA);
     }
 
     /**
-     * @return the c_bond_setB
+     * @return the cBondSetB
      */
     protected List<String> getCBondSetB() {
-        return Collections.unmodifiableList(c_bond_setB);
+        return Collections.unmodifiableList(cBondSetB);
     }
 
     /**
@@ -180,17 +180,17 @@ public class McgregorHelper {
     }
 
     /**
-     * @return the i_bond_setA
+     * @return the iBondSetA
      */
     protected List<Integer> getIBondSetA() {
-        return Collections.unmodifiableList(i_bond_setA);
+        return Collections.unmodifiableList(iBondSetA);
     }
 
     /**
-     * @return the i_bond_setB
+     * @return the iBondSetB
      */
     protected List<Integer> getIBondSetB() {
-        return Collections.unmodifiableList(i_bond_setB);
+        return Collections.unmodifiableList(iBondSetB);
     }
 
     int getsetNumB() {
