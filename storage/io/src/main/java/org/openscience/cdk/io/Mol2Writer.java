@@ -239,13 +239,14 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 
                 // we need to check the atom types to see if we have an amide bond
                 // and we're assuming a 2-centered bond
-                IAtom bondAtom1 = bond.getAtom(0);
-                IAtom bondAtom2 = bond.getAtom(1);
+                final IAtom bondAtom1 = bond.getAtom(0);
+                final IAtom bondAtom2 = bond.getAtom(1);
                 try {
-                    if ((matcher.findMatchingAtomType(mol, bondAtom1).getAtomTypeName().equals("N.am") && matcher
-                            .findMatchingAtomType(mol, bondAtom2).getAtomTypeName().equals("C.2"))
-                            || (matcher.findMatchingAtomType(mol, bondAtom2).getAtomTypeName().equals("N.am") && matcher
-                                    .findMatchingAtomType(mol, bondAtom1).getAtomTypeName().equals("C.2"))) {
+                    final IAtomType bondAtom1Type = matcher.findMatchingAtomType(mol, bondAtom1);
+                    final IAtomType bondAtom2Type = matcher.findMatchingAtomType(mol, bondAtom2);
+                    if (bondAtom1Type != null && bondAtom2Type != null && 
+                            ((bondAtom1Type.getAtomTypeName().equals("N.am") && bondAtom2Type.getAtomTypeName().equals("C.2"))
+                            || (bondAtom2Type.getAtomTypeName().equals("N.am") && bondAtom1Type.getAtomTypeName().equals("C.2")))) {
                         sybylBondOrder = "am";
                     }
                 } catch (CDKException e) {
