@@ -31,12 +31,14 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Isotope;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -45,6 +47,9 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
@@ -1190,5 +1195,32 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         f = MolecularFormulaManipulator.getMolecularFormula(mol);
         Assert.assertEquals("C6H6", MolecularFormulaManipulator.getString(f));
 
+    }
+    
+    @Test public void noNullPointerExceptionForExactMassOfRGroups() throws Exception {
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(new Isotope("C"));
+        formula.addIsotope(new Isotope("H"), 3);
+        formula.addIsotope(new Isotope("R"));
+        assertThat(MolecularFormulaManipulator.getTotalExactMass(formula),
+                   closeTo(15.0234, 0.01));
+    } 
+    
+    @Test public void noNullPointerExceptionForMassOfRGroups() throws Exception {
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(new Isotope("C"));
+        formula.addIsotope(new Isotope("H"), 3);
+        formula.addIsotope(new Isotope("R"));
+        assertThat(MolecularFormulaManipulator.getTotalMassNumber(formula),
+                   closeTo(15.0, 0.01));
+    } 
+    
+    @Test public void noNullPointerExceptionForMajorMassOfRGroups() throws Exception {
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(new Isotope("C"));
+        formula.addIsotope(new Isotope("H"), 3);
+        formula.addIsotope(new Isotope("R"));
+        assertThat(MolecularFormulaManipulator.getMajorIsotopeMass(formula),
+                   closeTo(15.0234, 0.01));
     }
 }
