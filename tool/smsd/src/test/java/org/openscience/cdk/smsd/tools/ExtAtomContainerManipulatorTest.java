@@ -65,7 +65,6 @@ public class ExtAtomContainerManipulatorTest {
      */
     @Test
     public void testMakeDeepCopy() throws InvalidSmilesException {
-        System.out.println("makeDeepCopy");
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer container = sp.parseSmiles(rawMolSmiles);
@@ -89,7 +88,6 @@ public class ExtAtomContainerManipulatorTest {
      */
     @Test
     public void testAromatizeMolecule() throws InvalidSmilesException {
-        System.out.println("aromatizeMolecule");
         String rawMolSmiles = "C1=CC2=C(C=C1)C=CC=C2";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(rawMolSmiles);
@@ -109,7 +107,6 @@ public class ExtAtomContainerManipulatorTest {
      */
     @Test
     public void testGetExplicitHydrogenCount() throws InvalidSmilesException {
-        System.out.println("getExplicitHydrogenCount");
 
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -133,7 +130,6 @@ public class ExtAtomContainerManipulatorTest {
      */
     @Test
     public void testGetImplicitHydrogenCount() throws InvalidSmilesException {
-        System.out.println("getImplicitHydrogenCount");
 
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -157,7 +153,6 @@ public class ExtAtomContainerManipulatorTest {
      */
     @Test
     public void testGetHydrogenCount() throws InvalidSmilesException {
-        System.out.println("getHydrogenCount");
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
@@ -179,7 +174,6 @@ public class ExtAtomContainerManipulatorTest {
      */
     @Test
     public void testRemoveHydrogensAndPreserveAtomID() throws InvalidSmilesException {
-        System.out.println("removeHydrogensAndPreserveAtomID");
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
@@ -210,7 +204,6 @@ public class ExtAtomContainerManipulatorTest {
      */
     @Test
     public void testConvertExplicitToImplicitHydrogens() throws InvalidSmilesException {
-        System.out.println("convertExplicitToImplicitHydrogens");
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
@@ -225,7 +218,6 @@ public class ExtAtomContainerManipulatorTest {
      */
     @Test
     public void testPercieveAtomTypesAndConfigureAtoms() throws Exception {
-        System.out.println("percieveAtomTypesAndConfigureAtoms");
         String rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);

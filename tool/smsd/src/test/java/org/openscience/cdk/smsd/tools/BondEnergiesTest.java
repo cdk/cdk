@@ -46,7 +46,6 @@ public class BondEnergiesTest extends CDKTestCase {
      */
     @Test
     public void testGetEnergies() {
-        System.out.println("getEnergies");
         IAtom sourceAtom = new Atom("C");
         IAtom targetAtom = new Atom("C");
         Order bondOrder = Order.SINGLE;

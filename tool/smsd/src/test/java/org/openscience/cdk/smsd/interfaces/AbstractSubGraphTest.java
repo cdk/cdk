@@ -74,7 +74,6 @@ public abstract class AbstractSubGraphTest {
      */
     @Test
     public void testIsSubgraph() throws InvalidSmilesException {
-        System.out.println("isSubgraph");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");

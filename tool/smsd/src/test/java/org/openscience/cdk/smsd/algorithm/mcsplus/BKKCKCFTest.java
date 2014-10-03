@@ -55,7 +55,6 @@ public class BKKCKCFTest {
 
     @Test
     public void testSomeMethod() {
-        System.out.println("BKKCKCF");
         // TODO review the generated test code and remove the default call to fail.
         assertNotNull(new BKKCKCF(new ArrayList<Integer>(), new ArrayList<Integer>(), new ArrayList<Integer>()));
     }

@@ -408,7 +408,6 @@ public class CDKMCSTest extends CDKTestCase {
      */
     @Test
     public void testGetTimeManager() {
-        System.out.println("getTimeManager");
         TimeManager expResult = new TimeManager();
         Assert.assertNotNull(expResult);
     }
@@ -418,7 +417,6 @@ public class CDKMCSTest extends CDKTestCase {
      */
     @Test
     public void testSetTimeManager() {
-        System.out.println("setTimeManager");
         TimeManager aTimeManager = new TimeManager();
         CDKMCS.setTimeManager(aTimeManager);
         Assert.assertNotNull(CDKMCS.getTimeManager().getElapsedTimeInSeconds());

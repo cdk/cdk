@@ -62,7 +62,6 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      */
     @Test
     public void testSet_IAtomContainer_IAtomContainer() throws Exception {
-        System.out.println("set");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -84,7 +83,6 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      */
     @Test
     public void testSet_String_String() throws CDKException, IOException {
-        System.out.println("set");
         String molfile = "data/mdl/decalin.mol";
         String queryfile = "data/mdl/decalin.mol";
         IAtomContainer query = new AtomContainer();
@@ -109,7 +107,6 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      */
     @Test
     public void testSet_MolHandler_MolHandler() {
-        System.out.println("set");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -132,7 +129,6 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
     @Test
     @Override
     public void testSearchMCS() {
-        System.out.println("searchMCS");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -154,7 +150,6 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      */
     @Test
     public void testGetAllMapping() {
-        System.out.println("getAllMapping");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -175,7 +170,6 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      */
     @Test
     public void testGetFirstMapping() {
-        System.out.println("getFirstMapping");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -196,7 +190,6 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      */
     @Test
     public void testGetAllAtomMapping() {
-        System.out.println("getAllAtomMapping");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
@@ -217,7 +210,6 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
      */
     @Test
     public void testGetFirstAtomMapping() {
-        System.out.println("getFirstAtomMapping");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();
