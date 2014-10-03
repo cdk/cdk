@@ -47,7 +47,6 @@ public class TimeManagerTest extends CDKTestCase {
      */
     @Test
     public void testGetElapsedTimeInHours() {
-        System.out.println("getElapsedTimeInHours");
         TimeManager instance = new TimeManager();
         double expResult = 0.0001;
         myMethod(360);
@@ -60,7 +59,6 @@ public class TimeManagerTest extends CDKTestCase {
      */
     @Test
     public void testGetElapsedTimeInMinutes() {
-        System.out.println("getElapsedTimeInMinutes");
         TimeManager instance = new TimeManager();
         double expResult = 0.006;
         myMethod(360);
@@ -73,7 +71,6 @@ public class TimeManagerTest extends CDKTestCase {
      */
     @Test
     public void testGetElapsedTimeInSeconds() {
-        System.out.println("getElapsedTimeInSeconds");
         TimeManager instance = new TimeManager();
         double expResult = 0.36;
         myMethod(360);
@@ -86,7 +83,6 @@ public class TimeManagerTest extends CDKTestCase {
      */
     @Test
     public void testGetElapsedTimeInMilliSeconds() {
-        System.out.println("getElapsedTimeInMilliSeconds");
         TimeManager instance = new TimeManager();
         double expResult = 360;
         myMethod(360);
@@ -103,7 +99,7 @@ public class TimeManagerTest extends CDKTestCase {
             thisThread.sleep(timeMillis);
         } catch (Throwable t) {
 
-            throw new OutOfMemoryError("An Error has occured");
+            throw new OutOfMemoryError("An Error has occurred");
         }
         System.out.println("Ending......");
 

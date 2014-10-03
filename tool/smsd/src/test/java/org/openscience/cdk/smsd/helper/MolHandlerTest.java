@@ -61,7 +61,6 @@ public class MolHandlerTest {
      */
     @Test
     public void testGetMolecule() {
-        System.out.println("getMolecule");
         MolHandler instance = new MolHandler(new AtomContainer(), true, true);
         IAtomContainer result = instance.getMolecule();
         assertNotNull(result);
@@ -72,7 +71,6 @@ public class MolHandlerTest {
      */
     @Test
     public void testGetRemoveHydrogenFlag() {
-        System.out.println("getRemoveHydrogenFlag");
         MolHandler instance = new MolHandler(new AtomContainer(), true, true);
         boolean expResult = true;
         boolean result = instance.getRemoveHydrogenFlag();

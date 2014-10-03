@@ -63,7 +63,6 @@ public class SingleMappingTest {
      */
     @Test
     public void testGetOverLaps() throws CDKException {
-        System.out.println("getOverLaps");
         IAtom atomSource = new Atom("R");
         IAtom atomTarget = new Atom("R");
         IAtomContainer source = new AtomContainer();

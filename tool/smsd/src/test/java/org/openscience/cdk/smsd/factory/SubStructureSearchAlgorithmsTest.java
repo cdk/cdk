@@ -60,7 +60,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testInit_3args_1() throws InvalidSmilesException, CDKException {
-        System.out.println("init");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
@@ -79,7 +78,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testInit_3args_2() throws InvalidSmilesException, CDKException {
-        System.out.println("init");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
@@ -97,7 +95,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testInit_3args_3() throws Exception {
-        System.out.println("init");
         //        String sourceMolFileName = "";
         //        String targetMolFileName = "";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -119,7 +116,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testSetChemFilters() throws InvalidSmilesException, CDKException {
-        System.out.println("setChemFilters");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
@@ -137,7 +133,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetFragmentSize() throws InvalidSmilesException, CDKException {
-        System.out.println("getFragmentSize");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -156,7 +151,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetStereoScore() throws InvalidSmilesException, CDKException {
-        System.out.println("getStereoScore");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");
@@ -175,7 +169,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetEnergyScore() throws InvalidSmilesException, CDKException {
-        System.out.println("getEnergyScore");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -194,7 +187,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetFirstMapping() throws InvalidSmilesException, CDKException {
-        System.out.println("getFirstMapping");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -213,7 +205,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetAllMapping() throws InvalidSmilesException, CDKException {
-        System.out.println("getAllMapping");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
@@ -237,7 +228,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetFirstAtomMapping() throws InvalidSmilesException, CDKException {
-        System.out.println("getFirstAtomMapping");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -256,7 +246,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetAllAtomMapping() throws InvalidSmilesException, CDKException {
-        System.out.println("getAllAtomMapping");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
@@ -280,7 +269,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetReactantMolecule() throws InvalidSmilesException, CDKException {
-        System.out.println("getReactantMolecule");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -299,7 +287,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetProductMolecule() throws InvalidSmilesException, CDKException {
-        System.out.println("getProductMolecule");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -317,7 +304,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetTanimotoSimilarity() throws Exception {
-        System.out.println("getTanimotoSimilarity");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -337,7 +323,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testIsStereoMisMatch() throws InvalidSmilesException, CDKException {
-        System.out.println("isStereoMisMatch");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -354,7 +339,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testIsSubgraph() throws InvalidSmilesException, CDKException {
-        System.out.println("isSubgraph");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
@@ -371,7 +355,6 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testGetEuclideanDistance() throws Exception {
-        System.out.println("getEuclideanDistance");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");

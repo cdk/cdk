@@ -59,7 +59,6 @@ public class BondEnergyTest {
      */
     @Test
     public void testGetSymbolFirstAtom() {
-        System.out.println("getSymbolFirstAtom");
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         String expResult = "H";
         String result = instance.getSymbolFirstAtom();
@@ -71,7 +70,6 @@ public class BondEnergyTest {
      */
     @Test
     public void testGetSymbolSecondAtom() {
-        System.out.println("getSymbolSecondAtom");
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         String expResult = "I";
         String result = instance.getSymbolSecondAtom();
@@ -83,7 +81,6 @@ public class BondEnergyTest {
      */
     @Test
     public void testGetBondOrder() {
-        System.out.println("getBondOrder");
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         Order expResult = Order.SINGLE;
         Order result = instance.getBondOrder();
@@ -95,7 +92,6 @@ public class BondEnergyTest {
      */
     @Test
     public void testGetEnergy() {
-        System.out.println("getEnergy");
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
         int expResult = 295;
         int result = instance.getEnergy();
