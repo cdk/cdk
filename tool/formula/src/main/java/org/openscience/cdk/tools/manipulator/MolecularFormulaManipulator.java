@@ -637,8 +637,10 @@ public class MolecularFormulaManipulator {
         for (IIsotope isotope : formula.isotopes()) {
             if (isotope.getExactMass() == CDKConstants.UNSET) {
                 try {
-                    mass += Isotopes.getInstance().getMajorIsotope(isotope.getSymbol()).getExactMass()
-                            * formula.getIsotopeCount(isotope);
+                    IIsotope majorIsotope = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
+                    if( majorIsotope != null ) {
+                        mass += majorIsotope.getExactMass() * formula.getIsotopeCount(isotope);
+					}
                 } catch (IOException e) {
                     throw new RuntimeException("Could not instantiate the IsotopeFactory.");
                 }
@@ -678,7 +680,9 @@ public class MolecularFormulaManipulator {
         for (IIsotope isotope : formula.isotopes()) {
             try {
                 IIsotope isotope2 = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
-                mass += isotope2.getMassNumber() * formula.getIsotopeCount(isotope);
+                if( isotope2 != null ) {
+                    mass += isotope2.getMassNumber() * formula.getIsotopeCount(isotope);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -714,6 +718,7 @@ public class MolecularFormulaManipulator {
      * @param  formula The IMolecularFormula to calculate
      * @return         The summed exact major isotope masses of all atoms in this MolecularFormula
      */
+	
     @TestMethod("testGetMajorIsotopeMass_IMolecularFormula")
     public static double getMajorIsotopeMass(IMolecularFormula formula) {
         double mass = 0.0;
@@ -725,7 +730,9 @@ public class MolecularFormulaManipulator {
         }
         for (IIsotope isotope : formula.isotopes()) {
             IIsotope major = factory.getMajorIsotope(isotope.getSymbol());
-            mass += major.getExactMass() * formula.getIsotopeCount(isotope);
+            if( major != null ) {
+                mass += major.getExactMass() * formula.getIsotopeCount(isotope);
+            }
         }
         return mass;
     }
