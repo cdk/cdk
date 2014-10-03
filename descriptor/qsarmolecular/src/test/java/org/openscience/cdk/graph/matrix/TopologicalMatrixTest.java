@@ -31,5 +31,6 @@ public class TopologicalMatrixTest extends CDKTestCase {
                 System.out.print(matrix[i][j] + " ");
             }
         }
+    System.out.print("\n");
     }
 }
