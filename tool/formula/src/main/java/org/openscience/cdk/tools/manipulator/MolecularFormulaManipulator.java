@@ -638,9 +638,9 @@ public class MolecularFormulaManipulator {
             if (isotope.getExactMass() == CDKConstants.UNSET) {
                 try {
                     IIsotope majorIsotope = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
-                    if( majorIsotope != null ) {
+                    if (majorIsotope != null) {
                         mass += majorIsotope.getExactMass() * formula.getIsotopeCount(isotope);
-					}
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException("Could not instantiate the IsotopeFactory.");
                 }
@@ -680,7 +680,7 @@ public class MolecularFormulaManipulator {
         for (IIsotope isotope : formula.isotopes()) {
             try {
                 IIsotope isotope2 = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
-                if( isotope2 != null ) {
+                if (isotope2 != null) {
                     mass += isotope2.getMassNumber() * formula.getIsotopeCount(isotope);
                 }
             } catch (IOException e) {
@@ -718,7 +718,7 @@ public class MolecularFormulaManipulator {
      * @param  formula The IMolecularFormula to calculate
      * @return         The summed exact major isotope masses of all atoms in this MolecularFormula
      */
-	
+
     @TestMethod("testGetMajorIsotopeMass_IMolecularFormula")
     public static double getMajorIsotopeMass(IMolecularFormula formula) {
         double mass = 0.0;
@@ -730,7 +730,7 @@ public class MolecularFormulaManipulator {
         }
         for (IIsotope isotope : formula.isotopes()) {
             IIsotope major = factory.getMajorIsotope(isotope.getSymbol());
-            if( major != null ) {
+            if (major != null) {
                 mass += major.getExactMass() * formula.getIsotopeCount(isotope);
             }
         }
@@ -816,8 +816,7 @@ public class MolecularFormulaManipulator {
         IAtom hAtom = null;
         for (IAtom iAtom : atomContainer.atoms()) {
             formula.addIsotope(iAtom);
-            if (iAtom.getFormalCharge() != null)
-                charge += iAtom.getFormalCharge();
+            if (iAtom.getFormalCharge() != null) charge += iAtom.getFormalCharge();
 
             if (iAtom.getImplicitHydrogenCount() != null && (iAtom.getImplicitHydrogenCount() > 0)) {
                 if (hAtom == null) hAtom = atomContainer.getBuilder().newInstance(IAtom.class, "H");

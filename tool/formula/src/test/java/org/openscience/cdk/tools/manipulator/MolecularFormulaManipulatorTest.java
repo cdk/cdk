@@ -634,18 +634,18 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         Assert.assertEquals(MolecularFormulaManipulator.getElementCount(mf2, elemH),
                 MolecularFormulaManipulator.getElementCount(mf1, elemH));
 
-	}
+    }
 
     @Test
-    public void testGetMolecularFormula_IAtomNullCharge(){
+    public void testGetMolecularFormula_IAtomNullCharge() {
         IAtomContainer ac = builder.newInstance(IAtomContainer.class);
-        ac.addAtom(builder.newInstance(IAtom.class,"C"));
-        ac.getAtom(0).setFormalCharge((Integer)CDKConstants.UNSET);
-        ac.addAtom(builder.newInstance(IAtom.class,"C"));
-        ac.addAtom(builder.newInstance(IAtom.class,"H"));
-        ac.addAtom(builder.newInstance(IAtom.class,"H"));
-        ac.addAtom(builder.newInstance(IAtom.class,"H"));
-        ac.addAtom(builder.newInstance(IAtom.class,"H"));
+        ac.addAtom(builder.newInstance(IAtom.class, "C"));
+        ac.getAtom(0).setFormalCharge((Integer) CDKConstants.UNSET);
+        ac.addAtom(builder.newInstance(IAtom.class, "C"));
+        ac.addAtom(builder.newInstance(IAtom.class, "H"));
+        ac.addAtom(builder.newInstance(IAtom.class, "H"));
+        ac.addAtom(builder.newInstance(IAtom.class, "H"));
+        ac.addAtom(builder.newInstance(IAtom.class, "H"));
 
         IMolecularFormula mf1 = MolecularFormulaManipulator.getMolecularFormula(ac);
         Assert.assertNotNull(mf1);
