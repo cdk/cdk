@@ -26,6 +26,7 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import com.google.common.primitives.Ints;
+
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -50,10 +51,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
+
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.geom.Point2D;
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
