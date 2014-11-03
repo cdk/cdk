@@ -50,6 +50,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -491,12 +492,15 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                             throw new CDKException(error, exception);
                         }
                         if (atomID != -1 && label.length() > 0) {
-                            IAtom atom = readData.getAtom(atomID - 1);
-                            if (!(atom instanceof IPseudoAtom)) {
-                                atom = readData.getBuilder().newInstance(IPseudoAtom.class, atom);
+                            IAtom original = readData.getAtom(atomID - 1);
+                            IAtom replacement = original;
+                            if (!(original instanceof IPseudoAtom)) {
+                                replacement = readData.getBuilder().newInstance(IPseudoAtom.class,
+                                                                                original);
                             }
-                            ((IPseudoAtom) atom).setLabel(label);
-                            readData.setAtom(atomID - 1, atom);
+                            ((IPseudoAtom) replacement).setLabel(label);
+                            if (replacement != original)
+                                AtomContainerManipulator.replaceAtomByAtom(readData, original, replacement);
                         }
                     }
                 } else {

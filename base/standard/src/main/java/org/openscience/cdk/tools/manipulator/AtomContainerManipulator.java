@@ -162,6 +162,7 @@ public class AtomContainerManipulator {
             }
             return true;
         }
+        // FIXME - also need to handle stereochemistry
     }
 
     /**

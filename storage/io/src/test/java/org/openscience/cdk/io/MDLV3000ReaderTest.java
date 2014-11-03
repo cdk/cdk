@@ -27,6 +27,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
@@ -106,6 +107,14 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals("Leu", molecule.getAtom(9).getSymbol());
         IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(9);
         Assert.assertEquals("Leu", pa.getLabel());
+    }
+    
+    @Test public void pseudoAtomReplacement() throws Exception {
+        MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("pseudoAtomReplacement.mol"));
+        IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0,0,0,0));
+        for (IAtom atom : container.getBond(9).atoms()) {
+            Assert.assertTrue(container.contains(atom));
+        }
     }
 
 }
