@@ -141,6 +141,13 @@ public interface IAtom extends IAtomType {
     public Integer getStereoParity();
 
     /**
+     * Is the atom marked as aromatic.
+     *
+     * @return atom is aromatic
+     */
+    public boolean isAromatic();
+
+    /**
      * @inheritDoc
      */
     @Override

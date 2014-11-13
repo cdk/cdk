@@ -667,6 +667,14 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
         return this.electronValency;
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public boolean isAromatic() {
+        return getFlag(CDKConstants.ISAROMATIC);
+    }
+
     @Override
     public IAtom clone() throws CloneNotSupportedException {
         // XXX: clone always dodgy

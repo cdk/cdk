@@ -348,6 +348,14 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
+     * @inheritDoc
+     */
+    @Override
+    public boolean isAromatic() {
+        return getFlag(CDKConstants.ISAROMATIC);
+    }
+
+    /**
      * Compares a atom with this atom.
      *
      * @param     object of type Atom
