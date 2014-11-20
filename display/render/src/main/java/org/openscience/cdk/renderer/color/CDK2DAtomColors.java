@@ -19,13 +19,31 @@
 package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
+
+import static org.openscience.cdk.config.Elements.Carbon;
+import static org.openscience.cdk.config.Elements.Hydrogen;
+import static org.openscience.cdk.config.Elements.Nitrogen;
+import static org.openscience.cdk.config.Elements.Oxygen;
+import static org.openscience.cdk.config.Elements.Phosphorus;
+import static org.openscience.cdk.config.Elements.Sulfur;
 
 /**
  * Gives a short table of atom colors for 2D display.
+ *
+ * The internal color map can be modified by invoking the set method. For convenience the set method
+ * returns the colorer instance for chaining.
+ * 
+ * <pre>{@code
+ * IAtomColorer colorer = new CDK2DAtomColors().set("H", Color.LIGHT_GRAY)
+ *                                             .set("O", Color.RED.lighter());
+ * }</pre>
  *
  * @cdk.module render
  * @cdk.githash
@@ -33,22 +51,61 @@ import org.openscience.cdk.interfaces.IAtom;
 @TestClass("org.openscience.cdk.renderer.color.CDK2DAtomColorsTest")
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
-    private static final long  serialVersionUID = 6712994043820219426L;
+    private static final long         serialVersionUID = 6712994043820219426L;
 
-    private final static Color HYDROGEN         = Color.black;
-    private final static Color CARBON           = Color.black;
-    private final static Color NITROGEN         = Color.blue;
-    private final static Color OXYGEN           = Color.red;
-    private final static Color PHOSPHORUS       = Color.green.darker();
-    private final static Color SULPHUR          = Color.yellow.darker();
+    private final static Color        DEFAULT          = Color.black;
 
-    private final static Color DEFAULT          = Color.black;
+    // Mapping of atomic numbers colors to their color
+    private final Map<Integer, Color> colorMap         = new HashMap<Integer, Color>(100);
+
+    public CDK2DAtomColors() {
+        set(Hydrogen, Color.black);
+        set(Carbon, Color.black);
+        set(Nitrogen, Color.blue);
+        set(Oxygen, Color.red);
+        set(Phosphorus, Color.green.darker());
+        set(Sulfur, Color.yellow.darker());
+    }
+
+    /**
+     * Set the color of the specified element.
+     *
+     * @param symbol symbol of element
+     * @param color  the color
+     * @return self reference for method chaining
+     */
+    CDK2DAtomColors set(String symbol, Color color) {
+        return set(Elements.ofString(symbol), color);
+    }
+
+    /**
+     * Set the color of the specified element.
+     *
+     * @param element instance of element
+     * @param color   the color
+     * @return self reference for method chaining
+     */
+    CDK2DAtomColors set(Elements element, Color color) {
+        return set(element.number(), color);
+    }
+
+    /**
+     * Set the color of the specified element.
+     *
+     * @param atomicNumber atomic number of element
+     * @param color        the color
+     * @return self reference for method chaining
+     */
+    CDK2DAtomColors set(int atomicNumber, Color color) {
+        colorMap.put(atomicNumber, color);
+        return this;
+    }
 
     /**
      * Returns the CDK 2D color for the given atom's element.
      *
-     * @param atom         IAtom to get a color for
-     * @return             the atom's color according to this coloring scheme.
+     * @param atom IAtom to get a color for
+     * @return the atom's color according to this coloring scheme.
      */
     @TestMethod("testGetAtomColor")
     @Override
@@ -57,56 +114,22 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
     }
 
     /**
-     * Returns the CDK 2D color for the given atom's element, or
-     * defaults to the given color if no color is defined.
+     * Returns the CDK 2D color for the given atom's element, or defaults to the given color if no
+     * color is defined.
      *
      * @param atom         IAtom to get a color for
-     * @param defaultColor Color returned if this scheme does not define
-     *                     a color for the passed IAtom
-     * @return             the atom's color according to this coloring scheme.
+     * @param defaultColor Color returned if this scheme does not define a color for the passed
+     *                     IAtom
+     * @return the atom's color according to this coloring scheme.
      */
     @TestMethod("testGetDefaultAtomColor")
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
-        Color color = defaultColor;
-        int atomnumber = 0;
-        if (atom.getAtomicNumber() != null) atomnumber = atom.getAtomicNumber();
-        if (atomnumber != 0) {
-            switch (atomnumber) {
-                case 1:
-                    color = CDK2DAtomColors.HYDROGEN;
-                    break;
-                case 6:
-                    color = CDK2DAtomColors.CARBON;
-                    break;
-                case 7:
-                    color = CDK2DAtomColors.NITROGEN;
-                    break;
-                case 8:
-                    color = CDK2DAtomColors.OXYGEN;
-                    break;
-                case 15:
-                    color = CDK2DAtomColors.PHOSPHORUS;
-                    break;
-                case 16:
-                    color = CDK2DAtomColors.SULPHUR;
-                    break;
-            }
-        } else {
-            String symbol = atom.getSymbol();
-            if (symbol.equals("N")) {
-                color = CDK2DAtomColors.NITROGEN;
-            }
-            if (symbol.equals("O")) {
-                color = CDK2DAtomColors.OXYGEN;
-            }
-            if (symbol.equals("P")) {
-                color = CDK2DAtomColors.PHOSPHORUS;
-            }
-            if (symbol.equals("S")) {
-                color = CDK2DAtomColors.SULPHUR;
-            }
-        }
-        return color;
+        Color color = null;
+        if (atom.getAtomicNumber() != null) color = colorMap.get(atom.getAtomicNumber());
+        if (color != null) return color;
+        if (atom.getAtomicNumber() != null) color = colorMap.get(Elements.ofString(atom.getSymbol()).number());
+        if (color != null) return color;
+        return defaultColor;
     }
 }
