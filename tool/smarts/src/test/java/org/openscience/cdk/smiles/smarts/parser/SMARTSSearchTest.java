@@ -1941,6 +1941,20 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(0, results[1]);
     }
 
+    @Test
+    public void testSubstructureBug20141125() throws Exception {
+        int[] results = match("[#6]S[#6]", "CSCCSCO");
+        Assert.assertEquals(4, results[0]);
+        Assert.assertEquals(2, results[1]);
+    }
+
+    @Test
+    public void testSubstructureBug20141125_2() throws Exception {
+        int[] results = match("[#6]S[#6]", "CSCCSC(O)CCCSCC");
+        Assert.assertEquals(6, results[0]);
+        Assert.assertEquals(3, results[1]);
+    }
+
     /**
      * Checks that when no number is specified for ring member ship any ring
      * atom is matched.
