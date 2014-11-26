@@ -91,6 +91,16 @@ public class StandardBondGeneratorTest {
         assertThat(freq[6], is(6));
     }
 
+
+    @Test
+    public void highAtomicNoElementCount() {
+        IAtomContainer container = TestMoleculeFactory.makeBenzene();
+        container.getAtom(0).setAtomicNumber(34);
+        container.getAtom(0).setSymbol("Se");
+        int[] freq = RingBondOffsetComparator.countLightElements(container);
+        assertThat(freq[6], is(5));
+    }
+
     @Test
     public void adenineElementCount() {
         int[] freq = RingBondOffsetComparator.countLightElements(TestMoleculeFactory.makeAdenine());
