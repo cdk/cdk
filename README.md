@@ -36,7 +36,7 @@ cdk/$ mvn compile
 
 This will produce a 'jar' file for each module located in each modules 'target/' directory.
 
-## Creating the JavaDoc documentation for the API
+## Creating the JavaDoc
 
 The JavaDoc documentation for the API describes all of the CDK classes in detail. It functions as
 the user manual for the CDK, although you should also look at the list of examples and tutorials
@@ -55,6 +55,16 @@ the documentation using the following command:
 ```bash
 cdk/$ firefox target/site/apidocs/index.html
 ```
+
+## Creating a Jar of all sources
+
+To create a Jar containing all source files use the following command on the main pom. 
+
+```bash
+$ mvn source:aggregate
+```
+
+The `cdk-{version}-sources.jar` will be generated in the `target/directory`.
 
 ## Running tests
 
