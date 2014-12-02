@@ -106,7 +106,7 @@ TOKEN_MGR_DECLS : {
 
 <*> TOKEN:
 {
-    <#_WS: ( " " | "\t" | "\n" | "\r" ) >
+    <WS: ( " " | "\t" | "\n" | "\r" ) >
     |
     // Logical Operators
     <L_AND : ";" >
@@ -294,7 +294,7 @@ TOKEN_MGR_DECLS : {
 }
 
 /**
- *                     Start ::= <ReactionExpression>
+ *                     Start ::= <ReactionExpression> <#_WS>
  *        ReactionExpression ::= <GroupExpression> (">>" <GroupExpression>)? |
  *                               ">" <GroupExpression> ">" | ">>" <GroupExpression>
  *           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
@@ -333,7 +333,7 @@ TOKEN_MGR_DECLS : {
 
 ASTStart Start() #Start : {}
 {
-    ReactionExpression() <EOF>
+    ReactionExpression() (<WS> | <EOF>)
     {
         return jjtThis;
     }

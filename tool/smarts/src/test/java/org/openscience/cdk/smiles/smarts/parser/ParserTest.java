@@ -1484,5 +1484,21 @@ public class ParserTest extends CDKTestCase {
     public void testGroup5Elements() throws Exception {
         parse("[V,Cr,Mn,Nb,Mo,Tc,Ta,W,Re]");
     }
+    
+    @Test public void endOnSpace() throws Exception {
+        parse("C ");
+    }
+
+    @Test public void endOnTab() throws Exception {
+        parse("C\t");
+    }
+
+    @Test public void endOnNewline() throws Exception {
+        parse("C\n");
+    }
+
+    @Test public void endOnCarriageReturn() throws Exception {
+        parse("C\r");
+    }
 
 }
