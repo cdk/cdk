@@ -164,7 +164,9 @@
       								</goals>
       							</pluginExecutionFilter>
       							<action>
-      								<execute/>
+      								<execute>
+      									<runOnConfiguration>true</runOnConfiguration>
+									    </execute>
       							</action>
       						</pluginExecution>
       					</pluginExecutions>
