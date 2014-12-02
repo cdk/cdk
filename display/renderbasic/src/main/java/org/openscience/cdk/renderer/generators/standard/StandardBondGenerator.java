@@ -1234,7 +1234,8 @@ final class StandardBondGenerator {
             // count elements up to Argon (number=18)
             int[] freq = new int[19];
             for (IAtom atom : container.atoms()) {
-                freq[atom.getAtomicNumber()]++;
+                if (atom.getAtomicNumber() >= 0 && atom.getAtomicNumber() < 19)
+                    freq[atom.getAtomicNumber()]++;
             }
             return freq;
         }

@@ -152,27 +152,34 @@ public final class SmilesParser {
      */
     @TestMethod("testReaction,testReactionWithAgents")
     public IReaction parseReactionSmiles(String smiles) throws InvalidSmilesException {
-        StringTokenizer tokenizer = new StringTokenizer(smiles, ">");
-        String reactantSmiles = tokenizer.nextToken();
-        String agentSmiles = "";
-        String productSmiles = tokenizer.nextToken();
-        if (tokenizer.hasMoreTokens()) {
-            agentSmiles = productSmiles;
-            productSmiles = tokenizer.nextToken();
-        }
+
+        if (!smiles.contains(">"))
+            throw new InvalidSmilesException("Not a reaction SMILES: " + smiles);
+
+        final int first  = smiles.indexOf('>');
+        final int second = smiles.indexOf('>', first + 1);
+
+        if (second < 0)
+            throw new InvalidSmilesException("Invalid reaction SMILES:" + smiles);
+
+        final String reactants = smiles.substring(0, first);
+        final String agents = smiles.substring(first + 1, second);
+        final String products = smiles.substring(second + 1, smiles.length());
 
         IReaction reaction = builder.newInstance(IReaction.class);
 
         // add reactants
-        IAtomContainer reactantContainer = parseSmiles(reactantSmiles);
-        IAtomContainerSet reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
-        for (int i = 0; i < reactantSet.getAtomContainerCount(); i++) {
-            reaction.addReactant(reactantSet.getAtomContainer(i));
+        if (!reactants.isEmpty()) {
+            IAtomContainer reactantContainer = parseSmiles(reactants);
+            IAtomContainerSet reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
+            for (int i = 0; i < reactantSet.getAtomContainerCount(); i++) {
+                reaction.addReactant(reactantSet.getAtomContainer(i));
+            }
         }
 
-        // add reactants
-        if (agentSmiles.length() > 0) {
-            IAtomContainer agentContainer = parseSmiles(agentSmiles);
+        // add agents
+        if (!agents.isEmpty()) {
+            IAtomContainer agentContainer = parseSmiles(agents);
             IAtomContainerSet agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
             for (int i = 0; i < agentSet.getAtomContainerCount(); i++) {
                 reaction.addAgent(agentSet.getAtomContainer(i));
@@ -180,10 +187,12 @@ public final class SmilesParser {
         }
 
         // add products
-        IAtomContainer productContainer = parseSmiles(productSmiles);
-        IAtomContainerSet productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
-        for (int i = 0; i < productSet.getAtomContainerCount(); i++) {
-            reaction.addProduct(productSet.getAtomContainer(i));
+        if (!products.isEmpty()) {
+            IAtomContainer productContainer = parseSmiles(products);
+            IAtomContainerSet productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
+            for (int i = 0; i < productSet.getAtomContainerCount(); i++) {
+                reaction.addProduct(productSet.getAtomContainer(i));
+            }
         }
 
         return reaction;

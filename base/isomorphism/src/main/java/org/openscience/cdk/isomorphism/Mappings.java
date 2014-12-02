@@ -35,6 +35,7 @@ import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 import java.util.Iterator;
@@ -399,6 +400,28 @@ public final class Mappings implements Iterable<int[]> {
     }
 
     /**
+     * Convert the permutations to an atom-atom bond-bond map.
+     *
+     * <blockquote><pre>
+     * for (Map&lt;IChemObject,IChemObject&gt; map : mappings.toBondMap()) {
+     *     for (Map.Entry&lt;IChemObject,IChemObject&gt; e : map.entrySet()) {
+     *         IChemObject queryObj  = e.getKey();
+     *         IChemObject targetObj = e.getValue();
+     *     }
+     *
+     *     IAtom matchedAtom = map.get(query.getAtom(i));
+     *     IBond matchedBond = map.get(query.getBond(i));
+     * }
+     * </pre></blockquote>
+     *
+     * @return iterable of atom-atom and bond-bond mappings
+     */
+    @TestMethod("toAtomBondMap")
+    public Iterable<Map<IChemObject, IChemObject>> toAtomBondMap() {
+        return map(new ToAtomBondMap(query, target));
+    }
+
+    /**
      * Efficiently determine if there are at least 'n' matches
      *
      * <blockquote><pre>
@@ -521,6 +544,44 @@ public final class Mappings implements Iterable<int[]> {
         public Map<IBond, IBond> apply(int[] mapping) {
             ImmutableMap.Builder<IBond, IBond> map = ImmutableMap.builder();
             for (int u = 0; u < g1.length; u++) {
+                for (int v : g1[u]) {
+                    if (v > u) {
+                        map.put(bonds1.get(u, v), bonds2.get(mapping[u], mapping[v]));
+                    }
+                }
+            }
+            return map.build();
+        }
+    }
+
+    /** Utility to transform a permutation into an atom-atom and bond-bond map. */
+    private final class ToAtomBondMap implements Function<int[], Map<IChemObject, IChemObject>> {
+
+        /** The query graph - indicates a presence of edges. */
+        private final int[][] g1;
+
+        /** Bond look ups for the query and target. */
+        private final GraphUtil.EdgeToBondMap bonds1, bonds2;
+
+        /**
+         * Use the provided query and target to obtain the bond instances.
+         *
+         * @param query  the structure to be found
+         * @param target the structure being searched
+         */
+        private ToAtomBondMap(IAtomContainer query, IAtomContainer target) {
+            this.bonds1 = GraphUtil.EdgeToBondMap.withSpaceFor(query);
+            this.bonds2 = GraphUtil.EdgeToBondMap.withSpaceFor(target);
+            this.g1 = GraphUtil.toAdjList(query, bonds1);
+            GraphUtil.toAdjList(target, bonds2);
+        }
+
+        /** @inheritDoc */
+        @Override
+        public Map<IChemObject, IChemObject> apply(int[] mapping) {
+            ImmutableMap.Builder<IChemObject, IChemObject> map = ImmutableMap.builder();
+            for (int u = 0; u < g1.length; u++) {
+                map.put(query.getAtom(u), target.getAtom(mapping[u]));
                 for (int v : g1[u]) {
                     if (v > u) {
                         map.put(bonds1.get(u, v), bonds2.get(mapping[u], mapping[v]));

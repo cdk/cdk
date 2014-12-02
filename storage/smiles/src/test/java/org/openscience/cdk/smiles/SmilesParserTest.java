@@ -1036,6 +1036,31 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(2, reaction.getProductCount());
     }
 
+    @Test public void noReactants() throws Exception {
+        IReaction reaction = sp.parseReactionSmiles(">>C");
+        Assert.assertEquals(0, reaction.getReactantCount());
+        Assert.assertEquals(1, reaction.getProductCount());
+    }
+
+    @Test public void noProducts() throws Exception {
+        IReaction reaction = sp.parseReactionSmiles("C>>");
+        Assert.assertEquals(1, reaction.getReactantCount());
+        Assert.assertEquals(0, reaction.getProductCount());
+    }
+
+    @Test public void noReaction() throws Exception {
+        IReaction reaction = sp.parseReactionSmiles(">>");
+        Assert.assertEquals(0, reaction.getReactantCount());
+        Assert.assertEquals(0, reaction.getProductCount());
+    }
+
+    @Test public void onlyAgents() throws Exception {
+        IReaction reaction = sp.parseReactionSmiles(">C>");
+        Assert.assertEquals(0, reaction.getReactantCount());
+        Assert.assertEquals(1, reaction.getAgents().getAtomContainerCount());
+        Assert.assertEquals(0, reaction.getProductCount());
+    }
+
     /**
      *  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 90
      *  (Part I).

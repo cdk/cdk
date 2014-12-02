@@ -40,10 +40,10 @@ public class CDK2DAtomColorsTest extends CDKTestCase {
         Assert.assertNotNull(colors);
         IAtom hydrogen = new Atom("H");
         hydrogen.setAtomicNumber(1);
-        Assert.assertEquals(Color.black, colors.getAtomColor(hydrogen));
+        Assert.assertEquals(new Color(51, 51, 51), colors.getAtomColor(hydrogen));
         IAtom helium = new Atom("He");
         helium.setAtomicNumber(2);
-        Assert.assertEquals(Color.black, colors.getAtomColor(helium));
+        Assert.assertEquals(new Color(103, 194, 255), colors.getAtomColor(helium));
     }
 
     @Test
@@ -52,6 +52,6 @@ public class CDK2DAtomColorsTest extends CDKTestCase {
 
         Assert.assertNotNull(colors);
         IAtom imaginary = new Atom("Ix");
-        Assert.assertEquals(Color.ORANGE, colors.getAtomColor(imaginary, Color.ORANGE));
+        Assert.assertEquals(Color.BLACK, colors.getAtomColor(imaginary, Color.BLACK));
     }
 }

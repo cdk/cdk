@@ -28,10 +28,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import org.junit.Test;
 import org.mockito.Matchers;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -205,6 +202,31 @@ public class MappingsTest {
         Map<IBond, IBond> m2 = iterator.next();
         assertThat(m2.get(query.getBond(0)), is(target.getBond(1)));
         assertThat(m2.get(query.getBond(1)), is(target.getBond(0)));
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void toAtomBondMap() throws Exception {
+        IAtomContainer query = smi("CCC");
+        IAtomContainer target = smi("CCC");
+
+        Iterable<Map<IChemObject, IChemObject>> iterable = Pattern.findIdentical(query).matchAll(target).toAtomBondMap();
+        Iterator<Map<IChemObject, IChemObject>> iterator = iterable.iterator();
+
+        assertTrue(iterator.hasNext());
+        Map<IChemObject, IChemObject> m1 = iterator.next();
+        assertThat(m1.get(query.getAtom(0)), is((IChemObject)target.getAtom(0)));
+        assertThat(m1.get(query.getAtom(1)), is((IChemObject)target.getAtom(1)));
+        assertThat(m1.get(query.getAtom(2)), is((IChemObject)target.getAtom(2)));
+        assertThat(m1.get(query.getBond(0)), is((IChemObject)target.getBond(0)));
+        assertThat(m1.get(query.getBond(1)), is((IChemObject)target.getBond(1)));
+        assertTrue(iterator.hasNext());
+        Map<IChemObject, IChemObject> m2 = iterator.next();
+        assertThat(m2.get(query.getAtom(0)), is((IChemObject)target.getAtom(2)));
+        assertThat(m2.get(query.getAtom(1)), is((IChemObject)target.getAtom(1)));
+        assertThat(m2.get(query.getAtom(2)), is((IChemObject)target.getAtom(0)));
+        assertThat(m2.get(query.getBond(0)), is((IChemObject)target.getBond(1)));
+        assertThat(m2.get(query.getBond(1)), is((IChemObject)target.getBond(0)));
         assertFalse(iterator.hasNext());
     }
 
