@@ -55,6 +55,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -831,6 +832,18 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         sdg.setMolecule(mol);
         sdg.generateCoordinates(new Vector2d(0, 1));
+    }
+
+    @Test public void alleneWithImplHDoesNotCauseNPE() throws Exception {
+
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        String smiles = "CC=[C@]=CC";
+
+        IAtomContainer mol = sp.parseSmiles(smiles);
+
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.setMolecule(mol, false);
+        sdg.generateCoordinates();
     }
 
     @Test
