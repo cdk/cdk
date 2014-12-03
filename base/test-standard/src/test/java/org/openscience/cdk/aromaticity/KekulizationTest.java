@@ -478,6 +478,23 @@ public class KekulizationTest {
         assertBondOrders(m, DOUBLE, SINGLE, DOUBLE, SINGLE, DOUBLE, SINGLE);
     }
 
+    // e.g. CHEMBL422679
+    @Test public void sulfurCation() throws Exception {
+        IAtomContainer m = new AtomContainer(5, 5, 0, 0);
+        m.addAtom(atom("S", 1, true));
+        m.addAtom(atom("C", 1, true));
+        m.addAtom(atom("C", 1, true));
+        m.addAtom(atom("C", 1, true));
+        m.addAtom(atom("C", 1, true));
+        m.getAtom(0).setFormalCharge(+1);
+        m.addBond(bond(m, 0, 1, UNSET, true));
+        m.addBond(bond(m, 1, 2, UNSET, true));
+        m.addBond(bond(m, 2, 3, UNSET, true));
+        m.addBond(bond(m, 3, 4, UNSET, true));
+        m.addBond(bond(m, 4, 0, UNSET, true));
+        assertBondOrders(m, SINGLE, DOUBLE, SINGLE, DOUBLE, SINGLE);
+    }
+
     void assertBondOrders(IAtomContainer ac, IBond.Order... expected) throws Exception {
         Kekulization.kekulize(ac);
         IBond[] bonds = AtomContainerManipulator.getBondArray(ac);
