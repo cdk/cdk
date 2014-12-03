@@ -231,6 +231,7 @@ final class NonplanarBonds {
         int i = 0;
         for (int v : priority(atomToIndex.get(focus), atoms, 4)) {
             IBond bond = bonds[v];
+            if (bond == null) continue;
             if (bond.getStereo() == NONE && bond.getOrder() == SINGLE) priority[v] = i++;
         }
 
