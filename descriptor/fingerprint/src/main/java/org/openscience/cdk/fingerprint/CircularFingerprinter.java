@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.zip.CRC32;
 
 import javax.vecmath.Point2d;
@@ -263,7 +264,7 @@ public class CircularFingerprinter implements IFingerprinter {
         calculate(mol);
 
         // extract a convenient {hash:count} datastructure
-        final HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        final Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
         for (FP fp : fplist) {
             if (map.containsKey(fp.hashCode))
                 map.put(fp.hashCode, map.get(fp.hashCode) + 1);
