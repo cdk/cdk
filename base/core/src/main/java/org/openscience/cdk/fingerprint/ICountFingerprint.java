@@ -28,7 +28,8 @@ import java.io.Serializable;
  * Interface for count fingerprint representations. The fingerprint is
  * regarded as a list of hashes and a list of counts where the the list of
  * counts keeps track of how many times the corresponding hash is found in
- * the fingerprint. So index refers to position in the list of
+ * the fingerprint. So index refers to position in the list. The list must
+ * be sorted in natural order (ascending).
  *
  * @author jonalv
  * @cdk.module     core
