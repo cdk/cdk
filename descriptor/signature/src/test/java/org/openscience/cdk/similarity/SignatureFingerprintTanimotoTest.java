@@ -84,7 +84,7 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase {
         Map<String, Integer> feat1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> feat2 = fingerprinter.getRawFingerprint(mol2);
         float rawTanimoto = Tanimoto.calculate(feat1, feat2);
-        double countTanimoto = Tanimoto.calculate(countFp1, countFp2);
+        double countTanimoto = Tanimoto.method1(countFp1, countFp2);
         Assert.assertEquals(rawTanimoto, countTanimoto, 0.001);
     }
 
