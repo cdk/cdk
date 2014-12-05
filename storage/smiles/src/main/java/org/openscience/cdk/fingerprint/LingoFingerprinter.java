@@ -32,7 +32,6 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -51,24 +50,26 @@ import java.util.regex.Pattern;
 @TestClass("org.openscience.cdk.fingerprint.LingoFingerprinterTest")
 public class LingoFingerprinter implements IFingerprinter {
 
-    int             q                  = 4;
-    SmilesGenerator gen                = new SmilesGenerator();
-    Pattern         ringClosurePattern = Pattern.compile("[0-9]+");
+    private final int n;
+    private final SmilesGenerator gen    = SmilesGenerator.unique().aromatic();
+    private final Pattern         DIGITS = Pattern.compile("[0-9]+");
 
     /**
      * Initialize the fingerprinter with a defult substring length of 4.
      */
     @TestMethod("testFingerprint")
-    public LingoFingerprinter() {}
+    public LingoFingerprinter() {
+        this(4);
+    }
 
     /**
      * Initialize the fingerprinter.
      *
-     * @param q The length of substrings to consider
+     * @param n The length of substrings to consider
      */
     @TestMethod("testFingerprint")
-    public LingoFingerprinter(int q) {
-        this.q = q;
+    public LingoFingerprinter(int n) {
+        this.n = n;
     }
 
     @Override
@@ -80,14 +81,15 @@ public class LingoFingerprinter implements IFingerprinter {
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
         Aromaticity.cdkLegacy().apply(atomContainer);
-        String smiles = refactorSmiles(gen.create(atomContainer));
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        for (int i = 0; i < smiles.length() - q + 1; i++) {
-            String subsmi = smiles.substring(i, i + q);
-            if (map.containsKey(subsmi))
-                map.put(subsmi, map.get(subsmi) + 1);
-            else
+        final String smiles = replaceDigits(gen.create(atomContainer));
+        final Map<String, Integer> map = new HashMap<String, Integer>();
+        for (int i = 0, l = smiles.length() - n + 1; i < l; i++) {
+            String subsmi = smiles.substring(i, i + n);
+            Integer count = map.get(subsmi);
+            if (count == null)
                 map.put(subsmi, 1);
+            else
+                map.put(subsmi, count + 1);
         }
         return map;
     }
@@ -95,12 +97,11 @@ public class LingoFingerprinter implements IFingerprinter {
     @TestMethod("testGetSize")
     @Override
     public int getSize() {
-        return -1;
+        return -1; // 1L << 32
     }
 
-    private String refactorSmiles(String smiles) {
-        Matcher matcher = ringClosurePattern.matcher(smiles);
-        return matcher.replaceAll("0");
+    private String replaceDigits(String smiles) {
+        return DIGITS.matcher(smiles).replaceAll("0");
     }
 
     @Override
