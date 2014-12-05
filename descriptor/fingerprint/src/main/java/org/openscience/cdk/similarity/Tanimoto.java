@@ -185,6 +185,18 @@ public class Tanimoto {
      */
     @TestMethod("testICountFingerprintComparison")
     public static double calculate(ICountFingerprint fp1, ICountFingerprint fp2) {
+        return method1(fp1, fp2);
+    }
+
+    /**
+     * Calculates Tanimoto distance for two count fingerprints using method 1.
+     *
+     * @param fp1 count fingerprint 1
+     * @param fp2 count fingerprint 2
+     * @return a Tanimoto distance
+     */
+    @TestMethod("method1")
+    public static double method1(ICountFingerprint fp1, ICountFingerprint fp2) {
         long xy = 0, x = 0, y = 0;
         for (int i = 0; i < fp1.numOfPopulatedbins(); i++) {
             int hash = fp1.getHash(i);
@@ -199,18 +211,6 @@ public class Tanimoto {
             y += fp2.getCount(j) * fp2.getCount(j);
         }
         return ((double) xy / (x + y - xy));
-    }
-
-    /**
-     * Calculates Tanimoto distance for two count fingerprints using method 1.
-     *
-     * @param fp1 count fingerprint 1
-     * @param fp2 count fingerprint 2
-     * @return a Tanimoto distance
-     */
-    @TestMethod("method1")
-    public static double method1(ICountFingerprint fp1, ICountFingerprint fp2) {
-        return calculate(fp1, fp2);
     }
 
     /**
