@@ -26,7 +26,9 @@ package org.openscience.cdk.fingerprint;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 
@@ -34,12 +36,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import static org.openscience.cdk.graph.Cycles.all;
+import static org.openscience.cdk.graph.Cycles.or;
+import static org.openscience.cdk.graph.Cycles.relevant;
+
 /**
- * An implementation of the LINGO fingerprint {@cdk.cite Vidal2005}.
- * <p>
- * While the current implementation converts ring closure symbols to 0's
- * it does not convert 2-letter element symbols to single letters (ala
- * OpenEye).
+ * An implementation of the LINGO fingerprint {@cdk.cite Vidal2005}. <p> While the current
+ * implementation converts ring closure symbols to 0's it does not convert 2-letter element symbols
+ * to single letters (ala OpenEye).
  *
  * @author Rajarshi Guha
  * @cdk.module smiles
@@ -53,6 +57,9 @@ public class LingoFingerprinter implements IFingerprinter {
     private final int n;
     private final SmilesGenerator gen    = SmilesGenerator.unique().aromatic();
     private final Pattern         DIGITS = Pattern.compile("[0-9]+");
+
+    private final Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(),
+                                                            or(all(), relevant()));
 
     /**
      * Initialize the fingerprinter with a defult substring length of 4.
@@ -80,7 +87,7 @@ public class LingoFingerprinter implements IFingerprinter {
     @TestMethod("testFingerprint")
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
-        Aromaticity.cdkLegacy().apply(atomContainer);
+        aromaticity.apply(atomContainer);
         final String smiles = replaceDigits(gen.create(atomContainer));
         final Map<String, Integer> map = new HashMap<String, Integer>();
         for (int i = 0, l = smiles.length() - n + 1; i < l; i++) {
