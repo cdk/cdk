@@ -154,7 +154,7 @@ public class Tanimoto {
      * @param features1 The first feature map
      * @param features2 The second feature map
      * @return The Tanimoto coefficient
-     */
+     */                         
     @TestMethod("testTanimoto4")
     public static float calculate(Map<String, Integer> features1, Map<String, Integer> features2) {
         Set<String> common = new TreeSet<String>(features1.keySet());
@@ -182,15 +182,20 @@ public class Tanimoto {
      * @param fp1 The first fingerprint
      * @param fp2 The second fingerprint
      * @return The Tanimoto coefficient
+     * @see #method1
+     * @see #method2
      */
     @TestMethod("testICountFingerprintComparison")
     public static double calculate(ICountFingerprint fp1, ICountFingerprint fp2) {
-        return method1(fp1, fp2);
+        return method2(fp1, fp2);
     }
 
     /**
      * Calculates Tanimoto distance for two count fingerprints using method 1.
      *
+     * The feature/count type fingerprints may be of different length.
+     * Uses Tanimoto method from {@cdk.cite Steffen09}.
+     * 
      * @param fp1 count fingerprint 1
      * @param fp2 count fingerprint 2
      * @return a Tanimoto distance
@@ -214,7 +219,7 @@ public class Tanimoto {
     }
 
     /**
-     * Calculates Tanimoto distance for two count fingerprints using method 2.
+     * Calculates Tanimoto distance for two count fingerprints using method 2 {@cdk.cite Grant06}.
      *
      * @param fp1 count fingerprint 1
      * @param fp2 count fingerprint 2

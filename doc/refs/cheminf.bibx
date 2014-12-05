@@ -811,6 +811,30 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:url>http://www.cdk.org/</bibtex:url>
     </bibtex:article>
   </bibtex:entry>
+  
+  <bibtex:entry id="Steffen09">
+    <bibtex:article>
+      <bibtex:author>Andreas Steffen, Thierry Kogej, Christian Tyrchan and Ola Engkvist</bibtex:author>
+      <bibtex:title>Comparison of Molecular Fingerprint Methods on the Basis of Biological Profile Data</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Model.</bibtex:journal>
+      <bibtex:year>2009</bibtex:year>
+      <bibtex:volume>49</bibtex:volume>
+      <bibtex:pages>338–347</bibtex:pages>
+      <bibtex:doi>10.1021/ci800326z</bibtex:doi>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="Grant06">
+    <bibtex:article>
+      <bibtex:author>J.A. Grant, J.A. Haigh, B.T. Pickup, A. Nicholls and R.A. Sayle</bibtex:author>
+      <bibtex:title>Lingos, Finite State Machines, and Fast Similarity Searching</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Model.</bibtex:journal>
+      <bibtex:year>2006</bibtex:year>
+      <bibtex:volume>46</bibtex:volume>
+      <bibtex:pages>1912-1918</bibtex:pages>
+      <bibtex:doi>10.1021/ci6002152</bibtex:doi>
+    </bibtex:article>
+  </bibtex:entry>
 
   <bibtex:entry id="TOD98">
     <bibtex:article>
