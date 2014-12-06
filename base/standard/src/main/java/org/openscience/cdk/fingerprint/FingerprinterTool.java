@@ -161,11 +161,11 @@ public class FingerprinterTool {
      * @return the continuous fingerprint
      */
     public static IBitFingerprint makeBitFingerprint(final Map<String,Integer> features, int len, int bits) {
-        final BitSetFingerprint fingerprint = new BitSetFingerprint();
+        final BitSetFingerprint fingerprint = new BitSetFingerprint(len);
         final Random rand = new Random();
         for (String feature : features.keySet()) {
             int hash = feature.hashCode();
-            fingerprint.set(hash % len);
+            fingerprint.set(Math.abs(hash % len));
             for (int i = 1; i < bits; i++) {
                 rand.setSeed(hash);
                 fingerprint.set(hash = rand.nextInt(len));
@@ -181,12 +181,14 @@ public class FingerprinterTool {
      * @return the continuous fingerprint
      */
     public static ICountFingerprint makeCountFingerprint(final Map<String,Integer> features) {
+
         final Map<Integer,Integer> bitCountMap = new TreeMap<>();
         
         for (Map.Entry<String,Integer> e : features.entrySet())
             bitCountMap.put(e.getKey().hashCode(), e.getValue());
         
         final List<Integer> bitAtIndex = new ArrayList<>(bitCountMap.keySet());
+        final List<Integer> cntAtIndex = new ArrayList<>(bitCountMap.values());
         
         return new ICountFingerprint() {
             @Override public long size() {
@@ -198,7 +200,7 @@ public class FingerprinterTool {
             }
 
             @Override public int getCount(int index) {
-                return getCountForHash(getHash(index));
+                return cntAtIndex.get(index);
             }
 
             @Override public int getHash(int index) {
