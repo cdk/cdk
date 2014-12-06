@@ -81,7 +81,7 @@ public class LingoFingerprinter implements IFingerprinter {
 
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer iAtomContainer) throws CDKException {
-        throw new UnsupportedOperationException();
+        return FingerprinterTool.makeBitFingerprint(getRawFingerprint(iAtomContainer));
     }
 
     @TestMethod("testFingerprint")
@@ -113,7 +113,7 @@ public class LingoFingerprinter implements IFingerprinter {
 
     @Override
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
-        throw new UnsupportedOperationException();
+        return FingerprinterTool.makeCountFingerprint(getRawFingerprint(container));
     }
 
 }
