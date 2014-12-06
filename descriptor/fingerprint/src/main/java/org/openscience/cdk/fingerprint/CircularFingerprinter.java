@@ -118,6 +118,7 @@ public class CircularFingerprinter implements IFingerprinter {
 
     private int            classType, atomClass;
     private IAtomContainer mol;
+    private final int      length;
 
     private int[]          identity;
     private boolean[]      resolvedChiral;
@@ -150,7 +151,7 @@ public class CircularFingerprinter implements IFingerprinter {
      * Default constructor: uses the ECFP6 type.
      */
     public CircularFingerprinter() {
-        classType = CLASS_ECFP6;
+        this(CLASS_ECFP6);
     }
 
     /**
@@ -161,7 +162,20 @@ public class CircularFingerprinter implements IFingerprinter {
      * @param classType one of CLASS_ECFP{n} or CLASS_FCFP{n}
      */
     public CircularFingerprinter(int classType) {
+        this(classType, 1024);
+    }
+
+    /**
+     * Specific constructor: initializes with descriptor class type, one of ECFP_{p} or FCFP_{p}, where ECFP is
+     * for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
+     * path diameter, and may be 0, 2, 4 or 6.
+     *
+     * @param classType one of CLASS_ECFP{n} or CLASS_FCFP{n}
+     * @param len size of folded (binary) fingerprint                  
+     */
+    public CircularFingerprinter(int classType, int len) {
         this.classType = classType;
+        this.length = len;
     }
 
     /**
@@ -179,7 +193,7 @@ public class CircularFingerprinter implements IFingerprinter {
 
         final int na = mol.getAtomCount();
         identity = new int[na];
-        resolvedChiral = new boolean[na];;
+        resolvedChiral = new boolean[na];
         atomGroup = new int[na][];
 
         for (int n = 0; n < na; n++)
@@ -241,12 +255,11 @@ public class CircularFingerprinter implements IFingerprinter {
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer mol) throws CDKException {
         calculate(mol);
-        final int FOLDING_SIZE = 1024;
-        final BitSet bits = new BitSet(FOLDING_SIZE);
+        final BitSet bits = new BitSet(length);
         for (int n = 0; n < fplist.size(); n++) {
             int i = fplist.get(n).hashCode;
             long b = i >= 0 ? i : ((i & 0x7FFFFFFF) | (1L << 31));
-            bits.set((int) (b % FOLDING_SIZE));
+            bits.set((int) (b % length));
         }
         return new BitSetFingerprint(bits);
     }
@@ -335,7 +348,7 @@ public class CircularFingerprinter implements IFingerprinter {
      */
     @Override
     public int getSize() {
-        return 1024;
+        return length;
     }
 
     // ------------ private methods ------------
