@@ -25,7 +25,10 @@ package org.openscience.cdk.fingerprint;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -121,6 +124,103 @@ public class FingerprinterTool {
         }
 
         return differences;
+    }
+
+    /**
+     * Convert a mapping of features and their counts to a 1024-bit binary fingerprint. A single 
+     * bit is set for each pattern.
+     *
+     * @param features features to include
+     * @return the continuous fingerprint
+     * @see #makeBitFingerprint(java.util.Map, int, int)
+     */
+    public static IBitFingerprint makeBitFingerprint(final Map<String,Integer> features) {
+        return makeBitFingerprint(features, 1024, 1);
+    }
+
+    /**
+     * Convert a mapping of features and their counts to a binary fingerprint. A single bit is
+     * set for each pattern.
+     *
+     * @param features features to include
+     * @param len fingerprint length
+     * @return the continuous fingerprint
+     * @see #makeBitFingerprint(java.util.Map, int, int) 
+     */
+    public static IBitFingerprint makeBitFingerprint(final Map<String,Integer> features, int len) {
+        return makeBitFingerprint(features, len, 1);
+    }
+
+    /**
+     * Convert a mapping of features and their counts to a binary fingerprint. Each feature
+     * can set 1-n hashes, the amount is modified by the {@code bits} operand.
+     *
+     * @param features features to include
+     * @param len fingerprint length
+     * @param bits number of bits to set for each pattern            
+     * @return the continuous fingerprint
+     */
+    public static IBitFingerprint makeBitFingerprint(final Map<String,Integer> features, int len, int bits) {
+        final BitSetFingerprint fingerprint = new BitSetFingerprint();
+        final Random rand = new Random();
+        for (String feature : features.keySet()) {
+            int hash = feature.hashCode();
+            fingerprint.set(hash % len);
+            for (int i = 1; i < bits; i++) {
+                rand.setSeed(hash);
+                fingerprint.set(hash = rand.nextInt(len));
+            }
+        }
+        return fingerprint;
+    }
+
+    /**
+     * Wrap a mapping of features and their counts to a continuous (count based) fingerprint.
+     * 
+     * @param features features to include
+     * @return the continuous fingerprint
+     */
+    public static ICountFingerprint makeCountFingerprint(final Map<String,Integer> features) {
+        final Map<Integer,Integer> bitCountMap = new TreeMap<>();
+        
+        for (Map.Entry<String,Integer> e : features.entrySet())
+            bitCountMap.put(e.getKey().hashCode(), e.getValue());
+        
+        final List<Integer> bitAtIndex = new ArrayList<>(bitCountMap.keySet());
+        
+        return new ICountFingerprint() {
+            @Override public long size() {
+                return 1L << 32;
+            }
+
+            @Override public int numOfPopulatedbins() {
+                return bitCountMap.size();
+            }
+
+            @Override public int getCount(int index) {
+                return getCountForHash(getHash(index));
+            }
+
+            @Override public int getHash(int index) {
+                return bitAtIndex.get(index);
+            }
+
+            @Override public void merge(ICountFingerprint fp) {
+                throw new UnsupportedOperationException("Merge not supported.");   
+            }
+
+            @Override public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {
+                throw new UnsupportedOperationException("Behave as bit fingerprint not supported.");
+            }
+
+            @Override public boolean hasHash(int hash) {
+                return bitCountMap.containsKey(hash);
+            }
+
+            @Override public int getCountForHash(int hash) {
+                return bitCountMap.get(hash);
+            }
+        };
     }
 
 }

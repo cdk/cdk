@@ -23,12 +23,19 @@
 package org.openscience.cdk.fingerprint;
 
 import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @cdk.module test-standard
@@ -47,7 +54,7 @@ public class FingerprinterToolTest extends CDKTestCase {
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
         IAtomContainer frag1 = MoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+        assertTrue(FingerprinterTool.isSubset(bs, bs1));
     }
 
     @Test
@@ -83,5 +90,31 @@ public class FingerprinterToolTest extends CDKTestCase {
         bs2.set(4);
 
         Assert.assertEquals(3, FingerprinterTool.differences(bs1, bs2).size());
+    }
+    
+    @Test 
+    public void makeBitFingerprint() {
+        Map<String,Integer> features = new HashMap<String,Integer>();
+        features.put("CCO", 1);
+        features.put("CC", 1);
+        features.put("C", 1);
+        IBitFingerprint fp = FingerprinterTool.makeBitFingerprint(features, 1024, 1);
+        assertThat(fp.cardinality(), is(3));
+        assertTrue(fp.get("CCO".hashCode() % 1024));
+        assertTrue(fp.get("CC".hashCode() % 1024));
+        assertTrue(fp.get("C".hashCode() % 1024));
+    }
+    
+    @Test 
+    public void makeCountFingerprint() {
+        Map<String,Integer> features = new HashMap<String,Integer>();
+        features.put("CCO", 1);
+        features.put("CC", 2);
+        features.put("C", 2);
+        ICountFingerprint fp = FingerprinterTool.makeCountFingerprint(features);
+        assertThat(fp.numOfPopulatedbins(), is(3));
+        assertThat(fp.getCountForHash("CCO".hashCode()), is(1));
+        assertThat(fp.getCountForHash("CC".hashCode()), is(2));
+        assertThat(fp.getCountForHash("C".hashCode()), is(2));
     }
 }
