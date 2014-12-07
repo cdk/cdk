@@ -181,48 +181,7 @@ public class FingerprinterTool {
      * @return the continuous fingerprint
      */
     public static ICountFingerprint makeCountFingerprint(final Map<String,Integer> features) {
-
-        final Map<Integer,Integer> bitCountMap = new TreeMap<>();
-        
-        for (Map.Entry<String,Integer> e : features.entrySet())
-            bitCountMap.put(e.getKey().hashCode(), e.getValue());
-        
-        final List<Integer> bitAtIndex = new ArrayList<>(bitCountMap.keySet());
-        final List<Integer> cntAtIndex = new ArrayList<>(bitCountMap.values());
-        
-        return new ICountFingerprint() {
-            @Override public long size() {
-                return 1L << 32;
-            }
-
-            @Override public int numOfPopulatedbins() {
-                return bitCountMap.size();
-            }
-
-            @Override public int getCount(int index) {
-                return cntAtIndex.get(index);
-            }
-
-            @Override public int getHash(int index) {
-                return bitAtIndex.get(index);
-            }
-
-            @Override public void merge(ICountFingerprint fp) {
-                throw new UnsupportedOperationException("Merge not supported.");   
-            }
-
-            @Override public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {
-                throw new UnsupportedOperationException("Behave as bit fingerprint not supported.");
-            }
-
-            @Override public boolean hasHash(int hash) {
-                return bitCountMap.containsKey(hash);
-            }
-
-            @Override public int getCountForHash(int hash) {
-                return bitCountMap.get(hash);
-            }
-        };
+        return new IntArrayCountFingerprint(features);
     }
 
 }
