@@ -174,6 +174,8 @@ public class CircularFingerprinter implements IFingerprinter {
      * @param len size of folded (binary) fingerprint                  
      */
     public CircularFingerprinter(int classType, int len) {
+        if (classType < 1 || classType > 8)
+            throw new IllegalArgumentException("Invalid classType specified: " + classType);
         this.classType = classType;
         this.length = len;
     }
