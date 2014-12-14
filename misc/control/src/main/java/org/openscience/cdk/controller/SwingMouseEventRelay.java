@@ -57,8 +57,6 @@ public class SwingMouseEventRelay implements MouseMotionListener, MouseListener 
     /** Position of mouse press for dragging. */
     private int     dragFromX = 0;
     private int     dragFromY = 0;
-    /** true means mouse was pressed in ball and still in panel.*/
-    private boolean _canDrag  = false;
 
     @Override
     public void mouseClicked(MouseEvent event) {
