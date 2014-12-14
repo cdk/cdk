@@ -35,11 +35,6 @@ public class PharmacophoreQueryAtomTest {
     }
 
     @Test
-    public void testSetOperator() {
-
-    }
-
-    @Test
     public void testMatches() {
         PharmacophoreQueryAtom qatom = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
 
