@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class VicinitySampler {
 
-    private final static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(VicinitySampler.class);
+    private final static ILoggingTool LOGGER     = LoggingToolFactory.createLoggingTool(VicinitySampler.class);
 
     int                               molCounter = 0;
 
@@ -57,7 +57,7 @@ public class VicinitySampler {
      * Faulon's equations.
      */
     public static List<IAtomContainer> sample(IAtomContainer ac) {
-        logger.debug("RandomGenerator->mutate() Start");
+        LOGGER.debug("RandomGenerator->mutate() Start");
         List<IAtomContainer> structures = new ArrayList<IAtomContainer>();
 
         int nrOfAtoms = ac.getAtomCount();
@@ -140,18 +140,18 @@ public class VicinitySampler {
                                     b12 = a11 + a12 - b11;
                                     b21 = a11 + a21 - b11;
                                     b22 = a22 - a11 + b11;
-                                    logger.debug("Trying atom combination : " + x1 + ":" + x2 + ":" + y1 + ":" + y2);
+                                    LOGGER.debug("Trying atom combination : " + x1 + ":" + x2 + ":" + y1 + ":" + y2);
                                     try {
                                         newAc = (IAtomContainer) ac.clone();
                                         change(newAc, x1, y1, x2, y2, b11, b12, b21, b22);
                                         if (ConnectivityChecker.isConnected(newAc)) {
                                             structures.add(newAc);
                                         } else {
-                                            logger.debug("not connected");
+                                            LOGGER.debug("not connected");
                                         }
                                     } catch (CloneNotSupportedException e) {
-                                        logger.error("Cloning exception: " + e.getMessage());
-                                        logger.debug(e);
+                                        LOGGER.error("Cloning exception: " + e.getMessage());
+                                        LOGGER.debug(e);
                                     }
                                 }
                             }
@@ -173,7 +173,7 @@ public class VicinitySampler {
             ay1 = ac.getAtom(y1);
             ay2 = ac.getAtom(y2);
         } catch (Exception exc) {
-            logger.debug(exc);
+            LOGGER.debug(exc);
         }
         b1 = ac.getBond(ax1, ay1);
         b2 = ac.getBond(ax1, ay2);
@@ -181,58 +181,58 @@ public class VicinitySampler {
         b4 = ac.getBond(ax2, ay2);
         if (b11 > 0) {
             if (b1 == null) {
-                logger.debug("no bond " + x1 + "-" + y1 + ". Adding it with order " + b11);
+                LOGGER.debug("no bond " + x1 + "-" + y1 + ". Adding it with order " + b11);
                 b1 = ac.getBuilder().newInstance(IBond.class, ax1, ay1, BondManipulator.createBondOrder(b11));
                 ac.addBond(b1);
             } else {
                 b1.setOrder(BondManipulator.createBondOrder(b11));
-                logger.debug("Setting bondorder for " + x1 + "-" + y1 + " to " + b11);
+                LOGGER.debug("Setting bondorder for " + x1 + "-" + y1 + " to " + b11);
             }
         } else if (b1 != null) {
             ac.removeBond(b1);
-            logger.debug("removing bond " + x1 + "-" + y1);
+            LOGGER.debug("removing bond " + x1 + "-" + y1);
         }
 
         if (b12 > 0) {
             if (b2 == null) {
-                logger.debug("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);
+                LOGGER.debug("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);
                 b2 = ac.getBuilder().newInstance(IBond.class, ax1, ay2, BondManipulator.createBondOrder(b12));
                 ac.addBond(b2);
             } else {
                 b2.setOrder(BondManipulator.createBondOrder(b12));
-                logger.debug("Setting bondorder for " + x1 + "-" + y2 + " to " + b12);
+                LOGGER.debug("Setting bondorder for " + x1 + "-" + y2 + " to " + b12);
             }
         } else if (b2 != null) {
             ac.removeBond(b2);
-            logger.debug("removing bond " + x1 + "-" + y2);
+            LOGGER.debug("removing bond " + x1 + "-" + y2);
         }
 
         if (b21 > 0) {
             if (b3 == null) {
-                logger.debug("no bond " + x2 + "-" + y1 + ". Adding it with order " + b21);
+                LOGGER.debug("no bond " + x2 + "-" + y1 + ". Adding it with order " + b21);
                 b3 = ac.getBuilder().newInstance(IBond.class, ax2, ay1, BondManipulator.createBondOrder(b21));
                 ac.addBond(b3);
             } else {
                 b3.setOrder(BondManipulator.createBondOrder(b21));
-                logger.debug("Setting bondorder for " + x2 + "-" + y1 + " to " + b21);
+                LOGGER.debug("Setting bondorder for " + x2 + "-" + y1 + " to " + b21);
             }
         } else if (b3 != null) {
             ac.removeBond(b3);
-            logger.debug("removing bond " + x2 + "-" + y1);
+            LOGGER.debug("removing bond " + x2 + "-" + y1);
         }
 
         if (b22 > 0) {
             if (b4 == null) {
-                logger.debug("no bond " + x2 + "-" + y2 + ". Adding it  with order " + b22);
+                LOGGER.debug("no bond " + x2 + "-" + y2 + ". Adding it  with order " + b22);
                 b4 = ac.getBuilder().newInstance(IBond.class, ax2, ay2, BondManipulator.createBondOrder(b22));
                 ac.addBond(b4);
             } else {
                 b4.setOrder(BondManipulator.createBondOrder(b22));
-                logger.debug("Setting bondorder for " + x2 + "-" + y2 + " to " + b22);
+                LOGGER.debug("Setting bondorder for " + x2 + "-" + y2 + " to " + b22);
             }
         } else if (b4 != null) {
             ac.removeBond(b4);
-            logger.debug("removing bond " + x2 + "-" + y2);
+            LOGGER.debug("removing bond " + x2 + "-" + y2);
         }
         return ac;
     }

@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest")
 public class IPBondLearningDescriptor extends AbstractBondDescriptor {
 
-    private static final String[] descriptorNames = {"ipBondLearning"};
+    private static final String[] DESCRIPTOR_NAMES = {"ipBondLearning"};
 
     /**
      *  Constructor for the IPBondLearningDescriptor object
@@ -105,12 +105,12 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return descriptorNames;
+        return DESCRIPTOR_NAMES;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), descriptorNames, e);
+                Double.NaN), DESCRIPTOR_NAMES, e);
     }
 
     /**
@@ -168,7 +168,7 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
         bond.getAtom(1).setBondOrderSum(originalBondOrderSum2);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),
-                descriptorNames);
+                DESCRIPTOR_NAMES);
     }
 
     /**

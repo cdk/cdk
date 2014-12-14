@@ -53,7 +53,7 @@ public final class PeriodicTable {
     private static volatile Map<Elements, String> ids;
 
     /** A lock used for locking CAD ID initialisation. */
-    private final static Object                   lock = new Object();
+    private final static Object                   LOCK = new Object();
 
     /**
      * Get the Van der Waals radius for the element in question.
@@ -264,7 +264,7 @@ public final class PeriodicTable {
     private static Map<Elements, String> casIds() {
         Map<Elements, String> result = ids;
         if (result == null) {
-            synchronized (lock) {
+            synchronized (LOCK) {
                 result = ids;
                 if (result == null) {
                     ids = result = initCasIds();
