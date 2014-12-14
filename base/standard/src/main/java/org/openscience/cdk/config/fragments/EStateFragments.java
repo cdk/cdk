@@ -51,7 +51,7 @@ public class EStateFragments {
      * See <a href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">
      * here</a> for the corresponding chemical groups
      */
-    private static final String[] names  = {"sLi", "ssBe", "ssssBe", "ssBH", "sssB", "ssssB", "sCH3", "dCH2", "ssCH2",
+    private static final String[] NAMES  = {"sLi", "ssBe", "ssssBe", "ssBH", "sssB", "ssssB", "sCH3", "dCH2", "ssCH2",
             "tCH", "dsCH", "aaCH", "sssCH", "ddC", "tsC", "dssC", "aasC", "aaaC", "ssssC", "sNH3", "sNH2", "ssNH2",
             "dNH", "ssNH", "aaNH", "tN", "sssNH", "dsN", "aaN", "sssN", "ddsN", "aasN", "ssssN", "sOH", "dO", "ssO",
             "aaO", "sF", "sSiH3", "ssSiH2", "sssSiH", "ssssSi", "sPH2", "ssPH", "sssP", "dsssP", "sssssP", "sSH", "dS",
@@ -62,7 +62,7 @@ public class EStateFragments {
     /**
      * The SMARTS patterns.
      */
-    private static final String[] smarts = {"[LiD1]-*", "[BeD2](-*)-*", "[BeD4](-*)(-*)(-*)-*", "[BD2H](-*)-*",
+    private static final String[] SMARTS = {"[LiD1]-*", "[BeD2](-*)-*", "[BeD4](-*)(-*)(-*)-*", "[BD2H](-*)-*",
             "[BD3](-*)(-*)-*", "[BD4](-*)(-*)(-*)-*", "[CD1H3]-*", "[CD1H2]=*", "[CD2H2](-*)-*", "[CD1H]#*",
             "[CD2H](=*)-*", "[C,c;D2H](:*):*", "[CD3H](-*)(-*)-*", "[CD2H0](=*)=*", "[CD2H0](#*)-*",
             "[CD3H0](=*)(-*)-*", "[C,c;D3H0](:*)(:*)-*", "[C,c;D3H0](:*)(:*):*", "[CD4H0](-*)(-*)(-*)-*", "[ND1H3]-*",
@@ -85,7 +85,7 @@ public class EStateFragments {
      * @return a string array of the names
      */
     public static String[] getNames() {
-        return names;
+        return NAMES;
     }
 
     /**
@@ -94,6 +94,6 @@ public class EStateFragments {
      * @return a string array with the SMARTS patterns
      */
     public static String[] getSmarts() {
-        return smarts;
+        return SMARTS;
     }
 }

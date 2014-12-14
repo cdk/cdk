@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptorTest")
 public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
 
-    private static final String[] descriptorNames = {"ipAtomicLearning"};
+    private static final String[] DESCRIPTOR_NAMES = {"ipAtomicLearning"};
 
     /**
      *  Constructor for the IPAtomicLearningDescriptor object.
@@ -107,7 +107,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
     @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
-        return descriptorNames;
+        return DESCRIPTOR_NAMES;
     }
 
     /**

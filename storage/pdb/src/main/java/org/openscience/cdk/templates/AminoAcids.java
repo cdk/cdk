@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class AminoAcids {
 
-    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AminoAcids.class);
+    private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(AminoAcids.class);
 
     /**
      * Creates matrix with info about the bonds in the amino acids.
@@ -71,9 +71,9 @@ public class AminoAcids {
         for (int aa = 0; aa < aminoAcids.length; aa++) {
             AminoAcid acid = aminoAcids[aa];
 
-            logger.debug("#bonds for ", acid.getProperty(RESIDUE_NAME).toString(), " = " + acid.getBondCount());
+            LOGGER.debug("#bonds for ", acid.getProperty(RESIDUE_NAME).toString(), " = " + acid.getBondCount());
             total += acid.getBondCount();
-            logger.debug("total #bonds: ", total);
+            LOGGER.debug("total #bonds: ", total);
 
             Iterator<IBond> bonds = acid.bonds().iterator();
             while (bonds.hasNext()) {
@@ -87,7 +87,7 @@ public class AminoAcids {
         }
 
         if (counter > 153) {
-            logger.error("Error while creating AA info! Bond count is too large: ", counter);
+            LOGGER.error("Error while creating AA info! Bond count is too large: ", counter);
             return null;
         }
 
@@ -125,15 +125,15 @@ public class AminoAcids {
             int counter = 0;
             while (iterator.hasNext()) {
                 IAtomContainer ac = (IAtomContainer) iterator.next();
-                logger.debug("Adding AA: ", ac);
+                LOGGER.debug("Adding AA: ", ac);
                 // convert into an AminoAcid
                 AminoAcid aminoAcid = new AminoAcid();
                 Iterator<IAtom> atoms = ac.atoms().iterator();
                 Iterator<Object> props = ac.getProperties().keySet().iterator();
                 while (props.hasNext()) {
                     Object next = props.next();
-                    logger.debug("Prop class: " + next.getClass().getName());
-                    logger.debug("Prop: " + next.toString());
+                    LOGGER.debug("Prop class: " + next.getClass().getName());
+                    LOGGER.debug("Prop: " + next.toString());
                     if (next instanceof DictRef) {
                         DictRef dictRef = (DictRef) next;
                         // logger.debug("DictRef type: " + dictRef.getType());
@@ -144,9 +144,9 @@ public class AminoAcids {
                             aminoAcid.setProperty(RESIDUE_NAME_SHORT, ac.getProperty(dictRef));
                         } else if (dictRef.getType().equals("pdb:id")) {
                             aminoAcid.setProperty(ID, ac.getProperty(dictRef));
-                            logger.debug("Set AA ID to: ", ac.getProperty(dictRef));
+                            LOGGER.debug("Set AA ID to: ", ac.getProperty(dictRef));
                         } else {
-                            logger.error("Cannot deal with dictRef!");
+                            LOGGER.error("Cannot deal with dictRef!");
                         }
                     }
                 }
@@ -172,14 +172,14 @@ public class AminoAcids {
                 if (counter < aminoAcids.length) {
                     aminoAcids[counter] = aminoAcid;
                 } else {
-                    logger.error("Could not store AminoAcid! Array too short!");
+                    LOGGER.error("Could not store AminoAcid! Array too short!");
                 }
                 counter++;
             }
             reader.close();
         } catch (CDKException | IOException exception) {
-            logger.error("Failed reading file: ", exception.getMessage());
-            logger.debug(exception);
+            LOGGER.error("Failed reading file: ", exception.getMessage());
+            LOGGER.debug(exception);
         }
 
         return aminoAcids;
