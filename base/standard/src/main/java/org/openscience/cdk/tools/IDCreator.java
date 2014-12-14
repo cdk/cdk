@@ -65,15 +65,15 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
 public abstract class IDCreator {
 
     // counters for generated in current session IDs
-    private static int          REACTION_COUNT          = 0;
-    private static int          ATOM_COUNT              = 0;
-    private static int          BOND_COUNT              = 0;
-    private static int          ATOMCONTAINER_COUNT     = 0;
-    private static int          ATOMCONTAINERSET_COUNT  = 0;
-    private static int          REACTIONSET_COUNT       = 0;
-    private static int          CHEMMODEL_COUNT         = 0;
-    private static int          CHEMSEQUENCE_COUNT      = 0;
-    private static int          CHEMFILE_COUNT          = 0;
+    private static int          reactionCount           = 0;
+    private static int          atomCount               = 0;
+    private static int          bondCount               = 0;
+    private static int          atomContainerCount      = 0;
+    private static int          atomContainerSetCount   = 0;
+    private static int          reactionSetCount        = 0;
+    private static int          chemModelCount          = 0;
+    private static int          chemSequenceCount       = 0;
+    private static int          chemFileCount           = 0;
 
     // prefix to prepend every individual IDs
     private final static String REACTION_PREFIX         = "r";
@@ -158,15 +158,15 @@ public abstract class IDCreator {
      * single chem object or a set of them
      */
     private static void resetCounters() {
-        ATOM_COUNT = 0;
-        BOND_COUNT = 0;
-        ATOMCONTAINER_COUNT = 0;
-        ATOMCONTAINERSET_COUNT = 0;
-        REACTION_COUNT = 0;
-        REACTIONSET_COUNT = 0;
-        CHEMMODEL_COUNT = 0;
-        CHEMSEQUENCE_COUNT = 0;
-        CHEMFILE_COUNT = 0;
+        atomCount = 0;
+        bondCount = 0;
+        atomContainerCount = 0;
+        atomContainerSetCount = 0;
+        reactionCount  = 0;
+        reactionSetCount = 0;
+        chemModelCount = 0;
+        chemSequenceCount = 0;
+        chemFileCount = 0;
     }
 
     /**
@@ -196,7 +196,7 @@ public abstract class IDCreator {
 
         if (null == container.getID()) {
             // generate new ID and remember it
-            ATOMCONTAINER_COUNT = setID(ATOMCONTAINER_PREFIX, ATOMCONTAINER_COUNT, container, tabuList);
+            atomContainerCount = setID(ATOMCONTAINER_PREFIX, atomContainerCount, container, tabuList);
         }
 
         // the tabu list for the container should force singularity
@@ -204,8 +204,8 @@ public abstract class IDCreator {
         List<String> internalTabuList = AtomContainerManipulator.getAllIDs(container);
         if (policy == OBJECT_UNIQUE_POLICY) {
             // start atom and bond indices within a container set always from 1
-            ATOM_COUNT = 0;
-            BOND_COUNT = 0;
+            atomCount = 0;
+            bondCount = 0;
         } else {
             internalTabuList = tabuList;
         }
@@ -214,7 +214,7 @@ public abstract class IDCreator {
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if (null == atom.getID()) {
-                ATOM_COUNT = setID(ATOM_PREFIX, ATOM_COUNT, atom, internalTabuList);
+                atomCount = setID(ATOM_PREFIX, atomCount, atom, internalTabuList);
             }
         }
 
@@ -222,7 +222,7 @@ public abstract class IDCreator {
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
             if (null == bond.getID()) {
-                BOND_COUNT = setID(BOND_PREFIX, BOND_COUNT, bond, internalTabuList);
+                bondCount = setID(BOND_PREFIX, bondCount, bond, internalTabuList);
             }
         }
     }
@@ -237,13 +237,13 @@ public abstract class IDCreator {
         if (tabuList == null) tabuList = AtomContainerSetManipulator.getAllIDs(containerSet);
 
         if (null == containerSet.getID()) {
-            ATOMCONTAINERSET_COUNT = setID(ATOMCONTAINERSET_PREFIX, ATOMCONTAINERSET_COUNT, containerSet, tabuList);
+            atomContainerSetCount = setID(ATOMCONTAINERSET_PREFIX, atomContainerSetCount, containerSet, tabuList);
         }
 
         if (policy == OBJECT_UNIQUE_POLICY) {
             // start atom and bond indices within a container set always from 1
-            ATOM_COUNT = 0;
-            BOND_COUNT = 0;
+            atomCount = 0;
+            bondCount = 0;
         }
 
         Iterator<IAtomContainer> acs = containerSet.atomContainers().iterator();
@@ -261,13 +261,13 @@ public abstract class IDCreator {
 
         if (null == reaction.getID()) {
             // generate new ID
-            REACTION_COUNT = setID(REACTION_PREFIX, REACTION_COUNT, reaction, tabuList);
+            reactionCount  = setID(REACTION_PREFIX, reactionCount , reaction, tabuList);
         }
 
         if (policy == OBJECT_UNIQUE_POLICY) {
             // start atom and bond indices within a reaction set always from 1
-            ATOM_COUNT = 0;
-            BOND_COUNT = 0;
+            atomCount = 0;
+            bondCount = 0;
         }
 
         for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
@@ -287,7 +287,7 @@ public abstract class IDCreator {
 
         if (null == reactionSet.getID()) {
             // generate new ID for the set
-            REACTIONSET_COUNT = setID(REACTIONSET_PREFIX, REACTIONSET_COUNT, reactionSet, tabuList);
+            reactionSetCount = setID(REACTIONSET_PREFIX, reactionSetCount, reactionSet, tabuList);
         }
 
         for (Iterator<IReaction> reaction = reactionSet.reactions().iterator(); reaction.hasNext();) {
@@ -299,12 +299,12 @@ public abstract class IDCreator {
         if (tabuList == null) tabuList = ChemFileManipulator.getAllIDs(file);
 
         if (null == file.getID()) {
-            CHEMFILE_COUNT = setID(CHEMFILE_PREFIX, CHEMFILE_COUNT, file, tabuList);
+            chemFileCount = setID(CHEMFILE_PREFIX, chemFileCount, file, tabuList);
         }
 
         if (policy == OBJECT_UNIQUE_POLICY) {
             // start indices within a chem file always from 1
-            CHEMSEQUENCE_COUNT = 0;
+            chemSequenceCount = 0;
         }
 
         for (IChemSequence chemSequence : file.chemSequences()) {
@@ -316,12 +316,12 @@ public abstract class IDCreator {
         if (tabuList == null) tabuList = ChemSequenceManipulator.getAllIDs(sequence);
 
         if (null == sequence.getID()) {
-            CHEMSEQUENCE_COUNT = setID(CHEMSEQUENCE_PREFIX, CHEMSEQUENCE_COUNT, sequence, tabuList);
+            chemSequenceCount = setID(CHEMSEQUENCE_PREFIX, chemSequenceCount, sequence, tabuList);
         }
 
         if (policy == OBJECT_UNIQUE_POLICY) {
             // start indices within a chem file always from 1
-            CHEMSEQUENCE_COUNT = 0;
+            chemSequenceCount = 0;
         }
 
         for (IChemModel chemModel : sequence.chemModels()) {
@@ -333,14 +333,14 @@ public abstract class IDCreator {
         if (tabuList == null) tabuList = ChemModelManipulator.getAllIDs(model);
 
         if (null == model.getID()) {
-            CHEMMODEL_COUNT = setID(CHEMMODEL_PREFIX, CHEMMODEL_COUNT, model, tabuList);
+            chemModelCount = setID(CHEMMODEL_PREFIX, chemModelCount, model, tabuList);
         }
 
         ICrystal crystal = model.getCrystal();
         if (crystal != null) {
             if (policy == OBJECT_UNIQUE_POLICY) {
-                ATOM_COUNT = 0;
-                BOND_COUNT = 0;
+                atomCount = 0;
+                bondCount = 0;
             }
             createIDsForAtomContainer(crystal, tabuList);
         }
@@ -348,8 +348,8 @@ public abstract class IDCreator {
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
         if (moleculeSet != null) {
             if (policy == OBJECT_UNIQUE_POLICY) {
-                ATOMCONTAINERSET_COUNT = 0;
-                ATOMCONTAINER_COUNT = 0;
+                atomContainerSetCount = 0;
+                atomContainerCount = 0;
             }
             createIDsForAtomContainerSet(moleculeSet, tabuList);
         }
@@ -357,8 +357,8 @@ public abstract class IDCreator {
         IReactionSet reactionSet = model.getReactionSet();
         if (reactionSet != null) {
             if (policy == OBJECT_UNIQUE_POLICY) {
-                REACTIONSET_COUNT = 0;
-                REACTION_COUNT = 0;
+                reactionSetCount = 0;
+                reactionCount  = 0;
             }
             createIDsForReactionSet(reactionSet, tabuList);
         }
