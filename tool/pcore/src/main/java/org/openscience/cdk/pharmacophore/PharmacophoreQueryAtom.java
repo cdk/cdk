@@ -84,11 +84,6 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
         return patom.getSymbol().equals(getSymbol());
     }
 
-    @TestMethod("testSetOperator")
-    public void setOperator(String ID) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
     /**
      * String representation of this pharmacophore group.
      *
