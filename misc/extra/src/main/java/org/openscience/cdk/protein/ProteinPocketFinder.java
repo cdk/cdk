@@ -414,7 +414,7 @@ public class ProteinPocketFinder {
     /**
      * Method performs the clustering, is called by findPockets().
      */
-    public List<Point3d> clusterPSPPocket(Point3d root, List<Point3d> sub_Pocket, int[] dim) {
+    public List<Point3d> clusterPSPPocket(Point3d root, List<Point3d> subPocket, int[] dim) {
         // logger.debug(" ****** New Root ******:"+root.x+" "+root.y+"
         // "+root.z);
         visited.put((int) root.x + "." + (int) root.y + "." + (int) root.z, 1);
@@ -438,14 +438,14 @@ public class ProteinPocketFinder {
                     // String(k+"."+m+"."+l)));
                     if (this.grid[k][m][l] >= minPSCluster && !visited.containsKey(k + "." + m + "." + l)) {
                         // logger.debug(" ---->FOUND");
-                        sub_Pocket.add(node);
-                        this.clusterPSPPocket(node, sub_Pocket, dim);
+                        subPocket.add(node);
+                        this.clusterPSPPocket(node, subPocket, dim);
                     }
                 }
             }
         }
-        sub_Pocket.add(root);
-        return sub_Pocket;
+        subPocket.add(root);
+        return subPocket;
     }
 
     /**
