@@ -437,12 +437,12 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
             position = 0;
             smooth = -2.86;
             angle = 0;
-            int ya_counter = 0;
+            int yaCounter = 0;
             List<IAtom> connAtoms;
             for (double g3r = 0; g3r < limitSup; g3r = g3r + step) {
                 sum = 0;
                 for (Integer aBondsInCycloex : bondsInCycloex) {
-                    ya_counter = 0;
+                    yaCounter = 0;
                     angle = 0;
                     partial = 0;
                     position = aBondsInCycloex;
@@ -452,10 +452,10 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
                     connAtoms = mol.getConnectedAtomsList(cycloexBondAtom0);
                     for (IAtom connAtom : connAtoms) {
-                        if (connAtom.equals(neighbour0)) ya_counter += 1;
+                        if (connAtom.equals(neighbour0)) yaCounter += 1;
                     }
 
-                    if (ya_counter > 0) {
+                    if (yaCounter > 0) {
                         aA.set(cycloexBondAtom1.getPoint3d().x, cycloexBondAtom1.getPoint3d().y,
                                 cycloexBondAtom1.getPoint3d().z);
                         aB.set(cycloexBondAtom0.getPoint3d().x, cycloexBondAtom0.getPoint3d().y,

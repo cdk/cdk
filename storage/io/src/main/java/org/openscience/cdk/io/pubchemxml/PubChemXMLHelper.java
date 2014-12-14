@@ -233,8 +233,8 @@ public class PubChemXMLHelper {
     }
 
     public void parserCompoundInfoData(XmlPullParser parser, IAtomContainer molecule) throws Exception {
-        String urn_label = null;
-        String urn_name = null;
+        String urnLabel = null;
+        String urnName = null;
         String sval = null;
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
             if (parser.getEventType() == XmlPullParser.END_TAG) {
@@ -243,9 +243,9 @@ public class PubChemXMLHelper {
                 }
             } else if (parser.getEventType() == XmlPullParser.START_TAG) {
                 if (EL_PROPS_URNNAME.equals(parser.getName())) {
-                    urn_name = parser.nextText();
+                    urnName = parser.nextText();
                 } else if (EL_PROPS_URNLABEL.equals(parser.getName())) {
-                    urn_label = parser.nextText();
+                    urnLabel = parser.nextText();
                 } else if (EL_PROPS_SVAL.equals(parser.getName())) {
                     sval = parser.nextText();
                 } else if (EL_PROPS_FVAL.equals(parser.getName())) {
@@ -255,8 +255,8 @@ public class PubChemXMLHelper {
                 }
             }
         }
-        if (urn_label != null & sval != null) {
-            String property = urn_label + (urn_name == null ? "" : " (" + urn_name + ")");
+        if (urnLabel != null & sval != null) {
+            String property = urnLabel + (urnName == null ? "" : " (" + urnName + ")");
             molecule.setProperty(property, sval);
         }
     }
