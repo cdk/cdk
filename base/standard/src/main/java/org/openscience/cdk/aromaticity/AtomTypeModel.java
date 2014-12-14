@@ -59,7 +59,7 @@ import static org.openscience.cdk.interfaces.IAtomType.Hybridization;
 final class AtomTypeModel extends ElectronDonation {
 
     /** Predefined electron contribution for several atom types. */
-    private final static Map<String, Integer> types = ImmutableMap.<String, Integer> builder().put("N.planar3", 2)
+    private final static Map<String, Integer> TYPES = ImmutableMap.<String, Integer> builder().put("N.planar3", 2)
                                                             .put("N.minus.planar3", 2).put("N.amide", 2).put("S.2", 2)
                                                             .put("S.planar3", 2).put("C.minus.planar", 2)
                                                             .put("O.planar3", 2).put("N.sp2.3", 1).put("C.sp2", 1)
@@ -158,7 +158,7 @@ final class AtomTypeModel extends ElectronDonation {
      * @return the number of electrons
      */
     private static int electronsForAtomType(IAtom atom) {
-        Integer electrons = types.get(atom.getAtomTypeName());
+        Integer electrons = TYPES.get(atom.getAtomTypeName());
 
         if (electrons != null) return electrons;
 
