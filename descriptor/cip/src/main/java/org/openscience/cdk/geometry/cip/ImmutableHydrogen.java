@@ -643,4 +643,11 @@ class ImmutableHydrogen implements IAtom {
         return null;
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public boolean isAromatic() {
+        return false;
+    }
 }
