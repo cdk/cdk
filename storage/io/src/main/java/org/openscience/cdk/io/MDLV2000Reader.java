@@ -76,7 +76,7 @@ import static org.openscience.cdk.io.MDLV2000Writer.SPIN_MULTIPLICITY;
  * Reads content from MDL molfiles and SD files. It can read a {@link
  * IAtomContainer} or {@link IChemModel} from an MDL molfile, and a {@link
  * IChemFile} from a SD file, with a {@link IChemSequence} of {@link
- * IChemModel}'s, where each IChemModel will contain one IMolecule.
+ * IChemModel}'s, where each IChemModel will contain one {@link IAtomContainer}.
  *
  * <p>From the Atom block it reads atomic coordinates, element types and formal
  * charges. From the Bond block it reads the bonds and the orders. Additionally,

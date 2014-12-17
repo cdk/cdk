@@ -37,7 +37,7 @@ import java.awt.geom.Rectangle2D;
 /**
  * Utility class for calculating the 2D bounding rectangles (bounds)
  * of various IChemObject subtypes - IChemModel, IReactionSet, IReaction,
- * IMoleculeSet, and IAtomContainer.
+ * IAtomContainerSet, and IAtomContainer.
  *
  * @author maclean
  * @cdk.module renderbasic

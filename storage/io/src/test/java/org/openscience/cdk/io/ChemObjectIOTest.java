@@ -120,7 +120,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
             }
         }
         Assert.assertTrue(
-                "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction, IRGroupQuery",
+                "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction, IRGroupQuery",
                 oneAccepted);
     }
 

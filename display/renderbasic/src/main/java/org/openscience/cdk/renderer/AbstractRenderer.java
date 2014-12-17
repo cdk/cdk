@@ -78,7 +78,7 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     protected IFontManager        fontManager;
 
     /**
-     * The center point of the model (IMolecule, IMoleculeSet, etc).
+     * The center point of the model (IAtomContainer, IAtomContainerSet, etc).
      */
     protected Point2d             modelCenter = new Point2d(0, 0);
 

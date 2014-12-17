@@ -86,9 +86,9 @@ public class RandomAccessSDFReader extends RandomAccessReader {
     @Override
     protected IChemObject processContent() throws CDKException {
         /*
-         * return chemObjectReader.read(builder.newInstance(IMolecule.class));
+         * return chemObjectReader.read(builder.newInstance(IAtomContainer.class));
          */
-        //read(IMolecule) doesn't read properties ...
+        //read(IAtomContainer) doesn't read properties ...
         IChemObject co = chemObjectReader.read(builder.newInstance(IChemFile.class));
         if (co instanceof IChemFile) {
             int c = ((IChemFile) co).getChemSequenceCount();

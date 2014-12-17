@@ -165,7 +165,7 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
             chemFile.addChemSequence(chemSeq);
             return (T) chemFile;
         } else {
-            throw new CDKException("Only supported is reading of IMoleculeSet.");
+            throw new CDKException("Only supported is reading of IAtomContainerSet.");
         }
     }
 
