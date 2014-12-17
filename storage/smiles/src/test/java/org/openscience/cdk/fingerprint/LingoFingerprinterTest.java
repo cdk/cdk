@@ -32,6 +32,9 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 /**
  * @cdk.module test-smiles
  */
@@ -51,19 +54,31 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
         Assert.assertEquals(-1, fingerprinter.getSize());
     }
 
-    @Ignore("tested by testFingerprint")
+    
     @Test
     @Override
-    public void testGetRawFingerprint() {}
+    public void testGetCountFingerprint() throws Exception {
+        LingoFingerprinter fpr = new LingoFingerprinter(4);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("Oc1ccccc1");
+        ICountFingerprint fp = fpr.getCountFingerprint(mol);
+        assertThat(fp.getCountForHash("cccc".hashCode()), is(2));
+        assertThat(fp.getCountForHash("Oc0c".hashCode()), is(1));
+        assertThat(fp.getCountForHash("c0cc".hashCode()), is(1));
+        assertThat(fp.getCountForHash("0ccc".hashCode()), is(1));
+        assertThat(fp.getCountForHash("ccc0".hashCode()), is(1));
+    }
 
     @Test
-    public void testFingerprint() throws Exception {
+    @Override
+    public void testGetRawFingerprint() throws Exception {
         LingoFingerprinter lfp = new LingoFingerprinter(3);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("O(NC)PS");
+        IAtomContainer mol = sp.parseSmiles("SPONC");
         Map<String, Integer> map = lfp.getRawFingerprint(mol);
-        Assert.assertEquals(5, map.size());
-        String[] subs = {"O(N", "(NC", "NC)", "C)P", ")PS"};
+        Assert.assertEquals(3, map.size());
+        // depend on canonical ordering of the SMILES since lingos uses Unique SMILES
+        String[] subs = {"PON", "ONC", "SPO"};
         for (String s : subs)
             Assert.assertTrue(map.containsKey(s));
     }
