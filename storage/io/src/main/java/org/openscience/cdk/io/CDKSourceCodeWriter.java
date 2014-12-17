@@ -158,7 +158,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
                 throw new CDKException("Exception while writing to CDK source code: " + ex.getMessage(), ex);
             }
         } else {
-            throw new CDKException("Only supported is writing of IMolecule and IAtomContainer objects.");
+            throw new CDKException("Only supported is writing of IAtomContainer objects.");
         }
     }
 

@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *  Its use looks like:
  *  <pre>
  *  ModelBuilder3D mb3d = ModelBuilder3D.getInstance();
- *  IMolecule molecule = mb3d.generate3DCoordinates(molecule, false);
+ *  IAtomContainer molecule = mb3d.generate3DCoordinates(molecule, false);
  *  </pre>
  *
  *  <p>Standing problems:

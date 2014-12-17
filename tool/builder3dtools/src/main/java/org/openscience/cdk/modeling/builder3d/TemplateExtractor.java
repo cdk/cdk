@@ -274,7 +274,7 @@ public class TemplateExtractor {
 
         /*
          * int c=0; Set keyset = HashRingSystems.keySet(); Iterator
-         * it=keyset.iterator(); IMoleculeSet som=new MoleculeSet();
+         * it=keyset.iterator(); IAtomContainerSet som=new AtomContainerSet();
          * SmilesParser smileParser=new SmilesParser(); String ringSmile="";
          * while (it.hasNext()) { key=(String)it.next();
          * ringSmile=(String)HashRingSystems.get(key);

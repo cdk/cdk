@@ -39,9 +39,9 @@ import org.openscience.cdk.tools.features.MoleculeFeaturesTool;
 public class DataFeaturesTool {
 
     /**
-     * Determines the features present in the given IMolecule.
+     * Determines the features present in the given {@link IAtomContainer}.
      *
-     * @param molecule IMolecule to determine the features off
+     * @param molecule IAtomContainer to determine the features off
      *
      * @return integer representation of the present features
      */

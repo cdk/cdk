@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 /**
  * Class to Fix bond orders at present for Aromatic Rings only.
  *
- * Contains one public function: kekuliseAromaticRings(IMolecule molecule)
+ * Contains one public function: kekuliseAromaticRings(IAtomContainer molecule)
  * <ul>
  * <li>Analyses which rings are marked aromatic/SP2/Planar3
  * <li>Splits rings into groups containing independent sets of single/fused rings
@@ -264,7 +264,7 @@ public class FixBondOrdersTool {
     /**
      * Stores an {@link IRingSet} corresponding to a molecule using the bond numbers.
      *
-     * @param mol The IMolecule for which to store the IRingSet.
+     * @param mol The IAtomContainer for which to store the IRingSet.
      * @param ringSet The IRingSet to store
      * @return The List of Integer arrays for the bond numbers of each ringSet
      */
@@ -371,7 +371,7 @@ public class FixBondOrdersTool {
     /**
      * Gets the List of atom nos corresponding to a particular set of fused rings.
      *
-     * @param {@link IMolecule} molecule
+     * @param {@link IAtomContainer} molecule
      * @param ringGroup
      * @param {@link IRingSet} ringSet
      * @return List of atom numbers for each set
@@ -395,7 +395,7 @@ public class FixBondOrdersTool {
     /**
      * Gets the List of bond nos corresponding to a particular set of fused rings.
      *
-     * @param {@link IMolecule} molecule
+     * @param {@link IAtomContainer} molecule
      * @param ringGroup
      * @param {@link IRingSet} ringSet
      * @return List of bond numbers for each set
@@ -419,7 +419,7 @@ public class FixBondOrdersTool {
     /**
      * Gets List of atom number pairs for each bond in a list of bonds for the molecule.
      *
-     * @param {@link IMolecule} molecule
+     * @param {@link IAtomContainer} molecule
      * @param bondsToCheck
      * @return List of atom pairs
      */
@@ -437,7 +437,7 @@ public class FixBondOrdersTool {
     /**
      * Function to set up an array of integers corresponding to indicate how many free valencies need fulfilling for each atom through ring bonds.
      *
-     * @param {@link IMolecule} molecule
+     * @param {@link IAtomContainer} molecule
      * @param atomsToCheck
      * @param M
      * @return The List of free valencies available for extra ring bonding

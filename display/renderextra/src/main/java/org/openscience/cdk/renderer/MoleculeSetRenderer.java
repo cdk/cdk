@@ -204,7 +204,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet> imp
     }
 
     /**
-     * Set the scale for an IMoleculeSet. It calculates the average bond length
+     * Set the scale for an {@link IAtomContainerSet}. It calculates the average bond length
      * of the model and calculates the multiplication factor to transform this
      * to the bond length that is set in the RendererModel.
      *

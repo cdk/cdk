@@ -117,7 +117,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (!(object instanceof IAtomContainer))
-            throw new CDKException("Only supported is reading of IMolecule objects.");
+            throw new CDKException("Only supported is reading of IAtomCOntainer objects.");
         IAtomContainer result = (IAtomContainer) object;
 
         // do the actual parsing

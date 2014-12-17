@@ -67,7 +67,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *   new FileInputStream(sdfFile), DefaultChemObjectBuilder.getInstance()
  * );
  * while (reader.hasNext()) {
- *   IMolecule molecule = (IMolecule)reader.next();
+ *   IAtomContainer molecule = (IAtomContainer)reader.next();
  * }
  * </pre>
  *
@@ -212,7 +212,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     /**
-     * Returns true if another IMolecule can be read.
+     * Returns true if another {@link IAtomContainer} can be read.
      */
     @Override
     public boolean hasNext() {
@@ -361,7 +361,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     /**
-     * Returns the next IMolecule.
+     * Returns the next {@link IAtomContainer}.
      */
     @Override
     public IAtomContainer next() {

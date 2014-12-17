@@ -66,7 +66,7 @@ import signature.SymmetryClass;
  * So, for example, to get the canonical signature for a molecule:
  *
  * <pre>
- * IMolecule diamantane = MoleculeFactory.makeBenzene();
+ * IAtomContainer diamantane = MoleculeFactory.makeBenzene();
  * MoleculeSignature moleculeSignature = new MoleculeSignature(diamantane);
  * String canonicalSignature = moleculeSignature.toCanonicalString();
  * </pre>

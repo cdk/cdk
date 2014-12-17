@@ -23,7 +23,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  * Classes that implement this interface are QSAR descriptor calculators
- * for <code>IMolecule</code> objects.
+ * for {@link IAtomContainer} objects.
  *
  * @cdk.module qsar
  * @cdk.githash

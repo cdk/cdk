@@ -70,7 +70,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * MDLV2000Writer writer = new MDLV2000Writer(
  *   new FileWriter(new File("output.mol"))
  * );
- * writer.write((IMolecule)molecule);
+ * writer.write((IAtomContainer)molecule);
  * writer.close();
  * </pre>
  *
