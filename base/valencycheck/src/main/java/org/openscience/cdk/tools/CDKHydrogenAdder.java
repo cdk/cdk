@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  * Adds implicit hydrogens based on atom type definitions. The class assumes
  * that CDK atom types are already detected. A full code example is:
  * <pre>
- *   IMolecule methane = new Molecule();
+ *   IAtomContainer methane = new AtomContainer();
  *   IAtom carbon = new Atom("C");
  *   methane.addAtom(carbon);
  *   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(methane.getNewBuilder());
@@ -56,7 +56,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  * <p>If you want to add the hydrogens to a specific atom only,
  * use this example:
  * <pre>
- *   IMolecule ethane = new Molecule();
+ *   IAtomContainer ethane = new AtomContainer();
  *   IAtom carbon1 = new Atom("C");
  *   IAtom carbon2 = new Atom("C");
  *   ethane.addAtom(carbon1);

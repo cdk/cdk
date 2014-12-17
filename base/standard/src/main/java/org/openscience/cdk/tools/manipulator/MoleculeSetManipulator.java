@@ -65,7 +65,7 @@ public class MoleculeSetManipulator {
 
     /**
      * Returns all the AtomContainer's of a MoleculeSet.
-     * @param set The collection of IMolecule objects
+     * @param set The collection of IAtomContainer objects
      * @return a list containing individual IAtomContainer's
      */
     @TestMethod("testGetAllAtomContainers_IMoleculeSet")
@@ -74,7 +74,7 @@ public class MoleculeSetManipulator {
     }
 
     /**
-     * @param set The collection of IMolecule objects
+     * @param set The collection of IAtomContainer objects
      * @see AtomContainerSetManipulator
      * @return The total charge on the collection of molecules
      */
@@ -84,7 +84,7 @@ public class MoleculeSetManipulator {
     }
 
     /**
-     * @param set The collection of IMolecule objects
+     * @param set The collection of IAtomContainer objects
      * @see AtomContainerSetManipulator
      * @return The total formal charge on the collection of molecules
      */
@@ -94,7 +94,7 @@ public class MoleculeSetManipulator {
     }
 
     /**
-     * @param set The collection of IMolecule objects
+     * @param set The collection of IAtomContainer objects
      * @see AtomContainerSetManipulator
      * @return the total implicit hydrogen count on the collection of molecules
      */

@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * <p>This mechanism displaces the charge (lonePair) because of
  * deficiency of charge.
- * It returns the reaction mechanism which has been cloned the IMolecule.</p>
+ * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
  * <p>This reaction could be represented as [A*]-B| => A=[B*]</p>
  *
  * @author         miguelrojasch
@@ -68,7 +68,7 @@ public class SharingElectronMechanism implements IReactionMechanism {
             throws CDKException {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 1) {
-            throw new CDKException("SharingElectronMechanism only expects one IMolecule");
+            throw new CDKException("SharingElectronMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 2) {
             throw new CDKException("SharingElectronMechanism expects two atoms in the ArrayList");
@@ -81,7 +81,7 @@ public class SharingElectronMechanism implements IReactionMechanism {
         try {
             reactantCloned = (IAtomContainer) molecule.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Could not clone IMolecule!", e);
+            throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0); // Atom containing the lone pair to share
         IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));

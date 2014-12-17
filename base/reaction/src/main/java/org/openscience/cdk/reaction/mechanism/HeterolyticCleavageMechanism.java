@@ -40,7 +40,7 @@ import java.util.ArrayList;
 /**
  * This mechanism displaces the chemical bond to an Atom. Generating one with
  * excess charge and the other with deficiency.
- * It returns the reaction mechanism which has been cloned the IMolecule.
+ * It returns the reaction mechanism which has been cloned the IAtomContainer.
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
@@ -70,7 +70,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder(),
                 CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
         if (atomContainerSet.getAtomContainerCount() != 1) {
-            throw new CDKException("TautomerizationMechanism only expects one IMolecule");
+            throw new CDKException("TautomerizationMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 2) {
             throw new CDKException("HeterolyticCleavageMechanism expects two atoms in the ArrayList");
@@ -83,7 +83,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism {
         try {
             reactantCloned = (IAtomContainer) molecule.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Could not clone IMolecule!", e);
+            throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);
         IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));

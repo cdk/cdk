@@ -43,11 +43,11 @@ import java.util.List;
 public class ReactionSchemeManipulator {
 
     /**
-     * Get all Molecules object from a set of Reactions given a IMoleculeSet to add.
+     * Get all molecule objects from a set of Reactions given a {@link IAtomContainerSet} to add.
      *
      * @param  scheme The set of reaction to inspect
      * @param  molSet The set of molecules to be added
-     * @return        The IMoleculeSet
+     * @return        The IAtomContainerSet
      */
     @TestMethod("testGetAllMolecules_IReactionScheme_IMoleculeSet")
     public static IAtomContainerSet getAllAtomContainers(IReactionScheme scheme, IAtomContainerSet molSet) {
