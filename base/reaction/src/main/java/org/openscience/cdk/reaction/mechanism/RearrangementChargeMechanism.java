@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 /**
  * <p>This mechanism displaces the charge(radical, charge + or charge -) because of
  * a double bond which is associated.
- * It returns the reaction mechanism which has been cloned the IMolecule.</p>
+ * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
  * <p>This reaction could be represented as [A*]-Y=Z => A=Z-[Y*]</p>
  *
  * @author         miguelrojasch
@@ -76,7 +76,7 @@ public class RearrangementChargeMechanism implements IReactionMechanism {
             throws CDKException {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 1) {
-            throw new CDKException("RearrangementChargeMechanism only expects one IMolecule");
+            throw new CDKException("RearrangementChargeMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 3) {
             throw new CDKException("RearrangementChargeMechanism expects three atoms in the ArrayList");
@@ -89,7 +89,7 @@ public class RearrangementChargeMechanism implements IReactionMechanism {
         try {
             reactantCloned = (IAtomContainer) molecule.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Could not clone IMolecule!", e);
+            throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);// Atom with the charge
         IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));

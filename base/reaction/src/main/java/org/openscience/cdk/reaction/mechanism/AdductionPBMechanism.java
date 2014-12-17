@@ -38,7 +38,7 @@ import java.util.ArrayList;
 /**
  * <p>This mechanism adduct together two fragments due to a double bond.
  * The second fragment will be deficient in charge.
- * It returns the reaction mechanism which has been cloned the IMolecule.</p>
+ * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
  * <p>This reaction could be represented as A=B + [C+] => [A+]-B-C</p>
  *
  *
@@ -68,7 +68,7 @@ public class AdductionPBMechanism implements IReactionMechanism {
             throws CDKException {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 2) {
-            throw new CDKException("AdductionPBMechanism expects two IMolecule's");
+            throw new CDKException("AdductionPBMechanism expects two IAtomContainer's");
         }
         if (atomList.size() != 3) {
             throw new CDKException("AdductionPBMechanism expects two atoms in the ArrayList");
@@ -84,7 +84,7 @@ public class AdductionPBMechanism implements IReactionMechanism {
             reactantCloned = (IAtomContainer) atomContainerSet.getAtomContainer(0).clone();
             reactantCloned.add((IAtomContainer) atomContainerSet.getAtomContainer(1).clone());
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Could not clone IMolecule!", e);
+            throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);// Atom 1: to be deficient in charge
         IAtom atom1C = reactantCloned.getAtom(molecule1.getAtomNumber(atom1));

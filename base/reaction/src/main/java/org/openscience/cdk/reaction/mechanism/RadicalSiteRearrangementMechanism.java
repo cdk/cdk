@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  * <p>This mechanism displaces an Atom or substructure (R) from one position to an other.
- * It returns the reaction mechanism which has been cloned the IMolecule.</p>
+ * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
  * <p>This reaction could be represented as [A*]-(X)_n-Y-Z => A(Z)-(X)_n-[Y*]</p>
  *
  * @author         miguelrojasch
@@ -70,7 +70,7 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism {
             throws CDKException {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 1) {
-            throw new CDKException("RadicalSiteRearrangementMechanism only expects one IMolecule");
+            throw new CDKException("RadicalSiteRearrangementMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 3) {
             throw new CDKException("RadicalSiteRearrangementMechanism expects three atoms in the ArrayList");
@@ -83,7 +83,7 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism {
         try {
             reactantCloned = (IAtomContainer) molecule.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Could not clone IMolecule!", e);
+            throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);// Atom to be moved
         IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));

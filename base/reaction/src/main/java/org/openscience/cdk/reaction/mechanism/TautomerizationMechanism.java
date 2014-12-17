@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 /**
  * <p>This mechanism produces the tautomerization chemical reaction between two tautomers.
- * It returns the reaction mechanism which has been cloned the IMolecule.</p>
+ * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
  * <p>This reaction could be represented as X=Y-Z-H => X(H)-Y=Z</p>
  *
  * @author         miguelrojasch
@@ -68,7 +68,7 @@ public class TautomerizationMechanism implements IReactionMechanism {
             throws CDKException {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 1) {
-            throw new CDKException("TautomerizationMechanism only expects one IMolecule");
+            throw new CDKException("TautomerizationMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 4) {
             throw new CDKException("TautomerizationMechanism expects four atoms in the ArrayList");
@@ -81,7 +81,7 @@ public class TautomerizationMechanism implements IReactionMechanism {
         try {
             reactantCloned = (IAtomContainer) molecule.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Could not clone IMolecule!", e);
+            throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);// Atom to be added the hydrogen
         IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));

@@ -227,9 +227,9 @@ public class StructureResonanceGenerator {
     }
 
     /**
-     * <p>Get the resonance structures from an IMolecule. </p>
+     * Get the resonance structures from an {@link IAtomContainer}.
      *
-     * @param molecule The IMolecule to analyze
+     * @param molecule The IAtomContainer to analyze
      * @return         The different resonance structures
      */
     @TestMethod("testGetStructures_IAtomContainer")
@@ -266,10 +266,10 @@ public class StructureResonanceGenerator {
     }
 
     /**
-     * <p>Get the container which is found resonance from a IMolecule.
-     * It is based on looking if the order of the bond changes.</p>
+     * Get the container which is found resonance from a {@link IAtomContainer}.
+     * It is based on looking if the order of the bond changes.
      *
-     * @param molecule The IMolecule to analyze
+     * @param molecule The IAtomContainer to analyze
      * @return         The different containers
      */
     @TestMethod("testGetContainers_IAtomContainer")
@@ -357,11 +357,11 @@ public class StructureResonanceGenerator {
     }
 
     /**
-     * <p>Get the container which the atom is found on resonance from a IMolecule.
+     * Get the container which the atom is found on resonance from a {@link IAtomContainer}.
      * It is based on looking if the order of the bond changes. Return null
-     * is any is found.</p>
+     * is any is found.
      *
-     * @param molecule The IMolecule to analyze
+     * @param molecule The IAtomContainer to analyze
      * @param atom     The IAtom
      * @return         The container with the atom
      */
@@ -378,11 +378,11 @@ public class StructureResonanceGenerator {
     }
 
     /**
-     * <p>Get the container which the bond is found on resonance from a IMolecule.
+     * Get the container which the bond is found on resonance from a {@link IAtomContainer}.
      * It is based on looking if the order of the bond changes. Return null
-     * is any is found.</p>
+     * is any is found.
      *
-     * @param molecule The IMolecule to analyze
+     * @param molecule The IAtomContainer to analyze
      * @param bond     The IBond
      * @return         The container with the bond
      */

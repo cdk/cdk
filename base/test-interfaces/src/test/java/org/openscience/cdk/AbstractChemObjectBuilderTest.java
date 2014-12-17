@@ -215,7 +215,7 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
      * @cdk.bug 3526870
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testNewBond_IAtom_IMolecule() {
+    public void testNewBond_IAtom_IAtomContainer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         builder.newInstance(IBond.class, builder.newInstance(IAtom.class), builder.newInstance(IAtomContainer.class));
     }

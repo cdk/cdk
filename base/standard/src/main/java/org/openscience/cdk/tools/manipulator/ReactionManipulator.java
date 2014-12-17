@@ -110,10 +110,10 @@ public class ReactionManipulator {
     }
 
     /**
-     * get all molecule of a IReaction. Reactants + Products
+     * Get all molecule of a {@link IReaction}: reactants + products.
      *
      * @param reaction  The IReaction
-     * @return The IMoleculeSet
+     * @return The IAtomContainerSet
      */
     @TestMethod("testGetAllMolecules_IReaction")
     public static IAtomContainerSet getAllMolecules(IReaction reaction) {
@@ -129,7 +129,7 @@ public class ReactionManipulator {
      * get all products of a IReaction
      *
      * @param reaction  The IReaction
-     * @return The IMoleculeSet
+     * @return The IAtomContainerSet
      */
     @TestMethod("testGetAllProducts_IReaction")
     public static IAtomContainerSet getAllProducts(IReaction reaction) {
@@ -145,7 +145,7 @@ public class ReactionManipulator {
      * get all reactants of a IReaction
      *
      * @param reaction  The IReaction
-     * @return The IMoleculeSet
+     * @return The IAtomContainerSet
      */
     @TestMethod("testGetAllReactants_IReaction")
     public static IAtomContainerSet getAllReactants(IReaction reaction) {

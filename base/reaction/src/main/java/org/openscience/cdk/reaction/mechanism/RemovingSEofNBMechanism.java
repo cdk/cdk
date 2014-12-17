@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * This mechanism extracts a single electron from a non-bonding orbital which located in
  * a ILonePair container. It returns the reaction mechanism which has been cloned the
- * IMolecule with an ILonPair electron less and an ISingleElectron more.
+ * {@link IAtomContainer} with an ILonPair electron less and an ISingleElectron more.
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
@@ -67,7 +67,7 @@ public class RemovingSEofNBMechanism implements IReactionMechanism {
             throws CDKException {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 1) {
-            throw new CDKException("RemovingSEofNBMechanism only expects one IMolecule");
+            throw new CDKException("RemovingSEofNBMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 1) {
             throw new CDKException("RemovingSEofNBMechanism only expects one atom in the ArrayList");
@@ -80,7 +80,7 @@ public class RemovingSEofNBMechanism implements IReactionMechanism {
         try {
             reactantCloned = (IAtomContainer) molecule.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Could not clone IMolecule!", e);
+            throw new CDKException("Could not clone IAtomContainer!", e);
         }
 
         // remove one lone pair electron and substitute with one single electron and charge 1.

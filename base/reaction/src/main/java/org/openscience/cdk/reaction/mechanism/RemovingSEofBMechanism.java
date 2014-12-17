@@ -40,7 +40,7 @@ import java.util.ArrayList;
 /**
  * This mechanism extracts a single electron from a bonding orbital which located in
  * an bond. It could have single, double as triple order. It returns the
- * reaction mechanism which has been cloned the IMolecule with a decrease
+ * reaction mechanism which has been cloned the {@link IAtomContainer} with a decrease
  * of the order of the bond and a ISingleElectron more.
  *
  * @author         miguelrojasch
@@ -70,7 +70,7 @@ public class RemovingSEofBMechanism implements IReactionMechanism {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder(),
                 CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
         if (atomContainerSet.getAtomContainerCount() != 1) {
-            throw new CDKException("RemovingSEofBMechanism only expects one IMolecule");
+            throw new CDKException("RemovingSEofBMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 2) {
             throw new CDKException("RemovingSEofBMechanism expects two atoms in the ArrayList");
@@ -83,7 +83,7 @@ public class RemovingSEofBMechanism implements IReactionMechanism {
         try {
             reactantCloned = (IAtomContainer) molecule.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Could not clone IMolecule!", e);
+            throw new CDKException("Could not clone IAtomContainer!", e);
         }
 
         IAtom atom1 = atomList.get(0);

@@ -40,7 +40,7 @@ import java.util.List;
 
 /**
  * <p>This mechanism extracts an atom because of the stabilization of a radical.
- * It returns the reaction mechanism which has been cloned the IMolecule.</p>
+ * It returns the reaction mechanism which has been cloned the IAtomContainer.</p>
  * <p>This reaction could be represented as Y-B-[C*] => [Y*] + B=C</p>
  *
  * @author         miguelrojasch
@@ -72,7 +72,7 @@ public class RadicalSiteIonizationMechanism implements IReactionMechanism {
             throws CDKException {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 1) {
-            throw new CDKException("RadicalSiteIonizationMechanism only expects one IMolecule");
+            throw new CDKException("RadicalSiteIonizationMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 3) {
             throw new CDKException("RadicalSiteIonizationMechanism expects three atoms in the ArrayList");
@@ -85,7 +85,7 @@ public class RadicalSiteIonizationMechanism implements IReactionMechanism {
         try {
             reactantCloned = (IAtomContainer) molecule.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Could not clone IMolecule!", e);
+            throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);// Atom containing the ISingleElectron
         IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));

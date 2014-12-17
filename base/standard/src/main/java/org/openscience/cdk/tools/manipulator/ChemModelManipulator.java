@@ -187,7 +187,7 @@ public class ChemModelManipulator {
 
     /**
      * Create a new ChemModel containing an IAtomContainer. It will create an
-     * IMolecule from the passed IAtomContainer when needed, which may cause
+     * {@link IAtomContainer} from the passed IAtomContainer when needed, which may cause
      * information loss.
      *
      * @param  atomContainer  The AtomContainer to have inside the ChemModel.

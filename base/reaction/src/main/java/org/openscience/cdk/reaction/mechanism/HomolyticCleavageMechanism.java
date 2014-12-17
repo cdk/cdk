@@ -40,7 +40,7 @@ import java.util.ArrayList;
 /**
  * This mechanism breaks the chemical bond between atoms. Generating two atoms with
  * attached radicals.
- * It returns the reaction mechanism which has been cloned the IMolecule.
+ * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
@@ -68,7 +68,7 @@ public class HomolyticCleavageMechanism implements IReactionMechanism {
             throws CDKException {
         CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 1) {
-            throw new CDKException("TautomerizationMechanism only expects one IMolecule");
+            throw new CDKException("TautomerizationMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 2) {
             throw new CDKException("HomolyticCleavageMechanism expects two atoms in the ArrayList");
@@ -81,7 +81,7 @@ public class HomolyticCleavageMechanism implements IReactionMechanism {
         try {
             reactantCloned = (IAtomContainer) molecule.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Could not clone IMolecule!", e);
+            throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);
         IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
