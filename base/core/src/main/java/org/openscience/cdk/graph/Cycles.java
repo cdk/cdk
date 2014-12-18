@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.Intractable;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -88,7 +86,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.graph.CyclesTest")
 public final class Cycles {
 
     /** Vertex paths for each cycle. */
@@ -118,12 +115,10 @@ public final class Cycles {
      *
      * @return number of cycles
      */
-    @TestMethod("all,mcb,relevant,essential,tripletShort,vertexShort,edgeShort")
     public int numberOfCycles() {
         return paths.length;
     }
 
-    @TestMethod("pathsAreCopy")
     public int[][] paths() {
         int[][] cpy = new int[paths.length][];
         for (int i = 0; i < paths.length; i++)
@@ -137,7 +132,6 @@ public final class Cycles {
      *
      * @return ringset for the cycles
      */
-    @TestMethod("toRingSet")
     public IRingSet toRingSet() {
         return toRingSet(container, paths, bondMap);
     }
@@ -172,7 +166,6 @@ public final class Cycles {
      * @see AllCycles
      * @see org.openscience.cdk.ringsearch.AllRingsFinder
      */
-    @TestMethod("all")
     public static CycleFinder all() {
         return CycleComputation.ALL;
     }
@@ -185,7 +178,6 @@ public final class Cycles {
      * @param length maximum size or cycle to find
      * @return cycle finder
      */
-    @TestMethod("allUpToLength")
     public static CycleFinder all(int length) {
         return new AllUpToLength(length);
     }
@@ -212,7 +204,6 @@ public final class Cycles {
      * @see #mcb(org.openscience.cdk.interfaces.IAtomContainer)
      * @see MinimumCycleBasis
      */
-    @TestMethod("mcb")
     public static CycleFinder mcb() {
         return CycleComputation.MCB;
     }
@@ -240,7 +231,6 @@ public final class Cycles {
      * @see #relevant(org.openscience.cdk.interfaces.IAtomContainer)
      * @see RelevantCycles
      */
-    @TestMethod("relevant")
     public static CycleFinder relevant() {
         return CycleComputation.RELEVANT;
     }
@@ -267,7 +257,6 @@ public final class Cycles {
      * @see #relevant(org.openscience.cdk.interfaces.IAtomContainer)
      * @see RelevantCycles
      */
-    @TestMethod("essential")
     public static CycleFinder essential() {
         return CycleComputation.ESSENTIAL;
     }
@@ -298,7 +287,6 @@ public final class Cycles {
      * @see #tripletShort(org.openscience.cdk.interfaces.IAtomContainer)
      * @see TripletShortCycles
      */
-    @TestMethod("tripletShort")
     public static CycleFinder tripletShort() {
         return CycleComputation.TRIPLET_SHORT;
     }
@@ -327,7 +315,6 @@ public final class Cycles {
      * @return finder for vertex short cycles
      * @see #vertexShort(org.openscience.cdk.interfaces.IAtomContainer)
      */
-    @TestMethod("vertexShort")
     public static CycleFinder vertexShort() {
         return CycleComputation.VERTEX_SHORT;
     }
@@ -356,7 +343,6 @@ public final class Cycles {
      * @return finder for edge short cycles
      * @see #edgeShort(org.openscience.cdk.interfaces.IAtomContainer)
      */
-    @TestMethod("edgeShort")
     public static CycleFinder edgeShort() {
         return CycleComputation.EDGE_SHORT;
     }
@@ -391,7 +377,6 @@ public final class Cycles {
      * @return finder for cdk aromatic cycles
      * @see #edgeShort(org.openscience.cdk.interfaces.IAtomContainer)
      */
-    @TestMethod("cdkAromaticSet")
     public static CycleFinder cdkAromaticSet() {
         return CycleComputation.CDK_AROMATIC;
     }
@@ -421,7 +406,6 @@ public final class Cycles {
      * @deprecated use {@link #or} to define a custom fall-back
      */
     @Deprecated
-    @TestMethod("allOrVertexShort")
     public static CycleFinder allOrVertexShort() {
         return or(all(), vertexShort());
     }
@@ -447,7 +431,6 @@ public final class Cycles {
      * @param auxiliary auxiliary cycle finding method if the primary failed
      * @return a new cycle finder
      */
-    @TestMethod("or")
     public static CycleFinder or(CycleFinder primary, CycleFinder auxiliary) {
         return new Fallback(primary, auxiliary);
     }
@@ -482,7 +465,6 @@ public final class Cycles {
      * @see AllCycles
      * @see org.openscience.cdk.ringsearch.AllRingsFinder
      */
-    @TestMethod("all")
     public static Cycles all(IAtomContainer container) throws Intractable {
         return all().find(container, container.getAtomCount());
     }
@@ -495,7 +477,6 @@ public final class Cycles {
      * @return all cycles
      * @throws Intractable computation was not feasible
      */
-    @TestMethod("allUpToLength")
     public static Cycles all(IAtomContainer container, int length) throws Intractable {
         return all().find(container, length);
     }
@@ -516,7 +497,6 @@ public final class Cycles {
      * @see #mcb()
      * @see MinimumCycleBasis
      */
-    @TestMethod("mcb")
     public static Cycles mcb(IAtomContainer container) {
         return _invoke(mcb(), container);
     }
@@ -539,7 +519,6 @@ public final class Cycles {
      * @see #mcb(org.openscience.cdk.interfaces.IAtomContainer)
      * @see MinimumCycleBasis
      */
-    @TestMethod("mcb")
     public static Cycles sssr(IAtomContainer container) {
         return mcb(container);
     }
@@ -560,7 +539,6 @@ public final class Cycles {
      * @see #relevant()
      * @see RelevantCycles
      */
-    @TestMethod("relevant")
     public static Cycles relevant(IAtomContainer container) {
         return _invoke(relevant(), container);
     }
@@ -581,7 +559,6 @@ public final class Cycles {
      * @see #relevant()
      * @see RelevantCycles
      */
-    @TestMethod("essential")
     public static Cycles essential(IAtomContainer container) {
         return _invoke(essential(), container);
     }
@@ -602,7 +579,6 @@ public final class Cycles {
      * @see #tripletShort()
      * @see TripletShortCycles
      */
-    @TestMethod("tripletShort")
     public static Cycles tripletShort(IAtomContainer container) {
         return _invoke(tripletShort(), container);
     }
@@ -623,7 +599,6 @@ public final class Cycles {
      * @see #vertexShort()
      * @see VertexShortCycles
      */
-    @TestMethod("vertexShort")
     public static Cycles vertexShort(IAtomContainer container) {
         return _invoke(vertexShort(), container);
     }
@@ -644,7 +619,6 @@ public final class Cycles {
      * @see #edgeShort()
      * @see EdgeShortCycles
      */
-    @TestMethod("edgeShort")
     public static Cycles edgeShort(IAtomContainer container) {
         return _invoke(edgeShort(), container);
     }
@@ -655,7 +629,6 @@ public final class Cycles {
      * @param original find the initial cycles before filtering
      * @return cycles or the original without chords
      */
-    @TestMethod("unchorded")
     public static CycleFinder unchorded(CycleFinder original) {
         return new Unchorded(original);
     }

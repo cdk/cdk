@@ -22,16 +22,12 @@
  */
 package org.openscience.cdk.exception;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * Exception that is thrown by CDK classes when some problem has occured.
  *
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.exception.CDKExceptionTest")
 public class CDKException extends Exception {
 
     private static final long serialVersionUID = 8371328769230823678L;
@@ -41,7 +37,6 @@ public class CDKException extends Exception {
      *
      * @param message for the constructed exception
      */
-    @TestMethod("testCDKException_String")
     public CDKException(String message) {
         super(message);
     }
@@ -53,7 +48,6 @@ public class CDKException extends Exception {
      * @param message for the constructed exception
      * @param cause   the Throwable that triggered this CDKException
      */
-    @TestMethod("testCDKException_String_Throwable")
     public CDKException(String message, Throwable cause) {
         super(message, cause);
     }

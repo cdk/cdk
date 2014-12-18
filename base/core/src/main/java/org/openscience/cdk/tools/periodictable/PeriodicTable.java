@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.tools.periodictable;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Elements;
 
 import java.util.EnumMap;
@@ -46,7 +44,6 @@ import static org.openscience.cdk.config.Elements.*;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.periodictable.PeriodicTableTest")
 public final class PeriodicTable {
 
     /** CAS ID Mapping. */
@@ -61,7 +58,6 @@ public final class PeriodicTable {
      * @param symbol The symbol of the element
      * @return the Van der waals radius
      */
-    @TestMethod("testTable")
     public static Double getVdwRadius(String symbol) {
         return Elements.ofString(symbol).vdwRadius();
     }
@@ -72,7 +68,6 @@ public final class PeriodicTable {
      * @param symbol the symbol of the element
      * @return the covalent radius
      */
-    @TestMethod("testTable")
     public static Double getCovalentRadius(String symbol) {
         return Elements.ofString(symbol).covalentRadius();
     }
@@ -83,7 +78,6 @@ public final class PeriodicTable {
      * @param symbol the symbol of the element
      * @return the CAS ID
      */
-    @TestMethod("testTable")
     public static String getCASId(String symbol) {
         return casIds().get(Elements.ofString(symbol));
     }
@@ -94,7 +88,6 @@ public final class PeriodicTable {
      * @param symbol the symbol of the element
      * @return the chemical series of the element
      */
-    @TestMethod("testTable")
     public static String getChemicalSeries(String symbol) {
         Elements e = Elements.ofString(symbol);
         for (Series s : Series.values())
@@ -108,7 +101,6 @@ public final class PeriodicTable {
      * @param symbol the symbol of the element
      * @return the group
      */
-    @TestMethod("testTable")
     public static Integer getGroup(String symbol) {
         return Elements.ofString(symbol).group();
     }
@@ -119,7 +111,6 @@ public final class PeriodicTable {
      * @param symbol the symbol of the element
      * @return the name of the element
      */
-    @TestMethod("testTable")
     public static String getName(String symbol) {
         return Elements.ofString(symbol).name();
     }
@@ -130,7 +121,6 @@ public final class PeriodicTable {
      * @param symbol the symbol of the element
      * @return the period
      */
-    @TestMethod("testTable")
     public static Integer getPeriod(String symbol) {
         return Elements.ofString(symbol).period();
     }
@@ -141,7 +131,6 @@ public final class PeriodicTable {
      * @param symbol the symbol of the element
      * @return the phase of the element
      */
-    @TestMethod("testTable")
     public static String getPhase(String symbol) {
         Elements e = Elements.ofString(symbol);
         for (Phase p : Phase.values())
@@ -155,7 +144,6 @@ public final class PeriodicTable {
      * @param symbol the symbol of the element
      * @return the atomic number
      */
-    @TestMethod("testTable")
     public static Integer getAtomicNumber(String symbol) {
         return Elements.ofString(symbol).number();
     }
@@ -166,7 +154,6 @@ public final class PeriodicTable {
      * @param symbol the symbol of the element
      * @return the Pauling electronegativity
      */
-    @TestMethod("testTable")
     public static Double getPaulingElectronegativity(String symbol) {
         return Elements.ofString(symbol).electronegativity();
     }
@@ -177,7 +164,6 @@ public final class PeriodicTable {
      * @param atomicNumber the atomic number of the element
      * @return the corresponding symbol
      */
-    @TestMethod("testTable")
     public static String getSymbol(int atomicNumber) {
         return Elements.ofNumber(atomicNumber).symbol();
     }
@@ -188,7 +174,6 @@ public final class PeriodicTable {
      *
      * @return the number of elements in the periodic table
      */
-    @TestMethod("testTable")
     public static int getElementCount() {
         return Elements.values().length;
     }

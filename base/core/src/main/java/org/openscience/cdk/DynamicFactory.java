@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.ICDKObject;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -126,7 +124,6 @@ import java.util.TreeSet;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.DynamicFactoryTest")
 public class DynamicFactory {
 
     /**
@@ -249,7 +246,6 @@ public class DynamicFactory {
      * @see #register(org.openscience.cdk.DynamicFactory.ConstructorKey,
      *      org.openscience.cdk.DynamicFactory.Creator)
      */
-    @TestMethod("testRegister,testRegister_NonCDKInterface")
     public <T extends ICDKObject> boolean register(Class<? extends T> impl) {
 
         if (!isConcrete(impl)) throw new IllegalArgumentException("non-concrete implementation provided");
@@ -283,7 +279,6 @@ public class DynamicFactory {
      *             class
      * @return whether registration was successful
      */
-    @TestMethod("testRegister_Explicit,testRegister_PrivateConstructor,testRegister_Duplicate")
     public <T extends ICDKObject> boolean register(Class<T> intf, Class<? extends T> impl) {
         return register(intf, impl, null);
     }
@@ -313,7 +308,6 @@ public class DynamicFactory {
      * @param <T>      implementation type (must extend interface)
      * @return whether registration was successful
      */
-    @TestMethod("testRegister_WithModifier")
     public <S extends ICDKObject, T extends S> boolean register(Class<S> intf, Class<T> impl,
             CreationModifier<T> modifier) {
 
@@ -355,7 +349,6 @@ public class DynamicFactory {
      * @param <T>         implementation type (must extend interface)
      * @return whether the constructor was registered
      */
-    @TestMethod("testRegister_Constructor")
     public <S extends ICDKObject, T extends S> boolean register(Class<S> intf, Constructor<T> constructor) {
         return register(intf, constructor, null);
     }
@@ -382,7 +375,6 @@ public class DynamicFactory {
      * @param <T>         implementation type (must extend interface)
      * @return whether the constructor was registered
      */
-    @TestMethod("testRegister_Constructor_Modifier")
     public <S extends ICDKObject, T extends S> boolean register(Class<S> intf, Constructor<T> constructor,
             CreationModifier<T> modifier) {
 
@@ -430,7 +422,6 @@ public class DynamicFactory {
      * @param <T> type of object that will be created
      * @return the registered creator - null if not registered
      */
-    @TestMethod("testOfClass_Wrapping")
     public <T> Creator<T> register(ConstructorKey key, Creator<T> creator) {
 
         if (creator == null) return null;
@@ -469,7 +460,6 @@ public class DynamicFactory {
      * @param types the classes that the the constructor requires
      * @return a constructor key which can be used to lookup a constructor
      */
-    @TestMethod("testKey_Default,testKey_Parameters,testKey_ArrayParameters,testKey_Primitives")
     public static ConstructorKey key(Class<?> intf, Class<?>... types) {
         return new ClassBasedKey(intf, convert(types));
     }
@@ -515,7 +505,6 @@ public class DynamicFactory {
      * @throws IllegalArgumentException thrown if the provided class is not an
      *                                  interface
      */
-    @TestMethod("testOfClass_WithParams,testOfClass_Wrapping")
     public <T extends ICDKObject> T ofClass(Class<T> intf, Object... objects) {
 
         try {
@@ -548,7 +537,6 @@ public class DynamicFactory {
      * @throws IllegalArgumentException thrown if the provided class is not an
      *                                  interface
      */
-    @TestMethod("testOfClass")
     public <T extends ICDKObject> T ofClass(Class<T> intf) {
 
         try {
@@ -666,7 +654,6 @@ public class DynamicFactory {
      * @param <T>  the type of the interface
      * @return set of implementation classes (empty if none found)
      */
-    @TestMethod("testImplementationsOf")
     public <T extends ICDKObject> Set<Class<?>> implementorsOf(Class<T> intf) {
         Set<Class<?>> implementations = new HashSet<Class<?>>(5);
         for (ConstructorKey key : lookup.getConstructors(intf)) {
@@ -682,7 +669,6 @@ public class DynamicFactory {
      * @param intf an interface to find all constructors for
      * @return an iterator of constructor keys
      */
-    @TestMethod("testSuggest")
     public Iterator<ConstructorKey> suggest(Class<?> intf) {
         return lookup.getConstructors(intf).iterator();
     }

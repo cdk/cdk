@@ -23,9 +23,6 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -56,7 +53,6 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * @see org.openscience.cdk.ringsearch.SSSRFinder#findEssentialRings()
  * @see GraphUtil
  */
-@TestClass("org.openscience.cdk.graph.EssentialCyclesTest")
 public final class EssentialCycles {
 
     /** Cycles which are essential. */
@@ -117,7 +113,6 @@ public final class EssentialCycles {
      *
      * @return array of vertex paths
      */
-    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," + "paths_cyclophane_odd,paths_cyclophane_even")
     public int[][] paths() {
         final int[][] paths = new int[size()][];
         for (int i = 0; i < paths.length; i++)
@@ -130,7 +125,6 @@ public final class EssentialCycles {
      *
      * @return number of cycles
      */
-    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," + "size_cyclophane_odd,size_cyclophane_even")
     public int size() {
         return essential.size();
     }

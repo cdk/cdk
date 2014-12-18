@@ -24,9 +24,6 @@
 
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -89,7 +86,6 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * @see org.openscience.cdk.ringsearch.SSSRFinder#findRelevantRings()
  * @see GreedyBasis
  */
-@TestClass("org.openscience.cdk.graph.RelevantCyclesTest")
 public final class RelevantCycles {
 
     /** The relevant cycle basis. */
@@ -102,7 +98,6 @@ public final class RelevantCycles {
      * @see org.openscience.cdk.ringsearch.RingSearch#fused()
      * @see GraphUtil#subgraph(int[][], int[])
      */
-    @TestMethod("noGraph")
     public RelevantCycles(final int[][] graph) {
         this(new InitialCycles(graph));
     }
@@ -114,7 +109,6 @@ public final class RelevantCycles {
      * @param initial set of initial cycles.
      * @throws NullPointerException null InitialCycles provided
      */
-    @TestMethod("noInitialCycles")
     RelevantCycles(final InitialCycles initial) {
 
         checkNotNull(initial, "No InitialCycles provided");
@@ -158,7 +152,6 @@ public final class RelevantCycles {
      *
      * @return array of vertex paths
      */
-    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," + "paths_cyclophane_odd,paths_cyclophane_even")
     public int[][] paths() {
         final int[][] paths = new int[size()][0];
         int i = 0;
@@ -174,7 +167,6 @@ public final class RelevantCycles {
      *
      * @return size of relevant cycle set
      */
-    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," + "size_cyclophane_odd,size_cyclophane_even")
     public int size() {
         int size = 0;
         for (final Cycle c : basis.members())

@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -39,7 +37,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * @cdk.module  core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.config.atomtypes.OWLAtomTypeHandlerTest")
 public class OWLAtomTypeHandler extends DefaultHandler {
 
     private final String              NS_ATOMTYPE = "http://cdk.sf.net/ontologies/atomtypes#";
@@ -61,7 +58,6 @@ public class OWLAtomTypeHandler extends DefaultHandler {
      *
      * @param build The IChemObjectBuilder used to create the IAtomType's.
      */
-    @TestMethod("testAtomTypeHandler_IChemObjectBuilder")
     public OWLAtomTypeHandler(IChemObjectBuilder build) {
         builder = build;
     }
@@ -71,7 +67,6 @@ public class OWLAtomTypeHandler extends DefaultHandler {
      *
      * @return The read IAtomType's.
      */
-    @TestMethod("testGetAtomTypes")
     public List<IAtomType> getAtomTypes() {
         return atomTypes;
     }
@@ -80,7 +75,6 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testStartDocument")
     public void startDocument() {
         atomTypes = new ArrayList<IAtomType>();
         currentAtomType = null;
@@ -88,7 +82,6 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testedByOtherClass")
     public void endElement(String uri, String local, String raw) {
         if (NS_ATOMTYPE.equals(uri)) {
             endAtomTypeElement(local);
@@ -121,7 +114,6 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testedByOtherClass")
     public void startElement(String uri, String local, String raw, Attributes atts) {
         currentChars = "";
         if (NS_ATOMTYPE.equals(uri)) {
@@ -190,7 +182,6 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testedByOtherClass")
     public void characters(char chars[], int start, int length) {
         logger.debug("character data");
         currentChars += new String(chars, start, length);
