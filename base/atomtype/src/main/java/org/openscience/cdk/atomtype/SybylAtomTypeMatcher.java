@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.mapper.AtomTypeMapper;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -45,7 +43,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword    atom type, Sybyl
  */
-@TestClass("org.openscience.cdk.atomtype.SybylAtomTypeMatcherTest")
 public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
 
     private final static String                                  SYBYL_ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/sybyl-atom-types.owl";
@@ -73,7 +70,6 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
      * @param builder {@link IChemObjectBuilder} to use to create {@link IAtomType} instances.
      * @return an instance of this atom type matcher.
      */
-    @TestMethod("testGetInstance_IChemObjectBuilder")
     public static SybylAtomTypeMatcher getInstance(IChemObjectBuilder builder) {
         if (!factories.containsKey(builder)) factories.put(builder, new SybylAtomTypeMatcher(builder));
         return factories.get(builder);
@@ -81,7 +77,6 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testFindMatchingAtomType_IAtomContainer")
     public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         for (IAtom atom : atomContainer.atoms()) {
             IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
@@ -112,7 +107,6 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
      * @param  atom          the {@link IAtom} to find the atom type of
      * @return               the atom type perceived from the given atom
      */
-    @TestMethod("testFindMatchingAtomType_IAtomContainer_IAtom")
     @Override
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);

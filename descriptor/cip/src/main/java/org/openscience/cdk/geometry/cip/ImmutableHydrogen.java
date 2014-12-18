@@ -27,8 +27,6 @@ import java.util.Map;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -44,13 +42,11 @@ import org.openscience.cdk.interfaces.IBond.Order;
  * @cdk.module cip
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.cip.ImmutableHydrogenTest")
 class ImmutableHydrogen implements IAtom {
 
     private static final String SYMBOL = "H";
 
     /** {@inheritDoc} */
-    @TestMethod("testClone")
     @Override
     public IAtom clone() {
         return this;
@@ -61,7 +57,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Double getCharge() {
         return null;
@@ -72,7 +67,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Point3d getFractionalPoint3d() {
         return null;
@@ -83,7 +77,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Integer getImplicitHydrogenCount() {
         return null;
@@ -94,7 +87,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Point2d getPoint2d() {
         return null;
@@ -105,7 +97,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Point3d getPoint3d() {
         return null;
@@ -116,7 +107,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Integer getStereoParity() {
         return null;
@@ -128,7 +118,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param charge The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setCharge(Double charge) {}
 
@@ -138,7 +127,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param point3d The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setFractionalPoint3d(Point3d point3d) {}
 
@@ -148,7 +136,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param hydrogenCount The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setImplicitHydrogenCount(Integer hydrogenCount) {}
 
@@ -158,7 +145,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param point2d The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setPoint2d(Point2d point2d) {}
 
@@ -168,7 +154,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param point3d The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setPoint3d(Point3d point3d) {}
 
@@ -178,7 +163,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param stereoParity The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setStereoParity(Integer stereoParity) {}
 
@@ -187,7 +171,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public String getAtomTypeName() {
         return null;
@@ -198,7 +181,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Double getBondOrderSum() {
         return null;
@@ -209,7 +191,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Double getCovalentRadius() {
         return null;
@@ -220,7 +201,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Integer getFormalCharge() {
         return null;
@@ -231,7 +211,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Integer getFormalNeighbourCount() {
         return null;
@@ -242,7 +221,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Hybridization getHybridization() {
         return null;
@@ -253,7 +231,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Order getMaxBondOrder() {
         return null;
@@ -264,7 +241,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Integer getValency() {
         return null;
@@ -276,7 +252,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param identifier The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setAtomTypeName(String identifier) {}
 
@@ -286,7 +261,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param bondOrderSum The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setBondOrderSum(Double bondOrderSum) {}
 
@@ -296,7 +270,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param radius The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setCovalentRadius(Double radius) {}
 
@@ -306,7 +279,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param charge The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setFormalCharge(Integer charge) {}
 
@@ -316,7 +288,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param count The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setFormalNeighbourCount(Integer count) {}
 
@@ -326,7 +297,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param hybridization The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setHybridization(Hybridization hybridization) {}
 
@@ -336,7 +306,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param maxBondOrder The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setMaxBondOrder(Order maxBondOrder) {}
 
@@ -346,7 +315,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param valency The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setValency(Integer valency) {}
 
@@ -355,7 +323,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Double getExactMass() {
         return null;
@@ -366,7 +333,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return 1.
      */
-    @TestMethod("testExpectedValues")
     @Override
     public Integer getMassNumber() {
         return Integer.valueOf(1);
@@ -377,7 +343,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Double getNaturalAbundance() {
         return null;
@@ -389,7 +354,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param exactMass The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setExactMass(Double exactMass) {}
 
@@ -399,7 +363,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param massNumber The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setMassNumber(Integer massNumber) {}
 
@@ -409,7 +372,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param naturalAbundance The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setNaturalAbundance(Double naturalAbundance) {}
 
@@ -418,7 +380,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return 1.
      */
-    @TestMethod("testExpectedValues")
     @Override
     public Integer getAtomicNumber() {
         return Integer.valueOf(1);
@@ -429,7 +390,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return "H".
      */
-    @TestMethod("testExpectedValues")
     @Override
     public String getSymbol() {
         return SYMBOL;
@@ -439,7 +399,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param atomicNumber An integer that will just be disregarded.
      */
-    @TestMethod("testOverwriteStaticValues")
     @Override
     public void setAtomicNumber(Integer atomicNumber) {}
 
@@ -447,12 +406,10 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param symbol A string that will just be disregarded.
      */
-    @TestMethod("testOverwriteStaticValues")
     @Override
     public void setSymbol(String symbol) {}
 
     /** {@inheritDoc} */
-    @TestMethod("testListenerStuff")
     @Override
     public void addListener(IChemObjectListener col) {}
 
@@ -462,7 +419,6 @@ class ImmutableHydrogen implements IAtom {
      * @param  flagType The value will be disregarded.
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public boolean getFlag(int flagType) {
         return false;
@@ -473,7 +429,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public boolean[] getFlags() {
         return null;
@@ -485,7 +440,6 @@ class ImmutableHydrogen implements IAtom {
      * @return null.
      */
     @Override
-    @TestMethod("testReturnsNull")
     public Number getFlagValue() {
         return null;
     }
@@ -496,21 +450,18 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public String getID() {
         return null;
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testListenerStuff")
     @Override
     public int getListenerCount() {
         return 0;
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testListenerStuff")
     @Override
     public boolean getNotification() {
         return false;
@@ -521,7 +472,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Map<Object, Object> getProperties() {
         return null;
@@ -533,7 +483,6 @@ class ImmutableHydrogen implements IAtom {
      * @param  description The value will be disregarded.
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public Object getProperty(Object description) {
         return null;
@@ -546,33 +495,27 @@ class ImmutableHydrogen implements IAtom {
      * @return null.
      */
     @Override
-    @TestMethod("testReturnsNull")
     public <T> T getProperty(Object description, Class<T> c) {
         return null;
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testListenerStuff")
     @Override
     public void notifyChanged() {}
 
     /** {@inheritDoc} */
-    @TestMethod("testListenerStuff")
     @Override
     public void notifyChanged(IChemObjectChangeEvent evt) {}
 
     /** {@inheritDoc} */
-    @TestMethod("testListenerStuff")
     @Override
     public void removeListener(IChemObjectListener col) {}
 
     /** {@inheritDoc} */
-    @TestMethod("testSetIsSilent")
     @Override
     public void removeProperty(Object description) {}
 
     /** {@inheritDoc} */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setFlag(int flagType, boolean flagValue) {}
 
@@ -582,7 +525,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param flagsNew The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setFlags(boolean[] flagsNew) {}
 
@@ -592,12 +534,10 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param identifier The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setID(String identifier) {}
 
     /** {@inheritDoc} */
-    @TestMethod("testListenerStuff")
     @Override
     public void setNotification(boolean bool) {}
 
@@ -607,7 +547,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param properties The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setProperties(Map<Object, Object> properties) {}
 
@@ -617,7 +556,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @param properties The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void addProperties(Map<Object, Object> properties) {}
 
@@ -628,7 +566,6 @@ class ImmutableHydrogen implements IAtom {
      * @param description The value will be disregarded.
      * @param property    The value will be disregarded.
      */
-    @TestMethod("testSetIsSilent")
     @Override
     public void setProperty(Object description, Object property) {}
 
@@ -637,7 +574,6 @@ class ImmutableHydrogen implements IAtom {
      *
      * @return null.
      */
-    @TestMethod("testReturnsNull")
     @Override
     public IChemObjectBuilder getBuilder() {
         return null;

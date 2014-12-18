@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.charges;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -33,7 +31,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.keyword electronegativity
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.charges.ElectronegativityTest")
 public class Electronegativity {
 
     private GasteigerMarsiliPartialCharges peoe  = null;
@@ -74,7 +71,6 @@ public class Electronegativity {
      *
      * @return piElectronegativity
      */
-    @TestMethod("testCalculateSigmaElectronegativity_IAtomContainer_IAtom")
     public double calculateSigmaElectronegativity(IAtomContainer ac, IAtom atom) {
 
         return calculateSigmaElectronegativity(ac, atom, maxI, maxRS);
@@ -90,7 +86,6 @@ public class Electronegativity {
      *
      * @return piElectronegativity
      */
-    @TestMethod("testCalculateSigmaElectronegativity_IAtomContainer_IAtom_Int_Int")
     public double calculateSigmaElectronegativity(IAtomContainer ac, IAtom atom, int maxIterations, int maxResonStruc) {
         maxI = maxIterations;
         maxRS = maxResonStruc;
@@ -127,7 +122,6 @@ public class Electronegativity {
      *
      * @param maxIterations The maximal number of iterations
      */
-    @TestMethod("testSetMaxIterations_Int")
     public void setMaxIterations(int maxIterations) {
         maxI = maxIterations;
     }
@@ -137,7 +131,6 @@ public class Electronegativity {
      *
      * @param maxResonStruc The maximal number of resonance structures
      */
-    @TestMethod("testSetMaxResonStruc_Int")
     public void setMaxResonStruc(int maxResonStruc) {
         maxRS = maxResonStruc;
     }
@@ -147,7 +140,6 @@ public class Electronegativity {
      *
      * @return The maximal number of iterations
      */
-    @TestMethod("testGetMaxIterations")
     public int getMaxIterations() {
         return maxI;
     }
@@ -157,7 +149,6 @@ public class Electronegativity {
      *
      * @return The maximal number of resonance structures
      */
-    @TestMethod("testGetMaxResonStruc")
     public int getMaxResonStruc() {
         return maxRS;
     }

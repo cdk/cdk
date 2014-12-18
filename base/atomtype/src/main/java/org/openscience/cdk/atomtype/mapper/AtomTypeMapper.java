@@ -17,8 +17,6 @@
  */
 package org.openscience.cdk.atomtype.mapper;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingReader;
 
 import java.io.InputStream;
@@ -35,7 +33,6 @@ import java.util.Map;
  * @cdk.module atomtype
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.atomtype.mapper.AtomTypeMapperTest")
 public class AtomTypeMapper {
 
     private static Map<String, AtomTypeMapper> mappers = new HashMap<String, AtomTypeMapper>();
@@ -65,7 +62,6 @@ public class AtomTypeMapper {
      * @param  mappingFile File name of the OWL file defining the atom type to atom type mappings.
      * @return             An instance of AtomTypeMapper for the given mapping file.
      */
-    @TestMethod("testGetInstance_String")
     public static AtomTypeMapper getInstance(String mappingFile) {
         if (!mappers.containsKey(mappingFile)) {
             mappers.put(mappingFile, new AtomTypeMapper(mappingFile));
@@ -80,7 +76,6 @@ public class AtomTypeMapper {
      * @param  stream      the {@link InputStream} from which the mappings as read
      * @return             An instance of AtomTypeMapper for the given mapping file.
      */
-    @TestMethod("testGetInstance_String_InputStream")
     public static AtomTypeMapper getInstance(String mappingFile, InputStream stream) {
         if (!mappers.containsKey(mappingFile)) {
             mappers.put(mappingFile, new AtomTypeMapper(mappingFile, stream));
@@ -95,7 +90,6 @@ public class AtomTypeMapper {
      * @param   type atom type to map to the target schema
      * @return  atom type name in the target schema
      */
-    @TestMethod("testMapAtomType_String")
     public String mapAtomType(String type) {
         return mappings.get(type);
     }
@@ -106,7 +100,6 @@ public class AtomTypeMapper {
      *
      * @return the name of the mapping represented by this {@link AtomTypeMapper}.
      */
-    @TestMethod("testGetMapping")
     public String getMapping() {
         return mappingFile;
     }

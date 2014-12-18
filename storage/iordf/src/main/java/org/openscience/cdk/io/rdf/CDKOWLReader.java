@@ -27,8 +27,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -47,7 +45,6 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
  * @cdk.githash
  * @cdk.keyword file format, OWL
  */
-@TestClass("org.openscience.cdk.io.rdf.CDKOWLReaderTest")
 public class CDKOWLReader extends DefaultChemObjectReader {
 
     private Reader input;
@@ -73,7 +70,6 @@ public class CDKOWLReader extends DefaultChemObjectReader {
      *
      * @return returns a {@link CDKOWLFormat}.
      */
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return CDKOWLFormat.getInstance();
@@ -86,21 +82,18 @@ public class CDKOWLReader extends DefaultChemObjectReader {
      * @param reader reader to which should be written.
      * @deprecated
      */
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) throws CDKException {
         this.input = reader;
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         this.input = new InputStreamReader(input);
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;
@@ -130,7 +123,6 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

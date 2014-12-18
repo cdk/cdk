@@ -25,8 +25,6 @@ package org.openscience.cdk.geometry.cip;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -36,7 +34,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.module cip
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.cip.VisitedAtomsTest")
 public class VisitedAtoms {
 
     /**
@@ -47,7 +44,6 @@ public class VisitedAtoms {
     /**
      * Creates a new empty list of visited {@link IAtom}s.
      */
-    @TestMethod("testConstructor")
     public VisitedAtoms() {
         visitedItems = new ArrayList<IAtom>();
     }
@@ -58,7 +54,6 @@ public class VisitedAtoms {
      * @param  atom {@link IAtom} which may have been visited
      * @return      true if the {@link IAtom} was visited
      */
-    @TestMethod("testVisiting")
     public boolean isVisited(IAtom atom) {
         return visitedItems.contains(atom);
     }
@@ -68,7 +63,6 @@ public class VisitedAtoms {
      *
      * @param atom {@link IAtom} that is now marked as visited
      */
-    @TestMethod("testVisiting")
     public void visited(IAtom atom) {
         visitedItems.add(atom);
     }
@@ -80,7 +74,6 @@ public class VisitedAtoms {
      * @param visitedAtoms the {@link VisitedAtoms} from which all atoms are
      *                     added
      */
-    @TestMethod("testAddedVisitedAtoms")
     public void visited(VisitedAtoms visitedAtoms) {
         visitedItems.addAll(visitedAtoms.visitedItems);
     }

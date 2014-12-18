@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.geometry.cip.rules;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.geometry.cip.ILigand;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
@@ -33,11 +31,9 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.module cip
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.cip.rules.AtomicNumberRuleTest")
 class AtomicNumberRule implements ISequenceSubRule<ILigand> {
 
     /** {@inheritDoc} */
-    @TestMethod("testCompare_Identity,testCompare,testOrder")
     @Override
     public int compare(ILigand ligand1, ILigand ligand2) {
         return getAtomicNumber(ligand1).compareTo(getAtomicNumber(ligand2));
