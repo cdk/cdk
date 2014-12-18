@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.ShortestPaths;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,7 +42,6 @@ import org.openscience.cdk.tools.StructureResonanceGenerator;
  * @cdk.keyword  stabilization charge
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.charges.StabilizationChargesTest")
 public class StabilizationCharges {
 
     /**
@@ -61,7 +58,6 @@ public class StabilizationCharges {
      *
      * @return stabilizationValue
      */
-    @TestMethod("testCalculatePositive_IAtomContainer_IAtom")
     public double calculatePositive(IAtomContainer atomContainer, IAtom atom) {
         /* restrictions */
         //    	if(atomContainer.getConnectedSingleElectronsCount(atom) > 0 || atom.getFormalCharge() != 1){

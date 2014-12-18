@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.geometry.cip;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -35,7 +33,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.module cip
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.cip.LigandTest")
 public class Ligand implements ILigand {
 
     private IAtomContainer container;
@@ -43,7 +40,6 @@ public class Ligand implements ILigand {
     private IAtom          ligandAtom;
     private VisitedAtoms   visitedAtoms;
 
-    @TestMethod("testConstructorAndGetMethods")
     public Ligand(IAtomContainer container, VisitedAtoms visitedAtoms, IAtom centralAtom, IAtom ligandAtom) {
         this.container = container;
         this.centralAtom = centralAtom;
@@ -58,7 +54,6 @@ public class Ligand implements ILigand {
      *
      * @return the IAtomContainer
      */
-    @TestMethod("testConstructorAndGetMethods")
     @Override
     public IAtomContainer getAtomContainer() {
         return container;
@@ -69,7 +64,6 @@ public class Ligand implements ILigand {
      *
      * @return the central atom
      */
-    @TestMethod("testConstructorAndGetMethods")
     @Override
     public IAtom getCentralAtom() {
         return centralAtom;
@@ -81,7 +75,6 @@ public class Ligand implements ILigand {
      *
      * @return the ligand atom
      */
-    @TestMethod("testConstructorAndGetMethods")
     @Override
     public IAtom getLigandAtom() {
         return ligandAtom;
@@ -89,14 +82,12 @@ public class Ligand implements ILigand {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testVisitedTracking")
     public VisitedAtoms getVisitedAtoms() {
         return visitedAtoms;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testVisitedTracking")
     public boolean isVisited(IAtom atom) {
         return visitedAtoms.isVisited(atom);
     }

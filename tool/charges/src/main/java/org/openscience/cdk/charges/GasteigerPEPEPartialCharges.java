@@ -24,8 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -66,7 +64,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.keyword PEPE
  * @see GasteigerMarsiliPartialCharges
  */
-@TestClass("org.openscience.cdk.charges.GasteigerPEPEPartialChargesTest")
 public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 
     /** max iterations */
@@ -97,7 +94,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      *
      *@param  iters  The new maxGasteigerIters value
      */
-    @TestMethod("testSetMaxGasteigerIters_Double")
     public void setMaxGasteigerIters(int iters) {
         MX_ITERATIONS = iters;
     }
@@ -107,7 +103,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      *
      *@param  numbReson  The number of resonance Structures to be searched
      */
-    @TestMethod("testSetMaxResoStruc_Int")
     public void setMaxResoStruc(int numbReson) {
         MX_RESON = numbReson;
     }
@@ -118,7 +113,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      *
      *@return  The new maxGasteigerIters value
      */
-    @TestMethod("testGetMaxGasteigerIters")
     public int getMaxGasteigerIters() {
         return MX_ITERATIONS;
     }
@@ -128,7 +122,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      *
      * @return the maximum number of resonance structures that will be returned
      */
-    @TestMethod("testGetMaxResoStruc")
     public int getMaxResoStruc() {
         return MX_RESON;
     }
@@ -142,7 +135,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      *@return                AtomContainer with partial charges
      *@exception  Exception  Possible Exceptions
      */
-    @TestMethod("testAssignGasteigerPiPartialCharges_IAtomContainer_Boolean")
     public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
 
         // we save the aromaticity flags for the input molecule so that
@@ -446,7 +438,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 
     }
 
-    @TestMethod("testCalculateCharges_IAtomContainer")
     @Override
     public void calculateCharges(IAtomContainer container) throws CDKException {
         try {
@@ -685,7 +676,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      *
      *@return STEP_SIZE
      */
-    @TestMethod("testGetStepSize")
     public int getStepSize() {
         return STEP_SIZE;
     }
@@ -696,7 +686,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      *
      *@param step
      */
-    @TestMethod("testSetStepSize")
     public void setStepSize(int step) {
         STEP_SIZE = step;
     }
@@ -801,7 +790,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      *
      *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
      */
-    @TestMethod("testAssignrPiMarsilliFactors_IAtomContainerSet")
     public double[][] assignrPiMarsilliFactors(IAtomContainerSet setAc) {
         //a,b,c,denom,chi,q
         double[][] gasteigerFactors = new double[setAc.getAtomContainerCount()][(setAc.getAtomContainer(0)
