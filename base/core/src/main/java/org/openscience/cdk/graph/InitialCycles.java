@@ -28,8 +28,6 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import com.google.common.primitives.Ints;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.BitSet;
 import java.util.Collection;
@@ -48,7 +46,6 @@ import static java.util.Arrays.copyOf;
  * @cdk.module core
  * @see RelevantCycles
  */
-@TestClass("org.openscience.cdk.graph.InitialCyclesTest")
 final class InitialCycles {
 
     /** Adjacency list representation of a chemical graph. */
@@ -147,7 +144,6 @@ final class InitialCycles {
      *
      * @return the graph
      */
-    @TestMethod("graph")
     int[][] graph() {
         return graph;
     }
@@ -157,7 +153,6 @@ final class InitialCycles {
      *
      * @return lengths of the discovered cycles
      */
-    @TestMethod("lengths_K4,lengths_naphthalene,lengths_anthracene," + "lengths_bicyclo,lengths_cyclophane")
     Iterable<Integer> lengths() {
         return cycles.keySet();
     }
@@ -170,7 +165,6 @@ final class InitialCycles {
      * @return cycles of the given length
      * @see #lengths()
      */
-    @TestMethod("cyclesOfLength_empty,cycles_K4")
     Collection<Cycle> cyclesOfLength(int length) {
         return cycles.get(length);
     }
@@ -180,7 +174,6 @@ final class InitialCycles {
      *
      * @return list of cycles
      */
-    @TestMethod("cycles_K4,cycles_naphthalene,cycles_anthracene," + "cycles_bicyclo,cycles_cyclophane")
     Collection<Cycle> cycles() {
         return cycles.values();
     }
@@ -190,7 +183,6 @@ final class InitialCycles {
      *
      * @return number of cycles
      */
-    @TestMethod("numberOfCycles_K4")
     int numberOfCycles() {
         return cycles.size();
     }
@@ -200,7 +192,6 @@ final class InitialCycles {
      *
      * @return number of edges
      */
-    @TestMethod("numberOfEdges_K4")
     int numberOfEdges() {
         return edges.size();
     }
@@ -211,7 +202,6 @@ final class InitialCycles {
      * @param i index of edge
      * @return the edge at the given index
      */
-    @TestMethod("edge_K4")
     Edge edge(int i) {
         return edges.inverse().get(i);
     }
@@ -224,7 +214,6 @@ final class InitialCycles {
      * @param v a vertex adjacent to <i>u</i>
      * @return the index of the edge
      */
-    @TestMethod("indexOfEdge_K4")
     int indexOfEdge(final int u, final int v) {
         return edges.get(new Edge(u, v));
     }
@@ -237,7 +226,6 @@ final class InitialCycles {
      * @return vector edges which make up the path
      * @see #indexOfEdge(int, int)
      */
-    @TestMethod("toEdgeVector_K4")
     BitSet toEdgeVector(final int[] path) {
         final BitSet incidence = new BitSet(edges.size());
         int len = path.length - 1;
@@ -417,7 +405,6 @@ final class InitialCycles {
      * @param q a path from <i>r</i>
      * @return whether the only intersect is <i>r</i>
      */
-    @TestMethod("singleton,startOverlap,endOverlap,middleOverlap")
     static boolean singletonIntersect(final int[] p, final int[] q) {
         int n = p.length;
         for (int i = 1; i < n; i++)
@@ -433,7 +420,6 @@ final class InitialCycles {
      * @param pathToZ second path
      * @return the paths joined end on end and the last vertex truncated
      */
-    @TestMethod("join")
     static int[] join(int[] pathToY, int[] pathToZ) {
         int[] path = copyOf(pathToY, pathToY.length + pathToZ.length);
         int j = path.length - 1;
@@ -453,7 +439,6 @@ final class InitialCycles {
      * @param pathToQ second path
      * @return the paths joined end on end and the last vertex truncated
      */
-    @TestMethod("joinWith")
     static int[] join(int[] pathToP, int y, int[] pathToQ) {
         int[] path = copyOf(pathToP, 1 + pathToQ.length + pathToQ.length);
         path[pathToP.length] = y;
@@ -471,7 +456,6 @@ final class InitialCycles {
      * @return computed initial cycles
      * @throws NullPointerException the graph was null
      */
-    @TestMethod("bioconnected_simpleCycle")
     static InitialCycles ofBiconnectedComponent(int[][] graph) {
         return ofBiconnectedComponent(graph, graph.length);
     }
@@ -484,7 +468,6 @@ final class InitialCycles {
      * @return computed initial cycles
      * @throws NullPointerException the graph was null
      */
-    @TestMethod("bioconnected_simpleCycle_limit_5")
     static InitialCycles ofBiconnectedComponent(int[][] graph, int limit) {
         return new InitialCycles(graph, limit, true);
     }
@@ -587,7 +570,6 @@ final class InitialCycles {
         }
 
         /** @inheritDoc */
-        @TestMethod("cycles_family_even")
         @Override
         int[][] family() {
 
@@ -634,7 +616,6 @@ final class InitialCycles {
         }
 
         /** @inheritDoc */
-        @TestMethod("cycles_family_odd")
         @Override
         int[][] family() {
             int[][] pathsToY = paths.pathsTo(y);
@@ -671,19 +652,16 @@ final class InitialCycles {
         }
 
         @Override
-        @TestMethod("edgeIsTransitive")
         public boolean equals(Object o) {
             Edge that = (Edge) o;
             return (this.v == that.v && this.w == that.w) || (this.v == that.w && this.w == that.v);
         }
 
         @Override
-        @TestMethod("edgeIsTransitive")
         public int hashCode() {
             return v ^ w;
         }
 
-        @TestMethod("edgeToString")
         @Override
         public String toString() {
             return "{" + v + ", " + w + "}";

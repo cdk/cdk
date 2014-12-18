@@ -25,8 +25,6 @@ package org.openscience.cdk;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -36,7 +34,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.CDKTest")
 public class CDK {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDK.class);
@@ -46,7 +43,6 @@ public class CDK {
      *
      * @return A {@link String} representation of the version number.
      */
-    @TestMethod("testGetVersion")
     public static String getVersion() {
         String propsFilename = "build.props";
         Properties props = new Properties();

@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -40,7 +38,6 @@ import java.util.Map;
  *
  * @see org.openscience.cdk.interfaces.IDoubleBondStereochemistry
  */
-@TestClass("org.openscience.cdk.stereo.DoubleBondStereochemistryTest")
 public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
 
     private Conformation       stereo;
@@ -65,21 +62,18 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
      * @param builder the new {@link IChemObjectBuilder} to be returned
      * @see #getBuilder()
      */
-    @TestMethod("testBuilder")
     public void setBuilder(IChemObjectBuilder builder) {
         this.builder = builder;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testBuilder")
     public IChemObjectBuilder getBuilder() {
         return this.builder;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetBonds")
     public IBond[] getBonds() {
         IBond[] arrayCopy = new IBond[2];
         System.arraycopy(ligandBonds, 0, arrayCopy, 0, 2);
@@ -88,14 +82,12 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetStereoBond")
     public IBond getStereoBond() {
         return this.stereoBond;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetStereo")
     public Conformation getStereo() {
         return this.stereo;
     }
@@ -103,13 +95,11 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
     /**
      * @inheritDoc
      */
-    @TestMethod("contains")
     @Override
     public boolean contains(IAtom atom) {
         return stereoBond.contains(atom) || ligandBonds[0].contains(atom) || ligandBonds[1].contains(atom);
     }
 
-    @TestMethod("testMap_Map_Map,testMap_Null_Map,testMap_Map_Map_NullElement,testMap_Map_Map_EmptyMapping")
     @Override
     public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
 

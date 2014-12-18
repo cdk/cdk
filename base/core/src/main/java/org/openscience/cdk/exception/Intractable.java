@@ -24,9 +24,6 @@
 
 package org.openscience.cdk.exception;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * Indicates a computation did not complete within some predefined bound. The
  * bound could be a limit on time, iterations or another quantity. Exceeding the
@@ -37,7 +34,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.exception.IntractableTest")
 public final class Intractable extends CDKException {
 
     /**
@@ -57,7 +53,6 @@ public final class Intractable extends CDKException {
      * @param t time in milliseconds
      * @return a throwable exception
      */
-    @TestMethod("timeout")
     public static Intractable timeout(long t) {
         return timeout("Operation", t);
     }
@@ -72,7 +67,6 @@ public final class Intractable extends CDKException {
      * @param t    time in milliseconds
      * @return a throwable exception
      */
-    @TestMethod("timeoutWithDesc")
     public static Intractable timeout(String desc, long t) {
         return new Intractable(desc + " did not finish after " + t + " ms.");
     }

@@ -23,9 +23,6 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.openscience.cdk.graph.InitialCycles.Cycle;
 
@@ -72,7 +69,6 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * @see org.openscience.cdk.ringsearch.SSSRFinder#findSSSR()
  * @see <a href="http://en.wikipedia.org/wiki/Cycle_space">Cycle Basis</a>
  */
-@TestClass("org.openscience.cdk.graph.MinimumCycleBasisTest")
 public final class MinimumCycleBasis {
 
     /** The minimum cycle basis. */
@@ -88,7 +84,6 @@ public final class MinimumCycleBasis {
      * @see org.openscience.cdk.ringsearch.RingSearch#fused()
      * @see GraphUtil#subgraph(int[][], int[])
      */
-    @TestMethod("noGraph")
     public MinimumCycleBasis(final int[][] graph) {
         this(new InitialCycles(checkNotNull(graph, "No graph provided")));
     }
@@ -100,7 +95,6 @@ public final class MinimumCycleBasis {
      * @param initial set of initial cycles.
      * @throws NullPointerException null InitialCycles provided
      */
-    @TestMethod("noInitialCycles")
     MinimumCycleBasis(final InitialCycles initial) {
         this(initial, false);
     }
@@ -115,7 +109,6 @@ public final class MinimumCycleBasis {
      *
      * @throws NullPointerException null InitialCycles provided
      */
-    @TestMethod("noInitialCycles")
     MinimumCycleBasis(final InitialCycles initial, boolean connected) {
 
         checkNotNull(initial, "No InitialCycles provided");
@@ -138,7 +131,6 @@ public final class MinimumCycleBasis {
      *
      * @return array of vertex paths
      */
-    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," + "paths_cyclophane_odd,paths_cyclophane_even")
     public int[][] paths() {
         final int[][] paths = new int[size()][0];
         int i = 0;
@@ -152,7 +144,6 @@ public final class MinimumCycleBasis {
      *
      * @return size of minimum cycle set
      */
-    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," + "size_cyclophane_odd,size_cyclophane_even")
     public int size() {
         return basis.size();
     }

@@ -24,8 +24,6 @@
 package org.openscience.cdk.graph;
 
 import com.google.common.collect.Lists;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +49,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @see <a href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia:
  *      Biconnected Component</a>
  */
-@TestClass("org.openscience.cdk.graph.RegularPathGraphTest")
 final class RegularPathGraph extends PathGraph {
 
     /** Path edges, indexed by their end points (incidence list). */
@@ -78,7 +75,6 @@ final class RegularPathGraph extends PathGraph {
      * @throws NullPointerException     the molecule graph was not provided
      */
     @SuppressWarnings("unchecked")
-    @TestMethod("nullMGraph,limitTooLow,limitTooHigh")
     RegularPathGraph(final int[][] mGraph, final int[] rank, final int limit) {
 
         checkNotNull(mGraph, "no molecule graph");
@@ -122,7 +118,6 @@ final class RegularPathGraph extends PathGraph {
 
     /** @inheritDoc */
     @Override
-    @TestMethod("k3Degree")
     public int degree(final int x) {
         return graph[x].size();
     }
@@ -166,7 +161,6 @@ final class RegularPathGraph extends PathGraph {
 
     /** @inheritDoc */
     @Override
-    @TestMethod("k3,k8,repeatRemoval")
     void remove(final int x, final List<int[]> cycles) {
 
         final List<PathEdge> edges = remove(x);

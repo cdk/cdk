@@ -29,8 +29,6 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.OWLBasedAtomTypeConfigurator;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -47,7 +45,6 @@ import org.xml.sax.XMLReader;
  * @cdk.module  core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.config.atomtypes.OWLAtomTypeReaderTest")
 public class OWLAtomTypeReader {
 
     private XMLReader           parser;
@@ -59,7 +56,6 @@ public class OWLAtomTypeReader {
      *
      * @param input The Reader to read the IAtomType's from.
      */
-    @TestMethod("testAtomTypeReader_Reader")
     public OWLAtomTypeReader(Reader input) {
         this.init();
         this.input = input;
@@ -104,7 +100,6 @@ public class OWLAtomTypeReader {
      * @param  builder The IChemObjectBuilder used to create new IAtomType's.
      * @return         a List with atom types. Is empty if some reading error occurred.
      */
-    @TestMethod("testReadAtomTypes_CDK,testReadAtomTypes_IChemObjectBuilder")
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) {
         List<IAtomType> isotopes = new ArrayList<IAtomType>();
         try {

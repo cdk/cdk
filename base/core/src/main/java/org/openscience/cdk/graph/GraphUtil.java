@@ -24,8 +24,6 @@
 package org.openscience.cdk.graph;
 
 import com.google.common.collect.Maps;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -44,7 +42,6 @@ import static java.util.Arrays.copyOf;
  * @see ShortestPaths
  * @see org.openscience.cdk.ringsearch.RingSearch
  */
-@TestClass("org.openscience.cdk.graph.GraphUtilTest")
 public class GraphUtil {
 
     private static final int DEFAULT_DEGREE = 4;
@@ -60,8 +57,6 @@ public class GraphUtil {
      * @throws IllegalArgumentException a bond was found which contained atoms
      *                                  not in the molecule
      */
-    @TestMethod("testToAdjList,testToAdjList_resize,testToAdjList_missingAtom,"
-            + "testToAdjList_Empty,testToAdjList_Null")
     public static int[][] toAdjList(IAtomContainer container) {
 
         if (container == null) throw new NullPointerException("atom container was null");
@@ -106,7 +101,6 @@ public class GraphUtil {
      * @throws IllegalArgumentException a bond was found which contained atoms
      *                                  not in the molecule
      */
-    @TestMethod("testToAdjList_withMap")
     public static int[][] toAdjList(IAtomContainer container, EdgeToBondMap bondMap) {
 
         if (container == null) throw new NullPointerException("atom container was null");
@@ -162,7 +156,6 @@ public class GraphUtil {
      * @param include the vertices of he graph to include in the subgraph
      * @return the subgraph
      */
-    @TestMethod("sequentialSubgraph,intermittentSubgraph,resizeSubgraph")
     public static int[][] subgraph(int[][] graph, int[] include) {
 
         // number of vertices in the graph and the subgraph
@@ -214,7 +207,6 @@ public class GraphUtil {
      *                                  cycle
      * @see org.openscience.cdk.ringsearch.RingSearch#isolated()
      */
-    @TestMethod("testCycle,testAcyclic,testAcyclic2")
     public static int[] cycle(int[][] graph, int[] vertices) {
 
         int n = graph.length;
@@ -254,7 +246,6 @@ public class GraphUtil {
      * @param marked marked values
      * @return first marked value, -1 if none found
      */
-    @TestMethod("firstMarked")
     static int firstMarked(int[] xs, boolean[] marked) {
         for (int x : xs)
             if (marked[x]) return x;

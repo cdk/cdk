@@ -32,8 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
@@ -45,7 +43,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.module  core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.config.IsotopesTest")
 public class Isotopes extends IsotopeFactory {
 
     private static Isotopes myself = null;
@@ -56,7 +53,6 @@ public class Isotopes extends IsotopeFactory {
      * @return the singleton
      * @throws IOException when reading of the data file did not work
      */
-    @TestMethod("testGetInstance_IChemObjectBuilder")
     public static Isotopes getInstance() throws IOException {
         if (myself == null) myself = new Isotopes();
         return myself;
@@ -93,7 +89,6 @@ public class Isotopes extends IsotopeFactory {
      *@param  symbol  An element symbol to search for
      *@return         An array of isotopes that matches the given element symbol
      */
-    @TestMethod("testGetIsotopes_String")
     @Override
     public IIsotope[] getIsotopes(String symbol) {
         if (isotopes.get(symbol) == null) return new IIsotope[0];
@@ -111,7 +106,6 @@ public class Isotopes extends IsotopeFactory {
      *
      * @return         An array of all isotopes
      */
-    @TestMethod("testGetIsotopes")
     @Override
     public IIsotope[] getIsotopes() {
         ArrayList<IIsotope> list = new ArrayList<IIsotope>();
@@ -131,7 +125,6 @@ public class Isotopes extends IsotopeFactory {
      * @param  difference mass the isotope is allowed to differ from the search mass
      * @return            An array of all isotopes
      */
-    @TestMethod("testGetIsotopes_double_double")
     @Override
     public IIsotope[] getIsotopes(double exactMass, double difference) {
         ArrayList<IIsotope> list = new ArrayList<IIsotope>();
@@ -152,7 +145,6 @@ public class Isotopes extends IsotopeFactory {
      * @param massNumber the mass number
      * @return the corresponding isotope
      */
-    @TestMethod("testGetIsotope,testGetIsotope_NonElement")
     @Override
     public IIsotope getIsotope(String symbol, int massNumber) {
         if (isotopes.get(symbol) == null) return null;
@@ -172,7 +164,6 @@ public class Isotopes extends IsotopeFactory {
      * @param tolerance allowed difference from provided exact mass
      * @return the corresponding isotope
      */
-    @TestMethod("testGetIsotopeFromExactMass,testGetIsotopeFromExactMass_NonElement")
     @Override
     public IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
         if (isotopes.get(symbol) == null) return null;
@@ -201,7 +192,6 @@ public class Isotopes extends IsotopeFactory {
      *
      * @see #getMajorIsotope(String symbol)
      */
-    @TestMethod("testGetMajorIsotope_int")
     @Override
     public IIsotope getMajorIsotope(int atomicNumber) {
         if (isotopes.get(PeriodicTable.getSymbol(atomicNumber)) == null) return null;
@@ -223,7 +213,6 @@ public class Isotopes extends IsotopeFactory {
      *@param  symbol  the symbol of the element in question
      *@return         The Major Isotope value
      */
-    @TestMethod("testGetMajorIsotope_String")
     @Override
     public IIsotope getMajorIsotope(String symbol) {
         IIsotope major = null;

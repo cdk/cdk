@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -54,7 +52,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.module     core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest")
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     public final static int                                                  REQUIRE_NOTHING            = 1;
@@ -71,12 +68,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         this.mode = mode;
     }
 
-    @TestMethod("testGetInstance_IChemObjectBuilder")
     public static CDKAtomTypeMatcher getInstance(IChemObjectBuilder builder) {
         return getInstance(builder, REQUIRE_NOTHING);
     }
 
-    @TestMethod("testGetInstance_IChemObjectBuilder_int")
     public static CDKAtomTypeMatcher getInstance(IChemObjectBuilder builder, int mode) {
         if (!factories.containsKey(mode))
             factories.put(mode, new Hashtable<IChemObjectBuilder, CDKAtomTypeMatcher>(1));
@@ -87,7 +82,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testFindMatchingAtomType_IAtomContainer")
     public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
         int typeCounter = 0;
@@ -100,7 +94,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testFindMatchingAtomType_IAtomContainer_IAtom")
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         IAtomType type = null;
         if (atom instanceof IPseudoAtom) {

@@ -23,9 +23,6 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +34,6 @@ import java.util.List;
  * @author John May
  * @cdk.module core
  */
-@TestClass("org.openscience.cdk.graph.EdgeShortCyclesTest")
 final class EdgeShortCycles {
 
     /** Shortest cycles stored as closed walks. */
@@ -89,7 +85,6 @@ final class EdgeShortCycles {
      *
      * @return the paths
      */
-    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," + "paths_cyclophane_even")
     int[][] paths() {
         int[][] paths = new int[this.paths.size()][0];
         for (int i = 0; i < this.paths.size(); i++) {
@@ -103,7 +98,6 @@ final class EdgeShortCycles {
      *
      * @return number of cycles
      */
-    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," + "size_cyclophane_even")
     int size() {
         return paths.size();
     }
