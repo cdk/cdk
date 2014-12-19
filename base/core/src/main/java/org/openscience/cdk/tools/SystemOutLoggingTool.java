@@ -23,9 +23,6 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * Implementation of the {@link ILoggingTool} interface that sends output to
  * the {@link System}.out channel.
@@ -33,7 +30,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.SystemOutLoggingToolTest")
 public class SystemOutLoggingTool implements ILoggingTool {
 
     /** Boolean which is true when debug messages are send to System.out. */
@@ -54,7 +50,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
      *
      * @param classInst Class from which the log messages originate
      */
-    @TestMethod("testLoggingTool_Class")
     public SystemOutLoggingTool(Class<?> classInst) {
         this.classname = classInst.getName();
         doDebug = false;
@@ -65,7 +60,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testDumpSystemProperties")
     @Override
     public void dumpSystemProperties() {
         debug("os.name        : " + System.getProperty("os.name"));
@@ -76,21 +70,18 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testSetStackLength_int")
     @Override
     public void setStackLength(int length) {
         this.stackLength = length;
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testDumpClasspath")
     @Override
     public void dumpClasspath() {
         debug("java.class.path: " + System.getProperty("java.class.path"));
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testDebug_Object")
     @Override
     public void debug(Object object) {
         if (doDebug) {
@@ -107,7 +98,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testDebug_Object_Object")
     @Override
     public void debug(Object object, Object... objects) {
         if (doDebug) {
@@ -159,7 +149,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testError_Object")
     @Override
     public void error(Object object) {
         if (doDebug) {
@@ -168,7 +157,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testError_Object_int")
     @Override
     public void error(Object object, Object... objects) {
         if (doDebug) {
@@ -186,7 +174,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testFatal_Object")
     @Override
     public void fatal(Object object) {
         if (doDebug) {
@@ -195,7 +182,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testInfo_Object")
     @Override
     public void info(Object object) {
         if (doDebug) {
@@ -204,7 +190,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testInfo_Object_int")
     @Override
     public void info(Object object, Object... objects) {
         if (doDebug) {
@@ -222,7 +207,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testWarn_Object")
     @Override
     public void warn(Object object) {
         if (doDebug) {
@@ -235,7 +219,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testWarn_Object_int")
     @Override
     public void warn(Object object, Object... objects) {
         if (doDebug) {
@@ -249,7 +232,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testIsDebugEnabled")
     @Override
     public boolean isDebugEnabled() {
         return doDebug;
@@ -269,7 +251,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
      * @param sourceClass Class for which logging messages are recorded.
      * @return            A {@link SystemOutLoggingTool}.
      */
-    @TestMethod("testCreate")
     public static ILoggingTool create(Class<?> sourceClass) {
         return new SystemOutLoggingTool(sourceClass);
     }
@@ -277,7 +258,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /**
      * Protected method which must not be used, except for testing purposes.
      */
-    @TestMethod("testIsDebugEnabled")
     protected void setDebugEnabled(boolean enabled) {
         doDebug = enabled;
     }

@@ -24,8 +24,6 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 
 import org.apache.log4j.Logger;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Useful for logging messages. Often used as a class static variable instantiated like:
@@ -85,7 +83,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module log4j
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.LoggingToolTest")
 public class LoggingTool implements ILoggingTool {
 
     private boolean             doDebug              = false;
@@ -104,7 +101,6 @@ public class LoggingTool implements ILoggingTool {
      * Constructs a LoggingTool which produces log lines without any special
      * indication which class the message originates from.
      */
-    @TestMethod("testLoggingTool")
     public LoggingTool() {
         this(LoggingTool.class);
     }
@@ -115,7 +111,6 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param object Object from which the log messages originate
      */
-    @TestMethod("testLoggingTool_Object")
     public LoggingTool(Object object) {
         this(object.getClass());
     }
@@ -126,7 +121,6 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param classInst Class from which the log messages originate
      */
-    @TestMethod("testLoggingTool_Class")
     public LoggingTool(Class<?> classInst) {
         LoggingTool.logger = this;
         stackLength = DEFAULT_STACK_LENGTH;
@@ -173,7 +167,6 @@ public class LoggingTool implements ILoggingTool {
      * Normally this should be done by the application that uses the CDK library,
      * but is available for convenience.
      */
-    @TestMethod("testConfigureLog4j")
     public static void configureLog4j() {
         LoggingTool localLogger = new LoggingTool(LoggingTool.class);
         try { // NOPMD
@@ -193,7 +186,6 @@ public class LoggingTool implements ILoggingTool {
      * version. More specifically: os.name, os.version, os.arch, java.version
      * and java.vendor.
      */
-    @TestMethod("testDumpSystemProperties")
     @Override
     public void dumpSystemProperties() {
         debug("os.name        : " + System.getProperty("os.name"));
@@ -212,7 +204,6 @@ public class LoggingTool implements ILoggingTool {
      *
      * @see #DEFAULT_STACK_LENGTH
      */
-    @TestMethod("testSetStackLength_int")
     @Override
     public void setStackLength(int length) {
         this.stackLength = length;
@@ -221,7 +212,6 @@ public class LoggingTool implements ILoggingTool {
     /**
      * Outputs the system property for java.class.path.
      */
-    @TestMethod("testDumpClasspath")
     @Override
     public void dumpClasspath() {
         debug("java.class.path: " + System.getProperty("java.class.path"));
@@ -234,7 +224,6 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
-    @TestMethod("testDebug_Object")
     @Override
     public void debug(Object object) {
         if (doDebug) {
@@ -261,7 +250,6 @@ public class LoggingTool implements ILoggingTool {
      * @param object  Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
      */
-    @TestMethod("testDebug_Object_int")
     @Override
     public void debug(Object object, Object... objects) {
         if (doDebug) {
@@ -316,7 +304,6 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
-    @TestMethod("testError_Object")
     @Override
     public void error(Object object) {
         if (doDebug) {
@@ -331,7 +318,6 @@ public class LoggingTool implements ILoggingTool {
      * @param object Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
      */
-    @TestMethod("testError_Object_int")
     @Override
     public void error(Object object, Object... objects) {
         if (doDebug) {
@@ -357,7 +343,6 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
-    @TestMethod("testFatal_Object")
     @Override
     public void fatal(Object object) {
         if (doDebug) {
@@ -374,7 +359,6 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
-    @TestMethod("testInfo_Object")
     @Override
     public void info(Object object) {
         if (doDebug) {
@@ -389,7 +373,6 @@ public class LoggingTool implements ILoggingTool {
      * @param object Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
      */
-    @TestMethod("testInfo_Object_int")
     @Override
     public void info(Object object, Object... objects) {
         if (doDebug) {
@@ -415,7 +398,6 @@ public class LoggingTool implements ILoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
-    @TestMethod("testWarn_Object")
     @Override
     public void warn(Object object) {
         if (doDebug) {
@@ -438,7 +420,6 @@ public class LoggingTool implements ILoggingTool {
      * @param object Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
      */
-    @TestMethod("testWarn_Object_int")
     @Override
     public void warn(Object object, Object... objects) {
         if (doDebug) {
@@ -463,7 +444,6 @@ public class LoggingTool implements ILoggingTool {
      *
      * @return true, if debug is enabled
      */
-    @TestMethod("testIsDebugEnabled")
     @Override
     public boolean isDebugEnabled() {
         return doDebug;
@@ -483,7 +463,6 @@ public class LoggingTool implements ILoggingTool {
      * @param sourceClass Class for which logging messages are recorded.
      * @return            A {@link LoggingTool}.
      */
-    @TestMethod("testCreate")
     public static ILoggingTool create(Class<?> sourceClass) {
         return new LoggingTool(sourceClass);
     }
