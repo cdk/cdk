@@ -23,9 +23,6 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
@@ -231,7 +228,6 @@ import java.util.TreeSet;
  * @see RelevantCycles
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.graph.TripletShortCyclesTest")
 public final class TripletShortCycles {
 
     /** Adjacency list representation of the graph. */
@@ -280,7 +276,6 @@ public final class TripletShortCycles {
      *
      * @return paths of the basis
      */
-    @TestMethod("empty,unmodifiable,naphthalenePaths,anthracenePaths," + "norbornanePaths")
     public int[][] paths() {
         int i = 0;
         int[][] paths = new int[size()][];
@@ -296,7 +291,6 @@ public final class TripletShortCycles {
      *
      * @return number of cycles in the basis
      */
-    @TestMethod("naphthaleneSize,anthraceneSize,norbornaneSize")
     public int size() {
         return basis.size();
     }
@@ -435,7 +429,6 @@ public final class TripletShortCycles {
      * @param p path forming a simple cycle
      * @return path of lowest rank
      */
-    @TestMethod("lexicographic")
     static int[] lexicographic(final int[] p) {
 
         // find min value (new start vertex)

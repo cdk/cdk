@@ -28,8 +28,6 @@ import nu.xom.Attribute;
 import nu.xom.Element;
 
 import org.openscience.cdk.interfaces.IPDBAtom;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.xmlcml.cml.element.CMLScalar;
 
 import org.openscience.cdk.exception.CDKException;
@@ -48,10 +46,8 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.set       libio-cml-customizers
  * @cdk.require   java1.5+
  */
-@TestClass("org.openscience.cdk.io.cml.PDBAtomCustomizerTest")
 public class PDBAtomCustomizer implements ICMLCustomizer {
 
-    @TestMethod("testPDBAtomCustomization")
     @Override
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
         if (!(nodeToAdd instanceof Element)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");

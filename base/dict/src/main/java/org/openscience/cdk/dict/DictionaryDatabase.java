@@ -29,8 +29,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -44,7 +42,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    dictionary
  * @cdk.module     dict
  */
-@TestClass("org.openscience.cdk.dict.DictDBTest")
 public class DictionaryDatabase {
 
     public final static String      DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
@@ -58,7 +55,6 @@ public class DictionaryDatabase {
 
     private Map<String, Dictionary> dictionaries;
 
-    @TestMethod("testDictionaryDatabase")
     public DictionaryDatabase() {
         // read dictionaries distributed with CDK
         dictionaries = new Hashtable<String, Dictionary>();
@@ -125,12 +121,10 @@ public class DictionaryDatabase {
      * Returns a String[] with the names of the known dictionaries.
      * @return The names of the dictionaries
      */
-    @TestMethod("testGetDictionaryNames")
     public String[] getDictionaryNames() {
         return dictionaryNames;
     }
 
-    @TestMethod("testOWLDictionary")
     public Dictionary getDictionary(String dictionaryName) {
         return dictionaries.get(dictionaryName);
     }
@@ -165,7 +159,6 @@ public class DictionaryDatabase {
     /**
      * Returns true if the database contains the dictionary.
      */
-    @TestMethod("testHasDictionary")
     public boolean hasDictionary(String name) {
         return dictionaries.containsKey(name.toLowerCase());
     }
@@ -173,7 +166,6 @@ public class DictionaryDatabase {
     /**
      * Returns true if the database contains the dictionary.
      */
-    @TestMethod("testListDictionaries")
     public Iterator<String> listDictionaries() {
         return dictionaries.keySet().iterator();
     }

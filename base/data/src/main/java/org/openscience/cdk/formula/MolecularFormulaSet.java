@@ -23,8 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -39,7 +37,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword molecular formula
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.formula.MolecularFormulaSetTest")
 public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecularFormulaSet, Cloneable {
 
     /**
@@ -82,7 +79,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      *
      * @param  formulaSet  The MolecularFormulaSet
      */
-    @TestMethod("testAdd_IMolecularFormulaSet")
     @Override
     public void add(IMolecularFormulaSet formulaSet) {
         for (IMolecularFormula mf : formulaSet.molecularFormulas()) {
@@ -98,7 +94,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      *
      * @param  formula  The molecularFormula to be added to this chemObject
      */
-    @TestMethod("testAdd_IMolecularFormula")
     @Override
     public void addMolecularFormula(IMolecularFormula formula) {
         components.add(formula);
@@ -110,7 +105,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      *
      * @return    An Iterable with the IMolecularFormula in this MolecularFormulaSet
      */
-    @TestMethod("testMolecularFormulas")
     @Override
     public Iterable<IMolecularFormula> molecularFormulas() {
         return components;
@@ -122,7 +116,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      *
      * @return    An Iterator with the IMolecularFormula in this MolecularFormulaSet
      */
-    @TestMethod("testIterator")
     @Override
     public Iterator<IMolecularFormula> iterator() {
         return components.iterator();
@@ -133,7 +126,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      *
      * @return     The number of MolecularFormulas in this MolecularFormulaSet
      */
-    @TestMethod("testSize")
     @Override
     public int size() {
         return components.size();
@@ -145,7 +137,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      * @param  formula  The IMolecularFormula this MolecularFormulaSet is searched for
      * @return          True, if the MolecularFormulaSet contains the given IMolecularFormula object
      */
-    @TestMethod("testContains_IMolecularFormula")
     @Override
     public boolean contains(IMolecularFormula formula) {
         return components.contains(formula);
@@ -159,7 +150,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      * @param  position The position of the IMolecularFormula to be returned.
      * @return          The IMolecularFormula at position <code>number</code> .
      */
-    @TestMethod("testGetMolecularFormula_int")
     @Override
     public IMolecularFormula getMolecularFormula(int position) {
         return components.get(position);
@@ -168,7 +158,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     /**
      * Removes all IMolecularFormula from this chemObject.
      */
-    @TestMethod("testRemoveAllMolecularFormulas")
     @Override
     public void removeAllMolecularFormulas() {
         components.clear();
@@ -179,7 +168,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      *
      * @param  formula  The IMolecularFormula to be removed from this chemObject
      */
-    @TestMethod("testRemoveMolecularFormula_IMolecularFormula")
     @Override
     public void removeMolecularFormula(IMolecularFormula formula) {
         components.remove(formula);
@@ -190,7 +178,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      *
      * @param  position  The position of the MolecularFormula to be removed from this chemObject
      */
-    @TestMethod("testRemoveMolecularFormula_int")
     @Override
     public void removeMolecularFormula(int position) {
         components.remove(position);
@@ -201,7 +188,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      *
      * @return    The cloned object
      */
-    @TestMethod("testClone")
     @Override
     public Object clone() throws CloneNotSupportedException {
 

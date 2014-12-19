@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -41,7 +39,6 @@ import java.util.Map;
  *
  * @see org.openscience.cdk.interfaces.ITetrahedralChirality
  */
-@TestClass("org.openscience.cdk.stereo.TetrahedralChiralityTest")
 public class TetrahedralChirality implements ITetrahedralChirality {
 
     private IAtom              chiralAtom;
@@ -56,7 +53,6 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      * @param ligandAtoms The ligand atoms around the chiral atom.
      * @param chirality   The {@link Stereo} chirality.
      */
-    @TestMethod("testTetrahedralChirality_IAtom_arrayIAtom_ITetrahedralChirality_Stereo")
     public TetrahedralChirality(IAtom chiralAtom, IAtom[] ligandAtoms, Stereo chirality) {
         this.chiralAtom = chiralAtom;
         this.ligandAtoms = ligandAtoms;
@@ -68,7 +64,6 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      *
      * @return an array of four {@link IAtom}s.
      */
-    @TestMethod("testGetLigands")
     @Override
     public IAtom[] getLigands() {
         IAtom[] arrayCopy = new IAtom[4];
@@ -81,7 +76,6 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      *
      * @return the chiral {@link IAtom}.
      */
-    @TestMethod("testGetChiralAtom")
     @Override
     public IAtom getChiralAtom() {
         return chiralAtom;
@@ -92,7 +86,6 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      *
      * @return the {@link Stereo} for this stereo element.
      */
-    @TestMethod("testGetStereo")
     @Override
     public Stereo getStereo() {
         return stereo;
@@ -104,13 +97,11 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      * @param builder the new {@link IChemObjectBuilder} to be returned
      * @see #getBuilder()
      */
-    @TestMethod("testBuilder")
     public void setBuilder(IChemObjectBuilder builder) {
         this.builder = builder;
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testBuilder")
     @Override
     public IChemObjectBuilder getBuilder() {
         return builder;
@@ -119,7 +110,6 @@ public class TetrahedralChirality implements ITetrahedralChirality {
     /**
      * @inheritDoc
      */
-    @TestMethod("contains")
     @Override
     public boolean contains(IAtom atom) {
         if (chiralAtom.equals(atom)) return true;
@@ -131,7 +121,6 @@ public class TetrahedralChirality implements ITetrahedralChirality {
     /**
      * @inheritDoc
      */
-    @TestMethod("testMap_Map_Map,testMap_Null_Map,testMap_Map_Map_NullElement,testMap_Map_Map_EmptyMapping")
     @Override
     public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
 
@@ -156,7 +145,6 @@ public class TetrahedralChirality implements ITetrahedralChirality {
      *
      * @return the String representation
      */
-    @TestMethod("testToString")
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.charges.Electronegativity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
@@ -58,7 +57,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @deprecated Results depend on the order of atoms in bonds, resolving this would require 
  *             retraining the models which are not available. 
  */
-@TestClass("org.openscience.cdk.test.tools.IonizationPotentialTest")
 @Deprecated
 public class IonizationPotentialTool {
 

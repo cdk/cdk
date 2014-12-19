@@ -34,8 +34,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
@@ -60,7 +58,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module tautomer
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tautomers.InChITautomerGeneratorTest")
 public class InChITautomerGenerator {
 
     private final static ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(InChITautomerGenerator.class);
@@ -72,7 +69,6 @@ public class InChITautomerGenerator {
      * @throws CDKException
      * @throws CloneNotSupportedException
      */
-    @TestMethod("test_withJniInchi,testAdenine")
     public List<IAtomContainer> getTautomers(IAtomContainer molecule) throws CDKException, CloneNotSupportedException {
 
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(molecule);
@@ -92,7 +88,6 @@ public class InChITautomerGenerator {
      * @throws CDKException
      * @throws CloneNotSupportedException
      */
-    @TestMethod("test1,test2,test3")
     public List<IAtomContainer> getTautomers(IAtomContainer inputMolecule, String inchi) throws CDKException,
             CloneNotSupportedException {
 
