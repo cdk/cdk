@@ -103,6 +103,12 @@ public class NumericalSurface {
      */
     public void calculateSurface() {
 
+        // invariants
+        for (IAtom atom : atoms) {
+            if (atom.getPoint3d() == null)
+                throw new IllegalArgumentException("One or more atoms had no 3D coordinate set");
+        }                
+        
         // get r_f and geometric center
         Point3d cp = new Point3d(0, 0, 0);
         double maxRadius = 0;
