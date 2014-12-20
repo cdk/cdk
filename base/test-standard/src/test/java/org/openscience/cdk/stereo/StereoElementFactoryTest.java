@@ -708,6 +708,141 @@ public class StereoElementFactoryTest {
         assertThat(elements.size(), is(0));
     }
 
+    /**
+     * glyceraldehyde
+     * @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
+     */
+    @Test public void onlyInterpretFischerProjectionsWhenAsked() throws Exception {
+        IAtomContainer m = new AtomContainer(8, 7, 0, 0);
+        m.addAtom(atom("C", 0, 0.80d, 1.24d));
+        m.addAtom(atom("C", 0, 0.80d, 0.42d));
+        m.addAtom(atom("O", 1, 0.09d, 1.66d));
+        m.addAtom(atom("O", 0, 1.52d, 1.66d));
+        m.addAtom(atom("O", 1, 1.63d, 0.42d));
+        m.addAtom(atom("C", 2, 0.80d, -0.41d));
+        m.addAtom(atom("H", 0, -0.02d, 0.42d));
+        m.addAtom(atom("O", 1, 1.52d, -0.82d));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(0, 2, IBond.Order.SINGLE);
+        m.addBond(0, 3, IBond.Order.DOUBLE, IBond.Stereo.E_Z_BY_COORDINATES);
+        m.addBond(1, 4, IBond.Order.SINGLE);
+        m.addBond(1, 5, IBond.Order.SINGLE);
+        m.addBond(1, 6, IBond.Order.SINGLE);
+        m.addBond(5, 7, IBond.Order.SINGLE);
+
+        assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                       .createAll()
+                                       .isEmpty());
+        assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                       .interpretProjections(Projection.Haworth)
+                                       .createAll()
+                                       .isEmpty());
+        assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                       .interpretProjections(Projection.Chair)
+                                       .createAll()
+                                       .isEmpty());
+        assertFalse(StereoElementFactory.using2DCoordinates(m)
+                                        .interpretProjections(Projection.Fischer)
+                                        .createAll()
+                                        .isEmpty());
+    }
+
+    /**
+     * beta-D-glucose
+     * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
+     */
+    @Test public void onlyInterpretHaworthProjectionsWhenAsked() throws Exception {
+        IAtomContainer m = new AtomContainer(12, 12, 0, 0);
+        m.addAtom(atom("C", 1, 4.16d, 1.66d));
+        m.addAtom(atom("C", 1, 3.75d, 0.94d));
+        m.addAtom(atom("C", 1, 4.16d, 0.23d));
+        m.addAtom(atom("C", 1, 5.05d, 0.23d));
+        m.addAtom(atom("C", 1, 5.46d, 0.94d));
+        m.addAtom(atom("O", 0, 5.05d, 1.66d));
+        m.addAtom(atom("O", 1, 5.46d, 1.77d));
+        m.addAtom(atom("C", 2, 4.16d, 2.48d));
+        m.addAtom(atom("O", 1, 3.45d, 2.89d));
+        m.addAtom(atom("O", 1, 3.75d, 0.12d));
+        m.addAtom(atom("O", 1, 4.16d, 1.05d));
+        m.addAtom(atom("O", 1, 5.05d, -0.60d));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.SINGLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(0, 5, IBond.Order.SINGLE);
+        m.addBond(4, 6, IBond.Order.SINGLE);
+        m.addBond(0, 7, IBond.Order.SINGLE);
+        m.addBond(7, 8, IBond.Order.SINGLE);
+        m.addBond(1, 9, IBond.Order.SINGLE);
+        m.addBond(2, 10, IBond.Order.SINGLE);
+        m.addBond(3, 11, IBond.Order.SINGLE);
+
+        assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                       .createAll()
+                                       .isEmpty());
+        assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                       .interpretProjections(Projection.Fischer)
+                                       .createAll()
+                                       .isEmpty());
+        assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                       .interpretProjections(Projection.Chair)
+                                       .createAll()
+                                       .isEmpty());
+        assertFalse(StereoElementFactory.using2DCoordinates(m)
+                                        .interpretProjections(Projection.Haworth)
+                                        .createAll()
+                                        .isEmpty());
+    }
+    
+    /**
+     * beta-D-glucose
+     * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
+     */
+    @Test public void onlyInterpretChairProjectionsWhenAsked() throws Exception {
+        IAtomContainer m = new AtomContainer(12, 12, 0, 0);
+        m.addAtom(atom("C", 1, -0.77d, 10.34d));
+        m.addAtom(atom("C", 1, 0.03d, 10.13d));
+        m.addAtom(atom("O", 0, 0.83d, 10.34d));
+        m.addAtom(atom("C", 1, 1.24d, 9.63d));
+        m.addAtom(atom("C", 1, 0.44d, 9.84d));
+        m.addAtom(atom("C", 1, -0.35d, 9.63d));
+        m.addAtom(atom("O", 1, 0.86d, 9.13d));
+        m.addAtom(atom("O", 1, 2.04d, 9.84d));
+        m.addAtom(atom("C", 2, -0.68d, 10.54d));
+        m.addAtom(atom("O", 1, -0.68d, 11.37d));
+        m.addAtom(atom("O", 1, -1.48d, 9.93d));
+        m.addAtom(atom("O", 1, -1.15d, 9.84d));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.SINGLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(5, 0, IBond.Order.SINGLE);
+        m.addBond(4, 6, IBond.Order.SINGLE);
+        m.addBond(3, 7, IBond.Order.SINGLE);
+        m.addBond(1, 8, IBond.Order.SINGLE);
+        m.addBond(8, 9, IBond.Order.SINGLE);
+        m.addBond(0, 10, IBond.Order.SINGLE);
+        m.addBond(5, 11, IBond.Order.SINGLE);
+
+        assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                       .createAll()
+                                       .isEmpty());
+        assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                       .interpretProjections(Projection.Fischer)
+                                       .createAll()
+                                       .isEmpty());
+        assertTrue(StereoElementFactory.using2DCoordinates(m)
+                                       .interpretProjections(Projection.Haworth)
+                                       .createAll()
+                                       .isEmpty());
+        assertFalse(StereoElementFactory.using2DCoordinates(m)
+                                        .interpretProjections(Projection.Chair)
+                                        .createAll()
+                                        .isEmpty());
+    }
+
     static IAtom atom(String symbol, int h, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(h);

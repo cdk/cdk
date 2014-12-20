@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.stereo;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,7 +37,10 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN;
@@ -57,7 +61,8 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  *
  * <blockquote><pre>
  * IAtomContainer       container = ...;
- * StereoElementFactory stereo    = StereoElementFactory.using2DCoordinates();
+ * StereoElementFactory stereo    = StereoElementFactory.using2DCoordinates()
+ *                                                      .interpretProjections(Project.Haworth);
  *
  * // set the elements replacing any existing elements (recommended)
  * container.setStereoElements(stereo.createAll());
@@ -80,10 +85,13 @@ public abstract class StereoElementFactory {
     protected final IAtomContainer container;
 
     /** Adjacency list graph representation. */
-    protected final int[][]        graph;
+    protected final int[][] graph;
 
     /** A bond map for fast access to bond labels between two atom indices. */
-    protected final EdgeToBondMap  bondMap;
+    protected final EdgeToBondMap bondMap;
+
+    
+    protected final Set<Projection> projections = EnumSet.noneOf(Projection.class);
 
     /**
      * Internal constructor.
@@ -110,6 +118,13 @@ public abstract class StereoElementFactory {
 
         Stereocenters centers = new Stereocenters(container, graph, bondMap);
         List<IStereoElement> elements = new ArrayList<IStereoElement>();
+
+        // projection recognition (note no action in constructors)
+        FischerRecognition fischerRecon = new FischerRecognition(container, graph, bondMap, centers);
+        CyclicCarbohydrateRecognition cycleRecon = new CyclicCarbohydrateRecognition(container, graph, bondMap, centers);
+
+        elements.addAll(fischerRecon.recognise(projections));
+        elements.addAll(cycleRecon.recognise(projections));
 
         for (int v = 0; v < graph.length; v++) {
             switch (centers.elementType(v)) {
@@ -263,6 +278,26 @@ public abstract class StereoElementFactory {
      * @return a new stereo element
      */
     abstract ExtendedTetrahedral createExtendedTetrahedral(int v, Stereocenters stereocenters);
+
+    /**
+     * Indicate that stereochemistry drawn as a certain projection should be
+     * interpreted. 
+     *
+     * <pre>{@code
+     * StereoElementFactory factory = 
+     *   StereoElementFactory.using2DCoordinates(container)
+     *                       .interpretProjections(Projection.Fischer, Projection.Haworth);
+     * }</pre>
+     * 
+     * @param projections types of projection
+     * @return self
+     * @see org.openscience.cdk.stereo.Projection
+     */
+    @TestMethod("onlyInterpretHaworthProjectionsWhenAsked")
+    public StereoElementFactory interpretProjections(Projection ... projections) {
+        Collections.addAll(this.projections, projections);
+        return this;
+    }
 
     /**
      * Create a stereo element factory for creating stereo elements using 2D

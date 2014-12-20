@@ -17,6 +17,16 @@
     </bibtex:article>
   </bibtex:entry>
   
+  <bibtex:entry id="batchelor13">
+    <bibtex:inproceedings>
+      <bibtex:author>Colin Batchelor and Ken Karapetyan and Valery Tkachenko and Anthony Williams</bibtex:author>
+      <bibtex:title>Validation and standardization of molecular structures in general and sugars in particular: a case study</bibtex:title>
+      <bibtex:year>2013</bibtex:year>
+      <bibtex:booktitle>6th Joint Sheffield Conference on Chemoinformatics</bibtex:booktitle>
+      <bibtex:url>http://www.slideshare.net/RSC-Chemistry/20130724-cisrg-sugarsbatchelor</bibtex:url>
+    </bibtex:inproceedings>
+  </bibtex:entry>
+  
   <bibtex:entry id="BER2001">
     <bibtex:misc>
       <bibtex:author>Bernstein, H.J.</bibtex:author>
