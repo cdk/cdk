@@ -62,7 +62,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * <blockquote><pre>
  * IAtomContainer       container = ...;
  * StereoElementFactory stereo    = StereoElementFactory.using2DCoordinates()
- *                                                      .interpretProjections(Project.Haworth);
+ *                                                      .interpretProjections(Projection.Haworth);
  *
  * // set the elements replacing any existing elements (recommended)
  * container.setStereoElements(stereo.createAll());
