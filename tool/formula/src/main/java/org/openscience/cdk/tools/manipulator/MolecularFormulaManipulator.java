@@ -706,7 +706,7 @@ public class MolecularFormulaManipulator {
             throw new RuntimeException("Could not instantiate the IsotopeFactory.");
         }
         for (IIsotope isotope : formula.isotopes()) {
-            IElement isotopesElement = isotope.getBuilder().newInstance(IElement.class, isotope);
+            IElement isotopesElement = formula.getBuilder().newInstance(IElement.class, isotope);
             mass += factory.getNaturalMass(isotopesElement) * formula.getIsotopeCount(isotope);
         }
         return mass;
