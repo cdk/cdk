@@ -36,6 +36,18 @@
         </license>
     </licenses>
 
+    <scm>
+        <url>https://github.com/cdk/cdk</url>
+        <connection>scm:git:git://github.com/cdk/cdk.git</connection>
+        <developerConnection>scm:git:git@github.com:cdk/cdk.git
+        </developerConnection>
+    </scm>
+
+    <issueManagement>
+        <url>http://sourceforge.net/p/cdk/bugs/</url>
+        <system>SourceForge Tracker</system>
+    </issueManagement>
+
     <!-- define the cdk.repo.url and cdk.repo.snapshots.url properties in 
          ~/.m2/settings.xml -->
     <distributionManagement>
@@ -529,7 +541,8 @@
                             <tagletClass>net.sf.cdk.tools.doclets.CDKThreadSafeTaglet</tagletClass>
                         </taglet>
                         <taglet>
-                            <tagletClass>net.sf.cdk.tools.doclets.CDKThreadNonSafeTaglet</tagletClass>
+                            <tagletClass>net.sf.cdk.tools.doclets.CDKThreadNonSafeTaglet
+                            </tagletClass>
                         </taglet>
                     </taglets>
                     <tagletArtifact>
@@ -569,7 +582,7 @@
                         <version>1.0.2.3</version>
                     </dependency>
                 </dependencies>
-            </plugin>          
+            </plugin>
             <plugin>
                 <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
                 <artifactId>maven-java-formatter-plugin</artifactId>
@@ -586,7 +599,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            
+
         </plugins>
         <pluginManagement>
             <plugins>
@@ -686,10 +699,10 @@
     </profiles>
 
     <dependencies>
-    	<dependency>
-    		<groupId>junit</groupId>
-    		<artifactId>junit</artifactId>
-    		<scope>test</scope>
-    	</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
