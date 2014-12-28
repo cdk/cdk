@@ -44,12 +44,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>2.1.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.xml-cml</groupId>
             <artifactId>cmlxom</artifactId>
             <version>3.1</version>
