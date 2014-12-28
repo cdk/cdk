@@ -89,6 +89,7 @@
         </developer>
         <developer>
             <name>John May</name>
+            <email>https://github.com/johnmay</email>
             <url>http://www.github.com/johnmay/</url>
             <organization>EMBL-EBI</organization>
             <organizationUrl>http://ebi.ac.uk</organizationUrl>
