@@ -15,14 +15,12 @@
     <name>cdk-builder3d</name>
     <dependencies>
         <dependency>
-            <groupId>Jama</groupId>
-            <artifactId>Jama</artifactId>
-            <version>1.0.2</version>
+            <groupId>gov.nist.math</groupId>
+            <artifactId>jama</artifactId>
         </dependency>
         <dependency>
             <groupId>java3d</groupId>
             <artifactId>vecmath</artifactId>
-            <version>1.5.2</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>

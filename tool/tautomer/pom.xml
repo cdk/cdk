@@ -27,13 +27,11 @@
         <dependency>
             <groupId>java3d</groupId>
             <artifactId>vecmath</artifactId>
-            <version>1.5.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.jni-inchi</groupId>
             <artifactId>jni-inchi</artifactId>
-            <version>0.7</version>
             <scope>test</scope>
         </dependency>
         <dependency>
