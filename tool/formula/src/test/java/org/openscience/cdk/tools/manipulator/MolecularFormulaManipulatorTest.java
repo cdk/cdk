@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.IsCloseTo.closeTo;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -32,13 +35,12 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Isotope;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -47,9 +49,6 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.number.IsCloseTo.closeTo;
 
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
@@ -1214,7 +1213,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(MolecularFormulaManipulator.getTotalMassNumber(formula),
                    closeTo(15.0, 0.01));
     } 
-    
+
     @Test public void noNullPointerExceptionForMajorMassOfRGroups() throws Exception {
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(new Isotope("C"));
@@ -1222,5 +1221,13 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(new Isotope("R"));
         assertThat(MolecularFormulaManipulator.getMajorIsotopeMass(formula),
                    closeTo(15.0234, 0.01));
+    }
+
+    @Test public void noNullPointerForStaticIsotopes() throws Exception {
+        Isotopes is = Isotopes.getInstance();
+        IIsotope carbon = is.getMajorIsotope("C");
+        MolecularFormula mf = new MolecularFormula();
+        mf.addIsotope(carbon, 10);
+        MolecularFormulaManipulator.getNaturalExactMass(mf);
     }
 }
