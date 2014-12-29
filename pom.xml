@@ -7,9 +7,9 @@
     <groupId>org.openscience.cdk</groupId>
     <artifactId>cdk</artifactId>
     <name>cdk</name>
+    <description>Modular library for Cheminformatics</description>
     <version>1.5.10-SNAPSHOT</version>
     <packaging>pom</packaging>
-
     <url>http://sourceforge.net/projects/cdk/</url>
 
     <modules>
