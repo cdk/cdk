@@ -51,16 +51,14 @@
     <!-- define the cdk.repo.url and cdk.repo.snapshots.url properties in 
          ~/.m2/settings.xml -->
     <distributionManagement>
-        <repository>
-            <id>cdk-repo</id>
-            <name>CDK Repository</name>
-            <url>${cdk.repo.url}</url>
-        </repository>
         <snapshotRepository>
-            <id>cdk-repo-snapshots</id>
-            <name>CDK Snapshot Repository</name>
-            <url>${cdk.repo.snapshots.url}</url>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
         <!-- site is staged and then copied to a sub-folder of gh-pages, no
              url is provided but the field is needed to stage the site. -->
         <site>
@@ -89,10 +87,8 @@
         </developer>
         <developer>
             <name>John May</name>
-            <email>https://github.com/johnmay</email>
+            <email>john@nextmovesoftware.com</email>
             <url>http://www.github.com/johnmay/</url>
-            <organization>EMBL-EBI</organization>
-            <organizationUrl>http://ebi.ac.uk</organizationUrl>
             <timezone>GMT</timezone>
         </developer>
     </developers>
@@ -693,6 +689,64 @@
                             </excludes>
                             <groups>org.openscience.cdk.SlowTest</groups>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>ossrh</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.3</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
