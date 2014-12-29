@@ -1418,4 +1418,16 @@ Method </bibtex:title>
         </bibtex:article>
     </bibtex:entry>
     
+    <bibtex:entry id="Pluskal2012">
+        <bibtex:article>
+            <bibtex:title>Highly accurate chemical formula prediction tool utilizing high-resolution mass spectra, MS/MS fragmentation, heuristic rules, and isotope pattern matching</bibtex:title>
+            <bibtex:author>Pluskal, Tomas and Uehara, Taisuke and Yanagida, Mitsuhiro</bibtex:author>
+            <bibtex:year>2012</bibtex:year>
+            <bibtex:journal>Analytical Chemistry</bibtex:journal>
+            <bibtex:volume>84</bibtex:volume>
+            <bibtex:number>10</bibtex:number>
+            <bibtex:pages>4396-4403</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
+    
 </bibtex:file>
