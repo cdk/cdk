@@ -29,6 +29,7 @@ import org.openscience.cdk.formula.IsotopePatternManipulatorTest;
 import org.openscience.cdk.formula.IsotopePatternSimilarityTest;
 import org.openscience.cdk.formula.IsotopePatternTest;
 import org.openscience.cdk.formula.MassToFormulaToolTest;
+import org.openscience.cdk.formula.MolecularFormulaGeneratorTest;
 import org.openscience.cdk.formula.MolecularFormulaRangeTest;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulatorTest;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulatorTest;
@@ -41,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulatorTes
 @RunWith(value = Suite.class)
 @SuiteClasses(value = {FormulaCoverageTest.class, IsotopeContainerTest.class, IsotopePatternGeneratorTest.class,
         IsotopePatternManipulatorTest.class, IsotopePatternSimilarityTest.class, IsotopePatternTest.class,
-        MassToFormulaToolTest.class, MolecularFormulaManipulatorTest.class, MolecularFormulaRangeManipulatorTest.class,
-        MolecularFormulaRangeTest.class, MolecularFormulaRangeManipulatorTest.class})
+        MassToFormulaToolTest.class, MolecularFormulaGeneratorTest.class, MolecularFormulaManipulatorTest.class, 
+        MolecularFormulaRangeManipulatorTest.class, MolecularFormulaRangeTest.class})
 public class MformulaTests {
 }
