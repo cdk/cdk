@@ -342,32 +342,6 @@
         </contributor>
     </contributors>
 
-    <repositories>
-        <repository>
-            <id>ebi-repo</id>
-            <name>EBI Maven Repository</name>
-            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>ebi-repo-3rd</id>
-            <name>EBI Maven Snapshots Repository</name>
-            <url>http://www.ebi.ac.uk/~maven/m2repo</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <pluginRepositories>
         <pluginRepository>
             <id>ebi-repo</id>
@@ -392,12 +366,12 @@
             <dependency>
                 <groupId>uk.ac.ebi.beam</groupId>
                 <artifactId>beam-core</artifactId>
-                <version>0.7</version>
+                <version>0.8</version>
             </dependency>
             <dependency>
                 <groupId>uk.ac.ebi.beam</groupId>
                 <artifactId>beam-func</artifactId>
-                <version>0.7</version>
+                <version>0.8</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
