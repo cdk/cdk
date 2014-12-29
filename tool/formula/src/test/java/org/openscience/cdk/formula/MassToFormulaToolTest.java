@@ -45,6 +45,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *
  * @cdk.module test-formula
  */
+@Deprecated
 public class MassToFormulaToolTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
