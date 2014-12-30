@@ -341,7 +341,7 @@ public class MolecularFormulaGenerator {
      */
     @TestMethod("testGetFinishedPercentage")
     public double getFinishedPercentage() {
-        double result = 0d;
+        double result = 0.0;
         double remainingPerc = 1.0;
 
         // Keep a lock on currentCounts, otherwise it might change during the
@@ -352,7 +352,7 @@ public class MolecularFormulaGenerator {
                 if (i > 0)
                     max += 1.0;
                 result += remainingPerc * ((double) currentCounts[i] / max);
-                remainingPerc /= (double) (max);
+                remainingPerc /= max;
             }
         }
         return result;
