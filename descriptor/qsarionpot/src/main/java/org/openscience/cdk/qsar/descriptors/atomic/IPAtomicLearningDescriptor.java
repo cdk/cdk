@@ -62,6 +62,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set      qsar-descriptors
  * @cdk.dictref  qsar-descriptors:ionizationPotential
  */
+@Deprecated
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptorTest")
 public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
 

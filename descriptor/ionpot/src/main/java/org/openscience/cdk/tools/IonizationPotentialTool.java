@@ -55,8 +55,11 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *
  * @see org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptor
  * @see org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptor
+ * @deprecated Results depend on the order of atoms in bonds, resolving this would require 
+ *             retraining the models which are not available. 
  */
 @TestClass("org.openscience.cdk.test.tools.IonizationPotentialTest")
+@Deprecated
 public class IonizationPotentialTool {
 
     /**

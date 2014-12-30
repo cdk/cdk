@@ -72,6 +72,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  * @see IPAtomicHOSEDescriptor
  * @see IPBondLearningDescriptor
  */
+@Deprecated
 @TestClass(value = "org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptorTest")
 public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
