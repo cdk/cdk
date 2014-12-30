@@ -20,8 +20,11 @@ package org.openscience.cdk.qsar.descriptors.bond;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -63,6 +66,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with CCCC=CCCCC
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPDescriptor_1() throws Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -80,6 +84,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with CC1CCC=C1
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPDescriptor_2() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -97,6 +102,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      *  A unit test for JUnit with C=CCCCC
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPDescriptor_3() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -115,6 +121,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      *
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPDescriptorReaction1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -135,6 +142,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      *
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPDescriptorReaction2() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -154,6 +162,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      *
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPTripleDescriptor1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -172,6 +181,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      *
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPTripleDescriptor2() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -189,7 +199,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      * A unit test for JUnit with C=C(C=CC)C
      *
      */
-    @Test
+    @Ignore("IonizationPotentialTool now deprecated due to bugs")
     public void testIPConjugatedDescriptor1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -212,6 +222,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      *
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPPySystemReaction1() throws java.lang.Exception {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

@@ -21,7 +21,9 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -69,6 +71,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      *  @cdk.inchi InChI=1/C6H14/c1-5(2)6(3)4/h5-6H,1-4H3
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPDescriptor0() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -100,6 +103,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      *
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPDescriptor_1() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-Cl");
@@ -119,6 +123,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      *  A unit test for JUnit with COCCCC=O
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPDescriptor_2() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("COCCCC=O");
@@ -140,6 +145,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      *  A unit test for JUnit with C=CCC(=O)CC
      */
     @Test
+    @Category(SlowTest.class)
     public void testIPDescriptor_3() throws Exception {
 
         IAtomContainer mol = sp.parseSmiles("C=CCCC(=O)C");
@@ -251,6 +257,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      * @throws CDKException
      */
     @Test
+    @Category(SlowTest.class)
     public void testBug_2787332_triclosan() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));//0
