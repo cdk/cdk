@@ -291,6 +291,31 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
     }
 
     /**
+     * Test to find a single carbon.
+     */
+    @Test
+    public void testSingleCarbon() throws Exception {
+
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(c, 0, 100);
+
+        double minMass = 5;
+        double maxMass = 15;
+
+        MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
+                minMass, maxMass, mfRange);
+        IMolecularFormulaSet mfSet = gen.getAllFormulas();
+
+        Assert.assertNotNull(mfSet);
+        Assert.assertEquals(1, mfSet.size());
+        Assert.assertEquals("C", MolecularFormulaManipulator.getString(mfSet
+                .getMolecularFormula(0)));
+    }
+
+    /**
      * Test to find MF=C10000, MW=120000.0 using only carbons.
      */
     @Test
@@ -313,6 +338,48 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         Assert.assertEquals(1, mfSet.size());
         Assert.assertEquals("C10000", MolecularFormulaManipulator
                 .getString(mfSet.getMolecularFormula(0)));
+    }
+
+    /**
+     * Test to find H2O in a range of 1-20.
+     */
+    @Test
+    public void testWater() throws Exception {
+
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope n = ifac.getMajorIsotope("N");
+        IIsotope o = ifac.getMajorIsotope("O");
+        IIsotope p = ifac.getMajorIsotope("P");
+        IIsotope s = ifac.getMajorIsotope("S");
+
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(c, 0, 10);
+        mfRange.addIsotope(h, 0, 10);
+        mfRange.addIsotope(o, 0, 10);
+        mfRange.addIsotope(n, 0, 10);
+        mfRange.addIsotope(p, 0, 10);
+        mfRange.addIsotope(s, 0, 10);
+
+        double minMass = 1;
+        double maxMass = 20;
+
+        MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
+                minMass, maxMass, mfRange);
+        IMolecularFormulaSet mfSet = gen.getAllFormulas();
+
+        Assert.assertNotNull(mfSet);
+
+        boolean found = false;
+        for (IMolecularFormula formula : mfSet.molecularFormulas()) {
+            String mf = MolecularFormulaManipulator.getString(formula);
+            if (mf.equals("H2O")) {
+                found = true;
+                break;
+            }
+        }
+        Assert.assertTrue("The molecular formula H2O should be found", found);
     }
 
     /**
