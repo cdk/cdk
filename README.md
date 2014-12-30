@@ -49,7 +49,7 @@ pom.xml
 cdk/$ mvn javadoc:aggregate
 ```
 
-The documenation is created as a series of .html pages in target/site/apidocs. If you use firefox, you can read
+The documentation is created as a series of .html pages in target/site/apidocs. If you use firefox, you can read
 the documentation using the following command:
 
 ```bash
@@ -121,46 +121,19 @@ cdk/$ ls target/cdk-{version}.jar
 
 ## Maven Artefacts
 
-The Maven artefacts are currently deployed to the European Bioinformatics Institute (EMBL-EBI) remote repositories. To use the repositories from a maven project add the following configuration to you `pom.xml`.
+Maven artefacts of each module are deployed to the Maven Central Repository. To use a CDK module 
+just specify the dependency in your `pom.xml`. Any additional requirements of the module will
+also be downloaded and included.
 
 ```xml
-<repositories>
-  <repository>
-    <id>ebi-repo</id>
-    <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo/</url>
-    <snapshots>
-      <enabled>false</enabled>
-    </snapshots>
-  </repository>
-  <repository>
-    <id>ebi-repo-snapshots</id>
-    <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots/</url>
-    <releases>
-      <enabled>false</enabled>
-    </releases>
-  </repository>
-</repositories>
+<dependency>
+  <groupId>org.openscience.cdk</groupId>
+  <artifactId>cdk-fingerprint</artifactId>
+  <version>1.5.10</version>
+</dependency>
 ```
 
-You can then use a cdk module by specifying a dependency in the `pom.xml`. Any additional requirements of the module will also be included. To include a dependency you specify a version.
-
-Using `RELEASE` specifies the latest released version. The CDK uses even minor versions for stable releases (1.0, 1.2, 1.4, ..) and odd minor numbers for developer releases (1.1, 1.3, 1.5, ..). The `RELEASE` version here refers to most recently deploy version which will normally be the developer. Snapshot builds are daily previews of the next release, for instance, `1.5.7-SNAPSHOT` is the preview of the `1.5.7` release. Generally, it is preferable to indicate a specific version requirement and only rely on snapshots when developing and a new feature is urgently required. [Ranges](http://stackoverflow.com/questions/30571/how-do-i-tell-maven-to-use-the-latest-version-of-a-dependency) can also be used.
-
-```xml
-<dependencies>
-  <dependency>
-    <groupId>org.openscience.cdk</groupId>
-    <artifactId>cdk-fingerprint</artifactId>
-    <version>1.5.6</version>
-  </dependency>
-</dependencies>
-```
-
-A jar of the CDK source is deployed to the maven repos. However, you can also create or install a jar of the source locally with the following command:
-
-```
-mvn source:jar install
-```
+To include everything in the library use the `cdk-bundle` artefact.
 
 ## Examples and tutorials
 
