@@ -8,7 +8,7 @@
     <artifactId>cdk</artifactId>
     <name>cdk</name>
     <description>Modular library for Cheminformatics</description>
-    <version>1.5.10</version>
+    <version>1.5.11-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://sourceforge.net/projects/cdk/</url>
 
@@ -342,6 +342,8 @@
         </contributor>
     </contributors>
 
+    <!-- Plugin repository (EBI) is required for cdk-build-utils and
+         ojdcheck to build the javadoc. -->
     <pluginRepositories>
         <pluginRepository>
             <id>ebi-repo</id>
