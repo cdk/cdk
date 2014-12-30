@@ -23,9 +23,12 @@
 package org.openscience.cdk.geometry;
 
 import javax.vecmath.AxisAngle4d;
+import javax.vecmath.AxisAngle4f;
 import javax.vecmath.Matrix3d;
+import javax.vecmath.Matrix3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
 
 /**
  * A set of static utility classes for dealing with Z matrices.
@@ -91,11 +94,12 @@ public class ZMatrixTools {
     }
 
     private static Vector3d rotate(Vector3d vector, Vector3d axis, double angle) {
-        Matrix3d rotate = new Matrix3d();
-        rotate.set(new AxisAngle4d(axis, Math.toRadians(angle)));
-        Vector3d result = new Vector3d();
-        rotate.transform(vector, result);
-        return result;
+        Matrix3f rotate = new Matrix3f();
+        rotate.set(new AxisAngle4f(new Vector3f(axis), (float) Math.toRadians(angle)));
+        Vector3f result   = new Vector3f();
+        Vector3f vector3f = new Vector3f(vector);
+        rotate.transform(vector3f, result);
+        return new Vector3d(result);
     }
 
 }
