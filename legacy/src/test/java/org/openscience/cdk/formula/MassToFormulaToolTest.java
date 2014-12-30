@@ -870,4 +870,98 @@ public class MassToFormulaToolTest extends CDKTestCase {
 
     }
 
+    /**
+     * Test to find a single carbon.
+     */
+    @Test
+    public void testSingleCarbon() throws Exception {
+
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(c, 0, 100);
+
+        MassToFormulaTool mfTool = new MassToFormulaTool(builder);
+
+        List<IRule> myRules = new ArrayList<IRule>();
+
+        IRule rule1 = new ElementRule();
+        Object[] params = new Object[1];
+        params[0] = mfRange;
+        rule1.setParameters(params);
+        myRules.add(rule1);
+
+        ToleranceRangeRule rule2 = new ToleranceRangeRule();
+        Object[] params2 = new Object[2];
+        params2[0] = 10.0;
+        params2[1] = 5.0;
+        rule2.setParameters(params2);
+        myRules.add(rule2);
+
+        mfTool.setRestrictions(myRules);
+
+        IMolecularFormulaSet mfSet = mfTool.generate(10.0);
+
+        Assert.assertNotNull(mfSet);
+        Assert.assertEquals(1, mfSet.size());
+        Assert.assertEquals("C", MolecularFormulaManipulator
+                .getString(mfSet.getMolecularFormula(0)));
+    }
+    
+    /**
+     * Test to find H2O in a range of 1-20.
+     */
+    @Test
+    public void testWater() throws Exception {
+
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope n = ifac.getMajorIsotope("N");
+        IIsotope o = ifac.getMajorIsotope("O");
+        IIsotope p = ifac.getMajorIsotope("P");
+        IIsotope s = ifac.getMajorIsotope("S");
+
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(c, 0, 10);
+        mfRange.addIsotope(h, 0, 10);
+        mfRange.addIsotope(o, 0, 10);
+        mfRange.addIsotope(n, 0, 10);
+        mfRange.addIsotope(p, 0, 10);
+        mfRange.addIsotope(s, 0, 10);
+
+        MassToFormulaTool mfTool = new MassToFormulaTool(builder);
+
+        List<IRule> myRules = new ArrayList<IRule>();
+
+        IRule rule1 = new ElementRule();
+        Object[] params = new Object[1];
+        params[0] = mfRange;
+        rule1.setParameters(params);
+        myRules.add(rule1);
+
+        ToleranceRangeRule rule2 = new ToleranceRangeRule();
+        Object[] params2 = new Object[2];
+        params2[0] = 10.0;
+        params2[1] = 9.0;
+        rule2.setParameters(params2);
+        myRules.add(rule2);
+
+        mfTool.setRestrictions(myRules);
+
+        IMolecularFormulaSet mfSet = mfTool.generate(10.0);
+
+        Assert.assertNotNull(mfSet);
+
+        boolean found = false;
+        for (IMolecularFormula formula : mfSet.molecularFormulas()) {
+            String mf = MolecularFormulaManipulator.getString(formula);
+            if (mf.equals("H2O")) {
+                found = true;
+                break;
+            }
+        }
+        Assert.assertTrue("The molecular formula H2O should be found", found);
+    }
 }
