@@ -23,7 +23,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.IonpotCoverageTest;
-import org.openscience.cdk.tools.IonizationPotentialToolTest;
 
 /**
  * TestSuite that runs all the tests for the CDK reaction module.
@@ -31,6 +30,6 @@ import org.openscience.cdk.tools.IonizationPotentialToolTest;
  * @cdk.module  test-ionpot
  */
 @RunWith(value = Suite.class)
-@SuiteClasses(value = {IonpotCoverageTest.class, IonizationPotentialToolTest.class})
+@SuiteClasses(value = {IonpotCoverageTest.class})
 public class MionpotTests {
 }

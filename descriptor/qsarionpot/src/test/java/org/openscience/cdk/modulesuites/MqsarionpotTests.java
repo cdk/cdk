@@ -21,10 +21,6 @@ package org.openscience.cdk.modulesuites;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.openscience.cdk.coverage.QsarionpotCoverageTest;
-import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests for the qsarionpot module.
@@ -32,7 +28,6 @@ import org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescrip
  * @cdk.module  test-qsarionpot
  */
 @RunWith(value = Suite.class)
-@SuiteClasses(value = {QsarionpotCoverageTest.class, IPAtomicLearningDescriptorTest.class,
-        IPBondLearningDescriptorTest.class, IPMolecularLearningDescriptorTest.class})
+@SuiteClasses(value = {})
 public class MqsarionpotTests {
 }
