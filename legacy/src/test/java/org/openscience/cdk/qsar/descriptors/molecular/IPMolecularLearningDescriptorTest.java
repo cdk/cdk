@@ -24,10 +24,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SlowTest;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
@@ -77,15 +75,15 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
-        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
-        mol.addBond(1, 2, IBond.Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
-        mol.addBond(1, 3, IBond.Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
-        mol.addBond(3, 4, IBond.Order.SINGLE);
+        mol.addBond(3, 4, Order.SINGLE);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
-        mol.addBond(3, 5, IBond.Order.SINGLE);
+        mol.addBond(3, 5, Order.SINGLE);
 
         addExplicitHydrogens(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -254,7 +252,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C12H7Cl3O2/c13-7-1-3-11(9(15)5-7)17-12-4-2-8(14)6-10(12)16/h1-6,16H
      * @cdk.bug 2787332
      *
-     * @throws CDKException
+     * @throws org.openscience.cdk.exception.CDKException
      */
     @Test
     @Category(SlowTest.class)
