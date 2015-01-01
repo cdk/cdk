@@ -161,7 +161,6 @@ import java.lang.reflect.Method;
  * @cdk.keyword    SMILES, generator
  * @cdk.module     smiles
  * @cdk.githash
- * @cdk.bug        1793446
  *
  * @see org.openscience.cdk.aromaticity.Aromaticity
  * @see org.openscience.cdk.stereo.Stereocenters

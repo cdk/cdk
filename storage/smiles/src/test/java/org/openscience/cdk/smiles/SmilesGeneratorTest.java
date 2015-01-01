@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.vecmath.Point2d;
 
@@ -72,6 +73,7 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * @author         steinbeck
@@ -972,6 +974,25 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String smiles = smilesGenerator.create(mol);
         Assert.assertTrue(smiles.contains("[n-]"));
+    }
+
+    /**
+     * @cdk.bug 545
+     */
+    @Test
+    public void testTimeOut() throws Exception {
+        String filename = "data/mdl/24763.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        ChemFile chemFile = reader.read(new ChemFile());
+        reader.close();
+        Assert.assertNotNull(chemFile);
+        List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        Assert.assertEquals(1, containersList.size());
+        IAtomContainer container = containersList.get(0);
+        SmilesGenerator smilesGenerator = new SmilesGenerator();
+        String genSmiles = smilesGenerator.create(container);
+        System.out.println(genSmiles);
     }
 
     /**
