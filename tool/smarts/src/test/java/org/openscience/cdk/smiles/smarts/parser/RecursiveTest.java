@@ -475,4 +475,12 @@ public class RecursiveTest extends CDKTestCase {
         assertThat(SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O.c1ccccc1"), is(new int[]{1, 1}));
         assertThat(SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O"), is(new int[]{0, 0}));
     }
+
+    /**
+     * @cdk.bug 844
+      */
+    @Test
+    public void bug844() throws Exception {
+        assertThat(SMARTSSearchTest.match("[*R0]-[$([NRD3][CR]=O)]", "N1(CC)C(=O)CCCC1"), is(new int[]{1, 1}));
+    }
 }
