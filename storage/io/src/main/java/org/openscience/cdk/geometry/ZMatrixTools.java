@@ -38,7 +38,6 @@ import javax.vecmath.Vector3f;
  * @cdk.keyword Z-matrix
  *
  * @cdk.created 2004-02-09
- * @cdk.bug     1653028
  */
 public class ZMatrixTools {
 
