@@ -1501,4 +1501,11 @@ public class ParserTest extends CDKTestCase {
         parse("C\r");
     }
 
+    /**
+     * @cdk.bug 909
+     */
+    @Test public void bug909() throws Exception {
+        parse("O=C1NCCSc2ccccc12");
+    }
+
 }
