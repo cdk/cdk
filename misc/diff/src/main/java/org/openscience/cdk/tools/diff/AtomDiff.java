@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.tools.diff;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.diff.tree.ChemObjectDifference;
@@ -36,7 +34,6 @@ import org.openscience.cdk.tools.diff.tree.Point3dDifference;
  * @cdk.module diff
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.diff.AtomDiffTest")
 public class AtomDiff {
 
     /**
@@ -52,7 +49,6 @@ public class AtomDiff {
      * @param second the second of the two classes to compare
      * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
      */
-    @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff(IChemObject first, IChemObject second) {
         IDifference diff = difference(first, second);
         if (diff == null) {
@@ -69,7 +65,6 @@ public class AtomDiff {
      * @param second the second of the two classes to compare
      * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
      */
-    @TestMethod("testDifference")
     public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IAtom && second instanceof IAtom)) {
             return null;

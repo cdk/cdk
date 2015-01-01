@@ -26,8 +26,6 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,7 +42,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.module valencycheck
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.CDKValencyCheckerTest")
 public class CDKValencyChecker implements IValencyChecker {
 
     private AtomTypeFactory                       atomTypeList;
@@ -56,14 +53,12 @@ public class CDKValencyChecker implements IValencyChecker {
         if (atomTypeList == null) atomTypeList = AtomTypeFactory.getInstance(ATOM_TYPE_LIST, builder);
     }
 
-    @TestMethod("testInstance")
     public static CDKValencyChecker getInstance(IChemObjectBuilder builder) {
         if (!tables.containsKey(builder.getClass().getName()))
             tables.put(builder.getClass().getName(), new CDKValencyChecker(builder));
         return tables.get(builder.getClass().getName());
     }
 
-    @TestMethod("testIsSaturated_IAtomContainer,testIsSaturated_MissingHydrogens_Methane")
     @Override
     public boolean isSaturated(IAtomContainer atomContainer) throws CDKException {
         for (IAtom atom : atomContainer.atoms()) {
@@ -72,7 +67,6 @@ public class CDKValencyChecker implements IValencyChecker {
         return true;
     }
 
-    @TestMethod("testIsSaturatedPerAtom")
     @Override
     public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException {
         System.out.println(atom.getAtomTypeName());

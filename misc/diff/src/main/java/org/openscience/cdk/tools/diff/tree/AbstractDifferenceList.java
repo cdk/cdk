@@ -18,9 +18,6 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,18 +29,15 @@ import java.util.List;
  * @cdk.module diff
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.diff.tree.AbstractDifferenceListTest")
 public abstract class AbstractDifferenceList implements IDifferenceList {
 
     protected List<IDifference> differences;
 
-    @TestMethod("testConstructor")
     protected AbstractDifferenceList() {
         differences = new ArrayList<IDifference>();
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testAddChild")
     @Override
     public void addChild(IDifference childDiff) {
         if (childDiff != null) {
@@ -52,7 +46,6 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testChildDiffs")
     @Override
     public void addChildren(List<IDifference> children) {
         if (children != null) {
@@ -61,7 +54,6 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testChildDiffs")
     @Override
     public Iterable<IDifference> getChildren() {
         return new Iterable<IDifference>() {
@@ -74,7 +66,6 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testAddChild")
     @Override
     public int childCount() {
         return differences.size();

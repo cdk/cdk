@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.tools.diff;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.diff.tree.ChemObjectDifference;
@@ -34,7 +32,6 @@ import org.openscience.cdk.tools.diff.tree.StringDifference;
  * @cdk.module diff
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.diff.ElementDiffTest")
 public class ElementDiff {
 
     /**
@@ -50,7 +47,6 @@ public class ElementDiff {
      * @param second the second of the two classes to compare
      * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
      */
-    @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff(IChemObject first, IChemObject second) {
         IDifference difference = difference(first, second);
         if (difference == null) {
@@ -67,7 +63,6 @@ public class ElementDiff {
      * @param second the second of the two classes to compare
      * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
      */
-    @TestMethod("testDifference")
     public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IElement && second instanceof IElement)) {
             return null;

@@ -18,9 +18,6 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import javax.vecmath.Point3d;
 import java.util.Iterator;
 
@@ -31,7 +28,6 @@ import java.util.Iterator;
  * @cdk.module diff
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.diff.tree.Point3dDifferenceTest")
 public class Point3dDifference extends AbstractDifferenceList implements IDifferenceList {
 
     private String name;
@@ -48,7 +44,6 @@ public class Point3dDifference extends AbstractDifferenceList implements IDiffer
      * @param second the second object to compare
      * @return       an {@link IDifference} reflecting the differences between the first and second object
      */
-    @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, Point3d first, Point3d second) {
         if (first == null && second == null) return null;
 
@@ -70,7 +65,6 @@ public class Point3dDifference extends AbstractDifferenceList implements IDiffer
      *
      * @return a {@link String}
      */
-    @TestMethod("testToString")
     @Override
     public String toString() {
         if (differences.size() == 0) return "";
