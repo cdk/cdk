@@ -2478,6 +2478,19 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(3, clone.getAtom(1).getFormalNeighbourCount().intValue());
     }
 
+    /** @cdk.bug 549 */
+    @Test
+    public void testDiBorane() throws Exception {
+        String smiles = "[H]B1([H])HB([H]1)([H])[H]";
+
+        IAtomContainer mol = loadExact(smiles);
+        Assert.assertEquals(8, mol.getAtomCount());
+        Assert.assertEquals(4, mol.getConnectedAtomsCount(mol.getAtom(1)));
+        Assert.assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(3)));
+        Assert.assertEquals(4, mol.getConnectedAtomsCount(mol.getAtom(4)));
+        Assert.assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(5)));
+    }
+
     /**
      * Counts aromatic atoms in a molecule.
      * @param mol molecule for which to count aromatic atoms.
