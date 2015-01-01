@@ -44,12 +44,15 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -1187,19 +1190,39 @@ public class SmilesGeneratorTest extends CDKTestCase {
         assertThat(SmilesGenerator.generic().withAtomClasses().create(ethanol), is("C[CH2:6]O"));
     }
 
+    /**
+     * @cdk.bug 328
+     */
+    @Test
+    public void bug328() throws Exception {
+        assertThat(canon("[H]c2c([H])c(c1c(nc(n1([H]))C(F)(F)F)c2Cl)Cl"),
+                   is(canon("Clc1ccc(Cl)c2[nH]c([nH0]c21)C(F)(F)F")));
+    }
+
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
         return new TetrahedralChirality(container.getAtom(central), new IAtom[]{container.getAtom(a1),
-                container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},
-                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE);
+                                                                                container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},
+                                        ITetrahedralChirality.Stereo.ANTI_CLOCKWISE);
     }
 
     static ITetrahedralChirality clockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
         return new TetrahedralChirality(container.getAtom(central), new IAtom[]{container.getAtom(a1),
-                container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},
-                ITetrahedralChirality.Stereo.CLOCKWISE);
+                                                                                container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},
+                                        ITetrahedralChirality.Stereo.CLOCKWISE);
     }
 
     static void define(IAtomContainer container, IStereoElement... elements) {
-        container.setStereoElements(Arrays.<IStereoElement> asList(elements));
+        container.setStereoElements(Arrays.<IStereoElement>asList(elements));
+    }
+
+    static String canon(String smi) throws Exception {
+        final IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        final SmilesParser smipar = new SmilesParser(bldr);
+        final IAtomContainer container = smipar.parseSmiles(smi);
+        AtomContainerManipulator.suppressHydrogens(container);
+        Aromaticity arom = new Aromaticity(ElectronDonation.daylight(),
+                                           Cycles.all());
+        arom.apply(container);
+        return SmilesGenerator.unique().create(container);
     }
 }
