@@ -66,7 +66,9 @@ import java.util.List;
  * @cdk.bug 1931262
  *
  * @cdk.threadnonsafe
+ * @deprecated Use the newer {@link org.openscience.cdk.aromaticity.Kekulization}
  */
+@Deprecated
 @TestClass("org.openscience.cdk.smiles.DeduceBondSystemToolTest")
 public class DeduceBondSystemTool {
 
