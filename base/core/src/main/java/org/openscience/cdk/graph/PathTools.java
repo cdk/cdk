@@ -43,7 +43,6 @@ import java.util.List;
  * @cdk.module  core
  * @cdk.githash
  * @cdk.created 2001-06-17
- * @cdk.bug     1817487
  */
 @TestClass("org.openscience.cdk.graph.PathToolsTest")
 public class PathTools {
@@ -82,14 +81,11 @@ public class PathTools {
      */
     @TestMethod("testComputeFloydAPSP_arrayintint")
     public static int[][] computeFloydAPSP(int costMatrix[][]) {
-        int i;
-        int j;
-        int k;
         int nrow = costMatrix.length;
         int[][] distMatrix = new int[nrow][nrow];
         //logger.debug("Matrix size: " + n);
-        for (i = 0; i < nrow; i++) {
-            for (j = 0; j < nrow; j++) {
+        for (int i = 0; i < nrow; i++) {
+            for (int j = 0; j < nrow; j++) {
                 if (costMatrix[i][j] == 0) {
                     distMatrix[i][j] = 999999999;
                 } else {
@@ -97,13 +93,13 @@ public class PathTools {
                 }
             }
         }
-        for (i = 0; i < nrow; i++) {
+        for (int i = 0; i < nrow; i++) {
             distMatrix[i][i] = 0;
             // no self cycle
         }
-        for (k = 0; k < nrow; k++) {
-            for (i = 0; i < nrow; i++) {
-                for (j = 0; j < nrow; j++) {
+        for (int k = 0; k < nrow; k++) {
+            for (int i = 0; i < nrow; i++) {
+                for (int j = 0; j < nrow; j++) {
                     if (distMatrix[i][k] + distMatrix[k][j] < distMatrix[i][j]) {
                         distMatrix[i][j] = distMatrix[i][k] + distMatrix[k][j];
                         //P[i][j] = k;        // k is included in the shortest path
@@ -125,13 +121,11 @@ public class PathTools {
      */
     @TestMethod("testComputeFloydAPSP_arraydoubledouble")
     public static int[][] computeFloydAPSP(double costMatrix[][]) {
-        int i;
-        int j;
         int nrow = costMatrix.length;
         int[][] distMatrix = new int[nrow][nrow];
         //logger.debug("Matrix size: " + n);
-        for (i = 0; i < nrow; i++) {
-            for (j = 0; j < nrow; j++) {
+        for (int i = 0; i < nrow; i++) {
+            for (int j = 0; j < nrow; j++) {
                 if (costMatrix[i][j] == 0) {
                     distMatrix[i][j] = 0;
                 } else {
@@ -429,14 +423,14 @@ public class PathTools {
         int[][] admat = AdjacencyMatrix.getMatrix(atomContainer);
         int[][] distanceMatrix = computeFloydAPSP(admat);
 
-        int n = 0;
+        int matches = 0;
 
         for (int i = 0; i < natom; i++) {
             for (int j = 0; j < natom; j++) {
-                if (distanceMatrix[i][j] == distance) n++;
+                if (distanceMatrix[i][j] == distance) matches++;
             }
         }
-        return n / 2;
+        return matches / 2;
     }
 
     /**
@@ -472,25 +466,25 @@ public class PathTools {
         }
         dist[atomContainer.getAtomNumber(start)] = 0;
 
-        List<IAtom> Slist = new ArrayList<IAtom>();
-        List<Integer> Qlist = new ArrayList<Integer>();
+        List<IAtom> sList = new ArrayList<IAtom>();
+        List<Integer> qList = new ArrayList<Integer>();
         for (int i = 0; i < natom; i++)
-            Qlist.add(i);
+            qList.add(i);
 
         while (true) {
-            if (Qlist.size() == 0) break;
+            if (qList.size() == 0) break;
 
             // extract min
             int u = 999999;
             int index = 0;
-            for (Integer tmp : Qlist) {
+            for (Integer tmp : qList) {
                 if (dist[tmp] < u) {
                     u = dist[tmp];
                     index = tmp;
                 }
             }
-            Qlist.remove(Qlist.indexOf(index));
-            Slist.add(atomContainer.getAtom(index));
+            qList.remove(qList.indexOf(index));
+            sList.add(atomContainer.getAtom(index));
             if (index == endNumber) break;
 
             // relaxation
