@@ -44,7 +44,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module  qsarmolecular
  * @cdk.githash
  * @cdk.set     qsar-descriptors
- * @cdk.bug     1728862
  */
 
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorChargeTest")
