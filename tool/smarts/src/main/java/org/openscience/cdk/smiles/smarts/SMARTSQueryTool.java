@@ -109,7 +109,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @cdk.githash
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
- * @cdk.bug 1761027
  */
 @TestClass("org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest")
 public class SMARTSQueryTool {
