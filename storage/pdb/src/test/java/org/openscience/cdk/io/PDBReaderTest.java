@@ -590,4 +590,12 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
     }
 
+    /**
+     * @cdk.bug 489
+     */
+    @Category(SlowTest.class)
+    @Test public void readFinalPump() throws Exception {
+        IChemFile chemFile = new PDBReader(getClass().getResourceAsStream("finalPump96.09.06.pdb")).read(new ChemFile());
+    }
+
 }

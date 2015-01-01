@@ -651,19 +651,19 @@ public class PDBReader extends DefaultChemObjectReader {
             oAtom.setAtomTypeName(oAtom.getResName() + "." + rawAtomName);
         }
         if (lineLength >= 59) {
-            String frag = cLine.substring(54, 60).trim();
+            String frag = cLine.substring(54, Math.min(lineLength, 60)).trim();
             if (frag.length() > 0) {
                 oAtom.setOccupancy(Double.parseDouble(frag));
             }
         }
         if (lineLength >= 65) {
-            String frag = cLine.substring(60, 66).trim();
+            String frag = cLine.substring(60, Math.min(lineLength, 66)).trim();
             if (frag.length() > 0) {
                 oAtom.setTempFactor(Double.parseDouble(frag));
             }
         }
         if (lineLength >= 75) {
-            oAtom.setSegID(cLine.substring(72, 76).trim());
+            oAtom.setSegID(cLine.substring(72, Math.min(lineLength, 76)).trim());
         }
         //		if (lineLength >= 78) {
         //            oAtom.setSymbol((new String(cLine.substring(76, 78))).trim());
