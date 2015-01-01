@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -147,7 +148,21 @@ public class AromaticityTest {
     @Test
     public void electronSum() throws Exception {
         assertThat(Aromaticity.electronSum(new int[]{0, 1, 2, 3, 0}, new int[]{1, 1, 1, 1}, new int[]{0, 1, 2, 3}),
-                is(4));
+                   is(4));
+    }
+
+    /**
+     * @cdk.bug 736
+     */
+    @Test
+    public void ensureConsistentRepresentation() throws Exception {
+        IAtomContainer a = smiles("C1=CC2=CC3=CC4=C(C=CC=C4)C=C3C=C2C=C1");
+        IAtomContainer b = smiles("c1cc2cc3cc4c(cccc4)cc3cc2cc1");
+        Aromaticity arom = new Aromaticity(ElectronDonation.daylight(),
+                                           Cycles.all());
+        arom.apply(a);
+        arom.apply(b);
+        assertTrue(AtomContainerDiff.diff(a, b).isEmpty());
     }
 
     static IAtomContainer smiles(String smi) throws Exception {
