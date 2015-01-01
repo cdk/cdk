@@ -27,8 +27,6 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -72,7 +70,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  * @cdk.module valencycheck
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.CDKHydrogenAdderTest")
 public class CDKHydrogenAdder {
 
     private AtomTypeFactory                      atomTypeList;
@@ -84,7 +81,6 @@ public class CDKHydrogenAdder {
         if (atomTypeList == null) atomTypeList = AtomTypeFactory.getInstance(ATOM_TYPE_LIST, builder);
     }
 
-    @TestMethod("testInstance")
     public static CDKHydrogenAdder getInstance(IChemObjectBuilder builder) {
         if (!tables.containsKey(builder.getClass().getName()))
             tables.put(builder.getClass().getName(), new CDKHydrogenAdder(builder));
@@ -99,7 +95,6 @@ public class CDKHydrogenAdder {
      *
      * @cdk.keyword hydrogens, adding
      */
-    @TestMethod("testMethane,testFormaldehyde,testHCN")
     public void addImplicitHydrogens(IAtomContainer container) throws CDKException {
         for (IAtom atom : container.atoms()) {
             if (!(atom instanceof IPseudoAtom)) {
@@ -116,7 +111,6 @@ public class CDKHydrogenAdder {
      * @param  atom         IAtom to set the implicit hydrogen count for
      * @throws CDKException Throws if insufficient information is present
      */
-    @TestMethod("testImpHByAtom")
     public void addImplicitHydrogens(IAtomContainer container, IAtom atom) throws CDKException {
         if (atom.getAtomTypeName() == null) throw new CDKException("IAtom is not typed! " + atom.getSymbol());
 

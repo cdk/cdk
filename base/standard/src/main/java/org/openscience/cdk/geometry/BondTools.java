@@ -24,8 +24,6 @@
 package org.openscience.cdk.geometry;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,7 +45,6 @@ import java.util.TreeMap;
  * @cdk.module  standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.BondToolsTest")
 public class BondTools {
 
     // FIXME: class JavaDoc should use {@cdk.cite BLA} for the CDK News article
@@ -59,7 +56,6 @@ public class BondTools {
      * @param  bond       The bond.
      * @return            true=is a potential configuration, false=is not.
      */
-    @TestMethod("testIsValidDoubleBondConfiguration_IAtomContainer_IBond")
     public static boolean isValidDoubleBondConfiguration(IAtomContainer container, IBond bond) {
         //org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
         List<IAtom> connectedAtoms = container.getConnectedAtomsList(bond.getAtom(0));
@@ -94,7 +90,6 @@ public class BondTools {
      * @return                   true=trans, false=cis.
      * @exception  CDKException  The atoms are not in a double bond configuration (no double bond in the middle, same atoms on one side)
      */
-    @TestMethod("testIsCisTrans_IAtom_IAtom_IAtom_IAtom_IAtomContainer")
     public static boolean isCisTrans(IAtom firstOuterAtom, IAtom firstInnerAtom, IAtom secondInnerAtom,
             IAtom secondOuterAtom, IAtomContainer ac) throws CDKException {
         if (!isValidDoubleBondConfiguration(ac, ac.getBond(firstInnerAtom, secondInnerAtom))) {
@@ -114,7 +109,6 @@ public class BondTools {
      * @param  viewTo    The atom to which to look
      * @return           true=is left, false = is not
      */
-    @TestMethod("testIsLeft_IAtom_IAtom_IAtom")
     public static boolean isLeft(IAtom whereIs, IAtom viewFrom, IAtom viewTo) {
         double angle = giveAngleBothMethods(viewFrom, viewTo, whereIs, false);
         if (angle < 0) {
@@ -135,7 +129,6 @@ public class BondTools {
      * @cdk.keyword                 join-the-dots
      * @cdk.keyword                 bond creation
      */
-    @TestMethod("testCloseEnoughToBond_IAtom_IAtom_double")
     public static boolean closeEnoughToBond(IAtom atom1, IAtom atom2, double distanceFudgeFactor) {
 
         if (atom1 != atom2) {
@@ -160,12 +153,10 @@ public class BondTools {
      * @param  bool  true=angle is 0 to 2PI, false=angel is -PI to PI.
      * @return       The angle in rad.
      */
-    @TestMethod("testGiveAngleBothMethods_IAtom_IAtom_IAtom_boolean")
     public static double giveAngleBothMethods(IAtom from, IAtom to1, IAtom to2, boolean bool) {
         return giveAngleBothMethods(from.getPoint2d(), to1.getPoint2d(), to2.getPoint2d(), bool);
     }
 
-    @TestMethod("testGiveAngleBothMethods_Point2d_Point2d_Point2d_boolean")
     public static double giveAngleBothMethods(Point2d from, Point2d to1, Point2d to2, boolean bool) {
         double[] A = new double[2];
         from.get(A);
@@ -316,7 +307,6 @@ public class BondTools {
      *@return            0=is not tetrahedral;>1 is a certain depiction of
      *      tetrahedrality (evaluated in parse chain)
      */
-    @TestMethod("testIsTetrahedral_IAtomContainer_IAtom_boolean")
     public static int isTetrahedral(IAtomContainer container, IAtom atom, boolean strict) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
         if (atoms.size() != 4) {
@@ -366,7 +356,6 @@ public class BondTools {
      *@param  container  The atomContainer the atom is in
      *@return            true=is square planar, false=is not
      */
-    @TestMethod("testIsTrigonalBipyramidalOrOctahedral_IAtomContainer_IAtom")
     public static int isTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom atom) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
         if (atoms.size() < 5 || atoms.size() > 6) {
@@ -401,7 +390,6 @@ public class BondTools {
      *@param  container  The atomContainer the atom is in
      *@return            true=is a stereo atom, false=is not
      */
-    @TestMethod("testIsStereo_IAtomContainer_IAtom")
     public static boolean isStereo(IAtomContainer container, IAtom stereoAtom) {
         List<IAtom> atoms = container.getConnectedAtomsList(stereoAtom);
         if (atoms.size() < 4 || atoms.size() > 6) {
@@ -491,7 +479,6 @@ public class BondTools {
      *@param  container  The atomContainer the atom is in
      *@return            true=is square planar, false=is not
      */
-    @TestMethod("testIsSquarePlanar_IAtomContainer_IAtom")
     public static boolean isSquarePlanar(IAtomContainer container, IAtom atom) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
         if (atoms.size() != 4) {
@@ -520,7 +507,6 @@ public class BondTools {
      *@param  container  The atomContainer the atom is in
      *@return            true=are opposite, false=are not
      */
-    @TestMethod("testStereosAreOpposite_IAtomContainer_IAtom")
     public static boolean stereosAreOpposite(IAtomContainer container, IAtom atom) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
         TreeMap<Double, Integer> hm = new TreeMap<Double, Integer>();
@@ -541,7 +527,6 @@ public class BondTools {
      *@param  to2   second direction to look in
      *@return       The angle in rad from 0 to 2*PI
      */
-    @TestMethod("testGiveAngle_IAtom_IAtom_IAtom")
     public static double giveAngle(IAtom from, IAtom to1, IAtom to2) {
         return (giveAngleBothMethods(from, to1, to2, true));
     }
@@ -554,12 +539,10 @@ public class BondTools {
      *@param  to2   second direction to look in
      *@return       The angle in rad from -PI to PI
      */
-    @TestMethod("testGiveAngleFromMiddle_IAtom_IAtom_IAtom")
     public static double giveAngleFromMiddle(IAtom from, IAtom to1, IAtom to2) {
         return (giveAngleBothMethods(from, to1, to2, false));
     }
 
-    @TestMethod("testMakeUpDownBonds_IAtomContainer")
     public static void makeUpDownBonds(IAtomContainer container) {
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom a = container.getAtom(i);

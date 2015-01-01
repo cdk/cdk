@@ -27,8 +27,6 @@
 package org.openscience.cdk.ringsearch;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllCycles;
 import org.openscience.cdk.graph.GraphUtil;
@@ -70,7 +68,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @cdk.keyword all rings
  * @see AllCycles
  */
-@TestClass("org.openscience.cdk.ringsearch.AllRingsFinderTest")
 public final class AllRingsFinder {
 
     /** Precomputed threshold - stops the computation running forever. */
@@ -110,7 +107,6 @@ public final class AllRingsFinder {
      * @see #findAllRings(IAtomContainer, int)
      * @see #findAllRingsInIsolatedRingSystem(IAtomContainer)
      */
-    @TestMethod("testFindAllRings_IAtomContainer,testBondsWithinRing")
     public IRingSet findAllRings(IAtomContainer container) throws CDKException {
         return findAllRings(container, container.getAtomCount());
     }
@@ -210,7 +206,6 @@ public final class AllRingsFinder {
      * @throws CDKException The exception thrown in case of hitting the timeout
      * @deprecated timeout not used
      */
-    @TestMethod("testCheckTimeout")
     @Deprecated
     public void checkTimeout() throws CDKException {
         // unused
@@ -225,7 +220,6 @@ public final class AllRingsFinder {
      * @return a reference to the instance this method was called for
      * @deprecated use the new threshold (during construction)
      */
-    @TestMethod("testSetTimeout_long")
     @Deprecated
     public AllRingsFinder setTimeout(long timeout) {
         System.err.println("AllRingsFinder.setTimeout() is not used, please " + "use the new threshold values");
@@ -238,7 +232,6 @@ public final class AllRingsFinder {
      * @return The timeout value
      * @deprecated timeout not used
      */
-    @TestMethod("testGetTimeout")
     @Deprecated
     public long getTimeout() {
         return 0;
