@@ -3,9 +3,6 @@ package org.openscience.cdk.formula;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * This class defines the properties of a deisotoped
  * pattern distribution. A isotope pattern is a set of
@@ -16,7 +13,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module formula
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.formula.IsotopePatternTest")
 public class IsotopePattern {
 
     private List<IsotopeContainer> isotopeCList = new ArrayList<IsotopeContainer>();
@@ -37,7 +33,6 @@ public class IsotopePattern {
      *
      *  @param isoContainer   The IsotopeContainer object
      */
-    @TestMethod("testSetMonoIsotope_IsotopeContainer")
     public void setMonoIsotope(IsotopeContainer isoContainer) {
         isotopeCList.add(isoContainer);
         monoIsotopePosition = isotopeCList.indexOf(isoContainer);
@@ -48,7 +43,6 @@ public class IsotopePattern {
      *
      *  @param isoContainer   The IsotopeContainer object
      */
-    @TestMethod("testAddIsotope_IsotopeContainer")
     public void addIsotope(IsotopeContainer isoContainer) {
         isotopeCList.add(isoContainer);
     }
@@ -58,7 +52,6 @@ public class IsotopePattern {
      *
      * @return The IsotopeContainer acting as mono-isotope
      */
-    @TestMethod("testGetMonoIsotope")
     public IsotopeContainer getMonoIsotope() {
         return isotopeCList.get(monoIsotopePosition);
     }
@@ -68,7 +61,6 @@ public class IsotopePattern {
      *
      * @return The IsotopeContainer acting as mono-isotope
      */
-    @TestMethod("testGetIsotopes")
     public List<IsotopeContainer> getIsotopes() {
         return isotopeCList;
     }
@@ -79,7 +71,6 @@ public class IsotopePattern {
      * @param  position position of the isotope to return
      * @return The isotope
      */
-    @TestMethod("testGetIsotope_int")
     public IsotopeContainer getIsotope(int position) {
         return isotopeCList.get(position);
     }
@@ -89,7 +80,6 @@ public class IsotopePattern {
      *
      * @return The number of isotopes
      */
-    @TestMethod("testGetNumberOfIsotopes")
     public int getNumberOfIsotopes() {
         return isotopeCList.size();
     }
@@ -99,7 +89,6 @@ public class IsotopePattern {
      *
      * @param charge The charge value
      */
-    @TestMethod("testSetCharge_double")
     public void setCharge(double charge) {
         chargI = charge;
 
@@ -110,7 +99,6 @@ public class IsotopePattern {
      *
      * @return The charge value
      */
-    @TestMethod("testGetCharge")
     public double getCharge() {
         return chargI;
 
@@ -121,7 +109,6 @@ public class IsotopePattern {
      *
      * @return    The cloned object
      */
-    @TestMethod("testClone")
     @Override
     public Object clone() throws CloneNotSupportedException {
         IsotopePattern isoClone = new IsotopePattern();

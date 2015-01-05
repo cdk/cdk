@@ -21,8 +21,6 @@ package org.openscience.cdk.config.isotopes;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -50,7 +48,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * @cdk.module  extra
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.config.isotopes.IsotopeHandlerTest")
 public class IsotopeHandler extends DefaultHandler {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IsotopeHandler.class);
@@ -68,7 +65,6 @@ public class IsotopeHandler extends DefaultHandler {
      *
      * @param builder The IChemObjectBuilder used to create new IIsotope's.
      */
-    @TestMethod("testIsotopeHandler_IChemObjectBuilder")
     public IsotopeHandler(IChemObjectBuilder builder) {
         this.builder = builder;
     }
@@ -78,7 +74,6 @@ public class IsotopeHandler extends DefaultHandler {
      *
      * @return A List object with all isotopes
      */
-    @TestMethod("testGetIsotopes")
     public List<IIsotope> getIsotopes() {
         return isotopes;
     }
@@ -87,14 +82,12 @@ public class IsotopeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testStartDocument")
     public void startDocument() {
         isotopes = new ArrayList<IIsotope>();
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testEndElement_String_String_String")
     public void endElement(String uri, String local, String raw) {
         logger.debug("end element: ", raw);
         if ("isotope".equals(local)) {
@@ -120,7 +113,6 @@ public class IsotopeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testEndElement_String_String_String")
     public void startElement(String uri, String local, String raw, Attributes atts) {
         currentChars = "";
         dictRef = "";
@@ -143,7 +135,6 @@ public class IsotopeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testCharacters_arraychar_int_int")
     public void characters(char chars[], int start, int length) {
         currentChars += new String(chars, start, length);
     }

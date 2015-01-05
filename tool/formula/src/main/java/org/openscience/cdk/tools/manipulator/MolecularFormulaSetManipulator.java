@@ -24,8 +24,6 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.Iterator;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -45,7 +43,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.formula.MolecularFormulaSetManipulatorTest")
 public class MolecularFormulaSetManipulator {
 
     /**
@@ -56,7 +53,6 @@ public class MolecularFormulaSetManipulator {
      * @return         A IMolecularFormula containing the maximum occurrence of the elements
      * @see            #getMinOccurrenceElements(IMolecularFormulaSet)
      */
-    @TestMethod("testGetMaxOccurrenceElements_IMolecularFormulaSet")
     public static IMolecularFormula getMaxOccurrenceElements(IMolecularFormulaSet mfSet) {
 
         IMolecularFormula molecularFormula = mfSet.getBuilder().newInstance(IMolecularFormula.class);
@@ -86,7 +82,6 @@ public class MolecularFormulaSetManipulator {
      * @return         A IMolecularFormula containing the minimal occurrence of the elements
      * @see            #getMaxOccurrenceElements(IMolecularFormulaSet)
      */
-    @TestMethod("testGetMinOccurrenceElements_IMolecularFormulaSet")
     public static IMolecularFormula getMinOccurrenceElements(IMolecularFormulaSet mfSet) {
 
         IMolecularFormula molecularFormula = mfSet.getBuilder().newInstance(IMolecularFormula.class);
@@ -120,7 +115,6 @@ public class MolecularFormulaSetManipulator {
      * @return            A IMolecularFormulaSet with only the IMolecularFormula which the IElements
      * 						are into the correct occurrence
      */
-    @TestMethod("testRemove_IMolecularFormulaSet_IMolecularFormula_IMolecularFormula")
     public static IMolecularFormulaSet remove(IMolecularFormulaSet formulaSet, IMolecularFormula formulaMin,
             IMolecularFormula formulaMax) {
 
@@ -180,7 +174,6 @@ public class MolecularFormulaSetManipulator {
      *
      * @see                IMolecularFormulaSet#contains(IMolecularFormula)
      */
-    @TestMethod("testContains_IMolecularFormulaSet_IMolecularFormula")
     public static boolean contains(IMolecularFormulaSet formulaSet, IMolecularFormula formula) {
         for (IMolecularFormula fm : formulaSet.molecularFormulas()) {
             if (MolecularFormulaManipulator.compare(fm, formula)) {
@@ -199,7 +192,6 @@ public class MolecularFormulaSetManipulator {
      * @param formulaSet   IMolecularFormulaSet to look for
      * @param formulaRange A IMolecularFormulaRange which contains the range representation of the IIsotope
      */
-    @TestMethod("testRemove_IMolecularFormulaSet_MolecularFormulaRange")
     public static IMolecularFormulaSet remove(IMolecularFormulaSet formulaSet, MolecularFormulaRange formulaRange) {
 
         IMolecularFormulaSet newFormulaSet = formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);

@@ -21,8 +21,6 @@ package org.openscience.cdk.graph.invariant;
 import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_RET;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
@@ -39,7 +37,6 @@ import java.util.List;
  * @cdk.module  inchi
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.graph.invariant.InChINumbersToolsTest")
 public class InChINumbersTools {
 
     /**
@@ -50,7 +47,6 @@ public class InChINumbersTools {
      * @return                The number from 1 to the number of heavy atoms.
      * @throws CDKException   When the InChI could not be generated
      */
-    @TestMethod("testSimpleNumbering,testHydrogens,testGlycine")
     public static long[] getNumbers(IAtomContainer atomContainer) throws CDKException {
         String aux = auxInfo(atomContainer);
         aux = aux.substring(aux.indexOf("/N:") + 3);
@@ -72,7 +68,6 @@ public class InChINumbersTools {
      * @return the atom numbers
      * @throws CDKException
      */
-    @TestMethod("testGlycine_uSmiles")
     public static long[] getUSmilesNumbers(IAtomContainer container) throws CDKException {
         String aux = auxInfo(container, INCHI_OPTION.RecMet, INCHI_OPTION.FixedH);
         return parseUSmilesNumbers(aux, container);
@@ -101,7 +96,6 @@ public class InChINumbersTools {
      * @param container the structure to obtain the numbering of
      * @return the numbers string to use
      */
-    @TestMethod("parseStandard,parseRecMet,parseFixedH")
     static long[] parseUSmilesNumbers(String aux, IAtomContainer container) {
 
         int index;
@@ -224,7 +218,6 @@ public class InChINumbersTools {
      * @return auxiliary info
      * @throws CDKException the inchi could not be generated
      */
-    @TestMethod("fixedH")
     static String auxInfo(IAtomContainer container, INCHI_OPTION... options) throws CDKException {
         InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
         boolean org = factory.getIgnoreAromaticBonds();

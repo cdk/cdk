@@ -37,8 +37,6 @@ import net.sf.jniinchi.JniInchiStereo0D;
 import net.sf.jniinchi.JniInchiWrapper;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -88,7 +86,6 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * @cdk.module inchi
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.inchi.InChIToStructureTest")
 public class InChIToStructure {
 
     protected JniInchiInputInchi      input;
@@ -105,7 +102,6 @@ public class InChIToStructure {
      * @param inchi
      * @throws CDKException
      */
-    @TestMethod("testConstructor_String_IChemObjectBuilder")
     protected InChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
         try {
             input = new JniInchiInputInchi(inchi, "");
@@ -151,7 +147,6 @@ public class InChIToStructure {
      *
      * @throws CDKException
      */
-    @TestMethod("testGetAtomContainer_IChemObjectBuilder")
     protected void generateAtomContainerFromInchi(IChemObjectBuilder builder) throws CDKException {
         try {
             output = JniInchiWrapper.getStructureFromInchi(input);
@@ -384,7 +379,6 @@ public class InChIToStructure {
      * Returns generated molecule.
      * @return An AtomContainer object
      */
-    @TestMethod("testGetAtomContainer")
     public IAtomContainer getAtomContainer() {
         return (molecule);
     }
@@ -394,7 +388,6 @@ public class InChIToStructure {
      * InChI has been generated, in all other cases InChI generation
      * has failed.
      */
-    @TestMethod("testGetReturnStatus_EOF")
     public INCHI_RET getReturnStatus() {
         return (output.getReturnStatus());
     }
@@ -402,7 +395,6 @@ public class InChIToStructure {
     /**
      * Gets generated (error/warning) messages.
      */
-    @TestMethod("testGetMessage")
     public String getMessage() {
         return (output.getMessage());
     }
@@ -410,7 +402,6 @@ public class InChIToStructure {
     /**
      * Gets generated log.
      */
-    @TestMethod("testGetLog")
     public String getLog() {
         return (output.getLog());
     }
@@ -424,7 +415,6 @@ public class InChIToStructure {
      * <br>y=1 => Main layer or Mobile-H
      * <br>y=0 => Fixed-H layer
      */
-    @TestMethod("testGetWarningFlags")
     public long[][] getWarningFlags() {
         return (output.getWarningFlags());
     }

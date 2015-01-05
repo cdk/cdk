@@ -1,7 +1,5 @@
 package org.openscience.cdk.formula;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
@@ -14,7 +12,6 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @cdk.module  formula
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.formula.IsotopeContainerTest")
 public class IsotopeContainer {
 
     private IMolecularFormula form;
@@ -35,7 +32,6 @@ public class IsotopeContainer {
      * @param formula        The formula of this container
      * @param intensity      The intensity of this container
      */
-    @TestMethod("testIsotopeContainer_IMolecularFormula_double")
     public IsotopeContainer(IMolecularFormula formula, double intensity) {
         form = formula;
         if (formula != null) masOs = MolecularFormulaManipulator.getTotalExactMass(formula);
@@ -49,7 +45,6 @@ public class IsotopeContainer {
      * @param mass           The mass of this container
      * @param intensity      The intensity of this container
      */
-    @TestMethod("testIsotopeContainer_double_double")
     public IsotopeContainer(double mass, double intensity) {
         masOs = mass;
         inte = intensity;
@@ -60,7 +55,6 @@ public class IsotopeContainer {
      *
      * @param formula The IMolecularFormula of the this container
      */
-    @TestMethod("testSetFormula_IMolecularFormula")
     public void setFormula(IMolecularFormula formula) {
         form = formula;
     }
@@ -70,7 +64,6 @@ public class IsotopeContainer {
      *
      * @param mass The mass of the this container
      */
-    @TestMethod("testSetMass_double")
     public void setMass(double mass) {
         masOs = mass;
     }
@@ -80,7 +73,6 @@ public class IsotopeContainer {
      *
      * @param intensity The intensity of the this container
      */
-    @TestMethod("testSetIntensity_double")
     public void setIntensity(double intensity) {
         inte = intensity;
     }
@@ -90,7 +82,6 @@ public class IsotopeContainer {
      *
      * @return The IMolecularformula of the this container
      */
-    @TestMethod("testGetFormula")
     public IMolecularFormula getFormula() {
         return form;
     }
@@ -100,7 +91,6 @@ public class IsotopeContainer {
      *
      * @return The mass of the this container
      */
-    @TestMethod("testGetMass")
     public double getMass() {
         return masOs;
     }
@@ -110,7 +100,6 @@ public class IsotopeContainer {
      *
      * @return The intensity of the this container
      */
-    @TestMethod("testGetIntensity")
     public double getIntensity() {
         return inte;
     }
@@ -120,7 +109,6 @@ public class IsotopeContainer {
      *
      * @return    The cloned object
      */
-    @TestMethod("testClone")
     @Override
     public Object clone() throws CloneNotSupportedException {
         IsotopeContainer isoClone = new IsotopeContainer();

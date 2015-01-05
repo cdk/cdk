@@ -23,8 +23,6 @@
 package org.openscience.cdk.fragment;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -73,7 +71,6 @@ import java.util.Set;
  * @cdk.keyword framework
  * @see org.openscience.cdk.fragment.ExhaustiveFragmenter
  */
-@TestClass("org.openscience.cdk.fragment.MurckoFragmenterTest")
 public class MurckoFragmenter implements IFragmenter {
 
     private static final String IS_SIDECHAIN_ATOM    = "sidechain";
@@ -95,7 +92,6 @@ public class MurckoFragmenter implements IFragmenter {
      * Considers fragments with 5 or more atoms and generates multiple
      * frameworks if available.
      */
-    @TestMethod("testMF1,testMF2,testMF3")
     public MurckoFragmenter() {
         this(false, 5, null);
     }
@@ -106,7 +102,6 @@ public class MurckoFragmenter implements IFragmenter {
      * @param singleFrameworkOnly if <code>true</code>, only the true Murcko framework is generated.
      * @param minimumFragmentSize the smallest size of fragment to consider
      */
-    @TestMethod("testMF1,testMF2,testMF3")
     public MurckoFragmenter(boolean singleFrameworkOnly, int minimumFragmentSize) {
         this(singleFrameworkOnly, minimumFragmentSize, null);
     }
@@ -119,7 +114,6 @@ public class MurckoFragmenter implements IFragmenter {
      * @param generator           An instance of a {@link MoleculeHashGenerator} to be used to check for
      *                            duplicate fragments
      */
-    @TestMethod("testSingleFramework")
     public MurckoFragmenter(boolean singleFrameworkOnly, int minimumFragmentSize, MoleculeHashGenerator generator) {
         this.singleFrameworkOnly = singleFrameworkOnly;
         this.minimumFragmentSize = minimumFragmentSize;
@@ -138,7 +132,6 @@ public class MurckoFragmenter implements IFragmenter {
      * @param atomContainer The input molecule
      * @throws CDKException
      */
-    @TestMethod("testMF1, testMF2, testMF3, testMF4, testMF5, testMF6")
     @Override
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
         Set<Long> fragmentSet = new HashSet<Long>();
@@ -358,7 +351,6 @@ public class MurckoFragmenter implements IFragmenter {
      * @see #getFrameworks()
      * @see #getFrameworksAsContainers()
      */
-    @TestMethod("testMF1")
     @Override
     public String[] getFragments() {
         List<String> allfrags = new ArrayList<String>();
@@ -372,7 +364,6 @@ public class MurckoFragmenter implements IFragmenter {
      *
      * @return An array of structures representing frameworks and ring systems
      */
-    @TestMethod("testGetFragmentsAsContainers")
     @Override
     public IAtomContainer[] getFragmentsAsContainers() {
         List<IAtomContainer> allfrags = new ArrayList<IAtomContainer>();
@@ -386,7 +377,6 @@ public class MurckoFragmenter implements IFragmenter {
      *
      * @return a String[] of the fragments.
      */
-    @TestMethod("testMF1")
     public String[] getRingSystems() {
         return getSmilesFromAtomContainers(ringMap.values()).toArray(new String[]{});
     }
@@ -396,7 +386,6 @@ public class MurckoFragmenter implements IFragmenter {
      *
      * @return an array of ring systems.
      */
-    @TestMethod("testMF2,testMF3")
     public IAtomContainer[] getRingSystemsAsContainers() {
         return ringMap.values().toArray(new IAtomContainer[0]);
     }
@@ -406,7 +395,6 @@ public class MurckoFragmenter implements IFragmenter {
      *
      * @return an array of SMILES strings
      */
-    @TestMethod("testMF2,testMF3")
     public String[] getFrameworks() {
         return getSmilesFromAtomContainers(frameMap.values()).toArray(new String[]{});
     }
@@ -416,7 +404,6 @@ public class MurckoFragmenter implements IFragmenter {
      *
      * @return an array of frameworks.
      */
-    @TestMethod("testMF1_Container,testMF3_Container")
     public IAtomContainer[] getFrameworksAsContainers() {
         return frameMap.values().toArray(new IAtomContainer[0]);
     }

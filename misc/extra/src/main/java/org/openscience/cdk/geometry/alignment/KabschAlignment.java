@@ -22,8 +22,6 @@ package org.openscience.cdk.geometry.alignment;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -92,7 +90,6 @@ import Jama.Matrix;
  * @cdk.dictref      blue-obelisk:alignmentKabsch
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.alignment.KabschAlignmentTest")
 public class KabschAlignment {
 
     private ILoggingTool logger = LoggingToolFactory.createLoggingTool(KabschAlignment.class);
@@ -234,7 +231,6 @@ public class KabschAlignment {
      *            so that the RMDS is minimized to the coordinates of the first one
      * @throws CDKException if the number of atom's are not the same in the two AtomContainer's
      */
-    @TestMethod("testAlign")
     public KabschAlignment(IAtomContainer ac1, IAtomContainer ac2) throws CDKException {
         if (ac1.getAtomCount() != ac2.getAtomCount()) {
             throw new CDKException("The AtomContainer's being aligned must have the same number of atoms");
@@ -283,7 +279,6 @@ public class KabschAlignment {
      * This method aligns to set of atoms which should have been specified
      * prior to this call
      */
-    @TestMethod("testAlign")
     public void align() {
 
         Matrix tmp;
@@ -427,7 +422,6 @@ public class KabschAlignment {
      * @return The RMSD for this alignment
      * @see #align
      */
-    @TestMethod("testAlign")
     public double getRMSD() {
         return (this.rmsd);
     }
@@ -438,7 +432,6 @@ public class KabschAlignment {
      * @return A double[][] representing the rotation matrix
      * @see #align
      */
-    @TestMethod("testAlign")
     public double[][] getRotationMatrix() {
         return (this.U);
     }

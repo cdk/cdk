@@ -27,8 +27,6 @@ import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Element;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -47,7 +45,6 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @cdk.githash
  * @cdk.keyword    aromatic ring, bond order adjustment
  */
-@TestClass("org.openscience.cdk.tools.DeAromatizationToolTest")
 public class DeAromatizationTool {
 
     /**
@@ -58,7 +55,6 @@ public class DeAromatizationTool {
      * @param ring Ring to dearomatize
      * @return  False if it could not convert the aromatic ring bond into single and double bonds
      */
-    @TestMethod("testDeAromatize_IRing,testPyridine,testBezene")
     public static boolean deAromatize(IRing ring) {
         boolean allaromatic = true;
         for (int i = 0; i < ring.getBondCount(); i++) {

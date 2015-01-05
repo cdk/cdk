@@ -27,8 +27,6 @@ import java.io.Writer;
 
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -50,7 +48,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  * @cdk.iooptions
  */
-@TestClass("org.openscience.cdk.io.CrystClustWriterTest")
 public class CrystClustWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter      writer;
@@ -82,7 +79,6 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return CrystClustFormat.getInstance();
@@ -102,7 +98,6 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         setWriter(new OutputStreamWriter(output));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
@@ -132,7 +127,6 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         writer.close();

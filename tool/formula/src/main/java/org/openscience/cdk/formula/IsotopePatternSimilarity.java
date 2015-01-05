@@ -1,8 +1,5 @@
 package org.openscience.cdk.formula;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * This class gives a score hit of similarity between two different
  * isotope abundance pattern.
@@ -12,7 +9,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module  formula
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.formula.IsotopePatternSimilarityTest")
 public class IsotopePatternSimilarity {
 
     private double        chargeToAdd;
@@ -31,7 +27,6 @@ public class IsotopePatternSimilarity {
      *
      * @param tolerance  The tolerance value
      */
-    @TestMethod("testSeTolerance_double")
     public void seTolerance(double tolerance) {
         tolerance_ppm = tolerance;
     }
@@ -41,7 +36,6 @@ public class IsotopePatternSimilarity {
      *
      * @return The tolerance value
      */
-    @TestMethod("testGetTolerance")
     public double getTolerance() {
         return tolerance_ppm;
     }
@@ -55,7 +49,6 @@ public class IsotopePatternSimilarity {
      * @param  isoto2  The Isotope pattern reference (detected)
      * @return         The hit score of similarity
      */
-    @TestMethod("testCompare_IsotopePattern_IsotopePattern")
     public double compare(IsotopePattern isoto1, IsotopePattern isoto2) {
 
         IsotopePattern iso1 = IsotopePatternManipulator.sortAndNormalizedByIntensity(isoto1);

@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -33,7 +31,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.keyword association
  * @cdk.keyword bond
  */
-@TestClass("org.openscience.cdk.AssociationTest")
 public class Association extends ElectronContainer implements java.io.Serializable, Cloneable {
 
     /**
@@ -60,7 +57,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      * @param atom2 An atom to be associated with another atom
      * @see org.openscience.cdk.Atom
      */
-    @TestMethod("testAssociation_IAtom_IAtom")
     public Association(IAtom atom1, IAtom atom2) {
         atoms = new IAtom[2];
         atoms[0] = atom1;
@@ -73,7 +69,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      *
      * @see org.openscience.cdk.Atom
      */
-    @TestMethod("testAssociation")
     public Association() {
         atoms = new Atom[2];
         atomCount = 0;
@@ -86,7 +81,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      *
      * @see    #setAtoms
      */
-    @TestMethod("testGetAtoms")
     public IAtom[] getAtoms() {
         IAtom[] returnAtoms = new Atom[atomCount];
         System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
@@ -100,7 +94,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      *
      * @see    #getAtoms
      */
-    @TestMethod("testSetAtoms")
     public void setAtoms(IAtom[] atoms) {
         this.atoms = atoms;
         notifyChanged();
@@ -111,7 +104,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      *
      * @return The number of Atoms in this Association
      */
-    @TestMethod("testGetAtomCount")
     public int getAtomCount() {
         return atomCount;
     }
@@ -121,7 +113,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      *
      * @return The number of electrons in a Association.
      */
-    @TestMethod("testGetAtomAt")
     @Override
     public Integer getElectronCount() {
         return 0;
@@ -135,7 +126,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      *
      * @see     #setAtomAt
      */
-    @TestMethod("testGetAtomAt")
     public IAtom getAtomAt(int position) {
         return atoms[position];
     }
@@ -146,7 +136,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      * @param   atom  The atom to be tested if it participates in this Association
      * @return     true if the atom participates in this Association
      */
-    @TestMethod("testContains")
     public boolean contains(IAtom atom) {
         for (IAtom atom1 : atoms) {
             if (atom1 == atom) {
@@ -164,7 +153,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      *
      * @see     #getAtomAt
      */
-    @TestMethod("testSetAtomAt")
     public void setAtomAt(IAtom atom, int position) {
         atoms[position] = atom;
         notifyChanged();
@@ -176,7 +164,6 @@ public class Association extends ElectronContainer implements java.io.Serializab
      *
      * @return    The string representation of this Container
      */
-    @TestMethod("testToString")
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();

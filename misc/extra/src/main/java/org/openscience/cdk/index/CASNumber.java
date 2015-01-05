@@ -23,9 +23,6 @@
 
 package org.openscience.cdk.index;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +46,6 @@ import java.util.regex.Pattern;
  * @cdk.keyword CAS number
  * @cdk.require java1.4+
  */
-@TestClass("org.openscience.cdk.index.CASNumberTest")
 public class CASNumber {
 
     /**
@@ -60,7 +56,6 @@ public class CASNumber {
      * @cdk.keyword validation
      * @return true if a valid CAS number, false otherwise
      */
-    @TestMethod("testInvalidCheckDigits,testValidNumbers")
     public static boolean isValid(String casNumber) {
         boolean overall = true;
         /*
