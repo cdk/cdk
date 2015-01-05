@@ -29,8 +29,6 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -52,7 +50,6 @@ import org.xml.sax.XMLReader;
  *
  * @author     Egon Willighagen
  */
-@TestClass("org.openscience.cdk.config.isotopes.IsotopeReaderTest")
 public class IsotopeReader {
 
     private XMLReader           parser;
@@ -67,7 +64,6 @@ public class IsotopeReader {
      * @param input   InputStream with the XML source
      * @param builder The {@link IChemObjectBuilder} used to create new IIsotope's.
      */
-    @TestMethod("testIsotopeReader_InputStream_IChemObjectBuilder")
     public IsotopeReader(InputStream input, IChemObjectBuilder builder) {
         this.init();
         this.input = input;
@@ -126,7 +122,6 @@ public class IsotopeReader {
      * @return a List of Isotope's. Returns an empty list is some reading error
      *         occurred.
      */
-    @TestMethod("testReadIsotopes,testReadIsotopes2")
     public List<IIsotope> readIsotopes() {
         List<IIsotope> isotopes = new ArrayList<IIsotope>();
         try {

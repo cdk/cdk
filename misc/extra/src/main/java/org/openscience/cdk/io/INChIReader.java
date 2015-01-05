@@ -30,8 +30,6 @@ import java.io.Reader;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -66,7 +64,6 @@ import org.xml.sax.XMLReader;
  *
  * @see     org.openscience.cdk.io.inchi.INChIHandler
  */
-@TestClass("org.openscience.cdk.io.INChIReaderTest")
 public class INChIReader extends DefaultChemObjectReader {
 
     private XMLReader           parser;
@@ -88,7 +85,6 @@ public class INChIReader extends DefaultChemObjectReader {
         this(new ByteArrayInputStream(new byte[0]));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return INChIFormat.getInstance();
@@ -98,13 +94,11 @@ public class INChIReader extends DefaultChemObjectReader {
      * This method must not be used; XML reading requires the use of an InputStream.
      * Use setReader(InputStream) instead.
      */
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) throws CDKException {
         throw new CDKException("Invalid method call; use SetReader(InputStream) instead.");
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         this.input = input;
@@ -158,7 +152,6 @@ public class INChIReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -217,7 +210,6 @@ public class INChIReader extends DefaultChemObjectReader {
         return cf;
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

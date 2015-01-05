@@ -2,9 +2,6 @@ package org.openscience.cdk.formula;
 
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * Class to manipulate IsotopePattern objects.
  *
@@ -13,7 +10,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module  formula
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.formula.IsotopePatternManipulatorTest")
 public class IsotopePatternManipulator {
 
     /**
@@ -22,7 +18,6 @@ public class IsotopePatternManipulator {
      * @param isotopeP  The IsotopePattern object to normalize
      * @return          The IsotopePattern normalized
      */
-    @TestMethod("testNormalize_IsotopePattern")
     public static IsotopePattern normalize(IsotopePattern isotopeP) {
         IsotopeContainer isoHighest = null;
 
@@ -64,7 +59,6 @@ public class IsotopePatternManipulator {
      * @param isotopeP  The IsotopePattern object to sort
      * @return          The IsotopePattern sorted
      */
-    @TestMethod("testSortAndNormalizedByIntensity_IsotopePattern")
     public static IsotopePattern sortAndNormalizedByIntensity(IsotopePattern isotopeP) {
         IsotopePattern isoNorma = normalize(isotopeP);
         return sortByIntensity(isoNorma);
@@ -77,7 +71,6 @@ public class IsotopePatternManipulator {
      * @param isotopeP  The IsotopePattern object to sort
      * @return          The IsotopePattern sorted
      */
-    @TestMethod("testSortByIntensity_IsotopePattern")
     public static IsotopePattern sortByIntensity(IsotopePattern isotopeP) {
         try {
             IsotopePattern isoSort = new IsotopePattern();
@@ -119,7 +112,6 @@ public class IsotopePatternManipulator {
      * @param isotopeP  The IsotopePattern object to sort
      * @return          The IsotopePattern sorted
      */
-    @TestMethod("testSortByMass_IsotopePattern")
     public static IsotopePattern sortByMass(IsotopePattern isotopeP) {
         try {
             IsotopePattern isoSort = new IsotopePattern();

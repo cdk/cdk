@@ -7,8 +7,6 @@ import java.util.NoSuchElementException;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -48,7 +46,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword file format SDF
  * @cdk.keyword conformer conformation
  */
-@TestClass("org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest")
 public class IteratingMDLConformerReader implements Iterator {
 
     private IteratingSDFReader imdlr;
@@ -58,19 +55,16 @@ public class IteratingMDLConformerReader implements Iterator {
     private boolean            hasNext     = false;
     private boolean            nextIsKnown = false;
 
-    @TestMethod("testSDF")
     public IteratingMDLConformerReader(Reader in, IChemObjectBuilder builder) {
         imdlr = new IteratingSDFReader(in, builder);
         container = new ConformerContainer();
     }
 
-    @TestMethod("testSDF")
     public IteratingMDLConformerReader(InputStream in, IChemObjectBuilder builder) {
         imdlr = new IteratingSDFReader(in, builder);
         container = new ConformerContainer();
     }
 
-    @TestMethod("testSDF")
     @Override
     public boolean hasNext() {
 
@@ -101,7 +95,6 @@ public class IteratingMDLConformerReader implements Iterator {
         return hasNext;
     }
 
-    @TestMethod("testSDF")
     @Override
     public Object next() {
         if (!nextIsKnown) hasNext();
@@ -111,7 +104,6 @@ public class IteratingMDLConformerReader implements Iterator {
         return container; //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @TestMethod("testRemove")
     @Override
     public void remove() {
         throw new UnsupportedOperationException();

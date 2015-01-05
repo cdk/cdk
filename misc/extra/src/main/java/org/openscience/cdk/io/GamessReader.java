@@ -29,8 +29,6 @@ import java.io.StringReader;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.PhysicalConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -91,7 +89,6 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 //TODO Update class comments with appropriate information.
 //TODO Update "see" tag with reference to GamessWriter when it will be implemented.
 //TODO Update "author" tag with appropriate information.
-@TestClass("org.openscience.cdk.io.GamessReaderTest")
 public class GamessReader extends DefaultChemObjectReader {
 
     /**
@@ -155,25 +152,21 @@ public class GamessReader extends DefaultChemObjectReader {
      */
     //TODO Update comment with appropriate information to comply Constructor's documentation.
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return GamessFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) throws CDKException {
         this.input = new BufferedReader(input);
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -443,7 +436,6 @@ public class GamessReader extends DefaultChemObjectReader {
      * @see org.openscience.cdk.io.ChemObjectIO#close()
      */
     //TODO Answer the question : What are all concerned ressources ?
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         /*

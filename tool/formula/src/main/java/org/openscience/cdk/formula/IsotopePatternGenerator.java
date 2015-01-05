@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -44,7 +43,6 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @cdk.keyword isotope pattern
  *
  */
-@TestClass("org.openscience.cdk.formula.IsotopePatternGeneratorTest")
 public class IsotopePatternGenerator {
 
     private IChemObjectBuilder builder        = null;

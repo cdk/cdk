@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.fragment;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -41,7 +39,6 @@ import java.util.List;
  * @author Rajarshi Guha
  * @cdk.module fragment
  */
-@TestClass("org.openscience.cdk.fragment.FragmentUtilsTest")
 public class FragmentUtils {
 
     /**
@@ -54,7 +51,6 @@ public class FragmentUtils {
      * @param bond The bond to split at
      * @return A list containing the two parts of the molecule
      */
-    @TestMethod("testSplit")
     protected static List<IAtomContainer> splitMolecule(IAtomContainer atomContainer, IBond bond) {
         List<IAtomContainer> ret = new ArrayList<IAtomContainer>();
 
@@ -100,7 +96,6 @@ public class FragmentUtils {
     // at a bond, we need to create an IAtomContainer from it, containing *one* of the atoms
     // of the splitting bond. In addition, the new IAtomContainer should not contain the
     // splitting bond itself
-    @TestMethod("testMakeAtomContainer")
     protected static IAtomContainer makeAtomContainer(IAtom atom, List<IBond> parts, IAtom excludedAtom) {
         IAtomContainer partContainer = atom.getBuilder().newInstance(IAtomContainer.class);
         partContainer.addAtom(atom);
@@ -114,7 +109,6 @@ public class FragmentUtils {
         return partContainer;
     }
 
-    @TestMethod("testTraversal_Chain")
     protected static List<IBond> traverse(IAtomContainer atomContainer, IAtom atom, List<IBond> bondList) {
         List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
         for (IBond aBond : connectedBonds) {

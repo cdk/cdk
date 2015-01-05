@@ -27,8 +27,6 @@ import java.io.Reader;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -48,7 +46,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  * @cdk.iooptions
  */
-@TestClass("org.openscience.cdk.io.CrystClustReaderTest")
 public class CrystClustReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
@@ -69,13 +66,11 @@ public class CrystClustReader extends DefaultChemObjectReader {
         this(new InputStreamReader(input));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return CrystClustFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) throws CDKException {
         if (reader instanceof BufferedReader) {
@@ -85,13 +80,11 @@ public class CrystClustReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -239,7 +232,6 @@ public class CrystClustReader extends DefaultChemObjectReader {
         return file;
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

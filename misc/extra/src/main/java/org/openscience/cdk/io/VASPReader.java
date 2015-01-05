@@ -31,8 +31,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -56,7 +54,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author  Fabian Dortu <Fabian.Dortu@wanadoo.be>
  */
-@TestClass("org.openscience.cdk.io.VSPReaderTest")
 public class VASPReader extends DefaultChemObjectReader {
 
     private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(VASPReader.class);
@@ -100,13 +97,11 @@ public class VASPReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return VASPFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -116,13 +111,11 @@ public class VASPReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class classObject) {
         return IChemFile.class.isAssignableFrom(classObject);
@@ -339,7 +332,6 @@ public class VASPReader extends DefaultChemObjectReader {
         return fieldVal;
     } //end nextVASPTokenFollowing(String string)
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         inputBuffer.close();

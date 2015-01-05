@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
@@ -43,7 +41,6 @@ import org.openscience.cdk.interfaces.IIsotope;
  * @cdk.keyword molecular formula
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.formula.MolecularFormulaRangeTest")
 public class MolecularFormulaRange implements Cloneable {
 
     private Map<IIsotope, Integer> isotopesMax;
@@ -66,7 +63,6 @@ public class MolecularFormulaRange implements Cloneable {
      * @param  countMin The minimal number of occurrences to add
      *
      */
-    @TestMethod("testAddIsotope_IIsotope_int_int")
     public void addIsotope(IIsotope isotope, int countMin, int countMax) {
         boolean flag = false;
         for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
@@ -92,7 +88,6 @@ public class MolecularFormulaRange implements Cloneable {
      * @param  isotope  The IIsotope this MolecularFormula is searched for
      * @return          True, if the MolecularFormula contains the given isotope object
      */
-    @TestMethod("testContains_IIsotope")
     public boolean contains(IIsotope isotope) {
         for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
             IIsotope thisIsotope = it.next();
@@ -111,7 +106,6 @@ public class MolecularFormulaRange implements Cloneable {
      * @param   isotope          The IIsotope to look for
      * @return                   The occurrence of this isotope in this IMolecularFormula
      */
-    @TestMethod("testGetIsotopeCountMax_IIsotope")
     public int getIsotopeCountMax(IIsotope isotope) {
         return !contains(isotope) ? -1 : isotopesMax.get(getIsotope(isotope));
     }
@@ -124,7 +118,6 @@ public class MolecularFormulaRange implements Cloneable {
      * @param   isotope          The IIsotope to look for
      * @return                   The occurrence of this isotope in this IMolecularFormula
      */
-    @TestMethod("testGetIsotopeCountMin_IIsotope")
     public int getIsotopeCountMin(IIsotope isotope) {
         return !contains(isotope) ? -1 : isotopesMin.get(getIsotope(isotope));
     }
@@ -135,7 +128,6 @@ public class MolecularFormulaRange implements Cloneable {
      *
      * @return        The the number of different isotopes in this MolecularFormulaExpand
      */
-    @TestMethod("testGetIsotopeCount")
     public int getIsotopeCount() {
         return isotopesMax.size();
     }
@@ -162,7 +154,6 @@ public class MolecularFormulaRange implements Cloneable {
      *
      * @return    An Iterator with the isotopes in this MolecularFormulaExpand
      */
-    @TestMethod("testIsotopes")
     public Iterable<IIsotope> isotopes() {
         return new Iterable<IIsotope>() {
 
@@ -176,7 +167,6 @@ public class MolecularFormulaRange implements Cloneable {
     /**
      * Removes all isotopes of this molecular formula.
      */
-    @TestMethod("testRemoveAllIsotopes")
     public void removeAllIsotopes() {
         isotopesMax.clear();
         isotopesMin.clear();
@@ -187,7 +177,6 @@ public class MolecularFormulaRange implements Cloneable {
      *
      * @param isotope  The IIsotope to be removed
      */
-    @TestMethod("testRemoveIsotope_IIsotope")
     public void removeIsotope(IIsotope isotope) {
         isotopesMax.remove(getIsotope(isotope));
         isotopesMin.remove(getIsotope(isotope));
@@ -199,7 +188,6 @@ public class MolecularFormulaRange implements Cloneable {
      *
      * @return    The cloned object
      */
-    @TestMethod("testClone")
     @Override
     public Object clone() throws CloneNotSupportedException {
 

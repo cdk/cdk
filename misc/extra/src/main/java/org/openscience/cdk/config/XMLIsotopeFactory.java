@@ -23,8 +23,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -56,7 +54,6 @@ import org.openscience.cdk.interfaces.IIsotope;
  * @cdk.keyword    isotope
  * @cdk.keyword    element
  */
-@TestClass("org.openscience.cdk.config.XMLIsotopeFactoryTest")
 public class XMLIsotopeFactory extends IsotopeFactory {
 
     private static XMLIsotopeFactory ifac  = null;
@@ -110,7 +107,6 @@ public class XMLIsotopeFactory extends IsotopeFactory {
      * @return                             The instance value
      * @exception  IOException  if isotopic data files could not be read.
      */
-    @TestMethod("testGetInstance_IChemObjectBuilder")
     public static XMLIsotopeFactory getInstance(IChemObjectBuilder builder) throws IOException {
         if (ifac == null) {
             ifac = new XMLIsotopeFactory(builder);

@@ -45,8 +45,6 @@ import net.sf.jniinchi.JniInchiStereo0D;
 import net.sf.jniinchi.JniInchiWrapper;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -99,7 +97,6 @@ import org.openscience.cdk.stereo.ExtendedTetrahedral;
  * @cdk.module inchi
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.inchi.InChIGeneratorTest")
 public class InChIGenerator {
 
     protected JniInchiInput  input;
@@ -122,7 +119,6 @@ public class InChIGenerator {
      * @throws org.openscience.cdk.exception.CDKException if there is an
      * error during InChI generation
      */
-    @TestMethod("testGetInchiFromChlorineAtom,testGetInchiFromLithiumIon,testGetStandardInchiFromChlorine37Atom")
     protected InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
         try {
             input = new JniInchiInput("");
@@ -523,7 +519,6 @@ public class InChIGenerator {
      * InChI has been generated, in all other cases InChI generation
      * has failed.
      */
-    @TestMethod("testGetInchiFromLandDAlanine3D,testGetInchiEandZ12Dichloroethene2D")
     public INCHI_RET getReturnStatus() {
         return (output.getReturnStatus());
     }
@@ -531,7 +526,6 @@ public class InChIGenerator {
     /**
      * Gets generated InChI string.
      */
-    @TestMethod("testGetInchiEandZ12Dichloroethene2D,testGetInchiFromEthyne,testGetInchiFromEthene")
     public String getInchi() {
         return (output.getInchi());
     }
@@ -539,7 +533,6 @@ public class InChIGenerator {
     /**
      * Gets generated InChIKey string.
      */
-    @TestMethod("testGetInchiFromEthane")
     public String getInchiKey() throws CDKException {
         JniInchiOutputKey key;
         try {
@@ -557,7 +550,6 @@ public class InChIGenerator {
     /**
      * Gets auxillary information.
      */
-    @TestMethod("testGetAuxInfo")
     public String getAuxInfo() {
         return (output.getAuxInfo());
     }
@@ -565,7 +557,6 @@ public class InChIGenerator {
     /**
      * Gets generated (error/warning) messages.
      */
-    @TestMethod("testGetMessage,testGetWarningMessage")
     public String getMessage() {
         return (output.getMessage());
     }
@@ -573,7 +564,6 @@ public class InChIGenerator {
     /**
      * Gets generated log.
      */
-    @TestMethod("testGetLog")
     public String getLog() {
         return (output.getLog());
     }

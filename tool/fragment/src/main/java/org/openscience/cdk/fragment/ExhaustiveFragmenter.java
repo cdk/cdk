@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.fragment;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
@@ -54,7 +52,6 @@ import java.util.Map;
  * @cdk.githash
  * @cdk.keyword fragment
  */
-@TestClass("org.openscience.cdk.fragment.ExhaustiveFragmenterTest")
 public class ExhaustiveFragmenter implements IFragmenter {
 
     private static final int    DEFAULT_MIN_FRAG_SIZE = 6;
@@ -69,7 +66,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
     /**
      * Instantiate fragmenter with default minimum fragment size.
      */
-    @TestMethod("testEF1,testEF2,testEF3")
     public ExhaustiveFragmenter() {
         this(DEFAULT_MIN_FRAG_SIZE);
     }
@@ -79,7 +75,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
      *
      * @param minFragSize the minimum fragment size desired
      */
-    @TestMethod("testEF1,testEF2,testEF3")
     public ExhaustiveFragmenter(int minFragSize) {
         this.minFragSize = minFragSize;
         fragMap = new HashMap<String, IAtomContainer>();
@@ -91,7 +86,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
      *
      * @param minFragSize the smallest size fragment that will be returned
      */
-    @TestMethod("testMinSize")
     public void setMinimumFragmentSize(int minFragSize) {
         this.minFragSize = minFragSize;
     }
@@ -101,7 +95,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
      *
      * @param atomContainer The input molecule.
      */
-    @TestMethod("testEF1,testEF2,testEF3,testEF4,testEF5,testEF6,testEF7")
     @Override
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
         fragMap.clear();
@@ -198,7 +191,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
      *
      * @return a String[] of the fragments.
      */
-    @TestMethod("testEF1,testEF2,testEF3,testEF4,testEF5,testEF6,testEF7")
     @Override
     public String[] getFragments() {
         return (new ArrayList<String>(fragMap.keySet())).toArray(new String[0]);
@@ -209,7 +201,6 @@ public class ExhaustiveFragmenter implements IFragmenter {
      *
      * @return a IAtomContainer[] of the fragments.
      */
-    @TestMethod("testEF5,testEF6,testEF7")
     @Override
     public IAtomContainer[] getFragmentsAsContainers() {
         return (new ArrayList<IAtomContainer>(fragMap.values())).toArray(new IAtomContainer[0]);

@@ -26,8 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -46,7 +44,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  * @see         IRule
  */
-@TestClass("org.openscience.cdk.formula.MolecularFormulaCheckerTest")
 public class MolecularFormulaChecker {
 
     private ILoggingTool logger = LoggingToolFactory.createLoggingTool(MolecularFormulaChecker.class);
@@ -69,7 +66,6 @@ public class MolecularFormulaChecker {
      *
      * @return A List with IRule
      */
-    @TestMethod("testGetRules")
     public List<IRule> getRules() {
         return rules;
     }
@@ -84,7 +80,6 @@ public class MolecularFormulaChecker {
      * @return              The percent of the validity
      * @see                 #isValid(IMolecularFormula)
      */
-    @TestMethod("testIsValidSum_IMolecularFormula")
     public Double isValidSum(IMolecularFormula formula) {
         double result = 1.0;
 
@@ -109,7 +104,6 @@ public class MolecularFormulaChecker {
      *                      IRule into properties
      * @see                 #isValidSum(IMolecularFormula)
      */
-    @TestMethod("testIsValid_IMolecularFormula")
     public IMolecularFormula isValid(IMolecularFormula formula) {
         logger.info("Generating the validity of the molecular formula");
 
