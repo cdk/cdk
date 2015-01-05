@@ -28,7 +28,6 @@ import java.util.TreeSet;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -80,6 +79,7 @@ public class MolecularFormulaGenerator {
 
     private static final ILoggingTool logger = LoggingToolFactory
             .createLoggingTool(MolecularFormulaGenerator.class);
+
     private final IChemObjectBuilder builder;
 
     /**
@@ -119,7 +119,7 @@ public class MolecularFormulaGenerator {
      *            Upper boundary of the target mass range
      * @param mfRange
      *            A range of elemental compositions defining the search space
-     * @throws CDKException
+     * @throws IllegalArgumentException
      *             In case some of the isotopes in mfRange has undefined exact
      *             mass or in case illegal parameters are provided (e.g.,
      *             negative mass values or empty MolecularFormulaRange)
@@ -127,23 +127,24 @@ public class MolecularFormulaGenerator {
      */
     public MolecularFormulaGenerator(final IChemObjectBuilder builder,
             final double minMass, final double maxMass,
-            final MolecularFormulaRange mfRange) throws CDKException {
+            final MolecularFormulaRange mfRange) {
 
         logger.info("Initiate MolecularFormulaGenerator, mass range ", minMass,
                 "-", maxMass);
 
         // Check parameter values
         if ((minMass < 0.0) || (maxMass < 0.0)) {
-            throw (new CDKException(
+            throw (new IllegalArgumentException(
                     "The minimum and maximum mass values must be >=0"));
         }
 
         if ((minMass > maxMass)) {
-            throw (new CDKException("Minimum mass must be <= maximum mass"));
+            throw (new IllegalArgumentException(
+                    "Minimum mass must be <= maximum mass"));
         }
 
         if ((mfRange == null) || (mfRange.getIsotopeCount() == 0)) {
-            throw (new CDKException(
+            throw (new IllegalArgumentException(
                     "The MolecularFormulaRange parameter must be non-null and must contain at least one isotope"));
         }
 
@@ -159,8 +160,9 @@ public class MolecularFormulaGenerator {
         for (IIsotope isotope : mfRange.isotopes()) {
             // Check if exact mass of each isotope is set
             if (isotope.getExactMass() == null)
-                throw new CDKException("The exact mass value of isotope "
-                        + isotope + " is not set");
+                throw new IllegalArgumentException(
+                        "The exact mass value of isotope " + isotope
+                                + " is not set");
             isotopesSet.add(isotope);
         }
         isotopes = isotopesSet.toArray(new IIsotope[isotopesSet.size()]);

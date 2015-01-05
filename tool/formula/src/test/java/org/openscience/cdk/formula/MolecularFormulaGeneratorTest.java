@@ -23,7 +23,6 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -196,7 +195,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
      * Test empty molecular formula range
      *
      */
-    @Test(expected = CDKException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testEmptyMFRange() throws Exception {
         new MolecularFormulaGenerator(builder, 0, 100,
                 new MolecularFormulaRange());
@@ -205,7 +204,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
     /**
      * Test negative mass
      */
-    @Test(expected = CDKException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testNegativeMass() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
