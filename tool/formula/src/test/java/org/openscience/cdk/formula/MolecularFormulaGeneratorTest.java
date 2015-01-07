@@ -626,16 +626,16 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         Assert.assertNotNull(mfSet);
         Assert.assertEquals(1, mfSet.size());
 
-        IMolecularFormula mf1 = new MolecularFormula(); // C3CH5
-        mf1.addIsotope(c, 3);
-        mf1.addIsotope(c13, 1);
-        mf1.addIsotope(h, 5);
+        IMolecularFormula trueFormula = new MolecularFormula(); // C3CH5
+        trueFormula.addIsotope(c, 3);
+        trueFormula.addIsotope(c13, 1);
+        trueFormula.addIsotope(h, 5);
 
-        Assert.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(0)
-                .getIsotopeCount());
-        Assert.assertEquals(mf1.getIsotopeCount(c), mfSet
+        Assert.assertEquals(trueFormula.getIsotopeCount(), mfSet
+                .getMolecularFormula(0).getIsotopeCount());
+        Assert.assertEquals(trueFormula.getIsotopeCount(c), mfSet
                 .getMolecularFormula(0).getIsotopeCount(c));
-        Assert.assertEquals(mf1.getIsotopeCount(c13), mfSet
+        Assert.assertEquals(trueFormula.getIsotopeCount(c13), mfSet
                 .getMolecularFormula(0).getIsotopeCount(c13));
 
     }
@@ -667,9 +667,70 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         IMolecularFormulaSet mfSet = gen.getAllFormulas();
 
         Assert.assertNotNull(mfSet);
-        Assert.assertEquals(mfSet.size(), 1);
+        Assert.assertEquals(1, mfSet.size());
         Assert.assertEquals("C7H15N2O4", MolecularFormulaManipulator
                 .getString(mfSet.getMolecularFormula(0)));
+
+    }
+
+    /**
+     * Test if zero results are returned in case the target mass range is too
+     * high
+     */
+    @Test
+    public void testMassRangeTooHigh() throws Exception {
+
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope n = ifac.getMajorIsotope("N");
+        IIsotope o = ifac.getMajorIsotope("O");
+
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(c, 0, 10);
+        mfRange.addIsotope(h, 0, 10);
+        mfRange.addIsotope(o, 0, 10);
+        mfRange.addIsotope(n, 0, 10);
+
+        double massMin = 1000d;
+        double massMax = 2000d;
+        MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
+                massMin, massMax, mfRange);
+
+        IMolecularFormulaSet mfSet = gen.getAllFormulas();
+
+        Assert.assertNotNull(mfSet);
+        Assert.assertEquals(0, mfSet.size());
+
+    }
+
+    /**
+     * Test if zero results are returned in case the target mass range is too
+     * low
+     */
+    @Test
+    public void testMassRangeTooLow() throws Exception {
+
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope n = ifac.getMajorIsotope("N");
+        IIsotope o = ifac.getMajorIsotope("O");
+
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(c, 100, 200);
+        mfRange.addIsotope(h, 100, 200);
+        mfRange.addIsotope(o, 100, 200);
+        mfRange.addIsotope(n, 100, 200);
+
+        double massMin = 50d;
+        double massMax = 100d;
+        MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
+                massMin, massMax, mfRange);
+
+        IMolecularFormulaSet mfSet = gen.getAllFormulas();
+        Assert.assertNotNull(mfSet);
+        Assert.assertEquals(0, mfSet.size());
 
     }
 

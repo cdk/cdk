@@ -97,9 +97,12 @@ public class MolecularFormulaGenerator {
      * order: [0,0,0], [1,0,0], [2,0,0], [3,0,0], [0,1,0], [1,1,0], [2,1,0],
      * [3,1,0], [0,2,0], [1,2,0], [2,2,0], etc.
      * 
+     * The lastIncreasedPosition index indicates the last position in
+     * currentCounts that was increased by calling increaseCounter(position)
      */
     private final IIsotope isotopes[];
     private final int minCounts[], maxCounts[], currentCounts[];
+    private int lastIncreasedPosition = 0;
 
     /**
      * A flag indicating that the formula generation is running. If the search
@@ -199,23 +202,22 @@ public class MolecularFormulaGenerator {
             double currentMass = calculateCurrentMass();
 
             // Heuristics: if we are over the mass, it is meaningless to add
-            // more atoms, so let's jump directly to the maximum count
+            // more atoms, so let's jump directly to the maximum count at the
+            // position we increased last time.
             if (currentMass > maxMass) {
-                for (int i = 0; i < currentCounts.length; i++) {
-                    if (currentCounts[i] > minCounts[i]) {
-                        // Keep a lock on the currentCounts, because
-                        // getFinishedPercentage() might be called from another
-                        // thread
-                        synchronized (currentCounts) {
-                            currentCounts[i] = maxCounts[i];
-                            increaseCounter(i);
-                        }
-                        continue mainCycle;
-                    }
+                // Keep a lock on the currentCounts, because
+                // getFinishedPercentage() might be called from another
+                // thread
+                synchronized (currentCounts) {
+                    currentCounts[lastIncreasedPosition] = maxCounts[lastIncreasedPosition];
+                    increaseCounter(lastIncreasedPosition);
                 }
+                continue mainCycle;
             }
 
-            if (currentMass >= minMass) {
+            // If the current formula mass fits in the target mass range, let's
+            // return it
+            if ((currentMass >= minMass) && (currentMass <= maxMass)) {
                 IMolecularFormula cdkFormula = generateFormulaObject();
                 increaseCounter(0);
                 return cdkFormula;
@@ -271,6 +273,8 @@ public class MolecularFormulaGenerator {
                     "Cannot increase the currentCounts counter at position "
                             + position);
         }
+
+        lastIncreasedPosition = position;
 
         // Keep a lock on the currentCounts, because
         // getFinishedPercentage() might be called from another thread
