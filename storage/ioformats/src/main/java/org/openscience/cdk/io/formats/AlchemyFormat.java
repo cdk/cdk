@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -29,14 +27,12 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.AlchemyFormatTest")
 public class AlchemyFormat extends AbstractResourceFormat implements IChemFormat {
 
     private static IResourceFormat myself = null;
 
     public AlchemyFormat() {}
 
-    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
         if (myself == null) myself = new AlchemyFormat();
         return myself;
@@ -44,63 +40,54 @@ public class AlchemyFormat extends AbstractResourceFormat implements IChemFormat
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Alchemy";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-alchemy";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"alc"};
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
         return false;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetSupportedDataFeatures")
     public int getSupportedDataFeatures() {
         return DataFeatures.NONE;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
         return DataFeatures.NONE;
     }

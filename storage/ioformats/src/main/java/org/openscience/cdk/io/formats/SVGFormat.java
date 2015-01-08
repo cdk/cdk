@@ -18,22 +18,17 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.SVGFormatTest")
 public class SVGFormat extends AbstractResourceFormat implements IResourceFormat {
 
     private static IResourceFormat myself = null;
 
     public SVGFormat() {}
 
-    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
         if (myself == null) myself = new SVGFormat();
         return myself;
@@ -41,35 +36,30 @@ public class SVGFormat extends AbstractResourceFormat implements IResourceFormat
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Scalable Vector Graphics";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"svg"};
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
         return true;
     }

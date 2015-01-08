@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -27,14 +25,12 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.INChIPlainTextFormatTest")
 public class INChIPlainTextFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
     private static IResourceFormat myself = null;
 
     public INChIPlainTextFormat() {}
 
-    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
         if (myself == null) myself = new INChIPlainTextFormat();
         return myself;
@@ -42,49 +38,42 @@ public class INChIPlainTextFormat extends SimpleChemFormatMatcher implements ICh
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "IUPAC-NIST Chemical Identifier (Plain Text)";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[0];
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
         return "org.openscience.cdk.io.INChIPlainTextReader";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("INChI=")) {
             return true;
@@ -94,21 +83,18 @@ public class INChIPlainTextFormat extends SimpleChemFormatMatcher implements ICh
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
         return false;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetSupportedDataFeatures")
     public int getSupportedDataFeatures() {
         return DataFeatures.NONE;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
         return DataFeatures.NONE;
     }

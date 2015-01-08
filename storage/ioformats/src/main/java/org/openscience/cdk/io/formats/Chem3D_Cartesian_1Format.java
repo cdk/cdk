@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -30,14 +28,12 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.Chem3D_Cartesian_1FormatTest")
 public class Chem3D_Cartesian_1Format extends AbstractResourceFormat implements IChemFormat {
 
     private static IResourceFormat myself = null;
 
     public Chem3D_Cartesian_1Format() {}
 
-    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
         if (myself == null) myself = new Chem3D_Cartesian_1Format();
         return myself;
@@ -45,63 +41,54 @@ public class Chem3D_Cartesian_1Format extends AbstractResourceFormat implements 
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Chem3D Cartesian 1";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"c3d1"};
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
         return false;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetSupportedDataFeatures")
     public int getSupportedDataFeatures() {
         return DataFeatures.NONE;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
         return DataFeatures.NONE;
     }
