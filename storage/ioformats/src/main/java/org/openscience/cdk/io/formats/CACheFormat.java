@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -27,14 +25,12 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.CACheFormatTest")
 public class CACheFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
     private static IResourceFormat myself = null;
 
     public CACheFormat() {}
 
-    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
         if (myself == null) myself = new CACheFormat();
         return myself;
@@ -42,40 +38,34 @@ public class CACheFormat extends SimpleChemFormatMatcher implements IChemFormatM
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "CAChe MolStruct";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-cache-csf";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"cache"};
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
         return null;
     }
 
-    @TestMethod("testGetWriterClassName")
     @Override
     public String getWriterClassName() {
         return null;
@@ -83,7 +73,6 @@ public class CACheFormat extends SimpleChemFormatMatcher implements IChemFormatM
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("molstruct")) {
             return true;
@@ -93,21 +82,18 @@ public class CACheFormat extends SimpleChemFormatMatcher implements IChemFormatM
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
         return false;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetSupportedDataFeatures")
     public int getSupportedDataFeatures() {
         return DataFeatures.NONE;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
         return DataFeatures.NONE;
     }

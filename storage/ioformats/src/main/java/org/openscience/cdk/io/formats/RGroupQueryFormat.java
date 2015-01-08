@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -34,14 +32,12 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.RGroupQueryFormatTest")
 public class RGroupQueryFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
     private static IResourceFormat myself = null;
 
     public RGroupQueryFormat() {}
 
-    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
         if (myself == null) myself = new RGroupQueryFormat();
         return myself;
@@ -49,49 +45,42 @@ public class RGroupQueryFormat extends SimpleChemFormatMatcher implements IChemF
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Symyx Rgroup query files";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"mol", "rgp"};
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
         return "org.openscience.cdk.io.RGroupQueryReader";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
         return "org.openscience.cdk.io.RGroupQueryWriter";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("$RGP") >= 0)
             return true;
@@ -101,21 +90,18 @@ public class RGroupQueryFormat extends SimpleChemFormatMatcher implements IChemF
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
         return false;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetSupportedDataFeatures")
     public int getSupportedDataFeatures() {
         return getRequiredDataFeatures() | DataFeatures.HAS_2D_COORDINATES;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
         return DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }

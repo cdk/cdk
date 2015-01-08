@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -31,68 +29,57 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.CacaoCartesianFormatTest")
 public class CacaoCartesianFormat extends AbstractResourceFormat implements IChemFormat {
 
     private static IResourceFormat myself = null;
 
     public CacaoCartesianFormat() {}
 
-    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
         if (myself == null) myself = new CacaoCartesianFormat();
         return myself;
     }
 
-    @TestMethod("testGetFormatName")
     @Override
     public String getFormatName() {
         return "Cacao Cartesian";
     }
 
-    @TestMethod("testGetMIMEType")
     @Override
     public String getMIMEType() {
         return null;
     }
 
-    @TestMethod("testGetPreferredNameExtension")
     @Override
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
-    @TestMethod("testGetNameExtensions")
     @Override
     public String[] getNameExtensions() {
         return new String[]{"caccrt"};
     }
 
-    @TestMethod("testGetReaderClassName")
     @Override
     public String getReaderClassName() {
         return null;
     }
 
-    @TestMethod("testGetWriterClassName")
     @Override
     public String getWriterClassName() {
         return null;
     }
 
-    @TestMethod("testIsXMLBased")
     @Override
     public boolean isXMLBased() {
         return false;
     }
 
-    @TestMethod("testGetSupportedDataFeatures")
     @Override
     public int getSupportedDataFeatures() {
         return DataFeatures.NONE;
     }
 
-    @TestMethod("testGetRequiredDataFeatures")
     @Override
     public int getRequiredDataFeatures() {
         return DataFeatures.NONE;
