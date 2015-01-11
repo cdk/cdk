@@ -7,7 +7,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.annotations.TestClass;
 
 /**
  * SMARTS based substructure fingerprint based on <emph>Chemical substructures
@@ -19,7 +18,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.module fingerprint
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.KlekotaRothFingerprinterTest")
 public class KlekotaRothFingerprinter extends SubstructureFingerprinter {
 
     public KlekotaRothFingerprinter() {

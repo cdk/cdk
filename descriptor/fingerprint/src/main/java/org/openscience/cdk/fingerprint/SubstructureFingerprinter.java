@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
@@ -365,7 +363,6 @@ import java.util.Map;
  * @cdk.module   fingerprint
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.SubstructureFingerprinterTest")
 public class SubstructureFingerprinter implements IFingerprinter {
 
     private String[] smarts;
@@ -374,7 +371,6 @@ public class SubstructureFingerprinter implements IFingerprinter {
      * Set up the fingerprinter to use the fragments from
      * {@link org.openscience.cdk.fingerprint.StandardSubstructureSets}.
      */
-    @TestMethod("testFingerprint")
     public SubstructureFingerprinter() {
         try {
             smarts = StandardSubstructureSets.getFunctionalGroupSMARTS();
@@ -388,13 +384,11 @@ public class SubstructureFingerprinter implements IFingerprinter {
      *
      * @param smarts The collection of fragments to look for
      */
-    @TestMethod("testUserFunctionalGroups")
     public SubstructureFingerprinter(String[] smarts) {
         this.smarts = smarts;
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testUserFunctionalGroups,testFingerprint")
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
         if (smarts == null) {
@@ -416,14 +410,12 @@ public class SubstructureFingerprinter implements IFingerprinter {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetRawFingerprint")
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testSize")
     @Override
     public int getSize() {
         return smarts.length;
@@ -437,14 +429,12 @@ public class SubstructureFingerprinter implements IFingerprinter {
      * @return SMARTS representation of substructure at
      *         index <code>bitIndex</code>.
      */
-    @TestMethod("testGetSubstructure")
     public String getSubstructure(int bitIndex) {
         return smarts[bitIndex];
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetCountFingerprint")
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         throw new UnsupportedOperationException();
     }

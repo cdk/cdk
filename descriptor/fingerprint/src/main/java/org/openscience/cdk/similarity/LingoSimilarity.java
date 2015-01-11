@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.similarity;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.Map;
 import java.util.TreeSet;
@@ -40,7 +38,6 @@ import java.util.TreeSet;
  * @cdk.keyword similarity, tanimoto
  * @cdk.module fingerprint
  */
-@TestClass("org.openscience.cdk.similarity.LingoSimilarityTest")
 public class LingoSimilarity {
 
     private LingoSimilarity() {}
@@ -54,7 +51,6 @@ public class LingoSimilarity {
      * @param features2
      * @return similarity
      */
-    @TestMethod("testLingoSim")
     public static float calculate(Map<String, Integer> features1, Map<String, Integer> features2) {
         TreeSet<String> keys = new TreeSet<String>(features1.keySet());
         keys.addAll(features2.keySet());
