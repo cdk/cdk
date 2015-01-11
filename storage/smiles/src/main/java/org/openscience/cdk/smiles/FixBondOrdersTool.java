@@ -28,8 +28,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -68,7 +66,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
  * @cdk.module smiles
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.smiles.FixBondOrdersToolTest")
 public class FixBondOrdersTool {
 
     private boolean interrupted;
@@ -143,7 +140,6 @@ public class FixBondOrdersTool {
      * @return The {@link IAtomContainer} with kekule structure
      * @throws CDKException
      */
-    @TestMethod("testLargeRingSystem")
     public IAtomContainer kekuliseAromaticRings(IAtomContainer molecule) throws CDKException {
         IAtomContainer mNew = null;
         try {
@@ -649,7 +645,6 @@ public class FixBondOrdersTool {
      *
      * @param interrupted true, if the calculation should be cancelled
      */
-    @TestMethod("testInterruption")
     public void setInterrupted(boolean interrupted) {
         this.interrupted = interrupted;
     }
@@ -659,7 +654,6 @@ public class FixBondOrdersTool {
      *
      * @return true or false
      */
-    @TestMethod("testInterruption")
     public boolean isInterrupted() {
         return this.interrupted;
     }

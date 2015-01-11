@@ -28,8 +28,6 @@ package org.openscience.cdk.normalize;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -50,7 +48,6 @@ import org.w3c.dom.NodeList;
  * @cdk.module    smiles
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.NormalizerTest")
 public class Normalizer {
 
     /**
@@ -69,7 +66,6 @@ public class Normalizer {
      * @return                             Did a replacement take place?
      * @exception  InvalidSmilesException  doc contains an invalid smiles.
      */
-    @TestMethod("testNormalize")
     public static boolean normalize(IAtomContainer ac, Document doc) throws InvalidSmilesException, CDKException {
         NodeList nl = doc.getElementsByTagName("replace-set");
         SmilesParser sp = new SmilesParser(ac.getBuilder());

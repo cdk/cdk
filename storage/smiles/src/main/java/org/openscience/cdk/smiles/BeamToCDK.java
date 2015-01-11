@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -71,7 +69,6 @@ import static uk.ac.ebi.beam.Configuration.Type.Tetrahedral;
  * @cdk.module smiles
  * @see <a href="http://johnmay.github.io/beam">Beam SMILES Toolkit</a>
  */
-@TestClass("org.openscience.cdk.smiles.BeamToCDKTest")
 final class BeamToCDK {
 
     /** The builder used to create the CDK objects. */
@@ -115,7 +112,6 @@ final class BeamToCDK {
      *                                  happens use the Beam Functions.expand()
      *                                  to
      */
-    @TestMethod("benzene,imidazole")
     IAtomContainer toAtomContainer(Graph g) {
 
         IAtomContainer ac = emptyContainer();
@@ -297,7 +293,6 @@ final class BeamToCDK {
      * @param hCount   hydrogen count for the atom
      * @return the CDK atom to have it's properties set
      */
-    @TestMethod("methaneAtom,waterAtom,oxidanide,azaniumAtom")
     IAtom toCDKAtom(Atom beamAtom, int hCount) {
 
         IAtom cdkAtom = newCDKAtom(beamAtom);
@@ -321,7 +316,6 @@ final class BeamToCDK {
      * @param atom an Atom from the Beam Graph
      * @return the CDK atom to have it's properties set
      */
-    @TestMethod("newUnknownAtom,newCarbonAtom,newNitrogenAtom")
     IAtom newCDKAtom(Atom atom) {
         Element element = atom.element();
         boolean unknown = element == Element.Unknown;
@@ -342,7 +336,6 @@ final class BeamToCDK {
      * @param atoms the already converted atoms
      * @return new bond instance
      */
-    @TestMethod("singleBondEdge,aromaticBondEdge,doubleBondEdge")
     IBond toCDKBond(Edge edge, IAtom[] atoms) {
 
         int u = edge.either();
