@@ -30,8 +30,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -64,7 +62,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @see org.openscience.cdk.io.iterator.IteratingSMILESReader
  */
-@TestClass("org.openscience.cdk.io.SMILESReaderTest")
 public class SMILESReader extends DefaultChemObjectReader {
 
     private BufferedReader      input  = null;
@@ -88,13 +85,11 @@ public class SMILESReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -104,13 +99,11 @@ public class SMILESReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainerSet.class.equals(classObject)) return true;
@@ -133,7 +126,6 @@ public class SMILESReader extends DefaultChemObjectReader {
      *
      * @see IChemFile
      */
-    @TestMethod("testReading,testReadingSmiFile_1,testReadingSmiFile_2,testReadingSmiFile_3")
     @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         sp = new SmilesParser(object.getBuilder());
@@ -201,7 +193,6 @@ public class SMILESReader extends DefaultChemObjectReader {
         return som;
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

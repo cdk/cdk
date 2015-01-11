@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -54,7 +52,6 @@ import java.io.Writer;
  *
  * @cdk.keyword file format, SMILES
  */
-@TestClass("org.openscience.cdk.io.SMILESWriterTest")
 public class SMILESWriter extends DefaultChemObjectWriter {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESWriter.class);
@@ -87,7 +84,6 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
@@ -119,14 +115,12 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         writer.flush();
         writer.close();
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;

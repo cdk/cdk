@@ -30,8 +30,6 @@ import java.io.Reader;
 import java.util.NoSuchElementException;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -62,7 +60,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.keyword    file format, SMILES
  */
-@TestClass("org.openscience.cdk.io.iterator.IteratingSMILESReaderTest")
 public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
     private BufferedReader           input;
@@ -86,7 +83,6 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
      * @see org.openscience.cdk.DefaultChemObjectBuilder
      * @see org.openscience.cdk.silent.SilentChemObjectBuilder
      */
-    @TestMethod("testSMILESFileWithNames")
     public IteratingSMILESReader(Reader in, IChemObjectBuilder builder) {
         sp = new SmilesParser(builder);
         setReader(in);
@@ -108,7 +104,6 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
      *
      * @return An instance of {@link org.openscience.cdk.io.formats.SMILESFormat}
      */
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
@@ -119,7 +114,6 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
      *
      * @return  true if there are molecules to read, false otherwise
      */
-    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testSMILESTitles,testSMILESFile")
     @Override
     public boolean hasNext() {
         if (!nextAvailableIsKnown) {
@@ -189,7 +183,6 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
      *
      * @return The next molecule
      */
-    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testSMILESTitles,testSMILESFile")
     @Override
     public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
@@ -207,19 +200,16 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
      *
      * @throws IOException if there is an error during closing
      */
-    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testClose")
     @Override
     public void close() throws IOException {
         if (input != null) input.close();
     }
 
-    @TestMethod("testRemove")
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) {
         if (reader instanceof BufferedReader) {
@@ -232,7 +222,6 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
         hasNext = false;
     }
 
-    @TestMethod("testSetReader1,testSetReader_InputStream")
     @Override
     public void setReader(InputStream reader) {
         setReader(new InputStreamReader(reader));

@@ -27,8 +27,6 @@ package org.openscience.cdk.smiles;
 import com.google.common.collect.Maps;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -86,7 +84,6 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * @cdk.keyword SMILES
  * @see <a href="http://johnmay.github.io/Beam">Beam SMILES Toolkit</a>
  */
-@TestClass("org.openscience.cdk.smiles.CDKToBeamTest")
 final class CDKToBeam {
 
     /**
@@ -136,7 +133,6 @@ final class CDKToBeam {
      * @param ac an atom container instance
      * @return the Beam ChemicalGraph for additional manipulation
      */
-    @TestMethod("adenine,benzene,imidazole")
     Graph toBeamGraph(IAtomContainer ac) throws CDKException {
 
         int order = ac.getAtomCount();
@@ -180,7 +176,6 @@ final class CDKToBeam {
      * @throws NullPointerException the atom had an undefined symbol or implicit
      *                              hydrogen count
      */
-    @TestMethod("aliphaticAtom,aromaticAtom")
     Atom toBeamAtom(final IAtom a) {
 
         final boolean aromatic = this.aromatic && a.getFlag(CDKConstants.ISAROMATIC);
@@ -235,7 +230,6 @@ final class CDKToBeam {
      *                                  unsupported order
      * @throws NullPointerException     the bond order was undefined
      */
-    @TestMethod("singleBond,doubleBond,tripleBond")
     Edge toBeamEdge(IBond b, Map<IAtom, Integer> indices) throws CDKException {
 
         checkArgument(b.getAtomCount() == 2, "Invalid number of atoms on bond");
