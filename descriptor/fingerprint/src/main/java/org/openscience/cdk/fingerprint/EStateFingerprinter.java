@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.fragments.EStateFragments;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,16 +60,13 @@ import java.util.Map;
  * @cdk.module fingerprint
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.EStateFingerprinterTest")
 public class EStateFingerprinter implements IFingerprinter {
 
     private static final String[] PATTERNS = EStateFragments.getSmarts();
 
-    @TestMethod("testFingerprint,testGetSize")
     public EStateFingerprinter() {}
 
     /** {@inheritDoc} */
-    @TestMethod("testFingerprint")
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
 
@@ -88,14 +83,12 @@ public class EStateFingerprinter implements IFingerprinter {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetRawFingerprint")
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetSize")
     @Override
     public int getSize() {
         return PATTERNS.length;
@@ -103,7 +96,6 @@ public class EStateFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetCountFingerprint")
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         throw new UnsupportedOperationException();
     }

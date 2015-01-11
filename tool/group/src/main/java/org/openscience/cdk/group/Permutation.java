@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A permutation with some associated methods to multiply, invert, and convert
@@ -38,7 +36,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module group
  *
  */
-@TestClass("org.openscience.cdk.group.PermutationTest")
 public final class Permutation {
 
     /**
@@ -51,7 +48,6 @@ public final class Permutation {
      *
      * @param size the number of elements in the permutation
      */
-    @TestMethod("sizeNConstructor")
     public Permutation(int size) {
         this.values = new int[size];
         for (int i = 0; i < size; i++) {
@@ -65,7 +61,6 @@ public final class Permutation {
      *
      * @param values the elements of the permutation
      */
-    @TestMethod("valuesConstructor")
     public Permutation(int... values) {
         this.values = values;
     }
@@ -75,7 +70,6 @@ public final class Permutation {
      *
      * @param other the other permutation
      */
-    @TestMethod("cloneConstructor")
     public Permutation(Permutation other) {
         this.values = other.values.clone();
     }
@@ -84,7 +78,6 @@ public final class Permutation {
      * @inheritDoc
      */
     @Override
-    @TestMethod("equalsTest,equalsTest_null,equalsTest_difference")
     public boolean equals(Object other) {
 
         if (this == other) return true;
@@ -107,7 +100,6 @@ public final class Permutation {
      *
      * @return true if for all i, p[i] = i
      */
-    @TestMethod("isIdentityTest")
     public boolean isIdentity() {
         for (int i = 0; i < this.values.length; i++) {
             if (this.values[i] != i) {
@@ -122,7 +114,6 @@ public final class Permutation {
      *
      * @return the number of elements
      */
-    @TestMethod("sizeTest")
     public int size() {
         return this.values.length;
     }
@@ -133,7 +124,6 @@ public final class Permutation {
      * @param index the permutation value at this index.
      * @return the value at this index
      */
-    @TestMethod("getTest")
     public int get(int index) {
         return this.values[index];
     }
@@ -143,7 +133,6 @@ public final class Permutation {
      *
      * @return the values of the permutation
      */
-    @TestMethod("getValuesTest")
     public int[] getValues() {
         return this.values;
     }
@@ -153,7 +142,6 @@ public final class Permutation {
      * @param other the other permutation to compare with
      * @return the first point at which the two permutations differ
      */
-    @TestMethod("firstIndexDiffTest")
     public int firstIndexOfDifference(Permutation other) {
         int r = 0;
         while ((r < values.length) && values[r] == other.get(r)) {
@@ -168,7 +156,6 @@ public final class Permutation {
      * @param element any element in the orbit
      * @return the list of elements reachable in this permutation
      */
-    @TestMethod("getOrbitTest")
     public List<Integer> getOrbit(int element) {
         List<Integer> orbit = new ArrayList<Integer>();
         orbit.add(element);
@@ -186,7 +173,6 @@ public final class Permutation {
      * @param index the index to set the value
      * @param value the value to set at this index
      */
-    @TestMethod("setTest")
     public void set(int index, int value) {
         this.values[index] = value;
     }
@@ -198,7 +184,6 @@ public final class Permutation {
      * @throws IllegalArgumentException thrown if the permutations are of different
      *                                  size
      */
-    @TestMethod("setToTest")
     public void setTo(Permutation other) {
 
         if (this.values.length != other.values.length)
@@ -216,7 +201,6 @@ public final class Permutation {
      * @param other the other permutation to use
      * @return a new permutation with the result of multiplying the permutations
      */
-    @TestMethod("multiplyTest")
     public Permutation multiply(Permutation other) {
         Permutation newPermutation = new Permutation(values.length);
         for (int i = 0; i < values.length; i++) {
@@ -230,7 +214,6 @@ public final class Permutation {
      *
      * @return the inverse of this permutation
      */
-    @TestMethod("invertTest")
     public Permutation invert() {
         Permutation inversion = new Permutation(values.length);
         for (int i = 0; i < values.length; i++) {
@@ -244,7 +227,6 @@ public final class Permutation {
      *
      * @return the cycle form of the permutation as a string
      */
-    @TestMethod("toCycleStringTest")
     public String toCycleString() {
         int n = this.values.length;
         boolean[] p = new boolean[n];

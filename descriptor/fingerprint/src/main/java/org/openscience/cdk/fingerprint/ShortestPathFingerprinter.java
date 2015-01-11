@@ -31,8 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -82,7 +80,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.githash
  *
  */
-@TestClass("org.openscience.cdk.fingerprint.ShortestPathFingerprinterTest")
 public class ShortestPathFingerprinter extends RandomNumber implements IFingerprinter, Serializable {
 
     /**
@@ -123,7 +120,6 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
      * @return A {@link BitSet} representing the fingerprint
      */
     @Override
-    @TestMethod("testgetBitFingerprint_IAtomContainer")
     public IBitFingerprint getBitFingerprint(IAtomContainer ac) throws CDKException {
 
         IAtomContainer atomContainer = null;
@@ -153,7 +149,6 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
      * @throws UnsupportedOperationException method is not supported
      */
     @Override
-    @TestMethod("testGetRawFingerprint")
     public Map<String, Integer> getRawFingerprint(IAtomContainer ac) throws CDKException {
         throw new UnsupportedOperationException();
     }
@@ -256,13 +251,11 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
     }
 
     @Override
-    @TestMethod("testGetSize")
     public int getSize() {
         return fingerprintLength;
     }
 
     @Override
-    @TestMethod("testGetCountFingerprint")
     public ICountFingerprint getCountFingerprint(IAtomContainer iac) throws CDKException {
         throw new UnsupportedOperationException("Not supported yet.");
     }

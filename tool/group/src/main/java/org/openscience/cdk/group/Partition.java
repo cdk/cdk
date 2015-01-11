@@ -30,8 +30,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A partition of a set of integers, such as the discrete partition {{1}, {2},
@@ -41,7 +39,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @author maclean
  * @cdk.module group
  */
-@TestClass("org.openscience.cdk.group.PartitionTest")
 public class Partition {
 
     /**
@@ -52,7 +49,6 @@ public class Partition {
     /**
      * Creates a new, empty partition with no cells.
      */
-    @TestMethod("emptyConstructor")
     public Partition() {
         this.cells = new ArrayList<SortedSet<Integer>>();
     }
@@ -62,7 +58,6 @@ public class Partition {
      *
      * @param other the partition to copy
      */
-    @TestMethod("copyConstructor")
     public Partition(Partition other) {
         this();
         for (SortedSet<Integer> block : other.cells) {
@@ -75,7 +70,6 @@ public class Partition {
      *
      * @param cellData the partition to copy
      */
-    @TestMethod("cellDataConstructor")
     public Partition(int[][] cellData) {
         this();
         for (int[] aCellData : cellData) {
@@ -90,7 +84,6 @@ public class Partition {
      * @param size the number of elements
      * @return a new Partition with one cell containing all the elements
      */
-    @TestMethod("unitStaticConstructor")
     public static Partition unit(int size) {
         Partition unit = new Partition();
         unit.cells.add(new TreeSet<Integer>());
@@ -103,7 +96,6 @@ public class Partition {
     /**
      * @inheritDoc
      */
-    @TestMethod("equalsTest,equalsTest_different,equalsTest_null")
     @Override
     public boolean equals(Object o) {
 
@@ -129,7 +121,6 @@ public class Partition {
      *
      * @return the number of cells in the partition
      */
-    @TestMethod("sizeTest")
     public int size() {
         return this.cells.size();
     }
@@ -139,7 +130,6 @@ public class Partition {
      *
      * @return the number of elements in the partition
      */
-    @TestMethod("numberOfElementsTest")
     public int numberOfElements() {
         int n = 0;
         for (SortedSet<Integer> cell : cells) {
@@ -154,7 +144,6 @@ public class Partition {
      *
      * @return true if all the cells are discrete
      */
-    @TestMethod("isDiscreteTest")
     public boolean isDiscrete() {
         for (SortedSet<Integer> cell : cells) {
             if (cell.size() != 1) {
@@ -169,7 +158,6 @@ public class Partition {
      *
      * @return the partition as a permutation
      */
-    @TestMethod("toPermutationTest")
     public Permutation toPermutation() {
         Permutation p = new Permutation(this.size());
         for (int i = 0; i < this.size(); i++) {
@@ -184,7 +172,6 @@ public class Partition {
      *
      * @return true if all cells in the partition are ordered
      */
-    @TestMethod("inOrderTest")
     public boolean inOrder() {
         SortedSet<Integer> prev = null;
         for (SortedSet<Integer> cell : cells) {
@@ -209,7 +196,6 @@ public class Partition {
      * @param cellIndex the cell to use
      * @return the first element in this cell
      */
-    @TestMethod("getFirstInCellTest")
     public int getFirstInCell(int cellIndex) {
         return this.cells.get(cellIndex).first();
     }
@@ -220,7 +206,6 @@ public class Partition {
      * @param cellIndex the index of the cell to return
      * @return the cell at this index
      */
-    @TestMethod("getCellTest")
     public SortedSet<Integer> getCell(int cellIndex) {
         return this.cells.get(cellIndex);
     }
@@ -234,7 +219,6 @@ public class Partition {
      * @param splitElement the element to put in its own cell
      * @return a new (finer) Partition
      */
-    @TestMethod("splitBeforeTest")
     public Partition splitBefore(int cellIndex, int splitElement) {
         Partition r = new Partition();
         // copy the cells up to cellIndex
@@ -264,7 +248,6 @@ public class Partition {
      * @param splitElement the element to put in its own cell
      * @return a new (finer) Partition
      */
-    @TestMethod("splitAfterTest")
     public Partition splitAfter(int cellIndex, int splitElement) {
         Partition r = new Partition();
         // copy the blocks up to blockIndex
@@ -292,7 +275,6 @@ public class Partition {
      * @param upTo take values from cells up to this one
      * @return the permutation representing the first element of each cell
      */
-    @TestMethod("setAsPermutationTest")
     public Permutation setAsPermutation(int upTo) {
         int[] p = new int[upTo];
         for (int i = 0; i < upTo; i++) {
@@ -308,7 +290,6 @@ public class Partition {
      * @param cellIndex the index of the cell to check
      * @return true of the cell at this index is discrete
      */
-    @TestMethod("isDiscreteCellTest")
     public boolean isDiscreteCell(int cellIndex) {
         return this.cells.get(cellIndex).size() == 1;
     }
@@ -318,7 +299,6 @@ public class Partition {
      *
      * @return the index of the first discrete cell
      */
-    @TestMethod("getIndexOfFirstNonDiscreteCellTest")
     public int getIndexOfFirstNonDiscreteCell() {
         for (int i = 0; i < this.cells.size(); i++) {
             if (!isDiscreteCell(i)) return i;
@@ -332,7 +312,6 @@ public class Partition {
      *
      * @param element the element to add in its own cell
      */
-    @TestMethod("addSingletonCellTest")
     public void addSingletonCell(int element) {
         SortedSet<Integer> cell = new TreeSet<Integer>();
         cell.add(element);
@@ -344,7 +323,6 @@ public class Partition {
      *
      * @param index the index of the cell to remove
      */
-    @TestMethod("removeCellTest")
     public void removeCell(int index) {
         this.cells.remove(index);
     }
@@ -354,7 +332,6 @@ public class Partition {
      *
      * @param elements the elements to add in a new cell
      */
-    @TestMethod("addCell_VarArgsTest")
     public void addCell(int... elements) {
         SortedSet<Integer> cell = new TreeSet<Integer>();
         for (int element : elements) {
@@ -368,7 +345,6 @@ public class Partition {
      *
      * @param elements the collection of elements to put in the cell
      */
-    @TestMethod("addCell_CollectionTest")
     public void addCell(Collection<Integer> elements) {
         cells.add(new TreeSet<Integer>(elements));
     }
@@ -379,7 +355,6 @@ public class Partition {
      * @param index the index of the cell to add to
      * @param element the element to add
      */
-    @TestMethod("addToCellTest")
     public void addToCell(int index, int element) {
         if (cells.size() < index + 1) {
             addSingletonCell(element);
@@ -394,7 +369,6 @@ public class Partition {
      * @param index the index of the cell to add
      * @param cell the cell to add
      */
-    @TestMethod("insertCellTest")
     public void insertCell(int index, SortedSet<Integer> cell) {
         this.cells.add(index, cell);
     }
@@ -405,7 +379,6 @@ public class Partition {
      * @param cellIndex the cell to copy
      * @return the copy of the cell
      */
-    @TestMethod("copyBlockTest")
     public SortedSet<Integer> copyBlock(int cellIndex) {
         return new TreeSet<Integer>(this.cells.get(cellIndex));
     }
@@ -413,7 +386,6 @@ public class Partition {
     /**
      * Sort the cells in increasing order.
      */
-    @TestMethod("orderTest")
     public void order() {
         Collections.sort(cells, new Comparator<SortedSet<Integer>>() {
 
@@ -432,7 +404,6 @@ public class Partition {
      * @param elementJ an element in the partition
      * @return true if both elements are in the same cell
      */
-    @TestMethod("inSameCellTest")
     public boolean inSameCell(int elementI, int elementJ) {
         for (int cellIndex = 0; cellIndex < size(); cellIndex++) {
             SortedSet<Integer> cell = getCell(cellIndex);
@@ -477,7 +448,6 @@ public class Partition {
      * @throws IllegalArgumentException thrown if the provided strFrom is
      *         null or empty
      */
-    @TestMethod("fromStringTest")
     public static Partition fromString(String strForm) {
 
         if (strForm == null || strForm.isEmpty()) throw new IllegalArgumentException("null or empty string provided");

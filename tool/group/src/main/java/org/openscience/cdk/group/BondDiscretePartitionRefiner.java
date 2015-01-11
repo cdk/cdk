@@ -31,8 +31,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -83,7 +81,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @author maclean
  * @cdk.module group
  */
-@TestClass("BondDiscretePartitionRefinerTest")
 public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefiner {
 
     /**
@@ -118,7 +115,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @inheritDoc
      */
     @Override
-    @TestMethod("getVertexCountTest")
     public int getVertexCount() {
         return connectionTable.length;
     }
@@ -127,7 +123,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @inheritDoc
      */
     @Override
-    @TestMethod("getConnectivityTest")
     public int getConnectivity(int i, int j) {
         int indexInRow;
         int maxRowIndex = connectionTable[i].length;
@@ -146,7 +141,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param bondIndex the index of the incident bond
      * @return an array of bond indices
      */
-    @TestMethod("getConnectedIndicesTest")
     public int[] getConnectedIndices(int bondIndex) {
         return connectionTable[bondIndex];
     }
@@ -158,7 +152,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param atomContainer the container with the bonds to partition
      * @return a partition of the bonds based on the element types and bond order
      */
-    @TestMethod("getBondPartitionTest")
     public Partition getBondPartition(IAtomContainer atomContainer) {
         int bondCount = atomContainer.getBondCount();
         Map<String, SortedSet<Integer>> cellMap = new HashMap<String, SortedSet<Integer>>();
@@ -210,7 +203,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     /**
      * Reset the connection table.
      */
-    @TestMethod("resetTest")
     public void reset() {
         connectionTable = null;
     }
@@ -225,7 +217,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      *
      * @param atomContainer the atomContainer to refine
      */
-    @TestMethod("refineTest")
     public void refine(IAtomContainer atomContainer) {
         refine(atomContainer, getBondPartition(atomContainer));
     }
@@ -236,7 +227,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param partition the initial partition of the bonds
      * @param atomContainer the atom container to use
      */
-    @TestMethod("refine_StartingPartitionTest")
     public void refine(IAtomContainer atomContainer, Partition partition) {
         setup(atomContainer);
         super.refine(partition);
@@ -249,7 +239,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param atomContainer the atom container to check
      * @return true if the atom container is canonical
      */
-    @TestMethod("isCanonical_TrueTest,isCanonical_FalseTest")
     public boolean isCanonical(IAtomContainer atomContainer) {
         setup(atomContainer);
         super.refine(getBondPartition(atomContainer));
@@ -265,7 +254,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param atomContainer the atom container to use
      * @return the automorphism group of the atom container
      */
-    @TestMethod("getAutomorphismGroupTest")
     public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer) {
         setup(atomContainer);
         super.refine(getBondPartition(atomContainer));
@@ -281,7 +269,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param group the group of known automorphisms
      * @return the full automorphism group
      */
-    @TestMethod("getAutomorphismGroup_StartingGroupTest")
     public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group) {
         setup(atomContainer, group);
         super.refine(getBondPartition(atomContainer));
@@ -295,7 +282,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param initialPartition an initial partition of the bonds
      * @return the automorphism group starting with this partition
      */
-    @TestMethod("getAutomorphismGroup_StartingPartitionTest")
     public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition) {
         setup(atomContainer);
         super.refine(initialPartition);
@@ -308,7 +294,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param atomContainer the molecule to calculate equivalence classes for
      * @return a partition of the bonds into equivalence classes
      */
-    @TestMethod("getAutomorphismPartitionTest")
     public Partition getAutomorphismPartition(IAtomContainer atomContainer) {
         setup(atomContainer);
         super.refine(getBondPartition(atomContainer));

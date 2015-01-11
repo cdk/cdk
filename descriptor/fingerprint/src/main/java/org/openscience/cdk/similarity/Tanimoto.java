@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.similarity;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.BitSetFingerprint;
 import org.openscience.cdk.fingerprint.IBitFingerprint;
@@ -64,7 +62,6 @@ import java.util.TreeSet;
  *@cdk.keyword    similarity, tanimoto
  * @cdk.module fingerprint
  */
-@TestClass("org.openscience.cdk.similarity.TanimotoTest")
 // see also SignatureFingerprintTanimotoTest
 public class Tanimoto {
 
@@ -78,7 +75,6 @@ public class Tanimoto {
      * @return The Tanimoto coefficient
      * @throws org.openscience.cdk.exception.CDKException  if bitsets are not of the same length
      */
-    @TestMethod("testTanimoto1,testTanimoto2")
     public static float calculate(BitSet bitset1, BitSet bitset2) throws CDKException {
         float _bitset1_cardinality = bitset1.cardinality();
         float _bitset2_cardinality = bitset2.cardinality();
@@ -99,7 +95,6 @@ public class Tanimoto {
      * @return The Tanimoto coefficient
      * @throws IllegalArgumentException if bitsets are not of the same length
      */
-    @TestMethod("testCalculate_BitFingerprint,testCompareBitSetandBitFingerprintTanimoto")
     public static double calculate(IBitFingerprint fingerprint1, IBitFingerprint fingerprint2) {
         if (fingerprint1.size() != fingerprint2.size()) {
             throw new IllegalArgumentException("Fingerprints must have the same size");
@@ -124,7 +119,6 @@ public class Tanimoto {
      * @return The continuous Tanimoto coefficient
      * @throws org.openscience.cdk.exception.CDKException  if the features are not of the same length
      */
-    @TestMethod("testTanimoto3")
     public static float calculate(double[] features1, double[] features2) throws CDKException {
 
         if (features1.length != features2.length) {
@@ -155,7 +149,6 @@ public class Tanimoto {
      * @param features2 The second feature map
      * @return The Tanimoto coefficient
      */                         
-    @TestMethod("testTanimoto4")
     public static float calculate(Map<String, Integer> features1, Map<String, Integer> features2) {
         Set<String> common = new TreeSet<String>(features1.keySet());
         common.retainAll(features2.keySet());
@@ -185,7 +178,6 @@ public class Tanimoto {
      * @see #method1
      * @see #method2
      */
-    @TestMethod("testICountFingerprintComparison")
     public static double calculate(ICountFingerprint fp1, ICountFingerprint fp2) {
         return method2(fp1, fp2);
     }
@@ -200,7 +192,6 @@ public class Tanimoto {
      * @param fp2 count fingerprint 2
      * @return a Tanimoto distance
      */
-    @TestMethod("method1")
     public static double method1(ICountFingerprint fp1, ICountFingerprint fp2) {
         long xy = 0, x = 0, y = 0;
         for (int i = 0; i < fp1.numOfPopulatedbins(); i++) {
@@ -225,7 +216,6 @@ public class Tanimoto {
      * @param fp2 count fingerprint 2
      * @return a Tanimoto distance
      */
-    @TestMethod("method2")
     public static double method2(ICountFingerprint fp1, ICountFingerprint fp2) {
 
         long maxSum = 0, minSum = 0;
