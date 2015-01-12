@@ -29,8 +29,6 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -106,7 +104,6 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @cdk.module renderextra
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.ChemModelRendererTest")
 public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements IRenderer<IChemModel> {
 
     private IRenderer<IAtomContainerSet> moleculeSetRenderer;
@@ -122,7 +119,6 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-    @TestMethod("testConstructor")
     public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
         super(new RendererModel());
         this.fontManager = fontManager;

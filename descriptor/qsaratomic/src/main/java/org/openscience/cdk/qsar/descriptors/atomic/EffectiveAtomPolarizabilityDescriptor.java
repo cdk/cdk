@@ -19,8 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -58,7 +56,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:effectivePolarizability
  * @see Polarizability
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest")
 public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private Polarizability pol;
@@ -76,7 +73,6 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -87,7 +83,6 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
@@ -98,13 +93,11 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      * @return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return new String[]{"effAtomPol"};
@@ -118,7 +111,6 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *@param  ac                AtomContainer
      *@return                   return the efective polarizability
      */
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         double polarizability;
@@ -156,7 +148,6 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -169,7 +160,6 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,7 +54,6 @@ import java.util.Map;
  *@cdk.set        qsar-descriptors
  *@cdk.dictref qsar-descriptors:period
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest")
 public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private static final String[] NAMES = {"periodicTablePosition"};
@@ -114,7 +111,6 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period",
@@ -124,7 +120,6 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
     /**
      * This descriptor does not have any parameter to be set.
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
@@ -136,13 +131,11 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      *@return    The parameters value
      *@see #setParameters
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -156,7 +149,6 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      * @return                   The period
      */
 
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         int period;
@@ -171,7 +163,6 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -183,7 +174,6 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

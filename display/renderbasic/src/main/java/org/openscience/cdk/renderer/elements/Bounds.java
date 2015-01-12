@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.renderer.elements;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Defines a bound box element which the renderer can use to determine the true
@@ -37,7 +35,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.BoundingBoxTest")
 public final class Bounds implements IRenderingElement {
 
     /** Minimum x/y coordinates. */
@@ -54,7 +51,6 @@ public final class Bounds implements IRenderingElement {
      * @param x2 max x coordinate
      * @param y2 max y coordinate
      */
-    @TestMethod("testConstructor")
     public Bounds(double x1, double y1, double x2, double y2) {
         this.minX = x1;
         this.minY = y1;
@@ -67,7 +63,6 @@ public final class Bounds implements IRenderingElement {
      *
      * @return the width of the bounding box
      */
-    @TestMethod("width")
     public final double width() {
         return maxX - minX;
     }
@@ -77,13 +72,11 @@ public final class Bounds implements IRenderingElement {
      *
      * @return the height of the bounding box
      */
-    @TestMethod("width")
     public final double height() {
         return maxY - minY;
     }
 
     /** @inheritDoc */
-    @TestMethod("testAccept")
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);

@@ -15,8 +15,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A line between two points.
@@ -24,7 +22,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.LineElementTest")
 public class LineElement implements IRenderingElement {
 
     /** The x-coordinate of the first point. **/
@@ -55,7 +52,6 @@ public class LineElement implements IRenderingElement {
      * @param width the width of the line
      * @param color the color of the line
      */
-    @TestMethod("testConstructor")
     public LineElement(double firstPointX, double firstPointY, double secondPointX, double secondPointY, double width,
             Color color) {
         this.firstPointX = firstPointX;
@@ -67,7 +63,6 @@ public class LineElement implements IRenderingElement {
     }
 
     /** {@inheritDoc} **/
-    @TestMethod("testAccept")
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);

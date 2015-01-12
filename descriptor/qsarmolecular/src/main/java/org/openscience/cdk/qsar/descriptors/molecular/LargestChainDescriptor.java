@@ -19,8 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
@@ -72,7 +70,6 @@ import java.util.List;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:largestChain
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.LargestChainDescriptorTest")
 public class LargestChainDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private boolean               checkAromaticity = false;
@@ -99,7 +96,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -117,7 +113,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
      * @throws CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 2) {
@@ -137,7 +132,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
      * @return The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -147,7 +141,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -173,7 +166,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
      * @return the number of atoms in the largest chain of this AtomContainer
      * @see #setParameters
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer container;
@@ -261,7 +253,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
@@ -316,7 +307,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
      *
      * @return The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[2];
@@ -331,7 +321,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
      * @param name Description of the Parameter
      * @return An Object of class equal to that of the parameter being requested
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return true;

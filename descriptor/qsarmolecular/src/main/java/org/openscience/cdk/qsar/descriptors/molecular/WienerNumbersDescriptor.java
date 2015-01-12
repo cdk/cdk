@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
@@ -65,7 +63,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref    qsar-descriptors:wienerNumbers
  * @cdk.keyword    Wiener number
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.WienerNumbersDescriptorTest")
 public class WienerNumbersDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] NAMES            = {"WPATH", "WPOL"};
@@ -97,7 +94,6 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -114,7 +110,6 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *@exception  CDKException  This method will not throw any exceptions
     *@see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
@@ -128,14 +123,12 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *@return    The parameters value
      *@see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return (null);
         // no parameters to return
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -147,7 +140,6 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *@param  atomContainer   The {@link IAtomContainer} for which this descriptor is to be calculated
      *@return wiener numbers as array of 2 doubles
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         wienerNumbers = new DoubleArrayResult(2);
@@ -187,7 +179,6 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(2);
@@ -200,7 +191,6 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         // no param names to return
@@ -213,7 +203,6 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *@param  name  Description of the Parameter
      *@return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return (null);

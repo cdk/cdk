@@ -21,8 +21,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,7 +47,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:acidicGroupCount
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.AcidicGroupCountDescriptorTest")
 public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private final static String[] SMARTS_STRINGS = {"[$([O;H1]-[C,S,P]=O)]", "[$([*;-;!$(*~[*;+])])]",
@@ -62,7 +59,6 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     /**
      * Creates a new {@link AcidicGroupCountDescriptor}.
      */
-    @TestMethod("testConstructor")
     public AcidicGroupCountDescriptor() {
         this.checkAromaticity = true;
     }
@@ -75,7 +71,6 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -84,7 +79,6 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
@@ -100,7 +94,6 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         Object params[] = new Object[1];
@@ -109,14 +102,12 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     }
 
     /** {@inheritDoc} */
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
 
@@ -147,14 +138,12 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResultType();
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -164,7 +153,6 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         Object object = null;

@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -57,7 +55,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:partialSigmaCharge
  * @see GasteigerMarsiliPartialCharges
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest")
 public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[]          NAMES = {"partialSigmaCharge"};
@@ -79,7 +76,6 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -94,7 +90,6 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *@param  params            Number of maximum iterations
      *@exception  CDKException  Description of the Exception
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
@@ -111,7 +106,6 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *
      *@return    The parameters value
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -120,7 +114,6 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -135,7 +128,6 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *@param  ac                AtomContainer
      *@return                   Value of the alpha partial charge
      */
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         // FIXME: for now I'll cache the original charges, and restore them at the end of this method
@@ -167,7 +159,6 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -182,7 +173,6 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         if ("maxIterations".equals(name)) return Integer.MAX_VALUE;

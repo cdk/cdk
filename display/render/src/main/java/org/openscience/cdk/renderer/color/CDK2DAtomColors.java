@@ -22,8 +22,6 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 
@@ -78,7 +76,6 @@ import static org.openscience.cdk.config.Elements.Xenon;
  * @cdk.githash
  * @see <a href="http://en.wikipedia.org/wiki/CPK_coloring">CPK coloring</a>
  */
-@TestClass("org.openscience.cdk.renderer.color.CDK2DAtomColorsTest")
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
     private static final long         serialVersionUID = 6712994043820219426L;
@@ -184,7 +181,6 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
      * @param atom IAtom to get a color for
      * @return the atom's color according to this coloring scheme.
      */
-    @TestMethod("testGetAtomColor")
     @Override
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, PINK);
@@ -199,7 +195,6 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
      *                     IAtom
      * @return the atom's color according to this coloring scheme.
      */
-    @TestMethod("testGetDefaultAtomColor")
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = null;

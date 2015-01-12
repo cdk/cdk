@@ -19,8 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
@@ -119,7 +117,6 @@ import Jama.Matrix;
  * @cdk.keyword BCUT
  * @cdk.keyword descriptor
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptorTest")
 public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(BCUTDescriptor.class);
@@ -137,7 +134,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         this.checkAromaticity = true;
     }
 
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
@@ -155,7 +151,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      * @throws CDKException if the parameters are of the wrong type
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // we expect 3 parameters
@@ -185,7 +180,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      *         to return respectively
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         Object params[] = new Object[3];
@@ -195,7 +189,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         return (params);
     }
 
-    @TestMethod("testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         String[] names;
@@ -218,7 +211,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      *
      * @return The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[3];
@@ -234,7 +226,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      * @param name Description of the Parameter (can be either 'nhigh' or 'nlow' or checkAromaticity)
      * @return The parameterType value
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         Object object = null;
@@ -316,7 +307,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      *         above. If a parameter list was supplied, then only the specified number
      *         of highest and lowest eigenvalues (for each class of BCUT) will be returned.
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         int counter;
@@ -508,7 +498,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(6);

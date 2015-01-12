@@ -20,8 +20,6 @@ package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -30,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.module render
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.color.CDKAtomColorsTest")
 public class CDKAtomColors implements IAtomColorer {
 
     private final static Color HYDROGEN   = Color.white;
@@ -49,7 +46,6 @@ public class CDKAtomColors implements IAtomColorer {
      * @param atom         IAtom to get a color for
      * @return             the atom's color according to this coloring scheme.
      */
-    @TestMethod("testGetAtomColor")
     @Override
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, DEFAULT);
@@ -64,7 +60,6 @@ public class CDKAtomColors implements IAtomColorer {
      *                     a color for the passed IAtom
      * @return             the atom's color according to this coloring scheme.
      */
-    @TestMethod("testGetDefaultAtomColor")
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;

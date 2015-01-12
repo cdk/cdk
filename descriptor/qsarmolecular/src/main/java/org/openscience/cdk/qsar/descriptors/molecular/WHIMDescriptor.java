@@ -23,8 +23,6 @@ import java.util.Map;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -119,7 +117,6 @@ import Jama.Matrix;
  * @cdk.keyword WHIM
  * @cdk.keyword descriptor
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptorTest")
 public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     static ILoggingTool logger = LoggingToolFactory.createLoggingTool(WHIMDescriptor.class);
@@ -217,7 +214,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
         this.hashpol.put("I", new Double(3.040));
     }
 
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM",
@@ -235,7 +231,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
      * @throws CDKException if the parameters are of the wrong type
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
@@ -257,7 +252,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
      *         to return respectively
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         Object[] o = new Object[1];
@@ -265,7 +259,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
         return (o);
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         String[] names = {"Wlambda1", "Wlambda2", "Wlambda3", "Wnu1", "Wnu2", "Wgamma1", "Wgamma2", "Wgamma3", "Weta1",
@@ -280,7 +273,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
      *
      * @return The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] pname = new String[1];
@@ -294,7 +286,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
      * @param name Description of the Parameter
      * @return The parameterType value
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return ("");
@@ -316,7 +307,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
      * @param container Parameter is the atom container.
      * @return An ArrayList containing the descriptors in the order described above.
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (!GeometryUtil.has3DCoordinates(container))
@@ -472,7 +462,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(17);

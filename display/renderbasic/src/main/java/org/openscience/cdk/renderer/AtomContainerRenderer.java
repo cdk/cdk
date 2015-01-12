@@ -27,7 +27,6 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -101,7 +100,6 @@ import static java.lang.Math.min;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.AtomContainerRendererTest")
 public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> implements IRenderer<IAtomContainer> {
 
     /**

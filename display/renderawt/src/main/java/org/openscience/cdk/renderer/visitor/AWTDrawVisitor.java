@@ -40,8 +40,6 @@ import java.util.Map;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ArrowElement;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
@@ -73,7 +71,6 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UseAntiAliasi
  * @cdk.module renderawt
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.visitor.AWTDrawVisitorTest")
 public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     /**
@@ -95,7 +92,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      *
      * @return the current model
      */
-    @TestMethod("testGetRendererModel")
     public RendererModel getRendererModel() {
         return rendererModel;
     }
@@ -105,7 +101,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      *
      * @return a {@link Map} with Integer as keys and {@link BasicStroke}s.
      */
-    @TestMethod("testGetStrokeMap")
     public Map<Integer, BasicStroke> getStrokeMap() {
         return strokeMap;
     }
@@ -123,7 +118,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      *
      * @return the {@link Graphics2D} object
      */
-    @TestMethod("testGetGraphics")
     public Graphics2D getGraphics() {
         return graphics;
     }
@@ -135,7 +129,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      *
      * @param graphics {@link Graphics2D} to which will be drawn
      */
-    @TestMethod("testConstructor")
     public AWTDrawVisitor(Graphics2D graphics) {
         this(graphics, true, 1.5f);
     }
@@ -606,7 +599,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testVisit")
     @Override
     public void visit(IRenderingElement element) {
         Color savedColor = this.graphics.getColor();
@@ -645,14 +637,12 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      *
      * @param fontManager the {@link IFontManager} to be used
      */
-    @TestMethod("testSetFontManager")
     @Override
     public void setFontManager(IFontManager fontManager) {
         this.fontManager = (AWTFontManager) fontManager;
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testSetRendererModel")
     @Override
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;

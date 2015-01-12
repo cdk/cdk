@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -66,7 +64,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondCount
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.BondCountDescriptorTest")
 public class BondCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     /** defaults to UNSET, which means: count all bonds **/
@@ -82,7 +79,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *
      *@return    The specification value
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -96,7 +92,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
@@ -118,7 +113,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *
      *@return    The parameters value
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -127,7 +121,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         if (order.equals(""))
@@ -142,7 +135,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *@param  container  AtomContainer
      *@return            The number of bonds of a certain type.
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (order.equals("")) {
@@ -195,7 +187,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
@@ -206,7 +197,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -220,7 +210,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         if ("order".equals(name)) return "";

@@ -21,8 +21,6 @@ package org.openscience.cdk.renderer.font;
 import java.awt.Font;
 import java.util.HashMap;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * AWT-specific font manager.
@@ -30,7 +28,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.font.AWTFontManagerTest")
 public class AWTFontManager extends AbstractFontManager {
 
     private HashMap<Integer, Font> fontSizeToFontMap;
@@ -42,7 +39,6 @@ public class AWTFontManager extends AbstractFontManager {
     /**
      * Make a manager for fonts in AWT, with a minimum font size of 9.
      */
-    @TestMethod("testConstructor")
     public AWTFontManager() {
         // apparently 9 pixels per em is the minimum
         // but I don't know if (size 9 == 9 px.em-1)...

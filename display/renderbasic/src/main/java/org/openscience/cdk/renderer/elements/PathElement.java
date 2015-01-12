@@ -23,8 +23,6 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A path composed of points.
@@ -32,7 +30,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.PathElementTest")
 public class PathElement implements IRenderingElement {
 
     /** The points that make up the path. **/
@@ -47,14 +44,12 @@ public class PathElement implements IRenderingElement {
      * @param points points defining the path
      * @param color  color of the path
      */
-    @TestMethod("testConstructor")
     public PathElement(List<Point2d> points, Color color) {
         this.points = points;
         this.color = color;
     }
 
     /** {@inheritDoc} **/
-    @TestMethod("testAccept")
     @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);

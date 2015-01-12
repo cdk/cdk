@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A group of rendering elements, of any type.
@@ -31,7 +29,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module  renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.ElementGroupTest")
 public class ElementGroup implements IRenderingElement, Iterable<IRenderingElement> {
 
     /**
@@ -74,7 +71,6 @@ public class ElementGroup implements IRenderingElement, Iterable<IRenderingEleme
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testAccept")
     @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);

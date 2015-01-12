@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
@@ -84,7 +82,6 @@ import java.util.List;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:mde
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.MDEDescriptorTest")
 public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] NAMES  = {"MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14", "MDEC-22", "MDEC-23",
@@ -143,7 +140,6 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
@@ -159,7 +155,6 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      *          is not of type String
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // none
@@ -171,13 +166,11 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @return The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -191,7 +184,6 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @return The total weight of atoms of the specified element type
      */
 
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
 
@@ -217,7 +209,6 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(19);
@@ -375,7 +366,6 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      *
      * @return The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return null;
@@ -387,7 +377,6 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @param name Description of the Parameter
      * @return An Object whose class is that of the parameter requested
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

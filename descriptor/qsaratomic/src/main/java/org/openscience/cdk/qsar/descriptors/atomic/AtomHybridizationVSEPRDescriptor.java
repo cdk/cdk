@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -88,7 +86,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptorTest")
 public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     /**
@@ -101,7 +98,6 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -112,7 +108,6 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
@@ -122,13 +117,11 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      * @return    The parameters value
      * @see       #setParameters
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return new String[]{"hybr"};
@@ -142,7 +135,6 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      *@return                   The hybridization
      */
 
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         IAtomType atomType;
@@ -176,7 +168,6 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -188,7 +179,6 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
      *@param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

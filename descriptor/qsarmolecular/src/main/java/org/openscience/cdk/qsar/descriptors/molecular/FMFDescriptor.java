@@ -20,8 +20,6 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fragment.MurckoFragmenter;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -54,7 +52,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.githash
  * @see org.openscience.cdk.fragment.MurckoFragmenter
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.FMFDescriptorTest")
 public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     public FMFDescriptor() {}
@@ -67,7 +64,6 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @return An object of {@link org.openscience.cdk.qsar.DescriptorValue} that contains the
      *         calculated FMF descriptor value as well as specification details
      */
-    @TestMethod("testCarbinoxamine,testIsamoltane,testPirenperone")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 3);

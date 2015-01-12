@@ -2,8 +2,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A ring is just a circle - in other words, an oval whose width and height are
@@ -12,7 +10,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.RingElementTest")
 public class RingElement extends OvalElement implements IRenderingElement {
 
     /**
@@ -23,13 +20,11 @@ public class RingElement extends OvalElement implements IRenderingElement {
      * @param radius the radius of the circle
      * @param color the color of the circle
      */
-    @TestMethod("testConstructor")
     public RingElement(double x, double y, double radius, Color color) {
         super(x, y, radius, false, color);
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testAccept")
     @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);
