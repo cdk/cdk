@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.result;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * IDescriptorResult type for booleans.
@@ -27,18 +25,15 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.qsar.result.DoubleResultTypeTest")
 public class DoubleResultType implements IDescriptorResult {
 
     private static final long serialVersionUID = -6641147506132424322L;
 
-    @TestMethod("testToString")
     @Override
     public String toString() {
         return "DoubleResultType";
     }
 
-    @TestMethod("testLength")
     @Override
     public int length() {
         return 1;

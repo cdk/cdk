@@ -48,7 +48,6 @@
 package org.openscience.cdk.smsd.algorithm.vflib.interfaces;
 
 import java.util.List;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.smsd.algorithm.matchers.VFAtomMatcher;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.EdgeBuilder;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.NodeBuilder;
@@ -59,7 +58,6 @@ import org.openscience.cdk.smsd.algorithm.vflib.builder.NodeBuilder;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public interface INode {
 
     /**

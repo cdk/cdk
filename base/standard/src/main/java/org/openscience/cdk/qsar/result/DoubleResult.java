@@ -18,14 +18,11 @@
  */
 package org.openscience.cdk.qsar.result;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.qsar.result.DoubleResultTest")
 public class DoubleResult implements IDescriptorResult {
 
     private double            value;
@@ -35,18 +32,15 @@ public class DoubleResult implements IDescriptorResult {
         this.value = value;
     }
 
-    @TestMethod("testDoubleValue")
     public double doubleValue() {
         return this.value;
     }
 
-    @TestMethod("testToString")
     @Override
     public String toString() {
         return Double.toString(value);
     }
 
-    @TestMethod("testLength")
     @Override
     public int length() {
         return 1;

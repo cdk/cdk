@@ -24,8 +24,6 @@ package org.openscience.cdk.tools;
 
 import java.util.Comparator;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
   * Compares elements based on the order commonly used in
@@ -37,7 +35,6 @@ import org.openscience.cdk.annotations.TestMethod;
   *
   * @cdk.keyword element, sorting
   */
-@TestClass("org.openscience.cdk.tools.ElementComparatorTest")
 public class ElementComparator implements Comparator<String> {
 
     private static final String H_ELEMENT_SYMBOL = "H";
@@ -48,7 +45,6 @@ public class ElementComparator implements Comparator<String> {
      * returns zero if they are identical, and positive if o1 comes
      * after o2 in the formula.
      */
-    @TestMethod("testCompare_Object_Object")
     @Override
     public int compare(String o1, String o2) {
         if (C_ELEMENT_SYMBOL.equals(o1)) {

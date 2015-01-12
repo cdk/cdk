@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.math;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Class providing convenience methods for simple mathematical operations.
@@ -27,7 +25,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.math.MathToolsTest")
 public class MathTools {
 
     /**
@@ -36,7 +33,6 @@ public class MathTools {
      * @param   values  the values to be searched for the largest value among them
      * @return   the largest value among a set of given values
      */
-    @TestMethod("testMax_arraydouble")
     public static double max(double[] values) {
         double max = values[0];
         for (double value : values)
@@ -50,7 +46,6 @@ public class MathTools {
      * @param   values  the values to be searched for the smallest value among them
      * @return   the smallest value among a set of given values
      */
-    @TestMethod("testMin_arraydouble")
     public static double min(double[] values) {
         double min = values[0];
         for (double value : values)
@@ -61,7 +56,6 @@ public class MathTools {
     /**
      * Analog of Math.max that returns the largest int value in an array of ints.
      **/
-    @TestMethod("testMax_arrayint")
     public static int max(int[] values) {
         int max = values[0];
         for (int value : values) {
@@ -75,7 +69,6 @@ public class MathTools {
     /**
      * Analog of Math.max that returns the largest int value in an array of ints.
      **/
-    @TestMethod("testMin_arrayint")
     public static int min(int[] values) {
         int min = values[0];
         for (int value : values) {
@@ -86,12 +79,10 @@ public class MathTools {
         return min;
     }
 
-    @TestMethod("testIsOdd_int")
     public static boolean isOdd(int intValue) {
         return !MathTools.isEven(intValue);
     }
 
-    @TestMethod("testIsEven_int")
     public static boolean isEven(int intValue) {
         return intValue % 2 == 0;
     }

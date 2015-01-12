@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.smsd.helper.FinalMappings;
 
 /**
@@ -45,7 +43,6 @@ import org.openscience.cdk.smsd.helper.FinalMappings;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.filters.PostFilterTest")
 public class PostFilter {
 
     /**
@@ -56,7 +53,6 @@ public class PostFilter {
      * @param mappings
      * @return Filtered non-redundant mappings
      */
-    @TestMethod("testFilter")
     public static List<Map<Integer, Integer>> filter(List<List<Integer>> mappings) {
         FinalMappings finalMappings = FinalMappings.getInstance();
         if (mappings != null && !mappings.isEmpty()) {

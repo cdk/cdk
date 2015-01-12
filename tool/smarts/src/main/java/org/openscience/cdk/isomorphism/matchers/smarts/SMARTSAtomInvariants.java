@@ -25,8 +25,6 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -60,7 +58,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @author John May
  * @cdk.module smarts
  */
-@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.DaylightSMARTSAtomInvariantsTest")
 final class SMARTSAtomInvariants {
 
     /** Property key to index the class by. */
@@ -114,7 +111,6 @@ final class SMARTSAtomInvariants {
         this.degree = degree;
     }
 
-    @TestMethod("target")
     IAtomContainer target() {
         return target;
     }
@@ -130,7 +126,6 @@ final class SMARTSAtomInvariants {
      *
      * @return the valence of the atom.
      */
-    @TestMethod("valence")
     int valence() {
         return valence;
     }
@@ -143,7 +138,6 @@ final class SMARTSAtomInvariants {
      *
      * @return number or rings
      */
-    @TestMethod("ringNumber,ringNumber_cyclophane")
     int ringNumber() {
         return ringNumber;
     }
@@ -157,7 +151,6 @@ final class SMARTSAtomInvariants {
      *
      * @return ring sizes
      */
-    @TestMethod("ringSize,ringSize_cyclophane,ringSize_imidazole")
     Set<Integer> ringSize() {
         return ringSize;
     }
@@ -170,7 +163,6 @@ final class SMARTSAtomInvariants {
      *
      * @return ring connectivity
      */
-    @TestMethod("ringConnectivity")
     int ringConnectivity() {
         return ringConnectivity;
     }
@@ -182,7 +174,6 @@ final class SMARTSAtomInvariants {
      *
      * @return connectivity
      */
-    @TestMethod("connectivity")
     int connectivity() {
         return connectivity;
     }
@@ -195,7 +186,6 @@ final class SMARTSAtomInvariants {
      *
      * @return connectivity
      */
-    @TestMethod("degree")
     int degree() {
         return degree;
     }
@@ -205,7 +195,6 @@ final class SMARTSAtomInvariants {
      *
      * @return
      */
-    @TestMethod("totalHydrogenCount")
     int totalHydrogenCount() {
         return totalHydrogenCount;
     }
@@ -227,7 +216,6 @@ final class SMARTSAtomInvariants {
      *
      * @param container the container to configure
      */
-    @TestMethod("noRingInfo")
     static void configureDaylightWithoutRingInfo(IAtomContainer container) {
         EdgeToBondMap map = EdgeToBondMap.withSpaceFor(container);
         int[][] graph = GraphUtil.toAdjList(container, map);
@@ -253,7 +241,6 @@ final class SMARTSAtomInvariants {
      *
      * @param container the container to configure
      */
-    @TestMethod("valence,degree")
     static void configureDaylightWithRingInfo(IAtomContainer container) {
         EdgeToBondMap map = EdgeToBondMap.withSpaceFor(container);
         int[][] graph = GraphUtil.toAdjList(container, map);

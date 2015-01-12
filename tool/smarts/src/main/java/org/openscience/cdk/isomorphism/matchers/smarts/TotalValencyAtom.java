@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -31,7 +29,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtom")
 public final class TotalValencyAtom extends SMARTSAtom {
 
     /**
@@ -53,7 +50,6 @@ public final class TotalValencyAtom extends SMARTSAtom {
      * @inheritDoc
      */
     @Override
-    @TestMethod("matches")
     public boolean matches(IAtom atom) {
         return invariants(atom).valence() == valence;
     }

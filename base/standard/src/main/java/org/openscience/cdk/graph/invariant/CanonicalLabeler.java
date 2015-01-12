@@ -23,8 +23,6 @@
 package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.InvPair;
@@ -51,7 +49,6 @@ import java.util.List;
  * @cdk.keyword canonicalization
  * @deprecated this labeller uses slow data structures and has been replaced - {@link Canon}
  */
-@TestClass("org.openscience.cdk.graph.invariant.CanonicalLabelerTest")
 @Deprecated
 public class CanonicalLabeler {
 
@@ -71,7 +68,6 @@ public class CanonicalLabeler {
      * cause a NumberFormatException to be thrown.
      * @param atomContainer The molecule to label
      */
-    @TestMethod("testCanonLabel_IAtomContainer,testSomeMoleculeWithDifferentStartingOrder")
     public synchronized void canonLabel(IAtomContainer atomContainer) {
         if (atomContainer.getAtomCount() == 0) return;
         if (atomContainer.getAtomCount() == 1) {

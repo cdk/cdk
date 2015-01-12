@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -43,7 +41,6 @@ import java.util.Random;
  *
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */
-@TestClass("org.openscience.cdk.fingerprint.GraphOnlyFingerprinterTest")
 public class GraphOnlyFingerprinter extends Fingerprinter {
 
     /**
@@ -74,7 +71,6 @@ public class GraphOnlyFingerprinter extends Fingerprinter {
         return "";
     }
 
-    @TestMethod("testFingerPrint,testFingerprint")
     public BitSet getBitFingerprint(IAtomContainer container, int size) throws Exception {
         int[] hashes = findPathes(container, super.getSearchDepth());
         BitSet bitSet = new BitSet(size);

@@ -57,7 +57,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -124,7 +123,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.module  smsd
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.smsd.algorithm.cdk.CDKMCSTest")
 public class CDKMCS {
 
     final static int           ID1         = 0;

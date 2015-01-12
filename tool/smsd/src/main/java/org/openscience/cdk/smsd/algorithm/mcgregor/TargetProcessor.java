@@ -24,7 +24,6 @@
 package org.openscience.cdk.smsd.algorithm.mcgregor;
 
 import java.util.List;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
@@ -33,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.algorithm.mcgregor.TargetProcessorTest")
 public class TargetProcessor {
 
     private List<String>  cTab1Copy;

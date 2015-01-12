@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.smsd.interfaces;
 
-import org.openscience.cdk.annotations.TestClass;
 
 /**
  * Interface class for reporting only substructure searches.
@@ -30,7 +29,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.interfaces.AbstractSubGraphTest")
 public abstract class AbstractSubGraph {
 
     /**

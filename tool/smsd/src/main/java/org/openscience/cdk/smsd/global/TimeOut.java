@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.smsd.global;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Class that manages MCS timeout.
@@ -33,7 +31,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.global.TimeOutTest")
 public class TimeOut {
 
     private static TimeOut instance    = null;
@@ -44,7 +41,6 @@ public class TimeOut {
      * Get Instance of the timeout. This starts the timeout counter.
      * @return Instance
      */
-    @TestMethod("testGetInstance")
     public static synchronized TimeOut getInstance() {
         if (instance == null) {
             // it's ok, we can call this constructor
@@ -60,7 +56,6 @@ public class TimeOut {
      * 23 seconds.
      * @param timeout
      */
-    @TestMethod("testSetTimeOut")
     public void setTimeOut(double timeout) {
         this.time = timeout;
     }
@@ -69,7 +64,6 @@ public class TimeOut {
      * Return cutoff value for time out.
      * @return time out cutoff value
      */
-    @TestMethod("testSetTimeOut")
     public double getTimeOut() {
         return time;
     }
@@ -78,7 +72,6 @@ public class TimeOut {
      * Return true if its a timeout else return false.
      * @return the timeout flag
      */
-    @TestMethod("testIsTimeOutFlag")
     public boolean isTimeOutFlag() {
         return timeOutFlag;
     }
@@ -87,7 +80,6 @@ public class TimeOut {
      * Set true if timeout occures else false
      * @param timeOut the timeout flag to set
      */
-    @TestMethod("testSetTimeOutFlag")
     public void setTimeOutFlag(boolean timeOut) {
         this.timeOutFlag = timeOut;
     }

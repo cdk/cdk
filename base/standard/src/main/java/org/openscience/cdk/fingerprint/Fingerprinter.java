@@ -23,8 +23,6 @@
 package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
@@ -92,7 +90,6 @@ import java.util.Set;
  * @cdk.module     standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.FingerprinterTest")
 public class Fingerprinter implements IFingerprinter {
 
     /** Throw an exception if too many paths (per atom) are generated. */
@@ -165,7 +162,6 @@ public class Fingerprinter implements IFingerprinter {
      * @return A {@link BitSet} representing the fingerprint
      */
 
-    @TestMethod("testgetBitFingerprint_IAtomContainer")
     public IBitFingerprint getBitFingerprint(IAtomContainer container, AllRingsFinder ringFinder) throws CDKException {
         int position = -1;
         logger.debug("Entering Fingerprinter");
@@ -192,7 +188,6 @@ public class Fingerprinter implements IFingerprinter {
      *
      *@param container The AtomContainer for which a Fingerprint is generated
      */
-    @TestMethod("testgetBitFingerprint_IAtomContainer")
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
         return getBitFingerprint(container, null);
@@ -314,12 +309,10 @@ public class Fingerprinter implements IFingerprinter {
         return bondSymbol;
     }
 
-    @TestMethod("testGetSearchDepth")
     public int getSearchDepth() {
         return searchDepth;
     }
 
-    @TestMethod("testGetSize")
     @Override
     public int getSize() {
         return size;

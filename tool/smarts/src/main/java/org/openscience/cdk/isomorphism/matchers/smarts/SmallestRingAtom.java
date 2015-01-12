@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -41,7 +39,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.SmallestRingAtomTest")
 public final class SmallestRingAtom extends SMARTSAtom {
 
     /** Ring size to check. */
@@ -59,7 +56,6 @@ public final class SmallestRingAtom extends SMARTSAtom {
 
     /** @inheritDoc */
     @Override
-    @TestMethod("matches")
     public boolean matches(IAtom atom) {
         return invariants(atom).ringSize().contains(ringSize);
     }

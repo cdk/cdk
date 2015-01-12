@@ -26,8 +26,6 @@ package org.openscience.cdk.smsd.tools;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -45,7 +43,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.tools.MoleculeSanityCheckTest")
 public class MoleculeSanityCheck {
 
     /**
@@ -53,7 +50,6 @@ public class MoleculeSanityCheck {
      * @param molecule
      * @return cleaned AtomContainer
      */
-    @TestMethod("testCheckAndCleanMolecule")
     public static IAtomContainer checkAndCleanMolecule(IAtomContainer molecule) {
         boolean isMarkush = false;
         for (IAtom atom : molecule.atoms()) {
@@ -94,7 +90,6 @@ public class MoleculeSanityCheck {
      * i.e. need to find rings and aromaticity again since added H's
      * @param mol
      */
-    @TestMethod("testFixAromaticity")
     public static void configure(IAtomContainer mol) {
         // need to find rings and aromaticity again since added H's
 

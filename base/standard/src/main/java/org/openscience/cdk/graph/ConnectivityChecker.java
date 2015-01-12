@@ -22,8 +22,6 @@ package org.openscience.cdk.graph;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -56,7 +54,6 @@ import org.openscience.cdk.stereo.ExtendedTetrahedral;
  *
  * @cdk.keyword connectivity
  */
-@TestClass("org.openscience.cdk.graph.ConnectivityCheckerTest")
 public class ConnectivityChecker {
 
     /**
@@ -65,7 +62,6 @@ public class ConnectivityChecker {
      * @param   atomContainer  The {@link IAtomContainer} to be check for connectedness
      * @return                 true if the {@link IAtomContainer} is connected
      */
-    @TestMethod("testIsConnected_IAtomContainer,testPartitionIntoMolecules_IsConnected_Consistency")
     public static boolean isConnected(IAtomContainer atomContainer) {
         // with one atom or less, we define it to be connected, as there is no
         // partitioning needed
@@ -83,7 +79,6 @@ public class ConnectivityChecker {
      *
      * @cdk.dictref   blue-obelisk:graphPartitioning
      */
-    @TestMethod("testPartitionIntoMolecules_IAtomContainer,testPartitionIntoMoleculesKeepsAtomIDs,testPartitionIntoMolecules_IsConnected_Consistency")
     public static IAtomContainerSet partitionIntoMolecules(IAtomContainer container) {
 
         ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjList(container));

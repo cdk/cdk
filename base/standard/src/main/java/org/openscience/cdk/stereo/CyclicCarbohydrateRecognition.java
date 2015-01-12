@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.rebond.Point;
 import org.openscience.cdk.interfaces.IAtom;
@@ -63,7 +61,6 @@ import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn.Righ
  * @see <a href="http://en.wikipedia.org/wiki/Haworth_projection">Haworth projection (Wikipedia)</a>
  * @see <a href="http://en.wikipedia.org/wiki/Chair_conformation">Chair conformation (Wikipedia)</a>
  */
-@TestClass("org.openscience.cdk.stereo.CyclicCarbohydrateRecognitionTest")
 final class CyclicCarbohydrateRecognition {
 
     /**
@@ -105,7 +102,6 @@ final class CyclicCarbohydrateRecognition {
      * @param projections the types of projections to recognise
      * @return recognised stereocenters
      */
-    @TestMethod("betaDGlucose_Haworth,betaDGlucose_Chair")
     List<IStereoElement> recognise(Set<Projection> projections) {
 
         if (!projections.contains(Projection.Haworth) && !projections.contains(Projection.Chair))
@@ -157,7 +153,6 @@ final class CyclicCarbohydrateRecognition {
      * @param points polygon points
      * @return array of turns (left, right) or null if a parallel line was found
      */
-    @TestMethod("haworthClockwise,haworthAnticlockwise")
     static Turn[] turns(Point2d[] points) {
 
         final Turn[] turns = new Turn[points.length];

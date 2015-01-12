@@ -20,8 +20,6 @@
 package org.openscience.cdk.graph.invariant;
 
 import com.google.common.primitives.Ints;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -43,7 +41,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @see CanonicalLabeler
  * @see HuLuIndexTool
  */
-@TestClass("org.openscience.cdk.graph.invariant.MorganNumbersToolsTest")
 public class MorganNumbersTools {
 
     /** Default size of adjacency lists. */
@@ -57,7 +54,6 @@ public class MorganNumbersTools {
      * @param molecule the molecule to analyse.
      * @return The morgan numbers value.
      */
-    @TestMethod("testGetMorganNumbers_IAtomContainer")
     public static long[] getMorganNumbers(IAtomContainer molecule) {
 
         int order = molecule.getAtomCount();
@@ -114,7 +110,6 @@ public class MorganNumbersTools {
      * @param atomContainer The atomContainer to analyse.
      * @return The morgan numbers value.
      */
-    @TestMethod("testPhenylamine")
     public static String[] getMorganNumbersWithElementSymbol(IAtomContainer atomContainer) {
         long[] morgannumbers = getMorganNumbers(atomContainer);
         String[] morgannumberswithelement = new String[morgannumbers.length];

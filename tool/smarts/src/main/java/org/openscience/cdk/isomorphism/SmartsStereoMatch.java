@@ -26,8 +26,6 @@ package org.openscience.cdk.isomorphism;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -56,7 +54,6 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * @cdk.module smarts
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.isomorphism.SmartsStereoMatchTest")
 public final class SmartsStereoMatch implements Predicate<int[]> {
 
     /** Query and target contains. */
@@ -109,7 +106,6 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
      * @param mapping permutation of the query vertices
      * @return the stereo chemistry is value
      */
-    @TestMethod("tetrahedral_match,tetrahedral_mismatch")
     @Override
     public boolean apply(final int[] mapping) {
         for (final int u : queryStereoIndices) {
