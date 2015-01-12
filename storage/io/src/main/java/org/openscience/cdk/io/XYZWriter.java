@@ -31,8 +31,6 @@ import java.util.Iterator;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -52,7 +50,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author  J. Daniel Gezelter
  * @author  Egon Willighagen
  */
-@TestClass("org.openscience.cdk.io.XYZWriterTest")
 public class XYZWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter      writer;
@@ -84,7 +81,6 @@ public class XYZWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return XYZFormat.getInstance();
@@ -107,13 +103,11 @@ public class XYZWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         writer.close();
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;

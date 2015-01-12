@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -47,13 +45,11 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * @author John May
  * @cdk.module hash
  */
-@TestClass("org.openscience.cdk.hash.stereo.DoubleBondElementEncoderFactoryTest")
 public final class DoubleBondElementEncoderFactory implements StereoEncoderFactory {
 
     /**
      * @inheritDoc
      */
-    @TestMethod("opposite,together")
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {
 

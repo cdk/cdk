@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Low weight alternative to Sun's Stack class.
@@ -33,7 +31,6 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  * @cdk.keyword stack
  */
-@TestClass("org.openscience.cdk.io.cml.CMLStackTest")
 public class CMLModuleStack {
 
     ICMLModule[] stack = new ICMLModule[64];
@@ -42,7 +39,6 @@ public class CMLModuleStack {
     /**
      * Adds an entry to the stack.
      */
-    @TestMethod("testPush_String")
     public void push(ICMLModule item) {
         if (sp == stack.length) {
             ICMLModule[] temp = new ICMLModule[2 * sp];
@@ -61,7 +57,6 @@ public class CMLModuleStack {
      *
      * @see #current()
      */
-    @TestMethod("testPop")
     public ICMLModule pop() {
         return stack[--sp];
     }
@@ -71,7 +66,6 @@ public class CMLModuleStack {
      *
      * @see #pop()
      */
-    @TestMethod("testCurrent")
     public ICMLModule current() {
         if (sp > 0) {
             return stack[sp - 1];
@@ -97,7 +91,6 @@ public class CMLModuleStack {
     /**
      * Convenience method to check the last added elements.
      */
-    @TestMethod("testEndsWith_String")
     public boolean endsWith(ICMLModule lastElement) {
         return stack[sp - 1].equals(lastElement);
     }
@@ -105,7 +98,6 @@ public class CMLModuleStack {
     /**
      * Convenience method to check the last two added elements.
      */
-    @TestMethod("testEndsWith_String_String")
     public boolean endsWith(ICMLModule oneButLast, ICMLModule lastElement) {
         return endsWith(lastElement) && stack[sp - 2].equals(oneButLast);
     }
@@ -113,7 +105,6 @@ public class CMLModuleStack {
     /**
      * Convenience method to check the last three added elements.
      */
-    @TestMethod("testEndsWith_String_String_String")
     public boolean endsWith(ICMLModule twoButLast, ICMLModule oneButLast, ICMLModule lastElement) {
         return endsWith(oneButLast, lastElement) && stack[sp - 3].equals(twoButLast);
     }

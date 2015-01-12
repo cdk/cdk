@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -55,7 +53,6 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
  * @cdk.githash
  * @see org.openscience.cdk.hash.HashGeneratorMaker
  */
-@TestClass("org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactoryTest")
 public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFactory {
 
     /**
@@ -66,7 +63,6 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
      * @param graph     adjacency list representation of the container
      * @return a new encoder for tetrahedral elements
      */
-    @TestMethod("testCreate,testCreate_NoCoordinates")
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {
 
@@ -109,7 +105,6 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
      * @param graph       adjacency list representation of the molecule
      * @return a stereo encoder (or null)
      */
-    @TestMethod("testCreate,testCreate_NoCoordinates")
     static StereoEncoder newEncoder(IAtomContainer container, IAtom left, IAtom leftParent, IAtom right,
             IAtom rightParent, int[][] graph) {
 
@@ -167,7 +162,6 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
      *            none
      * @return geometric parity or null
      */
-    @TestMethod("testGeometric_2D,testGeometric_3D")
     static GeometricParity geometric(IAtomContainer mol, int l, int r, int l1, int l2, int r1, int r2) {
 
         // we need all points for 2D as they may be skewed, i.e.
@@ -214,7 +208,6 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
      * @param neighbors neighbors of a double bonded atom specified by index
      * @return a new permutation parity
      */
-    @TestMethod("testPermutation_SingleSubstituents,testPermutation_TwoSubstituents")
     static PermutationParity permutation(int[] neighbors) {
         return neighbors.length == 2 ? PermutationParity.IDENTITY : new BasicPermutationParity(Arrays.copyOf(neighbors,
                 neighbors.length - 1));
@@ -228,7 +221,6 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
      * @param v         the value to shift to the back
      * @return <i>neighbors</i> array
      */
-    @TestMethod("testMoveToBack")
     static int[] moveToBack(int[] neighbors, int v) {
         int j = 0;
         for (int i = 0; i < neighbors.length; i++) {
@@ -250,8 +242,6 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
      * @param bonds all bonds connected to the atom
      * @return whether the atom is accepted for configuration
      */
-    @TestMethod("testAccept_Hybridization," + "testAccept_QueryBond," + "testAccept_CumulatedDoubleBond,"
-            + "testAccept_NoSubstituents")
     static boolean accept(IAtom atom, List<IBond> bonds) {
 
         int dbCount = 0;

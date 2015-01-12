@@ -24,8 +24,6 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -63,7 +61,6 @@ import java.util.StringTokenizer;
  *
  * @cdk.keyword    file format, MDL RXN
  */
-@TestClass("org.openscience.cdk.io.MDLRXNReaderTest")
 public class MDLRXNReader extends DefaultChemObjectReader {
 
     BufferedReader              input  = null;
@@ -99,13 +96,11 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return MDLRXNFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -115,13 +110,11 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -166,7 +159,6 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
         if (object instanceof IReaction) {
             return true;
@@ -425,7 +417,6 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         return reaction;
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Low weight alternative to Sun's Stack class.
@@ -33,7 +31,6 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  * @cdk.keyword stack
  */
-@TestClass("org.openscience.cdk.io.cml.CMLStackTest")
 final class CMLStack {
 
     private String[] stack = new String[64];
@@ -42,7 +39,6 @@ final class CMLStack {
     /**
      * Adds an entry to the stack.
      */
-    @TestMethod("testPush_String")
     void push(String item) {
         if (sp == stack.length) {
             String[] temp = new String[2 * sp];
@@ -61,7 +57,6 @@ final class CMLStack {
      *
      * @see #current()
      */
-    @TestMethod("testPop")
     String pop() {
         return stack[--sp];
     }
@@ -71,7 +66,6 @@ final class CMLStack {
      *
      * @see #pop()
      */
-    @TestMethod("testCurrent")
     String current() {
         if (sp > 0) {
             return stack[sp - 1];
@@ -97,7 +91,6 @@ final class CMLStack {
     /**
      * Convenience method to check the last added elements.
      */
-    @TestMethod("testEndsWith_String")
     boolean endsWith(String lastElement) {
         return stack[sp - 1].equals(lastElement);
     }
@@ -105,7 +98,6 @@ final class CMLStack {
     /**
      * Convenience method to check the last two added elements.
      */
-    @TestMethod("testEndsWith_String_String")
     boolean endsWith(String oneButLast, String lastElement) {
         return endsWith(lastElement) && stack[sp - 2].equals(oneButLast);
     }
@@ -113,7 +105,6 @@ final class CMLStack {
     /**
      * Convenience method to check the last three added elements.
      */
-    @TestMethod("testEndsWith_String_String_String")
     boolean endsWith(String twoButLast, String oneButLast, String lastElement) {
         return endsWith(oneButLast, lastElement) && stack[sp - 3].equals(twoButLast);
     }
@@ -122,7 +113,6 @@ final class CMLStack {
      * Current size of the stack.
      * @return number of items
      */
-    @TestMethod("testSize")
     int size() {
         return sp;
     }

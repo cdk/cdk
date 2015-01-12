@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A fast pseudorandom number generator based on feedback shift registers.
@@ -36,7 +34,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  * @cdk.module hash
  */
-@TestClass("org.openscience.cdk.hash.XorshiftTest")
 final class Xorshift extends Pseudorandom {
 
     /**
@@ -45,7 +42,6 @@ final class Xorshift extends Pseudorandom {
      * @param seed random number seed
      * @return the next pseudorandom number
      */
-    @TestMethod("testNext,testDistribution,demonstrateZeroLimitation")
     @Override
     long next(long seed) {
         seed = seed ^ seed << 21;

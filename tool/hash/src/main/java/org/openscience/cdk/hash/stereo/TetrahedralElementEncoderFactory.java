@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -47,13 +45,11 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * @author John May
  * @cdk.module hash
  */
-@TestClass("org.openscience.cdk.hash.stereo.TetrahedralElementEncoderFactoryTest")
 public final class TetrahedralElementEncoderFactory implements StereoEncoderFactory {
 
     /**
      * @inheritDoc
      */
-    @TestMethod("createExplicitH,createImplicitH_back,createImplicitH_front")
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {
 

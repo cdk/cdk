@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.hash.stereo.DoubleBondElementEncoderFactory;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.GeometricCumulativeDoubleBondFactory;
@@ -76,7 +74,6 @@ import java.util.List;
  * @cdk.module hash
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.HashGeneratorMakerTest")
 public final class HashGeneratorMaker {
 
     /* no default depth */
@@ -105,7 +102,6 @@ public final class HashGeneratorMaker {
      * @return reference for fluent API
      * @throws IllegalArgumentException if the depth was less then zero
      */
-    @TestMethod("testInvalidDepth,testDepth")
     public HashGeneratorMaker depth(int depth) {
         if (depth < 0) throw new IllegalArgumentException("depth must not be less than 0");
         this.depth = depth;
@@ -118,7 +114,6 @@ public final class HashGeneratorMaker {
      * @return fluent API reference (self)
      * @see BasicAtomEncoder#ATOMIC_NUMBER
      */
-    @TestMethod("testElemental")
     public HashGeneratorMaker elemental() {
         encoderSet.add(BasicAtomEncoder.ATOMIC_NUMBER);
         return this;
@@ -130,7 +125,6 @@ public final class HashGeneratorMaker {
      * @return fluent API reference (self)
      * @see BasicAtomEncoder#MASS_NUMBER
      */
-    @TestMethod("testIsotopic")
     public HashGeneratorMaker isotopic() {
         encoderSet.add(BasicAtomEncoder.MASS_NUMBER);
         return this;
@@ -142,7 +136,6 @@ public final class HashGeneratorMaker {
      * @return fluent API reference (self)
      * @see BasicAtomEncoder#FORMAL_CHARGE
      */
-    @TestMethod("testCharged")
     public HashGeneratorMaker charged() {
         encoderSet.add(BasicAtomEncoder.FORMAL_CHARGE);
         return this;
@@ -154,7 +147,6 @@ public final class HashGeneratorMaker {
      * @return fluent API reference (self)
      * @see BasicAtomEncoder#ORBITAL_HYBRIDIZATION
      */
-    @TestMethod("testOrbital")
     public HashGeneratorMaker orbital() {
         encoderSet.add(BasicAtomEncoder.ORBITAL_HYBRIDIZATION);
         return this;
@@ -166,7 +158,6 @@ public final class HashGeneratorMaker {
      * @return fluent API reference (self)
      * @see BasicAtomEncoder#FREE_RADICALS
      */
-    @TestMethod("testRadical")
     public HashGeneratorMaker radical() {
         encoderSet.add(BasicAtomEncoder.FREE_RADICALS);
         return this;
@@ -184,7 +175,6 @@ public final class HashGeneratorMaker {
      *
      * @return fluent API reference (self)
      */
-    @TestMethod("testChiral")
     public HashGeneratorMaker chiral() {
         this.stereoEncoders.add(new GeometricTetrahedralEncoderFactory());
         this.stereoEncoders.add(new GeometricDoubleBondEncoderFactory());
@@ -201,7 +191,6 @@ public final class HashGeneratorMaker {
      *
      * @return fluent API reference (self)
      */
-    @TestMethod("suppressHydrogens")
     public HashGeneratorMaker suppressHydrogens() {
         this.suppression = AtomSuppression.anyHydrogens();
         return this;
@@ -218,7 +207,6 @@ public final class HashGeneratorMaker {
      * @see MinimumEquivalentCyclicSet
      * @see #perturbWith(EquivalentSetFinder)
      */
-    @TestMethod("testPerturbed")
     public HashGeneratorMaker perturbed() {
         return perturbWith(new MinimumEquivalentCyclicSet());
     }
@@ -260,7 +248,6 @@ public final class HashGeneratorMaker {
      * @see MinimumEquivalentCyclicSet
      * @see MinimumEquivalentCyclicSetUnion
      */
-    @TestMethod("testPerturbedWith")
     HashGeneratorMaker perturbWith(EquivalentSetFinder equivSetFinder) {
         this.equivSetFinder = equivSetFinder;
         return this;
@@ -275,7 +262,6 @@ public final class HashGeneratorMaker {
      * @return fluent API reference (self)
      * @throws NullPointerException no encoder provided
      */
-    @TestMethod("testEncode_Null,testEncode")
     public HashGeneratorMaker encode(AtomEncoder encoder) {
         if (encoder == null) throw new NullPointerException("no encoder provided");
         customEncoders.add(encoder);
@@ -307,7 +293,6 @@ public final class HashGeneratorMaker {
      * @return instance of the generator
      * @throws IllegalArgumentException no depth or encoders were configured
      */
-    @TestMethod("testEnsemble")
     public EnsembleHashGenerator ensemble() {
         throw new UnsupportedOperationException("not yet supported");
     }
@@ -318,7 +303,6 @@ public final class HashGeneratorMaker {
      * @return instance of the generator
      * @throws IllegalArgumentException no depth or encoders were configured
      */
-    @TestMethod("testMolecular")
     public MoleculeHashGenerator molecular() {
         return new BasicMoleculeHashGenerator(atomic());
     }
@@ -329,7 +313,6 @@ public final class HashGeneratorMaker {
      * @return instance of the generator
      * @throws IllegalArgumentException no depth or encoders were configured
      */
-    @TestMethod("testAtomic,testNoDepth")
     public AtomHashGenerator atomic() {
 
         if (depth < 0) throw new IllegalArgumentException("no depth specified, use .depth(int)");

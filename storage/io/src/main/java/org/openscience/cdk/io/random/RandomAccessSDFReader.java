@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Iterator;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -78,7 +77,6 @@ public class RandomAccessSDFReader extends RandomAccessReader {
      * (non-Javadoc)
      * @see org.openscience.cdk.io.IChemObjectIO#getFormat()
      */
-    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLFormat.getInstance();
     }
@@ -112,19 +110,16 @@ public class RandomAccessSDFReader extends RandomAccessReader {
 
     }
 
-    @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         throw new UnsupportedOperationException();
 
     }
 
-    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream reader) throws CDKException {
         throw new UnsupportedOperationException();
 
     }
 
-    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         return chemObjectReader.accepts(classObject);
     }

@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Describes the geometric parity of a stereo configuration.
@@ -34,7 +32,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module hash
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.stereo.GeometricParityTest")
 abstract class GeometricParity {
 
     /**
@@ -75,7 +72,6 @@ abstract class GeometricParity {
      * @param parity existing parity
      * @return instance which when invoked will return the value
      */
-    @TestMethod("valueOf")
     static GeometricParity valueOf(int parity) {
         return new Predefined(parity);
     }
