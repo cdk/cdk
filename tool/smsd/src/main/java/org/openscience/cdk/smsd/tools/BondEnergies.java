@@ -26,8 +26,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -192,7 +190,6 @@ import org.openscience.cdk.smsd.helper.BondEnergy;
  * @cdk.module smsd
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.tools.BondEnergiesTest")
 public class BondEnergies {
 
     private static Map<Integer, BondEnergy> bondEngergies = null;
@@ -203,7 +200,6 @@ public class BondEnergies {
      * @return instance
      * @throws CDKException
      */
-    @TestMethod("testGetInstance")
     public synchronized static BondEnergies getInstance() throws CDKException {
         if (null == instance) {
             instance = new BondEnergies();
@@ -242,7 +238,6 @@ public class BondEnergies {
      * @param bondOrder (single, double etc)
      * @return bond energy
      */
-    @TestMethod("testGetEnergies")
     public int getEnergies(IAtom sourceAtom, IAtom targetAtom, Order bondOrder) {
         int dKJPerMol = -1;
 
@@ -270,7 +265,6 @@ public class BondEnergies {
      * @param bondOrder (single, double etc)
      * @return bond energy
      */
-    @TestMethod("testGetEnergies")
     public int getEnergies(String sourceAtom, String targetAtom, Order bondOrder) {
         int dKJPerMol = -1;
 
@@ -295,7 +289,6 @@ public class BondEnergies {
      * @param bond (single, double etc)
      * @return bond energy
      */
-    @TestMethod("testGetEnergies")
     public int getEnergies(IBond bond) {
         int dKJPerMol = -1;
         for (Map.Entry<Integer, BondEnergy> entry : bondEngergies.entrySet()) {

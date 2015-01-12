@@ -26,8 +26,6 @@ package org.openscience.cdk.tools;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -61,7 +59,6 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
  *
  * @cdk.keyword  id, creation
  */
-@TestClass("org.openscience.cdk.tools.IDCreatorTest")
 public abstract class IDCreator {
 
     // counters for generated in current session IDs
@@ -130,7 +127,6 @@ public abstract class IDCreator {
      *
      * @param  chemObject IChemObject to create IDs for.
      */
-    @TestMethod("testCreateIDs_IChemObject,testKeepingIDs,testNoDuplicateCreation,testCallingTwice")
     public static void createIDs(IChemObject chemObject) {
         if (chemObject == null) return;
 

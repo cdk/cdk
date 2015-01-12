@@ -25,8 +25,6 @@ package org.openscience.cdk.smsd.tools;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Class that handles execution time of the MCS search.
@@ -34,7 +32,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.tools.TimeManagerTest")
 public class TimeManager {
 
     private double           startTime;
@@ -43,7 +40,6 @@ public class TimeManager {
     /**
      * Constructor for storing execution time
      */
-    @TestMethod("testTimeManager")
     public TimeManager() {
 
         dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -56,7 +52,6 @@ public class TimeManager {
      * Returns Elapsed Time In Hours
      * @return Elapsed Time In Hours
      */
-    @TestMethod("testGetElapsedTimeInHours")
     public double getElapsedTimeInHours() {
         double currentTime = System.currentTimeMillis();
 
@@ -68,7 +63,6 @@ public class TimeManager {
      * Returns Elapsed Time In Minutes
      * @return Elapsed Time In Minutes
      */
-    @TestMethod("testGetElapsedTimeInMinutes")
     public double getElapsedTimeInMinutes() {
 
         //long diffSeconds = diff / 1000;
@@ -85,7 +79,6 @@ public class TimeManager {
      * Return Elapsed Time In Seconds
      * @return Elapsed Time In Seconds
      */
-    @TestMethod("testGetElapsedTimeInSeconds")
     public double getElapsedTimeInSeconds() {
         double currentTime = System.currentTimeMillis();
         return ((currentTime - startTime) / 1000);
@@ -96,7 +89,6 @@ public class TimeManager {
      * Returns Elapsed Time In Mill Seconds
      * @return Elapsed Time In Mill Seconds
      */
-    @TestMethod("testGetElapsedTimeInMilliSeconds")
     public double getElapsedTimeInMilliSeconds() {
         double currentTime = System.currentTimeMillis();
         return (currentTime - startTime);

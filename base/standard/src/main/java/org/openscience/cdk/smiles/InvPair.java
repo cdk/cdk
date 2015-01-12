@@ -27,8 +27,6 @@
  *  */
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.math.Primes;
@@ -40,7 +38,6 @@ import org.openscience.cdk.math.Primes;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.smiles.InvPairTest")
 public class InvPair implements java.io.Serializable {
 
     private static final long  serialVersionUID = -1397634098919863122L;
@@ -65,7 +62,6 @@ public class InvPair implements java.io.Serializable {
         atom.setProperty(INVARIANCE_PAIR, this);
     }
 
-    @TestMethod("testGetLast")
     public long getLast() {
         return last;
     }
@@ -82,7 +78,6 @@ public class InvPair implements java.io.Serializable {
      * @see #getCurr()
      * @see #setPrime()
      */
-    @TestMethod("testSetCurr_long")
     public void setCurr(long newCurr) {
         curr = newCurr;
     }
@@ -95,7 +90,6 @@ public class InvPair implements java.io.Serializable {
      * @see #setPrime()
      * @see #getPrime()
      */
-    @TestMethod("testGetCurr")
     public long getCurr() {
         return curr;
     }
@@ -106,7 +100,6 @@ public class InvPair implements java.io.Serializable {
      * @param object An instance of InvPair
      * @return true if they are equal, false otherwise
      */
-    @TestMethod("testEquals_Object")
     @Override
     public boolean equals(Object object) {
         if (object instanceof InvPair) {
@@ -118,22 +111,18 @@ public class InvPair implements java.io.Serializable {
         }
     }
 
-    @TestMethod("testSetLast_long")
     public void setLast(long newLast) {
         last = newLast;
     }
 
-    @TestMethod("testSetAtom_IAtom")
     public void setAtom(IAtom newAtom) {
         atom = newAtom;
     }
 
-    @TestMethod("testGetAtom")
     public IAtom getAtom() {
         return atom;
     }
 
-    @TestMethod("testCommit")
     public void commit() {
         atom.setProperty(CANONICAL_LABEL, Long.valueOf(curr));
     }
@@ -143,7 +132,6 @@ public class InvPair implements java.io.Serializable {
      *
      * @return The string representation of the class.
      */
-    @TestMethod("testToString")
     @Override
     public String toString() {
         StringBuilder buff = new StringBuilder();
@@ -158,7 +146,6 @@ public class InvPair implements java.io.Serializable {
      * @return The current prime number
      * @see #setPrime()
      */
-    @TestMethod("testGetPrime")
     public int getPrime() {
         return prime;
     }
@@ -173,7 +160,6 @@ public class InvPair implements java.io.Serializable {
      * @see #setCurr(long)
      * @see #getPrime()
      */
-    @TestMethod("testSetPrime")
     public void setPrime() {
         prime = Primes.getPrimeAt((int) curr - 1);
     }

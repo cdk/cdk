@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.graph.rebond;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,7 +47,6 @@ import java.util.Iterator;
  *
  * @see org.openscience.cdk.graph.rebond.Bspt
  */
-@TestClass("org.openscience.cdk.graph.rebond.RebondToolTest")
 public class RebondTool {
 
     private double maxCovalentRadius;
@@ -70,7 +67,6 @@ public class RebondTool {
      * defined will be deleted first. It assumes the unit of 3D space to
      * be 1 &Acircle;ngstrom.
      */
-    @TestMethod("testRebond_IAtomContainer")
     public void rebond(IAtomContainer container) throws CDKException {
         container.removeAllBonds();
         maxCovalentRadius = 0.0;

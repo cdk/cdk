@@ -30,8 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -64,7 +62,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFlibTurboHandlerTest")
 public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
     private static       List<Map<IAtom, IAtom>>     allAtomMCS     = null;
@@ -85,7 +82,6 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
     /**
      * Constructor for an extended VF Algorithm for the MCS search
      */
-    @TestMethod("setMCSAlgorithm")
     public VFlibTurboHandler() {
         allAtomMCS = new ArrayList<Map<IAtom, IAtom>>();
         allAtomMCSCopy = new ArrayList<Map<IAtom, IAtom>>();
@@ -117,7 +113,6 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
      * @param reactant
      * @param product
      */
-    @TestMethod("testSet_MolHandler_MolHandler")
     @Override
     public void set(MolHandler reactant, MolHandler product) {
         mol1 = reactant.getMolecule();
@@ -129,7 +124,6 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
      * @param source
      * @param target
      */
-    @TestMethod("testSet_IQueryAtomContainer_MolHandler")
     @Override
     public void set(IQueryAtomContainer source, IAtomContainer target) {
         queryMol = source;
@@ -148,7 +142,6 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
     /** {@inheritDoc}
      *
      */
-    @TestMethod("testGetAllAtomMapping")
     @Override
     public List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return Collections.unmodifiableList(allAtomMCS);
@@ -156,7 +149,6 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testGetAllMapping")
     @Override
     public List<Map<Integer, Integer>> getAllMapping() {
         return Collections.unmodifiableList(allMCS);
@@ -164,7 +156,6 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testGetFirstAtomMapping")
     @Override
     public Map<IAtom, IAtom> getFirstAtomMapping() {
         return Collections.unmodifiableMap(atomsMCS);
@@ -172,7 +163,6 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testGetFirstMapping")
     @Override
     public Map<Integer, Integer> getFirstMapping() {
         return Collections.unmodifiableMap(firstMCS);

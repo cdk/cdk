@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -50,14 +49,12 @@ public final class TotalHCountAtom extends SMARTSAtom {
      * @return the hydrogen count matches
      */
     @Override
-    @TestMethod("matches")
     public boolean matches(final IAtom atom) {
         return invariants(atom).totalHydrogenCount() == totalHCount;
     }
 
     /** @inheritDoc */
     @Override
-    @TestMethod("testToString")
     public String toString() {
         return "H" + totalHCount;
     }

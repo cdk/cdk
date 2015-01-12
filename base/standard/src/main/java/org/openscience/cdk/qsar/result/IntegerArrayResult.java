@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.result;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,6 @@ import java.util.List;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.qsar.result.IntegerArrayResultTest")
 public class IntegerArrayResult extends IntegerArrayResultType {
 
     private static final long serialVersionUID = 4077762427385735922L;
@@ -45,7 +42,6 @@ public class IntegerArrayResult extends IntegerArrayResultType {
         this.array = new ArrayList<Integer>(size);
     }
 
-    @TestMethod("testAdd_int")
     public void add(int value) {
         array.add(value);
     }
@@ -53,7 +49,6 @@ public class IntegerArrayResult extends IntegerArrayResultType {
     /**
      * The first int is at index = 0.
      */
-    @TestMethod("testGet_int")
     public int get(int index) {
         if (index >= this.array.size()) {
             return 0;
@@ -61,13 +56,11 @@ public class IntegerArrayResult extends IntegerArrayResultType {
         return this.array.get(index);
     }
 
-    @TestMethod("testSize")
     @Override
     public int length() {
         return Math.max(super.length(), this.array.size());
     }
 
-    @TestMethod("testToString")
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder();

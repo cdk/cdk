@@ -22,8 +22,6 @@ import java.io.Serializable;
 
 import org.openscience.cdk.CDK;
 import org.openscience.cdk.IImplementationSpecification;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Class that is used to distribute descriptor specifications.
@@ -31,7 +29,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.qsar.DescriptorSpecificationTest")
 public class DescriptorSpecification implements Serializable, IImplementationSpecification {
 
     private static final long serialVersionUID = 7044545275802343828L;
@@ -86,25 +83,21 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
         this.implementationVendor = implementationVendor;
     }
 
-    @TestMethod("testGetSpecificationReference")
     @Override
     public String getSpecificationReference() {
         return this.specificationReference;
     }
 
-    @TestMethod("testGetImplementationTitle")
     @Override
     public String getImplementationTitle() {
         return this.implementationTitle;
     }
 
-    @TestMethod("testGetImplementationIdentifier")
     @Override
     public String getImplementationIdentifier() {
         return this.implementationIdentifier;
     }
 
-    @TestMethod("testGetImplementationVendor")
     @Override
     public String getImplementationVendor() {
         return this.implementationVendor;

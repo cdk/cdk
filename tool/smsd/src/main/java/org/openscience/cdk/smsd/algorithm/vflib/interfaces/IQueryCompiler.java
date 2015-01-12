@@ -47,7 +47,6 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.interfaces;
 
-import org.openscience.cdk.annotations.TestClass;
 
 /**
  * Interface for the query graph generator.
@@ -56,7 +55,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
 
-@TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public interface IQueryCompiler {
 
     /**

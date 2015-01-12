@@ -36,8 +36,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -64,7 +62,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.normalize.SMSDNormalizerTest")
 public class SMSDNormalizer extends AtomContainerManipulator {
 
     /**
@@ -72,7 +69,6 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      * @param container
      * @return deep copy of the mol
      */
-    @TestMethod("testMakeDeepCopy")
     public static IAtomContainer makeDeepCopy(IAtomContainer container) {
 
         IAtomContainer newAtomContainer = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
@@ -120,7 +116,6 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      * aromatize the molecule.
      * @param mol input molecule
      */
-    @TestMethod("testAromatizeMolecule")
     public static void aromatizeMolecule(IAtomContainer mol) {
 
         // need to find rings and aromaticity again since added H's
@@ -184,7 +179,6 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      * @param atom
      * @return The number of explicit hydrogens on the given IAtom.
      */
-    @TestMethod("testGetExplicitHydrogenCount")
     public static int getExplicitHydrogenCount(IAtomContainer atomContainer, IAtom atom) {
         int hCount = 0;
         for (IAtom iAtom : atomContainer.getConnectedAtomsList(atom)) {
@@ -202,7 +196,6 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      * @param atom
      * @return Implicit Hydrogen Count
      */
-    @TestMethod("testGetImplicitHydrogenCount")
     public static int getImplicitHydrogenCount(IAtomContainer atomContainer, IAtom atom) {
         return atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
     }
@@ -213,7 +206,6 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      * @param atom
      * @return The summed implicit + explicit hydrogens of the given IAtom.
      */
-    @TestMethod("testGetHydrogenCount")
     public static int getHydrogenCount(IAtomContainer atomContainer, IAtom atom) {
         return getExplicitHydrogenCount(atomContainer, atom) + getImplicitHydrogenCount(atomContainer, atom);
     }
@@ -225,7 +217,6 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      * @return IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
      * is atom Hydrogen then its not removed.
      */
-    @TestMethod("testRemoveHydrogensAndPreserveAtomID")
     public static IAtomContainer removeHydrogensAndPreserveAtomID(IAtomContainer atomContainer) {
         Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>(); // maps original atoms to clones.
         List<IAtom> remove = new ArrayList<IAtom>(); // lists removed Hs.
@@ -288,7 +279,6 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      * @return IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
      * is atom Hydrogen then its not removed.
      */
-    @TestMethod("testConvertExplicitToImplicitHydrogens")
     public static IAtomContainer convertExplicitToImplicitHydrogens(IAtomContainer atomContainer) {
         IAtomContainer mol = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
         convertImplicitToExplicitHydrogens(mol);
@@ -314,7 +304,6 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      * @param container
      * @throws CDKException
      */
-    @TestMethod("testPercieveAtomTypesAndConfigureAtoms")
     public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
         for (IAtom atom : container.atoms()) {

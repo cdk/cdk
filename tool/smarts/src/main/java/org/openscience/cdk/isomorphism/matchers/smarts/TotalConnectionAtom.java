@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -38,7 +36,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.ExplicitConnectionAtomTest")
 public final class TotalConnectionAtom extends SMARTSAtom {
 
     /** Total number of connections from an atom including H count. */
@@ -52,7 +49,6 @@ public final class TotalConnectionAtom extends SMARTSAtom {
 
     /** @inheritDoc */
     @Override
-    @TestMethod("matches")
     public boolean matches(IAtom atom) {
         return invariants(atom).connectivity() == connectivity;
     }

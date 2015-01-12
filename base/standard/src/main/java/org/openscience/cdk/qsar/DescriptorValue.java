@@ -20,8 +20,6 @@ package org.openscience.cdk.qsar;
 
 import java.io.Serializable;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.qsar.result.BooleanResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -35,7 +33,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.qsar.DescriptorValueTest")
 public class DescriptorValue implements Serializable {
 
     private static final long       serialVersionUID = -5672896059814842972L;
@@ -87,27 +84,22 @@ public class DescriptorValue implements Serializable {
         this.exception = exception;
     }
 
-    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return this.specification;
     }
 
-    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return this.parameterSettings;
     }
 
-    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return this.parameterNames;
     }
 
-    @TestMethod("testGetValue")
     public IDescriptorResult getValue() {
         return this.value;
     }
 
-    @TestMethod("testGetException")
     public Exception getException() {
         return exception;
     }
@@ -134,7 +126,6 @@ public class DescriptorValue implements Serializable {
      *
      * @return An array of descriptor names.
      */
-    @TestMethod("testGetNames")
     public String[] getNames() {
         if (descriptorNames == null || descriptorNames.length == 0) {
             String title = specification.getImplementationTitle();

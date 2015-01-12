@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -32,7 +30,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.ExplicitConnectionAtomTest")
 public final class ExplicitConnectionAtom extends SMARTSAtom {
 
     /** Number of explicit connections. */
@@ -49,7 +46,6 @@ public final class ExplicitConnectionAtom extends SMARTSAtom {
 
     /** @inheritDoc */
     @Override
-    @TestMethod("matches")
     public boolean matches(IAtom atom) {
         // XXX: this is incorrect but bug 824 expects this behaviour. The reason
         //      Daylight matches is because the explicit hydrogens are

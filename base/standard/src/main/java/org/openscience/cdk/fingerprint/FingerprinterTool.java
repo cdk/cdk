@@ -31,8 +31,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -45,7 +43,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module     standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.FingerprinterToolTest")
 public class FingerprinterTool {
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(FingerprinterTool.class);
@@ -70,7 +67,6 @@ public class FingerprinterTool {
      *@return         True, if bs2 is a subset of bs1
      *@cdk.keyword    substructure search
      */
-    @TestMethod("testIsSubset_BitSet_BitSet")
     public static boolean isSubset(BitSet bs1, BitSet bs2) {
         BitSet clone = (BitSet) bs1.clone();
         clone.and(bs2);
@@ -90,7 +86,6 @@ public class FingerprinterTool {
      * @return An arrayList of Integers
      * @see #differences(java.util.BitSet, java.util.BitSet)
      */
-    @TestMethod("testListDifferences_BitSet_BitSet")
     public static List<Integer> listDifferences(BitSet bs1, BitSet bs2) {
         List<Integer> l = new ArrayList<Integer>();
         logger.debug("Listing bit positions set in bs2 but not in bs1");
@@ -112,7 +107,6 @@ public class FingerprinterTool {
      * @param t another bit vector
      * @return all differences between <i>s</i> and <i>t</i>
      */
-    @TestMethod("testDifferences,testDifferences_Scenario")
     public static Set<Integer> differences(BitSet s, BitSet t) {
         BitSet u = (BitSet) s.clone();
         u.xor(t);

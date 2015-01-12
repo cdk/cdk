@@ -32,8 +32,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -75,7 +73,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.module     standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.HybridizationFingerprinterTest")
 public class HybridizationFingerprinter implements IFingerprinter {
 
     /** The default length of created fingerprints. */
@@ -137,7 +134,6 @@ public class HybridizationFingerprinter implements IFingerprinter {
      * @param  container The {@link IAtomContainer} for which a fingerprint is
      *                   generated.
      */
-    @TestMethod("testGetFingerprint_IAtomContainer")
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
         BitSet bitSet = new BitSet(size);
@@ -282,12 +278,10 @@ public class HybridizationFingerprinter implements IFingerprinter {
         return false;
     }
 
-    @TestMethod("testGetSearchDepth")
     public int getSearchDepth() {
         return searchDepth;
     }
 
-    @TestMethod("testGetSize")
     @Override
     public int getSize() {
         return size;

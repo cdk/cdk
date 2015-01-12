@@ -27,7 +27,6 @@ package org.openscience.cdk.smsd.algorithm.mcsplus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
@@ -43,7 +42,6 @@ import org.openscience.cdk.smsd.tools.TimeManager;
  * @cdk.module smsd
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public class BKKCKCF {
 
     private List<List<Integer>> maxCliquesSet      = null;

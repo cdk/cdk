@@ -21,8 +21,6 @@ package org.openscience.cdk.atomtype;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,7 +38,6 @@ import org.openscience.cdk.interfaces.IRingSet;
  * @cdk.githash
  * @cdk.keyword atom type, E-state
  */
-@TestClass("org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest")
 public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
 
     IRingSet ringSet = null;
@@ -49,7 +46,6 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
         ringSet = rs;
     }
 
-    @TestMethod("testFindMatchingAtomType_IAtomContainer")
     @Override
     public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
@@ -61,7 +57,6 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
         return types;
     }
 
-    @TestMethod("testSP3Atoms,testNaCl,testNaphthalene,testSP2Atoms,testSPAtoms,testBenzeneFromSmiles")
     @Override
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) {
 
@@ -152,7 +147,6 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
         return atomType;
     }
 
-    @TestMethod("testAromaticAtoms")
     public static boolean inSameAromaticRing(IAtomContainer m, IAtom atom1, IAtom atom2, IRingSet rs) {
         if (rs == null) return false;
         for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++) {
@@ -164,7 +158,6 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
         return false;
     }
 
-    @TestMethod("testAromaticAtoms")
     static boolean isAromaticRing(IRing ring) {
         for (int i = 0; i < ring.getAtomCount(); i++)
             if (!ring.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) return (false);

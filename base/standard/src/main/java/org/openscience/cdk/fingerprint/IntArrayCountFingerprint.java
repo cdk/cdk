@@ -29,15 +29,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * @author jonalv
  * @cdk.module     standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.IntArrayCountFingerprintTest")
 public class IntArrayCountFingerprint implements ICountFingerprint {
 
     /**
@@ -113,7 +110,6 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
     }
 
     @Override
-    @TestMethod("testMerge")
     public void merge(ICountFingerprint fp) {
         Map<Integer, Integer> newFp = new HashMap<Integer, Integer>();
         for (int i = 0; i < hitHashes.length; i++) {

@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -70,7 +68,6 @@ import static org.openscience.cdk.stereo.Stereocenters.Type.Tetracoordinate;
  * @see <a href="http://en.wikipedia.org/wiki/Fischer_projection">Fischer 
  *      projection (Wikipedia)</a>
  */
-@TestClass("org.openscience.cdk.stereo.FischerRecogniserTest")
 final class FischerRecognition {
 
     /**
@@ -124,7 +121,6 @@ final class FischerRecognition {
      * @param projections allowed projection types
      * @return zero of more stereo elements
      */
-    @TestMethod("recogniseRightHandedGlyceraldehyde")
     List<IStereoElement> recognise(Set<Projection> projections) {
         
         if (!projections.contains(Projection.Fischer))
@@ -190,7 +186,6 @@ final class FischerRecognition {
      * @param bonds adjacent bonds
      * @return a stereo element, or null if one could not be created
      */
-    @TestMethod("createCenterWithFourNeighbors")
     static ITetrahedralChirality newTetrahedralCenter(IAtom focus, IBond[] bonds) {
 
         // obtain the bonds of a centre arranged by cardinal direction 
@@ -245,7 +240,6 @@ final class FischerRecognition {
      * @return array of bonds organised (N,E,S,W), or null if a bond was found
      * that exceeded the threshold
      */
-    @TestMethod("obtainNonPerfectCardinalBonds")
     static IBond[] cardinalBonds(IAtom focus, IBond[] bonds) {
 
         final Point2d centerXy = focus.getPoint2d();

@@ -22,8 +22,6 @@
  *  */
 package org.openscience.cdk.math;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * @cdk.module standard
@@ -34,7 +32,6 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  * @cdk.keyword prime numbers
  */
-@TestClass("org.openscience.cdk.math.PrimesTest")
 @Deprecated
 public class Primes {
 
@@ -178,7 +175,6 @@ public class Primes {
      * all prime numbers below 19700. The first in the sequence
      * (n=0) is the prime number 2.
      */
-    @TestMethod("testGetPrimeAt_int,testArrayIndexOutOfBounds")
     public static int getPrimeAt(int index) {
         if (index < 0 || index > PRIMES.length - 1) throw new ArrayIndexOutOfBoundsException("out of range " + index);
         return PRIMES[index];

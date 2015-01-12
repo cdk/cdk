@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.aromaticity;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.RingSearch;
@@ -41,11 +39,9 @@ import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
  * @author John May
  * @cdk.module standard
  */
-@TestClass("org.openscience.cdk.aromaticity.PiBondModelTest")
 final class PiBondModel extends ElectronDonation {
 
     /** @inheritDoc */
-    @TestMethod("bezene,furan,pyrrole")
     @Override
     int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 

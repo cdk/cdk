@@ -31,8 +31,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -64,7 +62,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandlerTest")
 public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     private static       List<Map<IAtom, IAtom>>     allAtomMCS     = null;
@@ -87,7 +84,6 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     /**
      * Constructor for an extended VF Algorithm for the MCS search
      */
-    @TestMethod("setMCSAlgorithm")
     public VFlibMCSHandler() {
         allAtomMCS = new ArrayList<Map<IAtom, IAtom>>();
         allAtomMCSCopy = new ArrayList<Map<IAtom, IAtom>>();
@@ -103,7 +99,6 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param bondTypeMatch
      */
     @Override
-    @TestMethod("testSearchMCS")
     public void searchMCS(boolean bondTypeMatch) {
         setBondMatchFlag(bondTypeMatch);
         searchVFMCSMappings();
@@ -146,7 +141,6 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param reactant
      * @param product
      */
-    @TestMethod("testSet_MolHandler_MolHandler")
     @Override
     public void set(MolHandler reactant, MolHandler product) {
         mol1 = reactant.getMolecule();
@@ -158,7 +152,6 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param source
      * @param target
      */
-    @TestMethod("testSet_IQueryAtomContainer_MolHandler")
     @Override
     public void set(IQueryAtomContainer source, IAtomContainer target) {
         queryMol = source;
@@ -175,28 +168,24 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetAllAtomMapping")
     @Override
     public List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return Collections.unmodifiableList(allAtomMCS);
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetAllMapping")
     @Override
     public List<Map<Integer, Integer>> getAllMapping() {
         return Collections.unmodifiableList(allMCS);
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetFirstAtomMapping")
     @Override
     public Map<IAtom, IAtom> getFirstAtomMapping() {
         return Collections.unmodifiableMap(atomsMCS);
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetFirstMapping")
     @Override
     public Map<Integer, Integer> getFirstMapping() {
         return Collections.unmodifiableMap(firstMCS);

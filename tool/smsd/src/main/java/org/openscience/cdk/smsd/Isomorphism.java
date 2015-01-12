@@ -34,8 +34,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -157,7 +155,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  *
  */
-@TestClass("org.openscience.cdk.smsd.factory.SubStructureSearchAlgorithmsTest")
 public final class Isomorphism extends AbstractMCS implements Serializable {
 
     static final long                   serialVersionUID       = 10278639972837495L;
@@ -196,7 +193,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      * @param algorithmType {@link org.openscience.cdk.smsd.interfaces.Algorithm}
      * @param bondTypeFlag
      */
-    @TestMethod("testSubStructureSearchAlgorithms")
     public Isomorphism(Algorithm algorithmType, boolean bondTypeFlag) {
         this.algorithmType = algorithmType;
         firstSolution = new TreeMap<Integer, Integer>();
@@ -610,7 +606,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      * @param product
      */
     @Override
-    @TestMethod("testInit_3args_2")
     public void init(IAtomContainer reactant, IAtomContainer product, boolean removeHydrogen,
             boolean cleanAndConfigureMolecule) throws CDKException {
         this.removeHydrogen = removeHydrogen;
@@ -626,7 +621,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      * @param cleanAndConfigureMolecule eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity etc
      * @throws CDKException
      */
-    @TestMethod("testInit_3args_3")
     public void init(String sourceMolFileName, String targetMolFileName, boolean removeHydrogen,
             boolean cleanAndConfigureMolecule) throws CDKException {
         this.removeHydrogen = removeHydrogen;
@@ -637,7 +631,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testSetChemFilters")
     public void setChemFilters(boolean stereoFilter, boolean fragmentFilter, boolean energyFilter) {
 
         if (firstAtomMCS != null) {
@@ -670,7 +663,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetFragmentSize")
     public synchronized Integer getFragmentSize(int key) {
         return (fragmentSize != null && !fragmentSize.isEmpty()) ? fragmentSize.get(key) : null;
     }
@@ -678,7 +670,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetStereoScore")
     public synchronized Integer getStereoScore(int key) {
         return (stereoScore != null && !stereoScore.isEmpty()) ? stereoScore.get(key).intValue() : null;
     }
@@ -686,7 +677,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetEnergyScore")
     public synchronized Double getEnergyScore(int key) {
         return (bEnergies != null && !bEnergies.isEmpty()) ? bEnergies.get(key) : null;
     }
@@ -694,7 +684,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetFirstMapping")
     public synchronized Map<Integer, Integer> getFirstMapping() {
         return firstSolution.isEmpty() ? null : firstSolution;
     }
@@ -702,7 +691,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetAllMapping")
     public synchronized List<Map<Integer, Integer>> getAllMapping() {
         return allMCS.isEmpty() ? null : allMCS;
     }
@@ -710,7 +698,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetFirstAtomMapping")
     public synchronized Map<IAtom, IAtom> getFirstAtomMapping() {
         return firstAtomMCS.isEmpty() ? null : firstAtomMCS;
     }
@@ -718,7 +705,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetAllAtomMapping")
     public synchronized List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return allAtomMCS.isEmpty() ? null : allAtomMCS;
     }
@@ -726,7 +712,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetreactantMolecule")
     public IAtomContainer getReactantMolecule() {
         return queryMol == null ? rMol.getMolecule() : queryMol;
     }
@@ -734,7 +719,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetproductMolecule")
     public IAtomContainer getProductMolecule() {
         return pAC == null ? pMol.getMolecule() : pAC;
     }
@@ -742,7 +726,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetTanimotoSimilarity")
     public double getTanimotoSimilarity() throws IOException {
         double tanimoto = getTanimotoAtomSimilarity() + getTanimotoBondSimilarity();
         if (tanimoto > 0 && getReactantMolecule().getBondCount() > 0 && getProductMolecule().getBondCount() > 0) {
@@ -797,7 +780,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      *
      */
     @Override
-    @TestMethod("testIsStereoMisMatch")
     public boolean isStereoMisMatch() {
         boolean flag = false;
         IAtomContainer reactant = getReactantMolecule();
@@ -838,7 +820,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
      *
      */
     @Override
-    @TestMethod("testIsSubgraph")
     public boolean isSubgraph() {
 
         IAtomContainer reactant = getReactantMolecule();
@@ -869,7 +850,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     /** {@inheritDoc}
      */
     @Override
-    @TestMethod("testGetEuclideanDistance")
     public double getEuclideanDistance() throws IOException {
         int decimalPlaces = 4;
         double source = 0;

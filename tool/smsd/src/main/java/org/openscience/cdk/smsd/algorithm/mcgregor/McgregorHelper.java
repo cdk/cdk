@@ -24,7 +24,6 @@ package org.openscience.cdk.smsd.algorithm.mcgregor;
 
 import java.util.Collections;
 import java.util.List;
-import org.openscience.cdk.annotations.TestClass;
 
 /**
  * Helper Class for McGregor algorithm.
@@ -35,7 +34,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.algorithm.mcgregor.McgregorHelperTest")
 public class McgregorHelper {
 
     private final List<String>  cBondSetA;

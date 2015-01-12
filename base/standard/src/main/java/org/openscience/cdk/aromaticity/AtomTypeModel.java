@@ -27,8 +27,6 @@ package org.openscience.cdk.aromaticity;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -54,7 +52,6 @@ import static org.openscience.cdk.interfaces.IAtomType.Hybridization;
  * @author John May
  * @cdk.module standard
  */
-@TestClass("org.openscience.cdk.aromaticity.AtomTypeModelTest")
 // mores tests in - org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest
 final class AtomTypeModel extends ElectronDonation {
 
@@ -81,7 +78,6 @@ final class AtomTypeModel extends ElectronDonation {
     }
 
     /** @inheritDoc */
-    @TestMethod("benzene,furan,pyrrole")
     @Override
     int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 

@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -42,7 +41,6 @@ import org.openscience.cdk.interfaces.IRingSet;
  * @cdk.keyword  volume, molecular
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.volume.VABCVolumeTest")
 public class VABCVolume {
 
     /**

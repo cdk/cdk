@@ -22,8 +22,6 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
@@ -39,7 +37,6 @@ import java.util.List;
  *
  * @see ChemModelManipulator
  */
-@TestClass("org.openscience.cdk.tools.manipulator.ReactionSchemeManipulatorTest")
 public class ReactionSchemeManipulator {
 
     /**
@@ -49,7 +46,6 @@ public class ReactionSchemeManipulator {
      * @param  molSet The set of molecules to be added
      * @return        The IAtomContainerSet
      */
-    @TestMethod("testGetAllMolecules_IReactionScheme_IMoleculeSet")
     public static IAtomContainerSet getAllAtomContainers(IReactionScheme scheme, IAtomContainerSet molSet) {
         // A ReactionScheme can contain other IRreactionSet objects
         if (scheme.getReactionSchemeCount() != 0) for (IReactionScheme rm : scheme.reactionSchemes()) {
@@ -88,7 +84,6 @@ public class ReactionSchemeManipulator {
      * @param scheme The scheme of reaction to inspect
      * @return       The IAtomContainerSet
      */
-    @TestMethod("testGetAllAtomContainers_IReactionScheme")
     public static IAtomContainerSet getAllAtomContainers(IReactionScheme scheme) {
         return getAllAtomContainers(scheme, scheme.getBuilder().newInstance(IAtomContainerSet.class));
     }
@@ -99,7 +94,6 @@ public class ReactionSchemeManipulator {
      * @param scheme  The IReactionScheme to analyze
      * @return        A List with all ID
      */
-    @TestMethod("testGetAllIDs_IReactionScheme")
     public static List<String> getAllIDs(IReactionScheme scheme) {
         List<String> IDlist = new ArrayList<String>();
         if (scheme.getID() != null) IDlist.add(scheme.getID());
@@ -118,7 +112,6 @@ public class ReactionSchemeManipulator {
      * @param  scheme The IReactionScheme to extract
      * @return        The IReactionSet
      */
-    @TestMethod("testGetAllReactions_IReactionScheme")
     public static IReactionSet getAllReactions(IReactionScheme scheme) {
         IReactionSet reactionSet = scheme.getBuilder().newInstance(IReactionSet.class);
 
@@ -139,7 +132,6 @@ public class ReactionSchemeManipulator {
      * @param  reactionSet The IReactionSet
      * @return             The IReactionScheme
      */
-    @TestMethod("testCreateReactionScheme_IReactionSet")
     public static IReactionScheme createReactionScheme(IReactionSet reactionSet) {
         IReactionScheme reactionScheme = reactionSet.getBuilder().newInstance(IReactionScheme.class);
 
@@ -165,7 +157,6 @@ public class ReactionSchemeManipulator {
      * @param reactionScheme  The IReactionScheme
      * @return                The set of top reactions
      */
-    @TestMethod("testExtractTopReactions_IReactionScheme")
     public static IReactionSet extractTopReactions(IReactionScheme reactionScheme) {
         IReactionSet reactionSet = reactionScheme.getBuilder().newInstance(IReactionSet.class);
 
@@ -261,7 +252,6 @@ public class ReactionSchemeManipulator {
      * @param reactionScheme      The IReactionScheme containing the AtomContainers
      * @return                    A List of IAtomContainerSet given the path
      */
-    @TestMethod("testGetAtomContainerSet_IAtomContainer_IAtomContainer_IReactionScheme")
     public static ArrayList<IAtomContainerSet> getAtomContainerSet(IAtomContainer origenMol, IAtomContainer finalMol,
             IReactionScheme reactionScheme) {
         ArrayList<IAtomContainerSet> listPath = new ArrayList<IAtomContainerSet>();

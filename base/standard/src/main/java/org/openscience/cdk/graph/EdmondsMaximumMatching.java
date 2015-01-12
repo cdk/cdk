@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.group.DisjointSetForest;
 
 import java.util.Arrays;
@@ -51,7 +49,6 @@ import java.util.Map;
  *
  * @cdk.module standard
  */
-@TestClass("org.openscience.cdk.graph.EdmondsMaximumMatchingTest")
 final class EdmondsMaximumMatching {
 
     /** The graph we are matching on. */
@@ -391,7 +388,6 @@ final class EdmondsMaximumMatching {
      * @param subset   subset of vertices
      * @return the matching
      */
-    @TestMethod("benzene,fullerene_C60")
     static Matching maxamise(Matching matching, int[][] graph, BitSet subset) {
         new EdmondsMaximumMatching(graph, matching, subset);
         return matching;

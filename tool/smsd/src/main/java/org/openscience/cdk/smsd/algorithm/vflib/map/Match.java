@@ -46,7 +46,6 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.map;
 
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 
@@ -56,7 +55,6 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class Match {
 
     private INode query;

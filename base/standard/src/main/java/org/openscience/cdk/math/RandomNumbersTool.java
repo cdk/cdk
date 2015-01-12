@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.math;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.Random;
 
@@ -35,7 +33,6 @@ import java.util.Random;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.math.RandomNumbersToolTest")
 public class RandomNumbersTool extends Random {
 
     private static final long serialVersionUID = -8238833473383641882L;
@@ -54,7 +51,6 @@ public class RandomNumbersTool extends Random {
      *
      * @param base_random a <code>java.util.Random</code> subclass.
      */
-    @TestMethod("testSetRandom")
     public static void setRandom(Random base_random) {
         random = base_random;
     }
@@ -65,7 +61,6 @@ public class RandomNumbersTool extends Random {
      *
      * @param new_seed the seed to be used by the random number generator.
      */
-    @TestMethod("testSetRandomSeed_long")
     public static void setRandomSeed(long new_seed) {
         randomSeed = new_seed;
         random.setSeed(randomSeed);
@@ -77,7 +72,6 @@ public class RandomNumbersTool extends Random {
      *
      * @return the <code>long</code> seed.
      */
-    @TestMethod("testGetRandomSeed")
     public static long getRandomSeed() {
         return randomSeed;
     }
@@ -87,7 +81,6 @@ public class RandomNumbersTool extends Random {
      *
      * @return An object of Random
      */
-    @TestMethod("testSetRandom")
     public static Random getRandom() {
         return random;
     }
@@ -98,7 +91,6 @@ public class RandomNumbersTool extends Random {
      *
      * @return a random integer between <code>0</code> and <code>1</code>.
      */
-    @TestMethod("testRandomInt")
     public static int randomInt() {
         return randomInt(0, 1);
     }
@@ -111,7 +103,6 @@ public class RandomNumbersTool extends Random {
      * @param hi the upper bound for the generated integer.
      * @return a random integer between <code>lo</code> and <code>hi</code>.
      */
-    @TestMethod("testRandomInt_int_int")
     public static int randomInt(int lo, int hi) {
         return (Math.abs(random.nextInt()) % (hi - lo + 1)) + lo;
     }
@@ -122,7 +113,6 @@ public class RandomNumbersTool extends Random {
      *
      * @return a random long between <code>0</code> and <code>1</code>.
      */
-    @TestMethod("testRandomLong")
     public static long randomLong() {
         return randomLong(0, 1);
     }
@@ -135,7 +125,6 @@ public class RandomNumbersTool extends Random {
      * @param hi the upper bound for the generated long.
      * @return a random long between <code>lo</code> and <code>hi</code>.
      */
-    @TestMethod("testRandomLong_long_long")
     public static long randomLong(long lo, long hi) {
         return nextLong(random, hi - lo + 1L) + lo;
     }
@@ -164,7 +153,6 @@ public class RandomNumbersTool extends Random {
      *
      * @return a random float between <code>0</code> and <code>1</code>.
      */
-    @TestMethod("testRandomFloat")
     public static float randomFloat() {
         return random.nextFloat();
     }
@@ -177,7 +165,6 @@ public class RandomNumbersTool extends Random {
      * @param hi the upper bound for the generated float.
      * @return a random float between <code>lo</code> and <code>hi</code>.
      */
-    @TestMethod("testRandomFloat_float_float")
     public static float randomFloat(float lo, float hi) {
         return (hi - lo) * random.nextFloat() + lo;
     }
@@ -188,7 +175,6 @@ public class RandomNumbersTool extends Random {
      *
      * @return a random double between <code>0</code> and <code>1</code>.
      */
-    @TestMethod("testRandomDouble")
     public static double randomDouble() {
         return random.nextDouble();
     }
@@ -201,7 +187,6 @@ public class RandomNumbersTool extends Random {
      * @param hi the upper bound for the generated double.
      * @return a random double between <code>lo</code> and <code>hi</code>.
      */
-    @TestMethod("testRandomDouble_double_double")
     public static double randomDouble(double lo, double hi) {
         return (hi - lo) * random.nextDouble() + lo;
     }
@@ -212,7 +197,6 @@ public class RandomNumbersTool extends Random {
      *
      * @return a random boolean.
      */
-    @TestMethod("testRandomBoolean")
     public static boolean randomBoolean() {
         return (randomInt() == 1);
     }
@@ -223,7 +207,6 @@ public class RandomNumbersTool extends Random {
      *
      * @return a random bit.
      */
-    @TestMethod("testRandomBit")
     public static int randomBit() {
         return randomInt();
     }
@@ -236,7 +219,6 @@ public class RandomNumbersTool extends Random {
      * @return <code>true</code> if a success was found; <code>false</code>
      *         otherwise.
      */
-    @TestMethod("testFlipCoin")
     public static boolean flipCoin(double p) {
         return (randomDouble() < p ? true : false);
     }
@@ -250,7 +232,6 @@ public class RandomNumbersTool extends Random {
      * @return a random float from a Gaussian distribution with deviation
      *         <code>dev</code>.
      */
-    @TestMethod("testGaussianFloat")
     public static float gaussianFloat(float dev) {
         return (float) random.nextGaussian() * dev;
     }
@@ -264,7 +245,6 @@ public class RandomNumbersTool extends Random {
      * @return a random double from a Gaussian distribution with deviation
      *         <code>dev</code>.
      */
-    @TestMethod("testGaussianDouble")
     public static double gaussianDouble(double dev) {
         return random.nextGaussian() * dev;
     }
@@ -278,7 +258,6 @@ public class RandomNumbersTool extends Random {
      * @return a random double from an Exponential distribution with mean value
      *         <code>mean</code>.
      */
-    @TestMethod("testExponentialDouble")
     public static double exponentialDouble(double mean) {
         return -mean * Math.log(randomDouble());
     }

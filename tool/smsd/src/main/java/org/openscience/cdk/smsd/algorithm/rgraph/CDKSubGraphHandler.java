@@ -29,8 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -49,7 +47,6 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.algorithm.cdk.CDKMCSHandlerTest")
 public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
     //    //~--- fields -------------------------------------------------------------
@@ -78,7 +75,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
      * @param source
      * @param target
      */
-    @TestMethod("testSet_MolHandler_MolHandler")
     @Override
     public void set(MolHandler source, MolHandler target) {
         this.source = source.getMolecule();
@@ -90,7 +86,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
      * @param source
      * @param target
      */
-    @TestMethod("testSet_IQueryAtomContainer_MolHandler")
     @Override
     public void set(IQueryAtomContainer source, IAtomContainer target) {
         this.source = source;
@@ -102,7 +97,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
      * @param shouldMatchBonds
      */
     @Override
-    @TestMethod("testSearchMCS")
     public boolean isSubgraph(boolean shouldMatchBonds) {
 
         CDKRMapHandler rmap = new CDKRMapHandler();
@@ -244,7 +238,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testGetAllMapping")
     @Override
     public List<Map<Integer, Integer>> getAllMapping() {
         return Collections.unmodifiableList(allMCS);
@@ -252,7 +245,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testGetFirstMapping")
     @Override
     public Map<Integer, Integer> getFirstMapping() {
         return Collections.unmodifiableMap(firstMCS);
@@ -260,7 +252,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testGetAllAtomMapping")
     @Override
     public List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return Collections.unmodifiableList(allAtomMCS);
@@ -268,7 +259,6 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testGetFirstAtomMapping")
     @Override
     public Map<IAtom, IAtom> getFirstAtomMapping() {
         return Collections.unmodifiableMap(firstAtomMCS);

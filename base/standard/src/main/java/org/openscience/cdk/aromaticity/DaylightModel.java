@@ -25,8 +25,6 @@
 package org.openscience.cdk.aromaticity;
 
 import com.google.common.collect.Maps;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -67,7 +65,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.aromaticity.DaylightModelTest")
 final class DaylightModel extends ElectronDonation {
 
     private static final int CARBON     = 6;
@@ -79,7 +76,6 @@ final class DaylightModel extends ElectronDonation {
     private static final int SELENIUM   = 34;
 
     /** @inheritDoc */
-    @TestMethod("benzene,furan,pyrrole")
     @Override
     int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 

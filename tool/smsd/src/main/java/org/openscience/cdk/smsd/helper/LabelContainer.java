@@ -27,8 +27,6 @@ package org.openscience.cdk.smsd.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Class that handles atoms and assignes an integer lable to them.
@@ -36,7 +34,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.helper.LabelContainerTest")
 public class LabelContainer {
 
     private List<String>          labelMap     = null;
@@ -55,7 +52,6 @@ public class LabelContainer {
      * Create ids from atom labels
      * @return instance of this object
      */
-    @TestMethod("testGetInstance")
     synchronized public static LabelContainer getInstance() {
         if (instance == null) {
             instance = new LabelContainer();
@@ -67,7 +63,6 @@ public class LabelContainer {
      * Add label if its not present
      * @param label
      */
-    @TestMethod("testAddLabel")
     synchronized public void addLabel(String label) {
         if (!labelMap.contains(label)) {
             labelMap.add(labelCounter++, label);
@@ -79,7 +74,6 @@ public class LabelContainer {
      * @param label
      * @return labelID
      */
-    @TestMethod("testGetLabelID")
     synchronized public Integer getLabelID(String label) {
         addLabel(label);
         return labelMap.indexOf(label);
@@ -90,7 +84,6 @@ public class LabelContainer {
      * @param labelID
      * @return label
      */
-    @TestMethod("testGetLabel")
     synchronized public String getLabel(Integer labelID) {
         return labelMap.get(labelID);
     }
@@ -99,7 +92,6 @@ public class LabelContainer {
      * Returns label count
      * @return size of the labels
      */
-    @TestMethod("testGetSize")
     synchronized public int getSize() {
         return labelMap.size();
     }

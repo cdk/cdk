@@ -26,7 +26,6 @@ package org.openscience.cdk.smsd.algorithm.mcsplus;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.openscience.cdk.annotations.TestClass;
 
 /**
  * This class handles MCS between two identical molecules.
@@ -35,7 +34,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public class ExactMapping {
 
     /**

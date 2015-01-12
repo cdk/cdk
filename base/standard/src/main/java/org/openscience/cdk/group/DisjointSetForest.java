@@ -24,8 +24,6 @@ package org.openscience.cdk.group;
 
 import java.util.Arrays;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Implementation of a union-find data structure, largely copied from
@@ -35,7 +33,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.keyword union-find
  */
-@TestClass("DisjointSetForestTest")
 public class DisjointSetForest {
 
     /**
@@ -50,7 +47,6 @@ public class DisjointSetForest {
      *
      * @param numberOfElements the number of elements in the forest
      */
-    @TestMethod("constructorTest")
     public DisjointSetForest(int numberOfElements) {
         forest = new int[numberOfElements];
         for (int i = 0; i < numberOfElements; i++) {
@@ -66,7 +62,6 @@ public class DisjointSetForest {
      * @param i the index in the forest
      * @return the value at this index
      */
-    @TestMethod("getTest")
     public int get(int i) {
         return forest[i];
     }
@@ -78,7 +73,6 @@ public class DisjointSetForest {
      * @param element the starting point
      * @return the root of the set containing element
      */
-    @TestMethod("getRootTest")
     public int getRoot(int element) {
         if (forest[element] < 0) {
             return element;
@@ -93,7 +87,6 @@ public class DisjointSetForest {
      * @param elementX an element
      * @param elementY an element
      */
-    @TestMethod("makeUnionTest")
     public void makeUnion(int elementX, int elementY) {
         int xRoot = getRoot(elementX);
         int yRoot = getRoot(elementY);
@@ -116,7 +109,6 @@ public class DisjointSetForest {
      *
      * @return the sets
      */
-    @TestMethod("getSetsTest")
     public int[][] getSets() {
         int n = 0;
         for (int i = 0; i < forest.length; i++) {

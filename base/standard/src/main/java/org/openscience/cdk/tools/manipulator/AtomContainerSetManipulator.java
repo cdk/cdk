@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,10 +40,8 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  *
  * @see ChemModelManipulator
  */
-@TestClass("org.openscience.cdk.tools.manipulator.AtomContainerSetManipulatorTest")
 public class AtomContainerSetManipulator {
 
-    @TestMethod("testGetAtomCount_IAtomContainerSet")
     public static int getAtomCount(IAtomContainerSet set) {
         int count = 0;
         for (IAtomContainer atomContainer : set.atomContainers()) {
@@ -54,7 +50,6 @@ public class AtomContainerSetManipulator {
         return count;
     }
 
-    @TestMethod("testGetBondCount_IAtomContainerSet")
     public static int getBondCount(IAtomContainerSet set) {
         int count = 0;
         for (IAtomContainer atomContainer : set.atomContainers()) {
@@ -63,7 +58,6 @@ public class AtomContainerSetManipulator {
         return count;
     }
 
-    @TestMethod("testRemoveAtomAndConnectedElectronContainers_IAtomContainerSet_IAtom")
     public static void removeAtomAndConnectedElectronContainers(IAtomContainerSet set, IAtom atom) {
         for (IAtomContainer atomContainer : set.atomContainers()) {
             if (atomContainer.contains(atom)) {
@@ -80,7 +74,6 @@ public class AtomContainerSetManipulator {
         }
     }
 
-    @TestMethod("testRemoveElectronContainer_IAtomContainerSet_IElectronContainer")
     public static void removeElectronContainer(IAtomContainerSet set, IElectronContainer electrons) {
         for (IAtomContainer atomContainer : set.atomContainers()) {
             if (atomContainer.contains(electrons)) {
@@ -103,7 +96,6 @@ public class AtomContainerSetManipulator {
      * @param set The collection of IAtomContainer objects
      * @return A list of individual IAtomContainer's
      */
-    @TestMethod("testGetAllAtomContainers_IAtomContainerSet")
     public static List<IAtomContainer> getAllAtomContainers(IAtomContainerSet set) {
         List<IAtomContainer> atomContainerList = new ArrayList<IAtomContainer>();
         for (IAtomContainer atomContainer : set.atomContainers()) {
@@ -116,7 +108,6 @@ public class AtomContainerSetManipulator {
      * @param set The collection of IAtomContainer objects
      * @return The summed charges of all atoms in this set.
      */
-    @TestMethod("testGetTotalCharge_IAtomContainerSet")
     public static double getTotalCharge(IAtomContainerSet set) {
         double charge = 0;
         for (int i = 0; i < set.getAtomContainerCount(); i++) {
@@ -131,7 +122,6 @@ public class AtomContainerSetManipulator {
      * @param set The collection of IAtomContainer objects
      * @return The summed formal charges of all atoms in this set.
      */
-    @TestMethod("testGetTotalFormalCharge_IAtomContainerSet")
     public static double getTotalFormalCharge(IAtomContainerSet set) {
         int charge = 0;
         for (int i = 0; i < set.getAtomContainerCount(); i++) {
@@ -146,7 +136,6 @@ public class AtomContainerSetManipulator {
      * @param set  The collection of IAtomContainer objects
      * @return The summed implicit hydrogens of all atoms in this set.
      */
-    @TestMethod("testGetTotalHydrogenCount_IAtomContainerSet")
     public static int getTotalHydrogenCount(IAtomContainerSet set) {
         int hCount = 0;
         for (int i = 0; i < set.getAtomContainerCount(); i++) {
@@ -155,7 +144,6 @@ public class AtomContainerSetManipulator {
         return hCount;
     }
 
-    @TestMethod("testGetAllIDs_IAtomContainerSet")
     public static List<String> getAllIDs(IAtomContainerSet set) {
         List<String> idList = new ArrayList<String>();
         if (set != null) {
@@ -167,7 +155,6 @@ public class AtomContainerSetManipulator {
         return idList;
     }
 
-    @TestMethod("testSetAtomProperties_IAtomContainerSet_Object_Object")
     public static void setAtomProperties(IAtomContainerSet set, Object propKey, Object propVal) {
         if (set != null) {
             for (int i = 0; i < set.getAtomContainerCount(); i++) {
@@ -176,7 +163,6 @@ public class AtomContainerSetManipulator {
         }
     }
 
-    @TestMethod("testGetRelevantAtomContainer_IAtomContainerSet_IAtom")
     public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IAtom atom) {
         for (IAtomContainer atomContainer : containerSet.atomContainers()) {
             if (atomContainer.contains(atom)) {
@@ -186,7 +172,6 @@ public class AtomContainerSetManipulator {
         return null;
     }
 
-    @TestMethod("testGetRelevantAtomContainer_IAtomContainerSet_IBond")
     public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IBond bond) {
         for (IAtomContainer atomContainer : containerSet.atomContainers()) {
             if (atomContainer.contains(bond)) {
@@ -202,7 +187,6 @@ public class AtomContainerSetManipulator {
      * @param set The collection of IAtomContainer objects
      * @return a list of individual ChemObject's
      */
-    @TestMethod("testGetAllChemObjects_IAtomContainerSet")
     public static List<IChemObject> getAllChemObjects(IAtomContainerSet set) {
         ArrayList<IChemObject> list = new ArrayList<IChemObject>();
         list.add(set);
@@ -225,7 +209,6 @@ public class AtomContainerSetManipulator {
      * considered equal.</p>
      * @param atomContainerSet The collection of IAtomContainer objects
      */
-    @TestMethod("testSort_IAtomContainerSet")
     public static void sort(IAtomContainerSet atomContainerSet) {
         List<IAtomContainer> atomContainerList = AtomContainerSetManipulator.getAllAtomContainers(atomContainerSet);
         Collections.sort(atomContainerList, new AtomContainerComparator());
@@ -241,7 +224,6 @@ public class AtomContainerSetManipulator {
      * @param id The IAtomContainer to look for
      * @param atomContainerSet The collection of IAtomContainer objects
      */
-    @TestMethod("testContainsByID_IAtomContainerSet_IAtomContainer")
     public static boolean containsByID(IAtomContainerSet atomContainerSet, String id) {
         for (IAtomContainer ac : atomContainerSet.atomContainers()) {
             if (ac.getID() != null && ac.getID().equals(id)) return true;

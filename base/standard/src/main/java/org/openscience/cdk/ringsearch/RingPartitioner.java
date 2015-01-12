@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
@@ -41,7 +39,6 @@ import java.util.List;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.ringsearch.RingPartitionerTest")
 public class RingPartitioner {
 
     /**
@@ -64,7 +61,6 @@ public class RingPartitioner {
      *@param  ringSet  The RingSet to be partitioned
      *@return          A {@link List} of connected RingSets
      */
-    @TestMethod("testPartitionIntoRings")
     public static List<IRingSet> partitionRings(IRingSet ringSet) {
         List<IRingSet> ringSets = new ArrayList<IRingSet>();
         if (ringSet.getAtomContainerCount() == 0) return ringSets;
@@ -91,7 +87,6 @@ public class RingPartitioner {
      *@param  ringSet  The RingSet to be converted.
      *@return          The AtomContainer containing the bonds and atoms of the ringSet.
      */
-    @TestMethod("testConvertToAtomContainer_IRingSet")
     public static IAtomContainer convertToAtomContainer(IRingSet ringSet) {
         IRing ring = (IRing) ringSet.getAtomContainer(0);
         if (ring == null) return null;
