@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Combine two permutation parities into one.
@@ -34,7 +32,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module hash
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.stereo.CombinedPermutationParityTest")
 final class CombinedPermutationParity extends PermutationParity {
 
     private final PermutationParity left;
@@ -55,7 +52,6 @@ final class CombinedPermutationParity extends PermutationParity {
     /**
      * @inheritDoc
      */
-    @TestMethod("testParity")
     @Override
     public int parity(long[] current) {
         return left.parity(current) * right.parity(current);

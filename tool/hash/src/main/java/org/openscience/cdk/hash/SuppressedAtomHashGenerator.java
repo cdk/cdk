@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,7 +42,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @see org.openscience.cdk.hash.SeedGenerator
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.SuppressedAtomHashGeneratorTest")
 final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator implements AtomHashGenerator {
 
     /* a generator for the initial atom seeds */
@@ -114,7 +111,6 @@ final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator implem
     /**
      * @inheritDoc
      */
-    @TestMethod("testGenerate")
     @Override
     public long[] generate(IAtomContainer container) {
         int[][] graph = toAdjList(container);
@@ -131,7 +127,6 @@ final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator implem
      * @param graph   adjacency list representation
      * @return hash codes for atoms
      */
-    @TestMethod("testGenerate_ZeroDepth,testGenerate_Disconnected,testGenerate_Simple")
     @Override
     long[] generate(long[] current, StereoEncoder encoder, int[][] graph, Suppressed suppressed) {
 
@@ -192,7 +187,6 @@ final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator implem
      * @param suppressed bit set indicates which atoms are 'suppressed'
      * @return the next value for <i>v</i>
      */
-    @TestMethod("testRotation")
     long next(int[][] graph, int v, long[] current, long[] unique, long[] included, Suppressed suppressed) {
 
         if (suppressed.contains(v)) return current[v];

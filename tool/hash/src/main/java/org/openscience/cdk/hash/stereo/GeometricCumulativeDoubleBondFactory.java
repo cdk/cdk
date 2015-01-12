@@ -23,8 +23,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -45,7 +43,6 @@ import java.util.Set;
  * @author John May
  * @cdk.module hash
  */
-@TestClass("org.openscience.cdk.hash.stereo.GeometricCumulativeDoubleBondFactoryTest")
 public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactory {
 
     /**
@@ -55,7 +52,6 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      * @param graph     adjacency list representation of the container
      * @return a stereo encoder
      */
-    @TestMethod("testCreate")
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {
 
@@ -145,7 +141,6 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      * @param end       end of the cumulated system
      * @return an encoder or null if there are no coordinated
      */
-    @TestMethod("testAxialEncoder_Empty")
     static StereoEncoder axialEncoder(IAtomContainer container, IAtom start, IAtom end) {
 
         List<IBond> startBonds = container.getConnectedBondsList(start);
@@ -332,7 +327,6 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      * @param a    an atom
      * @return elevation of bond
      */
-    @TestMethod("testElevation_Atom_Up,testElevation_Atom_Down")
     static int elevation(IBond bond, IAtom a) {
         return bond.getAtom(0).equals(a) ? elevation(bond) : elevation(bond) * -1;
     }
@@ -344,7 +338,6 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      * @return +1 above the plane, 0 in the plane (default) or -1 below the
      *         plane
      */
-    @TestMethod("testElevation_null,testElevation_Up,testElevation_Down")
     static int elevation(IBond bond) {
         IBond.Stereo stereo = bond.getStereo();
         if (stereo == null) return 0;

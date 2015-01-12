@@ -35,8 +35,6 @@ import javax.vecmath.Point3d;
 
 import com.google.common.collect.ImmutableMap;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -67,7 +65,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.created 2003-08-21
  * @cdk.keyword file format, Mol2
  */
-@TestClass("org.openscience.cdk.io.Mol2ReaderTest")
 public class Mol2Reader extends DefaultChemObjectReader {
 
     boolean                                  firstLineisMolecule = false;
@@ -109,13 +106,11 @@ public class Mol2Reader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return Mol2Format.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -125,13 +120,11 @@ public class Mol2Reader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -220,7 +213,6 @@ public class Mol2Reader extends DefaultChemObjectReader {
         return chemFile;
     }
 
-    @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
         if (object instanceof IChemFile) {
             return true;
@@ -424,7 +416,6 @@ public class Mol2Reader extends DefaultChemObjectReader {
         return false;
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

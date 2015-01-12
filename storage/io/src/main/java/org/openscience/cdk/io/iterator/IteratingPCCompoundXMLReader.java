@@ -28,7 +28,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.NoSuchElementException;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -101,7 +100,6 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
         this(new InputStreamReader(in), builder);
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return PubChemCompoundsXMLFormat.getInstance();
@@ -151,7 +149,6 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
         return nextMolecule;
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         primarySource.close();
@@ -162,7 +159,6 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
         throw new UnsupportedOperationException();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) throws CDKException {
         primarySource = reader;
@@ -176,7 +172,6 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
         hasNext = false;
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream reader) throws CDKException {
         setReader(new InputStreamReader(reader));

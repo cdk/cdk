@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.Arrays;
@@ -50,7 +48,6 @@ import java.util.Arrays;
  * @see BasicAtomHashGenerator
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.BasicMoleculeHashGeneratorTest")
 final class BasicMoleculeHashGenerator implements MoleculeHashGenerator {
 
     /* generator for atom hashes */
@@ -65,7 +62,6 @@ final class BasicMoleculeHashGenerator implements MoleculeHashGenerator {
      * @param generator a generator for atom hash codes
      * @throws NullPointerException no generator provided
      */
-    @TestMethod("testConstruct_Null")
     public BasicMoleculeHashGenerator(AtomHashGenerator generator) {
         this(generator, new Xorshift());
     }
@@ -79,7 +75,6 @@ final class BasicMoleculeHashGenerator implements MoleculeHashGenerator {
      * @throws NullPointerException no atom hash generator or pseudorandom
      *                              number generator provided
      */
-    @TestMethod("testConstruct_NullPRNG")
     BasicMoleculeHashGenerator(AtomHashGenerator generator, Pseudorandom pseudorandom) {
         if (generator == null) throw new NullPointerException("no AtomHashGenerator provided");
         if (pseudorandom == null) throw new NullPointerException("no Pseudorandom number generator provided");
@@ -90,7 +85,6 @@ final class BasicMoleculeHashGenerator implements MoleculeHashGenerator {
     /**
      * @inheritDoc
      */
-    @TestMethod("testGenerate")
     @Override
     public long generate(IAtomContainer container) {
 

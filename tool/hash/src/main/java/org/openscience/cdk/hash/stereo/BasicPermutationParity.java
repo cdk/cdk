@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A basic implementation suitable for determining the parity of the indicates a
@@ -35,7 +33,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module hash
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.stereo.BasicPermutationParityTest")
 final class BasicPermutationParity extends PermutationParity {
 
     private final int[] indices;
@@ -47,7 +44,6 @@ final class BasicPermutationParity extends PermutationParity {
      * @throws NullPointerException     the provided indices were null
      * @throws IllegalArgumentException less then two indices provided
      */
-    @TestMethod("testConstruction_Null,testConstruction_Empty")
     public BasicPermutationParity(int[] indices) {
         if (indices == null) throw new NullPointerException("no indices[] provided");
         if (indices.length < 2)
@@ -62,8 +58,6 @@ final class BasicPermutationParity extends PermutationParity {
      *
      * @inheritDoc
      */
-    @TestMethod("testParity_Even,testParity_Odd,testParity_Even_Negative,"
-            + "testParity_Odd_Negative,testParity_All,testParity_Duplicate")
     @Override
     public int parity(long[] current) {
 

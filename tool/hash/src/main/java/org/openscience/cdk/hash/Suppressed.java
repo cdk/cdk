@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.BitSet;
 
@@ -36,7 +34,6 @@ import java.util.BitSet;
  * @author John May
  * @cdk.module hash
  */
-@TestClass("org.openscience.cdk.hash.SupressedTest")
 abstract class Suppressed {
 
     /**
@@ -134,7 +131,6 @@ abstract class Suppressed {
      *
      * @return implementation where all vertices are unsuppressed
      */
-    @TestMethod("none")
     static Suppressed none() {
         return empty;
     }
@@ -145,7 +141,6 @@ abstract class Suppressed {
      * @param set bits indicated suppressed vertices
      * @return implementation using the BitSet to lookup suppressed vertices
      */
-    @TestMethod("bitset")
     static Suppressed fromBitSet(BitSet set) {
         return new SuppressedBitSet(set);
     }

@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
@@ -67,7 +66,6 @@ public interface IChemObjectIO extends Closeable {
      *
      * @throws throws an {@link IOException} when the wrapper IO class cannot be closed.
      */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException;
 

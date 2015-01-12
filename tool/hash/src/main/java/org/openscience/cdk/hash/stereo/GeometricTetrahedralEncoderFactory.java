@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -51,7 +49,6 @@ import java.util.Map;
  * @cdk.module hash
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.stereo.GeometricTetrahedralEncoderFactoryTest")
 public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory {
 
     /**
@@ -62,8 +59,6 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
      * @param graph     adjacency list representation of the container
      * @return a new encoder for tetrahedral elements
      */
-    @TestMethod("testCreate_2D,testCreate_3D," + "testCreate_2D_Implicit,testCreate_3D_Implicit,"
-            + "testCreate_NonSP3,testCreate_NonSP3,testCreate_NoStereoBonds," + "testCreate_WrongDegree")
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {
 

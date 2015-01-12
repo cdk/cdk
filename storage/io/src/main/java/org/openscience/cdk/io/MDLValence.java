@@ -33,8 +33,6 @@
 package org.openscience.cdk.io;
 
 import com.google.common.collect.Maps;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -49,7 +47,6 @@ import java.util.Map;
  * @see <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
  *      and Implicit Hydrogens: taking liberties with valence</a>
  */
-@TestClass("org.openscience.cdk.io.MDLValenceTest")
 final class MDLValence {
 
     private MDLValence() {}
@@ -60,7 +57,6 @@ final class MDLValence {
      * @param container an atom container loaded from an MDL format
      * @return the container (for convenience)
      */
-    @TestMethod("carbon_neutral,tin_ii,tin_iv")
     static IAtomContainer apply(IAtomContainer container) {
 
         int n = container.getAtomCount();
@@ -126,7 +122,6 @@ final class MDLValence {
      * @see <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
      *      and Implicit Hydrogens taking liberties with valence</a>
      */
-    @TestMethod("nitrogen_implicitValence")
     static int implicitValence(int elem, int q, int val) {
         switch (elem) {
             case 1: // H

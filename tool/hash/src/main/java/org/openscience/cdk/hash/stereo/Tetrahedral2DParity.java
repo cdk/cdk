@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import javax.vecmath.Point2d;
 
@@ -45,7 +43,6 @@ import javax.vecmath.Point2d;
  *      T and Wisniewski, J.L. 2001</a>
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.stereo.Tetrahedral2DParityTest")
 final class Tetrahedral2DParity extends GeometricParity {
 
     /* four coordinates */
@@ -63,7 +60,6 @@ final class Tetrahedral2DParity extends GeometricParity {
      * @throws IllegalArgumentException if the number of coordinates/elevations
      *                                  was not exactly 4
      */
-    @TestMethod("testConstruction_InvalidCoords,testConstruction_InvalidElev")
     public Tetrahedral2DParity(Point2d[] coordinates, int[] elevations) {
 
         if (coordinates.length != 4 || elevations.length != 4)
@@ -76,9 +72,6 @@ final class Tetrahedral2DParity extends GeometricParity {
     /**
      * @inheritDoc
      */
-    @TestMethod("testParity_Four_NNND,testParity_Four_NNNU," + "testParity_Four_NNNN,testParity_Four_UUUN,"
-            + "testParity_Four_DDDN,testParity_Four_UUUU," + "testParity_Four_DDDD,testParity_Three_UNN,"
-            + "testParity_Three_DNN,testParity_Three_UUU," + "testParity_Three_DDD")
     @Override
     public int parity() {
 

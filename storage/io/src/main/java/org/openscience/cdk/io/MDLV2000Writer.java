@@ -41,8 +41,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -95,7 +93,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.iooptions
  * @cdk.keyword file format, MDL molfile
  */
-@TestClass("org.openscience.cdk.io.MDLV2000WriterTest")
 public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     private final static ILoggingTool logger          = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
@@ -213,7 +210,6 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return MDLFormat.getInstance();
@@ -236,13 +232,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         writer.close();
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();

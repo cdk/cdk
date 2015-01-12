@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import javax.vecmath.Point2d;
 
@@ -40,7 +38,6 @@ import javax.vecmath.Point2d;
  * @cdk.module hash
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.stereo.DoubleBond2DParityTest")
 final class DoubleBond2DParity extends GeometricParity {
 
     // coordinates of the double bond atoms
@@ -111,7 +108,6 @@ final class DoubleBond2DParity extends GeometricParity {
      *
      * @return opposite (+1), together (-1) or unspecified (0)
      */
-    @TestMethod("opposite,together,unspecified")
     @Override
     public int parity() {
         return parity(l1, l2, r) * parity(r1, r2, l);

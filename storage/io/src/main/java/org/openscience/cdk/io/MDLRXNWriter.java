@@ -24,8 +24,6 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -68,7 +66,6 @@ import java.util.Set;
  *
  * @cdk.keyword file format, MDL RXN file
  */
-@TestClass("org.openscience.cdk.io.MDLRXNReaderTest")
 public class MDLRXNWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter      writer;
@@ -108,7 +105,6 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return MDLFormat.getInstance();
@@ -144,13 +140,11 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         writer.close();
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IReaction.class.equals(classObject)) return true;

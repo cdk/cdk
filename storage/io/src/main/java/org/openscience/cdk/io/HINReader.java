@@ -19,8 +19,6 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,7 +54,6 @@ import java.util.StringTokenizer;
  * @cdk.keyword file format, HIN
  * @cdk.iooptions
  */
-@TestClass("org.openscience.cdk.io.HINReaderTest")
 public class HINReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
@@ -78,19 +75,16 @@ public class HINReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return HINFormat.getInstance();
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -100,13 +94,11 @@ public class HINReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;

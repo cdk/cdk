@@ -33,8 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -60,7 +58,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.iooptions
  * @cdk.keyword file format, MDL SD file
  */
-@TestClass("org.openscience.cdk.io.SDFWriterTest")
 public class SDFWriter extends DefaultChemObjectWriter {
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SDFWriter.class);
@@ -129,7 +126,6 @@ public class SDFWriter extends DefaultChemObjectWriter {
         this(new StringWriter(), propertiesToWrite);
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return SDFFormat.getInstance();
@@ -152,13 +148,11 @@ public class SDFWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         writer.close();
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();

@@ -26,8 +26,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.SybylAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -51,7 +49,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author     Egon Willighagen
  */
-@TestClass("org.openscience.cdk.io.Mol2WriterTest")
 public class Mol2Writer extends DefaultChemObjectWriter {
 
     private BufferedWriter       writer;
@@ -81,7 +78,6 @@ public class Mol2Writer extends DefaultChemObjectWriter {
         this(new OutputStreamWriter(output));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return Mol2Format.getInstance();
@@ -104,13 +100,11 @@ public class Mol2Writer extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         writer.close();
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;

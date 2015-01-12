@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -70,7 +68,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *      Publication</a>
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.BasicAtomHashGeneratorTest")
 final class BasicAtomHashGenerator extends AbstractAtomHashGenerator implements AtomHashGenerator {
 
     /* a generator for the initial atom seeds */
@@ -128,7 +125,6 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator implements 
     /**
      * @inheritDoc
      */
-    @TestMethod("testGenerate")
     @Override
     public long[] generate(IAtomContainer container) {
         int[][] graph = toAdjList(container);
@@ -144,7 +140,6 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator implements 
      * @param graph   adjacency list representation
      * @return hash codes for atoms
      */
-    @TestMethod("testGenerate_Simple,testGenerate_ZeroDepth,testGenerate_Disconnected")
     @Override
     long[] generate(long[] current, StereoEncoder encoder, int[][] graph, Suppressed suppressed) {
 
@@ -191,7 +186,6 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator implements 
      *                 found.
      * @return the next value for <i>v</i>
      */
-    @TestMethod("testRotation")
     long next(int[][] graph, int v, long[] current, long[] unique, long[] included) {
 
         long invariant = distribute(current[v]);

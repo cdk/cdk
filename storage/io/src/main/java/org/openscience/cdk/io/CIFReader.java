@@ -34,8 +34,6 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -69,7 +67,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created 2003-10-12
  * @cdk.iooptions
  */
-@TestClass("org.openscience.cdk.io.CIFReaderTest")
 public class CIFReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
@@ -101,25 +98,21 @@ public class CIFReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return CIFFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) throws CDKException {
         this.input = new BufferedReader(input);
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> testClass) {
         if (IChemFile.class.equals(testClass)) return true;
@@ -443,7 +436,6 @@ public class CIFReader extends DefaultChemObjectReader {
         return result.toString();
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();
