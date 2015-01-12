@@ -19,8 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -65,7 +63,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:weight
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptorTest")
 public class WeightDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private String elementName = "*";
@@ -89,7 +86,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight",
@@ -104,7 +100,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
      *is not of type String
      *@see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
@@ -123,7 +118,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
      * @return    The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -132,7 +126,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         String name = "w";
@@ -155,7 +148,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
      * is specified as the element symbol make sure that the AtomContainer has hydrogens.
      *@return The total weight of atoms of the specified element type
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         double weight = 0;
@@ -214,7 +206,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
@@ -225,7 +216,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -239,7 +229,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
      *@param  name  Description of the Parameter
      *@return       An Object whose class is that of the parameter requested
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return "";

@@ -24,8 +24,6 @@
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A cubic curve in the path.
@@ -34,7 +32,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.path.CubicToTest")
 public class CubicTo extends PathElement {
 
     /** Coordinates of control point 1, control point 2 and end point. */
@@ -47,7 +44,6 @@ public class CubicTo extends PathElement {
      * @param cp2 second control point in the cubic
      * @param ep end point of the cubic
      */
-    @TestMethod("testConstructor")
     public CubicTo(Point2d cp1, Point2d cp2, Point2d ep) {
         this(cp1.x, cp1.y, cp2.x, cp2.y, ep.x, ep.y);
     }
@@ -85,7 +81,6 @@ public class CubicTo extends PathElement {
 
     /** {@inheritDoc} **/
     @Override
-    @TestMethod("testPoints")
     public float[] points() {
         return new float[]{(float) coords[0], (float) coords[1], (float) coords[2], (float) coords[3],
                 (float) coords[4], (float) coords[5]};

@@ -19,8 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -76,7 +74,6 @@ import java.util.List;
  * @cdk.keyword total polar surface area
  * @cdk.keyword descriptor
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptorTest")
 public class TPSADescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private boolean               checkAromaticity = false;
@@ -149,7 +146,6 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      *
      * @return The specification value
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa",
@@ -167,7 +163,6 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      * @throws CDKException if the supplied parameter is not of type Boolean
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
@@ -187,7 +182,6 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      *         indicating whether aromaticity was to be checked or not
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -197,7 +191,6 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -223,7 +216,6 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      * @param atomContainer The AtomContainer whose TPSA is to be calculated
      * @return A double containing the topological surface area
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
@@ -348,7 +340,6 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
@@ -359,7 +350,6 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      *
      * @return The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -373,7 +363,6 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      * @param name Description of the Parameter
      * @return The parameterType value
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return true;

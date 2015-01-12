@@ -30,8 +30,6 @@ import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.renderer.elements.path.Close;
 import org.openscience.cdk.renderer.elements.path.CubicTo;
 import org.openscience.cdk.renderer.elements.path.LineTo;
@@ -46,7 +44,6 @@ import org.openscience.cdk.renderer.elements.path.QuadTo;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.GeneralPathTest")
 public class GeneralPath implements IRenderingElement {
 
     /** The color of the path. */
@@ -80,7 +77,6 @@ public class GeneralPath implements IRenderingElement {
      * @param elements the elements that make up the path
      * @param color the color of the path
      */
-    @TestMethod("testConstructor")
     public GeneralPath(List<PathElement> elements, Color color) {
         this(elements, color, WIND_EVEN_ODD, 1, true);
 
@@ -121,7 +117,6 @@ public class GeneralPath implements IRenderingElement {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testAccept")
     @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);

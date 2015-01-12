@@ -19,8 +19,6 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.fragments.EStateFragments;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -304,7 +302,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierHallSmarts
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptorTest")
 public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static String[] names;
@@ -332,7 +329,6 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -348,7 +344,6 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      *          if any parameters are specified
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params != null) throw new CDKException("Must not supply any parameters");
@@ -360,13 +355,11 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      * @return The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return names;
@@ -386,7 +379,6 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      * @param container The molecule for which this descriptor is to be calculated
      * @return Counts of the fragments
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (container == null || container.getAtomCount() == 0) {
@@ -436,7 +428,6 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResult(SMARTS.length);
@@ -447,7 +438,6 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      *
      * @return The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return null;
@@ -459,7 +449,6 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      * @param name Description of the Parameter
      * @return An Object whose class is that of the parameter requested
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

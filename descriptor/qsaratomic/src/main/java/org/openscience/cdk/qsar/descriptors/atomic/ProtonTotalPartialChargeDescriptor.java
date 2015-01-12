@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,7 +45,6 @@ import java.util.List;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:protonPartialCharge
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest")
 public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private GasteigerMarsiliPartialCharges peoe             = null;
@@ -65,7 +62,6 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -76,7 +72,6 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
     /**
      * This descriptor does not have any parameter to be set.
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
@@ -89,13 +84,11 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      *@return    The parameters value
      *@see #setParameters
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         String[] labels = new String[MAX_PROTON_COUNT];
@@ -121,7 +114,6 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      *@param  ac                AtomContainer
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      */
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         neighboors = ac.getConnectedAtomsList(atom);
@@ -173,7 +165,6 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      *
      * @return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -186,7 +177,6 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

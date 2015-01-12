@@ -23,8 +23,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
@@ -43,12 +41,10 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
  * @cdk.module renderextra
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.generators.ReactionBoxGeneratorTest")
 public class ReactionBoxGenerator implements IGenerator<IReaction> {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testEmptyReaction")
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
         if (!model.getParameter(ShowReactionBoxes.class).getValue()) return null;
         double separation = model.getParameter(BondLength.class).getValue()
@@ -69,7 +65,6 @@ public class ReactionBoxGenerator implements IGenerator<IReaction> {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(new IGeneratorParameter<?>[]{});
     }

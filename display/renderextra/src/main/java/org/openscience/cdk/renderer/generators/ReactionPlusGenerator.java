@@ -24,8 +24,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.BoundsCalculator;
@@ -41,12 +39,10 @@ import org.openscience.cdk.renderer.elements.TextElement;
  * @cdk.module renderextra
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.generators.ReactionPlusGeneratorTest")
 public class ReactionPlusGenerator implements IGenerator<IReaction> {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testEmptyReaction")
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
         ElementGroup diagram = new ElementGroup();
 
@@ -89,7 +85,6 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(new IGeneratorParameter<?>[]{});
     }

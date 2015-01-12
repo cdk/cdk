@@ -26,8 +26,6 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Partial implementation of the {@link IDrawVisitor} interface for the AWT
@@ -37,7 +35,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderawt
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.visitor.AbstractAWTDrawVisitorTest")
 public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
 
     /**
@@ -53,7 +50,6 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      * @param yCoord y-coordinate of the world point to transform
      * @return       the transformed screen coordinate
      */
-    @TestMethod("testTransformPoint")
     public int[] transformPoint(double xCoord, double yCoord) {
         double[] src = new double[]{xCoord, yCoord};
         double[] dest = new double[2];
@@ -74,7 +70,6 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      * @param graphics the graphics to which the text is outputted
      * @return         the screen coordinates
      */
-    @TestMethod("testGetTextBounds")
     protected Rectangle2D getTextBounds(String text, double xCoord, double yCoord, Graphics2D graphics) {
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D bounds = fontMetrics.getStringBounds(text, graphics);
@@ -102,7 +97,6 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      * @param graphics the graphics to which the text is outputted
      * @return         the screen coordinates
      */
-    @TestMethod("testGetTextBasePoint")
     protected Point getTextBasePoint(String text, double xCoord, double yCoord, Graphics2D graphics) {
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D stringBounds = fontMetrics.getStringBounds(text, graphics);
@@ -133,7 +127,6 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      *
      * @param transform the new {@link AffineTransform}.
      */
-    @TestMethod("testSetAffineTransformation")
     @Override
     public void setTransform(AffineTransform transform) {
         this.transform = transform;

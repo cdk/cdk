@@ -22,8 +22,6 @@ import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
 import org.openscience.cdk.IImplementationSpecification;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
@@ -80,7 +78,6 @@ import java.util.jar.JarFile;
  * @see Dictionary
  * @see org.openscience.cdk.dict.OWLFile
  */
-@TestClass(value = "org.openscience.cdk.qsar.DescriptorEngineTest")
 public class DescriptorEngine {
 
     private static String                      rdfNS       = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
@@ -138,7 +135,6 @@ public class DescriptorEngine {
      * @see <a href="http://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Service
      *      Provider Interface (SPI) Introduction</a>
      */
-    @TestMethod(value = "testConstructor")
     public DescriptorEngine(Class<? extends IDescriptor> c, IChemObjectBuilder builder) {
 
         for (IDescriptor descriptor : ServiceLoader.load(c)) {
@@ -239,7 +235,6 @@ public class DescriptorEngine {
      * @return The type of the descriptor as stored in the dictionary, null if no entry is found matching
      *         the supplied identifier
      */
-    @TestMethod(value = "testDictionaryType")
     public String getDictionaryType(String identifier) {
 
         Entry[] dictEntries = dict.getEntries();
@@ -291,7 +286,6 @@ public class DescriptorEngine {
      * @return he type of the descriptor as stored in the dictionary, null if no entry is found matching
      *         the supplied identifier
      */
-    @TestMethod(value = "testDictionaryType")
     public String getDictionaryType(IImplementationSpecification descriptorSpecification) {
         return getDictionaryType(descriptorSpecification.getSpecificationReference());
     }
@@ -315,7 +309,6 @@ public class DescriptorEngine {
      * @return A List containing the names of the QSAR descriptor classes that this  descriptor was declared
      *         to belong to. If an entry for the specified identifier was not found, null is returned.
      */
-    @TestMethod(value = "testDictionaryClass")
     public String[] getDictionaryClass(String identifier) {
 
         Entry[] dictEntries = dict.getEntries();
@@ -368,7 +361,6 @@ public class DescriptorEngine {
      *         to belong to. If an entry for the specified identifier was not found, null is returned.
      */
 
-    @TestMethod(value = "testDictionaryClass")
     public String[] getDictionaryClass(IImplementationSpecification descriptorSpecification) {
         return getDictionaryClass(descriptorSpecification.getSpecificationReference());
     }
@@ -491,7 +483,6 @@ public class DescriptorEngine {
      *
      * @return A List containing descriptor classes
      */
-    @TestMethod(value = "testLoadingOfMolecularDescriptors,testLoadingOfAtomicDescriptors,testLoadingOfBondDescriptors")
     public List<IDescriptor> getDescriptorInstances() {
         return descriptors;
     }
@@ -511,7 +502,6 @@ public class DescriptorEngine {
      *
      * @return An array containing the unique dictionary classes.
      */
-    @TestMethod(value = "testAvailableClass")
     public String[] getAvailableDictionaryClasses() {
         List<String> classList = new ArrayList<String>();
         for (IImplementationSpecification spec : speclist) {

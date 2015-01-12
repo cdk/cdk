@@ -25,8 +25,6 @@ package org.openscience.cdk.renderer.elements.path;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A line element in the path.
@@ -35,7 +33,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.path.LineToTest")
 public class LineTo extends PathElement {
 
     /** The point to make a line to. */
@@ -46,7 +43,6 @@ public class LineTo extends PathElement {
      *
      * @param point the endpoint of the line
      */
-    @TestMethod("testConstructor")
     public LineTo(Point2d point) {
         this(point.x, point.y);
     }
@@ -75,7 +71,6 @@ public class LineTo extends PathElement {
 
     /** {@inheritDoc} **/
     @Override
-    @TestMethod("testPoints")
     public float[] points() {
         return new float[]{(float) coords[0], (float) coords[1]};
     }

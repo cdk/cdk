@@ -29,8 +29,6 @@ import java.util.List;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
@@ -50,7 +48,6 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @cdk.module  renderextra
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.generators.AtomNumberGeneratorTest")
 public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     /** Color to draw the atom numbers with. */
@@ -120,7 +117,6 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testEmptyContainer")
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup numbers = new ElementGroup();
         if (!model.getParameter(WillDrawAtomNumbers.class).getValue()) return numbers;
@@ -141,7 +137,6 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(new IGeneratorParameter<?>[]{textColor, willDrawAtomNumbers, offset, atomColorer,
                 colorByType});

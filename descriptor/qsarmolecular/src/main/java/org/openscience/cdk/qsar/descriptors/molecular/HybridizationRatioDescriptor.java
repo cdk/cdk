@@ -21,8 +21,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,7 +48,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:hybratio
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.HybridizationRatioDescriptorTest")
 public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     /**
@@ -64,7 +61,6 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @inheritDoc
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -81,7 +77,6 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      *          is not of type String
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
@@ -93,13 +88,11 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @return The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return new Object[0];
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return new String[]{"HybRatio"};
@@ -122,7 +115,6 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @param container The AtomContainer for which this descriptor is to be calculated.
      * @return The ratio of sp3 to sp2 carbons
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         try {
@@ -157,7 +149,6 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @return an object that implements the {@link IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
@@ -170,7 +161,6 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      *
      * @return The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -184,7 +174,6 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @param name the parameter name
      * @return An Object whose class is that of the parameter requested
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return "";

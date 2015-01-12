@@ -21,8 +21,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * {@link IRenderingElement} for linear arrows.
@@ -30,7 +28,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.ArrowElementTest")
 public class ArrowElement implements IRenderingElement {
 
     /** X coordinate of the point where the arrow starts. */
@@ -72,7 +69,6 @@ public class ArrowElement implements IRenderingElement {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testAccept")
     @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);

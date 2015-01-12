@@ -31,8 +31,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.io.IOException;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
@@ -63,19 +61,16 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.keyword volume
  * @cdk.keyword descriptor
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.FractionalPSADescriptorTest")
 public class FractionalPSADescriptor implements IMolecularDescriptor {
 
     public FractionalPSADescriptor() {}
 
-    @TestMethod("nop")
     @Override
     public void initialise(IChemObjectBuilder builder) {}
 
     /**
      * {@inheritDoc}
      */
-    @TestMethod("nop")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -84,7 +79,6 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("nop")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 0) {
@@ -93,19 +87,16 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("nop")
     @Override
     public Object[] getParameters() {
         return new Object[0];
     }
 
-    @TestMethod("nop")
     @Override
     public String[] getDescriptorNames() {
         return new String[]{"tpsaEfficiency"};
     }
 
-    @TestMethod("nop")
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                 Double.NaN), getDescriptorNames(), e);
@@ -117,7 +108,6 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
      * @param atomContainer The {@link IAtomContainer} whose volume is to be calculated
      * @return descriptor(s) retaining to polar surface area
      */
-    @TestMethod("testDescriptors")
     @Override
     public DescriptorValue calculate(IAtomContainer mol) {
         try {
@@ -156,21 +146,18 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("nop")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
     }
 
     /** {@inheritDoc} */
-    @TestMethod("nop")
     @Override
     public String[] getParameterNames() {
         return new String[0];
     }
 
     /** {@inheritDoc} */
-    @TestMethod("nop")
     @Override
     public Object getParameterType(String name) {
         return null;

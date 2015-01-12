@@ -26,8 +26,6 @@ import java.util.Stack;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,7 +45,6 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @cdk.module renderextra
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.generators.ExtendedAtomGeneratorTest")
 public class ExtendedAtomGenerator extends BasicAtomGenerator {
 
     /** Boolean that indicates if implicit hydrogens should be depicted. */
@@ -77,7 +74,6 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testSingleAtom")
     public IRenderingElement generate(IAtomContainer container, IAtom atom, RendererModel model) {
         boolean drawNumbers = false;
         if (model.hasParameter(WillDrawAtomNumbers.class)) {
@@ -206,7 +202,6 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("getParametersTest")
     public List<IGeneratorParameter<?>> getParameters() {
         List<IGeneratorParameter<?>> parameters = new ArrayList<IGeneratorParameter<?>>();
         parameters.add(showImplicitHydrogens);

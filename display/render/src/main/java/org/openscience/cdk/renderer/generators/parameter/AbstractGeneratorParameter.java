@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.renderer.generators.parameter;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
 /**
@@ -29,7 +27,6 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
  * @cdk.module  render
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameterTest")
 public abstract class AbstractGeneratorParameter<T> implements IGeneratorParameter<T> {
 
     private T parameterSetting;
@@ -39,7 +36,6 @@ public abstract class AbstractGeneratorParameter<T> implements IGeneratorParamet
      *
      * @param value the new parameter value
      */
-    @TestMethod("testValue")
     @Override
     public void setValue(T value) {
         this.parameterSetting = value;
@@ -51,7 +47,6 @@ public abstract class AbstractGeneratorParameter<T> implements IGeneratorParamet
      *
      * @return the current parameter value
      */
-    @TestMethod("testValue")
     @Override
     public T getValue() {
         if (this.parameterSetting == null)

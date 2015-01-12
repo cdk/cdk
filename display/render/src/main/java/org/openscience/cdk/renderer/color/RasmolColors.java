@@ -22,8 +22,6 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -34,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.module render
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.color.RasmolColorsTest")
 public class RasmolColors implements IAtomColorer, java.io.Serializable {
 
     private static final long         serialVersionUID = 2588969984094169759L;
@@ -87,7 +84,6 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
      * @param atom IAtom to get a color for
      * @return     the atom's color according to this coloring scheme.
      */
-    @TestMethod("testGetAtomColor")
     @Override
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, DEFAULT);
@@ -102,7 +98,6 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
      *                     a color for the passed IAtom
      * @return             the atom's color according to this coloring scheme.
      */
-    @TestMethod("testGetDefaultAtomColor")
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;

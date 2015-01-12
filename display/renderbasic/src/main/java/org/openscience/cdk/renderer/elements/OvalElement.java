@@ -20,8 +20,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * An oval element (should) have both a width and a height.
@@ -29,7 +27,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.OvalElementTest")
 public class OvalElement implements IRenderingElement {
 
     /** The x-coordinate of the center of the oval. **/
@@ -54,7 +51,6 @@ public class OvalElement implements IRenderingElement {
      * @param yCoord the y-coordinate of the center of the oval
      * @param color the color of the oval
      */
-    @TestMethod("testConstructor")
     public OvalElement(double xCoord, double yCoord, Color color) {
         this(xCoord, yCoord, 10, color);
     }
@@ -89,7 +85,6 @@ public class OvalElement implements IRenderingElement {
     }
 
     /** {@inheritDoc} **/
-    @TestMethod("testAccept")
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);

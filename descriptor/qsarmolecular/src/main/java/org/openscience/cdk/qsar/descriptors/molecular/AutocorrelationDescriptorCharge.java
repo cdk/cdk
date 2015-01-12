@@ -19,8 +19,6 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
@@ -46,7 +44,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  */
 
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorChargeTest")
 public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5"};
@@ -70,7 +67,6 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
         return charges;
     }
 
-    @TestMethod("test1")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer container;
@@ -119,31 +115,26 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
         }
     }
 
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
     }
 
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;
     }
 
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
     }
 
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -151,13 +142,11 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
                         .getClass().getName(), "The Chemistry Development Kit");
     }
 
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }
 
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
 

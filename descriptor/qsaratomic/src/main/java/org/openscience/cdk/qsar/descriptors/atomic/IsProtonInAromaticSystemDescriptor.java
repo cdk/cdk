@@ -21,8 +21,6 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -61,7 +59,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:isProtonInAromaticSystem
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest")
 public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private static final String[] NAMES            = {"protonInArmaticSystem"};
@@ -79,7 +76,6 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -94,7 +90,6 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *@param  params            The new parameters value
      *@exception  CDKException  Possible Exceptions
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
@@ -112,7 +107,6 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *
      *@return    The parameters value
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -121,7 +115,6 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -135,7 +128,6 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *@param  atomContainer               AtomContainer
      *@return                   true if the proton is bonded to an aromatic atom.
      */
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) {
         IAtomContainer clonedAtomContainer;
@@ -187,7 +179,6 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -202,7 +193,6 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return true;

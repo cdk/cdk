@@ -19,8 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -67,7 +65,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bpol
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptorTest")
 public class BPolDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(BPolDescriptor.class);
@@ -91,7 +88,6 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
         }
     }
 
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol",
@@ -104,7 +100,6 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
@@ -115,14 +110,12 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      *
      *@return    The parameters value
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // no parameters for this descriptor
         return (null);
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -136,7 +129,6 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@return            The sum of atomic polarizabilities
      */
 
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
 
@@ -196,7 +188,6 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
@@ -207,7 +198,6 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         // no param names to return
@@ -220,7 +210,6 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return (null);

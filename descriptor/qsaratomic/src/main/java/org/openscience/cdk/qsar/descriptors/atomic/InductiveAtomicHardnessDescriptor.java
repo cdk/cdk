@@ -23,8 +23,6 @@ import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -87,7 +85,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref   qsar-descriptors:atomicHardness
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptorTest")
 public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private static final String[] NAMES   = {"indAtomHardnesss"};
@@ -110,7 +107,6 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -121,7 +117,6 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
@@ -132,13 +127,11 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
      * @return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -157,7 +150,6 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
      *@param  ac                AtomContainer
      *@return                   a double with polarizability of the heavy atom
      */
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         if (factory == null)
@@ -235,7 +227,6 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -248,7 +239,6 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

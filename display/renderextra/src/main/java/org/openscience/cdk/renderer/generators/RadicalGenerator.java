@@ -26,8 +26,6 @@ import java.util.Map;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,14 +44,12 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
  * @cdk.module renderextra
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.generators.RadicalGeneratorTest")
 public class RadicalGenerator implements IGenerator<IAtomContainer> {
 
     public RadicalGenerator() {}
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testEmptyContainer")
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup group = new ElementGroup();
 
@@ -92,7 +88,6 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Collections.emptyList();
     }
