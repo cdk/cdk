@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -63,7 +61,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref  qsar-descriptors:ionizationPotential
  */
 @Deprecated
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptorTest")
 public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[] DESCRIPTOR_NAMES = {"ipAtomicLearning"};
@@ -78,7 +75,6 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -89,7 +85,6 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
@@ -99,13 +94,11 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      *@return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return DESCRIPTOR_NAMES;
@@ -118,7 +111,6 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      *@param  container         Parameter is the IAtomContainer.
      *@return                   The ionization potential. Not possible the ionization.
      */
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double value = 0;
@@ -167,7 +159,6 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      *
      * @return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -179,7 +170,6 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

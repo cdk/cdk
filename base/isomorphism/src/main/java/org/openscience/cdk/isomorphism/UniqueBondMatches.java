@@ -26,7 +26,6 @@ package org.openscience.cdk.isomorphism;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
-import org.openscience.cdk.annotations.TestClass;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -45,7 +44,6 @@ import java.util.Set;
  * @author John May
  * @cdk.module isomorphism
  */
-@TestClass("org.openscience.cdk.isomorphism.MappingPredicatesTest")
 final class UniqueBondMatches implements Predicate<int[]> {
 
     /** Which mappings have we seen already. */

@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.Arrays;
@@ -44,7 +42,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @author John May
  * @cdk.module isomorphism
  */
-@TestClass("org.openscience.cdk.isomorphism.UllmannStateTest")
 final class UllmannState extends State {
 
     /** Adjacency list representations. */
@@ -119,14 +116,12 @@ final class UllmannState extends State {
     }
 
     /** @inheritDoc */
-    @TestMethod("accessors")
     @Override
     int nMax() {
         return g1.length;
     }
 
     /** @inheritDoc */
-    @TestMethod("accessors")
     @Override
     int mMax() {
         return g2.length;
@@ -241,7 +236,6 @@ final class UllmannState extends State {
     }
 
     /** @inheritDoc */
-    @TestMethod("accessors")
     @Override
     int size() {
         return size;

@@ -19,8 +19,6 @@
 package org.openscience.cdk.reaction.type;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -79,7 +77,6 @@ import java.util.Iterator;
  *
  * @see HeterolyticCleavageMechanism
  **/
-@TestClass(value = "org.openscience.cdk.reaction.type.HeterolyticCleavageSBReactionTest")
 public class HeterolyticCleavageSBReaction extends ReactionEngine implements IReactionProcess {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HeterolyticCleavageSBReaction.class);
@@ -95,7 +92,6 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
      *
      *@return    The specification value
      */
-    @TestMethod("testGetSpecification")
     @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
@@ -114,7 +110,6 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
      * @param  reactants         reactants of the reaction
     * @param  agents            agents of the reaction (Must be in this case null)
      */
-    @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
     @Override
     public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
 

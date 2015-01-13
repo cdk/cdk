@@ -25,8 +25,6 @@ package org.openscience.cdk.aromaticity;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -59,12 +57,10 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @deprecated use {@link Aromaticity} with the {@link org.openscience.cdk.aromaticity.ElectronDonation#cdkAllowingExocyclic()} model
  */
 @Deprecated
-@TestClass("org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest")
 public class DoubleBondAcceptingAromaticityDetector {
 
     private static AtomTypeFactory factory = null;
 
-    @TestMethod("testDetectAromaticity_IAtomContainer")
     public static boolean detectAromaticity(IAtomContainer atomContainer) throws CDKException {
         SpanningTree spanningTree = new SpanningTree(atomContainer);
         IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();

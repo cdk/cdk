@@ -33,8 +33,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
@@ -56,7 +54,6 @@ import org._3pq.jgrapht.graph.Subgraph;
  * @cdk.githash
  *
  */
-@TestClass("org.openscience.cdk.graph.BiconnectivityInspectorTest")
 public class BiconnectivityInspector {
 
     private List            biconnectedSets;
@@ -204,7 +201,6 @@ public class BiconnectivityInspector {
      * @return a list of <code>Set</code>s, where each set contains all edge that are
      * in the same biconnected component
      */
-    @TestMethod("testBiconnectedSets")
     public List biconnectedSets() {
         return lazyFindBiconnectedSets();
     }

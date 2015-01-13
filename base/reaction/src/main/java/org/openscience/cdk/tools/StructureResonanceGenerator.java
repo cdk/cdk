@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -72,7 +70,6 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  *
  * @see org.openscience.cdk.reaction.IReactionProcess
  */
-@TestClass("org.openscience.cdk.tools.StructureResonanceGeneratorTest")
 public class StructureResonanceGenerator {
 
     private ILoggingTool           logger        = LoggingToolFactory
@@ -116,7 +113,6 @@ public class StructureResonanceGenerator {
      * @see #setReactions(java.util.List)
      * @see IReactionProcess
      */
-    @TestMethod("testSetReactions_List")
     public void setReactions(List<IReactionProcess> newReactionsList) {
         reactionsList = newReactionsList;
     }
@@ -129,7 +125,6 @@ public class StructureResonanceGenerator {
      *
      * @see #setDefaultReactions()
      */
-    @TestMethod("testGetReactions")
     public List<IReactionProcess> getReactions() {
         return this.reactionsList;
     }
@@ -140,7 +135,6 @@ public class StructureResonanceGenerator {
      *
      * @param maxStruct The maximal number
      */
-    @TestMethod("testSetMaximalStructures_int")
     public void setMaximalStructures(int maxStruct) {
         maxStructures = maxStruct;
     }
@@ -150,7 +144,6 @@ public class StructureResonanceGenerator {
      *
      * @return The maximal number
      */
-    @TestMethod("testGetMaximalStructures")
     public int getMaximalStructures() {
         return maxStructures;
     }
@@ -160,7 +153,6 @@ public class StructureResonanceGenerator {
      *
      * @see #getReactions()
      */
-    @TestMethod("testSetDefaultReactions")
     public void setDefaultReactions() {
         callDefaultReactions();
 
@@ -232,7 +224,6 @@ public class StructureResonanceGenerator {
      * @param molecule The IAtomContainer to analyze
      * @return         The different resonance structures
      */
-    @TestMethod("testGetStructures_IAtomContainer")
     public IAtomContainerSet getStructures(IAtomContainer molecule) {
         int countStructure = 0;
         IAtomContainerSet setOfMol = molecule.getBuilder().newInstance(IAtomContainerSet.class);
@@ -272,7 +263,6 @@ public class StructureResonanceGenerator {
      * @param molecule The IAtomContainer to analyze
      * @return         The different containers
      */
-    @TestMethod("testGetContainers_IAtomContainer")
     public IAtomContainerSet getContainers(IAtomContainer molecule) {
         IAtomContainerSet setOfCont = molecule.getBuilder().newInstance(IAtomContainerSet.class);
         IAtomContainerSet setOfMol = getStructures(molecule);
@@ -365,7 +355,6 @@ public class StructureResonanceGenerator {
      * @param atom     The IAtom
      * @return         The container with the atom
      */
-    @TestMethod("testGetContainer_IAtomContainer_IAtom")
     public IAtomContainer getContainer(IAtomContainer molecule, IAtom atom) {
         IAtomContainerSet setOfCont = getContainers(molecule);
         if (setOfCont == null) return null;
@@ -386,7 +375,6 @@ public class StructureResonanceGenerator {
      * @param bond     The IBond
      * @return         The container with the bond
      */
-    @TestMethod("testGetContainer_IAtomContainer_IBond")
     public IAtomContainer getContainer(IAtomContainer molecule, IBond bond) {
         IAtomContainerSet setOfCont = getContainers(molecule);
         if (setOfCont == null) return null;

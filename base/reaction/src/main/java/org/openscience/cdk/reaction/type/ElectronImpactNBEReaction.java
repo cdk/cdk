@@ -19,8 +19,6 @@
 package org.openscience.cdk.reaction.type;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -72,7 +70,6 @@ import java.util.Iterator;
  * @see RemovingSEofNBMechanism
  *
  **/
-@TestClass(value = "org.openscience.cdk.reaction.type.ElectronImpactNBEReactionTest")
 public class ElectronImpactNBEReaction extends ReactionEngine implements IReactionProcess {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ElectronImpactNBEReaction.class);
@@ -90,7 +87,6 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
      *
      * @return    The specification value
      */
-    @TestMethod("testGetSpecification")
     @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
@@ -109,7 +105,6 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
      *
      * @exception  CDKException  Description of the Exception
      */
-    @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
     @Override
     public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
 

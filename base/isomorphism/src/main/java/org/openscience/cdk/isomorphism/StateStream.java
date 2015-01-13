@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.Iterator;
 
@@ -38,7 +36,6 @@ import java.util.Iterator;
  * @author John May
  * @cdk.module isomorphism
  */
-@TestClass("org.openscience.cdk.isomorphism.StateStreamTest")
 final class StateStream implements Iterator<int[]> {
 
     /** A mapping state. */
@@ -65,14 +62,12 @@ final class StateStream implements Iterator<int[]> {
     }
 
     /** @inheritDoc */
-    @TestMethod("hasNext")
     @Override
     public boolean hasNext() {
         return next != null;
     }
 
     /** @inheritDoc */
-    @TestMethod("next")
     @Override
     public int[] next() {
         int[] ret = next;
@@ -81,7 +76,6 @@ final class StateStream implements Iterator<int[]> {
     }
 
     /** @inheritDoc */
-    @TestMethod("remove")
     @Override
     public void remove() {
         throw new UnsupportedOperationException("a graph matching cannot be removed");

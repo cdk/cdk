@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IElement;
@@ -52,7 +51,6 @@ public abstract class IsotopeFactory {
      *
      *@return    The size value
      */
-    @TestMethod("testGetSize")
     public int getSize() {
         return isotopes.size();
     }
@@ -77,7 +75,6 @@ public abstract class IsotopeFactory {
      *@param  symbol  An element symbol to search for
      *@return         An array of isotopes that matches the given element symbol
      */
-    @TestMethod("testGetIsotopes_String")
     public IIsotope[] getIsotopes(String symbol) {
         if (isotopes.get(symbol) == null) return new IIsotope[0];
         List<IIsotope> list = new ArrayList<IIsotope>();
@@ -98,7 +95,6 @@ public abstract class IsotopeFactory {
      *
      * @return         An array of all isotopes
      */
-    @TestMethod("testGetIsotopes")
     public IIsotope[] getIsotopes() {
         ArrayList<IIsotope> list = new ArrayList<IIsotope>();
         for (String element : isotopes.keySet()) {
@@ -123,7 +119,6 @@ public abstract class IsotopeFactory {
      * @param  difference mass the isotope is allowed to differ from the search mass
      * @return            An array of all isotopes
      */
-    @TestMethod("testGetIsotopes_double_double")
     public IIsotope[] getIsotopes(double exactMass, double difference) {
         ArrayList<IIsotope> list = new ArrayList<IIsotope>();
         for (String element : isotopes.keySet()) {
@@ -149,7 +144,6 @@ public abstract class IsotopeFactory {
      * @param massNumber the mass number
      * @return the corresponding isotope
      */
-    @TestMethod("testGetIsotope")
     public IIsotope getIsotope(String symbol, int massNumber) {
         IIsotope ret = null;
         for (IIsotope isotope : isotopes.get(symbol)) {
@@ -174,7 +168,6 @@ public abstract class IsotopeFactory {
      * @param tolerance allowed difference from provided exact mass
      * @return the corresponding isotope
      */
-    @TestMethod("testGetIsotopeFromExactMass")
     public IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
         IIsotope ret = null;
         double minDiff = Double.MAX_VALUE;
@@ -206,7 +199,6 @@ public abstract class IsotopeFactory {
      *
      * @see #getMajorIsotope(String symbol)
      */
-    @TestMethod("testGetMajorIsotope_int")
     public IIsotope getMajorIsotope(int atomicNumber) {
         IIsotope major = null;
         for (IIsotope isotope : isotopes.get(PeriodicTable.getSymbol(atomicNumber))) {
@@ -231,7 +223,6 @@ public abstract class IsotopeFactory {
      * @param  elementName   The element name to test
      * @return               True is the element exists, false otherwise
      */
-    @TestMethod("testIsElement_String")
     public boolean isElement(String elementName) {
         return (getElement(elementName) != null);
     }
@@ -242,7 +233,6 @@ public abstract class IsotopeFactory {
      *@param  symbol  the symbol of the element in question
      *@return         The Major Isotope value
      */
-    @TestMethod("testGetMajorIsotope_String")
     public IIsotope getMajorIsotope(String symbol) {
         IIsotope major = null;
         if (majorIsotopes.containsKey(symbol)) {
@@ -283,7 +273,6 @@ public abstract class IsotopeFactory {
      *@param  symbol  The element symbol for the requested element
      *@return         The configured element
      */
-    @TestMethod("testGetElement_String")
     public IElement getElement(String symbol) {
         return getMajorIsotope(symbol);
     }
@@ -294,7 +283,6 @@ public abstract class IsotopeFactory {
      *@param  atomicNumber  The elements atomic number
      *@return               The Element
      */
-    @TestMethod("testGetElement_int")
     public IElement getElement(int atomicNumber) {
         return getMajorIsotope(atomicNumber);
     }
@@ -305,7 +293,6 @@ public abstract class IsotopeFactory {
      * @param  atomicNumber  The elements atomic number
      * @return               The symbol of the Element
      */
-    @TestMethod("testGetElementSymbol_int")
     public String getElementSymbol(int atomicNumber) {
         IIsotope isotope = getMajorIsotope(atomicNumber);
         return isotope.getSymbol();
@@ -319,7 +306,6 @@ public abstract class IsotopeFactory {
      * @param  atom  The atom to be configured
      * @return       The configured atom
      */
-    @TestMethod("testConfigure_IAtom")
     public IAtom configure(IAtom atom) {
         IIsotope isotope;
 
@@ -340,7 +326,6 @@ public abstract class IsotopeFactory {
      *@param  isotope  The isotope to read the data from
      *@return          The configured atom
      */
-    @TestMethod("testConfigure_IAtom_IIsotope")
     public IAtom configure(IAtom atom, IIsotope isotope) {
         atom.setMassNumber(isotope.getMassNumber());
         atom.setSymbol(isotope.getSymbol());
@@ -356,7 +341,6 @@ public abstract class IsotopeFactory {
      *
      *@param  container  The AtomContainer to be configured
      */
-    @TestMethod("testConfigureAtoms_IAtomContainer")
     public void configureAtoms(IAtomContainer container) {
         for (int f = 0; f < container.getAtomCount(); f++) {
             configure(container.getAtom(f));
@@ -370,7 +354,6 @@ public abstract class IsotopeFactory {
      * @param  element                     the element in question
      * @return                             The natural mass value
      */
-    @TestMethod("testGetNaturalMass_IElement")
     public double getNaturalMass(IElement element) {
         IIsotope[] isotopes = getIsotopes(element.getSymbol());
         double summedAbundances = 0;

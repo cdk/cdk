@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.Arrays;
 
@@ -38,7 +36,6 @@ import java.util.Arrays;
  * @author John May
  * @cdk.module isomorphism
  */
-@TestClass("org.openscience.cdk.isomorphism.AbstractVFStateTest")
 abstract class AbstractVFState extends State {
 
     /** Value indicates a vertex is unmapped. */
@@ -84,7 +81,6 @@ abstract class AbstractVFState extends State {
      * @param n previous candidate n
      * @return the next value of n
      */
-    @TestMethod("nextNAt0,nextNTerminal,nextNNonTerminal")
     @Override
     final int nextN(int n) {
         if (size == 0) return 0;
@@ -105,7 +101,6 @@ abstract class AbstractVFState extends State {
      * @param m previous candidate m
      * @return the next value of m
      */
-    @TestMethod("nextMAt0,nextMTerminal,nextMNonTerminal")
     @Override
     final int nextM(int n, int m) {
         if (size == 0) return m + 1;
@@ -117,21 +112,18 @@ abstract class AbstractVFState extends State {
     }
 
     /** @inheritDoc */
-    @TestMethod("accessors")
     @Override
     final int nMax() {
         return g1.length;
     }
 
     /** @inheritDoc */
-    @TestMethod("accessors")
     @Override
     final int mMax() {
         return g2.length;
     }
 
     /** @inheritDoc */
-    @TestMethod("add,addNonFeasible")
     @Override
     final boolean add(int n, int m) {
         if (!feasible(n, m)) return false;
@@ -146,7 +138,6 @@ abstract class AbstractVFState extends State {
     }
 
     /** @inheritDoc */
-    @TestMethod("remove")
     @Override
     final void remove(int n, int m) {
         m1[n] = m2[m] = UNMAPPED;
@@ -168,14 +159,12 @@ abstract class AbstractVFState extends State {
     abstract boolean feasible(int n, int m);
 
     /** @inheritDoc */
-    @TestMethod("copyMapping")
     @Override
     int[] mapping() {
         return Arrays.copyOf(m1, m1.length);
     }
 
     /** @inheritDoc */
-    @TestMethod("accessors")
     @Override
     int size() {
         return size;
