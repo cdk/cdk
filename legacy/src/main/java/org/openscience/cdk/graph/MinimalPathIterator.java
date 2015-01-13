@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
@@ -51,7 +49,6 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
  * @cdk.githash
  *
  */
-@TestClass("org.openscience.cdk.graph.MinimalPathIteratorTest")
 public class MinimalPathIterator implements Iterator {
 
     private Object        sourceVertex, targetVertex;
@@ -189,7 +186,6 @@ public class MinimalPathIterator implements Iterator {
     //
     //	}
 
-    @TestMethod("testMinimalPathIterator")
     @Override
     public boolean hasNext() {
 
@@ -225,7 +221,6 @@ public class MinimalPathIterator implements Iterator {
 
     }
 
-    @TestMethod("testMinimalPathIterator")
     @Override
     public Object next() {
         if (hasNext()) {
@@ -237,7 +232,6 @@ public class MinimalPathIterator implements Iterator {
         }
     }
 
-    @TestMethod("testRemove")
     @Override
     public void remove() {
         throw new UnsupportedOperationException();

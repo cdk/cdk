@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
@@ -37,7 +35,6 @@ import static org.openscience.cdk.CDKConstants.ISAROMATIC;
  * @author John May
  * @cdk.module isomorphism
  */
-@TestClass("org.openscience.cdk.isomorphism.BondMatcherTest")
 public abstract class BondMatcher {
 
     /**
@@ -54,7 +51,6 @@ public abstract class BondMatcher {
      *
      * @return a bond matcher
      */
-    @TestMethod("anyMatch")
     public static BondMatcher forAny() {
         return new AnyMatcher();
     }
@@ -66,7 +62,6 @@ public abstract class BondMatcher {
      *
      * @return a bond matcher
      */
-    @TestMethod("aromaticStrictMatch,aliphaticStrictMatch")
     public static BondMatcher forStrictOrder() {
         return new StrictOrderMatcher();
     }
@@ -78,7 +73,6 @@ public abstract class BondMatcher {
      *
      * @return a bond matcher
      */
-    @TestMethod("aromaticMatch,aliphaticMatch")
     public static BondMatcher forOrder() {
         return new OrderMatcher();
     }
@@ -89,7 +83,6 @@ public abstract class BondMatcher {
      *
      * @return a bond matcher
      */
-    @TestMethod("queryMatch")
     public static BondMatcher forQuery() {
         return new QueryMatcher();
     }

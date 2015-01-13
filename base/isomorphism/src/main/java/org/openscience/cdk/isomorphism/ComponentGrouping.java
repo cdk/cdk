@@ -25,8 +25,6 @@
 package org.openscience.cdk.isomorphism;
 
 import com.google.common.base.Predicate;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,7 +54,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.module isomorphism
  * @see Pattern
  */
-@TestClass("org.openscience.cdk.isomorphism.ComponentGroupingTest")
 public final class ComponentGrouping implements Predicate<int[]> {
 
     /**
@@ -118,7 +115,6 @@ public final class ComponentGrouping implements Predicate<int[]> {
      * @param mapping a permutation of the query vertices
      * @return the mapping preserves the specified grouping
      */
-    @TestMethod("ungrouped,grouped")
     @Override
     public boolean apply(final int[] mapping) {
 

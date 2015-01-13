@@ -38,8 +38,6 @@ import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -69,7 +67,6 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @cdk.module    standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.GeometryToolsTest")
 public class GeometryTools {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GeometryTools.class);
@@ -1002,7 +999,6 @@ public class GeometryTools {
      * @see #get3DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
      * @see org.openscience.cdk.interfaces.IAtom#getPoint2d()
      */
-    @TestMethod("get2DCoordinateCoverage_EmptyAtomContainer,get2DCoordinateCoverage_Partial,get2DCoordinateCoverage_Full")
     public static CoordinateCoverage get2DCoordinateCoverage(IAtomContainer container) {
 
         if (container == null || container.getAtomCount() == 0) return CoordinateCoverage.NONE;
@@ -1089,7 +1085,6 @@ public class GeometryTools {
      *
      * @see org.openscience.cdk.interfaces.IAtom#getPoint3d()
      */
-    @TestMethod("testHas3DCoordinates_IAtomContainer,testHas3DCoordinates_EmptyAtomContainer")
     public static boolean has3DCoordinates(IAtomContainer container) {
 
         if (container == null || container.getAtomCount() == 0) return Boolean.FALSE;
@@ -1122,7 +1117,6 @@ public class GeometryTools {
      * @see #get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
      * @see org.openscience.cdk.interfaces.IAtom#getPoint3d()
      */
-    @TestMethod("get3DCoordinateCoverage_EmptyAtomContainer,get3DCoordinateCoverage_Partial,get3DCoordinateCoverage_Full")
     public static CoordinateCoverage get3DCoordinateCoverage(IAtomContainer container) {
 
         if (container == null || container.getAtomCount() == 0) return CoordinateCoverage.NONE;

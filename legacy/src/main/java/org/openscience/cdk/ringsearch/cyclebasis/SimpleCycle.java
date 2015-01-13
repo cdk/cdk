@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.openscience.cdk.annotations.TestClass;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.UndirectedGraph;
@@ -47,7 +46,6 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
  * @cdk.keyword ring search
  *
  */
-@TestClass("org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleTest")
 public class SimpleCycle extends UndirectedSubgraph {
 
     private static final long serialVersionUID = -3330742084804445688L;

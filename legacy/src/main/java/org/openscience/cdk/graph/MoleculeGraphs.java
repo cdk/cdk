@@ -25,8 +25,6 @@
 package org.openscience.cdk.graph;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -41,7 +39,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.githash
  *
  */
-@TestClass("org.openscience.cdk.graph.MoleculeGraphsTest")
 public class MoleculeGraphs {
 
     // make class non-instantiable
@@ -54,7 +51,6 @@ public class MoleculeGraphs {
      * @param molecule the specified molecule
      * @return a graph representing the molecule
      */
-    @TestMethod("testGetMoleculeGraph_IAtomContainer")
     static public SimpleGraph getMoleculeGraph(IAtomContainer molecule) {
         SimpleGraph graph = new SimpleGraph();
         for (int i = 0; i < molecule.getAtomCount(); i++) {

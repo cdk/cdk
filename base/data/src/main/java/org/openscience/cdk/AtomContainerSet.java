@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -410,7 +409,6 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * Sort the AtomContainers and multipliers using a provided Comparator.
      * @param comparator defines the sorting method
      */
-    @TestMethod("testSortAtomContainers_Comparator_Null,testSort_Coefficients,testSort_BrokenComparator,testSort_empty")
     @Override
     public void sortAtomContainers(final Comparator<IAtomContainer> comparator) {
 
@@ -443,7 +441,6 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
     /**
      * @inheritDoc
      */
-    @TestMethod("testIsEmpty")
     @Override
     public boolean isEmpty() {
         return atomContainerCount == 0;

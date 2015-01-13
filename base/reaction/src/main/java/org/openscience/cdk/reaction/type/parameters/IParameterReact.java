@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.reaction.type.parameters;
 
-import org.openscience.cdk.annotations.TestClass;
 
 /**
  * Interface for classes that generate parameters used in reactions.
@@ -27,7 +26,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.module  reaction
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.reaction.type.parameters.IParameterReactTest")
 public interface IParameterReact {
 
     /**

@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.reaction.type.parameters;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Class which defines the allowed parameters of a reaction.
@@ -28,7 +26,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module  reaction
  * @cdk.githash
  */
-@TestClass(value = "org.openscience.cdk.reaction.type.parameters.ParameterReactTest")
 public class ParameterReact implements IParameterReact {
 
     /** True, if the parameter is fixed to take account*/
@@ -41,7 +38,6 @@ public class ParameterReact implements IParameterReact {
      *
      * @param set True, if the parameter needs to take account
      */
-    @TestMethod(value = "testSetParameter_boolean")
     @Override
     public void setParameter(boolean set) {
         IS_SET_PARAMETER = set;
@@ -52,7 +48,6 @@ public class ParameterReact implements IParameterReact {
      *
      * @return True, if the parameter needs to take account
      */
-    @TestMethod(value = "testIsSetParameter")
     @Override
     public boolean isSetParameter() {
         return IS_SET_PARAMETER;
@@ -63,7 +58,6 @@ public class ParameterReact implements IParameterReact {
      *
      * @param value The value of the parameter
      */
-    @TestMethod(value = "testSetValue_object")
     @Override
     public void setValue(Object value) {
         VALUE = value;
@@ -74,7 +68,6 @@ public class ParameterReact implements IParameterReact {
      *
      * @return The value of the parameter
      */
-    @TestMethod(value = "testGetValue")
     @Override
     public Object getValue() {
         return VALUE;

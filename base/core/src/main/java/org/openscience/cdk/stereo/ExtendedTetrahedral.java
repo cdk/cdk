@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.stereo;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -99,7 +98,6 @@ public final class ExtendedTetrahedral implements IStereoElement {
      * @param peripherals atoms attached to the terminal atoms
      * @param winding     the configuration
      */
-    @TestMethod("peripheralsAreCopied")
     public ExtendedTetrahedral(IAtom focus, IAtom[] peripherals, Stereo winding) {
         assert focus != null && peripherals != null && winding != null;
         assert peripherals.length == 4;
@@ -113,7 +111,6 @@ public final class ExtendedTetrahedral implements IStereoElement {
      *
      * @return the focus
      */
-    @TestMethod("noOperation")
     public IAtom focus() {
         return focus;
     }
@@ -124,7 +121,6 @@ public final class ExtendedTetrahedral implements IStereoElement {
      *
      * @return the peripheral atoms
      */
-    @TestMethod("peripheralsAreNotModifable")
     public IAtom[] peripherals() {
         return Arrays.copyOf(peripherals, 4);
     }
@@ -134,7 +130,6 @@ public final class ExtendedTetrahedral implements IStereoElement {
      *
      * @return winding configuration
      */
-    @TestMethod("noOperation")
     public Stereo winding() {
         return winding;
     }
@@ -147,7 +142,6 @@ public final class ExtendedTetrahedral implements IStereoElement {
      * @param focus cumulated atom
      * @return the terminal atoms (unordered)
      */
-    @TestMethod("terminalAtomsAreFoundUnordered")
     public static IAtom[] findTerminalAtoms(IAtomContainer container, IAtom focus) {
         List<IBond> focusBonds = container.getConnectedBondsList(focus);
 
@@ -168,7 +162,6 @@ public final class ExtendedTetrahedral implements IStereoElement {
      * @param container structure representation
      * @return the terminal atoms (ordered)
      */
-    @TestMethod("terminalAtomsAreFoundOrdered")
     public IAtom[] findTerminalAtoms(IAtomContainer container) {
         List<IBond> focusBonds = container.getConnectedBondsList(focus);
 
@@ -189,7 +182,6 @@ public final class ExtendedTetrahedral implements IStereoElement {
     /**
      * @inheritDoc
      */
-    @TestMethod("containsAnAtom")
     @Override
     public boolean contains(IAtom atom) {
         // no way to test terminals
@@ -209,7 +201,6 @@ public final class ExtendedTetrahedral implements IStereoElement {
     /**
      * @inheritDoc
      */
-    @TestMethod("noBuilder")
     @Override
     public IChemObjectBuilder getBuilder() {
         throw new UnsupportedOperationException("non-domain object");

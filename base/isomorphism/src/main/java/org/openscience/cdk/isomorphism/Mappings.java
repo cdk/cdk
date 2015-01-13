@@ -29,8 +29,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -155,7 +153,6 @@ import java.util.Map;
  * @cdk.keyword matching
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.isomorphism.MappingsTest")
 public final class Mappings implements Iterable<int[]> {
 
     /** Iterable permutations of the query vertices. */
@@ -202,7 +199,6 @@ public final class Mappings implements Iterable<int[]> {
      * @param predicate a predicate
      * @return fluent-api reference
      */
-    @TestMethod("filter")
     public Mappings filter(final Predicate<int[]> predicate) {
         return new Mappings(query, target, Iterables.filter(iterable, predicate));
     }
@@ -239,7 +235,6 @@ public final class Mappings implements Iterable<int[]> {
      * @param f function to transform a mapping
      * @return iterable of the transformed type
      */
-    @TestMethod("map")
     public <T> Iterable<T> map(final Function<int[], T> f) {
         return Iterables.transform(iterable, f);
     }
@@ -251,7 +246,6 @@ public final class Mappings implements Iterable<int[]> {
      * @param limit the number of mappings
      * @return fluent-api instance
      */
-    @TestMethod("limit")
     public Mappings limit(int limit) {
         return new Mappings(query, target, Iterables.limit(iterable, limit));
     }
@@ -262,7 +256,6 @@ public final class Mappings implements Iterable<int[]> {
      *
      * @return fluent-api instance
      */
-    @TestMethod("stereochemistry")
     public Mappings stereochemistry() {
         // query structures currently have special requirements (i.e. SMARTS)
         if (query instanceof IQueryAtomContainer) return this;
@@ -277,7 +270,6 @@ public final class Mappings implements Iterable<int[]> {
      * @return fluent-api instance
      * @see #uniqueBonds()
      */
-    @TestMethod("uniqueAtoms")
     public Mappings uniqueAtoms() {
         // we need the unique predicate to be reset for each new iterator -
         // otherwise multiple iterations are always filtered (seen before)
@@ -297,7 +289,6 @@ public final class Mappings implements Iterable<int[]> {
      * @return fluent-api instance
      * @see #uniqueAtoms()
      */
-    @TestMethod("uniqueBonds")
     public Mappings uniqueBonds() {
         // we need the unique predicate to be reset for each new iterator -
         // otherwise multiple iterations are always filtered (seen before)
@@ -356,7 +347,6 @@ public final class Mappings implements Iterable<int[]> {
      *
      * @return array of mappings
      */
-    @TestMethod("toArray")
     public int[][] toArray() {
         return Iterables.toArray(iterable, int[].class);
     }
@@ -375,7 +365,6 @@ public final class Mappings implements Iterable<int[]> {
      *
      * @return iterable of atom-atom mappings
      */
-    @TestMethod("toAtomMap")
     public Iterable<Map<IAtom, IAtom>> toAtomMap() {
         return map(new ToAtomMap(query, target));
     }
@@ -394,7 +383,6 @@ public final class Mappings implements Iterable<int[]> {
      *
      * @return iterable of bond-bond mappings
      */
-    @TestMethod("toBondMap")
     public Iterable<Map<IBond, IBond>> toBondMap() {
         return map(new ToBondMap(query, target));
     }
@@ -416,7 +404,6 @@ public final class Mappings implements Iterable<int[]> {
      *
      * @return iterable of atom-atom and bond-bond mappings
      */
-    @TestMethod("toAtomBondMap")
     public Iterable<Map<IChemObject, IChemObject>> toAtomBondMap() {
         return map(new ToAtomBondMap(query, target));
     }
@@ -438,7 +425,6 @@ public final class Mappings implements Iterable<int[]> {
      * @param n number of matches
      * @return there are at least 'n' matches
      */
-    @TestMethod("atLeast")
     public boolean atLeast(int n) {
         return limit(n).count() == n;
     }
@@ -449,7 +435,6 @@ public final class Mappings implements Iterable<int[]> {
      *
      * @return first match
      */
-    @TestMethod("first")
     public int[] first() {
         return Iterables.getFirst(iterable, new int[0]);
     }
@@ -462,7 +447,6 @@ public final class Mappings implements Iterable<int[]> {
      *
      * @return number of matches
      */
-    @TestMethod("count")
     public int count() {
         return Iterables.size(iterable);
     }
@@ -478,13 +462,11 @@ public final class Mappings implements Iterable<int[]> {
      *
      * @return number of matches
      */
-    @TestMethod("countUnique")
     public int countUnique() {
         return uniqueAtoms().count();
     }
 
     /** @inheritDoc */
-    @TestMethod("iterator")
     @Override
     public Iterator<int[]> iterator() {
         return iterable.iterator();

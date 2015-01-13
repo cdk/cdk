@@ -19,8 +19,6 @@
 package org.openscience.cdk.reaction;
 
 import org.openscience.cdk.IImplementationSpecification;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Class that is used to distribute reactions specifications.
@@ -29,7 +27,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module  reaction
  * @cdk.githash
  */
-@TestClass(value = "org.openscience.cdk.reaction.ReactionSpecificationTest")
 public class ReactionSpecification implements IImplementationSpecification {
 
     private String specificationReference;
@@ -52,7 +49,6 @@ public class ReactionSpecification implements IImplementationSpecification {
      * @param implementationVendor Name of the organisation/person/program/whatever
      *          who wrote/packaged the implementation.
      */
-    @TestMethod(value = "testReactionSpecification_String_String_String_String")
     public ReactionSpecification(String specificationReference, String implementationTitle,
             String implementationIdentifier, String implementationVendor) {
         this.specificationReference = specificationReference;
@@ -61,25 +57,21 @@ public class ReactionSpecification implements IImplementationSpecification {
         this.implementationVendor = implementationVendor;
     }
 
-    @TestMethod(value = "testGetSpecificationReference")
     @Override
     public String getSpecificationReference() {
         return this.specificationReference;
     };
 
-    @TestMethod(value = "testGetImplementationTitle")
     @Override
     public String getImplementationTitle() {
         return this.implementationTitle;
     };
 
-    @TestMethod(value = "testGetImplementationIdentifier")
     @Override
     public String getImplementationIdentifier() {
         return this.implementationIdentifier;
     };
 
-    @TestMethod(value = "testGetImplementationVendor")
     @Override
     public String getImplementationVendor() {
         return this.implementationVendor;

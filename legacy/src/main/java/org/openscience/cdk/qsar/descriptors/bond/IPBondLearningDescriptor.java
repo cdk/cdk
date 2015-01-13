@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -61,7 +59,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:ionizationPotential
  */
 @Deprecated
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest")
 public class IPBondLearningDescriptor extends AbstractBondDescriptor {
 
     private static final String[] DESCRIPTOR_NAMES = {"ipBondLearning"};
@@ -76,7 +73,6 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -87,7 +83,6 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
@@ -97,13 +92,11 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      *@return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return DESCRIPTOR_NAMES;
@@ -120,7 +113,6 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      *@param  atomContainer         Parameter is the IAtomContainer.
      *@return                   The ionization potential
      */
-    @TestMethod(value = "testCalculate_IBond_IAtomContainer,testIPDescriptor_1,testIPDescriptor_2,testIPDescriptor_3")
     @Override
     public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) {
         double value = 0;
@@ -177,7 +169,6 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
     *
     * @return    The parameterNames value
     */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -189,7 +180,6 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

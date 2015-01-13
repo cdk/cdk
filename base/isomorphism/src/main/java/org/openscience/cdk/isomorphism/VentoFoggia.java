@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -73,7 +71,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @author John May
  * @cdk.module isomorphism
  */
-@TestClass("org.openscience.cdk.isomorphism.VentoFoggiaTest")
 public final class VentoFoggia extends Pattern {
 
     /** The query structure. */
@@ -116,14 +113,12 @@ public final class VentoFoggia extends Pattern {
     }
 
     /** @inheritDoc */
-    @TestMethod("benzeneIdentical,benzeneSubsearch")
     @Override
     public int[] match(IAtomContainer target) {
         return matchAll(target).stereochemistry().first();
     }
 
     /** @inheritDoc */
-    @TestMethod("benzeneIdentical,benzeneSubsearch")
     @Override
     public Mappings matchAll(final IAtomContainer target) {
         EdgeToBondMap bonds2 = EdgeToBondMap.withSpaceFor(target);
@@ -140,7 +135,6 @@ public final class VentoFoggia extends Pattern {
      * @param query the substructure to find
      * @return a pattern for finding the {@code query}
      */
-    @TestMethod("benzeneSubsearch")
     public static Pattern findSubstructure(IAtomContainer query) {
         boolean isQuery = query instanceof IQueryAtomContainer;
         return new VentoFoggia(query, isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),
@@ -154,7 +148,6 @@ public final class VentoFoggia extends Pattern {
      * @param query the substructure to find
      * @return a pattern for finding the {@code query}
      */
-    @TestMethod("benzeneIdentical")
     public static Pattern findIdentical(IAtomContainer query) {
         boolean isQuery = query instanceof IQueryAtomContainer;
         return new VentoFoggia(query, isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),

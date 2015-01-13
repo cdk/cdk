@@ -21,7 +21,6 @@ package org.openscience.cdk.debug;
 import java.util.Map;
 
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -236,7 +235,6 @@ public class DebugChemModel extends ChemModel implements IChemModel {
     /**
      * @inheritDoc
      */
-    @TestMethod("testIsEmpty_MoleculeSet,testIsEmpty_RingSet,testIsEmpty_Crystal,testIsEmpty_ReactionSet")
     @Override
     public boolean isEmpty() {
         boolean res = true;

@@ -25,8 +25,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
@@ -46,7 +44,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.set        reaction-types
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.reaction.ReactionEngineTest")
 public class ReactionEngine {
 
     private static ILoggingTool    logger = LoggingToolFactory.createLoggingTool(ReactionEngine.class);
@@ -150,7 +147,6 @@ public class ReactionEngine {
      *
      * @see #getParameterList
      */
-    @TestMethod(value = "testSetParameterList_List")
     public void setParameterList(List<IParameterReact> params) throws CDKException {
         paramsMap2 = params;
     }
@@ -161,7 +157,6 @@ public class ReactionEngine {
      * @return A List of Object containing the name and the type of the parameter
      * @see #setParameterList
      * */
-    @TestMethod(value = "testGetParameterList")
     public List<IParameterReact> getParameterList() {
         return paramsMap2;
     }
@@ -172,7 +167,6 @@ public class ReactionEngine {
      * @param paramClass The class
      * @return           The IParameterReact
      */
-    @TestMethod(value = "testGetParameterClass_Class")
     public IParameterReact getParameterClass(Class<?> paramClass) {
         for (Iterator<IParameterReact> it = paramsMap2.iterator(); it.hasNext();) {
             IParameterReact ipr = it.next();
