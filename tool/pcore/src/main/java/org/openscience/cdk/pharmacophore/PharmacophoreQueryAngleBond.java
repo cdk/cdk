@@ -19,8 +19,6 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
@@ -37,7 +35,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @see PharmacophoreMatcher
  * @see org.openscience.cdk.isomorphism.matchers.QueryAtomContainer
  */
-@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryAngleBondTest")
 public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
 
     private double upper;
@@ -94,7 +91,6 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
      * @param bond The angle relationship in a target molecule
      * @return true if the target angle lies within the range of the query constraint
      */
-    @TestMethod("testMatches")
     @Override
     public boolean matches(IBond bond) {
         if (bond instanceof PharmacophoreAngleBond) {
@@ -105,12 +101,10 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
             return false;
     }
 
-    @TestMethod("testUpper")
     public double getUpper() {
         return upper;
     }
 
-    @TestMethod("testLower")
     public double getLower() {
         return lower;
     }
@@ -127,7 +121,6 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
      *
      * @return String representation of and angle constraint
      */
-    @TestMethod("testToString")
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();

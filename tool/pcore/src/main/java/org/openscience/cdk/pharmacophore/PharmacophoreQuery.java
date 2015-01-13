@@ -19,8 +19,6 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -41,7 +39,6 @@ import java.util.List;
  * @cdk.keyword 3D isomorphism
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryTest")
 public class PharmacophoreQuery extends QueryAtomContainer {
 
     private List<Object> exclusionVolumes;
@@ -57,7 +54,6 @@ public class PharmacophoreQuery extends QueryAtomContainer {
      *
      * @return string representation of this query
      */
-    @TestMethod("testToString")
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.layout;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,7 +48,6 @@ import java.util.List;
  * @cdk.githash
  * @see AtomPlacer
  */
-@TestClass("org.openscience.cdk.layout.HydrogenPlacerTest")
 public final class HydrogenPlacer {
 
     /** Class logger. */
@@ -62,7 +59,6 @@ public final class HydrogenPlacer {
      * @param container  atom container
      * @param bondLength bond length to user
      */
-    @TestMethod("testBug933572,testH2")
     public void placeHydrogens2D(final IAtomContainer container, final double bondLength) {
         logger.debug("placing hydrogens on all atoms");
         for (IAtom atom : container.atoms()) {
@@ -85,7 +81,6 @@ public final class HydrogenPlacer {
      * @see #placeHydrogens2D(org.openscience.cdk.interfaces.IAtomContainer,
      *      double)
      */
-    @TestMethod("testPlaceHydrogens2D")
     public void placeHydrogens2D(IAtomContainer container, IAtom atom) {
         double bondLength = GeometryUtil.getBondLengthAverage(container);
         placeHydrogens2D(container, atom, bondLength);
@@ -102,7 +97,6 @@ public final class HydrogenPlacer {
      *                                  has connected atoms which have not been
      *                                  placed.
      */
-    @TestMethod("testNoConnections,testNullContainer,unplacedNonHydrogen")
     public void placeHydrogens2D(IAtomContainer container, IAtom atom, double bondLength) {
 
         if (container == null) throw new IllegalArgumentException("cannot place hydrogens, no container provided");

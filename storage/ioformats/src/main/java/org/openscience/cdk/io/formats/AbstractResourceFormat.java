@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * An abstract class providing {@link #hashCode()} and {@link #equals} for
  * {@link org.openscience.cdk.io.formats.IResourceFormat}s. As {@link
@@ -38,13 +36,11 @@ import org.openscience.cdk.annotations.TestMethod;
  */
 public abstract class AbstractResourceFormat implements IResourceFormat {
 
-    @TestMethod("testHashCode")
     @Override
     public int hashCode() {
         return getClass().hashCode();
     }
 
-    @TestMethod("testEquals,testEquals_null")
     @Override
     public boolean equals(Object that) {
         return that != null && this.getClass().equals(that.getClass());
