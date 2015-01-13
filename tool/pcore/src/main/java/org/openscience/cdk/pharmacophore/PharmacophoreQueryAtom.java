@@ -19,8 +19,6 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
@@ -40,7 +38,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @see org.openscience.cdk.isomorphism.matchers.QueryAtomContainer
  * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
  */
-@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryAtomTest")
 public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
 
     private String smarts;
@@ -61,7 +58,6 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      *
      * @return The SMARTS pattern
      */
-    @TestMethod("testGetSmarts")
     public String getSmarts() {
         return smarts;
     }
@@ -77,7 +73,6 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      * @param atom A target pharmacophore group
      * @return true if the current query group has the same symbol as the target group
      */
-    @TestMethod("testMatches")
     @Override
     public boolean matches(IAtom atom) {
         PharmacophoreAtom patom = (PharmacophoreAtom) atom;
@@ -89,7 +84,6 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      *
      * @return String representation of this pharmacophore group
      */
-    @TestMethod("testToString")
     @Override
     public String toString() {
         StringBuffer s = new StringBuffer();

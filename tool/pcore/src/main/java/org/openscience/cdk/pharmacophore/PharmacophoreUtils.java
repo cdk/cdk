@@ -26,8 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -49,7 +47,6 @@ import nu.xom.Serializer;
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  */
-@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreUtilityTest")
 public class PharmacophoreUtils {
 
     /**
@@ -88,7 +85,6 @@ public class PharmacophoreUtils {
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQuery
      * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
      */
-    @TestMethod("testReadPcoreDef, testInvalidPcoreXML")
     public static List<PharmacophoreQuery> readPharmacophoreDefinitions(String filename) throws CDKException,
             IOException {
         Builder parser = new Builder();
@@ -137,7 +133,6 @@ public class PharmacophoreUtils {
      * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQuery
      */
-    @TestMethod("testReadPcoreDef, testReadPcoreAngleDef, testInvalidPcoreXML")
     public static List<PharmacophoreQuery> readPharmacophoreDefinitions(InputStream ins) throws IOException,
             CDKException {
         Builder parser = new Builder();
@@ -157,7 +152,6 @@ public class PharmacophoreUtils {
      * @param out   The OutputStream to write to
      * @throws IOException if there is a problem writing the XML document
      */
-    @TestMethod("testPCoreWrite")
     public static void writePharmacophoreDefinition(PharmacophoreQuery query, OutputStream out) throws IOException {
         writePharmacophoreDefinition(new PharmacophoreQuery[]{query}, out);
     }
@@ -169,7 +163,6 @@ public class PharmacophoreUtils {
      * @param out     The OutputStream to write to
      * @throws IOException if there is a problem writing the XML document
      */
-    @TestMethod("testPCoreWrite")
     public static void writePharmacophoreDefinition(List<PharmacophoreQuery> queries, OutputStream out)
             throws IOException {
         writePharmacophoreDefinition(queries.toArray(new PharmacophoreQuery[]{}), out);
@@ -182,7 +175,6 @@ public class PharmacophoreUtils {
      * @param out     The OutputStream to write to
      * @throws IOException if there is a problem writing the XML document
      */
-    @TestMethod("testPCoreWrite")
     public static void writePharmacophoreDefinition(PharmacophoreQuery[] queries, OutputStream out) throws IOException {
         Element root = new Element("pharmacophoreContainer");
         root.addAttribute(new Attribute("version", "1.0"));
