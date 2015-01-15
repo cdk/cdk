@@ -24,14 +24,12 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.BitSet;
 
-import org.openscience.cdk.annotations.TestClass;
 
 /**
  * @author jonalv
  * @cdk.module     standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.BitSetFingerprintTest")
 public class BitSetFingerprint implements IBitFingerprint {
 
     /**

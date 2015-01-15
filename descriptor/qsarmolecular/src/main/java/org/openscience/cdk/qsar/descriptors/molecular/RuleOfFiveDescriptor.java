@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -62,7 +60,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.keyword rule-of-five
  * @cdk.keyword descriptor
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.RuleOfFiveDescriptorTest")
 public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private boolean               checkAromaticity = false;
@@ -89,7 +86,6 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -108,7 +104,6 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
      *@throws  CDKException  if more than 1 parameter or a non-Boolean parameter is specified
          *@see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
@@ -127,7 +122,6 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
      *@return    The parameters value
          *@see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -136,7 +130,6 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -149,7 +142,6 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
      *@param  mol   AtomContainer for which this descriptor is to be calculated
      *@return    The number of failures of the Lipinski rule
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer mol) {
 
@@ -219,7 +211,6 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
@@ -230,7 +221,6 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -244,7 +234,6 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
      *@param  name  The name of the parameter. In this case it is 'checkAromaticity'.
      *@return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return true;

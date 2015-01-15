@@ -24,8 +24,6 @@ package org.openscience.cdk.group;
 
 import java.util.Set;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Refiner for atom containers, which refines partitions of the bonds to
@@ -35,7 +33,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module group
  *
  */
-@TestClass("BondEquitablePartitionRefinerTest")
 public class BondEquitablePartitionRefiner extends AbstractEquitablePartitionRefiner implements
         IEquitablePartitionRefiner {
 
@@ -49,7 +46,6 @@ public class BondEquitablePartitionRefiner extends AbstractEquitablePartitionRef
      *
      * @param discreteRefiner the connections between vertices
      */
-    @TestMethod("constructorTest")
     public BondEquitablePartitionRefiner(BondDiscretePartitionRefiner discreteRefiner) {
         this.discreteRefiner = discreteRefiner;
     }
@@ -58,7 +54,6 @@ public class BondEquitablePartitionRefiner extends AbstractEquitablePartitionRef
      * @inheritDoc
      */
     @Override
-    @TestMethod("neighboursInBlockTest")
     public int neighboursInBlock(Set<Integer> block, int bondIndex) {
         int neighbours = 0;
         for (int connected : discreteRefiner.getConnectedIndices(bondIndex)) {
@@ -73,7 +68,6 @@ public class BondEquitablePartitionRefiner extends AbstractEquitablePartitionRef
      * @inheritDoc
      */
     @Override
-    @TestMethod("getVertexCountTest")
     public int getVertexCount() {
         return discreteRefiner.getVertexCount();
     }

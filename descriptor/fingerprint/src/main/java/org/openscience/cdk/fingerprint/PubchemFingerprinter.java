@@ -23,8 +23,6 @@
 package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -86,7 +84,6 @@ import java.util.Map;
  * @cdk.githash
  * @cdk.threadnonsafe
  */
-@TestClass("org.openscience.cdk.fingerprint.PubchemFingerprinterTest")
 public class PubchemFingerprinter implements IFingerprinter {
 
     /**
@@ -116,7 +113,6 @@ public class PubchemFingerprinter implements IFingerprinter {
      * searching or atom typing
      * @see #getFingerprintAsBytes()
      */
-    @TestMethod("testFingerprint")
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
         generateFp(atomContainer);
@@ -128,7 +124,6 @@ public class PubchemFingerprinter implements IFingerprinter {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetRawFingerprint")
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
@@ -139,7 +134,6 @@ public class PubchemFingerprinter implements IFingerprinter {
      *
      * @return The bit length of the fingerprint
      */
-    @TestMethod("testGetSize")
     @Override
     public int getSize() {
         return FP_SIZE;
@@ -336,7 +330,6 @@ public class PubchemFingerprinter implements IFingerprinter {
      * @return The fingerprint as a byte array
      * @see #getBitFingerprint(org.openscience.cdk.interfaces.IAtomContainer)
      */
-    @TestMethod("testGetFingerprintAsBytes")
     public byte[] getFingerprintAsBytes() {
         return m_bits;
     }
@@ -347,7 +340,6 @@ public class PubchemFingerprinter implements IFingerprinter {
      * @param enc The Base64 encoded fingerprint
      * @return A BitSet corresponding to the input fingerprint
      */
-    @TestMethod("testDecode,testDecode_invalid")
     public static BitSet decode(String enc) {
         byte[] fp = base64Decode(enc);
         if (fp.length < 4) {
@@ -2328,7 +2320,6 @@ public class PubchemFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetCountFingerprint")
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         throw new UnsupportedOperationException();
     }

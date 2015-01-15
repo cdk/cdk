@@ -28,8 +28,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -45,14 +43,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.githash
  *
  */
-@TestClass("org.openscience.cdk.fingerprint.SimpleAtomCanonicalizerTest")
 public class SimpleAtomCanonicalizer {
 
     /**
      * @param container the container
      * @return canonicalized atoms
      */
-    @TestMethod("testCanonicalizeAtoms")
     public Collection<IAtom> canonicalizeAtoms(IAtomContainer container) {
 
         List<IAtom> canonicalizedVertexList = new ArrayList<IAtom>();

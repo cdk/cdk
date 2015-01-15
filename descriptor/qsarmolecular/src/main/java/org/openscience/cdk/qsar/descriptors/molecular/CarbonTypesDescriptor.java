@@ -20,8 +20,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -73,7 +71,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.keyword topological bond order ctypes
  * @cdk.keyword descriptor
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.CarbonTypesDescriptorTest")
 public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private final static String[] NAMES = {"C1SP1", "C2SP1", "C1SP2", "C2SP2", "C3SP2", "C1SP3", "C2SP3", "C3SP3",
@@ -81,7 +78,6 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
 
     public CarbonTypesDescriptor() {}
 
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -97,7 +93,6 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      *          Description of the Exception
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
@@ -109,14 +104,12 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      * @return The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // no parameters to return
         return (null);
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -127,7 +120,6 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      *
      * @return The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         // no param names to return
@@ -140,7 +132,6 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      * @param name Description of the Parameter
      * @return The parameterType value
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return (null);
@@ -152,7 +143,6 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      * @param container Parameter is the atom container.
      * @return An ArrayList containing 9 elements in the order described above
      */
-    @TestMethod("testCalculate_IAtomContainer,testButane,testComplex1,testComplex2")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         int c1sp1 = 0;
@@ -230,7 +220,6 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResultType(9);

@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -39,7 +37,6 @@ import java.util.BitSet;
  * @author John May
  * @cdk.module hash
  */
-@TestClass("org.openscience.cdk.hash.AtomSuppressionTest")
 abstract class AtomSuppression {
 
     /**
@@ -105,7 +102,6 @@ abstract class AtomSuppression {
      *
      * @return a suppression which wont' suppress anything.
      */
-    @TestMethod("unsuppressed")
     static AtomSuppression unsuppressed() {
         return unsuppressed;
     }
@@ -115,7 +111,6 @@ abstract class AtomSuppression {
      *
      * @return a suppression which will mark 'all' explicit hydrogens
      */
-    @TestMethod("anyHydrogens")
     static AtomSuppression anyHydrogens() {
         return anyHydrogens;
     }
@@ -125,7 +120,6 @@ abstract class AtomSuppression {
      *
      * @return a suppression which will mark 'all' pseudo atoms
      */
-    @TestMethod("anyPseudos")
     static AtomSuppression anyPseudos() {
         return anyPseudos;
     }

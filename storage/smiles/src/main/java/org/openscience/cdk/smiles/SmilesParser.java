@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -106,7 +104,6 @@ import java.util.StringTokenizer;
  * @cdk.created 2002-04-29
  * @cdk.keyword SMILES, parser
  */
-@TestClass("org.openscience.cdk.smiles.SmilesParserTest")
 public final class SmilesParser {
 
     /**
@@ -147,7 +144,6 @@ public final class SmilesParser {
      * @throws InvalidSmilesException if the string cannot be parsed
      * @see #parseSmiles(String)
      */
-    @TestMethod("testReaction,testReactionWithAgents")
     public IReaction parseReactionSmiles(String smiles) throws InvalidSmilesException {
 
         if (!smiles.contains(">"))
@@ -202,7 +198,6 @@ public final class SmilesParser {
      * @return A structure representing the provided SMILES
      * @throws InvalidSmilesException thrown when the SMILES string is invalid
      */
-    @TestMethod("testAromaticSmiles,testSFBug1296113")
     public IAtomContainer parseSmiles(String smiles) throws InvalidSmilesException {
         try {
             // create the Beam object from the SMILES

@@ -23,9 +23,6 @@
  */
 package org.openscience.cdk.exception;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * Exception that is thrown when an Atom is requested or required that
  * does not exist in the relevant environment.
@@ -33,7 +30,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.exception.NoSuchAtomExceptionTest")
 public class NoSuchAtomException extends CDKException {
 
     private static final long serialVersionUID = -6367051798808824272L;
@@ -43,7 +39,6 @@ public class NoSuchAtomException extends CDKException {
      *
      * @param message for the constructed exception
      */
-    @TestMethod("testNoSuchAtomException_String")
     public NoSuchAtomException(String message) {
         super(message);
     }

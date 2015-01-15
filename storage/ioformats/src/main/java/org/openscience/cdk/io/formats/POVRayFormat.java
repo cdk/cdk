@@ -18,9 +18,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * See <a href="http://www.povray.org/">here</a>.
  *
@@ -30,14 +27,12 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.POVRayFormatTest")
 public class POVRayFormat extends AbstractResourceFormat implements IResourceFormat {
 
     private static IResourceFormat myself = null;
 
     public POVRayFormat() {}
 
-    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
         if (myself == null) myself = new POVRayFormat();
         return myself;
@@ -45,35 +40,30 @@ public class POVRayFormat extends AbstractResourceFormat implements IResourceFor
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "POV Ray";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"pov"};
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
         return false;
     }

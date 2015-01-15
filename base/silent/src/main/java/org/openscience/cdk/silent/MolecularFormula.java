@@ -24,8 +24,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -46,7 +44,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  */
-@TestClass("org.openscience.cdk.silent.MolecularFormulaTest")
 public class MolecularFormula implements IMolecularFormula {
 
     /**
@@ -83,7 +80,6 @@ public class MolecularFormula implements IMolecularFormula {
      * @param  formula  The molecularFormula to be added to this chemObject
      * @return          The IMolecularFormula
      */
-    @TestMethod("testAdd_IMolecularFormula")
     @Override
     public IMolecularFormula add(IMolecularFormula formula) {
         for (IIsotope newIsotope : formula.isotopes()) {
@@ -103,7 +99,6 @@ public class MolecularFormula implements IMolecularFormula {
      * @param  isotope  The isotope to be added to this MolecularFormula
      * @see             #addIsotope(IIsotope, int)
      */
-    @TestMethod("addIsotope_IIsotope")
     @Override
     public IMolecularFormula addIsotope(IIsotope isotope) {
         return this.addIsotope(isotope, 1);
@@ -116,7 +111,6 @@ public class MolecularFormula implements IMolecularFormula {
      * @param  count    The number of occurrences to add
      * @see             #addIsotope(IIsotope)
      */
-    @TestMethod("testAddIsotope_IIsotope_int")
     @Override
     public IMolecularFormula addIsotope(IIsotope isotope, int count) {
         boolean flag = false;
@@ -142,7 +136,6 @@ public class MolecularFormula implements IMolecularFormula {
      * @param  isotope  The IIsotope this MolecularFormula is searched for
      * @return          True, if the MolecularFormula contains the given isotope object
      */
-    @TestMethod("testContains_IIsotope")
     @Override
     public boolean contains(IIsotope isotope) {
         for (IIsotope thisIsotope : isotopes()) {
@@ -161,7 +154,6 @@ public class MolecularFormula implements IMolecularFormula {
      *
      * @see    #setCharge
      */
-    @TestMethod("testGetCharge")
     @Override
     public Integer getCharge() {
         return charge;
@@ -175,7 +167,6 @@ public class MolecularFormula implements IMolecularFormula {
      * @return                   The occurrence of this isotope in this IMolecularFormula
      * @see                      #getIsotopeCount()
      */
-    @TestMethod("testGetIsotopeCount_IIsotope")
     @Override
     public int getIsotopeCount(IIsotope isotope) {
         return !contains(isotope) ? 0 : isotopes.get(getIsotope(isotope));
@@ -188,7 +179,6 @@ public class MolecularFormula implements IMolecularFormula {
      * @return        The the number of different isotopes in this IMolecularFormula
      * @see           #getIsotopeCount(IIsotope)
      */
-    @TestMethod("testGetIsotopeCount")
     @Override
     public int getIsotopeCount() {
         return isotopes.size();
@@ -215,7 +205,6 @@ public class MolecularFormula implements IMolecularFormula {
      *
      * @return    An Iterator with the isotopes in this IMolecularFormula
      */
-    @TestMethod("testIsotopes")
     @Override
     public Iterable<IIsotope> isotopes() {
         return isotopes.keySet();
@@ -228,7 +217,6 @@ public class MolecularFormula implements IMolecularFormula {
      *
      * @see    #getCharge
      */
-    @TestMethod("testSetCharge_Integer")
     @Override
     public void setCharge(Integer charge) {
         this.charge = charge;
@@ -237,7 +225,6 @@ public class MolecularFormula implements IMolecularFormula {
     /**
      * Removes all isotopes of this molecular formula.
      */
-    @TestMethod("testRemoveAllIsotopes")
     @Override
     public void removeAllIsotopes() {
         isotopes.clear();
@@ -248,7 +235,6 @@ public class MolecularFormula implements IMolecularFormula {
      *
      * @param isotope  The IIsotope to be removed
      */
-    @TestMethod("testRemoveIsotope_IIsotope")
     @Override
     public void removeIsotope(IIsotope isotope) {
         isotopes.remove(getIsotope(isotope));
@@ -260,7 +246,6 @@ public class MolecularFormula implements IMolecularFormula {
      *
      * @return    The cloned object
      */
-    @TestMethod("testClone")
     @Override
     public Object clone() throws CloneNotSupportedException {
 
@@ -306,7 +291,6 @@ public class MolecularFormula implements IMolecularFormula {
      *@see                 #getProperty
      *@see                 #removeProperty
      */
-    @TestMethod("testSetProperty_Object_Object")
     @Override
     public void setProperty(Object description, Object property) {
         lazyProperties().put(description, property);
@@ -321,7 +305,6 @@ public class MolecularFormula implements IMolecularFormula {
      *@see                 #setProperty
      *@see                 #getProperty
      */
-    @TestMethod("testRemoveProperty_Object")
     @Override
     public void removeProperty(Object description) {
         if (properties == null) {
@@ -370,7 +353,6 @@ public class MolecularFormula implements IMolecularFormula {
      *@return    The object's properties as an Hashtable
      *@see       #setProperties
      */
-    @TestMethod("testGetProperties")
     @Override
     public Map<Object, Object> getProperties() {
         return lazyProperties();
@@ -382,7 +364,6 @@ public class MolecularFormula implements IMolecularFormula {
      *@param  properties  a Hashtable specifying the property values
      *@see                #getProperties
      */
-    @TestMethod("testSetProperties_Hashtable")
     @Override
     public void setProperties(Map<Object, Object> properties) {
 
@@ -401,7 +382,6 @@ public class MolecularFormula implements IMolecularFormula {
      * @param isotopeTwo   The second Isotope to compare
      * @return             True, if both isotope are the same
      */
-    @TestMethod("testIsTheSame")
     protected boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
 
         Double natAbund1 = isotopeOne.getNaturalAbundance();

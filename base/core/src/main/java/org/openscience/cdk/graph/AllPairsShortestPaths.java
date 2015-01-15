@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -77,7 +75,6 @@ import java.util.Map;
  * @cdk.githash
  * @see ShortestPaths
  */
-@TestClass("org.openscience.cdk.graph.AllPairsShortestPathsTest")
 public final class AllPairsShortestPaths {
 
     private final IAtomContainer  container;
@@ -88,7 +85,6 @@ public final class AllPairsShortestPaths {
      *
      * @param container the molecule of which to find the shortest paths
      */
-    @TestMethod("testConstruction_Null,testConstruction_Empty")
     public AllPairsShortestPaths(IAtomContainer container) {
 
         // toAdjList performs null check
@@ -123,7 +119,6 @@ public final class AllPairsShortestPaths {
      * @return The shortest paths from the given state vertex
      * @see ShortestPaths
      */
-    @TestMethod("testFrom_Int_Benzene")
     public ShortestPaths from(int start) {
         return (start < 0 || start >= shortestPaths.length) ? EMPTY_SHORTEST_PATHS : shortestPaths[start];
     }
@@ -151,7 +146,6 @@ public final class AllPairsShortestPaths {
      * @return The shortest paths from the given state vertex
      * @see ShortestPaths
      */
-    @TestMethod("testFrom_Atom_Benzene")
     public ShortestPaths from(IAtom start) {
         // currently container.getAtomNumber() return -1 when null
         return from(container.getAtomNumber(start));

@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.Arrays;
 import java.util.BitSet;
@@ -46,7 +44,6 @@ import java.util.BitSet;
  * @see <a href="http://en.wikipedia.org/wiki/Matching_(graph_theory)">Matching
  * (graph theory), Wikipedia</a>
  */
-@TestClass("org.openscience.cdk.graph.MatchingTest")
 public final class Matching {
 
     /** Indicate an unmatched vertex. */
@@ -72,7 +69,6 @@ public final class Matching {
      * @param u a vertex
      * @param v another vertex
      */
-    @TestMethod("match")
     public void match(final int u, final int v) {
         // set the new match, don't need to update existing - we only provide
         // access to bidirectional mappings
@@ -87,7 +83,6 @@ public final class Matching {
      * @return matched vertex
      * @throws IllegalArgumentException the vertex is currently unmatched
      */
-    @TestMethod("other")
     public int other(final int v) {
         if (unmatched(v)) throw new IllegalArgumentException(v + " is not matched");
         return match[v];
@@ -98,7 +93,6 @@ public final class Matching {
      *
      * @param v vertex
      */
-    @TestMethod("unmatch")
     public void unmatch(final int v) {
         match[v] = Nil;
     }
@@ -109,7 +103,6 @@ public final class Matching {
      * @param v vertex
      * @return the vertex is matched
      */
-    @TestMethod("nop")
     public boolean matched(final int v) {
         return !unmatched(v);
     }
@@ -120,7 +113,6 @@ public final class Matching {
      * @param v a vertex
      * @return the vertex has no matching
      */
-    @TestMethod("nop")
     public boolean unmatched(final int v) {
         return match[v] == Nil || match[match[v]] != v;
     }
@@ -135,7 +127,6 @@ public final class Matching {
      * @throws IllegalArgumentException the graph was a different size to the
      *                                  matching capacity
      */
-    @TestMethod("fulvelene2")
     public boolean perfect(int[][] graph, BitSet subset) {
 
         if (graph.length != match.length || subset.cardinality() > graph.length)
@@ -163,7 +154,6 @@ public final class Matching {
      * @param subset subset of vertices in the graph
      * @return the matching was perfect
      */
-    @TestMethod("perfectArbitaryMatching,imperfectArbitaryMatching")
     boolean arbitaryMatching(final int[][] graph, final BitSet subset) {
 
         final BitSet unmatched = new BitSet();
@@ -231,13 +221,11 @@ public final class Matching {
      * @param capacity maximum number of vertices
      * @return empty matching
      */
-    @TestMethod("nop")
     public static Matching withCapacity(final int capacity) {
         return new Matching(capacity);
     }
 
     /** @inheritDoc */
-    @TestMethod("string")
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(4 * match.length);

@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
@@ -29,7 +27,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.module diff
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.diff.tree.BondOrderDifferenceTest")
 public class BondOrderDifference implements IDifference {
 
     private String      name;
@@ -50,7 +47,6 @@ public class BondOrderDifference implements IDifference {
      * @param second the second object to compare
      * @return       an {@link IDifference} reflecting the differences between the first and second object
      */
-    @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, IBond.Order first, IBond.Order second) {
         if (first == second) {
             return null;
@@ -63,7 +59,6 @@ public class BondOrderDifference implements IDifference {
      *
      * @return a {@link String}
      */
-    @TestMethod("testToString")
     @Override
     public String toString() {
         return name + ":" + (first == null ? "NA" : first) + "/" + (second == null ? "NA" : second);

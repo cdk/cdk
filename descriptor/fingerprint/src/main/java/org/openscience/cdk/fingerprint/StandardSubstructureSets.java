@@ -1,7 +1,5 @@
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -17,7 +15,6 @@ import java.util.List;
  * @cdk.module fingerprint
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.StandardSubstructureSetsTest")
 public class StandardSubstructureSets {
 
     private static String[] smarts = null;
@@ -28,7 +25,6 @@ public class StandardSubstructureSets {
      * @return A set of the functional groups.
      * @throws Exception if there is an error parsing SMILES for the functional groups
      */
-    @TestMethod("testGetFunctionalGroupSubstructureSet")
     public static String[] getFunctionalGroupSMARTS() throws Exception {
         if (smarts != null) return smarts;
 

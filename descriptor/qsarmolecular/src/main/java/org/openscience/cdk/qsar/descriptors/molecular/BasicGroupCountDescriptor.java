@@ -21,8 +21,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -48,7 +46,6 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:acidicGroupCount
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.BasicGroupCountDescriptorTest")
 public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private final static String[] SMARTS_STRINGS = {"[$([NH2]-[CX4])]", "[$([NH](-[CX4])-[CX4])]",
@@ -60,7 +57,6 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     /**
      * Creates a new {@link BasicGroupCountDescriptor}.
      */
-    @TestMethod("testConstructor")
     public BasicGroupCountDescriptor() {}
 
     @Override
@@ -71,7 +67,6 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -80,26 +75,22 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /** {@inheritDoc} */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
     /** {@inheritDoc} */
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
 
@@ -120,14 +111,12 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResultType();
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -135,7 +124,6 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

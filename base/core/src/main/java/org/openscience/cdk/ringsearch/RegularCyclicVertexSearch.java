@@ -22,9 +22,6 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +33,6 @@ import java.util.List;
  * @author John May
  * @cdk.module core
  */
-@TestClass("org.openscience.cdk.ringsearch.RegularCyclicVertexSearchTest")
 class RegularCyclicVertexSearch implements CyclicVertexSearch {
 
     /* graph representation */
@@ -65,7 +61,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
      *
      * @param graph adjacency list representation of a graph
      */
-    @TestMethod("testEmpty")
     RegularCyclicVertexSearch(int[][] graph) {
 
         this.g = graph;
@@ -235,7 +230,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
      *
      * @return vertex colors
      */
-    @TestMethod("vertexColor")
     @Override
     public int[] vertexColor() {
         int[] result = colors;
@@ -276,7 +270,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     /**
      * @inheritDoc
      */
-    @TestMethod("testCyclic_Int")
     @Override
     public boolean cyclic(int v) {
         return isBitSet(cyclic, v);
@@ -285,7 +278,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     /**
      * @inheritDoc
      */
-    @TestMethod("testCyclic_IntInt")
     @Override
     public boolean cyclic(int u, int v) {
 
@@ -316,7 +308,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     /**
      * @inheritDoc
      */
-    @TestMethod("testCyclic")
     @Override
     public int[] cyclic() {
         return toArray(cyclic);
@@ -325,9 +316,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     /**
      * @inheritDoc
      */
-    @TestMethod("testIsolated,testIsolated_NonCyclic,testIsolated_Empty,"
-            + "testIsolated_Spiro,testIsolated_SpiroMedium," + "testIsolated_Biphenyl,testIsolated_BenzylBenzene,"
-            + "testIsolatedFragments")
     @Override
     public int[][] isolated() {
         List<int[]> isolated = new ArrayList<int[]>(cycles.size());
@@ -340,8 +328,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     /**
      * @inheritDoc
      */
-    @TestMethod("testFused,testFused_BiocycloEdgeLinked," + "testFused_BiocycloVertexLinked,testFused_Orthofused,"
-            + "testFused_Biorthofused,testFused_Cylclophane," + "testFused_Fullerene")
     @Override
     public int[][] fused() {
         List<int[]> fused = new ArrayList<int[]>(cycles.size());
@@ -358,7 +344,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
      * @param set value to convert
      * @return array of the set bits in the long value
      */
-    @TestMethod("testToArray_Empty,testToArray_Singleton")
     static int[] toArray(long set) {
 
         int[] vertices = new int[Long.bitCount(set)];
@@ -379,7 +364,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
      * @param bit   bit to test
      * @return whether the specified bit is set
      */
-    @TestMethod("testIsBitSet,testIsBitSet_Empty,testIsBitSet_Universe,testIsBitSet_Singleton")
     static boolean isBitSet(long value, int bit) {
         return (value & 1L << bit) != 0;
     }
@@ -391,7 +375,6 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
      * @param bit   the bit to set
      * @return modified value
      */
-    @TestMethod("testSetBit,testSetBit_Universe")
     static long setBit(long value, int bit) {
         return value | 1L << bit;
     }

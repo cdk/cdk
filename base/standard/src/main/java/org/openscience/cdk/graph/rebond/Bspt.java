@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.graph.rebond;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.Enumeration;
 
@@ -75,7 +73,6 @@ import java.util.Enumeration;
  * @cdk.keyword Binary Space Partitioning Tree
  * @cdk.keyword join-the-dots
  */
-@TestClass("org.openscience.cdk.graph.rebond.BsptTest")
 public final class Bspt {
 
     private final static int leafCount  = 4;
@@ -106,7 +103,6 @@ public final class Bspt {
         }
     }
 
-    @TestMethod("testToString")
     @Override
     public String toString() {
         return eleRoot.toString();

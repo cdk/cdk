@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,7 +45,6 @@ import java.util.Arrays;
  * @see        org.openscience.cdk.graph.invariant.MorganNumbersTools
  * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
-@TestClass("org.openscience.cdk.isomorphism.IsomorphismTesterTest")
 public class IsomorphismTester implements java.io.Serializable {
 
     private static final long serialVersionUID = 2499779110996693974L;
@@ -78,7 +75,6 @@ public class IsomorphismTester implements java.io.Serializable {
      * @param  mol2                     A second molecule to check against the first
      * @return                          True, if the two molecules are isomorphic
      */
-    @TestMethod("testIsIsomorphic_IMolecule_IMolecule")
     public boolean isIsomorphic(IAtomContainer mol1, IAtomContainer mol2) {
         setBaseTable(mol1);
         return isIsomorphic(mol2);
@@ -91,7 +87,6 @@ public class IsomorphismTester implements java.io.Serializable {
      * @param  mol2                     A molecule to check
      * @return                          True, if the two molecules are isomorphic
      */
-    @TestMethod("testIsIsomorphic_IMolecule")
     public boolean isIsomorphic(IAtomContainer mol2) {
         boolean found;
         IAtom atom1 = null;

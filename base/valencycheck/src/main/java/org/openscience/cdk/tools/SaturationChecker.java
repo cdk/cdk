@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
@@ -60,7 +59,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.module     valencycheck
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.SaturationCheckerTest")
 public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool {
 
     AtomTypeFactory             structgenATF;

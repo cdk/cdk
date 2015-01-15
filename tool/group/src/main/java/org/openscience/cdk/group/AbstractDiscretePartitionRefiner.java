@@ -24,8 +24,6 @@ package org.openscience.cdk.group;
 
 import java.util.Set;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Refines vertex partitions until they are discrete, and therefore equivalent
@@ -35,7 +33,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @author maclean
  * @cdk.module group
  */
-@TestClass("org.openscience.cdk.group.AbstractDiscretePartitionRefinerTest")
 public abstract class AbstractDiscretePartitionRefiner {
 
     /**
@@ -77,7 +74,6 @@ public abstract class AbstractDiscretePartitionRefiner {
     /**
      * A refiner - it is necessary to call {@link #setup} before use.
      */
-    @TestMethod("emptyConstructor")
     public AbstractDiscretePartitionRefiner() {
         this.bestExist = false;
         this.best = null;
@@ -109,7 +105,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      * @param group a group (possibly empty) of automorphisms
      * @param refiner the equitable refiner
      */
-    @TestMethod("setupTest")
     public void setup(PermutationGroup group, IEquitablePartitionRefiner refiner) {
         this.bestExist = false;
         this.best = null;
@@ -122,7 +117,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @return true if the first is the identity permutation
      */
-    @TestMethod("firstIsIdentityTest")
     public boolean firstIsIdentity() {
         return this.first.isIdentity();
     }
@@ -132,7 +126,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @return a partition of the elements of group
      */
-    @TestMethod("getAutomorphismPartitionTest")
     public Partition getAutomorphismPartition() {
         final int n = group.getSize();
         final DisjointSetForest forest = new DisjointSetForest(n);
@@ -187,7 +180,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      * @param permutation a permutation of the adjacency matrix
      * @return a string containing the permuted values of half the matrix
      */
-    @TestMethod("getHalfMatrixStringTest")
     public String getHalfMatrixString(Permutation permutation) {
         StringBuilder builder = new StringBuilder(permutation.size());
         int size = permutation.size();
@@ -204,7 +196,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @return the upper-half adjacency matrix string permuted by the best
      */
-    @TestMethod("getHalfMatrixStringTest")
     public String getBestHalfMatrixString() {
         return getHalfMatrixString(best);
     }
@@ -214,7 +205,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @return the upper-half adjacency matrix string permuted by the first
      */
-    @TestMethod("getFirstMatrixStringTest")
     public String getFirstHalfMatrixString() {
         return getHalfMatrixString(first);
     }
@@ -224,7 +214,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @return the upper-half adjacency matrix string
      */
-    @TestMethod("getHalfMatrixStringTest")
     public String getHalfMatrixString() {
         return getHalfMatrixString(new Permutation(getVertexCount()));
     }
@@ -234,7 +223,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @return the automorphism group
      */
-    @TestMethod("getGroupTest")
     public PermutationGroup getAutomorphismGroup() {
         return this.group;
     }
@@ -244,7 +232,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @return the permutation that gives the maximal half-matrix string
      */
-    @TestMethod("getBestTest")
     public Permutation getBest() {
         return this.best;
     }
@@ -254,7 +241,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @return the first permutation reached
      */
-    @TestMethod("getFirstTest")
     public Permutation getFirst() {
         return this.first;
     }
@@ -265,7 +251,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @return true if the graph is canonical
      */
-    @TestMethod("isCanonical_TrueTest,isCanonical_FalseTest")
     public boolean isCanonical() {
         return best.isIdentity();
     }
@@ -275,7 +260,6 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @param partition the initial partition of the vertices
      */
-    @TestMethod("refineTest")
     public void refine(Partition partition) {
         refine(this.group, partition);
     }

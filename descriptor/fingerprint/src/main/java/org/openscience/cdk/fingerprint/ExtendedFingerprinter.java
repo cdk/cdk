@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -48,7 +46,6 @@ import java.util.Map;
  *
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */
-@TestClass("org.openscience.cdk.fingerprint.ExtendedFingerprinterTest")
 public class ExtendedFingerprinter implements IFingerprinter {
 
     private final int     RESERVED_BITS = 25;
@@ -90,14 +87,12 @@ public class ExtendedFingerprinter implements IFingerprinter {
      *@param container The AtomContainer for which a Fingerprint is generated
      *@return a bit fingerprint for the given <code>IAtomContainer</code>.
      */
-    @TestMethod("testgetBitFingerprint_IAtomContainer")
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
         return this.getBitFingerprint(container, null, null);
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetRawFingerprint")
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
@@ -122,7 +117,6 @@ public class ExtendedFingerprinter implements IFingerprinter {
      * @exception CDKException  for example if input can not be cloned.
      * @return a BitSet representing the fingerprint
      */
-    @TestMethod("testgetBitFingerprint_IAtomContainer_IRingSet_List")
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer, IRingSet ringSet, List<IRingSet> rslist)
             throws CDKException {
         IAtomContainer container;
@@ -159,7 +153,6 @@ public class ExtendedFingerprinter implements IFingerprinter {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetSize")
     @Override
     public int getSize() {
         return fingerprinter.getSize() + RESERVED_BITS;
@@ -167,7 +160,6 @@ public class ExtendedFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetCountFingerprint")
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         throw new UnsupportedOperationException();
     }

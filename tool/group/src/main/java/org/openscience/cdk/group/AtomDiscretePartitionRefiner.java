@@ -31,8 +31,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -84,7 +82,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @author maclean
  * @cdk.module group
  */
-@TestClass("AtomGroupTests,AtomPermutationTests,AtomDiscretePartitionRefinerTest")
 public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefiner {
 
     /**
@@ -113,7 +110,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * Default constructor - does not ignore elements or bond orders
      * or bond orders.
      */
-    @TestMethod("defaultConstructorTest")
     public AtomDiscretePartitionRefiner() {
         this(false, false);
     }
@@ -124,7 +120,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param ignoreElements ignore element symbols when making automorphisms
      * @param ignoreBondOrders ignore bond order when making automorphisms
      */
-    @TestMethod("advancedConstructorTest")
     public AtomDiscretePartitionRefiner(boolean ignoreElements, boolean ignoreBondOrders) {
         this.ignoreElements = ignoreElements;
         this.ignoreBondOrders = ignoreBondOrders;
@@ -134,7 +129,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @inheritDoc
      */
     @Override
-    @TestMethod("getVertexCountTest")
     public int getVertexCount() {
         return connectionTable.length;
     }
@@ -143,7 +137,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @inheritDoc
      */
     @Override
-    @TestMethod("getConnectivityTest")
     public int getConnectivity(int i, int j) {
         int indexInRow;
         int maxRowIndex = connectionTable[i].length;
@@ -174,7 +167,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param atomIndex the index of the incident atom
      * @return an array of atom indices
      */
-    @TestMethod("getConnectedIndicesTest")
     public int[] getConnectedIndices(int atomIndex) {
         return connectionTable[atomIndex];
     }
@@ -190,7 +182,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param atomContainer the atom container to get element symbols from
      * @return a partition of the atom indices based on the element symbols
      */
-    @TestMethod("getElementPartitionTest")
     public Partition getElementPartition(IAtomContainer atomContainer) {
         if (ignoreElements) {
             int n = atomContainer.getAtomCount();
@@ -230,7 +221,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     /**
      * Reset the connection table.
      */
-    @TestMethod("resetTest")
     public void reset() {
         connectionTable = null;
     }
@@ -245,7 +235,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      *
      * @param atomContainer the atomContainer to refine
      */
-    @TestMethod("refine_IgnoreElementsTest,refineTest")
     public void refine(IAtomContainer atomContainer) {
         refine(atomContainer, getElementPartition(atomContainer));
     }
@@ -256,7 +245,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param atomContainer the atom container to use
      * @param partition the initial partition of the atoms
      */
-    @TestMethod("refine_StartingPartitionTest")
     public void refine(IAtomContainer atomContainer, Partition partition) {
         setup(atomContainer);
         super.refine(partition);
@@ -269,7 +257,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param atomContainer the atom container to check
      * @return true if the atom container is canonical
      */
-    @TestMethod("isCanonical_TrueTest,isCanonical_FalseTest")
     public boolean isCanonical(IAtomContainer atomContainer) {
         setup(atomContainer);
         super.refine(getElementPartition(atomContainer));
@@ -285,7 +272,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param atomContainer the atom container to use
      * @return the automorphism group of the atom container
      */
-    @TestMethod("getAutomorphismGroupTest")
     public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer) {
         setup(atomContainer);
         super.refine(getElementPartition(atomContainer));
@@ -301,7 +287,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param group the group of known automorphisms
      * @return the full automorphism group
      */
-    @TestMethod("getAutomorphismGroup_StartingGroupTest")
     public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group) {
         setup(atomContainer, group);
         super.refine(getElementPartition(atomContainer));
@@ -315,7 +300,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param initialPartition an initial partition of the atoms
      * @return the automorphism group starting with this partition
      */
-    @TestMethod("getAutomorphismGroup_StartingPartitionTest")
     public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition) {
         setup(atomContainer);
         super.refine(initialPartition);
@@ -328,7 +312,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param atomContainer the molecule to calculate equivalence classes for
      * @return a partition of the atoms into equivalence classes
      */
-    @TestMethod("getAutomorphismPartitionTest")
     public Partition getAutomorphismPartition(IAtomContainer atomContainer) {
         setup(atomContainer);
         super.refine(getElementPartition(atomContainer));

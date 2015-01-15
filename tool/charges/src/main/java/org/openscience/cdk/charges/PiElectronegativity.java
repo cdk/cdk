@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.charges;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -35,7 +33,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.keyword  electronegativity
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.charges.PiElectronegativityTest")
 public class PiElectronegativity {
 
     private GasteigerMarsiliPartialCharges peoe  = null;
@@ -78,7 +75,6 @@ public class PiElectronegativity {
      *
      * @return piElectronegativity
      */
-    @TestMethod("testCalculatePiElectronegativity_IAtomContainer_IAtom")
     public double calculatePiElectronegativity(IAtomContainer ac, IAtom atom) {
 
         return calculatePiElectronegativity(ac, atom, maxI, maxRS);
@@ -94,7 +90,6 @@ public class PiElectronegativity {
      *
      * @return piElectronegativity
      */
-    @TestMethod("testCalculatePiElectronegativity_IAtomContainer_IAtom_Int_Int")
     public double calculatePiElectronegativity(IAtomContainer ac, IAtom atom, int maxIterations, int maxResonStruc) {
         maxI = maxIterations;
         maxRS = maxResonStruc;
@@ -136,7 +131,6 @@ public class PiElectronegativity {
      *
      * @param maxIterations The maximum number of iterations
      */
-    @TestMethod("testSetMaxIterations_Int")
     public void setMaxIterations(int maxIterations) {
         maxI = maxIterations;
     }
@@ -146,7 +140,6 @@ public class PiElectronegativity {
      *
      * @param maxResonStruc The maximum number of resonance structures
      */
-    @TestMethod("testSetMaxResonStruc_Int")
     public void setMaxResonStruc(int maxResonStruc) {
         maxRS = maxResonStruc;
     }
@@ -156,7 +149,6 @@ public class PiElectronegativity {
      *
      * @return The maximum number of iterations
      */
-    @TestMethod("testGetMaxIterations")
     public int getMaxIterations() {
         return maxI;
     }
@@ -166,7 +158,6 @@ public class PiElectronegativity {
      *
      * @return The maximum number of resonance structures
      */
-    @TestMethod("testGetMaxResonStruc")
     public int getMaxResonStruc() {
         return maxRS;
     }

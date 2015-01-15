@@ -27,8 +27,6 @@ import java.util.List;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IReaction;
@@ -103,7 +101,6 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @cdk.module renderextra
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.ReactionSetRendererTest")
 public class ReactionSetRenderer extends AbstractRenderer<IReactionSet> implements IRenderer<IReactionSet> {
 
     private IRenderer<IReaction> reactionRenderer;
@@ -117,7 +114,6 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet> implemen
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-    @TestMethod("testConstructor")
     public ReactionSetRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
         this(new RendererModel(), generators, fontManager);
         for (IGenerator<IAtomContainer> generator : generators) {

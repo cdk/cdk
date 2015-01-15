@@ -38,8 +38,6 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.alg.DijkstraShortestPath;
 import org._3pq.jgrapht.graph.UndirectedSubgraph;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.BiconnectivityInspector;
 
 /**
@@ -57,7 +55,6 @@ import org.openscience.cdk.graph.BiconnectivityInspector;
  *
  */
 
-@TestClass("org.openscience.cdk.ringsearch.cyclebasis.CycleBasisTest")
 public class CycleBasis {
 
     //private List cycles = new Vector();
@@ -150,7 +147,6 @@ public class CycleBasis {
         }
     }
 
-    @TestMethod("testWeightVector")
     public int[] weightVector() {
         SimpleCycleBasis basis = simpleBasis();
         List cycles = basis.cycles();
@@ -194,7 +190,6 @@ public class CycleBasis {
      * @return a <Code>Collection</code> of the basis cycles
      */
 
-    @TestMethod("testCycles")
     public Collection cycles() {
         return simpleBasis().cycles();
     }
@@ -206,7 +201,6 @@ public class CycleBasis {
      * @return a <Code>Collection</code> of the essential cycles
      */
 
-    @TestMethod("testEssentialCycles")
     public Collection essentialCycles() {
         Collection result = new HashSet();
         //minimize();
@@ -227,7 +221,6 @@ public class CycleBasis {
      * basis cycle in this basis
      */
 
-    @TestMethod("testRelevantCycles")
     public Map relevantCycles() {
         Map result = new HashMap();
         //minimize();
@@ -249,7 +242,6 @@ public class CycleBasis {
      * equivalence class.
      */
 
-    @TestMethod("testEquivalenceClasses")
     public List equivalenceClasses() {
         List result = new ArrayList();
         //minimize();

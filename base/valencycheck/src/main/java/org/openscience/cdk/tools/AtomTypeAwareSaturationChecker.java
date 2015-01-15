@@ -26,7 +26,6 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -52,7 +51,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.keyword bond order
  * @cdk.module  valencycheck
  */
-@TestClass("org.openscience.cdk.tools.ATASaturationCheckerTest")
 public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceBondOrderTool {
 
     SaturationChecker           staturationChecker;

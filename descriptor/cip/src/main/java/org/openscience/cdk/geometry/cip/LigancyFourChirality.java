@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.geometry.cip;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -43,7 +41,6 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * @cdk.module cip
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.cip.LigancyFourChiralityTest")
 class LigancyFourChirality {
 
     private IAtom                        chiralAtom;
@@ -59,7 +56,6 @@ class LigancyFourChirality {
      *
      * @see ITetrahedralChirality.Stereo
      */
-    @TestMethod("testConstructor")
     public LigancyFourChirality(IAtom chiralAtom, ILigand[] ligands, ITetrahedralChirality.Stereo stereo) {
         this.chiralAtom = chiralAtom;
         this.ligands = ligands;
@@ -73,7 +69,6 @@ class LigancyFourChirality {
      * @param container    {@link IAtomContainer} to which the chiral atom belongs.
      * @param cdkChirality {@link ITetrahedralChirality} object specifying the chirality.
      */
-    @TestMethod("testConstructor_ILigancyFourChirality")
     public LigancyFourChirality(IAtomContainer container, ITetrahedralChirality cdkChirality) {
         this.chiralAtom = cdkChirality.getChiralAtom();
         IAtom[] ligandAtoms = cdkChirality.getLigands();
@@ -95,7 +90,6 @@ class LigancyFourChirality {
      *
      * @return An array of four {@link ILigand}s.
      */
-    @TestMethod("testConstructor")
     public ILigand[] getLigands() {
         return ligands;
     }
@@ -105,7 +99,6 @@ class LigancyFourChirality {
      *
      * @return The chiral {@link IAtom}.
      */
-    @TestMethod("testConstructor")
     public IAtom getChiralAtom() {
         return chiralAtom;
     }
@@ -115,7 +108,6 @@ class LigancyFourChirality {
      *
      * @return A {@link ITetrahedralChirality.Stereo} value.
      */
-    @TestMethod("testConstructor")
     public ITetrahedralChirality.Stereo getStereo() {
         return stereo;
     }
@@ -126,7 +118,6 @@ class LigancyFourChirality {
      * @param newOrder new order of atoms
      * @return the chirality following the new atom order
      */
-    @TestMethod("testProject_TwoChanges,testProject_OneChange,testProject")
     public LigancyFourChirality project(ILigand[] newOrder) {
         ITetrahedralChirality.Stereo newStereo = this.stereo;
         // copy the current ordering, and work with that

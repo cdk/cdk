@@ -23,7 +23,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -76,7 +75,6 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
         return getSphericalMatcher(factory.getAtomType(type));
     }
 
-    @TestMethod("testFindMatchingAtomType_IAtomContainer")
     @Override
     public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];

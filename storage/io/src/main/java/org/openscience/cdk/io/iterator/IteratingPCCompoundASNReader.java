@@ -30,7 +30,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.NoSuchElementException;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -90,7 +89,6 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
         this(new InputStreamReader(in), builder);
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return PubChemSubstancesASNFormat.getInstance();
@@ -177,7 +175,6 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
         return nextMolecule;
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();
@@ -204,7 +201,6 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
         return foundBracket ? buffer.toString().trim() : null;
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) {
         if (reader instanceof BufferedReader) {
@@ -217,7 +213,6 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
         hasNext = false;
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream reader) {
         setReader(new InputStreamReader(reader));

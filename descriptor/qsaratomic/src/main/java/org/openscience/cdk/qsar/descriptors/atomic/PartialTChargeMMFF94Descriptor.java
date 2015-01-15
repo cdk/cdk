@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.MMFF94PartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -57,7 +55,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.bug     1628461
  * @see MMFF94PartialCharges
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest")
 public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
 
     private static final String[] NAMES = {"partialTCMMFF94"};
@@ -76,7 +73,6 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -87,7 +83,6 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
     /**
      * This descriptor does not have any parameter to be set.
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
@@ -100,13 +95,11 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@return    The parameters value
      *@see #setParameters
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -120,7 +113,6 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@param  ac                AtomContainer
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      */
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         int position = ac.getAtomNumber(atom);
@@ -158,7 +150,6 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *
      * @return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -171,7 +162,6 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

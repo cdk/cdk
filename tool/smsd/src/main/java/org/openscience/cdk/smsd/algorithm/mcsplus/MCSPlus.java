@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.algorithm.mcgregor.McGregor;
@@ -42,7 +41,6 @@ import org.openscience.cdk.smsd.tools.TimeManager;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public class MCSPlus {
 
     /**

@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -63,7 +61,6 @@ import java.util.Set;
  * @cdk.githash
  * @see HashGeneratorMaker
  */
-@TestClass("org.openscience.cdk.hash.PerturbedAtomHashGeneratorTest")
 final class PerturbedAtomHashGenerator extends AbstractHashGenerator implements AtomHashGenerator {
 
     /* creates stereo encoders for IAtomContainers */
@@ -115,7 +112,6 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator implements 
     /**
      * @inheritDoc
      */
-    @TestMethod("testGenerate")
     @Override
     public long[] generate(IAtomContainer container) {
         int[][] graph = toAdjList(container);
@@ -177,7 +173,6 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator implements 
      * @param perturbed n x m, matrix
      * @return the combined values of each row
      */
-    @TestMethod("testCombine")
     long[] combine(long[][] perturbed) {
 
         int n = perturbed.length;

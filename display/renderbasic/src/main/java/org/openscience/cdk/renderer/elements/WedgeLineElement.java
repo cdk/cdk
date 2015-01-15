@@ -20,8 +20,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A 'wedge' is a triangle aligned along a bond that indicates stereochemistry.
@@ -30,7 +28,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.WedgeLineElementTest")
 public class WedgeLineElement extends LineElement {
 
     /**
@@ -71,7 +68,6 @@ public class WedgeLineElement extends LineElement {
      * @param direction the direction of the thickness
      * @param color the color of the wedge
      */
-    @TestMethod("testConstructor")
     public WedgeLineElement(double x1, double y1, double x2, double y2, double width, TYPE type, Direction direction,
             Color color) {
         super(x1, y1, x2, y2, width, color);
@@ -87,7 +83,6 @@ public class WedgeLineElement extends LineElement {
      * @param direction the direction of the thickness
      * @param color the color of the wedge
      */
-    @TestMethod("testConstructor_LineElement")
     public WedgeLineElement(LineElement element, TYPE type, Direction direction, Color color) {
         this(direction == Direction.toFirst ? element.secondPointX : element.firstPointX,
                 direction == Direction.toFirst ? element.secondPointY : element.firstPointY,
@@ -100,7 +95,6 @@ public class WedgeLineElement extends LineElement {
      * {@inheritDoc}
      */
     @Override
-    @TestMethod("testAccept")
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }

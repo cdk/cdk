@@ -22,8 +22,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A group of text elements, particularly the element symbol (eg: "C")
@@ -33,7 +31,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.TextGroupElementTest")
 public class TextGroupElement extends TextElement {
 
     /**
@@ -106,7 +103,6 @@ public class TextGroupElement extends TextElement {
      * @param text the text to render
      * @param color the color of the text
      */
-    @TestMethod("testConstructor")
     public TextGroupElement(double x, double y, String text, Color color) {
         super(x, y, text, color);
         this.children = new ArrayList<Child>();
@@ -136,7 +132,6 @@ public class TextGroupElement extends TextElement {
     /**
      * {@inheritDoc}
      */
-    @TestMethod("testAccept")
     @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);

@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -44,7 +42,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  */
-@TestClass("org.openscience.cdk.silent.AdductFormulaTest")
 public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormula, Cloneable {
 
     /**
@@ -87,7 +84,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @param  formula  The molecularFormula to be added to this chemObject
      */
-    @TestMethod("testAddMolecularFormula_IMolecularFormula")
     @Override
     public void addMolecularFormula(IMolecularFormula formula) {
         components.add(formula);
@@ -98,7 +94,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @param  formulaSet  The MolecularFormulaSet
      */
-    @TestMethod("testAdd_IMolecularFormulaSet")
     @Override
     public void add(IMolecularFormulaSet formulaSet) {
 
@@ -115,7 +110,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      * @param  isotope  The IIsotope this AdductFormula is searched for
      * @return          True, if the AdductFormula contains the given isotope object
      */
-    @TestMethod("testContains_IIsotope")
     @Override
     public boolean contains(IIsotope isotope) {
         for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
@@ -135,7 +129,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @see    #setCharge
      */
-    @TestMethod("testGetCharge")
     @Override
     public Integer getCharge() {
         Integer charge = 0;
@@ -154,7 +147,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      * @return                   The occurrence of this isotope in this adduct
      * @see                      #getIsotopeCount()
      */
-    @TestMethod("testGetIsotopeCount_IIsotope")
     @Override
     public int getIsotopeCount(IIsotope isotope) {
         int count = 0;
@@ -172,7 +164,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      * @return        The the number of different isotopes in this adduct formula
      * @see           #getIsotopeCount(IIsotope)
      */
-    @TestMethod("testGetIsotopeCount")
     @Override
     public int getIsotopeCount() {
         return isotopesList().size();
@@ -183,7 +174,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @return    An Iterator with the isotopes in this adduct formula
      */
-    @TestMethod("testIsotopes")
     @Override
     public Iterable<IIsotope> isotopes() {
         return new Iterable<IIsotope>() {
@@ -224,7 +214,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @see    #getCharge
      */
-    @TestMethod("testSetCharge")
     @Override
     public void setCharge(Integer charge) {
         throw new java.lang.IllegalAccessError();
@@ -236,7 +225,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @return    An Iterable with the IMolecularFormula in this adduct formula
      */
-    @TestMethod("testMolecularFormulas")
     @Override
     public Iterable<IMolecularFormula> molecularFormulas() {
         return components;
@@ -248,7 +236,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @return    An Iterator with the IMolecularFormula in this adduct formula
      */
-    @TestMethod("testIterator")
     @Override
     public Iterator<IMolecularFormula> iterator() {
         return components.iterator();
@@ -259,7 +246,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @return     The number of MolecularFormulas in this AdductFormula
      */
-    @TestMethod("testSize")
     @Override
     public int size() {
         return components.size();
@@ -271,7 +257,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      * @param  formula  The IMolecularFormula this AdductFormula is searched for
      * @return          True, if the AdductFormula contains the given IMolecularFormula object
      */
-    @TestMethod("testContains_IMolecularFormula")
     @Override
     public boolean contains(IMolecularFormula formula) {
         return components.contains(formula);
@@ -285,7 +270,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      * @param  position The position of the IMolecularFormula to be returned.
      * @return          The IMolecularFormula at position <code>number</code> .
      */
-    @TestMethod("testGetMolecularFormulas_int")
     @Override
     public IMolecularFormula getMolecularFormula(int position) {
         return components.get(position);
@@ -294,7 +278,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     /**
      * Removes all IMolecularFormula from this chemObject.
      */
-    @TestMethod("testRemoveAllMolecularFormulas")
     @Override
     public void removeAllMolecularFormulas() {
         components.clear();
@@ -305,7 +288,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @param  formula  The IMolecularFormula to be removed from this chemObject
      */
-    @TestMethod("testRemoveMolecularFormula_IMolecularFormula")
     @Override
     public void removeMolecularFormula(IMolecularFormula formula) {
         components.remove(formula);
@@ -316,7 +298,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @param  position The position of the MolecularFormula to be removed from this chemObject
      */
-    @TestMethod("testRemoveMolecularFormula_int")
     @Override
     public void removeMolecularFormula(int position) {
         components.remove(position);
@@ -327,7 +308,6 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @return    The cloned object
      */
-    @TestMethod("testClone")
     @Override
     public Object clone() throws CloneNotSupportedException {
 

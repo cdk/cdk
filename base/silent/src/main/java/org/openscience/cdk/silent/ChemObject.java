@@ -30,7 +30,6 @@ import java.util.Map;
 
 import com.google.common.base.Objects;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -211,7 +210,6 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     /**
      * @inheritDoc
      */
-    @TestMethod("testGetProperty_Object_Class,testGetProperty_Object_ClassCast")
     @Override
     public <T> T getProperty(Object description, Class<T> c) {
         Object value = lazyProperties().get(description);

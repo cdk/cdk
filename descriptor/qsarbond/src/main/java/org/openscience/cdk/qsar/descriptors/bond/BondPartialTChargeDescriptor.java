@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -67,7 +65,6 @@ import java.util.List;
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.bond.BondPartialTChargeDescriptorTest")
 public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
 
     private GasteigerMarsiliPartialCharges peoe = null;
@@ -96,7 +93,6 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
      *
      *@return The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -107,7 +103,6 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 3)
@@ -136,7 +131,6 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
      *@return The parameters value
      * @see #setParameters
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -147,7 +141,6 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -165,7 +158,6 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
      *@param  ac                AtomContainer
      *@return return the sigma electronegativity
      */
-    @TestMethod(value = "testCalculate_IBond_IAtomContainer,testBondTElectronegativityDescriptor,testBondTElectronegativityDescriptor_Allyl_bromide")
     @Override
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
         // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
@@ -244,7 +236,6 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
     *
     * @return    The parameterNames value
     */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[3];
@@ -260,7 +251,6 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         if ("maxIterations".equals(name)) return Integer.MAX_VALUE;

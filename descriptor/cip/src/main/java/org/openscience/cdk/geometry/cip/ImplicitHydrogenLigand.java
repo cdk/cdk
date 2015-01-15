@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.geometry.cip;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -33,12 +31,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.module cip
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.cip.ImplicitHydrogenLigandTest")
 public class ImplicitHydrogenLigand extends TerminalLigand {
 
     private static final IAtom IMMUTABLE_HYDROGEN = new ImmutableHydrogen();
 
-    @TestMethod("testConstructorAndGetMethods")
     public ImplicitHydrogenLigand(IAtomContainer container, VisitedAtoms visitedAtoms, IAtom centralAtom) {
         super(container, visitedAtoms, centralAtom, IMMUTABLE_HYDROGEN);
     }

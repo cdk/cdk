@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.smsd.interfaces;
 
-import org.openscience.cdk.annotations.TestClass;
 
 /**
  * Interface for MCS search algorithm.
@@ -32,7 +31,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithmTest")
 public abstract class AbstractMCSAlgorithm {
 
     /**

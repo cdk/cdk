@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -38,7 +36,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtomTest")
 public final class TotalRingConnectionAtom extends SMARTSAtom {
 
     /** Number of rings. */
@@ -56,7 +53,6 @@ public final class TotalRingConnectionAtom extends SMARTSAtom {
 
     /** @inheritDoc */
     @Override
-    @TestMethod("matches")
     public boolean matches(IAtom atom) {
         return invariants(atom).ringConnectivity() == ringConnectivity;
     }

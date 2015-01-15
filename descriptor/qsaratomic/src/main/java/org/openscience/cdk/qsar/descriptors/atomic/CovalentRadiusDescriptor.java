@@ -20,8 +20,6 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.io.IOException;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -59,7 +57,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:covalentradius
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.CovalentRadiusDescriptorTest")
 public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private AtomTypeFactory     factory = null;
@@ -88,7 +85,6 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -99,7 +95,6 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
@@ -109,13 +104,11 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      * @return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return new String[]{"covalentRadius"};
@@ -129,7 +122,6 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      *@return                   The Covalent radius of the atom
      */
 
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         if (factory == null)
@@ -160,7 +152,6 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      *
      * @return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -172,7 +163,6 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

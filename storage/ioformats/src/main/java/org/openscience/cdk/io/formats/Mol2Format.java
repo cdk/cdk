@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -29,14 +27,12 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.githash
  * @cdk.set    io-formats
  */
-@TestClass("org.openscience.cdk.io.formats.Mol2FormatTest")
 public class Mol2Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
     private static IResourceFormat myself = null;
 
     public Mol2Format() {}
 
-    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
         if (myself == null) myself = new Mol2Format();
         return myself;
@@ -44,49 +40,42 @@ public class Mol2Format extends SimpleChemFormatMatcher implements IChemFormatMa
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Mol2 (Sybyl)";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-mol2";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"mol2"};
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
         return "org.openscience.cdk.io.Mol2Reader";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
         return "org.openscience.cdk.io.Mol2Writer";
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (line.indexOf("<TRIPOS>") >= 0) {
             return true;
@@ -96,14 +85,12 @@ public class Mol2Format extends SimpleChemFormatMatcher implements IChemFormatMa
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
         return false;
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetSupportedDataFeatures")
     public int getSupportedDataFeatures() {
         return getRequiredDataFeatures() | DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
                 | DataFeatures.HAS_GRAPH_REPRESENTATION;
@@ -111,7 +98,6 @@ public class Mol2Format extends SimpleChemFormatMatcher implements IChemFormatMa
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
         return DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }

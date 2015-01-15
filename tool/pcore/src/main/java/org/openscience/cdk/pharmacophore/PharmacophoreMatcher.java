@@ -27,8 +27,6 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -134,7 +132,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond
  */
-@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreMatcherTest")
 public class PharmacophoreMatcher {
 
     private ILoggingTool                  logger                = LoggingToolFactory
@@ -181,7 +178,6 @@ public class PharmacophoreMatcher {
      *          does not have 3D coordinates
      * @see #matches(org.openscience.cdk.interfaces.IAtomContainer, boolean)
      */
-    @TestMethod("testCNSPcore")
     public boolean matches(IAtomContainer atomContainer) throws CDKException {
         return matches(atomContainer, true);
     }
@@ -200,7 +196,6 @@ public class PharmacophoreMatcher {
      *          if the query pharmacophore was not set or the query is invalid or if the molecule
      *          does not have 3D coordinates
      */
-    @TestMethod("testMatcherQuery1")
     public boolean matches(IAtomContainer atomContainer, boolean initializeTarget) throws CDKException {
         if (!GeometryUtil.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
         if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
@@ -247,7 +242,6 @@ public class PharmacophoreMatcher {
      * @see org.openscience.cdk.pharmacophore.PharmacophoreBond
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAngleBond
      */
-    @TestMethod("testMatchedBonds")
     public List<List<IBond>> getMatchingPharmacophoreBonds() {
         if (bondMapping == null) return null;
         matchingPBonds = new ArrayList<List<IBond>>();
@@ -282,7 +276,6 @@ public class PharmacophoreMatcher {
      * @return A List of HashMaps, identifying the query constraint corresponding to a matched constraint in the target
      *         molecule.
      */
-    @TestMethod("testMatchedBonds")
     public List<HashMap<IBond, IBond>> getTargetQueryBondMappings() {
         return bondMapHash;
     }
@@ -298,7 +291,6 @@ public class PharmacophoreMatcher {
      * @return a List of a List of pharmacophore groups in the target molecule that match the query
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
      */
-    @TestMethod("testMatchedAtoms")
     public List<List<PharmacophoreAtom>> getMatchingPharmacophoreAtoms() {
         if (pharmacophoreMolecule == null || bondMapping == null) return null;
         matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
@@ -318,7 +310,6 @@ public class PharmacophoreMatcher {
      * @return a List of a List of pharmacophore groups in the target molecule that match the query
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
      */
-    @TestMethod("testMatchedAtoms")
     public List<List<PharmacophoreAtom>> getUniqueMatchingPharmacophoreAtoms() {
         getMatchingPharmacophoreAtoms();
         List<List<PharmacophoreAtom>> ret = new ArrayList<List<PharmacophoreAtom>>();
@@ -358,7 +349,6 @@ public class PharmacophoreMatcher {
      *
      * @return The query
      */
-    @TestMethod("testGetterSetter")
     public PharmacophoreQuery getPharmacophoreQuery() {
         return pharmacophoreQuery;
     }
@@ -368,7 +358,6 @@ public class PharmacophoreMatcher {
      *
      * @param query The query
      */
-    @TestMethod("testGetterSetter")
     public void setPharmacophoreQuery(PharmacophoreQuery query) {
         pharmacophoreQuery = query;
     }

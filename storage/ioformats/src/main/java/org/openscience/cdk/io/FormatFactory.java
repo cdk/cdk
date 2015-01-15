@@ -34,8 +34,6 @@ import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import com.google.common.io.CharStreams;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
 import org.openscience.cdk.io.formats.XYZFormat;
@@ -58,7 +56,6 @@ import static org.openscience.cdk.io.formats.IChemFormatMatcher.MatchResult;
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @author  Bradley A. Smith <bradley@baysmith.com>
  */
-@TestClass("org.openscience.cdk.io.FormatFactoryTest")
 public class FormatFactory {
 
     private int                      headerLength;
@@ -93,7 +90,6 @@ public class FormatFactory {
     /**
      * Registers a format for detection.
      */
-    @TestMethod("testRegisterFormat")
     public void registerFormat(IChemFormatMatcher format) {
         formats.add(format);
     }
@@ -103,7 +99,6 @@ public class FormatFactory {
      *
      * @return {@link List} of {@link IChemFormat}s.
      */
-    @TestMethod("testGetFormats")
     public List<IChemFormatMatcher> getFormats() {
         return formats;
     }
@@ -127,7 +122,6 @@ public class FormatFactory {
      *
      * @see #guessFormat(InputStream)
      */
-    @TestMethod("testGuessFormat_Reader")
     public IChemFormat guessFormat(Reader input) throws IOException {
         if (input == null) {
             throw new IllegalArgumentException("input cannot be null");
@@ -181,7 +175,6 @@ public class FormatFactory {
         return null;
     }
 
-    @TestMethod("testGuessFormat")
     public IChemFormat guessFormat(InputStream input) throws IOException {
         if (input == null) {
             throw new IllegalArgumentException("input cannot be null");

@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
@@ -51,7 +49,6 @@ import static org.openscience.cdk.graph.Cycles.relevant;
  * @cdk.keyword hologram
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.LingoFingerprinterTest")
 public class LingoFingerprinter implements IFingerprinter {
 
     private final int n;
@@ -64,7 +61,6 @@ public class LingoFingerprinter implements IFingerprinter {
     /**
      * Initialize the fingerprinter with a defult substring length of 4.
      */
-    @TestMethod("testFingerprint")
     public LingoFingerprinter() {
         this(4);
     }
@@ -74,7 +70,6 @@ public class LingoFingerprinter implements IFingerprinter {
      *
      * @param n The length of substrings to consider
      */
-    @TestMethod("testFingerprint")
     public LingoFingerprinter(int n) {
         this.n = n;
     }
@@ -84,7 +79,6 @@ public class LingoFingerprinter implements IFingerprinter {
         return FingerprinterTool.makeBitFingerprint(getRawFingerprint(iAtomContainer));
     }
 
-    @TestMethod("testFingerprint")
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
         aromaticity.apply(atomContainer);
@@ -101,7 +95,6 @@ public class LingoFingerprinter implements IFingerprinter {
         return map;
     }
 
-    @TestMethod("testGetSize")
     @Override
     public int getSize() {
         return -1; // 1L << 32

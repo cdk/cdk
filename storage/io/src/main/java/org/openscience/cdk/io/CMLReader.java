@@ -32,8 +32,6 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -64,7 +62,6 @@ import org.xml.sax.XMLReader;
  * @cdk.bug     1544406
  * @cdk.iooptions
  */
-@TestClass("org.openscience.cdk.io.CMLReaderTest")
 public class CMLReader extends DefaultChemObjectReader {
 
     private XMLReader               parser;
@@ -104,7 +101,6 @@ public class CMLReader extends DefaultChemObjectReader {
         this.url = url;
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return CMLFormat.getInstance();
@@ -114,13 +110,11 @@ public class CMLReader extends DefaultChemObjectReader {
      * This method must not be used; XML reading requires the use of an InputStream.
      * Use setReader(InputStream) instead.
      */
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) throws CDKException {
         throw new CDKException("Invalid method call; use SetReader(InputStream) instead.");
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         this.input = input;
@@ -173,7 +167,6 @@ public class CMLReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
@@ -248,7 +241,6 @@ public class CMLReader extends DefaultChemObjectReader {
         return file;
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         if (input != null) input.close();

@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -32,7 +30,6 @@ import java.util.Map;
  * @cdk.module  atomtype
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingHandlerTest")
 public class OWLAtomTypeMappingHandler extends DefaultHandler {
 
     private final String        NS_ATOMTYPE_MAPPING = "http://cdk.sf.net/ontologies/atomtypemappings#";
@@ -46,7 +43,6 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
     /**
      * Constructs a new OWLAtomTypeMappingHandler.
      */
-    @TestMethod("testOWLAtomTypeMappingHandler")
     public OWLAtomTypeMappingHandler() {}
 
     /**
@@ -55,7 +51,6 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
      * @return a {@link Map} with the atom type name of the source schema as key, and the atom type name of
      *         the target schema as values.
      */
-    @TestMethod("testGetAtomTypeMappings")
     public Map<String, String> getAtomTypeMappings() {
         return atomTypeMappings;
     }
@@ -64,14 +59,12 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testStartDocument")
     public void startDocument() {
         atomTypeMappings = new Hashtable<String, String>();
     }
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testEndElement_String_String_String")
     public void endElement(String uri, String local, String raw) {
         if (NS_OWL.equals(uri)) {
             endAtomTypeElement(local);
@@ -86,7 +79,6 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testStartElement_String_String_String_Attributes")
     public void startElement(String uri, String local, String raw, Attributes atts) {
         if (NS_OWL.equals(uri)) {
             startOWLElement(local, atts);
@@ -112,7 +104,6 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testCharacters_arraychar_int_int")
     public void characters(char chars[], int start, int length) {}
 
 }

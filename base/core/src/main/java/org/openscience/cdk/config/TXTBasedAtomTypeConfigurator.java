@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -44,18 +42,15 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @cdk.keyword    atom, type
  */
-@TestClass("org.openscience.cdk.config.TXTBasedAtomTypeConfiguratorTest")
 public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
     private String      configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
     private InputStream ins        = null;
 
-    @TestMethod("testTXTBasedAtomTypeConfigurator")
     public TXTBasedAtomTypeConfigurator() {}
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testSetInputStream_InputStream")
     public void setInputStream(InputStream ins) {
         this.ins = ins;
     }
@@ -67,7 +62,6 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * @throws        IOException when a problem occurred with reading from the InputStream
      * @return        A List with read IAtomType's.
      */
-    @TestMethod("testReadAtomTypes_IChemObjectBuilder")
     @Override
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException {
         List<IAtomType> atomTypes = new ArrayList<IAtomType>();

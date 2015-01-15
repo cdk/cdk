@@ -24,8 +24,6 @@ package org.openscience.cdk.geometry.cip.rules;
 
 import java.util.Arrays;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.geometry.cip.CIPTool;
 import org.openscience.cdk.geometry.cip.ILigand;
 
@@ -39,13 +37,11 @@ import org.openscience.cdk.geometry.cip.ILigand;
  * @cdk.module cip
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.cip.rules.CIPLigandRuleTest")
 public class CIPLigandRule implements ISequenceSubRule<ILigand> {
 
     CombinedAtomicMassNumberRule numberRule = new CombinedAtomicMassNumberRule();
 
     /** {@inheritDoc} */
-    @TestMethod("testCompare,testCompare_Identity,testOrder")
     @Override
     public int compare(ILigand ligand1, ILigand ligand2) {
         int numberComp = numberRule.compare(ligand1, ligand2);

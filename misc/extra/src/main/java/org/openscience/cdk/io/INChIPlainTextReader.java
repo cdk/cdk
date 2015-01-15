@@ -31,8 +31,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -69,7 +67,6 @@ import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
  *
  * @see     org.openscience.cdk.io.INChIReader
  */
-@TestClass("org.openscience.cdk.io.INChIPlainTextReaderTest")
 public class INChIPlainTextReader extends DefaultChemObjectReader {
 
     private BufferedReader            input;
@@ -94,13 +91,11 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return INChIPlainTextFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader input) {
         if (input instanceof BufferedReader) {
@@ -110,7 +105,6 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
@@ -121,7 +115,6 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
      */
     private void init() {}
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -195,7 +188,6 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         return cf;
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

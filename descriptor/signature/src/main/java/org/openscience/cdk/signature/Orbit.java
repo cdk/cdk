@@ -28,8 +28,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A list of atom indices, and the label of the orbit.
@@ -38,7 +36,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @author maclean
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.signature.OrbitTest")
 public class Orbit implements Iterable<Integer>, Cloneable {
 
     /**
@@ -67,14 +64,12 @@ public class Orbit implements Iterable<Integer>, Cloneable {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("iteratorTest")
     @Override
     public Iterator<Integer> iterator() {
         return this.atomIndices.iterator();
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testClone")
     @Override
     public Object clone() {
         Orbit orbit = new Orbit(this.label, this.height);
@@ -87,7 +82,6 @@ public class Orbit implements Iterable<Integer>, Cloneable {
     /**
      * Sorts the atom indices in this orbit.
      */
-    @TestMethod("sortTest")
     public void sort() {
         // TODO : change the list to a sorted set?
         Collections.sort(this.atomIndices);
@@ -98,7 +92,6 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      *
      * @return the height of the signature of this orbit
      */
-    @TestMethod("getHeightTest")
     public int getHeight() {
         return this.height;
     }
@@ -108,7 +101,6 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      *
      * @return the atom indices
      */
-    @TestMethod("getAtomIndicesTest")
     public List<Integer> getAtomIndices() {
         return this.atomIndices;
     }
@@ -118,7 +110,6 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      *
      * @param atomIndex the atom index
      */
-    @TestMethod("addAtomTest")
     public void addAtom(int atomIndex) {
         this.atomIndices.add(atomIndex);
     }
@@ -129,7 +120,6 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      * @param otherLabel the label to compare with
      * @return true if it has this label
      */
-    @TestMethod("hasLabelTest")
     public boolean hasLabel(String otherLabel) {
         return this.label.equals(otherLabel);
     }
@@ -139,7 +129,6 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      *
      * @return true if there are no atom indices in the orbit
      */
-    @TestMethod("isEmptyTest")
     public boolean isEmpty() {
         return this.atomIndices.isEmpty();
     }
@@ -149,7 +138,6 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      *
      * @return the first atom index
      */
-    @TestMethod("getFirstAtomTest")
     public int getFirstAtom() {
         return this.atomIndices.get(0);
     }
@@ -159,7 +147,6 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      *
      * @param atomIndex the atom index to remove
      */
-    @TestMethod("removeTest")
     public void remove(int atomIndex) {
         this.atomIndices.remove(this.atomIndices.indexOf(atomIndex));
     }
@@ -169,7 +156,6 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      *
      * @return the orbit's string label
      */
-    @TestMethod("getLabelTest")
     public String getLabel() {
         return this.label;
     }
@@ -180,13 +166,11 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      * @param atomIndex the atom index to look for
      * @return true if the orbit contains this atom index
      */
-    @TestMethod("containsTest")
     public boolean contains(int atomIndex) {
         return this.atomIndices.contains(atomIndex);
     }
 
     /** {@inheritDoc} */
-    @TestMethod("toStringTest")
     @Override
     public String toString() {
         return label + " " + Arrays.deepToString(atomIndices.toArray());

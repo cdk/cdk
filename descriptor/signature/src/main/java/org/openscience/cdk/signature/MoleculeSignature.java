@@ -25,8 +25,6 @@ package org.openscience.cdk.signature;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -91,7 +89,6 @@ import signature.SymmetryClass;
  * @author maclean
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.signature.MoleculeSignatureTest")
 public class MoleculeSignature extends AbstractGraphSignature {
 
     /**
@@ -123,14 +120,12 @@ public class MoleculeSignature extends AbstractGraphSignature {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("getVertexCountTest")
     protected int getVertexCount() {
         return this.molecule.getAtomCount();
     }
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("getSignatureStringForVertexTest")
     public String signatureStringForVertex(int vertexIndex) {
         AtomSignature atomSignature;
         int height = super.getHeight();
@@ -144,7 +139,6 @@ public class MoleculeSignature extends AbstractGraphSignature {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("getSignatureStringForVertexTest_height")
     public String signatureStringForVertex(int vertexIndex, int height) {
         AtomSignature atomSignature = new AtomSignature(vertexIndex, height, this.molecule);
         return atomSignature.toCanonicalString();
@@ -152,7 +146,6 @@ public class MoleculeSignature extends AbstractGraphSignature {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("getSignatureForVertexTest")
     public AbstractVertexSignature signatureForVertex(int vertexIndex) {
         return new AtomSignature(vertexIndex, this.molecule);
     }
@@ -162,7 +155,6 @@ public class MoleculeSignature extends AbstractGraphSignature {
      *
      * @return a list of orbits
      */
-    @TestMethod("calculateOrbitsTest")
     public List<Orbit> calculateOrbits() {
         List<Orbit> orbits = new ArrayList<Orbit>();
         List<SymmetryClass> symmetryClasses = super.getSymmetryClasses();
@@ -184,7 +176,6 @@ public class MoleculeSignature extends AbstractGraphSignature {
      * @param coBuilder {@link IChemObjectBuilder} to build the returned atom container from
      * @return an atom container
      */
-    @TestMethod("fromSignatureStringTest")
     public static IAtomContainer fromSignatureString(String signatureString, IChemObjectBuilder coBuilder) {
         ColoredTree tree = AtomSignature.parse(signatureString);
         MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(coBuilder);
@@ -198,7 +189,6 @@ public class MoleculeSignature extends AbstractGraphSignature {
      * @param height the maximum height to make signatures
      * @return the canonical signature string
      */
-    @TestMethod("toCanonicalSignatureStringTest")
     public String toCanonicalSignatureString(int height) {
         String canonicalSignature = null;
         for (int i = 0; i < getVertexCount(); i++) {

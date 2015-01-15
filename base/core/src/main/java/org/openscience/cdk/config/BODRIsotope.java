@@ -25,8 +25,6 @@ package org.openscience.cdk.config;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -40,7 +38,6 @@ import org.openscience.cdk.interfaces.IIsotope;
  * @cdk.module  core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.config.BODRIsotopeTest")
 final class BODRIsotope implements IIsotope {
 
     private String  element;
@@ -49,7 +46,6 @@ final class BODRIsotope implements IIsotope {
     private Double  exactMass;
     private Integer massNumber;
 
-    @TestMethod("testConstructor")
     protected BODRIsotope(String element, Integer atomicNumber, Integer massNumber, Double exactMass,
             Double naturalAbundance) {
         this.element = element;
@@ -62,168 +58,135 @@ final class BODRIsotope implements IIsotope {
     // ignored methods
 
     @Override
-    @TestMethod("untested")
     public void addListener(IChemObjectListener col) {}
 
     @Override
-    @TestMethod("untested")
     public int getListenerCount() {
         return 0;
     }
 
     @Override
-    @TestMethod("untested")
     public void removeListener(IChemObjectListener col) {}
 
     @Override
-    @TestMethod("untested")
     public void setNotification(boolean bool) {}
 
     @Override
-    @TestMethod("untested")
     public boolean getNotification() {
         return false;
     }
 
     @Override
-    @TestMethod("untested")
     public void notifyChanged() {}
 
     @Override
-    @TestMethod("untested")
     public void notifyChanged(IChemObjectChangeEvent evt) {}
 
     // unsupported methods
 
     @Override
-    @TestMethod("untested")
     public Number getFlagValue() {
         return (short) 0;
     }
 
     @Override
-    @TestMethod("untested")
     public void setProperty(Object description, Object property) {}
 
     @Override
-    @TestMethod("untested")
     public void removeProperty(Object description) {}
 
     @Override
-    @TestMethod("untested")
     public <T> T getProperty(Object description) {
         return null;
     }
 
     @Override
-    @TestMethod("untested")
     public <T> T getProperty(Object description, Class<T> c) {
         return null;
     }
 
     @Override
-    @TestMethod("untested")
     public Map<Object, Object> getProperties() {
         return null;
     }
 
     @Override
-    @TestMethod("untested")
     public String getID() {
         return null;
     }
 
     @Override
-    @TestMethod("untested")
     public void setID(String identifier) {}
 
     @Override
-    @TestMethod("untested")
     public void setFlag(int flag_type, boolean flag_value) {}
 
     @Override
-    @TestMethod("untested")
     public boolean getFlag(int flag_type) {
         return false;
     }
 
     @Override
-    @TestMethod("untested")
     public void setProperties(Map<Object, Object> properties) {}
 
     @Override
-    @TestMethod("untested")
     public void addProperties(Map<Object, Object> properties) {}
 
     @Override
-    @TestMethod("untested")
     public void setFlags(boolean[] flagsNew) {}
 
     @Override
-    @TestMethod("untested")
     public boolean[] getFlags() {
         return new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
     }
 
     @Override
-    @TestMethod("untested")
     public IChemObjectBuilder getBuilder() {
         return null;
     }
 
     @Override
-    @TestMethod("testImmutable")
     public void setAtomicNumber(Integer atomicNumber) {}
 
     @Override
-    @TestMethod("testImmutable")
     public void setSymbol(String symbol) {}
 
     @Override
-    @TestMethod("testImmutable")
     public void setExactMass(Double exactMass) {}
 
     @Override
-    @TestMethod("testImmutable")
     public void setNaturalAbundance(Double naturalAbundance) {}
 
     @Override
-    @TestMethod("testImmutable")
     public void setMassNumber(Integer massNumber) {}
 
     // implemented methods
 
     @Override
-    @TestMethod("testConstructor")
     public String getSymbol() {
         return element;
     }
 
     @Override
-    @TestMethod("testConstructor")
     public Integer getAtomicNumber() {
         return atomicNumber;
     }
 
     @Override
-    @TestMethod("testConstructor")
     public Double getNaturalAbundance() {
         return naturalAbundance;
     }
 
     @Override
-    @TestMethod("testConstructor")
     public Double getExactMass() {
         return exactMass;
     };
 
     @Override
-    @TestMethod("testConstructor")
     public Integer getMassNumber() {
         return massNumber;
     }
 
-    @TestMethod("testNonclonable")
     @Override
     public Object clone() {
         return this;

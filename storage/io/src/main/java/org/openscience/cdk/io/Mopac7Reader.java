@@ -33,8 +33,6 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -54,7 +52,6 @@ import org.openscience.cdk.io.formats.MOPAC7Format;
  * @cdk.githash
  * @cdk.module  io
  */
-@TestClass("org.openscience.cdk.io.Mopac7ReaderTest")
 public class Mopac7Reader extends DefaultChemObjectReader {
 
     BufferedReader          input        = null;
@@ -103,7 +100,6 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testRead_IChemObject")
     public <T extends IChemObject> T read(T object) throws CDKException {
         final String[] expected_columns = {"NO.", "ATOM", "X", "Y", "Z"};
         StringBuffer eigenvalues = new StringBuffer();
@@ -246,7 +242,6 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader) input;
@@ -257,14 +252,12 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         this.input = new BufferedReader(new InputStreamReader(input));
     }
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
 
@@ -272,7 +265,6 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
@@ -286,7 +278,6 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MOPAC7Format.getInstance();
     }

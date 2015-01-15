@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.stereo;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -293,7 +292,6 @@ public abstract class StereoElementFactory {
      * @return self
      * @see org.openscience.cdk.stereo.Projection
      */
-    @TestMethod("onlyInterpretHaworthProjectionsWhenAsked")
     public StereoElementFactory interpretProjections(Projection ... projections) {
         Collections.addAll(this.projections, projections);
         return this;

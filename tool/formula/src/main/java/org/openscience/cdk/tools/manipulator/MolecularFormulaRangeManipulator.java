@@ -22,8 +22,6 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -39,7 +37,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.formula.MolecularFormulaRangeManipulatorTest")
 public class MolecularFormulaRangeManipulator {
 
     /**
@@ -49,7 +46,6 @@ public class MolecularFormulaRangeManipulator {
      * @param mfSet    The set of molecularFormules to inspect
      * @return         A MolecularFormulaRange containing range occurrence of the elements
      */
-    @TestMethod("testGetRange_IMolecularFormulaSet")
     public static MolecularFormulaRange getRange(IMolecularFormulaSet mfSet) {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
@@ -92,7 +88,6 @@ public class MolecularFormulaRangeManipulator {
      * @param   mfRange The MolecularFormulaRange to analyze
      * @return  A IMolecularFormula containing the maximal occurrence of each isotope
      */
-    @TestMethod("testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder")
     public static IMolecularFormula getMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder) {
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
 
@@ -110,7 +105,6 @@ public class MolecularFormulaRangeManipulator {
      * @param   mfRange The MolecularFormulaRange to analyze
      * @return  A IMolecularFormula containing the minimal occurrence of each isotope
      */
-    @TestMethod("testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder")
     public static IMolecularFormula getMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder) {
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
 

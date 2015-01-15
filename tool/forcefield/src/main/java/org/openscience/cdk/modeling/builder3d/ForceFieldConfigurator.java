@@ -30,8 +30,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -62,8 +60,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.module     forcefield
  * @cdk.githash
  */
-
-@TestClass("org.openscience.modeling.builder3d.ForceFieldConfiguratorTest")
 public class ForceFieldConfigurator {
 
     private String                        ffName       = "mmff94";
@@ -103,7 +99,6 @@ public class ForceFieldConfigurator {
      * @param  ffname  The new forceFieldType name
      */
 
-    @TestMethod("testCheckForceFieldType")
     public boolean checkForceFieldType(String ffname) {
         boolean check = false;
         for (int i = 0; i < fftypes.length; i++) {
@@ -124,7 +119,6 @@ public class ForceFieldConfigurator {
      *
      * @param  ffname  name of the force field data file
      */
-    @TestMethod("testSetForceFieldConfigurator")
     public void setForceFieldConfigurator(String ffname, IChemObjectBuilder builder) throws CDKException {
         ffname = ffname.toLowerCase();
         boolean check = false;
@@ -188,7 +182,6 @@ public class ForceFieldConfigurator {
     /**
      *  Sets the parameters attribute of the ForceFieldConfigurator object, default is mm2 force field
      */
-    @TestMethod("testSetMM2Parameters")
     public void setMM2Parameters(IChemObjectBuilder builder) throws CDKException {
         try {
             if (mm2 == null) mm2 = new MM2BasedParameterSetReader();
@@ -200,7 +193,6 @@ public class ForceFieldConfigurator {
         atomTypes = mm2.getAtomTypes();
     }
 
-    @TestMethod("testSetMMFF94Parameters")
     public void setMMFF94Parameters(IChemObjectBuilder builder) throws Exception {
         if (mmff94 == null) mmff94 = new MMFF94BasedParameterSetReader();
         mmff94.readParameterSets(builder);
@@ -250,7 +242,6 @@ public class ForceFieldConfigurator {
      *@return                sssrf set
      *@exception  CDKException  Problems detecting aromaticity or making hose codes.
      */
-    @TestMethod("testAssignAtomTyps")
     public IRingSet assignAtomTyps(IAtomContainer molecule) throws CDKException {
         IAtom atom = null;
         String hoseCode = "";
@@ -552,7 +543,6 @@ public class ForceFieldConfigurator {
         }
     }
 
-    @TestMethod("testRemoveAromaticityFlagsFromHoseCode")
     public String removeAromaticityFlagsFromHoseCode(String hoseCode) {
         String hosecode = "";
         for (int i = 0; i < hoseCode.length(); i++) {
@@ -571,7 +561,6 @@ public class ForceFieldConfigurator {
      * @return                   atom
      * @exception  NoSuchAtomTypeException  atomType is not known
      */
-    @TestMethod("testConfigureMMFF94BasedAtom")
     public IAtom configureMMFF94BasedAtom(IAtom atom, String hoseCode, boolean isInHetRing)
             throws NoSuchAtomTypeException {
         //logger.debug("****** Configure MMFF94 AtomType ******");

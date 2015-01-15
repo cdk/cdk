@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ringsearch.RingSearch;
 
@@ -60,14 +58,12 @@ import java.util.TreeSet;
  * @see MinimumEquivalentCyclicSetUnion
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.AllEquivalentCyclicSetTest")
 final class AllEquivalentCyclicSet extends EquivalentSetFinder {
 
     /**
      * @inheritDoc
      */
     @Override
-    @TestMethod("testFind,testFind_Distinct,testScenario")
     Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph) {
 
         int n = invariants.length;

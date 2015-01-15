@@ -27,8 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.geometry.cip.rules.CIPLigandRule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -63,7 +61,6 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * @cdk.module cip
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.cip.CIPToolTest")
 public class CIPTool {
 
     /**
@@ -90,7 +87,6 @@ public class CIPTool {
      *                      determined as {@link LigancyFourChirality} object.
      * @return A {@link CIP_CHIRALITY} value.
      */
-    @TestMethod("testGetCIPChirality,testGetCIPChirality_Anti")
     public static CIP_CHIRALITY getCIPChirality(LigancyFourChirality stereoCenter) {
         ILigand[] ligands = order(stereoCenter.getLigands());
         LigancyFourChirality rsChirality = stereoCenter.project(ligands);
@@ -112,7 +108,6 @@ public class CIPTool {
      *
      * @param container structure to label
      */
-    @TestMethod("label")
     public static void label(IAtomContainer container) {
 
         for (IStereoElement stereoElement : container.stereoElements()) {
@@ -138,7 +133,6 @@ public class CIPTool {
      *                      determined as {@link ITetrahedralChirality} object.
      * @return A {@link CIP_CHIRALITY} value.
      */
-    @TestMethod("testGetCIPChirality_ILigancyFourChirality,testGetCIPChirality_Anti_ILigancyFourChirality")
     public static CIP_CHIRALITY getCIPChirality(IAtomContainer container, ITetrahedralChirality stereoCenter) {
 
         // the LigancyFourChirality is kind of redundant but we keep for an
@@ -157,7 +151,6 @@ public class CIPTool {
         return CIP_CHIRALITY.NONE;
     }
 
-    @TestMethod("testGetCIPChirality_DoubleBond_Together,testGetCIPChirality_DoubleBond_Opposite")
     public static CIP_CHIRALITY getCIPChirality(IAtomContainer container, IDoubleBondStereochemistry stereoCenter) {
 
         IBond stereoBond = stereoCenter.getStereoBond();
@@ -232,7 +225,6 @@ public class CIPTool {
      * @param ligands array of {@link ILigand} to check
      * @return true, if all ligands are different
      */
-    @TestMethod("testCheckIfAllLigandsAreDifferent,testCheckIfAllLigandsAreDifferent_False")
     public static boolean checkIfAllLigandsAreDifferent(ILigand[] ligands) {
         for (int i = 0; i < (ligands.length - 1); i++) {
             if (cipRule.compare(ligands[i], ligands[i + 1]) == 0) return false;
@@ -246,7 +238,6 @@ public class CIPTool {
      * @param ligands Array of {@link ILigand}s to be reordered.
      * @return        Reordered array of {@link ILigand}s.
      */
-    @TestMethod("testOrder")
     public static ILigand[] order(ILigand[] ligands) {
         ILigand[] newLigands = new ILigand[ligands.length];
         System.arraycopy(ligands, 0, newLigands, 0, ligands.length);
@@ -302,7 +293,6 @@ public class CIPTool {
      * @param stereo     {@link Stereo} for the chirality
      * @return           the created {@link LigancyFourChirality}
      */
-    @TestMethod("testDefineLigancyFourChirality")
     public static LigancyFourChirality defineLigancyFourChirality(IAtomContainer container, int chiralAtom,
             int ligand1, int ligand2, int ligand3, int ligand4, Stereo stereo) {
         int[] atomIndices = {ligand1, ligand2, ligand3, ligand4};
@@ -327,7 +317,6 @@ public class CIPTool {
      * @param ligandAtom an integer pointing to the {@link IAtom} index of the {@link ILigand}
      * @return           the created {@link ILigand}
      */
-    @TestMethod("testDefineLigand")
     public static ILigand defineLigand(IAtomContainer container, VisitedAtoms visitedAtoms, int chiralAtom,
             int ligandAtom) {
         if (ligandAtom == HYDROGEN) {
@@ -345,7 +334,6 @@ public class CIPTool {
      * @param ligand     the {@link ILigand} for which to return the ILigands
      * @return           a {@link ILigand} array with the side chains of the ligand atom
      */
-    @TestMethod("testGetLigandLigands")
     public static ILigand[] getLigandLigands(ILigand ligand) {
         if (ligand instanceof TerminalLigand) return new ILigand[0];
 

@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -41,7 +39,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.config.atomtypes.AtomTypeHandlerTest")
 public class AtomTypeHandler extends DefaultHandler {
 
     private final int                 SCALAR_UNSET                 = 0;
@@ -75,7 +72,6 @@ public class AtomTypeHandler extends DefaultHandler {
      *
      * @param build The IChemObjectBuilder used to create the IAtomType's.
      */
-    @TestMethod("testAtomTypeHandler_IChemObjectBuilder")
     public AtomTypeHandler(IChemObjectBuilder build) {
         builder = build;
     }
@@ -85,7 +81,6 @@ public class AtomTypeHandler extends DefaultHandler {
      *
      * @return The read IAtomType's.
      */
-    @TestMethod("testGetAtomTypes")
     public List<IAtomType> getAtomTypes() {
         return atomTypes;
     }
@@ -101,7 +96,6 @@ public class AtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testStartDocument")
     public void startDocument() {
         atomTypes = new ArrayList<IAtomType>();
         scalarType = SCALAR_UNSET;
@@ -110,7 +104,6 @@ public class AtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testEndElement_String_String_String")
     public void endElement(String uri, String local, String raw) { //NOPMD
         logger.debug("END Element: ", raw);
         logger.debug("  uri: ", uri);
@@ -186,7 +179,6 @@ public class AtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testStartElement_String_String_String_Attributes")
     public void startElement(String uri, String local, //NOPMD
             String raw, Attributes atts) {
         currentChars = "";
@@ -265,7 +257,6 @@ public class AtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testCharacters_arraychar_int_int")
     public void characters(char chars[], int start, int length) {
         logger.debug("character data");
         currentChars += new String(chars, start, length);

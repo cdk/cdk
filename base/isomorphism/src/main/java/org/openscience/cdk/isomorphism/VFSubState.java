@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -46,7 +44,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @author John May
  * @cdk.module isomorphism
  */
-@TestClass("org.openscience.cdk.isomorphism.VFSubStateTest")
 final class VFSubState extends AbstractVFState {
 
     /** The query (container1) and target (container2) of the subgraph matching. */
@@ -111,7 +108,6 @@ final class VFSubState extends AbstractVFState {
      * @param m a candidate vertex from g2
      * @return the mapping is feasible
      */
-    @TestMethod("infeasibleAtoms,infeasibleBonds")
     @Override
     boolean feasible(int n, int m) {
 

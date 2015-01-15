@@ -19,8 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -58,7 +56,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:aromaticAtomsCount
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.AromaticAtomsCountDescriptorTest")
 public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private boolean               checkAromaticity = false;
@@ -84,7 +81,6 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -102,7 +98,6 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
      * @exception  CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
@@ -121,7 +116,6 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
      * @return    The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -130,7 +124,6 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -148,7 +141,6 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
      *@return                   the number of aromatic atoms of this AtomContainer
      *@see #setParameters
      */
-    @TestMethod("testCalculate_IAtomContainer,testAromaticAtomsCountDescriptor,testViaFlags")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
@@ -195,7 +187,6 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
@@ -206,7 +197,6 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -220,7 +210,6 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
      *@param  name  Description of the Parameter
      *@return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return true;

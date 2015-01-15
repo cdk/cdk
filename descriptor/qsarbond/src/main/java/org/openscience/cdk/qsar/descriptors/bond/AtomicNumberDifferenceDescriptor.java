@@ -21,8 +21,6 @@ package org.openscience.cdk.qsar.descriptors.bond;
 
 import java.io.IOException;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -46,7 +44,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.bond.AtomicNumberDifferenceDescriptorTest")
 public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor implements IBondDescriptor {
 
     private static IsotopeFactory factory = null;
@@ -67,7 +64,6 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
         }
     }
 
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -75,24 +71,20 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
                 .getClass().getName(), "The Chemistry Development Kit");
     }
 
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
     }
 
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
     }
 
-    @TestMethod(value = "testCalculate_IBond_IAtomContainer,testDescriptor1," + "testDescriptor2")
     @Override
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
         ensureIsotopeFactory();
@@ -108,13 +100,11 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
                                  - factory.getElement(atoms[1].getSymbol()).getAtomicNumber())), NAMES);
     }
 
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
     }
 
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

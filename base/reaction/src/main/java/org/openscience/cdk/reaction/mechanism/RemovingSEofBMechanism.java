@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -48,7 +46,6 @@ import java.util.ArrayList;
  * @cdk.module     reaction
  * @cdk.githash
  */
-@TestClass(value = "org.openscience.cdk.reaction.mechanism.RemovingSEofBMechanismTest")
 public class RemovingSEofBMechanism implements IReactionMechanism {
 
     /**
@@ -63,7 +60,6 @@ public class RemovingSEofBMechanism implements IReactionMechanism {
      * @return            The Reaction mechanism
      *
      */
-    @TestMethod(value = "testInitiate_IAtomContainerSet_ArrayList_ArrayList")
     @Override
     public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
             throws CDKException {

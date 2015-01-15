@@ -23,9 +23,6 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.BitSet;
 
 import static org.openscience.cdk.graph.InitialCycles.Cycle;
@@ -58,7 +55,6 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.graph.BitMatrixTest")
 final class BitMatrix {
 
     /** rows of the matrix. */
@@ -99,7 +95,6 @@ final class BitMatrix {
      * @param i row index
      * @param j row index
      */
-    @TestMethod("swap")
     void swap(int i, int j) {
         BitSet row = rows[i];
         int k = indices[i];
@@ -128,7 +123,6 @@ final class BitMatrix {
      * @param j index of row
      * @return the row which was added at index j
      */
-    @TestMethod("swap")
     public BitSet row(int j) {
         return rows[rowIndex(j)];
     }
@@ -141,13 +135,11 @@ final class BitMatrix {
      * @return whether the row was eliminated
      * @see #eliminate()
      */
-    @TestMethod("eliminate1,eliminate2,eliminate3")
     public boolean eliminated(int j) {
         return row(j).isEmpty();
     }
 
     /** Clear the matrix, setting the number of rows to 0. */
-    @TestMethod("clear")
     public void clear() {
         m = 0;
     }
@@ -157,7 +149,6 @@ final class BitMatrix {
      *
      * @param row the row
      */
-    @TestMethod("swap,clear")
     public void add(BitSet row) {
         if (m >= max) throw new IndexOutOfBoundsException("initalise matrix with more rows");
         rows[m] = row;
@@ -172,7 +163,6 @@ final class BitMatrix {
      * @return rank of the matrix
      * @see #eliminated(int)
      */
-    @TestMethod("eliminate1,eliminate2,eliminate3")
     public int eliminate() {
         return eliminate(0, 0);
     }
@@ -215,7 +205,6 @@ final class BitMatrix {
      * @param y row index
      * @return the first index where {@literal x} is set, index is < 0 if none
      */
-    @TestMethod("indexOf")
     int indexOf(int x, int y) {
         for (int j = y; j < m; j++) {
             if (rows[j].get(x)) return j;
@@ -224,7 +213,6 @@ final class BitMatrix {
     }
 
     /** @inheritDoc */
-    @TestMethod("string")
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder((4 + n) * m);
@@ -246,7 +234,6 @@ final class BitMatrix {
      * @param v a bit set
      * @return the 'xor' of {@literal u} and {@literal v}
      */
-    @TestMethod("xor")
     static BitSet xor(BitSet u, BitSet v) {
         BitSet w = (BitSet) u.clone();
         w.xor(v);
@@ -259,7 +246,6 @@ final class BitMatrix {
      * @param cycles cycles to create the matrix from
      * @return instance of a BitMatrix for the cycles
      */
-    @TestMethod("from_cycles")
     static BitMatrix from(final Iterable<Cycle> cycles) {
 
         int rows = 0, cols = 0;
@@ -283,7 +269,6 @@ final class BitMatrix {
      * @param cycle  final cycle to add
      * @return instance of a BitMatrix for the cycles
      */
-    @TestMethod("from_cycles_cycle")
     static BitMatrix from(final Iterable<Cycle> cycles, Cycle cycle) {
 
         int rows = 1, cols = cycle.edgeVector().length();

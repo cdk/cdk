@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -36,7 +34,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @author John May
  * @cdk.module isomorphism
  */
-@TestClass("org.openscience.cdk.isomorphism.AtomMatcherTest")
 public abstract class AtomMatcher {
 
     /**
@@ -53,7 +50,6 @@ public abstract class AtomMatcher {
      *
      * @return a matcher for which all atoms match
      */
-    @TestMethod("anyMatch")
     public static AtomMatcher forAny() {
         return new AnyMatcher();
     }
@@ -63,7 +59,6 @@ public abstract class AtomMatcher {
      *
      * @return a matcher which checks element compatibility
      */
-    @TestMethod("elementMatch")
     public static AtomMatcher forElement() {
         return new ElementMatcher();
     }
@@ -74,7 +69,6 @@ public abstract class AtomMatcher {
      *
      * @return a matcher which checks query atom compatibility
      */
-    @TestMethod("queryMatch")
     public static AtomMatcher forQuery() {
         return new QueryMatcher();
     }

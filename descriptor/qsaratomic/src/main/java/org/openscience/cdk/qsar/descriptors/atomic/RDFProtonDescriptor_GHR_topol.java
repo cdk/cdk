@@ -27,8 +27,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -78,7 +76,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
  * @cdk.bug     1632419
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHR_topolTest")
 public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private boolean                   checkAromaticity      = false;
@@ -101,7 +98,6 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
      *
      * @return The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -116,7 +112,6 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
      * @param params Parameters are the proton position and a boolean (true if you need to detect aromaticity)
      * @throws CDKException Possible Exceptions
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
@@ -134,7 +129,6 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
      *
      * @return The parameters value
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -143,7 +137,6 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         String[] descriptorNames = new String[ghr_topol_desc_length];
@@ -161,13 +154,11 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
                 getDescriptorNames(), e);
     }
 
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainerSet) {
         return (calculate(atom, varAtomContainerSet, null));
     }
 
-    @TestMethod(value = "testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset) {
         IAtomContainer varAtomContainer = null;
         try {
@@ -579,7 +570,6 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
      *
      * @return The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -594,7 +584,6 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
      * @param name Description of the Parameter
      * @return The parameterType value
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         if (name.equals("checkAromaticity")) return Boolean.TRUE;

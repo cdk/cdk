@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -47,7 +45,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.keyword    permutation
  * @cdk.module     standard
  */
-@TestClass("AtomContainerAtomPermutorTest")
 public class AtomContainerBondPermutor extends AtomContainerPermutor {
 
     /**
@@ -56,7 +53,6 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor {
      *
      * @param atomContainer the atom container to permute
      */
-    @TestMethod("constructorTest")
     public AtomContainerBondPermutor(IAtomContainer atomContainer) {
         super(atomContainer.getBondCount(), atomContainer);
     }
@@ -67,7 +63,6 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor {
      * org.openscience.cdk.graph.AtomContainerPermutor#containerFromPermutation
      * (int[])
      */
-    @TestMethod("containerFromPermutationTest")
     @Override
     public IAtomContainer containerFromPermutation(int[] permutation) {
         try {

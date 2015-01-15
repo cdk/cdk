@@ -22,8 +22,6 @@ import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
@@ -36,12 +34,10 @@ import org.openscience.cdk.renderer.elements.RectangleElement;
  * @cdk.module renderextra
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.generators.AtomContainerBoundsGeneratorTest")
 public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testEmptyContainer")
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         double[] minMax = GeometryUtil.getMinMax(container);
         return new RectangleElement(minMax[0], minMax[1], minMax[2], minMax[3], new Color(.7f, .7f, 1.0f));
@@ -50,7 +46,6 @@ public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> 
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Collections.emptyList();
     }

@@ -26,8 +26,6 @@ package org.openscience.cdk.isomorphism;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.BitSet;
 import java.util.Set;
@@ -46,7 +44,6 @@ import java.util.Set;
  * @author John May
  * @cdk.module isomorphism
  */
-@TestClass("org.openscience.cdk.isomorphism.MappingPredicatesTest")
 final class UniqueAtomMatches implements Predicate<int[]> {
 
     /** Which mappings have we seen already. */
@@ -73,7 +70,6 @@ final class UniqueAtomMatches implements Predicate<int[]> {
      * @inheritDoc
      */
     @Override
-    @TestMethod("uniqueAtoms")
     public boolean apply(int[] input) {
         return unique.add(toBitSet(input));
     }

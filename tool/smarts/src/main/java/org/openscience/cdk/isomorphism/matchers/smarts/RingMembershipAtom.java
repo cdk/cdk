@@ -17,8 +17,6 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -33,7 +31,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.RingMembershipAtomTest")
 public class RingMembershipAtom extends SMARTSAtom {
 
     /**
@@ -58,7 +55,6 @@ public class RingMembershipAtom extends SMARTSAtom {
 
     /** @inheritDoc */
     @Override
-    @TestMethod("matches")
     public boolean matches(IAtom atom) {
         return ringNumber < 0 ? invariants(atom).ringConnectivity() > 0 : ringNumber == invariants(atom).ringNumber();
     }

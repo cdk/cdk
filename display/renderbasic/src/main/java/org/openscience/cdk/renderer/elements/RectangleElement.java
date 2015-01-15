@@ -20,8 +20,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A rectangle, with width and height.
@@ -29,7 +27,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.RectangleElementTest")
 public class RectangleElement implements IRenderingElement {
 
     /** The x-coordinate of the center of the rectangle. **/
@@ -59,7 +56,6 @@ public class RectangleElement implements IRenderingElement {
      * @param yCoord2 the y-coordinate of the second point
      * @param color the color of the rectangle
      */
-    @TestMethod("testConstructor")
     public RectangleElement(double xCoord1, double yCoord1, double xCoord2, double yCoord2, Color color) {
 
         this(xCoord1, yCoord1, xCoord2 - xCoord1, yCoord2 - yCoord1, false, color);
@@ -85,7 +81,6 @@ public class RectangleElement implements IRenderingElement {
     }
 
     /** {@inheritDoc }**/
-    @TestMethod("testAccept")
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);

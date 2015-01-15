@@ -28,8 +28,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,7 +60,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.keyword MoSS
  */
-@TestClass("org.openscience.cdk.io.MoSSOutputReaderTest")
 public class MoSSOutputReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
@@ -98,28 +95,24 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return MoSSOutputFormat.getInstance();
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) throws CDKException {
         this.input = new BufferedReader(input);
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> testClass) {
         if (IAtomContainerSet.class.equals(testClass)) return true;
@@ -199,7 +192,6 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

@@ -33,8 +33,6 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -73,7 +71,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.githash
  * @cdk.iooptions
  */
-@TestClass("org.openscience.cdk.io.Gaussian98ReaderTest")
 public class Gaussian98Reader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
@@ -97,7 +94,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         this(new InputStreamReader(input));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return Gaussian98Format.getInstance();
@@ -109,7 +105,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @param input The new reader value
      * @throws CDKException Description of the Exception
      */
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -119,7 +114,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
@@ -139,7 +133,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         initIOSettings();
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -169,7 +162,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

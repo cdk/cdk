@@ -25,8 +25,6 @@ package org.openscience.cdk.tools.manipulator;
 import java.io.IOException;
 import java.util.Comparator;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -52,7 +50,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module   standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.manipulator.AtomContainerComparatorTest")
 public class AtomContainerComparator implements Comparator<IAtomContainer> {
 
     /** Configure LoggingTool */
@@ -75,7 +72,6 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
      * @return a negative integer, zero, or a positive integer as the first
      * argument is less than, equal to, or greater than the second.
      */
-    @TestMethod("testCompare_Object_Object")
     @Override
     public int compare(IAtomContainer o1, IAtomContainer o2) {
         // Check for nulls

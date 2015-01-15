@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
@@ -70,14 +68,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptorTest")
 public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"ECCEN"};
 
     public EccentricConnectivityIndexDescriptor() {}
 
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -91,7 +87,6 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
@@ -102,14 +97,12 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
      *
      *@return    The parameters value
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // no parameters to return
         return (null);
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -120,7 +113,6 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         // no param names to return
@@ -133,7 +125,6 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return (null);
@@ -146,7 +137,6 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
      *@return            An IntegerResult value representing the eccentric connectivity index
      */
 
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
@@ -180,7 +170,6 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);

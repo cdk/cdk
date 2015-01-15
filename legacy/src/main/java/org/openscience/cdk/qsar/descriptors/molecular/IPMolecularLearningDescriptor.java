@@ -21,8 +21,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -72,7 +70,6 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  * @see IPBondLearningDescriptor
  */
 @Deprecated
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptorTest")
 public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private boolean               addlp = true;
@@ -88,7 +85,6 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ip",
@@ -101,7 +97,6 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) throw new CDKException("One parameter expected");
@@ -114,13 +109,11 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *
      * @return The parameters value
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         return new Object[]{addlp};
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return names;
@@ -132,7 +125,6 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *@param  atomContainer     AtomContainer
      *@return                   The first ionization energy
      */
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer local;
@@ -170,7 +162,6 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *@return                   The 1, 2, .. ionization energies
      *@exception  CDKException  Possible Exceptions
      */
-    @TestMethod(value = "testIPDescriptor_2,testIPDescriptor_3")
     public DescriptorValue calculatePlus(IAtomContainer container) throws CDKException {
 
         ArrayList<Double> dar = new ArrayList<Double>();
@@ -233,7 +224,6 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
@@ -244,7 +234,6 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[]{"addlp"};
@@ -256,7 +245,6 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return addlp;

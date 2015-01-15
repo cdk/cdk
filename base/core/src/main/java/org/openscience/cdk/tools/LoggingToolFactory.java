@@ -21,9 +21,6 @@ package org.openscience.cdk.tools;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * Factory used to instantiate a {@link ILoggingTool}. To get an instance, run:
  * <pre>
@@ -39,7 +36,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.LoggingToolFactoryTest")
 public class LoggingToolFactory {
 
     /** Default logging tool. Currently, the log4j based one. */
@@ -55,7 +51,6 @@ public class LoggingToolFactory {
      * @param loggingTool The new {@link ILoggingTool}.
      * @see   #getLoggingToolClass()
      */
-    @TestMethod("testSetGetLoggingToolClass,testCustomLogger")
     public static void setLoggingToolClass(Class<? extends ILoggingTool> loggingTool) {
         LoggingToolFactory.userSetILoggerTool = loggingTool;
     }
@@ -66,7 +61,6 @@ public class LoggingToolFactory {
      * @return The currently used {@link ILoggingTool}.
      * @see    #setLoggingToolClass(Class)
      */
-    @TestMethod("testSetGetLoggingToolClass")
     public static Class<? extends ILoggingTool> getLoggingToolClass() {
         return LoggingToolFactory.userSetILoggerTool;
     }
@@ -79,7 +73,6 @@ public class LoggingToolFactory {
      *                     constructed.
      * @return             An {@link ILoggingTool} implementation.
      */
-    @TestMethod("testCreateLoggingTool")
     public static ILoggingTool createLoggingTool(Class<?> sourceClass) {
         ILoggingTool tool = null;
         // first attempt the user set ILoggingTool

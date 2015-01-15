@@ -1,8 +1,5 @@
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.Arrays;
 
 /**
@@ -20,7 +17,6 @@ import java.util.Arrays;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.graph.ConnectedComponentsTest")
 public final class ConnectedComponents {
 
     /** Adjacency-list representation of a graph. */
@@ -66,12 +62,10 @@ public final class ConnectedComponents {
      *
      * @return component labels
      */
-    @TestMethod("connected,disconnected")
     public int[] components() {
         return Arrays.copyOf(component, component.length);
     }
 
-    @TestMethod("connected,disconnected")
     public int nComponents() {
         return components;
     }

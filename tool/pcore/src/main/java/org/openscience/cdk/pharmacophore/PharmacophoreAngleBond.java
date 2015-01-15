@@ -19,8 +19,6 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Represents an angle relationship between three pharmacophore groups.
@@ -32,7 +30,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.keyword 3D isomorphism
  * @see PharmacophoreAtom
  */
-@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreAngleBondTest")
 public class PharmacophoreAngleBond extends Bond {
 
     /**
@@ -51,7 +48,6 @@ public class PharmacophoreAngleBond extends Bond {
      *
      * @return The angle in degrees between the two groups
      */
-    @TestMethod("testGetAngle1,testGetAngle2,testGetAngle3,testGetAngle4,testGetAngle5")
     public double getBondLength() {
         double epsilon = 1e-3;
         PharmacophoreAtom atom1 = (PharmacophoreAtom) getAtom(0);

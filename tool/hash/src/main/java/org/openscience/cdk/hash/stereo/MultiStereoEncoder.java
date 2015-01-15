@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -41,7 +39,6 @@ import java.util.List;
  * @author John May
  * @cdk.module hash
  */
-@TestClass("org.openscience.cdk.hash.stereo.MultiStereoEncoderTest")
 final class MultiStereoEncoder implements StereoEncoder {
 
     /* indices of unconfigured encoders */
@@ -53,7 +50,6 @@ final class MultiStereoEncoder implements StereoEncoder {
     /**
      * Create a new multiple stereo encoder from a single list of encoders
      */
-    @TestMethod("testConstruction_Empty")
     public MultiStereoEncoder(List<StereoEncoder> encoders) {
         if (encoders.isEmpty()) throw new IllegalArgumentException("no stereo encoders provided");
         this.encoders = Collections.unmodifiableList(new ArrayList<StereoEncoder>(encoders));
@@ -64,7 +60,6 @@ final class MultiStereoEncoder implements StereoEncoder {
     /**
      * @inheritDoc
      */
-    @TestMethod("testEncode")
     @Override
     public boolean encode(long[] current, long[] next) {
         boolean configured = false;
@@ -82,7 +77,6 @@ final class MultiStereoEncoder implements StereoEncoder {
     /**
      * @inheritDoc
      */
-    @TestMethod("testReset")
     @Override
     public void reset() {
         // mark all as unperceived and reset

@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -46,7 +44,6 @@ import org.openscience.cdk.interfaces.IAtomType;
  *      archive</a>
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.BasicAtomEncoderTest")
 public enum BasicAtomEncoder implements AtomEncoder {
 
     /**
@@ -59,7 +56,6 @@ public enum BasicAtomEncoder implements AtomEncoder {
         /**
          * @inheritDoc
          */
-        @TestMethod("testAtomicNumber,testAtomicNumber_Null")
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             Integer atomicNumber = atom.getAtomicNumber();
@@ -76,7 +72,6 @@ public enum BasicAtomEncoder implements AtomEncoder {
         /**
          * @inheritDoc
          */
-        @TestMethod("testMassNumber,testMassNumber_Null")
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             Integer massNumber = atom.getMassNumber();
@@ -94,7 +89,6 @@ public enum BasicAtomEncoder implements AtomEncoder {
         /**
          * @inheritDoc
          */
-        @TestMethod("testFormalCharge,testFormalCharge_Null")
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             Integer formalCharge = atom.getFormalCharge();
@@ -111,7 +105,6 @@ public enum BasicAtomEncoder implements AtomEncoder {
         /**
          * @inheritDoc
          */
-        @TestMethod("testNConnectedAtoms")
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             return container.getConnectedAtomsCount(atom);
@@ -142,7 +135,6 @@ public enum BasicAtomEncoder implements AtomEncoder {
         /**
          * @inheritDoc
          */
-        @TestMethod("testOrbitalHybridization,testOrbitalHybridization_Null")
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             IAtomType.Hybridization hybridization = atom.getHybridization();
@@ -159,7 +151,6 @@ public enum BasicAtomEncoder implements AtomEncoder {
         /**
          * @inheritDoc
          */
-        @TestMethod("testFreeRadicals")
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             return container.getConnectedSingleElectronsCount(atom);

@@ -36,8 +36,6 @@ import java.util.List;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -67,7 +65,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module   sdg
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.layout.TemplateHandlerTest")
 public class TemplateHandler {
 
     private static ILoggingTool        logger                     = LoggingToolFactory
@@ -80,7 +77,6 @@ public class TemplateHandler {
     /**
      * Creates a new TemplateHandler.
      */
-    @TestMethod("testInit")
     public TemplateHandler(IChemObjectBuilder builder) {
         templates = new ArrayList<IAtomContainer>();
         loadTemplates(builder);
@@ -91,7 +87,6 @@ public class TemplateHandler {
      * SDG, place a drawing with the new template in org/openscience/cdk/layout/templates and add the
      * template filename to org/openscience/cdk/layout/templates/template.list
      */
-    @TestMethod("testInit")
     public void loadTemplates(IChemObjectBuilder builder) {
         String line = null;
         try {
@@ -145,12 +140,10 @@ public class TemplateHandler {
      *
      * @param  molecule  The molecule to be added to the TemplateHandler
      */
-    @TestMethod("testAddMolecule")
     public void addMolecule(IAtomContainer molecule) {
         templates.add(anonymousTemplate(molecule));
     }
 
-    @TestMethod("testRemoveMolecule")
     public IAtomContainer removeMolecule(IAtomContainer molecule) throws CDKException {
         IAtomContainer ac1 = molecule.getBuilder().newInstance(IAtomContainer.class, molecule);
         IAtomContainer ac2 = null;
@@ -217,7 +210,6 @@ public class TemplateHandler {
      * @param  molecule  The molecule to be check for potential templates
      * @return           True if there was a possible mapping
      */
-    @TestMethod("testRemoveMolecule")
     public boolean mapTemplates(IAtomContainer molecule) throws CDKException {
         logger.debug("Trying to map a molecule...");
         boolean mapped = false;
@@ -262,7 +254,6 @@ public class TemplateHandler {
      *
      *@return    The templateCount value
      */
-    @TestMethod("testInit")
     public int getTemplateCount() {
         return templates.size();
     }
@@ -287,7 +278,6 @@ public class TemplateHandler {
      *                   the molecule
      * @throws CDKException if an error occurs
      */
-    @TestMethod("getMappedSubstructures_IAtomContainer")
     public IAtomContainerSet getMappedSubstructures(IAtomContainer molecule) throws CDKException {
         logger.debug("Trying get mapped substructures...");
         IAtomContainerSet matchedSubstructures = molecule.getBuilder().newInstance(IAtomContainerSet.class);

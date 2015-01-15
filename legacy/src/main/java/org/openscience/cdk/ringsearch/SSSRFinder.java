@@ -24,8 +24,6 @@ package org.openscience.cdk.ringsearch;
 
 import org._3pq.jgrapht.UndirectedGraph;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -57,7 +55,6 @@ import java.util.List;
  * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings_Berger
  *
  */
-@TestClass("org.openscience.cdk.ringsearch.SSSRFinderTest")
 public class SSSRFinder {
 
     private IAtomContainer atomContainer;
@@ -78,7 +75,6 @@ public class SSSRFinder {
      *
      * @return      a RingSet containing the SSSR
      */
-    @TestMethod("testFindSSSR,testFindSSSR_IAtomContainer")
     public IRingSet findSSSR() {
         if (atomContainer == null) {
             return null;

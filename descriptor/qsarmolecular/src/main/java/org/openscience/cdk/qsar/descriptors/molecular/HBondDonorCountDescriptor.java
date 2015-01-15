@@ -19,8 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -68,7 +66,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:hBondDonors
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptorTest")
 public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"nHBDon"};
@@ -84,7 +81,6 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
      *
      * @return    The specification value
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -98,7 +94,6 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
      * @param  params            this descriptor does not have any parameters
      * @exception  CDKException  Description of the Exception
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // this descriptor has no parameters; nothing has to be done here
@@ -109,14 +104,12 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
      *
      * @return    null as this descriptor does not have any parameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // no parameters; thus we return null
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -133,7 +126,6 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
      * @param  atomContainer               AtomContainer
      * @return                   number of H bond donors
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         int hBondDonors = 0;
@@ -184,7 +176,6 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
@@ -195,7 +186,6 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
      *
      * @return    null as this descriptor does not have any parameters
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         // no parameters; thus we return null
@@ -208,7 +198,6 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
      * @param  name  Description of the Parameter
      * @return       null as this descriptor does not have any parameters
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         // no parameters; thus we return null

@@ -20,8 +20,6 @@ package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -36,7 +34,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.githash
  * @cdk.keyword atom coloring, partial charges
  */
-@TestClass("org.openscience.cdk.renderer.color.PartialAtomicChargeColorsTest")
 public class PartialAtomicChargeColors implements IAtomColorer {
 
     /**
@@ -45,7 +42,6 @@ public class PartialAtomicChargeColors implements IAtomColorer {
      * @param atom         IAtom to get a color for
      * @return             the color for the given atom.
      */
-    @TestMethod("testGetAtomColor")
     @Override
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, Color.white);
@@ -60,7 +56,6 @@ public class PartialAtomicChargeColors implements IAtomColorer {
      *                     a color for the passed IAtom
      * @return             the color for the given atom.
      */
-    @TestMethod("testGetDefaultAtomColor")
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;

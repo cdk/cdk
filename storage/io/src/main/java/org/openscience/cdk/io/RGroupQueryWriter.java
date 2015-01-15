@@ -34,7 +34,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -94,7 +93,6 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
      * Returns true for accepted input types.
      */
     @SuppressWarnings("unchecked")
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
@@ -109,7 +107,6 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         writer.close();
@@ -141,7 +138,6 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
     /**
      * Returns output format.
      */
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return RGroupQueryFormat.getInstance();

@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -73,7 +71,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @author John May
  * @cdk.module isomorphism
  */
-@TestClass("org.openscience.cdk.isomorphism.UllmannTest")
 public final class Ullmann extends Pattern {
 
     /** The query structure. */
@@ -110,13 +107,11 @@ public final class Ullmann extends Pattern {
         this.queryMatching = query instanceof IQueryAtomContainer;
     }
 
-    @TestMethod("benzeneSubsearch,napthaleneSubsearch")
     @Override
     public int[] match(IAtomContainer target) {
         return matchAll(target).stereochemistry().first();
     }
 
-    @TestMethod("benzeneSubsearch,napthaleneSubsearch")
     @Override
     public Mappings matchAll(IAtomContainer target) {
         EdgeToBondMap bonds2 = EdgeToBondMap.withSpaceFor(target);
@@ -132,7 +127,6 @@ public final class Ullmann extends Pattern {
      * @param query the substructure to find
      * @return a pattern for finding the {@code query}
      */
-    @TestMethod("benzeneSubsearch,napthaleneSubsearch")
     public static Pattern findSubstructure(IAtomContainer query) {
         boolean isQuery = query instanceof IQueryAtomContainer;
         return new Ullmann(query, isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),

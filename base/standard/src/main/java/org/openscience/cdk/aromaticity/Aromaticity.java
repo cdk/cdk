@@ -25,8 +25,6 @@
 package org.openscience.cdk.aromaticity;
 
 import com.google.common.collect.Sets;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.CycleFinder;
 import org.openscience.cdk.graph.Cycles;
@@ -97,7 +95,6 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @see <a href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</a>
  * @see <a href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</a>
  */
-@TestClass("org.openscience.cdk.aromaticity.AromaticityTest")
 public final class Aromaticity {
 
     /** Find how many electrons each atom contributes. */
@@ -177,7 +174,6 @@ public final class Aromaticity {
      * @throws CDKException a problem occurred with the cycle perception - one
      *                      can retry with a simpler cycle set
      */
-    @TestMethod("benzene,furan,quinone")
     public Set<IBond> findBonds(IAtomContainer molecule) throws CDKException {
 
         // build graph data-structures for fast cycle perception
@@ -235,7 +231,6 @@ public final class Aromaticity {
      * @param molecule the molecule to apply the model to
      * @return the model found the molecule was aromatic
      */
-    @TestMethod("clearFlags_quinone")
     public boolean apply(IAtomContainer molecule) throws CDKException {
 
         Set<IBond> bonds = findBonds(molecule);
@@ -284,7 +279,6 @@ public final class Aromaticity {
      * @param contributions π-electron contribution from each atom
      * @return the total sum of π-electrons contributed by the {@code cycle}
      */
-    @TestMethod("electronSum,electronSum_negative")
     static int electronSum(final int[] cycle, final int[] contributions, final int[] subset) {
         int sum = 0;
         for (int i = 1; i < cycle.length; i++)
@@ -300,7 +294,6 @@ public final class Aromaticity {
      * @return there is an {@code n} such that {@code 4n + 2} is equal to the
      *         provided {@code sum}.
      */
-    @TestMethod("validSum")
     static boolean validSum(final int sum) {
         return (sum - 2) % 4 == 0;
     }

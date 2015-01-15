@@ -23,8 +23,6 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
@@ -33,7 +31,6 @@ import org.openscience.cdk.interfaces.IRing;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.manipulator.RingManipulatorTest")
 public class RingManipulator {
 
     /**
@@ -44,7 +41,6 @@ public class RingManipulator {
      *
      * @param ring The ring to examine
      */
-    @TestMethod("testMarkAromaticRings")
     public static void markAromaticRings(IRing ring) {
         // return as soon as the conditions are not met:
         // 1. all atoms are labeled aromatic

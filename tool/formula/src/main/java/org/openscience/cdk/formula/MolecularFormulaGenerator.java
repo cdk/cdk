@@ -26,8 +26,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.TreeSet;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -74,7 +72,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created 2014-12-28
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.formula.MolecularFormulaGeneratorTest")
 public class MolecularFormulaGenerator {
 
     private static final ILoggingTool logger = LoggingToolFactory
@@ -195,7 +192,6 @@ public class MolecularFormulaGenerator {
      * (search is finished). There is no guaranteed order in which the formulas
      * are generated.
      */
-    @TestMethod("testGetNextFormula")
     public synchronized IMolecularFormula getNextFormula() {
 
         // Main cycle iterating through element counters
@@ -247,7 +243,6 @@ public class MolecularFormulaGenerator {
      * 
      * @see #getNextFormula()
      */
-    @TestMethod("testGetAllFormulas")
     public synchronized IMolecularFormulaSet getAllFormulas() {
 
         final IMolecularFormulaSet result = builder
@@ -345,7 +340,6 @@ public class MolecularFormulaGenerator {
      * returned value might be slightly off due to rounding errors). This method
      * can be called from any thread.
      */
-    @TestMethod("testGetFinishedPercentage")
     public double getFinishedPercentage() {
         double result = 0.0;
         double remainingPerc = 1.0;
@@ -373,7 +367,6 @@ public class MolecularFormulaGenerator {
      * moment. The search cannot be restarted once canceled - any subsequent
      * calls to {@link getNextFormula()} will return null.
      */
-    @TestMethod("testCancel")
     public void cancel() {
         logger.info("Canceling MolecularFormulaGenerator");
         this.searchRunning = false;

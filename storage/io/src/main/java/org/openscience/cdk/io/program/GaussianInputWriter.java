@@ -30,8 +30,6 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,7 +54,6 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  *
  * @cdk.keyword Gaussian (tm), input file
  */
-@TestClass("org.openscience.cdk.io.program.GaussianInputWriterTest")
 public class GaussianInputWriter extends DefaultChemObjectWriter {
 
     static BufferedWriter writer;
@@ -94,7 +91,6 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return GaussianInputFormat.getInstance();
@@ -114,19 +110,16 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         setWriter(new OutputStreamWriter(output));
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         writer.close();
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         return IAtomContainer.class.isAssignableFrom(classObject);
     }
 
-    @TestMethod("testWrite")
     @Override
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IAtomContainer) {

@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -64,7 +62,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref    qsar-descriptors:petitjeanNumber
  * @cdk.keyword    Petit-Jean, number
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.PetitjeanNumberDescriptorTest")
 public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"PetitjeanNumber"};
@@ -79,7 +76,6 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
      *
      *@return    The specification value
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -93,7 +89,6 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
@@ -104,14 +99,12 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
      *
      *@return    The parameters value
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return (null);
         // no parameters to return
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -123,7 +116,6 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
      *@param  atomContainer                AtomContainer
      *@return                   petitjean number
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer cloneContainer = AtomContainerManipulator.removeHydrogens(atomContainer);
@@ -150,7 +142,6 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
@@ -161,7 +152,6 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         // no param names to return
@@ -174,7 +164,6 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return (null);

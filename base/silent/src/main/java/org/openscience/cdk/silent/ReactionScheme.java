@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 
@@ -62,7 +61,6 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
      *
      * @param scheme The IReactionScheme to include
      */
-    @TestMethod("testAdd_IReactionScheme")
     @Override
     public void add(IReactionScheme scheme) {
         reactionScheme.add(scheme);
@@ -74,7 +72,6 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
      *
      * @return    An Iterable with the IMolecularScheme in this ReactionScheme
      */
-    @TestMethod("testReactionSchemes")
     @Override
     public Iterable<IReactionScheme> reactionSchemes() {
         return reactionScheme;
@@ -85,7 +82,6 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
      *
      * @return     The number of ReactionScheme in this Scheme
      */
-    @TestMethod("testGetReactionSchemeCount")
     @Override
     public int getReactionSchemeCount() {
         return reactionScheme.size();
@@ -94,7 +90,6 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
     /**
      * Removes all IReactionScheme from this chemObject.
      */
-    @TestMethod("testRemoveAllReactionSchemes")
     @Override
     public void removeAllReactionSchemes() {
         reactionScheme.clear();
@@ -105,7 +100,6 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
      *
      * @param  scheme  The IReactionScheme to be removed from this chemObject
      */
-    @TestMethod("testRemoveReactionScheme_IReactionScheme")
     @Override
     public void removeReactionScheme(IReactionScheme scheme) {
         reactionScheme.remove(scheme);
@@ -116,7 +110,6 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
      *
      * @return    The cloned object
      */
-    @TestMethod("testClone")
     @Override
     public Object clone() throws CloneNotSupportedException {
 

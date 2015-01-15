@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -60,7 +58,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:partialPiCharge
  * @see         GasteigerPEPEPartialCharges
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptorTest")
 public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[]       NAMES = {"pepe"};
@@ -86,7 +83,6 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *
      *@return The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -102,7 +98,6 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *							number of maximum resonance structures to be searched.
      *@exception CDKException  Description of the Exception
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 3)
@@ -130,7 +125,6 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *
      *@return The parameters value
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -141,7 +135,6 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -161,7 +154,6 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@param  ac                AtomContainer
      *@return                   Value of the alpha partial charge
      */
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
@@ -221,7 +213,6 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[3];
@@ -238,7 +229,6 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         if ("maxIterations".equals(name)) return Integer.MAX_VALUE;

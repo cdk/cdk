@@ -32,8 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -59,7 +57,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.keyword file format, PubChem Compound ASN
  */
-@TestClass("org.openscience.cdk.io.PCCompoundASNReaderTest")
 public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
@@ -85,13 +82,11 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return PubChemASNFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -101,13 +96,11 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -137,7 +130,6 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

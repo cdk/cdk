@@ -36,8 +36,6 @@ import java.util.Locale;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -60,7 +58,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.githash
  * @cdk.module  io
  */
-@TestClass("org.openscience.cdk.io.program.Mopac7WriterTest")
 public class Mopac7Writer extends DefaultChemObjectWriter {
 
     private BufferedWriter      writer;
@@ -105,7 +102,6 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testWrite")
     public synchronized void write(IChemObject arg0) throws CDKException {
         customizeJob();
         if (arg0 instanceof IAtomContainer)
@@ -163,14 +159,12 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testClose")
     public void close() throws IOException {
         writer.close();
     }
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
@@ -184,21 +178,18 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MOPAC7InputFormat.getInstance();
     }
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testSetWriter_Writer")
     public void setWriter(OutputStream writer) throws CDKException {
         setWriter(new OutputStreamWriter(writer));
     }
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("testSetWriter_OutputStream")
     public void setWriter(Writer writer) throws CDKException {
         if (this.writer != null) {
             try {

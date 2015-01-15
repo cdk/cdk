@@ -28,8 +28,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -51,7 +49,6 @@ import org.xmlpull.v1.XmlPullParserFactory;
  *
  * @cdk.keyword file format, PubChem Compound ASN
  */
-@TestClass("org.openscience.cdk.io.PCSubstanceXMLReaderTest")
 public class PCSubstanceXMLReader extends DefaultChemObjectReader {
 
     private Reader             input;
@@ -78,13 +75,11 @@ public class PCSubstanceXMLReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return PubChemSubstanceXMLFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader input) throws CDKException {
         try {
@@ -99,13 +94,11 @@ public class PCSubstanceXMLReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         return IAtomContainer.class.isAssignableFrom(classObject);
@@ -130,7 +123,6 @@ public class PCSubstanceXMLReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

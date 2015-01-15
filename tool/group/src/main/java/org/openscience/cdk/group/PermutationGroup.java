@@ -25,8 +25,6 @@ package org.openscience.cdk.group;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * <p>
@@ -75,7 +73,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module group
  *
  */
-@TestClass("org.openscience.cdk.group.PermutationGroup")
 public class PermutationGroup {
 
     /**
@@ -120,7 +117,6 @@ public class PermutationGroup {
      *
      * @param size the number of elements in the base permutation
      */
-    @TestMethod("sizeConstructor")
     public PermutationGroup(int size) {
         this(new Permutation(size));
     }
@@ -130,7 +126,6 @@ public class PermutationGroup {
      *
      * @param base the permutation that the group is based on
      */
-    @TestMethod("baseConstructor")
     public PermutationGroup(Permutation base) {
         this.size = base.size();
         this.base = new Permutation(base);
@@ -148,7 +143,6 @@ public class PermutationGroup {
      * @param size the size of the group
      * @param generators the generators to use to make the group
      */
-    @TestMethod("generatorConstructor")
     public PermutationGroup(int size, List<Permutation> generators) {
         this(new Permutation(size));
         for (Permutation generator : generators) {
@@ -163,7 +157,6 @@ public class PermutationGroup {
      * @param size the size of the permutation
      * @return a group for all permutations of N
      */
-    @TestMethod("makeSymNTest")
     public static PermutationGroup makeSymN(int size) {
         List<Permutation> generators = new ArrayList<Permutation>();
 
@@ -194,7 +187,6 @@ public class PermutationGroup {
      *
      * @return the size of the permutations
      */
-    @TestMethod("getSizeTest")
     public int getSize() {
         return size;
     }
@@ -204,7 +196,6 @@ public class PermutationGroup {
      *
      * @return the (total) number of permutations in the group
      */
-    @TestMethod("orderTest")
     public long order() {
         // A group may have a size larger than Integer.MAX_INTEGER
         // (2 ** 32 - 1) - for example sym(13) is larger.
@@ -228,7 +219,6 @@ public class PermutationGroup {
      * @param uSubIndex the index of the permutation within Ui.
      * @return a permutation
      */
-    @TestMethod("getTest")
     public Permutation get(int uIndex, int uSubIndex) {
         return this.permutations[uIndex][uSubIndex];
     }
@@ -239,7 +229,6 @@ public class PermutationGroup {
      * @param index the index of the transversal
      * @return a list of permutations
      */
-    @TestMethod("getLeftTransversalTest")
     public List<Permutation> getLeftTransversal(int index) {
         List<Permutation> traversal = new ArrayList<Permutation>();
         for (int subIndex = 0; subIndex < size; subIndex++) {
@@ -256,7 +245,6 @@ public class PermutationGroup {
      * @param subgroup the subgroup to use for the transversal
      * @return a list of permutations
      */
-    @TestMethod("transversalTest")
     public List<Permutation> transversal(final PermutationGroup subgroup) {
         final long m = this.order() / subgroup.order();
         final List<Permutation> results = new ArrayList<Permutation>();
@@ -293,7 +281,6 @@ public class PermutationGroup {
      *
      * @param backtracker a hook for acting on the permutations
      */
-    @TestMethod("applyTest,apply_FinishEarlyTest")
     public void apply(Backtracker backtracker) {
         this.backtrack(0, new Permutation(size), backtracker);
     }
@@ -319,7 +306,6 @@ public class PermutationGroup {
      *
      * @return a list of permutations
      */
-    @TestMethod("allTest")
     public List<Permutation> all() {
         final List<Permutation> permutations = new ArrayList<Permutation>();
         Backtracker counter = new Backtracker() {
@@ -343,7 +329,6 @@ public class PermutationGroup {
      *
      * @param newBase the new base for the group
      */
-    @TestMethod("changeBaseTest")
     public void changeBase(Permutation newBase) {
         PermutationGroup h = new PermutationGroup(newBase);
 
@@ -377,7 +362,6 @@ public class PermutationGroup {
      *
      * @param g a permutation to add to the group
      */
-    @TestMethod("enterTest")
     public void enter(Permutation g) {
         int deg = size;
         int i = test(g);
@@ -405,7 +389,6 @@ public class PermutationGroup {
      * @param permutation the one to test
      * @return the position it should be in the group, if any
      */
-    @TestMethod("test_SuccessTest,test_FailureTest")
     public int test(Permutation permutation) {
         for (int i = 0; i < size; i++) {
             int x = permutation.get(base.get(i));

@@ -25,8 +25,6 @@ package org.openscience.cdk.signature;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -76,7 +74,6 @@ import signature.AbstractVertexSignature;
  * @author maclean
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.signature.AtomSignatureTest")
 public class AtomSignature extends AbstractVertexSignature {
 
     /**
@@ -162,7 +159,6 @@ public class AtomSignature extends AbstractVertexSignature {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("getIntLabelTest")
     protected int getIntLabel(int vertexIndex) {
         IAtom atom = molecule.getAtom(vertexIndex);
         return atom.getMassNumber();
@@ -170,7 +166,6 @@ public class AtomSignature extends AbstractVertexSignature {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("getConnectedTest")
     protected int[] getConnected(int vertexIndex) {
         IAtom atom = this.molecule.getAtom(vertexIndex);
         List<IAtom> connected = this.molecule.getConnectedAtomsList(atom);
@@ -184,7 +179,6 @@ public class AtomSignature extends AbstractVertexSignature {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("getEdgeLabelTest,getAromaticEdgeLabelTest")
     protected String getEdgeLabel(int vertexIndex, int otherVertexIndex) {
         IAtom atomA = this.molecule.getAtom(vertexIndex);
         IAtom atomB = this.molecule.getAtom(otherVertexIndex);
@@ -213,14 +207,12 @@ public class AtomSignature extends AbstractVertexSignature {
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("getVertexSymbolTest")
     protected String getVertexSymbol(int vertexIndex) {
         return this.molecule.getAtom(vertexIndex).getSymbol();
     }
 
     @Override
     /** {@inheritDoc} */
-    @TestMethod("convertEdgeLabelToColorTest")
     protected int convertEdgeLabelToColor(String edgeLabel) {
         if (edgeLabel.equals("")) {
             return 1;

@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
@@ -75,7 +73,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module  fingerprint
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.MACCSFingerprinterTest")
 public class MACCSFingerprinter implements IFingerprinter {
 
     private static ILoggingTool logger          = LoggingToolFactory.createLoggingTool(MACCSFingerprinter.class);
@@ -84,7 +81,6 @@ public class MACCSFingerprinter implements IFingerprinter {
 
     private volatile MaccsKey[] keys            = null;
 
-    @TestMethod("testFingerprint")
     public MACCSFingerprinter() {}
 
     public MACCSFingerprinter(IChemObjectBuilder builder) {
@@ -98,7 +94,6 @@ public class MACCSFingerprinter implements IFingerprinter {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testFingerprint,testfp2")
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
 
@@ -150,14 +145,12 @@ public class MACCSFingerprinter implements IFingerprinter {
     }
 
     /** {@inheritDoc} */
-    @TestMethod("testGetRawFingerprint")
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
 
     /** {@inheritDoc} */
-    @TestMethod("getsize")
     @Override
     public int getSize() {
         if (keys != null)
@@ -207,7 +200,6 @@ public class MACCSFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @Override
-    @TestMethod("testGetRawFingerprint")
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         throw new UnsupportedOperationException();
     }

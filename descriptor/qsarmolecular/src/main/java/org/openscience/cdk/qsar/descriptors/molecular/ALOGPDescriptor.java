@@ -21,8 +21,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -91,7 +89,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.keyword refractivity
  * @see org.openscience.cdk.tools.CDKHydrogenAdder
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptorTest")
 public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ALOGPDescriptor.class);
@@ -1898,7 +1895,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
      * @param atomContainer the molecule to calculate on
      * @return the result of the calculation
      */
-    @TestMethod("testCalculate_IAtomContainer,testChloroButane")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer container;
@@ -1971,42 +1967,35 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(3);
     }
 
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
                 this.getClass().getName(), "The Chemistry Development Kit");
     }
 
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
     }
 
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;
     }
 
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return STRINGS;

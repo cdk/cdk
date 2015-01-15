@@ -19,8 +19,6 @@
 package org.openscience.cdk.charges;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -50,7 +48,6 @@ import java.util.List;
  * @cdk.keyword polarizability
  * @cdk.module     charges
  */
-@TestClass("org.openscience.cdk.charges.PolarizabilityTest")
 public class Polarizability {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(Polarizability.class);
@@ -84,7 +81,6 @@ public class Polarizability {
      *@param  atom  atom for which the factor should become known
      *@return       The polarizabilitiyFactorForAtom value
      */
-    @TestMethod("testGetPolarizabilitiyFactorForAtom_IAtomContainer_IAtom")
     public double getPolarizabilitiyFactorForAtom(IAtomContainer atomContainer, IAtom atom) {
         IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
         addExplicitHydrogens(acH);
@@ -97,7 +93,6 @@ public class Polarizability {
      *@param  atomContainer  AtomContainer
      *@return     polarizabilitiy
      */
-    @TestMethod("testCalculateKJMeanMolecularPolarizability")
     public double calculateKJMeanMolecularPolarizability(IAtomContainer atomContainer) {
         double polarizabilitiy = 0;
         IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
@@ -118,7 +113,6 @@ public class Polarizability {
      *  been added to the molecule before being called
      * @return polarizabilitiy
      */
-    @TestMethod("testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Int_Boolean")
     public double calculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer, IAtom atom,
             int influenceSphereCutOff, boolean addExplicitH) {
         double polarizabilitiy = 0;
@@ -161,7 +155,6 @@ public class Polarizability {
      *                              form of the method is useful, if it is being called for multiple atoms in the same molecule
      * @return polarizabilitiy
      */
-    @TestMethod("testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt")
     public double calculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer, IAtom atom,
             boolean addExplicitH, int[][] distanceMatrix) {
         double polarizabilitiy = 0;
@@ -200,7 +193,6 @@ public class Polarizability {
      *@param  bond  Bond bond for which the polarizabilitiy should be calculated
      *@return       polarizabilitiy
      */
-    @TestMethod("testCalculateBondPolarizability_IAtomContainer_IBond")
     public double calculateBondPolarizability(IAtomContainer atomContainer, IBond bond) {
         double polarizabilitiy = 0;
         IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);

@@ -39,8 +39,6 @@ import java.util.regex.Pattern;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
@@ -70,7 +68,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author E.L. Willighagen
  * @cdk.require java1.4+
  */
-@TestClass("org.openscience.cdk.io.PMPReaderTest")
 public class PMPReader extends DefaultChemObjectReader {
 
     private static final String   PMP_ZORDER   = "ZOrder";
@@ -125,13 +122,11 @@ public class PMPReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return PMPFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -141,13 +136,11 @@ public class PMPReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -481,7 +474,6 @@ public class PMPReader extends DefaultChemObjectReader {
         }
     };
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

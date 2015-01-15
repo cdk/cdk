@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -45,7 +43,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.keyword LogP
  * @cdk.keyword descriptor
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.MannholdLogPDescriptorTest")
 public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"MLogP"};
@@ -55,7 +52,6 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      *
      * @return    The specification value
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/"
@@ -72,7 +68,6 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      *                           are passed
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params != null && params.length > 0) {
@@ -86,13 +81,11 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      * @return    A zero-length Object array.
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return new Object[0];
     }
 
-    @TestMethod("testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -110,7 +103,6 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      *                            descriptor value for.
      * @return A descriptor value wrapping a {@link DoubleResult}.
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac = null;
@@ -142,7 +134,6 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      *
      * @return returns a {@link DoubleResult}.
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
@@ -153,7 +144,6 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      *
      * @return    A zero-length String array.
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -166,7 +156,6 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      * @param  name  Name of the parameter for which the type is requested.
      * @return       The parameterType of the given parameter.
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

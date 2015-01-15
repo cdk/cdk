@@ -21,7 +21,6 @@ package org.openscience.cdk.qsar.descriptors.atompair;
 
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
@@ -127,7 +126,6 @@ public class PiContactDetectionDescriptor extends AbstractAtomPairDescriptor imp
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;

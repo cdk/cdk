@@ -38,8 +38,6 @@ import java.util.zip.CRC32;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -82,7 +80,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.module     standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.CircularFingerprinterTest")
 public class CircularFingerprinter implements IFingerprinter {
 
     // ------------ constants ------------
@@ -253,7 +250,6 @@ public class CircularFingerprinter implements IFingerprinter {
      * @param  mol IAtomContainer for which the fingerprint should be calculated.
      * @return the fingerprint
      */
-    @TestMethod("testGetBitFingerprint")
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer mol) throws CDKException {
         calculate(mol);
@@ -273,7 +269,6 @@ public class CircularFingerprinter implements IFingerprinter {
      * @param  mol IAtomContainer for which the fingerprint should be calculated.
      * @return the count fingerprint
      */
-    @TestMethod("testGetCountFingerprint")
     @Override
     public ICountFingerprint getCountFingerprint(IAtomContainer mol) throws CDKException {
         calculate(mol);

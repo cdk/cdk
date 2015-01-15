@@ -30,8 +30,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
@@ -51,7 +49,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.helper.MolHandlerTest")
 public class MolHandler {
 
     private IAtomContainer             atomContainer  = null;
@@ -66,7 +63,6 @@ public class MolHandler {
      * @param removeHydrogen
      *
      */
-    @TestMethod("MolHandlerTest")
     public MolHandler(String molFile, boolean removeHydrogen, boolean cleanMolecule) {
 
         MDLReader molRead = null;
@@ -119,7 +115,6 @@ public class MolHandler {
      * @param cleanMolecule
      * @param removeHydrogen
      */
-    @TestMethod("MolHandlerTest")
     public MolHandler(IAtomContainer container, boolean removeHydrogen, boolean cleanMolecule) {
         String molID = container.getID();
         this.removeHydrogen = removeHydrogen;
@@ -158,7 +153,6 @@ public class MolHandler {
      * Returns the modified container
      * @return get processed / modified container
      */
-    @TestMethod("testGetMolecule")
     public IAtomContainer getMolecule() {
         return atomContainer;
     }
@@ -167,7 +161,6 @@ public class MolHandler {
      * Returns true if hydrogens were made implicit else return false
      * @return true if remove H else false
      */
-    @TestMethod("testGetRemoveHydrogenFlag")
     public boolean getRemoveHydrogenFlag() {
         return removeHydrogen;
     }

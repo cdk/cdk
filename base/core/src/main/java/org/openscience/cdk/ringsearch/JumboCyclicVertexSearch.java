@@ -22,9 +22,6 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -36,7 +33,6 @@ import java.util.List;
  * @author John May
  * @cdk.module core
  */
-@TestClass("org.openscience.cdk.ringsearch.JumboCyclicVertexSearchTest")
 class JumboCyclicVertexSearch implements CyclicVertexSearch {
 
     /* graph representation */
@@ -65,7 +61,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
      *
      * @param graph adjacency list representation of a graph
      */
-    @TestMethod("testEmpty")
     JumboCyclicVertexSearch(int[][] graph) {
         this.g = graph;
         final int n = graph.length;
@@ -148,7 +143,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
      *
      * @return vertex colors
      */
-    @TestMethod("vertexColor")
     @Override
     public int[] vertexColor() {
         int[] result = colors;
@@ -188,7 +182,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     /**
      * @inheritDoc
      */
-    @TestMethod("testCyclic_Int")
     @Override
     public boolean cyclic(int v) {
         return cyclic.get(v);
@@ -197,7 +190,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     /**
      * @inheritDoc
      */
-    @TestMethod("testCyclic_IntInt")
     @Override
     public boolean cyclic(int u, int v) {
 
@@ -225,7 +217,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     /**
      * @inheritDoc
      */
-    @TestMethod("testCyclic")
     @Override
     public int[] cyclic() {
         return toArray(cyclic);
@@ -234,9 +225,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     /**
      * @inheritDoc
      */
-    @TestMethod("testIsolated,testIsolated_NonCyclic,testIsolated_Empty,"
-            + "testIsolated_Spiro,testIsolated_SpiroMedium," + "testIsolated_Biphenyl,testIsolated_BenzylBenzene,"
-            + "testIsolatedFragments")
     @Override
     public int[][] isolated() {
         List<int[]> isolated = new ArrayList<int[]>(cycles.size());
@@ -249,8 +237,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     /**
      * @inheritDoc
      */
-    @TestMethod("testFused,testFused_BiocycloEdgeLinked," + "testFused_BiocycloVertexLinked,testFused_Orthofused,"
-            + "testFused_Biorthofused,testFused_Cylclophane," + "testFused_Fullerene")
     @Override
     public int[][] fused() {
         List<int[]> fused = new ArrayList<int[]>(cycles.size());
@@ -345,7 +331,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
      * @param set input with 0 or more set bits
      * @return the bits which are set in the input
      */
-    @TestMethod("testToArray,testToArray_Empty")
     static int[] toArray(BitSet set) {
         int[] vertices = new int[set.cardinality()];
         int i = 0;
@@ -368,7 +353,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
      * @param y second bit set
      * @return the XOR of the two bit sets
      */
-    @TestMethod("testXor")
     static BitSet xor(BitSet x, BitSet y) {
         BitSet z = copy(x);
         z.xor(y);
@@ -383,7 +367,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
      * @param y second bit set
      * @return the AND of the two bit sets
      */
-    @TestMethod("testAnd")
     static BitSet and(BitSet x, BitSet y) {
         BitSet z = copy(x);
         z.and(y);
@@ -396,7 +379,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
      * @param org input bit set
      * @return copy of the input
      */
-    @TestMethod("testCopy")
     static BitSet copy(BitSet org) {
         BitSet cpy = (BitSet) org.clone();
         return cpy;

@@ -23,8 +23,6 @@ import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -50,7 +48,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.keyword charge distribution
  * @cdk.keyword electronegativity
  */
-@TestClass("org.openscience.cdk.charges.InductivePartialChargesTest")
 public class InductivePartialCharges implements IChargeCalculator {
 
     private static double[]     pauling;
@@ -82,7 +79,6 @@ public class InductivePartialCharges implements IChargeCalculator {
      *@return                AtomContainer
      *@exception  Exception  Description of the Exception
      */
-    @TestMethod("testInductivePartialCharges")
     public IAtomContainer assignInductivePartialCharges(IAtomContainer ac) throws Exception {
         if (factory == null) {
             factory = AtomTypeFactory
@@ -119,7 +115,6 @@ public class InductivePartialCharges implements IChargeCalculator {
         return ac;
     }
 
-    @TestMethod("testCalculateCharges_IAtomContainer")
     @Override
     public void calculateCharges(IAtomContainer container) throws CDKException {
         try {
@@ -139,7 +134,6 @@ public class InductivePartialCharges implements IChargeCalculator {
      *@return                The pauling electronegativities
      *@exception  Exception  Description of the Exception
      */
-    @TestMethod("testGetPaulingElectronegativities")
     public double[] getPaulingElectronegativities(IAtomContainer ac, boolean modified) throws CDKException {
         double[] paulingElectronegativities = new double[ac.getAtomCount()];
         IElement element = null;
@@ -208,7 +202,6 @@ public class InductivePartialCharges implements IChargeCalculator {
     // this method returns the result of the core of the equation of atomic softness
     // that can be used for qsar descriptors and during the iterative calculation
     // of effective electronegativity
-    @TestMethod("testGetAtomicSoftness")
     public double getAtomicSoftnessCore(IAtomContainer ac, int atomPosition) throws CDKException {
         if (factory == null) {
             factory = AtomTypeFactory

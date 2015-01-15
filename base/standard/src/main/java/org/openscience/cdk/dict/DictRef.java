@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.dict;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Object that can be used as key in IChemObject.setProperty(key, value) to
@@ -35,7 +33,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module  standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.dict.DictRefTest")
 public class DictRef implements java.io.Serializable, Cloneable {
 
     private static final long serialVersionUID = -3691244168587563625L;
@@ -48,17 +45,14 @@ public class DictRef implements java.io.Serializable, Cloneable {
         this.reference = dictRef;
     }
 
-    @TestMethod("testGetDictRef")
     public String getReference() {
         return reference;
     }
 
-    @TestMethod("testGetType")
     public String getType() {
         return type;
     }
 
-    @TestMethod("testToString")
     @Override
     public String toString() {
         return "DictRef{T=" + this.type + ", R=" + reference + "}";

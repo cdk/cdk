@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 
 /**
@@ -32,7 +31,6 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.module qsar
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.qsar.DescriptorExceptionTest")
 public class DescriptorException extends CDKException {
 
     private static final long serialVersionUID = 2564845219649348102L;

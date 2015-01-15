@@ -17,7 +17,6 @@
  */
 package org.openscience.cdk.atomtype;
 
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -52,7 +51,6 @@ public class StructGenMatcher implements IAtomTypeMatcher {
      */
     public StructGenMatcher() {}
 
-    @TestMethod("testFindMatchingAtomType_IAtomContainer")
     @Override
     public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];

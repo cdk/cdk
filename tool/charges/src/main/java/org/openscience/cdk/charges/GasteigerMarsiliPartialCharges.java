@@ -20,8 +20,6 @@ package org.openscience.cdk.charges;
 
 import java.util.Iterator;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,7 +42,6 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.keyword electronegativities, partial equalization of orbital
  * @cdk.keyword PEOE
  */
-@TestClass("org.openscience.cdk.charges.GasteigerMarsiliPartialChargesTest")
 public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
 
     private double DEOC_HYDROGEN = 20.02;
@@ -64,7 +61,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *
      *@param  chiCat  The new DEOC_HYDROGEN value
      */
-    @TestMethod("testSetChiCatHydrogen_Double")
     public void setChiCatHydrogen(double chiCat) {
         DEOC_HYDROGEN = chiCat;
     }
@@ -75,7 +71,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *
      *@param  damp  The new maxGasteigerDamp value
      */
-    @TestMethod("testSetMaxGasteigerDamp_Double")
     public void setMaxGasteigerDamp(double damp) {
         MX_DAMP = damp;
     }
@@ -86,7 +81,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *
      *@param  iters  The new maxGasteigerIters value
      */
-    @TestMethod("testSetMaxGasteigerIters_Double")
     public void setMaxGasteigerIters(double iters) {
         MX_ITERATIONS = iters;
     }
@@ -96,7 +90,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
       *
       * @return  The new DEOC_HYDROGEN value
       */
-    @TestMethod("testGetChiCatHydrogen")
     public double getChiCatHydrogen() {
         return DEOC_HYDROGEN;
     }
@@ -107,7 +100,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *
      * @return  The new maxGasteigerDamp value
      */
-    @TestMethod("testGetMaxGasteigerDamp")
     public double getMaxGasteigerDamp() {
         return MX_DAMP;
     }
@@ -118,7 +110,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *
      * @return  The new maxGasteigerIters value
      */
-    @TestMethod("testGetMaxGasteigerIters")
     public double getMaxGasteigerIters() {
         return MX_ITERATIONS;
     }
@@ -131,7 +122,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *@return                AtomContainer with partial charges
      *@exception  Exception  Possible Exceptions
      */
-    @TestMethod("testAssignGasteigerMarsiliSigmaPartialCharges_IAtomContainer_Boolean")
     public IAtomContainer assignGasteigerMarsiliSigmaPartialCharges(IAtomContainer ac, boolean setCharge)
             throws Exception {
 
@@ -206,7 +196,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
         return ac;
     }
 
-    @TestMethod("testCalculateCharges_IAtomContainer")
     @Override
     public void calculateCharges(IAtomContainer container) throws CDKException {
         try {
@@ -223,7 +212,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *
      *@return STEP_SIZE
      */
-    @TestMethod("testGetStepSize")
     public int getStepSize() {
         return STEP_SIZE;
     }
@@ -234,7 +222,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *
      * @param step size of the step
      */
-    @TestMethod("testSetStepSize")
     public void setStepSize(int step) {
         STEP_SIZE = step;
     }
@@ -245,7 +232,6 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      *@param  ac  AtomContainer
      *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
      */
-    @TestMethod("testAssignGasteigerSigmaMarsiliFactors_IAtomContainer")
     public double[] assignGasteigerSigmaMarsiliFactors(IAtomContainer ac) throws CDKException {
         //a,b,c,denom,chi,q
         double[] gasteigerFactors = new double[(ac.getAtomCount() * (STEP_SIZE + 1))];

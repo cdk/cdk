@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.result;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Object that provides access to the calculated descriptor value.
@@ -27,7 +25,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.qsar.result.IntegerResultTest")
 public class IntegerResult implements IDescriptorResult {
 
     private static final long serialVersionUID = -8066984646119839996L;
@@ -38,18 +35,15 @@ public class IntegerResult implements IDescriptorResult {
         this.value = value;
     }
 
-    @TestMethod("testIntValue")
     public int intValue() {
         return this.value;
     }
 
-    @TestMethod("testToString")
     @Override
     public String toString() {
         return Integer.toString(value);
     }
 
-    @TestMethod("testLength")
     @Override
     public int length() {
         return 1;

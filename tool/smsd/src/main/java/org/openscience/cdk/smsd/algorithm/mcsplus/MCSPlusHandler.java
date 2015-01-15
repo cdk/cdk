@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -47,7 +45,6 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     private static List<Map<IAtom, IAtom>>     allAtomMCS   = null;
@@ -73,7 +70,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param source
      * @param target
      */
-    @TestMethod("testSet_MolHandler_MolHandler")
     @Override
     public synchronized void set(MolHandler source, MolHandler target) {
         this.source = source.getMolecule();
@@ -85,7 +81,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param source
      * @param target
      */
-    @TestMethod("testSet_IQueryAtomContainer_MolHandler")
     @Override
     public void set(IQueryAtomContainer source, IAtomContainer target) {
         this.source = source;
@@ -98,7 +93,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param shouldMatchBonds
      */
     @Override
-    @TestMethod("testSearchMCS")
     public synchronized void searchMCS(boolean shouldMatchBonds) {
         List<List<Integer>> mappings = null;
         try {
@@ -184,7 +178,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testSearchMCS")
     @Override
     public synchronized List<Map<Integer, Integer>> getAllMapping() {
         return allMCS;
@@ -192,7 +185,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testSearchMCS")
     @Override
     public synchronized Map<Integer, Integer> getFirstMapping() {
         return firstMCS;
@@ -200,7 +192,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testSearchMCS")
     @Override
     public synchronized List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return allAtomMCS;
@@ -208,7 +199,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     /** {@inheritDoc}
      */
-    @TestMethod("testSearchMCS")
     @Override
     public synchronized Map<IAtom, IAtom> getFirstAtomMapping() {
         return atomsMCS;

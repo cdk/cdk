@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -46,7 +44,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:NilaComplexity
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.FragmentComplexityDescriptorTest")
 public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"fragC"};
@@ -71,7 +68,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -88,7 +84,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
      * @exception  CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 0) {
@@ -102,14 +97,12 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
      * @return    The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return new Object[0];
         // return the parameters as used for the descriptor calculation
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -122,7 +115,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
      *@return                   the complexity
      *@see #setParameters
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         //System.out.println("FragmentComplexityDescriptor");
@@ -153,7 +145,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
@@ -164,7 +155,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return null;
@@ -176,7 +166,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
      *@param  name  Description of the Parameter
      *@return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

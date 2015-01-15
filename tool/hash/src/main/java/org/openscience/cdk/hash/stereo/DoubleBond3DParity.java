@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 import javax.vecmath.Point3d;
 
@@ -39,7 +37,6 @@ import javax.vecmath.Point3d;
  * @cdk.module hash
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.hash.stereo.DoubleBond3DParityTest")
 final class DoubleBond3DParity extends GeometricParity {
 
     // coordinates of the double bond atoms:
@@ -68,7 +65,6 @@ final class DoubleBond3DParity extends GeometricParity {
      *
      * @return opposite (+1), together (-1)
      */
-    @TestMethod("opposite,together")
     @Override
     public int parity() {
 

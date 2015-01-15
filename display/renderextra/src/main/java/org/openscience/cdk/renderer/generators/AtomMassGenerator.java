@@ -20,8 +20,6 @@ package org.openscience.cdk.renderer.generators;
 
 import java.io.IOException;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,7 +33,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module renderextra
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.generators.AtomMassGeneratorTest")
 public class AtomMassGenerator extends BasicAtomGenerator {
 
     private ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomMassGenerator.class);
@@ -49,7 +46,6 @@ public class AtomMassGenerator extends BasicAtomGenerator {
      * @param  model     the {@link RendererModel}
      * @return true, when mass number information should be depicted
      */
-    @TestMethod("showCarbon_ShowEndCarbonsTest")
     @Override
     public boolean showCarbon(IAtom atom, IAtomContainer container, RendererModel model) {
 

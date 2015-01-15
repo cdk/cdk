@@ -18,9 +18,6 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * {@link IDifference} between two {@link Double}.
  *
@@ -28,7 +25,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module diff
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.diff.tree.DoubleDifferenceTest")
 public class DoubleDifference implements IDifference {
 
     private final static double ERROR = 0.000000001;
@@ -51,7 +47,6 @@ public class DoubleDifference implements IDifference {
      * @param second the second object to compare
      * @return       an {@link IDifference} reflecting the differences between the first and second object
      */
-    @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, Double first, Double second) {
         if (first == null && second == null) {
             return null; // no difference
@@ -70,7 +65,6 @@ public class DoubleDifference implements IDifference {
      *
      * @return a {@link String}
      */
-    @TestMethod("testToString")
     @Override
     public String toString() {
         return name + ":" + (first == null ? "NA" : first) + "/" + (second == null ? "NA" : second);

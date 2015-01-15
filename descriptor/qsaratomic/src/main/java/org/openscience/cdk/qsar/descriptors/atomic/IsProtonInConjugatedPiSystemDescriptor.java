@@ -21,8 +21,6 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
@@ -60,7 +58,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
  */
-@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptorTest")
 public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private static final String[] NAMES            = {"protonInConjSystem"};
@@ -79,7 +76,6 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *
      *@return    The specification value
      */
-    @TestMethod(value = "testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -94,7 +90,6 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *@param  params            Parameters are an integer (heavy atom position) and a boolean (true if is needed a checkAromaticity)
      *@exception  CDKException  Description of the Exception
      */
-    @TestMethod(value = "testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
@@ -112,7 +107,6 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *
      *@return    The parameters value
      */
-    @TestMethod(value = "testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -121,7 +115,6 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
         return params;
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -134,7 +127,6 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *@param  atomContainer              AtomContainer
      *@return                   true if the proton is bonded to a conjugated system
      */
-    @TestMethod(value = "testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) {
         IAtomContainer clonedAtomContainer;
@@ -184,7 +176,6 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value = "testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -199,7 +190,6 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value = "testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return true;

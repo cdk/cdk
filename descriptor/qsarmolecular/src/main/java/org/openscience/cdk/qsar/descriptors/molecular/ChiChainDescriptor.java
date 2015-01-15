@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -84,7 +82,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.keyword chi chain index
  * @cdk.keyword descriptor
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.ChiChainDescriptorTest")
 public class ChiChainDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class);
@@ -95,7 +92,6 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
 
     public ChiChainDescriptor() {}
 
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -103,31 +99,26 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
                         .getName(), "The Chemistry Development Kit");
     }
 
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @TestMethod(value = "testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -142,7 +133,6 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
                 getDescriptorNames(), e);
     }
 
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (sp == null) sp = new SmilesParser(container.getBuilder());
@@ -220,7 +210,6 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(10);

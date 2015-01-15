@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -70,7 +68,6 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulator;
  * @deprecated Please use MolecularFormulaGenerator
  */
 @Deprecated
-@TestClass("org.openscience.cdk.formula.MassToFormulaToolTest")
 public class MassToFormulaTool {
 
     private ILoggingTool          logger = LoggingToolFactory.createLoggingTool(MassToFormulaTool.class);
@@ -117,7 +114,6 @@ public class MassToFormulaTool {
      * @see #setDefaultRestrictions()
      * @see IRule
      */
-    @TestMethod("testSetRestrictions_List")
     public void setRestrictions(List<IRule> rulesNew) throws CDKException {
 
         Iterator<IRule> itRules = rulesNew.iterator();
@@ -176,7 +172,6 @@ public class MassToFormulaTool {
      *
      * @see #setDefaultRestrictions()
      */
-    @TestMethod("testGetRestrictions")
     public List<IRule> getRestrictions() {
         return this.rules;
     }
@@ -186,7 +181,6 @@ public class MassToFormulaTool {
      *
      * @see #getRestrictions()
      */
-    @TestMethod("testSetDefaultRestrictions")
     public void setDefaultRestrictions() {
         try {
             callDefaultRestrictions();
@@ -251,7 +245,6 @@ public class MassToFormulaTool {
      * @param  mass            molecular formula to create from the mass
      * @return                 the filled molecular formulas as IMolecularFormulaSet
      */
-    @TestMethod("testGenerate_double")
     public IMolecularFormulaSet generate(double mass) {
 
         if (mass <= 0.0) {

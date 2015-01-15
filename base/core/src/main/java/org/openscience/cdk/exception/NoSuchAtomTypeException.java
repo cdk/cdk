@@ -23,9 +23,6 @@
  */
 package org.openscience.cdk.exception;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 /**
  * Exception that may be thrown when an atom type is looked up or perceived
  * but no such atom type was found.
@@ -33,7 +30,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module core
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest")
 public class NoSuchAtomTypeException extends CDKException {
 
     private static final long serialVersionUID = 2689048410917221667L;
@@ -43,7 +39,6 @@ public class NoSuchAtomTypeException extends CDKException {
      *
      * @param message Message explaining why the atom type could not be found
      */
-    @TestMethod("testNoSuchAtomTypeException_String")
     public NoSuchAtomTypeException(String message) {
         super(message);
     }

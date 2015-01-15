@@ -18,9 +18,6 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.Iterator;
 
 /**
@@ -30,7 +27,6 @@ import java.util.Iterator;
  * @cdk.module diff
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.tools.diff.tree.BooleanArrayDifferenceTest")
 public class BooleanArrayDifference extends AbstractDifferenceList implements IDifferenceList {
 
     private String name;
@@ -47,7 +43,6 @@ public class BooleanArrayDifference extends AbstractDifferenceList implements ID
      * @param second the second object to compare
      * @return       an {@link IDifference} reflecting the differences between the first and second object
      */
-    @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, boolean[] first, boolean[] second) {
         if (first == null && second == null) return null;
 
@@ -84,7 +79,6 @@ public class BooleanArrayDifference extends AbstractDifferenceList implements ID
      *
      * @return a {@link String}
      */
-    @TestMethod("testToString")
     @Override
     public String toString() {
         if (differences.size() == 0) return "";

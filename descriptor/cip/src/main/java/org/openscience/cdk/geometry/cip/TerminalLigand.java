@@ -22,8 +22,6 @@
  */
 package org.openscience.cdk.geometry.cip;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -33,10 +31,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.module cip
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.cip.TerminalLigandTest")
 class TerminalLigand extends Ligand {
 
-    @TestMethod("testConstructorAndGetMethods")
     public TerminalLigand(IAtomContainer container, VisitedAtoms visitedAtoms, IAtom centralAtom, IAtom ligandAtom) {
         super(container, visitedAtoms, centralAtom, ligandAtom);
     }

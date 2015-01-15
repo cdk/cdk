@@ -25,8 +25,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -51,7 +49,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.githash
  * @cdk.iooptions
  */
-@TestClass("org.openscience.cdk.io.CTXReaderTest")
 public class CTXReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
@@ -76,13 +73,11 @@ public class CTXReader extends DefaultChemObjectReader {
         this(new InputStreamReader(input));
     }
 
-    @TestMethod("testGetFormat")
     @Override
     public IResourceFormat getFormat() {
         return CTXFormat.getInstance();
     }
 
-    @TestMethod("testSetReader_Reader")
     @Override
     public void setReader(Reader reader) throws CDKException {
         if (reader instanceof BufferedReader) {
@@ -92,13 +87,11 @@ public class CTXReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-    @TestMethod("testAccepts")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -223,7 +216,6 @@ public class CTXReader extends DefaultChemObjectReader {
         return (line.length() > 1 && line.charAt(0) == ' ' && line.charAt(1) == '/');
     }
 
-    @TestMethod("testClose")
     @Override
     public void close() throws IOException {
         input.close();

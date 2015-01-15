@@ -25,8 +25,6 @@ package org.openscience.cdk.renderer.elements.path;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Make a quadratic curve in the path.
@@ -35,7 +33,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module renderbasic
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.renderer.elements.path.QuadToTest")
 public class QuadTo extends PathElement {
 
     /** Coordinates of control point and end point. */
@@ -47,7 +44,6 @@ public class QuadTo extends PathElement {
      * @param cp control point of the curve
      * @param ep end point of the curve
      */
-    @TestMethod("testConstructor")
     public QuadTo(Point2d cp, Point2d ep) {
         this(cp.x, cp.y, ep.x, ep.y);
     }
@@ -81,7 +77,6 @@ public class QuadTo extends PathElement {
 
     /** {@inheritDoc} **/
     @Override
-    @TestMethod("testPoints")
     public float[] points() {
         return new float[]{(float) coords[0], (float) coords[1], (float) coords[2], (float) coords[3]};
     }

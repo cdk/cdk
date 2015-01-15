@@ -40,8 +40,6 @@ import java.util.logging.Logger;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -65,7 +63,6 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  */
-@TestClass("org.openscience.cdk.smsd.filters.ChemicalFiltersTest")
 public class ChemicalFilters {
 
     private List<Map<Integer, Integer>> allMCS        = null;
@@ -95,7 +92,6 @@ public class ChemicalFilters {
      * @param sourceMol
      * @param targetMol
      */
-    @TestMethod("ChemicalFiltersTest")
     public ChemicalFilters(List<Map<Integer, Integer>> allMCS, List<Map<IAtom, IAtom>> allAtomMCS,
             Map<Integer, Integer> firstSolution, Map<IAtom, IAtom> firstAtomMCS, IAtomContainer sourceMol,
             IAtomContainer targetMol) {
@@ -191,7 +187,6 @@ public class ChemicalFilters {
      * Sort MCS solution by stereo and bond type matches.
      * @throws CDKException
      */
-    @TestMethod("testSortResultsByStereoAndBondMatch")
     public synchronized void sortResultsByStereoAndBondMatch() throws CDKException {
 
         //        System.out.println("\n\n\n\nSort By ResultsByStereoAndBondMatch");
@@ -258,7 +253,6 @@ public class ChemicalFilters {
     /**
      * Sort solution by ascending order of the fragment count.
      */
-    @TestMethod("testSortResultsByFragments")
     public synchronized void sortResultsByFragments() {
 
         //        System.out.println("\nSort By Fragment");
@@ -310,7 +304,6 @@ public class ChemicalFilters {
      *
      * @throws CDKException
      */
-    @TestMethod("testSortResultsByEnergies")
     public synchronized void sortResultsByEnergies() throws CDKException {
 
         //        System.out.println("\nSort By Energies");
@@ -458,7 +451,6 @@ public class ChemicalFilters {
         return totalBondEnergy;
     }
 
-    @TestMethod("testSortMapByValueInAccendingOrder")
     static Map<Integer, Double> sortMapByValueInAccendingOrder(Map<Integer, Double> map) {
         List<Map.Entry<Integer, Double>> list = new LinkedList<Map.Entry<Integer, Double>>(map.entrySet());
         // Sort the list using an annonymous inner class implementing Comparator for the compare method
@@ -480,7 +472,6 @@ public class ChemicalFilters {
         return result;
     }
 
-    @TestMethod("testSortMapByValueInDecendingOrder")
     static Map<Integer, Double> sortMapByValueInDecendingOrder(Map<Integer, Double> map) {
         List<Map.Entry<Integer, Double>> list = new LinkedList<Map.Entry<Integer, Double>>(map.entrySet());
         // Sort the list using an annonymous inner class implementing Comparator for the compare method
@@ -506,7 +497,6 @@ public class ChemicalFilters {
      * Return sorted energy in ascending order.
      * @return sorted bond breaking energy
      */
-    @TestMethod("testGetSortedEnergy")
     public List<Double> getSortedEnergy() {
         return Collections.unmodifiableList(bEnergies);
     }
@@ -515,7 +505,6 @@ public class ChemicalFilters {
      * Return sorted fragment in ascending order of the size.
      * @return sorted fragment count
      */
-    @TestMethod("testGetSortedFragment")
     public List<Integer> getSortedFragment() {
         return Collections.unmodifiableList(fragmentSize);
     }
@@ -524,7 +513,6 @@ public class ChemicalFilters {
      * Return Stereo matches in descending order.
      * @return sorted stereo matches
      */
-    @TestMethod("testGetStereoMatches")
     public List<Double> getStereoMatches() {
         return Collections.unmodifiableList(stereoScore);
     }

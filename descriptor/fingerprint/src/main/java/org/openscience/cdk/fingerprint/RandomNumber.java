@@ -28,8 +28,6 @@ import java.io.Serializable;
 import org.apache.commons.math3.random.MersenneTwister;
 import org.apache.commons.math3.random.RandomAdaptor;
 import org.apache.commons.math3.random.RandomGenerator;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Generates pseudorandom numbers using the MersenneTwister method from commons-math.
@@ -40,7 +38,6 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module fingerprint
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.fingerprint.RandomNumberTest")
 public class RandomNumber implements Serializable {
 
     private static final long               serialVersionUID = 23345464573453571L;
@@ -54,7 +51,6 @@ public class RandomNumber implements Serializable {
      * @param seed the seed for the next pseudorandom number
      * @return next pseudorandom number
      */
-    @TestMethod("testGenerateMersenneTwisterRandomNumber")
     public int generateMersenneTwisterRandomNumber(int n, long seed) {
         rg.setSeed(seed);
         return rg.nextInt(n);

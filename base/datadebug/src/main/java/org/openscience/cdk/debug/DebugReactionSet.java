@@ -21,7 +21,6 @@ package org.openscience.cdk.debug;
 import java.util.Map;
 
 import org.openscience.cdk.ReactionSet;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -219,7 +218,6 @@ public class DebugReactionSet extends ReactionSet implements IReactionSet {
     /**
      * @inheritDoc
      */
-    @TestMethod("testIsEmpty")
     @Override
     public boolean isEmpty() {
         logger.debug("Checking if reaction set is empty: ", super.isEmpty());

@@ -24,9 +24,6 @@
 
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +76,6 @@ import java.util.List;
  * @see <a href="http://efficientbits.blogspot.co.uk/2013/06/allringsfinder-sport-edition.html">Performance
  *      Analysis (Blog Post)</a>
  */
-@TestClass("org.openscience.cdk.graph.AllCyclesTest")
 public final class AllCycles {
 
     /** All simple cycles. */
@@ -136,7 +132,6 @@ public final class AllCycles {
      * @param rank see {@link #rank(int[][])}
      * @return vertices in order
      */
-    @TestMethod("verticesInOrder")
     static int[] verticesInOrder(final int[] rank) {
         int[] vs = new int[rank.length];
         for (int v = 0; v < rank.length; v++)
@@ -151,7 +146,6 @@ public final class AllCycles {
      * @param g a graph in adjacent list representation
      * @return array indicating the rank of each vertex.
      */
-    @TestMethod("rank")
     static int[] rank(final int[][] g) {
         final int ord = g.length;
 
@@ -177,7 +171,6 @@ public final class AllCycles {
      *
      * @return 2d array of paths
      */
-    @TestMethod("k4Paths,k5Paths")
     public int[][] paths() {
         int[][] paths = new int[cycles.size()][];
         for (int i = 0; i < cycles.size(); i++)
@@ -190,7 +183,6 @@ public final class AllCycles {
      *
      * @return number of cycles
      */
-    @TestMethod("k4Size,k5Size,k6Size,k7Size")
     public int size() {
         return cycles.size();
     }
@@ -201,7 +193,6 @@ public final class AllCycles {
      *
      * @return algorithm completed
      */
-    @TestMethod("completed,impractical")
     public boolean completed() {
         return completed;
     }

@@ -30,8 +30,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -54,7 +52,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.formula.MolecularFormulaManipulatorTest")
 public class MolecularFormulaManipulator {
 
     /**
@@ -64,7 +61,6 @@ public class MolecularFormulaManipulator {
      * @param   formula  The MolecularFormula to check
      * @return           The occurrence total
      */
-    @TestMethod("testGetAtomCount_IMolecularFormula")
     public static int getAtomCount(IMolecularFormula formula) {
 
         int count = 0;
@@ -83,7 +79,6 @@ public class MolecularFormulaManipulator {
      * @param   element The IElement object
      * @return          The occurrence of this element in this molecular formula
      */
-    @TestMethod("testGetElementCount_IMolecularFormula_IElement")
     public static int getElementCount(IMolecularFormula formula, IElement element) {
 
         int count = 0;
@@ -125,7 +120,6 @@ public class MolecularFormulaManipulator {
      * @param   element The IElement object
      * @return          The list with the IIsotopes in this molecular formula
      */
-    @TestMethod("testGetIsotopes_IMolecularFormula_IElement")
     public static List<IIsotope> getIsotopes(IMolecularFormula formula, IElement element) {
 
         List<IIsotope> isotopeList = new ArrayList<IIsotope>();
@@ -143,7 +137,6 @@ public class MolecularFormulaManipulator {
      *@param   formula The MolecularFormula to check
      *@return          The list with the IElements in this molecular formula
      */
-    @TestMethod("testElements_IMolecularFormula")
     public static List<IElement> elements(IMolecularFormula formula) {
 
         List<IElement> elementList = new ArrayList<IElement>();
@@ -165,7 +158,6 @@ public class MolecularFormulaManipulator {
      * @param  element   The element this MolecularFormula is searched for
      * @return           True, if the MolecularFormula contains the given element object
      */
-    @TestMethod("testContainsElement_IMolecularFormula_IElement")
     public static boolean containsElement(IMolecularFormula formula, IElement element) {
 
         for (IIsotope isotope : formula.isotopes()) {
@@ -182,7 +174,6 @@ public class MolecularFormulaManipulator {
      * @param  element   The IElement of the IIsotopes to be removed
      * @return           The molecularFormula with the isotopes removed
      */
-    @TestMethod("testRemoveElement_IMolecularFormula_IElement")
     public static IMolecularFormula removeElement(IMolecularFormula formula, IElement element) {
         for (IIsotope isotope : getIsotopes(formula, element)) {
             formula.removeIsotope(isotope);
@@ -205,7 +196,6 @@ public class MolecularFormulaManipulator {
      * @see #generateOrderEle_Hill_WithCarbons()
      *
      */
-    @TestMethod("testGetString_IMolecularFormula_arrayString_boolean")
     public static String getString(IMolecularFormula formula, String[] orderElements, boolean setOne) {
         StringBuffer stringMF = new StringBuffer();
         List<IIsotope> isotopesList = putInOrder(orderElements, formula);
@@ -243,7 +233,6 @@ public class MolecularFormulaManipulator {
      *
      * @see #getHTML(IMolecularFormula)
      */
-    @TestMethod("testGetString_IMolecularFormula")
     public static String getString(IMolecularFormula formula) {
 
         return getString(formula, false);
@@ -265,7 +254,6 @@ public class MolecularFormulaManipulator {
      *
      * @see #getHTML(IMolecularFormula)
      */
-    @TestMethod("testGetString_IMolecularFormula_boolean")
     public static String getString(IMolecularFormula formula, boolean setOne) {
 
         if (containsElement(formula, formula.getBuilder().newInstance(IElement.class, "C")))
@@ -291,7 +279,6 @@ public class MolecularFormulaManipulator {
     /**
      * @deprecated  Use {@link #getString(org.openscience.cdk.interfaces.IMolecularFormula)}
      */
-    @TestMethod("testGetHillString_IMolecularFormula")
     @Deprecated
     public static String getHillString(IMolecularFormula formula) {
         StringBuffer hillString = new StringBuffer();
@@ -341,7 +328,6 @@ public class MolecularFormulaManipulator {
      * @see              #getHTML(IMolecularFormula, boolean, boolean)
      *
      */
-    @TestMethod("testGetHTML_IMolecularFormula")
     public static String getHTML(IMolecularFormula formula) {
         return getHTML(formula, false, false);
     }
@@ -361,7 +347,6 @@ public class MolecularFormulaManipulator {
      * @see              #getHTML(IMolecularFormula)
      *
      */
-    @TestMethod("testGetHTML_IMolecularFormula_boolean_boolean")
     public static String getHTML(IMolecularFormula formula, boolean chargeB, boolean isotopeB) {
         String[] orderElements;
         if (containsElement(formula, formula.getBuilder().newInstance(IElement.class, "C")))
@@ -387,7 +372,6 @@ public class MolecularFormulaManipulator {
      * @see              #getHTML(IMolecularFormula)
      *
      */
-    @TestMethod("testGetHTML_IMolecularFormula_arrayString_boolean_boolean")
     public static String getHTML(IMolecularFormula formula, String[] orderElements, boolean chargeB, boolean isotopeB) {
         StringBuilder sb = new StringBuilder();
         for (String orderElement : orderElements) {
@@ -436,7 +420,6 @@ public class MolecularFormulaManipulator {
      * @return            The filled IMolecularFormula
      * @see               #getMolecularFormula(String,IMolecularFormula)
      */
-    @TestMethod("testGetMolecularFormula_String_IChemObjectBuilder")
     public static IMolecularFormula getMolecularFormula(String stringMF, IChemObjectBuilder builder) {
         return getMolecularFormula(stringMF, false, builder);
     }
@@ -452,7 +435,6 @@ public class MolecularFormulaManipulator {
      * @return The filled IMolecularFormula
      * @see               #getMolecularFormula(String,IMolecularFormula)
      */
-    @TestMethod("testGetMajorIsotopeMolecularFormula_String_IChemObjectBuilder")
     public static IMolecularFormula getMajorIsotopeMolecularFormula(String stringMF, IChemObjectBuilder builder) {
         return getMolecularFormula(stringMF, true, builder);
     }
@@ -474,7 +456,6 @@ public class MolecularFormulaManipulator {
      * @return            The filled IMolecularFormula
      * @see               #getMolecularFormula(String, IChemObjectBuilder)
      */
-    @TestMethod("testGetMolecularFormula_String_IMolecularFormula")
     public static IMolecularFormula getMolecularFormula(String stringMF, IMolecularFormula formula) {
         return getMolecularFormula(stringMF, formula, false);
     }
@@ -630,7 +611,6 @@ public class MolecularFormulaManipulator {
      * @param  formula The IMolecularFormula to calculate
      * @return         The summed exact mass of all atoms in this MolecularFormula
      */
-    @TestMethod("testGetTotalExactMass_IMolecularFormula")
     public static double getTotalExactMass(IMolecularFormula formula) {
         Double mass = 0.0;
 
@@ -674,7 +654,6 @@ public class MolecularFormulaManipulator {
      * @param  formula The IMolecularFormula to calculate
      * @return         The summed nominal mass of all atoms in this MolecularFormula
      */
-    @TestMethod("testGetTotalMassNumber_IMolecularFormula")
     public static double getTotalMassNumber(IMolecularFormula formula) {
         double mass = 0.0;
         for (IIsotope isotope : formula.isotopes()) {
@@ -696,7 +675,6 @@ public class MolecularFormulaManipulator {
      * @param  formula The IMolecularFormula to calculate
      * @return         The summed exact mass of all atoms in this MolecularFormula
      */
-    @TestMethod("testGetNaturalExactMass_IMolecularFormula")
     public static double getNaturalExactMass(IMolecularFormula formula) {
         double mass = 0.0;
         IsotopeFactory factory;
@@ -718,8 +696,6 @@ public class MolecularFormulaManipulator {
      * @param  formula The IMolecularFormula to calculate
      * @return         The summed exact major isotope masses of all atoms in this MolecularFormula
      */
-
-    @TestMethod("testGetMajorIsotopeMass_IMolecularFormula")
     public static double getMajorIsotopeMass(IMolecularFormula formula) {
         double mass = 0.0;
         IsotopeFactory factory;
@@ -744,7 +720,6 @@ public class MolecularFormulaManipulator {
      * @param  formula The IMolecularFormula to calculate
      * @return         The summed natural abundance of all isotopes in this MolecularFormula
      */
-    @TestMethod("testGetTotalNaturalAbundance_IMolecularFormula")
     public static double getTotalNaturalAbundance(IMolecularFormula formula) {
         double abundance = 1.0;
         for (IIsotope isotope : formula.isotopes()) {
@@ -764,7 +739,6 @@ public class MolecularFormulaManipulator {
      * @cdk.keyword DBE
      * @cdk.keyword double bond equivalent
      */
-    @TestMethod("testGetDBE_IMolecularFormula")
     public static double getDBE(IMolecularFormula formula) throws CDKException {
         int valencies[] = new int[5];
         IAtomContainer ac = getAtomContainer(formula);
@@ -792,7 +766,6 @@ public class MolecularFormulaManipulator {
      * @return	a molecular formula object
      * @see		#getMolecularFormula(IAtomContainer,IMolecularFormula)
      */
-    @TestMethod("testGetMolecularFormula_IAtomContainer")
     public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer) {
 
         IMolecularFormula formula = atomContainer.getBuilder().newInstance(IMolecularFormula.class);
@@ -810,7 +783,6 @@ public class MolecularFormulaManipulator {
      * @return                   the filled AtomContainer
      * @see                      #getMolecularFormula(IAtomContainer)
      */
-    @TestMethod("testGetMolecularFormula_IAtomContainer_IMolecularFormula")
     public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer, IMolecularFormula formula) {
         int charge = 0;
         IAtom hAtom = null;
@@ -836,7 +808,6 @@ public class MolecularFormulaManipulator {
      * @return          the filled AtomContainer
      * @see             #getAtomContainer(IMolecularFormula, IAtomContainer)
      */
-    @TestMethod("testGetAtomContainer_IMolecularFormula")
     public static IAtomContainer getAtomContainer(IMolecularFormula formula) {
 
         IAtomContainer atomContainer = formula.getBuilder().newInstance(IAtomContainer.class);
@@ -853,7 +824,6 @@ public class MolecularFormulaManipulator {
      * @return                   the filled AtomContainer
      * @see                      #getAtomContainer(IMolecularFormula)
      */
-    @TestMethod("testGetAtomContainer_IMolecularFormula_IAtomContainer")
     public static IAtomContainer getAtomContainer(IMolecularFormula formula, IAtomContainer atomContainer) {
 
         for (IIsotope isotope : formula.isotopes()) {
@@ -874,7 +844,6 @@ public class MolecularFormulaManipulator {
      * @param builder a chem object builder
      * @return atoms wrapped in an atom container
      */
-    @TestMethod("testGetAtomContainer_String_IChemObjectBuilder")
     public static IAtomContainer getAtomContainer(String formulaString, IChemObjectBuilder builder) {
         return MolecularFormulaManipulator.getAtomContainer(MolecularFormulaManipulator.getMolecularFormula(
                 formulaString, builder));
@@ -961,7 +930,6 @@ public class MolecularFormulaManipulator {
      * @param formula2   The second IMolecularFormula
      * @return           True, if the both IMolecularFormula are the same
      */
-    @TestMethod("testCompare_IMolecularFormula_IMolecularFormula")
     public static boolean compare(IMolecularFormula formula1, IMolecularFormula formula2) {
 
         if (formula1.getCharge() != formula2.getCharge()) return false;
@@ -991,7 +959,6 @@ public class MolecularFormulaManipulator {
      *
      * @cdk.keyword    hydrogen, removal
      */
-    @TestMethod("testGetHeavyElements_IMolecularFormula")
     public static List<IElement> getHeavyElements(IMolecularFormula formula) {
         List<IElement> newEle = new ArrayList<IElement>();
         for (IElement element : elements(formula)) {
@@ -1010,7 +977,6 @@ public class MolecularFormulaManipulator {
      * @param formula  The molecular formula
      * @return         The simplified molecular formula
      */
-    @TestMethod("testSimplifyMolecularFormula_String")
     public static String simplifyMolecularFormula(String formula) {
         String newFormula = formula;
         char thisChar;
