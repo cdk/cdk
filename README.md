@@ -135,6 +135,74 @@ also be downloaded and included.
 
 To include everything in the library use the `cdk-bundle` artefact.
 
+### Maven reporting plugins 
+
+This section details how to run the plugins and access the reports.
+
+#### PMD
+
+[PMD](http://en.wikipedia.org/wiki/PMD_(software)) analyses code style (e.g. variable naming, complexity) and reports potential bugs. Currently only production (non-test) code is inspected. The following snippet shows how to run PMD on the 'cdk-silent' module.
+
+```
+cdk/: cd base/silent
+cdk/base/silent: ls
+cdk/base/silent: mvn pmd:pmd
+cdk/base/silent: open target/site/pmd.html 
+```
+
+#### java-formatter
+
+As a relatively mature project with many different developers there are many different formatting styles used in the CDK source code. Following patches from different IDEs with different settings some files have gotten pretty messy. The java-formatter tidies up the code using consistent settings. 
+
+The formatting settings are in the cdk-build-util project [cdk-build-util/.../cdk-formatting-conventions.xml](https://github.com/cdk/cdk-build-util/blob/master/src/main/resources/cdk-formatting-conventions.xml).
+
+To run the formatter on the silent module
+
+```
+cdk/: cd base/silent
+cdk/base/silent: ls
+cdk/base/silent: mvn java-formatter:format
+[INFO] --- maven-java-formatter-plugin:0.4:format (default-cli) @ cdk-silent ---
+[INFO] Using 'UTF-8' encoding to format source files.
+[INFO] Number of files to be formatted: 76
+[INFO] Successfully formatted: 76 file(s)
+[INFO] Fail to format        : 0 file(s)
+[INFO] Skipped               : 0 file(s)
+[INFO] Approximate time taken: 3s
+```
+
+#### JaCoCo
+
+[JaCoCo](http://en.wikipedia.org/wiki/Java_Code_Coverage_Tools#JaCoCo) is a tool for analysing test coverage. JaCoCo can install [agent](http://www.javabeat.net/introduction-to-java-agents/) instrumentation and check exactly which lines are called and missed by tests. This not only serves as a quality measure but also can guide optimisation, "why isn't that conditional ever hit by my tests, is it even possible?". 
+
+I'll use the new MMFF atom typing to demonstrate:
+
+```
+cdk/: cd tool/forcefield
+cdk/tool/forcefield: ls
+cdk/tool/forcefield: mvn jacoco:prepare-agent test
+cdk/tool/forcefield: mvn jacoco:report
+cdk/tool/forcefield: open target/site/jacoco/index.html
+```
+
+The contribute method determines the number of pi electrons for an element with specified valence (v) and connectivity (x). We can see that two lines are flagged as yellow. On inspection we can see that 1 of 4 branches was missed. There are four branches because of two conditionals (2^2=4) and one of them is missed.
+
+![JaCoCo Report Example](http://i56.photobucket.com/albums/g187/johnymay/cdk-wiki/jacoco-mmff-example_zps529c0073.png)
+
+IDEs and CI servers (Jenkins) can also integrate the reports directly.
+
+Reporting coverage when the tests are separate to the production code is a little more tricky but possible. Here is an example for the 'cdk-standard' module.
+
+```
+cdk/: cd base/standard
+cdk/base/standard: mvn install
+cdk/base/standard: cd ../test-standard
+cdk/base/test-standard: mvn jacoco:prepare-agent test
+cdk/base/standard: cd ../standard
+cdk/base/standard: mvn jacoco:report
+cdk/base/standard: open target/site/jacoco/index.html
+```
+
 ## Examples and tutorials
 
 To get started using the CDK, you may be interested in the following websites which contain
