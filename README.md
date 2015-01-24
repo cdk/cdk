@@ -8,7 +8,7 @@ License: LGPL v2, see doc/lgpl.license
 
 You are currently reading the README file for the Chemistry Development Project (CDK).
 This project is hosted under http://cdk.sourceforge.net/
-Please refer to these pages for updated information and the latest version of the CDK.
+Please refer to these pages for updated information and the latest version of the CDK. CDK's API documentation is available though our [Github site](http://cdk.github.io/cdk/).
 
 The CDK is an open-source library of algorithms for structural chemo- and bioinformatics, implemented in 
 the programming language Java(tm). The library is published under terms of the the 
