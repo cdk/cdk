@@ -479,8 +479,8 @@
         </bondArray>
     </molecule>
 
-    <molecule id="tryptophan" dictRef="pdb:aminoAcid">
-        <name>tryptophan</name>
+    <molecule id="tyrosine" dictRef="pdb:aminoAcid">
+        <name>tyrosine</name>
         <name dictRef="pdb:residueName">Tyr</name>
         <name dictRef="pdb:oneLetterCode">Y</name>
         <scalar dictRef="pdb:id">131</scalar>
@@ -542,8 +542,8 @@
         </bondArray>
     </molecule>
 
-    <molecule id="tyrosine" dictRef="pdb:aminoAcid">
-        <name>tyrosine</name>
+    <molecule id="tryptophan" dictRef="pdb:aminoAcid">
+        <name>tryptophan</name>
         <name dictRef="pdb:residueName">Trp</name>
         <name dictRef="pdb:oneLetterCode">W</name>
         <scalar dictRef="pdb:id">119</scalar>
