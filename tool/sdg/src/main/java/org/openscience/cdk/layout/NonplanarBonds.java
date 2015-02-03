@@ -24,13 +24,13 @@
 
 package org.openscience.cdk.layout;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
@@ -38,92 +38,86 @@ import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN;
+import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
 import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 import static org.openscience.cdk.interfaces.IBond.Stereo.UP;
+import static org.openscience.cdk.interfaces.IBond.Stereo.UP_OR_DOWN;
+import static org.openscience.cdk.interfaces.IBond.Stereo.UP_OR_DOWN_INVERTED;
 
 /**
- * Assigns non-planar labels (wedge/hatch) to the tetrahedral centres in a 2D
- * depiction. Labels are assign to atoms using the following priority.
- * <ol>
- *     <li>bond to non-stereo atoms</li>
- *     <li>acyclic bonds</li>
- *     <li>bonds to atoms with lower degree (i.e. terminal)</li>
- *     <li>lower atomic number</li>
+ * Assigns non-planar labels (wedge/hatch) to the tetrahedral and extended tetrahedral 
+ * stereocentres in a 2D depiction. Labels are assigned to atoms using the following priority. <ol> <li>bond to non-stereo atoms</li> <li>acyclic
+ * bonds</li> <li>bonds to atoms with lower degree (i.e. terminal)</li> <li>lower atomic number</li>
  * </ol>
- *
+ * <p/>
+ * Unspecified bonds are also marked.
+ * 
  * @author John May
  * @cdk.module sdg
  */
 final class NonplanarBonds {
 
     /** The structure we are assigning labels to. */
-    private final IAtomContainer          container;
+    private final IAtomContainer container;
 
     /** Adjacency list graph representation of the structure. */
-    private final int[][]                 graph;
+    private final int[][] graph;
 
     /** Search for cyclic atoms. */
-    private final RingSearch              ringSearch;
+    private final RingSearch ringSearch;
 
     /** Tetrahedral elements indexed by central atom. */
-    private final ITetrahedralChirality[] elements;
+    private final ITetrahedralChirality[] tetrahedralElements;
+
+    /** Double-bond elements indexed by end atoms. */
+    private final IDoubleBondStereochemistry[] doubleBondElements;
 
     /** Lookup atom index (avoid IAtomContainer). */
-    private final Map<IAtom, Integer>     atomToIndex;
+    private final Map<IAtom, Integer> atomToIndex;
+
+    /** Quick lookup of a bond give the atom index of it's atoms. */
+    private final GraphUtil.EdgeToBondMap edgeToBond;
 
     /**
-     * Assign non-planar, up and down labels to indicate tetrahedral
-     * configuration. Currently all existing directional labels are removed
-     * before assigning new labels.
+     * Assign non-planar, up and down labels to indicate tetrahedral configuration. Currently all
+     * existing directional labels are removed before assigning new labels.
      *
      * @param container the structure to assign labels to
-     * @return a container with assigned labels (currently the same as the
-     *         input)
-     * @throws IllegalArgumentException an atom had no 2D coordinates or labels
-     *                                  could not be assigned to a tetrahedral
-     *                                  centre
+     * @return a container with assigned labels (currently the same as the input)
+     * @throws IllegalArgumentException an atom had no 2D coordinates or labels could not be
+     *                                  assigned to a tetrahedral centre
      */
     public static IAtomContainer assign(final IAtomContainer container) {
-        if (!Iterables.isEmpty(container.stereoElements())) new NonplanarBonds(container);
+        GraphUtil.EdgeToBondMap edgeToBond = GraphUtil.EdgeToBondMap.withSpaceFor(container);
+        new NonplanarBonds(container, GraphUtil.toAdjList(container, edgeToBond), edgeToBond);
         return container;
     }
 
     /**
-     * Assign non-planar bonds to the tetrahedral stereocenters in the {@code
-     * container}.
-     *
-     * @param container structure
-     * @throws IllegalArgumentException an atom had no 2D coordinates or labels
-     *                                  could not be assigned to a tetrahedral
-     *                                  centre
-     */
-    NonplanarBonds(IAtomContainer container) {
-        this(container, GraphUtil.toAdjList(container));
-    }
-
-    /**
-     * Assign non-planar bonds to the tetrahedral stereocenters in the {@code
-     * container}.
+     * Assign non-planar bonds to the tetrahedral stereocenters in the {@code container}.
      *
      * @param container structure
      * @param g         graph adjacency list representation
-     * @throws IllegalArgumentException an atom had no 2D coordinates or labels
-     *                                  could not be assigned to a tetrahedral
-     *                                  centre
+     * @throws IllegalArgumentException an atom had no 2D coordinates or labels could not be
+     *                                  assigned to a tetrahedral centre
      */
-    NonplanarBonds(final IAtomContainer container, final int[][] g) {
+    NonplanarBonds(final IAtomContainer container, final int[][] g, final GraphUtil.EdgeToBondMap edgeToBond) {
 
         this.container = container;
-        this.elements = new ITetrahedralChirality[container.getAtomCount()];
+        this.tetrahedralElements = new ITetrahedralChirality[container.getAtomCount()];
+        this.doubleBondElements = new IDoubleBondStereochemistry[container.getAtomCount()];
         this.graph = g;
         this.atomToIndex = Maps.newHashMapWithExpectedSize(container.getAtomCount());
+        this.edgeToBond = edgeToBond;
         this.ringSearch = new RingSearch(container, graph);
 
         // clear existing up/down labels to avoid collision, this isn't strictly
@@ -142,7 +136,8 @@ final class NonplanarBonds {
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom atom = container.getAtom(i);
             atomToIndex.put(atom, i);
-            if (atom.getPoint2d() == null) throw new IllegalArgumentException("atom " + i + " had unset coordinates");
+            if (atom.getPoint2d() == null)
+                throw new IllegalArgumentException("atom " + i + " had unset coordinates");
         }
 
         // index the tetrahedral elements by their focus
@@ -152,8 +147,13 @@ final class NonplanarBonds {
             if (element instanceof ITetrahedralChirality) {
                 ITetrahedralChirality tc = (ITetrahedralChirality) element;
                 int focus = atomToIndex.get(tc.getChiralAtom());
-                elements[focus] = tc;
+                tetrahedralElements[focus] = tc;
                 foci[n++] = focus;
+            }
+            else if (element instanceof IDoubleBondStereochemistry) {
+                IBond doubleBond = ((IDoubleBondStereochemistry) element).getStereoBond();
+                doubleBondElements[atomToIndex.get(doubleBond.getAtom(0))] =
+                        doubleBondElements[atomToIndex.get(doubleBond.getAtom(1))] = (IDoubleBondStereochemistry) element;
             }
         }
 
@@ -166,12 +166,21 @@ final class NonplanarBonds {
             }
         });
 
-        // label a bond on each element
-        for (int i = 0; i < n; i++)
-            label(elements[foci[i]]);
+        // Tetrahedral labels
+        for (int i = 0; i < n; i++) {
+            label(tetrahedralElements[foci[i]]);
+        }
 
+        // Extended tetrahedral labels
         for (IStereoElement se : container.stereoElements()) {
-            if (se instanceof ExtendedTetrahedral) label((ExtendedTetrahedral) se);
+            if (se instanceof ExtendedTetrahedral) {
+                label((ExtendedTetrahedral) se);
+            }
+        }
+
+        // Unspecified double bond, indicated with an up/down wavy bond
+        for (IBond bond : findUnspecifiedDoubleBonds()) {
+            labelUnspecified(bond);
         }
     }
 
@@ -376,8 +385,8 @@ final class NonplanarBonds {
      */
     private int nAdjacentCentres(int i) {
         int n = 0;
-        for (IAtom atom : elements[i].getLigands())
-            if (elements[atomToIndex.get(atom)] != null) n++;
+        for (IAtom atom : tetrahedralElements[i].getLigands())
+            if (tetrahedralElements[atomToIndex.get(atom)] != null) n++;
         return n;
     }
 
@@ -409,7 +418,7 @@ final class NonplanarBonds {
      * Does the atom at index {@code i} have priority over the atom at index
      * {@code j} for the tetrahedral atom {@code focus}.
      *
-     * @param focus tetrahedral centre
+     * @param focus tetrahedral centre (or -1 if double bond)
      * @param i     adjacent atom index
      * @param j     adjacent atom index
      * @return whether atom i has priority
@@ -417,12 +426,14 @@ final class NonplanarBonds {
     boolean hasPriority(int focus, int i, int j) {
 
         // prioritise bonds to non-centres
-        if (elements[i] == null && elements[j] != null) return true;
-        if (elements[i] != null && elements[j] == null) return false;
+        if (tetrahedralElements[i] == null && tetrahedralElements[j] != null) return true;
+        if (tetrahedralElements[i] != null && tetrahedralElements[j] == null) return false;
+        if (doubleBondElements[i] == null && doubleBondElements[j] != null) return true;
+        if (doubleBondElements[i] != null && doubleBondElements[j] == null) return false;
 
         // prioritise acyclic bonds
-        boolean iCyclic = ringSearch.cyclic(focus, i);
-        boolean jCyclic = ringSearch.cyclic(focus, j);
+        boolean iCyclic = focus >= 0 ? ringSearch.cyclic(focus, i) : ringSearch.cyclic(i);
+        boolean jCyclic = focus >= 0 ? ringSearch.cyclic(focus, j) : ringSearch.cyclic(j);
         if (!iCyclic && jCyclic) return true;
         if (iCyclic && !jCyclic) return false;
 
@@ -431,15 +442,17 @@ final class NonplanarBonds {
         if (graph[i].length > graph[j].length) return false;
 
         // prioritise by atomic number
-        if (container.getAtom(i).getAtomicNumber() < container.getAtom(j).getAtomicNumber()) return true;
-        if (container.getAtom(i).getAtomicNumber() > container.getAtom(j).getAtomicNumber()) return false;
+        if (container.getAtom(i).getAtomicNumber() < container.getAtom(j).getAtomicNumber())
+            return true;
+        if (container.getAtom(i).getAtomicNumber() > container.getAtom(j).getAtomicNumber())
+            return false;
 
         return false;
     }
 
     /**
-     * Sort the {@code indices}, which correspond to an index in the {@code
-     * atoms} array in clockwise order.
+     * Sort the {@code indices}, which correspond to an index in the {@code atoms} array in
+     * clockwise order.
      *
      * @param indices indices, 0 to n
      * @param focus   the central atom
@@ -462,16 +475,15 @@ final class NonplanarBonds {
     }
 
     /**
-     * Is index {@code i}, to the left of index {@code j} when sorting clockwise
-     * around the {@code centre}.
+     * Is index {@code i}, to the left of index {@code j} when sorting clockwise around the {@code
+     * centre}.
      *
      * @param i      an index in {@code atoms}
      * @param j      an index in {@code atoms}
      * @param atoms  atoms
      * @param center central point
      * @return atom i is before j
-     * @see <a href="http://stackoverflow.com/a/6989383">Sort points in
-     *      clockwise order, ciamej</a>
+     * @see <a href="http://stackoverflow.com/a/6989383">Sort points in clockwise order, ciamej</a>
      */
     static boolean less(int i, int j, IAtom[] atoms, Point2d center) {
 
@@ -495,5 +507,138 @@ final class NonplanarBonds {
         double d1 = (a.x - center.x) * (a.x - center.x) + (a.y - center.y) * (a.y - center.y);
         double d2 = (b.x - center.x) * (b.x - center.x) + (b.y - center.y) * (b.y - center.y);
         return d1 > d2;
+    }
+
+    /**
+     * Labels a double bond as unspecified either by marking an adjacent bond as
+     * wavy (up/down) or if that's not possible (e.g. it's conjugated with other double bonds
+     * that have a conformation), setting the bond to a crossed double bond.
+     * 
+     * @param doubleBond the bond to mark as unspecified
+     */
+    private void labelUnspecified(IBond doubleBond) {
+
+        final IAtom aBeg = doubleBond.getAtom(0);
+        final IAtom aEnd = doubleBond.getAtom(1);
+
+        final int beg = atomToIndex.get(aBeg);
+        final int end = atomToIndex.get(aEnd);
+
+        int nAdj = 0;
+        final IAtom[] focus = new IAtom[4];
+        final IAtom[] adj = new IAtom[4];
+
+        // build up adj list of all potential atoms
+        for (int neighbor : graph[beg]) {
+            IBond bond = edgeToBond.get(beg, neighbor);
+            if (bond.getOrder() == SINGLE) {
+                if (nAdj == 4) return; // more than 4? not a stereo-dbond
+                focus[nAdj] = aBeg;
+                adj[nAdj++] = container.getAtom(neighbor);
+            }
+            // conjugated and someone else has marked it as unspecified
+            if (bond.getStereo() == UP_OR_DOWN || bond.getStereo() == UP_OR_DOWN_INVERTED) {
+                return;
+            }
+        }
+        for (int neighbor : graph[end]) {
+            IBond bond = edgeToBond.get(end, neighbor);
+            if (bond.getOrder() == SINGLE) {
+                if (nAdj == 4) return; // more than 4? not a stereo-dbond
+                focus[nAdj] = aEnd;
+                adj[nAdj++] = container.getAtom(neighbor);
+            }
+            // conjugated and someone else has marked it as unspecified
+            if (bond.getStereo() == UP_OR_DOWN || bond.getStereo() == UP_OR_DOWN_INVERTED) {
+                return;
+            }
+        }
+
+        int[] rank = priority(-1, adj, nAdj);
+
+        // set the bond to up/down wavy to mark unspecified stereochemistry taking care not
+        // to accidentally mark another stereocentre as unspecified
+        for (int i = 0; i < nAdj; i++) {
+            if (doubleBondElements[atomToIndex.get(adj[rank[i]])] == null &&
+                    tetrahedralElements[atomToIndex.get(adj[rank[i]])] == null) {
+                edgeToBond.get(atomToIndex.get(focus[rank[i]]),
+                               atomToIndex.get(adj[rank[i]])).setStereo(UP_OR_DOWN);
+                return;
+            }
+        }
+
+        // we got here an no bond was marked, fortunately we have a fallback and can use 
+        // crossed bond
+        doubleBond.setStereo(E_OR_Z);
+    }
+
+    /**
+     * Locates double bonds to mark as unspecified stereochemistry.
+     * 
+     * @return set of double bonds
+     */
+    private List<IBond> findUnspecifiedDoubleBonds() {
+        List<IBond> unspecifiedDoubleBonds = new ArrayList<>();
+        for (IBond bond : container.bonds()) {
+            // non-double bond, ignore it
+            if (bond.getOrder() != DOUBLE)
+                continue;
+
+            final IAtom aBeg = bond.getAtom(0);
+            final IAtom aEnd = bond.getAtom(1);
+
+            final int beg = atomToIndex.get(aBeg);
+            final int end = atomToIndex.get(aEnd);
+
+            // cyclic bond, ignore it (FIXME may be a cis/trans bond in macro cycle |V| > 7)
+            if (ringSearch.cyclic(beg, end))
+                continue;
+
+            // stereo bond, ignore it depiction is correct
+            if ((doubleBondElements[beg] != null && doubleBondElements[beg].getStereoBond() == bond) ||
+                    (doubleBondElements[end] != null && doubleBondElements[end].getStereoBond() == bond))
+                continue;
+
+            // is actually a tetrahedral centre
+            if (tetrahedralElements[beg] != null || tetrahedralElements[end] != null)
+                continue;
+            
+            if (!hasOnlyPlainBonds(beg, bond) || !hasOnlyPlainBonds(end, bond))
+                continue;
+            
+            unspecifiedDoubleBonds.add(bond);
+        }
+        return unspecifiedDoubleBonds;
+    }
+
+
+    /**
+     * Check that an atom (v:index) is only adjacent to plain single bonds (may be a bold or
+     * hashed wedged - e.g. at fat end) with the single exception being the allowed double bond
+     * passed as an argument. 
+     * 
+     * @param v atom index
+     * @param allowedDoubleBond a double bond that is allowed
+     * @return the atom is adjacent to one or more plain single bonds
+     */
+    private boolean hasOnlyPlainBonds(int v, IBond allowedDoubleBond) {
+        int count = 0;
+        for (int neighbor : graph[v]) {
+            IBond adjBond = edgeToBond.get(v, neighbor);
+            // non single bonds
+            if (adjBond.getOrder().numeric() > 1) {
+                if (allowedDoubleBond != adjBond) {
+                    return false;
+                }
+            }
+            // single bonds
+            else { 
+                if (adjBond.getStereo() == UP_OR_DOWN || adjBond.getStereo() == UP_OR_DOWN_INVERTED) {
+                    return false;
+                }
+                count++;
+            }            
+        }
+        return count > 0;
     }
 }

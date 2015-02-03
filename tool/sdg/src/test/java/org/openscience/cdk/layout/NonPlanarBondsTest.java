@@ -32,13 +32,16 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 import javax.vecmath.Point2d;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
 
 /**
  * @author John May
@@ -308,6 +311,137 @@ public class NonPlanarBondsTest {
                 m.getAtom(3),}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
         assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.DOWN));
+    }
+    
+    
+    // ethene is left alone and not marked as crossed
+    @Test public void dontCrossEtheneDoubleBond() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 2, 0.000, 0.000));
+        m.addAtom(atom("C", 2, 1.299, -0.750));
+        m.addBond(0, 1, IBond.Order.DOUBLE);
+        NonplanarBonds.assign(m);
+        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/C4H8O/c1-3-4(2)5/h3H2,1-2H3
+     */
+    @Test public void dontMarkTerminalBonds() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 3, 0.000, 0.000));
+        m.addAtom(atom("C", 0, 1.299, -0.750));
+        m.addAtom(atom("C", 2, 2.598, -0.000));
+        m.addAtom(atom("C", 3, 3.897, -0.750));
+        m.addAtom(atom("O", 0, 1.299, -2.250));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.SINGLE);
+        m.addBond(1, 4, IBond.Order.DOUBLE);
+        NonplanarBonds.assign(m);
+        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(1).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(2).getStereo(), is(IBond.Stereo.NONE));
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3
+     */
+    @Test public void markBut2eneWithWavyBond() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 3, 0.000, 0.000));
+        m.addAtom(atom("C", 1, 1.299, -0.750));
+        m.addAtom(atom("C", 1, 2.598, -0.000));
+        m.addAtom(atom("C", 3, 3.897, -0.750));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.SINGLE);
+        NonplanarBonds.assign(m);
+        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.UP_OR_DOWN));
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/C8H12/c1-3-5-7-8-6-4-2/h3-8H,1-2H3/b5-3+,6-4+,8-7?
+     */
+    @Test public void useCrossedBondIfNeeded() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 3, 0.000, 0.000));
+        m.addAtom(atom("C", 1, 1.299, -0.750));
+        m.addAtom(atom("C", 1, 2.598, -0.000));
+        m.addAtom(atom("C", 1, 3.897, -0.750));
+        m.addAtom(atom("C", 1, 5.196, -0.000));
+        m.addAtom(atom("C", 1, 6.495, -0.750));
+        m.addAtom(atom("C", 1, 7.794, -0.000));
+        m.addAtom(atom("C", 3, 9.093, -0.750));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.SINGLE);
+        m.addBond(3, 4, IBond.Order.DOUBLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(5, 6, IBond.Order.DOUBLE);
+        m.addBond(6, 7, IBond.Order.SINGLE);
+        m.addStereoElement(new DoubleBondStereochemistry(m.getBond(1),
+                                                         new IBond[]{
+                                                                 m.getBond(0),
+                                                                 m.getBond(2)
+                                                         },
+                                                         OPPOSITE));
+        m.addStereoElement(new DoubleBondStereochemistry(m.getBond(5),
+                                                         new IBond[]{
+                                                                 m.getBond(4),
+                                                                 m.getBond(6)
+                                                         },
+                                                         OPPOSITE));
+        NonplanarBonds.assign(m);
+        assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.E_OR_Z));
+    }
+
+    /**
+     * @cdk.inchi InChI=1S/C6H14S/c1-5-7(4)6(2)3/h5H2,1-4H3/t7-/m0/s1 
+     */                                                                  
+    @Test
+    public void dontMarkTetrahedralCentresWithDoubleBondsAsUnspecified() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 3, 2.598, 1.500));
+        m.addAtom(atom("S", 0, 2.598, -0.000));
+        m.addAtom(atom("C", 1, 1.299, -0.750));
+        m.addAtom(atom("C", 3, 0.000, 0.000));
+        m.addAtom(atom("C", 2, 3.897, -0.750));
+        m.addAtom(atom("C", 3, 5.196, -0.000));
+        m.addBond(1, 0, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.SINGLE);
+        m.addBond(1, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(1),
+                                                    new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(2), m.getAtom(4)},
+                                                    ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+
+        NonplanarBonds.assign(m);
+        assertThat(m.getBond(0).getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
+        assertThat(m.getBond(2).getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
+        assertThat(m.getBond(3).getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
+    }
+    
+    @Test
+    public void dontMarkRingBondsInBezeneAsUnspecified() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 1, -1.299, 0.750));
+        m.addAtom(atom("C", 1, 0.000, 1.500));
+        m.addAtom(atom("C", 1, 1.299, 0.750));
+        m.addAtom(atom("C", 1, 1.299, -0.750));
+        m.addAtom(atom("C", 1, 0.000, -1.500));
+        m.addAtom(atom("C", 1, -1.299, -0.750));
+        m.addBond(0, 1, IBond.Order.DOUBLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.DOUBLE);
+        m.addBond(0, 5, IBond.Order.SINGLE);
+        NonplanarBonds.assign(m);
+        for (IBond bond : m.bonds()) {
+            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));   
+        }
     }
 
     static IAtom atom(String symbol, int hCount, double x, double y) {
