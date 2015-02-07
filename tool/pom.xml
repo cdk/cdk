@@ -25,6 +25,7 @@
         <module>smsd</module>
         <module>structgen</module>
         <module>tautomer</module>
+        <module>model</module>
     </modules>
     <packaging>pom</packaging>
     <artifactId>cdk-tool</artifactId>
