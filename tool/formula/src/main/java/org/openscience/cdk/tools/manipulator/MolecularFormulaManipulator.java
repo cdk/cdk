@@ -446,6 +446,11 @@ public class MolecularFormulaManipulator {
         return getMolecularFormula(stringMF, formula, assumeMajorIsotope);
     }
 
+    private static final char HYPHEN = '-';
+    private static final char MINUS  = '–';
+    private static final String HYPHEN_STR = "-";
+    private static final String MINUS_STR  = "–";
+    
     /**
      * add in a instance of IMolecularFormula the elements extracts form
      * molecular formula string. The string is immediately analyzed and a set of Nodes
@@ -481,7 +486,7 @@ public class MolecularFormulaManipulator {
 
         // Extract charge from String when contains []X- format
         Integer charge = null;
-        if ((stringMF.contains("[") && stringMF.contains("]")) && (stringMF.contains("+") || stringMF.contains("-"))) {
+        if ((stringMF.contains("[") && stringMF.contains("]")) && (stringMF.contains("+") || stringMF.contains(HYPHEN_STR) || stringMF.contains(MINUS_STR))) {
             charge = extractCharge(stringMF);
             stringMF = cleanMFfromCharge(stringMF);
         }
@@ -572,7 +577,7 @@ public class MolecularFormulaManipulator {
         }
         return finalFormula;
     }
-
+    
     /**
      * Extract the charge given a molecular formula format [O3S]2-.
      *
@@ -581,7 +586,7 @@ public class MolecularFormulaManipulator {
      */
     private static int extractCharge(String formula) {
 
-        if (!(formula.contains("[") && formula.contains("]") && (formula.contains("+") || formula.contains("-"))))
+        if (!(formula.contains("[") && formula.contains("]") && (formula.contains("+") || formula.contains(HYPHEN_STR) || formula.contains(MINUS_STR))))
             return 0;
 
         boolean finishBreak = false;
@@ -591,8 +596,8 @@ public class MolecularFormulaManipulator {
             if (thisChar == ']') {
                 // finish
                 finishBreak = true;
-            } else if (thisChar == '-') {
-                multiple = thisChar + multiple;
+            } else if (thisChar == HYPHEN || thisChar == MINUS) {
+                multiple = HYPHEN + multiple;
                 break;
             } else if (thisChar == '+') {
                 break;
@@ -600,7 +605,7 @@ public class MolecularFormulaManipulator {
                 multiple += thisChar;
             }
         }
-        if (multiple.isEmpty() || multiple.equals("-")) multiple += 1;
+        if (multiple.isEmpty() || multiple.equals(HYPHEN_STR) || multiple.equals(MINUS_STR)) multiple += 1;
         return Integer.valueOf(multiple);
     }
 

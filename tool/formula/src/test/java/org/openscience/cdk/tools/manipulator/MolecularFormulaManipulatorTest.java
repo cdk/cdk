@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 
@@ -1229,5 +1230,12 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         MolecularFormula mf = new MolecularFormula();
         mf.addIsotope(carbon, 10);
         MolecularFormulaManipulator.getNaturalExactMass(mf);
+    }
+    
+    @Test public void acceptMinusAsInput() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[PO4]3–",
+                                                                               bldr);
+        assertThat(mf.getCharge(), is(-3));
     }
 }
