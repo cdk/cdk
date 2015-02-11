@@ -867,12 +867,14 @@ public class CircularFingerprinter implements IFingerprinter {
                 xp[n] = (float) (o3d.x - x0);
                 yp[n] = (float) (o3d.y - y0);
                 zp[n] = (float) (o3d.z - z0);
-            } else {
+            } else if (o2d != null) {
                 IBond.Stereo stereo = bond.getStereo();
                 xp[n] = (float) (o2d.x - x0);
                 yp[n] = (float) (o2d.y - y0);
                 zp[n] = other == bond.getAtom(0) ? 0 : stereo == IBond.Stereo.UP ? 1 : stereo == IBond.Stereo.DOWN ? -1
                         : 0;
+            } else {
+                return null; // no 2D coordinates on some atom
             }
 
             final float dx = xp[n] - x0, dy = yp[n] - y0, dz = zp[n] - z0;
