@@ -61,6 +61,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import javax.vecmath.Point2d;
+
 /**
  * @cdk.module test-standard
  */
@@ -299,9 +301,37 @@ public class CircularFingerprinterTest extends CDKTestCase {
         assertNotNull(circ.getBitFingerprint(pyrazole));
     }
 
+    /**
+     * @cdk.bug 1357
+     */
+    @Test
+    public void partialCoordinatesDontCauseNPE() throws Exception {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 3, 0.000, 0.000));
+        m.addAtom(atom("C", 0, 1.299, -0.750));
+        m.addAtom(atom("H", 0, 0));
+        m.addAtom(atom("O", 0, 1));
+        m.addAtom(atom("C", 2, 2.598, -0.000));
+        m.addAtom(atom("C", 3, 3.897, -0.750));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(1, 3, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(1, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP6);
+        assertNotNull(circ.getBitFingerprint(m));
+    }
+    
     static IAtom atom(String symbol, int q, int h) {
         IAtom a = new Atom(symbol);
         a.setFormalCharge(q);
+        a.setImplicitHydrogenCount(h);
+        return a;
+    }
+
+    static IAtom atom(String symbol, int h, double x, double y) {
+        IAtom a = new Atom(symbol);
+        a.setPoint2d(new Point2d(x,y));
         a.setImplicitHydrogenCount(h);
         return a;
     }
