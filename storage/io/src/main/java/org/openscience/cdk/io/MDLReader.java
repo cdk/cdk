@@ -221,6 +221,8 @@ public class MDLReader extends DefaultChemObjectReader {
                 // apparently, this is a SDF file, continue with
                 // reading mol files
                 str = line;
+                if (line.equals("M  END"))
+                    continue;
                 if (str.equals("$$$$")) {
                     m = readMolecule(chemFile.getBuilder().newInstance(IAtomContainer.class));
 
