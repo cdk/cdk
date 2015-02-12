@@ -34,6 +34,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -255,5 +256,13 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         assertNotNull(container.getProperty("second"));
         reader.close();
             
+    }
+
+    @Test(expected=CDKException.class)
+    public void wrongFormat() throws CDKException {
+        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/bug1356.sdf");
+        MDLReader reader = new MDLReader(in, Mode.STRICT);
+        IChemFile chemfile = DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class);
+        chemfile = reader.read(chemfile);
     }
 }
