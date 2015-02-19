@@ -361,6 +361,12 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
                 case QUADRUPLE:
                     this.electronCount = 8;
                     break;
+                case QUINTUPLE:
+                    this.electronCount = 10;
+                    break;
+                case SEXTUPLE:
+                    this.electronCount = 12;
+                    break;
                 default:
                     this.electronCount = 0;
                     break;
