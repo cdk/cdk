@@ -57,6 +57,8 @@ public interface IBond extends IElectronContainer {
          * Order.DOUBLE.numeric()    // 2
          * Order.TRIPLE.numeric()    // 3
          * Order.QUADRUPLE.numeric() // 4
+         * Order.QUINTUPLE.numeric() // 5
+         * Order.SEXTUPLE.numeric()  // 6
          * Order.UNSET.numeric()     // 0
          * }</pre>
          *
