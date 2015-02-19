@@ -287,6 +287,20 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setOrder(Order.QUADRUPLE);
         Assert.assertNotNull(b.getElectronCount());
         Assert.assertEquals(8, b.getElectronCount().intValue());
+
+        // OK, a bit hypothetical
+        b.setAtom(c, 0);
+        b.setAtom(o, 1);
+        b.setOrder(Order.QUINTUPLE);
+        Assert.assertNotNull(b.getElectronCount());
+        Assert.assertEquals(10, b.getElectronCount().intValue());
+
+        // OK, a bit hypothetical
+        b.setAtom(c, 0);
+        b.setAtom(o, 1);
+        b.setOrder(Order.SEXTUPLE);
+        Assert.assertNotNull(b.getElectronCount());
+        Assert.assertEquals(12, b.getElectronCount().intValue());
     }
 
     @Test
