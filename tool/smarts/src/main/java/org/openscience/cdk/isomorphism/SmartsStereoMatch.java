@@ -132,6 +132,9 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
     private boolean checkTetrahedral(int u, int[] mapping) {
 
         int v = mapping[u];
+        
+        if (targetTypes[v] != null && targetTypes[v] != Type.Tetrahedral)
+            return false;
 
         ITetrahedralChirality queryElement = (ITetrahedralChirality) queryElements[u];
         ITetrahedralChirality targetElement = (ITetrahedralChirality) targetElements[v];
@@ -187,6 +190,11 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
 
         int v1 = mapping[u1];
         int v2 = mapping[u2];
+
+        if (targetTypes[v1] != null && targetTypes[v1] != Type.Geometric)
+            return false;
+        if (targetTypes[v2] != null && targetTypes[v2] != Type.Geometric)
+            return false;
 
         IDoubleBondStereochemistry queryElement = (IDoubleBondStereochemistry) queryElements[u1];
         IBond[] queryBonds = queryElement.getBonds();

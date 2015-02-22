@@ -1994,4 +1994,14 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertThat(match("([#8]).([#8])", "OCCO"), is(new int[]{0, 0}));
         assertThat(match("([#8]).([#8])", "O.CCO"), is(new int[]{2, 1}));
     }
+
+    /**
+     * Ensure a class cast exception is not thrown when matching stereochemistry. 
+     * @cdk.bug 1358
+     */
+    @Test
+    public void bug1358() throws Exception {
+        assertThat(match("[$([*@](~*)(~*)(*)*),$([*@H](*)(*)*),$([*@](~*)(*)*)]",
+                         "N#CN/C(=N/CCSCC=1N=CNC1C)NC"), is(new int[]{0, 0}));        
+    }
 }
