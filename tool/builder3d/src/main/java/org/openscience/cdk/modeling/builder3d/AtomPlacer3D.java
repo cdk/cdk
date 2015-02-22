@@ -389,6 +389,20 @@ public class AtomPlacer3D {
     }
 
     /**
+     * Find the first unplaced atom.
+     * 
+     * @param molecule molecule being built
+     * @return an unplaced heavy atom, null if none.
+     */
+    IAtom getUnplacedHeavyAtom(IAtomContainer molecule) {
+        for (IAtom atom : molecule.atoms()) {
+            if (isUnplacedHeavyAtom(atom))
+                return atom;
+        }
+        return null;
+    }
+
+    /**
      *  Gets the nextPlacedHeavyAtomWithAliphaticPlacedNeigbor from an atom container or molecule.
      *
      * @param molecule

@@ -179,7 +179,7 @@ public class ModelBuilder3D {
 
         if (ap3d.numberOfUnplacedHeavyAtoms(molecule) == 1) {
             logger.debug("Only one Heavy Atom");
-            molecule.getAtom(0).setPoint3d(new Point3d(0.0, 0.0, 0.0));
+            ap3d.getUnplacedHeavyAtom(molecule).setPoint3d(new Point3d(0.0, 0.0, 0.0));
             try {
                 atlp3d.add3DCoordinatesForSinglyBondedLigands(molecule);
             } catch (CDKException ex3) {
