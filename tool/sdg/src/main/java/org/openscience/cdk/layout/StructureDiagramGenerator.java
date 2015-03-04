@@ -83,9 +83,7 @@ public class StructureDiagramGenerator {
 
     private ILoggingTool            logger                   = LoggingToolFactory
                                                                      .createLoggingTool(StructureDiagramGenerator.class);
-
-    private static TemplateHandler  DEFAULT_TEMPLATE_HANDLER = null;
-
+    
     private IAtomContainer          molecule;
     private IRingSet                sssr;
     private double                  bondLength               = 1.5;
@@ -97,20 +95,27 @@ public class StructureDiagramGenerator {
     private TemplateHandler         templateHandler          = null;
     private boolean                 useTemplates             = true;
     private boolean                 useIdentTemplates        = true;
-
-    public static Vector2d          DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
-
+    
     /** Atoms of the molecule that mapped a template */
     private IAtomContainerSet       mappedSubstructures;
 
     /** Identity templates - for laying out primary ring system. */
-    private IdentityTemplateLibrary identityLibrary          = IdentityTemplateLibrary
-                                                                     .loadFromResource("chebi-ring-templates.smi");
+    private IdentityTemplateLibrary identityLibrary;
+
+    public  static Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
+    private static TemplateHandler         DEFAULT_TEMPLATE_HANDLER = null;
+    private static IdentityTemplateLibrary DEFAULT_IDENTITY_LIBRARY = IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi");
 
     /**
      *  The empty constructor.
      */
-    public StructureDiagramGenerator() {}
+    public StructureDiagramGenerator() {
+        this(DEFAULT_IDENTITY_LIBRARY);
+    }
+
+    private StructureDiagramGenerator(IdentityTemplateLibrary identityLibrary) {
+        this.identityLibrary = identityLibrary;
+    }
 
     /**
      *  Creates an instance of this class while assigning a molecule to be layed
@@ -141,7 +146,8 @@ public class StructureDiagramGenerator {
                 logger.error("Should clone, but exception occured: ", e.getMessage());
                 logger.debug(e);
             }
-        } else {
+        }
+        else {
             this.molecule = mol;
         }
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -182,7 +188,7 @@ public class StructureDiagramGenerator {
     /**
      *  Returns whether the use of templates is enabled or disabled.
      *
-     *  @return    true, when the use of templates is enables, false otherwise
+     *  @return true, when the use of templates is enables, false otherwise
      */
     public boolean getUseTemplates() {
         return useTemplates;
@@ -200,7 +206,7 @@ public class StructureDiagramGenerator {
     /**
      *  Gets the templateHandler attribute of the StructureDiagramGenerator object
      *
-     *  @return    The templateHandler value
+     *  @return The templateHandler value
      */
     public TemplateHandler getTemplateHandler() {
         if (templateHandler == null) {
