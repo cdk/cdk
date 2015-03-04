@@ -81,8 +81,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class StructureDiagramGenerator {
 
-    private ILoggingTool            logger                   = LoggingToolFactory
-                                                                     .createLoggingTool(StructureDiagramGenerator.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
     
     private IAtomContainer          molecule;
     private IRingSet                sssr;
@@ -137,7 +136,8 @@ public class StructureDiagramGenerator {
      *  @param  clone  Should the whole process be performed with a cloned copy?
      */
     public void setMolecule(IAtomContainer mol, boolean clone) {
-        templateHandler = new TemplateHandler(mol.getBuilder());
+        if (useTemplates && templateHandler == null)
+            templateHandler = new TemplateHandler(mol.getBuilder());
         IAtom atom = null;
         if (clone) {
             try {
