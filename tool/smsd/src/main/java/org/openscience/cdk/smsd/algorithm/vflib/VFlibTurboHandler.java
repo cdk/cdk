@@ -64,12 +64,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
-    private static       List<Map<IAtom, IAtom>>     allAtomMCS     = null;
-    private static       Map<IAtom, IAtom>           atomsMCS       = null;
-    private static       List<Map<IAtom, IAtom>>     allAtomMCSCopy = null;
-    private static       Map<Integer, Integer>       firstMCS       = null;
-    private static       List<Map<Integer, Integer>> allMCS         = null;
-    private static       List<Map<Integer, Integer>> allMCSCopy     = null;
+    private              List<Map<IAtom, IAtom>>     allAtomMCS     = null;
+    private              Map<IAtom, IAtom>           atomsMCS       = null;
+    private              List<Map<IAtom, IAtom>>     allAtomMCSCopy = null;
+    private              Map<Integer, Integer>       firstMCS       = null;
+    private              List<Map<Integer, Integer>> allMCS         = null;
+    private              List<Map<Integer, Integer>> allMCSCopy     = null;
     private              IQueryAtomContainer         queryMol       = null;
     private              IAtomContainer              mol1           = null;
     private              IAtomContainer              mol2           = null;
