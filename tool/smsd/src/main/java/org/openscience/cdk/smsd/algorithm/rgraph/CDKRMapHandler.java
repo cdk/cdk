@@ -58,7 +58,7 @@ public class CDKRMapHandler {
      * Returns source molecule
      * @return the source
      */
-    public static IAtomContainer getSource() {
+    public IAtomContainer getSource() {
         return source;
     }
 
@@ -66,7 +66,7 @@ public class CDKRMapHandler {
      * Set source molecule
      * @param aSource the source to set
      */
-    public static void setSource(IAtomContainer aSource) {
+    public void setSource(IAtomContainer aSource) {
         source = aSource;
     }
 
@@ -74,7 +74,7 @@ public class CDKRMapHandler {
      * Returns target molecule
      * @return the target
      */
-    public static IAtomContainer getTarget() {
+    public IAtomContainer getTarget() {
         return target;
     }
 
@@ -82,13 +82,13 @@ public class CDKRMapHandler {
      * Set target molecule
      * @param aTarget the target to set
      */
-    public static void setTarget(IAtomContainer aTarget) {
+    public void setTarget(IAtomContainer aTarget) {
         target = aTarget;
     }
 
     private List<Map<Integer, Integer>> mappings;
-    private static IAtomContainer       source;
-    private static IAtomContainer       target;
+    private IAtomContainer       source;
+    private IAtomContainer       target;
     private boolean                     timeoutFlag = false;
 
     /**
