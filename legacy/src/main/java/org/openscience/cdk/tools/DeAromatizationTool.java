@@ -27,10 +27,14 @@ import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Element;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -44,7 +48,10 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @cdk.module     extra
  * @cdk.githash
  * @cdk.keyword    aromatic ring, bond order adjustment
+ * @deprecated the newer {@link org.openscience.cdk.aromaticity.Kekulization} provides a faster, more generic and
+ *             comprehensive algorithm.
  */
+@Deprecated
 public class DeAromatizationTool {
 
     /**
