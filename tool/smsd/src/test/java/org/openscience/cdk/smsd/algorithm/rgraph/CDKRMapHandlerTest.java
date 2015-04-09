@@ -47,6 +47,8 @@ import org.openscience.cdk.smsd.helper.FinalMappings;
  */
 public class CDKRMapHandlerTest {
 
+    private final CDKRMapHandler handler = new CDKRMapHandler();
+
     public CDKRMapHandlerTest() {}
 
     @BeforeClass
@@ -67,8 +69,8 @@ public class CDKRMapHandlerTest {
     @Test
     public void testGetSource() {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        CDKRMapHandler.setSource(expResult);
-        IAtomContainer result = CDKRMapHandler.getSource();
+        handler.setSource(expResult);
+        IAtomContainer result = handler.getSource();
         Assert.assertEquals(expResult, result);
     }
 
@@ -78,8 +80,8 @@ public class CDKRMapHandlerTest {
     @Test
     public void testSetSource() {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        CDKRMapHandler.setSource(expResult);
-        IAtomContainer result = CDKRMapHandler.getSource();
+        handler.setSource(expResult);
+        IAtomContainer result = handler.getSource();
         Assert.assertEquals(expResult, result);
     }
 
@@ -89,8 +91,8 @@ public class CDKRMapHandlerTest {
     @Test
     public void testGetTarget() {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        CDKRMapHandler.setTarget(expResult);
-        IAtomContainer result = CDKRMapHandler.getTarget();
+        handler.setTarget(expResult);
+        IAtomContainer result = handler.getTarget();
         Assert.assertEquals(expResult, result);
     }
 
@@ -100,8 +102,8 @@ public class CDKRMapHandlerTest {
     @Test
     public void testSetTarget() {
         IAtomContainer expResult = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        CDKRMapHandler.setTarget(expResult);
-        IAtomContainer result = CDKRMapHandler.getTarget();
+        handler.setTarget(expResult);
+        IAtomContainer result = handler.getTarget();
         Assert.assertEquals(expResult, result);
     }
 
