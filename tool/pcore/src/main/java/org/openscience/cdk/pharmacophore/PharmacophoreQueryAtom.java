@@ -21,6 +21,8 @@ package org.openscience.cdk.pharmacophore;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 
 /**
  * Represents a query pharmacophore group.
@@ -41,6 +43,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
 
     private String smarts;
+    private IQueryAtomContainer[] compiledSmarts;
 
     /**
      * Creat a new query pharmacophore group
@@ -51,6 +54,13 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
     public PharmacophoreQueryAtom(String symbol, String smarts) {
         setSymbol(symbol);
         this.smarts = smarts;
+        // Note that we allow a special form of SMARTS where the | operator
+        // represents logical or of multi-atom groups (as opposed to ','
+        // which is for single atom matches)
+        String[] subSmarts = smarts.split("\\|");
+        this.compiledSmarts = new IQueryAtomContainer[subSmarts.length];
+        for (int i = 0; i < compiledSmarts.length; i++)
+            compiledSmarts[i] = SMARTSParser.parse(subSmarts[i], null);
     }
 
     /**
@@ -60,6 +70,14 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      */
     public String getSmarts() {
         return smarts;
+    }
+
+    /**
+     * Accessed the compiled SMARTS for this pcore query atom.  
+     * @return compiled SMARTS
+     */
+    IQueryAtomContainer[] getCompiledSmarts() {
+        return compiledSmarts;    
     }
 
     /**
