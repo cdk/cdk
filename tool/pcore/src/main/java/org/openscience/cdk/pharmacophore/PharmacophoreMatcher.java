@@ -21,7 +21,9 @@ package org.openscience.cdk.pharmacophore;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.vecmath.Point3d;
 
@@ -362,15 +364,22 @@ public class PharmacophoreMatcher {
         pharmacophoreQuery = query;
     }
 
-    private IAtomContainer getPharmacophoreMolecule(IAtomContainer atomContainer) throws CDKException {
+    /**
+     * Convert the input into a pcore molecule.
+     * 
+     * @param input the compound being converted from
+     * @return pcore molecule 
+     * @throws CDKException match failed
+     */
+    private IAtomContainer getPharmacophoreMolecule(IAtomContainer input) throws CDKException {
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("C", atomContainer.getBuilder());
-        IAtomContainer pharmacophoreMolecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        SMARTSQueryTool sqt = new SMARTSQueryTool("C", input.getBuilder());
+        IAtomContainer pharmacophoreMolecule = input.getBuilder().newInstance(IAtomContainer.class);
 
         // lets loop over each pcore query atom
-        HashMap<String, String> map = new HashMap<String, String>();
+        Set<String> matched = new HashSet<>();
 
-        logger.debug("Converting [" + atomContainer.getProperty(CDKConstants.TITLE) + "] to a pcore molecule");
+        logger.debug("Converting [" + input.getProperty(CDKConstants.TITLE) + "] to a pcore molecule");
 
         for (IAtom atom : pharmacophoreQuery.atoms()) {
             PharmacophoreQueryAtom qatom = (PharmacophoreQueryAtom) atom;
@@ -380,11 +389,8 @@ public class PharmacophoreMatcher {
             // 2 hydrophobic groups separated by X unit). In such a case we want to find
             // the atoms matching the pgroup SMARTS just once, rather than redoing the
             // matching for each instance of the pcore query atom.
-            if (!map.containsKey(qatom.getSymbol()))
-                map.put(qatom.getSymbol(), smarts);
-            else if (map.get(qatom.getSymbol()).equals(smarts)) {
+            if (!matched.add(qatom.getSymbol()))
                 continue;
-            }
 
             // see if the smarts for this pcore query atom gets any matches
             // in our query molecule. If so, then cllect each set of
@@ -398,10 +404,10 @@ public class PharmacophoreMatcher {
 
             for (String subSmart : subSmarts) {
                 sqt.setSmarts(subSmart);
-                if (sqt.matches(atomContainer)) {
+                if (sqt.matches(input)) {
                     List<List<Integer>> mappings = sqt.getUniqueMatchingAtoms();
                     for (List<Integer> atomIndices : mappings) {
-                        Point3d coords = getEffectiveCoordinates(atomContainer, atomIndices);
+                        Point3d coords = getEffectiveCoordinates(input, atomIndices);
                         PharmacophoreAtom patom = new PharmacophoreAtom(smarts, qatom.getSymbol(), coords);
                         patom.setMatchingAtoms(intIndices(atomIndices));
                         if (!pharmacophoreMolecule.contains(patom)) pharmacophoreMolecule.addAtom(patom);
