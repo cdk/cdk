@@ -422,8 +422,7 @@ public class PharmacophoreMatcher {
                     PharmacophoreAtom patom = new PharmacophoreAtom(smarts, qatom.getSymbol(), coords);
                     // n.b. mapping[] is reusued for efficient to need to make an explict copy 
                     patom.setMatchingAtoms(Arrays.copyOf(mapping, mapping.length));
-                    if (!pharmacophoreMolecule.contains(patom))
-                        pharmacophoreMolecule.addAtom(patom);
+                    pharmacophoreMolecule.addAtom(patom);
                     count++;
                 }
             }
