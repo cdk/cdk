@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -387,9 +388,10 @@ public class PharmacophoreMatcher {
         // XXX: prepare query, to be moved
         prepareInput(input);
         
-        IAtomContainer pharmacophoreMolecule = input.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer pharmacophoreMolecule = input.getBuilder().newInstance(IAtomContainer.class,0,0,0,0);
 
-        final Set<String> matched = new HashSet<>();
+        final Set<String>            matched     = new HashSet<>();
+        final Set<PharmacophoreAtom> uniqueAtoms = new LinkedHashSet<>();
 
         logger.debug("Converting [" + input.getProperty(CDKConstants.TITLE) + "] to a pcore molecule");
         
@@ -418,12 +420,14 @@ public class PharmacophoreMatcher {
                                                  .uniqueAtoms();
                 
                 for (final int[] mapping : mappings) {
-                    pharmacophoreMolecule.addAtom(newPCoreAtom(input, qatom, smarts, mapping));
+                    uniqueAtoms.add(newPCoreAtom(input, qatom, smarts, mapping));
                     count++;
                 }
             }
             logger.debug("\tFound " + count + " unique matches for " + smarts);
         }
+
+        pharmacophoreMolecule.setAtoms(uniqueAtoms.toArray(new IAtom[uniqueAtoms.size()]));
 
         // now that we have added all the pcore atoms to the container
         // we need to join all atoms with pcore bonds   (i.e. distance constraints)
@@ -509,8 +513,8 @@ public class PharmacophoreMatcher {
     private PharmacophoreAtom newPCoreAtom(IAtomContainer input, PharmacophoreQueryAtom qatom, String smarts, int[] mapping) {
         final Point3d coords = getEffectiveCoordinates(input, mapping);
         PharmacophoreAtom patom = new PharmacophoreAtom(smarts, qatom.getSymbol(), coords);
-        // n.b. mapping[] is reused for efficient to need to make an explict copy 
-        patom.setMatchingAtoms(Arrays.copyOf(mapping, mapping.length));
+        // n.b. mapping[] copy is mad by pcore atom 
+        patom.setMatchingAtoms(mapping);
         return patom;
     }
 
