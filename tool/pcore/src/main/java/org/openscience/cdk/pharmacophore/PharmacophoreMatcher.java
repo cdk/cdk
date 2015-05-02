@@ -418,11 +418,7 @@ public class PharmacophoreMatcher {
                                                  .uniqueAtoms();
                 
                 for (final int[] mapping : mappings) {
-                    final Point3d coords = getEffectiveCoordinates(input, mapping);
-                    PharmacophoreAtom patom = new PharmacophoreAtom(smarts, qatom.getSymbol(), coords);
-                    // n.b. mapping[] is reusued for efficient to need to make an explict copy 
-                    patom.setMatchingAtoms(Arrays.copyOf(mapping, mapping.length));
-                    pharmacophoreMolecule.addAtom(patom);
+                    pharmacophoreMolecule.addAtom(newPCoreAtom(input, qatom, smarts, mapping));
                     count++;
                 }
             }
@@ -508,6 +504,14 @@ public class PharmacophoreMatcher {
         }
 
         return pharmacophoreMolecule;
+    }
+
+    private PharmacophoreAtom newPCoreAtom(IAtomContainer input, PharmacophoreQueryAtom qatom, String smarts, int[] mapping) {
+        final Point3d coords = getEffectiveCoordinates(input, mapping);
+        PharmacophoreAtom patom = new PharmacophoreAtom(smarts, qatom.getSymbol(), coords);
+        // n.b. mapping[] is reused for efficient to need to make an explict copy 
+        patom.setMatchingAtoms(Arrays.copyOf(mapping, mapping.length));
+        return patom;
     }
 
     private void prepareInput(IAtomContainer input) throws CDKException {
