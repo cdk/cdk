@@ -20,15 +20,18 @@ package org.openscience.cdk.pharmacophore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.vecmath.Point3d;
 
+import com.google.common.collect.HashBiMap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -39,6 +42,7 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.Mappings;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -148,13 +152,9 @@ public class PharmacophoreMatcher {
     private ILoggingTool                  logger                = LoggingToolFactory
                                                                         .createLoggingTool(PharmacophoreMatcher.class);
     private PharmacophoreQuery            pharmacophoreQuery    = null;
-    private List<List<PharmacophoreAtom>> matchingPAtoms        = null;
-    private List<List<IBond>>             matchingPBonds        = null;
-
-    private List<List<RMap>>              bondMapping;
     private IAtomContainer                pharmacophoreMolecule = null;
-
-    private List<HashMap<IBond, IBond>>   bondMapHash           = null;
+    
+    private Mappings mappings = null;
     
     private final Aromaticity arom = new Aromaticity(ElectronDonation.daylight(),
                                                      Cycles.or(Cycles.all(), Cycles.relevant()));
@@ -238,9 +238,12 @@ public class PharmacophoreMatcher {
             logger.debug("Target [" + title + "] did not match the query SMARTS. Skipping constraints");
             return false;
         }
-        bondMapping = new UniversalIsomorphismTester().getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
-        logger.debug("  Got " + bondMapping.size() + " hits");
-        return bondMapping.size() > 0;
+        
+        mappings = Pattern.findSubstructure(pharmacophoreQuery)
+                          .matchAll(pharmacophoreMolecule);
+
+        // XXX: doing one search then discarding
+        return mappings.atLeast(1);
     }
 
     /**
@@ -257,41 +260,40 @@ public class PharmacophoreMatcher {
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAngleBond
      */
     public List<List<IBond>> getMatchingPharmacophoreBonds() {
-        if (bondMapping == null) return null;
-        matchingPBonds = new ArrayList<List<IBond>>();
-        bondMapHash = new ArrayList<HashMap<IBond, IBond>>();
+        if (mappings == null) return null;
 
-        for (List<RMap> aBondMapping : bondMapping) {
-            List<RMap> list = aBondMapping;
-            List<IBond> bondList = new ArrayList<IBond>();
-            HashMap<IBond, IBond> tmphash = new HashMap<IBond, IBond>();
-            for (Object aList : list) {
-                RMap map = (RMap) aList;
-                int bondID = map.getId1();
-                bondList.add(pharmacophoreMolecule.getBond(bondID));
-
-                tmphash.put(pharmacophoreMolecule.getBond(map.getId1()), pharmacophoreQuery.getBond(map.getId2()));
-            }
-            bondMapHash.add(tmphash);
-            matchingPBonds.add(bondList);
+        // XXX: re-subsearching the query
+        List<List<IBond>> bonds = new ArrayList<>();
+        for (Map<IBond,IBond> map : mappings.toBondMap()) {
+            bonds.add(new ArrayList<>(map.values()));
         }
-        return matchingPBonds;
+        
+        return bonds;
     }
 
     /**
      * Return a list of HashMap's that allows one to get the query constraint for a given pharmacophore bond.
      * <p/>
-     * This should be called after calling {@link #getMatchingPharmacophoreBonds()}, otherwise the
-     * return value is null. If the matching is successfull, the return value is a List of HashMaps, each
-     * HashMap corresponding to a seperate match. Each HashMap is keyed on the {@link org.openscience.cdk.pharmacophore.PharmacophoreBond}
-     * in the target molecule that matched a contstraint ({@link org.openscience.cdk.pharmacophore.PharmacophoreQueryBond} or
+     * If the matching is successful, the return value is a List of HashMaps, each
+     * HashMap corresponding to a separate match. Each HashMap is keyed on the {@link org.openscience.cdk.pharmacophore.PharmacophoreBond}
+     * in the target molecule that matched a constraint ({@link org.openscience.cdk.pharmacophore.PharmacophoreQueryBond} or
      * {@link org.openscience.cdk.pharmacophore.PharmacophoreQueryAngleBond}. The value is the corresponding query bond.
      *
      * @return A List of HashMaps, identifying the query constraint corresponding to a matched constraint in the target
      *         molecule.
      */
     public List<HashMap<IBond, IBond>> getTargetQueryBondMappings() {
-        return bondMapHash;
+        if (mappings == null) return null;
+        
+        List<HashMap<IBond,IBond>> bondMap = new ArrayList<>();
+        
+        // query -> target so need to inverse the mapping
+        // XXX: re-subsearching the query
+        for (Map<IBond,IBond> map : mappings.toBondMap()) {
+            bondMap.add(new HashMap<>(HashBiMap.create(map).inverse()));
+        }
+        
+        return bondMap;
     }
 
     /**
@@ -306,9 +308,8 @@ public class PharmacophoreMatcher {
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
      */
     public List<List<PharmacophoreAtom>> getMatchingPharmacophoreAtoms() {
-        if (pharmacophoreMolecule == null || bondMapping == null) return null;
-        matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
-        return matchingPAtoms;
+        if (pharmacophoreMolecule == null || mappings == null) return null;
+        return getPCoreAtoms(mappings);
     }
 
     /**
@@ -325,37 +326,20 @@ public class PharmacophoreMatcher {
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
      */
     public List<List<PharmacophoreAtom>> getUniqueMatchingPharmacophoreAtoms() {
-        getMatchingPharmacophoreAtoms();
-        List<List<PharmacophoreAtom>> ret = new ArrayList<List<PharmacophoreAtom>>();
+        if (pharmacophoreMolecule == null || mappings == null) return null;
+        return getPCoreAtoms(mappings.uniqueAtoms());
+    }
 
-        List<String> tmp = new ArrayList<String>();
-        for (List<PharmacophoreAtom> pmatch : matchingPAtoms) {
-            List<Integer> ilist = new ArrayList<Integer>();
-            for (PharmacophoreAtom patom : pmatch) {
-                int[] indices = patom.getMatchingAtoms();
-                for (int i : indices) {
-                    if (!ilist.contains(i)) ilist.add(i);
-                }
-            }
-            Collections.sort(ilist);
-
-            // convert the list of ints to a string
-            String s = "";
-            for (int i : ilist)
-                s += i;
-            tmp.add(s);
+    private List<List<PharmacophoreAtom>> getPCoreAtoms(Mappings mappings) {
+        List<List<PharmacophoreAtom>> atoms = new ArrayList<>();
+        // XXX: re-subsearching the query
+        for (Map<IAtom,IAtom> map : mappings.toAtomMap()) {
+            List<PharmacophoreAtom> pcoreatoms = new ArrayList<>();
+            for (IAtom atom : map.values())
+                pcoreatoms.add((PharmacophoreAtom) atom);
+            atoms.add(pcoreatoms);
         }
-
-        // now we go through our integer list and see if we can get rid of duplicates
-        List<String> utmp = new ArrayList<String>();
-        for (int i = 0; i < tmp.size(); i++) {
-            String ilist = tmp.get(i);
-            if (!utmp.contains(ilist)) {
-                utmp.add(ilist);
-                ret.add(matchingPAtoms.get(i));
-            }
-        }
-        return ret;
+        return atoms;
     }
 
     /**
@@ -571,43 +555,6 @@ public class PharmacophoreMatcher {
         ret.y /= atomIndices.length;
         ret.z /= atomIndices.length;
         return ret;
-    }
-
-    private List<List<PharmacophoreAtom>> getAtomMappings(List<List<RMap>> bondMapping, IAtomContainer atomContainer) {
-        List<List<PharmacophoreAtom>> atomMapping = new ArrayList<List<PharmacophoreAtom>>();
-
-        // loop over each mapping
-        for (List<RMap> aBondMapping : bondMapping) {
-            List<RMap> list = aBondMapping;
-
-            List<Integer> tmp = new ArrayList<Integer>();
-            List<PharmacophoreAtom> atomList = new ArrayList<PharmacophoreAtom>();
-
-            // loop over this mapping
-            for (Object aList : list) {
-                RMap map = (RMap) aList;
-                int bondID = map.getId1();
-
-                // get the atoms in this bond
-                IBond bond = atomContainer.getBond(bondID);
-                IAtom atom1 = bond.getAtom(0);
-                IAtom atom2 = bond.getAtom(1);
-
-                Integer idx1 = atomContainer.getAtomNumber(atom1);
-                Integer idx2 = atomContainer.getAtomNumber(atom2);
-
-                if (!tmp.contains(idx1)) {
-                    tmp.add(idx1);
-                    atomList.add(new PharmacophoreAtom((PharmacophoreAtom) atom1));
-                }
-                if (!tmp.contains(idx2)) {
-                    tmp.add(idx2);
-                    atomList.add(new PharmacophoreAtom((PharmacophoreAtom) atom2));
-                }
-            }
-            if (tmp.size() > 0) atomMapping.add(atomList);
-        }
-        return atomMapping;
     }
 
     private boolean checkQuery(IQueryAtomContainer query) {
