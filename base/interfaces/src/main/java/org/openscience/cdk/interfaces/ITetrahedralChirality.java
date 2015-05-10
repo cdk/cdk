@@ -43,7 +43,7 @@ public interface ITetrahedralChirality extends IStereoElement {
     /**
      * Enumeration that defines the two possible chiralities for this stereochemistry type.
      */
-    public enum Stereo {
+    enum Stereo {
         CLOCKWISE, ANTI_CLOCKWISE;
 
         /**
@@ -70,21 +70,28 @@ public interface ITetrahedralChirality extends IStereoElement {
      *
      * @return an array of four {@link IAtom}s.
      */
-    public IAtom[] getLigands();
+    IAtom[] getLigands();
 
     /**
      * Atom that is the chirality center.
      *
      * @return the chiral {@link IAtom}.
      */
-    public IAtom getChiralAtom();
+    IAtom getChiralAtom();
 
     /**
      * Defines the stereochemistry around the chiral atom. The value depends on the order of ligand atoms.
      *
      * @return the {@link Stereo} for this stereo element.
      */
-    public Stereo getStereo();
+    Stereo getStereo();
+
+    /**
+     * Set the stereochemistry of this tetrahedral centre.
+     * 
+     * @param stereo the new stereo assignment
+     */
+    void setStereo(Stereo stereo);
 
     /**
      * @inheritDoc
