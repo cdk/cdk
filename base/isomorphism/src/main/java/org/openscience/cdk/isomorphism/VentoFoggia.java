@@ -137,8 +137,9 @@ public final class VentoFoggia extends Pattern {
      */
     public static Pattern findSubstructure(IAtomContainer query) {
         boolean isQuery = query instanceof IQueryAtomContainer;
-        return new VentoFoggia(query, isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),
-                isQuery ? BondMatcher.forQuery() : BondMatcher.forOrder(), true);
+        return findSubstructure(query,
+                                isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),
+                                isQuery ? BondMatcher.forQuery() : BondMatcher.forOrder());
     }
 
     /**
@@ -150,8 +151,35 @@ public final class VentoFoggia extends Pattern {
      */
     public static Pattern findIdentical(IAtomContainer query) {
         boolean isQuery = query instanceof IQueryAtomContainer;
-        return new VentoFoggia(query, isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),
-                isQuery ? BondMatcher.forQuery() : BondMatcher.forOrder(), false);
+        return findIdentical(query,
+                             isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),
+                             isQuery ? BondMatcher.forQuery() : BondMatcher.forOrder());
+    }
+
+    /**
+     * Create a pattern which can be used to find molecules which contain the
+     * {@code query} structure.
+     *
+     * @param query the substructure to find
+     * @param atomMatcher how atoms are matched
+     * @param bondMatcher how bonds are matched
+     * @return a pattern for finding the {@code query}
+     */
+    public static Pattern findSubstructure(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
+        return new VentoFoggia(query, atomMatcher, bondMatcher, true);
+    }
+
+    /**
+     * Create a pattern which can be used to find molecules which are the same
+     * as the {@code query} structure.
+     *
+     * @param query the substructure to find
+     * @param atomMatcher how atoms are matched
+     * @param bondMatcher how bonds are matched
+     * @return a pattern for finding the {@code query}
+     */
+    public static Pattern findIdentical(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
+        return new VentoFoggia(query, atomMatcher, bondMatcher, false);
     }
 
     private static final class VFIterable implements Iterable<int[]> {
