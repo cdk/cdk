@@ -29,7 +29,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-public final class LogicalOperatorAtom extends SMARTSAtom {
+public class LogicalOperatorAtom extends SMARTSAtom {
 
     /**
      * Left child
@@ -91,7 +91,6 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
      * .openscience.cdk.interfaces.IAtom)
      */
-    @Deprecated
     @Override
     public boolean matches(IAtom atom) {
         boolean val = false;
@@ -174,7 +173,7 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
     }
 
     /** Defines a conjunction (AND) between two query atoms. */
-    private static class Conjunction extends SMARTSAtom {
+    private static class Conjunction extends LogicalOperatorAtom {
 
         /** left and right of the operator. */
         private SMARTSAtom left, right;
@@ -190,6 +189,21 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
             super(builder);
             this.left = (SMARTSAtom) left;
             this.right = (SMARTSAtom) right;
+            super.setLeft(left);
+            super.setRight(right);
+            super.setOperator("and");
+        }
+
+        @Override public void setLeft(IQueryAtom left) {
+            throw new UnsupportedOperationException("create a new logical atom");
+        }
+
+        @Override public void setRight(IQueryAtom left) {
+            throw new UnsupportedOperationException("create a new logical atom");
+        }
+
+        @Override public void setOperator(String name) {
+            throw new UnsupportedOperationException("create a new logical atom");
         }
 
         /** @inheritDoc */
@@ -208,7 +222,7 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
     }
 
     /** Defines a disjunction (or) between two query atoms. */
-    private static class Disjunction extends SMARTSAtom {
+    private static class Disjunction extends LogicalOperatorAtom {
 
         /** left and right of the operator. */
         private SMARTSAtom left, right;
@@ -224,6 +238,21 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
             super(builder);
             this.left = (SMARTSAtom) left;
             this.right = (SMARTSAtom) right;
+            super.setLeft(left);
+            super.setRight(right);
+            super.setOperator("or");
+        }
+
+        @Override public void setLeft(IQueryAtom left) {
+            throw new UnsupportedOperationException("create a new logical atom");
+        }
+
+        @Override public void setRight(IQueryAtom left) {
+            throw new UnsupportedOperationException("create a new logical atom");
+        }
+
+        @Override public void setOperator(String name) {
+            throw new UnsupportedOperationException("create a new logical atom");
         }
 
         /** @inheritDoc */
@@ -243,7 +272,7 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
     }
 
     /** Defines a negation (not) of a query atom. */
-    private static class Negation extends SMARTSAtom {
+    private static class Negation extends LogicalOperatorAtom {
 
         /** Expression to negate. */
         private SMARTSAtom expression;
@@ -260,7 +289,21 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
         private Negation(IChemObjectBuilder builder, IQueryAtom expression) {
             super(builder);
             this.expression = (SMARTSAtom) expression;
-            this.chiral = expression.getClass().equals(ChiralityAtom.class);
+            this.chiral     = expression.getClass().equals(ChiralityAtom.class);
+            super.setLeft(expression);
+            super.setOperator("not");
+        }
+
+        @Override public void setLeft(IQueryAtom left) {
+            throw new UnsupportedOperationException("create a new logical atom");
+        }
+
+        @Override public void setRight(IQueryAtom left) {
+            throw new UnsupportedOperationException("create a new logical atom");
+        }
+
+        @Override public void setOperator(String name) {
+            throw new UnsupportedOperationException("create a new logical atom");
         }
 
         /** @inheritDoc */
