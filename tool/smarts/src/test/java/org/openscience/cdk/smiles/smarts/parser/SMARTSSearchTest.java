@@ -579,6 +579,13 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test
+    public void quadBond() throws Exception {
+        int[] results = match("*$*", "[Re]$[Re]");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+    
+    @Test
     public void testPropertyValence1() throws Exception {
         int[] results = match("[v4]", "C");
         Assert.assertEquals(1, results[0]);
