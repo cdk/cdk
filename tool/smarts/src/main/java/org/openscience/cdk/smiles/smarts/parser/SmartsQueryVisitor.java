@@ -434,6 +434,9 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             case SMARTSParserConstants.T_BOND:
                 bond = new OrderQueryBond(IBond.Order.TRIPLE, builder);
                 break;
+            case SMARTSParserConstants.DOLLAR:
+                bond = new OrderQueryBond(IBond.Order.QUADRUPLE, builder);
+                break;
             case SMARTSParserConstants.ANY_BOND:
                 bond = new AnyOrderQueryBond(builder);
                 break;

@@ -172,7 +172,7 @@ TOKEN_MGR_DECLS : {
     |
     <R_BRACKET : "]" > 
     |
-    <DOLLAR : "$" > 
+    <DOLLAR : "$" >  // also quad bond
     |
     <PLUS: "+" >
 }
@@ -521,7 +521,9 @@ void SimpleBond() #SimpleBond : {}
         <D_BOND> 
         | 
         <T_BOND> 
-        | 
+        |
+        <DOLLAR> 
+        |
         <AR_BOND> 
         | 
         <ANY_BOND> 
