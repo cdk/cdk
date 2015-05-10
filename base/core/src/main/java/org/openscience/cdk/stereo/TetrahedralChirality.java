@@ -91,6 +91,11 @@ public class TetrahedralChirality implements ITetrahedralChirality {
         return stereo;
     }
 
+    /** {@inheritDoc} */
+    @Override public void setStereo(Stereo stereo) {
+        this.stereo = stereo;
+    }
+
     /**
      * Sets a new {@link IChemObjectBuilder}.
      *
