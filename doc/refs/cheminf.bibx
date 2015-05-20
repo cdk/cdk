@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://bibtexml.sf.net/ bibtexml.xsd">
 
-  <!-- This file is preferably edited in jEdit with the XML plugin installed -->
+  <!-- DO NOT EDIT. INSTEAD EDIT THIS FILE: https://github.com/cdk/cdk-build-util/blob/master/src/main/resources/net/sf/cdk/tools/doclets/cheminf.bibx -->
 
   <bibtex:entry id="AiresDeSousa2002">
     <bibtex:article>
