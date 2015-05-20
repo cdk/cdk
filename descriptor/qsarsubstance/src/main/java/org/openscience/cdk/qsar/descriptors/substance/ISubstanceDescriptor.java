@@ -1,4 +1,4 @@
-/* Copyright (C) 2011  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2011-2015  Egon Willighagen <egonw@users.sf.net>
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,25 +14,29 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.bitbucket.nanojava.descriptor;
+package org.openscience.cdk.qsar.descriptors.substance;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ISubstance;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
+/**
+ * Classes that implement this interface are QSAR substance calculators.
+ *
+ * @cdk.githash
+ */
 public interface ISubstanceDescriptor extends IDescriptor {
 
     /**
      * Calculates the descriptor value for the given {@link ISubstance}.
      *
-     * @param container An {@link IAtomContainer} for which this descriptor
+     * @param substance An {@link ISubstance} for which this descriptor
      *                  should be calculated
      * @return An object of {@link DescriptorValue} that contain the
      *         calculated value as well as specification details
      */
-    public DescriptorValue calculate(ISubstance container);
+    public DescriptorValue calculate(ISubstance substance);
 
     /**
      * Returns the specific type of the DescriptorResult object.
