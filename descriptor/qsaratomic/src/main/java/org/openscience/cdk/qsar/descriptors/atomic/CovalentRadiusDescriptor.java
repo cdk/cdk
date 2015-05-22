@@ -34,7 +34,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- *  This class return the covalent radius of a given atom.
+ *  This class returns the covalent radius of a given atom.
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -65,7 +65,7 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
     /**
      *  Constructor for the CovalentRadiusDescriptor object.
      *
-     *  @throws IOException if an error ocurrs when reading atom type information
+     *  @throws IOException if an error occurs when reading atom type information
      *  @throws ClassNotFoundException if an error occurs during tom typing
      */
     public CovalentRadiusDescriptor() throws IOException, ClassNotFoundException {}
@@ -115,7 +115,7 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
     }
 
     /**
-     *  This method calculate the Covalent radius of an atom.
+     *  This method calculates the Covalent radius of an atom.
      *
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  container         The {@link IAtomContainer} for which the descriptor is to be calculated

@@ -32,7 +32,7 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
- * Effective polarizability of an heavy atom
+ * Effective polarizability of a heavy atom
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -109,7 +109,7 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
-     *@return                   return the efective polarizability
+     *@return                   return the effective polarizability
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {

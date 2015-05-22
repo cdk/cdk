@@ -163,7 +163,7 @@ public interface IDescriptor {
      * <p/>
      * In many cases, these names can be as simple as X1, X2, ..., XN where X is a prefix
      * and 1, 2, ..., N are the indices. On the other hand it is also possible to return
-     * other arbitrary names, which should be documented in the Javadocs for the decsriptor
+     * other arbitrary names, which should be documented in the Javadocs for the descriptor
      * (e.g., the CPSA descriptor).
      * <p/>
      * Note that by default if a descriptor returns a single value
