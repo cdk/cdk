@@ -137,7 +137,7 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
     }
 
     /**
-     * generic method for calculation of distance btw 2 atoms
+     * generic method for calculation of distance between 2 atoms
      *
      * @param atom1 The IAtom 1
      * @param atom2 The IAtom 2

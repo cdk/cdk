@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * Provides atomic property values for descriptor calculations.
  *
- * This class currently provides values for mass, Vanderwaals volume, electronegativity and
+ * This class currently provides values for mass, van der Waals volume, electronegativity and
  * polarizability.
  *
  * @author     Todd Martin

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * A class representing the solvent acessible surface area surface of a molecule.
+ * A class representing the solvent accessible surface area surface of a molecule.
  *
  * <p>This class is based on the Python implementation of the DCLM method
  * ({@cdk.cite EIS95}) by Peter McCluskey, which is a non-analytical method to generate a set of points
@@ -86,7 +86,7 @@ public class NumericalSurface {
      * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
      * @param solventRadius The radius of a solvent molecule that is used to extend
      * the radius of each atom. Setting to 0 gives the Van der Waals surface
-     * @param tesslevel The number of levels that the subdivision algorithm for tessllation
+     * @param tesslevel The number of levels that the subdivision algorithm for tessellation
      * should use
      */
     public NumericalSurface(IAtomContainer atomContainer, double solventRadius, int tesslevel) {

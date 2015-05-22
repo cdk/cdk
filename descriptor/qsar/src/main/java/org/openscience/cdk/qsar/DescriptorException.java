@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Exception that is thrown by descriptor routines when a problem has occured.
+ * Exception that is thrown by descriptor routines when a problem has occurred.
  *
  * @cdk.module qsar
  * @cdk.githash

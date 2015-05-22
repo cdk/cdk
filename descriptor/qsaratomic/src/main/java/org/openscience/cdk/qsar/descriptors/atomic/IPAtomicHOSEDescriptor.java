@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  This class returns the ionization potential of an atom containg lone
+ *  This class returns the ionization potential of an atom containing lone
  *  pair electrons. It is
  *  based on a decision tree which is extracted from Weka(J48) from
  *  experimental values. Up to now is only possible predict for
