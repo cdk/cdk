@@ -22,6 +22,7 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
@@ -53,9 +54,10 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test
-    public void testAccepts() {
+    public void testAccepts() throws IOException {
         INChIPlainTextReader reader = new INChIPlainTextReader();
         Assert.assertTrue(reader.accepts(ChemFile.class));
+        reader.close();
     }
 
     /**
@@ -69,6 +71,7 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         INChIPlainTextReader reader = new INChIPlainTextReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
+        reader.close();
 
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
@@ -92,6 +95,7 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
                 "InChI=1/C40H62/c1-33(2)19-13-23-37(7)27-17-31-39(9)29-15-25-35(5)21-11-12-22-36(6)26-16-30-40(10)32-18-28-38(8)24-14-20-34(3)4/h11-12,15,19-22,25,27-30H,13-14,16-18,23-24,26,31-32H2,1-10H3");
         INChIPlainTextReader reader = new INChIPlainTextReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
+        reader.close();
 
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
