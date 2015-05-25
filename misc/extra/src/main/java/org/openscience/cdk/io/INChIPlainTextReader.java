@@ -165,12 +165,16 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     // ok, we expect 4 tokens
                     tokenizer.nextToken(); // 1.12Beta not stored since never used
                     final String formula = tokenizer.nextToken(); // C6H6
-                    final String connections = tokenizer.nextToken().substring(1); // 1-2-4-6-5-3-1
+                    String connections = null;
+                    if (tokenizer.hasMoreTokens()) {
+                        connections = tokenizer.nextToken().substring(1); // 1-2-4-6-5-3-1
+                    }
                     //final String hydrogens = tokenizer.nextToken().substring(1); // 1-6H
 
                     IAtomContainer parsedContent = inchiTool.processFormula(
                             cf.getBuilder().newInstance(IAtomContainer.class), formula);
-                    inchiTool.processConnections(connections, parsedContent, -1);
+                    if (connections != null)
+                        inchiTool.processConnections(connections, parsedContent, -1);
 
                     IAtomContainerSet moleculeSet = cf.getBuilder().newInstance(IAtomContainerSet.class);
                     moleculeSet.addAtomContainer(cf.getBuilder().newInstance(IAtomContainer.class, parsedContent));
