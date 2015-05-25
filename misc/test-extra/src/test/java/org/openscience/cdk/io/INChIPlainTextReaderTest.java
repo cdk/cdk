@@ -113,4 +113,27 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(39, molecule.getBondCount());
     }
 
+    @Test
+    public void testPlatinum() throws Exception {
+        StringReader ins = new StringReader(
+                "InChI=1S/Pt");
+        INChIPlainTextReader reader = new INChIPlainTextReader(ins);
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
+        reader.close();
+
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(1, chemFile.getChemSequenceCount());
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1, seq.getChemModelCount());
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        Assert.assertNotNull(model);
+        IAtomContainerSet moleculeSet = model.getMoleculeSet();
+        Assert.assertNotNull(moleculeSet);
+        IAtomContainer molecule = moleculeSet.getAtomContainer(0);
+        Assert.assertNotNull(molecule);
+
+        Assert.assertEquals(1, molecule.getAtomCount());
+        Assert.assertEquals(0, molecule.getBondCount());
+    }
 }
