@@ -26,7 +26,7 @@ CDK library.
 
 ## Compiling
 
-Compiling the library is performed with Apache Maven and requires Java 1.6.0 or later:
+Compiling the library is performed with Apache Maven and requires Java 1.7 or later:
 
 ```bash
 cdk/$ ls pom.xml
