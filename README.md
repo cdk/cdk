@@ -30,7 +30,7 @@ Compiling the library is performed with Apache Maven and requires Java 1.6.0 or 
 
 ```bash
 cdk/$ ls pom.xml
-cdk/$ pom.xml
+pom.xml
 cdk/$ mvn compile
 ```
 
@@ -61,7 +61,7 @@ cdk/$ firefox target/site/apidocs/index.html
 To create a Jar containing all source files use the following command on the main pom. 
 
 ```bash
-$ mvn source:aggregate
+cdk/$ mvn source:aggregate
 ```
 
 The `cdk-{version}-sources.jar` will be generated in the `target/directory`.
@@ -89,7 +89,7 @@ cdk/$ cd descriptor/fingerprint
 cdk/descriptor/fingerprint/$ mvn test
 ```
 
-Tutorials on building the project in integrated development enviroments (IDEs) are avaialble on the wiki:
+Tutorials on building the project in integrated development environments (IDEs) are available on the wiki:
 https://github.com/cdk/cdk/wiki/Building-CDK
 
 ## Using CDK
@@ -107,8 +107,10 @@ A large bundled jar with all dependencies can also be built. If you have locally
 made modifications to the source code you will need to install these to your
 local repository. The jar will in the target directory of the 'bundle' module.
 
+```bash
 cdk/$ mvn install -DskipTests=true
 cdk/$ ls bundle/target/cdk-{version}.jar
+```
 
 If you have not made any changes you need only package the bundle module. The other
 modules will be automatically downloaded.
