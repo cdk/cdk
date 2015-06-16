@@ -27,41 +27,54 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.result.IntegerResultType;
 
+/**
+ * Descriptor that returns the number of oxygens in the chemical
+ * formula. Originally aimed at metal oxide nanoparticles.
+ *
+ * @author      egonw
+ * @cdk.githash
+ */
 public class OxygenAtomCountDescriptor implements ISubstanceDescriptor {
 
+	/** {@inheritDoc} */ @Override
 	public String[] getDescriptorNames() {
         return new String[]{"NoMe"};
 	}
 
+	/** {@inheritDoc} */ @Override
 	public String[] getParameterNames() {
         return new String[0];
 	}
 
-	public Object getParameterType(String arg0) {
+	/** {@inheritDoc} */ @Override
+	public Object getParameterType(String substance) {
 		return null;
 	}
 
+	/** {@inheritDoc} */ @Override
 	public Object[] getParameters() {
 		return new Object[0];
 	}
 
+	/** {@inheritDoc} */ @Override
 	public DescriptorSpecification getSpecification() {
 	    return new DescriptorSpecification(
 	        "http://egonw.github.com/resource/NM_001002",
 	        this.getClass().getName(),
-	        "$Id: 9927243df29a118e9bfd0b8624bc8d77d3c6db07 $",
-	        "The NanoJava Project"
+	        "The Chemistry Development Kit"
 	    );
 	}
 
-	public void setParameters(Object[] arg0) throws CDKException {
+	/** {@inheritDoc} */ @Override
+	public void setParameters(Object[] parameters) throws CDKException {
 		return; // no parameters
 	}
 
-	public DescriptorValue calculate(ISubstance container) {
-        if (container == null) return newNaNDescriptor();
+	/** {@inheritDoc} */ @Override
+	public DescriptorValue calculate(ISubstance substance) {
+        if (substance == null) return newNaNDescriptor();
 
-	    IMolecularFormula molFormula = SubstanceManipulator.getChemicalComposition(container);
+	    IMolecularFormula molFormula = SubstanceManipulator.getChemicalComposition(substance);
 	    if (molFormula == null) return newNaNDescriptor();
 
 	    int count = 0;
@@ -81,6 +94,9 @@ public class OxygenAtomCountDescriptor implements ISubstanceDescriptor {
 		return newNaNDescriptor();
 	}
 
+	/**
+	 * Internal method to return a NaN value.
+	 */
 	private DescriptorValue newNaNDescriptor() {
 	    return new DescriptorValue(
 	        getSpecification(),
@@ -91,11 +107,12 @@ public class OxygenAtomCountDescriptor implements ISubstanceDescriptor {
 	    );
     }
 
+	/** {@inheritDoc} */ @Override
     public IDescriptorResult getDescriptorResultType() {
 		return new IntegerResultType();
 	}
 
-	@Override
+	/** {@inheritDoc} */ @Override
 	public void initialise(IChemObjectBuilder builder) {
 		// nothing to be done
 	}
