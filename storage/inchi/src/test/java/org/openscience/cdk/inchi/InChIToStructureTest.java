@@ -232,4 +232,14 @@ public class InChIToStructureTest extends CDKTestCase {
         assertThat(element.focus(), is(container.getAtom(4)));
         assertThat(element.winding(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
+
+    @Test
+    public void platinum() throws Exception {
+        InChIToStructure parser = new InChIToStructure("InChI=1S/Pt",
+                SilentChemObjectBuilder.getInstance());
+        IAtomContainer container = parser.getAtomContainer();
+
+        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
+        Assert.assertThat(container.getAtomCount(), is(1));
+    }
 }
