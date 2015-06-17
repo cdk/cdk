@@ -17,9 +17,9 @@
 package org.openscience.cdk.qsar.descriptors.substance;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.ISubstance;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -74,24 +74,18 @@ public class OxygenAtomCountDescriptor implements ISubstanceDescriptor {
 	public DescriptorValue calculate(ISubstance substance) {
         if (substance == null) return newNaNDescriptor();
 
-	    IMolecularFormula molFormula = SubstanceManipulator.getChemicalComposition(substance);
-	    if (molFormula == null) return newNaNDescriptor();
-
 	    int count = 0;
-        for (IIsotope isotope : molFormula.isotopes()) {
-            if ("O".equals(isotope.getSymbol())) {
-                count = molFormula.getIsotopeCount(isotope);
-                return new DescriptorValue(
-                    getSpecification(),
-                    getParameterNames(),
-                    getParameters(),
-                    new IntegerResult(count),
-                    getDescriptorNames()
-                );
-            }
-        }
-	    
-		return newNaNDescriptor();
+	    for (IAtomContainer container : substance.atomContainers()) {
+			for (IAtom atom : container.atoms()) {
+				if ("O".equals(atom.getSymbol()) || 8 == atom.getAtomicNumber())
+					count++;
+			}
+		}
+
+		return new DescriptorValue(
+		    getSpecification(), getParameterNames(), getParameters(),
+		    new IntegerResult(count), getDescriptorNames()
+		);
 	}
 
 	/**
