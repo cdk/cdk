@@ -57,6 +57,7 @@ public final class SmallestRingAtom extends SMARTSAtom {
     /** @inheritDoc */
     @Override
     public boolean matches(IAtom atom) {
-        return invariants(atom).ringSize().contains(ringSize);
+        return ringSize < 0 ? invariants(atom).ringConnectivity() > 0
+                            : invariants(atom).ringSize().contains(ringSize);
     }
 }
