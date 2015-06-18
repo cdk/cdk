@@ -2004,4 +2004,18 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertThat(match("[$([*@](~*)(~*)(*)*),$([*@H](*)(*)*),$([*@](~*)(*)*)]",
                          "N#CN/C(=N/CCSCC=1N=CNC1C)NC"), is(new int[]{0, 0}));        
     }
+
+    /**
+     * Ensure 'r' without a size is equivalent to !R0 and R.
+     * @cdk.bug 1364
+     */
+    @Test
+    public void bug1364() throws Exception {
+        assertThat(match("[!R0!R1]", "C[C@]12CC3CC([NH2+]CC(=O)NCC4CC4)(C1)C[C@@](C)(C3)C2"),
+                   is(new int[]{7, 7}));
+        assertThat(match("[R!R1]", "C[C@]12CC3CC([NH2+]CC(=O)NCC4CC4)(C1)C[C@@](C)(C3)C2"),
+                   is(new int[]{7, 7}));
+        assertThat(match("[r!R1]", "C[C@]12CC3CC([NH2+]CC(=O)NCC4CC4)(C1)C[C@@](C)(C3)C2"),
+                   is(new int[]{7, 7}));
+    }
 }

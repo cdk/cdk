@@ -728,7 +728,7 @@ void RingMembership() #RingMembership :
 void SmallestRingSize() #SmallestRingSize : 
 { StringBuffer digits = new StringBuffer(); }
 {
-    <r> { jjtThis.setSize(1); } 
+    <r> { jjtThis.setSize(-1); }
     [ ( <DIGIT> { digits.append(token.image); } )+ 
     { jjtThis.setSize( Integer.parseInt(digits.toString()) ); } ]
 }
