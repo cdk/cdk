@@ -41,7 +41,16 @@ This will produce a 'jar' file for each module located in each modules 'target/'
 The JavaDoc documentation for the API describes all of the CDK classes in detail. It functions as
 the user manual for the CDK, although you should also look at the list of examples and tutorials
 below. 
-This documentation is created by 'mvn' from the Java source code for the CDK as follows:
+
+Before creating the JavaDoc you will need to install the CDK build util project in your local maven repo.
+
+```bash
+git clone https://github.com/cdk/cdk-build-util
+cd cdk-build-util
+mvn install
+```
+
+The documentation on the main project can then be created:
 
 ```bash
 cdk/$ ls pom.xml
