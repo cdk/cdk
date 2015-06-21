@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -206,7 +207,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      */
     private Map<Object, Object> lazyProperties() {
         if (properties == null) {
-            properties = new LinkedHashMap<Object, Object>();
+            properties = new LinkedHashMap<>(4);
         }
         return properties;
     }
@@ -236,10 +237,13 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      */
     @Override
     public void removeProperty(Object description) {
-        if (properties == null) {
-            return;
+        if (properties != null) {
+            boolean changed = properties.remove(description) != null;
+            if (properties.isEmpty())
+                properties = null;
+            if (changed)
+                notifyChanged();
         }
-        if (lazyProperties().remove(description) != null) notifyChanged();
     }
 
     /**
@@ -291,7 +295,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      */
     @Override
     public Map<Object, Object> getProperties() {
-        return lazyProperties();
+        return properties == null ? Collections.emptyMap()
+                                  : Collections.unmodifiableMap(properties);
     }
 
     /**
