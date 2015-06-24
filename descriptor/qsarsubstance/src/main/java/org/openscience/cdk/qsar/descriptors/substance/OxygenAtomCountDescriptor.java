@@ -29,7 +29,7 @@ import org.openscience.cdk.qsar.result.IntegerResultType;
 
 /**
  * Descriptor that returns the number of oxygens in the chemical
- * formula. Originally aimed at metal oxide nanoparticles {@cdk.cite Liu2011}.
+ * formula. Originally aimed at metal oxide nanoparticles.
  *
  * @author      egonw
  * @cdk.githash
