@@ -315,4 +315,27 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     }
 
+    @Test
+    public void testV3000MolfileFormat() throws IOException, CDKException {
+
+        String path = "data/mdl/molV3000.mol";
+        InputStream in = getClass().getClassLoader().getResourceAsStream(path);
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IteratingSDFReader reader = new IteratingSDFReader(in, builder);
+
+        reader.setSkip(true); // skip over null entries and keep reading until EOF
+
+        int count = 0;
+
+        while (reader.hasNext()) {
+            IAtomContainer molecule = reader.next();
+            count++;
+        }
+
+        reader.close();
+
+        Assert.assertEquals(1, count);
+
+    }
+
 }

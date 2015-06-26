@@ -232,7 +232,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                 // do MDL molfile version checking
                 Matcher versionMatcher = MDL_VERSION.matcher(currentLine);
                 if (versionMatcher.find()) {
-                    currentFormat = versionMatcher.group(1) != null ? (IChemFormat) MDLV2000Format.getInstance()
+                    currentFormat = "2000".equals(versionMatcher.group(1)) ? (IChemFormat) MDLV2000Format.getInstance()
                             : (IChemFormat) MDLV3000Format.getInstance();
                 }
 
