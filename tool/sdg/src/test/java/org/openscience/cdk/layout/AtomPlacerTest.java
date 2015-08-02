@@ -51,8 +51,6 @@ public class AtomPlacerTest extends CDKTestCase {
     public void emptyAtomsListTest() {
         List<IAtom> atoms = new ArrayList<IAtom>();
         // switch on debugging, to see if NPE is thrown
-        System.setProperty("cdk.debugging", "true");
-        System.setProperty("cdk.debug.stdout", "true");
         AtomPlacer placer = new AtomPlacer();
         boolean npeThrown = false;
         try {
