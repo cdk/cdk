@@ -22,17 +22,27 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.io.iterator.IteratingSMILESReader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.InputStream;
+import java.io.StringReader;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -99,6 +109,24 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
         Assert.assertEquals(5, som.getAtomContainerCount());
+    }
+    
+    @Test 
+    public void badSmilesLine() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        String input = "C\nn1cccc1\nc1ccccc1\n";
+        DefaultChemObjectReader cor = new SMILESReader(new StringReader(input));
+        IAtomContainerSet mols = cor.read(bldr.newInstance(IAtomContainerSet.class));
+        assertThat(mols.getAtomContainerCount(), is(3));
+        assertThat(mols.getAtomContainer(0).getAtomCount(), is(1));
+        assertThat(mols.getAtomContainer(0).getProperty(IteratingSMILESReader.BAD_SMILES_INPUT),
+                   nullValue());
+        assertThat(mols.getAtomContainer(1).getAtomCount(), is(0));
+        assertThat(mols.getAtomContainer(1).getProperty(IteratingSMILESReader.BAD_SMILES_INPUT),
+                   notNullValue());
+        assertThat(mols.getAtomContainer(2).getAtomCount(), is(6));
+        assertThat(mols.getAtomContainer(2).getProperty(IteratingSMILESReader.BAD_SMILES_INPUT),
+                   nullValue());
     }
 
 }

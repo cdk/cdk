@@ -23,13 +23,7 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -39,9 +33,17 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
+import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * This Reader reads files which has one SMILES string on each
@@ -50,7 +52,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * COC ethoxy ethane
  * </pre>
  * Thus first the SMILES, and then after the first space (or tab) on the line a title
- * that is stored as "SMIdbNAME" property in the Molecule.
+ * that is stored as {@link CDKConstants#TITLE}. For legacy comparability the
+ * title is also placed in a "SMIdbNAME" property. If a line is invalid an empty
+ * molecule is inserted into the container set. The molecule with have the prop
+ * {@link IteratingSMILESReader#BAD_SMILES_INPUT} set to the input line that
+ * could not be read. 
  *
  * <p>For each line a molecule is generated, and multiple Molecules are
  * read as MoleculeSet.
@@ -160,25 +166,20 @@ public class SMILESReader extends DefaultChemObjectReader {
             while (line != null) {
                 logger.debug("Line: ", line);
 
-                String[] tokens = line.split("[\\s\\t]+", 2);
-                if (tokens.length > 2) throw new Exception("Malformed line");
-
-                String SMILES = tokens[0];
-                String name = null;
-                if (tokens.length == 2) name = tokens[1];
-
-                logger.debug("Line contains SMILES and name: ", SMILES, " + ", name);
+                final String name = suffix(line);
 
                 try {
-                    IAtomContainer molecule = sp.parseSmiles(SMILES);
+                    IAtomContainer molecule = sp.parseSmiles(line);
+                    molecule.setProperty("SMIdbNAME", name);
+                    molecule.setProperty(CDKConstants.TITLE, name);
                     som.addAtomContainer(molecule);
-                    if (name != null) {
-                        molecule.setProperty("SMIdbNAME", name);
-                    }
-                } catch (Exception exception) {
-                    logger.warn("This SMILES could not be parsed: ", SMILES);
+                } catch (CDKException exception) {
+                    logger.warn("This SMILES could not be parsed: ", line);
                     logger.warn("Because of: ", exception.getMessage());
                     logger.debug(exception);
+                    IAtomContainer empty = som.getBuilder().newInstance(IAtomContainer.class, 0, 0, 0, 0);
+                    empty.setProperty(IteratingSMILESReader.BAD_SMILES_INPUT, line);
+                    som.addAtomContainer(empty);
                 }
                 if (input.ready()) {
                     line = input.readLine();
@@ -196,5 +197,20 @@ public class SMILESReader extends DefaultChemObjectReader {
     @Override
     public void close() throws IOException {
         input.close();
+    }
+
+    /**
+     * Obtain the suffix after a line containing SMILES. The suffix follows
+     * any ' ' or '\t' termination characters.
+     *
+     * @param line input line
+     * @return the suffix - or an empty line
+     */
+    private String suffix(final String line) {
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (c == ' ' || c == '\t') return line.substring(i + 1);
+        }
+        return "";
     }
 }
