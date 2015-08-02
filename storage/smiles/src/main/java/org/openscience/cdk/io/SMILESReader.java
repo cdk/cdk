@@ -211,6 +211,6 @@ public class SMILESReader extends DefaultChemObjectReader {
             char c = line.charAt(i);
             if (c == ' ' || c == '\t') return line.substring(i + 1);
         }
-        return "";
+        return null;
     }
 }
