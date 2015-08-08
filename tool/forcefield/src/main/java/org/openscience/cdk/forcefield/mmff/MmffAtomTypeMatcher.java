@@ -28,6 +28,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -102,6 +103,21 @@ final class MmffAtomTypeMatcher {
      * @return MMFF symbolic types for each atom index
      */
     String[] symbolicTypes(final IAtomContainer container) {
+        EdgeToBondMap bonds = EdgeToBondMap.withSpaceFor(container);
+        int[][] graph = GraphUtil.toAdjList(container, bonds);
+        return symbolicTypes(container, graph, bonds, new HashSet<IBond>());
+    }
+
+    /**
+     * Obtain the MMFF symbolic types to the atoms of the provided structure.
+     *
+     * @param container structure representation
+     * @param graph     adj list data structure
+     * @param bonds     bond lookup map
+     * @param mmffArom  flags which bonds are aromatic by MMFF model
+     * @return MMFF symbolic types for each atom index
+     */
+    String[] symbolicTypes(final IAtomContainer container, final int[][] graph, final EdgeToBondMap bonds, final Set<IBond> mmffArom) {
 
         // Array of symbolic types, MMFF refers to these as 'SYMB' and the numeric
         // value a s 'TYPE'.
@@ -111,12 +127,9 @@ final class MmffAtomTypeMatcher {
 
         assignPreliminaryTypes(container, symbs);
 
-        final EdgeToBondMap bonds = EdgeToBondMap.withSpaceFor(container);
-        final int[][] graph = GraphUtil.toAdjList(container, bonds);
-
         // aromatic types, set by upgrading preliminary types in specified positions
         // and conditions. This requires a fair bit of code and is delegated to a separate class.
-        aromaticTypes.assign(container, symbs, bonds, graph);
+        aromaticTypes.assign(container, symbs, bonds, graph, mmffArom);
 
         // special case, 'NCN+' matches entries that the validation suite say should
         // actually be 'NC=N'. We can achieve 100% compliance by checking if NCN+ is still
