@@ -42,7 +42,7 @@
 [NX4]~[OX1] N3OX
 [NX4] NR+
 [NX3v4](~[OX1])(~O)~O NO3
-[NX3v4](~[OX1])~[OX1] NO2
+[NX3](~[OX1])~[OX1] NO2
 [NX3v4](~[OX1]) N2OX
 [N+]=C([NX3])[NX3] NGD+
 [NX3]C(=[N+])[NX3] NGD+
