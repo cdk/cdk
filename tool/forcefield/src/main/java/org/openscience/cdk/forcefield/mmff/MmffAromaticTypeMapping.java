@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
@@ -82,9 +83,9 @@ final class MmffAromaticTypeMapping {
      * @param container structure representation
      * @param symbs     vector of symbolic types for the whole structure
      * @param bonds     edge to bond map lookup
-     * @param graph     adjacency list graph representation of structure
+     * @param mmffArom  set of bonds that are aromatic
      */
-    void assign(IAtomContainer container, String[] symbs, EdgeToBondMap bonds, int[][] graph) {
+    void assign(IAtomContainer container, String[] symbs, EdgeToBondMap bonds, int[][] graph, Set<IBond> mmffArom) {
 
         int[] contribution = new int[graph.length];
         int[] doubleBonds = new int[graph.length];
@@ -95,8 +96,15 @@ final class MmffAromaticTypeMapping {
 
         for (int[] cycle : cycles) {
             int len = cycle.length - 1;
-            if (len == 6) updateAromaticTypesInSixMemberRing(cycle, symbs);
-            if (len == 5 && normaliseCycle(cycle, contribution)) updateAromaticTypesInFiveMemberRing(cycle, symbs);
+            if (len == 6) {
+                updateAromaticTypesInSixMemberRing(cycle, symbs);
+            }
+            if (len == 5 && normaliseCycle(cycle, contribution)) {
+                updateAromaticTypesInFiveMemberRing(cycle, symbs);
+            }
+            // mark aromatic bonds
+            for (int i = 1; i < cycle.length; i++)
+                mmffArom.add(bonds.get(cycle[i], cycle[i - 1]));
         }
     }
 
@@ -422,12 +430,12 @@ final class MmffAromaticTypeMapping {
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute a
      * lone pair.
      */
-    private final Map<String, String> hetroTypes = ImmutableMap.<String, String> builder().put("S", STHI)
-                                                         .put("-O-", OFUR).put("OC=C", OFUR).put("OC=N", OFUR)
-                                                         .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
-                                                         .put("NM", N5M).put("NC=C", NPYL).put("NC=N", NPYL)
-                                                         .put("NC=O", NPYL).put("NC=S", NPYL).put("NSO2", NPYL)
-                                                         .put("NR", NPYL).build();
+    private final Map<String, String> hetroTypes = ImmutableMap.<String, String>builder().put("S", STHI)
+                                                               .put("-O-", OFUR).put("OC=C", OFUR).put("OC=N", OFUR)
+                                                               .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
+                                                               .put("NM", N5M).put("NC=C", NPYL).put("NC=N", NPYL).put("NN=N", NPYL)
+                                                               .put("NC=O", NPYL).put("NC=S", NPYL).put("NSO2", NPYL)
+                                                               .put("NR", NPYL).build();
     /**
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
      * one electron and are alpha to an atom that contributes a lone pair.
