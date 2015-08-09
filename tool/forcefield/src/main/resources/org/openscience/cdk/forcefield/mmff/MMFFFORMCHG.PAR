@@ -1,0 +1,44 @@
+* Initial formal charge table for symbolic MMFF atom types.
+* Transcribed from TABLE III in Halgren T. Merck Molecular Force Field. I. 
+* Basis, Form, Scope, Parameterization, and Performance of MMFF94. 1995. 
+* variable are implemented in code
+O2CM    -0.500
+O3N     -0.333
+O4S     -0.500
+* O2S     variable        
+* O3S     variable
+OSMS    -0.500
+* O2P     variable
+* O3P     variable
+* O4P     variable
+O4CL    -0.250
+NR+     +1.000
+OM      -1.000
+OM2     -1.000
+O+      +1.000
+O=+     +1.000
+N+=C    +1.000
+N+=N    +1.000
+NCN+    +0.500
+NGD+    +0.333
+NPD+    +1.000
+NM      -1.000
+SSMO    -0.500
+* N5M     variable
+NIM+    +0.500
+N5A+    +1.000
+N5B+    +1.000
+N5+     +1.000
+FE+2    +2.000
+FE+3    +3.000
+F-      -1.000
+CL-     -1.000
+BR-     -1.000
+LI+     +1.000
+NA+     +1.000
+K+      +1.000
+ZN+2    +2.000
+CA+2    +2.000
+CU+1    +1.000
+CU+2    +2.000
+MG+2    +2.000      
