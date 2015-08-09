@@ -29,6 +29,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -127,6 +128,7 @@ public class ForceFieldConfiguratorTest {
      * @cdk.bug  #3515122:  N atom type instead of NC=O
      */
     @Test
+    @Ignore("Old atom typing method - see new Mmff class")
     public void testConfigureMMFF94BasedAtom_IAtom_String_boolean_hydroxyurea() throws CDKException {
         String husmi = "NC(=O)NO";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -179,6 +181,7 @@ public class ForceFieldConfiguratorTest {
      * @cdk.bug : bad atom types
      */
     @Test
+    @Ignore("Old atom typing method - see new Mmff class")
     public void testAssignAtomTyps_test4_hydroxyurea() throws CDKException {
         String smiles = "C(=O)(NO)N";
         String[] originalAtomTypes = {"C.sp2", "O.sp2", "N.amide", "O.sp3", "N.amide"};
@@ -211,6 +214,7 @@ public class ForceFieldConfiguratorTest {
      * @cdk.bug #3523240
      */
     @Test
+    @Ignore("Old atom typing method - see new Mmff class")
     public void testAssignAtomTyps_bug() throws Exception {
         String smiles = "CC(C)C1CCC(CC1)C(=O)NC(Cc1ccccc1)C(=O)O";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -228,6 +232,7 @@ public class ForceFieldConfiguratorTest {
      * @cdk.bug #3524734
      */
     @Test
+    @Ignore("Old atom typing method - see new Mmff class")
     public void testAssignAtomTyps_bug_no2() throws Exception {
         String smiles = "CC[N+](=O)[O-]";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -263,6 +268,7 @@ public class ForceFieldConfiguratorTest {
      * @cdk.bug #3525144
      */
     @Test
+    @Ignore("Old atom typing method - see new Mmff class")
     public void testAssignAtomTyps_bug_nitrogenatomType() throws Exception {
         String smiles = "CNC(=O)N(C)N=O";
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
