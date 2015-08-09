@@ -43,7 +43,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created    2005-18-07
  * @cdk.module     extra
  * @cdk.githash
+ * @deprecated use the newer Mmff.assignAtomTypes()
  */
+@Deprecated
 public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 
     private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(MMFF94AtomTypeMatcher.class);
