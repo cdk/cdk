@@ -50,7 +50,7 @@ import java.util.Set;
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
 /**
- * Determine the MMFF symbolic atom types {@cdk.cite Halgren95a}. The matcher uses SMARTS patterns
+ * Determine the MMFF symbolic atom types {@cdk.cite Halgren96a}. The matcher uses SMARTS patterns
  * to assign preliminary symbolic types. The types are then adjusted considering aromaticity {@link
  * MmffAromaticTypeMapping}. The assigned atom types validate completely with the validation suite
  * (http://server.ccl.net/cca/data/MMFF94/).
