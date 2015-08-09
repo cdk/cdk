@@ -18,7 +18,9 @@
  */
 package org.openscience.cdk.charges;
 
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.forcefield.mmff.Mmff;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
@@ -32,7 +34,7 @@ import java.util.Map;
 
 /**
  * The calculation of the MMFF94 partial charges. Charges are stored as atom
- * properties: for an AtomContainer ac, values are calculated with:
+ * properties ("MMFF94charge") for an AtomContainer ac, values are calculated with:
  * <pre>
  *  HydrogenAdder hAdder = new HydrogenAdder();
  *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -45,21 +47,28 @@ import java.util.Map;
  * <pre>
  *  ( (Double)atom.getProperty("MMFF94charge") ).doubleValue().
  *  </pre>
+ *  
+ * <b>Note:</b> This class delegates to {@link Mmff} and charges are also assigned
+ * directly to the atom attribute {@link IAtom#getCharge()}. 
  *
  * @author mfe4
  * @author chhoppe
  * @cdk.created 2004-11-03
  * @cdk.module forcefield
  * @cdk.githash
+ * @see Mmff#partialCharges(IAtomContainer) 
  */
 public class MMFF94PartialCharges implements IChargeCalculator {
 
+    public static final String MMFF_94_CHARGE = "MMFF94charge";
     private final ILoggingTool LOG = LoggingToolFactory.createLoggingTool(MMFF94BasedParameterSetReader.class);
+    private final Mmff mmff = new Mmff();
 
     /**
      * Constructor for the MMFF94PartialCharges object
      */
-    public MMFF94PartialCharges() {}
+    public MMFF94PartialCharges() {
+    }
 
     /**
      * Main method which assigns MMFF94 partial charges
@@ -68,71 +77,13 @@ public class MMFF94PartialCharges implements IChargeCalculator {
      * @return AtomContainer with MMFF94 partial charges as atom properties
      * @throws Exception Possible Exceptions
      */
-    public IAtomContainer assignMMFF94PartialCharges(IAtomContainer ac) throws Exception {
-        ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-        ffc.setForceFieldConfigurator("mmff94", ac.getBuilder());
-        ffc.assignAtomTyps(ac);
-        Map<String, Object> parameterSet = ffc.getParameterSet();
-        // for this calculation,
-        // we need some values stored in the vector "data" in the
-        // hashtable of these atomTypes:
-        double charge = 0;
-        double formalCharge = 0;
-        double formalChargeNeigh = 0;
-        double theta = 0;
-        double sumOfFormalCharges = 0;
-        double sumOfBondIncrements = 0;
-        IAtom thisAtom = null;
-        List<IAtom> neighboors;
-        Object data = null;
-        Object bondData = null;
-        Object dataNeigh = null;
-        Iterator<IAtom> atoms = ac.atoms().iterator();
-
-        while (atoms.hasNext()) {
-            thisAtom = atoms.next();
-            LOG.debug("Assigning MMFF94 Charge for atom " + thisAtom.getAtomTypeName());
-            data = parameterSet.get("data" + thisAtom.getAtomTypeName());
-            LOG.debug("Atom data:");
-            LOG.debug("WellD, Apol, Neff, DA, q, pbci, A_i, G_i");
-            LOG.debug(data);
-            neighboors = ac.getConnectedAtomsList(thisAtom);
-            LOG.debug("Atom has  " + neighboors.size() + " neighbour(s)");
-            formalCharge = thisAtom.getCharge();
-            LOG.debug("Atom's formal charge is  " + formalCharge);
-            theta = (Double) ((List) data).get(5);
-            charge = formalCharge * (1 - (neighboors.size() * theta));
-            sumOfFormalCharges = 0;
-            sumOfBondIncrements = 0;
-            for (IAtom neighboor : neighboors) {
-                IAtom neighbour = (IAtom) neighboor;
-                LOG.debug("  neighbour of " + thisAtom.getAtomTypeName() + " is " + neighbour.getAtomTypeName());
-                dataNeigh = parameterSet.get("data" + neighbour.getAtomTypeName());
-                LOG.debug("     dataNeigh is " + dataNeigh);
-                if (parameterSet.containsKey("bond" + thisAtom.getAtomTypeName() + ";" + neighbour.getAtomTypeName())) {
-                    bondData = parameterSet
-                            .get("bond" + thisAtom.getAtomTypeName() + ";" + neighbour.getAtomTypeName());
-                    sumOfBondIncrements -= (Double) ((List) bondData).get(4);
-                } else if (parameterSet.containsKey("bond" + neighbour.getAtomTypeName() + ";"
-                        + thisAtom.getAtomTypeName())) {
-                    bondData = parameterSet
-                            .get("bond" + neighbour.getAtomTypeName() + ";" + thisAtom.getAtomTypeName());
-                    sumOfBondIncrements += (Double) ((List) bondData).get(4);
-                } else {
-                    // Maybe not all bonds have pbci in mmff94.prm, i.e. C-N
-                    sumOfBondIncrements += (theta - (Double) ((List) dataNeigh).get(5));
-                }
-
-                dataNeigh = parameterSet.get("data" + neighbour.getID());
-                formalChargeNeigh = neighbour.getCharge();
-                sumOfFormalCharges += formalChargeNeigh;
-            }
-            charge += sumOfFormalCharges * theta;
-            charge += sumOfBondIncrements;
-            thisAtom.setProperty("MMFF94charge", charge);
-            LOG.debug("Final MMFF94charge on : " + thisAtom.getAtomTypeName() + " is "
-                    + thisAtom.getProperty("MMFF94charge") + "\n");
-        }
+    public IAtomContainer assignMMFF94PartialCharges(IAtomContainer ac) throws CDKException {
+        if (!mmff.assignAtomTypes(ac))
+            throw new CDKException("Molecule had an atom of unknown MMFF type");
+        mmff.partialCharges(ac);
+        mmff.clearProps(ac);
+        for (IAtom atom : ac.atoms())
+            atom.setProperty(MMFF_94_CHARGE, atom.getCharge());
         return ac;
     }
 

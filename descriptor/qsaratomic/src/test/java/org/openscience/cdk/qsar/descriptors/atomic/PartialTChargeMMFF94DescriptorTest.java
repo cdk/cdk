@@ -18,81 +18,22 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
-
 import org.openscience.cdk.charges.MMFF94PartialCharges;
 import org.openscience.cdk.exception.CDKException;
-
+import org.openscience.cdk.inchi.InChIGeneratorFactory;
+import org.openscience.cdk.inchi.InChIToStructure;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import org.openscience.cdk.inchi.InChIGeneratorFactory;
-import org.openscience.cdk.inchi.InChIToStructure;
-
 /**
- * TestSuite that runs all QSAR tests.
+ * See tests in MmffTest.
  *
  * @cdk.module test-qsaratomic
  * @cdk.bug 1627763
  */
 public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
-
-    private final double METHOD_ERROR = 0.16;
-
-    private final double[] AtomInChIToMMFF94PartialCharges(String InChI) {
-
-        InChIGeneratorFactory factory = null;
-
-        try {
-            factory = InChIGeneratorFactory.getInstance();
-        } catch (CDKException e2) {
-
-            e2.printStackTrace();
-        }
-
-        InChIToStructure parser = null;
-        try {
-            parser = factory.getInChIToStructure(InChI, DefaultChemObjectBuilder.getInstance());
-        } catch (CDKException e1) {
-
-            e1.printStackTrace();
-        }
-
-        IAtomContainer ac = parser.getAtomContainer();
-        try {
-            addExplicitHydrogens(ac);
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-        MMFF94PartialCharges mmff = new MMFF94PartialCharges();
-        try {
-            mmff.assignMMFF94PartialCharges(ac);
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-        double[] testResult = new double[ac.getAtomCount()];
-        int i = 0;
-        for (IAtom atom : ac.atoms()) {
-
-            // System.out.println(atom.getAtomTypeName() + " " +
-            // atom.getProperty("MMFF94charge").toString());
-            testResult[i] = atom.getProperty("MMFF94charge", Double.class);
-            i++;
-
-        }
-
-        return testResult;
-
-    }
 
     /**
      * Constructor for the PartialTChargeMMFF94DescriptorTest object
@@ -108,5 +49,4 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
     public void setUp() throws Exception {
         setDescriptor(PartialTChargeMMFF94Descriptor.class);
     }
-
 }
