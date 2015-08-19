@@ -83,6 +83,7 @@ final class MmffAromaticTypeMapping {
      * @param container structure representation
      * @param symbs     vector of symbolic types for the whole structure
      * @param bonds     edge to bond map lookup
+     * @param graph     adjacency list graph representation of structure
      * @param mmffArom  set of bonds that are aromatic
      */
     void assign(IAtomContainer container, String[] symbs, EdgeToBondMap bonds, int[][] graph, Set<IBond> mmffArom) {
