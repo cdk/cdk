@@ -18,14 +18,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.junit.Before;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.charges.MMFF94PartialCharges;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.inchi.InChIGeneratorFactory;
-import org.openscience.cdk.inchi.InChIToStructure;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.junit.BeforeClass;
 
 /**
  * See tests in MmffTest.
@@ -45,7 +38,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
      */
     public PartialTChargeMMFF94DescriptorTest() {}
 
-    @Before
+    @BeforeClass
     public void setUp() throws Exception {
         setDescriptor(PartialTChargeMMFF94Descriptor.class);
     }
