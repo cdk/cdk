@@ -90,9 +90,9 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
     public String toString() {
         StringBuilder description = new StringBuilder();
         description.append("PDBMonomer(");
-        description.append(this.hashCode()).append(", ");
-        description.append("iCode=").append(getICode()).append(", ");
-        description.append("chainID=").append(getChainID()).append(", ");
+        description.append(this.hashCode());
+        description.append(", iCode=").append(getICode());
+        description.append(", chainID=").append(getChainID()).append(", ");
         description.append(super.toString());
         description.append(')');
         return description.toString();
