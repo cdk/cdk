@@ -35,8 +35,8 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 public class ProblemMarker {
 
-    public static String ERROR_MARKER   = "org.openscience.cdk.validate.error";
-    public static String WARNING_MARKER = "org.openscience.cdk.validate.warning";
+    public static final String ERROR_MARKER   = "org.openscience.cdk.validate.error";
+    public static final String WARNING_MARKER = "org.openscience.cdk.validate.warning";
 
     public static void markWithError(IChemObject object) {
         object.setProperty(ERROR_MARKER, Boolean.TRUE);
