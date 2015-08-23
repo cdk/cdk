@@ -406,7 +406,7 @@ public class Bayesian {
      * @param title short text description (no newlines or tabs); use null if none
      */
     public void setNoteTitle(String title) {
-        if (title.indexOf("\n") >= 0 || title.indexOf("\t") >= 0)
+        if (title.indexOf('\n') >= 0 || title.indexOf('\t') >= 0)
             throw new IllegalArgumentException("Comments cannot contain newlines or tabs.");
         noteTitle = title;
     }
@@ -448,7 +448,7 @@ public class Bayesian {
     public void setNoteComments(String[] comments) {
         if (comments != null)
             for (String comment : comments)
-                if (comment.indexOf("\n") >= 0 || comment.indexOf("\t") >= 0)
+                if (comment.indexOf('\n') >= 0 || comment.indexOf('\t') >= 0)
                     throw new IllegalArgumentException("Comments cannot contain newlines or tabs.");
         noteComments = comments == null ? null : Arrays.copyOf(comments, comments.length);
     }
