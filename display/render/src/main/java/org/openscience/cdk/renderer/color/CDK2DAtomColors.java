@@ -31,7 +31,6 @@ import static org.openscience.cdk.config.Elements.Barium;
 import static org.openscience.cdk.config.Elements.Beryllium;
 import static org.openscience.cdk.config.Elements.Boron;
 import static org.openscience.cdk.config.Elements.Bromine;
-import static org.openscience.cdk.config.Elements.Cadmium;
 import static org.openscience.cdk.config.Elements.Caesium;
 import static org.openscience.cdk.config.Elements.Calcium;
 import static org.openscience.cdk.config.Elements.Carbon;
