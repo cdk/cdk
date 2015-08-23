@@ -486,27 +486,27 @@ public class Bayesian {
         }
 
         // other information
-        buff.append("training:size=" + trainingSize + "\n");
-        buff.append("training:actives=" + trainingActives + "\n");
+        buff.append("training:size=").append(trainingSize).append('\n');
+        buff.append("training:actives=").append(trainingActives).append('\n');
 
-        if (!Double.isNaN(rocAUC)) buff.append("roc:auc=" + rocAUC + "\n");
-        if (rocType != null) buff.append("roc:type=" + rocType + "\n");
+        if (!Double.isNaN(rocAUC)) buff.append("roc:auc=").append(rocAUC).append('\n');
+        if (rocType != null) buff.append("roc:type=").append(rocType).append('\n');
         if (rocX != null && rocY != null) {
             buff.append("roc:x=");
             for (int n = 0; n < rocX.length; n++)
                 buff.append((n == 0 ? "" : ",") + rocX[n]);
-            buff.append("\n");
+            buff.append('\n');
 
             buff.append("roc:y=");
             for (int n = 0; n < rocY.length; n++)
                 buff.append((n == 0 ? "" : ",") + rocY[n]);
-            buff.append("\n");
+            buff.append('\n');
         }
 
-        if (noteTitle != null) buff.append("note:title=" + noteTitle + "\n");
-        if (noteOrigin != null) buff.append("note:origin=" + noteOrigin + "\n");
+        if (noteTitle != null) buff.append("note:title=").append(noteTitle).append('\n');
+        if (noteOrigin != null) buff.append("note:origin=").append(noteOrigin).append('\n');
         if (noteComments != null) for (String comment : noteComments)
-            buff.append("note:comment=" + comment + "\n");
+            buff.append("note:comment=").append(comment).append('\n');
 
         buff.append("!End\n");
 
