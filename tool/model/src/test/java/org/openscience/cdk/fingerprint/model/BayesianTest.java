@@ -439,11 +439,11 @@ public class BayesianTest {
                 writeln("    ** reference ROC AUC=" + ref.getROCAUC());
                 failed = true;
             }
-            if (model.lowThresh != ref.lowThresh) {
+            if (Math.abs(model.lowThresh - ref.lowThresh) > 0.00000000000001) {
                 writeln("    ** reference lowThresh=" + ref.lowThresh + " different to calculated " + model.lowThresh);
                 failed = true;
             }
-            if (model.highThresh != ref.highThresh) {
+            if (Math.abs(model.highThresh - ref.highThresh) > 0.00000000000001) {
                 writeln("    ** reference highThresh=" + ref.highThresh + " different to calculated "
                         + model.highThresh);
                 failed = true;

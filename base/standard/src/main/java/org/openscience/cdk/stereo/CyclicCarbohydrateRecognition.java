@@ -25,13 +25,11 @@
 package org.openscience.cdk.stereo;
 
 import org.openscience.cdk.graph.GraphUtil;
-import org.openscience.cdk.graph.rebond.Point;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
-import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.ringsearch.RingSearch;
 
 import javax.vecmath.Point2d;

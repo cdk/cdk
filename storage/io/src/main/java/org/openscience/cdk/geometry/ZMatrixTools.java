@@ -22,9 +22,7 @@
  *  */
 package org.openscience.cdk.geometry;
 
-import javax.vecmath.AxisAngle4d;
 import javax.vecmath.AxisAngle4f;
-import javax.vecmath.Matrix3d;
 import javax.vecmath.Matrix3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;

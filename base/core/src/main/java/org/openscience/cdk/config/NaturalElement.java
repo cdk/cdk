@@ -112,10 +112,10 @@ final class NaturalElement implements IElement {
     public void setID(String identifier) {}
 
     @Override
-    public void setFlag(int flag_type, boolean flag_value) {}
+    public void setFlag(int flagType, boolean flagValue) {}
 
     @Override
-    public boolean getFlag(int flag_type) {
+    public boolean getFlag(int flagType) {
         return false;
     }
 

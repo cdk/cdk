@@ -458,7 +458,7 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
         if (getAtomCount() > 0) {
             resultString.append(", #A:").append(getAtomCount());
             for (int i = 0; i < atomCount; i++) {
-                resultString.append(", ").append("" + atoms[i]);
+                resultString.append(", ").append(atoms[i] == null ? "null" : atoms[i].toString());
             }
         }
         resultString.append(", ").append(super.toString());

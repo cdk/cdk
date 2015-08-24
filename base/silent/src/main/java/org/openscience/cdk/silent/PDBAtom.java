@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2005-2015  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -365,18 +365,18 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     public String toString() {
         StringBuilder description = new StringBuilder();
         description.append("PDBAtom(");
-        description.append(this.hashCode()).append(", ");
-        description.append("altLoc=").append(getAltLoc()).append(", ");
-        description.append("chainID=").append(getChainID()).append(", ");
-        description.append("iCode=").append(getICode()).append(", ");
-        description.append("name=").append(getName()).append(", ");
-        description.append("resName=").append(getResName()).append(", ");
-        description.append("resSeq=").append(getResSeq()).append(", ");
-        description.append("segID=").append(getSegID()).append(", ");
-        description.append("serial=").append(getSerial()).append(", ");
-        description.append("tempFactor=").append(getTempFactor()).append(", ");
-        description.append("oxt=").append(getOxt()).append(", ");
-        description.append("hetatm=").append(getHetAtom()).append(", ");
+        description.append(this.hashCode());
+        description.append(", altLoc=").append(getAltLoc());
+        description.append(", chainID=").append(getChainID());
+        description.append(", iCode=").append(getICode());
+        description.append(", name=").append(getName());
+        description.append(", resName=").append(getResName());
+        description.append(", resSeq=").append(getResSeq());
+        description.append(", segID=").append(getSegID());
+        description.append(", serial=").append(getSerial());
+        description.append(", tempFactor=").append(getTempFactor());
+        description.append(", oxt=").append(getOxt());
+        description.append(", hetatm=").append(getHetAtom()).append(", ");
         description.append(super.toString());
         description.append(')');
         return description.toString();

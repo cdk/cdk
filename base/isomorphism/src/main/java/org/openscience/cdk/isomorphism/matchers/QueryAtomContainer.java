@@ -45,20 +45,20 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("QueryAtomContainer(");
-        s.append(this.hashCode() + ", ");
-        s.append("#A:" + getAtomCount() + ", ");
-        s.append("#EC:" + getElectronContainerCount() + ", ");
+        s.append(this.hashCode());
+        s.append(", #A:").append(getAtomCount());
+        s.append(", #EC:").append(getElectronContainerCount());
         for (int i = 0; i < getAtomCount(); i++) {
-            s.append(getAtom(i).toString() + ", ");
+            s.append(", ").append(getAtom(i).toString());
         }
         for (int i = 0; i < getBondCount(); i++) {
-            s.append(getBond(i).toString() + ", ");
+            s.append(", ").append(getBond(i).toString());
         }
         for (int i = 0; i < getLonePairCount(); i++) {
-            s.append(getLonePair(i).toString() + ", ");
+            s.append(", ").append(getLonePair(i).toString());
         }
         for (int i = 0; i < getSingleElectronCount(); i++) {
-            s.append(getSingleElectron(i).toString() + ", ");
+            s.append(", ").append(getSingleElectron(i).toString());
         }
         s.append(')');
         return s.toString();

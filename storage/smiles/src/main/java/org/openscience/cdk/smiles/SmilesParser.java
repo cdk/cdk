@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IReaction;
 import uk.ac.ebi.beam.Graph;
 
 import java.io.IOException;
-import java.util.StringTokenizer;
 
 /**
  * Read molecules and reactions from a SMILES {@cdk.cite SMILESTUT} string.

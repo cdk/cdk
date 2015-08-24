@@ -1,4 +1,4 @@
-/* Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2003-2015  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -21,6 +21,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
  * Atom that represents part of an residue in an enzyme, like Arg255.
@@ -55,10 +58,10 @@ public class EnzymeResidueLocator extends PseudoAtom {
      *
      * @param   atom Atom that should be converted into a EnzymeResidueLocator.
      */
-    public EnzymeResidueLocator(Atom atom) {
+    public EnzymeResidueLocator(IAtom atom) {
         super(atom);
-        if (atom instanceof PseudoAtom) {
-            this.setLabel(((PseudoAtom) atom).getLabel());
+        if (atom instanceof IPseudoAtom) {
+            this.setLabel(((IPseudoAtom) atom).getLabel());
         }
     }
 }
