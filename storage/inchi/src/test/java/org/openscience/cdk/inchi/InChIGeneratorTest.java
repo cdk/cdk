@@ -100,7 +100,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a1);
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_SINGLE));
-        InChIGenerator gen = getFactory().getInChIGenerator(ac);
+        InChIGenerator gen = getFactory().getInChIGenerator(ac, "");
         Assert.assertNotNull(gen.getAuxInfo());
         Assert.assertTrue(gen.getAuxInfo().startsWith("AuxInfo="));
     }
@@ -712,7 +712,6 @@ public class InChIGeneratorTest extends CDKTestCase {
 
         InChIGenerator genE = getFactory().getInChIGenerator(acE);
         Assert.assertEquals(INCHI_RET.OKAY, genE.getReturnStatus());
-        System.out.println(genE.getMessage());
         Assert.assertEquals("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.getInchi());
     }
 
