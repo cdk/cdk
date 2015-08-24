@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -56,6 +57,8 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
@@ -99,9 +102,13 @@ import org.openscience.cdk.stereo.ExtendedTetrahedral;
  */
 public class InChIGenerator {
 
-    protected JniInchiInput  input;
+    protected JniInchiInput input;
 
     protected JniInchiOutput output;
+
+    private final boolean auxNone;
+
+    private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(InChIGenerator.class);
 
     /**
      * AtomContainer instance refers to.
@@ -120,12 +127,7 @@ public class InChIGenerator {
      * error during InChI generation
      */
     protected InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
-        try {
-            input = new JniInchiInput("");
-            generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-        } catch (JniInchiException jie) {
-            throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
-        }
+        this(atomContainer, Collections.singletonList(INCHI_OPTION.AuxNone), ignoreAromaticBonds);
     }
 
     /**
@@ -146,6 +148,7 @@ public class InChIGenerator {
         try {
             input = new JniInchiInput(options);
             generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
+            auxNone = input.getOptions() != null && input.getOptions().contains("AuxNone");
         } catch (JniInchiException jie) {
             throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
@@ -167,6 +170,7 @@ public class InChIGenerator {
         try {
             input = new JniInchiInput(options);
             generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
+            auxNone = input.getOptions() != null && input.getOptions().contains("AuxNone");
         } catch (JniInchiException jie) {
             throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
@@ -551,6 +555,9 @@ public class InChIGenerator {
      * Gets auxillary information.
      */
     public String getAuxInfo() {
+        if (auxNone) {
+            LOGGER.warn("AuxInfo requested but AuxNone option is set (default).");
+        }
         return (output.getAuxInfo());
     }
 
