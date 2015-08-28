@@ -40,10 +40,10 @@ public class MDMolecule extends AtomContainer {
     private static final long serialVersionUID = -3129626782945020908L;
 
     //List of Residues
-    private List              residues;
+    private List<Residue>              residues;
 
     //List of ChargeGroups
-    private List              chargeGroups;
+    private List<ChargeGroup>          chargeGroups;
 
     public MDMolecule() {
         super();
@@ -53,11 +53,11 @@ public class MDMolecule extends AtomContainer {
         super(container);
     }
 
-    public List getResidues() {
+    public List<Residue> getResidues() {
         return residues;
     }
 
-    public void setResidues(List residues) {
+    public void setResidues(List<Residue> residues) {
         this.residues = residues;
     }
 
@@ -66,7 +66,7 @@ public class MDMolecule extends AtomContainer {
      * @param residue Residue to add
      */
     public void addResidue(Residue residue) {
-        if (residues == null) residues = new ArrayList();
+        if (residues == null) residues = new ArrayList<Residue>();
 
         //Check if exists
         if (residues.contains(residue)) {
@@ -77,11 +77,11 @@ public class MDMolecule extends AtomContainer {
         residues.add(residue);
     }
 
-    public List getChargeGroups() {
+    public List<ChargeGroup> getChargeGroups() {
         return chargeGroups;
     }
 
-    public void setChargeGroups(List chargeGroups) {
+    public void setChargeGroups(List<ChargeGroup> chargeGroups) {
         this.chargeGroups = chargeGroups;
     }
 
@@ -91,7 +91,7 @@ public class MDMolecule extends AtomContainer {
      * @param chargeGroup {@link ChargeGroup} to add
      */
     public void addChargeGroup(ChargeGroup chargeGroup) {
-        if (chargeGroups == null) chargeGroups = new ArrayList();
+        if (chargeGroups == null) chargeGroups = new ArrayList<ChargeGroup>();
 
         //Check if exists
         if (chargeGroups.contains(chargeGroup)) {

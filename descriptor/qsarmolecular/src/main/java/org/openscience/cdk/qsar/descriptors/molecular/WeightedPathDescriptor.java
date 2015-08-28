@@ -158,7 +158,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         int natom = local.getAtomCount();
         DoubleArrayResult retval = new DoubleArrayResult();
 
-        ArrayList pathList = new ArrayList();
+        ArrayList<List<?>> pathList = new ArrayList<List<?>>();
 
         // unique paths
         for (int i = 0; i < natom - 1; i++) {
@@ -258,10 +258,10 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         return new DoubleArrayResultType(5);
     }
 
-    private double[] getPathWeights(List pathList, IAtomContainer atomContainer) {
+    private double[] getPathWeights(List<List<?>> pathList, IAtomContainer atomContainer) {
         double[] pathWts = new double[pathList.size()];
         for (int i = 0; i < pathList.size(); i++) {
-            List p = (List) pathList.get(i);
+            List<?> p = pathList.get(i);
             pathWts[i] = 1.0;
             for (int j = 0; j < p.size() - 1; j++) {
                 IAtom a = (IAtom) p.get(j);

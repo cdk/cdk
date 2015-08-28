@@ -64,7 +64,7 @@ class ChiIndexUtils {
         UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
         List<List<Integer>> uniqueSubgraphs = new ArrayList<List<Integer>>();
         for (QueryAtomContainer query : queries) {
-            List subgraphMaps = null;
+            List<List<RMap>> subgraphMaps = null;
             try {
                 // we get the list of bond mappings
                 subgraphMaps = universalIsomorphismTester.getSubgraphMaps(atomContainer, query);
@@ -129,7 +129,7 @@ class ChiIndexUtils {
      * @return The valence corrected chi index
      * @throws CDKException if the <code>IsotopeFactory</code> cannot be created
      */
-    public static double evalValenceIndex(IAtomContainer atomContainer, List fragList) throws CDKException {
+    public static double evalValenceIndex(IAtomContainer atomContainer, List<List<Integer>> fragList) throws CDKException {
         try {
             IsotopeFactory ifac = Isotopes.getInstance();
             ifac.configureAtoms(atomContainer);
@@ -137,8 +137,8 @@ class ChiIndexUtils {
             throw new CDKException("IO problem occured when using the CDK atom config\n" + e.getMessage(), e);
         }
         double sum = 0;
-        for (Object aFragList : fragList) {
-            ArrayList frag = (ArrayList) aFragList;
+        for (List<Integer> aFragList : fragList) {
+            List<Integer> frag = aFragList;
             double prod = 1.0;
             for (Object aFrag : frag) {
                 int atomSerial = (Integer) aFrag;
@@ -253,12 +253,12 @@ class ChiIndexUtils {
      * @param ac        The molecule we are examining
      * @return A unique <code>List</code> of atom paths
      */
-    private static List<List<Integer>> getUniqueBondSubgraphs(List subgraphs, IAtomContainer ac) {
+    private static List<List<Integer>> getUniqueBondSubgraphs(List<List<RMap>> subgraphs, IAtomContainer ac) {
         List<List<Integer>> bondList = new ArrayList<List<Integer>>();
-        for (Object subgraph : subgraphs) {
-            List current = (List) subgraph;
+        for (List<RMap> subgraph : subgraphs) {
+            List<RMap> current = subgraph;
             List<Integer> ids = new ArrayList<Integer>();
-            for (Object aCurrent : current) {
+            for (RMap aCurrent : current) {
                 RMap rmap = (RMap) aCurrent;
                 ids.add(rmap.getId1());
             }
@@ -271,8 +271,8 @@ class ChiIndexUtils {
         bondList = new ArrayList<List<Integer>>(hs);
 
         List<List<Integer>> paths = new ArrayList<List<Integer>>();
-        for (Object aBondList1 : bondList) {
-            List aBondList = (List) aBondList1;
+        for (List<Integer> aBondList1 : bondList) {
+            List<Integer> aBondList = aBondList1;
             List<Integer> tmp = new ArrayList<Integer>();
             for (Object anABondList : aBondList) {
                 int bondNumber = (Integer) anABondList;
