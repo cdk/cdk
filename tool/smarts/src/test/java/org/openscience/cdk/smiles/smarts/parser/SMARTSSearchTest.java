@@ -1680,46 +1680,29 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(3, results[1]);
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testInvalidPeriodicGroupNumber() throws Exception {
-        try {
-            int[] results = match("[G19]", "CCN");
-            Assert.fail();
-        } catch (IllegalArgumentException pe) {
-            Assert.assertTrue(true);
-        }
-
-        try {
-            int[] results = match("[G0]", "CCN");
-            Assert.fail();
-        } catch (IllegalArgumentException pe) {
-            Assert.assertTrue(true);
-        }
-
-        try {
-            int[] results = match("[G345]", "CCN");
-            Assert.fail();
-        } catch (IllegalArgumentException pe) {
-            Assert.assertTrue(true);
-        }
-
+        match("[G19]", "CCN");
     }
 
-    @Test
-    public void testNonPeriodicGroupNumber() throws Exception {
-        try {
-            int[] results = match("[G]", "CCN");
-            Assert.fail("Should throw an exception if G is not followed by a number");
-        } catch (IllegalArgumentException pe) {
-            Assert.assertTrue(true);
-        }
+    @Test(expected=IllegalArgumentException.class)
+    public void testInvalidPeriodicGroupNumber_2() throws Exception {
+        match("[G0]", "CCN");
+    }
 
-        try {
-            int[] results = match("[GA]", "CCN");
-            Assert.fail("Should throw an exception if G is not followed by a number");
-        } catch (IllegalArgumentException pe) {
-            Assert.assertTrue(true);
-        }
+    @Test(expected=IllegalArgumentException.class)
+    public void testInvalidPeriodicGroupNumber_3() throws Exception {
+        match("[G345]", "CCN");
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testNonPeriodicGroupNumber() throws Exception {
+        match("[G]", "CCN"); // Should throw an exception if G is not followed by a number
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testNonPeriodicGroupNumber_2() throws Exception {
+        match("[GA]", "CCN"); // Should throw an exception if G is not followed by a number
     }
 
     @Test
@@ -1766,36 +1749,24 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testBadHybridizationNumber() throws Exception {
+    	match("[^]", "CCN"); // Should throw an exception if ^ is not followed by a number
+    }
 
-        try {
-            int[] results = match("[^]", "CCN");
-            Assert.fail("Should throw an exception if ^ is not followed by a number");
-        } catch (IllegalArgumentException pe) {
-            Assert.assertTrue(true);
-        }
+    @Test(expected=IllegalArgumentException.class)
+    public void testBadHybridizationNumber_2() throws Exception {
+    	match("[^X]", "CCN"); // Should throw an exception if ^ is not followed by a number
+    }
 
-        try {
-            int[] results = match("[^X]", "CCN");
-            Assert.fail("Should throw an exception if ^ is not followed by a number");
-        } catch (IllegalArgumentException pe) {
-            Assert.assertTrue(true);
-        }
+    @Test(expected=IllegalArgumentException.class)
+    public void testBadHybridizationNumber_3() throws Exception {
+    	match("[^0]", "CCN"); // Should throw an exception if ^ is not followed by a number
+    }
 
-        try {
-            int[] results = match("[^0]", "CCN");
-            Assert.fail("Should throw an exception if ^ is not between 1 & 8");
-        } catch (IllegalArgumentException pe) {
-            Assert.assertTrue(true);
-        }
-
-        try {
-            int[] results = match("[^9]", "CCN");
-            Assert.fail("Should throw an exception if ^ is not between 1 & 8");
-        } catch (IllegalArgumentException pe) {
-            Assert.assertTrue(true);
-        }
+    @Test(expected=IllegalArgumentException.class)
+    public void testBadHybridizationNumber_4() throws Exception {
+    	match("[^9]", "CCN"); // Should throw an exception if ^ is not followed by a number
     }
 
     /**
