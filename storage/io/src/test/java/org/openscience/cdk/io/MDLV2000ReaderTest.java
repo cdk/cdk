@@ -68,7 +68,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -1412,22 +1411,13 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
      * The non-standard ACDLabs atom label property should throw a CDKException in STRICT mode.
      * @throws Exception
      */
-    @Test
+    @Test(expected=CDKException.class)
     public void testAcdChemSketchLabel_Strict() throws Exception {
         
         String filename = "data/mdl/chemsketch-all-labelled.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        try {
-            IAtomContainer mol = reader.read(new AtomContainer());
-            fail();     // Force failure if expected cdke not thrown
-        }
-        catch (CDKException cdke) {
-                        // Do nothing, test passed
-        }
-        finally {
-            reader.close();
-        }
+        reader.read(new AtomContainer());
     }
     
     /**

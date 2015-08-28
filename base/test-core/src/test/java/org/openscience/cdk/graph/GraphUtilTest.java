@@ -81,14 +81,14 @@ public class GraphUtilTest {
     public void testAcyclic() {
         // 0-1-2-3-4-5 (5 and 0 not connected)
         int[][] g = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
-        int[] path = GraphUtil.cycle(g, new int[]{0, 3, 4, 1, 5, 2});
+        GraphUtil.cycle(g, new int[]{0, 3, 4, 1, 5, 2});
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testAcyclic2() {
         // 0-1-2 3-4-5- (2 and 3) not connected
         int[][] g = new int[][]{{1}, {0, 2}, {1}, {4}, {3, 5}, {4}};
-        int[] path = GraphUtil.cycle(g, new int[]{0, 3, 4, 1, 5, 2});
+        GraphUtil.cycle(g, new int[]{0, 3, 4, 1, 5, 2});
     }
 
     @Test
@@ -189,7 +189,7 @@ public class GraphUtilTest {
 
         container.removeAtom(4); // remove 'e'
 
-        int[][] adjacent = GraphUtil.toAdjList(container);
+        GraphUtil.toAdjList(container);
 
     }
 
@@ -201,7 +201,7 @@ public class GraphUtilTest {
 
     @Test(expected = NullPointerException.class)
     public void testToAdjList_Null() throws Exception {
-        int[][] adjacent = GraphUtil.toAdjList(null);
+        GraphUtil.toAdjList(null);
     }
 
     /**

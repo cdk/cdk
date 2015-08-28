@@ -63,12 +63,12 @@ public class ShortestPathsTest {
 
     @Test(expected = NullPointerException.class)
     public void testConstructor_Container_Null() {
-        ShortestPaths sp = new ShortestPaths(null, new Atom());
+        new ShortestPaths(null, new Atom());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_Container_MissingAtom() {
-        ShortestPaths sp = new ShortestPaths(MoleculeFactory.makeBenzene(), new Atom());
+        new ShortestPaths(MoleculeFactory.makeBenzene(), new Atom());
     }
 
     @Test

@@ -305,7 +305,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         int count = 0;
 
         while (reader.hasNext()) {
-            IAtomContainer molecule = reader.next();
+            reader.next();
             count++;
         }
 
@@ -328,7 +328,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         int count = 0;
 
         while (reader.hasNext()) {
-            IAtomContainer molecule = reader.next();
+            reader.next();
             count++;
         }
 

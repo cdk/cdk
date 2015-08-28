@@ -123,7 +123,7 @@ public class SmilesParserTest extends CDKTestCase {
      */
     @Test(expected = InvalidSmilesException.class)
     public void pyrrolylpyrrole_invalid() throws InvalidSmilesException {
-        IAtomContainer m = load("c1cccn1c2cccn2");
+        load("c1cccn1c2cccn2");
     }
 
     /**
@@ -133,6 +133,7 @@ public class SmilesParserTest extends CDKTestCase {
     @Test
     public void pyrrolylpyrrole_valid() throws InvalidSmilesException {
         IAtomContainer m = load("c1cccn1c2ccc[nH]2");
+        Assert.assertNotNull(m);
     }
 
     /** @cdk.bug 1363882 */
@@ -2069,7 +2070,6 @@ public class SmilesParserTest extends CDKTestCase {
      */
     @Test
     public void testAromaticity() throws InvalidSmilesException {
-        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = loadExact("c1cnc2s[cH][cH]n12");
         for (IAtom atom : mol.atoms()) {
             assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
@@ -2439,7 +2439,7 @@ public class SmilesParserTest extends CDKTestCase {
      */
     @Test(expected = InvalidSmilesException.class)
     public void testAromaticBoron_invalid() throws CDKException {
-        IAtomContainer mol = load("c1cc2c3cc1.c1cb23cc1");
+        load("c1cc2c3cc1.c1cb23cc1");
     }
 
     /**
