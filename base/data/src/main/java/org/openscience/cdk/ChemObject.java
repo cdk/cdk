@@ -99,7 +99,6 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      */
     public ChemObject(IChemObject chemObject) {
         // copy the flags
-        boolean[] oldflags = chemObject.getFlags();
         flags = chemObject.getFlagValue().shortValue();
         // copy the identifier
         identifier = chemObject.getID();
