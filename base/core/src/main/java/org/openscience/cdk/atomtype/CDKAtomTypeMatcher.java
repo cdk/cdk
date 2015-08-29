@@ -61,7 +61,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private AtomTypeFactory                                                  factory;
     private int                                                              mode;
     
-    private final static Object                                              lock                       = new Object();
+    private final static Object                                              LOCK                       = new Object();
 
     private static Map<Integer, Map<IChemObjectBuilder, CDKAtomTypeMatcher>> factories                  = new ConcurrentHashMap<>(5);
 
@@ -75,7 +75,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     public static CDKAtomTypeMatcher getInstance(IChemObjectBuilder builder, int mode) {
-        synchronized (lock) {
+        synchronized (LOCK) {
             if (!factories.containsKey(mode))
                 factories.put(mode, new Hashtable<IChemObjectBuilder, CDKAtomTypeMatcher>(1));
             if (!factories.get(mode).containsKey(builder))

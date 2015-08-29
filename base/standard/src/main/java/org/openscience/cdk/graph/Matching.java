@@ -47,7 +47,7 @@ import java.util.BitSet;
 public final class Matching {
 
     /** Indicate an unmatched vertex. */
-    private static final int Nil = -1;
+    private static final int NIL = -1;
 
     /** Match storage. */
     private final int[]      match;
@@ -59,7 +59,7 @@ public final class Matching {
      */
     private Matching(final int n) {
         this.match = new int[n];
-        Arrays.fill(match, Nil);
+        Arrays.fill(match, NIL);
     }
 
     /**
@@ -94,7 +94,7 @@ public final class Matching {
      * @param v vertex
      */
     public void unmatch(final int v) {
-        match[v] = Nil;
+        match[v] = NIL;
     }
 
     /**
@@ -114,7 +114,7 @@ public final class Matching {
      * @return the vertex has no matching
      */
     public boolean unmatched(final int v) {
-        return match[v] == Nil || match[match[v]] != v;
+        return match[v] == NIL || match[match[v]] != v;
     }
 
     /**

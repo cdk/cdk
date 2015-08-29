@@ -115,35 +115,35 @@ public enum Elements {
     /**
      * Lookup elements by atomic number.
      */
-    static final Elements[]            numberMap = new Elements[119];
+    static final Elements[]            NUMER_MAP = new Elements[119];
 
     /**
      * Lookup elements by symbol / name.
      */
-    static final Map<String, Elements> symbolMap = new HashMap<String, Elements>(400);
+    static final Map<String, Elements> SYMBOL_MAP = new HashMap<String, Elements>(400);
 
     static {
         // index elements
         for (final Elements e : values()) {
-            numberMap[e.number] = e;
-            symbolMap.put(e.symbol.toLowerCase(Locale.ENGLISH), e);
-            symbolMap.put(e.name().toLowerCase(Locale.ENGLISH), e);
+            NUMER_MAP[e.number] = e;
+            SYMBOL_MAP.put(e.symbol.toLowerCase(Locale.ENGLISH), e);
+            SYMBOL_MAP.put(e.name().toLowerCase(Locale.ENGLISH), e);
         }
 
         // recently named elements
-        symbolMap.put("uub", Copernicium); // 2009
-        symbolMap.put("ununbium", Copernicium);
+        SYMBOL_MAP.put("uub", Copernicium); // 2009
+        SYMBOL_MAP.put("ununbium", Copernicium);
 
-        symbolMap.put("uuq", Flerovium); // 2012
-        symbolMap.put("ununquadium", Flerovium);
+        SYMBOL_MAP.put("uuq", Flerovium); // 2012
+        SYMBOL_MAP.put("ununquadium", Flerovium);
 
-        symbolMap.put("uuh", Livermorium); // 2012
-        symbolMap.put("ununhexium", Livermorium);
+        SYMBOL_MAP.put("uuh", Livermorium); // 2012
+        SYMBOL_MAP.put("ununhexium", Livermorium);
 
         // alternative spellings
-        symbolMap.put("sulphur", Sulfur);
-        symbolMap.put("cesium", Caesium);
-        symbolMap.put("aluminum", Aluminium);
+        SYMBOL_MAP.put("sulphur", Sulfur);
+        SYMBOL_MAP.put("cesium", Caesium);
+        SYMBOL_MAP.put("aluminum", Aluminium);
 
     }
 
@@ -272,7 +272,7 @@ public enum Elements {
      */
     public static Elements ofNumber(final int number) {
         if (number < 0 || number > 118) return Unknown;
-        return numberMap[number];
+        return NUMER_MAP[number];
     }
 
     /**
@@ -293,7 +293,7 @@ public enum Elements {
      */
     public static Elements ofString(final String str) {
         if (str == null) return Unknown;
-        Elements e = symbolMap.get(str.toLowerCase(Locale.ENGLISH));
+        Elements e = SYMBOL_MAP.get(str.toLowerCase(Locale.ENGLISH));
         if (e == null) return Unknown;
         return e;
     }
