@@ -324,10 +324,10 @@ public class DynamicFactory {
         }
 
         if (registered) {
-            LOGGER.debug("registered '" + intf.getSimpleName() + "' with '" + impl.getSimpleName() + "' implementation");
+            LOGGER.debug("registered '", intf.getSimpleName(), "' with '", impl.getSimpleName(), "' implementation");
         } else {
-            LOGGER.debug("could not registered '" + intf.getSimpleName() + "' with '" + impl.getSimpleName()
-                    + "' implementation");
+            LOGGER.debug("could not registered '", intf.getSimpleName(), "' with '", impl.getSimpleName(),
+                    "' implementation");
         }
 
         return registered;
@@ -628,7 +628,7 @@ public class DynamicFactory {
             return new ArrayWrapCreator<T>(creator);
         }
 
-        LOGGER.debug("no instance handler found for " + key);
+        LOGGER.debug("no instance handler found for ", key);
 
         // return an instance handler that will throw an exception when invoked
         return new Creator<T>() {
@@ -786,18 +786,18 @@ public class DynamicFactory {
          */
         public Set<ConstructorKey> getCandidates(Class<?> intf, int n) {
 
-            LOGGER.debug("getting candidates for " + intf + " " + n);
+            LOGGER.debug("getting candidates for ", intf, " ", n);
 
             Map<Integer, Set<ConstructorKey>> map = keys.get(intf);
             if (map == null) {
-                LOGGER.debug("no keys for " + intf);
+                LOGGER.debug("no keys for ", intf);
                 LOGGER.debug(keys);
                 return EMPTY_KEY_SET;
             }
 
             Set<ConstructorKey> candidates = map.get(n);
             if (candidates == null) {
-                LOGGER.debug("no keys for parameter count" + n);
+                LOGGER.debug("no keys for parameter count", n);
                 LOGGER.debug(map);
                 return EMPTY_KEY_SET;
             }
