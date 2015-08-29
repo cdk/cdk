@@ -71,6 +71,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         }
 
         Assert.assertEquals(6, molCount);
+        reader.close();
     }
 
     @Test
@@ -99,6 +100,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         }
 
         Assert.assertEquals(6, molCount);
+        reader.close();
     }
 
     @Test
@@ -115,6 +117,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         Assert.assertTrue(object instanceof IAtomContainer);
         Assert.assertEquals("2-methylbenzo-1,4-quinone", ((IAtomContainer) object).getProperty(CDKConstants.TITLE));
         Assert.assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
+        reader.close();
     }
 
     @Test
@@ -132,6 +135,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         IAtomContainer m = (IAtomContainer) object;
         Assert.assertEquals("1", m.getProperty("E_NSC"));
         Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
+        reader.close();
     }
 
     @Test
@@ -144,6 +148,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
         m = reader.next();
         Assert.assertEquals("120-78-5", m.getProperty("E_CAS"));
+        reader.close();
     }
 
     @Test
@@ -162,6 +167,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         }
 
         Assert.assertEquals(1, molCount);
+        reader.close();
     }
 
     @Test
@@ -180,10 +186,11 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         }
 
         Assert.assertEquals(1, molCount);
+        reader.close();
     }
 
     @Test
-    public void testEmptyEntryIteratingReader() {
+    public void testEmptyEntryIteratingReader() throws IOException {
         String filename = "data/mdl/emptyStructures.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -203,7 +210,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         }
 
         Assert.assertEquals(2, molCount);
-
+        reader.close();
     }
 
     /**
@@ -229,10 +236,12 @@ public class IteratingSDFReaderTest extends CDKTestCase {
             boolean has3d = GeometryUtil.has3DCoordinates((IAtomContainer) object);
             Assert.assertTrue(has3d);
         }
+        Assert.assertNotSame(0, molCount);
+        reader.close();
     }
 
     @Test
-    public void testNo3DCoordsButForcedAs() {
+    public void testNo3DCoordsButForcedAs() throws IOException {
         // First test unforced 3D coordinates
         String filename = "data/mdl/no3dStructures.sdf";
         logger.info("Testing: " + filename);
@@ -251,6 +260,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         Assert.assertEquals(2, molCount);
         Assert.assertNotNull(mol.getAtom(0).getPoint2d());
         Assert.assertNull(mol.getAtom(0).getPoint3d());
+        reader.close();
 
         // Now test forced 3D coordinates
         logger.info("Testing: " + filename);
@@ -271,6 +281,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         Assert.assertEquals(2, molCount);
         Assert.assertNull(mol.getAtom(0).getPoint2d());
         Assert.assertNotNull(mol.getAtom(0).getPoint3d());
+        reader.close();
     }
 
     class MyListener implements IChemObjectIOListener {
