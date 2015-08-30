@@ -1,5 +1,4 @@
 org.openscience.cdk
-org.openscience.cdk.annotations
 org.openscience.cdk.aromaticity
 org.openscience.cdk.atomtype
 org.openscience.cdk.atomtype.mapper
@@ -14,6 +13,7 @@ org.openscience.cdk.dict
 org.openscience.cdk.event
 org.openscience.cdk.exception
 org.openscience.cdk.fingerprint
+org.openscience.cdk.fingerprint.model
 org.openscience.cdk.forcefield.mmff
 org.openscience.cdk.formula
 org.openscience.cdk.formula.rules
@@ -69,6 +69,7 @@ org.openscience.cdk.qsar.descriptors.atompair
 org.openscience.cdk.qsar.descriptors.bond
 org.openscience.cdk.qsar.descriptors.molecular
 org.openscience.cdk.qsar.descriptors.protein
+org.openscience.cdk.qsar.descriptors.substance
 org.openscience.cdk.qsar.result
 org.openscience.cdk.reaction
 org.openscience.cdk.reaction.mechanism
