@@ -30,7 +30,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>java3d</groupId>
+            <groupId>javax.vecmath</groupId>
             <artifactId>vecmath</artifactId>
             <scope>test</scope>
         </dependency>
