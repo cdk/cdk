@@ -77,7 +77,7 @@ import java.util.List;
 public class TPSADescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private boolean               checkAromaticity = false;
-    private static HashMap        map;
+    private static HashMap<String,Double>        map;
     private static final String[] NAMES            = {"TopoPSA"};
 
     /**
@@ -85,7 +85,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      */
     public TPSADescriptor() {
         if (map == null) {
-            map = new HashMap();
+            map = new HashMap<String,Double>();
             // contributions:
             // every contribution is given by an atom profile;
             // positions in atom profile strings are: symbol, max-bond-order, bond-order-sum,
@@ -268,7 +268,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
                     else if (connectedBond.getOrder() == CDKConstants.BONDORDER_TRIPLE) tripleBondCount++;
                 }
                 int formalCharge = atom.getFormalCharge();
-                List connectedAtoms = ac.getConnectedAtomsList(atom);
+                List<IAtom> connectedAtoms = ac.getConnectedAtomsList(atom);
                 int numberOfNeighbours = connectedAtoms.size();
 
                 // EXPLICIT hydrogens: count the number of hydrogen atoms

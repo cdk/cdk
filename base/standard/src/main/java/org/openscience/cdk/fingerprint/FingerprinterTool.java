@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class FingerprinterTool {
 
-    private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(FingerprinterTool.class);
+    private final static ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(FingerprinterTool.class);
 
     /**
      *  Checks whether all the positive bits in BitSet bs2 occur in BitSet bs1. If
@@ -88,11 +88,11 @@ public class FingerprinterTool {
      */
     public static List<Integer> listDifferences(BitSet bs1, BitSet bs2) {
         List<Integer> l = new ArrayList<Integer>();
-        logger.debug("Listing bit positions set in bs2 but not in bs1");
+        LOGGER.debug("Listing bit positions set in bs2 but not in bs1");
         for (int f = 0; f < bs2.size(); f++) {
             if (bs2.get(f) && !bs1.get(f)) {
                 l.add(f);
-                logger.debug("Bit " + f + " not set in bs1");
+                LOGGER.debug("Bit " + f + " not set in bs1");
             }
         }
         return l;

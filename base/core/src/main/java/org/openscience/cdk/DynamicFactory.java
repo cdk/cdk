@@ -129,7 +129,7 @@ public class DynamicFactory {
     /**
      * logger for use in this class
      */
-    private static final ILoggingTool             logger            = LoggingToolFactory
+    private static final ILoggingTool             LOGGER            = LoggingToolFactory
                                                                             .createLoggingTool(DynamicFactory.class);
 
     /**
@@ -324,10 +324,10 @@ public class DynamicFactory {
         }
 
         if (registered) {
-            logger.debug("registered '" + intf.getSimpleName() + "' with '" + impl.getSimpleName() + "' implementation");
+            LOGGER.debug("registered '", intf.getSimpleName(), "' with '", impl.getSimpleName(), "' implementation");
         } else {
-            logger.debug("could not registered '" + intf.getSimpleName() + "' with '" + impl.getSimpleName()
-                    + "' implementation");
+            LOGGER.debug("could not registered '", intf.getSimpleName(), "' with '", impl.getSimpleName(),
+                    "' implementation");
         }
 
         return registered;
@@ -628,7 +628,7 @@ public class DynamicFactory {
             return new ArrayWrapCreator<T>(creator);
         }
 
-        logger.debug("no instance handler found for " + key);
+        LOGGER.debug("no instance handler found for ", key);
 
         // return an instance handler that will throw an exception when invoked
         return new Creator<T>() {
@@ -786,19 +786,19 @@ public class DynamicFactory {
          */
         public Set<ConstructorKey> getCandidates(Class<?> intf, int n) {
 
-            logger.debug("getting candidates for " + intf + " " + n);
+            LOGGER.debug("getting candidates for ", intf, " ", n);
 
             Map<Integer, Set<ConstructorKey>> map = keys.get(intf);
             if (map == null) {
-                logger.debug("no keys for " + intf);
-                logger.debug(keys);
+                LOGGER.debug("no keys for ", intf);
+                LOGGER.debug(keys);
                 return EMPTY_KEY_SET;
             }
 
             Set<ConstructorKey> candidates = map.get(n);
             if (candidates == null) {
-                logger.debug("no keys for parameter count" + n);
-                logger.debug(map);
+                LOGGER.debug("no keys for parameter count", n);
+                LOGGER.debug(map);
                 return EMPTY_KEY_SET;
             }
 

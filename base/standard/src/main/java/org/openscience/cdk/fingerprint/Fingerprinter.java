@@ -108,7 +108,7 @@ public class Fingerprinter implements IFingerprinter {
     private static ILoggingTool              logger               = LoggingToolFactory
                                                                           .createLoggingTool(Fingerprinter.class);
 
-    private static final Map<String, String> queryReplace         = new HashMap<String, String>() {
+    private static final Map<String, String> QUERY_REPLACE        = new HashMap<String, String>() {
 
                                                                       private static final long serialVersionUID = 1L;
 
@@ -285,7 +285,7 @@ public class Fingerprinter implements IFingerprinter {
 
     private String convertSymbol(String symbol) {
 
-        String returnSymbol = queryReplace.get(symbol);
+        String returnSymbol = QUERY_REPLACE.get(symbol);
         return returnSymbol == null ? symbol : returnSymbol;
     }
 

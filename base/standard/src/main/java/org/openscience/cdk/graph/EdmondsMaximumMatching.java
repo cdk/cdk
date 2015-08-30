@@ -66,7 +66,7 @@ final class EdmondsMaximumMatching {
     private final int[]               even, odd;
 
     /** Special 'nil' vertex. */
-    private static final int          nil     = -1;
+    private static final int          NIL     = -1;
 
     /** Queue of 'even' (free) vertices to start paths from. */
     private final List<Integer>       queue;
@@ -127,8 +127,8 @@ final class EdmondsMaximumMatching {
     private boolean augment() {
 
         // reset data structures
-        Arrays.fill(even, nil);
-        Arrays.fill(odd, nil);
+        Arrays.fill(even, NIL);
+        Arrays.fill(odd, NIL);
         dsf = new DisjointSetForest(graph.length);
         bridges.clear();
         queue.clear();
@@ -153,18 +153,18 @@ final class EdmondsMaximumMatching {
                 // the endpoints of the edge are both at even levels in the
                 // forest - this means it is either an augmenting path or
                 // a blossom
-                if (even[dsf.getRoot(w)] != nil) {
+                if (even[dsf.getRoot(w)] != NIL) {
                     if (check(v, w)) return true;
                 }
 
                 // add the edge to the forest if is not already and extend
                 // the tree with this matched edge
-                else if (odd[w] == nil) {
+                else if (odd[w] == NIL) {
                     odd[w] = v;
                     int u = matching.other(w);
                     // add the matched edge (potential though a blossom) if it
                     // isn't in the forest already
-                    if (even[dsf.getRoot(u)] == nil) {
+                    if (even[dsf.getRoot(u)] == NIL) {
                         even[u] = w;
                         queue.add(u);
                     }
@@ -313,7 +313,7 @@ final class EdmondsMaximumMatching {
      * @param v the leaf to augment from
      */
     private void augment(int v) {
-        int n = buildPath(path, 0, v, nil);
+        int n = buildPath(path, 0, v, NIL);
         for (int i = 2; i < n; i += 2) {
             matching.match(path[i], path[i - 1]);
         }
@@ -334,7 +334,7 @@ final class EdmondsMaximumMatching {
         while (true) {
 
             // lift the path through the contracted blossom
-            while (odd[start] != nil) {
+            while (odd[start] != NIL) {
 
                 Tuple bridge = bridges.get(start);
 

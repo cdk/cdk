@@ -732,7 +732,6 @@ public class Convertor {
     private void writeProperties(IChemObject object, CMLElement cmlElement) {
         Map<Object, Object> props = object.getProperties();
         Iterator<Object> keys = props.keySet().iterator();
-        CMLElement propList = null;
         while (keys.hasNext()) {
             Object key = keys.next();
             if (key instanceof DictRef) {
@@ -755,9 +754,6 @@ public class Convertor {
                     cmlElement.appendChild(scalar);
                 }
             }
-        }
-        if (propList != null) {
-            cmlElement.appendChild(propList);
         }
     }
 

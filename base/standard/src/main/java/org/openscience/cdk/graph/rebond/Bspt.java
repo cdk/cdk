@@ -75,8 +75,8 @@ import java.util.Enumeration;
  */
 public final class Bspt {
 
-    private final static int leafCount  = 4;
-    private final static int stackDepth = 64; /*
+    private final static int LEAF_COUNT  = 4;
+    private final static int STACK_DEPTH = 64;/*
                                                * this corresponds to the max
                                                * height of the tree
                                                */
@@ -124,12 +124,12 @@ public final class Bspt {
         Leaf   leaf;
 
         EnumerateAll() {
-            stack = new Node[stackDepth];
+            stack = new Node[STACK_DEPTH];
             sp = 0;
             Element ele = eleRoot;
             while (ele instanceof Node) {
                 Node node = (Node) ele;
-                if (sp == stackDepth) throw new Error("Bspt.EnumerateAll tree stack overflow");
+                if (sp == STACK_DEPTH) throw new Error("Bspt.EnumerateAll tree stack overflow");
                 stack[sp++] = node;
                 ele = node.eleLE;
             }
@@ -176,13 +176,13 @@ public final class Bspt {
             this.distance = distance;
             this.center = center;
 
-            stack = new Node[stackDepth];
+            stack = new Node[STACK_DEPTH];
             sp = 0;
             Element ele = eleRoot;
             while (ele instanceof Node) {
                 Node node = (Node) ele;
                 if (center.getDimValue(node.dim) - distance <= node.splitValue) {
-                    if (sp == stackDepth) throw new Error("Bspt.EnumerateNear tree stack overflow");
+                    if (sp == STACK_DEPTH) throw new Error("Bspt.EnumerateNear tree stack overflow");
                     stack[sp++] = node;
                     ele = node.eleLE;
                 } else {
@@ -255,13 +255,13 @@ public final class Bspt {
             centerValues = new double[dimMax];
             for (int dim = dimMax; --dim >= 0;)
                 centerValues[dim] = center.getDimValue(dim);
-            stack = new Node[stackDepth];
+            stack = new Node[STACK_DEPTH];
             sp = 0;
             Element ele = eleRoot;
             while (ele instanceof Node) {
                 Node node = (Node) ele;
                 if (center.getDimValue(node.dim) - distance <= node.splitValue) {
-                    if (sp == stackDepth) throw new Error("Bspt.EnumerateSphere tree stack overflow");
+                    if (sp == STACK_DEPTH) throw new Error("Bspt.EnumerateSphere tree stack overflow");
                     stack[sp++] = node;
                     ele = node.eleLE;
                 } else {
@@ -415,12 +415,12 @@ public final class Bspt {
 
         Leaf() {
             count = 0;
-            tuples = new Tuple[leafCount];
+            tuples = new Tuple[LEAF_COUNT];
         }
 
         Leaf(Leaf leaf, int dim, double splitValue) {
             this();
-            for (int i = leafCount; --i >= 0;) {
+            for (int i = LEAF_COUNT; --i >= 0;) {
                 Tuple tuple = leaf.tuples[i];
                 double value = tuple.getDimValue(dim);
                 if (value > splitValue || (value == splitValue && ((i & 1) == 1))) {
@@ -429,15 +429,15 @@ public final class Bspt {
                 }
             }
             int dest = 0;
-            for (int src = 0; src < leafCount; ++src)
+            for (int src = 0; src < LEAF_COUNT; ++src)
                 if (leaf.tuples[src] != null) leaf.tuples[dest++] = leaf.tuples[src];
             leaf.count = dest;
-            if (count == 0) tuples[leafCount] = null; // explode
+            if (count == 0) tuples[LEAF_COUNT] = null; // explode
         }
 
         public double getSplitValue(int dim) {
-            if (count != leafCount) tuples[leafCount] = null;
-            return (tuples[0].getDimValue(dim) + tuples[leafCount - 1].getDimValue(dim)) / 2;
+            if (count != LEAF_COUNT) tuples[LEAF_COUNT] = null;
+            return (tuples[0].getDimValue(dim) + tuples[LEAF_COUNT - 1].getDimValue(dim)) / 2;
         }
 
         @Override
@@ -447,7 +447,7 @@ public final class Bspt {
 
         @Override
         public boolean addTuple(Tuple tuple) {
-            if (count == leafCount) return false;
+            if (count == LEAF_COUNT) return false;
             tuples[count++] = tuple;
             return true;
         }
@@ -466,7 +466,7 @@ public final class Bspt {
 
         @Override
         public boolean isLeafWithSpace() {
-            return count < leafCount;
+            return count < LEAF_COUNT;
         }
     }
 }
