@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/cdk/cdk.svg?branch=master)](https://travis-ci.org/cdk/cdk)
 
-# The Chemical Development Kit (CDK)
+# The Chemistry Development Kit (CDK)
  
 Copyright 1997-2015 The CDK Development Team
 
