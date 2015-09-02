@@ -54,15 +54,21 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -1530,5 +1536,104 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         String expected = prefix + digits + suffix;
         
         assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
+    }
+
+    @Test
+    public void testSgroupAbbreviation() throws Exception {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-abbrv.mol"))) {
+            final IAtomContainer container = mdlr.read(new AtomContainer());
+            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            assertNotNull(sgroups);
+            assertThat(sgroups.size(), is(1));
+            Sgroup sgroup = sgroups.get(0);
+            assertThat(sgroup.getType(), is(SgroupType.CtabAbbreviation));
+            assertThat(sgroup.getSubscript(), is("Cs2CO3"));
+            assertThat(sgroup.getAtoms().size(), is(6));
+        }
+    }
+
+    @Test
+    public void testSgroupRepeatUnit() throws Exception {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru.mol"))) {
+            IAtomContainer container = mdlr.read(new AtomContainer());
+            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            assertNotNull(sgroups);
+            assertThat(sgroups.size(), is(1));
+            Sgroup sgroup = sgroups.get(0);
+            assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
+            assertThat(sgroup.getSubscript(), is("n"));
+            assertThat((String) sgroup.getValue(SgroupKey.CtabConnectivity), is("HT"));
+            assertThat(sgroup.getAtoms().size(), is(10));
+            assertThat(sgroup.getBonds().size(), is(2));
+            List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+            assertThat(brackets.size(), is(2));
+            // M  SDI   1  4    2.2579   -0.8756    1.7735   -1.6600
+            assertThat(brackets.get(0).getFirstPoint().x, closeTo(2.2579, 0.001));
+            assertThat(brackets.get(0).getFirstPoint().y, closeTo(-0.8756, 0.001));
+            assertThat(brackets.get(0).getSecondPoint().x, closeTo(1.7735, 0.001));
+            assertThat(brackets.get(0).getSecondPoint().y, closeTo(-1.6600, 0.001));
+            // M  SDI   1  4   -0.9910   -1.7247   -0.4960   -0.8673
+            assertThat(brackets.get(1).getFirstPoint().x, closeTo(-0.9910, 0.001));
+            assertThat(brackets.get(1).getFirstPoint().y, closeTo(-1.7247, 0.001));
+            assertThat(brackets.get(1).getSecondPoint().x, closeTo(-0.4960, 0.001));
+            assertThat(brackets.get(1).getSecondPoint().y, closeTo(-0.8673, 0.001));
+
+        }
+    }
+
+    @Test
+    public void testSgroupUnorderedMixture() throws Exception {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-unord-mixture.mol"))) {
+            IAtomContainer container = mdlr.read(new AtomContainer());
+            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            assertNotNull(sgroups);
+            assertThat(sgroups.size(), is(3));
+            // first sgroup
+            Sgroup sgroup = sgroups.get(0);
+            assertThat(sgroup.getType(), is(SgroupType.CtabComponent));
+            assertThat(sgroup.getParents().size(), is(1));
+            assertThat(sgroup.getParents(), hasItem(sgroups.get(2)));
+            // second sgroup
+            sgroup = sgroups.get(1);
+            assertThat(sgroup.getType(), is(SgroupType.CtabComponent));
+            assertThat(sgroup.getParents().size(), is(1));
+            assertThat(sgroup.getParents(), hasItem(sgroups.get(2)));
+            // third sgroup
+            sgroup = sgroups.get(2);
+            assertThat(sgroup.getType(), is(SgroupType.CtabMixture));
+            assertThat(sgroup.getParents().size(), is(0));
+        }
+    }
+
+    @Test(expected = CDKException.class)
+    public void testSgroupInvalidConnectInStrictMode() throws Exception {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru-bad-scn.mol"))) {
+            mdlr.setReaderMode(Mode.STRICT);
+            IAtomContainer container = mdlr.read(new AtomContainer());
+        }
+    }
+
+    @Test(expected = CDKException.class)
+    public void testSgroupDefOrderInStrictMode() throws Exception {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru-bad-def.mol"))) {
+            mdlr.setReaderMode(Mode.STRICT);
+            IAtomContainer container = mdlr.read(new AtomContainer());
+        }
+    }
+
+    @Test
+    public void testSgroupBracketStyle() throws Exception {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru-bracketstyles.mol"))) {
+            IAtomContainer container = mdlr.read(new AtomContainer());
+            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            assertNotNull(sgroups);
+            assertThat(sgroups.size(), is(2));
+            Sgroup sgroup = sgroups.get(0);
+            assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
+            assertThat((Integer) sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
+            sgroup = sgroups.get(1);
+            assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
+            assertThat((Integer) sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
+        }
     }
 }

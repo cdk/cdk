@@ -47,6 +47,10 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -61,7 +65,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -766,17 +774,21 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         // already had atoms present before reading the file
         int offset = container.getAtomCount() - nAtoms;
 
+        Map<Integer, Sgroup> sgroups = new LinkedHashMap<>();
+
+        LINES:
         while ((line = input.readLine()) != null) {
 
-            int index, count;
+            int index, count, lnOffset;
+            Sgroup sgroup;
             int length = line.length();
             final PropertyKey key = PropertyKey.of(line);
             switch (key) {
 
-            // A  aaa
-            // x...
-            //
-            // atom alias is stored as label on a pseudo atom
+                // A  aaa
+                // x...
+                //
+                // atom alias is stored as label on a pseudo atom
                 case ATOM_ALIAS:
                     index = readMolfileInt(line, 3) - 1;
                     final String label = input.readLine();
@@ -913,16 +925,201 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     index = readMolfileInt(line, 7) - 1;
                     String atomLabel = line.substring(11);  // DO NOT TRIM
                     container.getAtom(offset + index).setProperty(CDKConstants.ACDLABS_LABEL, atomLabel);
-                    break;    
-                                    
+                    break;
+
+                // M STYnn8 sss ttt ...
+                //  sss: Sgroup number
+                //  ttt: Sgroup type: SUP = abbreviation Sgroup (formerly called superatom), MUL = multiple group,
+                //                    SRU = SRU type, MON = monomer, MER = Mer type, COP = copolymer, CRO = crosslink,
+                //                    MOD = modification, GRA = graft, COM = component, MIX = mixture,
+                //                    FOR = formulation, DAT = data Sgroup, ANY = any polymer, GEN = generic.
+                //
+                // Note: For a given Sgroup, an STY line giving its type must appear before any other line that
+                //       supplies information about it. For a data Sgroup, an SDT line must describe the data
+                //       field before the SCD and SED lines that contain the data (see Data Sgroup Data below).
+                //       When a data Sgroup is linked to another Sgroup, the Sgroup must already have been defined.
+                //
+                // Sgroups can be in any order on the Sgroup Type line. Brackets are drawn around Sgroups with the
+                // M SDI lines defining the coordinates.
+                case M_STY:
+                    count = readMolfileInt(line, 6);
+                    for (int i = 0; i < count; i++) {
+                        lnOffset = 10 + (i * 8);
+                        index = readMolfileInt(line, lnOffset);
+
+                        if (mode == Mode.STRICT && sgroups.containsKey(index))
+                            handleError("STY line must appear before any other line that supplies Sgroup information");
+
+                        sgroup = new Sgroup();
+                        sgroups.put(index, sgroup);
+
+                        SgroupType type = SgroupType.parseCtabKey(line.substring(lnOffset + 4, lnOffset + 7));
+                        if (type != null)
+                            sgroup.setType(type);
+                    }
+                    break;
+
+                // Sgroup Subtype [Sgroup]
+                // M  SSTnn8 sss ttt ...
+                // ttt: Polymer Sgroup subtypes: ALT = alternating, RAN = random, BLO = block
+                case M_SST:
+                    count = readMolfileInt(line, 6);
+                    for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) {
+                        sgroup = ensureSgroup(sgroups,
+                                              readMolfileInt(line, st));
+                        if (mode == Mode.STRICT && sgroup.getType() != SgroupType.CtabCopolymer)
+                            handleError("SST (Sgroup Subtype) specified for a non co-polymer group");
+
+                        String sst = line.substring(st+4, st+7);
+
+                        if (mode == Mode.STRICT && !("ALT".equals(sst) || "RAN".equals(sst) || "BLO".equals(sst)))
+                            handleError("Invalid sgroup subtype: " + sst + " expected (ALT, RAN, or BLO)");
+
+                        sgroup.putValue(SgroupKey.CtabSubType, sst);
+                    }
+                    break;
+
+                // Sgroup Atom List [Sgroup]
+                // M   SAL sssn15 aaa ...
+                // aaa: Atoms in Sgroup sss
+                case M_SAL:
+                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
+                    count  = readMolfileInt(line, 10);
+                    for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4) {
+                        index = readMolfileInt(line, st) - 1;
+                        sgroup.addAtom(container.getAtom(offset + index));
+                    }
+                    break;
+
+
+                // Sgroup Bond List [Sgroup]
+                // M  SBL sssn15 bbb ...
+                // bbb: Bonds in Sgroup sss.
+                // (For data Sgroups, bbb’s are the containment bonds, for all other
+                //  Sgroup types, bbb’s are crossing bonds.)
+                case M_SBL:
+                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
+                    count = readMolfileInt(line, 10);
+                    for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4) {
+                        index = readMolfileInt(line, st) - 1;
+                        sgroup.addBond(container.getBond(offset + index));
+                    }
+                    break;
+
+                // Sgroup Hierarchy Information [Sgroup]
+                // M  SPLnn8 ccc ppp ...
+                //   ccc: Sgroup index of the child Sgroup
+                //   ppp: Sgroup index of the parent Sgroup (ccc and ppp must already be defined via an
+                //        STY line prior to encountering this line)
+                case M_SPL:
+                    count = readMolfileInt(line, 6);
+                    for (int i = 0, st = 10; i < count && st + 6 <= length; i++, st += 8) {
+                        sgroup = ensureSgroup(sgroups, readMolfileInt(line, st));
+                        sgroup.addParent(ensureSgroup(sgroups, readMolfileInt(line, st+4)));
+                    }
+                    break;
+
+                // Sgroup Connectivity [Sgroup]
+                // M  SCNnn8 sss ttt ...
+                // ttt: HH = head-to-head, HT = head-to-tail, EU = either unknown.
+                // Left justified.
+                case M_SCN:
+                    count = readMolfileInt(line, 6);
+                    for (int i = 0, st = 10; i < count && st + 6 <= length; i++, st += 8) {
+                        sgroup = ensureSgroup(sgroups,
+                                              readMolfileInt(line, st));
+                        String con = line.substring(st + 4, Math.min(length, st + 7)).trim();
+                        if (mode == Mode.STRICT && !("HH".equals(con) || "HT".equals(con) || "EU".equals(con)))
+                            handleError("Unknown SCN type (expected: HH, HT, or EU) was " + con);
+                        sgroup.putValue(SgroupKey.CtabConnectivity,
+                                        con);
+                    }
+                    break;
+
+                // Sgroup Display Information
+                // M SDI sssnn4 x1 y1 x2 y2
+                // x1,y1, Coordinates of bracket endpoints
+                // x2,y2:
+                case M_SDI:
+                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
+                    count = readMolfileInt(line, 10);
+                    assert count == 4; // fixed?
+                    sgroup.addBracket(new SgroupBracket(readMDLCoordinate(line, 13),
+                                                        readMDLCoordinate(line, 23),
+                                                        readMDLCoordinate(line, 33),
+                                                        readMDLCoordinate(line, 43)));
+                    break;
+
+                // Sgroup subscript
+                // M SMT sss m...
+                // m...: Text of subscript Sgroup sss.
+                // (For multiple groups, m... is the text representation of the multiple group multiplier.
+                //  For abbreviation Sgroups, m... is the text of the abbreviation Sgroup label.)
+                case M_SMT:
+                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
+                    sgroup.putValue(SgroupKey.CtabSubScript,
+                                    line.substring(11).trim());
+                    break;
+
+                // Sgroup Bracket Style
+                // The format for the Sgroup bracket style is as follows:
+                // M  SBTnn8 sss ttt ...
+                // where:
+                //   sss: Index of Sgroup
+                //   ttt: Bracket display style: 0 = default, 1 = curved (parenthetic) brackets
+                // This appendix supports altering the display style of the Sgroup brackets.
+                case M_SBT:
+                    count = readMolfileInt(line, 6);
+                    for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) {
+                        sgroup = ensureSgroup(sgroups,
+                                              readMolfileInt(line, st));
+                        sgroup.putValue(SgroupKey.CtabBracketStyle,
+                                        readMolfileInt(line, st+4));
+                    }
+                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
+                    sgroup.putValue(SgroupKey.CtabBracketStyle, readMolfileInt(line, 10));
+                    break;
+
                 // M  END
                 //
                 // This entry goes at the end of the properties block and is required for molfiles which contain a
                 // version stamp in the counts line.
                 case M_END:
-                    return;
+                    break LINES;
             }
         }
+
+
+        if (!sgroups.isEmpty()) {
+            // load Sgroups into molecule, first we downcast
+            List<Sgroup> sgroupOrgList = new ArrayList<>(sgroups.values());
+            List<Sgroup> sgroupCpyList = new ArrayList<>(sgroupOrgList.size());
+            for (int i = 0; i < sgroupOrgList.size(); i++) {
+                Sgroup cpy = sgroupOrgList.get(i).downcast();
+                sgroupCpyList.add(cpy);
+            }
+            // update replaced parents
+            for (int i = 0; i < sgroupOrgList.size(); i++) {
+                Sgroup newSgroup = sgroupCpyList.get(i);
+                Set<Sgroup> oldParents = new HashSet<>(newSgroup.getParents());
+                newSgroup.removeParents(oldParents);
+                for (Sgroup parent : oldParents) {
+                    newSgroup.addParent(sgroupCpyList.get(sgroupOrgList.indexOf(parent)));
+                }
+            }
+            container.setProperty(CDKConstants.CTAB_SGROUPS, sgroupCpyList);
+        }
+    }
+
+
+    private Sgroup ensureSgroup(Map<Integer, Sgroup> map, int idx) throws CDKException {
+        Sgroup sgroup = map.get(idx);
+        if (sgroup == null) {
+            if (mode == Mode.STRICT)
+                handleError("Sgroups must first be defined by a STY property");
+            map.put(idx, sgroup = new Sgroup());
+        }
+        return sgroup;
     }
 
     /**
@@ -1875,6 +2072,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         /** Sgroup Component Numbers. */
         M_SNC,
+
+        /** Sgroup Bracket Style. */
+        M_SBT,
 
         /** 3D Feature Properties. */
         M_$3D,
