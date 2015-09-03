@@ -26,6 +26,7 @@ package org.openscience.cdk.io;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.Collections;
 import java.util.Properties;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -54,8 +55,10 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.listener.PropertiesListener;
+import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
@@ -231,7 +234,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         String output = writer.toString();
         Assert.assertEquals("Test for zero length pseudo atom label in MDL file", -1,
-                output.indexOf("0.0000    0.0000    0.0000     0  0  0  0  0  0  0  0  0  0  0  0"));
+                            output.indexOf("0.0000    0.0000    0.0000     0  0  0  0  0  0  0  0  0  0  0  0"));
     }
 
     @Test
@@ -657,5 +660,73 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
                 is("M  RAD  8   1   2   2   2   3   2   4   2   5   2   6   2   7   2   8   2"));
         assertThat("incorrect radical output on line 23", lines[22], is("M  RAD  1   9   2"));
 
+    }
+
+    @Test
+    public void testSgroupAtomListWrapping() throws Exception {
+        IAtomContainer mol = TestMoleculeFactory.makeEthylPropylPhenantren();
+
+        Sgroup sgroup = new Sgroup();
+        for (IAtom atom : mol.atoms())
+            sgroup.addAtom(atom);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                        Collections.singletonList(sgroup));
+
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mol);
+            String output = sw.toString();
+            assertThat(output, containsString("M  SAL   1 15"));
+            assertThat(output, containsString("M  SAL   1  4"));
+        }
+    }
+
+    @Test
+    public void sgroupRepeatUnitRoundTrip() throws Exception {
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru.mol"));
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mdlr.read(new AtomContainer()));
+            String output = sw.toString();
+            assertThat(output, containsString("M  STY  1   1 SRU"));
+            assertThat(output, containsString("M  SMT   1 n"));
+            assertThat(output, containsString("M  SCN  1   1 HT"));
+        }
+    }
+
+    @Test
+    public void sgroupBracketStylesRoundTrip() throws Exception {
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru-bracketstyles.mol"));
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mdlr.read(new AtomContainer()));
+            String output = sw.toString();
+            assertThat(output, containsString("M  STY  2   1 SRU   2 SRU"));
+            assertThat(output, containsString("M  SBT  1   1   1"));
+        }
+    }
+
+    @Test
+    public void sgroupUnorderedMixtureRoundTrip() throws Exception {
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-unord-mixture.mol"));
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mdlr.read(new AtomContainer()));
+            String output = sw.toString();
+            assertThat(output, containsString("M  STY  3   1 COM   2 COM   3 MIX"));
+            assertThat(output, containsString("M  SPL  1   1   3"));
+        }
+    }
+
+    @Test
+    public void sgroupCopolymerRoundTrip() throws Exception {
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-ran-copolymer.mol"));
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mdlr.read(new AtomContainer()));
+            String output = sw.toString();
+            assertThat(output, containsString("M  SST  1   1 RAN"));
+            assertThat(output, containsString("M  STY  3   1 COP   2 SRU   3 SRU"));
+        }
     }
 }
