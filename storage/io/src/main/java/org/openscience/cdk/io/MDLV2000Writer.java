@@ -32,10 +32,14 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,6 +60,9 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -71,7 +78,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * writer.write((IAtomContainer)molecule);
  * writer.close();
  * </pre>
- *
+ * <p/>
  * <p>The writer has two IO settings: one for writing 2D coordinates, even if
  * 3D coordinates are given for the written data; the second writes aromatic
  * bonds as bond type 4, which is, strictly speaking, a query bond type, but
@@ -88,17 +95,17 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * writer.addChemObjectIOListener(listener);
  * </pre>
  *
- * @cdk.module  io
+ * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
  * @cdk.keyword file format, MDL molfile
  */
 public class MDLV2000Writer extends DefaultChemObjectWriter {
 
-    private final static ILoggingTool logger          = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
+    private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
 
     // regular expression to capture R groups with attached numbers
-    private Pattern                   NUMERED_R_GROUP = Pattern.compile("R(\\d+)");
+    private Pattern NUMERED_R_GROUP = Pattern.compile("R(\\d+)");
 
     /**
      * Enumeration of all valid radical values.
@@ -179,13 +186,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     @Deprecated
     private BooleanIOSetting writeQueryFormatValencies;
 
-    private BufferedWriter   writer;
+    private BufferedWriter writer;
 
     /**
      * Constructs a new MDLWriter that can write an {@link IAtomContainer}
      * to the MDL molfile format.
      *
-     * @param   out  The Writer to write to
+     * @param out The Writer to write to
      */
     public MDLV2000Writer(Writer out) {
         if (out instanceof BufferedWriter) {
@@ -200,7 +207,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * Constructs a new MDLWriter that can write an {@link IAtomContainer}
      * to a given OutputStream.
      *
-     * @param   output  The OutputStream to write to
+     * @param output The OutputStream to write to
      */
     public MDLV2000Writer(OutputStream output) {
         this(new OutputStreamWriter(output));
@@ -259,7 +266,6 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * {@link IChemObject} and {@link IAtomContainer}.
      *
      * @param object {@link IChemObject} to write
-     *
      * @see #accepts(Class)
      */
     @Override
@@ -295,14 +301,14 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             if (container.getProperty(CDKConstants.TITLE) != null) {
                 if (bigPile.getProperty(CDKConstants.TITLE) != null)
                     bigPile.setProperty(CDKConstants.TITLE,
-                            bigPile.getProperty(CDKConstants.TITLE) + "; " + container.getProperty(CDKConstants.TITLE));
+                                        bigPile.getProperty(CDKConstants.TITLE) + "; " + container.getProperty(CDKConstants.TITLE));
                 else
                     bigPile.setProperty(CDKConstants.TITLE, container.getProperty(CDKConstants.TITLE));
             }
             if (container.getProperty(CDKConstants.REMARK) != null) {
                 if (bigPile.getProperty(CDKConstants.REMARK) != null)
                     bigPile.setProperty(CDKConstants.REMARK, bigPile.getProperty(CDKConstants.REMARK) + "; "
-                            + container.getProperty(CDKConstants.REMARK));
+                                                             + container.getProperty(CDKConstants.REMARK));
                 else
                     bigPile.setProperty(CDKConstants.REMARK, container.getProperty(CDKConstants.REMARK));
             }
@@ -313,7 +319,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     /**
      * Writes a Molecule to an OutputStream in MDL sdf format.
      *
-     * @param   container  Molecule that is written to an OutputStream
+     * @param container Molecule that is written to an OutputStream
      */
     public void writeMolecule(IAtomContainer container) throws Exception {
         String line = "";
@@ -527,7 +533,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
             } else {
                 if (bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED
-                        || bond.getStereo() == IBond.Stereo.UP_OR_DOWN_INVERTED) {
+                    || bond.getStereo() == IBond.Stereo.UP_OR_DOWN_INVERTED) {
                     // turn around atom coding to correct for inv stereo
                     line = formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1, 3);
                     line += formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1, 3);
@@ -580,8 +586,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom atom = container.getAtom(i);
             if (atom.getProperty(CDKConstants.COMMENT) != null
-                    && atom.getProperty(CDKConstants.COMMENT) instanceof String
-                    && !((String) atom.getProperty(CDKConstants.COMMENT)).trim().equals("")) {
+                && atom.getProperty(CDKConstants.COMMENT) instanceof String
+                && !((String) atom.getProperty(CDKConstants.COMMENT)).trim().equals("")) {
                 writer.write("V  ");
                 writer.write(formatMDLInt(i + 1, 3));
                 writer.write(" ");
@@ -702,10 +708,144 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             }
         }
 
+        writeSgroups(container, writer);
+
         // close molecule
         writer.write("M  END");
         writer.newLine();
         writer.flush();
+    }
+
+    private void writeSgroups(IAtomContainer container, BufferedWriter writer) throws IOException {
+        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups == null)
+            return;
+
+        for (List<Sgroup> wrapSgroups : wrap(sgroups, 8)) {
+            // Declare the SGroup type
+            writer.write("M  STY");
+            writer.write(formatMDLInt(wrapSgroups.size(), 3));
+            for (Sgroup sgroup : wrapSgroups) {
+                writer.write(' ');
+                writer.write(formatMDLInt(1 + sgroups.indexOf(sgroup), 3));
+                writer.write(' ');
+                writer.write(sgroup.getType().getKey());
+            }
+            writer.newLine();
+        }
+
+        // Sgroup output is non-compact for now - but valid
+        for (int id = 1; id <= sgroups.size(); id++) {
+            Sgroup sgroup = sgroups.get(id - 1);
+
+            // Sgroup Atom List
+            for (List<IAtom> atoms : wrap(sgroup.getAtoms(), 15)) {
+                writer.write("M  SAL ");
+                writer.write(formatMDLInt(id, 3));
+                writer.write(formatMDLInt(atoms.size(), 3));
+                for (IAtom atom : atoms) {
+                    writer.write(' ');
+                    writer.write(formatMDLInt(1+container.getAtomNumber(atom), 3));
+                }
+                writer.newLine();
+            }
+
+            // Sgroup Bond List
+            for (List<IBond> bonds : wrap(sgroup.getBonds(), 15)) {
+                writer.write("M  SBL ");
+                writer.write(formatMDLInt(id, 3));
+                writer.write(formatMDLInt(bonds.size(), 3));
+                for (IBond bond : bonds) {
+                    writer.write(' ');
+                    writer.write(formatMDLInt(1+container.getBondNumber(bond), 3));
+                }
+                writer.newLine();
+            }
+
+            // Sgroup Parent List
+            for (List<Sgroup> parents : wrap(sgroup.getParents(), 8)) {
+                writer.write("M  SPL");
+                writer.write(formatMDLInt(parents.size(), 3));
+                for (Sgroup parent : parents) {
+                    writer.write(' ');
+                    writer.write(formatMDLInt(id, 3));
+                    writer.write(' ');
+                    writer.write(formatMDLInt(1 + sgroups.indexOf(parent), 3));
+                }
+                writer.newLine();
+            }
+
+            Set<SgroupKey> attributeKeys = sgroup.getAttributeKeys();
+            // TODO order and aggregate attribute keys
+            for (SgroupKey key : attributeKeys) {
+                switch (key) {
+                    case CtabSubScript:
+                        writer.write("M  SMT ");
+                        writer.write(formatMDLInt(id, 3));
+                        writer.write(' ');
+                        writer.write((String) sgroup.getValue(key));
+                        writer.newLine();
+                        break;
+                    case CtabBracket:
+                        final List<SgroupBracket> brackets = sgroup.getValue(key);
+                        for (SgroupBracket bracket : brackets) {
+                            writer.write("M  SDI ");
+                            writer.write(formatMDLInt(id, 3));
+                            writer.write(formatMDLInt(4, 3));
+                            writer.write(formatMDLFloat((float) bracket.getFirstPoint().x));
+                            writer.write(formatMDLFloat((float) bracket.getFirstPoint().y));
+                            writer.write(formatMDLFloat((float) bracket.getSecondPoint().x));
+                            writer.write(formatMDLFloat((float) bracket.getSecondPoint().y));
+                            writer.newLine();
+                        }
+                        break;
+                    case CtabBracketStyle:
+                        writer.write("M  SBT");
+                        writer.write(formatMDLInt(1, 3));
+                        writer.write(' ');
+                        writer.write(formatMDLInt(id, 3));
+                        writer.write(' ');
+                        writer.write(formatMDLInt((int)sgroup.getValue(key), 3));
+                        writer.newLine();
+                        break;
+                    case CtabConnectivity:
+                        writer.write("M  SCN");
+                        writer.write(formatMDLInt(1, 3));
+                        writer.write(' ');
+                        writer.write(formatMDLInt(id, 3));
+                        writer.write(' ');
+                        writer.write((String) sgroup.getValue(key));
+                        writer.newLine();
+                        break;
+                    case CtabSubType:
+                        writer.write("M  SST");
+                        writer.write(formatMDLInt(1, 3));
+                        writer.write(' ');
+                        writer.write(formatMDLInt(id, 3));
+                        writer.write(' ');
+                        writer.write((String) sgroup.getValue(key));
+                        writer.newLine();
+                        break;
+                }
+            }
+
+        }
+    }
+
+    private <T> List<List<T>> wrap(Collection<T> set, int lim) {
+        List<List<T>> wrapped = new ArrayList<>();
+        List<T> list = new ArrayList<T>(set);
+        if (set.size() <= lim) {
+            if (!list.isEmpty())
+             wrapped.add(list);
+        } else {
+            int i = 0;
+            for (; (i + lim) < set.size(); i += lim) {
+                wrapped.add(list.subList(i, i + lim));
+            }
+            wrapped.add(list.subList(i, list.size()));
+        }
+        return wrapped;
     }
 
     private void writeRadicalPattern(Iterator<Map.Entry<Integer, SPIN_MULTIPLICITY>> iterator, int i)
@@ -725,9 +865,9 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * Formats an integer to fit into the connection table and changes it
      * to a String.
      *
-     * @param   i  The int to be formated
-     * @param   l  Length of the String
-     * @return     The String to be written into the connectiontable
+     * @param i The int to be formated
+     * @param l Length of the String
+     * @return The String to be written into the connectiontable
      */
     protected static String formatMDLInt(int i, int l) {
         String s = "", fs = "";
@@ -748,8 +888,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * Formats a float to fit into the connectiontable and changes it
      * to a String.
      *
-     * @param   fl  The float to be formated
-     * @return      The String to be written into the connectiontable
+     * @param fl The float to be formated
+     * @return The String to be written into the connectiontable
      */
     protected static String formatMDLFloat(float fl) {
         String s = "", fs = "";
@@ -771,9 +911,9 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     /**
      * Formats a String to fit into the connectiontable.
      *
-     * @param   s    The String to be formated
-     * @param   le   The length of the String
-     * @return       The String to be written in the connectiontable
+     * @param s  The String to be formated
+     * @param le The length of the String
+     * @return The String to be written in the connectiontable
      */
     protected static String formatMDLString(String s, int le) {
         s = s.trim();
@@ -792,11 +932,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      */
     private void initIOSettings() {
         forceWriteAs2DCoords = addSetting(new BooleanIOSetting("ForceWriteAs2DCoordinates", IOSetting.Importance.LOW,
-                "Should coordinates always be written as 2D?", "false"));
+                                                               "Should coordinates always be written as 2D?", "false"));
         writeAromaticBondTypes = addSetting(new BooleanIOSetting("WriteAromaticBondTypes", IOSetting.Importance.LOW,
-                "Should aromatic bonds be written as bond type 4?", "false"));
+                                                                 "Should aromatic bonds be written as bond type 4?", "false"));
         writeQueryFormatValencies = addSetting(new BooleanIOSetting("WriteQueryFormatValencies",
-                IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
+                                                                    IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
     }
 
     public void customizeJob() {
