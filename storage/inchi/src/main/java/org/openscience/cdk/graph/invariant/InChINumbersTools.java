@@ -104,7 +104,10 @@ public class InChINumbersTools {
         int label = 1;
 
         if ((index = aux.indexOf("/R:")) >= 0) { // reconnected metal numbers
-            String[] baseNumbers = aux.substring(index + 8, aux.indexOf('/', index + 8)).split(";");
+            int endIndex = aux.indexOf('/', index + 8);
+            if (endIndex<0)
+                endIndex = aux.length();
+            String[] baseNumbers = aux.substring(index + 8, endIndex).split(";");
             first = new int[baseNumbers.length];
             Arrays.fill(first, -1);
             for (int i = 0; i < baseNumbers.length; i++) {
