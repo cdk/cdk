@@ -786,6 +786,16 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write((String) sgroup.getValue(key));
                         writer.newLine();
                         break;
+                    case CtabExpansion:
+                        final boolean expanded = sgroup.getValue(key);
+                        if (expanded) {
+                            writer.write("M  SDS EXP");
+                            writer.write(formatMDLInt(1, 3));
+                            writer.write(' ');
+                            writer.write(formatMDLInt(id, 3));
+                            writer.newLine();
+                        }
+                        break;
                     case CtabBracket:
                         final List<SgroupBracket> brackets = sgroup.getValue(key);
                         for (SgroupBracket bracket : brackets) {

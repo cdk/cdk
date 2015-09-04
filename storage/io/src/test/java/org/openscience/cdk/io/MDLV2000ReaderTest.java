@@ -1605,6 +1605,31 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+    @Test
+    public void testSgroupExpandedAbbreviation() throws Exception {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/triphenyl-phosphate-expanded.mol"))) {
+            IAtomContainer container = mdlr.read(new AtomContainer());
+            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            assertNotNull(sgroups);
+            assertThat(sgroups.size(), is(3));
+            // first sgroup
+            Sgroup sgroup = sgroups.get(0);
+            assertThat(sgroup.getType(), is(SgroupType.CtabAbbreviation));
+            assertThat(sgroup.getSubscript(), is("Ph"));
+            assertNotNull(sgroup.getValue(SgroupKey.CtabExpansion));
+            // second sgroup
+            sgroup = sgroups.get(1);
+            assertThat(sgroup.getType(), is(SgroupType.CtabAbbreviation));
+            assertThat(sgroup.getSubscript(), is("Ph"));
+            assertNotNull(sgroup.getValue(SgroupKey.CtabExpansion));
+            // third sgroup
+            sgroup = sgroups.get(2);
+            assertThat(sgroup.getType(), is(SgroupType.CtabAbbreviation));
+            assertThat(sgroup.getSubscript(), is("Ph"));
+            assertNotNull(sgroup.getValue(SgroupKey.CtabExpansion));
+        }
+    }
+
     @Test(expected = CDKException.class)
     public void testSgroupInvalidConnectInStrictMode() throws Exception {
         try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru-bad-scn.mol"))) {
