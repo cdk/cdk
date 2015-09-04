@@ -1080,6 +1080,22 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     sgroup.putValue(SgroupKey.CtabBracketStyle, readMolfileInt(line, 10));
                     break;
 
+                // Sgroup Expansion
+                // M  SDS EXPn15 sss ...
+                // sss: Sgroup index of expanded abbreviation Sgroups
+                case M_SDS:
+
+                    if ("EXP".equals(line.substring(7, 10))) {
+                        count = readMolfileInt(line, 10);
+                        for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4) {
+                            sgroup = ensureSgroup(sgroups, readMolfileInt(line, st));
+                            sgroup.putValue(SgroupKey.CtabExpansion, true);
+                        }
+                    } else if (mode == Mode.STRICT) {
+                        handleError("Expected EXP to follow SDS tag");
+                    }
+                    break;
+
                 // M  END
                 //
                 // This entry goes at the end of the properties block and is required for molfiles which contain a
