@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -42,6 +43,9 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -50,8 +54,10 @@ import java.awt.Font;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
@@ -148,7 +154,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             waveSections = new WaveSpacing(), fancyBoldWedges = new FancyBoldWedges(),
             fancyHashedWedges = new FancyHashedWedges(), highlighting = new Highlighting(),
             glowWidth = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
-            annFontSize = new AnnotationFontScale();
+            annFontSize = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
+            sgroupFontScale = new SgroupFontScale();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -173,6 +180,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         final SymbolVisibility visibility = parameters.get(Visibility.class);
         final IAtomColorer coloring = parameters.get(AtomColor.class);
         final Color annotationColor = parameters.get(AnnotationColor.class);
+        final Color foreground = coloring.getAtomColor(container.getBuilder().newInstance(IAtom.class, "C"));
+
 
         // the stroke width is based on the font. a better method is needed to get
         // the exact font stroke but for now we use the width of the pipe character.
@@ -183,10 +192,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         AtomSymbol[] symbols = generateAtomSymbols(container, visibility, parameters, annotations, stroke);
         IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke,
-                font, annotations);
+                                                                               font, annotations);
 
         Rectangle2D bounds = new Rectangle2D.Double(container.getAtom(0).getPoint2d().x, container.getAtom(0)
-                .getPoint2d().y, 0, 0);
+                                                                                                  .getPoint2d().y, 0, 0);
 
         final HighlightStyle style = parameters.get(Highlighting.class);
         final double glowWidth = parameters.get(OuterGlowWidth.class);
@@ -247,6 +256,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
         }
 
+        // Add the Sgroups display elements to the front layer
+        IRenderingElement sgroups = StandardSgroupGenerator.generate(parameters, stroke, font, foreground, container);
+        frontLayer.add(sgroups);
+        updateBounds(bounds, sgroups);
+
         // ensure annotations are included in the bound calculation
         for (IRenderingElement element : annotations) {
             if (element instanceof GeneralPath)
@@ -277,11 +291,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @return generated atom symbols (can contain null)
      */
     private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility,
-            RendererModel parameters, ElementGroup annotations, double stroke) {
+                                             RendererModel parameters, ElementGroup annotations, double stroke) {
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
         final double annDist = parameters.get(AnnotationDistance.class)
-                * (parameters.get(BasicSceneGenerator.BondLength.class) / scale);
+                               * (parameters.get(BasicSceneGenerator.BondLength.class) / scale);
         final double annScale = (1 / scale) * parameters.get(AnnotationFontScale.class);
         final Color annColor = parameters.get(AnnotationColor.class);
         final double halfStroke = stroke / 2;
@@ -399,7 +413,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
                 hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
-                annCol, annDist, annFontSize);
+                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale);
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {
@@ -601,6 +615,32 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     static boolean isWedged(IBond bond) {
         return (bond.getStereo() == IBond.Stereo.UP || bond.getStereo() == IBond.Stereo.DOWN
                 || bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED);
+    }
+
+    /**
+     * Generic bounds update given a root element.
+     *
+     * @param bounds the current bounds of the diagram
+     * @param root the root rendering element (normally ElementGroup)
+     */
+    private static void updateBounds(Rectangle2D bounds, IRenderingElement root) {
+        Deque<IRenderingElement> elements = new ArrayDeque<>();
+        elements.push(root);
+        while (!elements.isEmpty()) {
+            IRenderingElement element = elements.poll();
+            if (element instanceof GeneralPath) {
+                updateBounds(bounds, (GeneralPath) element);
+            }
+            else if (element instanceof LineElement) {
+                LineElement lineElem = (LineElement) element;
+                updateBounds(bounds, lineElem.firstPointX, lineElem.firstPointY);
+                updateBounds(bounds, lineElem.secondPointX, lineElem.secondPointY);
+            }
+            else if (element instanceof ElementGroup) {
+                for (IRenderingElement child : (ElementGroup) element)
+                    elements.add(child);
+            }
+        }
     }
 
     /**
@@ -881,6 +921,30 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         @Override
         public Double getDefault() {
             return 0.5;
+        }
+    }
+
+    /**
+     * How "deep" are brackets drawn. The value is relative to bond length.
+     */
+    public static final class SgroupBracketDepth extends AbstractGeneratorParameter<Double> {
+
+        /** @inheritDoc */
+        @Override
+        public Double getDefault() {
+            return 0.18;
+        }
+    }
+
+    /**
+     * Scale Sgroup annotations relative to the normal font size (atom symbol).
+     */
+    public static final class SgroupFontScale extends AbstractGeneratorParameter<Double> {
+
+        /** @inheritDoc */
+        @Override
+        public Double getDefault() {
+            return 0.6;
         }
     }
 }
