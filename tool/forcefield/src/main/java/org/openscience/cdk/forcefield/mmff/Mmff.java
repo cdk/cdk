@@ -75,9 +75,9 @@ import java.util.Set;
  */
 public class Mmff {
 
-    public static String MMFF_ADJLIST_CACHE = "mmff.adjlist.cache";
-    public static String MMFF_EDGEMAP_CACHE = "mmff.edgemap.cache";
-    public static String MMFF_AROM          = "mmff.arom";
+    private static final String MMFF_ADJLIST_CACHE = "mmff.adjlist.cache";
+    private static final String MMFF_EDGEMAP_CACHE = "mmff.edgemap.cache";
+    private static final String MMFF_AROM          = "mmff.arom";
 
     private final MmffAtomTypeMatcher mmffAtomTyper = new MmffAtomTypeMatcher();
     private final MmffParamSet        mmffParamSet  = MmffParamSet.INSTANCE;

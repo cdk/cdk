@@ -125,7 +125,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
             }
 
             for (IAtom a : org.atoms()) {
-                if (atom.getImplicitHydrogenCount() == null || atom.getImplicitHydrogenCount() != 0) {
+                if (a.getImplicitHydrogenCount() == null || a.getImplicitHydrogenCount() != 0) {
                     logger.error("Hydrogens must be explict for MMFF charge calculation");
                     return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                                                new DoubleResult(Double.NaN), NAMES);
