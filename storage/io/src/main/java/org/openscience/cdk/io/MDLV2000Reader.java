@@ -1096,6 +1096,27 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                     break;
 
+                // Multiple Group Parent Atom List [Sgroup]
+                // M SPA sssn15 aaa ...
+                // aaa: Atoms in paradigmatic repeating unit of multiple group sss
+                // Note: To ensure that all current molfile readers consistently
+                //       interpret chemical structures, multiple groups are written
+                //       in their fully expanded state to the molfile. The M SPA atom
+                //       list is a subset of the full atom list that is defined by the
+                //       Sgroup Atom List M SAL entry.
+                case M_SPA:
+                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
+                    count  = readMolfileInt(line, 10);
+                    Set<IAtom> parentAtomList = sgroup.getValue(SgroupKey.CtabParentAtomList);
+                    if (parentAtomList == null) {
+                        sgroup.putValue(SgroupKey.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
+                    }
+                    for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4) {
+                        index = readMolfileInt(line, st) - 1;
+                        parentAtomList.add(container.getAtom(offset + index));
+                    }
+                    break;
+
                 // M  END
                 //
                 // This entry goes at the end of the properties block and is required for molfiles which contain a
