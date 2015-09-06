@@ -24,7 +24,12 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.geometry.GeometryUtil;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
@@ -33,15 +38,24 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
+/**
+ * Internal class, call exclusively from StandardGenerator - separate purely for code organisation only.
+ */
 final class StandardSgroupGenerator {
 
     public static final double EQUIV_THRESHOLD = 0.1;
@@ -68,6 +82,64 @@ final class StandardSgroupGenerator {
         return new StandardSgroupGenerator(parameters, stroke, font, foreground).generateSgroups(container);
     }
 
+
+    static void prepareDisplayShortcuts(IAtomContainer container, Map<IAtom, String> symbolRemap) {
+
+        List<Sgroup> sgroups    = container.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> toContract = new ArrayList<>();
+
+        if (sgroups == null || sgroups.isEmpty())
+            return;
+
+        // select abbreviations that should be contracted
+        for (Sgroup sgroup : sgroups) {
+            if (sgroup.getType() != SgroupType.CtabAbbreviation)
+                continue;
+            Boolean expansion = sgroup.getValue(SgroupKey.CtabExpansion);
+            // abbreviation is displayed as expanded
+            if (expansion != null && expansion == Boolean.TRUE)
+                continue;
+            // no or empty label, skip it
+            if (sgroup.getSubscript() == null || sgroup.getSubscript().isEmpty())
+                continue;
+            toContract.add(sgroup);
+        }
+
+        // Perform the contraction, we only do zero and single attachment for now
+        // but could be generalised to handle 2/3 attachments (e.g. PEG linkers)
+        final IChemObjectBuilder builder = container.getBuilder();
+        for (Sgroup sgroup : toContract) {
+
+            final Set<IBond> crossing = sgroup.getBonds();
+            final Set<IAtom> atoms = sgroup.getAtoms();
+
+            // only do 0,1 attachments for now
+            if (crossing.size() > 1)
+                continue;
+
+            for (IAtom atom : atoms) {
+                StandardGenerator.hide(atom);
+            }
+            for (IBond bond : container.bonds()) {
+                if (atoms.contains(bond.getAtom(0)) ||
+                    atoms.contains(bond.getAtom(1)))
+                    StandardGenerator.hide(bond);
+            }
+            for (IBond bond : crossing) {
+                StandardGenerator.unhide(bond);
+                IAtom a1 = bond.getAtom(0);
+                IAtom a2 = bond.getAtom(1);
+                StandardGenerator.unhide(a1);
+                if (atoms.contains(a1))
+                    symbolRemap.put(a1, sgroup.getSubscript());
+                StandardGenerator.unhide(a2);
+                if (atoms.contains(a2))
+                    symbolRemap.put(a2, sgroup.getSubscript());
+            }
+        }
+
+    }
+
     /**
      * Generate the Sgroup elements for the provided atom contains.
      *
@@ -85,6 +157,9 @@ final class StandardSgroupGenerator {
         for (Sgroup sgroup : sgroups) {
 
             switch (sgroup.getType()) {
+                case CtabAbbreviation:
+                    result.add(generateAbbreviationSgroup(sgroup));
+                    break;
                 case CtabAnyPolymer:
                 case CtabMonomer:
                 case CtabCrossLink:
@@ -103,6 +178,21 @@ final class StandardSgroupGenerator {
         }
 
         return result;
+    }
+
+    private IRenderingElement generateAbbreviationSgroup(Sgroup sgroup) {
+        String label = sgroup.getSubscript();
+        // already handled by symbol remapping
+        if (sgroup.getBonds().size() > 0 || label == null || label.isEmpty()) {
+            return new ElementGroup();
+        }
+        // we're showing a label where there were no atoms before, we put it in the
+        // middle of all of those which were hidden
+        final Point2d labelCoords = GeometryUtil.get2DCenter(sgroup.getAtoms());
+        return GeneralPath.shapeOf(makeText(label,
+                                            labelCoords,
+                                            new Vector2d(0,0), 1).getOutline(),
+                                   foreground);
     }
 
     /**
@@ -222,19 +312,19 @@ final class StandardSgroupGenerator {
         // subscript/superscript suffix annotation
         if (subscriptSuffix != null && !subscriptSuffix.isEmpty()) {
             TextOutline subscriptOutline = leftAlign(makeText(subscriptSuffix.toLowerCase(Locale.ROOT),
-                                                              subSufPnt, subpvec));
+                                                              subSufPnt, subpvec, labelScale));
             result.add(GeneralPath.shapeOf(subscriptOutline.getOutline(), foreground));
         }
         if (superscriptSuffix != null && !superscriptSuffix.isEmpty()) {
             TextOutline superscriptOutline = leftAlign(makeText(superscriptSuffix.toLowerCase(Locale.ROOT),
-                                                                supSufPnt, subpvec));
+                                                                supSufPnt, subpvec, labelScale));
             result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
         }
 
         return result;
     }
 
-    private TextOutline makeText(String subscriptSuffix, Point2d b1p2, Vector2d b1pvec) {
+    private TextOutline makeText(String subscriptSuffix, Point2d b1p2, Vector2d b1pvec, double labelScale) {
         return StandardGenerator.generateAnnotation(b1p2,
                                                     subscriptSuffix,
                                                     VecmathUtil.negate(b1pvec), 1,
