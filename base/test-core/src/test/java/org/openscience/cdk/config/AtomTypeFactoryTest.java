@@ -333,7 +333,8 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         Assert.assertNotNull("Could not find the atom type list CML source", ins);
 
         if (System.getProperty("java.version").indexOf("1.6") != -1
-                || System.getProperty("java.version").indexOf("1.7") != -1) {
+            || System.getProperty("java.version").indexOf("1.7") != -1
+            || System.getProperty("java.version").indexOf("1.8") != -1) {
 
             InputStream cmlSchema = new FileInputStream(tmpCMLSchema);
             Assert.assertNotNull("Could not find the CML schema", cmlSchema);
