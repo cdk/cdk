@@ -164,6 +164,13 @@ public class InChINumbersToolsTest extends CDKTestCase {
         assertThat(InChINumbersTools.getUSmilesNumbers(container), is(new long[]{2, 1, 3, 4, 5}));
     }
 
+    @Test
+    public void bug1370() throws Exception {
+        IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance())
+                .parseSmiles("O=[Bi]Cl");
+        assertThat(InChINumbersTools.getUSmilesNumbers(container), is(new long[]{3, 1, 2}));
+    }
+
     static IAtomContainer mock(int nAtoms) {
         IAtomContainer container = Mockito.mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(nAtoms);
