@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -43,9 +42,6 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
-import org.openscience.cdk.sgroup.Sgroup;
-import org.openscience.cdk.sgroup.SgroupBracket;
-import org.openscience.cdk.sgroup.SgroupKey;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -121,6 +117,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * }</pre>
      */
     public final static String          ITALIC_DISPLAY_PREFIX = "std.itl:";
+
+    /**
+     * Marks atoms and bonds as being hidden from the actual depiction. Set this
+     * property to non-null to indicate this.
+     */
+    public final static String          HIDDEN = "stdgen.hidden";
 
     private final Font                  font;
     private final StandardAtomGenerator atomGenerator;
@@ -209,6 +211,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             IBond bond = container.getBond(i);
 
+            if (isHidden(bond))
+                continue;
+
             Color highlight = getHighlightColor(bond, parameters);
             if (highlight != null && style == HighlightStyle.OuterGlow) {
                 backLayer.add(outerGlow(bondElements[i], highlight, glowWidth, stroke));
@@ -223,6 +228,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         // convert the atom symbols to IRenderingElements
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom atom = container.getAtom(i);
+
+            if (isHidden(atom))
+                continue;
 
             if (symbols[i] == null) {
                 updateBounds(bounds, atom.getPoint2d().x, atom.getPoint2d().y);
@@ -305,6 +313,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         for (int i = 0; i < container.getAtomCount(); i++) {
 
             final IAtom atom = container.getAtom(i);
+
             final List<IBond> bonds = container.getConnectedBondsList(atom);
             final List<IAtom> neighbors = container.getConnectedAtomsList(atom);
 
@@ -699,6 +708,31 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         double minY = Math.min(y, bounds.getMinY());
         double maxY = Math.max(y, bounds.getMaxY());
         bounds.setRect(minX, minY, maxX - minX, maxY - minY);
+    }
+
+    /**
+     * Is the chem object hidden?
+     * @param chemobj a chem object
+     * @return whether it is hidden
+     */
+    static boolean isHidden(IChemObject chemobj) {
+        return Boolean.TRUE.equals(chemobj.getProperty(HIDDEN));
+    }
+
+    /**
+     * Hide the specified chemobj.
+     * @param chemobj a chem obj (atom or bond) to hide
+     */
+    static void hide(IChemObject chemobj) {
+        chemobj.setProperty(HIDDEN, true);
+    }
+
+    /**
+     * Unhide the specified chemobj.
+     * @param chemobj a chem obj (atom or bond) to unhide
+     */
+    static void unhide(IChemObject chemobj) {
+        chemobj.setProperty(HIDDEN, false);
     }
 
     /**
