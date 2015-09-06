@@ -28,6 +28,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 import org.openscience.cdk.renderer.color.IAtomColorer;
@@ -54,7 +56,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
 
@@ -177,6 +181,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         if (container.getAtomCount() == 0) return new ElementGroup();
 
+        Map<IAtom,String> symbolRemap = new HashMap<>();
+        StandardSgroupGenerator.prepareDisplayShortcuts(container, symbolRemap);
+
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
 
         final SymbolVisibility visibility = parameters.get(Visibility.class);
@@ -192,12 +199,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         ElementGroup annotations = new ElementGroup();
 
-        AtomSymbol[] symbols = generateAtomSymbols(container, visibility, parameters, annotations, stroke);
+        AtomSymbol[] symbols = generateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, stroke);
         IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke,
                                                                                font, annotations);
 
-        Rectangle2D bounds = new Rectangle2D.Double(container.getAtom(0).getPoint2d().x, container.getAtom(0)
-                                                                                                  .getPoint2d().y, 0, 0);
+        Rectangle2D bounds = null;
 
         final HighlightStyle style = parameters.get(Highlighting.class);
         final double glowWidth = parameters.get(OuterGlowWidth.class);
@@ -233,7 +239,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 continue;
 
             if (symbols[i] == null) {
-                updateBounds(bounds, atom.getPoint2d().x, atom.getPoint2d().y);
+                bounds = updateBounds(bounds, atom.getPoint2d().x, atom.getPoint2d().y);
                 continue;
             }
 
@@ -244,7 +250,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             ElementGroup symbolElements = new ElementGroup();
             for (Shape shape : symbols[i].getOutlines()) {
                 GeneralPath path = GeneralPath.shapeOf(shape, color);
-                updateBounds(bounds, path);
+                bounds = updateBounds(bounds, path);
                 symbolElements.add(path);
             }
 
@@ -267,12 +273,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         // Add the Sgroups display elements to the front layer
         IRenderingElement sgroups = StandardSgroupGenerator.generate(parameters, stroke, font, foreground, container);
         frontLayer.add(sgroups);
-        updateBounds(bounds, sgroups);
+        bounds = updateBounds(bounds, sgroups);
 
         // ensure annotations are included in the bound calculation
         for (IRenderingElement element : annotations) {
             if (element instanceof GeneralPath)
-                updateBounds(bounds, (GeneralPath) element);
+                bounds = updateBounds(bounds, (GeneralPath) element);
             else
                 throw new InternalError("Annotation element not included in bounds calculation");
         }
@@ -294,11 +300,13 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * Generate the intermediate {@link AtomSymbol} instances.
      *
      * @param container  structure representation
+     * @param symbolRemap use alternate symbols (used for Sgroup shortcuts)
      * @param visibility defines whether an atom symbol is displayed
-     * @param parameters render model parameters
-     * @return generated atom symbols (can contain null)
+     * @param parameters render model parameters   @return generated atom symbols (can contain null)
      */
-    private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility,
+    private AtomSymbol[] generateAtomSymbols(IAtomContainer container,
+                                             Map<IAtom, String> symbolRemap,
+                                             SymbolVisibility visibility,
                                              RendererModel parameters, ElementGroup annotations, double stroke) {
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
@@ -309,29 +317,43 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         final double halfStroke = stroke / 2;
 
         AtomSymbol[] symbols = new AtomSymbol[container.getAtomCount()];
+        IChemObjectBuilder builder = container.getBuilder();
 
         for (int i = 0; i < container.getAtomCount(); i++) {
 
             final IAtom atom = container.getAtom(i);
 
-            final List<IBond> bonds = container.getConnectedBondsList(atom);
+            final List<IBond> bonds     = container.getConnectedBondsList(atom);
             final List<IAtom> neighbors = container.getConnectedAtomsList(atom);
 
-            final List<Vector2d> auxVectors = new ArrayList<Vector2d>(1);
+            int visibleNeighbourCount = 0;
+            for (IBond bond : bonds) {
+                if (!isHidden(bond))
+                    visibleNeighbourCount++;
+            }
+
+            final List<Vector2d> auxVectors = new ArrayList<>(1);
+            boolean remapped = symbolRemap.containsKey(atom);
 
             // only generate if the symbol is visible
-            if (visibility.visible(atom, bonds, parameters)) {
+            if (visibility.visible(atom, bonds, parameters) || remapped) {
 
                 final HydrogenPosition hPosition = HydrogenPosition.position(atom, neighbors);
 
                 if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() > 0)
                     auxVectors.add(hPosition.vector());
 
-                symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
+                if (remapped) {
+                    IPseudoAtom tmp = builder.newInstance(IPseudoAtom.class, symbolRemap.get(atom));
+                    tmp.setPoint2d(atom.getPoint2d());
+                    symbols[i] = atomGenerator.generateSymbol(container, tmp, hPosition);
+                } else {
+                    symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
+                }
 
                 // defines how the element is aligned on the atom point, when
                 // aligned to the left, the first character 'e.g. Cl' is used.
-                if (neighbors.size() == 1) {
+                if (visibleNeighbourCount == 1) {
                     if (hPosition == Left)
                         symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
                     else
@@ -356,7 +378,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
                 final Vector2d vector = newAtomAnnotationVector(atom, bonds, auxVectors);
                 final TextOutline annOutline = generateAnnotation(atom.getPoint2d(), label, vector, annDist
-                        + strokeAdjust, annScale, font, symbols[i]);
+                                                                                                    + strokeAdjust, annScale, font, symbols[i]);
 
                 // the AtomSymbol may migrate during bond generation and therefore the annotation
                 // needs to be tied to the symbol. If no symbol is available the annotation is
@@ -632,24 +654,25 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param bounds the current bounds of the diagram
      * @param root the root rendering element (normally ElementGroup)
      */
-    private static void updateBounds(Rectangle2D bounds, IRenderingElement root) {
+    private static Rectangle2D updateBounds(Rectangle2D bounds, IRenderingElement root) {
         Deque<IRenderingElement> elements = new ArrayDeque<>();
         elements.push(root);
         while (!elements.isEmpty()) {
             IRenderingElement element = elements.poll();
             if (element instanceof GeneralPath) {
-                updateBounds(bounds, (GeneralPath) element);
+                bounds = updateBounds(bounds, (GeneralPath) element);
             }
             else if (element instanceof LineElement) {
                 LineElement lineElem = (LineElement) element;
-                updateBounds(bounds, lineElem.firstPointX, lineElem.firstPointY);
-                updateBounds(bounds, lineElem.secondPointX, lineElem.secondPointY);
+                bounds = updateBounds(bounds, lineElem.firstPointX, lineElem.firstPointY);
+                bounds = updateBounds(bounds, lineElem.secondPointX, lineElem.secondPointY);
             }
             else if (element instanceof ElementGroup) {
                 for (IRenderingElement child : (ElementGroup) element)
                     elements.add(child);
             }
         }
+        return bounds;
     }
 
     /**
@@ -658,7 +681,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param bounds bounding box
      * @param path   the path
      */
-    private static void updateBounds(Rectangle2D bounds, GeneralPath path) {
+    private static Rectangle2D updateBounds(Rectangle2D bounds, GeneralPath path) {
 
         double minX = Integer.MAX_VALUE;
         double maxX = Integer.MIN_VALUE;
@@ -691,8 +714,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             maxY = Math.max(maxY, y);
         }
 
-        updateBounds(bounds, minX, minY);
-        updateBounds(bounds, maxX, maxY);
+        bounds = updateBounds(bounds, minX, minY);
+        bounds = updateBounds(bounds, maxX, maxY);
+        return bounds;
     }
 
     /**
@@ -702,12 +726,17 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param x      x-axis coordinate
      * @param y      y-axis coordinate
      */
-    private static void updateBounds(Rectangle2D bounds, double x, double y) {
-        double minX = Math.min(x, bounds.getMinX());
-        double maxX = Math.max(x, bounds.getMaxX());
-        double minY = Math.min(y, bounds.getMinY());
-        double maxY = Math.max(y, bounds.getMaxY());
-        bounds.setRect(minX, minY, maxX - minX, maxY - minY);
+    private static Rectangle2D updateBounds(Rectangle2D bounds, double x, double y) {
+        if (bounds == null) {
+            return new Rectangle2D.Double(x, y, 0, 0);
+        } else {
+            double minX = Math.min(x, bounds.getMinX());
+            double maxX = Math.max(x, bounds.getMaxX());
+            double minY = Math.min(y, bounds.getMinY());
+            double maxY = Math.max(y, bounds.getMaxY());
+            bounds.setRect(minX, minY, maxX - minX, maxY - minY);
+            return bounds;
+        }
     }
 
     /**
