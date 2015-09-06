@@ -85,59 +85,82 @@ final class StandardSgroupGenerator {
 
     static void prepareDisplayShortcuts(IAtomContainer container, Map<IAtom, String> symbolRemap) {
 
-        List<Sgroup> sgroups    = container.getProperty(CDKConstants.CTAB_SGROUPS);
-        List<Sgroup> toContract = new ArrayList<>();
-
+        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null || sgroups.isEmpty())
             return;
 
         // select abbreviations that should be contracted
         for (Sgroup sgroup : sgroups) {
-            if (sgroup.getType() != SgroupType.CtabAbbreviation)
-                continue;
-            Boolean expansion = sgroup.getValue(SgroupKey.CtabExpansion);
-            // abbreviation is displayed as expanded
-            if (expansion != null && expansion == Boolean.TRUE)
-                continue;
-            // no or empty label, skip it
-            if (sgroup.getSubscript() == null || sgroup.getSubscript().isEmpty())
-                continue;
-            toContract.add(sgroup);
+            if (sgroup.getType() == SgroupType.CtabAbbreviation) {
+                Boolean expansion = sgroup.getValue(SgroupKey.CtabExpansion);
+                // abbreviation is displayed as expanded
+                if (expansion != null && expansion == Boolean.TRUE)
+                    continue;
+                // no or empty label, skip it
+                if (sgroup.getSubscript() == null || sgroup.getSubscript().isEmpty())
+                    continue;
+                contractAbbreviation(container, symbolRemap, sgroup);
+            }
+            else if (sgroup.getType() == SgroupType.CtabMultipleGroup) {
+                hideMultipleParts(container, sgroup);
+            }
         }
+    }
 
+    private static void hideMultipleParts(IAtomContainer container, Sgroup sgroup) {
+
+        final Set<IBond> crossing = sgroup.getBonds();
+        final Set<IAtom> atoms = sgroup.getAtoms();
+        final Set<IAtom> parentAtoms = sgroup.getValue(SgroupKey.CtabParentAtomList);
+
+        for (IBond bond : container.bonds()) {
+            if (parentAtoms.contains(bond.getAtom(0)) && parentAtoms.contains(bond.getAtom(1)))
+                continue;
+            if (atoms.contains(bond.getAtom(0)) || atoms.contains(bond.getAtom(1)))
+                StandardGenerator.hide(bond);
+        }
+        for (IAtom atom : atoms) {
+            if (!parentAtoms.contains(atom))
+                StandardGenerator.hide(atom);
+        }
+        for (IBond bond : crossing) {
+            StandardGenerator.unhide(bond);
+        }
+    }
+
+    private static void contractAbbreviation(IAtomContainer container, Map<IAtom, String> symbolRemap,
+                                             Sgroup sgroup) {
         // Perform the contraction, we only do zero and single attachment for now
         // but could be generalised to handle 2/3 attachments (e.g. PEG linkers)
         final IChemObjectBuilder builder = container.getBuilder();
-        for (Sgroup sgroup : toContract) {
 
-            final Set<IBond> crossing = sgroup.getBonds();
-            final Set<IAtom> atoms = sgroup.getAtoms();
 
-            // only do 0,1 attachments for now
-            if (crossing.size() > 1)
-                continue;
+        final Set<IBond> crossing = sgroup.getBonds();
+        final Set<IAtom> atoms = sgroup.getAtoms();
 
-            for (IAtom atom : atoms) {
-                StandardGenerator.hide(atom);
-            }
-            for (IBond bond : container.bonds()) {
-                if (atoms.contains(bond.getAtom(0)) ||
-                    atoms.contains(bond.getAtom(1)))
-                    StandardGenerator.hide(bond);
-            }
-            for (IBond bond : crossing) {
-                StandardGenerator.unhide(bond);
-                IAtom a1 = bond.getAtom(0);
-                IAtom a2 = bond.getAtom(1);
-                StandardGenerator.unhide(a1);
-                if (atoms.contains(a1))
-                    symbolRemap.put(a1, sgroup.getSubscript());
-                StandardGenerator.unhide(a2);
-                if (atoms.contains(a2))
-                    symbolRemap.put(a2, sgroup.getSubscript());
-            }
+        // only do 0,1 attachments for now
+        if (crossing.size() > 1)
+            return;
+
+        for (IAtom atom : atoms) {
+            StandardGenerator.hide(atom);
         }
-
+        for (IBond bond : container.bonds()) {
+            if (atoms.contains(bond.getAtom(0)) ||
+                atoms.contains(bond.getAtom(1)))
+                StandardGenerator.hide(bond);
+        }
+        for (IBond bond : crossing) {
+            StandardGenerator.unhide(bond);
+            IAtom a1 = bond.getAtom(0);
+            IAtom a2 = bond.getAtom(1);
+            StandardGenerator.unhide(a1);
+            if (atoms.contains(a1))
+                symbolRemap.put(a1, sgroup.getSubscript());
+            StandardGenerator.unhide(a2);
+            if (atoms.contains(a2))
+                symbolRemap.put(a2, sgroup.getSubscript());
+        }
     }
 
     /**
@@ -160,6 +183,9 @@ final class StandardSgroupGenerator {
                 case CtabAbbreviation:
                     result.add(generateAbbreviationSgroup(sgroup));
                     break;
+                case CtabMultipleGroup:
+                    result.add(generateMultipleSgroup(sgroup));
+                    break;
                 case CtabAnyPolymer:
                 case CtabMonomer:
                 case CtabCrossLink:
@@ -178,6 +204,18 @@ final class StandardSgroupGenerator {
         }
 
         return result;
+    }
+
+    private IRenderingElement generateMultipleSgroup(Sgroup sgroup) {
+        // just draw the brackets - multiplied group parts have already been hidden in prep phase
+        List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+        if (brackets != null) {
+            return generateSgroupBrackets(sgroup, brackets,
+                                          (String) sgroup.getValue(SgroupKey.CtabSubScript),
+                                          null);
+        } else {
+            return new ElementGroup();
+        }
     }
 
     private IRenderingElement generateAbbreviationSgroup(Sgroup sgroup) {
