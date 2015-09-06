@@ -66,6 +66,7 @@ import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 import static org.openscience.cdk.renderer.generators.BasicSceneGenerator.BondLength;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.BondSeparation;
+import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.HIDDEN;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.HashSpacing;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.WaveSpacing;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
@@ -184,7 +185,10 @@ final class StandardBondGenerator {
                 font, stroke);
         IRenderingElement[] elements = new IRenderingElement[container.getBondCount()];
         for (int i = 0; i < container.getBondCount(); i++) {
-            elements[i] = bondGenerator.generate(container.getBond(i));
+            final IBond bond = container.getBond(i);
+            if (!StandardGenerator.isHidden(bond)) {
+                elements[i] = bondGenerator.generate(bond);
+            }
         }
         return elements;
     }
