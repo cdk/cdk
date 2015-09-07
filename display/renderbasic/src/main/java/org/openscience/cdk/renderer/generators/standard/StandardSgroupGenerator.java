@@ -83,6 +83,15 @@ final class StandardSgroupGenerator {
     }
 
 
+    /**
+     * If the molecule has display shortcuts (abbreviations or multiple group sgroups) certain parts
+     * of the structure are hidden from display. This method marks the parts to hide and in the case
+     * of abbreviations, remaps atom symbols. Appart from additional property flags, the molecule
+     * is unchanged by this method.
+     *
+     * @param container molecule input
+     * @param symbolRemap a map that will hold symbol remapping
+     */
     static void prepareDisplayShortcuts(IAtomContainer container, Map<IAtom, String> symbolRemap) {
 
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
@@ -107,6 +116,15 @@ final class StandardSgroupGenerator {
         }
     }
 
+    /**
+     * Hide the repeated atoms and bonds of a multiple group. We hide al atoms that
+     * belong to the group unless they are defined in the parent atom list. Any
+     * bond to those atoms that is not a crossing bond or one connecting atoms in
+     * the parent list is hidden.
+     *
+     * @param container molecule
+     * @param sgroup multiple group display shortcut
+     */
     private static void hideMultipleParts(IAtomContainer container, Sgroup sgroup) {
 
         final Set<IBond> crossing = sgroup.getBonds();
@@ -128,12 +146,16 @@ final class StandardSgroupGenerator {
         }
     }
 
+    /**
+     * Hide the atoms and bonds of a contracted abbreviation. If the abbreviations is attached
+     * we remap the attachment symbol to display the name. If there are no attachments the symbol
+     * we be added later ({@see #generateSgroups}).
+     *
+     * @param container molecule
+     * @param sgroup abbreviation group display shortcut
+     */
     private static void contractAbbreviation(IAtomContainer container, Map<IAtom, String> symbolRemap,
                                              Sgroup sgroup) {
-        // Perform the contraction, we only do zero and single attachment for now
-        // but could be generalised to handle 2/3 attachments (e.g. PEG linkers)
-        final IChemObjectBuilder builder = container.getBuilder();
-
 
         final Set<IBond> crossing = sgroup.getBonds();
         final Set<IAtom> atoms = sgroup.getAtoms();
