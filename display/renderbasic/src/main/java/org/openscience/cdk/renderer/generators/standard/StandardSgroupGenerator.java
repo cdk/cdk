@@ -273,6 +273,39 @@ final class StandardSgroupGenerator {
         }
     }
 
+    private IRenderingElement generateMixtureSgroup(Sgroup sgroup) {
+        // draw the brackets
+        // TODO - mixtures normally have attached Sgroup data
+        // TODO - e.g. COMPONENT_FRACTION, ACTIVITY_TYPE, WEIGHT_PERCENT
+        List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+        if (brackets != null) {
+
+            SgroupType type = sgroup.getType();
+            String subscript = "?";
+            switch (type) {
+                case CtabComponent:
+                    Integer compNum = sgroup.getValue(SgroupKey.CtabComponentNumber);
+                    if (compNum != null)
+                        subscript = "c" + Integer.toString(compNum);
+                    else
+                        subscript = "c";
+                    break;
+                case CtabMixture:
+                    subscript = "mix";
+                    break;
+                case CtabFormulation:
+                    subscript = "f";
+                    break;
+            }
+
+            return generateSgroupBrackets(sgroup, brackets,
+                                          subscript,
+                                          null);
+        } else {
+            return new ElementGroup();
+        }
+    }
+
     private IRenderingElement generateSgroupBrackets(Sgroup sgroup, List<SgroupBracket> brackets,
                                                      String subscriptSuffix, String superscriptSuffix) {
 
