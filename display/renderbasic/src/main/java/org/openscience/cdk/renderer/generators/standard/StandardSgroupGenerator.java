@@ -223,6 +223,10 @@ final class StandardSgroupGenerator {
                 case CtabFormulation:
                     result.add(generateMixtureSgroup(sgroup));
                     break;
+                case CtabGeneric:
+                    // not strictly a polymer but okay to draw as one
+                    result.add(generatePolymerSgroup(sgroup));
+                    break;
             }
         }
 
@@ -268,7 +272,10 @@ final class StandardSgroupGenerator {
         if (brackets != null) {
 
             SgroupType type = sgroup.getType();
+
             String subscript = sgroup.getValue(SgroupKey.CtabSubScript);
+            String connectivity = sgroup.getValue(SgroupKey.CtabConnectivity);
+
             switch (type) {
                 case CtabCopolymer:
                     subscript = "co";
@@ -298,11 +305,17 @@ final class StandardSgroupGenerator {
                 case CtabModification:
                     subscript = "mod";
                     break;
+                case CtabStructureRepeatUnit:
+                    if (subscript == null)
+                        subscript = "n";
+                    if (connectivity == null)
+                        connectivity = "eu";
+                    break;
             }
 
             return generateSgroupBrackets(sgroup, brackets,
                                           subscript,
-                                          (String) sgroup.getValue(SgroupKey.CtabConnectivity));
+                                          connectivity);
         } else {
             return new ElementGroup();
         }
