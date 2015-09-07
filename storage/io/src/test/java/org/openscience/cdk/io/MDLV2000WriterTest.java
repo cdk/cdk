@@ -753,4 +753,17 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             assertThat(output, containsString("M  SPA   1 12"));
         }
     }
+
+    @Test
+    public void sgroupOrderedMixtureRoundTrip() throws Exception {
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-ord-mixture.mol"));
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mdlr.read(new AtomContainer()));
+            String output = sw.toString();
+            assertThat(output, containsString("M  STY  3   1 COM   2 COM   3 FOR"));
+            assertThat(output, containsString("M  SNC  1   1   1"));
+            assertThat(output, containsString("M  SNC  1   2   2"));
+        }
+    }
 }

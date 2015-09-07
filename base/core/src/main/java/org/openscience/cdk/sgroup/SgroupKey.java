@@ -40,5 +40,5 @@ public enum SgroupKey {
     CtabBracket,
     CtabBracketStyle,
     CtabClass,
-    CtabParentAtomList;
+    CtabParentAtomList, CtabComponentNumber;
 }
