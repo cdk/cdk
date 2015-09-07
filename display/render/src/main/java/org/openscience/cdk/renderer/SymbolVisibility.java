@@ -183,7 +183,7 @@ public abstract class SymbolVisibility {
             final double thetaInRad = getAngle(atom, bonds.get(0), bonds.get(1));
             final double thetaInDeg = Math.toDegrees(thetaInRad);
             final double delta = Math.abs(thetaInDeg - 180);
-            return Double.isNaN(delta) || delta < 8;
+            return delta < 8;
         }
 
         /**
