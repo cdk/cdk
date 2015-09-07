@@ -848,6 +848,15 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             }
                             writer.newLine();
                         }
+                    case CtabComponentNumber:
+                        Integer compNumber = sgroup.getValue(key);
+                        writer.write("M  SNC");
+                        writer.write(formatMDLInt(1, 3));
+                        writer.write(' ');
+                        writer.write(formatMDLInt(id, 3));
+                        writer.write(' ');
+                        writer.write(formatMDLInt(compNumber, 3));
+                        writer.newLine();
                         break;
                 }
             }

@@ -1076,8 +1076,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         sgroup.putValue(SgroupKey.CtabBracketStyle,
                                         readMolfileInt(line, st+4));
                     }
-                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
-                    sgroup.putValue(SgroupKey.CtabBracketStyle, readMolfileInt(line, 10));
                     break;
 
                 // Sgroup Expansion
@@ -1114,6 +1112,20 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4) {
                         index = readMolfileInt(line, st) - 1;
                         parentAtomList.add(container.getAtom(offset + index));
+                    }
+                    break;
+
+                // Sgroup Component Numbers [Sgroup]
+                // M  SNCnn8 sss ooo ...
+                // sss: Index of component Sgroup
+                // ooo: Integer component order (1...256). This limit applies only to MACCS-II
+                case M_SNC:
+                    count = readMolfileInt(line, 6);
+                    for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) {
+                        sgroup = ensureSgroup(sgroups,
+                                              readMolfileInt(line, st));
+                        sgroup.putValue(SgroupKey.CtabComponentNumber,
+                                        readMolfileInt(line, st+4));
                     }
                     break;
 
