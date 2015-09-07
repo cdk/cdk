@@ -215,12 +215,13 @@ final class StandardSgroupGenerator {
                 case CtabStructureRepeatUnit:
                 case CtabMer:
                 case CtabGraft:
+                case CtabModification:
                     result.add(generatePolymerSgroup(sgroup));
                     break;
                 case CtabComponent:
                 case CtabMixture:
                 case CtabFormulation:
-                    // Todo
+                    result.add(generateMixtureSgroup(sgroup));
                     break;
             }
         }
@@ -265,8 +266,42 @@ final class StandardSgroupGenerator {
         // draw the brackets
         List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
         if (brackets != null) {
+
+            SgroupType type = sgroup.getType();
+            String subscript = sgroup.getValue(SgroupKey.CtabSubScript);
+            switch (type) {
+                case CtabCopolymer:
+                    subscript = "co";
+                    String subtype = sgroup.getValue(SgroupKey.CtabSubType);
+                    if ("RAN".equals(subtype))
+                        subscript = "ran";
+                    else if ("BLK".equals(subtype))
+                        subscript = "blk";
+                    else if ("ALT".equals(subtype))
+                        subscript = "alt";
+                    break;
+                case CtabCrossLink:
+                    subscript = "xl";
+                    break;
+                case CtabAnyPolymer:
+                    subscript = "any";
+                    break;
+                case CtabGraft:
+                    subscript = "grf";
+                    break;
+                case CtabMer:
+                    subscript = "mer";
+                    break;
+                case CtabMonomer:
+                    subscript = "mon";
+                    break;
+                case CtabModification:
+                    subscript = "mod";
+                    break;
+            }
+
             return generateSgroupBrackets(sgroup, brackets,
-                                          (String) sgroup.getValue(SgroupKey.CtabSubScript),
+                                          subscript,
                                           (String) sgroup.getValue(SgroupKey.CtabConnectivity));
         } else {
             return new ElementGroup();
