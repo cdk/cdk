@@ -44,10 +44,15 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -362,107 +367,244 @@ final class StandardSgroupGenerator {
         boolean round = style != null && style == 1;
         ElementGroup result = new ElementGroup();
 
-        // < 2 brackets - unpaired, > 2 ... possible but difficult and probably incorrect
-        if (brackets.size() != 2) {
-            return result;
+        Set<IAtom> atoms = sgroup.getAtoms();
+        Set<IBond> crossingBonds = sgroup.getBonds();
+
+        // easy to depict in correct orientation, we just
+        // point each bracket at the atom of a crossing
+        // bond that is 'in' the group - this scales
+        // to more than two brackets
+
+        // first we need to pair the brackets with the bonds
+        Map<SgroupBracket,IBond> pairs = crossingBonds.size() == brackets.size() ? bracketBondPairs(brackets, crossingBonds)
+                                                                                 : Collections.<SgroupBracket,IBond>emptyMap();
+
+        if (!pairs.isEmpty()) {
+
+            SgroupBracket suffixBracket = null;
+            Vector2d suffixBracketPerp = null;
+
+            for (Map.Entry<SgroupBracket,IBond> e : pairs.entrySet()) {
+
+                final SgroupBracket bracket     = e.getKey();
+                final IBond         bond        = e.getValue();
+                final IAtom         inGroupAtom = atoms.contains(bond.getAtom(0)) ? bond.getAtom(0) : bond.getAtom(1);
+
+                final Point2d p1 = bracket.getFirstPoint();
+                final Point2d p2 = bracket.getSecondPoint();
+
+                final Vector2d perp = VecmathUtil.newPerpendicularVector(VecmathUtil.newUnitVector(p1, p2));
+
+                // point the vector at the atom group
+                Point2d midpoint = VecmathUtil.midpoint(p1, p2);
+                if (perp.dot(VecmathUtil.newUnitVector(midpoint,
+                                          inGroupAtom.getPoint2d())) < 0) {
+                    perp.negate();
+                }
+
+                perp.scale(bracketDepth);
+
+                Path2D path = new Path2D.Double();
+                if (round) {
+                    // bracket 1 (cp: control point)
+                    path.moveTo(p1.x + perp.x, p1.y + perp.y);
+                    Point2d cpb1 = new Point2d(midpoint);
+                    cpb1.add(VecmathUtil.negate(perp));
+                    path.quadTo(cpb1.x, cpb1.y,
+                                p2.x + perp.x, p2.y + p2.y);
+                } else {
+                    path.moveTo(p1.x + perp.x, p1.y + perp.y);
+                    path.lineTo(p1.x, p1.y);
+                    path.lineTo(p2.x, p2.y);
+                    path.lineTo(p2.x + perp.x, p2.y + perp.y);
+                }
+                result.add(GeneralPath.outlineOf(path, stroke, foreground));
+
+                if (suffixBracket == null) {
+                    suffixBracket = bracket;
+                    suffixBracketPerp = perp;
+                } else {
+                    // is this bracket better as a suffix?
+                    Point2d sp1 = suffixBracket.getFirstPoint();
+                    Point2d sp2 = suffixBracket.getSecondPoint();
+                    double bestMaxX = Math.max(sp1.x,
+                                               sp2.x);
+                    double thisMaxX = Math.max(p1.x,
+                                               p2.x);
+                    double bestMaxY = Math.max(sp1.y,
+                                               sp2.y);
+                    double thisMaxY = Math.max(p1.y,
+                                               p2.y);
+
+                    // choose the most eastern or.. the most southern
+                    double xDiff = thisMaxX - bestMaxX;
+                    double yDiff = thisMaxY - bestMaxY;
+                    if (xDiff > EQUIV_THRESHOLD || (xDiff > -EQUIV_THRESHOLD && yDiff < -EQUIV_THRESHOLD)) {
+                        suffixBracket = bracket;
+                        suffixBracketPerp = perp;
+                    }
+                }
+            }
+
+            // write the labels
+            if (suffixBracket != null) {
+
+                Point2d subSufPnt = suffixBracket.getFirstPoint();
+                Point2d supSufPnt = suffixBracket.getSecondPoint();
+
+                // try to put the subscript on the bottom
+                double xDiff = subSufPnt.x - supSufPnt.x;
+                double yDiff = subSufPnt.y - supSufPnt.y;
+                if (yDiff > EQUIV_THRESHOLD || (yDiff > -EQUIV_THRESHOLD && xDiff > EQUIV_THRESHOLD)) {
+                    Point2d tmpP = subSufPnt;
+                    subSufPnt = supSufPnt;
+                    supSufPnt = tmpP;
+                }
+
+                // subscript/superscript suffix annotation
+                if (subscriptSuffix != null && !subscriptSuffix.isEmpty()) {
+                    TextOutline subscriptOutline = leftAlign(makeText(subscriptSuffix.toLowerCase(Locale.ROOT),
+                                                                      subSufPnt, suffixBracketPerp, labelScale));
+                    result.add(GeneralPath.shapeOf(subscriptOutline.getOutline(), foreground));
+                }
+                if (superscriptSuffix != null && !superscriptSuffix.isEmpty()) {
+                    TextOutline superscriptOutline = leftAlign(makeText(superscriptSuffix.toLowerCase(Locale.ROOT),
+                                                                        supSufPnt, suffixBracketPerp, labelScale));
+                    result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
+                }
+
+            }
+        } else if (brackets.size() == 2) {
+
+            final Point2d b1p1 = brackets.get(0).getFirstPoint();
+            final Point2d b1p2 = brackets.get(0).getSecondPoint();
+            final Point2d b2p1 = brackets.get(1).getFirstPoint();
+            final Point2d b2p2 = brackets.get(1).getSecondPoint();
+
+            final Vector2d b1vec = VecmathUtil.newUnitVector(b1p1, b1p2);
+            final Vector2d b2vec = VecmathUtil.newUnitVector(b2p1, b2p2);
+
+            final Vector2d b1pvec = VecmathUtil.newPerpendicularVector(b1vec);
+            final Vector2d b2pvec = VecmathUtil.newPerpendicularVector(b2vec);
+
+            // Point the vectors at each other
+            if (b1pvec.dot(VecmathUtil.newUnitVector(b1p1, b2p1)) < 0)
+                b1pvec.negate();
+            if (b2pvec.dot(VecmathUtil.newUnitVector(b2p1, b1p1)) < 0)
+                b2pvec.negate();
+
+            // scale perpendicular vectors by how deep the brackets need to be
+            b1pvec.scale(bracketDepth);
+            b2pvec.scale(bracketDepth);
+
+            // bad brackets
+            if (Double.isNaN(b1pvec.x) || Double.isNaN(b1pvec.y) ||
+                Double.isNaN(b2pvec.x) || Double.isNaN(b2pvec.y))
+                return result;
+
+            Path2D path = new Path2D.Double();
+
+            if (round) {
+                // bracket 1 (cp: control point)
+                path.moveTo(b1p1.x + b1pvec.x, b1p1.y + b1pvec.y);
+                Point2d cpb1 = VecmathUtil.midpoint(b1p1, b1p2);
+                cpb1.add(VecmathUtil.negate(b1pvec));
+                path.quadTo(cpb1.x, cpb1.y,
+                            b1p2.x + b1pvec.x, b1p2.y + b1pvec.y);
+
+                // bracket 2 (cp: control point)
+                path.moveTo(b2p1.x + b2pvec.x, b2p1.y + b2pvec.y);
+                Point2d cpb2 = VecmathUtil.midpoint(b2p1, b2p2);
+                cpb2.add(VecmathUtil.negate(b2pvec));
+                path.quadTo(cpb2.x, cpb2.y,
+                            b2p2.x + b2pvec.x, b2p2.y + b2pvec.y);
+            } else {
+                // bracket 1
+                path.moveTo(b1p1.x + b1pvec.x, b1p1.y + b1pvec.y);
+                path.lineTo(b1p1.x, b1p1.y);
+                path.lineTo(b1p2.x, b1p2.y);
+                path.lineTo(b1p2.x + b1pvec.x, b1p2.y + b1pvec.y);
+
+                // bracket 2
+                path.moveTo(b2p1.x + b2pvec.x, b2p1.y + b2pvec.y);
+                path.lineTo(b2p1.x, b2p1.y);
+                path.lineTo(b2p2.x, b2p2.y);
+                path.lineTo(b2p2.x + b2pvec.x, b2p2.y + b2pvec.y);
+            }
+
+            result.add(GeneralPath.outlineOf(path, stroke, foreground));
+
+            // work out where to put the suffix labels (e.g. ht/hh/eu) superscript
+            // and (e.g. n, xl, c, mix) subscript
+            // TODO: could be improved
+            double b1MaxX = Math.max(b1p1.x, b1p2.x);
+            double b2MaxX = Math.max(b2p1.x, b2p2.x);
+            double b1MaxY = Math.max(b1p1.y, b1p2.y);
+            double b2MaxY = Math.max(b2p1.y, b2p2.y);
+
+            Point2d subSufPnt = b2p2;
+            Point2d supSufPnt = b2p1;
+            Vector2d subpvec = b2pvec;
+
+            double bXDiff = b1MaxX - b2MaxX;
+            double bYDiff = b1MaxY - b2MaxY;
+
+            if (bXDiff > EQUIV_THRESHOLD || (bXDiff > -EQUIV_THRESHOLD && bYDiff < -EQUIV_THRESHOLD)) {
+                subSufPnt = b1p2;
+                supSufPnt = b1p1;
+                subpvec = b1pvec;
+            }
+
+            double xDiff = subSufPnt.x - supSufPnt.x;
+            double yDiff = subSufPnt.y - supSufPnt.y;
+
+            if (yDiff > EQUIV_THRESHOLD || (yDiff > -EQUIV_THRESHOLD && xDiff > EQUIV_THRESHOLD)) {
+                Point2d tmpP = subSufPnt;
+                subSufPnt = supSufPnt;
+                supSufPnt = tmpP;
+            }
+
+            // subscript/superscript suffix annotation
+            if (subscriptSuffix != null && !subscriptSuffix.isEmpty()) {
+                TextOutline subscriptOutline = leftAlign(makeText(subscriptSuffix.toLowerCase(Locale.ROOT),
+                                                                  subSufPnt, subpvec, labelScale));
+                result.add(GeneralPath.shapeOf(subscriptOutline.getOutline(), foreground));
+            }
+            if (superscriptSuffix != null && !superscriptSuffix.isEmpty()) {
+                TextOutline superscriptOutline = leftAlign(makeText(superscriptSuffix.toLowerCase(Locale.ROOT),
+                                                                    supSufPnt, subpvec, labelScale));
+                result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
+            }
+
         }
-
-        final Point2d b1p1 = brackets.get(0).getFirstPoint();
-        final Point2d b1p2 = brackets.get(0).getSecondPoint();
-        final Point2d b2p1 = brackets.get(1).getFirstPoint();
-        final Point2d b2p2 = brackets.get(1).getSecondPoint();
-
-        final Vector2d b1vec = VecmathUtil.newUnitVector(b1p1, b1p2);
-        final Vector2d b2vec = VecmathUtil.newUnitVector(b2p1, b2p2);
-
-        final Vector2d b1pvec = VecmathUtil.newPerpendicularVector(b1vec);
-        final Vector2d b2pvec = VecmathUtil.newPerpendicularVector(b2vec);
-
-        // Point the vectors at each other
-        if (b1pvec.dot(VecmathUtil.newUnitVector(b1p1, b2p1)) < 0)
-            b1pvec.negate();
-        if (b2pvec.dot(VecmathUtil.newUnitVector(b2p1, b1p1)) < 0)
-            b2pvec.negate();
-
-        // scale perpendicular vectors by how deep the brackets need to be
-        b1pvec.scale(bracketDepth);
-        b2pvec.scale(bracketDepth);
-
-        Path2D path = new Path2D.Double();
-
-        if (round) {
-            // bracket 1 (cp: control point)
-            path.moveTo(b1p1.x + b1pvec.x, b1p1.y + b1pvec.y);
-            Point2d cpb1 = VecmathUtil.midpoint(b1p1, b1p2);
-            cpb1.add(VecmathUtil.negate(b1pvec));
-            path.quadTo(cpb1.x, cpb1.y,
-                        b1p2.x + b1pvec.x, b1p2.y + b1pvec.y);
-
-            // bracket 2 (cp: control point)
-            path.moveTo(b2p1.x + b2pvec.x, b2p1.y + b2pvec.y);
-            Point2d cpb2 = VecmathUtil.midpoint(b2p1, b2p2);
-            cpb2.add(VecmathUtil.negate(b2pvec));
-            path.quadTo(cpb2.x, cpb2.y,
-                        b2p2.x + b2pvec.x, b2p2.y + b2pvec.y);
-        } else {
-            // bracket 1
-            path.moveTo(b1p1.x + b1pvec.x, b1p1.y + b1pvec.y);
-            path.lineTo(b1p1.x, b1p1.y);
-            path.lineTo(b1p2.x, b1p2.y);
-            path.lineTo(b1p2.x + b1pvec.x, b1p2.y + b1pvec.y);
-
-            // bracket 2
-            path.moveTo(b2p1.x + b2pvec.x, b2p1.y + b2pvec.y);
-            path.lineTo(b2p1.x, b2p1.y);
-            path.lineTo(b2p2.x, b2p2.y);
-            path.lineTo(b2p2.x + b2pvec.x, b2p2.y + b2pvec.y);
-        }
-
-        result.add(GeneralPath.outlineOf(path, stroke, foreground));
-
-        // work out where to put the suffix labels (e.g. ht/hh/eu) superscript
-        // and (e.g. n, xl, c, mix) subscript
-        // TODO: could be improved
-        double b1MaxX = Math.max(b1p1.x, b1p2.x);
-        double b2MaxX = Math.max(b2p1.x, b2p2.x);
-        double b1MaxY = Math.max(b1p1.y, b1p2.y);
-        double b2MaxY = Math.max(b2p1.y, b2p2.y);
-
-        Point2d subSufPnt = b2p2;
-        Point2d supSufPnt = b2p1;
-        Vector2d subpvec = b2pvec;
-
-        double bXDiff = b1MaxX - b2MaxX;
-        double bYDiff = b1MaxY - b2MaxY;
-
-        if (bXDiff > EQUIV_THRESHOLD || (bXDiff > -EQUIV_THRESHOLD && bYDiff < -EQUIV_THRESHOLD)) {
-            subSufPnt = b1p2;
-            supSufPnt = b1p1;
-            subpvec = b1pvec;
-        }
-
-        double xDiff = subSufPnt.x - supSufPnt.x;
-        double yDiff = subSufPnt.y - supSufPnt.y;
-
-        if (yDiff > EQUIV_THRESHOLD || (yDiff > -EQUIV_THRESHOLD && xDiff > EQUIV_THRESHOLD)) {
-            Point2d tmpP = subSufPnt;
-            subSufPnt = supSufPnt;
-            supSufPnt = tmpP;
-        }
-
-        // subscript/superscript suffix annotation
-        if (subscriptSuffix != null && !subscriptSuffix.isEmpty()) {
-            TextOutline subscriptOutline = leftAlign(makeText(subscriptSuffix.toLowerCase(Locale.ROOT),
-                                                              subSufPnt, subpvec, labelScale));
-            result.add(GeneralPath.shapeOf(subscriptOutline.getOutline(), foreground));
-        }
-        if (superscriptSuffix != null && !superscriptSuffix.isEmpty()) {
-            TextOutline superscriptOutline = leftAlign(makeText(superscriptSuffix.toLowerCase(Locale.ROOT),
-                                                                supSufPnt, subpvec, labelScale));
-            result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
-        }
-
         return result;
+    }
+
+    private static Map<SgroupBracket,IBond> bracketBondPairs(Collection<SgroupBracket> brackets,
+                                                                   Collection<IBond> bonds) {
+        Map<SgroupBracket,IBond> pairs = new HashMap<>();
+
+        for (SgroupBracket bracket : brackets) {
+            IBond crossingBond = null;
+            for (IBond bond : bonds) {
+                IAtom a1 = bond.getAtom(0);
+                IAtom a2 = bond.getAtom(1);
+                if (Line2D.linesIntersect(bracket.getFirstPoint().x, bracket.getFirstPoint().y,
+                                          bracket.getSecondPoint().x, bracket.getSecondPoint().y,
+                                          a1.getPoint2d().x, a1.getPoint2d().y,
+                                          a2.getPoint2d().x, a2.getPoint2d().y)) {
+                    // more than one... not good
+                    if (crossingBond != null)
+                        return new HashMap<>();
+                    crossingBond = bond;
+                }
+            }
+            if (crossingBond == null)
+                return new HashMap<>();
+            pairs.put(bracket, crossingBond);
+        }
+
+        return pairs;
     }
 
     private TextOutline makeText(String subscriptSuffix, Point2d b1p2, Vector2d b1pvec, double labelScale) {
