@@ -63,6 +63,7 @@ public enum SgroupType {
     CtabMultipleGroup("MUL"),
     CtabStructureRepeatUnit("SRU"),
     CtabMonomer("MON"),
+    CtabModification("MOD"),
     CtabCopolymer("COP"),
     CtabMer("MER"),
     CtabCrossLink("CRO"),
