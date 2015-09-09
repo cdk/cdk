@@ -325,11 +325,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             final List<IBond> bonds     = container.getConnectedBondsList(atom);
             final List<IAtom> neighbors = container.getConnectedAtomsList(atom);
+            final List<IAtom> visNeighbors = new ArrayList<>();
 
-            int visibleNeighbourCount = 0;
-            for (IBond bond : bonds) {
-                if (!isHidden(bond))
-                    visibleNeighbourCount++;
+            for (IAtom neighbor : neighbors) {
+                if (!isHidden(neighbor))
+                    visNeighbors.add(neighbor);
             }
 
             final List<Vector2d> auxVectors = new ArrayList<>(1);
@@ -338,26 +338,26 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             // only generate if the symbol is visible
             if (visibility.visible(atom, bonds, parameters) || remapped) {
 
-                final HydrogenPosition hPosition = HydrogenPosition.position(atom, neighbors);
+                final HydrogenPosition hPosition = HydrogenPosition.position(atom, visNeighbors);
 
                 if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() > 0)
                     auxVectors.add(hPosition.vector());
 
                 if (remapped) {
-                    IPseudoAtom tmp = builder.newInstance(IPseudoAtom.class, symbolRemap.get(atom));
-                    tmp.setPoint2d(atom.getPoint2d());
-                    symbols[i] = atomGenerator.generateSymbol(container, tmp, hPosition);
+                    symbols[i] = atomGenerator.generatePseudoSymbol(symbolRemap.get(atom));
                 } else {
                     symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
                 }
 
                 // defines how the element is aligned on the atom point, when
                 // aligned to the left, the first character 'e.g. Cl' is used.
-                if (visibleNeighbourCount == 1) {
-                    if (hPosition == Left)
+                if (visNeighbors.size() == 1) {
+                    if (hPosition == Left) {
                         symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
-                    else
+                    }
+                    else {
                         symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Left);
+                    }
                 }
 
                 final Point2d p = atom.getPoint2d();
