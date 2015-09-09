@@ -28,8 +28,6 @@ import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
@@ -39,7 +37,6 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -47,9 +44,6 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -220,7 +214,7 @@ final class StandardSgroupGenerator {
                 case CtabStructureRepeatUnit:
                 case CtabMer:
                 case CtabGraft:
-                case CtabModification:
+                case CtabModified:
                     result.add(generatePolymerSgroup(sgroup));
                     break;
                 case CtabComponent:
@@ -307,7 +301,7 @@ final class StandardSgroupGenerator {
                 case CtabMonomer:
                     subscript = "mon";
                     break;
-                case CtabModification:
+                case CtabModified:
                     subscript = "mod";
                     break;
                 case CtabStructureRepeatUnit:
