@@ -1613,17 +1613,21 @@ public final class GeometryUtil {
      */
     public static double getBondLengthMedian(final IAtomContainer container) {
         if (container.getBondCount() == 0) throw new IllegalArgumentException("Container has no bonds.");
+        int nBonds = 0;
         double[] lengths = new double[container.getBondCount()];
         for (int i = 0; i < container.getBondCount(); i++) {
             final IBond bond = container.getBond(i);
             final IAtom atom1 = bond.getAtom(0);
             final IAtom atom2 = bond.getAtom(1);
-            if (atom1.getPoint2d() == null || atom2.getPoint2d() == null)
+            Point2d p1 = atom1.getPoint2d();
+            Point2d p2 = atom2.getPoint2d();
+            if (p1 == null || p2 == null)
                 throw new IllegalArgumentException("An atom has no 2D coordinates.");
-            lengths[i] = getLength2D(bond);
+            if (p1.x != p2.x || p1.y != p2.y)
+                lengths[nBonds++] = p1.distance(p2);
         }
-        Arrays.sort(lengths);
-        return lengths[lengths.length / 2];
+        Arrays.sort(lengths, 0, nBonds);
+        return lengths[nBonds / 2];
     }
 
     /**
