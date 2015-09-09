@@ -124,7 +124,7 @@ public class GeometryUtilTest extends CDKTestCase {
         IAtomContainer container = new AtomContainer();
         Assert.assertEquals(GeometryUtil.CoordinateCoverage.NONE, GeometryUtil.get2DCoordinateCoverage(container));
         Assert.assertEquals(GeometryUtil.CoordinateCoverage.NONE,
-                GeometryUtil.get2DCoordinateCoverage((IAtomContainer) null));
+                            GeometryUtil.get2DCoordinateCoverage((IAtomContainer) null));
     }
 
     @Test
@@ -480,7 +480,7 @@ public class GeometryUtilTest extends CDKTestCase {
         IAtomContainer container = new AtomContainer();
         Assert.assertEquals(GeometryUtil.CoordinateCoverage.NONE, GeometryUtil.get3DCoordinateCoverage(container));
         Assert.assertEquals(GeometryUtil.CoordinateCoverage.NONE,
-                GeometryUtil.get3DCoordinateCoverage((IAtomContainer) null));
+                            GeometryUtil.get3DCoordinateCoverage((IAtomContainer) null));
     }
 
     @Test
@@ -741,7 +741,7 @@ public class GeometryUtilTest extends CDKTestCase {
 
         // shift the second reaction up
         GeometryUtil.shiftReactionVertical(reaction2, GeometryUtil.getMinMax(react2), GeometryUtil.getMinMax(react1),
-                1.0);
+                                           1.0);
         // assert all coordinates of the second reaction moved up
         AtomContainerDiff.diff(react1, react2);
         for (int i = 0; i < 2; i++) {
@@ -777,7 +777,7 @@ public class GeometryUtilTest extends CDKTestCase {
 
         // shift the second reaction up
         GeometryUtil.shiftReactionVertical(reaction2, GeometryUtil.getMinMax(react2), GeometryUtil.getMinMax(react1),
-                1.0);
+                                           1.0);
         // assert all coordinates of the second reaction moved up
         AtomContainerDiff.diff(react1, react2);
         for (int i = 0; i < 2; i++) {
@@ -855,6 +855,29 @@ public class GeometryUtilTest extends CDKTestCase {
         container.addAtom(atomAt(new Point2d(0, 1.5)));
         container.addBond(0, 1, IBond.Order.SINGLE);
         assertThat(GeometryUtil.getBondLengthMedian(container), is(1.5));
+    }
+
+    @Test
+    public void medianBondLengthWithZeroLengthBonds() {
+        IAtomContainer container = new AtomContainer();
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 1)));
+        container.addAtom(atomAt(new Point2d(0, 2)));
+        container.addAtom(atomAt(new Point2d(0, 3)));
+        for (int i = 0; i < container.getAtomCount()-1; i++) {
+            container.addBond(i, i+1, IBond.Order.SINGLE);
+        }
+        assertThat(GeometryUtil.getBondLengthMedian(container), is(1d));
     }
 
     private IAtom atomAt(Point2d p) {
