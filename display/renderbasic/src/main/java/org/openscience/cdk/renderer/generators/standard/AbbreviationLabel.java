@@ -56,6 +56,12 @@ final class AbbreviationLabel {
             "7-", "8-", "9-"
     };
 
+    // see https://en.wikipedia.org/wiki/Wikipedia:Naming_conventions_(chemistry)#Prefixes_in_titles
+    private final static String[] ITAL_PREFIX = new String[]{
+            "sec", "s", "tert", "t",
+            "ortho", "o", "meta", "m", "para", "p"
+    };
+
     // chemical symbols excluding periodic symbols which are loaded separately
     // Some of these are derived from https://github.com/openbabel/superatoms that
     // has the following license:
@@ -97,12 +103,15 @@ final class AbbreviationLabel {
                                                              "TMS", "Tos", "Tosyl", "Tr", "Troc", "Vinyl", "Voc", "Z"};
 
     private static Trie PREFIX_TRIE = new Trie();
+    private static Trie ITAL_PREFIX_TRIE = new Trie();
     private static Trie SYMBOL_TRIE = new Trie();
 
     // build the tries on class init
     static {
         for (String str : PREFIX_LIST)
             insert(PREFIX_TRIE, str, 0);
+        for (String str : ITAL_PREFIX)
+            insert(ITAL_PREFIX_TRIE, str, 0);
         for (Elements elem : Elements.values())
             if (!elem.symbol().isEmpty())
                 insert(SYMBOL_TRIE, elem.symbol(), 0);
@@ -254,7 +263,7 @@ final class AbbreviationLabel {
                 texts.add(new FormattedText(coef + sign, STYLE_SUPSCRIPT));
             } else {
                 // optional prefix
-                int i = findPrefix(PREFIX_TRIE, token, 0, -1);
+                int i = findPrefix(ITAL_PREFIX_TRIE, token, 0, -1);
                 // find a numeric suffix to subscript
                 int j = token.length();
                 while (j > 0 && isDigit(token.charAt(j - 1)))
