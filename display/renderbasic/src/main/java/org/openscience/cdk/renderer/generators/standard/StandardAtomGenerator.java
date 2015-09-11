@@ -30,12 +30,12 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.renderer.generators.standard.AbbreviationLabel.FormattedText;
 
 import java.awt.Font;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -112,11 +112,11 @@ final class StandardAtomGenerator {
      */
     AtomSymbol generateSymbol(IAtomContainer container, IAtom atom, HydrogenPosition position) {
         if (atom instanceof IPseudoAtom) {
-            return generatePseudoSymbol(accessPseudoLabel((IPseudoAtom) atom, "?"));
+            return generatePseudoSymbol(accessPseudoLabel((IPseudoAtom) atom, "?"), position);
         } else {
             int number = unboxSafely(atom.getAtomicNumber(), Elements.ofString(atom.getSymbol()).number());
 
-            if (number == 0) return generatePseudoSymbol("?");
+            if (number == 0) return generatePseudoSymbol("?", position);
 
             // unset the mass if it's the major isotope (could be an option)
             Integer mass = atom.getMassNumber();
@@ -135,28 +135,77 @@ final class StandardAtomGenerator {
      *
      * @return the atom symbol
      */
-    AtomSymbol generatePseudoSymbol(String label) {
-        if (label.matches("R\\d+")) {
-            return generateNumberedRgroupSymbol(Integer.parseInt(label.substring(1)));
+    AtomSymbol generatePseudoSymbol(String label, HydrogenPosition position) {
+        List<String> tokens = new ArrayList<>();
+        if (AbbreviationLabel.parse(label, tokens)) {
+            return generateAbbreviationSymbol(tokens, position);
         } else {
-            return new AtomSymbol(new TextOutline(label, font), Collections.<TextOutline> emptyList());
+            return new AtomSymbol(new TextOutline(label, font), Collections.<TextOutline>emptyList());
         }
     }
 
     /**
-     * Generates an atom symbol for a numbered Rgroup. The Rgroup number is subscript to the 'R'.
+     * Generate a formatted abbreviation AtomSymbol for the given Hydrogen position.
      *
-     * @param number Rgroup number
-     * @return the atom symbol
+     * @param tokens the parsed tokens
+     * @param position hydrogen position - determines if we reverse the label
+     * @return the generated symbol
      */
-    AtomSymbol generateNumberedRgroupSymbol(int number) {
+    AtomSymbol generateAbbreviationSymbol(List<String> tokens, HydrogenPosition position) {
 
-        TextOutline rLabel = new TextOutline("R", font);
-        TextOutline numberLabel = new TextOutline(Integer.toString(number), font).resize(scriptSize, scriptSize);
+        if (position == Left)
+            AbbreviationLabel.reverse(tokens);
 
-        numberLabel = positionSubscript(rLabel, numberLabel);
+        final TextOutline tmpRefPoint = new TextOutline("H", font);
+        final List<FormattedText> fTexts = AbbreviationLabel.format(tokens);
 
-        return new AtomSymbol(rLabel, Arrays.asList(numberLabel));
+        final Font italicFont = font.deriveFont(Font.ITALIC);
+
+        // convert to outlines
+        final List<TextOutline> outlines = new ArrayList<>(fTexts.size());
+        for (FormattedText fText : fTexts) {
+
+            TextOutline outline = fText.style == AbbreviationLabel.STYLE_ITALIC
+                                  ? new TextOutline(fText.text, italicFont)
+                                  : new TextOutline(fText.text, font);
+
+            // resize and position scripts
+            if (fText.style == AbbreviationLabel.STYLE_SUBSCRIPT) {
+                outline = outline.resize(scriptSize, scriptSize);
+                outline = positionSubscript(tmpRefPoint, outline);
+            } else if (fText.style == AbbreviationLabel.STYLE_SUPSCRIPT) {
+                outline = outline.resize(scriptSize, scriptSize);
+                outline = positionSuperscript(tmpRefPoint, outline);
+            }
+
+            outlines.add(outline);
+        }
+
+        // position the outlines relative to each other
+        for (int i = 1; i < outlines.size(); i++) {
+            TextOutline ref  = outlines.get(i - 1);
+            TextOutline curr = outlines.get(i);
+            // charge aligns to symbol not a subscript part
+            if (fTexts.get(i).style == AbbreviationLabel.STYLE_SUPSCRIPT &&
+                fTexts.get(i-1).style == AbbreviationLabel.STYLE_SUBSCRIPT && i > 1) {
+                ref = outlines.get(i - 2);
+            }
+            outlines.set(i, positionAfter(ref, curr));
+        }
+
+        // find symbol where we want to attach the bond
+        // this becomes the primary outline
+        int index;
+        if (position == Left) {
+            for (index = outlines.size() - 1; index >= 0; index--)
+                if ((fTexts.get(index).style & 0x1) == 0) break;
+        } else {
+            for (index = 0; index < outlines.size(); index++)
+                if ((fTexts.get(index).style & 0x1) == 0) break;
+        }
+        TextOutline primary = outlines.remove(index);
+
+        return new AtomSymbol(primary, outlines);
     }
 
     /**
@@ -245,6 +294,22 @@ final class StandardAtomGenerator {
         subscript = subscript.translate((hydrogenBounds.getMaxX() + padding) - hydrogenCountBounds.getMinX(),
                 (hydrogenBounds.getMaxY() + (hydrogenCountBounds.getHeight() / 2)) - hydrogenCountBounds.getMaxY());
         return subscript;
+    }
+
+    TextOutline positionSuperscript(TextOutline label, TextOutline superscript) {
+        final Rectangle2D labelBounds = label.getBounds();
+        final Rectangle2D superscriptBounds = superscript.getBounds();
+        superscript = superscript.translate((labelBounds.getMaxX() + padding) - superscriptBounds.getMinX(),
+                                            (labelBounds.getMinY() - (superscriptBounds.getHeight() / 2)) - superscriptBounds.getMinY());
+        return superscript;
+    }
+
+    TextOutline positionAfter(TextOutline before, TextOutline after) {
+        final Rectangle2D fixedBounds = before.getBounds();
+        final Rectangle2D movableBounds = after.getBounds();
+        after = after.translate((fixedBounds.getMaxX() + padding) - movableBounds.getMinX(),
+                                0);
+        return after;
     }
 
     /**
