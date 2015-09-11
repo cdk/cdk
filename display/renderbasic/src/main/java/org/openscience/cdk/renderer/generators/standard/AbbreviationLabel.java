@@ -263,7 +263,7 @@ final class AbbreviationLabel {
                 texts.add(new FormattedText(coef + sign, STYLE_SUPSCRIPT));
             } else {
                 // optional prefix
-                int i = findPrefix(ITAL_PREFIX_TRIE, token, 0, -1);
+                int i = findPrefix(ITAL_PREFIX_TRIE, token, 0, 0);
                 // find a numeric suffix to subscript
                 int j = token.length();
                 while (j > 0 && isDigit(token.charAt(j - 1)))
