@@ -110,6 +110,11 @@ final class AbbreviationLabel {
             insert(SYMBOL_TRIE, str, 0);
     }
 
+    static int STYLE_NORMAL    = 0;
+    static int STYLE_SUBSCRIPT = -1;
+    static int STYLE_SUPSCRIPT = +1;
+    static int STYLE_ITALIC    = 2;
+
     /**
      * A small class to help describe which parts of a string
      * are super and subscript (style field).
@@ -191,7 +196,7 @@ final class AbbreviationLabel {
                 }
             }
 
-            if (i == st){
+            if (i == st) {
                 return failParse(label, tokens);
             }
 
@@ -246,19 +251,25 @@ final class AbbreviationLabel {
                 String sign = Character.toString(normDash(token.charAt(0)));
                 String coef = token.length() > 1 ? token.substring(1) : "";
                 if (sign.equals("-")) sign = MINUS_STRING;
-                texts.add(new FormattedText(coef + sign, +1));
+                texts.add(new FormattedText(coef + sign, STYLE_SUPSCRIPT));
             } else {
+                // optional prefix
+                int i = findPrefix(PREFIX_TRIE, token, 0, -1);
                 // find a numeric suffix to subscript
-                int i = token.length();
-                while (i > 0 && isDigit(token.charAt(i - 1)))
-                    i--;
-
-                if (i > 0 && i < token.length()) {
-                    texts.add(new FormattedText(token.substring(0, i), 0));
-                    texts.add(new FormattedText(token.substring(i), -1));
+                int j = token.length();
+                while (j > 0 && isDigit(token.charAt(j - 1)))
+                    j--;
+                // check if we have numeric suffix
+                if (j > 0 && j < token.length()) {
+                    if (i > j) i = 0; // prefix overlaps with suffix so don't use it
+                    if (i > 0)
+                        texts.add(new FormattedText(token.substring(0, i), STYLE_ITALIC));
+                    texts.add(new FormattedText(token.substring(i, j), STYLE_NORMAL));
+                    texts.add(new FormattedText(token.substring(j), STYLE_SUBSCRIPT));
                 } else {
-                    // just a plain label
-                    texts.add(new FormattedText(token, 0));
+                    if (i > 0)
+                        texts.add(new FormattedText(token.substring(0, i), STYLE_ITALIC));
+                    texts.add(new FormattedText(token.substring(i), STYLE_NORMAL));
                 }
             }
         }

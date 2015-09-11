@@ -125,11 +125,22 @@ public class AbbreviationLabelTest {
         List<AbbreviationLabel.FormattedText> texts = AbbreviationLabel.format(tokens);
         assertThat(texts.size(), is(3));
         assertThat(texts.get(0).text, is("OPO"));
-        assertThat(texts.get(0).style, is(0));
+        assertThat(texts.get(0).style, is(AbbreviationLabel.STYLE_NORMAL));
         assertThat(texts.get(1).text, is("3"));
-        assertThat(texts.get(1).style, is(-1));
+        assertThat(texts.get(1).style, is(AbbreviationLabel.STYLE_SUBSCRIPT));
         assertThat(texts.get(2).text, is("2−"));
-        assertThat(texts.get(2).style, is(+1));
+        assertThat(texts.get(2).style, is(AbbreviationLabel.STYLE_SUPSCRIPT));
+    }
+
+    @Test
+    public void formatTBu() {
+        List<String> tokens = Arrays.asList("tBu");
+        List<AbbreviationLabel.FormattedText> texts = AbbreviationLabel.format(tokens);
+        assertThat(texts.size(), is(2));
+        assertThat(texts.get(0).text, is("t"));
+        assertThat(texts.get(0).style, is(AbbreviationLabel.STYLE_ITALIC));
+        assertThat(texts.get(1).text, is("Bu"));
+        assertThat(texts.get(1).style, is(AbbreviationLabel.STYLE_NORMAL));
     }
 
     @Test
