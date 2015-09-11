@@ -61,6 +61,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
+import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.position;
 
 /**
  * The standard generator creates {@link IRenderingElement}s for the atoms and bonds of a structure
@@ -344,7 +345,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                     auxVectors.add(hPosition.vector());
 
                 if (remapped) {
-                    symbols[i] = atomGenerator.generatePseudoSymbol(symbolRemap.get(atom));
+                    symbols[i] = atomGenerator.generatePseudoSymbol(symbolRemap.get(atom), hPosition);
                 } else {
                     symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
                 }

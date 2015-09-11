@@ -354,14 +354,14 @@ public class StandardAtomGeneratorTest {
 
     @Test
     public void numberedRgroupSymbol() {
-        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R1");
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R1", HydrogenPosition.Right);
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(2));
     }
 
     @Test
     public void pseudoSymbol() {
-        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("Protein");
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("Protein", HydrogenPosition.Right);
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
     }
