@@ -157,4 +157,14 @@ public class AbbreviationLabelTest {
         assertThat(texts.get(3).text, is("2"));
         assertThat(texts.get(3).style, is(-1));
     }
+
+    @Test
+    public void parseChargeOnly() {
+        assertFalse(AbbreviationLabel.parse("+", new ArrayList<String>()));
+    }
+
+    @Test
+    public void parseNumberOnly() {
+        assertFalse(AbbreviationLabel.parse("1", new ArrayList<String>()));
+    }
 }

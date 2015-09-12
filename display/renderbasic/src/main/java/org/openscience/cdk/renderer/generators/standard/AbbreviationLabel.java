@@ -189,8 +189,8 @@ final class AbbreviationLabel {
                     i++;
                 }
             }
-            // a charge token
-            else if (i == st) {
+            // a charge token, only if it's after some other parts
+            else if (i == st && st > 0) {
                 c = normDash(label.charAt(i));
                 if (c == '-' || c == '+') {
                     i++;
