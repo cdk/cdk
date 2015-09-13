@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.renderer;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
@@ -148,7 +149,7 @@ public class SymbolVisibilityTest {
     }
 
     // produces an NaN internally
-    @Test
+    @Ignore("Multiple Group Sgroup rendering can have zero length C-C bonds (e.g. overlaid coords), we don't want to show the symbols")
     public void iupacCarbonCornerCase() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
