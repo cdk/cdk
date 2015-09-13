@@ -18,7 +18,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 
 /**
  * See tests in MmffTest.
@@ -38,7 +38,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
      */
     public PartialTChargeMMFF94DescriptorTest() {}
 
-    @BeforeClass
+    @Before
     public void setUp() throws Exception {
         setDescriptor(PartialTChargeMMFF94Descriptor.class);
     }
