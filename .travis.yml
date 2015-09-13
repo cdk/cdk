@@ -1,2 +1,2 @@
 language: java
-script: mvn install -Dmaven.test.failure.ignore=true
+script: mvn test -Dmaven.test.failure.ignore=true
