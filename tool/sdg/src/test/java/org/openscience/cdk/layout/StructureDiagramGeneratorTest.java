@@ -758,8 +758,10 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles(smiles);
 
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-        sdg.setMolecule(mol);
-        sdg.generateCoordinates(new Vector2d(0, 1));
+        sdg.setUseIdentityTemplates(true);
+        sdg.setUseTemplates(false);
+        sdg.setMolecule(mol, false);
+        sdg.generateCoordinates();
         mol = sdg.getMolecule();
 
         int invalidCoordCount = 0;
