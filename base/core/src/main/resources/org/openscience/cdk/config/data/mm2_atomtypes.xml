@@ -131,6 +131,7 @@
    </atomType> 
    <atomType id="Cplusplus">
     <!-- ketonium -->
+    <label value="C++"/>
     <atom elementType="C" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
