@@ -101,6 +101,18 @@ public class RendererModel implements Serializable, Cloneable {
     private IGeneratorParameter<Color> externalHighlightColor = new ExternalHighlightColor();
 
     /**
+     * Padding between molecules in a grid or row.
+     */
+    public static class Padding extends AbstractGeneratorParameter<Double> {
+
+        /** {@inheritDoc} */
+        @Override
+        public Double getDefault() {
+            return 16d;
+        }
+    }
+
+    /**
      * The color hash is used to color substructures.
      */
     public static class ColorHash extends AbstractGeneratorParameter<Map<IChemObject, Color>> {
@@ -127,6 +139,7 @@ public class RendererModel implements Serializable, Cloneable {
         renderingParameters.put(colorHash.getClass().getName(), colorHash);
         renderingParameters.put(externalHighlightColor.getClass().getName(), externalHighlightColor);
         renderingParameters.put(SelectionColor.class.getName(), new SelectionColor());
+        renderingParameters.put(Padding.class.getName(), new Padding());
     }
 
     /**
