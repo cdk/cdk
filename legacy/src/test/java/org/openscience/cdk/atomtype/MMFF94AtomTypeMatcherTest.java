@@ -45,12 +45,17 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Checks the functionality of the AtomType-MMFF94AtomTypeMatcher.
  *
  * @cdk.module test-extra
  *
- * @see org.openscience.cdk.atomtype.MMFF94AtomTypeMatcher
+ * @see MMFF94AtomTypeMatcher
  */
 public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
