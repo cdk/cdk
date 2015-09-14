@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @cdk.module test-extra
  *
- * @see org.openscience.cdk.atomtype.MMFF2AtomTypeMatcher
+ * @see org.openscience.cdk.atomtype.MM2AtomTypeMatcher
  */
 public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 

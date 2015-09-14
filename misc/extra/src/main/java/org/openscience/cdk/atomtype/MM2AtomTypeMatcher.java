@@ -150,7 +150,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
                     }
 
                     if (atom.getSymbol().equals("S")) {
-                        if (atomChemicalGroupConstant == 8) {
+                        if (atomChemicalGroupConstant == AtomTypeTools.THIOPHENE_RING) {
                             ID = "Sthi";
                         } else {
                             p1 = Pattern.compile(getSphericalMatcher("S"));
@@ -177,7 +177,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
                 } else if (atomTypeIds[j].equals("O")) {
                     //OH/Ether
                     if (atomChemicalGroupConstant != -1) {
-                        if (atomChemicalGroupConstant == 6) {
+                        if (atomChemicalGroupConstant == AtomTypeTools.FURAN_RING) {
                             ID = "Oar";//furan
                         } else if (atomRingSize == 3) {
                             ID = "OR";//epoxy
