@@ -21,6 +21,7 @@
         <module>storage</module>
         <module>tool</module>
         <module>legacy</module>
+        <module>app</module>
     </modules>
 
     <properties>
