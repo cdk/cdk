@@ -25,10 +25,15 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
 * AtomTypeTools is a helper class for assigning atom types to an atom.
@@ -102,8 +107,7 @@ public class AtomTypeTools {
                 atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, Integer.valueOf(sring.getRingSize()));
                 atom2.setProperty(
                         CDKConstants.CHEMICAL_GROUP_CONSTANT,
-                        Integer.valueOf(ringSystemClassifier(sring,
-                                sg.create(atom2.getBuilder().newInstance(IAtomContainer.class, sring)))));
+                        Integer.valueOf(ringSystemClassifier(sring, getSubgraphSmiles(sring, molecule))));
                 atom2.setFlag(CDKConstants.ISINRING, true);
                 atom2.setFlag(CDKConstants.ISALIPHATIC, false);
             } else {
@@ -120,6 +124,55 @@ public class AtomTypeTools {
             }
         }
         return ringSetMolecule;
+    }
+
+    /**
+     * New SMILES code respects atom valency hence a ring subgraph of 'o1cccc1CCCC' is correctly
+     * written as 'o1ccc[c]1' note there is no hydrogen there since it was an external attachment.
+     * To get unique subgraph SMILES we need to adjust valencies of atoms by adding Hydrogens. We
+     * base this on the sum of bond orders removed.
+     *
+     * @param subgraph subgraph (atom and bond refs in 'molecule')
+     * @param molecule the molecule
+     * @return the canonical smiles of the subgraph
+     * @throws CDKException something went wrong with SMILES gen
+     */
+    private static String getSubgraphSmiles(IAtomContainer subgraph, IAtomContainer molecule) throws CDKException {
+        Set<IBond> bonds = new HashSet<>();
+        for (IBond bond : subgraph.bonds())
+            bonds.add(bond);
+
+        Integer[] hCount = new Integer[subgraph.getAtomCount()];
+        for (int i = 0; i < subgraph.getAtomCount(); i++) {
+            final IAtom atom = subgraph.getAtom(i);
+            int removed = 0;
+            for (IBond bond : molecule.getConnectedBondsList(atom)) {
+                if (!bonds.contains(bond))
+                    removed += bond.getOrder().numeric();
+            }
+            hCount[i] = atom.getImplicitHydrogenCount();
+            atom.setImplicitHydrogenCount(hCount[i] == null ? removed : hCount[i] + removed);
+        }
+
+        String smi = cansmi(subgraph);
+
+        // reset for fused rings!
+        for (int i = 0; i < subgraph.getAtomCount(); i++) {
+            subgraph.getAtom(i).setImplicitHydrogenCount(hCount[i]);
+        }
+
+        return smi;
+    }
+
+    /**
+     * Canonical SMILES for the provided molecule.
+     *
+     * @param mol molecule
+     * @return the cansmi string
+     * @throws CDKException something went wrong with SMILES gen
+     */
+    private static String cansmi(IAtomContainer mol) throws CDKException {
+        return SmilesGenerator.unique().aromatic().create(mol);
     }
 
     /**
