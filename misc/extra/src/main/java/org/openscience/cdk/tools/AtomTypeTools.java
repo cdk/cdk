@@ -22,6 +22,7 @@ package org.openscience.cdk.tools;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -172,7 +173,7 @@ public class AtomTypeTools {
      * @throws CDKException something went wrong with SMILES gen
      */
     private static String cansmi(IAtomContainer mol) throws CDKException {
-        return SmilesGenerator.unique().aromatic().create(mol);
+        return SmilesGenerator.unique().create(mol);
     }
 
     /**
@@ -183,21 +184,24 @@ public class AtomTypeTools {
      *@param  smile  smile of the ring system
      *@return     chemicalRingConstant
      */
-    private int ringSystemClassifier(IRing ring, String smile) {
+    private int ringSystemClassifier(IRing ring, String smile) throws CDKException {
         /* System.out.println("IN AtomTypeTools Smile:"+smile); */
         logger.debug("Comparing ring systems: SMILES=", smile);
 
-        if (smile.equals("c1ccnc1"))
+        final SmilesParser smipar = new SmilesParser(ring.getBuilder());
+
+        if (smile.equals(cansmi(smipar.parseSmiles("c1cc[nH]c1"))))
             return 4;
-        else if (smile.equals("c1ccoc1"))
+        else if (smile.equals(cansmi(smipar.parseSmiles("c1ccoc1"))))
             return 6;
-        else if (smile.equals("c1ccsc1"))
+        else if (smile.equals(cansmi(smipar.parseSmiles("c1ccsc1"))))
             return 8;
-        else if (smile.equals("c1ccncc1"))
+        else if (smile.equals(cansmi(smipar.parseSmiles("c1ccncc1"))))
             return 10;
-        else if (smile.equals("c1cncnc1"))
+        else if (smile.equals(cansmi(smipar.parseSmiles("c1cncnc1"))))
             return 12;
-        else if (smile.equals("c1ccccc1")) return 5;
+        else if (smile.equals(cansmi(smipar.parseSmiles("c1ccccc1"))))
+            return 5;
 
         int ncount = 0;
         for (int i = 0; i < ring.getAtomCount(); i++) {
