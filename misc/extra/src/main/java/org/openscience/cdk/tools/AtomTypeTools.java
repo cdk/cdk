@@ -22,7 +22,6 @@ package org.openscience.cdk.tools;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -47,9 +46,15 @@ import java.util.Set;
 
 public class AtomTypeTools {
 
+    public static final int PYROLE_RING     = 4;
+    public static final int FURAN_RING      = 6;
+    public static final int THIOPHENE_RING  = 8;
+    public static final int PYRIDINE_RING   = 10;
+    public static final int PYRIMIDINE_RING = 12;
+    public static final int BENZENE_RING = 5;
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomTypeTools.class);
-    HOSECodeGenerator           hcg    = null;
-    SmilesGenerator             sg     = null;
+    HOSECodeGenerator hcg = null;
+    SmilesGenerator   sg  = null;
 
     /**
      * Constructor for the MMFF94AtomTypeMatcher object.
@@ -74,8 +79,8 @@ public class AtomTypeTools {
      *  </ul>
      *
      *@param aromaticity boolean true/false true if aromaticity should be calculated
-     *@return                sssrf ringSetofTheMolecule
-     *@exception  Exception  Description of the Exception
+     *@return sssrf ringSetofTheMolecule
+     *@exception Exception  Description of the Exception
      */
     public IRingSet assignAtomTypePropertiesToAtom(IAtomContainer molecule, boolean aromaticity) throws Exception {
         SmilesGenerator sg = new SmilesGenerator();
@@ -176,13 +181,25 @@ public class AtomTypeTools {
         return SmilesGenerator.unique().create(mol);
     }
 
+    private String PYRROLE_SMI    = null;
+    private String FURAN_SMI      = null;
+    private String THIOPHENE_SMI  = null;
+    private String PYRIDINE_SMI   = null;
+    private String PYRIMIDINE_SMI = null;
+    private String BENZENE_SMI    = null;
+
+    private static String smicache(String cached, SmilesParser smipar, String input) throws CDKException {
+        if (cached != null) return cached;
+        return cached = cansmi(smipar.parseSmiles(input));
+    }
+
     /**
      *  Identifies ringSystem and returns a number which corresponds to
      *  CDKChemicalRingConstant
      *
-     *@param  ring	Ring class with the ring system
+     *@param  ring    Ring class with the ring system
      *@param  smile  smile of the ring system
-     *@return     chemicalRingConstant
+     *@return chemicalRingConstant
      */
     private int ringSystemClassifier(IRing ring, String smile) throws CDKException {
         /* System.out.println("IN AtomTypeTools Smile:"+smile); */
@@ -190,18 +207,18 @@ public class AtomTypeTools {
 
         final SmilesParser smipar = new SmilesParser(ring.getBuilder());
 
-        if (smile.equals(cansmi(smipar.parseSmiles("c1cc[nH]c1"))))
-            return 4;
-        else if (smile.equals(cansmi(smipar.parseSmiles("c1ccoc1"))))
-            return 6;
-        else if (smile.equals(cansmi(smipar.parseSmiles("c1ccsc1"))))
-            return 8;
-        else if (smile.equals(cansmi(smipar.parseSmiles("c1ccncc1"))))
-            return 10;
-        else if (smile.equals(cansmi(smipar.parseSmiles("c1cncnc1"))))
-            return 12;
-        else if (smile.equals(cansmi(smipar.parseSmiles("c1ccccc1"))))
-            return 5;
+        if (smile.equals(smicache(PYRROLE_SMI, smipar, "c1cc[nH]c1")))
+            return PYROLE_RING;
+        else if (smile.equals(smicache(FURAN_SMI, smipar, "o1cccc1")))
+            return FURAN_RING;
+        else if (smile.equals(smicache(THIOPHENE_SMI, smipar, "c1ccsc1")))
+            return THIOPHENE_RING;
+        else if (smile.equals(smicache(PYRIDINE_SMI, smipar, "c1ccncc1")))
+            return PYRIDINE_RING;
+        else if (smile.equals(smicache(PYRIMIDINE_SMI, smipar, "c1cncnc1")))
+            return PYRIMIDINE_RING;
+        else if (smile.equals(smicache(BENZENE_SMI, smipar, "c1ccccc1")))
+            return BENZENE_RING;
 
         int ncount = 0;
         for (int i = 0; i < ring.getAtomCount(); i++) {
