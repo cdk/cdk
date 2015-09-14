@@ -24,8 +24,11 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,13 +43,18 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Checks the functionality of the AtomType-MMFF2AtomTypeMatcher.
  *
  * @cdk.module test-extra
  *
- * @see org.openscience.cdk.atomtype.MM2AtomTypeMatcher
+ * @see MM2AtomTypeMatcher
  */
+@Category(SlowTest.class)
 public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     private static ILoggingTool         logger          = LoggingToolFactory
@@ -153,7 +161,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
      * in the source. Ugly, but @AfterClass does not work because that
      * method cannot Assert.assert anything.
      */
-    @Test
+    @Ignore("Atom type matcher is incomplete")
     public void countTestedAtomTypes() {
         AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml",
                 SilentChemObjectBuilder.getInstance());

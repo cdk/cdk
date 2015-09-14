@@ -41,7 +41,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created    2005-18-07
  * @cdk.module     extra
  * @cdk.githash
+ * @deprecated Incomplete and error prone - use at your own risk.
  */
+@Deprecated
 public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 
     private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(MM2AtomTypeMatcher.class);
