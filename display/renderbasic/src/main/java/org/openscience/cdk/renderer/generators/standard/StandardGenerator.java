@@ -50,6 +50,7 @@ import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayDeque;
@@ -204,8 +205,6 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke,
                                                                                font, annotations);
 
-        Rectangle2D bounds = null;
-
         final HighlightStyle style = parameters.get(Highlighting.class);
         final double glowWidth = parameters.get(OuterGlowWidth.class);
 
@@ -240,7 +239,6 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 continue;
 
             if (symbols[i] == null) {
-                bounds = updateBounds(bounds, atom.getPoint2d().x, atom.getPoint2d().y);
                 continue;
             }
 
@@ -251,7 +249,6 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             ElementGroup symbolElements = new ElementGroup();
             for (Shape shape : symbols[i].getOutlines()) {
                 GeneralPath path = GeneralPath.shapeOf(shape, color);
-                bounds = updateBounds(bounds, path);
                 symbolElements.add(path);
             }
 
@@ -274,22 +271,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         // Add the Sgroups display elements to the front layer
         IRenderingElement sgroups = StandardSgroupGenerator.generate(parameters, stroke, font, foreground, container);
         frontLayer.add(sgroups);
-        bounds = updateBounds(bounds, sgroups);
-
-        // ensure annotations are included in the bound calculation
-        for (IRenderingElement element : annotations) {
-            if (element instanceof GeneralPath)
-                bounds = updateBounds(bounds, (GeneralPath) element);
-            else
-                throw new InternalError("Annotation element not included in bounds calculation");
-        }
 
         // Annotations are added to the front layer.
         frontLayer.add(annotations);
 
         ElementGroup group = new ElementGroup();
 
-        group.add(new Bounds(bounds.getMinX(), bounds.getMinY(), bounds.getMaxX(), bounds.getMaxY()));
         group.add(backLayer);
         group.add(middleLayer);
         group.add(frontLayer);
@@ -647,97 +634,6 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     static boolean isWedged(IBond bond) {
         return (bond.getStereo() == IBond.Stereo.UP || bond.getStereo() == IBond.Stereo.DOWN
                 || bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED);
-    }
-
-    /**
-     * Generic bounds update given a root element.
-     *
-     * @param bounds the current bounds of the diagram
-     * @param root the root rendering element (normally ElementGroup)
-     */
-    private static Rectangle2D updateBounds(Rectangle2D bounds, IRenderingElement root) {
-        Deque<IRenderingElement> elements = new ArrayDeque<>();
-        elements.push(root);
-        while (!elements.isEmpty()) {
-            IRenderingElement element = elements.poll();
-            if (element instanceof GeneralPath) {
-                bounds = updateBounds(bounds, (GeneralPath) element);
-            }
-            else if (element instanceof LineElement) {
-                LineElement lineElem = (LineElement) element;
-                bounds = updateBounds(bounds, lineElem.firstPointX, lineElem.firstPointY);
-                bounds = updateBounds(bounds, lineElem.secondPointX, lineElem.secondPointY);
-            }
-            else if (element instanceof ElementGroup) {
-                for (IRenderingElement child : (ElementGroup) element)
-                    elements.add(child);
-            }
-        }
-        return bounds;
-    }
-
-    /**
-     * Updating the bounds such that it contains every point in the provided path.
-     *
-     * @param bounds bounding box
-     * @param path   the path
-     */
-    private static Rectangle2D updateBounds(Rectangle2D bounds, GeneralPath path) {
-
-        double minX = Integer.MAX_VALUE;
-        double maxX = Integer.MIN_VALUE;
-        double minY = Integer.MAX_VALUE;
-        double maxY = Integer.MIN_VALUE;
-
-        double[] points = new double[6];
-        double x = 0, y = 0;
-        for (PathElement element : path.elements) {
-            element.points(points);
-
-            switch (element.type()) {
-                case MoveTo:
-                case LineTo:
-                    x = points[0];
-                    y = points[1];
-                    break;
-                case QuadTo:
-                    x = points[2];
-                    y = points[3];
-                    break;
-                case CubicTo:
-                    x = points[4];
-                    y = points[5];
-                    break;
-            }
-            minX = Math.min(minX, x);
-            maxX = Math.max(maxX, x);
-            minY = Math.min(minY, y);
-            maxY = Math.max(maxY, y);
-        }
-
-        bounds = updateBounds(bounds, minX, minY);
-        bounds = updateBounds(bounds, maxX, maxY);
-        return bounds;
-    }
-
-    /**
-     * Updating the bounds such that it contains the point {x, y}.
-     *
-     * @param bounds bounding box
-     * @param x      x-axis coordinate
-     * @param y      y-axis coordinate
-     */
-    private static Rectangle2D updateBounds(Rectangle2D bounds, double x, double y) {
-        if (bounds == null) {
-            return new Rectangle2D.Double(x, y, 0, 0);
-        } else {
-            double minX = Math.min(x, bounds.getMinX());
-            double maxX = Math.max(x, bounds.getMaxX());
-            double minY = Math.min(y, bounds.getMinY());
-            double maxY = Math.max(y, bounds.getMaxY());
-            bounds.setRect(minX, minY, maxX - minX, maxY - minY);
-            return bounds;
-        }
     }
 
     /**

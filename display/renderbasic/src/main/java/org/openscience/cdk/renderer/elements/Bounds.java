@@ -25,8 +25,13 @@
 package org.openscience.cdk.renderer.elements;
 
 
+import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
- * Defines a bound box element which the renderer can use to determine the true
+ * Defines a bounding box element which the renderer can use to determine the true
  * drawing limits. Using only atom coordinates adjuncts (e.g. hydrogen labels)
  * may be truncated. If a generator provide a bounding box element, then the
  * min/max bounds of all bounding boxes are utilised.
@@ -37,11 +42,20 @@ package org.openscience.cdk.renderer.elements;
  */
 public final class Bounds implements IRenderingElement {
 
-    /** Minimum x/y coordinates. */
-    public final double minX, minY;
+    /**
+     * Minimum x/y coordinates.
+     */
+    public double minX, minY;
 
-    /** Maximum x/y coordinates. */
-    public final double maxX, maxY;
+    /**
+     * Maximum x/y coordinates.
+     */
+    public double maxX, maxY;
+
+    /**
+     * Know which elements are within this bound box.
+     */
+    private final ElementGroup elements = new ElementGroup();
 
     /**
      * Specify the min/max coordinates of the bounding box.
@@ -56,6 +70,114 @@ public final class Bounds implements IRenderingElement {
         this.minY = y1;
         this.maxX = x2;
         this.maxY = y2;
+    }
+
+    /**
+     * An empty bounding box.
+     */
+    public Bounds() {
+        this(+Double.MAX_VALUE, +Double.MAX_VALUE,
+             -Double.MAX_VALUE, -Double.MAX_VALUE);
+    }
+
+    /**
+     * An bounding box around the specified element.
+     */
+    public Bounds(IRenderingElement element) {
+        this();
+        add(element);
+    }
+
+    /**
+     * Add the specified element bounds.
+     */
+    public void add(IRenderingElement element) {
+        elements.add(element);
+        traverse(element);
+    }
+
+    /**
+     * Ensure the point x,y is included in the bounding box.
+     *
+     * @param x x-coordinate
+     * @param y y-coordinate
+     */
+    public void add(double x, double y) {
+        if (x < minX) minX = x;
+        if (y < minY) minY = y;
+        if (x > maxX) maxX = x;
+        if (y > maxY) maxY = y;
+    }
+
+    /**
+     * Add one bounds to another.
+     *
+     * @param bounds other bounds
+     */
+    public void add(Bounds bounds) {
+        if (bounds.minX < minX) minX = bounds.minX;
+        if (bounds.minY < minY) minY = bounds.minY;
+        if (bounds.maxX > maxX) maxX = bounds.maxX;
+        if (bounds.maxY > maxY) maxY = bounds.maxY;
+    }
+
+    /**
+     * Add the provided general path to the bounding box.
+     *
+     * @param path general path
+     */
+    public void add(GeneralPath path) {
+        double[] points = new double[6];
+        for (org.openscience.cdk.renderer.elements.path.PathElement element : path.elements) {
+            element.points(points);
+            switch (element.type()) {
+                case MoveTo:
+                case LineTo:
+                    add(points[0], points[1]);
+                    break;
+                case QuadTo:
+                    add(points[2], points[3]);
+                    break;
+                case CubicTo:
+                    add(points[4], points[5]);
+                    break;
+            }
+        }
+    }
+
+    private void traverse(IRenderingElement newElement) {
+        Deque<IRenderingElement> stack = new ArrayDeque<>();
+        stack.push(newElement);
+        while (!stack.isEmpty()) {
+            final IRenderingElement element = stack.poll();
+            if (element instanceof Bounds) {
+                add((Bounds) element);
+            } else if (element instanceof GeneralPath) {
+                add((GeneralPath) element);
+            } else if (element instanceof LineElement) {
+                LineElement lineElem = (LineElement) element;
+                add(lineElem.firstPointX, lineElem.firstPointY);
+                add(lineElem.secondPointX, lineElem.secondPointY);
+            } else if (element instanceof ElementGroup) {
+                for (IRenderingElement child : (ElementGroup) element)
+                    stack.add(child);
+            } else {
+                // ignored from bounds calculation, we don't really
+                // care but log we skipped it
+                LoggingToolFactory.createLoggingTool(Bounds.class)
+                                  .warn(element.getClass() + " not included in bounds calculation");
+            }
+        }
+    }
+
+    /**
+     * Access the root rendering element, it contains all
+     * elements added to the bounds so far.
+     *
+     * @return root rendering element
+     */
+    public IRenderingElement root() {
+        return elements;
     }
 
     /**
@@ -76,13 +198,26 @@ public final class Bounds implements IRenderingElement {
         return maxY - minY;
     }
 
-    /** @inheritDoc */
+    /**
+     * The bounds are empty and contain no elements.
+     *
+     * @return bounds are empty (true) or not (false)
+     */
+    public final boolean isEmpty() {
+        return minX > maxX || minY > maxY;
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     */
     @Override
     public String toString() {
         return "{{" + minX + ", " + minY + "} - {" + maxX + ", " + maxY + "}}";
