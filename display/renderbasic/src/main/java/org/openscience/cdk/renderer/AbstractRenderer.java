@@ -523,31 +523,9 @@ public abstract class AbstractRenderer<T extends IChemObject> {
      * @return the bounds required (null if unspecified)
      */
     public Rectangle2D getBounds(IRenderingElement element) {
-
         if (element == null) return null;
-
-        double minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
-        double maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE;
-
-        if (element instanceof ElementGroup) {
-            for (IRenderingElement child : (ElementGroup) element) {
-                Rectangle2D bounds = getBounds(child);
-                if (bounds == null) continue;
-                if (bounds.getMinX() < minX) minX = bounds.getMinX();
-                if (bounds.getMinY() < minY) minY = bounds.getMinY();
-                if (bounds.getMaxX() > maxX) maxX = bounds.getMaxX();
-                if (bounds.getMaxY() > maxY) maxY = bounds.getMaxY();
-            }
-        } else if (element.getClass().equals(Bounds.class)) {
-            Bounds bounds = (Bounds) element;
-            if (bounds.minX < minX) minX = bounds.minX;
-            if (bounds.minY < minY) minY = bounds.minY;
-            if (bounds.maxX > maxX) maxX = bounds.maxX;
-            if (bounds.maxY > maxY) maxY = bounds.maxY;
-        }
-
-        if (minX == Integer.MAX_VALUE) return null;
-
-        return new Rectangle2D.Double(minX, minY, maxX - minX, maxY - minY);
+        final Bounds bounds = new Bounds(element);
+        return new Rectangle2D.Double(bounds.minX, bounds.minY,
+                                      bounds.width(), bounds.height());
     }
 }
