@@ -911,9 +911,22 @@ final class StandardBondGenerator {
      */
     private IRenderingElement generateTripleBond(IBond bond, IAtom atom1, IAtom atom2) {
         ElementGroup group = new ElementGroup();
-        group.add(generatePlainSingleBond(atom1, atom2));
-        group.add(generateCenteredDoubleBond(bond, atom1, atom2, Collections.<IBond> emptyList(),
-                Collections.<IBond> emptyList()));
+
+        final Point2d p1 = backOffPoint(atom1, atom2);
+        final Point2d p2 = backOffPoint(atom2, atom1);
+
+        final Vector2d perp = VecmathUtil.newPerpendicularVector(VecmathUtil.newUnitVector(p1, p2));
+        perp.scale(separation);
+
+        group.add(new LineElement(p1.x, p1.y,
+                                  p2.x, p2.y,
+                                  stroke, foreground));
+        group.add(new LineElement(p1.x + perp.x, p1.y + perp.y,
+                                  p2.x + perp.x, p2.y + perp.y,
+                                  stroke, foreground));
+        group.add(new LineElement(p1.x - perp.x, p1.y - perp.y,
+                                  p2.x - perp.x, p2.y - perp.y,
+                                  stroke, foreground));
 
         // add annotation label
         String label = StandardGenerator.getAnnotationLabel(bond);
