@@ -30,6 +30,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
+import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
@@ -107,8 +108,10 @@ public final class DepictionGenerator {
      */
     public static double DEFAULT_PX_MARGIN = 4;
 
-    private double width  = AUTOMATIC;
-    private double height = AUTOMATIC;
+    /**
+     * The dimensions (width x height) of the depiction.
+     */
+    private Dimensions dimensions = Dimensions.AUTOMATIC;
 
     /**
      * Storage of rendering parameters.
@@ -188,7 +191,24 @@ public final class DepictionGenerator {
      * @throws CDKException a depiction could not be generated
      */
     public Depiction depict(Iterable<IAtomContainer> mols, int nrow, int ncol) throws CDKException {
-        throw new UnsupportedOperationException("Not yet implemented");
+
+        // ensure we have coordinates, generate if not
+        for (IAtomContainer mol : mols)
+            ensure2dLayout(mol);
+
+        // setup the scale
+        List<IAtomContainer> molList = FluentIterable.from(mols).toList();
+        withParam(BasicSceneGenerator.Scale.class,
+                  caclModelScale(molList));
+
+        // generate bound rendering elements
+        final List<Bounds> molElems = generate(molList, 1, false);
+
+        return new MolGridDepiction(model,
+                                   molElems,
+                                   Collections.<Bounds>emptyList(), // skip titles for now
+                                   dimensions,
+                                   nrow, ncol);
     }
 
     /**
@@ -237,14 +257,14 @@ public final class DepictionGenerator {
         return grp;
     }
 
-    private List<IRenderingElement> generate(List<IAtomContainer> mols, int atomNum,
+    private List<Bounds> generate(List<IAtomContainer> mols, int atomNum,
                                              boolean pluses) throws CDKException {
-        List<IRenderingElement> elems = new ArrayList<>();
+        List<Bounds> elems = new ArrayList<>();
         int num = 0;
         for (IAtomContainer mol : mols) {
             if (pluses && elems.size() > 0)
                 elems.add(null); // ToDo need 'plus icons'
-            elems.add(generate(mol, atomNum));
+            elems.add(new Bounds(generate(mol, atomNum)));
             atomNum += mol.getAtomCount();
         }
         return elems;
@@ -390,8 +410,7 @@ public final class DepictionGenerator {
     public DepictionGenerator withSize(double w, double h) {
         if (w < 0 && h >= 0 || h < 0 && w >= 0)
             throw new UnsupportedOperationException("Both width and height must be automatic");
-        width = w;
-        height = h;
+        dimensions = w == AUTOMATIC ? Dimensions.AUTOMATIC : new Dimensions(w, h);
         return this;
     }
 
@@ -475,7 +494,7 @@ public final class DepictionGenerator {
 
     private double medianBondLength(Collection<IBond> bonds) {
         if (bonds.isEmpty())
-            return 0.75;
+            return 1.5;
         int nBonds = 0;
         double[] lengths = new double[bonds.size()];
         for (IBond bond : bonds) {
