@@ -141,6 +141,55 @@ final class MolGridDepiction extends Depiction {
 
     @Override
     String toVecStr(String fmt) {
-        throw new UnsupportedOperationException("not implemented yet");
+
+        // format margins and padding for raster images
+        final double margin  = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
+        final double padding = getPaddingValue(2 * margin);
+        final double scale   = model.get(BasicSceneGenerator.Scale.class);
+
+        // row and col offsets for alignment
+        double[] yOffset = new double[nRow+1];
+        double[] xOffset = new double[nCol+1];
+
+        Dimensions required    = Dimensions.ofGrid(molecules, yOffset, xOffset)
+                                           .scale(scale);
+
+        final Dimensions total = calcTotalDimensions(margin, padding, required);
+        final double fitting   = calcFitting(margin, padding, required);
+
+        // create the image for rendering
+        FreeHepWrapper wrapper = new FreeHepWrapper(fmt, total.w, total.h);
+
+        final AWTDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
+        wrapper.g2.setColor(model.get(BasicSceneGenerator.BackgroundColor.class));
+        wrapper.g2.fillRect(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h));
+
+        // compound the fitting and scaling into a single value
+        final double rescale = fitting * scale;
+
+        // x,y base coordinates include the margin and centering (only if fitting to a size)
+        final double xBase = margin + (total.w - 2*margin - (nCol-1)*padding - (rescale * xOffset[nCol])) / 2;
+        final double yBase = margin + (total.h - 2*margin - (nRow-1)*padding - (rescale * yOffset[nRow])) / 2;
+
+        for (int i = 0; i < molecules.size(); i++) {
+            final int row = i / nRow;
+            final int col = i % nCol;
+
+            // calc the 'view' bounds:
+            //  amount of padding depends on which row or column we are in.
+            //  the width/height of this col/row can be determined by the next offset
+            double x = xBase + col * padding + rescale * xOffset[col];
+            double y = yBase + row * padding + rescale * yOffset[row];
+            double w = rescale * (xOffset[col+1] - xOffset[col]);
+            double h = rescale * (yOffset[row+1] - yOffset[row]);
+
+            draw(visitor,
+                 molecules.get(i),
+                 new Rectangle2D.Double(x, y, w, h));
+        }
+
+        // we created the Graphic2d instance so need to dispose of it
+        wrapper.dispose();
+        return wrapper.toString();
     }
 }
