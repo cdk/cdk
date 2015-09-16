@@ -23,11 +23,13 @@
 
 package org.openscience.cdk.depict;
 
+import org.freehep.graphicsio.pdf.PDF;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -39,11 +41,13 @@ import java.util.List;
  */
 final class MolGridDepiction extends Depiction {
 
+    public static final double MM_TO_INCH = 0.0393700787;
+    public static final double MM_TO_POINT = 2.83464566751;
     private final RendererModel model;
     private final Dimensions    dimensions;
     private final int           nCol, nRow;
-    private final List<Bounds>  molecules;
-    private final List<Bounds>  titles;
+    private final List<Bounds> molecules;
+    private final List<Bounds> titles;
 
     public MolGridDepiction(RendererModel model,
                             List<Bounds> molecules,
@@ -63,19 +67,19 @@ final class MolGridDepiction extends Depiction {
     public BufferedImage toImg() {
 
         // format margins and padding for raster images
-        final double margin  = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
+        final double margin = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
         final double padding = getPaddingValue(2 * margin);
-        final double scale   = model.get(BasicSceneGenerator.Scale.class);
+        final double scale = model.get(BasicSceneGenerator.Scale.class);
 
         // row and col offsets for alignment
-        double[] yOffset = new double[nRow+1];
-        double[] xOffset = new double[nCol+1];
+        double[] yOffset = new double[nRow + 1];
+        double[] xOffset = new double[nCol + 1];
 
-        Dimensions required    = Dimensions.ofGrid(molecules, yOffset, xOffset)
-                                           .scale(scale);
+        Dimensions required = Dimensions.ofGrid(molecules, yOffset, xOffset)
+                                        .scale(scale);
 
-        final Dimensions total = calcTotalDimensions(margin, padding, required);
-        final double fitting   = calcFitting(margin, padding, required);
+        final Dimensions total = calcTotalDimensions(margin, padding, required, null);
+        final double fitting = calcFitting(margin, padding, required);
 
         // create the image for rendering
         final BufferedImage img = new BufferedImage((int) Math.ceil(total.w), (int) Math.ceil(total.h),
@@ -131,12 +135,16 @@ final class MolGridDepiction extends Depiction {
         return resize;
     }
 
-    private Dimensions calcTotalDimensions(double margin, double padding, Dimensions required) {
+    private Dimensions calcTotalDimensions(double margin, double padding, Dimensions required, String fmt) {
         if (dimensions == Dimensions.AUTOMATIC) {
             return required.add(2 * margin, 2 * margin)
                            .add((nCol - 1) * padding, (nRow - 1) * padding);
         } else {
-            return dimensions;
+            // we want all vector graphics dims in MM
+            if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt))
+                return dimensions.scale(MM_TO_POINT);
+            else
+                return dimensions;
         }
     }
 
@@ -144,18 +152,30 @@ final class MolGridDepiction extends Depiction {
     String toVecStr(String fmt) {
 
         // format margins and padding for raster images
-        final double margin  = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
-        final double padding = getPaddingValue(2 * margin);
+        double margin  = getMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
+        double padding = getPaddingValue(2 * margin);
         final double scale   = model.get(BasicSceneGenerator.Scale.class);
+
+        // All vector graphics will be written in mm not px to we need to
+        // adjust the size of the molecules accordingly. For now the rescaling
+        // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
+        double zoom = rescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
+
+        // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
+        if (fmt.equals(PDF_FMT) || fmt.equals(PS_FMT)) {
+            zoom    *= MM_TO_POINT;
+            margin  *= MM_TO_POINT;
+            padding *= MM_TO_POINT;
+        }
 
         // row and col offsets for alignment
         double[] yOffset = new double[nRow+1];
         double[] xOffset = new double[nCol+1];
 
         Dimensions required    = Dimensions.ofGrid(molecules, yOffset, xOffset)
-                                           .scale(scale);
+                                           .scale(zoom * scale);
 
-        final Dimensions total = calcTotalDimensions(margin, padding, required);
+        final Dimensions total = calcTotalDimensions(margin, padding, required, fmt);
         final double fitting   = calcFitting(margin, padding, required);
 
         // create the image for rendering
@@ -166,7 +186,7 @@ final class MolGridDepiction extends Depiction {
         wrapper.g2.fillRect(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h));
 
         // compound the fitting and scaling into a single value
-        final double rescale = fitting * scale;
+        final double rescale = zoom * fitting * scale;
 
         // x,y base coordinates include the margin and centering (only if fitting to a size)
         final double xBase = margin + (total.w - 2*margin - (nCol-1)*padding - (rescale * xOffset[nCol])) / 2;
@@ -185,7 +205,7 @@ final class MolGridDepiction extends Depiction {
             double h = rescale * (yOffset[row+1] - yOffset[row]);
 
             draw(visitor,
-                 1d,
+                 zoom,
                  molecules.get(i),
                  new Rectangle2D.Double(x, y, w, h));
         }

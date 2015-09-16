@@ -24,7 +24,6 @@
 package org.openscience.cdk.depict;
 
 import org.freehep.graphicsio.pdf.PDFGraphics2D;
-import org.freehep.graphicsio.ps.PSGraphics2D;
 import org.freehep.graphicsio.svg.SVGGraphics2D;
 
 import java.awt.Dimension;
@@ -33,6 +32,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 
 /**
  * Internal - wrapper around the FreeHEP vector graphics output that makes things consistent
@@ -62,12 +62,16 @@ final class FreeHepWrapper {
                 return svg;
             case Depiction.PDF_FMT:
                 PDFGraphics2D pdf = new PDFGraphics2D(out, dim);
+                Properties props = new Properties();
+                props.setProperty(PDFGraphics2D.FIT_TO_PAGE, "false");
+                props.setProperty(PDFGraphics2D.PAGE_SIZE, PDFGraphics2D.CUSTOM_PAGE_SIZE);
+                props.setProperty(PDFGraphics2D.CUSTOM_PAGE_SIZE, dim.width + ", " + dim.height);
+                props.setProperty(PDFGraphics2D.PAGE_MARGINS, "0, 0, 0, 0");
+                pdf.setProperties(props);
                 pdf.writeHeader();
                 return pdf;
             case Depiction.PS_FMT:
-                PSGraphics2D eps = new PSGraphics2D(out, dim);
-                eps.writeHeader();
-                return eps;
+                // can't scale page size correctly in FreeEHP atm
             default:
                 throw new IOException("Unsupported vector format, " + fmt);
         }
@@ -83,10 +87,6 @@ final class FreeHepWrapper {
                 case Depiction.PDF_FMT:
                     ((PDFGraphics2D) g2).writeTrailer();
                     ((PDFGraphics2D) g2).closeStream();
-                    break;
-                case Depiction.PS_FMT:
-                    ((PSGraphics2D) g2).writeTrailer();
-                    ((PSGraphics2D) g2).closeStream();
                     break;
             }
         } catch (IOException e) {
