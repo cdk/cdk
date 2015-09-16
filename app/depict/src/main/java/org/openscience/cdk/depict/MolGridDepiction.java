@@ -109,6 +109,7 @@ final class MolGridDepiction extends Depiction {
             double h = rescale * (yOffset[row+1] - yOffset[row]);
 
             draw(visitor,
+                 1d,
                  molecules.get(i),
                  new Rectangle2D.Double(x, y, w, h));
         }
@@ -184,6 +185,7 @@ final class MolGridDepiction extends Depiction {
             double h = rescale * (yOffset[row+1] - yOffset[row]);
 
             draw(visitor,
+                 1d,
                  molecules.get(i),
                  new Rectangle2D.Double(x, y, w, h));
         }

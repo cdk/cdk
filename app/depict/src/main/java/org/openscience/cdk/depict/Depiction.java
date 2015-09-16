@@ -277,11 +277,13 @@ public abstract class Depiction {
      * Low-level draw method used by other rendering methods.
      *
      * @param visitor    the draw visitor
+     * @param bounds     a bound rendering element
+     * @param zoom       if the diagram is zoomed at all
      * @param viewBounds the view bounds - the root will be centered in the bounds
      */
-    protected final void draw(IDrawVisitor visitor, Bounds bounds, Rectangle2D viewBounds) {
+    protected final void draw(IDrawVisitor visitor, double zoom, Bounds bounds, Rectangle2D viewBounds) {
 
-        double modelScale = model.get(BasicSceneGenerator.Scale.class);
+        double modelScale = zoom * model.get(BasicSceneGenerator.Scale.class);
         double zoomToFit = Math.min(viewBounds.getWidth() / (bounds.width() * modelScale),
                                     viewBounds.getHeight() / (bounds.height() * modelScale));
 
