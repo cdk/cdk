@@ -64,7 +64,7 @@ final class FreeHepWrapper {
                 PDFGraphics2D pdf = new PDFGraphics2D(out, dim);
                 pdf.writeHeader();
                 return pdf;
-            case Depiction.EPS_FMT:
+            case Depiction.PS_FMT:
                 PSGraphics2D eps = new PSGraphics2D(out, dim);
                 eps.writeHeader();
                 return eps;
@@ -84,7 +84,7 @@ final class FreeHepWrapper {
                     ((PDFGraphics2D) g2).writeTrailer();
                     ((PDFGraphics2D) g2).closeStream();
                     break;
-                case Depiction.EPS_FMT:
+                case Depiction.PS_FMT:
                     ((PSGraphics2D) g2).writeTrailer();
                     ((PSGraphics2D) g2).closeStream();
                     break;

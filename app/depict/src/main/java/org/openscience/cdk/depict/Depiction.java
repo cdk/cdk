@@ -21,7 +21,6 @@ package org.openscience.cdk.depict;
 import com.google.common.base.Charsets;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
-import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
@@ -56,9 +55,9 @@ public abstract class Depiction {
     public static final String SVG_FMT = "svg";
 
     /**
-     * Encapsulated PostScript (EPS) format key.
+     * PostScript (PS) format key.
      */
-    public static final String EPS_FMT = "eps";
+    public static final String PS_FMT = "ps";
 
     /**
      * Portable Document Format (PDF) format key.
@@ -117,7 +116,7 @@ public abstract class Depiction {
      * @return eps content
      */
     public final String toEpsStr() {
-        return toVecStr(EPS_FMT);
+        return toVecStr(PS_FMT);
     }
 
     /**
@@ -151,7 +150,7 @@ public abstract class Depiction {
      * @return margin
      */
     double getMarginValue(final double defaultMargin) {
-        double margin  = model.get(BasicSceneGenerator.Margin.class);
+        double margin = model.get(BasicSceneGenerator.Margin.class);
         if (margin == AUTOMATIC)
             margin = defaultMargin;
         return margin;
@@ -175,8 +174,8 @@ public abstract class Depiction {
         final List<String> formats = new ArrayList<>();
         formats.add(SVG_FMT);
         formats.add(SVG_FMT.toUpperCase(Locale.ROOT));
-        formats.add(EPS_FMT);
-        formats.add(EPS_FMT.toUpperCase(Locale.ROOT));
+        formats.add(PS_FMT);
+        formats.add(PS_FMT.toUpperCase(Locale.ROOT));
         formats.add(PDF_FMT);
         formats.add(PDF_FMT.toUpperCase(Locale.ROOT));
         formats.addAll(Arrays.asList(ImageIO.getWriterFormatNames()));
@@ -194,7 +193,7 @@ public abstract class Depiction {
     public final void writeTo(String fmt, OutputStream out) throws IOException {
         if (fmt.equalsIgnoreCase(SVG_FMT)) {
             out.write(toSvgStr().getBytes(Charsets.UTF_8));
-        } else if (fmt.equalsIgnoreCase(EPS_FMT)) {
+        } else if (fmt.equalsIgnoreCase(PS_FMT)) {
             out.write(toEpsStr().getBytes(Charsets.UTF_8));
         } else if (fmt.equalsIgnoreCase(PDF_FMT)) {
             out.write(toPdfStr().getBytes(Charsets.UTF_8));
