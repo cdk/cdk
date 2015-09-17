@@ -58,10 +58,12 @@ final class FreeHepWrapper {
         switch (fmt) {
             case Depiction.SVG_FMT:
                 SVGGraphics2D svg = new SVGGraphics2D(out, dim);
+                svg.setCreator("Chemistry Development Kit (CDK)");
                 svg.writeHeader();
                 return svg;
             case Depiction.PDF_FMT:
                 PDFGraphics2D pdf = new PDFGraphics2D(out, dim);
+                pdf.setCreator("Chemistry Development Kit (CDK)");
                 Properties props = new Properties();
                 props.setProperty(PDFGraphics2D.FIT_TO_PAGE, "false");
                 props.setProperty(PDFGraphics2D.PAGE_SIZE, PDFGraphics2D.CUSTOM_PAGE_SIZE);
