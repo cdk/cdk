@@ -46,8 +46,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A high-level API for depicting molecules and reactions.
@@ -143,7 +145,7 @@ public final class DepictionGenerator {
     /**
      * Object that should be highlighted
      */
-    private List<IChemObject> highlight;
+    private Map<IChemObject, Color> highlight = new HashMap<>();
 
     /**
      * Create a depiction generator using the standard sans-serif
@@ -220,6 +222,10 @@ public final class DepictionGenerator {
         // lengths are the same.
         List<Double> scaleFactors = prepareCoords(mols);
 
+        // highlight parts
+        for (Map.Entry<IChemObject,Color> e : highlight.entrySet())
+            e.getKey().setProperty(StandardGenerator.HIGHLIGHT_COLOR, e.getValue());
+
         // setup the model scale
         List<IAtomContainer> molList = FluentIterable.from(mols).toList();
         withParam(BasicSceneGenerator.Scale.class,
@@ -237,6 +243,10 @@ public final class DepictionGenerator {
             for (IAtomContainer mol : mols)
                 titles.add(generateTitle(mol));
         }
+
+        // remove current highlight setting
+        for (IChemObject obj: highlight.keySet())
+            obj.removeProperty(StandardGenerator.HIGHLIGHT_COLOR);
 
         return new MolGridDepiction(model, molElems, titles, dimensions, nrow, ncol);
     }
@@ -305,12 +315,6 @@ public final class DepictionGenerator {
             }
         }
 
-        // highlight
-        if (highlight != null) {
-            for (IChemObject obj : highlight)
-                obj.setProperty(StandardGenerator.HIGHLIGHT_COLOR, Color.RED);
-        }
-
         ElementGroup grp = new ElementGroup();
         for (IGenerator<IAtomContainer> gen : gens)
             grp.add(gen.generate(molecule, model));
@@ -320,10 +324,6 @@ public final class DepictionGenerator {
             for (IAtom atom : molecule.atoms()) {
                 atom.removeProperty(StandardGenerator.ANNOTATION_LABEL);
             }
-        }
-        if (highlight != null) {
-            for (IChemObject obj : highlight)
-                obj.removeProperty(StandardGenerator.HIGHLIGHT_COLOR);
         }
 
         return grp;
@@ -510,9 +510,8 @@ public final class DepictionGenerator {
      * Highlight the provided set of atoms and bonds in the depiction in the
      * specified color.
      * <p/>
-     * Calling this methods replaces any previous highlight. To highlight multiple
-     * parts in different colours manually set the atom/bond property {@link
-     * StandardGenerator#HIGHLIGHT_COLOR}.
+     * Calling this methods appends to the current highlight buffer. The buffer
+     * is cleared after each depiction is generated (e.g. {@link #depict(IAtomContainer)}).
      *
      * @param chemObjs set of atoms and bonds
      * @param color    the color to highlight
@@ -520,8 +519,9 @@ public final class DepictionGenerator {
      * @see StandardGenerator#HIGHLIGHT_COLOR
      */
     public DepictionGenerator withHighlight(Iterable<IChemObject> chemObjs, Color color) {
-        this.highlight = FluentIterable.from(chemObjs).toList();
-        throw new UnsupportedOperationException("Not yet implemented");
+        for (IChemObject chemObj : chemObjs)
+            highlight.put(chemObj, color);
+        return this;
     }
 
     /**
