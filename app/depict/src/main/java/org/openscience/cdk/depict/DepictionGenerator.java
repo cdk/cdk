@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -214,17 +215,21 @@ public final class DepictionGenerator {
      */
     public Depiction depict(Iterable<IAtomContainer> mols, int nrow, int ncol) throws CDKException {
 
-        // ensure we have coordinates, generate if not
-        for (IAtomContainer mol : mols)
-            ensure2dLayout(mol);
+        // ensure we have coordinates, generate them if not
+        // we also rescale the molecules such that all bond
+        // lengths are the same.
+        List<Double> scaleFactors = prepareCoords(mols);
 
-        // setup the scale
+        // setup the model scale
         List<IAtomContainer> molList = FluentIterable.from(mols).toList();
         withParam(BasicSceneGenerator.Scale.class,
                   caclModelScale(molList));
 
         // generate bound rendering elements
         final List<Bounds> molElems = generate(molList, 1, false);
+
+        // reset molecule coordinates
+        resetCoords(mols, scaleFactors);
 
         // generate titles (if enabled)
         final List<Bounds> titles = new ArrayList<>();
@@ -234,6 +239,48 @@ public final class DepictionGenerator {
         }
 
         return new MolGridDepiction(model, molElems, titles, dimensions, nrow, ncol);
+    }
+
+    /**
+     * Prepare a collection of molecules for rendering. If not coordinates are
+     * present they are generated, if coordinates exists they are scaled to
+     * be consistent (length=1.5).
+     *
+     * @param mols molecules
+     * @return coordinates
+     * @throws CDKException
+     */
+    private List<Double> prepareCoords(Iterable<IAtomContainer> mols) throws CDKException {
+        List<Double> scaleFactors = new ArrayList<>();
+        for (IAtomContainer mol : mols) {
+            if (ensure2dLayout(mol)) {
+                scaleFactors.add(Double.NaN);
+            } else {
+                final double factor = GeometryUtil.getScaleFactor(mol, 1.5);
+                GeometryUtil.scaleMolecule(mol, factor);
+                scaleFactors.add(factor);
+            }
+        }
+        return scaleFactors;
+    }
+
+    /**
+     * Reset the coordinates to their position before rendering.
+     *
+     * @param mols molecules
+     * @param scales how molecules were scaled
+     */
+    private void resetCoords(Iterable<IAtomContainer> mols, List<Double> scales) {
+        Iterator<Double> it = scales.iterator();
+        for (IAtomContainer mol : mols) {
+            final double factor = it.next();
+            if (!Double.isNaN(factor)) {
+                GeometryUtil.scaleMolecule(mol, 1 / factor);
+            } else {
+                for (IAtom atom : mol.atoms())
+                    atom.setPoint2d(null);
+            }
+        }
     }
 
     /**
@@ -317,12 +364,15 @@ public final class DepictionGenerator {
      *
      * @param container a molecule
      * @throws CDKException coordinates could not be generated
+     * @return if coordinates needed to be generated
      */
-    private void ensure2dLayout(IAtomContainer container) throws CDKException {
+    private boolean ensure2dLayout(IAtomContainer container) throws CDKException {
         if (!GeometryUtil.has2DCoordinates(container)) {
             sdg.setMolecule(container, false);
             sdg.generateCoordinates();
+            return true;
         }
+        return false;
     }
 
     /**
