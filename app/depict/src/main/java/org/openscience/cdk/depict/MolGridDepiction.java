@@ -23,16 +23,15 @@
 
 package org.openscience.cdk.depict;
 
-import org.freehep.graphicsio.pdf.PDF;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,8 +45,7 @@ final class MolGridDepiction extends Depiction {
     private final RendererModel model;
     private final Dimensions    dimensions;
     private final int           nCol, nRow;
-    private final List<Bounds> molecules;
-    private final List<Bounds> titles;
+    private final List<Bounds>  elements;
 
     public MolGridDepiction(RendererModel model,
                             List<Bounds> molecules,
@@ -57,25 +55,49 @@ final class MolGridDepiction extends Depiction {
         super(model);
         this.model = model;
         this.dimensions = dimensions;
+
+        this.elements = new ArrayList<>();
+
+        // degenerate case is when no title are provided
+        if (titles.isEmpty()) {
+            elements.addAll(molecules);
+        } else {
+            assert molecules.size() == titles.size();
+            // interweave molecules and titles
+            for (int r = 0; r < nRow; r++) {
+                final int fromIndex = r * nCol;
+                final int toIndex = Math.min(molecules.size(), (r + 1) * nCol);
+                if (fromIndex >= toIndex)
+                    break;
+
+                final List<Bounds> molsublist = molecules.subList(fromIndex, toIndex);
+                // need to pad list
+                while (molsublist.size() < nCol)
+                    molsublist.add(new Bounds());
+
+                elements.addAll(molsublist);
+                elements.addAll(titles.subList(fromIndex, toIndex));
+            }
+            nRow *= 2;
+        }
+
         this.nCol = nCol;
         this.nRow = nRow;
-        this.molecules = molecules;
-        this.titles = titles;
     }
 
     @Override
     public BufferedImage toImg() {
 
         // format margins and padding for raster images
-        final double margin = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
-        final double padding = getPaddingValue(2 * margin);
-        final double scale = model.get(BasicSceneGenerator.Scale.class);
+        final double margin  = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
+        final double padding = getPaddingValue(3 * margin);
+        final double scale   = model.get(BasicSceneGenerator.Scale.class);
 
         // row and col offsets for alignment
         double[] yOffset = new double[nRow + 1];
         double[] xOffset = new double[nCol + 1];
 
-        Dimensions required = Dimensions.ofGrid(molecules, yOffset, xOffset)
+        Dimensions required = Dimensions.ofGrid(elements, yOffset, xOffset)
                                         .scale(scale);
 
         final Dimensions total = calcTotalDimensions(margin, padding, required, null);
@@ -100,9 +122,14 @@ final class MolGridDepiction extends Depiction {
         final double xBase = margin + (total.w - 2*margin - (nCol-1)*padding - (rescale * xOffset[nCol])) / 2;
         final double yBase = margin + (total.h - 2*margin - (nRow-1)*padding - (rescale * yOffset[nRow])) / 2;
 
-        for (int i = 0; i < molecules.size(); i++) {
-            final int row = i / nRow;
+        for (int i = 0; i < elements.size(); i++) {
+            final int row = i / nCol;
             final int col = i % nCol;
+
+            // skip empty elements
+            final Bounds bounds = this.elements.get(i);
+            if (bounds.isEmpty())
+                continue;
 
             // calc the 'view' bounds:
             //  amount of padding depends on which row or column we are in.
@@ -112,10 +139,7 @@ final class MolGridDepiction extends Depiction {
             double w = rescale * (xOffset[col+1] - xOffset[col]);
             double h = rescale * (yOffset[row+1] - yOffset[row]);
 
-            draw(visitor,
-                 1d,
-                 molecules.get(i),
-                 new Rectangle2D.Double(x, y, w, h));
+            draw(visitor, 1d, bounds, rect(x, y, w, h));
         }
 
         // we created the Graphic2d instance so need to dispose of it
@@ -153,7 +177,7 @@ final class MolGridDepiction extends Depiction {
 
         // format margins and padding for raster images
         double margin  = getMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
-        double padding = getPaddingValue(2 * margin);
+        double padding = getPaddingValue(3 * margin);
         final double scale   = model.get(BasicSceneGenerator.Scale.class);
 
         // All vector graphics will be written in mm not px to we need to
@@ -172,7 +196,7 @@ final class MolGridDepiction extends Depiction {
         double[] yOffset = new double[nRow+1];
         double[] xOffset = new double[nCol+1];
 
-        Dimensions required    = Dimensions.ofGrid(molecules, yOffset, xOffset)
+        Dimensions required    = Dimensions.ofGrid(elements, yOffset, xOffset)
                                            .scale(zoom * scale);
 
         final Dimensions total = calcTotalDimensions(margin, padding, required, fmt);
@@ -192,8 +216,8 @@ final class MolGridDepiction extends Depiction {
         final double xBase = margin + (total.w - 2*margin - (nCol-1)*padding - (rescale * xOffset[nCol])) / 2;
         final double yBase = margin + (total.h - 2*margin - (nRow-1)*padding - (rescale * yOffset[nRow])) / 2;
 
-        for (int i = 0; i < molecules.size(); i++) {
-            final int row = i / nRow;
+        for (int i = 0; i < elements.size(); i++) {
+            final int row = i / nCol;
             final int col = i % nCol;
 
             // calc the 'view' bounds:
@@ -204,14 +228,15 @@ final class MolGridDepiction extends Depiction {
             double w = rescale * (xOffset[col+1] - xOffset[col]);
             double h = rescale * (yOffset[row+1] - yOffset[row]);
 
-            draw(visitor,
-                 zoom,
-                 molecules.get(i),
-                 new Rectangle2D.Double(x, y, w, h));
+            draw(visitor, zoom, elements.get(i), rect(x, y, w, h));
         }
 
         // we created the Graphic2d instance so need to dispose of it
         wrapper.dispose();
         return wrapper.toString();
+    }
+
+    private Rectangle2D.Double rect(double x, double y, double w, double h) {
+        return new Rectangle2D.Double(x, y, w, h);
     }
 }
