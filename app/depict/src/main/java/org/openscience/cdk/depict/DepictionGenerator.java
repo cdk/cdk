@@ -290,8 +290,8 @@ public final class DepictionGenerator {
         String title = mol.getProperty(CDKConstants.TITLE);
         if (title == null || title.isEmpty())
             return new Bounds();
-        final double scale = 1/model.get(BasicSceneGenerator.Scale.class) * model.get(StandardGenerator.AnnotationFontScale.class);
-        return new Bounds(StandardGenerator.embedText(font, title, model.get(StandardGenerator.AnnotationColor.class), scale));
+        final double scale = 1/model.get(BasicSceneGenerator.Scale.class) * model.get(RendererModel.TitleFontScale.class);
+        return new Bounds(StandardGenerator.embedText(font, title, model.get(RendererModel.TitleColor.class), scale));
     }
 
 
@@ -377,6 +377,42 @@ public final class DepictionGenerator {
     public DepictionGenerator withAnnotationColor(Color color) {
         return withParam(StandardGenerator.AnnotationColor.class,
                          color);
+    }
+
+    /**
+     * Set the size of annotations relative to atom symbols.
+     *
+     * @param scale the scale of annotations
+     * @return this generator for method chaining
+     * @see StandardGenerator.AnnotationFontScale
+     */
+    public DepictionGenerator withAnnotationScale(double scale) {
+        return withParam(StandardGenerator.AnnotationFontScale.class,
+                         scale);
+    }
+
+    /**
+     * Set the color titles will appear in.
+     *
+     * @param color the color of titles
+     * @return this generator for method chaining
+     * @see RendererModel.TitleColor
+     */
+    public DepictionGenerator withTitleColor(Color color) {
+        return withParam(RendererModel.TitleColor.class,
+                         color);
+    }
+
+    /**
+     * Set the size of titles compared to atom symbols.
+     *
+     * @param scale the scale of titles
+     * @return this generator for method chaining
+     * @see RendererModel.TitleFontScale
+     */
+    public DepictionGenerator withTitleScale(double scale) {
+        return withParam(RendererModel.TitleFontScale.class,
+                         scale);
     }
 
     /**

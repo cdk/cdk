@@ -127,6 +127,30 @@ public class RendererModel implements Serializable, Cloneable {
     private IGeneratorParameter<Map<IChemObject, Color>> colorHash           = new ColorHash();
 
     /**
+     * Size of title font relative compared to atom symbols
+     */
+    public static class TitleFontScale extends AbstractGeneratorParameter<Double> {
+
+        /** {@inheritDoc} */
+        @Override
+        public Double getDefault() {
+            return 0.8d;
+        }
+    }
+
+    /**
+     * Color of title text.
+     */
+    public static class TitleColor extends AbstractGeneratorParameter<Color> {
+
+        /** {@inheritDoc} */
+        @Override
+        public Color getDefault() {
+            return Color.RED;
+        }
+    }
+
+    /**
      * A map of {@link IGeneratorParameter} class names to instances.
      */
     private Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<String, IGeneratorParameter<?>>();
@@ -140,6 +164,8 @@ public class RendererModel implements Serializable, Cloneable {
         renderingParameters.put(externalHighlightColor.getClass().getName(), externalHighlightColor);
         renderingParameters.put(SelectionColor.class.getName(), new SelectionColor());
         renderingParameters.put(Padding.class.getName(), new Padding());
+        renderingParameters.put(TitleFontScale.class.getName(), new TitleFontScale());
+        renderingParameters.put(TitleColor.class.getName(), new TitleColor());
     }
 
     /**
