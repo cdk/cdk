@@ -20,7 +20,12 @@ package org.openscience.cdk.depict;
 
 import org.openscience.cdk.renderer.elements.Bounds;
 
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Internal: Immutable value class to help with store diagram dimensions
@@ -104,6 +109,43 @@ final class Dimensions {
             xOffset[i] += xOffset[i - 1];
 
         return new Dimensions(xOffset[nCol], yOffset[nRow]);
+    }
+
+    /**
+     * Determine grid size (nrow, ncol) that could be used
+     * for displaying a given number of elements.
+     *
+     * @param nElem number of elements
+     * @return grid dimensions (integers)
+     */
+    static Dimension determineGrid(int nElem) {
+        switch (nElem) {
+            case 0:
+                return new Dimension(0, 0);
+            case 1:
+                return new Dimension(1, 1);
+            case 2:
+                return new Dimension(2, 1);
+            case 3:
+                return new Dimension(3, 1);
+            case 4:
+                return new Dimension(2, 2);
+            case 5:
+                return new Dimension(3, 2);
+            case 6:
+                return new Dimension(3, 2);
+            case 7:
+                return new Dimension(4, 2);
+            case 8:
+                return new Dimension(4, 2);
+            case 9:
+                return new Dimension(3, 3);
+            default:
+                // not great but okay
+                int nrow = (int) Math.floor(Math.sqrt(nElem));
+                int ncol = (int) Math.ceil(nElem / (double) nrow);
+                return new Dimension(ncol, nrow);
+        }
     }
 
     @Override

@@ -186,6 +186,22 @@ public final class DepictionGenerator {
     }
 
     /**
+     * Depict a set of molecules, they will be depicted in a grid. The grid
+     * size (nrow x ncol) is determined automatically based on the number
+     * molecules.
+     *
+     * @param mols molecules
+     * @return depiction
+     * @throws CDKException a depiction could not be generated
+     * @see #depict(Iterable, int, int)
+     */
+    public Depiction depict(Iterable<IAtomContainer> mols) throws CDKException {
+        int nMols = FluentIterable.from(mols).size();
+        Dimension grid = Dimensions.determineGrid(nMols);
+        return depict(mols, grid.height, grid.width);
+    }
+
+    /**
      * Depict a set of molecules, they will be depicted in a grid with the
      * specified number of rows and columns. Rows are filled first and then
      * columns.
