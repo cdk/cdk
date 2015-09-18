@@ -425,6 +425,22 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         return annOutline.translate(direction.x - center.getX(), direction.y - center.getY());
     }
 
+
+    /**
+     * Make an embedded text label for display in a CDK renderer.
+     *
+     * @param font the font to embedded
+     * @param text the text label
+     * @param color the color
+     * @param scale the resize, should include the model scale
+     * @return pre-rendered element
+     */
+    public static IRenderingElement embedText(Font font, String text, Color color, double scale) {
+        final TextOutline outline = new TextOutline(text, font).resize(scale, -scale);
+        return GeneralPath.shapeOf(outline.getOutline(),
+                                   color);
+    }
+
     /**
      * @inheritDoc
      */

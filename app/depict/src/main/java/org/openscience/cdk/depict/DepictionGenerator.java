@@ -19,6 +19,7 @@
 package org.openscience.cdk.depict;
 
 import com.google.common.collect.FluentIterable;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -119,6 +120,11 @@ public final class DepictionGenerator {
     private final RendererModel model = new RendererModel();
 
     /**
+     * Font used for depictions.
+     */
+    private final Font font;
+
+    /**
      * Diagram generators.
      */
     private final List<IGenerator<IAtomContainer>> gens = new ArrayList<>();
@@ -154,7 +160,7 @@ public final class DepictionGenerator {
      */
     public DepictionGenerator(Font font) {
         gens.add(new BasicSceneGenerator());
-        gens.add(new StandardGenerator(font));
+        gens.add(new StandardGenerator(this.font = font));
         for (IGenerator<IAtomContainer> gen : gens)
             model.registerParameters(gen);
 
@@ -204,11 +210,14 @@ public final class DepictionGenerator {
         // generate bound rendering elements
         final List<Bounds> molElems = generate(molList, 1, false);
 
-        return new MolGridDepiction(model,
-                                   molElems,
-                                   Collections.<Bounds>emptyList(), // skip titles for now
-                                   dimensions,
-                                   nrow, ncol);
+        // generate titles (if enabled)
+        final List<Bounds> titles = new ArrayList<>();
+        if (model.get(BasicSceneGenerator.ShowMoleculeTitle.class)) {
+            for (IAtomContainer mol : mols)
+                titles.add(generateTitle(mol));
+        }
+
+        return new MolGridDepiction(model, molElems, titles, dimensions, nrow, ncol);
     }
 
     /**
@@ -269,6 +278,23 @@ public final class DepictionGenerator {
         }
         return elems;
     }
+
+    /**
+     * Generate a bound element that is the title of the provided molecule. If title
+     * is not specified an empty bounds is returned.
+     *
+     * @param mol molecule
+     * @return bound element
+     */
+    private Bounds generateTitle(IAtomContainer mol) {
+        String title = mol.getProperty(CDKConstants.TITLE);
+        if (title == null || title.isEmpty())
+            return new Bounds();
+        final double scale = 1/model.get(BasicSceneGenerator.Scale.class) * model.get(StandardGenerator.AnnotationFontScale.class);
+        return new Bounds(StandardGenerator.embedText(font, title, model.get(StandardGenerator.AnnotationColor.class), scale));
+    }
+
+
 
     /**
      * Automatically generate coordinates if a user has provided a molecule without them.
