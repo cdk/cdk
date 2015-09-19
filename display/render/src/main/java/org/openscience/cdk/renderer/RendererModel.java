@@ -101,6 +101,18 @@ public class RendererModel implements Serializable, Cloneable {
     private IGeneratorParameter<Color> externalHighlightColor = new ExternalHighlightColor();
 
     /**
+     * Padding between molecules in a grid or row.
+     */
+    public static class Padding extends AbstractGeneratorParameter<Double> {
+
+        /** {@inheritDoc} */
+        @Override
+        public Double getDefault() {
+            return 16d;
+        }
+    }
+
+    /**
      * The color hash is used to color substructures.
      */
     public static class ColorHash extends AbstractGeneratorParameter<Map<IChemObject, Color>> {
@@ -115,6 +127,30 @@ public class RendererModel implements Serializable, Cloneable {
     private IGeneratorParameter<Map<IChemObject, Color>> colorHash           = new ColorHash();
 
     /**
+     * Size of title font relative compared to atom symbols
+     */
+    public static class TitleFontScale extends AbstractGeneratorParameter<Double> {
+
+        /** {@inheritDoc} */
+        @Override
+        public Double getDefault() {
+            return 0.8d;
+        }
+    }
+
+    /**
+     * Color of title text.
+     */
+    public static class TitleColor extends AbstractGeneratorParameter<Color> {
+
+        /** {@inheritDoc} */
+        @Override
+        public Color getDefault() {
+            return Color.RED;
+        }
+    }
+
+    /**
      * A map of {@link IGeneratorParameter} class names to instances.
      */
     private Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<String, IGeneratorParameter<?>>();
@@ -127,6 +163,9 @@ public class RendererModel implements Serializable, Cloneable {
         renderingParameters.put(colorHash.getClass().getName(), colorHash);
         renderingParameters.put(externalHighlightColor.getClass().getName(), externalHighlightColor);
         renderingParameters.put(SelectionColor.class.getName(), new SelectionColor());
+        renderingParameters.put(Padding.class.getName(), new Padding());
+        renderingParameters.put(TitleFontScale.class.getName(), new TitleFontScale());
+        renderingParameters.put(TitleColor.class.getName(), new TitleColor());
     }
 
     /**

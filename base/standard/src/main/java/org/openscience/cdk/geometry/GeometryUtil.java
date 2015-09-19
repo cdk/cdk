@@ -31,6 +31,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -162,8 +165,20 @@ public final class GeometryUtil {
     public static void scaleMolecule(IAtomContainer atomCon, double scaleFactor) {
         for (int i = 0; i < atomCon.getAtomCount(); i++) {
             if (atomCon.getAtom(i).getPoint2d() != null) {
-                atomCon.getAtom(i).getPoint2d().x *= scaleFactor;
-                atomCon.getAtom(i).getPoint2d().y *= scaleFactor;
+                atomCon.getAtom(i).getPoint2d().scale(scaleFactor);
+            }
+        }
+        // scale Sgroup brackets
+        if (atomCon.getProperty(CDKConstants.CTAB_SGROUPS) != null) {
+            List<Sgroup> sgroups = atomCon.getProperty(CDKConstants.CTAB_SGROUPS);
+            for (Sgroup sgroup : sgroups) {
+                List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+                if (brackets != null) {
+                    for (SgroupBracket bracket : brackets) {
+                        bracket.getFirstPoint().scale(scaleFactor);
+                        bracket.getSecondPoint().scale(scaleFactor);
+                    }
+                }
             }
         }
     }
@@ -198,6 +213,19 @@ public final class GeometryUtil {
                 atom.getPoint2d().add(vector);
             } else {
                 logger.warn("Could not translate atom in 2D space");
+            }
+        }
+        // translate Sgroup brackets
+        if (atomCon.getProperty(CDKConstants.CTAB_SGROUPS) != null) {
+            List<Sgroup> sgroups = atomCon.getProperty(CDKConstants.CTAB_SGROUPS);
+            for (Sgroup sgroup : sgroups) {
+                List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+                if (brackets != null) {
+                    for (SgroupBracket bracket : brackets) {
+                        bracket.getFirstPoint().add(vector);
+                        bracket.getSecondPoint().add(vector);
+                    }
+                }
             }
         }
     }
@@ -860,7 +888,7 @@ public final class GeometryUtil {
      */
 
     public static double getScaleFactor(IAtomContainer container, double bondLength) {
-        double currentAverageBondLength = getBondLengthAverage(container);
+        double currentAverageBondLength = getBondLengthMedian(container);
         if (currentAverageBondLength == 0 || Double.isNaN(currentAverageBondLength)) return 1;
         return bondLength / currentAverageBondLength;
     }

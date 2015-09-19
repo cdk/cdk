@@ -40,7 +40,7 @@ public class ElementGroup implements IRenderingElement, Iterable<IRenderingEleme
      * Create an empty element group.
      */
     public ElementGroup() {
-        elements = new ArrayList<IRenderingElement>();
+        elements = new ArrayList<>();
     }
 
     /** {@inheritDoc} */
@@ -55,8 +55,12 @@ public class ElementGroup implements IRenderingElement, Iterable<IRenderingEleme
      * @param element the element to add to the group
      */
     public void add(IRenderingElement element) {
-        if (element == null) return;
-        elements.add(element);
+        if (element != null) {
+            if (element.getClass().equals(ElementGroup.class))
+                elements.addAll(((ElementGroup) element).elements);
+            else
+                elements.add(element);
+        }
     }
 
     /**

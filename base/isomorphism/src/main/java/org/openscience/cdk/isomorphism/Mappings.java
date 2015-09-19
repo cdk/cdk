@@ -26,6 +26,7 @@ package org.openscience.cdk.isomorphism;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
@@ -406,6 +407,29 @@ public final class Mappings implements Iterable<int[]> {
      */
     public Iterable<Map<IChemObject, IChemObject>> toAtomBondMap() {
         return map(new ToAtomBondMap(query, target));
+    }
+
+    /**
+     * Obtain the chem objects (atoms and bonds) that have 'hit' in the target molecule.
+     *
+     * <blockquote><pre>
+     * for (IChemObject obj : mappings.toChemObjects()) {
+     *   if (obj instanceof IAtom) {
+     *      // this atom was 'hit' by the pattern
+     *   }
+     * }
+     * </pre></blockquote>
+     *
+     * @return lazy iterable of chem objects
+     */
+    public Iterable<IChemObject> toChemObjects() {
+        return FluentIterable.from(map(new ToAtomBondMap(query, target)))
+                             .transformAndConcat(new Function<Map<IChemObject, IChemObject>, Iterable<? extends IChemObject>>() {
+            @Override
+            public Iterable<? extends IChemObject> apply(Map<IChemObject, IChemObject> map) {
+                return map.values();
+            }
+        });
     }
 
     /**
