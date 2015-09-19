@@ -247,6 +247,7 @@ public final class DepictionGenerator {
         // remove current highlight setting
         for (IChemObject obj: highlight.keySet())
             obj.removeProperty(StandardGenerator.HIGHLIGHT_COLOR);
+        highlight.clear();
 
         return new MolGridDepiction(model, molElems, titles, dimensions, nrow, ncol);
     }
