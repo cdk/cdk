@@ -92,13 +92,14 @@ final class MolGridDepiction extends Depiction {
         final double margin  = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
         final double padding = getPaddingValue(3 * margin);
         final double scale   = model.get(BasicSceneGenerator.Scale.class);
+        final double zoom    = model.get(BasicSceneGenerator.ZoomFactor.class);
 
         // row and col offsets for alignment
         double[] yOffset = new double[nRow + 1];
         double[] xOffset = new double[nCol + 1];
 
         Dimensions required = Dimensions.ofGrid(elements, yOffset, xOffset)
-                                        .scale(scale);
+                                        .scale(scale * zoom);
 
         final Dimensions total = calcTotalDimensions(margin, padding, required, null);
         final double fitting = calcFitting(margin, padding, required);
@@ -115,8 +116,8 @@ final class MolGridDepiction extends Depiction {
         g2.setBackground(model.get(BasicSceneGenerator.BackgroundColor.class));
         g2.clearRect(0, 0, img.getWidth(), img.getHeight());
 
-        // compound the fitting and scaling into a single value
-        final double rescale = fitting * scale;
+        // compound the zoom, fitting and scaling into a single value
+        final double rescale = zoom * fitting * scale;
 
         // x,y base coordinates include the margin and centering (only if fitting to a size)
         final double xBase = margin + (total.w - 2*margin - (nCol-1)*padding - (rescale * xOffset[nCol])) / 2;
@@ -139,7 +140,7 @@ final class MolGridDepiction extends Depiction {
             double w = rescale * (xOffset[col+1] - xOffset[col]);
             double h = rescale * (yOffset[row+1] - yOffset[row]);
 
-            draw(visitor, 1d, bounds, rect(x, y, w, h));
+            draw(visitor, zoom, bounds, rect(x, y, w, h));
         }
 
         // we created the Graphic2d instance so need to dispose of it
@@ -183,7 +184,7 @@ final class MolGridDepiction extends Depiction {
         // All vector graphics will be written in mm not px to we need to
         // adjust the size of the molecules accordingly. For now the rescaling
         // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
-        double zoom = rescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
+        double zoom = model.get(BasicSceneGenerator.ZoomFactor.class) * rescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
 
         // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
         if (fmt.equals(PDF_FMT) || fmt.equals(PS_FMT)) {

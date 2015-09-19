@@ -572,6 +572,25 @@ public final class DepictionGenerator {
     }
 
     /**
+     * Specify a desired zoom factor - this changes the base size of a
+     * depiction and is used for uniformly making depictions bigger. If
+     * you would like to simply fill all available space (not recommended)
+     * use {@link #withFillToFit()}.
+     * <p/>
+     * The zoom is a scaling factor, specifying a zoom of 2 is double size,
+     * 0.5 half size, etc.
+     *
+     * @param zoom zoom factor
+     * @return this generator for method chaining
+     * @see BasicSceneGenerator.ZoomFactor
+     */
+    public DepictionGenerator withZoom(double zoom) {
+        withParam(BasicSceneGenerator.ZoomFactor.class,
+                  zoom);
+        return this;
+    }
+
+    /**
      * Resize depictions to fill all available space (only if a size is specified).
      * This generally isn't wanted as very small molecules (e.g. acetaldehyde) may
      * become huge.
