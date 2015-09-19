@@ -47,6 +47,7 @@ import static org.openscience.cdk.depict.DepictionGenerator.AUTOMATIC;
  *
  * @author John May
  */
+@SuppressWarnings("PMD.ShortVariable")
 public abstract class Depiction {
 
     /**
@@ -239,7 +240,7 @@ public abstract class Depiction {
     public final void writeTo(String path) throws IOException {
         final int i = path.lastIndexOf(DOT);
         if (i < 0 || i + 1 == path.length())
-            throw new IOException("Can not find suffix in provided path: " + path);
+            throw new IOException("Cannot find suffix in provided path: " + path);
         final String fmt = path.substring(i + 1);
         writeTo(fmt, path);
     }
