@@ -94,6 +94,7 @@ import java.util.Map;
  *
  * @author John may
  */
+@SuppressWarnings("PMD.ShortVariable")
 public final class DepictionGenerator {
 
     /**
@@ -529,7 +530,11 @@ public final class DepictionGenerator {
      * Specify a desired size of depiction. The units depend on the output format with
      * raster images using pixels and vector graphics using millimeters. By default depictions
      * are only ever made smaller if you would also like to make depictions fill all available
-     * space use the {@link #withFillToFit()} option.
+     * space use the {@link #withFillToFit()} option. <p/>
+     *
+     * Currently the size must either both be precisely specified (e.g. 256x256) or
+     * automatic (e.g. {@link #AUTOMATIC}x{@link #AUTOMATIC}) you cannot for example
+     * specify a fixed height and automatic width.
      *
      * @param w max width
      * @param h max height
@@ -538,7 +543,7 @@ public final class DepictionGenerator {
      */
     public DepictionGenerator withSize(double w, double h) {
         if (w < 0 && h >= 0 || h < 0 && w >= 0)
-            throw new UnsupportedOperationException("Both width and height must be automatic");
+            throw new IllegalArgumentException("Width and height must either both be automatic or both specified");
         dimensions = w == AUTOMATIC ? Dimensions.AUTOMATIC : new Dimensions(w, h);
         return this;
     }

@@ -33,6 +33,7 @@ import java.util.TreeSet;
  * grow/shrink as needed. Utility methods are provided for laying out rendering
  * elements in grids and rows.
  */
+@SuppressWarnings("PMD.ShortVariable")
 final class Dimensions {
 
     /**
@@ -72,7 +73,7 @@ final class Dimensions {
     }
 
     /**
-     * Determine how much space is needed to depiction the bound IRenderingElements if
+     * Determine how much space is needed to depiction the bound {@link IRenderingElements} if
      * they were aligned in a grid without padding or margins. The method takes arrays
      * for for the offset which are one item bigger than the size of the gird
      * (e.g. 3x2 would need arrays of length 4 and 2). The arrays are filled with the
