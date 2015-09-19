@@ -50,6 +50,7 @@ import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -436,9 +437,15 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @return pre-rendered element
      */
     public static IRenderingElement embedText(Font font, String text, Color color, double scale) {
+
         final TextOutline outline = new TextOutline(text, font).resize(scale, -scale);
-        return GeneralPath.shapeOf(outline.getOutline(),
-                                   color);
+
+        ElementGroup group = new ElementGroup();
+        group.add(GeneralPath.shapeOf(outline.getOutline(), color));
+        Rectangle2D logicalBounds = outline.getLogicalBounds();
+        group.add(new Bounds(logicalBounds.getMinX(), logicalBounds.getMinY(),
+                             logicalBounds.getMaxX(), logicalBounds.getMaxY()));
+        return group;
     }
 
     /**

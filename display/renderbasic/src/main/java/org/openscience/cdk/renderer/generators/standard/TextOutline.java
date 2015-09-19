@@ -41,6 +41,7 @@ import java.awt.geom.Rectangle2D;
  */
 final class TextOutline {
 
+    public static final FontRenderContext FONT_RENDER_CONTEXT = new FontRenderContext(new AffineTransform(), true, true);
     /**
      * The original text.
      */
@@ -123,6 +124,15 @@ final class TextOutline {
     }
 
     /**
+     * Access the transformed logical bounds of the outline text.
+     *
+     * @return logical bounds
+     */
+    Rectangle2D getLogicalBounds() {
+        return transformedBounds(glyphs.getLogicalBounds());
+    }
+
+    /**
      * Access the bounds of a shape that have been transformed.
      *
      * @param shape any shape
@@ -130,14 +140,19 @@ final class TextOutline {
      */
     private Rectangle2D transformedBounds(Shape shape) {
         Rectangle2D rectangle2D = shape.getBounds2D();
-        Point2D minPoint = new Point2D.Double(rectangle2D.getX(), rectangle2D.getY());
+        Point2D minPoint = new Point2D.Double(rectangle2D.getMinX(), rectangle2D.getMinY());
         Point2D maxPoint = new Point2D.Double(rectangle2D.getMaxX(), rectangle2D.getMaxY());
 
         transform.transform(minPoint, minPoint);
         transform.transform(maxPoint, maxPoint);
 
-        return new Rectangle2D.Double(minPoint.getX(), minPoint.getY(), maxPoint.getX() - minPoint.getX(),
-                maxPoint.getY() - minPoint.getY());
+        // may be flipped by transformation
+        double minX = Math.min(minPoint.getX(), maxPoint.getX());
+        double maxX = Math.max(minPoint.getX(), maxPoint.getX());
+        double minY = Math.min(minPoint.getY(), maxPoint.getY());
+        double maxY = Math.max(minPoint.getY(), maxPoint.getY());
+
+        return new Rectangle2D.Double(minX, minY, maxX - minX, maxY - minY);
     }
 
     /**
