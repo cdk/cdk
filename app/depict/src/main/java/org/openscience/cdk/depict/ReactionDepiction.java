@@ -136,7 +136,7 @@ final class ReactionDepiction extends Depiction {
                                             .scale(scale * zoom);
 
         final Dimensions total = calcTotalDimensions(margin, padding, mainRequired, sideRequired, null);
-        final double fitting = calcFitting(margin, padding, mainRequired, sideRequired);
+        final double fitting = calcFitting(margin, padding, mainRequired, sideRequired, null);
 
         // create the image for rendering
         final BufferedImage img = new BufferedImage((int) Math.ceil(total.w), (int) Math.ceil(total.h),
@@ -221,10 +221,114 @@ final class ReactionDepiction extends Depiction {
 
     @Override
     String toVecStr(String fmt) {
-        throw new UnsupportedOperationException();
+        // format margins and padding for raster images
+        final double scale = model.get(BasicSceneGenerator.Scale.class);
+
+        double margin = getMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
+        double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin);
+
+        // All vector graphics will be written in mm not px to we need to
+        // adjust the size of the molecules accordingly. For now the rescaling
+        // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
+        double zoom = model.get(BasicSceneGenerator.ZoomFactor.class) * rescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
+
+        // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
+        if (fmt.equals(PDF_FMT) || fmt.equals(PS_FMT)) {
+            zoom    *= MM_TO_POINT;
+            margin  *= MM_TO_POINT;
+            padding *= MM_TO_POINT;
+        }
+
+        // work out the required space of the main and side components separately
+        // will draw these in two passes (main then side) hence want different offsets for each
+        final int nSideCol = xOffsetSide.length - 1;
+        final int nSideRow = yOffsetSide.length - 1;
+        Dimensions sideRequired = sideDim.scale(scale * zoom);
+
+        double[] xOffsets = new double[mainComp.size() + 1];
+        double[] yOffsets = new double[2];
+        Dimensions mainRequired = Dimensions.ofGrid(mainComp, yOffsets, xOffsets)
+                                            .scale(scale * zoom);
+
+        final Dimensions total = calcTotalDimensions(margin, padding, mainRequired, sideRequired, fmt);
+        final double fitting = calcFitting(margin, padding, mainRequired, sideRequired, fmt);
+
+        // create the image for rendering
+        FreeHepWrapper wrapper = new FreeHepWrapper(fmt, total.w, total.h);
+        final AWTDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
+
+        // background color
+        wrapper.g2.setColor(model.get(BasicSceneGenerator.BackgroundColor.class));
+        wrapper.g2.fillRect(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h));
+
+        // compound the zoom, fitting and scaling into a single value
+        final double rescale = zoom * fitting * scale;
+        double mainCompOffset = 0;
+
+        // shift product x-offset to make room for the arrow / side components
+        if (!sideComps.isEmpty()) {
+            mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * mainRequired.h / 2;
+            for (int i = arrowIdx + 1; i < xOffsets.length; i++) {
+                xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
+            }
+        }
+
+        // MAIN COMPONENTS DRAW
+        // x,y base coordinates include the margin and centering (only if fitting to a size)
+        double xBase = margin + (total.w - 2 * margin - (mainComp.size() - 1) * padding - (nSideCol - 1) * padding - (rescale * xOffsets[mainComp.size()])) / 2;
+        double yBase = margin + (mainCompOffset) + (total.h - 2 * margin - (mainCompOffset + fitting * mainRequired.h)) / 2;
+        for (int i = 0; i < mainComp.size(); i++) {
+
+            // calc the 'view' bounds:
+            //  amount of padding depends on which row or column we are in.
+            //  the width/height of this col/row can be determined by the next offset
+            double x = xBase + i * padding + rescale * xOffsets[i];
+            double y = yBase;
+            double w = rescale * (xOffsets[i + 1] - xOffsets[i]);
+            double h = fitting * mainRequired.h;
+
+            // intercept arrow draw and make it as big as need
+            if (i == arrowIdx) {
+                w = rescale * (xOffsets[i + 1] - xOffsets[i]) + (nSideCol - 1) * padding;
+                draw(visitor, 1, createArrow(w, arrowHeight * rescale), rect(x, y, w, h));
+                continue;
+            }
+
+            // extra padding from the side components
+            if (i > arrowIdx)
+                x += (nSideCol - 1) * padding;
+
+            // skip empty elements
+            final Bounds bounds = this.mainComp.get(i);
+            if (bounds.isEmpty())
+                continue;
+
+            draw(visitor, zoom, bounds, rect(x, y, w, h));
+        }
+
+        // SIDE COMPONENTS DRAW
+        xBase += arrowIdx * padding + rescale * xOffsets[arrowIdx];
+        yBase -= mainCompOffset;
+        for (int i = 0; i < sideComps.size(); i++) {
+            final int row = i / nSideCol;
+            final int col = i % nSideCol;
+
+            // calc the 'view' bounds:
+            //  amount of padding depends on which row or column we are in.
+            //  the width/height of this col/row can be determined by the next offset
+            double x = xBase + col * padding + rescale * xOffsetSide[col];
+            double y = yBase + row * padding + rescale * yOffsetSide[row];
+            double w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
+            double h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
+
+            draw(visitor, zoom, sideComps.get(i), rect(x, y, w, h));
+        }
+
+        wrapper.dispose();
+        return wrapper.toString();
     }
 
-    private double calcFitting(double margin, double padding, Dimensions mainRequired, Dimensions sideRequired) {
+    private double calcFitting(double margin, double padding, Dimensions mainRequired, Dimensions sideRequired, String fmt) {
         if (dimensions == Dimensions.AUTOMATIC)
             return 1; // no fitting
 
@@ -241,12 +345,19 @@ final class ReactionDepiction extends Depiction {
         // tall we won't normally bit fitting by this param. If do fit by this
         // param we might make the depiction smaller then it needs to be but thats
         // better than cutting bits off
-        Dimensions targetDim = dimensions.add(-2 * margin, -2 * margin)
+        Dimensions targetDim = dimensions;
+
+        targetDim = targetDim.add(-2 * margin, -2 * margin)
                                          .add(-((mainComp.size() - 1) * padding), 0)
                                          .add(-(nSideCol - 1) * padding, -(nSideRow - 1) * padding);
 
+        // PDF and PS are in point to we need to account for that
+        if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt))
+            targetDim = targetDim.scale(MM_TO_POINT);
+
         double resize = Math.min(targetDim.w / required.w,
                                  targetDim.h / required.h);
+
         if (resize > 1 && !model.get(BasicSceneGenerator.FitToScreen.class))
             resize = 1;
         return resize;
