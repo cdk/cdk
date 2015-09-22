@@ -145,6 +145,11 @@ public final class DepictionGenerator {
     private boolean annotateAtomNum = false;
 
     /**
+     * Flag to indicate atom maps should be displayed.
+     */
+    private boolean annotateAtomMap = false;
+
+    /**
      * Object that should be highlighted
      */
     private Map<IChemObject, Color> highlight = new HashMap<>();
@@ -225,7 +230,7 @@ public final class DepictionGenerator {
         List<Double> scaleFactors = prepareCoords(mols);
 
         // highlight parts
-        for (Map.Entry<IChemObject,Color> e : highlight.entrySet())
+        for (Map.Entry<IChemObject, Color> e : highlight.entrySet())
             e.getKey().setProperty(StandardGenerator.HIGHLIGHT_COLOR, e.getValue());
 
         // setup the model scale
@@ -247,7 +252,7 @@ public final class DepictionGenerator {
         }
 
         // remove current highlight buffer
-        for (IChemObject obj: highlight.keySet())
+        for (IChemObject obj : highlight.keySet())
             obj.removeProperty(StandardGenerator.HIGHLIGHT_COLOR);
         highlight.clear();
 
@@ -357,6 +362,17 @@ public final class DepictionGenerator {
                                  Integer.toString(atomNum++));
             }
         }
+        else if (annotateAtomMap) {
+            for (IAtom atom : molecule.atoms()) {
+                if (atom.getProperty(StandardGenerator.ANNOTATION_LABEL) != null)
+                    throw new UnsupportedOperationException("Multiple annotation labels are not supported.");
+                Integer mapidx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING, Integer.class);
+                if (mapidx != null) {
+                    atom.setProperty(StandardGenerator.ANNOTATION_LABEL,
+                                     Integer.toString(mapidx));
+                }
+            }
+        }
 
         ElementGroup grp = new ElementGroup();
         for (IGenerator<IAtomContainer> gen : gens)
@@ -448,14 +464,41 @@ public final class DepictionGenerator {
     }
 
     /**
-     * Display atom numbers on the molecule. The numbers are based on the
-     * ordering of atoms in the molecule data structure and not a
-     * systematic system such as IUPAC numbering.
+     * Display atom numbers on the molecule or reaction. The numbers are based on the
+     * ordering of atoms in the molecule data structure and not a systematic system
+     * such as IUPAC numbering.
+     * <p/>
+     * Note: A depiction can not have both atom numbers and atom maps visible
+     * (but this can be achieved by manually setting the annotation).
      *
      * @return this generator for method chaining
+     * @see #withAtomMapNumbers()
+     * @see StandardGenerator#ANNOTATION_LABEL
      */
     public DepictionGenerator withAtomNumbers() {
+        if (annotateAtomMap)
+            throw new IllegalArgumentException();
         annotateAtomNum = true;
+        return this;
+    }
+
+    /**
+     * Display atom-atom mapping numbers on a reaction. Each atom map index
+     * is loaded from the property {@link CDKConstants#ATOM_ATOM_MAPPING}.
+     * <p/>
+     * Note: A depiction can not have both atom numbers and atom
+     * maps visible (but this can be achieved by manually setting
+     * the annotation).
+     *
+     * @return this generator for method chaining
+     * @see #withAtomNumbers()
+     * @see CDKConstants#ATOM_ATOM_MAPPING
+     * @see StandardGenerator#ANNOTATION_LABEL
+     */
+    public DepictionGenerator withAtomMapNumbers() {
+        if (annotateAtomNum)
+            throw new IllegalArgumentException();
+        annotateAtomMap = true;
         return this;
     }
 
