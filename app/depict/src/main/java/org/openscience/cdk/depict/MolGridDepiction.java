@@ -40,8 +40,6 @@ import java.util.List;
  */
 final class MolGridDepiction extends Depiction {
 
-    public static final double MM_TO_INCH = 0.0393700787;
-    public static final double MM_TO_POINT = 2.83464566751;
     private final RendererModel model;
     private final Dimensions    dimensions;
     private final int           nCol, nRow;
@@ -90,7 +88,7 @@ final class MolGridDepiction extends Depiction {
 
         // format margins and padding for raster images
         final double margin  = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
-        final double padding = getPaddingValue(3 * margin);
+        final double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin);
         final double scale   = model.get(BasicSceneGenerator.Scale.class);
         final double zoom    = model.get(BasicSceneGenerator.ZoomFactor.class);
 
@@ -178,7 +176,7 @@ final class MolGridDepiction extends Depiction {
 
         // format margins and padding for raster images
         double margin  = getMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
-        double padding = getPaddingValue(3 * margin);
+        double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin);
         final double scale   = model.get(BasicSceneGenerator.Scale.class);
 
         // All vector graphics will be written in mm not px to we need to

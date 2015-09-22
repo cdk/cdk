@@ -51,6 +51,17 @@ import static org.openscience.cdk.depict.DepictionGenerator.AUTOMATIC;
 public abstract class Depiction {
 
     /**
+     * For converting MM coordinates to PS Point (1/72 inch)
+     */
+    protected static final double MM_TO_POINT = 2.83464566751;
+
+    /**
+     * When no fixed padding value is specified we use margin
+     * multiplied by this value.
+     */
+    protected static final double DEFAULT_PADDING_FACTOR = 2;
+
+    /**
      * Structured Vector Graphics (SVG) format key.
      */
     public static final String SVG_FMT = "svg";
