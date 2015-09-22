@@ -24,6 +24,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
@@ -233,7 +234,7 @@ public final class DepictionGenerator {
                   caclModelScale(molList));
 
         // generate bound rendering elements
-        final List<Bounds> molElems = generate(molList, 1, false);
+        final List<Bounds> molElems = generate(molList, 1);
 
         // reset molecule coordinates
         resetCoords(mols, scaleFactors);
@@ -245,7 +246,7 @@ public final class DepictionGenerator {
                 titles.add(generateTitle(mol));
         }
 
-        // remove current highlight setting
+        // remove current highlight buffer
         for (IChemObject obj: highlight.keySet())
             obj.removeProperty(StandardGenerator.HIGHLIGHT_COLOR);
         highlight.clear();
@@ -303,7 +304,47 @@ public final class DepictionGenerator {
      * @throws CDKException a depiction could not be generated
      */
     public Depiction depict(IReaction rxn) throws CDKException {
-        throw new UnsupportedOperationException("Not yet implemented");
+
+        final List<IAtomContainer> reactants = toList(rxn.getReactants());
+        final List<IAtomContainer> products  = toList(rxn.getProducts());
+        final List<IAtomContainer> agents    = toList(rxn.getAgents());
+
+        final List<Double> reactantScales = prepareCoords(reactants);
+        final List<Double> productScales  = prepareCoords(products);
+        final List<Double> agentScales    = prepareCoords(agents);
+
+        // highlight parts
+        for (Map.Entry<IChemObject,Color> e : highlight.entrySet())
+            e.getKey().setProperty(StandardGenerator.HIGHLIGHT_COLOR, e.getValue());
+
+        // setup the model scale based on bond length
+        final double scale = caclModelScale(rxn);
+        withParam(BasicSceneGenerator.Scale.class, scale);
+
+        // reactant/product/agent element generation, we number the reactants, then products then agents
+        List<Bounds> reactantBounds = generate(reactants, 1);
+        List<Bounds> productBounds  = generate(toList(rxn.getProducts()), rxn.getReactantCount());
+        List<Bounds> agentBounds    = generate(toList(rxn.getAgents()), rxn.getReactantCount() + rxn.getProductCount());
+
+        // remove current highlight buffer
+        for (IChemObject obj: highlight.keySet())
+            obj.removeProperty(StandardGenerator.HIGHLIGHT_COLOR);
+        highlight.clear();
+
+        // generate a 'plus' element
+        Bounds plus = generatePlusSymbol(scale);
+
+        return new ReactionDepiction(model,
+                                     reactantBounds, productBounds, agentBounds,
+                                     plus, rxn.getDirection(), dimensions);
+    }
+
+    private Bounds generatePlusSymbol(double scale) {
+        return new Bounds(StandardGenerator.embedText(font, "+", Color.BLACK, 1 / scale));
+    }
+
+    private List<IAtomContainer> toList(IAtomContainerSet set) {
+        return FluentIterable.from(set.atomContainers()).toList();
     }
 
     private IRenderingElement generate(IAtomContainer molecule, int atomNum) throws CDKException {
@@ -331,13 +372,10 @@ public final class DepictionGenerator {
         return grp;
     }
 
-    private List<Bounds> generate(List<IAtomContainer> mols, int atomNum,
-                                             boolean pluses) throws CDKException {
+    private List<Bounds> generate(List<IAtomContainer> mols, int atomNum) throws CDKException {
         List<Bounds> elems = new ArrayList<>();
         int num = 0;
         for (IAtomContainer mol : mols) {
-            if (pluses && elems.size() > 0)
-                elems.add(null); // ToDo need 'plus icons'
             elems.add(new Bounds(generate(mol, atomNum)));
             atomNum += mol.getAtomCount();
         }
