@@ -20,18 +20,6 @@
  */
 package org.openscience.cdk.layout;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.concurrent.TimeUnit;
-
-import javax.vecmath.Vector2d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -40,7 +28,6 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -57,7 +44,17 @@ import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Vector2d;
+import java.io.InputStream;
+import java.io.StringReader;
+
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  *  A set of test cases for the StructureDiagramGenerator
@@ -321,19 +318,11 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     /**
      * @cdk.bug 884993
      */
-    @Test(timeout = 5000)
     public void testBug884993() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp
-                .parseSmiles("[N+](=O)([O-])C1=C(O)C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-].C23N(CCCC2)CCCC3");
-        try {
-            IAtomContainer ac = layout(mol);
-            assertTrue(GeometryUtil.has2DCoordinates(ac));
-            fail("This should have thrown a 'Molecule not connected' exception.");
-        } catch (Exception exc) {
-            // OK, an exception should have been thrown
-            if (!(exc.toString().indexOf("Molecule not connected") >= 0)) fail();
-        }
+        IAtomContainer mol = sp.parseSmiles("[N+](=O)([O-])C1=C(O)C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-].C23N(CCCC2)CCCC3");
+        IAtomContainer ac = layout(mol);
+        assertTrue(GeometryUtil.has2DCoordinates(ac));
     }
 
     /**
@@ -790,7 +779,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      *
      * @cdk.bug 1279
      */
-    @Test(timeout = 5000, expected = Exception.class)
+    @Test(timeout = 5000)
     public void testBug1279() throws Exception {
 
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -799,6 +788,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles(smiles);
 
         layout(mol);
+        for (IAtom atom : mol.atoms())
+            assertNotNull(atom.getPoint2d());
     }
 
     @Test public void alleneWithImplHDoesNotCauseNPE() throws Exception {
@@ -865,6 +856,15 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
 
         // N is at index 2
         assertThat(i, not(2));
+    }
+
+    @Test
+    public void handleFragments() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCOCC.o1cccc1");
+        layout(mol);
+        for (IAtom atom : mol.atoms())
+            assertNotNull(atom.getPoint2d());
     }
 
 }

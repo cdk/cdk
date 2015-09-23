@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -298,11 +299,14 @@ public class StructureDiagramGenerator {
             molecule.getAtom(0).setPoint2d(new Point2d(0, 0));
             return;
         }
-        if (!ConnectivityChecker.isConnected(molecule)) {
-            logger.debug("Molecule is not connected. Throwing exception.");
-            throw new CDKException(disconnectedMessage);
-        } else {
-            logger.debug("Molecule is connected.");
+
+        // intercept fragment molecules and lay them out in a grid
+        final IAtomContainerSet frags = ConnectivityChecker.partitionIntoMolecules(molecule);
+        if (frags.getAtomContainerCount() > 1) {
+            generateFragmentCoordinates(frags);
+            // don't call set molecule as it wipes x,y coordinates!
+            this.molecule = molecule;
+            return;
         }
 
         /*
@@ -463,6 +467,60 @@ public class StructureDiagramGenerator {
         // done on-demand (e.g. when writing a MDL Molfile)
         NonplanarBonds.assign(molecule);
 
+    }
+
+    private void generateFragmentCoordinates(IAtomContainerSet frags) throws CDKException {
+        List<double[]> limits = new ArrayList<>();
+        int numFragments = frags.getAtomContainerCount();
+
+        // generate the sub-layouts
+        for (IAtomContainer fragment : frags.atomContainers()) {
+            setMolecule(fragment, false);
+            generateCoordinates();
+            limits.add(GeometryUtil.getMinMax(fragment));
+        }
+
+        final int nRow = (int) Math.floor(Math.sqrt(numFragments));
+        final int nCol = (int) Math.ceil(numFragments / (double) nRow);
+
+        final double[] xOffsets = new double[nCol+1];
+        final double[] yOffsets = new double[nRow+1];
+
+        // calc the max widths/height of each row, we also add some
+        // spacing
+        double spacing = 1.5 * bondLength;
+        for (int i = 0; i < numFragments; i++) {
+            // +1 because first offset is always 0
+            int col = 1 + i % nCol;
+            int row = 1 + i / nCol;
+
+            double[] minmax = limits.get(i);
+            final double width  = spacing + (minmax[2] - minmax[0]);
+            final double height = spacing + (minmax[3] - minmax[1]);
+
+            if (width > xOffsets[col])
+                xOffsets[col] = width;
+            if (height > yOffsets[row])
+                yOffsets[row] = height;
+        }
+
+        // cumulative counts
+        for (int i = 1; i < xOffsets.length; i++)
+            xOffsets[i] += xOffsets[i-1];
+        for (int i = 1; i < yOffsets.length; i++)
+            yOffsets[i] += yOffsets[i-1];
+
+        // translate the molecules, note need to flip y axis
+        for (int i = 0; i < limits.size(); i++) {
+            final int row = nRow - (i / nCol) - 1;
+            final int col = i % nCol;
+            Point2d dest  = new Point2d((xOffsets[col] + xOffsets[col+1]) / 2,
+                                        (yOffsets[row] + yOffsets[row+1]) / 2);
+            double[] minmax = limits.get(i);
+            Point2d curr  = new Point2d((minmax[0]+minmax[2])/2, (minmax[1]+minmax[3])/2);
+            GeometryUtil.translate2D(frags.getAtomContainer(i),
+                                     dest.x - curr.x, dest.y - curr.y);
+        }
     }
 
     /**
