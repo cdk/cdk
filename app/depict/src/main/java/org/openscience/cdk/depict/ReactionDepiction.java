@@ -165,7 +165,7 @@ final class ReactionDepiction extends Depiction {
         // MAIN COMPONENTS DRAW
         // x,y base coordinates include the margin and centering (only if fitting to a size)
         double xBase = margin + (total.w - 2 * margin - (mainComp.size() - 1) * padding - (nSideCol - 1) * padding - (rescale * xOffsets[mainComp.size()])) / 2;
-        double yBase = margin + (mainCompOffset) + (total.h - 2 * margin - (mainCompOffset + fitting * mainRequired.h)) / 2;
+        double yBase = margin + (Math.max(mainCompOffset, 0)) + (total.h - 2 * margin - (Math.max(mainCompOffset, 0) + fitting * mainRequired.h)) / 2;
         for (int i = 0; i < mainComp.size(); i++) {
 
             // calc the 'view' bounds:
@@ -276,7 +276,7 @@ final class ReactionDepiction extends Depiction {
         // MAIN COMPONENTS DRAW
         // x,y base coordinates include the margin and centering (only if fitting to a size)
         double xBase = margin + (total.w - 2 * margin - (mainComp.size() - 1) * padding - (nSideCol - 1) * padding - (rescale * xOffsets[mainComp.size()])) / 2;
-        double yBase = margin + (mainCompOffset) + (total.h - 2 * margin - (mainCompOffset + fitting * mainRequired.h)) / 2;
+        double yBase = margin + Math.max(mainCompOffset, 0) + (total.h - 2 * margin - (Math.max(mainCompOffset, 0) + fitting * mainRequired.h)) / 2;
         for (int i = 0; i < mainComp.size(); i++) {
 
             // calc the 'view' bounds:
@@ -337,6 +337,8 @@ final class ReactionDepiction extends Depiction {
 
         // need padding in calculation
         double mainCompOffset = sideRequired.h > 0 ? sideRequired.h + (nSideRow * padding) - (mainRequired.h / 2) : 0;
+        if (mainCompOffset < 0)
+            mainCompOffset = 0;
 
         Dimensions required = mainRequired.add(sideRequired.w, mainCompOffset);
 
@@ -370,7 +372,9 @@ final class ReactionDepiction extends Depiction {
             final int nSideCol = xOffsetSide.length - 1;
             final int nSideRow = yOffsetSide.length - 1;
 
-            double mainCompOffset = sideRequired.h > 0 ? sideRequired.h + (nSideRow * padding) - (mainRequired.h / 2) : 0;
+            double mainCompOffset = sideRequired.h + (nSideRow * padding) - (mainRequired.h / 2);
+            if (mainCompOffset < 0)
+                mainCompOffset = 0;
 
             return mainRequired.add(2 * margin, 2 * margin)
                                .add(((mainComp.size() - 1) * padding), 0)
