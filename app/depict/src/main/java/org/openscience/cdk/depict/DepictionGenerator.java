@@ -317,10 +317,12 @@ public final class DepictionGenerator {
         for (IAtomContainer mol : mols) {
             if (ensure2dLayout(mol)) {
                 scaleFactors.add(Double.NaN);
-            } else {
+            } else if (mol.getBondCount() > 0){
                 final double factor = GeometryUtil.getScaleFactor(mol, 1.5);
                 GeometryUtil.scaleMolecule(mol, factor);
                 scaleFactors.add(factor);
+            } else {
+                scaleFactors.add(1d); // no bonds
             }
         }
         return scaleFactors;
@@ -389,6 +391,11 @@ public final class DepictionGenerator {
 
         // generate a 'plus' element
         Bounds plus = generatePlusSymbol(scale);
+
+        // reset the coordinates to how they were before we invoked depict
+        resetCoords(reactants, reactantScales);
+        resetCoords(products, productScales);
+        resetCoords(agents, agentScales);
 
         return new ReactionDepiction(model,
                                      reactantBounds, productBounds, agentBounds,
