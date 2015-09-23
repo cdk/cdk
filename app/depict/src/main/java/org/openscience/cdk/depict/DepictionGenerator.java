@@ -99,6 +99,40 @@ import java.util.Map;
 public final class DepictionGenerator {
 
     /**
+     * Visually distinct colors for highlighting.
+     * http://stackoverflow.com/a/4382138
+     * Kenneth L. Kelly and Deanne B. Judd.
+     * "Color: Universal Language and Dictionary of Names",
+     * National Bureau of Standards,
+     * Spec. Publ. 440, Dec. 1976, 189 pages.
+     */
+    private static final Color[] KELLY_MAX_CONTRAST = new Color[]{
+            new Color(0x00538A), // Strong Blue (sub-optimal for defective color vision)
+            new Color(0x93AA00), // Vivid Yellowish Green (sub-optimal for defective color vision)
+            new Color(0xC10020), // Vivid Red
+            new Color(0xFFB300), // Vivid Yellow
+            new Color(0x007D34), // Vivid Green (sub-optimal for defective color vision)
+            new Color(0xFF6800), // Vivid Orange
+            new Color(0xCEA262), // Grayish Yellow
+            new Color(0x817066), // Medium Gray
+            new Color(0xA6BDD7), // Very Light Blue
+            new Color(0x803E75), // Strong Purple
+
+            new Color(0xF6768E), // Strong Purplish Pink (sub-optimal for defective color vision)
+
+            new Color(0xFF7A5C), // Strong Yellowish Pink (sub-optimal for defective color vision)
+            new Color(0x53377A), // Strong Violet (sub-optimal for defective color vision)
+            new Color(0xFF8E00), // Vivid Orange Yellow (sub-optimal for defective color vision)
+            new Color(0xB32851), // Strong Purplish Red (sub-optimal for defective color vision)
+            new Color(0xF4C800), // Vivid Greenish Yellow (sub-optimal for defective color vision)
+            new Color(0x7F180D), // Strong Reddish Brown (sub-optimal for defective color vision)
+
+            new Color(0x593315), // Deep Yellowish Brown (sub-optimal for defective color vision)
+            new Color(0xF13A13), // Vivid Reddish Orange (sub-optimal for defective color vision)
+            new Color(0x232C16), // Dark Olive Green (sub-optimal for defective color vision)
+    };
+
+    /**
      * Magic value for indicating automatic parameters. These can
      * be overridden by a caller.
      */
@@ -148,6 +182,16 @@ public final class DepictionGenerator {
      * Flag to indicate atom maps should be displayed.
      */
     private boolean annotateAtomMap = false;
+
+    /**
+     * Flag to indicate atom maps should be highlighted with colored.
+     */
+    private boolean highlightAtomMap = false;
+
+    /**
+     * Colors to use in atom-map highlighting.
+     */
+    private Color[] atomMapColors = null;
 
     /**
      * Object that should be highlighted
@@ -314,12 +358,20 @@ public final class DepictionGenerator {
         final List<IAtomContainer> products  = toList(rxn.getProducts());
         final List<IAtomContainer> agents    = toList(rxn.getAgents());
 
+        final Map<IChemObject,Color> myHighlight = new HashMap<>();
+        if (highlightAtomMap) {
+            myHighlight.putAll(makeHighlightAtomMap(reactants, products));
+        }
+        // user highlight buffer pushes out the atom-map highlight if provided
+        myHighlight.putAll(highlight);
+        highlight.clear();
+
         final List<Double> reactantScales = prepareCoords(reactants);
         final List<Double> productScales  = prepareCoords(products);
         final List<Double> agentScales    = prepareCoords(agents);
 
         // highlight parts
-        for (Map.Entry<IChemObject,Color> e : highlight.entrySet())
+        for (Map.Entry<IChemObject,Color> e : myHighlight.entrySet())
             e.getKey().setProperty(StandardGenerator.HIGHLIGHT_COLOR, e.getValue());
 
         // setup the model scale based on bond length
@@ -332,9 +384,8 @@ public final class DepictionGenerator {
         List<Bounds> agentBounds    = generate(toList(rxn.getAgents()), rxn.getReactantCount() + rxn.getProductCount());
 
         // remove current highlight buffer
-        for (IChemObject obj: highlight.keySet())
+        for (IChemObject obj: myHighlight.keySet())
             obj.removeProperty(StandardGenerator.HIGHLIGHT_COLOR);
-        highlight.clear();
 
         // generate a 'plus' element
         Bounds plus = generatePlusSymbol(scale);
@@ -342,6 +393,71 @@ public final class DepictionGenerator {
         return new ReactionDepiction(model,
                                      reactantBounds, productBounds, agentBounds,
                                      plus, rxn.getDirection(), dimensions);
+    }
+
+    /**
+     * Internal - makes a map of the highlights for reaciton mapping.
+     *
+     * @param reactants reaction reactants
+     * @param products reaction products
+     * @return the highlight map
+     */
+    private Map<IChemObject,Color> makeHighlightAtomMap(List<IAtomContainer> reactants, List<IAtomContainer> products) {
+        Map<IChemObject,Color> colorMap = new HashMap<>();
+        Map<Integer,Color> mapToColor = new HashMap<>();
+        int colorIdx = -1;
+        for (IAtomContainer mol : reactants) {
+            int prevPalletIdx = colorIdx;
+            for (IAtom atom : mol.atoms()) {
+                int mapidx = accessAtomMap(atom);
+                if (mapidx > 0) {
+                    if (prevPalletIdx == colorIdx) {
+                        colorIdx++; // select next color
+                        if (colorIdx >= atomMapColors.length)
+                            throw new IllegalArgumentException("Not enough colors to highlight atom mapping, please provide mode");
+                    }
+                    Color color = atomMapColors[colorIdx];
+                    colorMap.put(atom, color);
+                    mapToColor.put(mapidx, color);
+                }
+            }
+            if (colorIdx > prevPalletIdx) {
+                for (IBond bond : mol.bonds()) {
+                    IAtom a1 = bond.getAtom(0);
+                    IAtom a2 = bond.getAtom(1);
+                    Color c1 = colorMap.get(a1);
+                    Color c2 = colorMap.get(a2);
+                    if (c1 != null && c1 == c2)
+                        colorMap.put(bond, c1);
+                }
+            }
+        }
+
+        for (IAtomContainer mol : products) {
+            for (IAtom atom : mol.atoms()) {
+                int mapidx = accessAtomMap(atom);
+                if (mapidx > 0) {
+                    colorMap.put(atom, mapToColor.get(mapidx));
+                }
+            }
+            for (IBond bond : mol.bonds()) {
+                IAtom a1 = bond.getAtom(0);
+                IAtom a2 = bond.getAtom(1);
+                Color c1 = colorMap.get(a1);
+                Color c2 = colorMap.get(a2);
+                if (c1 != null && c1 == c2)
+                    colorMap.put(bond, c1);
+            }
+        }
+
+        return colorMap;
+    }
+
+    private Integer accessAtomMap(IAtom atom) {
+        Integer mapidx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING, Integer.class);
+        if (mapidx == null)
+            return 0;
+        return mapidx;
     }
 
     private Bounds generatePlusSymbol(double scale) {
@@ -366,10 +482,9 @@ public final class DepictionGenerator {
             for (IAtom atom : molecule.atoms()) {
                 if (atom.getProperty(StandardGenerator.ANNOTATION_LABEL) != null)
                     throw new UnsupportedOperationException("Multiple annotation labels are not supported.");
-                Integer mapidx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING, Integer.class);
-                if (mapidx != null) {
-                    atom.setProperty(StandardGenerator.ANNOTATION_LABEL,
-                                     Integer.toString(mapidx));
+                int mapidx = accessAtomMap(atom);
+                if (mapidx > 0) {
+                    atom.setProperty(StandardGenerator.ANNOTATION_LABEL, Integer.toString(mapidx));
                 }
             }
         }
@@ -499,6 +614,37 @@ public final class DepictionGenerator {
         if (annotateAtomNum)
             throw new IllegalArgumentException();
         annotateAtomMap = true;
+        return this;
+    }
+
+    /**
+     * Adds to the highlight the coloring of reaction atom-maps. The
+     * optional color array is used as the pallet with which to
+     * highlight. If none is provided a set of high-contrast colors
+     * will be used.
+     *
+     * @return this generator for method chaining
+     * @see #withAtomMapNumbers()
+     * @see #withAtomMapHighlight()
+     */
+    public DepictionGenerator withAtomMapHighlight() {
+        return withAtomMapHighlight(KELLY_MAX_CONTRAST);
+    }
+
+    /**
+     * Adds to the highlight the coloring of reaction atom-maps. The
+     * optional color array is used as the pallet with which to
+     * highlight. If none is provided a set of high-contrast colors
+     * will be used.
+     *
+     * @param colors array of colors
+     * @return this generator for method chaining
+     * @see #withAtomMapNumbers()
+     * @see #withAtomMapHighlight()
+     */
+    public DepictionGenerator withAtomMapHighlight(Color[] colors) {
+        highlightAtomMap = true;
+        atomMapColors = colors;
         return this;
     }
 
