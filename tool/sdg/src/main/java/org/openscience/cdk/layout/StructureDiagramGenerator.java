@@ -298,6 +298,10 @@ public class StructureDiagramGenerator {
         if (molecule.getAtomCount() == 1) {
             molecule.getAtom(0).setPoint2d(new Point2d(0, 0));
             return;
+        } else if (molecule.getBondCount() == 1) {
+            molecule.getAtom(0).setPoint2d(new Point2d(0, 0));
+            molecule.getAtom(1).setPoint2d(new Point2d(bondLength, 0));
+            return;
         }
 
         // intercept fragment molecules and lay them out in a grid
