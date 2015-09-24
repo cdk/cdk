@@ -287,7 +287,20 @@ public class StructureDiagramGenerator {
      *  @param  firstBondVector          The vector of the first bond to lay out
      *  @throws CDKException             if an error occurs
      */
-    public void generateCoordinates(Vector2d firstBondVector) throws CDKException {
+    private void generateCoordinates(Vector2d firstBondVector) throws CDKException {
+        generateCoordinates(firstBondVector, false);
+    }
+
+    /**
+     *  The main method of this StructurDiagramGenerator. Assign a molecule to the
+     *  StructurDiagramGenerator, call the generateCoordinates() method and get
+     *  your molecule back.
+     *
+     *  @param  firstBondVector          The vector of the first bond to lay out
+     *  @throws CDKException             if an error occurs
+     */
+    private void generateCoordinates(Vector2d firstBondVector, boolean isFragment) throws CDKException {
+
         int safetyCounter = 0;
         /*
          * if molecule contains only one Atom, don't fail, simply set
@@ -305,12 +318,16 @@ public class StructureDiagramGenerator {
         }
 
         // intercept fragment molecules and lay them out in a grid
-        final IAtomContainerSet frags = ConnectivityChecker.partitionIntoMolecules(molecule);
-        if (frags.getAtomContainerCount() > 1) {
-            generateFragmentCoordinates(frags);
-            // don't call set molecule as it wipes x,y coordinates!
-            this.molecule = molecule;
-            return;
+        if (!isFragment) {
+            final IAtomContainerSet frags = ConnectivityChecker.partitionIntoMolecules(molecule);
+            if (frags.getAtomContainerCount() > 1) {
+                generateFragmentCoordinates(frags);
+                // don't call set molecule as it wipes x,y coordinates!
+                // this looks like a self assignment but actually the fragment
+                // method changes this.molecule
+                this.molecule = molecule;
+                return;
+            }
         }
 
         /*
@@ -480,7 +497,7 @@ public class StructureDiagramGenerator {
         // generate the sub-layouts
         for (IAtomContainer fragment : frags.atomContainers()) {
             setMolecule(fragment, false);
-            generateCoordinates();
+            generateCoordinates(DEFAULT_BOND_VECTOR, true);
             limits.add(GeometryUtil.getMinMax(fragment));
         }
 
