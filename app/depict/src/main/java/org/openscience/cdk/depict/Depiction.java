@@ -237,7 +237,7 @@ public abstract class Depiction {
      * @see #listFormats()
      */
     public final void writeTo(String fmt, String path) throws IOException {
-        writeTo(fmt, new File(replaceTildaWithHomeDir(ensureSuffix(path, fmt))));
+        writeTo(fmt, new File(replaceTildeWithHomeDir(ensureSuffix(path, fmt))));
     }
 
     /**
@@ -263,7 +263,7 @@ public abstract class Depiction {
      * @param path the file system path
      * @return normalised path
      */
-    private static String replaceTildaWithHomeDir(String path) {
+    private static String replaceTildeWithHomeDir(String path) {
         if (path.startsWith("~/"))
             return System.getProperty("user.home") + path.substring(1);
         return path;

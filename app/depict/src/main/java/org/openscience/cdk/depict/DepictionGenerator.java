@@ -358,7 +358,7 @@ public final class DepictionGenerator {
     }
 
     /**
-     * Prepare a collection of molecules for rendering. If not coordinates are
+     * Prepare a collection of molecules for rendering. If coordinates are not
      * present they are generated, if coordinates exists they are scaled to
      * be consistent (length=1.5).
      *
