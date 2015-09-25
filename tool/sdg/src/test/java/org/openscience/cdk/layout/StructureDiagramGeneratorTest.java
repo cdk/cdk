@@ -48,9 +48,13 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import javax.vecmath.Vector2d;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.HashSet;
+import java.util.Set;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -867,4 +871,137 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
             assertNotNull(atom.getPoint2d());
     }
 
+    @Test
+    public void ionicBondsInAlCl3() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[Al+3].[Cl-].[Cl-].[Cl-]");
+        layout(mol);
+        for (IAtom atom : mol.atoms())
+            assertNotNull(atom.getPoint2d());
+        assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(1).getPoint2d()),
+                   closeTo(SDG.getBondLength(), 0.001));
+        assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(2).getPoint2d()),
+                   closeTo(SDG.getBondLength(), 0.001));
+        assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(3).getPoint2d()),
+                   closeTo(SDG.getBondLength(), 0.001));
+    }
+
+    @Test
+    public void ionicBondsInK2CO3() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[K+].[O-]C(=O)[O-].[K+]");
+        layout(mol);
+        for (IAtom atom : mol.atoms())
+            assertNotNull(atom.getPoint2d());
+        assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(1).getPoint2d()),
+                   closeTo(SDG.getBondLength(), 0.001));
+        assertThat(mol.getAtom(4).getPoint2d().distance(mol.getAtom(5).getPoint2d()),
+                   closeTo(SDG.getBondLength(), 0.001));
+    }
+
+    // subjective... since the real structure is lattice but looks better than a grid
+    @Test
+    public void ionicBondsInLiAlH4() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[Li+].[Al+3].[Cl-].[Cl-].[Cl-].[Cl-]");
+        layout(mol);
+        for (IAtom atom : mol.atoms())
+            assertNotNull(atom.getPoint2d());
+        for (int i = 2; i < 5; i++) {
+            double distLi = mol.getAtom(0).getPoint2d().distance(mol.getAtom(i).getPoint2d());
+            double distAl = mol.getAtom(1).getPoint2d().distance(mol.getAtom(i).getPoint2d());
+            double diffLi = distLi - SDG.getBondLength();
+            double diffAl = distAl - SDG.getBondLength();
+            if (Math.abs(diffLi) > 0.001 && Math.abs(diffAl) > 0.001)
+                fail("Chlorine must be bond length from Al or Li atoms");
+        }
+    }
+
+    @Test
+    public void ionicBondsInSodiumBenzoate() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[Na+].[O-]C(=O)c1ccccc1");
+        layout(mol);
+        for (IAtom atom : mol.atoms())
+            assertNotNull(atom.getPoint2d());
+        assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(1).getPoint2d()),
+                   closeTo(SDG.getBondLength(), 0.001));
+    }
+
+    // SMILES have been shuffled the smiles to make it harder... otherwise we
+    // get it right by chance
+    @Test
+    public void chembl12276() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[Cl-].C(C1=CC=CC2=C(C=CC=C12)[N+](=O)[O-])[N+](C)(CCCl)CCCl");
+        layout(mol);
+        for (IAtom atom : mol.atoms())
+            assertNotNull(atom.getPoint2d());
+        assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(2).getPoint2d()),
+                   closeTo(SDG.getBondLength(), 0.001));
+    }
+
+    // An extreme test case suggest by Roger Sayle showing Humpty Dumpty reassembly
+    @Test
+    public void multipleSalts() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[K+].[Al+3].[Cl-].[Cl-].[K+].[Cl-].[Cl-].[Al+3].[Cl-].[Pt+2]([NH3])[NH3].[Cl-].[Cl-].[Cl-].[O-][C+]([O-])[O-]");
+        layout(mol);
+        for (IAtom atom : mol.atoms())
+            assertNotNull(atom.getPoint2d());
+
+        IAtom platinum = null;
+        Set<IAtom> aluminiums = new HashSet<>();
+        Set<IAtom> potassiums = new HashSet<>();
+        Set<IAtom> chlorines = new HashSet<>();
+        Set<IAtom> oxygens = new HashSet<>();
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getSymbol().equals("Cl"))
+                chlorines.add(atom);
+            else if (atom.getSymbol().equals("O"))
+                oxygens.add(atom);
+            else if (atom.getSymbol().equals("Al"))
+                aluminiums.add(atom);
+            else if (atom.getSymbol().equals("K"))
+                potassiums.add(atom);
+            else if (atom.getSymbol().equals("Pt"))
+                platinum = atom;
+        }
+
+        assertNotNull(platinum);
+        assertThat(potassiums.size(), is(2));
+        assertThat(oxygens.size(), is(3));
+        assertThat(chlorines.size(), is(8));
+
+        // platin has two chlorines...
+        int ptFound = 0;
+        for (IAtom chlorine : chlorines) {
+            double delta = chlorine.getPoint2d().distance(platinum.getPoint2d()) - SDG.getBondLength();
+            if (Math.abs(delta) < 0.01)
+                ptFound++;
+        }
+        assertThat(ptFound, is(2));
+
+        // K+ each have an oxygen
+        for (IAtom potassium : potassiums) {
+            int kFound = 0;
+            for (IAtom oxygen : oxygens) {
+                double delta = oxygen.getPoint2d().distance(potassium.getPoint2d()) - SDG.getBondLength();
+                if (Math.abs(delta) < 0.01)
+                    kFound++;
+            }
+            assertThat(kFound, is(1));
+        }
+
+        // Al+3 each have 3 chlorines
+        for (IAtom aluminium : aluminiums) {
+            int clFound = 0;
+            for (IAtom chlorine : chlorines) {
+                double delta = chlorine.getPoint2d().distance(aluminium.getPoint2d()) - SDG.getBondLength();
+                if (Math.abs(delta) < 0.01)
+                    clFound++;
+            }
+            assertThat(clFound, is(3));
+        }
+    }
 }
