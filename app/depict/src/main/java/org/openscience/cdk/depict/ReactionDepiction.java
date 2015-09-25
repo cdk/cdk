@@ -92,17 +92,24 @@ final class ReactionDepiction extends Depiction {
             this.mainComp.add(reactant);
             this.mainComp.add(plus);
         }
+
         // replacing trailing plus with placeholder for arrow
-        this.mainComp.set(this.mainComp.size() - 1, new Bounds());
+        if (reactants.isEmpty())
+            this.mainComp.add(new Bounds());
+        else
+            this.mainComp.set(this.mainComp.size() - 1, new Bounds());
+
         for (Bounds product : products) {
             this.mainComp.add(product);
             this.mainComp.add(plus);
         }
+
         // trailing plus not needed
-        this.mainComp.remove(this.mainComp.size() - 1);
+        if (!products.isEmpty())
+            this.mainComp.remove(this.mainComp.size() - 1);
 
         // arrow params
-        this.arrowIdx = reactants.size() + reactants.size() - 1;
+        this.arrowIdx = Math.max(reactants.size() + reactants.size() - 1, 0);
         this.direction = direction;
         this.arrowHeight = plus.height();
 
