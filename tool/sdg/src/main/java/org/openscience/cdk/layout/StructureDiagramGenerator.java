@@ -297,14 +297,15 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  The main method of this StructurDiagramGenerator. Assign a molecule to the
-     *  StructurDiagramGenerator, call the generateCoordinates() method and get
+     *  The main method of this StructureDiagramGenerator. Assign a molecule to the
+     *  StructureDiagramGenerator, call the generateCoordinates() method and get
      *  your molecule back.
      *
-     *  @param  firstBondVector          The vector of the first bond to lay out
-     *  @throws CDKException             if an error occurs
+     *  @param  firstBondVector the vector of the first bond to lay out
+     *  @param  isConnected the 'molecule' attribute is guaranteed to be connected (we have checked)
+     *  @throws CDKException problem occurred during layout
      */
-    private void generateCoordinates(Vector2d firstBondVector, boolean isFragment) throws CDKException {
+    private void generateCoordinates(Vector2d firstBondVector, boolean isConnected) throws CDKException {
 
         int safetyCounter = 0;
         /*
@@ -323,7 +324,7 @@ public class StructureDiagramGenerator {
         }
 
         // intercept fragment molecules and lay them out in a grid
-        if (!isFragment) {
+        if (!isConnected) {
             final IAtomContainerSet frags = ConnectivityChecker.partitionIntoMolecules(molecule);
             if (frags.getAtomContainerCount() > 1) {
                 generateFragmentCoordinates(molecule, toList(frags));
@@ -668,7 +669,7 @@ public class StructureDiagramGenerator {
     /**
      * Alternative method name "Humpty Dumpty" (a la. R Sayle).
      * <p/>
-     * (Re)bonding of ionic fragments from improved layout. This method takes a list
+     * (Re)bonding of ionic fragments for improved layout. This method takes a list
      * of two or more fragments and creates zero or more bonds (return value) that
      * should be temporarily used for layout generation. In general this problem is
      * difficult but since molecules will be laid out in a grid by default - any
