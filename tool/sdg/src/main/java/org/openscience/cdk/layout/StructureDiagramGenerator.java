@@ -292,7 +292,7 @@ public class StructureDiagramGenerator {
      *  @param  firstBondVector          The vector of the first bond to lay out
      *  @throws CDKException             if an error occurs
      */
-    private void generateCoordinates(Vector2d firstBondVector) throws CDKException {
+    public void generateCoordinates(Vector2d firstBondVector) throws CDKException {
         generateCoordinates(firstBondVector, false);
     }
 
