@@ -23,15 +23,21 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
+import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -287,6 +293,19 @@ public class StructureDiagramGenerator {
      *  @throws CDKException             if an error occurs
      */
     public void generateCoordinates(Vector2d firstBondVector) throws CDKException {
+        generateCoordinates(firstBondVector, false);
+    }
+
+    /**
+     *  The main method of this StructurDiagramGenerator. Assign a molecule to the
+     *  StructurDiagramGenerator, call the generateCoordinates() method and get
+     *  your molecule back.
+     *
+     *  @param  firstBondVector          The vector of the first bond to lay out
+     *  @throws CDKException             if an error occurs
+     */
+    private void generateCoordinates(Vector2d firstBondVector, boolean isFragment) throws CDKException {
+
         int safetyCounter = 0;
         /*
          * if molecule contains only one Atom, don't fail, simply set
@@ -297,12 +316,23 @@ public class StructureDiagramGenerator {
         if (molecule.getAtomCount() == 1) {
             molecule.getAtom(0).setPoint2d(new Point2d(0, 0));
             return;
+        } else if (molecule.getBondCount() == 1) {
+            molecule.getAtom(0).setPoint2d(new Point2d(0, 0));
+            molecule.getAtom(1).setPoint2d(new Point2d(bondLength, 0));
+            return;
         }
-        if (!ConnectivityChecker.isConnected(molecule)) {
-            logger.debug("Molecule is not connected. Throwing exception.");
-            throw new CDKException(disconnectedMessage);
-        } else {
-            logger.debug("Molecule is connected.");
+
+        // intercept fragment molecules and lay them out in a grid
+        if (!isFragment) {
+            final IAtomContainerSet frags = ConnectivityChecker.partitionIntoMolecules(molecule);
+            if (frags.getAtomContainerCount() > 1) {
+                generateFragmentCoordinates(molecule, toList(frags));
+                // don't call set molecule as it wipes x,y coordinates!
+                // this looks like a self assignment but actually the fragment
+                // method changes this.molecule
+                this.molecule = molecule;
+                return;
+            }
         }
 
         /*
@@ -465,12 +495,297 @@ public class StructureDiagramGenerator {
 
     }
 
+    private void generateFragmentCoordinates(IAtomContainer mol, List<IAtomContainer> frags) throws CDKException {
+        final List<IBond> ionicBonds = makeIonicBonds(frags);
+
+        if (!ionicBonds.isEmpty()) {
+            // add tmp bonds and re-fragment
+            int rollback = mol.getBondCount();
+            for (IBond bond : ionicBonds)
+                mol.addBond(bond);
+            frags = toList(ConnectivityChecker.partitionIntoMolecules(mol));
+
+            // rollback temporary bonds
+            int numBonds = mol.getBondCount();
+            while (numBonds-- > rollback)
+                mol.removeBond(numBonds);
+        }
+
+        List<double[]> limits = new ArrayList<>();
+        final int numFragments = frags.size();
+
+        // generate the sub-layouts
+        for (IAtomContainer fragment : frags) {
+            setMolecule(fragment, false);
+            generateCoordinates(DEFAULT_BOND_VECTOR, true);
+            limits.add(GeometryUtil.getMinMax(fragment));
+        }
+
+        final int nRow = (int) Math.floor(Math.sqrt(numFragments));
+        final int nCol = (int) Math.ceil(numFragments / (double) nRow);
+
+        final double[] xOffsets = new double[nCol+1];
+        final double[] yOffsets = new double[nRow+1];
+
+        // calc the max widths/height of each row, we also add some
+        // spacing
+        double spacing = 1.5 * bondLength;
+        for (int i = 0; i < numFragments; i++) {
+            // +1 because first offset is always 0
+            int col = 1 + i % nCol;
+            int row = 1 + i / nCol;
+
+            double[] minmax = limits.get(i);
+            final double width  = spacing + (minmax[2] - minmax[0]);
+            final double height = spacing + (minmax[3] - minmax[1]);
+
+            if (width > xOffsets[col])
+                xOffsets[col] = width;
+            if (height > yOffsets[row])
+                yOffsets[row] = height;
+        }
+
+        // cumulative counts
+        for (int i = 1; i < xOffsets.length; i++)
+            xOffsets[i] += xOffsets[i-1];
+        for (int i = 1; i < yOffsets.length; i++)
+            yOffsets[i] += yOffsets[i-1];
+
+        // translate the molecules, note need to flip y axis
+        for (int i = 0; i < limits.size(); i++) {
+            final int row = nRow - (i / nCol) - 1;
+            final int col = i % nCol;
+            Point2d dest = new Point2d((xOffsets[col] + xOffsets[col + 1]) / 2,
+                                       (yOffsets[row] + yOffsets[row + 1]) / 2);
+            double[] minmax = limits.get(i);
+            Point2d curr = new Point2d((minmax[0] + minmax[2]) / 2, (minmax[1] + minmax[3]) / 2);
+            GeometryUtil.translate2D(frags.get(i),
+                                     dest.x - curr.x, dest.y - curr.y);
+        }
+    }
+
     /**
-     *  The main method of this StructurDiagramGenerator. Assign a molecule to the
-     *  StructurDiagramGenerator, call the generateCoordinates() method and get
-     *  your molecule back.
+     * Property to cache the charge of a fragment.
+     */
+    private static final String FRAGMENT_CHARGE = "FragmentCharge";
+
+    /**
+     * Merge fragments with duplicate atomic ions (e.g. [Na+].[Na+].[Na+]) into
+     * single fragments.
      *
-     *  @throws CDKException if an error occurs
+     * @param frags input fragments (all connected)
+     * @return the merge ions
+     */
+    private List<IAtomContainer> mergeAtomicIons(final List<IAtomContainer> frags) {
+        final List<IAtomContainer> res = new ArrayList<>(frags.size());
+        for (IAtomContainer frag : frags) {
+
+            IChemObjectBuilder bldr = frag.getBuilder();
+
+            if (frag.getBondCount() > 0 || res.isEmpty()) {
+                res.add(bldr.newInstance(IAtomContainer.class, frag));
+            } else {
+                // try to find matching atomic ion
+                int i = 0;
+                while (i < res.size()) {
+                    IAtom iAtm = frag.getAtom(0);
+                    if (res.get(i).getBondCount() == 0) {
+                        IAtom jAtm = res.get(i).getAtom(0);
+                        if (nullAsZero(iAtm.getFormalCharge()) == nullAsZero(jAtm.getFormalCharge()) &&
+                            nullAsZero(iAtm.getAtomicNumber()) == nullAsZero(jAtm.getAtomicNumber()) &&
+                            nullAsZero(iAtm.getImplicitHydrogenCount()) == nullAsZero(jAtm.getImplicitHydrogenCount())) {
+                            break;
+                        }
+                    }
+                    i++;
+                }
+
+                if (i < res.size()) {
+                    res.get(i).add(frag);
+                } else {
+                    res.add(bldr.newInstance(IAtomContainer.class, frag));
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * Select ions from a charged fragment. Ions not in charge separated
+     * bonds are favoured but select if needed. If an atom has lost or
+     * gained more than one electron it is added mutliple times to the
+     * output list
+     *
+     * @param frag charged fragment
+     * @param sign the charge sign to select (+1 : cation, -1: anion)
+     * @return the select atoms (includes duplicates)
+     */
+    private List<IAtom> selectIons(IAtomContainer frag, int sign) {
+        int fragChg = frag.getProperty(FRAGMENT_CHARGE);
+        assert Integer.signum(fragChg) == sign;
+        final List<IAtom> atoms = new ArrayList<>();
+
+        FIRST_PASS:
+        for (IAtom atom : frag.atoms()) {
+            if (fragChg == 0)
+                break;
+            int atmChg = nullAsZero(atom.getFormalCharge());
+            if (Integer.signum(atmChg) == sign) {
+
+                // skip in first pass if charge separated
+                for (IBond bond : frag.getConnectedBondsList(atom)) {
+                    if (Integer.signum(nullAsZero(bond.getConnectedAtom(atom).getFormalCharge())) + sign == 0)
+                        continue FIRST_PASS;
+                }
+
+                while (fragChg != 0 && atmChg != 0) {
+                    atoms.add(atom);
+                    atmChg -= sign;
+                    fragChg -= sign;
+                }
+            }
+        }
+
+        if (fragChg == 0)
+            return atoms;
+
+        for (IAtom atom : frag.atoms()) {
+            if (fragChg == 0)
+                break;
+            int atmChg = nullAsZero(atom.getFormalCharge());
+            if (Math.signum(atmChg) == sign) {
+                while (fragChg != 0 && atmChg != 0) {
+                    atoms.add(atom);
+                    atmChg -= sign;
+                    fragChg -= sign;
+                }
+            }
+        }
+
+        return atoms;
+    }
+
+    /**
+     * Alternative method name "Humpty Dumpty" (a la. R Sayle).
+     * <p/>
+     * (Re)bonding of ionic fragments from improved layout. This method takes a list
+     * of two or more fragments and creates zero or more bonds (return value) that
+     * should be temporarily used for layout generation. In general this problem is
+     * difficult but since molecules will be laid out in a grid by default - any
+     * positioning is an improvement. Heuristics could be added if bad (re)bonds
+     * are seen.
+     *
+     * @param frags connected fragments
+     * @return ionic bonds to make
+     */
+    private List<IBond> makeIonicBonds(final List<IAtomContainer> frags) {
+        assert frags.size() > 1;
+        final Set<IAtomContainer> remove = new HashSet<>();
+
+        // merge duplicates together, e.g. [H-].[H-].[H-].[Na+].[Na+].[Na+]
+        // would be two needsMerge fragments. We currently only do single
+        // atoms but in theory could also do larger ones
+        final List<IAtomContainer> mergedFrags = mergeAtomicIons(frags);
+        final List<IAtomContainer> posFrags = new ArrayList<>();
+        final List<IAtomContainer> negFrags = new ArrayList<>();
+
+        int chgSum = 0;
+        for (IAtomContainer frag : mergedFrags) {
+            int chg = 0;
+            for (final IAtom atom : frag.atoms())
+                chg += nullAsZero(atom.getFormalCharge());
+            chgSum += chg;
+            frag.setProperty(FRAGMENT_CHARGE, chg);
+            if (chg < 0)
+                negFrags.add(frag);
+            else if (chg > 0)
+                posFrags.add(frag);
+        }
+
+        // non-neutral or we only have one needsMerge fragment?
+        if (chgSum != 0 || mergedFrags.size() == 1)
+            return Collections.emptyList();
+
+        List<IAtom> cations = new ArrayList<>();
+        List<IAtom> anions = new ArrayList<>();
+        Map<IAtom, IAtomContainer> atmMap = new HashMap<>();
+
+        // trivial case
+        if (posFrags.size() == 1 && negFrags.size() == 1) {
+            cations.addAll(selectIons(posFrags.get(0), +1));
+            anions.addAll(selectIons(negFrags.get(0), -1));
+        } else {
+
+            // sort hi->lo fragment charge, if same charge then we put smaller
+            // fragments (bond count) before in cations and after in anions
+            Comparator<IAtomContainer> comparator = new Comparator<IAtomContainer>() {
+                @Override
+                public int compare(IAtomContainer a, IAtomContainer b) {
+                    int qA = a.getProperty(FRAGMENT_CHARGE);
+                    int qB = b.getProperty(FRAGMENT_CHARGE);
+                    int cmp = Integer.compare(Math.abs(qA), Math.abs(qB));
+                    if (cmp != 0) return cmp;
+                    int sign = Integer.signum(qA);
+                    return Integer.compare(sign * a.getBondCount(), sign * b.getBondCount());
+                }
+            };
+
+            // greedy selection
+            Collections.sort(posFrags, comparator);
+            Collections.sort(negFrags, comparator);
+
+            for (IAtomContainer posFrag : posFrags)
+                cations.addAll(selectIons(posFrag, +1));
+            for (IAtomContainer negFrag : negFrags)
+                anions.addAll(selectIons(negFrag, -1));
+        }
+
+        if (cations.size() != anions.size() && cations.isEmpty())
+            return Collections.emptyList();
+
+        final IChemObjectBuilder bldr = frags.get(0).getBuilder();
+
+        // make the bonds
+        final List<IBond> ionicBonds = new ArrayList<>();
+        for (int i = 0; i < cations.size(); i++) {
+            final IAtom beg = cations.get(i);
+            final IAtom end = anions.get(i);
+            ionicBonds.add(bldr.newInstance(IBond.class, beg, end));
+        }
+
+        // we could merge the fragments here using union-find structures
+        // but it's much simpler (and probably more efficient) to return
+        // the new bonds and re-fragment the molecule with these bonds added.
+
+        return ionicBonds;
+    }
+
+    /**
+     * Utility - safely access Object Integers as primitives, when we want the
+     * default value of null to be zero.
+     *
+     * @param x number
+     * @return the number primitive or zero if null
+     */
+    private static int nullAsZero(Integer x) {
+        return x == null ? 0 : x;
+    }
+
+    /**
+     * Utility - get the IAtomContainers as a list.
+     * @param frags connected fragments
+     * @return list of fragments
+     */
+    private List<IAtomContainer> toList(IAtomContainerSet frags) {
+        return new ArrayList<>(FluentIterable.from(frags.atomContainers()).toList());
+    }
+
+    /**
+     * The main method of this StructurDiagramGenerator. Assign a molecule to the
+     * StructurDiagramGenerator, call the generateCoordinates() method and get
+     * your molecule back.
+     *
+     * @throws CDKException if an error occurs
      */
     public void generateCoordinates() throws CDKException {
         generateCoordinates(DEFAULT_BOND_VECTOR);
@@ -581,18 +896,18 @@ public class StructureDiagramGenerator {
          * this.mappedSubstructures
          */
         if (useTemplates && mappedSubstructures.getAtomContainerCount() > 0
-                && System.getProperty("java.version").indexOf("1.3.") == -1) {
+            && System.getProperty("java.version").indexOf("1.3.") == -1) {
             /*
              * Find mapped substructures
              */
             for (Iterator<IAtomContainer> substructureIterator = mappedSubstructures.atomContainers().iterator(); substructureIterator
-                    .hasNext();) {
+                    .hasNext(); ) {
                 IAtomContainer substructure = substructureIterator.next();
                 boolean substructureMapped = false;
                 for (Iterator<IAtomContainer> ringSetIterator = rs.atomContainers().iterator(); ringSetIterator
-                        .hasNext() && !substructureMapped;) {
+                                                                                                        .hasNext() && !substructureMapped; ) {
                     IRing ring = (IRing) ringSetIterator.next();
-                    for (Iterator atomIterator = ring.atoms().iterator(); atomIterator.hasNext() && !substructureMapped;) {
+                    for (Iterator atomIterator = ring.atoms().iterator(); atomIterator.hasNext() && !substructureMapped; ) {
                         IAtom atom = (IAtom) atomIterator.next();
                         if (substructure.contains(atom)) substructureMapped = true;
                     }
@@ -606,7 +921,7 @@ public class StructureDiagramGenerator {
                         logger.warn("A supposedly matched substructure failed to match.");
                     else {
                         // Mark substructure atoms as CDKConstants.ISPLACED
-                        for (Iterator iterator = substructure.atoms().iterator(); iterator.hasNext();) {
+                        for (Iterator iterator = substructure.atoms().iterator(); iterator.hasNext(); ) {
                             IAtom atom = (IAtom) iterator.next();
                             atom.setFlag(CDKConstants.ISPLACED, true);
                         }
@@ -706,7 +1021,7 @@ public class StructureDiagramGenerator {
                         logger.debug("More than one atoms placed already");
                         logger.debug("trying to place neighbors of atom " + (molecule.getAtomNumber(atom) + 1));
                         atomPlacer.distributePartners(atom, placedAtoms, GeometryUtil.get2DCenter(placedAtoms),
-                                unplacedAtoms, bondLength);
+                                                      unplacedAtoms, bondLength);
                         direction = new Vector2d(longestUnplacedChain.getAtom(1).getPoint2d());
                         startVector = new Vector2d(atom.getPoint2d());
                         direction.sub(startVector);
@@ -715,7 +1030,7 @@ public class StructureDiagramGenerator {
                         logger.debug("Less than or equal one atoms placed already");
                         logger.debug("Trying to get next bond vector.");
                         direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtom(0),
-                                GeometryUtil.get2DCenter(molecule), true);
+                                                                 GeometryUtil.get2DCenter(molecule), true);
 
                     }
 
@@ -771,7 +1086,7 @@ public class StructureDiagramGenerator {
              */
             IAtomContainer ringSystem = tempAc.getBuilder().newInstance(IAtomContainer.class);
             for (Iterator containers = RingSetManipulator.getAllAtomContainers(nextRingSystem).iterator(); containers
-                    .hasNext();)
+                    .hasNext(); )
                 ringSystem.add((IAtomContainer) containers.next());
 
             /*

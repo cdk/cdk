@@ -51,6 +51,17 @@ import static org.openscience.cdk.depict.DepictionGenerator.AUTOMATIC;
 public abstract class Depiction {
 
     /**
+     * For converting MM coordinates to PS Point (1/72 inch)
+     */
+    protected static final double MM_TO_POINT = 2.83464566751;
+
+    /**
+     * When no fixed padding value is specified we use margin
+     * multiplied by this value.
+     */
+    protected static final double DEFAULT_PADDING_FACTOR = 2;
+
+    /**
      * Structured Vector Graphics (SVG) format key.
      */
     public static final String SVG_FMT = "svg";
@@ -226,7 +237,7 @@ public abstract class Depiction {
      * @see #listFormats()
      */
     public final void writeTo(String fmt, String path) throws IOException {
-        writeTo(fmt, new File(replaceTildaWithHomeDir(ensureSuffix(path, fmt))));
+        writeTo(fmt, new File(replaceTildeWithHomeDir(ensureSuffix(path, fmt))));
     }
 
     /**
@@ -252,7 +263,7 @@ public abstract class Depiction {
      * @param path the file system path
      * @return normalised path
      */
-    private static String replaceTildaWithHomeDir(String path) {
+    private static String replaceTildeWithHomeDir(String path) {
         if (path.startsWith("~/"))
             return System.getProperty("user.home") + path.substring(1);
         return path;

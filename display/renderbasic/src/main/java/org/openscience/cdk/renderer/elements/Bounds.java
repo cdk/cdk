@@ -126,7 +126,7 @@ public final class Bounds implements IRenderingElement {
      *
      * @param path general path
      */
-    public void add(GeneralPath path) {
+    private void add(GeneralPath path) {
         double[] points = new double[6];
         for (org.openscience.cdk.renderer.elements.path.PathElement element : path.elements) {
             element.points(points);

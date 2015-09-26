@@ -1,0 +1,442 @@
+/*
+ * Copyright (c) 2015 John May <jwmay@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or (at
+ * your option) any later version. All we ask is that proper credit is given
+ * for our work, which includes - but is not limited to - adding the above
+ * copyright notice to the beginning of your source code files, and to any
+ * copyright notice that you may distribute with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
+ */
+
+package org.openscience.cdk.depict;
+
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.renderer.RendererModel;
+import org.openscience.cdk.renderer.elements.Bounds;
+import org.openscience.cdk.renderer.elements.GeneralPath;
+import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
+import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Internal - depiction of a single reaction. We divide the reaction into two draw steps.
+ * The first step draws the main components (reactants and products) whilst the second
+ * draws the side components (agents: catalysts, solvents, spectators, etc). Reaction
+ * direction is drawn a single headed arrow (forward and backward) or an equilibrium
+ * (bidirectional).
+ */
+final class ReactionDepiction extends Depiction {
+
+    private final RendererModel model;
+    private final Dimensions    dimensions;
+
+    // molecule sets
+    private final List<Bounds> mainComp  = new ArrayList<>();
+    private final List<Bounds> sideComps = new ArrayList<>();
+
+    // arrow info
+    private final int                 arrowIdx;
+    private final IReaction.Direction direction;
+    private final double              arrowHeight;
+
+    // dimensions and spacing of side components
+    private final Dimensions sideDim;
+    private final double[]   xOffsetSide, yOffsetSide;
+
+    public ReactionDepiction(RendererModel model,
+                             List<Bounds> reactants,
+                             List<Bounds> products,
+                             List<Bounds> agents,
+                             Bounds plus,
+                             IReaction.Direction direction,
+                             Dimensions dimensions) {
+        super(model);
+        this.model = model;
+        this.dimensions = dimensions;
+
+        // side components (catalysts, solvents, etc) note we deliberately
+        // swap sideGrid width and height as we to stack agents on top of
+        // each other. By default determineGrid tries to make the grid
+        // wide but we want it tall
+        this.sideComps.addAll(agents);
+        Dimension sideGrid = Dimensions.determineGrid(sideComps.size());
+        sideDim = Dimensions.ofGrid(sideComps,
+                                    yOffsetSide = new double[sideGrid.width + 1],
+                                    xOffsetSide = new double[sideGrid.height + 1]);
+
+        // build the main components, we add a 'plus' between each molecule
+        for (Bounds reactant : reactants) {
+            this.mainComp.add(reactant);
+            this.mainComp.add(plus);
+        }
+
+        // replacing trailing plus with placeholder for arrow
+        if (reactants.isEmpty())
+            this.mainComp.add(new Bounds());
+        else
+            this.mainComp.set(this.mainComp.size() - 1, new Bounds());
+
+        for (Bounds product : products) {
+            this.mainComp.add(product);
+            this.mainComp.add(plus);
+        }
+
+        // trailing plus not needed
+        if (!products.isEmpty())
+            this.mainComp.remove(this.mainComp.size() - 1);
+
+        // arrow params
+        this.arrowIdx = Math.max(reactants.size() + reactants.size() - 1, 0);
+        this.direction = direction;
+        this.arrowHeight = plus.height();
+
+        // when no side component we still want an arrow, since the
+        // arrow is drawn as big as needed we simply put some points
+        // in the bounds object and all dimensions work out okay
+        if (sideComps.isEmpty()) {
+            mainComp.get(arrowIdx).add(0, 0);
+            mainComp.get(arrowIdx).add(4 * arrowHeight, arrowHeight);
+        }
+    }
+
+    @Override
+    public BufferedImage toImg() {
+
+        // format margins and padding for raster images
+        final double scale = model.get(BasicSceneGenerator.Scale.class);
+        final double zoom = model.get(BasicSceneGenerator.ZoomFactor.class);
+        final double margin = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
+        final double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin);
+
+        // work out the required space of the main and side components separately
+        // will draw these in two passes (main then side) hence want different offsets for each
+        final int nSideCol = xOffsetSide.length - 1;
+        final int nSideRow = yOffsetSide.length - 1;
+        Dimensions sideRequired = sideDim.scale(scale * zoom);
+
+        double[] xOffsets = new double[mainComp.size() + 1];
+        double[] yOffsets = new double[2];
+        Dimensions mainRequired = Dimensions.ofGrid(mainComp, yOffsets, xOffsets)
+                                            .scale(scale * zoom);
+
+        final Dimensions total = calcTotalDimensions(margin, padding, mainRequired, sideRequired, null);
+        final double fitting = calcFitting(margin, padding, mainRequired, sideRequired, null);
+
+        // create the image for rendering
+        final BufferedImage img = new BufferedImage((int) Math.ceil(total.w), (int) Math.ceil(total.h),
+                                                    BufferedImage.TYPE_4BYTE_ABGR);
+
+        // we use the AWT for vector graphics if though we're raster because
+        // fractional strokes can be figured out by interpolation, without
+        // when we shrink diagrams bonds can look too bold/chubby
+        final Graphics2D g2 = img.createGraphics();
+        final AWTDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
+        g2.setBackground(model.get(BasicSceneGenerator.BackgroundColor.class));
+        g2.clearRect(0, 0, img.getWidth(), img.getHeight());
+
+        // compound the zoom, fitting and scaling into a single value
+        final double rescale = zoom * fitting * scale;
+        double mainCompOffset = 0;
+
+        // shift product x-offset to make room for the arrow / side components
+        if (!sideComps.isEmpty()) {
+            mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * mainRequired.h / 2;
+            for (int i = arrowIdx + 1; i < xOffsets.length; i++) {
+                xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
+            }
+        }
+
+        // MAIN COMPONENTS DRAW
+        // x,y base coordinates include the margin and centering (only if fitting to a size)
+        double xBase = margin + (total.w - 2 * margin - (mainComp.size() - 1) * padding - (nSideCol - 1) * padding - (rescale * xOffsets[mainComp.size()])) / 2;
+        double yBase = margin + (Math.max(mainCompOffset, 0)) + (total.h - 2 * margin - (Math.max(mainCompOffset, 0) + fitting * mainRequired.h)) / 2;
+        for (int i = 0; i < mainComp.size(); i++) {
+
+            // calc the 'view' bounds:
+            //  amount of padding depends on which row or column we are in.
+            //  the width/height of this col/row can be determined by the next offset
+            double x = xBase + i * padding + rescale * xOffsets[i];
+            double y = yBase;
+            double w = rescale * (xOffsets[i + 1] - xOffsets[i]);
+            double h = fitting * mainRequired.h;
+
+            // intercept arrow draw and make it as big as need
+            if (i == arrowIdx) {
+                w = rescale * (xOffsets[i + 1] - xOffsets[i]) + (nSideCol - 1) * padding;
+                draw(visitor, 1, createArrow(w, arrowHeight * rescale), rect(x, y, w, h));
+                continue;
+            }
+
+            // extra padding from the side components
+            if (i > arrowIdx)
+                x += (nSideCol - 1) * padding;
+
+            // skip empty elements
+            final Bounds bounds = this.mainComp.get(i);
+            if (bounds.isEmpty())
+                continue;
+
+            draw(visitor, zoom, bounds, rect(x, y, w, h));
+        }
+
+        // SIDE COMPONENTS DRAW
+        xBase += arrowIdx * padding + rescale * xOffsets[arrowIdx];
+        yBase -= mainCompOffset;
+        for (int i = 0; i < sideComps.size(); i++) {
+            final int row = i / nSideCol;
+            final int col = i % nSideCol;
+
+            // calc the 'view' bounds:
+            //  amount of padding depends on which row or column we are in.
+            //  the width/height of this col/row can be determined by the next offset
+            double x = xBase + col * padding + rescale * xOffsetSide[col];
+            double y = yBase + row * padding + rescale * yOffsetSide[row];
+            double w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
+            double h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
+
+            draw(visitor, zoom, sideComps.get(i), rect(x, y, w, h));
+        }
+
+
+        // we created the Graphic2d instance so need to dispose of it
+        g2.dispose();
+        return img;
+    }
+
+    @Override
+    String toVecStr(String fmt) {
+        // format margins and padding for raster images
+        final double scale = model.get(BasicSceneGenerator.Scale.class);
+
+        double margin = getMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
+        double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin);
+
+        // All vector graphics will be written in mm not px to we need to
+        // adjust the size of the molecules accordingly. For now the rescaling
+        // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
+        double zoom = model.get(BasicSceneGenerator.ZoomFactor.class) * rescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
+
+        // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
+        if (fmt.equals(PDF_FMT) || fmt.equals(PS_FMT)) {
+            zoom    *= MM_TO_POINT;
+            margin  *= MM_TO_POINT;
+            padding *= MM_TO_POINT;
+        }
+
+        // work out the required space of the main and side components separately
+        // will draw these in two passes (main then side) hence want different offsets for each
+        final int nSideCol = xOffsetSide.length - 1;
+        final int nSideRow = yOffsetSide.length - 1;
+        Dimensions sideRequired = sideDim.scale(scale * zoom);
+
+        double[] xOffsets = new double[mainComp.size() + 1];
+        double[] yOffsets = new double[2];
+        Dimensions mainRequired = Dimensions.ofGrid(mainComp, yOffsets, xOffsets)
+                                            .scale(scale * zoom);
+
+        final Dimensions total = calcTotalDimensions(margin, padding, mainRequired, sideRequired, fmt);
+        final double fitting = calcFitting(margin, padding, mainRequired, sideRequired, fmt);
+
+        // create the image for rendering
+        FreeHepWrapper wrapper = new FreeHepWrapper(fmt, total.w, total.h);
+        final AWTDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
+
+        // background color
+        wrapper.g2.setColor(model.get(BasicSceneGenerator.BackgroundColor.class));
+        wrapper.g2.fillRect(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h));
+
+        // compound the zoom, fitting and scaling into a single value
+        final double rescale = zoom * fitting * scale;
+        double mainCompOffset = 0;
+
+        // shift product x-offset to make room for the arrow / side components
+        if (!sideComps.isEmpty()) {
+            mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * mainRequired.h / 2;
+            for (int i = arrowIdx + 1; i < xOffsets.length; i++) {
+                xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
+            }
+        }
+
+        // MAIN COMPONENTS DRAW
+        // x,y base coordinates include the margin and centering (only if fitting to a size)
+        double xBase = margin + (total.w - 2 * margin - (mainComp.size() - 1) * padding - (nSideCol - 1) * padding - (rescale * xOffsets[mainComp.size()])) / 2;
+        double yBase = margin + Math.max(mainCompOffset, 0) + (total.h - 2 * margin - (Math.max(mainCompOffset, 0) + fitting * mainRequired.h)) / 2;
+        for (int i = 0; i < mainComp.size(); i++) {
+
+            // calc the 'view' bounds:
+            //  amount of padding depends on which row or column we are in.
+            //  the width/height of this col/row can be determined by the next offset
+            double x = xBase + i * padding + rescale * xOffsets[i];
+            double y = yBase;
+            double w = rescale * (xOffsets[i + 1] - xOffsets[i]);
+            double h = fitting * mainRequired.h;
+
+            // intercept arrow draw and make it as big as need
+            if (i == arrowIdx) {
+                w = rescale * (xOffsets[i + 1] - xOffsets[i]) + (nSideCol - 1) * padding;
+                draw(visitor, 1, createArrow(w, arrowHeight * rescale), rect(x, y, w, h));
+                continue;
+            }
+
+            // extra padding from the side components
+            if (i > arrowIdx)
+                x += (nSideCol - 1) * padding;
+
+            // skip empty elements
+            final Bounds bounds = this.mainComp.get(i);
+            if (bounds.isEmpty())
+                continue;
+
+            draw(visitor, zoom, bounds, rect(x, y, w, h));
+        }
+
+        // SIDE COMPONENTS DRAW
+        xBase += arrowIdx * padding + rescale * xOffsets[arrowIdx];
+        yBase -= mainCompOffset;
+        for (int i = 0; i < sideComps.size(); i++) {
+            final int row = i / nSideCol;
+            final int col = i % nSideCol;
+
+            // calc the 'view' bounds:
+            //  amount of padding depends on which row or column we are in.
+            //  the width/height of this col/row can be determined by the next offset
+            double x = xBase + col * padding + rescale * xOffsetSide[col];
+            double y = yBase + row * padding + rescale * yOffsetSide[row];
+            double w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
+            double h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
+
+            draw(visitor, zoom, sideComps.get(i), rect(x, y, w, h));
+        }
+
+        wrapper.dispose();
+        return wrapper.toString();
+    }
+
+    private double calcFitting(double margin, double padding, Dimensions mainRequired, Dimensions sideRequired, String fmt) {
+        if (dimensions == Dimensions.AUTOMATIC)
+            return 1; // no fitting
+
+        final int nSideCol = xOffsetSide.length - 1;
+        final int nSideRow = yOffsetSide.length - 1;
+
+        // need padding in calculation
+        double mainCompOffset = sideRequired.h > 0 ? sideRequired.h + (nSideRow * padding) - (mainRequired.h / 2) : 0;
+        if (mainCompOffset < 0)
+            mainCompOffset = 0;
+
+        Dimensions required = mainRequired.add(sideRequired.w, mainCompOffset);
+
+        // We take out the padding height of the side components but in reality
+        // some of it overlaps, since reactions are normally wider then they are
+        // tall we won't normally bit fitting by this param. If do fit by this
+        // param we might make the depiction smaller then it needs to be but thats
+        // better than cutting bits off
+        Dimensions targetDim = dimensions;
+
+        targetDim = targetDim.add(-2 * margin, -2 * margin)
+                                         .add(-((mainComp.size() - 1) * padding), 0)
+                                         .add(-(nSideCol - 1) * padding, -(nSideRow - 1) * padding);
+
+        // PDF and PS are in point to we need to account for that
+        if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt))
+            targetDim = targetDim.scale(MM_TO_POINT);
+
+        double resize = Math.min(targetDim.w / required.w,
+                                 targetDim.h / required.h);
+
+        if (resize > 1 && !model.get(BasicSceneGenerator.FitToScreen.class))
+            resize = 1;
+        return resize;
+    }
+
+    private Dimensions calcTotalDimensions(double margin, double padding, Dimensions mainRequired,
+                                           Dimensions sideRequired, String fmt) {
+        if (dimensions == Dimensions.AUTOMATIC) {
+
+            final int nSideCol = xOffsetSide.length - 1;
+            final int nSideRow = yOffsetSide.length - 1;
+
+            double mainCompOffset = sideRequired.h + (nSideRow * padding) - (mainRequired.h / 2);
+            if (mainCompOffset < 0)
+                mainCompOffset = 0;
+
+            return mainRequired.add(2 * margin, 2 * margin)
+                               .add(((mainComp.size() - 1) * padding), 0)
+                    .add(sideRequired.w, 0)           // side component extra width
+                    .add((nSideCol - 1) * padding, 0) // side component padding
+                    .add(0, mainCompOffset);
+
+        } else {
+            // we want all vector graphics dims in MM
+            if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt))
+                return dimensions.scale(MM_TO_POINT);
+            else
+                return dimensions;
+        }
+    }
+
+    private Rectangle2D.Double rect(double x, double y, double w, double h) {
+        return new Rectangle2D.Double(x, y, w, h);
+    }
+
+    private Bounds createArrow(double minWidth, double minHeight) {
+        Bounds arrow = new Bounds();
+        Path2D path = new Path2D.Double();
+        final double headThickness = minHeight / 3;
+        final double inset = 0.8;
+        switch (direction) {
+            case FORWARD:
+                arrow.add(new LineElement(0, 0, minWidth + minHeight, 0, minHeight / 14, Color.BLACK));
+                path.moveTo(minWidth + minHeight + minHeight, 0);
+                path.lineTo(minWidth + inset * minHeight, +headThickness);
+                path.lineTo(minWidth + minHeight, 0);
+                path.lineTo(minWidth + inset * minHeight, -headThickness);
+                path.closePath();
+                arrow.add(GeneralPath.shapeOf(path, Color.BLACK));
+                break;
+            case BACKWARD:
+                arrow.add(new LineElement(0, 0, minWidth + minHeight, 0, minHeight / 14, Color.BLACK));
+                path.moveTo(-minHeight, 0);
+                path.lineTo((1 - inset) * minHeight, +headThickness);
+                path.lineTo(0, 0);
+                path.lineTo((1 - inset) * minHeight, -headThickness);
+                path.closePath();
+                arrow.add(GeneralPath.shapeOf(path, Color.BLACK));
+                break;
+            case BIDIRECTIONAL: // equilibrium?
+                path.moveTo(0, 0.5 * +headThickness);
+                path.lineTo(minWidth + minHeight + minHeight, 0.5 * +headThickness);
+                path.lineTo(minWidth + minHeight, 1.5 * +headThickness);
+                path.moveTo(minWidth + minHeight + minHeight, 0.5 * -headThickness);
+                path.lineTo(0, 0.5 * -headThickness);
+                path.lineTo(minHeight, 1.5 * -headThickness);
+                arrow.add(GeneralPath.outlineOf(path, minHeight / 14, Color.BLACK));
+                break;
+        }
+
+        return arrow;
+    }
+}

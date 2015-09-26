@@ -40,8 +40,6 @@ import java.util.List;
  */
 final class MolGridDepiction extends Depiction {
 
-    public static final double MM_TO_INCH = 0.0393700787;
-    public static final double MM_TO_POINT = 2.83464566751;
     private final RendererModel model;
     private final Dimensions    dimensions;
     private final int           nCol, nRow;
@@ -90,7 +88,7 @@ final class MolGridDepiction extends Depiction {
 
         // format margins and padding for raster images
         final double margin  = getMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
-        final double padding = getPaddingValue(3 * margin);
+        final double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin);
         final double scale   = model.get(BasicSceneGenerator.Scale.class);
         final double zoom    = model.get(BasicSceneGenerator.ZoomFactor.class);
 
@@ -102,7 +100,7 @@ final class MolGridDepiction extends Depiction {
                                         .scale(scale * zoom);
 
         final Dimensions total = calcTotalDimensions(margin, padding, required, null);
-        final double fitting = calcFitting(margin, padding, required);
+        final double fitting = calcFitting(margin, padding, required, null);
 
         // create the image for rendering
         final BufferedImage img = new BufferedImage((int) Math.ceil(total.w), (int) Math.ceil(total.h),
@@ -148,10 +146,16 @@ final class MolGridDepiction extends Depiction {
         return img;
     }
 
-    private double calcFitting(double margin, double padding, Dimensions required) {
+    private double calcFitting(double margin, double padding, Dimensions required, String fmt) {
         if (dimensions == Dimensions.AUTOMATIC)
             return 1; // no fitting
-        Dimensions targetDim = dimensions.add(-2 * margin, -2 * margin)
+        Dimensions targetDim = dimensions;
+
+        // PDF and PS are in point to we need to account for that
+        if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt))
+            targetDim = targetDim.scale(MM_TO_POINT);
+
+        targetDim = targetDim.add(-2 * margin, -2 * margin)
                                          .add(-((nCol - 1) * padding), -((nRow - 1) * padding));
         double resize = Math.min(targetDim.w / required.w,
                                  targetDim.h / required.h);
@@ -178,7 +182,7 @@ final class MolGridDepiction extends Depiction {
 
         // format margins and padding for raster images
         double margin  = getMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
-        double padding = getPaddingValue(3 * margin);
+        double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin);
         final double scale   = model.get(BasicSceneGenerator.Scale.class);
 
         // All vector graphics will be written in mm not px to we need to
@@ -201,7 +205,7 @@ final class MolGridDepiction extends Depiction {
                                            .scale(zoom * scale);
 
         final Dimensions total = calcTotalDimensions(margin, padding, required, fmt);
-        final double fitting   = calcFitting(margin, padding, required);
+        final double fitting   = calcFitting(margin, padding, required, fmt);
 
         // create the image for rendering
         FreeHepWrapper wrapper = new FreeHepWrapper(fmt, total.w, total.h);
