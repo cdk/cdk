@@ -270,10 +270,10 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     }
 
     /**
-     * Compares a atom type with this atom type.
+     * Compares an isotope with this isotope.
      *
-     * @param  object Object of type AtomType
-     * @return        true if the atom types are equal
+     * @param  object Object of type Isotope
+     * @return        true if the isotopes are equal
      */
     @Override
     public boolean compare(Object object) {
