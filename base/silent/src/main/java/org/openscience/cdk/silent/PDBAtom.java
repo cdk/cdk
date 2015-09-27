@@ -363,7 +363,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
      */
     @Override
     public String toString() {
-        StringBuilder description = new StringBuilder();
+        StringBuilder description = new StringBuilder(150);
         description.append("PDBAtom(");
         description.append(this.hashCode());
         description.append(", altLoc=").append(getAltLoc());
