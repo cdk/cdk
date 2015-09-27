@@ -27,6 +27,7 @@ package org.openscience.cdk.renderer.elements;
 
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import javax.vecmath.Vector2d;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -156,8 +157,17 @@ public final class Bounds implements IRenderingElement {
                 add((GeneralPath) element);
             } else if (element instanceof LineElement) {
                 LineElement lineElem = (LineElement) element;
-                add(lineElem.firstPointX, lineElem.firstPointY);
-                add(lineElem.secondPointX, lineElem.secondPointY);
+                Vector2d vec = new Vector2d(lineElem.secondPointX-lineElem.firstPointX,
+                                            lineElem.secondPointY-lineElem.firstPointY);
+                Vector2d ortho = new Vector2d(-vec.y, vec.x);
+                ortho.normalize();
+                vec.normalize();
+                ortho.scale(lineElem.width / 2);  // stroke width
+                vec.scale(lineElem.width / 2);    // stroke rounded also makes line longer
+                add(lineElem.firstPointX - vec.x + ortho.x, lineElem.firstPointY - vec.y + ortho.y);
+                add(lineElem.secondPointX + vec.x + ortho.x, lineElem.secondPointY + vec.y + ortho.y);
+                add(lineElem.firstPointX - vec.x - ortho.x, lineElem.firstPointY - vec.y - ortho.y);
+                add(lineElem.secondPointX + vec.x - ortho.x, lineElem.secondPointY + vec.y - ortho.y);
             } else if (element instanceof ElementGroup) {
                 for (IRenderingElement child : (ElementGroup) element)
                     stack.add(child);
