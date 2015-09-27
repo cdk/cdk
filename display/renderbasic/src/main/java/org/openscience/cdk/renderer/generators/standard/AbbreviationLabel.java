@@ -58,7 +58,7 @@ final class AbbreviationLabel {
 
     // see https://en.wikipedia.org/wiki/Wikipedia:Naming_conventions_(chemistry)#Prefixes_in_titles
     private final static String[] ITAL_PREFIX = new String[]{
-            "sec", "s", "tert", "t",
+            "n", "norm", "sec", "s", "tert", "t",
             "ortho", "o", "meta", "m", "para", "p"
     };
 
