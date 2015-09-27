@@ -167,4 +167,10 @@ public class AbbreviationLabelTest {
     public void parseNumberOnly() {
         assertFalse(AbbreviationLabel.parse("1", new ArrayList<String>()));
     }
+
+    @Test
+    public void nonAsciiLabel() {
+        // phenyl
+        assertFalse(AbbreviationLabel.parse("苯基", new ArrayList<String>()));
+    }
 }

@@ -191,7 +191,7 @@ final class AbbreviationLabel {
             }
             // a charge token, only if it's after some other parts
             else if (i == st && st > 0) {
-                c = normDash(label.charAt(i));
+                c = norm(label.charAt(i));
                 if (c == '-' || c == '+') {
                     i++;
                     while (i < len && isDigit(label.charAt(i))) {
@@ -257,7 +257,7 @@ final class AbbreviationLabel {
         for (String token : tokens) {
             if (isChargeToken(token)) {
                 // charges are superscript
-                String sign = Character.toString(normDash(token.charAt(0)));
+                String sign = Character.toString(norm(token.charAt(0)));
                 String coef = token.length() > 1 ? token.substring(1) : "";
                 if (sign.equals("-")) sign = MINUS_STRING;
                 texts.add(new FormattedText(coef + sign, STYLE_SUPSCRIPT));
@@ -304,7 +304,7 @@ final class AbbreviationLabel {
      * @return the token is a charge label (+2, -, +, -2)
      */
     private static boolean isChargeToken(String token) {
-        return normDash(token.charAt(0)) == '-' || token.charAt(0) == '+';
+        return norm(token.charAt(0)) == '-' || token.charAt(0) == '+';
     }
 
     /**
@@ -323,7 +323,10 @@ final class AbbreviationLabel {
      * @param c character
      * @return normalised character
      */
-    private static char normDash(char c) {
+    private static char norm(char c) {
+        // if character is out of scope don't
+        if (c > 128)
+            return 0;
         switch (c) {
             case '\u002d': // hyphen
             case '\u2012': // figure dash
@@ -353,7 +356,7 @@ final class AbbreviationLabel {
             best = i;
         if (i == string.length())
             return best;
-        final char c = normDash(string.charAt(i));
+        final char c = norm(string.charAt(i));
         return findPrefix(trie.children[c], string, i + 1, best);
     }
 
@@ -382,6 +385,6 @@ final class AbbreviationLabel {
      */
     private static final class Trie {
         String token;
-        Trie[] children = new Trie[256];
+        Trie[] children = new Trie[128];
     }
 }
