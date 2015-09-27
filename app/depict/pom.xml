@@ -18,6 +18,11 @@
     <dependencies>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
+            <artifactId>cdk-test</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-renderextra</artifactId>
             <version>${project.version}</version>
         </dependency>
