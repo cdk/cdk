@@ -39,6 +39,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,9 +54,10 @@ final class ReactionDepiction extends Depiction {
     private final RendererModel model;
     private final Dimensions    dimensions;
 
-    // molecule sets
+    // molecule sets and titles
     private final List<Bounds> mainComp  = new ArrayList<>();
     private final List<Bounds> sideComps = new ArrayList<>();
+    private final Bounds title;
 
     // arrow info
     private final int                 arrowIdx;
@@ -64,7 +66,11 @@ final class ReactionDepiction extends Depiction {
 
     // dimensions and spacing of side components
     private final Dimensions sideDim;
-    private final double[]   xOffsetSide, yOffsetSide;
+    private final Dimensions mainDim;
+    private final double[]   xOffsets, yOffsets;
+    private final double[] xOffsetSide, yOffsetSide;
+
+    private final int nRow, nCol;
 
     public ReactionDepiction(RendererModel model,
                              List<Bounds> reactants,
@@ -72,10 +78,15 @@ final class ReactionDepiction extends Depiction {
                              List<Bounds> agents,
                              Bounds plus,
                              IReaction.Direction direction,
-                             Dimensions dimensions) {
+                             Dimensions dimensions,
+                             List<Bounds> reactantTitles,
+                             List<Bounds> productTitles,
+                             Bounds title) {
         super(model);
         this.model = model;
         this.dimensions = dimensions;
+        this.title = title;
+
 
         // side components (catalysts, solvents, etc) note we deliberately
         // swap sideGrid width and height as we to stack agents on top of
@@ -108,6 +119,38 @@ final class ReactionDepiction extends Depiction {
         if (!products.isEmpty())
             this.mainComp.remove(this.mainComp.size() - 1);
 
+        // add title if supplied, we simply line them up with
+        // the main components and the add them as an extra
+        // row
+        if (!reactantTitles.isEmpty() || !productTitles.isEmpty()) {
+            if (!reactantTitles.isEmpty() && reactantTitles.size() != reactants.size())
+                throw new IllegalArgumentException("Number of reactant titles differed from number of reactants");
+            if (!productTitles.isEmpty() && productTitles.size() != products.size())
+                throw new IllegalArgumentException("Number of product titles differed from number of products");
+            List<Bounds> mainTitles = new ArrayList<>();
+            for (Bounds reactantTitle : reactantTitles) {
+                mainTitles.add(reactantTitle);
+                mainTitles.add(new Bounds());
+            }
+            if (reactants.isEmpty())
+                mainTitles.add(new Bounds()); // gap for arrow
+            for (Bounds productTitle : productTitles) {
+                mainTitles.add(productTitle);
+                mainTitles.add(new Bounds());
+            }
+            // remove trailing space for plus
+            if (!products.isEmpty())
+                mainTitles.remove(mainTitles.size() - 1);
+
+            assert mainTitles.size() == mainComp.size();
+            this.mainComp.addAll(mainTitles);
+            this.nRow = 2;
+            this.nCol = mainComp.size() / 2;
+        } else {
+            this.nRow = 1;
+            this.nCol = mainComp.size();
+        }
+
         // arrow params
         this.arrowIdx = Math.max(reactants.size() + reactants.size() - 1, 0);
         this.direction = direction;
@@ -120,6 +163,10 @@ final class ReactionDepiction extends Depiction {
             mainComp.get(arrowIdx).add(0, 0);
             mainComp.get(arrowIdx).add(4 * arrowHeight, arrowHeight);
         }
+
+        mainDim = Dimensions.ofGrid(mainComp,
+                                    yOffsets = new double[nRow + 1],
+                                    xOffsets = new double[nCol + 1]);
     }
 
     @Override
@@ -135,15 +182,15 @@ final class ReactionDepiction extends Depiction {
         // will draw these in two passes (main then side) hence want different offsets for each
         final int nSideCol = xOffsetSide.length - 1;
         final int nSideRow = yOffsetSide.length - 1;
+
         Dimensions sideRequired = sideDim.scale(scale * zoom);
+        Dimensions mainRequired = mainDim.scale(scale * zoom);
 
-        double[] xOffsets = new double[mainComp.size() + 1];
-        double[] yOffsets = new double[2];
-        Dimensions mainRequired = Dimensions.ofGrid(mainComp, yOffsets, xOffsets)
-                                            .scale(scale * zoom);
+        Dimensions titleRequired = new Dimensions(title.width(), title.height()).scale(scale * zoom);
 
-        final Dimensions total = calcTotalDimensions(margin, padding, mainRequired, sideRequired, null);
-        final double fitting = calcFitting(margin, padding, mainRequired, sideRequired, null);
+        final double firstRowHeight = scale * zoom * yOffsets[1];
+        final Dimensions total = calcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
+        final double fitting = calcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
 
         // create the image for rendering
         final BufferedImage img = new BufferedImage((int) Math.ceil(total.w), (int) Math.ceil(total.h),
@@ -163,7 +210,7 @@ final class ReactionDepiction extends Depiction {
 
         // shift product x-offset to make room for the arrow / side components
         if (!sideComps.isEmpty()) {
-            mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * mainRequired.h / 2;
+            mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * firstRowHeight / 2;
             for (int i = arrowIdx + 1; i < xOffsets.length; i++) {
                 xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
             }
@@ -171,17 +218,22 @@ final class ReactionDepiction extends Depiction {
 
         // MAIN COMPONENTS DRAW
         // x,y base coordinates include the margin and centering (only if fitting to a size)
-        double xBase = margin + (total.w - 2 * margin - (mainComp.size() - 1) * padding - (nSideCol - 1) * padding - (rescale * xOffsets[mainComp.size()])) / 2;
-        double yBase = margin + (Math.max(mainCompOffset, 0)) + (total.h - 2 * margin - (Math.max(mainCompOffset, 0) + fitting * mainRequired.h)) / 2;
+        final double totalRequiredWidth  = 2 * margin + (nCol - 1) * padding + (nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
+        final double totalRequiredHeight = 2 * margin + (nRow - 1) * padding + (!title.isEmpty() ? padding : 0) + Math.max(mainCompOffset, 0) + fitting * mainRequired.h + fitting * Math.max(0, titleRequired.h);
+        double xBase = margin + (total.w - totalRequiredWidth) / 2;
+        double yBase = margin + Math.max(mainCompOffset, 0) + (total.h - totalRequiredHeight) / 2;
         for (int i = 0; i < mainComp.size(); i++) {
+
+            final int row = i / nCol;
+            final int col = i % nCol;
 
             // calc the 'view' bounds:
             //  amount of padding depends on which row or column we are in.
             //  the width/height of this col/row can be determined by the next offset
-            double x = xBase + i * padding + rescale * xOffsets[i];
-            double y = yBase;
-            double w = rescale * (xOffsets[i + 1] - xOffsets[i]);
-            double h = fitting * mainRequired.h;
+            double x = xBase + col * padding + rescale * xOffsets[col];
+            double y = yBase + row * padding + rescale * yOffsets[row];
+            double w = rescale * (xOffsets[col + 1] - xOffsets[col]);
+            double h = rescale * (yOffsets[row + 1] - yOffsets[row]);
 
             // intercept arrow draw and make it as big as need
             if (i == arrowIdx) {
@@ -202,6 +254,13 @@ final class ReactionDepiction extends Depiction {
             draw(visitor, zoom, bounds, rect(x, y, w, h));
         }
 
+        // RXN TITLE DRAW
+        if (!title.isEmpty()) {
+            double y = yBase + nRow * padding + rescale * yOffsets[nRow];
+            double h = rescale * title.height();
+            draw(visitor, zoom, title, rect(0, y, total.w, h));
+        }
+
         // SIDE COMPONENTS DRAW
         xBase += arrowIdx * padding + rescale * xOffsets[arrowIdx];
         yBase -= mainCompOffset;
@@ -220,6 +279,12 @@ final class ReactionDepiction extends Depiction {
             draw(visitor, zoom, sideComps.get(i), rect(x, y, w, h));
         }
 
+
+        // reset shared xOffsets
+        if (!sideComps.isEmpty()) {
+            for (int i = arrowIdx + 1; i < xOffsets.length; i++)
+                xOffsets[i] -= sideRequired.w * 1 / (scale * zoom);
+        }
 
         // we created the Graphic2d instance so need to dispose of it
         g2.dispose();
@@ -250,15 +315,15 @@ final class ReactionDepiction extends Depiction {
         // will draw these in two passes (main then side) hence want different offsets for each
         final int nSideCol = xOffsetSide.length - 1;
         final int nSideRow = yOffsetSide.length - 1;
+
         Dimensions sideRequired = sideDim.scale(scale * zoom);
+        Dimensions mainRequired = mainDim.scale(scale * zoom);
 
-        double[] xOffsets = new double[mainComp.size() + 1];
-        double[] yOffsets = new double[2];
-        Dimensions mainRequired = Dimensions.ofGrid(mainComp, yOffsets, xOffsets)
-                                            .scale(scale * zoom);
+        Dimensions titleRequired = new Dimensions(title.width(), title.height()).scale(scale * zoom);
 
-        final Dimensions total = calcTotalDimensions(margin, padding, mainRequired, sideRequired, fmt);
-        final double fitting = calcFitting(margin, padding, mainRequired, sideRequired, fmt);
+        final double firstRowHeight = scale * zoom * yOffsets[1];
+        final Dimensions total = calcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
+        final double fitting = calcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
 
         // create the image for rendering
         FreeHepWrapper wrapper = new FreeHepWrapper(fmt, total.w, total.h);
@@ -274,7 +339,7 @@ final class ReactionDepiction extends Depiction {
 
         // shift product x-offset to make room for the arrow / side components
         if (!sideComps.isEmpty()) {
-            mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * mainRequired.h / 2;
+            mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * firstRowHeight / 2;
             for (int i = arrowIdx + 1; i < xOffsets.length; i++) {
                 xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
             }
@@ -282,17 +347,22 @@ final class ReactionDepiction extends Depiction {
 
         // MAIN COMPONENTS DRAW
         // x,y base coordinates include the margin and centering (only if fitting to a size)
-        double xBase = margin + (total.w - 2 * margin - (mainComp.size() - 1) * padding - (nSideCol - 1) * padding - (rescale * xOffsets[mainComp.size()])) / 2;
-        double yBase = margin + Math.max(mainCompOffset, 0) + (total.h - 2 * margin - (Math.max(mainCompOffset, 0) + fitting * mainRequired.h)) / 2;
+        final double totalRequiredWidth  = 2 * margin + (nCol - 1) * padding + (nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
+        final double totalRequiredHeight = 2 * margin + (nRow - 1) * padding + (!title.isEmpty() ? padding : 0) + Math.max(mainCompOffset, 0) + fitting * mainRequired.h + fitting * Math.max(0, titleRequired.h);
+        double xBase = margin + (total.w - totalRequiredWidth) / 2;
+        double yBase = margin + Math.max(mainCompOffset, 0) + (total.h - totalRequiredHeight) / 2;
         for (int i = 0; i < mainComp.size(); i++) {
+
+            final int row = i / nCol;
+            final int col = i % nCol;
 
             // calc the 'view' bounds:
             //  amount of padding depends on which row or column we are in.
             //  the width/height of this col/row can be determined by the next offset
-            double x = xBase + i * padding + rescale * xOffsets[i];
-            double y = yBase;
-            double w = rescale * (xOffsets[i + 1] - xOffsets[i]);
-            double h = fitting * mainRequired.h;
+            double x = xBase + col * padding + rescale * xOffsets[col];
+            double y = yBase + row * padding + rescale * yOffsets[row];
+            double w = rescale * (xOffsets[col + 1] - xOffsets[col]);
+            double h = rescale * (yOffsets[row + 1] - yOffsets[row]);
 
             // intercept arrow draw and make it as big as need
             if (i == arrowIdx) {
@@ -313,6 +383,13 @@ final class ReactionDepiction extends Depiction {
             draw(visitor, zoom, bounds, rect(x, y, w, h));
         }
 
+        // RXN TITLE DRAW
+        if (!title.isEmpty()) {
+            double y = yBase + nRow * padding + rescale * yOffsets[nRow];
+            double h = rescale * title.height();
+            draw(visitor, zoom, title, rect(0, y, total.w, h));
+        }
+
         // SIDE COMPONENTS DRAW
         xBase += arrowIdx * padding + rescale * xOffsets[arrowIdx];
         yBase -= mainCompOffset;
@@ -331,11 +408,19 @@ final class ReactionDepiction extends Depiction {
             draw(visitor, zoom, sideComps.get(i), rect(x, y, w, h));
         }
 
+        // reset shared xOffsets
+        if (!sideComps.isEmpty()) {
+            for (int i = arrowIdx + 1; i < xOffsets.length; i++)
+                xOffsets[i] -= sideRequired.w * 1 / (scale * zoom);
+        }
+
         wrapper.dispose();
         return wrapper.toString();
     }
 
-    private double calcFitting(double margin, double padding, Dimensions mainRequired, Dimensions sideRequired, String fmt) {
+    private double calcFitting(double margin, double padding, Dimensions mainRequired, Dimensions sideRequired,
+                               Dimensions titleRequired,
+                               double firstRowHeight, String fmt) {
         if (dimensions == Dimensions.AUTOMATIC)
             return 1; // no fitting
 
@@ -343,11 +428,12 @@ final class ReactionDepiction extends Depiction {
         final int nSideRow = yOffsetSide.length - 1;
 
         // need padding in calculation
-        double mainCompOffset = sideRequired.h > 0 ? sideRequired.h + (nSideRow * padding) - (mainRequired.h / 2) : 0;
+        double mainCompOffset = sideRequired.h > 0 ? sideRequired.h + (nSideRow * padding) - (firstRowHeight / 2) : 0;
         if (mainCompOffset < 0)
             mainCompOffset = 0;
 
-        Dimensions required = mainRequired.add(sideRequired.w, mainCompOffset);
+        Dimensions required = mainRequired.add(sideRequired.w, mainCompOffset)
+                                          .add(0, Math.max(0, titleRequired.h));
 
         // We take out the padding height of the side components but in reality
         // some of it overlaps, since reactions are normally wider then they are
@@ -357,8 +443,9 @@ final class ReactionDepiction extends Depiction {
         Dimensions targetDim = dimensions;
 
         targetDim = targetDim.add(-2 * margin, -2 * margin)
-                                         .add(-((mainComp.size() - 1) * padding), 0)
-                                         .add(-(nSideCol - 1) * padding, -(nSideRow - 1) * padding);
+                             .add(-((nCol - 1) * padding), -((nRow - 1) * padding))
+                             .add(-(nSideCol - 1) * padding, -(nSideRow - 1) * padding)
+                             .add(0, titleRequired.h > 0 ? -padding : 0);
 
         // PDF and PS are in point to we need to account for that
         if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt))
@@ -373,21 +460,28 @@ final class ReactionDepiction extends Depiction {
     }
 
     private Dimensions calcTotalDimensions(double margin, double padding, Dimensions mainRequired,
-                                           Dimensions sideRequired, String fmt) {
+                                           Dimensions sideRequired, Dimensions titleRequired,
+                                           double firstRowHeight,
+                                           String fmt) {
         if (dimensions == Dimensions.AUTOMATIC) {
 
             final int nSideCol = xOffsetSide.length - 1;
             final int nSideRow = yOffsetSide.length - 1;
 
-            double mainCompOffset = sideRequired.h + (nSideRow * padding) - (mainRequired.h / 2);
+            double mainCompOffset = sideRequired.h + (nSideRow * padding) - (firstRowHeight / 2);
             if (mainCompOffset < 0)
                 mainCompOffset = 0;
 
+            double titleExtra = Math.max(0, titleRequired.h);
+            if (titleExtra > 0)
+                titleExtra += padding;
+
             return mainRequired.add(2 * margin, 2 * margin)
-                               .add(((mainComp.size() - 1) * padding), 0)
-                    .add(sideRequired.w, 0)           // side component extra width
+                               .add((nCol - 1) * padding, (nRow - 1) * padding)
+                    .add(Math.max(0, sideRequired.w), 0)           // side component extra width
                     .add((nSideCol - 1) * padding, 0) // side component padding
-                    .add(0, mainCompOffset);
+                    .add(0, mainCompOffset)
+                    .add(0, titleExtra);
 
         } else {
             // we want all vector graphics dims in MM

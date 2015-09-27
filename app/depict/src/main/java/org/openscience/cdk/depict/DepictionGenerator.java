@@ -452,9 +452,21 @@ public final class DepictionGenerator {
         resetCoords(products, productScales);
         resetCoords(agents, agentScales);
 
+        final Bounds emptyBounds = new Bounds();
+        final Bounds title = copy.getParameterValue(BasicSceneGenerator.ShowReactionTitle.class) ? copy.generateTitle(rxn) : emptyBounds;
+        final List<Bounds> reactantTitles = new ArrayList<>();
+        final List<Bounds> productTitles = new ArrayList<>();
+        if (copy.getParameterValue(BasicSceneGenerator.ShowMoleculeTitle.class)) {
+            for (IAtomContainer reactant : reactants)
+                reactantTitles.add(copy.generateTitle(reactant));
+            for (IAtomContainer product : products)
+                productTitles.add(copy.generateTitle(product));
+        }
+
         return new ReactionDepiction(model,
                                      reactantBounds, productBounds, agentBounds,
-                                     plus, rxn.getDirection(), dimensions);
+                                     plus, rxn.getDirection(), dimensions,
+                                     reactantTitles, productTitles, title);
     }
 
     /**
@@ -579,11 +591,11 @@ public final class DepictionGenerator {
      * Generate a bound element that is the title of the provided molecule. If title
      * is not specified an empty bounds is returned.
      *
-     * @param mol molecule
+     * @param chemObj molecule or reaction
      * @return bound element
      */
-    private Bounds generateTitle(IAtomContainer mol) {
-        String title = mol.getProperty(CDKConstants.TITLE);
+    private Bounds generateTitle(IChemObject chemObj) {
+        String title = chemObj.getProperty(CDKConstants.TITLE);
         if (title == null || title.isEmpty())
             return new Bounds();
         final double scale = 1 / getParameterValue(BasicSceneGenerator.Scale.class) * getParameterValue(RendererModel.TitleFontScale.class);
@@ -716,13 +728,27 @@ public final class DepictionGenerator {
     /**
      * Display a molecule title with each depiction. The title
      * is specified by setting the {@link org.openscience.cdk.CDKConstants#TITLE}
-     * property.
+     * property. For reactions only the main components have their
+     * title displayed.
      *
      * @return new generator for method chaining
      * @see BasicSceneGenerator.ShowMoleculeTitle
      */
     public DepictionGenerator withMolTitle() {
         return withParam(BasicSceneGenerator.ShowMoleculeTitle.class,
+                         true);
+    }
+
+    /**
+     * Display a reaction title with the depiction. The title
+     * is specified by setting the {@link org.openscience.cdk.CDKConstants#TITLE}
+     * property on the {@link IReaction} instance.
+     *
+     * @return new generator for method chaining
+     * @see BasicSceneGenerator.ShowReactionTitle
+     */
+    public DepictionGenerator withRxnTitle() {
+        return withParam(BasicSceneGenerator.ShowReactionTitle.class,
                          true);
     }
 
