@@ -68,7 +68,7 @@ public class ConformerContainer implements List<IAtomContainer> {
         Point3d[] tmp = new Point3d[atomContainer.getAtomCount()];
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             IAtom atom = atomContainer.getAtom(i);
-            if (atom.getPoint3d() == null) throw new NullPointerException("Molecule must have 3D coordinates");
+            if (atom.getPoint3d() == null) throw new IllegalArgumentException("Molecule must have 3D coordinates");
             tmp[i] = new Point3d(atom.getPoint3d());
         }
         return tmp;
