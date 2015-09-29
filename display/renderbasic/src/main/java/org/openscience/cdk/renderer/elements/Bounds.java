@@ -171,6 +171,8 @@ public final class Bounds implements IRenderingElement {
             } else if (element instanceof ElementGroup) {
                 for (IRenderingElement child : (ElementGroup) element)
                     stack.add(child);
+            } else if (element instanceof MarkedElement) {
+                stack.add(((MarkedElement)element).element());
             } else {
                 // ignored from bounds calculation, we don't really
                 // care but log we skipped it

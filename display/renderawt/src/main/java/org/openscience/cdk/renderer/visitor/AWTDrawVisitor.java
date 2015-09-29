@@ -48,6 +48,7 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.elements.PathElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
@@ -625,7 +626,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         else if (element instanceof ArrowElement)
             visit((ArrowElement) element);
         else if (element instanceof Bounds) {
-            // ignore
+            visit(((Bounds) element).root());
+        } else if (element instanceof MarkedElement) {
+            visit(((MarkedElement) element).element());
         } else
             System.err.println("Visitor method for " + element.getClass().getName() + " is not implemented");
         this.graphics.setColor(savedColor);
