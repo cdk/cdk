@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.depict;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -36,6 +35,7 @@ import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
@@ -44,7 +44,9 @@ import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -401,6 +403,11 @@ public final class DepictionGenerator {
         }
     }
 
+    private static void setIfMissing(IChemObject chemObject, String key, String val) {
+        if (chemObject.getProperty(key) == null)
+            chemObject.setProperty(key, val);
+    }
+
     /**
      * Depict a reaction.
      *
@@ -413,6 +420,21 @@ public final class DepictionGenerator {
         final List<IAtomContainer> reactants = toList(rxn.getReactants());
         final List<IAtomContainer> products = toList(rxn.getProducts());
         final List<IAtomContainer> agents = toList(rxn.getAgents());
+
+        // set ids for tagging elements
+        int molId = 0;
+        for (IAtomContainer mol : reactants) {
+            setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+            setIfMissing(mol, MarkedElement.CLASS_KEY, "reactant");
+        }
+        for (IAtomContainer mol : products) {
+            setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+            setIfMissing(mol, MarkedElement.CLASS_KEY, "product");
+        }
+        for (IAtomContainer mol : agents) {
+            setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+            setIfMissing(mol, MarkedElement.CLASS_KEY, "agent");
+        }
 
         final Map<IChemObject, Color> myHighlight = new HashMap<>();
         if (highlightAtomMap) {
@@ -544,6 +566,16 @@ public final class DepictionGenerator {
     }
 
     private IRenderingElement generate(IAtomContainer molecule, RendererModel model, int atomNum) throws CDKException {
+
+        // tag the atom and bond ids
+        String molId = molecule.getProperty(MarkedElement.ID_KEY);
+        if (molId != null) {
+            int atomId = 0, bondid = 0;
+            for (IAtom atom : molecule.atoms())
+                setIfMissing(atom, MarkedElement.ID_KEY, molId + "atm" + ++atomId);
+            for (IBond bond : molecule.bonds())
+                setIfMissing(bond, MarkedElement.ID_KEY, molId + "bnd" + ++bondid);
+        }
 
         if (annotateAtomNum) {
             for (IAtom atom : molecule.atoms()) {
