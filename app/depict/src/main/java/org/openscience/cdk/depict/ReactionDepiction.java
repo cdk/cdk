@@ -29,8 +29,10 @@ import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
+import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -200,9 +202,9 @@ final class ReactionDepiction extends Depiction {
         // fractional strokes can be figured out by interpolation, without
         // when we shrink diagrams bonds can look too bold/chubby
         final Graphics2D g2 = img.createGraphics();
-        final AWTDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
-        g2.setBackground(model.get(BasicSceneGenerator.BackgroundColor.class));
-        g2.clearRect(0, 0, img.getWidth(), img.getHeight());
+        final IDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
+        visitor.visit(new RectangleElement(0, 0, img.getWidth(), img.getHeight(),
+                                           model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the zoom, fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
@@ -330,8 +332,8 @@ final class ReactionDepiction extends Depiction {
         final AWTDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
 
         // background color
-        wrapper.g2.setColor(model.get(BasicSceneGenerator.BackgroundColor.class));
-        wrapper.g2.fillRect(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h));
+        visitor.visit(new RectangleElement(0, 0, total.w, total.h,
+                                           model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the zoom, fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
