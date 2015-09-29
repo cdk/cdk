@@ -42,6 +42,7 @@ import org.openscience.cdk.renderer.RendererModel.ColorHash;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.elements.WedgeLineElement;
 import org.openscience.cdk.renderer.elements.WedgeLineElement.Direction;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
@@ -261,7 +262,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         ringSet.sortAtomContainers(new AtomContainerComparatorBy2DCenter());
 
         for (IBond bond : container.bonds()) {
-            group.add(this.generate(bond, model));
+            group.add(MarkedElement.markupBond(this.generate(bond, model), bond));
         }
         return group;
     }

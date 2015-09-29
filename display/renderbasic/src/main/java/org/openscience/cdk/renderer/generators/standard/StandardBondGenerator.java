@@ -38,6 +38,7 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.elements.path.Close;
 import org.openscience.cdk.renderer.elements.path.CubicTo;
 import org.openscience.cdk.renderer.elements.path.LineTo;
@@ -964,7 +965,7 @@ final class StandardBondGenerator {
 
         TextOutline outline = StandardGenerator.generateAnnotation(midPoint, label, perpendicular, annotationDistance,
                 annotationScale, font, null);
-        annotations.add(GeneralPath.shapeOf(outline.getOutline(), annotationColor));
+        annotations.add(MarkedElement.markup(GeneralPath.shapeOf(outline.getOutline(), annotationColor), "annotation"));
     }
 
     /**
