@@ -631,7 +631,8 @@ public final class DepictionGenerator {
         if (title == null || title.isEmpty())
             return new Bounds();
         final double scale = 1 / getParameterValue(BasicSceneGenerator.Scale.class) * getParameterValue(RendererModel.TitleFontScale.class);
-        return new Bounds(StandardGenerator.embedText(font, title, getParameterValue(RendererModel.TitleColor.class), scale));
+        return new Bounds(MarkedElement.markup(StandardGenerator.embedText(font, title, getParameterValue(RendererModel.TitleColor.class), scale),
+                                               "title"));
     }
 
 

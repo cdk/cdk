@@ -328,8 +328,11 @@ final class ReactionDepiction extends Depiction {
         final double fitting = calcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
 
         // create the image for rendering
-        FreeHepWrapper wrapper = new FreeHepWrapper(fmt, total.w, total.h);
-        final AWTDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
+        FreeHepWrapper wrapper = null;
+        if (!fmt.equals(SVG_FMT))
+            wrapper = new FreeHepWrapper(fmt, total.w, total.h);
+        final IDrawVisitor visitor = fmt.equals(SVG_FMT) ? new SvgDrawVisitor(total.w, total.h)
+                                                         : AWTDrawVisitor.forVectorGraphics(wrapper.g2);
 
         // background color
         visitor.visit(new RectangleElement(0, 0, total.w, total.h,
@@ -416,8 +419,12 @@ final class ReactionDepiction extends Depiction {
                 xOffsets[i] -= sideRequired.w * 1 / (scale * zoom);
         }
 
-        wrapper.dispose();
-        return wrapper.toString();
+        if (wrapper != null) {
+            wrapper.dispose();
+            return wrapper.toString();
+        } else {
+            return visitor.toString();
+        }
     }
 
     private double calcFitting(double margin, double padding, Dimensions mainRequired, Dimensions sideRequired,
