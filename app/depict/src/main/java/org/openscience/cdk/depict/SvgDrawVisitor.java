@@ -25,7 +25,6 @@ package org.openscience.cdk.depict;
 
 import com.google.common.base.Joiner;
 import com.google.common.xml.XmlEscapers;
-import com.sun.tools.javac.jvm.Gen;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -120,10 +119,71 @@ final class SvgDrawVisitor implements IDrawVisitor {
         return decimalFormat.format(num);
     }
 
-    private void append(StringBuilder sb, double[] nums, int len) {
-        for (int i = 0; i < len; i++) {
-            if (i > 0) sb.append(' ');
-            sb.append(decimalFormat.format(nums[i]));
+    private void appendPoints(StringBuilder sb, double[] points, int numPoints) {
+        switch (numPoints) {
+            case 1:
+                sb.append(decimalFormat.format(points[0]));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[1]));
+                break;
+            case 2:
+                sb.append(decimalFormat.format(points[0]));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[1]));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[2]));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[3]));
+                break;
+            case 3:
+                sb.append(decimalFormat.format(points[0]));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[1]));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[2]));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[3]));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[4]));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[5]));
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    private void appendRelativePoints(StringBuilder sb, double[] points, double xBase, double yBase, int numPoints) {
+        switch (numPoints) {
+            case 1:
+                sb.append(decimalFormat.format(points[0] - xBase));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[1] - yBase));
+                break;
+            case 2:
+                sb.append(decimalFormat.format(points[0] - xBase));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[1] - yBase));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[2] - xBase));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[3] - yBase));
+                break;
+            case 3:
+                sb.append(decimalFormat.format(points[0] - xBase));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[1] - yBase));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[2] - xBase));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[3] - yBase));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[4] - xBase));
+                sb.append(' ');
+                sb.append(decimalFormat.format(points[5] - yBase));
+                break;
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
@@ -152,31 +212,51 @@ final class SvgDrawVisitor implements IDrawVisitor {
         if (cls != null) sb.append(" class='").append(cls).append("'");
         sb.append(" d='");
         double[] points = new double[6];
+        double xCurr = 0, yCurr = 0;
         for (PathElement pelem : elem.elements) {
             pelem.points(points);
             switch (pelem.type) {
                 case Close:
-                    sb.append("Z ");
+                    sb.append("z");
+                    xCurr = yCurr = 0;
                     break;
                 case LineTo:
-                    sb.append("L ");
                     transform(points, 1);
-                    append(sb, points, 2);
+                    double dx = points[0];
+                    double dy = points[1];
+                    // horizontal and vertical lines can be even more compact
+                    if (dx == 0) {
+                        sb.append("v").append(toStr(dy));
+                    } else if (dy == 0) {
+                        sb.append("h").append(toStr(dx));
+                    } else {
+                        sb.append("l");
+                        appendRelativePoints(sb, points, xCurr, yCurr, 1);
+                    }
+                    xCurr = points[0];
+                    yCurr = points[1];
                     break;
                 case MoveTo:
-                    sb.append("M ");
+                    // We have Move as always absolute
+                    sb.append("M");
                     transform(points, 1);
-                    append(sb, points, 2);
+                    appendPoints(sb, points, 1);
+                    xCurr = points[0];
+                    yCurr = points[1];
                     break;
                 case QuadTo:
-                    sb.append("Q ");
+                    sb.append("q");
                     transform(points, 2);
-                    append(sb, points, 4);
+                    appendRelativePoints(sb, points, xCurr, yCurr, 2);
+                    xCurr = points[2];
+                    yCurr = points[3];
                     break;
                 case CubicTo:
-                    sb.append("C ");
+                    sb.append("c");
                     transform(points, 3);
-                    append(sb, points, 6);
+                    appendRelativePoints(sb, points, xCurr, yCurr, 3);
+                    xCurr = points[4];
+                    yCurr = points[5];
                     break;
             }
         }
@@ -236,8 +316,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
         // we try to
         if (marked instanceof LineElement) {
             visit(id, cls, (LineElement) marked);
-        }
-        else if (marked instanceof GeneralPath) {
+        } else if (marked instanceof GeneralPath) {
             visit(id, cls, (GeneralPath) marked);
         } else {
             appendIdent();
