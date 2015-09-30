@@ -114,7 +114,7 @@ final class MolGridDepiction extends Depiction {
         final IDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
 
         visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),
-                                           model.get(BasicSceneGenerator.BackgroundColor.class)));
+                                           true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the zoom, fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
@@ -214,7 +214,7 @@ final class MolGridDepiction extends Depiction {
 
         final IDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
         visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),
-                                           model.get(BasicSceneGenerator.BackgroundColor.class)));
+                                           true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
