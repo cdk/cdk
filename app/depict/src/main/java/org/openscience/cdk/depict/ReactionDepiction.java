@@ -334,6 +334,9 @@ final class ReactionDepiction extends Depiction {
             wrapper = new FreeHepWrapper(fmt, total.w, total.h);
         final IDrawVisitor visitor = fmt.equals(SVG_FMT) ? new SvgDrawVisitor(total.w, total.h)
                                                          : AWTDrawVisitor.forVectorGraphics(wrapper.g2);
+        if (fmt.equals(SVG_FMT)) {
+            svgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor) visitor, mainComp);
+        }
 
         // background color
         visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),

@@ -216,6 +216,10 @@ final class MolGridDepiction extends Depiction {
         visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),
                                            true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
+        if (fmt.equals(SVG_FMT)) {
+            svgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor) visitor, elements);
+        }
+
         // compound the fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
 
