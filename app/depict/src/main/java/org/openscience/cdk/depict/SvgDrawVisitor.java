@@ -67,6 +67,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
 
     private int             indentLvl     = 0;
     private AffineTransform transform     = null;
+    private RendererModel   model         = null;
     private NumberFormat    decimalFormat = new DecimalFormat(".##");
 
     /**
@@ -197,8 +198,8 @@ final class SvgDrawVisitor implements IDrawVisitor {
     }
 
     @Override
-    public void setRendererModel(RendererModel rendererModel) {
-        // ignored - not needed
+    public void setRendererModel(RendererModel model) {
+        this.model = model;
     }
 
     private void visit(GeneralPath elem) {
@@ -399,8 +400,11 @@ final class SvgDrawVisitor implements IDrawVisitor {
             } else if (elem instanceof Bounds) {
                 queue.add(((Bounds) elem).root());
             } else if (elem instanceof MarkedElement) {
-                // TODO can disable here for smalled output
-                visit(((MarkedElement) elem));
+                if (model != null && model.get(RendererModel.MarkedOutput.class)) {
+                    visit(((MarkedElement) elem));
+                } else {
+                    visit(((MarkedElement) elem).element());
+                }
             } else if (elem instanceof LineElement) {
                 visit((LineElement) elem);
             } else if (elem instanceof GeneralPath) {
