@@ -133,8 +133,10 @@ public final class MarkedElement implements IRenderingElement {
     private static MarkedElement markupChemObj(IRenderingElement elem, IChemObject chemObj) {
         assert elem != null;
         MarkedElement tagElem = new MarkedElement(elem);
-        tagElem.setId(chemObj.getProperty(ID_KEY, String.class));
-        tagElem.aggClass(chemObj.getProperty(CLASS_KEY, String.class));
+        if (chemObj != null) {
+            tagElem.setId(chemObj.getProperty(ID_KEY, String.class));
+            tagElem.aggClass(chemObj.getProperty(CLASS_KEY, String.class));
+        }
         return tagElem;
     }
 

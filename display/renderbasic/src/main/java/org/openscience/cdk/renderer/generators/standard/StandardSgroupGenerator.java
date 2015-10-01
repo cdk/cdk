@@ -32,6 +32,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
@@ -256,9 +257,11 @@ final class StandardSgroupGenerator {
         // middle of all of those which were hidden
         final Point2d labelCoords = GeometryUtil.get2DCenter(sgroup.getAtoms());
         ElementGroup group = new ElementGroup();
-        for (Shape outline : atomGenerator.generatePseudoSymbol(label, HydrogenPosition.Right).getOutlines())
+        for (Shape outline : atomGenerator.generatePseudoSymbol(label, HydrogenPosition.Right)
+                                          .resize(1 / scale, 1 / -scale)
+                                          .getOutlines())
             group.add(GeneralPath.shapeOf(outline, foreground));
-        return group;
+        return MarkedElement.markupAtom(group, null);
     }
 
     /**
