@@ -89,7 +89,7 @@ final class AbbreviationLabel {
     //    OTHER DEALINGS IN THE SOFTWARE.
     //
     //    For more information, please refer to <http://unlicense.org/>
-    private final static String[] SYMBOL_LIST = new String[]{"Ace", "Acetyl", "Acyl", "Ad", "All", "Alloc", "Allyl",
+    private final static String[] SYMBOL_LIST = new String[]{"acac", "Ace", "Acetyl", "Acyl", "Ad", "All", "Alloc", "Allyl",
                                                              "Amyl", "AOC", "BDMS", "Benzoyl", "Benzyl", "Bn", "BOC",
                                                              "Boc", "BOM", "Bromo", "Bs", "Bu", "But", "Butyl", "Bz",
                                                              "Bzl", "Cbz", "Chloro", "CoA", "D", "Dan", "Dansyl",
@@ -172,6 +172,17 @@ final class AbbreviationLabel {
             if (c == '(' || c == ')') {
                 tokens.add(Character.toString(c));
                 i++;
+
+                // digits following closing brackets
+                if (c == ')') {
+                    st = i;
+                    while (i < len && isDigit(c = label.charAt(i))) {
+                        i++;
+                    }
+                    if (i > st)
+                        tokens.add(label.substring(st, i));
+                }
+
                 continue;
             }
 
@@ -255,13 +266,19 @@ final class AbbreviationLabel {
     static List<FormattedText> format(List<String> tokens) {
         List<FormattedText> texts = new ArrayList<>(2 + tokens.size());
         for (String token : tokens) {
+            // charges
             if (isChargeToken(token)) {
                 // charges are superscript
                 String sign = Character.toString(norm(token.charAt(0)));
                 String coef = token.length() > 1 ? token.substring(1) : "";
                 if (sign.equals("-")) sign = MINUS_STRING;
                 texts.add(new FormattedText(coef + sign, STYLE_SUPSCRIPT));
-            } else {
+            }
+            // subscript number after brackets
+            else if (token.length() == 1 && isDigit(token.charAt(0)) && !texts.isEmpty() && texts.get(texts.size()-1).text.equals(")")) {
+                texts.add(new FormattedText(token, STYLE_SUBSCRIPT));
+            }
+            else {
                 // optional prefix
                 int i = findPrefix(ITAL_PREFIX_TRIE, token, 0, 0);
                 // find a numeric suffix to subscript

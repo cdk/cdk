@@ -264,7 +264,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         }
 
         // Add the Sgroups display elements to the front layer
-        IRenderingElement sgroups = StandardSgroupGenerator.generate(parameters, stroke, font, foreground, container);
+        IRenderingElement sgroups = StandardSgroupGenerator.generate(parameters, stroke, font, foreground, atomGenerator, container);
         frontLayer.add(sgroups);
 
         // Annotations are added to the front layer.

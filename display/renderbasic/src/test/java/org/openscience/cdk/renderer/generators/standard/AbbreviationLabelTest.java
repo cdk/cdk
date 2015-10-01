@@ -89,6 +89,26 @@ public class AbbreviationLabelTest {
     }
 
     @Test
+    public void parseFeacac3() {
+        List<String> tokens = new ArrayList<>();
+        assertTrue(AbbreviationLabel.parse("Fe(acac)3", tokens));
+        assertThat(tokens.size(), is(5));
+        assertThat(tokens, hasItems("Fe", "(", "acac", ")", "3"));
+    }
+
+    @Test
+    public void formatFeacac3() {
+        List<String> tokens = new ArrayList<>();
+        assertTrue(AbbreviationLabel.parse("Fe(acac)3", tokens));
+        List<AbbreviationLabel.FormattedText> formatted = AbbreviationLabel.format(tokens);
+        assertThat(formatted.get(0).text, is("Fe(acac)"));
+        assertThat(formatted.get(0).style, is(0));
+        assertThat(formatted.get(1).text, is("3"));
+        assertThat(formatted.get(1).style, is(-1));
+    }
+
+
+    @Test
     public void CO2Et() {
         List<String> tokens = new ArrayList<>();
         assertTrue(AbbreviationLabel.parse("CO2Et", tokens));
