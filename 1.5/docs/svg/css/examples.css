@@ -1,0 +1,67 @@
+/*
+http://www.colourlovers.com/palette/490780/The_First_Raindrop
+#81A8B8
+#A4BCC2
+#C2CBCE
+#DBE6EC
+#E8F3F8
+*/
+
+body {
+  background-color: #DBE6EC;
+  font: normal 12pt Verdana;
+  color: #81A8B8;
+}
+
+.emph-content {
+  background-color: #81A8B8;
+  color: #E8F3F8;
+  padding: 4px;
+  margin: 10px auto 10px auto;
+  width: 75%;
+}
+
+.content {
+  color: #81A8B8;
+  padding: 4px;
+  margin: 10px auto 10px auto;
+  width: 75%;
+}
+
+h1 {  
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  font: normal 10pt Verdana, Helvetica, sans-serif;
+  border: #81A8B8 3px solid;        
+  color: #81A8B8;
+  width: 650px;    
+  text-align: left;
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;
+}
+
+table tr {
+  padding: 0;
+  border: 0;
+  maring: 0;
+}
+
+table td {
+  color: #444444;
+}
+
+table td,
+table th  {
+  border:  0;
+  margin:  0;
+  padding: 5px;    
+}
+
+table th  {
+  background-color: #81A8B8;
+  color: #E8F3F8;
+  font: normal 10pt Verdana, Helvetica, sans-serif;
+}
