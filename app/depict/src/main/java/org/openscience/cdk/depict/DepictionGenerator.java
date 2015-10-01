@@ -323,6 +323,11 @@ public final class DepictionGenerator {
      */
     public Depiction depict(Iterable<IAtomContainer> mols, int nrow, int ncol) throws CDKException {
 
+        int molId = 0;
+        for (IAtomContainer mol : mols) {
+            setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+        }
+
         // ensure we have coordinates, generate them if not
         // we also rescale the molecules such that all bond
         // lengths are the same.
