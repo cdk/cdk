@@ -271,12 +271,12 @@ final class SvgDrawVisitor implements IDrawVisitor {
                     break;
                 case LineTo:
                     transform(points, 1);
-                    double dx = points[0];
-                    double dy = points[1];
+                    double dx = points[0] - xCurr;
+                    double dy = points[1] - yCurr;
                     // horizontal and vertical lines can be even more compact
-                    if (dx == 0) {
+                    if (Math.abs(dx) < 0.01) {
                         sb.append("v").append(toStr(dy));
-                    } else if (dy == 0) {
+                    } else if ((Math.abs(dy) < 0.01)) {
                         sb.append("h").append(toStr(dx));
                     } else {
                         sb.append("l");
