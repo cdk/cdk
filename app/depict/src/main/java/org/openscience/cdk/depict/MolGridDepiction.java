@@ -31,6 +31,7 @@ import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -210,15 +211,19 @@ final class MolGridDepiction extends Depiction {
         final double fitting   = calcFitting(margin, padding, required, fmt);
 
         // create the image for rendering
-        FreeHepWrapper wrapper = new FreeHepWrapper(fmt, total.w, total.h);
-
-        final IDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
-        visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),
-                                           true, model.get(BasicSceneGenerator.BackgroundColor.class)));
+        FreeHepWrapper wrapper = null;
+        if (!fmt.equals(SVG_FMT))
+            wrapper = new FreeHepWrapper(fmt, total.w, total.h);
+        final IDrawVisitor visitor = fmt.equals(SVG_FMT) ? new SvgDrawVisitor(total.w, total.h)
+                                                         : AWTDrawVisitor.forVectorGraphics(wrapper.g2);
 
         if (fmt.equals(SVG_FMT)) {
             svgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor) visitor, elements);
         }
+
+        visitor.setTransform(new AffineTransform());
+        visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),
+                                           true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
@@ -242,9 +247,12 @@ final class MolGridDepiction extends Depiction {
             draw(visitor, zoom, elements.get(i), rect(x, y, w, h));
         }
 
-        // we created the Graphic2d instance so need to dispose of it
-        wrapper.dispose();
-        return wrapper.toString();
+        if (wrapper != null) {
+            wrapper.dispose();
+            return wrapper.toString();
+        } else {
+            return visitor.toString();
+        }
     }
 
     private Rectangle2D.Double rect(double x, double y, double w, double h) {

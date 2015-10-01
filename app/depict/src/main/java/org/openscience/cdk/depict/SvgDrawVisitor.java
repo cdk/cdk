@@ -243,11 +243,13 @@ final class SvgDrawVisitor implements IDrawVisitor {
             }
         }
 
-        defaultFill = fillFreq.getMostFrequent();
-        defaultStroke = strokeFreq.getMostFrequent();
-        Double strokeWidth = strokeWidthFreq.getMostFrequent();
-        if (strokeWidth != null)
-            defaultStrokeWidth = toStr(strokeWidth);
+        if (!defaultsWritten) {
+            defaultFill = fillFreq.getMostFrequent();
+            defaultStroke = strokeFreq.getMostFrequent();
+            Double strokeWidth = strokeWidthFreq.getMostFrequent();
+            if (strokeWidth != null)
+                defaultStrokeWidth = toStr(strokeWidth);
+        }
     }
 
     private void visit(GeneralPath elem) {

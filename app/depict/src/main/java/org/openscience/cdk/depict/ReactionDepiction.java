@@ -37,6 +37,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -339,6 +340,7 @@ final class ReactionDepiction extends Depiction {
         }
 
         // background color
+        visitor.setTransform(new AffineTransform());
         visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),
                                            true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
