@@ -873,7 +873,7 @@ public final class DepictionGenerator {
      * @return new generator for method chaining
      * @see StandardGenerator#HIGHLIGHT_COLOR
      */
-    public DepictionGenerator withHighlight(Iterable<IChemObject> chemObjs, Color color) {
+    public DepictionGenerator withHighlight(Iterable<? extends IChemObject> chemObjs, Color color) {
         DepictionGenerator copy = new DepictionGenerator(this);
         for (IChemObject chemObj : chemObjs)
             copy.highlight.put(chemObj, color);
