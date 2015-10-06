@@ -93,7 +93,7 @@ import java.util.Set;
 public class Fingerprinter implements IFingerprinter {
 
     /** Throw an exception if too many paths (per atom) are generated. */
-    private final static int                 PATH_LIMIT           = 150;
+    private final static int                 DEFAULT_PATH_LIMIT   = 1500;
 
     /** The default length of created fingerprints. */
     public final static int                  DEFAULT_SIZE         = 1024;
@@ -102,8 +102,10 @@ public class Fingerprinter implements IFingerprinter {
 
     private int                              size;
     private int                              searchDepth;
+    private int                              pathLimit = DEFAULT_PATH_LIMIT;
 
     static int                               debugCounter         = 0;
+
 
     private static ILoggingTool              logger               = LoggingToolFactory
                                                                           .createLoggingTool(Fingerprinter.class);
@@ -216,7 +218,7 @@ public class Fingerprinter implements IFingerprinter {
         Map<IAtom, Map<IAtom, IBond>> cache = new HashMap<IAtom, Map<IAtom, IBond>>();
 
         for (IAtom startAtom : container.atoms()) {
-            List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, PATH_LIMIT);
+            List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
             for (List<IAtom> path : p) {
                 StringBuffer sb = new StringBuffer();
                 IAtom x = path.get(0);
@@ -307,6 +309,10 @@ public class Fingerprinter implements IFingerprinter {
             bondSymbol = "#";
         }
         return bondSymbol;
+    }
+
+    public void setPathLimit(int limit) {
+        this.pathLimit = limit;
     }
 
     public int getSearchDepth() {
