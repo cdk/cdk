@@ -32,11 +32,13 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
+import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.BackgroundColor;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.standard.SelectionVisibility;
@@ -683,10 +685,64 @@ public final class DepictionGenerator {
      * @see StandardGenerator.AtomColor
      * @see StandardGenerator.Highlighting
      * @see StandardGenerator.HighlightStyle
+     * @see CDK2DAtomColors
      */
     public DepictionGenerator withAtomColors() {
-        return withParam(StandardGenerator.AtomColor.class, new CDK2DAtomColors())
-                .withParam(StandardGenerator.Highlighting.class, StandardGenerator.HighlightStyle.OuterGlow);
+        return withAtomColors(new CDK2DAtomColors());
+    }
+
+    /**
+     * Color atom symbols using provided colorer.
+     *
+     * @return new generator for method chaining
+     * @see StandardGenerator.AtomColor
+     * @see StandardGenerator.Highlighting
+     * @see StandardGenerator.HighlightStyle
+     * @see CDK2DAtomColors
+     * @see org.openscience.cdk.renderer.color.UniColor
+     */
+    public DepictionGenerator withAtomColors(IAtomColorer colorer) {
+        return withParam(StandardGenerator.AtomColor.class, colorer);
+    }
+
+    /**
+     * Change the background color.
+     *
+     * @param color background color
+     * @return new generator for method chaining
+     * @see BackgroundColor
+     */
+    public DepictionGenerator withBackgroundColor(Color color) {
+        return withParam(BackgroundColor.class, color);
+    }
+
+    /**
+     * Highlights are shown as an outer glow around the atom symbols and bonds
+     * rather than recoloring. The width of the glow can be set but defaults to
+     * 4x the stroke width.
+     *
+     * @return new generator for method chaining
+     * @see StandardGenerator.Highlighting
+     * @see StandardGenerator.HighlightStyle
+     */
+    public DepictionGenerator withOuterGlowHighlight() {
+        return withOuterGlowHighlight(4);
+    }
+
+    /**
+     * Highlights are shown as an outer glow around the atom symbols and bonds
+     * rather than recoloring.
+     *
+     * @param width width of the outer glow relative to the bond stroke
+     * @return new generator for method chaining
+     * @see StandardGenerator.Highlighting
+     * @see StandardGenerator.HighlightStyle
+     */
+    public DepictionGenerator withOuterGlowHighlight(double width) {
+        return withParam(StandardGenerator.Highlighting.class,
+                         StandardGenerator.HighlightStyle.OuterGlow)
+                .withParam(StandardGenerator.OuterGlowWidth.class,
+                           width);
     }
 
     /**
