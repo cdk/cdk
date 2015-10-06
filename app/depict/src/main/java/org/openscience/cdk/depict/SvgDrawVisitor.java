@@ -411,7 +411,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
         appendIdent();
         double[] points = new double[]{elem.xCoord, elem.yCoord};
         transform(points, 1);
-        sb.append("<oval");
+        sb.append("<ellipse");
         sb.append(" cx='").append(toStr(points[0])).append("'");
         sb.append(" cy='").append(toStr(points[1])).append("'");
         sb.append(" rx='").append(toStr(scaled(elem.radius))).append("'");

@@ -39,6 +39,7 @@ import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.MarkedElement;
+import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
@@ -233,13 +234,18 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             if (isHidden(atom))
                 continue;
 
-            if (symbols[i] == null) {
-                continue;
-            }
-
             Color highlight = getHighlightColor(atom, parameters);
             Color color = highlight != null && style == HighlightStyle.Colored ? highlight : coloring
                     .getAtomColor(atom);
+
+            if (symbols[i] == null) {
+                // we add a 'ball' around atoms with no symbols (e.g. carbons)
+                if (highlight != null && style == HighlightStyle.OuterGlow) {
+                    backLayer.add(MarkedElement.markup(new OvalElement(atom.getPoint2d().x, atom.getPoint2d().y,1.75 * glowWidth * stroke, true, highlight),
+                                                       "outerglow"));
+                }
+                continue;
+            }
 
             ElementGroup symbolElements = new ElementGroup();
             for (Shape shape : symbols[i].getOutlines()) {
