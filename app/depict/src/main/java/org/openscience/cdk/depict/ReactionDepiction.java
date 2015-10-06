@@ -204,7 +204,8 @@ final class ReactionDepiction extends Depiction {
         // when we shrink diagrams bonds can look too bold/chubby
         final Graphics2D g2 = img.createGraphics();
         final IDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
-        visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),
+        visitor.setTransform(AffineTransform.getScaleInstance(1,-1));
+        visitor.visit(new RectangleElement(0, -(int) Math.ceil(total.h), (int) Math.ceil(total.w), (int) Math.ceil(total.h),
                                            true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
 
@@ -340,8 +341,8 @@ final class ReactionDepiction extends Depiction {
         }
 
         // background color
-        visitor.setTransform(new AffineTransform());
-        visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),
+        visitor.setTransform(AffineTransform.getScaleInstance(1,-1));
+        visitor.visit(new RectangleElement(0, -(int) Math.ceil(total.h), (int) Math.ceil(total.w), (int) Math.ceil(total.h),
                                            true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the zoom, fitting and scaling into a single value

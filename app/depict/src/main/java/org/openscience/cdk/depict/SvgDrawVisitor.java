@@ -394,7 +394,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
         transform(points, 1);
         sb.append("<rect");
         sb.append(" x='").append(toStr(points[0])).append("'");
-        sb.append(" y='").append(toStr(points[1])).append("'");
+        sb.append(" y='").append(toStr(points[1]-elem.height)).append("'");
         sb.append(" width='").append(toStr(scaled(elem.width))).append("'");
         sb.append(" height='").append(toStr(scaled(elem.height))).append("'");
         if (elem.filled) {

@@ -114,7 +114,8 @@ final class MolGridDepiction extends Depiction {
         final Graphics2D g2 = img.createGraphics();
         final IDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
 
-        visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),
+        visitor.setTransform(AffineTransform.getScaleInstance(1,-1));
+        visitor.visit(new RectangleElement(0, -(int) Math.ceil(total.h), (int) Math.ceil(total.w), (int) Math.ceil(total.h),
                                            true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the zoom, fitting and scaling into a single value
@@ -221,8 +222,8 @@ final class MolGridDepiction extends Depiction {
             svgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor) visitor, elements);
         }
 
-        visitor.setTransform(new AffineTransform());
-        visitor.visit(new RectangleElement(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h),
+        visitor.setTransform(AffineTransform.getScaleInstance(1,-1));
+        visitor.visit(new RectangleElement(0, -(int) Math.ceil(total.h), (int) Math.ceil(total.w), (int) Math.ceil(total.h),
                                            true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the fitting and scaling into a single value
