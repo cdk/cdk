@@ -433,6 +433,40 @@ public final class Mappings implements Iterable<int[]> {
     }
 
     /**
+     * Obtain the mapped substructures (atoms/bonds) of the target compound. The atoms
+     * and bonds are the same as in the target molecule but there may be less of them.
+     *
+     * <blockquote><pre>
+     * IAtomContainer query, target
+     * Mappings mappings = ...;
+     * for (IAtomContainer mol : mol.toSubstructures()) {
+     *    for (IAtom atom : mol.atoms())
+     *      target.contains(atom); // always true
+     *    for (IAtom atom : target.atoms())
+     *      mol.contains(atom): // not always true
+     * }
+     * </pre></blockquote>
+     *
+     * @return lazy iterable of molecules
+     */
+    public Iterable<IAtomContainer> toSubstructures() {
+        return FluentIterable.from(map(new ToAtomBondMap(query, target)))
+                             .transform(new Function<Map<IChemObject, IChemObject>, IAtomContainer>() {
+                                 @Override
+                                 public IAtomContainer apply(Map<IChemObject, IChemObject> map) {
+                                     final IAtomContainer submol = target.getBuilder()
+                                                                         .newInstance(IAtomContainer.class,
+                                                                                      query.getAtomCount(), target.getBondCount(), 0, 0);
+                                     for (IAtom atom : query.atoms())
+                                         submol.addAtom((IAtom)map.get(atom));
+                                     for (IBond bond : query.bonds())
+                                         submol.addBond((IBond)map.get(bond));
+                                     return submol;
+                                 }
+                             });
+    }
+
+    /**
      * Efficiently determine if there are at least 'n' matches
      *
      * <blockquote><pre>
