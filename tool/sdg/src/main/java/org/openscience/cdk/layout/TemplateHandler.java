@@ -155,6 +155,13 @@ public final class TemplateHandler {
      * @param molecule The molecule to be added to the TemplateHandler
      */
     public void addMolecule(IAtomContainer molecule) {
+        if (!GeometryUtil.has2DCoordinates(molecule))
+            throw new IllegalArgumentException("Template did not have 2D coordinates");
+
+        // we want a consistent scale!
+        GeometryUtil.scaleMolecule(molecule, GeometryUtil.getScaleFactor(molecule,
+                                                                         StructureDiagramGenerator.DEFAULT_BOND_LENGTH));
+
         templates.add(molecule);
         anonPatterns.add(VentoFoggia.findSubstructure(molecule,
                                                       anonAtomMatcher,
@@ -308,8 +315,6 @@ public final class TemplateHandler {
         try {
             TemplateHandler handler = new TemplateHandler();
             IAtomContainer copy = template.clone();
-            if (!GeometryUtil.has2DCoordinates(copy))
-                throw new IllegalArgumentException("Template did not have 2D coordinates");
             handler.addMolecule(copy);
             return handler;
         } catch (CloneNotSupportedException e) {

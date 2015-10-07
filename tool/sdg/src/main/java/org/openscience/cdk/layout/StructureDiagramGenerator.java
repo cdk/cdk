@@ -88,10 +88,11 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 public class StructureDiagramGenerator {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
+    public static final double DEFAULT_BOND_LENGTH = 1.5;
     
     private IAtomContainer          molecule;
     private IRingSet                sssr;
-    private double                  bondLength               = 1.5;
+    private double                  bondLength               = DEFAULT_BOND_LENGTH;
     private Vector2d                firstBondVector;
     private RingPlacer              ringPlacer               = new RingPlacer();
     private AtomPlacer              atomPlacer               = new AtomPlacer();
