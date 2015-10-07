@@ -775,6 +775,10 @@ final class StandardBondGenerator {
             if (closest.dot(perpendicular) < 0) atom2Offset = -atom2Offset;
         }
 
+        final double halfBondLength = atom1Point.distance(atom2BackOffPoint) / 2;
+        if (Math.abs(atom1Offset) > halfBondLength) atom1Offset = 0;
+        if (Math.abs(atom2Offset) > halfBondLength) atom2Offset = 0;
+
         final ElementGroup group = new ElementGroup();
 
         group.add(newLineElement(atom1Point, atom2BackOffPoint));
