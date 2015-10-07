@@ -99,7 +99,7 @@ public class StructureDiagramGenerator {
     private List<IRingSet>          ringSystems              = null;
     private final String            disconnectedMessage      = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
     private TemplateHandler         templateHandler          = null;
-    private boolean                 useTemplates             = true;
+    private boolean                 useTemplates             = false;
     private boolean                 useIdentTemplates        = true;
     
     /** Atoms of the molecule that mapped a template */
