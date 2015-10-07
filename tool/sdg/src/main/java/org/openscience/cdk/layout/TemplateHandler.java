@@ -29,6 +29,7 @@ package org.openscience.cdk.layout;
 import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -53,6 +54,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -291,5 +293,55 @@ public final class TemplateHandler {
             }
         }
         return matchedSubstructures;
+    }
+
+    /**
+     * Singleton template instance, mainly useful for aligning molecules. If the template
+     * does not have coordinates an error is thrown.
+     *
+     * For safety we clone the molecule.
+     *
+     * @param template the molecule
+     * @return new template handler
+     */
+    public static TemplateHandler createSingleton(IAtomContainer template) {
+        try {
+            TemplateHandler handler = new TemplateHandler();
+            IAtomContainer copy = template.clone();
+            if (!GeometryUtil.has2DCoordinates(copy))
+                throw new IllegalArgumentException("Template did not have 2D coordinates");
+            handler.addMolecule(copy);
+            return handler;
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalArgumentException("Could not clone molecule.");
+        }
+    }
+
+    /**
+     * Create a template from a substructure pattern. Using this template handler in the diagram
+     * generator then allows us to align to common reference.
+     *
+     * @param template the molecule
+     * @return new template handler
+     */
+    public static TemplateHandler createFromSubstructure(Pattern ptrn, Iterable<IAtomContainer> mols) {
+        for (IAtomContainer mol : mols) {
+            for (IAtomContainer template : ptrn.matchAll(mol).toSubstructures())
+                return createSingleton(template);
+        }
+        throw new IllegalArgumentException("Pattern does not match any provided molecules");
+    }
+
+    /**
+     * Create a template from a substructure pattern. Using this template handler in the diagram
+     * generator then allows us to align to common reference.
+     *
+     * @param template the molecule
+     * @return new template handler
+     */
+    public static TemplateHandler createFromSubstructure(Pattern ptrn, IAtomContainer mol) {
+        for (IAtomContainer template : ptrn.matchAll(mol).toSubstructures())
+            return createSingleton(template);
+        throw new IllegalArgumentException("Pattern does not match any provided molecules");
     }
 }
