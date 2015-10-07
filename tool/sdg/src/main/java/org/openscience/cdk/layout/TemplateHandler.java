@@ -92,10 +92,16 @@ public final class TemplateHandler {
     };
 
     /**
-     * Creates a new TemplateHandler.
+     * Creates a new TemplateHandler with default templates loaded.
      */
     public TemplateHandler(IChemObjectBuilder builder) {
         loadTemplates(builder);
+    }
+
+    /**
+     * Creates a new TemplateHandler without any default templates.
+     */
+    public TemplateHandler() {
     }
 
     /**
