@@ -76,8 +76,15 @@ public final class TemplateHandler {
     private final static ILoggingTool         LOGGER       = LoggingToolFactory.createLoggingTool(TemplateHandler.class);
     private final        List<IAtomContainer> templates    = new ArrayList<>();
     private final        List<Pattern>        anonPatterns = new ArrayList<>();
+    private final        List<Pattern>        elemPatterns = new ArrayList<>();
 
 
+    private final AtomMatcher elemAtomMatcher = new AtomMatcher() {
+        @Override
+        public boolean matches(IAtom a, IAtom b) {
+            return a.getAtomicNumber().equals(b.getAtomicNumber());
+        }
+    };
     private final AtomMatcher anonAtomMatcher = new AtomMatcher() {
         @Override
         public boolean matches(IAtom a, IAtom b) {
@@ -150,12 +157,16 @@ public final class TemplateHandler {
         anonPatterns.add(VentoFoggia.findSubstructure(molecule,
                                                       anonAtomMatcher,
                                                       anonBondMatcher));
+        elemPatterns.add(VentoFoggia.findSubstructure(molecule,
+                                                      elemAtomMatcher,
+                                                      anonBondMatcher));
     }
 
     public IAtomContainer removeMolecule(IAtomContainer molecule) throws CDKException {
         for (int i = 0; i < templates.size(); i++) {
             if (VentoFoggia.findIdentical(templates.get(i), anonAtomMatcher, anonBondMatcher)
                            .matches(molecule)) {
+                elemPatterns.remove(i);
                 anonPatterns.remove(i);
                 return templates.remove(i);
             }
@@ -196,6 +207,18 @@ public final class TemplateHandler {
      * @return True if there was a possible mapping
      */
     public boolean mapTemplates(IAtomContainer molecule) throws CDKException {
+        // match element patterns first so hetero atoms are oriented correctly
+        for (Pattern anonPattern : elemPatterns) {
+            for (Map<IAtom, IAtom> atoms : anonPattern.matchAll(molecule).toAtomMap()) {
+                for (Map.Entry<IAtom, IAtom> e : atoms.entrySet()) {
+                    e.getValue().setPoint2d(new Point2d(e.getKey().getPoint2d()));
+                    e.getValue().setFlag(CDKConstants.ISPLACED, true);
+                }
+                if (!atoms.isEmpty())
+                    return true;
+            }
+        }
+        // no element pattern matched, try anonymous patterns
         for (Pattern anonPattern : anonPatterns) {
             for (Map<IAtom, IAtom> atoms : anonPattern.matchAll(molecule).toAtomMap()) {
                 for (Map.Entry<IAtom, IAtom> e : atoms.entrySet()) {
