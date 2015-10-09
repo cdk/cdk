@@ -29,6 +29,10 @@ package org.openscience.cdk.sgroup;
 public enum SgroupKey {
     CtabType,
     CtabSubType,
+    /**
+     * Not to be confused with the subscript key
+     * this is Sgroup label not the bracket label (e.g. 'n').
+     */
     CtabLabel,
     CtabExpansion,
     CtabCorrespondence,
