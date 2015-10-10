@@ -40,7 +40,7 @@ public class AromaticOrSingleQueryBond extends SMARTSBond {
      */
     public AromaticOrSingleQueryBond(IChemObjectBuilder builder) {
         super(builder);
-        setFlag(CDKConstants.ISAROMATIC, true);
+        setIsAromatic(true);
     }
 
     /**
@@ -49,7 +49,7 @@ public class AromaticOrSingleQueryBond extends SMARTSBond {
      */
     public AromaticOrSingleQueryBond(IQueryAtom atom1, IQueryAtom atom2, Order order, IChemObjectBuilder builder) {
         super(atom1, atom2, order, builder);
-        setFlag(CDKConstants.ISAROMATIC, true);
+        setIsAromatic(true);
     }
 
     /*
@@ -60,7 +60,7 @@ public class AromaticOrSingleQueryBond extends SMARTSBond {
      */
     @Override
     public boolean matches(IBond bond) {
-        return bond.getFlag(CDKConstants.ISAROMATIC) || bond.getOrder() == IBond.Order.SINGLE;
+        return bond.isAromatic() || bond.getOrder() == IBond.Order.SINGLE;
     }
 
     /*

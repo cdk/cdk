@@ -652,7 +652,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 } else if (countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
                     // OK, it's SP2
                     count++;
-                } else if (atomContainer.getBond(atom, nextAtom).getFlag(CDKConstants.ISAROMATIC)) {
+                } else if (atomContainer.getBond(atom, nextAtom).isAromatic()) {
                     // two aromatic bonds indicate sp2
                     count++;
                 } // OK, not SP2
@@ -944,7 +944,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
         for (IAtom atom1 : connected) {
 
-            boolean aromatic = container.getBond(atom, atom1).getFlag(CDKConstants.ISAROMATIC);
+            boolean aromatic = container.getBond(atom, atom1).isAromatic();
 
             // ignoring non-aromatic bonds
             if (!aromatic) continue;
@@ -955,7 +955,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             // check the second sphere
             for (IAtom atom2 : container.getConnectedAtomsList(atom1)) {
 
-                if (atom2 != atom && container.getBond(atom1, atom2).getFlag(CDKConstants.ISAROMATIC)
+                if (atom2 != atom && container.getBond(atom1, atom2).isAromatic()
                         && !"C".equals(atom2.getSymbol())) {
                     return false;
                 }
@@ -2379,7 +2379,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private boolean hasAromaticBond(IAtomContainer container, IAtom atom) {
         List<IBond> neighbors = container.getConnectedBondsList(atom);
         for (IBond bond : neighbors) {
-            if (bond.getFlag(CDKConstants.ISAROMATIC)) return true;
+            if (bond.isAromatic()) return true;
         }
         return false;
     }

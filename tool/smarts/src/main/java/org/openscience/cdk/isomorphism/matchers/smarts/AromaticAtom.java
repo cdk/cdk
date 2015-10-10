@@ -40,7 +40,7 @@ public class AromaticAtom extends SMARTSAtom {
      */
     public AromaticAtom(IChemObjectBuilder builder) {
         super(builder);
-        setFlag(CDKConstants.ISAROMATIC, true);
+        setIsAromatic(true);
     }
 
     /*
@@ -51,7 +51,7 @@ public class AromaticAtom extends SMARTSAtom {
      */
     @Override
     public boolean matches(IAtom atom) {
-        return atom.getFlag(CDKConstants.ISAROMATIC);
+        return atom.isAromatic();
     }
 
     /*

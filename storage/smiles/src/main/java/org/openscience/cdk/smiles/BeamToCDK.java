@@ -302,7 +302,7 @@ final class BeamToCDK {
 
         if (beamAtom.isotope() >= 0) cdkAtom.setMassNumber(beamAtom.isotope());
 
-        if (beamAtom.aromatic()) cdkAtom.setFlag(ISAROMATIC, true);
+        if (beamAtom.aromatic()) cdkAtom.setIsAromatic(true);
 
         if (beamAtom.atomClass() > 0) cdkAtom.setProperty(ATOM_ATOM_MAPPING, beamAtom.atomClass());
 
@@ -348,14 +348,14 @@ final class BeamToCDK {
             case AROMATIC:
             case IMPLICIT_AROMATIC:
             case DOUBLE_AROMATIC:
-                bond.setFlag(ISAROMATIC, true);
-                atoms[u].setFlag(ISAROMATIC, true);
-                atoms[v].setFlag(ISAROMATIC, true);
+                bond.setIsAromatic(true);
+                atoms[u].setIsAromatic(true);
+                atoms[v].setIsAromatic(true);
             case IMPLICIT:
-                if (atoms[u].getFlag(ISAROMATIC) && atoms[v].getFlag(ISAROMATIC)) {
-                    bond.setFlag(ISAROMATIC, true);
-                    atoms[u].setFlag(ISAROMATIC, true);
-                    atoms[v].setFlag(ISAROMATIC, true);
+                if (atoms[u].isAromatic() && atoms[v].isAromatic()) {
+                    bond.setIsAromatic(true);
+                    atoms[u].setIsAromatic(true);
+                    atoms[v].setIsAromatic(true);
                 }
         }
 

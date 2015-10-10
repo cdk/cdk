@@ -37,7 +37,7 @@ public class AliphaticSymbolAtom extends SMARTSAtom {
      */
     public AliphaticSymbolAtom(String symbol, IChemObjectBuilder builder) {
         super(builder);
-        setFlag(CDKConstants.ISAROMATIC, false);
+        setIsAromatic(true);
         setSymbol(symbol);
     }
 
@@ -49,7 +49,7 @@ public class AliphaticSymbolAtom extends SMARTSAtom {
      */
     @Override
     public boolean matches(IAtom atom) {
-        return !atom.getFlag(CDKConstants.ISAROMATIC) && atom.getSymbol().equals(this.getSymbol());
+        return !atom.isAromatic() && atom.getSymbol().equals(this.getSymbol());
     }
 
     /*

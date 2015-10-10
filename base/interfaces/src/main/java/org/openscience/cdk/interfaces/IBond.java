@@ -247,6 +247,43 @@ public interface IBond extends IElectronContainer {
      */
     public boolean isConnectedTo(IBond bond);
 
+    /**
+     * Access whether this bond has been marked as aromatic. The default
+     * value is false and you must explicitly perceive aromaticity with
+     * one of the available models.
+     *
+     * @return aromatic status
+     * @see #getFlag(int)
+     * @see org.openscience.cdk.aromaticity.Aromaticity
+     */
+    boolean isAromatic();
+
+    /**
+     * Mark this bond as being aromatic.
+     *
+     * @param arom aromatic status
+     * @see #setFlag(int, boolean)
+     */
+    void setIsAromatic(boolean arom);
+
+    /**
+     * Access whether this bond has been flagged as in a ring. The default
+     * value is false and you must explicitly find rings first.
+     *
+     * @return ring status
+     * @see #getFlag(int)
+     * @see @see org.openscience.cdk.graph.RingFinder
+     */
+    boolean isInRing();
+
+    /**
+     * Mark this bond as being in a ring.
+     *
+     * @param ring ring status
+     * @see #setFlag(int, boolean)
+     */
+    void setIsInRing(boolean ring);
+
     /** @inheritDoc */
     @Override
     public IBond clone() throws CloneNotSupportedException;

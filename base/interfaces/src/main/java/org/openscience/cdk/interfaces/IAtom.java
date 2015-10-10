@@ -141,6 +141,43 @@ public interface IAtom extends IAtomType {
     public Integer getStereoParity();
 
     /**
+     * Access whether this atom has been marked as aromatic. The default
+     * value is false and you must explicitly perceive aromaticity with
+     * one of the available models.
+     *
+     * @return aromatic status
+     * @see #getFlag(int)
+     * @see org.openscience.cdk.aromaticity.Aromaticity
+     */
+    boolean isAromatic();
+
+    /**
+     * Mark this atom as being aromatic.
+     *
+     * @param arom aromatic status
+     * @see #setFlag(int, boolean)
+     */
+    void setIsAromatic(boolean arom);
+
+    /**
+     * Access whether this atom has been flagged as in a ring. The default
+     * value is false and you must explicitly find rings first.
+     *
+     * @return ring status
+     * @see #getFlag(int)
+     * @see @see org.openscience.cdk.graph.RingFinder
+     */
+    boolean isInRing();
+
+    /**
+     * Mark this atom as being in a ring.
+     *
+     * @param ring ring status
+     * @see #setFlag(int, boolean)
+     */
+    void setIsInRing(boolean ring);
+
+    /**
      * @inheritDoc
      */
     @Override

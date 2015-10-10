@@ -475,6 +475,30 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         return false;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public boolean isAromatic() {
+        return getFlag(CDKConstants.ISAROMATIC);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setIsAromatic(boolean arom) {
+        setFlag(CDKConstants.ISAROMATIC, arom);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isInRing() {
+        return getFlag(CDKConstants.ISINRING);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setIsInRing(boolean ring) {
+        setFlag(CDKConstants.ISINRING, ring);
+    }
+
     /**
      * Clones this bond object, including clones of the atoms between which the
      * bond is defined.
