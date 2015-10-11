@@ -88,17 +88,18 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 public class StructureDiagramGenerator {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
+    public static final double DEFAULT_BOND_LENGTH = 1.5;
     
     private IAtomContainer          molecule;
     private IRingSet                sssr;
-    private double                  bondLength               = 1.5;
+    private double                  bondLength               = DEFAULT_BOND_LENGTH;
     private Vector2d                firstBondVector;
     private RingPlacer              ringPlacer               = new RingPlacer();
     private AtomPlacer              atomPlacer               = new AtomPlacer();
     private List<IRingSet>          ringSystems              = null;
     private final String            disconnectedMessage      = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
     private TemplateHandler         templateHandler          = null;
-    private boolean                 useTemplates             = true;
+    private boolean                 useTemplates             = false;
     private boolean                 useIdentTemplates        = true;
     
     /** Atoms of the molecule that mapped a template */
@@ -344,7 +345,6 @@ public class StructureDiagramGenerator {
         //Vector2d ringSystemVector = null;
         //Vector2d newRingSystemVector = null;
         this.firstBondVector = firstBondVector;
-        boolean templateMapped = false;
         double angle;
 
         /*
@@ -352,12 +352,11 @@ public class StructureDiagramGenerator {
          * coordinates Those are stored as CML in
          * <i>org/openscience/cdk/layout/templates</i>.
          */
-        if (useTemplates && (System.getProperty("java.version").indexOf("1.3.") == -1)) {
+        if (useTemplates && !System.getProperty("java.version").contains("1.3.")) {
             logger.debug("Initializing TemplateHandler");
             logger.debug("TemplateHander initialized");
             logger.debug("Now starting Template Detection in Molecule...");
             mappedSubstructures = getTemplateHandler().getMappedSubstructures(molecule);
-            templateMapped = mappedSubstructures.getAtomContainerCount() > 0;
             logger.debug("Template Detection finished");
             logger.debug("Number of found templates: " + mappedSubstructures.getAtomContainerCount());
         }
@@ -896,38 +895,31 @@ public class StructureDiagramGenerator {
          * coordinates. All mapped substructures are saved in:
          * this.mappedSubstructures
          */
-        if (useTemplates && mappedSubstructures.getAtomContainerCount() > 0
-            && System.getProperty("java.version").indexOf("1.3.") == -1) {
-            /*
-             * Find mapped substructures
-             */
-            for (Iterator<IAtomContainer> substructureIterator = mappedSubstructures.atomContainers().iterator(); substructureIterator
-                    .hasNext(); ) {
-                IAtomContainer substructure = substructureIterator.next();
+        if (useTemplates &&
+            mappedSubstructures.getAtomContainerCount() > 0 &&
+            !System.getProperty("java.version").contains("1.3.")) {
+
+            for (IAtomContainer substructure : mappedSubstructures.atomContainers()) {
                 boolean substructureMapped = false;
-                for (Iterator<IAtomContainer> ringSetIterator = rs.atomContainers().iterator(); ringSetIterator
-                                                                                                        .hasNext() && !substructureMapped; ) {
-                    IRing ring = (IRing) ringSetIterator.next();
-                    for (Iterator atomIterator = ring.atoms().iterator(); atomIterator.hasNext() && !substructureMapped; ) {
-                        IAtom atom = (IAtom) atomIterator.next();
-                        if (substructure.contains(atom)) substructureMapped = true;
-                    }
-                }
-                /*
-                 * Layout a found mapped substructure
-                 */
-                if (substructureMapped) {
-                    boolean mapped = getTemplateHandler().mapTemplateExact(substructure);
-                    if (!mapped)
-                        logger.warn("A supposedly matched substructure failed to match.");
-                    else {
-                        // Mark substructure atoms as CDKConstants.ISPLACED
-                        for (Iterator iterator = substructure.atoms().iterator(); iterator.hasNext(); ) {
-                            IAtom atom = (IAtom) iterator.next();
-                            atom.setFlag(CDKConstants.ISPLACED, true);
+
+                for (IAtomContainer ring : rs.atomContainers()) {
+                    for (IAtom atom : ring.atoms()) {
+                        if (substructure.contains(atom)) {
+                            substructureMapped = true;
+                            break;
                         }
+                    }
+                    if (substructureMapped)
+                        break;
+                }
+
+                // FIXME: we've already determine the atom-atom mapping to template but is redone here
+                if (substructureMapped) {
+                    if (getTemplateHandler().mapTemplateExact(substructure)) {
                         // Mark rings of substrucure as CDKConstants.ISPLACED
                         ringPlacer.checkAndMarkPlaced(rs);
+                    } else {
+                        logger.warn("A supposedly matched substructure failed to match.");
                     }
                 }
             }

@@ -36,6 +36,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
@@ -227,6 +228,30 @@ public class MappingsTest {
         assertThat(m2.get(query.getAtom(2)), is((IChemObject)target.getAtom(0)));
         assertThat(m2.get(query.getBond(0)), is((IChemObject)target.getBond(1)));
         assertThat(m2.get(query.getBond(1)), is((IChemObject)target.getBond(0)));
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void toSubstructures() throws Exception {
+        IAtomContainer query  = smi("O1CC1");
+        IAtomContainer target = smi("C1OC1CCC");
+
+        Iterable<IAtomContainer> iterable = Pattern.findSubstructure(query)
+                                                   .matchAll(target)
+                                                   .uniqueAtoms()
+                                                   .toSubstructures();
+        Iterator<IAtomContainer> iterator = iterable.iterator();
+
+        assertTrue(iterator.hasNext());
+        IAtomContainer submol = iterator.next();
+        assertThat(submol, is(not(query)));
+        // note that indices are mapped from query to target
+        assertThat(submol.getAtom(0), is(target.getAtom(1))); // oxygen
+        assertThat(submol.getAtom(1), is(target.getAtom(0))); // C
+        assertThat(submol.getAtom(2), is(target.getAtom(2))); // C
+        assertThat(submol.getBond(0), is(target.getBond(0))); // C-O bond
+        assertThat(submol.getBond(1), is(target.getBond(2))); // O-C bond
+        assertThat(submol.getBond(2), is(target.getBond(1))); // C-C bond
         assertFalse(iterator.hasNext());
     }
 
