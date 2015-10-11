@@ -480,6 +480,30 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
         return this.electronCount;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public boolean isAromatic() {
+        return getFlag(CDKConstants.ISAROMATIC);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setIsAromatic(boolean arom) {
+        setFlag(CDKConstants.ISAROMATIC, arom);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isInRing() {
+        return getFlag(CDKConstants.ISINRING);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setIsInRing(boolean ring) {
+        setFlag(CDKConstants.ISINRING, ring);
+    }
+
     /**
      * Sets the number of electrons in this bond
      * @param   electronCount The number of electrons in this electron container.

@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -577,6 +578,28 @@ class ImmutableHydrogen implements IAtom {
     @Override
     public IChemObjectBuilder getBuilder() {
         return null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isAromatic() {
+        return false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setIsAromatic(boolean arom) {
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isInRing() {
+        return false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setIsInRing(boolean ring) {
     }
 
 }

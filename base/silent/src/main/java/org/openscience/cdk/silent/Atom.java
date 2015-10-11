@@ -367,6 +367,30 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
         return false;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public boolean isAromatic() {
+        return getFlag(CDKConstants.ISAROMATIC);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setIsAromatic(boolean arom) {
+        setFlag(CDKConstants.ISAROMATIC, arom);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isInRing() {
+        return getFlag(CDKConstants.ISINRING);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setIsInRing(boolean ring) {
+        setFlag(CDKConstants.ISINRING, ring);
+    }
+
     /**
      * Returns a one line string representation of this Atom.
      * Methods is conform RFC #9.

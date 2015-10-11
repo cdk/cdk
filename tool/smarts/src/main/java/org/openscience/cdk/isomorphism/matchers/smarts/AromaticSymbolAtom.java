@@ -32,13 +32,13 @@ public class AromaticSymbolAtom extends SMARTSAtom {
 
     public AromaticSymbolAtom(String symbol, IChemObjectBuilder builder) {
         super(builder);
-        setFlag(CDKConstants.ISAROMATIC, true);
+        setIsAromatic(true);
         setSymbol(symbol);
     }
 
     @Override
     public boolean matches(IAtom atom) {
-        return atom.getFlag(CDKConstants.ISAROMATIC) && atom.getSymbol().equals(this.getSymbol());
+        return atom.isAromatic() && atom.getSymbol().equals(this.getSymbol());
     }
 
     @Override

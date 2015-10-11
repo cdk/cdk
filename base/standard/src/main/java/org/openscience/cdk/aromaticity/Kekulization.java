@@ -102,7 +102,7 @@ public final class Kekulization {
 
         // propegate bond order information from the matching
         for (final IBond bond : ac.bonds()) {
-            if (bond.getOrder() == UNSET && bond.getFlag(ISAROMATIC)) bond.setOrder(SINGLE);
+            if (bond.getOrder() == UNSET && bond.isAromatic()) bond.setOrder(SINGLE);
         }
         for (int v = available.nextSetBit(0); v >= 0; v = available.nextSetBit(v + 1)) {
             final int w = matching.other(v);

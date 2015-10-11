@@ -54,14 +54,12 @@ public class OrderQueryBond extends SMARTSBond {
      */
     @Override
     public boolean matches(IBond bond) {
-        if (bond.getFlag(CDKConstants.ISAROMATIC) ^ getFlag(CDKConstants.ISAROMATIC)) return false;
+        if (bond.isAromatic() ^ isAromatic()) return false;
 
         // we check for both bonds being aromatic - but the query will
         // never come in as aromatic (since there is a separate aromatic
         // query bond). But no harm in checking
-        if (bond.getFlag(CDKConstants.ISAROMATIC) && getFlag(CDKConstants.ISAROMATIC)) return true;
-
-        return bond.getOrder() == getOrder();
+        return bond.isAromatic() || bond.getOrder() == getOrder();
     }
 
     /*

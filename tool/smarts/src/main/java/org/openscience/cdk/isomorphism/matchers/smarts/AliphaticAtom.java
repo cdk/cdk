@@ -51,7 +51,7 @@ public class AliphaticAtom extends SMARTSAtom {
      */
     @Override
     public boolean matches(IAtom atom) {
-        return !atom.getFlag(CDKConstants.ISAROMATIC);
+        return !atom.isAromatic();
 
     }
 
