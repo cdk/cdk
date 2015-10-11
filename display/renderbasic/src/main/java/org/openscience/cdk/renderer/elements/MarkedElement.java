@@ -164,7 +164,8 @@ public final class MarkedElement implements IRenderingElement {
      * @return the marked element
      */
     public static MarkedElement markupAtom(IRenderingElement elem, IAtom atom) {
-        assert elem != null;
+        if (elem == null)
+            return null;
         MarkedElement tagElem = markupChemObj(elem, atom);
         tagElem.aggClass("atom");
         return tagElem;

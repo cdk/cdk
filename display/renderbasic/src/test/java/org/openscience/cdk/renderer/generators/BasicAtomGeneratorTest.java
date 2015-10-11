@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.AtomColor;
@@ -57,6 +58,12 @@ import org.openscience.cdk.validate.ProblemMarker;
 public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
 
     private BasicAtomGenerator generator;
+
+    static IRenderingElement unbox(IRenderingElement element) {
+        if (element instanceof MarkedElement)
+            return ((MarkedElement) element).element();
+        return element;
+    }
 
     @Override
     public Rectangle getCustomCanvas() {
@@ -229,7 +236,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
 
         List<IRenderingElement> elements = getAllSimpleElements(generator, singleAtom);
         Assert.assertEquals(1, elements.size());
-        AtomSymbolElement element = ((AtomSymbolElement) elements.get(0));
+        AtomSymbolElement element = ((AtomSymbolElement) unbox(elements.get(0)));
         Assert.assertEquals(testColor, element.color);
     }
 
@@ -267,7 +274,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
         List<IRenderingElement> elements = getAllSimpleElements(generator, cnop);
         Assert.assertEquals(4, elements.size());
         for (IRenderingElement element : elements) {
-            AtomSymbolElement symbolElement = (AtomSymbolElement) element;
+            AtomSymbolElement symbolElement = (AtomSymbolElement) unbox(element);
             String symbol = symbolElement.text;
             Assert.assertTrue(colorMap.containsKey(symbol));
             Assert.assertEquals(colorMap.get(symbol), symbolElement.color);
@@ -281,7 +288,7 @@ public class BasicAtomGeneratorTest extends AbstractGeneratorTest {
         List<IRenderingElement> elements = getAllSimpleElements(generator, snop);
         Color defaultColor = model.getDefault(AtomColor.class);
         for (IRenderingElement element : elements) {
-            AtomSymbolElement symbolElement = (AtomSymbolElement) element;
+            AtomSymbolElement symbolElement = (AtomSymbolElement) unbox(element);
             Assert.assertEquals(defaultColor, symbolElement.color);
         }
     }

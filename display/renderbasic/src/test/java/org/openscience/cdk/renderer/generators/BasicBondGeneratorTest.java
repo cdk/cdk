@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 
 /**
  * Test the {@link BasicBondGenerator}.
@@ -21,6 +22,12 @@ import org.openscience.cdk.renderer.elements.LineElement;
 public class BasicBondGeneratorTest extends AbstractGeneratorTest {
 
     private BasicBondGenerator generator;
+
+    static IRenderingElement unbox(IRenderingElement element) {
+        if (element instanceof MarkedElement)
+            return ((MarkedElement) element).element();
+        return element;
+    }
 
     @Override
     public Rectangle getCustomCanvas() {
