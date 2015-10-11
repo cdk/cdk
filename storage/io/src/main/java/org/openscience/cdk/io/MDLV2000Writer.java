@@ -30,6 +30,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -210,7 +211,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * @param output The OutputStream to write to
      */
     public MDLV2000Writer(OutputStream output) {
-        this(new OutputStreamWriter(output));
+        this(new OutputStreamWriter(output, StandardCharsets.UTF_8));
     }
 
     public MDLV2000Writer() {
