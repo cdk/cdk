@@ -28,9 +28,11 @@ import java.util.List;
 
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
+import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
@@ -67,6 +69,10 @@ public class ElementUtility implements IDrawVisitor {
                 this.elements.add(element);
             }
             ((ElementGroup) element).visitChildren(this);
+        } else if (element instanceof MarkedElement) {
+            visit(((MarkedElement) element).element());
+        } else if (element instanceof Bounds) {
+            visit(((Bounds) element).root());
         } else {
             this.elements.add(element);
         }
