@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 import org.openscience.cdk.renderer.color.IAtomColorer;
@@ -39,7 +38,8 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
-import org.openscience.cdk.renderer.elements.path.PathElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
+import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
@@ -50,20 +50,15 @@ import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
-import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.position;
 
 /**
  * The standard generator creates {@link IRenderingElement}s for the atoms and bonds of a structure
@@ -223,12 +218,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             Color highlight = getHighlightColor(bond, parameters);
             if (highlight != null && style == HighlightStyle.OuterGlow) {
-                backLayer.add(outerGlow(bondElements[i], highlight, glowWidth, stroke));
+                backLayer.add(MarkedElement.markup(outerGlow(bondElements[i], highlight, glowWidth, stroke), "outerglow"));
             }
             if (highlight != null && style == HighlightStyle.Colored) {
-                frontLayer.add(recolor(bondElements[i], highlight));
+                frontLayer.add(MarkedElement.markupBond(recolor(bondElements[i], highlight), bond));
             } else {
-                middleLayer.add(bondElements[i]);
+                middleLayer.add(MarkedElement.markupBond(bondElements[i], bond));
             }
         }
 
@@ -239,13 +234,18 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             if (isHidden(atom))
                 continue;
 
-            if (symbols[i] == null) {
-                continue;
-            }
-
             Color highlight = getHighlightColor(atom, parameters);
             Color color = highlight != null && style == HighlightStyle.Colored ? highlight : coloring
                     .getAtomColor(atom);
+
+            if (symbols[i] == null) {
+                // we add a 'ball' around atoms with no symbols (e.g. carbons)
+                if (highlight != null && style == HighlightStyle.OuterGlow) {
+                    backLayer.add(MarkedElement.markup(new OvalElement(atom.getPoint2d().x, atom.getPoint2d().y,1.75 * glowWidth * stroke, true, highlight),
+                                                       "outerglow"));
+                }
+                continue;
+            }
 
             ElementGroup symbolElements = new ElementGroup();
             for (Shape shape : symbols[i].getOutlines()) {
@@ -255,22 +255,22 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             // add the annotations of the symbol to the annotations ElementGroup
             for (Shape shape : symbols[i].getAnnotationOutlines()) {
-                annotations.add(GeneralPath.shapeOf(shape, annotationColor));
+                annotations.add(MarkedElement.markup(GeneralPath.shapeOf(shape, annotationColor), "annotation"));
             }
 
             if (highlight != null && style == HighlightStyle.OuterGlow) {
-                backLayer.add(outerGlow(symbolElements, highlight, glowWidth, stroke));
+                backLayer.add(MarkedElement.markup(outerGlow(symbolElements, highlight, glowWidth, stroke), "outerglow"));
             }
 
             if (highlight != null && style == HighlightStyle.Colored) {
-                frontLayer.add(symbolElements);
+                frontLayer.add(MarkedElement.markupAtom(symbolElements, atom));
             } else {
-                middleLayer.add(symbolElements);
+                middleLayer.add(MarkedElement.markupAtom(symbolElements, atom));
             }
         }
 
         // Add the Sgroups display elements to the front layer
-        IRenderingElement sgroups = StandardSgroupGenerator.generate(parameters, stroke, font, foreground, container);
+        IRenderingElement sgroups = StandardSgroupGenerator.generate(parameters, stroke, font, foreground, atomGenerator, container);
         frontLayer.add(sgroups);
 
         // Annotations are added to the front layer.
@@ -282,7 +282,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         group.add(middleLayer);
         group.add(frontLayer);
 
-        return group;
+        return MarkedElement.markupMol(group, container);
     }
 
     /**

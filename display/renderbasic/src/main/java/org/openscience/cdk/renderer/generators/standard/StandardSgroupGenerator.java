@@ -32,6 +32,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
@@ -64,8 +65,9 @@ final class StandardSgroupGenerator {
     private final Font          font;
     private final Color         foreground;
     private final double labelScale;
+    private final StandardAtomGenerator atomGenerator;
 
-    private StandardSgroupGenerator(RendererModel parameters, double stroke, Font font, Color foreground) {
+    private StandardSgroupGenerator(RendererModel parameters, StandardAtomGenerator atomGenerator, double stroke, Font font, Color foreground) {
         this.font = font;
         this.scale = parameters.get(BasicSceneGenerator.Scale.class);
         this.stroke = stroke;
@@ -75,10 +77,11 @@ final class StandardSgroupGenerator {
 
         // foreground is based on the carbon color
         this.foreground = foreground;
+        this.atomGenerator = atomGenerator;
     }
 
-    static IRenderingElement generate(RendererModel parameters, double stroke, Font font, Color foreground, IAtomContainer container) {
-        return new StandardSgroupGenerator(parameters, stroke, font, foreground).generateSgroups(container);
+    static IRenderingElement generate(RendererModel parameters, double stroke, Font font, Color foreground, StandardAtomGenerator atomGenerator, IAtomContainer container) {
+        return new StandardSgroupGenerator(parameters, atomGenerator, stroke, font, foreground).generateSgroups(container);
     }
 
 
@@ -253,10 +256,12 @@ final class StandardSgroupGenerator {
         // we're showing a label where there were no atoms before, we put it in the
         // middle of all of those which were hidden
         final Point2d labelCoords = GeometryUtil.get2DCenter(sgroup.getAtoms());
-        return GeneralPath.shapeOf(makeText(label,
-                                            labelCoords,
-                                            new Vector2d(0,0), 1).getOutline(),
-                                   foreground);
+        ElementGroup group = new ElementGroup();
+        for (Shape outline : atomGenerator.generatePseudoSymbol(label, HydrogenPosition.Right)
+                                          .resize(1 / scale, 1 / -scale)
+                                          .getOutlines())
+            group.add(GeneralPath.shapeOf(outline, foreground));
+        return MarkedElement.markupAtom(group, null);
     }
 
     /**

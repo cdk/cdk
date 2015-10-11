@@ -25,10 +25,13 @@ package org.openscience.cdk.depict;
 
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
+import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
+import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -109,10 +112,11 @@ final class MolGridDepiction extends Depiction {
         // fractional strokes can be figured out by interpolation, without
         // when we shrink diagrams bonds can look too bold/chubby
         final Graphics2D g2 = img.createGraphics();
-        final AWTDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
+        final IDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(g2);
 
-        g2.setBackground(model.get(BasicSceneGenerator.BackgroundColor.class));
-        g2.clearRect(0, 0, img.getWidth(), img.getHeight());
+        visitor.setTransform(AffineTransform.getScaleInstance(1,-1));
+        visitor.visit(new RectangleElement(0, -(int) Math.ceil(total.h), (int) Math.ceil(total.w), (int) Math.ceil(total.h),
+                                           true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the zoom, fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
@@ -208,11 +212,19 @@ final class MolGridDepiction extends Depiction {
         final double fitting   = calcFitting(margin, padding, required, fmt);
 
         // create the image for rendering
-        FreeHepWrapper wrapper = new FreeHepWrapper(fmt, total.w, total.h);
+        FreeHepWrapper wrapper = null;
+        if (!fmt.equals(SVG_FMT))
+            wrapper = new FreeHepWrapper(fmt, total.w, total.h);
+        final IDrawVisitor visitor = fmt.equals(SVG_FMT) ? new SvgDrawVisitor(total.w, total.h)
+                                                         : AWTDrawVisitor.forVectorGraphics(wrapper.g2);
 
-        final AWTDrawVisitor visitor = AWTDrawVisitor.forVectorGraphics(wrapper.g2);
-        wrapper.g2.setColor(model.get(BasicSceneGenerator.BackgroundColor.class));
-        wrapper.g2.fillRect(0, 0, (int) Math.ceil(total.w), (int) Math.ceil(total.h));
+        if (fmt.equals(SVG_FMT)) {
+            svgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor) visitor, elements);
+        }
+
+        visitor.setTransform(AffineTransform.getScaleInstance(1,-1));
+        visitor.visit(new RectangleElement(0, -(int) Math.ceil(total.h), (int) Math.ceil(total.w), (int) Math.ceil(total.h),
+                                           true, model.get(BasicSceneGenerator.BackgroundColor.class)));
 
         // compound the fitting and scaling into a single value
         final double rescale = zoom * fitting * scale;
@@ -236,9 +248,12 @@ final class MolGridDepiction extends Depiction {
             draw(visitor, zoom, elements.get(i), rect(x, y, w, h));
         }
 
-        // we created the Graphic2d instance so need to dispose of it
-        wrapper.dispose();
-        return wrapper.toString();
+        if (wrapper != null) {
+            wrapper.dispose();
+            return wrapper.toString();
+        } else {
+            return visitor.toString();
+        }
     }
 
     private Rectangle2D.Double rect(double x, double y, double w, double h) {

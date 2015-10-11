@@ -34,6 +34,7 @@ import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
@@ -215,7 +216,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup elementGroup = new ElementGroup();
         for (IAtom atom : container.atoms()) {
-            elementGroup.add(this.generate(container, atom, model));
+            elementGroup.add(MarkedElement.markupAtom(this.generate(container, atom, model), atom));
         }
         return elementGroup;
     }

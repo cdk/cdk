@@ -85,6 +85,19 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
         }
     }
 
+    /**
+     * Determines if the reaction's title is depicted.
+     */
+    public static class ShowReactionTitle extends AbstractGeneratorParameter<Boolean> {
+
+        /** Returns the default value.
+         * @return {@link Boolean}.FALSE */
+        @Override
+        public Boolean getDefault() {
+            return Boolean.FALSE;
+        }
+    }
+
     private ShowMoleculeTitle showMoleculeTitle = new ShowMoleculeTitle();
 
     /**
@@ -260,6 +273,6 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(new IGeneratorParameter<?>[]{backgroundColor, foregroundColor, margin, useAntiAliasing,
                 fontStyle, fontName, zoomFactor, scale, bondLength, fitToScreen, showMoleculeTitle, showTooltip,
-                arrowHeadWidth});
+                arrowHeadWidth, new ShowReactionTitle()});
     }
 }

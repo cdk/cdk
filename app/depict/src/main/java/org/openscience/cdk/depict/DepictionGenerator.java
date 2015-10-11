@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.depict;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -33,10 +32,13 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
+import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.elements.MarkedElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.BackgroundColor;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.standard.SelectionVisibility;
@@ -44,7 +46,9 @@ import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -321,6 +325,11 @@ public final class DepictionGenerator {
      */
     public Depiction depict(Iterable<IAtomContainer> mols, int nrow, int ncol) throws CDKException {
 
+        int molId = 0;
+        for (IAtomContainer mol : mols) {
+            setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+        }
+
         // ensure we have coordinates, generate them if not
         // we also rescale the molecules such that all bond
         // lengths are the same.
@@ -401,6 +410,11 @@ public final class DepictionGenerator {
         }
     }
 
+    private static void setIfMissing(IChemObject chemObject, String key, String val) {
+        if (chemObject.getProperty(key) == null)
+            chemObject.setProperty(key, val);
+    }
+
     /**
      * Depict a reaction.
      *
@@ -413,6 +427,21 @@ public final class DepictionGenerator {
         final List<IAtomContainer> reactants = toList(rxn.getReactants());
         final List<IAtomContainer> products = toList(rxn.getProducts());
         final List<IAtomContainer> agents = toList(rxn.getAgents());
+
+        // set ids for tagging elements
+        int molId = 0;
+        for (IAtomContainer mol : reactants) {
+            setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+            setIfMissing(mol, MarkedElement.CLASS_KEY, "reactant");
+        }
+        for (IAtomContainer mol : products) {
+            setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+            setIfMissing(mol, MarkedElement.CLASS_KEY, "product");
+        }
+        for (IAtomContainer mol : agents) {
+            setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+            setIfMissing(mol, MarkedElement.CLASS_KEY, "agent");
+        }
 
         final Map<IChemObject, Color> myHighlight = new HashMap<>();
         if (highlightAtomMap) {
@@ -452,9 +481,21 @@ public final class DepictionGenerator {
         resetCoords(products, productScales);
         resetCoords(agents, agentScales);
 
+        final Bounds emptyBounds = new Bounds();
+        final Bounds title = copy.getParameterValue(BasicSceneGenerator.ShowReactionTitle.class) ? copy.generateTitle(rxn) : emptyBounds;
+        final List<Bounds> reactantTitles = new ArrayList<>();
+        final List<Bounds> productTitles = new ArrayList<>();
+        if (copy.getParameterValue(BasicSceneGenerator.ShowMoleculeTitle.class)) {
+            for (IAtomContainer reactant : reactants)
+                reactantTitles.add(copy.generateTitle(reactant));
+            for (IAtomContainer product : products)
+                productTitles.add(copy.generateTitle(product));
+        }
+
         return new ReactionDepiction(model,
                                      reactantBounds, productBounds, agentBounds,
-                                     plus, rxn.getDirection(), dimensions);
+                                     plus, rxn.getDirection(), dimensions,
+                                     reactantTitles, productTitles, title);
     }
 
     /**
@@ -533,6 +574,16 @@ public final class DepictionGenerator {
 
     private IRenderingElement generate(IAtomContainer molecule, RendererModel model, int atomNum) throws CDKException {
 
+        // tag the atom and bond ids
+        String molId = molecule.getProperty(MarkedElement.ID_KEY);
+        if (molId != null) {
+            int atomId = 0, bondid = 0;
+            for (IAtom atom : molecule.atoms())
+                setIfMissing(atom, MarkedElement.ID_KEY, molId + "atm" + ++atomId);
+            for (IBond bond : molecule.bonds())
+                setIfMissing(bond, MarkedElement.ID_KEY, molId + "bnd" + ++bondid);
+        }
+
         if (annotateAtomNum) {
             for (IAtom atom : molecule.atoms()) {
                 if (atom.getProperty(StandardGenerator.ANNOTATION_LABEL) != null)
@@ -579,15 +630,16 @@ public final class DepictionGenerator {
      * Generate a bound element that is the title of the provided molecule. If title
      * is not specified an empty bounds is returned.
      *
-     * @param mol molecule
+     * @param chemObj molecule or reaction
      * @return bound element
      */
-    private Bounds generateTitle(IAtomContainer mol) {
-        String title = mol.getProperty(CDKConstants.TITLE);
+    private Bounds generateTitle(IChemObject chemObj) {
+        String title = chemObj.getProperty(CDKConstants.TITLE);
         if (title == null || title.isEmpty())
             return new Bounds();
         final double scale = 1 / getParameterValue(BasicSceneGenerator.Scale.class) * getParameterValue(RendererModel.TitleFontScale.class);
-        return new Bounds(StandardGenerator.embedText(font, title, getParameterValue(RendererModel.TitleColor.class), scale));
+        return new Bounds(MarkedElement.markup(StandardGenerator.embedText(font, title, getParameterValue(RendererModel.TitleColor.class), scale),
+                                               "title"));
     }
 
 
@@ -633,10 +685,64 @@ public final class DepictionGenerator {
      * @see StandardGenerator.AtomColor
      * @see StandardGenerator.Highlighting
      * @see StandardGenerator.HighlightStyle
+     * @see CDK2DAtomColors
      */
     public DepictionGenerator withAtomColors() {
-        return withParam(StandardGenerator.AtomColor.class, new CDK2DAtomColors())
-                .withParam(StandardGenerator.Highlighting.class, StandardGenerator.HighlightStyle.OuterGlow);
+        return withAtomColors(new CDK2DAtomColors());
+    }
+
+    /**
+     * Color atom symbols using provided colorer.
+     *
+     * @return new generator for method chaining
+     * @see StandardGenerator.AtomColor
+     * @see StandardGenerator.Highlighting
+     * @see StandardGenerator.HighlightStyle
+     * @see CDK2DAtomColors
+     * @see org.openscience.cdk.renderer.color.UniColor
+     */
+    public DepictionGenerator withAtomColors(IAtomColorer colorer) {
+        return withParam(StandardGenerator.AtomColor.class, colorer);
+    }
+
+    /**
+     * Change the background color.
+     *
+     * @param color background color
+     * @return new generator for method chaining
+     * @see BackgroundColor
+     */
+    public DepictionGenerator withBackgroundColor(Color color) {
+        return withParam(BackgroundColor.class, color);
+    }
+
+    /**
+     * Highlights are shown as an outer glow around the atom symbols and bonds
+     * rather than recoloring. The width of the glow can be set but defaults to
+     * 4x the stroke width.
+     *
+     * @return new generator for method chaining
+     * @see StandardGenerator.Highlighting
+     * @see StandardGenerator.HighlightStyle
+     */
+    public DepictionGenerator withOuterGlowHighlight() {
+        return withOuterGlowHighlight(4);
+    }
+
+    /**
+     * Highlights are shown as an outer glow around the atom symbols and bonds
+     * rather than recoloring.
+     *
+     * @param width width of the outer glow relative to the bond stroke
+     * @return new generator for method chaining
+     * @see StandardGenerator.Highlighting
+     * @see StandardGenerator.HighlightStyle
+     */
+    public DepictionGenerator withOuterGlowHighlight(double width) {
+        return withParam(StandardGenerator.Highlighting.class,
+                         StandardGenerator.HighlightStyle.OuterGlow)
+                .withParam(StandardGenerator.OuterGlowWidth.class,
+                           width);
     }
 
     /**
@@ -716,13 +822,27 @@ public final class DepictionGenerator {
     /**
      * Display a molecule title with each depiction. The title
      * is specified by setting the {@link org.openscience.cdk.CDKConstants#TITLE}
-     * property.
+     * property. For reactions only the main components have their
+     * title displayed.
      *
      * @return new generator for method chaining
      * @see BasicSceneGenerator.ShowMoleculeTitle
      */
     public DepictionGenerator withMolTitle() {
         return withParam(BasicSceneGenerator.ShowMoleculeTitle.class,
+                         true);
+    }
+
+    /**
+     * Display a reaction title with the depiction. The title
+     * is specified by setting the {@link org.openscience.cdk.CDKConstants#TITLE}
+     * property on the {@link IReaction} instance.
+     *
+     * @return new generator for method chaining
+     * @see BasicSceneGenerator.ShowReactionTitle
+     */
+    public DepictionGenerator withRxnTitle() {
+        return withParam(BasicSceneGenerator.ShowReactionTitle.class,
                          true);
     }
 
@@ -809,7 +929,7 @@ public final class DepictionGenerator {
      * @return new generator for method chaining
      * @see StandardGenerator#HIGHLIGHT_COLOR
      */
-    public DepictionGenerator withHighlight(Iterable<IChemObject> chemObjs, Color color) {
+    public DepictionGenerator withHighlight(Iterable<? extends IChemObject> chemObjs, Color color) {
         DepictionGenerator copy = new DepictionGenerator(this);
         for (IChemObject chemObj : chemObjs)
             copy.highlight.put(chemObj, color);

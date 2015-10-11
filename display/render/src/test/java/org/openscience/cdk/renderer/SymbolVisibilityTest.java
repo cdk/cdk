@@ -193,4 +193,21 @@ public class SymbolVisibilityTest {
                 .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
+    @Test
+    public void ethaneNonTerminal() {
+        IAtom a1 = new Atom("C");
+        IAtom a2 = new Atom("C");
+
+        a1.setPoint2d(new Point2d(0, 0));
+        a2.setPoint2d(new Point2d(0.5, -0.5));
+
+        IBond bond1 = new Bond(a1, a2);
+
+        a1.setImplicitHydrogenCount(3);
+        a2.setImplicitHydrogenCount(3);
+
+        assertTrue(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon()
+                                   .visible(a1, Collections.singletonList(bond1), new RendererModel()));
+    }
+
 }

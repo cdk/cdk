@@ -21,6 +21,7 @@ package org.openscience.cdk.depict;
 import com.google.common.base.Charsets;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
+import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
@@ -330,5 +331,11 @@ public abstract class Depiction {
      */
     final double rescaleForBondLength(double bondLength) {
         return bondLength / model.get(BasicSceneGenerator.BondLength.class);
+    }
+
+    protected void svgPrevisit(String fmt, double rescale, SvgDrawVisitor visitor, List<? extends IRenderingElement> elements) {
+        visitor.setTransform(AffineTransform.getScaleInstance(rescale, rescale));
+        visitor.previsit(elements);
+        visitor.setTransform(null);
     }
 }

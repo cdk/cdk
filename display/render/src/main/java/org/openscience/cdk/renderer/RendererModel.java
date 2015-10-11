@@ -151,6 +151,19 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
+     * If format supports it (e.g. SVG) should marked up elements (id and classes)
+     * be output.
+     */
+    public static class MarkedOutput extends AbstractGeneratorParameter<Boolean> {
+
+        /** {@inheritDoc} */
+        @Override
+        public Boolean getDefault() {
+            return true;
+        }
+    }
+
+    /**
      * A map of {@link IGeneratorParameter} class names to instances.
      */
     private Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<String, IGeneratorParameter<?>>();
@@ -166,6 +179,7 @@ public class RendererModel implements Serializable, Cloneable {
         renderingParameters.put(Padding.class.getName(), new Padding());
         renderingParameters.put(TitleFontScale.class.getName(), new TitleFontScale());
         renderingParameters.put(TitleColor.class.getName(), new TitleColor());
+        renderingParameters.put(MarkedOutput.class.getName(), new MarkedOutput());
     }
 
     /**

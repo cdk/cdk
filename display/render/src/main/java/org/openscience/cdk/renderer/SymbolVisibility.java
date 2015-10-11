@@ -134,6 +134,15 @@ public abstract class SymbolVisibility {
                 return true;
             }
 
+            // special case ethane
+            if (bonds.size() == 1) {
+                Integer begHcnt = atom.getImplicitHydrogenCount();
+                IAtom end = bonds.get(0).getConnectedAtom(atom);
+                Integer endHcnt = end.getImplicitHydrogenCount();
+                if (begHcnt != null && endHcnt != null && begHcnt == 3 && endHcnt == 3)
+                    return true;
+            }
+
             // ProblemMarker ?
 
             return false;
