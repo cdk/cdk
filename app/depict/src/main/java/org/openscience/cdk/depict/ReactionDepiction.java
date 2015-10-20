@@ -338,6 +338,9 @@ final class ReactionDepiction extends Depiction {
                                                          : AWTDrawVisitor.forVectorGraphics(wrapper.g2);
         if (fmt.equals(SVG_FMT)) {
             svgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor) visitor, mainComp);
+        } else {
+            // pdf can handle fraction coords just fine
+            ((AWTDrawVisitor) visitor).setRounding(false);
         }
 
         // background color

@@ -220,6 +220,9 @@ final class MolGridDepiction extends Depiction {
 
         if (fmt.equals(SVG_FMT)) {
             svgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor) visitor, elements);
+        } else {
+            // pdf can handle fraction coords just fine
+            ((AWTDrawVisitor) visitor).setRounding(false);
         }
 
         visitor.setTransform(AffineTransform.getScaleInstance(1,-1));

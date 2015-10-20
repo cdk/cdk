@@ -115,6 +115,11 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     private final Graphics2D                 graphics;
 
     /**
+     * Should we round coordinates to ints to circumvent graphical glitches from AWT.
+     */
+    private boolean roundCoords = true;
+
+    /**
      * Returns the {@link Graphics2D} for for this visitor.
      *
      * @return the {@link Graphics2D} object
@@ -162,6 +167,17 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         return new AWTDrawVisitor(g2, false, Float.NEGATIVE_INFINITY);
     }
 
+    /**
+     * Set whether we should we round coordinates to ints, this tries to circumvent
+     * graphical glitches from AWT where floating points are truncated (e.g. 1.6 -> 1)
+     * which causes notable defect such as parallel lines that aren't parallel.
+     *
+     * @param val rounding mode
+     */
+    public void setRounding(boolean val) {
+        this.roundCoords = val;
+    }
+
     private void visit(ElementGroup elementGroup) {
         elementGroup.visitChildren(this);
     }
@@ -187,7 +203,13 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
         graphics.setColor(line.color);
         transform.transform(coordinates, 0, coordinates, 0, 2);
-        graphics.draw(new Line2D.Double(coordinates[0], coordinates[1], coordinates[2], coordinates[3]));
+        if (roundCoords) {
+            graphics.drawLine((int) Math.round(coordinates[0]), (int) Math.round(coordinates[1]),
+                              (int) Math.round(coordinates[2]), (int) Math.round(coordinates[3]));
+        } else {
+            graphics.draw(new Line2D.Double(coordinates[0], coordinates[1],
+                                            coordinates[2], coordinates[3]));
+        }
         graphics.setStroke(savedStroke);
     }
 
