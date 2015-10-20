@@ -410,6 +410,46 @@ public final class Cycles {
         return or(all(), vertexShort());
     }
 
+
+    /**
+     * Find and mark all cyclic atoms and bonds in the provided molecule.
+     *
+     * @param mol molecule
+     * @see IBond#isInRing()
+     * @see IAtom#isInRing()
+     */
+    public static void markRingAtomsAndBonds(IAtomContainer mol) {
+        EdgeToBondMap bonds = EdgeToBondMap.withSpaceFor(mol);
+        markRingAtomsAndBonds(mol, GraphUtil.toAdjList(mol, bonds), bonds);
+    }
+
+    /**
+     * Find and mark all cyclic atoms and bonds in the provided molecule. This optimised version
+     * allows the caller to optionally provided indexed fast access structure which would otherwise
+     * be created.
+     *
+     * @param mol molecule
+     * @see IBond#isInRing()
+     * @see IAtom#isInRing()
+     */
+    public static void markRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap) {
+        RingSearch ringSearch = new RingSearch(mol, adjList);
+        for (int v = 0; v < mol.getAtomCount(); v++) {
+            mol.getAtom(v).setIsInRing(false);
+            for (int w : adjList[v]) {
+                // note we only mark the bond on second visit (first v < w) and
+                // clear flag on first visit (or if non-cyclic)
+                if (v > w && ringSearch.cyclic(v, w)) {
+                    bondMap.get(v, w).setIsInRing(true);
+                    mol.getAtom(v).setIsInRing(true);
+                    mol.getAtom(w).setIsInRing(true);
+                } else {
+                    bondMap.get(v, w).setIsInRing(false);
+                }
+            }
+        }
+    }
+
     /**
      * Use an auxiliary cycle finder if the primary method was intractable.
      *

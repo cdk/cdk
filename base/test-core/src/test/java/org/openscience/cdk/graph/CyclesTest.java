@@ -2,7 +2,9 @@ package org.openscience.cdk.graph;
 
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -216,6 +218,24 @@ public class CyclesTest {
         assertThat(r2.getBond(3), is(biphenyl.getBond(10)));
         assertThat(r2.getBond(4), is(biphenyl.getBond(11)));
         assertThat(r2.getBond(5), is(biphenyl.getBond(12)));
+    }
+
+    @Test
+    public void markAtomsAndBonds() throws Exception {
+        IAtomContainer biphenyl = makeBiphenyl();
+        Cycles.markRingAtomsAndBonds(biphenyl);
+        int cyclicAtoms = 0;
+        int cyclicBonds = 0;
+        for (IAtom atom : biphenyl.atoms()) {
+            if (atom.isInRing())
+                cyclicAtoms++;
+        }
+        for (IBond bond : biphenyl.bonds()) {
+            if (bond.isInRing())
+                cyclicBonds++;
+        }
+        assertThat(cyclicAtoms, is(biphenyl.getAtomCount()));
+        assertThat(cyclicBonds, is(biphenyl.getBondCount()-1));
     }
 
     @Test
