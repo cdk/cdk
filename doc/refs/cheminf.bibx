@@ -80,6 +80,18 @@
       <bibtex:pages>915-926</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+
+  <bibtex:entry id="Clark06">
+    <bibtex:article>
+      <bibtex:author>Clark AM, Labute P, Santavy M</bibtex:author>
+      <bibtex:title>2D structure depiction</bibtex:title>
+      <bibtex:journal>J Chem Inf Model</bibtex:journal>
+      <bibtex:year>2006</bibtex:year>
+      <bibtex:volume>46</bibtex:volume>
+      <bibtex:number>3</bibtex:number>
+      <bibtex:pages>1107-23</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
   
    <bibtex:entry id="Clark13">
       <bibtex:article>
@@ -831,6 +843,17 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:volume>49</bibtex:volume>
       <bibtex:pages>338–347</bibtex:pages>
       <bibtex:doi>10.1021/ci800326z</bibtex:doi>
+    </bibtex:article>
+  </bibtex:entry>
+  
+  <bibtex:entry id="Shelley83">
+    <bibtex:article>
+      <bibtex:author>Shelley CA</bibtex:author>
+      <bibtex:title>Heuristic Approach for Displaying Chemical Structures</bibtex:title>
+      <bibtex:journal>J.Chem.Inf.Comput.Sci.</bibtex:journal>
+      <bibtex:year>1983</bibtex:year>
+      <bibtex:volume>23</bibtex:volume>
+      <bibtex:number>61</bibtex:number>
     </bibtex:article>
   </bibtex:entry>
   

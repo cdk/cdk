@@ -493,6 +493,11 @@ public class StructureDiagramGenerator {
         // done on-demand (e.g. when writing a MDL Molfile)
         NonplanarBonds.assign(molecule);
 
+        Cycles.markRingAtomsAndBonds(molecule);
+        AtomPlacer.prioritise(molecule);
+
+        LayoutRefiner refiner = new LayoutRefiner(molecule);
+        refiner.refine();
     }
 
     private void generateFragmentCoordinates(IAtomContainer mol, List<IAtomContainer> frags) throws CDKException {

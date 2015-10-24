@@ -23,18 +23,12 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryUtil;
+import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,6 +37,13 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  *  Methods for generating coordinates for atoms in various situations. They can
@@ -56,36 +57,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class AtomPlacer {
 
-    public final static boolean debug      = true;
-    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(AtomPlacer.class);
+    public final static boolean debug = true;
+    public static final String PRIORITY = "Weight";
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomPlacer.class);
 
     /**
      *  The molecule to be laid out. To be assigned from outside
      */
-    IAtomContainer              molecule   = null;
-
-    final Comparator<IAtom>     ATOM_ORDER = new Comparator<IAtom>() {
-
-                                               @Override
-                                               public int compare(IAtom a, IAtom b) {
-                                                   return weight(a).compareTo(weight(b));
-                                               }
-
-                                               /**
-                                                * Access the weight property of the provided atom. If the weight is
-                                                * not set (i.e. <i>null</i>) then {@link Integer#MIN_VALUE} is
-                                                * returned. This allows atoms with no weight to sort lower then
-                                                * those with weight.
-                                                *
-                                                * @param atom an atom to obtain the weight property from
-                                                * @return the weight value or minimum integer value if null
-                                                */
-                                               private Integer weight(IAtom atom) {
-                                                   Integer weight = (Integer) atom.getProperty("Weight");
-                                                   return weight != null ? weight : Integer.MIN_VALUE;
-                                               }
-
-                                           };
+    IAtomContainer molecule = null;
 
     /**
      *  Constructor for the AtomPlacer object
@@ -814,48 +793,91 @@ public class AtomPlacer {
     }
 
     /**
-     *  Calculates weights for unplaced atoms.
+     * Calculates priority for atoms in a molecule.
      *
-     *@param  ac  The atomcontainer for which weights are to be calculated
+     * @param mol connected molecule
+     * @see #PRIORITY
      */
-    static void calculateWeights(IAtomContainer ac) {
-        int[] weights = getWeightNumbers(ac);
-        for (int f = 0; f < ac.getAtomCount(); f++) {
-            ac.getAtom(f).setProperty("Weight", Integer.valueOf(weights[f]));
+    static void prioritise(IAtomContainer mol) {
+        prioritise(mol, GraphUtil.toAdjList(mol));
+    }
+
+    /**
+     * Calculates priority for atoms in a molecule.
+     *
+     * @param mol connected molecule
+     * @param  adjList fast adjacency lookup
+     * @see #PRIORITY
+     */
+    static void prioritise(IAtomContainer mol, int[][] adjList) {
+        int[] weights = getPriority(mol, adjList);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            mol.getAtom(i).setProperty(PRIORITY, weights[i]);
         }
     }
 
     /**
-     *  Makes an array containing morgan-number-like number for an atomContainer.
+     * Prioritise atoms of a molecule base on how 'buried' they are. The priority
+     * is cacheted with a morgan-like relaxation O(n^2 lg n). Priorities are assign
+     * from 1..|V| (usually less than |V| due to symmetry) where the lowest numbers
+     * have priority.
      *
-     *@param  atomContainer  The atomContainer to analyse.
-     *@return                The morgan numbers value.
+     * @param  mol     molecule
+     * @param  adjList fast adjacency lookup
+     * @return the priority
      */
-    static int[] getWeightNumbers(IAtomContainer atomContainer) {
-        int[] morganMatrix;
-        int[] tempMorganMatrix;
-        int N = atomContainer.getAtomCount();
-        morganMatrix = new int[N];
-        tempMorganMatrix = new int[N];
-        List atoms = null;
-        for (int f = 0; f < N; f++) {
-            morganMatrix[f] = atomContainer.getConnectedBondsCount(f);
-            tempMorganMatrix[f] = atomContainer.getConnectedBondsCount(f);
+    static int[] getPriority(IAtomContainer mol, int[][] adjList) {
+
+        final int n = mol.getAtomCount();
+        final Integer[] order = new Integer[n];
+        final int[] rank  = new int[n];
+        final int[] prev  = new int[n];
+
+        // init priorities, Helson 99 favours cyclic (init=2)
+        for (int f = 0; f < n; f++) {
+            rank[f]  = 1;
+            prev[f]  = 1;
+            order[f] = f;
         }
-        for (int e = 0; e < N; e++) {
-            for (int f = 0; f < N; f++) {
-                morganMatrix[f] = 0;
-                atoms = atomContainer.getConnectedAtomsList(atomContainer.getAtom(f));
-                for (int g = 0; g < atoms.size(); g++) {
-                    IAtom atom = (IAtom) atoms.get(g);
-                    if (!atom.getFlag(CDKConstants.ISPLACED)) {
-                        morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber(atom)];
-                    }
-                }
+
+        final Comparator<Integer> comparator = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer a, Integer b) {
+                // highest (most buried) first
+                return Integer.compare(rank[a], rank[b]);
             }
-            System.arraycopy(morganMatrix, 0, tempMorganMatrix, 0, N);
+        };
+
+        int nDistinct = 1;
+
+        for (int rep = 0; rep < n; rep++) {
+            for (int i = 0; i < n; i++) {
+                rank[i] = 3 * prev[i];
+                for (int w : adjList[i])
+                    rank[i] += prev[w];
+            }
+
+            // assign new ranks
+            Arrays.sort(order, comparator);
+            int clsNum = 1;
+            prev[order[0]] = clsNum;
+            for (int i = 1; i < n; i++) {
+                if (rank[order[i]] != rank[order[i-1]])
+                    clsNum++;
+                prev[order[i]] = clsNum;
+            }
+
+            // no refinement over previous
+            if (clsNum == nDistinct)
+                break;
+            nDistinct = clsNum;
         }
-        return tempMorganMatrix;
+
+        // we want values 1 ≤ x < |V|
+        for (int i = 0; i < n; i++)
+            prev[i] = 1 + nDistinct - prev[i];
+
+        return prev;
     }
 
     static public boolean shouldBeLinear(IAtom atom, IAtomContainer molecule) {
