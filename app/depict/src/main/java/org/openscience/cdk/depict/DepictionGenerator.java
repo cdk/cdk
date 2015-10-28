@@ -424,6 +424,9 @@ public final class DepictionGenerator {
      */
     public Depiction depict(IReaction rxn) throws CDKException {
 
+        final Color fgcol = getParameterValue(StandardGenerator.AtomColor.class).getAtomColor(rxn.getBuilder()
+                                                                                                 .newInstance(IAtom.class, "C"));
+
         final List<IAtomContainer> reactants = toList(rxn.getReactants());
         final List<IAtomContainer> products = toList(rxn.getProducts());
         final List<IAtomContainer> agents = toList(rxn.getAgents());
@@ -474,7 +477,7 @@ public final class DepictionGenerator {
             obj.removeProperty(StandardGenerator.HIGHLIGHT_COLOR);
 
         // generate a 'plus' element
-        Bounds plus = copy.generatePlusSymbol(scale);
+        Bounds plus = copy.generatePlusSymbol(scale, fgcol);
 
         // reset the coordinates to how they were before we invoked depict
         resetCoords(reactants, reactantScales);
@@ -495,7 +498,7 @@ public final class DepictionGenerator {
         return new ReactionDepiction(model,
                                      reactantBounds, productBounds, agentBounds,
                                      plus, rxn.getDirection(), dimensions,
-                                     reactantTitles, productTitles, title);
+                                     reactantTitles, productTitles, title, fgcol);
     }
 
     /**
@@ -564,8 +567,8 @@ public final class DepictionGenerator {
         return mapidx;
     }
 
-    private Bounds generatePlusSymbol(double scale) {
-        return new Bounds(StandardGenerator.embedText(font, "+", Color.BLACK, 1 / scale));
+    private Bounds generatePlusSymbol(double scale, Color fgcol) {
+        return new Bounds(StandardGenerator.embedText(font, "+", fgcol, 1 / scale));
     }
 
     private List<IAtomContainer> toList(IAtomContainerSet set) {
