@@ -483,8 +483,6 @@ public class StructureDiagramGenerator {
             layoutNextRingSystem();
         } while (!atomPlacer.allPlaced(molecule) && safetyCounter <= molecule.getAtomCount());
 
-        fixRest();
-
         // correct double-bond stereo, this changes the layout and in reality
         // should be done during the initial placement
         CorrectGeometricConfiguration.correct(molecule);
@@ -1285,50 +1283,6 @@ public class StructureDiagramGenerator {
         }
         return sharedAtoms;
     }
-
-    /**
-     *  This method will go as soon as the rest works. It just assignes Point2d's
-     *  of position (0,0) so that the molecule can be drawn.
-     */
-    private void fixRest() {
-        IAtom atom = null;
-        for (int f = 0; f < molecule.getAtomCount(); f++) {
-            atom = molecule.getAtom(f);
-            if (atom.getPoint2d() == null) {
-                atom.setPoint2d(new Point2d(0, 0));
-            }
-        }
-    }
-
-    /**
-     *  This method will go as soon as the rest works. It just assignes Point2d's
-     *  of position (0,0) so that the molecule can be drawn.
-     *  @param molecule the molecule to fix
-     *  @return the fixed molecule
-     */
-    private IAtomContainer fixMol(IAtomContainer molecule) {
-        IAtom atom = null;
-        for (int f = 0; f < molecule.getAtomCount(); f++) {
-            atom = molecule.getAtom(f);
-            if (atom.getPoint2d() == null) {
-                atom.setPoint2d(new Point2d(0, 0));
-            }
-        }
-        return molecule;
-    }
-
-    /**
-     *  Initializes all rings in RingSet rs as not placed
-     *
-     *  @param  rs  The RingSet to be initialized
-     */
-    //	private void markNotPlaced(IRingSet rs)
-    //	{
-    //		for (int f = 0; f < rs.size(); f++)
-    //		{
-    //			((IRing) rs.get(f)).setFlag(CDKConstants.ISPLACED, false);
-    //		}
-    //	}
 
     /**
      *  Are all rings in the Vector placed?
