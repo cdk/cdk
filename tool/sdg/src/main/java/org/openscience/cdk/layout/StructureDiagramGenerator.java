@@ -494,8 +494,95 @@ public class StructureDiagramGenerator {
         Cycles.markRingAtomsAndBonds(molecule);
         AtomPlacer.prioritise(molecule);
 
+        // refine the layout by rotating, bending, and stretching bonds
         LayoutRefiner refiner = new LayoutRefiner(molecule);
         refiner.refine();
+
+        // choose the orientation in which to display the structure
+        selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
+    }
+
+    /**
+     * Select the global orientation of the layout. We click round at 30 degree increments
+     * and select the orientation that a) is the widest or b) has the most bonds aligned to
+     * +/- 30 degrees {@cdk.cite Clark06}.
+     *
+     * @param mol molecule
+     * @param widthDiff parameter at which to consider orientations equally good (wide select)
+     * @param alignDiff parameter at which we consider orientations equally good (bond align select)
+     */
+    private static void selectOrientation(IAtomContainer mol, double widthDiff, int alignDiff) {
+        double[] minmax = GeometryUtil.getMinMax(mol);
+        Point2d pivot = new Point2d(minmax[0] + ((minmax[2] - minmax[0]) / 2),
+                                    minmax[1] + ((minmax[3] - minmax[1]) / 2));
+
+
+        double maxWidth   = minmax[2]-minmax[0];
+        int    maxAligned = countAlignedBonds(mol);
+
+        Point2d[] coords = new Point2d[mol.getAtomCount()];
+        for (int i = 0; i < mol.getAtomCount(); i++)
+            coords[i] = new Point2d(mol.getAtom(i).getPoint2d());
+
+        final double step     = Math.toRadians(30);
+        final int    numSteps = (360 / 30)-1;
+        for (int i = 0; i < numSteps; i++) {
+
+            GeometryUtil.rotate(mol, pivot, step);
+            minmax = GeometryUtil.getMinMax(mol);
+
+            double width = minmax[2]-minmax[0];
+            double delta = Math.abs(width-maxWidth);
+
+            // if this orientation is significantly wider than the
+            // best so far select it
+            if (delta > widthDiff && width > maxWidth) {
+                maxWidth = width;
+                for (int j = 0; j < mol.getAtomCount(); j++)
+                    coords[j] = new Point2d(mol.getAtom(j).getPoint2d());
+            }
+            // width is not significantly better or worse so check
+            // the number of bonds aligned to 30 deg (aesthetics)
+            else if (delta <= widthDiff) {
+                int aligned = countAlignedBonds(mol);
+                if (aligned - maxAligned > alignDiff) {
+                    maxAligned = aligned;
+                    maxWidth = width;
+                    for (int j = 0; j < mol.getAtomCount(); j++)
+                        coords[j] = new Point2d(mol.getAtom(j).getPoint2d());
+                }
+            }
+        }
+
+        // set the best coordinates we found
+        for (int i = 0; i < mol.getAtomCount(); i++)
+            mol.getAtom(i).setPoint2d(coords[i]);
+    }
+
+    /**
+     * Count the number of bonds aligned to 30 degrees.
+     *
+     * @param mol molecule
+     * @return number of aligned bonds
+     */
+    private static int countAlignedBonds(IAtomContainer mol) {
+        final double ref  = Math.toRadians(30);
+        final double diff = Math.toRadians(1);
+        int count = 0;
+        for (IBond bond : mol.bonds()) {
+            Point2d beg = bond.getAtom(0).getPoint2d();
+            Point2d end = bond.getAtom(1).getPoint2d();
+            if (beg.x > end.x) {
+                Point2d tmp = beg; beg = end; end = tmp;
+            }
+            Vector2d vec = new Vector2d(end.x-beg.x, end.y-beg.y);
+            double angle = Math.atan2(vec.y, vec.x);
+
+            if (Math.abs(angle)-ref < diff) {
+                count++;
+            }
+        }
+        return count;
     }
 
     private void generateFragmentCoordinates(IAtomContainer mol, List<IAtomContainer> frags) throws CDKException {
