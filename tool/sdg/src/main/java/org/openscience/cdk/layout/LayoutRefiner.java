@@ -32,6 +32,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
+import java.awt.Color;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,7 +75,7 @@ final class LayoutRefiner {
 
     // Min dist between un-bonded atoms, making the denominator smaller means
     // we want to spread atoms out more
-    private static final double MIN_DIST = BOND_LENGTH / 2.7;
+    private static final double MIN_DIST = BOND_LENGTH / 2;
 
     // Min score is derived from the min distance
     private static final double MIN_SCORE = 1 / (MIN_DIST * MIN_DIST);
@@ -83,13 +84,14 @@ final class LayoutRefiner {
     private static final double STRETCH_STEP = 0.32 * BOND_LENGTH;
 
     // How much we bend bonds by
-    private static final double BEND_STEP = Math.toRadians(7.5);
+    private static final double BEND_STEP = Math.toRadians(10);
 
     // Ensure we don't stretch bonds too long.
     private static final double MAX_BOND_LENGTH = 2 * BOND_LENGTH;
 
-    // Only accept if improvement is >= 2%. This is a bit sketch because
-    // of course larger structures will have less improvement.
+    // Only accept if improvement is >= 2%. I don't like this because
+    // huge structures will have less improvement even though the overlap
+    // was resolved.
     public static final double IMPROVEMENT_PERC_THRESHOLD = 0.02;
 
     // Rotation (reflection) is always good if it improves things
@@ -367,7 +369,9 @@ final class LayoutRefiner {
 
                 double delta = min - congestion.score();
 
-                if (delta > ROTATE_DELTA_THRESHOLD) {
+                // keep if decent improvement or improvement and resolves this overlap
+                if (delta > ROTATE_DELTA_THRESHOLD ||
+                    (delta > 1 && congestion.contribution(pair.fst, pair.snd) < MIN_SCORE)) {
                     continue Pair;
                 }
                 else {
@@ -473,8 +477,7 @@ final class LayoutRefiner {
             restoreCoords(stack, backup);
             bend(stack.xs, 0, split, pivotA, -BEND_STEP);
             bend(stack.xs, split, stack.len, pivotB, BEND_STEP);
-            congestion.update(visited, stack.xs, stack.len);
-
+            congestion.update(stack.xs, stack.len);
             if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD && congestion.score() < min) {
                 backupCoords(coords, stack);
                 stackBackup.copyFrom(stack);
@@ -483,7 +486,7 @@ final class LayoutRefiner {
 
             // restore original coordinates and reset score
             restoreCoords(stack, backup);
-            congestion.update(visited, stack.xs, stack.len);
+            congestion.update(stack.xs, stack.len);
             congestion.score = score;
         }
         // general case: try bending acyclic bonds in the shortest

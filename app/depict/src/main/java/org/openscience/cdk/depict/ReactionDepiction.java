@@ -75,6 +75,8 @@ final class ReactionDepiction extends Depiction {
 
     private final int nRow, nCol;
 
+    private final Color fgcol;
+
     public ReactionDepiction(RendererModel model,
                              List<Bounds> reactants,
                              List<Bounds> products,
@@ -84,11 +86,13 @@ final class ReactionDepiction extends Depiction {
                              Dimensions dimensions,
                              List<Bounds> reactantTitles,
                              List<Bounds> productTitles,
-                             Bounds title) {
+                             Bounds title,
+                             Color fgcol) {
         super(model);
         this.model = model;
         this.dimensions = dimensions;
         this.title = title;
+        this.fgcol = fgcol;
 
 
         // side components (catalysts, solvents, etc) note we deliberately
@@ -528,7 +532,7 @@ final class ReactionDepiction extends Depiction {
                 path.lineTo(minWidth + minHeight, 0);
                 path.lineTo(minWidth + inset * minHeight, -headThickness);
                 path.closePath();
-                arrow.add(GeneralPath.shapeOf(path, Color.BLACK));
+                arrow.add(GeneralPath.shapeOf(path, fgcol));
                 break;
             case BACKWARD:
                 arrow.add(new LineElement(0, 0, minWidth + minHeight, 0, minHeight / 14, Color.BLACK));
@@ -537,7 +541,7 @@ final class ReactionDepiction extends Depiction {
                 path.lineTo(0, 0);
                 path.lineTo((1 - inset) * minHeight, -headThickness);
                 path.closePath();
-                arrow.add(GeneralPath.shapeOf(path, Color.BLACK));
+                arrow.add(GeneralPath.shapeOf(path, fgcol));
                 break;
             case BIDIRECTIONAL: // equilibrium?
                 path.moveTo(0, 0.5 * +headThickness);
@@ -546,7 +550,7 @@ final class ReactionDepiction extends Depiction {
                 path.moveTo(minWidth + minHeight + minHeight, 0.5 * -headThickness);
                 path.lineTo(0, 0.5 * -headThickness);
                 path.lineTo(minHeight, 1.5 * -headThickness);
-                arrow.add(GeneralPath.outlineOf(path, minHeight / 14, Color.BLACK));
+                arrow.add(GeneralPath.outlineOf(path, minHeight / 14, fgcol));
                 break;
         }
 
