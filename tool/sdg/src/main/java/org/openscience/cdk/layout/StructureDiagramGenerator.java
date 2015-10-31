@@ -68,48 +68,50 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * sdg.generateCoordinates();
  * Molecule layedOutMol = sdg.getMolecule();
  * </pre>
- *
+ * <p/>
  * <p>The method will fail if the molecule is disconnected. The
  * partitionIntoMolecules(AtomContainer) can help here.
  *
- * @author      steinbeck
+ * @author steinbeck
  * @cdk.created 2004-02-02
- * @see         org.openscience.cdk.graph.ConnectivityChecker#partitionIntoMolecules(IAtomContainer)
  * @cdk.keyword Layout
  * @cdk.keyword Structure Diagram Generation (SDG)
  * @cdk.keyword 2D-coordinates
  * @cdk.keyword Coordinate generation, 2D
  * @cdk.dictref blue-obelisk:layoutMolecule
- * @cdk.module  sdg
+ * @cdk.module sdg
  * @cdk.githash
- * @cdk.bug     1536561
- * @cdk.bug     1788686
+ * @cdk.bug 1536561
+ * @cdk.bug 1788686
+ * @see org.openscience.cdk.graph.ConnectivityChecker#partitionIntoMolecules(IAtomContainer)
  */
 public class StructureDiagramGenerator {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
-    public static final double DEFAULT_BOND_LENGTH = 1.5;
+    private static      ILoggingTool logger              = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
+    public static final double       DEFAULT_BOND_LENGTH = 1.5;
 
-    private IAtomContainer          molecule;
-    private IRingSet                sssr;
-    private double                  bondLength               = DEFAULT_BOND_LENGTH;
-    private Vector2d                firstBondVector;
-    private RingPlacer              ringPlacer               = new RingPlacer();
-    private AtomPlacer              atomPlacer               = new AtomPlacer();
-    private List<IRingSet>          ringSystems              = null;
-    private boolean                 useIdentTemplates        = true;
+    private IAtomContainer molecule;
+    private IRingSet       sssr;
+    private double bondLength = DEFAULT_BOND_LENGTH;
+    private Vector2d firstBondVector;
+    private RingPlacer     ringPlacer        = new RingPlacer();
+    private AtomPlacer     atomPlacer        = new AtomPlacer();
+    private List<IRingSet> ringSystems       = null;
+    private boolean        useIdentTemplates = true;
 
 
-    /** Identity templates - for laying out primary ring system. */
+    /**
+     * Identity templates - for laying out primary ring system.
+     */
     private IdentityTemplateLibrary identityLibrary;
 
-    public  static Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
+    public static  Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
     private static TemplateHandler         DEFAULT_TEMPLATE_HANDLER = null;
     private static IdentityTemplateLibrary DEFAULT_IDENTITY_LIBRARY = IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi");
     private static IdentityTemplateLibrary MACROCYCLES              = IdentityTemplateLibrary.loadFromResource("macro.smi");
 
     /**
-     *  The empty constructor.
+     * The empty constructor.
      */
     public StructureDiagramGenerator() {
         this(DEFAULT_IDENTITY_LIBRARY);
@@ -120,10 +122,10 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Creates an instance of this class while assigning a molecule to be layed
-     *  out.
+     * Creates an instance of this class while assigning a molecule to be layed
+     * out.
      *
-     *  @param  molecule  The molecule to be layed out.
+     * @param molecule The molecule to be layed out.
      */
     public StructureDiagramGenerator(IAtomContainer molecule) {
         this();
@@ -131,11 +133,11 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Assings a molecule to be layed out. Call generateCoordinates() to do the
-     *  actual layout.
+     * Assings a molecule to be layed out. Call generateCoordinates() to do the
+     * actual layout.
      *
-     *  @param  mol    the molecule for which coordinates are to be generated.
-     *  @param  clone  Should the whole process be performed with a cloned copy?
+     * @param mol   the molecule for which coordinates are to be generated.
+     * @param clone Should the whole process be performed with a cloned copy?
      */
     public void setMolecule(IAtomContainer mol, boolean clone) {
         IAtom atom = null;
@@ -146,8 +148,7 @@ public class StructureDiagramGenerator {
                 logger.error("Should clone, but exception occured: ", e.getMessage());
                 logger.debug(e);
             }
-        }
-        else {
+        } else {
             this.molecule = mol;
         }
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -164,11 +165,11 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Sets whether to use templates or not. Some complicated ring systems
-     *  like adamantane are only nicely layouted when using templates. This
-     *  option is by default set true.
+     * Sets whether to use templates or not. Some complicated ring systems
+     * like adamantane are only nicely layouted when using templates. This
+     * option is by default set true.
      *
-     *@param  useTemplates  set true to use templates, false otherwise
+     * @param useTemplates set true to use templates, false otherwise
      * @deprecated always false, substructure templates are not used anymore
      */
     @Deprecated
@@ -188,10 +189,10 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Returns whether the use of templates is enabled or disabled.
+     * Returns whether the use of templates is enabled or disabled.
      *
-     *  @return true, when the use of templates is enables, false otherwise
-     *  @deprecated always false, substructure templates are not used anymore
+     * @return true, when the use of templates is enables, false otherwise
+     * @deprecated always false, substructure templates are not used anymore
      */
     @Deprecated
     public boolean getUseTemplates() {
@@ -199,11 +200,11 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Sets the templateHandler attribute of the StructureDiagramGenerator object
+     * Sets the templateHandler attribute of the StructureDiagramGenerator object
      *
-     *  @param  templateHandler  The new templateHandler value
+     * @param templateHandler The new templateHandler value
      * @deprecated substructure templates are no longer used for layout but those provided here
-     *             will be consumed by the newer method
+     * will be consumed by the newer method
      */
     @Deprecated
     public void setTemplateHandler(TemplateHandler templateHandler) {
@@ -211,10 +212,10 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Gets the templateHandler attribute of the StructureDiagramGenerator object
+     * Gets the templateHandler attribute of the StructureDiagramGenerator object
      *
-     *  @return The templateHandler value
-     *  @deprecated always null, substructure templates are not used anymore
+     * @return The templateHandler value
+     * @deprecated always null, substructure templates are not used anymore
      */
     @Deprecated
     public TemplateHandler getTemplateHandler() {
@@ -222,31 +223,31 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Assings a molecule to be layed out. Call generateCoordinates() to do the
-     *  actual layout.
+     * Assings a molecule to be layed out. Call generateCoordinates() to do the
+     * actual layout.
      *
-     *  @param  molecule  the molecule for which coordinates are to be generated.
+     * @param molecule the molecule for which coordinates are to be generated.
      */
     public void setMolecule(IAtomContainer molecule) {
         setMolecule(molecule, true);
     }
 
     /**
-     *  Returns the molecule, usually used after a call of generateCoordinates()
+     * Returns the molecule, usually used after a call of generateCoordinates()
      *
-     *  @return    The molecule with new coordinates (if generateCoordinates() had
-     *             been called)
+     * @return The molecule with new coordinates (if generateCoordinates() had
+     * been called)
      */
     public IAtomContainer getMolecule() {
         return molecule;
     }
 
     /**
-     *  This method uses generateCoordinates, but it removes the hydrogens first,
-     *  lays out the structuren and then adds them again.
+     * This method uses generateCoordinates, but it removes the hydrogens first,
+     * lays out the structuren and then adds them again.
      *
-     *  @throws  CDKException  if an error occurs
-     *  @see     #generateCoordinates
+     * @throws CDKException if an error occurs
+     * @see #generateCoordinates
      */
     public void generateExperimentalCoordinates() throws CDKException {
         generateExperimentalCoordinates(DEFAULT_BOND_VECTOR);
@@ -284,25 +285,25 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  The main method of this StructurDiagramGenerator. Assign a molecule to the
-     *  StructurDiagramGenerator, call the generateCoordinates() method and get
-     *  your molecule back.
+     * The main method of this StructurDiagramGenerator. Assign a molecule to the
+     * StructurDiagramGenerator, call the generateCoordinates() method and get
+     * your molecule back.
      *
-     *  @param  firstBondVector          The vector of the first bond to lay out
-     *  @throws CDKException             if an error occurs
+     * @param firstBondVector The vector of the first bond to lay out
+     * @throws CDKException if an error occurs
      */
     public void generateCoordinates(Vector2d firstBondVector) throws CDKException {
         generateCoordinates(firstBondVector, false);
     }
 
     /**
-     *  The main method of this StructureDiagramGenerator. Assign a molecule to the
-     *  StructureDiagramGenerator, call the generateCoordinates() method and get
-     *  your molecule back.
+     * The main method of this StructureDiagramGenerator. Assign a molecule to the
+     * StructureDiagramGenerator, call the generateCoordinates() method and get
+     * your molecule back.
      *
-     *  @param  firstBondVector the vector of the first bond to lay out
-     *  @param  isConnected the 'molecule' attribute is guaranteed to be connected (we have checked)
-     *  @throws CDKException problem occurred during layout
+     * @param firstBondVector the vector of the first bond to lay out
+     * @param isConnected     the 'molecule' attribute is guaranteed to be connected (we have checked)
+     * @throws CDKException problem occurred during layout
      */
     private void generateCoordinates(Vector2d firstBondVector, boolean isConnected) throws CDKException {
 
@@ -498,7 +499,7 @@ public class StructureDiagramGenerator {
      * and select the orientation that a) is the widest or b) has the most bonds aligned to
      * +/- 30 degrees {@cdk.cite Clark06}.
      *
-     * @param mol molecule
+     * @param mol       molecule
      * @param widthDiff parameter at which to consider orientations equally good (wide select)
      * @param alignDiff parameter at which we consider orientations equally good (bond align select)
      */
@@ -508,22 +509,22 @@ public class StructureDiagramGenerator {
                                     minmax[1] + ((minmax[3] - minmax[1]) / 2));
 
 
-        double maxWidth   = minmax[2]-minmax[0];
-        int    maxAligned = countAlignedBonds(mol);
+        double maxWidth = minmax[2] - minmax[0];
+        int maxAligned = countAlignedBonds(mol);
 
         Point2d[] coords = new Point2d[mol.getAtomCount()];
         for (int i = 0; i < mol.getAtomCount(); i++)
             coords[i] = new Point2d(mol.getAtom(i).getPoint2d());
 
-        final double step     = Math.toRadians(30);
-        final int    numSteps = (360 / 30)-1;
+        final double step = Math.toRadians(30);
+        final int numSteps = (360 / 30) - 1;
         for (int i = 0; i < numSteps; i++) {
 
             GeometryUtil.rotate(mol, pivot, step);
             minmax = GeometryUtil.getMinMax(mol);
 
-            double width = minmax[2]-minmax[0];
-            double delta = Math.abs(width-maxWidth);
+            double width = minmax[2] - minmax[0];
+            double delta = Math.abs(width - maxWidth);
 
             // if this orientation is significantly wider than the
             // best so far select it
@@ -557,19 +558,21 @@ public class StructureDiagramGenerator {
      * @return number of aligned bonds
      */
     private static int countAlignedBonds(IAtomContainer mol) {
-        final double ref  = Math.toRadians(30);
+        final double ref = Math.toRadians(30);
         final double diff = Math.toRadians(1);
         int count = 0;
         for (IBond bond : mol.bonds()) {
             Point2d beg = bond.getAtom(0).getPoint2d();
             Point2d end = bond.getAtom(1).getPoint2d();
             if (beg.x > end.x) {
-                Point2d tmp = beg; beg = end; end = tmp;
+                Point2d tmp = beg;
+                beg = end;
+                end = tmp;
             }
-            Vector2d vec = new Vector2d(end.x-beg.x, end.y-beg.y);
+            Vector2d vec = new Vector2d(end.x - beg.x, end.y - beg.y);
             double angle = Math.atan2(vec.y, vec.x);
 
-            if (Math.abs(angle)-ref < diff) {
+            if (Math.abs(angle) - ref < diff) {
                 count++;
             }
         }
@@ -605,8 +608,8 @@ public class StructureDiagramGenerator {
         final int nRow = (int) Math.floor(Math.sqrt(numFragments));
         final int nCol = (int) Math.ceil(numFragments / (double) nRow);
 
-        final double[] xOffsets = new double[nCol+1];
-        final double[] yOffsets = new double[nRow+1];
+        final double[] xOffsets = new double[nCol + 1];
+        final double[] yOffsets = new double[nRow + 1];
 
         // calc the max widths/height of each row, we also add some
         // spacing
@@ -617,7 +620,7 @@ public class StructureDiagramGenerator {
             int row = 1 + i / nCol;
 
             double[] minmax = limits.get(i);
-            final double width  = spacing + (minmax[2] - minmax[0]);
+            final double width = spacing + (minmax[2] - minmax[0]);
             final double height = spacing + (minmax[3] - minmax[1]);
 
             if (width > xOffsets[col])
@@ -628,9 +631,9 @@ public class StructureDiagramGenerator {
 
         // cumulative counts
         for (int i = 1; i < xOffsets.length; i++)
-            xOffsets[i] += xOffsets[i-1];
+            xOffsets[i] += xOffsets[i - 1];
         for (int i = 1; i < yOffsets.length; i++)
-            yOffsets[i] += yOffsets[i-1];
+            yOffsets[i] += yOffsets[i - 1];
 
         // translate the molecules, note need to flip y axis
         for (int i = 0; i < limits.size(); i++) {
@@ -854,6 +857,7 @@ public class StructureDiagramGenerator {
 
     /**
      * Utility - get the IAtomContainers as a list.
+     *
      * @param frags connected fragments
      * @return list of fragments
      */
@@ -877,7 +881,7 @@ public class StructureDiagramGenerator {
      * The method indicates whether a match was found.
      *
      * @param ringSystem the ring system (may be fused, bridged, etc.)
-     * @param molecule the rest of the compound
+     * @param molecule   the rest of the compound
      * @return coordinates were assigned
      */
     private boolean lookupRingSystem(IAtomContainer ringSystem, IAtomContainer molecule) {
@@ -956,13 +960,13 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Does a layout of all the rings in a given connected RingSet. Uses a TemplateHandler
-     *  to treat templated mapped substructures differently if <code>useTemplates</code> is
-     *  set true.
+     * Does a layout of all the rings in a given connected RingSet. Uses a TemplateHandler
+     * to treat templated mapped substructures differently if <code>useTemplates</code> is
+     * set true.
      *
      * @param firstBondVector A vector giving the placement for the first bond
-     * @param rs The connected RingSet for which the layout is to be
-     *           done
+     * @param rs              The connected RingSet for which the layout is to be
+     *                        done
      * @throws CDKException if an error occurs
      */
     private void layoutRingSet(Vector2d firstBondVector, IRingSet rs) throws CDKException {
@@ -1107,13 +1111,13 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Does the layout for the next RingSystem that is connected to those parts of
-     *  the molecule that have already been laid out. Finds the next ring with an
-     *  unplaced ring atom and lays out this ring. Then lays out the ring substituents
-     *  of this ring. Then moves and rotates the laid out ring to match the position
-     *  of its attachment bond to the rest of the molecule.
+     * Does the layout for the next RingSystem that is connected to those parts of
+     * the molecule that have already been laid out. Finds the next ring with an
+     * unplaced ring atom and lays out this ring. Then lays out the ring substituents
+     * of this ring. Then moves and rotates the laid out ring to match the position
+     * of its attachment bond to the rest of the molecule.
      *
-     *  @throws CDKException if an error occurs
+     * @throws CDKException if an error occurs
      */
     private void layoutNextRingSystem() throws CDKException {
         logger.debug("Start of layoutNextRingSystem()");
@@ -1212,12 +1216,12 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Returns an AtomContainer with all unplaced atoms connected to a given
-     *  atom
+     * Returns an AtomContainer with all unplaced atoms connected to a given
+     * atom
      *
-     *  @param  atom  The Atom whose unplaced bonding partners are to be returned
-     *  @return       an AtomContainer with all unplaced atoms connected to a
-     *                given atom
+     * @param atom The Atom whose unplaced bonding partners are to be returned
+     * @return an AtomContainer with all unplaced atoms connected to a
+     * given atom
      */
     private IAtomContainer getUnplacedAtoms(IAtom atom) {
         IAtomContainer unplacedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
@@ -1233,12 +1237,12 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Returns an AtomContainer with all placed atoms connected to a given
-     *  atom
+     * Returns an AtomContainer with all placed atoms connected to a given
+     * atom
      *
-     *  @param  atom  The Atom whose placed bonding partners are to be returned
-     *  @return       an AtomContainer with all placed atoms connected to a given
-     *                atom
+     * @param atom The Atom whose placed bonding partners are to be returned
+     * @return an AtomContainer with all placed atoms connected to a given
+     * atom
      */
     private IAtomContainer getPlacedAtoms(IAtom atom) {
         IAtomContainer placedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
@@ -1254,9 +1258,9 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Returns the next atom with unplaced aliphatic neighbors
+     * Returns the next atom with unplaced aliphatic neighbors
      *
-     *  @return    the next atom with unplaced aliphatic neighbors
+     * @return the next atom with unplaced aliphatic neighbors
      */
     private IAtom getNextAtomWithAliphaticUnplacedNeigbors() {
         IBond bond;
@@ -1275,9 +1279,9 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Returns the next bond with an unplaced ring atom
+     * Returns the next bond with an unplaced ring atom
      *
-     *  @return    the next bond with an unplaced ring atom
+     * @return the next bond with an unplaced ring atom
      */
     private IBond getNextBondWithUnplacedRingAtom() {
         Iterator bonds = molecule.bonds().iterator();
@@ -1286,12 +1290,12 @@ public class StructureDiagramGenerator {
 
             if (bond.getAtom(0).getPoint2d() != null && bond.getAtom(1).getPoint2d() != null) {
                 if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) && !bond.getAtom(0).getFlag(CDKConstants.ISPLACED)
-                        && bond.getAtom(0).getFlag(CDKConstants.ISINRING)) {
+                    && bond.getAtom(0).getFlag(CDKConstants.ISINRING)) {
                     return bond;
                 }
 
                 if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) && !bond.getAtom(1).getFlag(CDKConstants.ISPLACED)
-                        && bond.getAtom(1).getFlag(CDKConstants.ISINRING)) {
+                    && bond.getAtom(1).getFlag(CDKConstants.ISINRING)) {
                     return bond;
                 }
             }
@@ -1300,13 +1304,13 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Places the first bond of the first ring such that one atom is at (0,0) and
-     *  the other one at the position given by bondVector
+     * Places the first bond of the first ring such that one atom is at (0,0) and
+     * the other one at the position given by bondVector
      *
-     *  @param  bondVector  A 2D vector to point to the position of the second bond
-     *                      atom
-     *  @param  bond        the bond to lay out
-     *  @return             an IAtomContainer with the atoms of the bond and the bond itself
+     * @param bondVector A 2D vector to point to the position of the second bond
+     *                   atom
+     * @param bond       the bond to lay out
+     * @return an IAtomContainer with the atoms of the bond and the bond itself
      */
     private IAtomContainer placeFirstBond(IBond bond, Vector2d bondVector) {
         IAtomContainer sharedAtoms = null;
@@ -1345,10 +1349,10 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Are all rings in the Vector placed?
+     * Are all rings in the Vector placed?
      *
-     *  @param  rings  The Vector to be checked
-     *  @return        true if all rings are placed, false otherwise
+     * @param rings The Vector to be checked
+     * @return true if all rings are placed, false otherwise
      */
     private boolean allPlaced(IRingSet rings) {
         for (int f = 0; f < rings.getAtomContainerCount(); f++) {
@@ -1361,9 +1365,9 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Mark all atoms in the molecule as being part of a ring
+     * Mark all atoms in the molecule as being part of a ring
      *
-     *  @param  rings  an IRingSet with the rings to process
+     * @param rings an IRingSet with the rings to process
      */
     private void markRingAtoms(IRingSet rings) {
         IRing ring = null;
@@ -1376,10 +1380,10 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Get the unplaced ring atom in this bond
+     * Get the unplaced ring atom in this bond
      *
-     *  @param  bond  the bond to be search for the unplaced ring atom
-     *  @return       the unplaced ring atom in this bond
+     * @param bond the bond to be search for the unplaced ring atom
+     * @return the unplaced ring atom in this bond
      */
     private IAtom getRingAtom(IBond bond) {
         if (bond.getAtom(0).getFlag(CDKConstants.ISINRING) && !bond.getAtom(0).getFlag(CDKConstants.ISPLACED)) {
@@ -1392,11 +1396,11 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Get the ring system of which the given atom is part of
+     * Get the ring system of which the given atom is part of
      *
-     *  @param  ringSystems  a List of ring systems to be searched
-     *  @param  ringAtom     the ring atom to be search in the ring system.
-     *  @return              the ring system the given atom is part of
+     * @param ringSystems a List of ring systems to be searched
+     * @param ringAtom    the ring atom to be search in the ring system.
+     * @return the ring system the given atom is part of
      */
     private IRingSet getRingSystemOfAtom(List ringSystems, IAtom ringAtom) {
         IRingSet ringSet = null;
@@ -1410,7 +1414,7 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Set all the atoms in unplaced rings to be unplaced
+     * Set all the atoms in unplaced rings to be unplaced
      */
     private void resetUnplacedRings() {
         IRing ring = null;
@@ -1432,19 +1436,19 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     *  Set the bond length used for laying out the molecule.
-     *  The default value is 1.5.
+     * Set the bond length used for laying out the molecule.
+     * The default value is 1.5.
      *
-     *  @param  bondLength  The new bondLength value
+     * @param bondLength The new bondLength value
      */
     public void setBondLength(double bondLength) {
         this.bondLength = bondLength;
     }
 
     /**
-     *  Returns the bond length used for laying out the molecule.
+     * Returns the bond length used for laying out the molecule.
      *
-     *  @return The current bond length
+     * @return The current bond length
      */
     public double getBondLength() {
         return bondLength;
