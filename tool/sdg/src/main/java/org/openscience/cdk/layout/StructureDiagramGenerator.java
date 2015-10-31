@@ -1025,6 +1025,7 @@ public class StructureDiagramGenerator {
         /*
          * Now layout the rest of this ring system
          */
+        RingSetManipulator.sort(rs); // small -> large
 
         /*
          * Get the most complex ring in this RingSet
