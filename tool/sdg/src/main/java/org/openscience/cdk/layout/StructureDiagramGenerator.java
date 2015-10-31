@@ -398,8 +398,15 @@ public class StructureDiagramGenerator {
             ringSystems = RingPartitioner.partitionRings(sssr);
 
             /*
-             * We got our ring systems now
+             * We got our ring systems now, sort by number of bonds (largest first)
              */
+            Collections.sort(ringSystems, new Comparator<IRingSet>() {
+                @Override
+                public int compare(IRingSet a, IRingSet b) {
+                    return -Integer.compare(AtomContainerSetManipulator.getBondCount(a),
+                                            AtomContainerSetManipulator.getBondCount(b));
+                }
+            });
 
             /*
              * Do the layout for the first connected ring system ...
@@ -407,7 +414,7 @@ public class StructureDiagramGenerator {
             int largest = 0;
             int largestSize = ((IRingSet) ringSystems.get(0)).getAtomContainerCount();
             logger.debug("We have " + ringSystems.size() + " ring system(s).");
-            for (int f = 0; f < ringSystems.size(); f++) {
+            for (int f = 1; f < ringSystems.size(); f++) {
                 logger.debug("RingSet " + f + " has size " + ((IRingSet) ringSystems.get(f)).getAtomContainerCount());
                 if (((IRingSet) ringSystems.get(f)).getAtomContainerCount() > largestSize) {
                     largestSize = ((IRingSet) ringSystems.get(f)).getAtomContainerCount();
