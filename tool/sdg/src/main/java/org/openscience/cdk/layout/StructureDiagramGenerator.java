@@ -97,13 +97,8 @@ public class StructureDiagramGenerator {
     private RingPlacer              ringPlacer               = new RingPlacer();
     private AtomPlacer              atomPlacer               = new AtomPlacer();
     private List<IRingSet>          ringSystems              = null;
-    private final String            disconnectedMessage      = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
-    private TemplateHandler         templateHandler          = null;
-    private boolean                 useTemplates             = false;
     private boolean                 useIdentTemplates        = true;
 
-    /** Atoms of the molecule that mapped a template */
-    private IAtomContainerSet       mappedSubstructures;
 
     /** Identity templates - for laying out primary ring system. */
     private IdentityTemplateLibrary identityLibrary;
@@ -133,7 +128,6 @@ public class StructureDiagramGenerator {
     public StructureDiagramGenerator(IAtomContainer molecule) {
         this();
         setMolecule(molecule, false);
-        templateHandler = new TemplateHandler(molecule.getBuilder());
     }
 
     /**
@@ -144,8 +138,6 @@ public class StructureDiagramGenerator {
      *  @param  clone  Should the whole process be performed with a cloned copy?
      */
     public void setMolecule(IAtomContainer mol, boolean clone) {
-        if (useTemplates && templateHandler == null)
-            templateHandler = new TemplateHandler(mol.getBuilder());
         IAtom atom = null;
         if (clone) {
             try {
@@ -177,9 +169,11 @@ public class StructureDiagramGenerator {
      *  option is by default set true.
      *
      *@param  useTemplates  set true to use templates, false otherwise
+     * @deprecated always false, substructure templates are not used anymore
      */
+    @Deprecated
     public void setUseTemplates(boolean useTemplates) {
-        this.useTemplates = useTemplates;
+
     }
 
     /**
@@ -197,31 +191,34 @@ public class StructureDiagramGenerator {
      *  Returns whether the use of templates is enabled or disabled.
      *
      *  @return true, when the use of templates is enables, false otherwise
+     *  @deprecated always false, substructure templates are not used anymore
      */
+    @Deprecated
     public boolean getUseTemplates() {
-        return useTemplates;
+        return false;
     }
 
     /**
      *  Sets the templateHandler attribute of the StructureDiagramGenerator object
      *
      *  @param  templateHandler  The new templateHandler value
+     * @deprecated substructure templates are no longer used for layout but those provided here
+     *             will be consumed by the newer method
      */
+    @Deprecated
     public void setTemplateHandler(TemplateHandler templateHandler) {
-        this.templateHandler = templateHandler;
+        // TODO convert to identity templates
     }
 
     /**
      *  Gets the templateHandler attribute of the StructureDiagramGenerator object
      *
      *  @return The templateHandler value
+     *  @deprecated always null, substructure templates are not used anymore
      */
+    @Deprecated
     public TemplateHandler getTemplateHandler() {
-        if (templateHandler == null) {
-            return DEFAULT_TEMPLATE_HANDLER;
-        } else {
-            return templateHandler;
-        }
+        return null;
     }
 
     /**
@@ -347,20 +344,6 @@ public class StructureDiagramGenerator {
         //Vector2d newRingSystemVector = null;
         this.firstBondVector = firstBondVector;
         double angle;
-
-        /*
-         * First we check if we can map any templates with predefined
-         * coordinates Those are stored as CML in
-         * <i>org/openscience/cdk/layout/templates</i>.
-         */
-        if (useTemplates && !System.getProperty("java.version").contains("1.3.")) {
-            logger.debug("Initializing TemplateHandler");
-            logger.debug("TemplateHander initialized");
-            logger.debug("Now starting Template Detection in Molecule...");
-            mappedSubstructures = getTemplateHandler().getMappedSubstructures(molecule);
-            logger.debug("Template Detection finished");
-            logger.debug("Number of found templates: " + mappedSubstructures.getAtomContainerCount());
-        }
 
         int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
         if (expectedRingCount > 0) {
@@ -988,40 +971,6 @@ public class StructureDiagramGenerator {
         int thisRing;
         logger.debug("Start of layoutRingSet");
 
-        /*
-         * First we check if we can map any templates with predifined
-         * coordinates. All mapped substructures are saved in:
-         * this.mappedSubstructures
-         */
-        if (useTemplates &&
-            mappedSubstructures.getAtomContainerCount() > 0 &&
-            !System.getProperty("java.version").contains("1.3.")) {
-
-            for (IAtomContainer substructure : mappedSubstructures.atomContainers()) {
-                boolean substructureMapped = false;
-
-                for (IAtomContainer ring : rs.atomContainers()) {
-                    for (IAtom atom : ring.atoms()) {
-                        if (substructure.contains(atom)) {
-                            substructureMapped = true;
-                            break;
-                        }
-                    }
-                    if (substructureMapped)
-                        break;
-                }
-
-                // FIXME: we've already determine the atom-atom mapping to template but is redone here
-                if (substructureMapped) {
-                    if (getTemplateHandler().mapTemplateExact(substructure)) {
-                        // Mark rings of substrucure as CDKConstants.ISPLACED
-                        ringPlacer.checkAndMarkPlaced(rs);
-                    } else {
-                        logger.warn("A supposedly matched substructure failed to match.");
-                    }
-                }
-            }
-        }
 
         /*
          * Now layout the rest of this ring system

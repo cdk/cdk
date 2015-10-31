@@ -29,6 +29,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,6 +41,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -71,12 +73,9 @@ import static org.junit.Assert.fail;
 public class StructureDiagramGeneratorTest extends CDKTestCase {
 
     private static final StructureDiagramGenerator SDG = new StructureDiagramGenerator();
-
-    boolean standAlone = false;
-
+    
     static {
         SDG.setUseIdentityTemplates(true);
-        SDG.setUseTemplates(false);
     }
 
     public static IAtomContainer layout(IAtomContainer mol) throws Exception {
@@ -814,7 +813,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
 
         StructureDiagramGenerator generator = new StructureDiagramGenerator();
         generator.setUseIdentityTemplates(true);
-        generator.setUseTemplates(false);
 
         IAtomContainer mol = sp.parseSmiles(smiles);
 
@@ -838,7 +836,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
 
         StructureDiagramGenerator generator = new StructureDiagramGenerator();
         generator.setUseIdentityTemplates(false);
-        generator.setUseTemplates(false);
 
         IAtomContainer mol = sp.parseSmiles(smiles);
 
