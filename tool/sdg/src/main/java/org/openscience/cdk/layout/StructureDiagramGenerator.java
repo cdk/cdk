@@ -111,6 +111,7 @@ public class StructureDiagramGenerator {
     public  static Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
     private static TemplateHandler         DEFAULT_TEMPLATE_HANDLER = null;
     private static IdentityTemplateLibrary DEFAULT_IDENTITY_LIBRARY = IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi");
+    private static IdentityTemplateLibrary MACROCYCLES              = IdentityTemplateLibrary.loadFromResource("macro.smi");
 
     /**
      *  The empty constructor.
@@ -1033,17 +1034,20 @@ public class StructureDiagramGenerator {
         IRing ring = RingSetManipulator.getMostComplexRing(rs);
         int i = 0;
 
+
         /*
          * Place the most complex ring at the origin of the coordinate system
          */
         if (!ring.getFlag(CDKConstants.ISPLACED)) {
             sharedAtoms = placeFirstBond(ring.getBond(i), firstBondVector);
-            /*
-             * Call the method which lays out the new ring.
-             */
-            ringCenterVector = ringPlacer.getRingCenterOfFirstRing(ring, firstBondVector, bondLength);
-            ringPlacer
-                    .placeRing(ring, sharedAtoms, GeometryUtil.get2DCenter(sharedAtoms), ringCenterVector, bondLength);
+            if (ring.getAtomCount() < 10 || !layoutMacroCycle(ring)) {
+                /*
+                 * Call the method which lays out the new ring.
+                 */
+                ringCenterVector = ringPlacer.getRingCenterOfFirstRing(ring, firstBondVector, bondLength);
+                ringPlacer.placeRing(ring, sharedAtoms, GeometryUtil.get2DCenter(sharedAtoms), ringCenterVector, bondLength);
+            }
+
             /*
              * Mark the ring as placed
              */
@@ -1066,6 +1070,18 @@ public class StructureDiagramGenerator {
             ring = (IRing) rs.getAtomContainer(thisRing);
         } while (!allPlaced(rs));
         logger.debug("End of layoutRingSet");
+    }
+
+    private boolean layoutMacroCycle(IRing ring) {
+        IAtomContainer anon = AtomContainerManipulator.anonymise(ring);
+        boolean res = MACROCYCLES.assignLayout(anon);
+        if (res) {
+            for (int i = 0; i < anon.getAtomCount(); i++) {
+                ring.getAtom(i).setPoint2d(anon.getAtom(i).getPoint2d());
+                ring.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
+            }
+        }
+        return res;
     }
 
     /**
