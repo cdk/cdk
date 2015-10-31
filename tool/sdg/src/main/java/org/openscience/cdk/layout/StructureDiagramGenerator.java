@@ -409,19 +409,7 @@ public class StructureDiagramGenerator {
             logger.debug("Largest RingSystem is at RingSet collection's position " + largest);
             logger.debug("Size of Largest RingSystem: " + largestSize);
 
-            IAtomContainer ringSystem = molecule.getBuilder().newInstance(IAtomContainer.class);
-            for (IAtomContainer container : ringSystems.get(largest).atomContainers())
-                ringSystem.add(container);
-
-            // This is the primary ring system of the molecule, we lookup an identity template
-            // that helps us orientate in de factor conformation.
-            if (lookupRingSystem(ringSystem, molecule)) {
-                for (IAtomContainer container : ringSystems.get(largest).atomContainers())
-                    container.setFlag(CDKConstants.ISPLACED, true);
-                ringSystems.get(largest).setFlag(CDKConstants.ISPLACED, true);
-            } else {
-                layoutRingSet(firstBondVector, (IRingSet) ringSystems.get(largest));
-            }
+            layoutRingSet(firstBondVector, ringSystems.get(largest));
             logger.debug("First RingSet placed");
             /*
              * and do the placement of all the directly connected atoms of this
@@ -878,18 +866,22 @@ public class StructureDiagramGenerator {
 
     /**
      * Using a fast identity template library, lookup the the ring system and assign coordinates.
-     * The method indicates whether a match was found.
+     * The method indicates whether a match was found and coordinates were assigned.
      *
-     * @param ringSystem the ring system (may be fused, bridged, etc.)
+     * @param rs         the ring set
      * @param molecule   the rest of the compound
      * @return coordinates were assigned
      */
-    private boolean lookupRingSystem(IAtomContainer ringSystem, IAtomContainer molecule) {
+    private boolean lookupRingSystem(IRingSet rs, IAtomContainer molecule) {
 
         // identity templates are disabled
         if (!useIdentTemplates) return false;
 
         final IChemObjectBuilder bldr = molecule.getBuilder();
+
+        final IAtomContainer ringSystem = bldr.newInstance(IAtomContainer.class);
+        for (IAtomContainer container : rs.atomContainers())
+            ringSystem.add(container);
 
         final Set<IAtom> ringAtoms = new HashSet<IAtom>();
         for (IAtom atom : ringSystem.atoms())
@@ -975,6 +967,13 @@ public class StructureDiagramGenerator {
         int thisRing;
         logger.debug("Start of layoutRingSet");
 
+        // Check for an exact match (identity) on the ring system and use those coordinates
+        if (lookupRingSystem(rs, molecule)) {
+            for (IAtomContainer container : rs.atomContainers())
+                container.setFlag(CDKConstants.ISPLACED, true);
+            rs.setFlag(CDKConstants.ISPLACED, true);
+            return;
+        }
 
         /*
          * Now layout the rest of this ring system
