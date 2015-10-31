@@ -25,8 +25,12 @@
 package org.openscience.cdk.layout;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -40,6 +44,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static java.util.AbstractMap.SimpleEntry;
@@ -75,12 +80,97 @@ final class IdentityTemplateLibrary {
 
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##");
 
-    private final Map<String, Point2d[]> templateMap = new HashMap<String, Point2d[]>();
+    private final Map<String, Point2d[]> templateMap = new LinkedHashMap<String, Point2d[]>();
 
-    private final SmilesGenerator        smigen      = SmilesGenerator.unique();
-    private final ILoggingTool           logger      = LoggingToolFactory.createLoggingTool(getClass());
+    private final SmilesGenerator smigen = SmilesGenerator.unique();
+    private final ILoggingTool    logger = LoggingToolFactory.createLoggingTool(getClass());
 
-    private IdentityTemplateLibrary() {}
+    private IdentityTemplateLibrary() {
+    }
+
+    /**
+     * Internal - create a canonical SMILES string temporarily adjusting to default
+     * hydrogen count. This method may be moved to the SMILESGenerator in future.
+     *
+     * @param mol molecule
+     * @param ordering ordering output
+     * @return SMILES
+     * @throws CDKException SMILES could be generate
+     */
+    private String cansmi(IAtomContainer mol, int[] ordering) throws CDKException {
+
+        // backup parts we will strip off
+        Integer[] hcntBackup = new Integer[mol.getAtomCount()];
+
+        Map<IAtom, Integer> idxs = new HashMap<>();
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            hcntBackup[i] = mol.getAtom(i).getImplicitHydrogenCount();
+            idxs.put(mol.getAtom(i), i);
+        }
+
+        int[] bondedValence = new int[mol.getAtomCount()];
+        for (int i = 0; i < mol.getBondCount(); i++) {
+            IBond bond = mol.getBond(i);
+            bondedValence[idxs.get(bond.getAtom(0))] += bond.getOrder().numeric();
+            bondedValence[idxs.get(bond.getAtom(1))] += bond.getOrder().numeric();
+        }
+
+        // http://www.opensmiles.org/opensmiles.html#orgsbst
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            IAtom atom = mol.getAtom(i);
+            atom.setImplicitHydrogenCount(0);
+            switch (atom.getAtomicNumber()) {
+                case 5: // B
+                    if (bondedValence[i] <= 3)
+                        atom.setImplicitHydrogenCount(3 - bondedValence[i]);
+                    break;
+                case 6: // C
+                    if (bondedValence[i] <= 4)
+                        atom.setImplicitHydrogenCount(4 - bondedValence[i]);
+                    break;
+                case 7:  // N
+                case 15: // P
+                    if (bondedValence[i] <= 3)
+                        atom.setImplicitHydrogenCount(3 - bondedValence[i]);
+                    else if (bondedValence[i] <= 5)
+                        atom.setImplicitHydrogenCount(5 - bondedValence[i]);
+                    break;
+                case 8:  // O
+                    if (bondedValence[i] <= 2)
+                        atom.setImplicitHydrogenCount(2 - bondedValence[i]);
+                    break;
+                case 16: // S
+                    if (bondedValence[i] <= 2)
+                        atom.setImplicitHydrogenCount(2 - bondedValence[i]);
+                    else if (bondedValence[i] <= 4)
+                        atom.setImplicitHydrogenCount(4 - bondedValence[i]);
+                    else if (bondedValence[i] <= 6)
+                        atom.setImplicitHydrogenCount(6 - bondedValence[i]);
+                    break;
+                case 9:  // F
+                case 17: // Cl
+                case 35: // Br
+                case 53: // I
+                    if (bondedValence[i] <= 1)
+                        atom.setImplicitHydrogenCount(1 - bondedValence[i]);
+                    break;
+                default:
+                    atom.setImplicitHydrogenCount(0);
+                    break;
+            }
+        }
+
+        String smi = null;
+        try {
+            smi = smigen.create(mol, ordering);
+        } finally {
+            // restore
+            for (int i = 0; i < mol.getAtomCount(); i++)
+                mol.getAtom(i).setImplicitHydrogenCount(hcntBackup[i]);
+        }
+
+        return smi;
+    }
 
     /**
      * Create a library entry from an atom container. Note the entry is not added to the library.
@@ -94,7 +184,7 @@ final class IdentityTemplateLibrary {
 
             final int n = container.getAtomCount();
             final int[] ordering = new int[n];
-            final String smiles = smigen.create(container, ordering);
+            final String smiles = cansmi(container, ordering);
 
             // build point array that is in the canonical output order
             final Point2d[] points = new Point2d[n];
@@ -229,7 +319,7 @@ final class IdentityTemplateLibrary {
             // the canonical out ordering
             int n = container.getAtomCount();
             int[] ordering = new int[n];
-            String smiles = smigen.create(container, ordering);
+            String smiles = cansmi(container, ordering);
 
             // find the points in the library
             Point2d[] points = templateMap.get(smiles);
@@ -294,6 +384,43 @@ final class IdentityTemplateLibrary {
             library.add(decodeEntry(line));
         }
         return library;
+    }
+
+    /**
+     * Reorder coordinates.
+     *
+     * @param coords coordinates
+     * @param order permutation
+     * @return reordered coordinates
+     */
+    static Point2d[] reorderCoords(Point2d[] coords, int[] order) {
+        Point2d[] neworder = new Point2d[coords.length];
+        for (int i = 0; i < order.length; i++)
+            neworder[order[i]] = coords[i];
+        return neworder;
+    }
+
+    /**
+     * Update the template library - can be called for safety after
+     * each load.
+     *
+     * @param bldr builder
+     */
+    void update(IChemObjectBuilder bldr) {
+        final SmilesParser smipar = new SmilesParser(bldr);
+        Map<String,Point2d[]> updated = new LinkedHashMap<>();
+        for (Map.Entry<String,Point2d[]> e : templateMap.entrySet()) {
+            try {
+                IAtomContainer mol = smipar.parseSmiles(e.getKey());
+                int[] order = new int[mol.getAtomCount()];
+                updated.put(cansmi(mol, order),
+                            reorderCoords(e.getValue(), order));
+            } catch (CDKException ex) {
+                System.err.println(e.getKey() + " could not be updated: " + ex.getMessage());
+            }
+        }
+        templateMap.clear();
+        templateMap.putAll(updated);
     }
 
     /**
