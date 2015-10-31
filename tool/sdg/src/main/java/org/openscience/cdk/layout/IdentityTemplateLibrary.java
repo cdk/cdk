@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,6 +72,8 @@ import static java.util.Map.Entry;
  * @author John May
  */
 final class IdentityTemplateLibrary {
+
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##");
 
     private final Map<String, Point2d[]> templateMap = new HashMap<String, Point2d[]>();
 
@@ -136,12 +139,28 @@ final class IdentityTemplateLibrary {
      * @return array of coordinates
      */
     static Point2d[] decodeCoordinates(String str) {
-        String[] strs = str.split(", ");
-        Point2d[] points = new Point2d[strs.length / 2];
-        for (int i = 0; i < strs.length; i += 2) {
-            points[i / 2] = new Point2d(Double.parseDouble(strs[i]), Double.parseDouble(strs[i + 1]));
+        if (str.startsWith("|(")) {
+            int end = str.indexOf(')', 2);
+            if (end < 0)
+                return new Point2d[0];
+            String[] strs = str.substring(2, end).split(";");
+            Point2d[] points = new Point2d[strs.length];
+            for (int i = 0; i < strs.length; i++) {
+                String coord = strs[i];
+                int first  = coord.indexOf(',');
+                int second = coord.indexOf(',', first+1);
+                points[i] = new Point2d(Double.parseDouble(coord.substring(0, first)),
+                                        Double.parseDouble(coord.substring(first + 1, second)));
+            }
+            return points;
+        } else {
+            String[] strs = str.split(", ");
+            Point2d[] points = new Point2d[strs.length / 2];
+            for (int i = 0; i < strs.length; i += 2) {
+                points[i / 2] = new Point2d(Double.parseDouble(strs[i]), Double.parseDouble(strs[i + 1]));
+            }
+            return points;
         }
-        return points;
     }
 
     /**
@@ -160,19 +179,22 @@ final class IdentityTemplateLibrary {
     }
 
     /**
-     * Encode coordinates in a byte buffer.
+     * Encode coordinates in a string.
      *
-     * @param points
-     * @return
+     * @param points points
+     * @return extended SMILES format coordinates
      */
     static String encodeCoordinates(Point2d[] points) {
         StringBuilder sb = new StringBuilder();
+        sb.append("|(");
         for (Point2d point : points) {
-            if (sb.length() > 0) sb.append(", ");
-            sb.append(String.format("%.3f", point.x));
-            sb.append(", ");
-            sb.append(String.format("%.3f", point.y));
+            if (sb.length() > 2) sb.append(";");
+            sb.append(DECIMAL_FORMAT.format(point.x));
+            sb.append(',');
+            sb.append(DECIMAL_FORMAT.format(point.y));
+            sb.append(',');
         }
+        sb.append(")|");
         return sb.toString();
     }
 
@@ -286,7 +308,7 @@ final class IdentityTemplateLibrary {
 
         for (Entry<String, Point2d[]> e : templateMap.entrySet()) {
             bw.write(encodeEntry(e));
-            bw.newLine();
+            bw.write('\n');
         }
 
         bw.close();

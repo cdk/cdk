@@ -89,7 +89,7 @@ public class StructureDiagramGenerator {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
     public static final double DEFAULT_BOND_LENGTH = 1.5;
-    
+
     private IAtomContainer          molecule;
     private IRingSet                sssr;
     private double                  bondLength               = DEFAULT_BOND_LENGTH;
@@ -101,7 +101,7 @@ public class StructureDiagramGenerator {
     private TemplateHandler         templateHandler          = null;
     private boolean                 useTemplates             = false;
     private boolean                 useIdentTemplates        = true;
-    
+
     /** Atoms of the molecule that mapped a template */
     private IAtomContainerSet       mappedSubstructures;
 
