@@ -619,36 +619,35 @@ public class RingPlacer {
      * @param   ring  The Ring for which all connected rings in RingSet are to be layed out.
      */
     void placeConnectedRings(IRingSet rs, IRing ring, int handleType, double bondLength) {
-        IRingSet connectedRings = rs.getConnectedRings(ring);
-        IRing connectedRing;
-        IAtomContainer sharedAtoms;
-        int sac;
-        Point2d oldRingCenter, sharedAtomsCenter, tempPoint;
-        Vector2d tempVector, oldRingCenterVector, newRingCenterVector;
+        final IRingSet connectedRings = rs.getConnectedRings(ring);
 
         //		logger.debug(rs.reportRingList(molecule));
         for (IAtomContainer container : connectedRings.atomContainers()) {
-            connectedRing = (IRing) container;
+            final IRing connectedRing = (IRing) container;
             if (!connectedRing.getFlag(CDKConstants.ISPLACED)) {
                 //				logger.debug(ring.toString(molecule));
                 //				logger.debug(connectedRing.toString(molecule));
-                sharedAtoms = AtomContainerManipulator.getIntersection(ring, connectedRing);
-                sac = sharedAtoms.getAtomCount();
+                final IAtomContainer sharedAtoms = AtomContainerManipulator.getIntersection(ring, connectedRing);
+                final int numSharedAtoms = sharedAtoms.getAtomCount();
                 logger.debug("placeConnectedRings-> connectedRing: " + (ring.toString()));
-                if ((sac == 2 && handleType == FUSED) || (sac == 1 && handleType == SPIRO)
-                        || (sac > 2 && handleType == BRIDGED)) {
-                    sharedAtomsCenter = GeometryUtil.get2DCenter(sharedAtoms);
-                    oldRingCenter = GeometryUtil.get2DCenter(ring);
-                    tempVector = (new Vector2d(sharedAtomsCenter));
-                    newRingCenterVector = new Vector2d(tempVector);
+                if ((numSharedAtoms == 2 && handleType == FUSED) ||
+                    (numSharedAtoms == 1 && handleType == SPIRO) ||
+                    (numSharedAtoms > 2  && handleType == BRIDGED)) {
+
+                    System.err.println("place");
+
+                    final Point2d sharedAtomsCenter = GeometryUtil.get2DCenter(sharedAtoms);
+                    final Point2d oldRingCenter = GeometryUtil.get2DCenter(ring);
+                    final Vector2d tempVector = (new Vector2d(sharedAtomsCenter));
+                    final Vector2d newRingCenterVector = new Vector2d(tempVector);
                     newRingCenterVector.sub(new Vector2d(oldRingCenter));
-                    oldRingCenterVector = new Vector2d(newRingCenterVector);
+                    final Vector2d oldRingCenterVector = new Vector2d(newRingCenterVector);
                     logger.debug("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: "
                             + tempVector.length());
                     logger.debug("placeConnectedRing -> bondCenter: " + sharedAtomsCenter);
                     logger.debug("placeConnectedRing -> oldRingCenterVector.length(): " + oldRingCenterVector.length());
                     logger.debug("placeConnectedRing -> newRingCenterVector.length(): " + newRingCenterVector.length());
-                    tempPoint = new Point2d(sharedAtomsCenter);
+                    final Point2d tempPoint = new Point2d(sharedAtomsCenter);
                     tempPoint.add(newRingCenterVector);
                     placeRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
                     connectedRing.setFlag(CDKConstants.ISPLACED, true);
