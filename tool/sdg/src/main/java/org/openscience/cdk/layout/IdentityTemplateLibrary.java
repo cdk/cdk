@@ -24,7 +24,10 @@
 
 package org.openscience.cdk.layout;
 
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.rebond.Point;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -43,8 +46,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.util.AbstractMap.SimpleEntry;
@@ -80,7 +87,7 @@ final class IdentityTemplateLibrary {
 
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##");
 
-    private final Map<String, Point2d[]> templateMap = new LinkedHashMap<String, Point2d[]>();
+    private final Multimap<String, Point2d[]> templateMap = LinkedListMultimap.create();
 
     private final SmilesGenerator smigen = SmilesGenerator.unique();
     private final ILoggingTool    logger = LoggingToolFactory.createLoggingTool(getClass());
@@ -307,7 +314,8 @@ final class IdentityTemplateLibrary {
     }
 
     /**
-     * Assign a 2D layout to the atom container using the contents of the library.
+     * Assign a 2D layout to the atom container using the contents of the library. If multiple
+     * coordinates are available the first is choosen.
      *
      * @param container structure representation
      * @return a layout was assigned
@@ -322,19 +330,47 @@ final class IdentityTemplateLibrary {
             String smiles = cansmi(container, ordering);
 
             // find the points in the library
-            Point2d[] points = templateMap.get(smiles);
-
-            // no matching entry
-            if (points == null) return false;
-
-            // set the points
-            for (int i = 0; i < n; i++) {
-                container.getAtom(i).setPoint2d(new Point2d(points[ordering[i]]));
+            for (Point2d[] points : templateMap.get(smiles)) {
+                // set the points
+                for (int i = 0; i < n; i++) {
+                    container.getAtom(i).setPoint2d(new Point2d(points[ordering[i]]));
+                }
+                return true;
             }
-
-            return true;
         } catch (CDKException e) {
-            return false;
+            // ignored
+        }
+        return false;
+    }
+
+    /**
+     * Get all templated coordinates for the provided molecule. The return collection has
+     * coordinates ordered based on the input.
+     *
+     * @param mol molecule (or fragment) to lookup
+     * @return the coordinates
+     */
+    Collection<Point2d[]> getCoordinates(IAtomContainer mol) {
+        try {
+            // create the library key to lookup an entry, we also store
+            // the canonical out ordering
+            int n = mol.getAtomCount();
+            int[] ordering = new int[n];
+            String smiles = cansmi(mol, ordering);
+
+            final Collection<Point2d[]> coordSet = templateMap.get(smiles);
+            final List<Point2d[]> orderedCoordSet = new ArrayList<>(coordSet.size());
+
+            for (Point2d[] coords : coordSet) {
+                Point2d[] orderedCoords = new Point2d[coords.length];
+                for (int i = 0; i < n; i++) {
+                    orderedCoords[i] = new Point2d(coords[ordering[i]]);
+                }
+                orderedCoordSet.add(orderedCoords);
+            }
+            return Collections.unmodifiableList(orderedCoordSet);
+        } catch (CDKException e) {
+            return Collections.emptyList();
         }
     }
 
@@ -408,13 +444,15 @@ final class IdentityTemplateLibrary {
      */
     void update(IChemObjectBuilder bldr) {
         final SmilesParser smipar = new SmilesParser(bldr);
-        Map<String,Point2d[]> updated = new LinkedHashMap<>();
-        for (Map.Entry<String,Point2d[]> e : templateMap.entrySet()) {
+        Multimap<String,Point2d[]> updated = LinkedListMultimap.create();
+        for (Map.Entry<String,Collection<Point2d[]>> e : templateMap.asMap().entrySet()) {
             try {
                 IAtomContainer mol = smipar.parseSmiles(e.getKey());
                 int[] order = new int[mol.getAtomCount()];
-                updated.put(cansmi(mol, order),
-                            reorderCoords(e.getValue(), order));
+                String key = cansmi(mol, order);
+                for (Point2d[] coords : e.getValue()) {
+                    updated.put(key, reorderCoords(coords, order));
+                }
             } catch (CDKException ex) {
                 System.err.println(e.getKey() + " could not be updated: " + ex.getMessage());
             }
@@ -433,7 +471,7 @@ final class IdentityTemplateLibrary {
 
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));
 
-        for (Entry<String, Point2d[]> e : templateMap.entrySet()) {
+        for (Entry<String, Point2d[]> e : templateMap.entries()) {
             bw.write(encodeEntry(e));
             bw.write('\n');
         }
