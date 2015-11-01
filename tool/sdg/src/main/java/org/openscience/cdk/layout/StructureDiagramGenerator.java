@@ -952,22 +952,22 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     * Does a layout of all the rings in a given connected RingSet. Uses a TemplateHandler
-     * to treat templated mapped substructures differently if <code>useTemplates</code> is
-     * set true.
+     * Layout a set of connected rings (ring set/ring system). <br/>
+     *
+     * Current Scheme:
+     *   1. Lookup the entire ring system for a known template.
+     *   2. If first (most complex) ring is macrocycle,
+     *      2a. Assign coordinates from macro cycle templates
+     *   3. If first is not-macrocycle (or currently doesn't match out templates)
+     *      3a. Layout as regular polygon
+     *   4. Sequentially connected layout rings {@link RingPlacer}
      *
      * @param firstBondVector A vector giving the placement for the first bond
-     * @param rs              The connected RingSet for which the layout is to be
-     *                        done
-     * @throws CDKException if an error occurs
+     * @param rs              The connected RingSet to layout
      */
-    private void layoutRingSet(Vector2d firstBondVector, IRingSet rs) throws CDKException {
-        IAtomContainer sharedAtoms;
-        Vector2d ringCenterVector;
-        int thisRing;
-        logger.debug("Start of layoutRingSet");
+    private void layoutRingSet(Vector2d firstBondVector, IRingSet rs) {
 
-        // Check for an exact match (identity) on the ring system and use those coordinates
+        // Check for an exact match (identity) on the entire ring system
         if (lookupRingSystem(rs, molecule)) {
             for (IAtomContainer container : rs.atomContainers())
                 container.setFlag(CDKConstants.ISPLACED, true);
@@ -975,40 +975,28 @@ public class StructureDiagramGenerator {
             return;
         }
 
-        /*
-         * Now layout the rest of this ring system
-         */
-        RingSetManipulator.sort(rs); // small -> large
+        // TODO fused ring peeling
 
-        /*
-         * Get the most complex ring in this RingSet
-         */
-        IRing ring = RingSetManipulator.getMostComplexRing(rs);
-        int i = 0;
+        // sort small -> large
+        RingSetManipulator.sort(rs);
 
+        // Get the most complex ring in this RingSet (largest prioritized)
+        final IRing first = RingSetManipulator.getMostComplexRing(rs);
 
-        /*
-         * Place the most complex ring at the origin of the coordinate system
-         */
-        if (!ring.getFlag(CDKConstants.ISPLACED)) {
-            sharedAtoms = placeFirstBond(ring.getBond(i), firstBondVector);
-            if (ring.getAtomCount() < 10 || !layoutMacroCycle(ring)) {
-                /*
-                 * Call the method which lays out the new ring.
-                 */
-                ringCenterVector = ringPlacer.getRingCenterOfFirstRing(ring, firstBondVector, bondLength);
-                ringPlacer.placeRing(ring, sharedAtoms, GeometryUtil.get2DCenter(sharedAtoms), ringCenterVector, bondLength);
+        // Place the most complex ring at the origin of the coordinate system
+        if (!first.getFlag(CDKConstants.ISPLACED)) {
+            IAtomContainer sharedAtoms = placeFirstBond(first.getBond(0), firstBondVector);
+            if (first.getAtomCount() < 10 || !layoutMacroCycle(first)) {
+                // de novo layout of ring as a regular polygon
+                Vector2d ringCenterVector = ringPlacer.getRingCenterOfFirstRing(first, firstBondVector, bondLength);
+                ringPlacer.placeRing(first, sharedAtoms, GeometryUtil.get2DCenter(sharedAtoms), ringCenterVector, bondLength);
             }
-
-            /*
-             * Mark the ring as placed
-             */
-            ring.setFlag(CDKConstants.ISPLACED, true);
+            first.setFlag(CDKConstants.ISPLACED, true);
         }
-        /*
-         * Place all other rings in this ringsystem.
-         */
-        thisRing = 0;
+
+        // Place all connected rings start with those connected to first
+        int thisRing = 0;
+        IRing ring = first;
         do {
             if (ring.getFlag(CDKConstants.ISPLACED)) {
                 ringPlacer.placeConnectedRings(rs, ring, RingPlacer.FUSED, bondLength);
@@ -1021,7 +1009,6 @@ public class StructureDiagramGenerator {
             }
             ring = (IRing) rs.getAtomContainer(thisRing);
         } while (!allPlaced(rs));
-        logger.debug("End of layoutRingSet");
     }
 
     private boolean layoutMacroCycle(IRing ring) {
