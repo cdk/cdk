@@ -870,9 +870,10 @@ public class StructureDiagramGenerator {
      *
      * @param rs         the ring set
      * @param molecule   the rest of the compound
+     * @param anon       check for anonmised templates
      * @return coordinates were assigned
      */
-    private boolean lookupRingSystem(IRingSet rs, IAtomContainer molecule) {
+    private boolean lookupRingSystem(IRingSet rs, IAtomContainer molecule, boolean anon) {
 
         // identity templates are disabled
         if (!useIdentTemplates) return false;
@@ -912,6 +913,9 @@ public class StructureDiagramGenerator {
         final IAtomContainer anonymous = clearHydrogenCounts(AtomContainerManipulator.anonymise(ringSystem));
 
         for (IAtomContainer container : Arrays.asList(skeletonStub, skeleton, anonymous)) {
+
+            if (!anon && container == anonymous)
+                continue;
 
             // assign the atoms 0 to |ring|, the stubs are added at the end of the container
             // and are not placed here (since the index of each stub atom is > |ring|)
@@ -967,8 +971,15 @@ public class StructureDiagramGenerator {
      */
     private void layoutRingSet(Vector2d firstBondVector, IRingSet rs) {
 
+        // sort small -> large
+        // Get the most complex ring in this RingSet (largest prioritized)
+        RingSetManipulator.sort(rs);
+        final IRing first = RingSetManipulator.getMostComplexRing(rs);
+
+        final boolean macro = isMacroCycle(first, rs);
+
         // Check for an exact match (identity) on the entire ring system
-        if (lookupRingSystem(rs, molecule)) {
+        if (lookupRingSystem(rs, molecule, !macro || rs.getAtomContainerCount() > 1)) {
             for (IAtomContainer container : rs.atomContainers())
                 container.setFlag(CDKConstants.ISPLACED, true);
             rs.setFlag(CDKConstants.ISPLACED, true);
@@ -977,16 +988,11 @@ public class StructureDiagramGenerator {
 
         // TODO fused ring peeling
 
-        // sort small -> large
-        RingSetManipulator.sort(rs);
-
-        // Get the most complex ring in this RingSet (largest prioritized)
-        final IRing first = RingSetManipulator.getMostComplexRing(rs);
 
         // Place the most complex ring at the origin of the coordinate system
         if (!first.getFlag(CDKConstants.ISPLACED)) {
             IAtomContainer sharedAtoms = placeFirstBond(first.getBond(0), firstBondVector);
-            if (first.getAtomCount() < 10 || !layoutMacroCycle(first)) {
+            if (!macro || !layoutMacroCycle(first)) {
                 // de novo layout of ring as a regular polygon
                 Vector2d ringCenterVector = ringPlacer.getRingCenterOfFirstRing(first, firstBondVector, bondLength);
                 ringPlacer.placeRing(first, sharedAtoms, GeometryUtil.get2DCenter(sharedAtoms), ringCenterVector, bondLength);
@@ -1009,6 +1015,34 @@ public class StructureDiagramGenerator {
             }
             ring = (IRing) rs.getAtomContainer(thisRing);
         } while (!allPlaced(rs));
+    }
+
+    /**
+     * Check if a ring in a ring set is a macro cycle. We define this as a
+     * ring with >= 10 atom and has at least one bond that isn't contained
+     * in any other rings.
+     *
+     * @param ring ring to check
+     * @param rs rest of ring system
+     * @return ring is a macro cycle
+     */
+    private boolean isMacroCycle(IRing ring, IRingSet rs) {
+        if (ring.getAtomCount() < 10)
+            return false;
+        for (IBond bond : ring.bonds()) {
+            boolean found = false;
+            for (IAtomContainer other : rs.atomContainers()) {
+                if (ring == other)
+                    continue;
+                if (other.contains(bond)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                return true;
+        }
+        return false;
     }
 
     private boolean layoutMacroCycle(IRing ring) {
