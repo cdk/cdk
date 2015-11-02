@@ -244,7 +244,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private IAtomType perceiveSelenium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if ("Se".equals(atom.getSymbol())) {
-            int doublebondcount = countAttachedDoubleBonds(atomContainer, atom);
+        	int doublebondcount = countAttachedDoubleBonds(atomContainer, atom);
             if (atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() == 0) {
                 if (atomContainer.getConnectedAtomsCount(atom) == 0) {
                     if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() == 0) {
@@ -366,108 +366,123 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveCarbons(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        // if hybridization is given, use that
-        if (hasOneSingleElectron(atomContainer, atom)) {
+    	if (hasOneSingleElectron(atomContainer, atom)) {
             return perceiveCarbonRadicals(atomContainer, atom);
-        } else if (hasHybridization(atom) && !isCharged(atom)) {
+        }
+    	List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
+        // if hybridization is given, use that
+        if (hasHybridization(atom) && !isCharged(atom)) {
             if (atom.getHybridization() == Hybridization.SP2) {
                 IAtomType type = getAtomType("C.sp2");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getHybridization() == Hybridization.SP3) {
                 IAtomType type = getAtomType("C.sp3");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getHybridization() == Hybridization.SP1) {
-                IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+                IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
                 if (maxBondOrder == Order.TRIPLE) {
                     IAtomType type = getAtomType("C.sp");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else {
                     IAtomType type = getAtomType("C.allene");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             }
         } else if (isCharged(atom)) {
             if (atom.getFormalCharge() == 1) {
-                if (atomContainer.getConnectedBondsCount(atom) == 0) {
+                if (connectedBonds.isEmpty()) {
                     IAtomType type = getAtomType("C.plus.sp2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else {
-                    IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+                	IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
                     if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
                         IAtomType type = getAtomType("C.plus.sp1");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     } else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
                         IAtomType type = getAtomType("C.plus.sp2");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     } else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
                         IAtomType type = getAtomType("C.plus.planar");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                 }
             } else if (atom.getFormalCharge() == -1) {
-                IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-                if (maxBondOrder == CDKConstants.BONDORDER_SINGLE && atomContainer.getConnectedBondsCount(atom) <= 3) {
-                    if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer)) {
+                IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
+                if (maxBondOrder == CDKConstants.BONDORDER_SINGLE && connectedBonds.size() <= 3) {
+                    if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer, connectedBonds)) {
                         IAtomType type = getAtomType("C.minus.planar");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                     IAtomType type = getAtomType("C.minus.sp3");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE
-                        && atomContainer.getConnectedBondsCount(atom) <= 3) {
+                        && connectedBonds.size() <= 3) {
                     IAtomType type = getAtomType("C.minus.sp2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE
-                        && atomContainer.getConnectedBondsCount(atom) <= 1) {
+                        && connectedBonds.size() <= 1) {
                     IAtomType type = getAtomType("C.minus.sp1");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             }
             return null;
         } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
             IAtomType type = getAtomType("C.sp2");
-            if (isAcceptable(atom, atomContainer, type)) return type;
-        } else if (hasOneOrMoreSingleOrDoubleBonds(atomContainer, atom)) {
+            if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
+        } else if (hasOneOrMoreSingleOrDoubleBonds(connectedBonds)) {
             IAtomType type = getAtomType("C.sp2");
-            if (isAcceptable(atom, atomContainer, type)) return type;
-        } else if (atomContainer.getConnectedBondsCount(atom) > 4) {
+            if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
+        } else if (connectedBonds.size() > 4) {
             // FIXME: I don't perceive carbons with more than 4 connections yet
             return null;
         } else { // OK, use bond order info
-            IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+            IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
             if (maxBondOrder == IBond.Order.QUADRUPLE) {
                 // WTF??
                 return null;
             } else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
                 IAtomType type = getAtomType("C.sp");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
                 // OK, one or two double bonds?
-                int doubleBondCount = countAttachedDoubleBonds(atomContainer, atom);
+                int doubleBondCount = countAttachedDoubleBonds(connectedBonds, atom);
                 if (doubleBondCount == 2) {
                     IAtomType type = getAtomType("C.allene");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else if (doubleBondCount == 1) {
                     IAtomType type = getAtomType("C.sp2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             } else {
-                if (hasAromaticBond(atomContainer, atom)) {
+                if (hasAromaticBond(connectedBonds)) {
                     IAtomType type = getAtomType("C.sp2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
                 IAtomType type = getAtomType("C.sp3");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         }
         return null;
     }
 
-    private boolean hasOneOrMoreSingleOrDoubleBonds(IAtomContainer atomContainer, IAtom atom) {
-        for (IBond bond : atomContainer.getConnectedBondsList(atom)) {
+    private Order getMaximumBondOrder(List<IBond> connectedBonds) {
+    	IBond.Order max = IBond.Order.SINGLE;
+    	for (IBond bond : connectedBonds) {
+            if (bond.getOrder().numeric() > max.numeric())
+            	max = bond.getOrder();
+        }
+        return max;
+	}
+
+	private boolean hasOneOrMoreSingleOrDoubleBonds(List<IBond> bonds) {
+        for (IBond bond : bonds) {
             if (bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) return true;
         }
         return false;
+    }
+
+	private boolean hasOneOrMoreSingleOrDoubleBonds(IAtomContainer atomContainer, IAtom atom) {
+        return hasOneOrMoreSingleOrDoubleBonds(atomContainer.getConnectedBondsList(atom));
     }
 
     private boolean hasOneSingleElectron(IAtomContainer atomContainer, IAtom atom) {
@@ -528,105 +543,106 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
 
         // if hybridization is given, use that
+        List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
         if (hasHybridization(atom) && !isCharged(atom)) {
             if (atom.getHybridization() == Hybridization.SP2) {
-                int connectedAtomsCount = atomContainer.getConnectedAtomsCount(atom);
+                int connectedAtomsCount = connectedBonds.size();
                 if (connectedAtomsCount == 1) {
-                    if (isCarboxylate(atom, atomContainer)) {
+                    if (isCarboxylate(atomContainer, atom, connectedBonds)) {
                         IAtomType type = getAtomType("O.sp2.co2");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     } else {
                         IAtomType type = getAtomType("O.sp2");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                 } else if (connectedAtomsCount == 2) {
                     IAtomType type = getAtomType("O.planar3");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             } else if (atom.getHybridization() == Hybridization.SP3) {
                 IAtomType type = getAtomType("O.sp3");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getHybridization() == Hybridization.PLANAR3) {
                 IAtomType type = getAtomType("O.planar3");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (isCharged(atom)) {
-            if (atom.getFormalCharge() == -1 && atomContainer.getConnectedAtomsCount(atom) <= 1) {
-                if (isCarboxylate(atom, atomContainer)) {
+            if (atom.getFormalCharge() == -1 && connectedBonds.size() <= 1) {
+                if (isCarboxylate(atomContainer, atom, connectedBonds)) {
                     IAtomType type = getAtomType("O.minus.co2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else {
                     IAtomType type = getAtomType("O.minus");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
-            } else if (atom.getFormalCharge() == -2 && atomContainer.getConnectedAtomsCount(atom) == 0) {
+            } else if (atom.getFormalCharge() == -2 && connectedBonds.size() == 0) {
                 IAtomType type = getAtomType("O.minus2");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getFormalCharge() == +1) {
-                if (atomContainer.getConnectedBondsCount(atom) == 0) {
+                if (connectedBonds.size() == 0) {
                     IAtomType type = getAtomType("O.plus");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
-                IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+                IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
                 if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
                     IAtomType type = getAtomType("O.plus.sp2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
                     IAtomType type = getAtomType("O.plus.sp1");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else {
                     IAtomType type = getAtomType("O.plus");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             }
             return null;
-        } else if (atomContainer.getConnectedBondsCount(atom) > 2) {
+        } else if (connectedBonds.size() > 2) {
             // FIXME: I don't perceive carbons with more than 4 connections yet
             return null;
-        } else if (atomContainer.getConnectedBondsCount(atom) == 0) {
+        } else if (connectedBonds.size() == 0) {
             IAtomType type = getAtomType("O.sp3");
-            if (isAcceptable(atom, atomContainer, type)) return type;
+            if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
         } else { // OK, use bond order info
-            IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+            IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
             if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-                if (isCarboxylate(atom, atomContainer)) {
+                if (isCarboxylate(atomContainer, atom, connectedBonds)) {
                     IAtomType type = getAtomType("O.sp2.co2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else {
                     IAtomType type = getAtomType("O.sp2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             } else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-                int explicitHydrogens = countExplicitHydrogens(atom, atomContainer);
-                int connectedHeavyAtoms = atomContainer.getConnectedBondsCount(atom) - explicitHydrogens;
+                int explicitHydrogens = countExplicitHydrogens(atom, connectedBonds);
+                int connectedHeavyAtoms = connectedBonds.size() - explicitHydrogens;
                 if (connectedHeavyAtoms == 2) {
                     // a O.sp3 which is expected to take part in an aromatic system
-                    if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer)) {
+                    if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer, connectedBonds)) {
                         IAtomType type = getAtomType("O.planar3");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                     IAtomType type = getAtomType("O.sp3");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else {
                     IAtomType type = getAtomType("O.sp3");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             }
         }
         return null;
     }
 
-    private boolean isCarboxylate(IAtom atom, IAtomContainer container) {
+    private boolean isCarboxylate(IAtomContainer container, IAtom atom, List<IBond> connectedBonds) {
         // assumes that the oxygen only has one neighbor (C=O, or C-[O-])
-        List<IAtom> neighbors = container.getConnectedAtomsList(atom);
-        if (neighbors.size() != 1) return false;
-        IAtom carbon = neighbors.get(0);
+        if (connectedBonds.size() != 1) return false;
+        IAtom carbon = connectedBonds.get(0).getConnectedAtom(atom);
         if (!"C".equals(carbon.getSymbol())) return false;
 
+        List<IBond> carbonBonds = container.getConnectedBondsList(carbon);
         int oxygenCount = 0;
         int singleBondedNegativeOxygenCount = 0;
         int doubleBondedOxygenCount = 0;
-        for (IBond cBond : container.getConnectedBondsList(carbon)) {
+        for (IBond cBond : carbonBonds) {
             IAtom neighbor = cBond.getConnectedAtom(carbon);
             if ("O".equals(neighbor.getSymbol())) {
                 oxygenCount++;
@@ -642,9 +658,33 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return (oxygenCount == 2) && (singleBondedNegativeOxygenCount == 1) && (doubleBondedOxygenCount == 1);
     }
 
-    private boolean atLeastTwoNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer) {
+    private boolean atLeastTwoXNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer) {
+    	return atLeastTwoNeighborsAreSp2(atom, atomContainer, null);
+    }
+
+    private boolean atLeastTwoNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds) {
+    	if (connectedBonds != null) {
+    		int count = 0;
+    		for (IBond bond : connectedBonds) {
+    			if (bond.getOrder() == Order.DOUBLE || bond.isAromatic()) {
+    				count++;
+    			} else {
+    				IAtom nextAtom = bond.getConnectedAtom(atom);
+    				if (nextAtom.getHybridization() != CDKConstants.UNSET &&
+    						nextAtom.getHybridization() == Hybridization.SP2) {
+    					// OK, it's SP2
+    					count++;
+    				} else if (countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
+    					// OK, it's SP2
+    					count++;
+    				}
+    			}
+				if (count >= 2) return true;
+    		}
+    		return false;
+    	}
         int count = 0;
-        Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
+        Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();;
         while (atoms.hasNext() && (count < 2)) {
             IAtom nextAtom = atoms.next();
             if (!nextAtom.getSymbol().equals("H")) {
@@ -664,8 +704,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return count >= 2;
     }
 
-    private boolean bothNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer) {
-        return atLeastTwoNeighborsAreSp2(atom, atomContainer);
+    private boolean bothNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds) {
+        return atLeastTwoNeighborsAreSp2(atom, atomContainer, connectedBonds);
     }
 
     private IAtomType perceiveNitrogenRadicals(IAtomContainer atomContainer, IAtom atom) throws CDKException {
@@ -720,149 +760,151 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         // if hybridization is given, use that
         if (hasOneSingleElectron(atomContainer, atom)) {
             return perceiveNitrogenRadicals(atomContainer, atom);
-        } else if (hasHybridization(atom) && !isCharged(atom)) {
+        }
+        
+        List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
+        if (hasHybridization(atom) && !isCharged(atom)) {
             if (atom.getHybridization() == Hybridization.SP1) {
-                int neighborCount = atomContainer.getConnectedAtomsCount(atom);
+                int neighborCount = connectedBonds.size();
                 if (neighborCount > 1) {
                     IAtomType type = getAtomType("N.sp1.2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else {
                     IAtomType type = getAtomType("N.sp1");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             } else if (atom.getHybridization() == Hybridization.SP2) {
                 if (isAmide(atom, atomContainer)) {
                     IAtomType type = getAtomType("N.amide");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else if (isThioAmide(atom, atomContainer)) {
                     IAtomType type = getAtomType("N.thioamide");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
                 // but an sp2 hyb N might N.sp2 or N.planar3 (pyrrole), so check for the latter
-                int neighborCount = atomContainer.getConnectedAtomsCount(atom);
-                if (neighborCount == 4 && IBond.Order.DOUBLE == atomContainer.getMaximumBondOrder(atom)) {
+                int neighborCount = connectedBonds.size();
+                if (neighborCount == 4 && IBond.Order.DOUBLE == getMaximumBondOrder(connectedBonds)) {
                     IAtomType type = getAtomType("N.oxide");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
-                } else if (neighborCount > 1 && bothNeighborsAreSp2(atom, atomContainer)) {
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
+                } else if (neighborCount > 1 && bothNeighborsAreSp2(atom, atomContainer, connectedBonds)) {
                     if (isRingAtom(atom, atomContainer)) {
                         if (neighborCount == 3) {
-                            IBond.Order maxOrder = atomContainer.getMaximumBondOrder(atom);
+                            IBond.Order maxOrder = getMaximumBondOrder(connectedBonds);
                             if (maxOrder == IBond.Order.DOUBLE) {
                                 IAtomType type = getAtomType("N.sp2.3");
-                                if (isAcceptable(atom, atomContainer, type)) return type;
+                                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                             } else if (maxOrder == IBond.Order.SINGLE) {
                                 IAtomType type = getAtomType("N.planar3");
-                                if (isAcceptable(atom, atomContainer, type)) return type;
+                                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                             }
                         } else if (neighborCount == 2) {
-                            IBond.Order maxOrder = atomContainer.getMaximumBondOrder(atom);
+                            IBond.Order maxOrder = getMaximumBondOrder(connectedBonds);
                             if (maxOrder == IBond.Order.SINGLE) {
                                 if (atom.getImplicitHydrogenCount() != CDKConstants.UNSET
                                         && atom.getImplicitHydrogenCount() == 1) {
                                     IAtomType type = getAtomType("N.planar3");
-                                    if (isAcceptable(atom, atomContainer, type)) return type;
+                                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                                 } else {
                                     IAtomType type = getAtomType("N.sp2");
-                                    if (isAcceptable(atom, atomContainer, type)) return type;
+                                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                                 }
                             } else if (maxOrder == IBond.Order.DOUBLE) {
                                 IAtomType type = getAtomType("N.sp2");
-                                if (isAcceptable(atom, atomContainer, type)) return type;
+                                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                             }
                         }
                     }
                 }
                 IAtomType type = getAtomType("N.sp2");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getHybridization() == Hybridization.SP3) {
                 IAtomType type = getAtomType("N.sp3");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getHybridization() == Hybridization.PLANAR3) {
-                IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-                if (atomContainer.getConnectedAtomsCount(atom) == 3 && maxBondOrder == CDKConstants.BONDORDER_DOUBLE
-                        && countAttachedDoubleBonds(atomContainer, atom, "O") == 2) {
+                IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
+                if (connectedBonds.size() == 3 && maxBondOrder == CDKConstants.BONDORDER_DOUBLE
+                        && countAttachedDoubleBonds(connectedBonds, atom, "O") == 2) {
                     IAtomType type = getAtomType("N.nitro");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
                 IAtomType type = getAtomType("N.planar3");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (isCharged(atom)) {
             if (atom.getFormalCharge() == 1) {
-                IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-                if (maxBondOrder == CDKConstants.BONDORDER_SINGLE || atomContainer.getConnectedBondsCount(atom) == 0) {
+                IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
+                if (maxBondOrder == CDKConstants.BONDORDER_SINGLE || connectedBonds.size() == 0) {
                     if (atom.getHybridization() == IAtomType.Hybridization.SP2) {
                         IAtomType type = getAtomType("N.plus.sp2");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                     IAtomType type = getAtomType("N.plus");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-                    int doubleBonds = countAttachedDoubleBonds(atomContainer, atom);
+                    int doubleBonds = countAttachedDoubleBonds(connectedBonds, atom);
                     if (doubleBonds == 1) {
                         IAtomType type = getAtomType("N.plus.sp2");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     } else if (doubleBonds == 2) {
                         IAtomType type = getAtomType("N.plus.sp1");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                 } else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
-                    if (atomContainer.getConnectedBondsCount(atom) == 2) {
+                    if (connectedBonds.size() == 2) {
                         IAtomType type = getAtomType("N.plus.sp1");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                 }
             } else if (atom.getFormalCharge() == -1) {
-                IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+                IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
                 if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-                    if (atomContainer.getConnectedAtomsCount(atom) >= 2 && bothNeighborsAreSp2(atom, atomContainer)
+                    if (connectedBonds.size() >= 2 && bothNeighborsAreSp2(atom, atomContainer, connectedBonds)
                             && isRingAtom(atom, atomContainer)) {
                         IAtomType type = getAtomType("N.minus.planar3");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    } else if (atomContainer.getConnectedBondsCount(atom) <= 2) {
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
+                    } else if (connectedBonds.size() <= 2) {
                         IAtomType type = getAtomType("N.minus.sp3");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                 } else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-                    if (atomContainer.getConnectedBondsCount(atom) <= 1) {
+                    if (connectedBonds.size() <= 1) {
                         IAtomType type = getAtomType("N.minus.sp2");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                 }
             }
-        } else if (atomContainer.getConnectedBondsCount(atom) > 3) {
-            if (atomContainer.getConnectedBondsCount(atom) == 4 && countAttachedDoubleBonds(atomContainer, atom) == 1) {
+        } else if (connectedBonds.size() > 3) {
+            if (connectedBonds.size() == 4 && countAttachedDoubleBonds(connectedBonds, atom) == 1) {
                 IAtomType type = getAtomType("N.oxide");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
             return null;
-        } else if (atomContainer.getConnectedBondsCount(atom) == 0) {
+        } else if (connectedBonds.size() == 0) {
             IAtomType type = getAtomType("N.sp3");
-            if (isAcceptable(atom, atomContainer, type)) return type;
-        } else if (hasOneOrMoreSingleOrDoubleBonds(atomContainer, atom)) {
-            int connectedAtoms = atomContainer.getConnectedAtomsCount(atom)
+            if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
+        } else if (hasOneOrMoreSingleOrDoubleBonds(connectedBonds)) {
+            int connectedAtoms = connectedBonds.size()
                     + (atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount());
             if (connectedAtoms == 3) {
                 IAtomType type = getAtomType("N.planar3");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
             IAtomType type = getAtomType("N.sp2");
-            if (isAcceptable(atom, atomContainer, type)) return type;
+            if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
         } else { // OK, use bond order info
-            IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+            IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
             if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
                 if (isAmide(atom, atomContainer)) {
                     IAtomType type = getAtomType("N.amide");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else if (isThioAmide(atom, atomContainer)) {
                     IAtomType type = getAtomType("N.thioamide");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
 
-                List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
-                List<IBond> heavy = heavyBonds(bonds);
+                List<IBond> heavy = heavyBonds(connectedBonds);
 
-                int expHCount = heavy.size() - bonds.size();
+                int expHCount = heavy.size() - connectedBonds.size();
 
                 if (heavy.size() == 2) {
 
@@ -871,60 +913,60 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                         int hCount = atom.getImplicitHydrogenCount() != null ? atom.getImplicitHydrogenCount()
                                 + expHCount : expHCount;
                         if (hCount == 0) {
-                            if (atomContainer.getMaximumBondOrder(atom) == CDKConstants.BONDORDER_SINGLE
+                            if (maxBondOrder == CDKConstants.BONDORDER_SINGLE
                                     && isSingleHeteroAtom(atom, atomContainer)) {
                                 IAtomType type = getAtomType("N.planar3");
-                                if (isAcceptable(atom, atomContainer, type)) return type;
+                                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                             } else {
                                 IAtomType type = getAtomType("N.sp2");
-                                if (isAcceptable(atom, atomContainer, type)) return type;
+                                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                             }
                         } else if (hCount == 1) {
                             IAtomType type = getAtomType("N.planar3");
-                            if (isAcceptable(atom, atomContainer, type)) return type;
+                            if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                         }
-                    } else if (bothNeighborsAreSp2(atom, atomContainer) && isRingAtom(atom, atomContainer)) {
+                    } else if (bothNeighborsAreSp2(atom, atomContainer, connectedBonds) && isRingAtom(atom, atomContainer)) {
                         // a N.sp3 which is expected to take part in an aromatic system
                         IAtomType type = getAtomType("N.planar3");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     } else {
                         IAtomType type = getAtomType("N.sp3");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                 } else if (heavy.size() == 3) {
-                    if (bothNeighborsAreSp2(atom, atomContainer) && isRingAtom(atom, atomContainer)) {
+                    if (bothNeighborsAreSp2(atom, atomContainer, connectedBonds) && isRingAtom(atom, atomContainer)) {
                         IAtomType type = getAtomType("N.planar3");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
+                        if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
                     IAtomType type = getAtomType("N.sp3");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else if (heavy.size() == 1) {
                     IAtomType type = getAtomType("N.sp3");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else if (heavy.size() == 0) {
                     IAtomType type = getAtomType("N.sp3");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             } else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-                if (atomContainer.getConnectedAtomsCount(atom) == 3
-                        && countAttachedDoubleBonds(atomContainer, atom, "O") == 2) {
+                if (connectedBonds.size() == 3
+                        && countAttachedDoubleBonds(connectedBonds, atom, "O") == 2) {
                     IAtomType type = getAtomType("N.nitro");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
-                } else if (atomContainer.getConnectedAtomsCount(atom) == 3
-                        && countAttachedDoubleBonds(atomContainer, atom) > 0) {
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
+                } else if (connectedBonds.size() == 3
+                        && countAttachedDoubleBonds(connectedBonds, atom) > 0) {
                     IAtomType type = getAtomType("N.sp2.3");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
                 IAtomType type = getAtomType("N.sp2");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
-                int neighborCount = atomContainer.getConnectedAtomsCount(atom);
+                int neighborCount = connectedBonds.size();
                 if (neighborCount > 1) {
                     IAtomType type = getAtomType("N.sp1.2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else {
                     IAtomType type = getAtomType("N.sp1");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             }
         }
@@ -996,9 +1038,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return false;
     }
 
-    private int countExplicitHydrogens(IAtom atom, IAtomContainer atomContainer) {
+    private int countExplicitHydrogens(IAtom atom, List<IBond> connectedBonds) {
         int count = 0;
-        for (IAtom aAtom : atomContainer.getConnectedAtomsList(atom)) {
+        for (IBond bond : connectedBonds) {
+        	IAtom aAtom = bond.getConnectedAtom(atom);
             if (aAtom.getSymbol().equals("H")) {
                 count++;
             }
@@ -1028,12 +1071,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 // no idea how to deal with this yet
                 return null;
             } else if ((atom.getFormalCharge() != null && atom.getFormalCharge() == 0)) {
-                IAtomType type = getAtomType("Fe.metallic");
-                if (isAcceptable(atom, atomContainer, type)) {
-                    return type;
-                }
                 int neighbors = atomContainer.getConnectedAtomsCount(atom);
-                if (neighbors == 2) {
+                if (neighbors == 0) {
+                	IAtomType type = getAtomType("Fe.metallic");
+                	if (isAcceptable(atom, atomContainer, type)) {
+                		return type;
+                	}
+                } else if (neighbors == 2) {
                     IAtomType type5 = getAtomType("Fe.2");
                     if (isAcceptable(atom, atomContainer, type5)) {
                         return type5;
@@ -1148,9 +1192,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveSulphurs(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
+        List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
         IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-        int neighborcount = neighbors.size();
+        int neighborcount = connectedBonds.size();
         if (hasOneSingleElectron(atomContainer, atom)) {
             // no idea how to deal with this yet
             return null;
@@ -1158,76 +1202,76 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 && atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() == +1) {
             if (neighborcount == 3) {
                 IAtomType type = getAtomType("S.inyl.charged");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else {
                 IAtomType type = getAtomType("S.plus");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() != 0) {
 
             if (atom.getFormalCharge() == -1 && neighborcount == 1) {
                 IAtomType type = getAtomType("S.minus");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getFormalCharge() == +1 && neighborcount == 2) {
                 IAtomType type = getAtomType("S.plus");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getFormalCharge() == +1 && neighborcount == 3) {
                 IAtomType type = getAtomType("S.inyl.charged");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getFormalCharge() == +2 && neighborcount == 4) {
                 IAtomType type = getAtomType("S.onyl.charged");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getFormalCharge() == -2 && neighborcount == 0) {
                 IAtomType type = getAtomType("S.2minus");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (neighborcount == 0) {
             if (atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() == 0) {
                 IAtomType type = getAtomType("S.3");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (neighborcount == 1) {
             if (atomContainer.getConnectedBondsList(atom).get(0).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
                 IAtomType type = getAtomType("S.2");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atomContainer.getConnectedBondsList(atom).get(0).getOrder() == CDKConstants.BONDORDER_SINGLE) {
                 IAtomType type = getAtomType("S.3");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (neighborcount == 2) {
-            if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer)) {
+            if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer, connectedBonds)) {
                 if (countAttachedDoubleBonds(atomContainer, atom) == 2) {
                     IAtomType type = getAtomType("S.inyl.2");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 } else {
                     IAtomType type = getAtomType("S.planar3");
-                    if (isAcceptable(atom, atomContainer, type)) return type;
+                    if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
             } else if (countAttachedDoubleBonds(atomContainer, atom, "O") == 2) {
                 IAtomType type = getAtomType("S.oxide");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (countAttachedDoubleBonds(atomContainer, atom) == 2) {
                 IAtomType type = getAtomType("S.inyl.2");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (countAttachedDoubleBonds(atomContainer, atom) <= 1) {
                 IAtomType type = getAtomType("S.3");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (countAttachedDoubleBonds(atomContainer, atom) == 0
                     && countAttachedSingleBonds(atomContainer, atom) == 2) {
                 IAtomType type = getAtomType("S.octahedral");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (neighborcount == 3) {
             int doubleBondedAtoms = countAttachedDoubleBonds(atomContainer, atom);
             if (doubleBondedAtoms == 1) {
                 IAtomType type = getAtomType("S.inyl");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (doubleBondedAtoms == 3) {
                 IAtomType type = getAtomType("S.trioxide");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (doubleBondedAtoms == 0) {
                 IAtomType type = getAtomType("S.anyl");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (neighborcount == 4) {
             // count the number of double bonded oxygens
@@ -1238,19 +1282,19 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
             if (doubleBondedOxygens + doubleBondedNitrogens == 2) {
                 IAtomType type = getAtomType("S.onyl");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (doubleBondedSulphurs == 1 && doubleBondedOxygens == 1) {
                 IAtomType type = getAtomType("S.thionyl");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
                 IAtomType type = getAtomType("S.anyl");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (doubleBondedOxygens == 1) {
                 IAtomType type = getAtomType("S.sp3d1");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (countAttachedDoubleBonds == 2 && maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
                 IAtomType type = getAtomType("S.sp3.4");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
 
         } else if (neighborcount == 5) {
@@ -1258,15 +1302,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
 
                 IAtomType type = getAtomType("S.sp3d1");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
                 IAtomType type = getAtomType("S.octahedral");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (neighborcount == 6) {
             if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
                 IAtomType type = getAtomType("S.octahedral");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         }
         return null;
@@ -2314,6 +2358,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return null;
     }
 
+    private int countAttachedDoubleBonds(List<IBond> connectedAtoms, IAtom atom, String symbol) {
+        return countAttachedBonds(connectedAtoms, atom, IBond.Order.DOUBLE, symbol);
+    }
+
     private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom, String symbol) {
         return countAttachedBonds(container, atom, IBond.Order.DOUBLE, symbol);
     }
@@ -2371,12 +2419,27 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return null;
     }
 
+    private int countAttachedDoubleBonds(List<IBond> connectedAtoms, IAtom atom) {
+        return countAttachedBonds(connectedAtoms, atom, IBond.Order.DOUBLE, null);
+    }
+
     private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom) {
         return countAttachedBonds(container, atom, IBond.Order.DOUBLE, null);
     }
 
+    private int countAttachedSingleBonds(List<IBond> connectedAtoms, IAtom atom) {
+        return countAttachedBonds(connectedAtoms, atom, IBond.Order.SINGLE, null);
+    }
+
     private int countAttachedSingleBonds(IAtomContainer atomContainer, IAtom atom) {
         return countAttachedBonds(atomContainer, atom, IBond.Order.SINGLE, null);
+    }
+
+    private boolean hasAromaticBond(List<IBond> connectedAtoms) {
+        for (IBond bond : connectedAtoms) {
+            if (bond.isAromatic()) return true;
+        }
+        return false;
     }
 
     private boolean hasAromaticBond(IAtomContainer container, IAtom atom) {
@@ -2398,16 +2461,29 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
      * @return the number of doubly bonded atoms
      */
     private int countAttachedBonds(IAtomContainer container, IAtom atom, IBond.Order order, String symbol) {
+    	return countAttachedBonds(container.getConnectedBondsList(atom), atom, order, symbol);
+    }
+
+    /**
+     * Count the number of doubly bonded atoms.
+     *
+     * @param container the molecule in which to look
+     * @param atom the atom being looked at
+     * @param order the desired bond order of the attached bonds
+     * @param symbol If not null, then it only counts the double bonded atoms which
+     *               match the given symbol.
+     * @return the number of doubly bonded atoms
+     */
+    private int countAttachedBonds(List<IBond> connectedBonds, IAtom atom, IBond.Order order, String symbol) {
         // count the number of double bonded oxygens
-        List<IBond> neighbors = container.getConnectedBondsList(atom);
-        int neighborcount = neighbors.size();
+        int neighborcount = connectedBonds.size();
         int doubleBondedAtoms = 0;
         for (int i = neighborcount - 1; i >= 0; i--) {
-            IBond bond = neighbors.get(i);
+            IBond bond = connectedBonds.get(i);
             if (bond.getOrder() == order) {
-                if (bond.getAtomCount() == 2 && bond.contains(atom)) {
+                if (bond.getAtomCount() == 2) {
                     if (symbol != null) {
-                        // if other atom is a sulphur
+                        // if other atom is of the given element (by its symbol)
                         if ((bond.getAtom(0) != atom && bond.getAtom(0).getSymbol().equals(symbol))
                                 || (bond.getAtom(1) != atom && bond.getAtom(1).getSymbol().equals(symbol))) {
                             doubleBondedAtoms++;
@@ -2428,14 +2504,19 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private boolean isAcceptable(IAtom atom, IAtomContainer container, IAtomType type) {
+    	return isAcceptable(atom, container, type, null);
+    }
+
+    private boolean isAcceptable(IAtom atom, IAtomContainer container, IAtomType type, List<IBond> connectedBonds) {
+    	if (connectedBonds == null) connectedBonds = container.getConnectedBondsList(atom);
         if (mode == REQUIRE_EXPLICIT_HYDROGENS) {
             // make sure no implicit hydrogens were assumed
-            int actualContainerCount = container.getConnectedAtomsCount(atom);
+            int actualContainerCount = connectedBonds.size();
             int requiredContainerCount = type.getFormalNeighbourCount();
             if (actualContainerCount != requiredContainerCount) return false;
         } else if (atom.getImplicitHydrogenCount() != CDKConstants.UNSET) {
             // confirm correct neighbour count
-            int connectedAtoms = container.getConnectedAtomsCount(atom);
+            int connectedAtoms = connectedBonds.size();
             int hCount = atom.getImplicitHydrogenCount();
             int actualNeighbourCount = connectedAtoms + hCount;
             int requiredNeighbourCount = type.getFormalNeighbourCount();
@@ -2445,7 +2526,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         // confirm correct bond orders
         IBond.Order typeOrder = type.getMaxBondOrder();
         if (typeOrder != null) {
-            for (IBond bond : container.getConnectedBondsList(atom)) {
+            for (IBond bond : connectedBonds) {
                 IBond.Order order = bond.getOrder();
                 if (order != CDKConstants.UNSET && order != IBond.Order.UNSET) {
                     if (BondManipulator.isHigherOrder(order, typeOrder)) return false;
