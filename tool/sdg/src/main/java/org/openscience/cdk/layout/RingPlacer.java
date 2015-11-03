@@ -25,15 +25,6 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Tuple2d;
-import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,6 +35,14 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Tuple2d;
+import javax.vecmath.Vector2d;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * Class providing methods for generating coordinates for ring atoms.
@@ -56,6 +55,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  **/
 public class RingPlacer {
 
+    // indicate we want to snap to regular polygons for bridges, not generally applicable
+    // but useful for macro cycles
+    private static final String SNAP_BRIDGED = "sdg.snap.bridged";
     final static boolean                     debug         = false;
     private static ILoggingTool              logger        = LoggingToolFactory.createLoggingTool(RingPlacer.class);
 
@@ -227,14 +229,7 @@ public class RingPlacer {
      * @param   ringCenterVector  A vector pointing the the center of the new ring
      * @param   bondLength  The standard bondlength
      */
-    private void placeBridgedRing(IRing ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter,
-            Vector2d ringCenterVector, double bondLength) {
-        double radius = getNativeRingRadius(ring, bondLength);
-        Point2d ringCenter = new Point2d(sharedAtomsCenter);
-        ringCenterVector.normalize();
-        logger.debug("placeBridgedRing->: ringCenterVector.length()" + ringCenterVector.length());
-        ringCenterVector.scale(radius);
-        ringCenter.add(ringCenterVector);
+    private void placeBridgedRing(IRing ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength) {
 
         IAtom[] bridgeAtoms = getBridgeAtoms(sharedAtoms);
         IAtom bondAtom1 = bridgeAtoms[0];
@@ -242,6 +237,36 @@ public class RingPlacer {
 
         Vector2d bondAtom1Vector = new Vector2d(bondAtom1.getPoint2d());
         Vector2d bondAtom2Vector = new Vector2d(bondAtom2.getPoint2d());
+
+        final boolean snap = ring.getProperty(SNAP_BRIDGED) != null && ring.getProperty(SNAP_BRIDGED, Boolean.class);
+
+        Point2d midPoint   = getMidPoint(bondAtom1Vector, bondAtom2Vector);
+        Point2d ringCenter = null;
+        double  radius     = getNativeRingRadius(ring, bondLength);
+        double  offset     = 0;
+
+        if (snap) {
+            ringCenter = new Point2d(midPoint);
+            ringCenterVector = getPerpendicular(bondAtom1Vector, bondAtom2Vector,
+                                                new Vector2d(midPoint.x - sharedAtomsCenter.x, midPoint.y - sharedAtomsCenter.y));
+
+            offset = 0;
+            for (IAtom atom : sharedAtoms.atoms()) {
+                if (atom == bondAtom1 || atom == bondAtom2)
+                    continue;
+                double dist = atom.getPoint2d().distance(midPoint);
+                if (dist > offset)
+                    offset = dist;
+            }
+        } else {
+            ringCenter = new Point2d(sharedAtomsCenter);
+        }
+
+        ringCenterVector.normalize();
+        ringCenterVector.scale(radius-offset);
+        ringCenter.add(ringCenterVector);
+
+
         Vector2d originRingCenterVector = new Vector2d(ringCenter);
 
         bondAtom1Vector.sub(originRingCenterVector);
@@ -535,8 +560,7 @@ public class RingPlacer {
         final Vector2d pVec = new Vector2d(-(a.y-b.y), a.x-b.x);
         if (pVec.dot(ref) < 0)
             pVec.negate();
-        ref = pVec;
-        return ref;
+        return pVec;
     }
 
     /**
