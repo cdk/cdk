@@ -279,7 +279,7 @@ public class RingPlacer {
             }
 
             //changes the drawing direction
-            if (centerX < bondAtom1.getPoint2d().x) {
+            if (centerX < sharedAtomsCenter.x) {
                 direction = 1;
             } else {
                 direction = -1;
@@ -296,7 +296,7 @@ public class RingPlacer {
             }
 
             //changes the drawing direction
-            if (centerY - bondAtom1.getPoint2d().y > (centerX - bondAtom1.getPoint2d().x) * yDiff / xDiff) {
+            if (centerY - sharedAtomsCenter.y > (centerX - sharedAtomsCenter.x) * yDiff / xDiff) {
                 direction = 1;
             } else {
                 direction = -1;
