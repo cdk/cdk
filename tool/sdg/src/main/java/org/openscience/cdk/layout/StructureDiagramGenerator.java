@@ -94,10 +94,11 @@ public class StructureDiagramGenerator {
     private IRingSet       sssr;
     private double bondLength = DEFAULT_BOND_LENGTH;
     private Vector2d firstBondVector;
-    private RingPlacer     ringPlacer        = new RingPlacer();
-    private AtomPlacer     atomPlacer        = new AtomPlacer();
-    private List<IRingSet> ringSystems       = null;
-    private boolean        useIdentTemplates = true;
+    private RingPlacer       ringPlacer        = new RingPlacer();
+    private AtomPlacer       atomPlacer        = new AtomPlacer();
+    private MacroCycleLayout macroPlacer       = null;
+    private List<IRingSet>   ringSystems       = null;
+    private boolean          useIdentTemplates = true;
 
 
     /**
@@ -108,7 +109,7 @@ public class StructureDiagramGenerator {
     public static  Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
     private static TemplateHandler         DEFAULT_TEMPLATE_HANDLER = null;
     private static IdentityTemplateLibrary DEFAULT_IDENTITY_LIBRARY = IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi");
-    private static IdentityTemplateLibrary MACROCYCLES              = IdentityTemplateLibrary.loadFromResource("macro.smi");
+
 
     /**
      * The empty constructor.
@@ -162,6 +163,7 @@ public class StructureDiagramGenerator {
         atomPlacer.setMolecule(this.molecule);
         ringPlacer.setMolecule(this.molecule);
         ringPlacer.setAtomPlacer(this.atomPlacer);
+        macroPlacer = new MacroCycleLayout(mol);
     }
 
     /**
@@ -992,12 +994,18 @@ public class StructureDiagramGenerator {
         // Place the most complex ring at the origin of the coordinate system
         if (!first.getFlag(CDKConstants.ISPLACED)) {
             IAtomContainer sharedAtoms = placeFirstBond(first.getBond(0), firstBondVector);
-            if (!macro || !layoutMacroCycle(first)) {
+            if (!macro || !macroPlacer.layout(first, rs)) {
                 // de novo layout of ring as a regular polygon
                 Vector2d ringCenterVector = ringPlacer.getRingCenterOfFirstRing(first, firstBondVector, bondLength);
                 ringPlacer.placeRing(first, sharedAtoms, GeometryUtil.get2DCenter(sharedAtoms), ringCenterVector, bondLength);
             }
             first.setFlag(CDKConstants.ISPLACED, true);
+        }
+
+        // hint to RingPlacer
+        if (macro) {
+            for (IAtomContainer ring : rs.atomContainers())
+                ring.setProperty(RingPlacer.SNAP_HINT, true);
         }
 
         // Place all connected rings start with those connected to first
@@ -1043,18 +1051,6 @@ public class StructureDiagramGenerator {
                 return true;
         }
         return false;
-    }
-
-    private boolean layoutMacroCycle(IRing ring) {
-        IAtomContainer anon = AtomContainerManipulator.anonymise(ring);
-        boolean res = MACROCYCLES.assignLayout(anon);
-        if (res) {
-            for (int i = 0; i < anon.getAtomCount(); i++) {
-                ring.getAtom(i).setPoint2d(anon.getAtom(i).getPoint2d());
-                ring.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
-            }
-        }
-        return res;
     }
 
     /**

@@ -57,22 +57,23 @@ public class RingPlacer {
 
     // indicate we want to snap to regular polygons for bridges, not generally applicable
     // but useful for macro cycles
-    private static final String SNAP_BRIDGED = "sdg.snap.bridged";
-    final static boolean                     debug         = false;
-    private static ILoggingTool              logger        = LoggingToolFactory.createLoggingTool(RingPlacer.class);
+    static final   String       SNAP_HINT = "sdg.snap.bridged";
+    final static   boolean      debug     = false;
+    private static ILoggingTool logger    = LoggingToolFactory.createLoggingTool(RingPlacer.class);
 
-    private IAtomContainer                   molecule;
+    private IAtomContainer molecule;
 
-    private AtomPlacer                       atomPlacer    = new AtomPlacer();
+    private AtomPlacer atomPlacer = new AtomPlacer();
 
-    static int                               FUSED         = 0;
-    static int                               BRIDGED       = 1;
-    static int                               SPIRO         = 2;
+    static int FUSED   = 0;
+    static int BRIDGED = 1;
+    static int SPIRO   = 2;
 
     /**
      * Default ring start angles. Map contains pairs: ring size with start angle.
      */
     public static final Map<Integer, Double> defaultAngles = new HashMap<Integer, Double>();
+
     static {
         defaultAngles.put(3, Math.PI * (0.1666667));
         defaultAngles.put(4, Math.PI * (0.25));
@@ -84,7 +85,8 @@ public class RingPlacer {
     /**
      * Suggested ring start angles for JChempaint, different due to Y inversion of canvas.
      */
-    public static final Map<Integer, Double> jcpAngles     = new HashMap<Integer, Double>();
+    public static final Map<Integer, Double> jcpAngles = new HashMap<Integer, Double>();
+
     static {
         jcpAngles.put(3, Math.PI * (0.5));
         jcpAngles.put(4, Math.PI * (0.25));
@@ -96,7 +98,8 @@ public class RingPlacer {
     /**
      * The empty constructor.
      */
-    public RingPlacer() {}
+    public RingPlacer() {
+    }
 
     /**
      * Generated coordinates for a given ring. Multiplexes to special handlers
@@ -109,7 +112,7 @@ public class RingPlacer {
      * @param   bondLength  The standard bondlength
      */
     public void placeRing(IRing ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector,
-            double bondLength) {
+                          double bondLength) {
         int sharedAtomCount = sharedAtoms.getAtomCount();
         logger.debug("placeRing -> sharedAtomCount: " + sharedAtomCount);
         if (sharedAtomCount > 2) {
@@ -238,7 +241,7 @@ public class RingPlacer {
         Vector2d bondAtom1Vector = new Vector2d(bondAtom1.getPoint2d());
         Vector2d bondAtom2Vector = new Vector2d(bondAtom2.getPoint2d());
 
-        final boolean snap = ring.getProperty(SNAP_BRIDGED) != null && ring.getProperty(SNAP_BRIDGED, Boolean.class);
+        final boolean snap = ring.getProperty(SNAP_HINT) != null && ring.getProperty(SNAP_HINT, Boolean.class);
 
         Point2d midPoint   = getMidPoint(bondAtom1Vector, bondAtom2Vector);
         Point2d ringCenter = null;
