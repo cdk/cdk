@@ -356,6 +356,8 @@ public class StructureDiagramGenerator {
         int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
         if (expectedRingCount > 0) {
             logger.debug("*** Start of handling rings. ***");
+            Cycles.markRingAtomsAndBonds(molecule);
+
             /*
              * Get the smallest set of smallest rings on this molecule
              */
@@ -488,7 +490,6 @@ public class StructureDiagramGenerator {
         // done on-demand (e.g. when writing a MDL Molfile)
         NonplanarBonds.assign(molecule);
 
-        Cycles.markRingAtomsAndBonds(molecule);
         AtomPlacer.prioritise(molecule);
 
         // refine the layout by rotating, bending, and stretching bonds
@@ -1005,7 +1006,7 @@ public class StructureDiagramGenerator {
             for (IAtomContainer container : rs.atomContainers())
                 container.setFlag(CDKConstants.ISPLACED, true);
             rs.setFlag(CDKConstants.ISPLACED, true);
-            result = 1;
+            result = macro ? 2 : 1;
         }
 
         // TODO fused ring peeling
