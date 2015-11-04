@@ -100,6 +100,10 @@ public class StructureDiagramGenerator {
     private List<IRingSet>   ringSystems       = null;
     private boolean          useIdentTemplates = true;
 
+    // show we orient the structure (false: keep de facto ring systems drawn
+    // the right way up)
+    private boolean selectOrientation = true;
+
 
     /**
      * Identity templates - for laying out primary ring system.
@@ -164,6 +168,7 @@ public class StructureDiagramGenerator {
         ringPlacer.setMolecule(this.molecule);
         ringPlacer.setAtomPlacer(this.atomPlacer);
         macroPlacer = new MacroCycleLayout(mol);
+        selectOrientation = true;
     }
 
     /**
@@ -399,19 +404,29 @@ public class StructureDiagramGenerator {
              * Do the layout for the first connected ring system ...
              */
             int largest = 0;
-            int largestSize = ((IRingSet) ringSystems.get(0)).getAtomContainerCount();
+            int numComplex = 0;
+            int largestSize = (ringSystems.get(0)).getAtomContainerCount();
+            if (largestSize > 1)
+                numComplex++;
             logger.debug("We have " + ringSystems.size() + " ring system(s).");
             for (int f = 1; f < ringSystems.size(); f++) {
                 logger.debug("RingSet " + f + " has size " + ((IRingSet) ringSystems.get(f)).getAtomContainerCount());
-                if (((IRingSet) ringSystems.get(f)).getAtomContainerCount() > largestSize) {
-                    largestSize = ((IRingSet) ringSystems.get(f)).getAtomContainerCount();
+                int size = (ringSystems.get(f)).getAtomContainerCount();
+                if (size > 1)
+                    numComplex++;
+                if (size > largestSize) {
+                    largestSize = (ringSystems.get(f)).getAtomContainerCount();
                     largest = f;
                 }
             }
             logger.debug("Largest RingSystem is at RingSet collection's position " + largest);
             logger.debug("Size of Largest RingSystem: " + largestSize);
 
-            layoutRingSet(firstBondVector, ringSystems.get(largest));
+            int respect = layoutRingSet(firstBondVector, ringSystems.get(largest));
+
+            if (respect == 1 && numComplex == 1 || respect == 2)
+                selectOrientation = false;
+
             logger.debug("First RingSet placed");
             /*
              * and do the placement of all the directly connected atoms of this
@@ -481,7 +496,10 @@ public class StructureDiagramGenerator {
         refiner.refine();
 
         // choose the orientation in which to display the structure
-        selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
+        if (selectOrientation) {
+            System.err.println("selecting orientation");
+            selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
+        }
     }
 
     /**
@@ -527,7 +545,8 @@ public class StructureDiagramGenerator {
             // the number of bonds aligned to 30 deg (aesthetics)
             else if (delta <= widthDiff) {
                 int aligned = countAlignedBonds(mol);
-                if (aligned - maxAligned > alignDiff) {
+                int alignDelta = aligned - maxAligned;
+                if (alignDelta > alignDiff || (alignDelta == 0 && width > maxWidth)) {
                     maxAligned = aligned;
                     maxWidth = width;
                     for (int j = 0; j < mol.getAtomCount(); j++)
@@ -971,7 +990,7 @@ public class StructureDiagramGenerator {
      * @param firstBondVector A vector giving the placement for the first bond
      * @param rs              The connected RingSet to layout
      */
-    private void layoutRingSet(Vector2d firstBondVector, IRingSet rs) {
+    private int layoutRingSet(Vector2d firstBondVector, IRingSet rs) {
 
         // sort small -> large
         // Get the most complex ring in this RingSet (largest prioritized)
@@ -979,13 +998,14 @@ public class StructureDiagramGenerator {
         final IRing first = RingSetManipulator.getMostComplexRing(rs);
 
         final boolean macro = isMacroCycle(first, rs);
+        int result = 0;
 
         // Check for an exact match (identity) on the entire ring system
         if (lookupRingSystem(rs, molecule, !macro || rs.getAtomContainerCount() > 1)) {
             for (IAtomContainer container : rs.atomContainers())
                 container.setFlag(CDKConstants.ISPLACED, true);
             rs.setFlag(CDKConstants.ISPLACED, true);
-            return;
+            result = 1;
         }
 
         // TODO fused ring peeling
@@ -998,6 +1018,8 @@ public class StructureDiagramGenerator {
                 // de novo layout of ring as a regular polygon
                 Vector2d ringCenterVector = ringPlacer.getRingCenterOfFirstRing(first, firstBondVector, bondLength);
                 ringPlacer.placeRing(first, sharedAtoms, GeometryUtil.get2DCenter(sharedAtoms), ringCenterVector, bondLength);
+            } else {
+                result = 2;
             }
             first.setFlag(CDKConstants.ISPLACED, true);
         }
@@ -1023,6 +1045,8 @@ public class StructureDiagramGenerator {
             }
             ring = (IRing) rs.getAtomContainer(thisRing);
         } while (!allPlaced(rs));
+
+        return result;
     }
 
     /**
