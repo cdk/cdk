@@ -30,6 +30,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +39,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -892,9 +895,9 @@ public class StructureDiagramGenerator {
      * Using a fast identity template library, lookup the the ring system and assign coordinates.
      * The method indicates whether a match was found and coordinates were assigned.
      *
-     * @param rs         the ring set
-     * @param molecule   the rest of the compound
-     * @param anon       check for anonmised templates
+     * @param rs       the ring set
+     * @param molecule the rest of the compound
+     * @param anon     check for anonmised templates
      * @return coordinates were assigned
      */
     private boolean lookupRingSystem(IRingSet rs, IAtomContainer molecule, boolean anon) {
@@ -1008,11 +1011,15 @@ public class StructureDiagramGenerator {
             for (IAtomContainer container : rs.atomContainers())
                 container.setFlag(CDKConstants.ISPLACED, true);
             rs.setFlag(CDKConstants.ISPLACED, true);
-            result = macro ? 2 : 1;
+            return macro ? 2 : 1;
+        } else {
+            // attempt ring peeling and retemplate
+            final IRingSet core = getRingSetCore(rs);
+            if (lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
+                for (IAtomContainer container : core.atomContainers())
+                    container.setFlag(CDKConstants.ISPLACED, true);
+            }
         }
-
-        // TODO fused ring peeling
-
 
         // Place the most complex ring at the origin of the coordinate system
         if (!first.getFlag(CDKConstants.ISPLACED)) {
@@ -1053,12 +1060,54 @@ public class StructureDiagramGenerator {
     }
 
     /**
+     * Peel back terminal rings to the complex 'core': {@cdk.cite Helson99}, {@cdk.cite Clark06}.
+     *
+     * @param rs ring set
+     * @return the ring set core
+     */
+    private IRingSet getRingSetCore(IRingSet rs) {
+
+        Multimap<IBond, IRing> ringlookup = HashMultimap.create();
+        Set<IRing> ringsystem = new LinkedHashSet<>();
+
+        for (IAtomContainer ring : rs.atomContainers()) {
+            ringsystem.add((IRing) ring);
+            for (IBond bond : ring.bonds())
+                ringlookup.put(bond, (IRing) ring);
+        }
+
+        // iteratively reduce ring system by removing ring that only share one bond
+        Set<IRing> toremove = new HashSet<>();
+        do {
+            toremove.clear();
+            for (IRing ring : ringsystem) {
+                int numAttach = 0;
+                for (IBond bond : ring.bonds()) {
+                    for (IRing attached : ringlookup.get(bond)) {
+                        if (attached != ring && ringsystem.contains(attached))
+                            numAttach++;
+                    }
+                }
+                if (numAttach == 1)
+                    toremove.add(ring);
+            }
+            ringsystem.removeAll(toremove);
+        } while (!toremove.isEmpty());
+
+        final IRingSet core = rs.getBuilder().newInstance(IRingSet.class);
+        for (IRing ring : ringsystem)
+            core.addAtomContainer(ring);
+
+        return core;
+    }
+
+    /**
      * Check if a ring in a ring set is a macro cycle. We define this as a
      * ring with >= 10 atom and has at least one bond that isn't contained
      * in any other rings.
      *
      * @param ring ring to check
-     * @param rs rest of ring system
+     * @param rs   rest of ring system
      * @return ring is a macro cycle
      */
     private boolean isMacroCycle(IRing ring, IRingSet rs) {
