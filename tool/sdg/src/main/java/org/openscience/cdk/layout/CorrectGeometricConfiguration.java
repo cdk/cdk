@@ -150,17 +150,18 @@ final class CorrectGeometricConfiguration {
         // configuration is already correct
         if (p == q) return;
 
-        // incorrect configuration but cyclic if we reflect coordinate
-        // we'll still have the same configuration. this needs to be
-        // handled by the layout
+        Arrays.fill(visited, false);
+        visited[atomToIndex.get(left)] = true;
+
+        // XXX: bad but correct layout
         if (ringSearch.cyclic(atomToIndex.get(left), atomToIndex.get(right))) {
-            LoggingToolFactory.createLoggingTool(getClass()).error(
-                    "cannot correct cyclic double-bond stereo configuration");
+            Arrays.fill(visited, true);
+            for (int w : graph[atomToIndex.get(right)]) {
+                reflect(w, db);
+            }
             return;
         }
 
-        Arrays.fill(visited, false);
-        visited[atomToIndex.get(left)] = true;
         for (int w : graph[atomToIndex.get(right)]) {
             if (!visited[w]) reflect(w, db);
         }
