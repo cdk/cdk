@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.layout;
 
+import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -39,6 +40,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
+import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -172,6 +174,43 @@ public class AtomPlacer {
             startAngle = 0.0;
             populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, bondLength);
             return;
+        }
+
+        // If the atom is a macrocycle and the substituents are terminal we allow these to point these into the ring
+        final boolean isInMacrocycle = atom.getProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT) != null &&
+                                       atom.getProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT, Boolean.class);
+        if (isInMacrocycle &&
+            placedNeighbours.getAtomCount() == 2 &&
+            molecule.getBond(atom, placedNeighbours.getAtom(0)).isInRing() &&
+            molecule.getBond(atom, placedNeighbours.getAtom(1)).isInRing()) {
+
+            int numTerminal = 0;
+            for (IAtom unplaced : unplacedNeighbours.atoms())
+                if (molecule.getConnectedAtomsCount(unplaced) == 1)
+                    numTerminal++;
+
+            if (numTerminal == unplacedNeighbours.getAtomCount()) {
+                final Vector2d a = newVector(placedNeighbours.getAtom(0).getPoint2d(), atom.getPoint2d());
+                final Vector2d b = newVector(placedNeighbours.getAtom(1).getPoint2d(), atom.getPoint2d());
+                final double d1 = GeometryUtil.getAngle(a.x, a.y);
+                final double d2 = GeometryUtil.getAngle(b.x, b.y);
+                double sweep = a.angle(b);
+                if (sweep < Math.PI) {
+                    sweep = 2 * Math.PI - sweep;
+                }
+                startAngle = d2;
+                if (d1 > d2 && d1 - d2 < Math.PI || d2 - d1 >= Math.PI) {
+                    startAngle = d1;
+                }
+                sweep /= (1 + unplacedNeighbours.getAtomCount());
+                populatePolygonCorners(FluentIterable.from(unplacedNeighbours.atoms()).toList(),
+                                       atom.getPoint2d(), startAngle, sweep, bondLength);
+
+                markPlaced(unplacedNeighbours);
+                return;
+            } else {
+                atom.removeProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT);
+            }
         }
 
         /*
@@ -892,5 +931,9 @@ public class AtomPlacer {
         }
         if (sum >= 10) return true;
         return false;
+    }
+
+    static Vector2d newVector(Tuple2d to, Tuple2d from) {
+        return new Vector2d(to.x-from.x, to.y-from.y);
     }
 }
