@@ -211,11 +211,13 @@ public class StructureDiagramGenerator {
      *
      * @param templateHandler The new templateHandler value
      * @deprecated substructure templates are no longer used for layout but those provided here
-     * will be consumed by the newer method
+     * will be converted to identity templates
      */
     @Deprecated
     public void setTemplateHandler(TemplateHandler templateHandler) {
-        // TODO convert to identity templates
+        IdentityTemplateLibrary lib = templateHandler.toIdentityTemplateLibrary();
+        lib.add(identityLibrary);
+        identityLibrary = lib; // new ones take priority
     }
 
     /**
