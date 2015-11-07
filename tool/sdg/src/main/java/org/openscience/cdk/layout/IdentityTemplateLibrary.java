@@ -96,6 +96,17 @@ final class IdentityTemplateLibrary {
     }
 
     /**
+     * Add one template library to another.
+     *
+     * @param library another template library
+     * @return this library with the other one added in (allows chaining)
+     */
+    public IdentityTemplateLibrary add(IdentityTemplateLibrary library) {
+        this.templateMap.putAll(library.templateMap);
+        return this;
+    }
+
+    /**
      * Internal - create a canonical SMILES string temporarily adjusting to default
      * hydrogen count. This method may be moved to the SMILESGenerator in future.
      *

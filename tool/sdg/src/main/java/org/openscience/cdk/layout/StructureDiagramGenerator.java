@@ -111,15 +111,15 @@ public class StructureDiagramGenerator {
     private IdentityTemplateLibrary identityLibrary;
 
     public static  Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
-    private static TemplateHandler         DEFAULT_TEMPLATE_HANDLER = null;
-    private static IdentityTemplateLibrary DEFAULT_IDENTITY_LIBRARY = IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi");
+    private static IdentityTemplateLibrary DEFAULT_TEMPLATE_LIBRARY = IdentityTemplateLibrary.loadFromResource("custom-templates.smi")
+                                                                                             .add(IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi"));
 
 
     /**
      * The empty constructor.
      */
     public StructureDiagramGenerator() {
-        this(DEFAULT_IDENTITY_LIBRARY);
+        this(DEFAULT_TEMPLATE_LIBRARY);
     }
 
     private StructureDiagramGenerator(IdentityTemplateLibrary identityLibrary) {
