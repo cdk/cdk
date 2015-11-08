@@ -23,6 +23,35 @@
  */
 package org.openscience.cdk.layout;
 
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryUtil;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -35,34 +64,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryUtil;
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.graph.Cycles;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.sgroup.Sgroup;
-import org.openscience.cdk.sgroup.SgroupBracket;
-import org.openscience.cdk.sgroup.SgroupKey;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
@@ -516,9 +517,11 @@ public class StructureDiagramGenerator {
     /**
      * Finalize the molecule layout, primarily updating Sgroups.
      *
-     * @param molecule molecule being laid out
+     * @param mol molecule being laid out
      */
     private void finalizeLayout(IAtomContainer mol) {
+        // TODO need to handle multiple group Sgroups
+        placePositionalVariation(mol);
         placeSgroupBrackets(mol);
     }
 
@@ -1578,6 +1581,156 @@ public class StructureDiagramGenerator {
             return bond.getAtom(1);
         else
             return bond.getAtom(0);
+    }
+
+    private void placePositionalVariation(IAtomContainer mol) {
+
+        final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups == null)
+            return;
+
+        Multimap<Set<IAtom>, IAtom> mapping = aggregateMulticenterSgroups(sgroups);
+
+        if (mapping.isEmpty())
+            return;
+
+        // helps with traversal
+        GraphUtil.EdgeToBondMap bondMap = GraphUtil.EdgeToBondMap.withSpaceFor(mol);
+        int[][] adjlist = GraphUtil.toAdjList(mol, bondMap);
+        Map<IAtom,Integer> idxs = new HashMap<>();
+        for (IAtom atom : mol.atoms())
+            idxs.put(atom, idxs.size());
+
+        for (Map.Entry<Set<IAtom>,Collection<IAtom>> e : mapping.asMap().entrySet()) {
+            Set<IBond> bonds = new LinkedHashSet<>();
+
+            IAtomContainer shared = mol.getBuilder().newInstance(IAtomContainer.class);
+            for (IAtom atom : e.getKey())
+                shared.addAtom(atom);
+            Point2d center = GeometryUtil.get2DCenter(shared);
+
+            for (IBond bond : mol.bonds()) {
+                if (e.getKey().contains(bond.getAtom(0)) && e.getKey().contains(bond.getAtom(1))) {
+                    bonds.add(bond);
+                }
+            }
+
+            if (bonds.size() >= e.getValue().size()) {
+
+                Iterator<IAtom> begIter = e.getValue().iterator();
+                Iterator<IBond> bndIter = bonds.iterator();
+
+                while (begIter.hasNext() && bndIter.hasNext()) {
+
+                    final IBond bond = bndIter.next();
+                    final IAtom atom = begIter.next();
+
+                    if (numRingBonds(mol, bond.getAtom(0)) > 2 && numRingBonds(mol, bond.getAtom(1)) > 2)
+                        continue;
+
+                    final Point2d newBegP = new Point2d(bond.getAtom(0).getPoint2d());
+                    final Point2d newEndP = new Point2d(bond.getAtom(1).getPoint2d());
+
+                    final Vector2d bndVec  = new Vector2d(newEndP.x-newBegP.x, newEndP.y-newBegP.y);
+                    final Vector2d bndXVec = new Vector2d(-bndVec.y, bndVec.x);
+
+                    // ensure vector is pointing out of rings
+                    Vector2d centerVec = new Vector2d(center.x - ((newBegP.x + newEndP.x) / 2), center.y - ((newBegP.y + newEndP.y) / 2));
+                    if (bndXVec.dot(centerVec) > 0) {
+                        bndXVec.negate();
+                    }
+
+                    bndVec.normalize();
+                    bndXVec.normalize();
+
+                    bndVec.scale(0.5 * bondLength); // crossing point
+                    bndXVec.scale((1.4 * bondLength)/2); // length of crossing bond
+
+                    newBegP.add(bndVec);
+                    newBegP.sub(bndXVec);
+                    newEndP.sub(bndVec);
+                    newEndP.add(bndXVec);
+
+                    int atomIdx = idxs.get(atom);
+                    if (adjlist[atomIdx].length != 1)
+                        continue;
+
+                    // get all atoms connected to the part we will move
+                    Set<Integer> visited = new HashSet<>();
+                    visit(visited, adjlist, atomIdx);
+                    IAtomContainer frag = mol.getBuilder().newInstance(IAtomContainer.class);
+                    for (Integer visit : visited)
+                        frag.addAtom(mol.getAtom(visit));
+
+                    final IBond attachBond = bondMap.get(atomIdx, adjlist[atomIdx][0]);
+                    final Point2d begP = atom.getPoint2d();
+                    final Point2d endP = attachBond.getConnectedAtom(atom).getPoint2d();
+
+                    Vector2d orgVec = new Vector2d(endP.x-begP.x, endP.y-begP.y);
+                    Vector2d newVec = new Vector2d(newEndP.x-newBegP.x, newEndP.y-newBegP.y);
+
+                    // need perpendiculat dot product to get signed angle
+                    double pDot = orgVec.x * newVec.y - orgVec.y * newVec.x;
+                    double theta = Math.atan2(pDot, newVec.dot(orgVec));
+
+                    // position
+                    GeometryUtil.translate2D(frag, newBegP.x - begP.x, newBegP.y - begP.y);
+                    GeometryUtil.rotate(frag, new Point2d(atom.getPoint2d()), theta);
+
+                    // stretch bond
+                    frag.removeAtom(atom);
+                    GeometryUtil.translate2D(frag, newEndP.x - endP.x, newEndP.y - endP.y);
+                }
+            } else {
+                System.err.println("Positional variation not yet handled");
+            }
+        }
+    }
+
+    private static void visit(Set<Integer> visited, int[][] g, int v) {
+        visited.add(v);
+        for (int w : g[v]) {
+            if (!visited.contains(w))
+                visit(visited, g, w);
+        }
+    }
+
+    private static Multimap<Set<IAtom>, IAtom> aggregateMulticenterSgroups(List<Sgroup> sgroups) {
+        Multimap<Set<IAtom>,IAtom> mapping = HashMultimap.create();
+        for (Sgroup sgroup : sgroups) {
+            if (sgroup.getType() != SgroupType.ExtMulticenter)
+                continue;
+
+            IAtom      beg  = null;
+            Set<IAtom> ends = new HashSet<>();
+
+            Set<IBond> bonds = sgroup.getBonds();
+            if (bonds.size() != 1)
+                continue;
+            IBond bond = bonds.iterator().next();
+
+            for (IAtom atom : sgroup.getAtoms()) {
+                if (bond.contains(atom))
+                    beg = atom;
+                else
+                    ends.add(atom);
+            }
+
+            if (beg == null || ends.isEmpty())
+                continue;
+
+            mapping.put(ends, beg);
+        } return mapping;
+    }
+
+
+    private static int numRingBonds(IAtomContainer mol, IAtom atom) {
+        int cnt = 0;
+        for (IBond bond : mol.getConnectedBondsList(atom)) {
+            if (bond.isInRing())
+                cnt++;
+        }
+        return cnt;
     }
 
 

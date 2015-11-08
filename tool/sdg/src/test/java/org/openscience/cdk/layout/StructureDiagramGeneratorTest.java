@@ -30,7 +30,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,7 +41,6 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
@@ -52,7 +50,9 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
+import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
+import java.awt.geom.Line2D;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.Arrays;
@@ -1115,5 +1115,53 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         List<SgroupBracket> brackets2 = sgroup2.getValue(SgroupKey.CtabBracket);
         assertNotNull(brackets2);
         assertThat(brackets2.size(), is(2));
+    }
+
+    boolean isCrossing(IBond a, IBond b) {
+        Point2d p1 = a.getAtom(0).getPoint2d();
+        Point2d p2 = a.getAtom(1).getPoint2d();
+        Point2d p3 = b.getAtom(2).getPoint2d();
+        Point2d p4 = b.getAtom(3).getPoint2d();
+        return Line2D.linesIntersect(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
+    }
+
+    @Test public void positionalVariation() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("c1ccccc1CCCC.*[R1].*C(=O)O");
+
+        Sgroup sgroup1 = new Sgroup();
+        sgroup1.setType(SgroupType.ExtMulticenter);
+        assert mol.getBond(10).contains(mol.getAtom(10));
+        sgroup1.addAtom(mol.getAtom(10));
+        sgroup1.addBond(mol.getBond(10));
+        sgroup1.addAtom(mol.getAtom(0));
+        sgroup1.addAtom(mol.getAtom(1));
+        sgroup1.addAtom(mol.getAtom(2));
+        sgroup1.addAtom(mol.getAtom(3));
+        sgroup1.addAtom(mol.getAtom(4));
+        sgroup1.addAtom(mol.getAtom(5));
+
+        Sgroup sgroup2 = new Sgroup();
+        sgroup2.setType(SgroupType.ExtMulticenter);
+        assert mol.getBond(11).contains(mol.getAtom(12));
+        sgroup2.addAtom(mol.getAtom(12));
+        sgroup2.addBond(mol.getBond(11));
+        sgroup2.addAtom(mol.getAtom(0));
+        sgroup2.addAtom(mol.getAtom(1));
+        sgroup2.addAtom(mol.getAtom(2));
+        sgroup2.addAtom(mol.getAtom(3));
+        sgroup2.addAtom(mol.getAtom(4));
+        sgroup2.addAtom(mol.getAtom(5));
+
+        mol.setProperty(CDKConstants.CTAB_SGROUPS, Arrays.asList(sgroup1, sgroup2));
+        layout(mol);
+
+        int numCrossing = 0;
+        for (int i = 0; i < 6; i++) {
+            if (isCrossing(mol.getBond(i), mol.getBond(10)))
+                numCrossing++;
+            if (isCrossing(mol.getBond(i), mol.getBond(11)))
+                numCrossing++;
+        }
     }
 }
