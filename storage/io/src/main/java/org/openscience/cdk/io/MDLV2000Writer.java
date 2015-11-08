@@ -64,6 +64,7 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -721,6 +722,16 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null)
             return;
+
+        // going to modify
+        sgroups = new ArrayList<>(sgroups);
+
+        // remove non-ctab Sgroups
+        Iterator<Sgroup> iter = sgroups.iterator();
+        while (iter.hasNext()) {
+            if (iter.next().getType() == SgroupType.ExtMulticenter)
+                iter.remove();
+        }
 
         for (List<Sgroup> wrapSgroups : wrap(sgroups, 8)) {
             // Declare the SGroup type

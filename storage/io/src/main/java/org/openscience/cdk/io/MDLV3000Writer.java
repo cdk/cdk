@@ -57,6 +57,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -441,6 +442,13 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
         // going to reorder but keep the originals untouched
         sgroups = new ArrayList<>(sgroups);
+
+        // remove non-ctab Sgroups
+        Iterator<Sgroup> iter = sgroups.iterator();
+        while (iter.hasNext()) {
+            if (iter.next().getType() == SgroupType.ExtMulticenter)
+                iter.remove();
+        }
 
         // Short of building a full dependency graph we write the parents
         // first, this sort is good for three levels of nesting. Not perfect

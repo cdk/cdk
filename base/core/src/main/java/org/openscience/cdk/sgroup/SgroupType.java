@@ -73,7 +73,10 @@ public enum SgroupType {
     CtabMixture("MIX"),
     CtabFormulation("FOR"),
     CtabData("DAT"),
-    CtabGeneric("GEN");
+    CtabGeneric("GEN"),
+
+    // extension for handling positional variation and distributed coordination bonds
+    ExtMulticenter("N/A");
 
 
     static final Map<String, SgroupType> map = new HashMap<>();
