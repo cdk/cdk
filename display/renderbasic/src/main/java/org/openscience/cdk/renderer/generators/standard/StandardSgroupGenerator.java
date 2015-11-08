@@ -115,6 +115,19 @@ final class StandardSgroupGenerator {
             else if (sgroup.getType() == SgroupType.CtabMultipleGroup) {
                 hideMultipleParts(container, sgroup);
             }
+            else if (sgroup.getType() == SgroupType.ExtMulticenter) {
+                Set<IAtom> atoms = sgroup.getAtoms();
+                // should only be one bond
+                for (IBond bond : sgroup.getBonds()) {
+                    IAtom beg = bond.getAtom(0);
+                    IAtom end = bond.getAtom(1);
+                    if (atoms.contains(beg)) {
+                        StandardGenerator.hide(beg);
+                    } else {
+                        StandardGenerator.hide(end);
+                    }
+                }
+            }
         }
     }
 
