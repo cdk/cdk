@@ -24,6 +24,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -43,6 +44,10 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.Mol2Reader;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -50,7 +55,10 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import javax.vecmath.Vector2d;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -1000,5 +1008,112 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
             }
             assertThat(clFound, is(3));
         }
+    }
+
+    @Test public void placeCrossingSgroupBrackets() throws Exception {
+        IAtomContainer mol = new org.openscience.cdk.silent.AtomContainer();
+        mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
+        mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
+        mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
+        mol.addAtom(new org.openscience.cdk.silent.Atom("O"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.getAtom(1).setImplicitHydrogenCount(2);
+        mol.getAtom(2).setImplicitHydrogenCount(2);
+        mol.getAtom(3).setImplicitHydrogenCount(1);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        mol.addBond(2, 3, IBond.Order.SINGLE);
+
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabStructureRepeatUnit);
+        sgroup.setSubscript("n");
+        sgroup.putValue(SgroupKey.CtabConnectivity, "HT");
+        sgroup.addAtom(mol.getAtom(1));
+        sgroup.addAtom(mol.getAtom(2));
+        sgroup.addBond(mol.getBond(0));
+        sgroup.addBond(mol.getBond(2));
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                        Collections.singletonList(sgroup));
+
+        layout(mol);
+        List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+        assertNotNull(brackets);
+        assertThat(brackets.size(), is(2));
+    }
+
+    @Test public void placeNonCrossingSgroupBrackets() throws Exception {
+        IAtomContainer mol = new org.openscience.cdk.silent.AtomContainer();
+        mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
+        mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
+        mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
+        mol.addAtom(new org.openscience.cdk.silent.Atom("O"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.getAtom(1).setImplicitHydrogenCount(2);
+        mol.getAtom(2).setImplicitHydrogenCount(2);
+        mol.getAtom(3).setImplicitHydrogenCount(1);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        mol.addBond(2, 3, IBond.Order.SINGLE);
+
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabStructureRepeatUnit);
+        sgroup.setSubscript("n");
+        sgroup.putValue(SgroupKey.CtabConnectivity, "HT");
+        for (IAtom atom : mol.atoms())
+            sgroup.addAtom(atom);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                        Collections.singletonList(sgroup));
+
+        layout(mol);
+        List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+        assertNotNull(brackets);
+        assertThat(brackets.size(), is(2));
+    }
+
+    @Test public void placeOverlappingCrossingSgroupBrackets() throws Exception {
+        IAtomContainer mol = new org.openscience.cdk.silent.AtomContainer();
+        mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
+        mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
+        mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
+        mol.addAtom(new org.openscience.cdk.silent.Atom("C"));
+        mol.addAtom(new org.openscience.cdk.silent.Atom("O"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.getAtom(1).setImplicitHydrogenCount(2);
+        mol.getAtom(2).setImplicitHydrogenCount(2);
+        mol.getAtom(3).setImplicitHydrogenCount(2);
+        mol.getAtom(3).setImplicitHydrogenCount(1);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        mol.addBond(2, 3, IBond.Order.SINGLE);
+        mol.addBond(3, 4, IBond.Order.SINGLE);
+
+        Sgroup sgroup1 = new Sgroup();
+        sgroup1.setType(SgroupType.CtabStructureRepeatUnit);
+        sgroup1.setSubscript("n");
+        sgroup1.putValue(SgroupKey.CtabConnectivity, "HT");
+        sgroup1.addAtom(mol.getAtom(1));
+        sgroup1.addAtom(mol.getAtom(2));
+        sgroup1.addBond(mol.getBond(1));
+        sgroup1.addBond(mol.getBond(2));
+
+        Sgroup sgroup2 = new Sgroup();
+        sgroup2.setType(SgroupType.CtabStructureRepeatUnit);
+        sgroup2.setSubscript("m");
+        sgroup2.putValue(SgroupKey.CtabConnectivity, "HT");
+        sgroup2.addAtom(mol.getAtom(1));
+        sgroup2.addAtom(mol.getAtom(2));
+        sgroup2.addAtom(mol.getAtom(3));
+        sgroup2.addBond(mol.getBond(1));
+        sgroup2.addBond(mol.getBond(3));
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                        Arrays.asList(sgroup1, sgroup2));
+
+        layout(mol);
+        List<SgroupBracket> brackets1 = sgroup1.getValue(SgroupKey.CtabBracket);
+        assertNotNull(brackets1);
+        assertThat(brackets1.size(), is(2));
+        List<SgroupBracket> brackets2 = sgroup2.getValue(SgroupKey.CtabBracket);
+        assertNotNull(brackets2);
+        assertThat(brackets2.size(), is(2));
     }
 }

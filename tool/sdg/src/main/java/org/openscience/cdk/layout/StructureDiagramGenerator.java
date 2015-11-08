@@ -25,6 +25,7 @@ package org.openscience.cdk.layout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -54,6 +55,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -505,6 +509,17 @@ public class StructureDiagramGenerator {
         if (selectOrientation) {
             selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
         }
+
+        finalizeLayout(molecule);
+    }
+
+    /**
+     * Finalize the molecule layout, primarily updating Sgroups.
+     *
+     * @param molecule molecule being laid out
+     */
+    private void finalizeLayout(IAtomContainer mol) {
+        placeSgroupBrackets(mol);
     }
 
     /**
@@ -660,6 +675,9 @@ public class StructureDiagramGenerator {
             GeometryUtil.translate2D(frags.get(i),
                                      dest.x - curr.x, dest.y - curr.y);
         }
+
+        // finalize
+        finalizeLayout(mol);
     }
 
     /**
@@ -1562,4 +1580,138 @@ public class StructureDiagramGenerator {
             return bond.getAtom(0);
     }
 
+
+    /**
+     * Place and update brackets for polymer Sgroups.
+     *
+     * @param mol molecule
+     */
+    private void placeSgroupBrackets(IAtomContainer mol) {
+        final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups == null) return;
+
+        // index all crossing bonds
+        final Multimap<IBond,Sgroup> bondMap = HashMultimap.create();
+        final Map<IBond,Integer> counter = new HashMap<>();
+        for (Sgroup sgroup : sgroups) {
+            if (!hasBrackets(sgroup))
+                continue;
+            for (IBond bond : sgroup.getBonds()) {
+                bondMap.put(bond, sgroup);
+                counter.put(bond, 0);
+            }
+        }
+
+        for (Sgroup sgroup : sgroups) {
+            if (!hasBrackets(sgroup))
+                continue;
+
+            final Set<IAtom> atoms  = sgroup.getAtoms();
+            final Set<IBond> xbonds = sgroup.getBonds();
+
+            // clear all the existing brackets
+            sgroup.putValue(SgroupKey.CtabBracket, null);
+
+            // assign brackets to crossing bonds
+            if (xbonds.size() >= 2) {
+                for (IBond bond : xbonds)
+                    sgroup.addBracket(newCrossingBracket(bond,
+                                                         bondMap,
+                                                         counter));
+            }
+            // <= 1 crossing bonds so simply wrap the entire fragment
+            else {
+                IAtomContainer tmp = mol.getBuilder().newInstance(IAtomContainer.class);
+                for (IAtom atom : atoms)
+                    tmp.addAtom(atom);
+                double[] minmax = GeometryUtil.getMinMax(tmp);
+                double padding  = 0.7 * bondLength;
+                sgroup.addBracket(new SgroupBracket(minmax[0] - padding, minmax[1] - padding,
+                                                    minmax[0] - padding, minmax[3] + padding));
+                sgroup.addBracket(new SgroupBracket(minmax[2] + padding, minmax[1] - padding,
+                                                    minmax[2] + padding, minmax[3] + padding));
+            }
+        }
+
+    }
+
+    /**
+     * Generate a new bracket across the provided bond.
+     *
+     * @param bond bond
+     * @param bonds bond map to Sgroups
+     * @param counter count how many brackets this group has already
+     * @return the new bracket
+     */
+    private SgroupBracket newCrossingBracket(IBond bond, Multimap<IBond,Sgroup> bonds, Map<IBond,Integer> counter) {
+        final IAtom beg = bond.getAtom(0);
+        final IAtom end = bond.getAtom(1);
+        final Point2d begXy = beg.getPoint2d();
+        final Point2d endXy = end.getPoint2d();
+        final Vector2d lenOffset = new Vector2d(endXy.x-begXy.x, endXy.y-begXy.y);
+        final Vector2d bndCrossVec = new Vector2d(-lenOffset.y, lenOffset.x);
+        lenOffset.normalize();
+        bndCrossVec.normalize();
+        bndCrossVec.scale(((1.2 * bondLength)) / 2);
+
+        final Collection<Sgroup> sgroups = bonds.get(bond);
+
+        // bond in sgroup, place it in the middle of the bond
+        if (sgroups.size() == 1) {
+            lenOffset.scale(0.5 * bondLength);
+        }
+        // two sgroups, place one near start and one near end
+        else if (sgroups.size() == 2) {
+            if (counter.get(bond) == 0) {
+                lenOffset.scale(0.25 * bondLength); // 15% along
+                counter.put(bond, 1);
+            } else {
+                lenOffset.scale(0.75 * bondLength); // 85% along
+            }
+        }
+        else {
+            double step = bondLength / (1 + sgroups.size());
+            int idx = counter.get(bond) + 1;
+            counter.put(bond, idx);
+            lenOffset.scale((idx * step) * bondLength);
+        }
+
+        final double theta = endXy.x < begXy.x ? GeometryUtil.getAngle(-lenOffset.x, -lenOffset.y) :
+                                                 GeometryUtil.getAngle(lenOffset.x, lenOffset.y);
+        // vertical bracket
+        if (theta < 0.5*Math.PI || theta > 1.5*Math.PI) {
+            return new SgroupBracket(begXy.x + lenOffset.x, begXy.y + lenOffset.y + bndCrossVec.length(),
+                                     begXy.x + lenOffset.x, begXy.y + lenOffset.y - bndCrossVec.length());
+        } else {
+            return new SgroupBracket(begXy.x + lenOffset.x + bndCrossVec.x, begXy.y + lenOffset.y + bndCrossVec.y,
+                                     begXy.x + lenOffset.x - bndCrossVec.x, begXy.y + lenOffset.y - bndCrossVec.y);
+        }
+    }
+
+    /**
+     * Determine whether and Sgroup type has brackets to be placed.
+     * @param sgroup the Sgroup
+     * @return brackets need to be placed
+     */
+    private static boolean hasBrackets(Sgroup sgroup) {
+        switch (sgroup.getType()) {
+            case CtabStructureRepeatUnit:
+            case CtabAnyPolymer:
+            case CtabCrossLink:
+            case CtabComponent:
+            case CtabMixture:
+            case CtabFormulation:
+            case CtabGraft:
+            case CtabModified:
+            case CtabMonomer:
+            case CtabCopolymer:
+            case CtabMultipleGroup:
+                return true;
+            case CtabGeneric:
+                List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+                return brackets != null && !brackets.isEmpty();
+            default:
+                return false;
+        }
+    }
 }
