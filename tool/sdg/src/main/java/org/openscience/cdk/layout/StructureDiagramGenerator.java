@@ -503,7 +503,6 @@ public class StructureDiagramGenerator {
 
         // choose the orientation in which to display the structure
         if (selectOrientation) {
-            System.err.println("selecting orientation");
             selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
         }
     }
