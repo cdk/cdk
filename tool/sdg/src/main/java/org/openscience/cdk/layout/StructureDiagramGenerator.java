@@ -1767,10 +1767,22 @@ public class StructureDiagramGenerator {
 
             // assign brackets to crossing bonds
             if (xbonds.size() >= 2) {
+
+                // check for vertical alignment
+                boolean vert = true;
+                for (IBond bond : xbonds) {
+                    final double theta = angle(bond);
+                    if (Math.abs(Math.toDegrees(theta)) > 40 && Math.abs(Math.toDegrees(theta)) < 140) {
+                        vert = false;
+                        break;
+                    }
+                }
+
                 for (IBond bond : xbonds)
                     sgroup.addBracket(newCrossingBracket(bond,
                                                          bondMap,
-                                                         counter));
+                                                         counter,
+                                                         vert));
             }
             // <= 1 crossing bonds so simply wrap the entire fragment
             else {
@@ -1788,15 +1800,22 @@ public class StructureDiagramGenerator {
 
     }
 
+    private static double angle(IBond bond) {
+        Point2d end = bond.getAtom(0).getPoint2d();
+        Point2d beg = bond.getAtom(1).getPoint2d();
+        return Math.atan2(end.y - beg.y, end.x - beg.x);
+    }
+
     /**
      * Generate a new bracket across the provided bond.
      *
      * @param bond bond
      * @param bonds bond map to Sgroups
      * @param counter count how many brackets this group has already
+     * @param vert vertical align bonds
      * @return the new bracket
      */
-    private SgroupBracket newCrossingBracket(IBond bond, Multimap<IBond,Sgroup> bonds, Map<IBond,Integer> counter) {
+    private SgroupBracket newCrossingBracket(IBond bond, Multimap<IBond,Sgroup> bonds, Map<IBond,Integer> counter, boolean vert) {
         final IAtom beg = bond.getAtom(0);
         final IAtom end = bond.getAtom(1);
         final Point2d begXy = beg.getPoint2d();
@@ -1805,7 +1824,7 @@ public class StructureDiagramGenerator {
         final Vector2d bndCrossVec = new Vector2d(-lenOffset.y, lenOffset.x);
         lenOffset.normalize();
         bndCrossVec.normalize();
-        bndCrossVec.scale(((1.2 * bondLength)) / 2);
+        bndCrossVec.scale(((0.9 * bondLength)) / 2);
 
         final Collection<Sgroup> sgroups = bonds.get(bond);
 
@@ -1829,10 +1848,8 @@ public class StructureDiagramGenerator {
             lenOffset.scale((idx * step) * bondLength);
         }
 
-        final double theta = endXy.x < begXy.x ? GeometryUtil.getAngle(-lenOffset.x, -lenOffset.y) :
-                                                 GeometryUtil.getAngle(lenOffset.x, lenOffset.y);
         // vertical bracket
-        if (theta < 0.5*Math.PI || theta > 1.5*Math.PI) {
+        if (vert) {
             return new SgroupBracket(begXy.x + lenOffset.x, begXy.y + lenOffset.y + bndCrossVec.length(),
                                      begXy.x + lenOffset.x, begXy.y + lenOffset.y - bndCrossVec.length());
         } else {

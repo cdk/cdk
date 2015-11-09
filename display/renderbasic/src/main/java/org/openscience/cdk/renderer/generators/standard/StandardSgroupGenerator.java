@@ -423,7 +423,7 @@ final class StandardSgroupGenerator {
                     Point2d cpb1 = new Point2d(midpoint);
                     cpb1.add(VecmathUtil.negate(perp));
                     path.quadTo(cpb1.x, cpb1.y,
-                                p2.x + perp.x, p2.y + p2.y);
+                                p2.x + perp.x, p2.y + perp.y);
                 } else {
                     path.moveTo(p1.x + perp.x, p1.y + perp.y);
                     path.lineTo(p1.x, p1.y);
