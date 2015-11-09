@@ -1644,11 +1644,16 @@ public class StructureDiagramGenerator {
                     bndXVec.normalize();
 
                     bndVec.scale(0.5 * bondLength); // crossing point
-                    bndXVec.scale((1.4 * bondLength)/2); // length of crossing bond
+
+                    double bndStep = (1.4*bondLength) / 4;
 
                     newBegP.add(bndVec);
+                    bndXVec.normalize();
+                    bndXVec.scale(bndStep);
                     newBegP.sub(bndXVec);
                     newEndP.sub(bndVec);
+                    bndXVec.normalize();
+                    bndXVec.scale(3*bndStep);
                     newEndP.add(bndXVec);
 
                     int atomIdx = idxs.get(atom);
