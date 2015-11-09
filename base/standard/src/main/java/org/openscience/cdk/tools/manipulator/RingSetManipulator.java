@@ -154,7 +154,9 @@ public class RingSetManipulator {
     }
 
     /**
-     * Returns the ring with the highest numbers of other rings attached to it.
+     * Returns the ring with the highest numbers of other rings attached to it. If an
+     * equally complex ring is found the last one is selected allow prioritization by
+     * size with {@link RingSetManipulator#sort(IRingSet)}.
      *
      * @param ringSet The collection of rings
      * @return the ring with the highest numbers of other rings attached to it.
@@ -191,7 +193,7 @@ public class RingSetManipulator {
             }
         }
         for (int i = 0; i < neighbors.length; i++) {
-            if (neighbors[i] > mostComplex) {
+            if (neighbors[i] >= mostComplex) {
                 mostComplex = neighbors[i];
                 mostComplexPosition = i;
             }

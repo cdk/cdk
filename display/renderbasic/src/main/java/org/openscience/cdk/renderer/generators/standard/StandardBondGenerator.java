@@ -777,8 +777,8 @@ final class StandardBondGenerator {
         }
 
         final double halfBondLength = atom1Point.distance(atom2BackOffPoint) / 2;
-        if (Math.abs(atom1Offset) > halfBondLength) atom1Offset = 0;
-        if (Math.abs(atom2Offset) > halfBondLength) atom2Offset = 0;
+        if (atom1Offset > halfBondLength || atom1Offset < 0) atom1Offset = 0;
+        if (atom2Offset > halfBondLength || atom2Offset < 0) atom2Offset = 0;
 
         final ElementGroup group = new ElementGroup();
 
@@ -832,8 +832,8 @@ final class StandardBondGenerator {
             double line2Adjust = adjacentLength(nearest2, perpendicular2, halfSeparation);
 
             // don't adjust beyond half the bond length
-            if (line1Adjust > halfBondLength) line1Adjust = 0;
-            if (line2Adjust > halfBondLength) line2Adjust = 0;
+            if (line1Adjust > halfBondLength || line1Adjust < 0) line1Adjust = 0;
+            if (line2Adjust > halfBondLength || line2Adjust < 0) line2Adjust = 0;
 
             // corner case when the adjacent bonds are acute to the double bond,
             if (nearest1.dot(unit) > 0) line1Adjust = -line1Adjust;
@@ -852,8 +852,8 @@ final class StandardBondGenerator {
             double line2Adjust = adjacentLength(nearest2, perpendicular2, halfSeparation);
 
             // don't adjust beyond half the bond length
-            if (line1Adjust > halfBondLength) line1Adjust = 0;
-            if (line2Adjust > halfBondLength) line2Adjust = 0;
+            if (line1Adjust > halfBondLength || line1Adjust < 0) line1Adjust = 0;
+            if (line2Adjust > halfBondLength || line2Adjust < 0) line2Adjust = 0;
 
             // corner case when the adjacent bonds are acute to the double bond
             if (nearest1.dot(unit) < 0) line1Adjust = -line1Adjust;

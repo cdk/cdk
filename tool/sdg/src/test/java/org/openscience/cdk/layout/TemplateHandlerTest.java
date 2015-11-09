@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.layout;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Assert;
@@ -31,10 +33,14 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * @cdk.module  test-sdg
@@ -180,6 +186,17 @@ public class TemplateHandlerTest extends CDKTestCase {
 
         // Do the Assert.assertion
         Assert.assertEquals("3 mapped templates", 3, mappedStructures.getAtomContainerCount());
+    }
+
+    @Test public void convert() throws IOException {
+        TemplateHandler templateHandler = new TemplateHandler(SilentChemObjectBuilder.getInstance());
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        templateHandler.toIdentityTemplateLibrary().store(bout);
+        assertThat(new String(bout.toByteArray()), is("C1C2CC3CC1CC(C2)C3 |(-1.07,-1.59,;.38,-1.21,;1.82,-1.59,;1.07,-.29,;-.38,-.67,;-1.82,-.29,;-1.82,1.21,;-.37,1.59,;.38,.29,;1.07,1.21,)|\n"
+                                                      + "C12C3C4C1C5C2C3C45 |(.62,-.99,;-.88,-1.12,;-1.23,.43,;.26,.57,;.88,1.12,;1.23,-.43,;-.26,-.57,;-.62,.98,)|\n"
+                                                      + "C1C2CC3C4CC5CC(C14)C(C2)C3C5 |(-1.82,2.15,;-.37,2.53,;1.07,2.15,;1.07,.65,;-.38,.27,;-.38,-1.23,;.37,-2.53,;-1.07,-2.15,;-1.07,-.65,;-1.82,.65,;.38,-.27,;.38,1.23,;1.82,-.65,;1.82,-2.15,)|\n"
+                                                      + "C1CCC2C(C1)CCC3C4CCCC4CCC23 |(-6.51,.72,;-6.51,-.78,;-5.22,-1.53,;-3.92,-.78,;-3.92,.72,;-5.22,1.47,;-2.62,1.47,;-1.32,.72,;-1.32,-.78,;-.02,-1.53,;1.41,-1.07,;2.29,-2.28,;1.41,-3.49,;-.02,-3.03,;-1.32,-3.78,;-2.62,-3.03,;-2.62,-1.53,)|\n"
+                                                      + "C1CCCCCCCCCCCCC1 |(-.04,1.51,;1.26,.76,;1.26,-.74,;2.56,-1.49,;2.56,-2.99,;1.29,-3.72,;1.31,-5.29,;-.09,-5.89,;-1.34,-5.24,;-1.34,-3.74,;-2.63,-2.99,;-2.63,-1.49,;-1.34,-.74,;-1.34,.76,)|\n"));
     }
 
 }

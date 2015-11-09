@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
+import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ final class LayoutRefiner {
 
     // Min dist between un-bonded atoms, making the denominator smaller means
     // we want to spread atoms out more
-    private static final double MIN_DIST = BOND_LENGTH / 2.7;
+    private static final double MIN_DIST = BOND_LENGTH / 2;
 
     // Min score is derived from the min distance
     private static final double MIN_SCORE = 1 / (MIN_DIST * MIN_DIST);
@@ -83,13 +84,14 @@ final class LayoutRefiner {
     private static final double STRETCH_STEP = 0.32 * BOND_LENGTH;
 
     // How much we bend bonds by
-    private static final double BEND_STEP = Math.toRadians(7.5);
+    private static final double BEND_STEP = Math.toRadians(10);
 
     // Ensure we don't stretch bonds too long.
     private static final double MAX_BOND_LENGTH = 2 * BOND_LENGTH;
 
-    // Only accept if improvement is >= 2%. This is a bit sketch because
-    // of course larger structures will have less improvement.
+    // Only accept if improvement is >= 2%. I don't like this because
+    // huge structures will have less improvement even though the overlap
+    // was resolved.
     public static final double IMPROVEMENT_PERC_THRESHOLD = 0.02;
 
     // Rotation (reflection) is always good if it improves things
@@ -367,7 +369,9 @@ final class LayoutRefiner {
 
                 double delta = min - congestion.score();
 
-                if (delta > ROTATE_DELTA_THRESHOLD) {
+                // keep if decent improvement or improvement and resolves this overlap
+                if (delta > ROTATE_DELTA_THRESHOLD ||
+                    (delta > 1 && congestion.contribution(pair.fst, pair.snd) < MIN_SCORE)) {
                     continue Pair;
                 }
                 else {
@@ -394,29 +398,88 @@ final class LayoutRefiner {
      */
     void invert(Collection<AtomPair> pairs) {
         for (AtomPair pair : pairs) {
-            // not candidates for inversion
-            // > 3 bonds
-            if (pair.bndAt.length != 3)
+            if (congestion.contribution(pair.fst, pair.snd) < MIN_SCORE)
                 continue;
-            // we want *!@*@*!@*
-            if (!pair.bndAt[0].isInRing() || pair.bndAt[1].isInRing() || pair.bndAt[2].isInRing())
+            if (fusionPointInversion(pair))
                 continue;
-            // non-terminals
-            if (adjList[pair.fst].length > 1 || adjList[pair.snd].length > 1)
+            if (macroCycleInversion(pair))
                 continue;
-
-            IAtom fst = atoms[pair.fst];
-
-            // choose which one to invert, preffering hydrogens
-            stackBackup.clear();
-            if (fst.getAtomicNumber() == 1)
-                stackBackup.push(pair.fst);
-            else
-                stackBackup.push(pair.snd);
-
-            reflect(stackBackup, pair.bndAt[0].getAtom(0), pair.bndAt[0].getAtom(1));
-            congestion.update(stackBackup.xs, stackBackup.len);
         }
+    }
+
+    // For substituents attached to macrocycles we may be able to point these in/out
+    // of the ring
+    private boolean macroCycleInversion(AtomPair pair) {
+
+        for (int v : pair.seqAt) {
+            IAtom atom = mol.getAtom(v);
+            if (!atom.isInRing() || adjList[v].length == 2)
+                continue;
+            if (atom.getProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT) == null)
+                continue;
+            final List<IBond> acyclic = new ArrayList<>(2);
+            final List<IBond> cyclic = new ArrayList<>(2);
+            for (int w : adjList[v]) {
+                IBond bond = bondMap.get(v, w);
+                if (bond.isInRing())
+                    cyclic.add(bond);
+                else
+                    acyclic.add(bond);
+            }
+            if (cyclic.size() > 2)
+                continue;
+
+            for (IBond bond : acyclic) {
+
+                Arrays.fill(visited, false);
+                stackBackup.len = visit(visited, stackBackup.xs, v, idxs.get(bond.getConnectedAtom(atom)), 0);
+
+                Point2d a = atom.getPoint2d();
+                Point2d b = bond.getConnectedAtom(atom).getPoint2d();
+
+                Vector2d perp = new Vector2d(b.x - a.x, b.y - a.y);
+                perp.normalize();
+                double score = congestion.score();
+                backupCoords(backup, stackBackup);
+
+                reflect(stackBackup, new Point2d(a.x - perp.y, a.y + perp.x), new Point2d(a.x + perp.y, a.y - perp.x));
+                congestion.update(visited, stackBackup.xs, stackBackup.len);
+
+                if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD) {
+                    return true;
+                }
+
+                restoreCoords(stackBackup, backup);
+            }
+        }
+
+        return false;
+    }
+
+    private boolean fusionPointInversion(AtomPair pair) {
+        // not candidates for inversion
+        // > 3 bonds
+        if (pair.bndAt.length != 3)
+            return false;
+        // we want *!@*@*!@*
+        if (!pair.bndAt[0].isInRing() || pair.bndAt[1].isInRing() || pair.bndAt[2].isInRing())
+            return false;
+        // non-terminals
+        if (adjList[pair.fst].length > 1 || adjList[pair.snd].length > 1)
+            return false;
+
+        IAtom fst = atoms[pair.fst];
+
+        // choose which one to invert, preffering hydrogens
+        stackBackup.clear();
+        if (fst.getAtomicNumber() == 1)
+            stackBackup.push(pair.fst);
+        else
+            stackBackup.push(pair.snd);
+
+        reflect(stackBackup, pair.bndAt[0].getAtom(0), pair.bndAt[0].getAtom(1));
+        congestion.update(stackBackup.xs, stackBackup.len);
+        return true;
     }
 
     /**
@@ -473,8 +536,7 @@ final class LayoutRefiner {
             restoreCoords(stack, backup);
             bend(stack.xs, 0, split, pivotA, -BEND_STEP);
             bend(stack.xs, split, stack.len, pivotB, BEND_STEP);
-            congestion.update(visited, stack.xs, stack.len);
-
+            congestion.update(stack.xs, stack.len);
             if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD && congestion.score() < min) {
                 backupCoords(coords, stack);
                 stackBackup.copyFrom(stack);
@@ -483,7 +545,7 @@ final class LayoutRefiner {
 
             // restore original coordinates and reset score
             restoreCoords(stack, backup);
-            congestion.update(visited, stack.xs, stack.len);
+            congestion.update(stack.xs, stack.len);
             congestion.score = score;
         }
         // general case: try bending acyclic bonds in the shortest
@@ -731,6 +793,10 @@ final class LayoutRefiner {
     private void reflect(IntStack stack, IAtom beg, IAtom end) {
         Point2d begP = beg.getPoint2d();
         Point2d endP = end.getPoint2d();
+        reflect(stack, begP, endP);
+    }
+
+    private void reflect(IntStack stack, Tuple2d begP, Tuple2d endP) {
         double dx = endP.x - begP.x;
         double dy = endP.y - begP.y;
 
@@ -750,7 +816,7 @@ final class LayoutRefiner {
      * @param a    a reflection coef
      * @param b    b reflection coef
      */
-    private static void reflect(Point2d p, Point2d base, double a, double b) {
+    private static void reflect(Tuple2d p, Tuple2d base, double a, double b) {
         double x = a * (p.x - base.x) + b * (p.y - base.y) + base.x;
         double y = b * (p.x - base.x) - a * (p.y - base.y) + base.y;
         p.x = x;

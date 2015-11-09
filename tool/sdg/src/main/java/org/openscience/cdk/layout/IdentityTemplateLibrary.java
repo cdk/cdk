@@ -24,9 +24,16 @@
 
 package org.openscience.cdk.layout;
 
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.rebond.Point;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -38,7 +45,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.util.AbstractMap.SimpleEntry;
@@ -72,12 +85,110 @@ import static java.util.Map.Entry;
  */
 final class IdentityTemplateLibrary {
 
-    private final Map<String, Point2d[]> templateMap = new HashMap<String, Point2d[]>();
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##");
 
-    private final SmilesGenerator        smigen      = SmilesGenerator.unique();
-    private final ILoggingTool           logger      = LoggingToolFactory.createLoggingTool(getClass());
+    private final Multimap<String, Point2d[]> templateMap = LinkedListMultimap.create();
 
-    private IdentityTemplateLibrary() {}
+    private final SmilesGenerator smigen = SmilesGenerator.unique();
+    private final ILoggingTool    logger = LoggingToolFactory.createLoggingTool(getClass());
+
+    private IdentityTemplateLibrary() {
+    }
+
+    /**
+     * Add one template library to another.
+     *
+     * @param library another template library
+     * @return this library with the other one added in (allows chaining)
+     */
+    public IdentityTemplateLibrary add(IdentityTemplateLibrary library) {
+        this.templateMap.putAll(library.templateMap);
+        return this;
+    }
+
+    /**
+     * Internal - create a canonical SMILES string temporarily adjusting to default
+     * hydrogen count. This method may be moved to the SMILESGenerator in future.
+     *
+     * @param mol molecule
+     * @param ordering ordering output
+     * @return SMILES
+     * @throws CDKException SMILES could be generate
+     */
+    private String cansmi(IAtomContainer mol, int[] ordering) throws CDKException {
+
+        // backup parts we will strip off
+        Integer[] hcntBackup = new Integer[mol.getAtomCount()];
+
+        Map<IAtom, Integer> idxs = new HashMap<>();
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            hcntBackup[i] = mol.getAtom(i).getImplicitHydrogenCount();
+            idxs.put(mol.getAtom(i), i);
+        }
+
+        int[] bondedValence = new int[mol.getAtomCount()];
+        for (int i = 0; i < mol.getBondCount(); i++) {
+            IBond bond = mol.getBond(i);
+            bondedValence[idxs.get(bond.getAtom(0))] += bond.getOrder().numeric();
+            bondedValence[idxs.get(bond.getAtom(1))] += bond.getOrder().numeric();
+        }
+
+        // http://www.opensmiles.org/opensmiles.html#orgsbst
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            IAtom atom = mol.getAtom(i);
+            atom.setImplicitHydrogenCount(0);
+            switch (atom.getAtomicNumber()) {
+                case 5: // B
+                    if (bondedValence[i] <= 3)
+                        atom.setImplicitHydrogenCount(3 - bondedValence[i]);
+                    break;
+                case 6: // C
+                    if (bondedValence[i] <= 4)
+                        atom.setImplicitHydrogenCount(4 - bondedValence[i]);
+                    break;
+                case 7:  // N
+                case 15: // P
+                    if (bondedValence[i] <= 3)
+                        atom.setImplicitHydrogenCount(3 - bondedValence[i]);
+                    else if (bondedValence[i] <= 5)
+                        atom.setImplicitHydrogenCount(5 - bondedValence[i]);
+                    break;
+                case 8:  // O
+                    if (bondedValence[i] <= 2)
+                        atom.setImplicitHydrogenCount(2 - bondedValence[i]);
+                    break;
+                case 16: // S
+                    if (bondedValence[i] <= 2)
+                        atom.setImplicitHydrogenCount(2 - bondedValence[i]);
+                    else if (bondedValence[i] <= 4)
+                        atom.setImplicitHydrogenCount(4 - bondedValence[i]);
+                    else if (bondedValence[i] <= 6)
+                        atom.setImplicitHydrogenCount(6 - bondedValence[i]);
+                    break;
+                case 9:  // F
+                case 17: // Cl
+                case 35: // Br
+                case 53: // I
+                    if (bondedValence[i] <= 1)
+                        atom.setImplicitHydrogenCount(1 - bondedValence[i]);
+                    break;
+                default:
+                    atom.setImplicitHydrogenCount(0);
+                    break;
+            }
+        }
+
+        String smi = null;
+        try {
+            smi = smigen.create(mol, ordering);
+        } finally {
+            // restore
+            for (int i = 0; i < mol.getAtomCount(); i++)
+                mol.getAtom(i).setImplicitHydrogenCount(hcntBackup[i]);
+        }
+
+        return smi;
+    }
 
     /**
      * Create a library entry from an atom container. Note the entry is not added to the library.
@@ -91,7 +202,7 @@ final class IdentityTemplateLibrary {
 
             final int n = container.getAtomCount();
             final int[] ordering = new int[n];
-            final String smiles = smigen.create(container, ordering);
+            final String smiles = cansmi(container, ordering);
 
             // build point array that is in the canonical output order
             final Point2d[] points = new Point2d[n];
@@ -136,12 +247,28 @@ final class IdentityTemplateLibrary {
      * @return array of coordinates
      */
     static Point2d[] decodeCoordinates(String str) {
-        String[] strs = str.split(", ");
-        Point2d[] points = new Point2d[strs.length / 2];
-        for (int i = 0; i < strs.length; i += 2) {
-            points[i / 2] = new Point2d(Double.parseDouble(strs[i]), Double.parseDouble(strs[i + 1]));
+        if (str.startsWith("|(")) {
+            int end = str.indexOf(')', 2);
+            if (end < 0)
+                return new Point2d[0];
+            String[] strs = str.substring(2, end).split(";");
+            Point2d[] points = new Point2d[strs.length];
+            for (int i = 0; i < strs.length; i++) {
+                String coord = strs[i];
+                int first  = coord.indexOf(',');
+                int second = coord.indexOf(',', first+1);
+                points[i] = new Point2d(Double.parseDouble(coord.substring(0, first)),
+                                        Double.parseDouble(coord.substring(first + 1, second)));
+            }
+            return points;
+        } else {
+            String[] strs = str.split(", ");
+            Point2d[] points = new Point2d[strs.length / 2];
+            for (int i = 0; i < strs.length; i += 2) {
+                points[i / 2] = new Point2d(Double.parseDouble(strs[i]), Double.parseDouble(strs[i + 1]));
+            }
+            return points;
         }
-        return points;
     }
 
     /**
@@ -160,19 +287,22 @@ final class IdentityTemplateLibrary {
     }
 
     /**
-     * Encode coordinates in a byte buffer.
+     * Encode coordinates in a string.
      *
-     * @param points
-     * @return
+     * @param points points
+     * @return extended SMILES format coordinates
      */
     static String encodeCoordinates(Point2d[] points) {
         StringBuilder sb = new StringBuilder();
+        sb.append("|(");
         for (Point2d point : points) {
-            if (sb.length() > 0) sb.append(", ");
-            sb.append(String.format("%.3f", point.x));
-            sb.append(", ");
-            sb.append(String.format("%.3f", point.y));
+            if (sb.length() > 2) sb.append(";");
+            sb.append(DECIMAL_FORMAT.format(point.x));
+            sb.append(',');
+            sb.append(DECIMAL_FORMAT.format(point.y));
+            sb.append(',');
         }
+        sb.append(")|");
         return sb.toString();
     }
 
@@ -195,7 +325,8 @@ final class IdentityTemplateLibrary {
     }
 
     /**
-     * Assign a 2D layout to the atom container using the contents of the library.
+     * Assign a 2D layout to the atom container using the contents of the library. If multiple
+     * coordinates are available the first is choosen.
      *
      * @param container structure representation
      * @return a layout was assigned
@@ -207,22 +338,50 @@ final class IdentityTemplateLibrary {
             // the canonical out ordering
             int n = container.getAtomCount();
             int[] ordering = new int[n];
-            String smiles = smigen.create(container, ordering);
+            String smiles = cansmi(container, ordering);
 
             // find the points in the library
-            Point2d[] points = templateMap.get(smiles);
-
-            // no matching entry
-            if (points == null) return false;
-
-            // set the points
-            for (int i = 0; i < n; i++) {
-                container.getAtom(i).setPoint2d(new Point2d(points[ordering[i]]));
+            for (Point2d[] points : templateMap.get(smiles)) {
+                // set the points
+                for (int i = 0; i < n; i++) {
+                    container.getAtom(i).setPoint2d(new Point2d(points[ordering[i]]));
+                }
+                return true;
             }
-
-            return true;
         } catch (CDKException e) {
-            return false;
+            // ignored
+        }
+        return false;
+    }
+
+    /**
+     * Get all templated coordinates for the provided molecule. The return collection has
+     * coordinates ordered based on the input.
+     *
+     * @param mol molecule (or fragment) to lookup
+     * @return the coordinates
+     */
+    Collection<Point2d[]> getCoordinates(IAtomContainer mol) {
+        try {
+            // create the library key to lookup an entry, we also store
+            // the canonical out ordering
+            int n = mol.getAtomCount();
+            int[] ordering = new int[n];
+            String smiles = cansmi(mol, ordering);
+
+            final Collection<Point2d[]> coordSet = templateMap.get(smiles);
+            final List<Point2d[]> orderedCoordSet = new ArrayList<>(coordSet.size());
+
+            for (Point2d[] coords : coordSet) {
+                Point2d[] orderedCoords = new Point2d[coords.length];
+                for (int i = 0; i < n; i++) {
+                    orderedCoords[i] = new Point2d(coords[ordering[i]]);
+                }
+                orderedCoordSet.add(orderedCoords);
+            }
+            return Collections.unmodifiableList(orderedCoordSet);
+        } catch (CDKException e) {
+            return Collections.emptyList();
         }
     }
 
@@ -275,6 +434,45 @@ final class IdentityTemplateLibrary {
     }
 
     /**
+     * Reorder coordinates.
+     *
+     * @param coords coordinates
+     * @param order permutation
+     * @return reordered coordinates
+     */
+    static Point2d[] reorderCoords(Point2d[] coords, int[] order) {
+        Point2d[] neworder = new Point2d[coords.length];
+        for (int i = 0; i < order.length; i++)
+            neworder[order[i]] = coords[i];
+        return neworder;
+    }
+
+    /**
+     * Update the template library - can be called for safety after
+     * each load.
+     *
+     * @param bldr builder
+     */
+    void update(IChemObjectBuilder bldr) {
+        final SmilesParser smipar = new SmilesParser(bldr);
+        Multimap<String,Point2d[]> updated = LinkedListMultimap.create();
+        for (Map.Entry<String,Collection<Point2d[]>> e : templateMap.asMap().entrySet()) {
+            try {
+                IAtomContainer mol = smipar.parseSmiles(e.getKey());
+                int[] order = new int[mol.getAtomCount()];
+                String key = cansmi(mol, order);
+                for (Point2d[] coords : e.getValue()) {
+                    updated.put(key, reorderCoords(coords, order));
+                }
+            } catch (CDKException ex) {
+                System.err.println(e.getKey() + " could not be updated: " + ex.getMessage());
+            }
+        }
+        templateMap.clear();
+        templateMap.putAll(updated);
+    }
+
+    /**
      * Store a template library to the provided output stream.
      *
      * @param out output stream
@@ -284,9 +482,9 @@ final class IdentityTemplateLibrary {
 
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));
 
-        for (Entry<String, Point2d[]> e : templateMap.entrySet()) {
+        for (Entry<String, Point2d[]> e : templateMap.entries()) {
             bw.write(encodeEntry(e));
-            bw.newLine();
+            bw.write('\n');
         }
 
         bw.close();

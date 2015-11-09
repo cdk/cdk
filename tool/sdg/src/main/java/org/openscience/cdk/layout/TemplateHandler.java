@@ -45,6 +45,7 @@ import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import javax.vecmath.Point2d;
@@ -348,5 +349,19 @@ public final class TemplateHandler {
         for (IAtomContainer template : ptrn.matchAll(mol).toSubstructures())
             return createSingleton(template);
         throw new IllegalArgumentException("Pattern does not match any provided molecules");
+    }
+
+    /**
+     * Convert to an identity template library.
+     *
+     * @return identity template library
+     */
+    IdentityTemplateLibrary toIdentityTemplateLibrary() {
+        IdentityTemplateLibrary lib = IdentityTemplateLibrary.empty();
+        for (IAtomContainer mol : templates) {
+            lib.add(mol);
+            lib.add(AtomContainerManipulator.anonymise(mol));
+        }
+        return lib;
     }
 }
