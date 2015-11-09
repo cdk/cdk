@@ -53,6 +53,21 @@ public interface IPseudoAtom extends IAtom {
     public void setLabel(String label);
 
     /**
+     * Access the attachment point number. The default, 0, indicates this atom
+     * is not an attachment point.
+     *
+     * @return attach point number
+     */
+    int getAttachPointNum();
+
+    /**
+     * Set the attachment point number.
+     *
+     * @param ap attach point number
+     */
+    void setAttachPointNum(int ap);
+
+    /**
      * @inheritDoc
      */
     @Override
