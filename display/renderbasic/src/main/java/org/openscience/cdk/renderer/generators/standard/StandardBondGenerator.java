@@ -32,6 +32,7 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -64,6 +65,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
+import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
 import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 import static org.openscience.cdk.renderer.generators.BasicSceneGenerator.BondLength;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.BondSeparation;
@@ -204,21 +206,44 @@ final class StandardBondGenerator {
         final IAtom atom1 = bond.getAtom(0);
         final IAtom atom2 = bond.getAtom(1);
 
-        final IBond.Order order = bond.getOrder();
+        IBond.Order order = bond.getOrder();
 
-        if (order == null) return generateDashedBond(atom1, atom2);
+        if (order == null) order = IBond.Order.UNSET;
+
+        IRenderingElement elem;
 
         switch (order) {
             case SINGLE:
-                return generateSingleBond(bond, atom1, atom2);
+                elem = generateSingleBond(bond, atom1, atom2);
+                break;
             case DOUBLE:
-                return generateDoubleBond(bond);
+                elem = generateDoubleBond(bond);
+                break;
             case TRIPLE:
-                return generateTripleBond(bond, atom1, atom2);
+                elem =  generateTripleBond(bond, atom1, atom2);
+                break;
+            default:
+                // bond orders > 3 not supported
+                elem = generateDashedBond(atom1, atom2);
+                break;
         }
 
-        // bond order > 3 not supported
-        return generateDashedBond(atom1, atom2);
+        // attachment point drawing, in future we could also draw the attach point
+        // number, typically within a circle
+        if (isAttachPoint(atom1)) {
+            ElementGroup elemGrp = new ElementGroup();
+            elemGrp.add(elem);
+            elemGrp.add(generateAttachPoint(atom1, bond));
+            elem = elemGrp;
+        }
+        if (isAttachPoint(atom2)) {
+            ElementGroup elemGrp = new ElementGroup();
+            elemGrp.add(elem);
+            elemGrp.add(generateAttachPoint(atom2, bond));
+            elem = elemGrp;
+        }
+
+        return elem;
     }
 
     /**
@@ -938,6 +963,77 @@ final class StandardBondGenerator {
         if (label != null) addAnnotation(atom1, atom2, label);
 
         return group;
+    }
+
+    /**
+     * Draws a crossing wavy
+     *
+     * @param atom1
+     * @param bond
+     * @return
+     */
+    private IRenderingElement generateAttachPoint(IAtom atom1, IBond bond) {
+
+        final Vector2d bndVec  = VecmathUtil.newUnitVector(atom1, bond);
+        final Vector2d bndXVec = VecmathUtil.newPerpendicularVector(bndVec);
+
+        final double length = atom1.getPoint2d().distance(bond.getConnectedAtom(atom1).getPoint2d());
+        bndXVec.scale(length /2);
+        final Tuple2d beg = VecmathUtil.sum(atom1.getPoint2d(), bndXVec);
+        bndXVec.scale(-1);
+        final Tuple2d end = VecmathUtil.sum(atom1.getPoint2d(), bndXVec);
+
+        // wavy line between beg and end, see generateWavyBond for explanation
+
+        final int nCurves = 2 * (int) (length / waveSpacing);
+        final double step = length / nCurves;
+
+        bndXVec.normalize();
+        Vector2d peak = scale(bndVec, step);
+        Vector2d unit = VecmathUtil.newUnitVector(beg, end);
+
+        List<PathElement> path = new ArrayList<PathElement>();
+        path.add(new MoveTo(beg.x, beg.y));
+
+        for (int i = 1; i < nCurves; i += 2) {
+
+            peak = negate(peak); // alternate wave side
+
+            // curving away from the center line
+            {
+                double dist = i * step;
+                // first end point
+                final Tuple2d endPoint = sum(sum(beg, scale(unit, dist)), peak);
+                    final Tuple2d controlPoint1 = sum(sum(beg, scale(unit, (i - 1) * step)), scale(peak, 0.5));
+                    final Tuple2d controlPoint2 = sum(sum(beg, scale(unit, (i - 0.5) * step)), peak);
+                    path.add(new CubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y,
+                                         endPoint.x, endPoint.y));
+            }
+
+            // curving towards the center line
+            {
+                double dist = (i + 1) * step;
+                // second end point
+                final Tuple2d endPoint = sum(beg, scale(unit, dist));
+
+                final Tuple2d controlPoint1 = sum(sum(beg, scale(unit, (i + 0.5) * step)), peak);
+                final Tuple2d controlPoint2 = sum(sum(beg, scale(unit, dist)), scale(peak, 0.5));
+                path.add(new CubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y,
+                                     endPoint.x, endPoint.y));
+            }
+        }
+
+        return new GeneralPath(path, foreground).outline(stroke);
+    }
+
+    /**
+     * Determine if an atom is an attach point.
+     *
+     * @param atom potential attach point atom
+     * @return the atom is an attachment point
+     */
+    private boolean isAttachPoint(IAtom atom) {
+        return atom instanceof IPseudoAtom && ((IPseudoAtom) atom).getAttachPointNum() > 0;
     }
 
     /**

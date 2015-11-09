@@ -338,6 +338,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                     symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
                 }
 
+                if (symbols[i] == null)
+                    continue;
+
                 // defines how the element is aligned on the atom point, when
                 // aligned to the left, the first character 'e.g. Cl' is used.
                 if (visNeighbors.size() == 1) {

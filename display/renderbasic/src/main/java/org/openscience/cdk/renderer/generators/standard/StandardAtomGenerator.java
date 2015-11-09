@@ -112,7 +112,11 @@ final class StandardAtomGenerator {
      */
     AtomSymbol generateSymbol(IAtomContainer container, IAtom atom, HydrogenPosition position) {
         if (atom instanceof IPseudoAtom) {
-            return generatePseudoSymbol(accessPseudoLabel((IPseudoAtom) atom, "?"), position);
+            IPseudoAtom pAtom = (IPseudoAtom) atom;
+            if (pAtom.getAttachPointNum() <= 0)
+                return generatePseudoSymbol(accessPseudoLabel(pAtom, "?"), position);
+            else
+                return null; // attach point drawn in bond generator
         } else {
             int number = unboxSafely(atom.getAtomicNumber(), Elements.ofString(atom.getSymbol()).number());
 
