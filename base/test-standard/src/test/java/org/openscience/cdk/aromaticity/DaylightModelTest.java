@@ -208,6 +208,10 @@ public class DaylightModelTest {
         test(smiles("C1=CC(=C([N+]=C1)N)[N+](=O)[O-]"), 1, 1, 1, 1, -1, 1, -1, -1, -1, -1);
     }
 
+    @Test public void thiazole1oxide() throws Exception {
+        test(smiles("O=S1C=NC=C1"), -1, 2, 1, 1, 1, 1);
+    }
+
     static IAtomContainer addHydrogens(IAtomContainer container) throws CDKException {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
         CDKHydrogenAdder.getInstance(container.getBuilder()).addImplicitHydrogens(container);
