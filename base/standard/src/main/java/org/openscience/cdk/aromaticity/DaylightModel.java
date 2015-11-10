@@ -271,10 +271,12 @@ final class DaylightModel extends ElectronDonation {
                 if (charge == +1) return valence == 4;
                 return charge == 0 && (valence == 3 || (valence == 5 && element == NITROGEN));
             case OXYGEN:
+                if (charge == +1) return valence == 3;
+                return charge == 0 && valence == 2;
             case SULPHUR:
             case SELENIUM:
                 if (charge == +1) return valence == 3;
-                return charge == 0 && valence == 2;
+                return charge == 0 && (valence == 2 || valence == 4 || valence == 6);
         }
         return false;
     }
