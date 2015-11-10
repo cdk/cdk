@@ -316,6 +316,19 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                                 Map<IChemObject, Integer> idxs) throws IOException, CDKException {
         if (mol.getBondCount() == 0)
             return;
+
+        // collect multicenter Sgroups before output
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        Map<IBond,Sgroup> multicenterSgroups = new HashMap<>();
+        if (sgroups != null) {
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getType() != SgroupType.ExtMulticenter)
+                    continue;
+                for (IBond bond : sgroup.getBonds())
+                    multicenterSgroups.put(bond, sgroup);
+            }
+        }
+
         writer.write("BEGIN BOND\n");
         int bondIdx = 0;
         for (IBond bond : mol.bonds()) {
@@ -371,6 +384,14 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 default:
                     // warn?
                     break;
+            }
+
+            Sgroup sgroup = multicenterSgroups.get(bond);
+            if (sgroup != null) {
+                List<IAtom> atoms = new ArrayList<>(sgroup.getAtoms());
+                atoms.remove(bond.getAtom(0));
+                atoms.remove(bond.getAtom(1));
+                writer.write(" ATTACH=ANY ENDPTS=(").write(atoms, idxs).write(')');
             }
 
             writer.write('\n');
@@ -435,11 +456,6 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      */
     private void writeSgroupBlock(List<Sgroup> sgroups, Map<IChemObject, Integer> idxs) throws IOException, CDKException {
 
-        if (sgroups.isEmpty())
-            return;
-
-        writer.write("BEGIN SGROUP\n");
-
         // going to reorder but keep the originals untouched
         sgroups = new ArrayList<>(sgroups);
 
@@ -449,6 +465,11 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
             if (iter.next().getType() == SgroupType.ExtMulticenter)
                 iter.remove();
         }
+
+        if (sgroups.isEmpty())
+            return;
+
+        writer.write("BEGIN SGROUP\n");
 
         // Short of building a full dependency graph we write the parents
         // first, this sort is good for three levels of nesting. Not perfect

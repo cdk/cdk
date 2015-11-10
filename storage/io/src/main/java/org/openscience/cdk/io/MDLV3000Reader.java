@@ -24,8 +24,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -46,6 +49,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -142,7 +147,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     public IAtomContainer readMolecule(IChemObjectBuilder builder) throws CDKException {
-        return builder.newInstance(IAtomContainer.class, readConnectionTable(builder));
+        return readConnectionTable(builder);
     }
 
     public IAtomContainer readConnectionTable(IChemObjectBuilder builder) throws CDKException {
@@ -393,12 +398,14 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     logger.debug(exception);
                     throw new CDKException(error, exception);
                 }
+
+                List<IAtom> endpts = new ArrayList<>();
+                String attach = null;
+
                 // the rest are key=value fields
                 if (command.indexOf('=') != -1) {
                     Map<String, String> options = parseOptions(exhaustStringTokenizer(tokenizer));
-                    Iterator<String> keys = options.keySet().iterator();
-                    while (keys.hasNext()) {
-                        String key = keys.next();
+                    for (String key : options.keySet()) {
                         String value = options.get(key);
                         try {
                             if (key.equals("CFG")) {
@@ -412,12 +419,20 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                 } else if (configuration == 3) {
                                     bond.setStereo(IBond.Stereo.DOWN);
                                 }
+                            } else if (key.equals("ENDPTS")) {
+                                String[] endptStr = value.split(" ");
+                                // skip first value that is count
+                                for (int i = 1; i < endptStr.length; i++) {
+                                    endpts.add(readData.getAtom(Integer.parseInt(endptStr[i]) - 1));
+                                }
+                            } else if (key.equals("ATTACH")) {
+                                attach = value;
                             } else {
                                 logger.warn("Not parsing key: " + key);
                             }
                         } catch (Exception exception) {
                             String error = "Error while parsing key/value " + key + "=" + value + ": "
-                                    + exception.getMessage();
+                                           + exception.getMessage();
                             logger.error(error);
                             logger.debug(exception);
                             throw new CDKException(error, exception);
@@ -427,6 +442,22 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
                 // storing bond
                 readData.addBond(bond);
+
+                // storing positional variation
+                if ("ANY".equals(attach)) {
+                    Sgroup sgroup = new Sgroup();
+                    sgroup.setType(SgroupType.ExtMulticenter);
+                    sgroup.addAtom(bond.getAtom(0)); // could be other end?
+                    sgroup.addBond(bond);
+                    for (IAtom endpt : endpts)
+                        sgroup.addAtom(endpt);
+
+                    List<Sgroup> sgroups = readData.getProperty(CDKConstants.CTAB_SGROUPS);
+                    if (sgroups == null)
+                        readData.setProperty(CDKConstants.CTAB_SGROUPS, sgroups = new ArrayList<>(4));
+                    sgroups.add(sgroup);
+                }
+
                 logger.debug("Added bond: " + bond);
             }
         }

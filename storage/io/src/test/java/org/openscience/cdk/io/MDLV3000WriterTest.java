@@ -392,6 +392,14 @@ public class MDLV3000WriterTest {
         }
     }
 
+    @Test public void positionalVariationRoundTrip() throws Exception {
+        try (MDLV3000Reader mdlr = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"))) {
+            IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
+            String res = writeToStr(mol);
+            assertThat(res, CoreMatchers.containsString("M  V30 8 1 8 9 ATTACH=ANY ENDPTS=(5 2 3 4 5 6)\n"));
+        }
+    }
+
     private String writeToStr(IAtomContainer mol) throws IOException, CDKException {
         StringWriter sw = new StringWriter();
         try (MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {

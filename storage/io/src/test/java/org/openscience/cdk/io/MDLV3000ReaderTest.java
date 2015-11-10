@@ -25,11 +25,14 @@ package org.openscience.cdk.io;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -37,6 +40,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 /**
  * TestCase for the reading MDL V3000 mol files using one test file.
@@ -117,4 +125,13 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+    @Test public void positionalVariation() throws Exception {
+        MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"));
+        IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0,0,0,0));
+        assertThat(container.getBondCount(), is(8));
+        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+        assertNotNull(sgroups);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getType(), is(SgroupType.ExtMulticenter));
+    }
 }
