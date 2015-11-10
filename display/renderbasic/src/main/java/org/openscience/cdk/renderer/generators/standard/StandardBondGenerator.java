@@ -966,26 +966,27 @@ final class StandardBondGenerator {
     }
 
     /**
-     * Draws a crossing wavy
+     * Draws a crossing wavy line at the end of a bond to indicate a point of attachment.
      *
-     * @param atom1
-     * @param bond
-     * @return
+     * @param atom atom that is an attachment point
+     * @param bond bond that is an attachment point
+     * @return the rendering element
      */
-    private IRenderingElement generateAttachPoint(IAtom atom1, IBond bond) {
+    private IRenderingElement generateAttachPoint(IAtom atom, IBond bond) {
 
-        final Vector2d bndVec  = VecmathUtil.newUnitVector(atom1, bond);
+        final Point2d  mid     = atom.getPoint2d();
+        final Vector2d bndVec  = VecmathUtil.newUnitVector(atom, bond);
         final Vector2d bndXVec = VecmathUtil.newPerpendicularVector(bndVec);
 
-        final double length = atom1.getPoint2d().distance(bond.getConnectedAtom(atom1).getPoint2d());
+        final double length = atom.getPoint2d().distance(bond.getConnectedAtom(atom).getPoint2d());
         bndXVec.scale(length /2);
-        final Tuple2d beg = VecmathUtil.sum(atom1.getPoint2d(), bndXVec);
+        final Tuple2d beg = VecmathUtil.sum(atom.getPoint2d(), bndXVec);
         bndXVec.scale(-1);
-        final Tuple2d end = VecmathUtil.sum(atom1.getPoint2d(), bndXVec);
+        final Tuple2d end = VecmathUtil.sum(atom.getPoint2d(), bndXVec);
 
         // wavy line between beg and end, see generateWavyBond for explanation
 
-        final int nCurves = 2 * (int) (length / waveSpacing);
+        final int nCurves = (int) (2 * Math.ceil(length / waveSpacing));
         final double step = length / nCurves;
 
         bndXVec.normalize();
@@ -993,31 +994,62 @@ final class StandardBondGenerator {
         Vector2d unit = VecmathUtil.newUnitVector(beg, end);
 
         List<PathElement> path = new ArrayList<PathElement>();
-        path.add(new MoveTo(beg.x, beg.y));
 
-        for (int i = 1; i < nCurves; i += 2) {
-
-            peak = negate(peak); // alternate wave side
+        int halfNCurves = nCurves / 2;
+        // one half
+        path.add(new MoveTo(mid.x, mid.y));
+        for (int i = 1; i < halfNCurves; i += 2) {
+            peak.negate(); // alternate wave side
 
             // curving away from the center line
             {
                 double dist = i * step;
                 // first end point
-                final Tuple2d endPoint = sum(sum(beg, scale(unit, dist)), peak);
-                    final Tuple2d controlPoint1 = sum(sum(beg, scale(unit, (i - 1) * step)), scale(peak, 0.5));
-                    final Tuple2d controlPoint2 = sum(sum(beg, scale(unit, (i - 0.5) * step)), peak);
-                    path.add(new CubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y,
-                                         endPoint.x, endPoint.y));
+                final Tuple2d endPoint = sum(sum(mid, scale(unit, dist)), peak);
+                final Tuple2d controlPoint1 = sum(sum(mid, scale(unit, (i - 1) * step)), scale(peak, 0.5));
+                final Tuple2d controlPoint2 = sum(sum(mid, scale(unit, (i - 0.5) * step)), peak);
+                path.add(new CubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y,
+                                     endPoint.x, endPoint.y));
             }
 
             // curving towards the center line
             {
                 double dist = (i + 1) * step;
                 // second end point
-                final Tuple2d endPoint = sum(beg, scale(unit, dist));
+                final Tuple2d endPoint = sum(mid, scale(unit, dist));
 
-                final Tuple2d controlPoint1 = sum(sum(beg, scale(unit, (i + 0.5) * step)), peak);
-                final Tuple2d controlPoint2 = sum(sum(beg, scale(unit, dist)), scale(peak, 0.5));
+                final Tuple2d controlPoint1 = sum(sum(mid, scale(unit, (i + 0.5) * step)), peak);
+                final Tuple2d controlPoint2 = sum(sum(mid, scale(unit, dist)), scale(peak, 0.5));
+                path.add(new CubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y,
+                                     endPoint.x, endPoint.y));
+            }
+        }
+        // other half
+        unit.negate();
+        peak.negate();
+        path.add(new MoveTo(mid.x, mid.y));
+        for (int i = 1; i < halfNCurves; i += 2) {
+            peak.negate(); // alternate wave side
+
+            // curving away from the center line
+            {
+                double dist = i * step;
+                // first end point
+                final Tuple2d endPoint = sum(sum(mid, scale(unit, dist)), peak);
+                final Tuple2d controlPoint1 = sum(sum(mid, scale(unit, (i - 1) * step)), scale(peak, 0.5));
+                final Tuple2d controlPoint2 = sum(sum(mid, scale(unit, (i - 0.5) * step)), peak);
+                path.add(new CubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y,
+                                     endPoint.x, endPoint.y));
+            }
+
+            // curving towards the center line
+            {
+                double dist = (i + 1) * step;
+                // second end point
+                final Tuple2d endPoint = sum(mid, scale(unit, dist));
+
+                final Tuple2d controlPoint1 = sum(sum(mid, scale(unit, (i + 0.5) * step)), peak);
+                final Tuple2d controlPoint2 = sum(sum(mid, scale(unit, dist)), scale(peak, 0.5));
                 path.add(new CubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y,
                                      endPoint.x, endPoint.y));
             }
