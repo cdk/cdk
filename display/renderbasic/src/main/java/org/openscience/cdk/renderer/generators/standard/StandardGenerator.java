@@ -124,7 +124,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * Marks atoms and bonds as being hidden from the actual depiction. Set this
      * property to non-null to indicate this.
      */
-    public final static String          HIDDEN = "stdgen.hidden";
+    public final static String          HIDDEN       = "stdgen.hidden";
+    public final static String          HIDDEN_FULLY = "stdgen.hidden.fully";
 
     private final Font                  font;
     private final StandardAtomGenerator atomGenerator;
@@ -311,6 +312,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         for (int i = 0; i < container.getAtomCount(); i++) {
 
             final IAtom atom = container.getAtom(i);
+
+            if (isHiddenFully(atom))
+                continue;
 
             final List<IBond> bonds     = container.getConnectedBondsList(atom);
             final List<IAtom> neighbors = container.getConnectedAtomsList(atom);
@@ -672,11 +676,30 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Hide the specified chemobj.
+     * Is the chem object hidden fully?
+     * @param chemobj a chem object
+     * @return whether it is hidden
+     */
+    static boolean isHiddenFully(IChemObject chemobj) {
+        return Boolean.TRUE.equals(chemobj.getProperty(HIDDEN_FULLY));
+    }
+
+    /**
+     * Hide the specified chemobj, if an atom still use the bounds of its
+     * symbol.
+     *
      * @param chemobj a chem obj (atom or bond) to hide
      */
     static void hide(IChemObject chemobj) {
         chemobj.setProperty(HIDDEN, true);
+    }
+
+    /**
+     * Hide the specified chemobj and don't use the bounds of its symbol.
+     * @param chemobj a chem obj (atom or bond) to hide
+     */
+    static void hideFully(IChemObject chemobj) {
+        chemobj.setProperty(HIDDEN_FULLY, true);
     }
 
     /**
@@ -685,6 +708,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     static void unhide(IChemObject chemobj) {
         chemobj.setProperty(HIDDEN, false);
+        chemobj.setProperty(HIDDEN_FULLY, false);
     }
 
     /**

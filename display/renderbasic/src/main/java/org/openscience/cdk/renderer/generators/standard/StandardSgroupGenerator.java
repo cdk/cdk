@@ -122,9 +122,9 @@ final class StandardSgroupGenerator {
                     IAtom beg = bond.getAtom(0);
                     IAtom end = bond.getAtom(1);
                     if (atoms.contains(beg)) {
-                        StandardGenerator.hide(beg);
+                        StandardGenerator.hideFully(beg);
                     } else {
-                        StandardGenerator.hide(end);
+                        StandardGenerator.hideFully(end);
                     }
                 }
             }

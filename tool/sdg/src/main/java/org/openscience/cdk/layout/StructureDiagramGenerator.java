@@ -1645,11 +1645,11 @@ public class StructureDiagramGenerator {
 
                     bndVec.scale(0.5 * bondLength); // crossing point
 
-                    double bndStep = (1.4*bondLength) / 4;
+                    double bndStep = (bondLength) / 5;
 
                     newBegP.add(bndVec);
                     bndXVec.normalize();
-                    bndXVec.scale(bndStep);
+                    bndXVec.scale(2*bndStep);
                     newBegP.sub(bndXVec);
                     newEndP.sub(bndVec);
                     bndXVec.normalize();
