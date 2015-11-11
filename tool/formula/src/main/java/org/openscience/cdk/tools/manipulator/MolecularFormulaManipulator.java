@@ -329,7 +329,7 @@ public class MolecularFormulaManipulator {
      *
      */
     public static String getHTML(IMolecularFormula formula) {
-        return getHTML(formula, false, false);
+        return getHTML(formula, true, true);
     }
 
     /**
