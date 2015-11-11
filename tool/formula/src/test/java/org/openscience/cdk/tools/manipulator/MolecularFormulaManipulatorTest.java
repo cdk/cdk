@@ -571,9 +571,21 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals("C<sub>10</sub>", MolecularFormulaManipulator.getHTML(formula, true, false));
         formula.setCharge(1);
-        Assert.assertEquals("C<sub>10</sub><sup>1+</sup>", MolecularFormulaManipulator.getHTML(formula, true, false));
+        Assert.assertEquals("C<sub>10</sub><sup>+</sup>", MolecularFormulaManipulator.getHTML(formula, true, false));
         formula.setCharge(formula.getCharge() - 2);
-        Assert.assertEquals("C<sub>10</sub><sup>1-</sup>", MolecularFormulaManipulator.getHTML(formula, true, false));
+        Assert.assertEquals("C<sub>10</sub><sup>–</sup>", MolecularFormulaManipulator.getHTML(formula, true, false));
+    }
+
+    @Test
+    public void nullIsotopeLabels() {
+        MolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
+
+        Assert.assertEquals("C<sub>10</sub>", MolecularFormulaManipulator.getHTML(formula, true, false));
+        formula.setCharge(1);
+        Assert.assertEquals("C<sub>10</sub><sup>+</sup>", MolecularFormulaManipulator.getHTML(formula, true, true));
+        formula.setCharge(formula.getCharge() - 2);
+        Assert.assertEquals("C<sub>10</sub><sup>–</sup>", MolecularFormulaManipulator.getHTML(formula, true, true));
     }
 
     @Test
@@ -605,7 +617,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(ifac.getMajorIsotope("C"), 2);
         formula.addIsotope(ifac.getMajorIsotope("H"), 6);
         formula.setCharge(1);
-        Assert.assertEquals("<sup>12</sup>C<sub>2</sub><sup>1</sup>H<sub>6</sub><sup>1+</sup>",
+        Assert.assertEquals("<sup>12</sup>C<sub>2</sub><sup>1</sup>H<sub>6</sub><sup>+</sup>",
                 MolecularFormulaManipulator.getHTML(formula, true, true));
     }
 
