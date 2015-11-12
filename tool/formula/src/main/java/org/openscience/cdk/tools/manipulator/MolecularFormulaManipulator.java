@@ -329,7 +329,7 @@ public class MolecularFormulaManipulator {
      *
      */
     public static String getHTML(IMolecularFormula formula) {
-        return getHTML(formula, false, false);
+        return getHTML(formula, true, true);
     }
 
     /**
@@ -359,25 +359,25 @@ public class MolecularFormulaManipulator {
     /**
      * Returns the string representation of the molecule formula with numbers
      * wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the isotope of each Element
-     * in &lt;sup&gt;&lt;/sup&gt; tags and the total charge of IMolecularFormula
+     * in &lt;sup&gt;&lt;/sup&gt; tags and the total showCharge of IMolecularFormula
      * in &lt;sup&gt;&lt;/sup&gt; tags. Useful for displaying formulae in Swing
      * components or on the web.
      *
      *
      * @param   formula  The IMolecularFormula object
      * @param   orderElements The order of Elements
-     * @param   chargeB  True, If it has to show the charge
-     * @param   isotopeB True, If it has to show the Isotope mass
+     * @param   showCharge  True, If it has to show the showCharge
+     * @param   showIsotopes True, If it has to show the Isotope mass
      * @return           A HTML representation of the molecular formula
      * @see              #getHTML(IMolecularFormula)
      *
      */
-    public static String getHTML(IMolecularFormula formula, String[] orderElements, boolean chargeB, boolean isotopeB) {
+    public static String getHTML(IMolecularFormula formula, String[] orderElements, boolean showCharge, boolean showIsotopes) {
         StringBuilder sb = new StringBuilder();
         for (String orderElement : orderElements) {
             IElement element = formula.getBuilder().newInstance(IElement.class, orderElement);
             if (containsElement(formula, element)) {
-                if (!isotopeB) {
+                if (!showIsotopes) {
                     sb.append(element.getSymbol());
                     int n = getElementCount(formula, element);
                     if (n > 1) {
@@ -385,7 +385,9 @@ public class MolecularFormulaManipulator {
                     }
                 } else {
                     for (IIsotope isotope : getIsotopes(formula, element)) {
-                        sb.append("<sup>").append(isotope.getMassNumber()).append("</sup>");
+                        Integer massNumber = isotope.getMassNumber();
+                        if (massNumber != null)
+                            sb.append("<sup>").append(massNumber).append("</sup>");
                         sb.append(isotope.getSymbol());
                         int n = formula.getIsotopeCount(isotope);
                         if (n > 1) {
@@ -396,14 +398,19 @@ public class MolecularFormulaManipulator {
             }
         }
 
-        if (chargeB) {
+        if (showCharge) {
             Integer charge = formula.getCharge();
             if (charge == CDKConstants.UNSET || charge == 0) {
                 return sb.toString();
-            } else if (charge < 0) {
-                sb.append("<sup>").append(charge * -1).append('-').append("</sup>");
             } else {
-                sb.append("<sup>").append(charge).append('+').append("</sup>");
+                sb.append("<sup>");
+                if (charge > 1 || charge < -1)
+                    sb.append(Math.abs(charge));
+                if (charge > 0)
+                    sb.append('+');
+                else
+                    sb.append(MINUS); // note, not a hyphen!
+                sb.append("</sup>");
             }
         }
         return sb.toString();
