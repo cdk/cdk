@@ -105,20 +105,20 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
         if ("C".equals(atom.getSymbol())) {
             type = perceiveCarbons(atomContainer, atom);
-        } else if ("Li".equals(atom.getSymbol())) {
-            type = perceiveLithium(atomContainer, atom);
+        } else if ("H".equals(atom.getSymbol())) {
+            type = perceiveHydrogens(atomContainer, atom);
         } else if ("O".equals(atom.getSymbol())) {
             type = perceiveOxygens(atomContainer, atom);
         } else if ("N".equals(atom.getSymbol())) {
             type = perceiveNitrogens(atomContainer, atom);
-        } else if ("H".equals(atom.getSymbol())) {
-            type = perceiveHydrogens(atomContainer, atom);
         } else if ("S".equals(atom.getSymbol())) {
             type = perceiveSulphurs(atomContainer, atom);
         } else if ("P".equals(atom.getSymbol())) {
             type = perceivePhosphors(atomContainer, atom);
         } else if ("Si".equals(atom.getSymbol())) {
             type = perceiveSilicon(atomContainer, atom);
+        } else if ("Li".equals(atom.getSymbol())) {
+            type = perceiveLithium(atomContainer, atom);
         } else if ("B".equals(atom.getSymbol())) {
             type = perceiveBorons(atomContainer, atom);
         } else if ("Be".equals(atom.getSymbol())) {
