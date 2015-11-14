@@ -30,6 +30,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -55,6 +56,7 @@ import javax.vecmath.Vector2d;
 import java.awt.geom.Line2D;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -1162,6 +1164,35 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
                 numCrossing++;
             if (isCrossing(mol.getBond(i), mol.getBond(11)))
                 numCrossing++;
+        }
+    }
+
+    @Test
+    public void disconnectedMultigroupPlacement() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("c1ccccc1.c1ccccc1.c1ccccc1");
+
+        // build multiple group Sgroup
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabMultipleGroup);
+        for (IAtom atom : mol.atoms())
+            sgroup.addAtom(atom);
+        List<IAtom> patoms = new ArrayList<>(6);
+        for (IAtom atom : mol.atoms()) {
+            patoms.add(atom);
+            if (patoms.size() == 6)
+                break;
+        }
+        sgroup.putValue(SgroupKey.CtabParentAtomList, patoms);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS, Collections.singletonList(sgroup));
+        layout(mol);
+        for (int i = 0; i < 6; i++) {
+            assertEquals(mol.getAtom(i).getPoint2d(),
+                         mol.getAtom(i + 6).getPoint2d(),
+                         0.01);
+            assertEquals(mol.getAtom(i).getPoint2d(),
+                         mol.getAtom(i + 12).getPoint2d(),
+                         0.01);
         }
     }
 }
