@@ -410,7 +410,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             } else if (atom.getFormalCharge() == -1) {
                 IBond.Order maxBondOrder = getMaximumBondOrder(connectedBonds);
                 if (maxBondOrder == CDKConstants.BONDORDER_SINGLE && connectedBonds.size() <= 3) {
-                    if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer, connectedBonds)) {
+                    if (bothNeighborsAreSp2(atom, atomContainer, connectedBonds) && isRingAtom(atom, atomContainer)) {
                         IAtomType type = getAtomType("C.minus.planar");
                         if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
@@ -614,7 +614,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 int connectedHeavyAtoms = connectedBonds.size() - explicitHydrogens;
                 if (connectedHeavyAtoms == 2) {
                     // a O.sp3 which is expected to take part in an aromatic system
-                    if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer, connectedBonds)) {
+                    if (bothNeighborsAreSp2(atom, atomContainer, connectedBonds) && isRingAtom(atom, atomContainer)) {
                         IAtomType type = getAtomType("O.planar3");
                         if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                     }
@@ -990,7 +990,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer) {
-        RingSearch searcher = new RingSearch(atomContainer);
+        return isRingAtom(atom, atomContainer, null);
+    }
+
+    private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer, RingSearch searcher) {
+        if (searcher == null) searcher = new RingSearch(atomContainer);
         return searcher.cyclic(atom);
     }
 
@@ -1215,7 +1219,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (neighborcount == 2) {
-            if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer, connectedBonds)) {
+            if (bothNeighborsAreSp2(atom, atomContainer, connectedBonds) && isRingAtom(atom, atomContainer)) {
                 if (countAttachedDoubleBonds(connectedBonds, atom) == 2) {
                     IAtomType type = getAtomType("S.inyl.2");
                     if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
