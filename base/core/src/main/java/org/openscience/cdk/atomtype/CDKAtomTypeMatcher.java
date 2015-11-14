@@ -636,6 +636,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (!"C".equals(carbon.getSymbol())) return false;
 
         List<IBond> carbonBonds = container.getConnectedBondsList(carbon);
+        if (carbonBonds.size() < 2) return false;
         int oxygenCount = 0;
         int singleBondedNegativeOxygenCount = 0;
         int doubleBondedOxygenCount = 0;
