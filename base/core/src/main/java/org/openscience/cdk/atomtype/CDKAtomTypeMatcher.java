@@ -656,48 +656,27 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private boolean atLeastTwoNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds) {
-    	if (connectedBonds != null) {
-    		int count = 0;
-    		for (IBond bond : connectedBonds) {
-    			if (bond.getOrder() == Order.DOUBLE || bond.isAromatic()) {
+    	int count = 0;
+    	for (IBond bond : connectedBonds) {
+    		if (bond.getOrder() == Order.DOUBLE || bond.isAromatic()) {
+    			count++;
+    		} else {
+    			IAtom nextAtom = bond.getConnectedAtom(atom);
+    			if (nextAtom.getHybridization() != CDKConstants.UNSET &&
+    					nextAtom.getHybridization() == Hybridization.SP2) {
+    				// OK, it's SP2
     				count++;
     			} else {
-    				IAtom nextAtom = bond.getConnectedAtom(atom);
-    				if (nextAtom.getHybridization() != CDKConstants.UNSET &&
-    						nextAtom.getHybridization() == Hybridization.SP2) {
+    				List<IBond> nextConnectBonds = atomContainer.getConnectedBondsList(nextAtom);
+    				if (countAttachedDoubleBonds(nextConnectBonds, nextAtom) > 0) {
     					// OK, it's SP2
     					count++;
-    				} else {
-    					List<IBond> nextConnectBonds = atomContainer.getConnectedBondsList(nextAtom);
-    					if (countAttachedDoubleBonds(nextConnectBonds, nextAtom) > 0) {
-    						// OK, it's SP2
-    						count++;
-    					}
     				}
     			}
-				if (count >= 2) return true;
     		}
-    		return false;
+    		if (count >= 2) return true;
     	}
-        int count = 0;
-        Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();;
-        while (atoms.hasNext() && (count < 2)) {
-            IAtom nextAtom = atoms.next();
-            if (!nextAtom.getSymbol().equals("H")) {
-                if (nextAtom.getHybridization() != CDKConstants.UNSET
-                        && nextAtom.getHybridization() == Hybridization.SP2) {
-                    // OK, it's SP2
-                    count++;
-                } else if (countAttachedDoubleBonds(connectedBonds, nextAtom) > 0) {
-                    // OK, it's SP2
-                    count++;
-                } else if (atomContainer.getBond(atom, nextAtom).isAromatic()) {
-                    // two aromatic bonds indicate sp2
-                    count++;
-                } // OK, not SP2
-            }
-        }
-        return count >= 2;
+    	return false;
     }
 
     private boolean bothNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds) {
