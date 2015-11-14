@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2008  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2007-2015  Egon Willighagen <egonw@users.sf.net>
  *                    2011  Nimish Gopal <nimishg@ebi.ac.uk>
  *                    2011  Syed Asad Rahman <asad@ebi.ac.uk>
  *                    2011  Gilleain Torrance <gilleain.torrance@gmail.com>
@@ -1018,7 +1018,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         List<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom);
         for (IAtom neighbor : neighbors) {
             if (neighbor.getSymbol().equals("C")) {
-                if (countAttachedDoubleBonds(atomContainer, neighbor, "O") == 1) return true;
+                if (countAttachedDoubleBonds(atomContainer.getConnectedBondsList(neighbor), neighbor, "O") == 1) return true;
             }
         }
         return false;
@@ -1028,7 +1028,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         List<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom);
         for (IAtom neighbor : neighbors) {
             if (neighbor.getSymbol().equals("C")) {
-                if (countAttachedDoubleBonds(atomContainer, neighbor, "S") == 1) return true;
+                if (countAttachedDoubleBonds(atomContainer.getConnectedBondsList(neighbor), neighbor, "S") == 1) return true;
             }
         }
         return false;
@@ -2359,10 +2359,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return countAttachedBonds(connectedAtoms, atom, IBond.Order.DOUBLE, symbol);
     }
 
-    private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom, String symbol) {
-        return countAttachedBonds(container, atom, IBond.Order.DOUBLE, symbol);
-    }
-
     private IAtomType perceiveCobalt(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (hasOneSingleElectron(atomContainer, atom)) {
             // no idea how to deal with this yet
@@ -2429,20 +2425,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             if (bond.isAromatic()) return true;
         }
         return false;
-    }
-
-    /**
-     * Count the number of doubly bonded atoms.
-     *
-     * @param container the molecule in which to look
-     * @param atom the atom being looked at
-     * @param order the desired bond order of the attached bonds
-     * @param symbol If not null, then it only counts the double bonded atoms which
-     *               match the given symbol.
-     * @return the number of doubly bonded atoms
-     */
-    private int countAttachedBonds(IAtomContainer container, IAtom atom, IBond.Order order, String symbol) {
-    	return countAttachedBonds(container.getConnectedBondsList(atom), atom, order, symbol);
     }
 
     /**
