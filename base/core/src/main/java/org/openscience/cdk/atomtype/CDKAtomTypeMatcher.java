@@ -2530,8 +2530,4 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return true;
     }
 
-    private boolean isHueckelNumber(int electronCount) {
-        return (electronCount % 4 == 2) && (electronCount >= 2);
-    }
-
 }
