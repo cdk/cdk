@@ -2447,8 +2447,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 if (bond.getAtomCount() == 2) {
                     if (symbol != null) {
                         // if other atom is of the given element (by its symbol)
-                        if ((bond.getAtom(0) != atom && bond.getAtom(0).getSymbol().equals(symbol))
-                                || (bond.getAtom(1) != atom && bond.getAtom(1).getSymbol().equals(symbol))) {
+                        if (bond.getConnectedAtom(atom).getSymbol().equals(symbol)) {
                             doubleBondedAtoms++;
                         }
                     } else {
