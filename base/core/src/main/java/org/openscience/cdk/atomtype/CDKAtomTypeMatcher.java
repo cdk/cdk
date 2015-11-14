@@ -1357,11 +1357,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveHydrogens(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        int neighborcount = atomContainer.getConnectedBondsCount(atom);
+    	List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
+        int neighborcount = connectedBonds.size();
         if (hasOneSingleElectron(atomContainer, atom)) {
             if ((atom.getFormalCharge() == CDKConstants.UNSET || atom.getFormalCharge() == 0) && neighborcount == 0) {
                 IAtomType type = getAtomType("H.radical");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
             return null;
         } else if (neighborcount == 2) {
@@ -1370,18 +1371,18 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else if (neighborcount == 1) {
             if (atom.getFormalCharge() == CDKConstants.UNSET || atom.getFormalCharge() == 0) {
                 IAtomType type = getAtomType("H");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         } else if (neighborcount == 0) {
             if (atom.getFormalCharge() == CDKConstants.UNSET || atom.getFormalCharge() == 0) {
                 IAtomType type = getAtomType("H");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getFormalCharge() == 1) {
                 IAtomType type = getAtomType("H.plus");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (atom.getFormalCharge() == -1) {
                 IAtomType type = getAtomType("H.minus");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
         }
         return null;
