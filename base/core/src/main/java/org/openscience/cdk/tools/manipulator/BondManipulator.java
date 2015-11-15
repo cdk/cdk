@@ -280,7 +280,7 @@ public class BondManipulator {
      * @see #getMinimumBondOrder(java.util.List)
      */
     public static IBond.Order getMinimumBondOrder(Iterator<IBond> bonds) {
-        IBond.Order minOrder = IBond.Order.QUADRUPLE;
+        IBond.Order minOrder = IBond.Order.SEXTUPLE;
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
             if (isLowerOrder(bond.getOrder(), minOrder)) minOrder = bond.getOrder();

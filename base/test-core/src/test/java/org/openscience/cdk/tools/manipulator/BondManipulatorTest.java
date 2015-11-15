@@ -306,6 +306,18 @@ public class BondManipulatorTest extends CDKTestCase {
     }
 
     @Test
+    public void testGetMinimumBondOrder_HigherOrders() {
+        List<IBond> bonds = new ArrayList<IBond>();
+        IBond bond = new Bond();
+        bond.setOrder(IBond.Order.QUINTUPLE);
+        bonds.add(bond);
+        bond = new Bond();
+        bond.setOrder(IBond.Order.SEXTUPLE);
+        bonds.add(bond);
+        Assert.assertEquals(IBond.Order.QUINTUPLE, BondManipulator.getMinimumBondOrder(bonds.iterator()));
+    }
+
+    @Test
     public void testGetSingleBondEquivalentSum_List() {
         List<IBond> bonds = new ArrayList<IBond>();
         IBond bond = new Bond();
