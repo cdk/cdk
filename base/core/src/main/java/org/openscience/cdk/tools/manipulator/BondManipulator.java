@@ -72,10 +72,15 @@ public class BondManipulator {
     public static boolean isLowerOrder(IBond.Order first, IBond.Order second) {
         if (first == null || second == null) return false;
 
-        if (second == IBond.Order.QUADRUPLE) {
-            if (first != IBond.Order.QUADRUPLE) return true;
-        }
-        if (second == IBond.Order.TRIPLE) {
+        if (second == IBond.Order.SEXTUPLE) {
+            if (first != IBond.Order.SEXTUPLE) return true;
+        } else if (second == IBond.Order.QUINTUPLE) {
+            if (first == IBond.Order.SINGLE || first == IBond.Order.DOUBLE ||
+            	first == IBond.Order.TRIPLE || first == IBond.Order.QUADRUPLE) return true;
+        } else if (second == IBond.Order.QUADRUPLE) {
+            if (first == IBond.Order.SINGLE || first == IBond.Order.DOUBLE ||
+                first == IBond.Order.TRIPLE) return true;
+        } else if (second == IBond.Order.TRIPLE) {
             if (first == IBond.Order.SINGLE || first == IBond.Order.DOUBLE) return true;
         } else if (second == IBond.Order.DOUBLE) {
             if (first == IBond.Order.SINGLE) return true;
@@ -97,13 +102,18 @@ public class BondManipulator {
     public static boolean isHigherOrder(IBond.Order first, IBond.Order second) {
         if (first == null || second == null) return false;
 
-        if (second == IBond.Order.QUADRUPLE) {
+        if (second == IBond.Order.SEXTUPLE) {
             return false;
-        }
-        if (second == IBond.Order.TRIPLE) {
-            if (first == IBond.Order.QUADRUPLE) return true;
+        } else if (second == IBond.Order.QUINTUPLE) {
+            if (first == IBond.Order.SEXTUPLE) return true;
+        } else if (second == IBond.Order.QUADRUPLE) {
+            if (first == IBond.Order.QUINTUPLE || first == IBond.Order.SEXTUPLE) return true;
+        } else if (second == IBond.Order.TRIPLE) {
+            if (first == IBond.Order.QUADRUPLE ||
+            	first == IBond.Order.QUINTUPLE || first == IBond.Order.SEXTUPLE) return true;
         } else if (second == IBond.Order.DOUBLE) {
-            if (first == IBond.Order.TRIPLE || first == IBond.Order.QUADRUPLE) return true;
+            if (first == IBond.Order.TRIPLE || first == IBond.Order.QUADRUPLE ||
+            	first == IBond.Order.QUINTUPLE || first == IBond.Order.SEXTUPLE) return true;
         } else if (second == IBond.Order.SINGLE) {
             if (first != IBond.Order.SINGLE) return true;
         }
@@ -120,7 +130,11 @@ public class BondManipulator {
      * @see #decreaseBondOrder(org.openscience.cdk.interfaces.IBond)
      */
     public static IBond.Order increaseBondOrder(IBond.Order oldOrder) {
-        if (oldOrder == IBond.Order.TRIPLE) {
+    	if (oldOrder == IBond.Order.QUINTUPLE) {
+            return IBond.Order.SEXTUPLE;
+        } else if (oldOrder == IBond.Order.QUADRUPLE) {
+            return IBond.Order.QUINTUPLE;
+        } else if (oldOrder == IBond.Order.TRIPLE) {
             return IBond.Order.QUADRUPLE;
         } else if (oldOrder == IBond.Order.DOUBLE) {
             return IBond.Order.TRIPLE;
@@ -152,12 +166,16 @@ public class BondManipulator {
      * @see #increaseBondOrder(org.openscience.cdk.interfaces.IBond.Order)
      */
     public static IBond.Order decreaseBondOrder(IBond.Order oldOrder) {
-        if (oldOrder == IBond.Order.TRIPLE) {
+    	if (oldOrder == IBond.Order.SEXTUPLE) {
+            return IBond.Order.QUINTUPLE;
+        } else if (oldOrder == IBond.Order.QUINTUPLE) {
+            return IBond.Order.QUADRUPLE;
+        } else if (oldOrder == IBond.Order.QUADRUPLE) {
+            return IBond.Order.TRIPLE;
+        } else if (oldOrder == IBond.Order.TRIPLE) {
             return IBond.Order.DOUBLE;
         } else if (oldOrder == IBond.Order.DOUBLE) {
             return IBond.Order.SINGLE;
-        } else if (oldOrder == IBond.Order.QUADRUPLE) {
-            return IBond.Order.TRIPLE;
         }
         return oldOrder;
     }
@@ -190,6 +208,10 @@ public class BondManipulator {
             return IBond.Order.TRIPLE;
         } else if (bondOrder == 4.0) {
             return IBond.Order.QUADRUPLE;
+        } else if (bondOrder == 5.0) {
+            return IBond.Order.QUINTUPLE;
+        } else if (bondOrder == 6.0) {
+            return IBond.Order.SEXTUPLE;
         }
         return null;
     }
@@ -211,8 +233,12 @@ public class BondManipulator {
             return 2.0;
         } else if (bondOrder == IBond.Order.TRIPLE) {
             return 3.0;
+        } else if (bondOrder == IBond.Order.QUADRUPLE) {
+            return 4.0;
+        } else if (bondOrder == IBond.Order.QUINTUPLE) {
+            return 5.0;
         }
-        return 4.0;
+        return 6.0;
     }
 
     /**
