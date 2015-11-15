@@ -21,6 +21,7 @@
 package org.openscience.cdk.atomtype;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -91,11 +92,25 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer, RingSearch searcher) throws CDKException {
+    	// cache the ring information
     	if (searcher == null) searcher = new RingSearch(atomContainer);
+    	// cache atom bonds
+    	Map<IAtom, List<IBond>> connectedBonds = new HashMap<IAtom,List<IBond>>(atomContainer.getAtomCount());
+    	for (IBond bond : atomContainer.bonds()) {
+    		for (IAtom atom : bond.atoms()) {
+    			List<IBond> atomBonds = connectedBonds.get(atom);
+    			if (atomBonds == null) {
+    				atomBonds = new ArrayList<>(4);
+    				connectedBonds.put(atom, atomBonds);
+    			}
+    			atomBonds.add(bond);
+    		}
+    	}
+    	
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
         int typeCounter = 0;
         for (IAtom atom : atomContainer.atoms()) {
-            types[typeCounter] = findMatchingAtomType(atomContainer, atom, searcher);
+            types[typeCounter] = findMatchingAtomType(atomContainer, atom, searcher, connectedBonds.get(atom));
             typeCounter++;
         }
         return types;
@@ -104,24 +119,24 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     /** {@inheritDoc} */
     @Override
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-    	return findMatchingAtomType(atomContainer, atom, null);
+    	return findMatchingAtomType(atomContainer, atom, null, null);
     }
 
-    private IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom, RingSearch searcher) throws CDKException {
+    private IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds) throws CDKException {
         IAtomType type = null;
         if (atom instanceof IPseudoAtom) {
             return factory.getAtomType("X");
         }
         if ("C".equals(atom.getSymbol())) {
-            type = perceiveCarbons(atomContainer, atom, searcher);
+            type = perceiveCarbons(atomContainer, atom, searcher, connectedBonds);
         } else if ("H".equals(atom.getSymbol())) {
             type = perceiveHydrogens(atomContainer, atom);
         } else if ("O".equals(atom.getSymbol())) {
-            type = perceiveOxygens(atomContainer, atom, searcher);
+            type = perceiveOxygens(atomContainer, atom, searcher, connectedBonds);
         } else if ("N".equals(atom.getSymbol())) {
-            type = perceiveNitrogens(atomContainer, atom, searcher);
+            type = perceiveNitrogens(atomContainer, atom, searcher, connectedBonds);
         } else if ("S".equals(atom.getSymbol())) {
-            type = perceiveSulphurs(atomContainer, atom, searcher);
+            type = perceiveSulphurs(atomContainer, atom, searcher, connectedBonds);
         } else if ("P".equals(atom.getSymbol())) {
             type = perceivePhosphors(atomContainer, atom);
         } else if ("Si".equals(atom.getSymbol())) {
@@ -375,11 +390,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return null;
     }
 
-    private IAtomType perceiveCarbons(IAtomContainer atomContainer, IAtom atom, RingSearch searcher) throws CDKException {
+    private IAtomType perceiveCarbons(IAtomContainer atomContainer, IAtom atom,
+    		                          RingSearch searcher, List<IBond> connectedBonds) throws CDKException {
     	if (hasOneSingleElectron(atomContainer, atom)) {
             return perceiveCarbonRadicals(atomContainer, atom);
         }
-    	List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
+    	if (connectedBonds == null) connectedBonds = atomContainer.getConnectedBondsList(atom);
         // if hybridization is given, use that
         if (hasHybridization(atom) && !isCharged(atom)) {
             if (atom.getHybridization() == Hybridization.SP2) {
@@ -543,13 +559,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return atom.getHybridization() != CDKConstants.UNSET;
     }
 
-    private IAtomType perceiveOxygens(IAtomContainer atomContainer, IAtom atom, RingSearch searcher) throws CDKException {
+    private IAtomType perceiveOxygens(IAtomContainer atomContainer, IAtom atom,
+    		                          RingSearch searcher, List<IBond> connectedBonds) throws CDKException {
         if (hasOneSingleElectron(atomContainer, atom)) {
             return perceiveOxygenRadicals(atomContainer, atom);
         }
 
         // if hybridization is given, use that
-        List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
+        if (connectedBonds == null) connectedBonds = atomContainer.getConnectedBondsList(atom);
         if (hasHybridization(atom) && !isCharged(atom)) {
             if (atom.getHybridization() == Hybridization.SP2) {
                 int connectedAtomsCount = connectedBonds.size();
@@ -741,13 +758,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return null;
     }
 
-    private IAtomType perceiveNitrogens(IAtomContainer atomContainer, IAtom atom, RingSearch searcher) throws CDKException {
+    private IAtomType perceiveNitrogens(IAtomContainer atomContainer, IAtom atom,
+    		                            RingSearch searcher, List<IBond> connectedBonds) throws CDKException {
         // if hybridization is given, use that
         if (hasOneSingleElectron(atomContainer, atom)) {
             return perceiveNitrogenRadicals(atomContainer, atom);
         }
         
-        List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
+        if (connectedBonds == null) connectedBonds = atomContainer.getConnectedBondsList(atom);
         if (hasHybridization(atom) && !isCharged(atom)) {
             if (atom.getHybridization() == Hybridization.SP1) {
                 int neighborCount = connectedBonds.size();
@@ -1178,8 +1196,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return null;
     }
 
-    private IAtomType perceiveSulphurs(IAtomContainer atomContainer, IAtom atom, RingSearch searcher) throws CDKException {
-        List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
+    private IAtomType perceiveSulphurs(IAtomContainer atomContainer, IAtom atom,
+    		                           RingSearch searcher, List<IBond> connectedBonds) throws CDKException {
+        if (connectedBonds == null) connectedBonds = atomContainer.getConnectedBondsList(atom);
         IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         int neighborcount = connectedBonds.size();
         if (hasOneSingleElectron(atomContainer, atom)) {
