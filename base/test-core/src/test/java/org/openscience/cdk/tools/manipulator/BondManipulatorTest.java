@@ -53,18 +53,38 @@ public class BondManipulatorTest extends CDKTestCase {
         Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.SINGLE, IBond.Order.DOUBLE));
         Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.SINGLE, IBond.Order.TRIPLE));
         Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.SINGLE, IBond.Order.QUADRUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.SINGLE, IBond.Order.QUINTUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.SINGLE, IBond.Order.SEXTUPLE));
         Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.DOUBLE, IBond.Order.SINGLE));
         Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.DOUBLE, IBond.Order.DOUBLE));
         Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.DOUBLE, IBond.Order.TRIPLE));
         Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.DOUBLE, IBond.Order.QUADRUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.DOUBLE, IBond.Order.QUINTUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.DOUBLE, IBond.Order.SEXTUPLE));
         Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.TRIPLE, IBond.Order.SINGLE));
         Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.TRIPLE, IBond.Order.DOUBLE));
         Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.TRIPLE, IBond.Order.TRIPLE));
         Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.TRIPLE, IBond.Order.QUADRUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.TRIPLE, IBond.Order.QUINTUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.TRIPLE, IBond.Order.SEXTUPLE));
         Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.QUADRUPLE, IBond.Order.SINGLE));
         Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.QUADRUPLE, IBond.Order.DOUBLE));
         Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.QUADRUPLE, IBond.Order.TRIPLE));
         Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.QUADRUPLE, IBond.Order.QUADRUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.QUADRUPLE, IBond.Order.QUINTUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.QUADRUPLE, IBond.Order.SEXTUPLE));
+        Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.QUINTUPLE, IBond.Order.SINGLE));
+        Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.QUINTUPLE, IBond.Order.DOUBLE));
+        Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.QUINTUPLE, IBond.Order.TRIPLE));
+        Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.QUINTUPLE, IBond.Order.QUADRUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.QUINTUPLE, IBond.Order.QUINTUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.QUINTUPLE, IBond.Order.SEXTUPLE));
+        Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.SEXTUPLE, IBond.Order.SINGLE));
+        Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.SEXTUPLE, IBond.Order.DOUBLE));
+        Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.SEXTUPLE, IBond.Order.TRIPLE));
+        Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.SEXTUPLE, IBond.Order.QUADRUPLE));
+        Assert.assertTrue(BondManipulator.isHigherOrder(IBond.Order.SEXTUPLE, IBond.Order.QUINTUPLE));
+        Assert.assertFalse(BondManipulator.isHigherOrder(IBond.Order.SEXTUPLE, IBond.Order.SEXTUPLE));
     }
 
     @Test
@@ -73,18 +93,38 @@ public class BondManipulatorTest extends CDKTestCase {
         Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.SINGLE, IBond.Order.DOUBLE));
         Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.SINGLE, IBond.Order.TRIPLE));
         Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.SINGLE, IBond.Order.QUADRUPLE));
+        Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.SINGLE, IBond.Order.QUINTUPLE));
+        Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.SINGLE, IBond.Order.SEXTUPLE));
         Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.DOUBLE, IBond.Order.SINGLE));
         Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.DOUBLE, IBond.Order.DOUBLE));
         Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.DOUBLE, IBond.Order.TRIPLE));
         Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.DOUBLE, IBond.Order.QUADRUPLE));
+        Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.DOUBLE, IBond.Order.QUINTUPLE));
+        Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.DOUBLE, IBond.Order.SEXTUPLE));
         Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.TRIPLE, IBond.Order.SINGLE));
         Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.TRIPLE, IBond.Order.DOUBLE));
         Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.TRIPLE, IBond.Order.TRIPLE));
         Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.TRIPLE, IBond.Order.QUADRUPLE));
+        Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.TRIPLE, IBond.Order.QUINTUPLE));
+        Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.TRIPLE, IBond.Order.SEXTUPLE));
         Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUADRUPLE, IBond.Order.SINGLE));
         Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUADRUPLE, IBond.Order.DOUBLE));
         Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUADRUPLE, IBond.Order.TRIPLE));
         Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUADRUPLE, IBond.Order.QUADRUPLE));
+        Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.QUADRUPLE, IBond.Order.QUINTUPLE));
+        Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.QUADRUPLE, IBond.Order.SEXTUPLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUINTUPLE, IBond.Order.SINGLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUINTUPLE, IBond.Order.DOUBLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUINTUPLE, IBond.Order.TRIPLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUINTUPLE, IBond.Order.QUADRUPLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUINTUPLE, IBond.Order.QUINTUPLE));
+        Assert.assertTrue(BondManipulator.isLowerOrder(IBond.Order.QUINTUPLE, IBond.Order.SEXTUPLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.SEXTUPLE, IBond.Order.SINGLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.SEXTUPLE, IBond.Order.DOUBLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.SEXTUPLE, IBond.Order.TRIPLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.SEXTUPLE, IBond.Order.QUADRUPLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.SEXTUPLE, IBond.Order.QUINTUPLE));
+        Assert.assertFalse(BondManipulator.isLowerOrder(IBond.Order.SEXTUPLE, IBond.Order.SEXTUPLE));
     }
 
     @Test
@@ -92,7 +132,9 @@ public class BondManipulatorTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.DOUBLE, BondManipulator.increaseBondOrder(IBond.Order.SINGLE));
         Assert.assertEquals(IBond.Order.TRIPLE, BondManipulator.increaseBondOrder(IBond.Order.DOUBLE));
         Assert.assertEquals(IBond.Order.QUADRUPLE, BondManipulator.increaseBondOrder(IBond.Order.TRIPLE));
-        Assert.assertEquals(IBond.Order.QUADRUPLE, BondManipulator.increaseBondOrder(IBond.Order.QUADRUPLE));
+        Assert.assertEquals(IBond.Order.QUINTUPLE, BondManipulator.increaseBondOrder(IBond.Order.QUADRUPLE));
+        Assert.assertEquals(IBond.Order.SEXTUPLE, BondManipulator.increaseBondOrder(IBond.Order.QUINTUPLE));
+        Assert.assertEquals(IBond.Order.SEXTUPLE, BondManipulator.increaseBondOrder(IBond.Order.SEXTUPLE));
     }
 
     @Test
@@ -106,7 +148,11 @@ public class BondManipulatorTest extends CDKTestCase {
         BondManipulator.increaseBondOrder(bond);
         Assert.assertEquals(IBond.Order.QUADRUPLE, bond.getOrder());
         BondManipulator.increaseBondOrder(bond);
-        Assert.assertEquals(IBond.Order.QUADRUPLE, bond.getOrder());
+        Assert.assertEquals(IBond.Order.QUINTUPLE, bond.getOrder());
+        BondManipulator.increaseBondOrder(bond);
+        Assert.assertEquals(IBond.Order.SEXTUPLE, bond.getOrder());
+        BondManipulator.increaseBondOrder(bond);
+        Assert.assertEquals(IBond.Order.SEXTUPLE, bond.getOrder());
     }
 
     @Test
@@ -115,12 +161,18 @@ public class BondManipulatorTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.SINGLE, BondManipulator.decreaseBondOrder(IBond.Order.DOUBLE));
         Assert.assertEquals(IBond.Order.DOUBLE, BondManipulator.decreaseBondOrder(IBond.Order.TRIPLE));
         Assert.assertEquals(IBond.Order.TRIPLE, BondManipulator.decreaseBondOrder(IBond.Order.QUADRUPLE));
+        Assert.assertEquals(IBond.Order.QUADRUPLE, BondManipulator.decreaseBondOrder(IBond.Order.QUINTUPLE));
+        Assert.assertEquals(IBond.Order.QUINTUPLE, BondManipulator.decreaseBondOrder(IBond.Order.SEXTUPLE));
     }
 
     @Test
     public void testDecreaseBondOrder_IBond() {
         IBond bond = new Bond();
-        bond.setOrder(IBond.Order.QUADRUPLE);
+        bond.setOrder(IBond.Order.SEXTUPLE);
+        BondManipulator.decreaseBondOrder(bond);
+        Assert.assertEquals(IBond.Order.QUINTUPLE, bond.getOrder());
+        BondManipulator.decreaseBondOrder(bond);
+        Assert.assertEquals(IBond.Order.QUADRUPLE, bond.getOrder());
         BondManipulator.decreaseBondOrder(bond);
         Assert.assertEquals(IBond.Order.TRIPLE, bond.getOrder());
         BondManipulator.decreaseBondOrder(bond);
@@ -137,6 +189,8 @@ public class BondManipulatorTest extends CDKTestCase {
         Assert.assertEquals(2.0, BondManipulator.destroyBondOrder(IBond.Order.DOUBLE), 0.00001);
         Assert.assertEquals(3.0, BondManipulator.destroyBondOrder(IBond.Order.TRIPLE), 0.00001);
         Assert.assertEquals(4.0, BondManipulator.destroyBondOrder(IBond.Order.QUADRUPLE), 0.00001);
+        Assert.assertEquals(5.0, BondManipulator.destroyBondOrder(IBond.Order.QUINTUPLE), 0.00001);
+        Assert.assertEquals(6.0, BondManipulator.destroyBondOrder(IBond.Order.SEXTUPLE), 0.00001);
     }
 
     @Test
@@ -289,6 +343,8 @@ public class BondManipulatorTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.DOUBLE, BondManipulator.createBondOrder(2.0));
         Assert.assertEquals(IBond.Order.TRIPLE, BondManipulator.createBondOrder(3.0));
         Assert.assertEquals(IBond.Order.QUADRUPLE, BondManipulator.createBondOrder(4.0));
+        Assert.assertEquals(IBond.Order.QUINTUPLE, BondManipulator.createBondOrder(5.0));
+        Assert.assertEquals(IBond.Order.SEXTUPLE, BondManipulator.createBondOrder(6.0));
     }
 
 }
