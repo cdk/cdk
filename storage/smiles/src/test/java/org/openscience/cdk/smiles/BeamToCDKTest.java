@@ -49,6 +49,7 @@ import java.util.Iterator;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -529,9 +530,24 @@ public class BeamToCDKTest {
                 is(new IAtom[]{ac.getAtom(0), ac.getAtom(1), ac.getAtom(3), ac.getAtom(4)}));
     }
 
+    @Test public void titleWithTab() throws Exception {
+        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").getProperty(CDKConstants.TITLE),
+                     "caffeine");
+    }
+
+    @Test public void titleWithSpace() throws Exception {
+        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").getProperty(CDKConstants.TITLE),
+                     "caffeine");
+    }
+
+    @Test public void titleWithMultipleSpace() throws Exception {
+        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").getProperty(CDKConstants.TITLE),
+                     "caffeine compound");
+    }
+
     IAtomContainer convert(String smi) throws IOException {
         BeamToCDK g2c = new BeamToCDK(SilentChemObjectBuilder.getInstance());
-        Graph g = Functions.expand(Graph.fromSmiles(smi));
+        Graph g = Graph.fromSmiles(smi);
         return g2c.toAtomContainer(g);
     }
 

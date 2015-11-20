@@ -171,7 +171,6 @@ public class SMILESReader extends DefaultChemObjectReader {
                 try {
                     IAtomContainer molecule = sp.parseSmiles(line);
                     molecule.setProperty("SMIdbNAME", name);
-                    molecule.setProperty(CDKConstants.TITLE, name);
                     som.addAtomContainer(molecule);
                 } catch (CDKException exception) {
                     logger.warn("This SMILES could not be parsed: ", line);

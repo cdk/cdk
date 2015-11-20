@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.smiles;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -146,6 +147,9 @@ final class BeamToCDK {
 
         // use directional bonds to assign bond-based stereo-specification
         addDoubleBondStereochemistry(g, ac);
+
+        // title suffix
+        ac.setProperty(CDKConstants.TITLE, g.getTitle());
 
         return ac;
     }

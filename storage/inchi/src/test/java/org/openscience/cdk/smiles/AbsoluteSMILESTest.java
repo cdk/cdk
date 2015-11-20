@@ -27,6 +27,7 @@ package org.openscience.cdk.smiles;
 import com.google.common.base.Joiner;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.util.HashSet;
@@ -99,6 +100,16 @@ public class AbsoluteSMILESTest {
                 "[C@H]1(C)N2N([C@H]2C)[C@H](N3N1[C@H]3C)C", "N12[C@H](C)N1[C@@H](C)N3[C@H](C)N3[C@H]2C",
                 "N12N([C@H](C)N3[C@H](N3[C@@H]1C)C)[C@@H]2C", "[C@H]1(N2[C@@H](C)N2[C@@H](N3[C@@H](C)N13)C)C",
                 "N12[C@H](C)N3N([C@@H]3C)[C@H](C)N1[C@H]2C", "N12N([C@@H](C)N3N([C@H]3C)[C@H]1C)[C@H]2C");
+    }
+
+    @Test
+    public void dbStereoCanonGeneration() throws Exception {
+        String in = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        final IAtomContainer mol = smipar.parseSmiles(in);
+        final SmilesGenerator cansmi = SmilesGenerator.absolute();
+        Assert.assertEquals(cansmi.create(mol),
+                            cansmi.create(smipar.parseSmiles(cansmi.create(mol))));
     }
 
     static void test(String... inputs) throws Exception {

@@ -1199,6 +1199,18 @@ public class SmilesGeneratorTest extends CDKTestCase {
                    is(canon("Clc1ccc(Cl)c2[nH]c([nH0]c21)C(F)(F)F")));
     }
 
+
+    /**
+     * @see https://tech.knime.org/forum/cdk/buggy-behavior-of-molecule-to-cdk-node
+     */
+    @Test
+    public void assignDbStereo() throws Exception {
+        String in = "C(/N)=C\\C=C\\1/N=C1";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(in);
+        Assert.assertEquals("C(/N)=C\\C=C\\1/N=C1", SmilesGenerator.isomeric().create(mol));
+    }
+
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
         return new TetrahedralChirality(container.getAtom(central), new IAtom[]{container.getAtom(a1),
                                                                                 container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},
