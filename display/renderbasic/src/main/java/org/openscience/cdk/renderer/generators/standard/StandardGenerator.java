@@ -316,17 +316,21 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             if (isHiddenFully(atom))
                 continue;
 
+
+            boolean remapped = symbolRemap.containsKey(atom);
             final List<IBond> bonds     = container.getConnectedBondsList(atom);
             final List<IAtom> neighbors = container.getConnectedAtomsList(atom);
             final List<IAtom> visNeighbors = new ArrayList<>();
 
+            // if a symbol is remapped we only want to consider
+            // visible neighbors in the alignment calc, otherwise
+            // we include all neighbors
             for (IAtom neighbor : neighbors) {
-                if (!isHidden(neighbor))
+                if (!remapped || !isHidden(neighbor))
                     visNeighbors.add(neighbor);
             }
 
             final List<Vector2d> auxVectors = new ArrayList<>(1);
-            boolean remapped = symbolRemap.containsKey(atom);
 
             // only generate if the symbol is visible
             if (visibility.visible(atom, bonds, parameters) || remapped) {
