@@ -76,26 +76,26 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     public void testBug1571207() throws Exception {
         String filename = "data/mdl/molV3000.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLV3000Reader reader = new MDLV3000Reader(ins);
-        IAtomContainer m = reader.read(new AtomContainer());
-        reader.close();
-        Assert.assertNotNull(m);
-        Assert.assertEquals(31, m.getAtomCount());
-        Assert.assertEquals(34, m.getBondCount());
+        try (InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+             MDLV3000Reader reader = new MDLV3000Reader(ins);) {
+            IAtomContainer m = reader.read(new AtomContainer());
+            reader.close();
+            Assert.assertNotNull(m);
+            Assert.assertEquals(31, m.getAtomCount());
+            Assert.assertEquals(34, m.getBondCount());
 
-        IAtom atom = m.getAtom(0);
-        Assert.assertNotNull(atom);
-        Assert.assertNotNull(atom.getPoint2d());
-        Assert.assertEquals(10.4341, atom.getPoint2d().x, 0.0001);
-        Assert.assertEquals(5.1053, atom.getPoint2d().y, 0.0001);
+            IAtom atom = m.getAtom(0);
+            Assert.assertNotNull(atom);
+            Assert.assertNotNull(atom.getPoint2d());
+            Assert.assertEquals(10.4341, atom.getPoint2d().x, 0.0001);
+            Assert.assertEquals(5.1053, atom.getPoint2d().y, 0.0001);
+        }
     }
 
     @Test
     public void testEmptyString() throws Exception {
         String emptyString = "";
-        MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString));
-        try {
+        try (MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString))) {
             reader.read(new AtomContainer());
             reader.close();
             Assert.fail("Should have received a CDK Exception");
@@ -106,32 +106,35 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testPseudoAtomLabels() throws Exception {
-        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/pseudoatomsv3000.mol");
-        MDLV3000Reader reader = new MDLV3000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        molecule = reader.read(molecule);
-        reader.close();
-        Assert.assertTrue(molecule.getAtom(9) instanceof IPseudoAtom);
-        Assert.assertEquals("Leu", molecule.getAtom(9).getSymbol());
-        IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(9);
-        Assert.assertEquals("Leu", pa.getLabel());
+        try (InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/pseudoatomsv3000.mol");
+        MDLV3000Reader reader = new MDLV3000Reader(in);) {
+            IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+            molecule = reader.read(molecule);
+            reader.close();
+            Assert.assertTrue(molecule.getAtom(9) instanceof IPseudoAtom);
+            Assert.assertEquals("Leu", molecule.getAtom(9).getSymbol());
+            IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(9);
+            Assert.assertEquals("Leu", pa.getLabel());
+        }
     }
     
     @Test public void pseudoAtomReplacement() throws Exception {
-        MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("pseudoAtomReplacement.mol"));
-        IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0,0,0,0));
-        for (IAtom atom : container.getBond(9).atoms()) {
-            Assert.assertTrue(container.contains(atom));
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("pseudoAtomReplacement.mol"))) {
+            IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
+            for (IAtom atom : container.getBond(9).atoms()) {
+                Assert.assertTrue(container.contains(atom));
+            }
         }
     }
 
     @Test public void positionalVariation() throws Exception {
-        MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"));
-        IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0,0,0,0));
-        assertThat(container.getBondCount(), is(8));
-        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-        assertNotNull(sgroups);
-        assertThat(sgroups.size(), is(1));
-        assertThat(sgroups.get(0).getType(), is(SgroupType.ExtMulticenter));
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("multicenterBond.mol"))) {
+            IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
+            assertThat(container.getBondCount(), is(8));
+            List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+            assertNotNull(sgroups);
+            assertThat(sgroups.size(), is(1));
+            assertThat(sgroups.get(0).getType(), is(SgroupType.ExtMulticenter));
+        }
     }
 }
