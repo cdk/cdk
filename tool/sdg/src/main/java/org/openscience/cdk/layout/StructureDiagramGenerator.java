@@ -23,8 +23,43 @@
  */
 package org.openscience.cdk.layout;
 
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryUtil;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.isomorphism.AtomMatcher;
+import org.openscience.cdk.isomorphism.BondMatcher;
+import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.VentoFoggia;
+import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -34,31 +69,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryUtil;
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.graph.Cycles;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
@@ -505,6 +515,19 @@ public class StructureDiagramGenerator {
         if (selectOrientation) {
             selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
         }
+
+        finalizeLayout(molecule);
+    }
+
+    /**
+     * Finalize the molecule layout, primarily updating Sgroups.
+     *
+     * @param mol molecule being laid out
+     */
+    private void finalizeLayout(IAtomContainer mol) {
+        placeMultipleGroups(mol);
+        placePositionalVariation(mol);
+        placeSgroupBrackets(mol);
     }
 
     /**
@@ -660,6 +683,9 @@ public class StructureDiagramGenerator {
             GeometryUtil.translate2D(frags.get(i),
                                      dest.x - curr.x, dest.y - curr.y);
         }
+
+        // finalize
+        finalizeLayout(mol);
     }
 
     /**
@@ -1014,7 +1040,7 @@ public class StructureDiagramGenerator {
         } else {
             // attempt ring peeling and retemplate
             final IRingSet core = getRingSetCore(rs);
-            if (lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
+            if (core.getAtomContainerCount() > 0 && lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
                 for (IAtomContainer container : core.atomContainers())
                     container.setFlag(CDKConstants.ISPLACED, true);
             }
@@ -1087,7 +1113,7 @@ public class StructureDiagramGenerator {
                             numAttach++;
                     }
                 }
-                if (numAttach == 1)
+                if (numAttach <= 1)
                     toremove.add(ring);
             }
             ringsystem.removeAll(toremove);
@@ -1562,4 +1588,499 @@ public class StructureDiagramGenerator {
             return bond.getAtom(0);
     }
 
+    /**
+     * Multiple groups need special placement by overlaying the repeat part
+     * coordinates.
+     *
+     * coordinates on each other.
+     * @param mol molecule to place the multiple groups of
+     */
+    private void placeMultipleGroups(IAtomContainer mol) {
+        final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups == null)
+            return;
+        final List<Sgroup> multipleGroups = new ArrayList<>();
+        for (Sgroup sgroup : sgroups) {
+            if (sgroup.getType() == SgroupType.CtabMultipleGroup)
+                multipleGroups.add(sgroup);
+        }
+        if (multipleGroups.isEmpty())
+            return;
+
+        int[][] adjlist = GraphUtil.toAdjList(mol);
+        Map<IAtom,Integer> idxs = new HashMap<>();
+        for (IAtom atom : mol.atoms())
+            idxs.put(atom, idxs.size());
+
+        for (Sgroup sgroup : multipleGroups) {
+            final int numCrossing = sgroup.getBonds().size();
+            if (numCrossing != 0 && numCrossing != 2)
+                continue;
+
+            // extract substructure
+            final IAtomContainer substructure = mol.getBuilder().newInstance(IAtomContainer.class);
+            final Set<IAtom> visit = new HashSet<>();
+            final Collection<IAtom> patoms = sgroup.getValue(SgroupKey.CtabParentAtomList);
+            if (patoms == null)
+                continue;
+            for (IAtom atom : patoms) {
+                substructure.addAtom(atom);
+                visit.add(atom);
+            }
+            for (IBond bond : mol.bonds()) {
+                IAtom beg = bond.getAtom(0);
+                IAtom end = bond.getAtom(1);
+                if (visit.contains(beg) && visit.contains(end))
+                    substructure.addBond(bond);
+            }
+
+            // advanced API usage, we make a set that only includes the atoms we want to match
+            // and use this in a custom AtomMatcher to skip matches we don't want and update as
+            // we go
+            visit.addAll(sgroup.getAtoms());
+
+            Pattern ptrn = VentoFoggia.findSubstructure(substructure, new AtomMatcher() {
+                @Override
+                public boolean matches(IAtom a, IAtom b) {
+                    if (!visit.contains(b))
+                        return false;
+                    final int aElem = safeUnbox(a.getAtomicNumber());
+                    final int bElem = safeUnbox(b.getAtomicNumber());
+                    if (aElem != bElem)
+                        return false;
+                    final int aChg = safeUnbox(a.getFormalCharge());
+                    final int bChg = safeUnbox(b.getFormalCharge());
+                    if (aChg != bChg)
+                        return false;
+                    final int aMass = safeUnbox(a.getMassNumber());
+                    final int bMass = safeUnbox(b.getMassNumber());
+                    if (aMass != bMass)
+                        return false;
+                    final int aHcnt = safeUnbox(a.getImplicitHydrogenCount());
+                    final int bHcnt = safeUnbox(b.getImplicitHydrogenCount());
+                    if (aHcnt != bHcnt)
+                        return false;
+                    return true;
+                }
+            }, BondMatcher.forOrder());
+
+            Set<IAtom> sgroupAtoms = sgroup.getAtoms();
+
+            // when there are crossing bonds, things are more tricky as
+            // we need to translate connected parts
+            List<Map.Entry<Point2d,Vector2d>> outgoing = new ArrayList<>();
+            List<Map.Entry<IBond,Vector2d>>   xBondVec = new ArrayList<>();
+            if (numCrossing == 2) {
+                for (IBond bond : mol.bonds()) {
+                    IAtom beg = bond.getAtom(0);
+                    IAtom end = bond.getAtom(1);
+                    if (patoms.contains(beg) == patoms.contains(end))
+                        continue;
+                    if (patoms.contains(beg)) {
+                        outgoing.add(new SimpleImmutableEntry<>(beg.getPoint2d(),
+                                                                new Vector2d(end.getPoint2d().x - beg.getPoint2d().x,
+                                                                             end.getPoint2d().y - beg.getPoint2d().y)));
+                    } else {
+                        outgoing.add(new SimpleImmutableEntry<>(end.getPoint2d(),
+                                                                new Vector2d(beg.getPoint2d().x - end.getPoint2d().x,
+                                                                             beg.getPoint2d().y - end.getPoint2d().y)));
+                    }
+                }
+                for (IBond bond : sgroup.getBonds()) {
+                    IAtom beg = bond.getAtom(0);
+                    IAtom end = bond.getAtom(1);
+                    if (sgroupAtoms.contains(beg)) {
+                        xBondVec.add(new SimpleImmutableEntry<>(bond,
+                                                                new Vector2d(end.getPoint2d().x - beg.getPoint2d().x,
+                                                                             end.getPoint2d().y - beg.getPoint2d().y)));
+                    } else {
+                        xBondVec.add(new SimpleImmutableEntry<>(bond,
+                                                                new Vector2d(beg.getPoint2d().x - end.getPoint2d().x,
+                                                                             beg.getPoint2d().y - end.getPoint2d().y)));
+                    }
+                }
+            }
+
+            // no crossing bonds is easy just map the repeat part and transfer coordinates
+            visit.removeAll(patoms); // don't need to map parent
+            for (Map<IAtom, IAtom> atoms : ptrn.matchAll(mol).uniqueAtoms().toAtomMap()) {
+                for (Map.Entry<IAtom, IAtom> e : atoms.entrySet()) {
+                    e.getValue().setPoint2d(new Point2d(e.getKey().getPoint2d()));
+                }
+                // search is lazy so can update the matcher before the next match
+                // is found (implementation ninja)
+                visit.removeAll(atoms.values());
+            }
+
+            // reposition
+            assert xBondVec.size() == outgoing.size();
+            for (Map.Entry<IBond,Vector2d> e : xBondVec) {
+                IBond bond = e.getKey();
+
+                // can't fix move ring bonds
+                if (bond.isInRing())
+                    continue;
+
+                IAtom beg  = sgroupAtoms.contains(bond.getAtom(0)) ? bond.getAtom(0) : bond.getAtom(1);
+                Map.Entry<Point2d,Vector2d> best = null;
+                for (Map.Entry<Point2d,Vector2d> candidate : outgoing) {
+                    if (best == null || candidate.getKey().distance(beg.getPoint2d()) < best.getKey().distance(beg.getPoint2d()))
+                        best = candidate;
+                }
+                outgoing.remove(best);
+                assert best != null;
+
+                // visit rest of connected molecule
+                Set<Integer> iVisit = new HashSet<>();
+                iVisit.add(idxs.get(beg));
+                visit(iVisit, adjlist, idxs.get(bond.getConnectedAtom(beg)));
+                iVisit.remove(idxs.get(beg));
+                IAtomContainer frag = mol.getBuilder().newInstance(IAtomContainer.class);
+                for (Integer idx : iVisit)
+                    frag.addAtom(mol.getAtom(idx));
+
+                Vector2d orgVec = e.getValue();
+                Vector2d newVec = best.getValue();
+
+                Point2d endP    = bond.getConnectedAtom(beg).getPoint2d();
+                Point2d newEndP = new Point2d(beg.getPoint2d());
+                newEndP.add(newVec);
+
+                // need perpendicular dot product to get signed angle
+                double pDot  = orgVec.x * newVec.y - orgVec.y * newVec.x;
+                double theta = Math.atan2(pDot, newVec.dot(orgVec));
+
+                // position
+                GeometryUtil.translate2D(frag, newEndP.x - endP.x, newEndP.y - endP.y);
+                GeometryUtil.rotate(frag, new Point2d(bond.getConnectedAtom(beg).getPoint2d()), theta);
+            }
+        }
+
+    }
+
+    private int safeUnbox(Integer x) {
+        return x == null ? 0 : x;
+    }
+
+    private void placePositionalVariation(IAtomContainer mol) {
+
+        final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups == null)
+            return;
+
+        Multimap<Set<IAtom>, IAtom> mapping = aggregateMulticenterSgroups(sgroups);
+
+        if (mapping.isEmpty())
+            return;
+
+        // helps with traversal
+        GraphUtil.EdgeToBondMap bondMap = GraphUtil.EdgeToBondMap.withSpaceFor(mol);
+        int[][] adjlist = GraphUtil.toAdjList(mol, bondMap);
+        Map<IAtom,Integer> idxs = new HashMap<>();
+        for (IAtom atom : mol.atoms())
+            idxs.put(atom, idxs.size());
+
+        for (Map.Entry<Set<IAtom>,Collection<IAtom>> e : mapping.asMap().entrySet()) {
+            Set<IBond> bonds = new LinkedHashSet<>();
+
+            IAtomContainer shared = mol.getBuilder().newInstance(IAtomContainer.class);
+            for (IAtom atom : e.getKey())
+                shared.addAtom(atom);
+            Point2d center = GeometryUtil.get2DCenter(shared);
+
+            for (IBond bond : mol.bonds()) {
+                if (e.getKey().contains(bond.getAtom(0)) && e.getKey().contains(bond.getAtom(1))) {
+                    bonds.add(bond);
+                }
+            }
+
+            if (bonds.size() >= e.getValue().size()) {
+
+                Iterator<IAtom> begIter = e.getValue().iterator();
+                Iterator<IBond> bndIter = bonds.iterator();
+
+                while (begIter.hasNext() && bndIter.hasNext()) {
+
+                    final IBond bond = bndIter.next();
+                    final IAtom atom = begIter.next();
+
+                    if (numRingBonds(mol, bond.getAtom(0)) > 2 && numRingBonds(mol, bond.getAtom(1)) > 2)
+                        continue;
+
+                    final Point2d newBegP = new Point2d(bond.getAtom(0).getPoint2d());
+                    final Point2d newEndP = new Point2d(bond.getAtom(1).getPoint2d());
+
+                    final Vector2d bndVec  = new Vector2d(newEndP.x-newBegP.x, newEndP.y-newBegP.y);
+                    final Vector2d bndXVec = new Vector2d(-bndVec.y, bndVec.x);
+
+                    // ensure vector is pointing out of rings
+                    Vector2d centerVec = new Vector2d(center.x - ((newBegP.x + newEndP.x) / 2), center.y - ((newBegP.y + newEndP.y) / 2));
+                    if (bndXVec.dot(centerVec) > 0) {
+                        bndXVec.negate();
+                    }
+
+                    bndVec.normalize();
+                    bndXVec.normalize();
+
+                    bndVec.scale(0.5 * bondLength); // crossing point
+
+                    double bndStep = (bondLength) / 5;
+
+                    newBegP.add(bndVec);
+                    bndXVec.normalize();
+                    bndXVec.scale(2*bndStep);
+                    newBegP.sub(bndXVec);
+                    newEndP.sub(bndVec);
+                    bndXVec.normalize();
+                    bndXVec.scale(3*bndStep);
+                    newEndP.add(bndXVec);
+
+                    int atomIdx = idxs.get(atom);
+                    if (adjlist[atomIdx].length != 1)
+                        continue;
+
+                    // get all atoms connected to the part we will move
+                    Set<Integer> visited = new HashSet<>();
+                    visit(visited, adjlist, atomIdx);
+                    IAtomContainer frag = mol.getBuilder().newInstance(IAtomContainer.class);
+                    for (Integer visit : visited)
+                        frag.addAtom(mol.getAtom(visit));
+
+                    final IBond attachBond = bondMap.get(atomIdx, adjlist[atomIdx][0]);
+                    final Point2d begP = atom.getPoint2d();
+                    final Point2d endP = attachBond.getConnectedAtom(atom).getPoint2d();
+
+                    Vector2d orgVec = new Vector2d(endP.x-begP.x, endP.y-begP.y);
+                    Vector2d newVec = new Vector2d(newEndP.x-newBegP.x, newEndP.y-newBegP.y);
+
+                    // need perpendiculat dot product to get signed angle
+                    double pDot = orgVec.x * newVec.y - orgVec.y * newVec.x;
+                    double theta = Math.atan2(pDot, newVec.dot(orgVec));
+
+                    // position
+                    GeometryUtil.translate2D(frag, newBegP.x - begP.x, newBegP.y - begP.y);
+                    GeometryUtil.rotate(frag, new Point2d(atom.getPoint2d()), theta);
+
+                    // stretch bond
+                    frag.removeAtom(atom);
+                    GeometryUtil.translate2D(frag, newEndP.x - endP.x, newEndP.y - endP.y);
+                }
+            } else {
+                System.err.println("Positional variation not yet handled");
+            }
+        }
+    }
+
+    private static void visit(Set<Integer> visited, int[][] g, int v) {
+        visited.add(v);
+        for (int w : g[v]) {
+            if (!visited.contains(w))
+                visit(visited, g, w);
+        }
+    }
+
+    private static Multimap<Set<IAtom>, IAtom> aggregateMulticenterSgroups(List<Sgroup> sgroups) {
+        Multimap<Set<IAtom>,IAtom> mapping = HashMultimap.create();
+        for (Sgroup sgroup : sgroups) {
+            if (sgroup.getType() != SgroupType.ExtMulticenter)
+                continue;
+
+            IAtom      beg  = null;
+            Set<IAtom> ends = new HashSet<>();
+
+            Set<IBond> bonds = sgroup.getBonds();
+            if (bonds.size() != 1)
+                continue;
+            IBond bond = bonds.iterator().next();
+
+            for (IAtom atom : sgroup.getAtoms()) {
+                if (bond.contains(atom))
+                    beg = atom;
+                else
+                    ends.add(atom);
+            }
+
+            if (beg == null || ends.isEmpty())
+                continue;
+
+            mapping.put(ends, beg);
+        } return mapping;
+    }
+
+
+    private static int numRingBonds(IAtomContainer mol, IAtom atom) {
+        int cnt = 0;
+        for (IBond bond : mol.getConnectedBondsList(atom)) {
+            if (bond.isInRing())
+                cnt++;
+        }
+        return cnt;
+    }
+
+
+    /**
+     * Place and update brackets for polymer Sgroups.
+     *
+     * @param mol molecule
+     */
+    private void placeSgroupBrackets(IAtomContainer mol) {
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups == null) return;
+
+        // index all crossing bonds
+        final Multimap<IBond,Sgroup> bondMap = HashMultimap.create();
+        final Map<IBond,Integer> counter = new HashMap<>();
+        for (Sgroup sgroup : sgroups) {
+            if (!hasBrackets(sgroup))
+                continue;
+            for (IBond bond : sgroup.getBonds()) {
+                bondMap.put(bond, sgroup);
+                counter.put(bond, 0);
+            }
+        }
+        sgroups = new ArrayList<>(sgroups);
+        // place child sgroups first
+        Collections.sort(sgroups,
+                         new Comparator<Sgroup>() {
+                             @Override
+                             public int compare(Sgroup o1, Sgroup o2) {
+                                 if (o1.getParents().isEmpty() != o2.getParents().isEmpty()) {
+                                     if (o1.getParents().isEmpty())
+                                         return +1;
+                                     return -1;
+                                 }
+                                 return 0;
+                             }
+                         });
+
+        for (Sgroup sgroup : sgroups) {
+            if (!hasBrackets(sgroup))
+                continue;
+
+            final Set<IAtom> atoms  = sgroup.getAtoms();
+            final Set<IBond> xbonds = sgroup.getBonds();
+
+            // clear all the existing brackets
+            sgroup.putValue(SgroupKey.CtabBracket, null);
+
+            // assign brackets to crossing bonds
+            if (xbonds.size() >= 2) {
+
+                // check for vertical alignment
+                boolean vert = true;
+                for (IBond bond : xbonds) {
+                    final double theta = angle(bond);
+                    if (Math.abs(Math.toDegrees(theta)) > 40 && Math.abs(Math.toDegrees(theta)) < 140) {
+                        vert = false;
+                        break;
+                    }
+                }
+
+                for (IBond bond : xbonds)
+                    sgroup.addBracket(newCrossingBracket(bond,
+                                                         bondMap,
+                                                         counter,
+                                                         vert));
+            }
+            // <= 1 crossing bonds so simply wrap the entire fragment
+            else {
+                IAtomContainer tmp = mol.getBuilder().newInstance(IAtomContainer.class);
+                for (IAtom atom : atoms)
+                    tmp.addAtom(atom);
+                double[] minmax = GeometryUtil.getMinMax(tmp);
+                double padding  = 0.7 * bondLength;
+                sgroup.addBracket(new SgroupBracket(minmax[0] - padding, minmax[1] - padding,
+                                                    minmax[0] - padding, minmax[3] + padding));
+                sgroup.addBracket(new SgroupBracket(minmax[2] + padding, minmax[1] - padding,
+                                                    minmax[2] + padding, minmax[3] + padding));
+            }
+        }
+
+    }
+
+    private static double angle(IBond bond) {
+        Point2d end = bond.getAtom(0).getPoint2d();
+        Point2d beg = bond.getAtom(1).getPoint2d();
+        return Math.atan2(end.y - beg.y, end.x - beg.x);
+    }
+
+    /**
+     * Generate a new bracket across the provided bond.
+     *
+     * @param bond bond
+     * @param bonds bond map to Sgroups
+     * @param counter count how many brackets this group has already
+     * @param vert vertical align bonds
+     * @return the new bracket
+     */
+    private SgroupBracket newCrossingBracket(IBond bond, Multimap<IBond,Sgroup> bonds, Map<IBond,Integer> counter, boolean vert) {
+        final IAtom beg = bond.getAtom(0);
+        final IAtom end = bond.getAtom(1);
+        final Point2d begXy = beg.getPoint2d();
+        final Point2d endXy = end.getPoint2d();
+        final Vector2d lenOffset = new Vector2d(endXy.x-begXy.x, endXy.y-begXy.y);
+        final Vector2d bndCrossVec = new Vector2d(-lenOffset.y, lenOffset.x);
+        lenOffset.normalize();
+        bndCrossVec.normalize();
+        bndCrossVec.scale(((0.9 * bondLength)) / 2);
+
+        final List<Sgroup> sgroups = new ArrayList<>(bonds.get(bond));
+
+        // bond in sgroup, place it in the middle of the bond
+        if (sgroups.size() == 1) {
+            lenOffset.scale(0.5 * bondLength);
+        }
+        // two sgroups, place one near start and one near end
+        else if (sgroups.size() == 2) {
+            boolean flip = !sgroups.get(counter.get(bond)).getAtoms().contains(beg);
+            if (counter.get(bond) == 0) {
+                lenOffset.scale(flip ? 0.75 : 0.25 * bondLength); // 75 or 25% along
+                counter.put(bond, 1);
+            } else {
+                lenOffset.scale(flip ? 0.25 : 0.75 * bondLength); // 25 or 75% along
+            }
+        }
+        else {
+            double step = bondLength / (1 + sgroups.size());
+            int idx = counter.get(bond) + 1;
+            counter.put(bond, idx);
+            lenOffset.scale((idx * step) * bondLength);
+        }
+
+        // vertical bracket
+        if (vert) {
+            return new SgroupBracket(begXy.x + lenOffset.x, begXy.y + lenOffset.y + bndCrossVec.length(),
+                                     begXy.x + lenOffset.x, begXy.y + lenOffset.y - bndCrossVec.length());
+        } else {
+            return new SgroupBracket(begXy.x + lenOffset.x + bndCrossVec.x, begXy.y + lenOffset.y + bndCrossVec.y,
+                                     begXy.x + lenOffset.x - bndCrossVec.x, begXy.y + lenOffset.y - bndCrossVec.y);
+        }
+    }
+
+    /**
+     * Determine whether and Sgroup type has brackets to be placed.
+     * @param sgroup the Sgroup
+     * @return brackets need to be placed
+     */
+    private static boolean hasBrackets(Sgroup sgroup) {
+        switch (sgroup.getType()) {
+            case CtabStructureRepeatUnit:
+            case CtabAnyPolymer:
+            case CtabCrossLink:
+            case CtabComponent:
+            case CtabMixture:
+            case CtabFormulation:
+            case CtabGraft:
+            case CtabModified:
+            case CtabMonomer:
+            case CtabCopolymer:
+            case CtabMultipleGroup:
+                return true;
+            case CtabGeneric:
+                List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
+                return brackets != null && !brackets.isEmpty();
+            default:
+                return false;
+        }
+    }
 }

@@ -179,6 +179,12 @@ public class AbbreviationLabelTest {
     }
 
     @Test
+    public void het() {
+        // 'Het' not 'He'lium and 't'erts
+        assertFalse(AbbreviationLabel.parse("Het", new ArrayList<String>()));
+    }
+
+    @Test
     public void parseChargeOnly() {
         assertFalse(AbbreviationLabel.parse("+", new ArrayList<String>()));
     }

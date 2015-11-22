@@ -51,6 +51,8 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
 
     private String            label;
 
+    private int               attachPoint;
+
     /**
      * Constructs an empty PseudoAtom.
      */
@@ -131,6 +133,22 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
     @Override
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getAttachPointNum() {
+        return attachPoint;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAttachPointNum(int attachPoint) {
+        this.attachPoint = attachPoint;
     }
 
     /**

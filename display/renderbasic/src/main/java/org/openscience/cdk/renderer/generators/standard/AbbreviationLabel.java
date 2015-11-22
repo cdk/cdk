@@ -191,6 +191,7 @@ final class AbbreviationLabel {
             if ((last = findPrefix(PREFIX_TRIE, label, i, -1)) > 0) {
                 i += (last - i);
             }
+            final int symSt = i;
 
             // a valid symbol token
             if ((last = findPrefix(SYMBOL_TRIE, label, i, -1)) > 0) {
@@ -216,7 +217,7 @@ final class AbbreviationLabel {
                 }
             }
 
-            if (i == st) {
+            if (i == st || i == symSt) {
                 return failParse(label, tokens);
             }
 
