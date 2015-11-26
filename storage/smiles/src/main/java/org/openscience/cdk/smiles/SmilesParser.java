@@ -207,6 +207,8 @@ public final class SmilesParser {
             return beamToCDK.toAtomContainer(kekulise ? g.kekule() : g);
         } catch (IOException e) {
             throw new InvalidSmilesException("could not parse '" + smiles + "', " + e.getMessage());
+        } catch (Exception e) {
+            throw new InvalidSmilesException("could not parse '" + smiles + "'");
         }
     }
 
