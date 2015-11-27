@@ -1208,7 +1208,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String in = "C(/N)=C\\C=C\\1/N=C1";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(in);
-        Assert.assertEquals("C(/N)=C\\C=C\\1/N=C1", SmilesGenerator.isomeric().create(mol));
+        Assert.assertEquals("C(\\N)=C/C=C/1\\N=C1", SmilesGenerator.isomeric().create(mol));
     }
 
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
