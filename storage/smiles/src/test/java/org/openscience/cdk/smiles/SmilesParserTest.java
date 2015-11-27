@@ -2492,6 +2492,15 @@ public class SmilesParserTest extends CDKTestCase {
     }
 
     /**
+     * Okay exception for a non-SMILES string.
+     * @cdk.bug 1375
+     */
+    @Test(expected = InvalidSmilesException.class)
+    public void idNumber() throws Exception {
+        load("50-00-0");
+    }
+
+    /**
      * Counts aromatic atoms in a molecule.
      * @param mol molecule for which to count aromatic atoms.
      */
