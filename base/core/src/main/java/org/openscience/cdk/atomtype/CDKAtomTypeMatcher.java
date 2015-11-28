@@ -2472,7 +2472,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private IAtomType getAtomType(String identifier) throws CDKException {
         IAtomType type = factory.getAtomType(identifier);
-        type.setValency((Integer) type.getProperty(CDKConstants.PI_BOND_COUNT) + type.getFormalNeighbourCount());
         return type;
     }
 
