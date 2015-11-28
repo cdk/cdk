@@ -75,7 +75,12 @@ final class ImmutableAtomType implements IAtomType {
         if (type.getValency() != null) {
             this.electronValency = type.getValency();
         } else {
-            this.electronValency = type.getProperty(CDKConstants.PI_BOND_COUNT, Integer.class) + type.getFormalNeighbourCount();
+            Integer piBondCount = type.getProperty(CDKConstants.PI_BOND_COUNT, Integer.class);
+            if (piBondCount != null && formalNeighbourCount != null) {
+                this.electronValency = piBondCount + formalNeighbourCount;
+            } else {
+                this.electronValency = null;
+            }
         }
     }
 
