@@ -65,7 +65,6 @@ public final class ImmutableAtomType implements IAtomType {
         this.massNumber = type.getMassNumber();
         this.formalCharge = type.getFormalCharge();
         this.hybridization = type.getHybridization();
-        this.electronValency = type.getValency();
         this.formalNeighbourCount = type.getFormalNeighbourCount();
         this.identifier = type.getAtomTypeName();
         this.maxBondOrder = type.getMaxBondOrder();
@@ -73,6 +72,11 @@ public final class ImmutableAtomType implements IAtomType {
         this.covalentRadius = type.getCovalentRadius();
         this.flags = (short)type.getFlagValue();
         this.properties = Collections.unmodifiableMap(type.getProperties());
+        if (type.getValency() != null) {
+            this.electronValency = type.getValency();
+        } else {
+            this.electronValency = type.getProperty(CDKConstants.PI_BOND_COUNT, Integer.class) + type.getFormalNeighbourCount();
+        }
     }
 
     // ignored methods
