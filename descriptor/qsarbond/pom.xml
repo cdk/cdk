@@ -7,7 +7,7 @@
     <parent>
         <artifactId>cdk-descriptor</artifactId>
         <groupId>org.openscience.cdk</groupId>
-        <version>1.5.12-SNAPSHOT</version>
+        <version>1.5.12</version>
     </parent>
 
     <artifactId>cdk-qsarbond</artifactId>
