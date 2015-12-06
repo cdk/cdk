@@ -300,6 +300,13 @@
             <artifactId>cdk-legacy</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
+        <!-- Apps -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-depict</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
