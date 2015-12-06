@@ -1,89 +1,47 @@
-/* Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
+/*
+ * Copyright (c) 2015 John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or (at
+ * your option) any later version. All we ask is that proper credit is given
+ * for our work, which includes - but is not limited to - adding the above
+ * copyright notice to the beginning of your source code files, and to any
+ * copyright notice that you may distribute with programs based on this work.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-package org.openscience.cdk.renderer.color;
 
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
+package org.openscience.cdk.renderer.color;
 
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 
-import static org.openscience.cdk.config.Elements.Aluminium;
-import static org.openscience.cdk.config.Elements.Argon;
-import static org.openscience.cdk.config.Elements.Barium;
-import static org.openscience.cdk.config.Elements.Beryllium;
-import static org.openscience.cdk.config.Elements.Boron;
-import static org.openscience.cdk.config.Elements.Bromine;
-import static org.openscience.cdk.config.Elements.Caesium;
-import static org.openscience.cdk.config.Elements.Calcium;
-import static org.openscience.cdk.config.Elements.Carbon;
-import static org.openscience.cdk.config.Elements.Chlorine;
-import static org.openscience.cdk.config.Elements.Fluorine;
-import static org.openscience.cdk.config.Elements.Francium;
-import static org.openscience.cdk.config.Elements.Helium;
-import static org.openscience.cdk.config.Elements.Hydrogen;
-import static org.openscience.cdk.config.Elements.Iodine;
-import static org.openscience.cdk.config.Elements.Iron;
-import static org.openscience.cdk.config.Elements.Krypton;
-import static org.openscience.cdk.config.Elements.Lithium;
-import static org.openscience.cdk.config.Elements.Magnesium;
-import static org.openscience.cdk.config.Elements.Neon;
-import static org.openscience.cdk.config.Elements.Nitrogen;
-import static org.openscience.cdk.config.Elements.Oxygen;
-import static org.openscience.cdk.config.Elements.Phosphorus;
-import static org.openscience.cdk.config.Elements.Potassium;
-import static org.openscience.cdk.config.Elements.Radium;
-import static org.openscience.cdk.config.Elements.Rubidium;
-import static org.openscience.cdk.config.Elements.Silver;
-import static org.openscience.cdk.config.Elements.Sodium;
-import static org.openscience.cdk.config.Elements.Strontium;
-import static org.openscience.cdk.config.Elements.Sulfur;
-import static org.openscience.cdk.config.Elements.Titanium;
+import java.awt.Color;
+
 import static org.openscience.cdk.config.Elements.Unknown;
-import static org.openscience.cdk.config.Elements.Xenon;
 
 /**
- * Gives a short table of atom colors for 2D display. The coloring is loosely
- * based on JMol CPK.
- *
- * The internal color map can be modified by invoking the set method. For convenience the set method
- * returns the colorer instance for chaining.
- * 
- * <pre>{@code
- * IAtomColorer colorer = new CDK2DAtomColors().set("H", Color.LIGHT_GRAY)
- *                                             .set("O", Color.RED.lighter());
- * }</pre>
- *
- * @cdk.module render
- * @cdk.githash
- * @see <a href="http://en.wikipedia.org/wiki/CPK_coloring">CPK coloring</a>
+ * Default JMol colors.
  * @see <a href="http://jmol.sourceforge.net/jscolors/">JMol, Colors</a>
  */
-public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
+public final class JmolColors implements IAtomColorer {
 
-    private static final long  serialVersionUID = 6712994043820219426L;
-
+    private static final Color hexFFFFFF = new Color(0xFFFFFF);
     private static final Color hexD9FFFF = new Color(0xD9FFFF);
     private static final Color hexCC80FF = new Color(0xCC80FF);
     private static final Color hexC2FF00 = new Color(0xC2FF00);
     private static final Color hexFFB5B5 = new Color(0xFFB5B5);
+    private static final Color hex909090 = new Color(0x909090);
     private static final Color hex3050F8 = new Color(0x3050F8);
     private static final Color hexFF0D0D = new Color(0xFF0D0D);
     private static final Color hex90E050 = new Color(0x90E050);
@@ -188,23 +146,19 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
     private static final Color hexE6002E = new Color(0xE6002E);
     private static final Color hexEB0026 = new Color(0xEB0026);
 
-    /**
-     * {@inheritDoc }
-     */
     @Override
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, hexB31FBA);
     }
 
-    /**
-     * {@inheritDoc }
-     */
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Elements elem = Elements.ofString(atom.getSymbol());
         if (elem == Unknown)
             elem = Elements.ofNumber(atom.getAtomicNumber());
         switch (elem) {
+            case Hydrogen:
+                return hexFFFFFF;
             case Helium:
                 return hexD9FFFF;
             case Lithium:
@@ -213,10 +167,8 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
                 return hexC2FF00;
             case Boron:
                 return hexFFB5B5;
-            case Hydrogen:
             case Carbon:
-            case Unknown:
-                return Color.BLACK;
+                return hex909090;
             case Nitrogen:
                 return hex3050F8;
             case Oxygen:
