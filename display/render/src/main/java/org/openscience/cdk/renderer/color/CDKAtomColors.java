@@ -27,7 +27,9 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module render
  * @cdk.githash
+ * @deprecated {@link JmolColors} provides more comprehensive color pallet for 3D
  */
+@Deprecated
 public class CDKAtomColors implements IAtomColorer {
 
     private final static Color HYDROGEN   = Color.white;

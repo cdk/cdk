@@ -30,7 +30,9 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.module  render
  * @cdk.githash
  * @cdk.keyword atom coloring, CPK
+ * @deprecated {@link JmolColors} provides more comprehensive CPK color pallet
  */
+@Deprecated
 public class CPKAtomColors implements IAtomColorer, java.io.Serializable {
 
     private static final long                serialVersionUID    = -3205785984391537452L;
