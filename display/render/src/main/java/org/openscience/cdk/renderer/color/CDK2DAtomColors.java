@@ -61,7 +61,7 @@ import static org.openscience.cdk.config.Elements.Xenon;
 
 /**
  * Gives a short table of atom colors for 2D display. The coloring is loosely
- * based on JMol CPK.
+ * based on Jmol CPK.
  *
  * The internal color map can be modified by invoking the set method. For convenience the set method
  * returns the colorer instance for chaining.
@@ -74,7 +74,7 @@ import static org.openscience.cdk.config.Elements.Xenon;
  * @cdk.module render
  * @cdk.githash
  * @see <a href="http://en.wikipedia.org/wiki/CPK_coloring">CPK coloring</a>
- * @see <a href="http://jmol.sourceforge.net/jscolors/">JMol, Colors</a>
+ * @see <a href="http://jmol.sourceforge.net/jscolors/">Jmol, Colors</a>
  */
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 

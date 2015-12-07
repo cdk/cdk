@@ -31,8 +31,8 @@ import java.awt.Color;
 import static org.openscience.cdk.config.Elements.Unknown;
 
 /**
- * Default JMol colors.
- * @see <a href="http://jmol.sourceforge.net/jscolors/">JMol, Colors</a>
+ * Default Jmol colors.
+ * @see <a href="http://Jmol.sourceforge.net/jscolors/">Jmol, Colors</a>
  */
 public final class JmolColors implements IAtomColorer {
 
