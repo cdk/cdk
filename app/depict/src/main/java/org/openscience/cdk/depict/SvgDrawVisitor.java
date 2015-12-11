@@ -43,6 +43,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayDeque;
 import java.util.Collection;
@@ -50,6 +51,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -71,7 +73,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
     private int             indentLvl     = 0;
     private AffineTransform transform     = null;
     private RendererModel   model         = null;
-    private NumberFormat    decimalFormat = new DecimalFormat(".##");
+    private NumberFormat    decimalFormat = new DecimalFormat(".##", new DecimalFormatSymbols(Locale.ROOT));
 
     private boolean defaultsWritten    = false;
     private Color   defaultStroke      = null;
