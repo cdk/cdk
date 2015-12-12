@@ -212,7 +212,7 @@ final class ConvexHull {
             }
             previousPoint = point;
         }
-        return null;
+        return new Point2D.Double(line.getX1(), line.getY1());
     }
 
     /**
