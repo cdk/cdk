@@ -19,3 +19,4 @@ nbproject/private/
 target
 .project
 .classpath
+*.dot

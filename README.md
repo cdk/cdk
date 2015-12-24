@@ -216,6 +216,14 @@ cdk/base/standard: mvn jacoco:report
 cdk/base/standard: open target/site/jacoco/index.html
 ```
 
+#### Dependency Tree
+
+Maven can create a dependency tree with the following command:
+
+```
+cdk/: mvn dependency:tree
+```
+
 ## Examples and tutorials
 
 To get started using the CDK, you may be interested in the following websites which contain
