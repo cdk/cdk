@@ -6,10 +6,13 @@
 <module name="Checker">
   <module name="TreeWalker">
     <module name="JavadocMethod">
+      <property name="excludeScope" value="package"/>
     </module>
     <module name="JavadocVariable">
+      <property name="excludeScope" value="package"/>
     </module>
     <module name="JavadocType">
+      <property name="excludeScope" value="package"/>
     </module>
   </module>
 </module>
