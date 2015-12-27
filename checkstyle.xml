@@ -11,5 +11,9 @@
     </module>
     <module name="JavadocType">
     </module>
+    <module name="JavadocStyle">
+    </module>
+    <module name="NonEmptyAtclauseDescription">
+    </module>
   </module>
 </module>
