@@ -27,10 +27,11 @@ import java.util.Collections;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,8 +48,6 @@ import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 import net.sf.jniinchi.INCHI_RET;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * TestCase for the InChIGenerator.
@@ -99,7 +98,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         a2.setImplicitHydrogenCount(3);
         ac.addAtom(a1);
         ac.addAtom(a2);
-        ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_SINGLE));
+        ac.addBond(new Bond(a1, a2, Order.SINGLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "");
         Assert.assertNotNull(gen.getAuxInfo());
         Assert.assertTrue(gen.getAuxInfo().startsWith("AuxInfo="));
@@ -203,7 +202,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         a2.setImplicitHydrogenCount(3);
         ac.addAtom(a1);
         ac.addAtom(a2);
-        ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_SINGLE));
+        ac.addBond(new Bond(a1, a2, Order.SINGLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals("InChI=1/C2H6/c1-2/h1-2H3", gen.getInchi());
@@ -224,7 +223,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         a2.setImplicitHydrogenCount(2);
         ac.addAtom(a1);
         ac.addAtom(a2);
-        ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_DOUBLE));
+        ac.addBond(new Bond(a1, a2, Order.DOUBLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals("InChI=1/C2H4/c1-2/h1-2H2", gen.getInchi());
@@ -244,7 +243,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         a2.setImplicitHydrogenCount(1);
         ac.addAtom(a1);
         ac.addAtom(a2);
-        ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_TRIPLE));
+        ac.addBond(new Bond(a1, a2, Order.TRIPLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals("InChI=1/C2H2/c1-2/h1-2H", gen.getInchi());
@@ -271,10 +270,10 @@ public class InChIGeneratorTest extends CDKTestCase {
         acE.addAtom(a3E);
         acE.addAtom(a4E);
 
-        acE.addBond(new Bond(a1E, a2E, CDKConstants.BONDORDER_DOUBLE));
-        acE.addBond(new Bond(a1E, a2E, CDKConstants.BONDORDER_DOUBLE));
-        acE.addBond(new Bond(a1E, a3E, CDKConstants.BONDORDER_SINGLE));
-        acE.addBond(new Bond(a2E, a4E, CDKConstants.BONDORDER_SINGLE));
+        acE.addBond(new Bond(a1E, a2E, Order.DOUBLE));
+        acE.addBond(new Bond(a1E, a2E, Order.DOUBLE));
+        acE.addBond(new Bond(a1E, a3E, Order.SINGLE));
+        acE.addBond(new Bond(a2E, a4E, Order.SINGLE));
 
         InChIGenerator genE = getFactory().getInChIGenerator(acE, "FixedH");
         Assert.assertEquals(genE.getReturnStatus(), INCHI_RET.OKAY);
@@ -293,10 +292,10 @@ public class InChIGeneratorTest extends CDKTestCase {
         acZ.addAtom(a3Z);
         acZ.addAtom(a4Z);
 
-        acZ.addBond(new Bond(a1Z, a2Z, CDKConstants.BONDORDER_DOUBLE));
-        acZ.addBond(new Bond(a1Z, a2Z, CDKConstants.BONDORDER_DOUBLE));
-        acZ.addBond(new Bond(a1Z, a3Z, CDKConstants.BONDORDER_SINGLE));
-        acZ.addBond(new Bond(a2Z, a4Z, CDKConstants.BONDORDER_SINGLE));
+        acZ.addBond(new Bond(a1Z, a2Z, Order.DOUBLE));
+        acZ.addBond(new Bond(a1Z, a2Z, Order.DOUBLE));
+        acZ.addBond(new Bond(a1Z, a3Z, Order.SINGLE));
+        acZ.addBond(new Bond(a2Z, a4Z, Order.SINGLE));
 
         InChIGenerator genZ = getFactory().getInChIGenerator(acZ, "FixedH");
         Assert.assertEquals(genZ.getReturnStatus(), INCHI_RET.OKAY);
@@ -330,11 +329,11 @@ public class InChIGeneratorTest extends CDKTestCase {
         acL.addAtom(a5L);
         acL.addAtom(a6L);
 
-        acL.addBond(new Bond(a1L, a2L, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a1L, a3L, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a1L, a4L, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a2L, a5L, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a2L, a6L, CDKConstants.BONDORDER_DOUBLE));
+        acL.addBond(new Bond(a1L, a2L, Order.SINGLE));
+        acL.addBond(new Bond(a1L, a3L, Order.SINGLE));
+        acL.addBond(new Bond(a1L, a4L, Order.SINGLE));
+        acL.addBond(new Bond(a2L, a5L, Order.SINGLE));
+        acL.addBond(new Bond(a2L, a6L, Order.DOUBLE));
 
         InChIGenerator genL = getFactory().getInChIGenerator(acL, "FixedH");
         Assert.assertEquals(genL.getReturnStatus(), INCHI_RET.OKAY);
@@ -359,11 +358,11 @@ public class InChIGeneratorTest extends CDKTestCase {
         acD.addAtom(a5D);
         acD.addAtom(a6D);
 
-        acD.addBond(new Bond(a1D, a2D, CDKConstants.BONDORDER_SINGLE));
-        acD.addBond(new Bond(a1D, a3D, CDKConstants.BONDORDER_SINGLE));
-        acD.addBond(new Bond(a1D, a4D, CDKConstants.BONDORDER_SINGLE));
-        acD.addBond(new Bond(a2D, a5D, CDKConstants.BONDORDER_SINGLE));
-        acD.addBond(new Bond(a2D, a6D, CDKConstants.BONDORDER_DOUBLE));
+        acD.addBond(new Bond(a1D, a2D, Order.SINGLE));
+        acD.addBond(new Bond(a1D, a3D, Order.SINGLE));
+        acD.addBond(new Bond(a1D, a4D, Order.SINGLE));
+        acD.addBond(new Bond(a2D, a5D, Order.SINGLE));
+        acD.addBond(new Bond(a2D, a6D, Order.DOUBLE));
 
         InChIGenerator genD = getFactory().getInChIGenerator(acD, "FixedH");
         Assert.assertEquals(genD.getReturnStatus(), INCHI_RET.OKAY);
@@ -474,7 +473,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         a2.setImplicitHydrogenCount(3);
         ac.addAtom(a1);
         ac.addAtom(a2);
-        ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_SINGLE));
+        ac.addBond(new Bond(a1, a2, Order.SINGLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
         Assert.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
         Assert.assertEquals("InChI=1S/C2H6/c1-2/h1-2H3", gen.getInchi());
@@ -495,7 +494,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         a2.setImplicitHydrogenCount(2);
         ac.addAtom(a1);
         ac.addAtom(a2);
-        ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_DOUBLE));
+        ac.addBond(new Bond(a1, a2, Order.DOUBLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
         Assert.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
         Assert.assertEquals("InChI=1S/C2H4/c1-2/h1-2H2", gen.getInchi());
@@ -515,7 +514,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         a2.setImplicitHydrogenCount(1);
         ac.addAtom(a1);
         ac.addAtom(a2);
-        ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_TRIPLE));
+        ac.addBond(new Bond(a1, a2, Order.TRIPLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
         Assert.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
         Assert.assertEquals("InChI=1S/C2H2/c1-2/h1-2H", gen.getInchi());
@@ -542,10 +541,10 @@ public class InChIGeneratorTest extends CDKTestCase {
         acE.addAtom(a3E);
         acE.addAtom(a4E);
 
-        acE.addBond(new Bond(a1E, a2E, CDKConstants.BONDORDER_DOUBLE));
-        acE.addBond(new Bond(a1E, a2E, CDKConstants.BONDORDER_DOUBLE));
-        acE.addBond(new Bond(a1E, a3E, CDKConstants.BONDORDER_SINGLE));
-        acE.addBond(new Bond(a2E, a4E, CDKConstants.BONDORDER_SINGLE));
+        acE.addBond(new Bond(a1E, a2E, Order.DOUBLE));
+        acE.addBond(new Bond(a1E, a2E, Order.DOUBLE));
+        acE.addBond(new Bond(a1E, a3E, Order.SINGLE));
+        acE.addBond(new Bond(a2E, a4E, Order.SINGLE));
 
         InChIGenerator genE = getFactory().getInChIGenerator(acE);
         Assert.assertEquals(INCHI_RET.OKAY, genE.getReturnStatus());
@@ -564,10 +563,10 @@ public class InChIGeneratorTest extends CDKTestCase {
         acZ.addAtom(a3Z);
         acZ.addAtom(a4Z);
 
-        acZ.addBond(new Bond(a1Z, a2Z, CDKConstants.BONDORDER_DOUBLE));
-        acZ.addBond(new Bond(a1Z, a2Z, CDKConstants.BONDORDER_DOUBLE));
-        acZ.addBond(new Bond(a1Z, a3Z, CDKConstants.BONDORDER_SINGLE));
-        acZ.addBond(new Bond(a2Z, a4Z, CDKConstants.BONDORDER_SINGLE));
+        acZ.addBond(new Bond(a1Z, a2Z, Order.DOUBLE));
+        acZ.addBond(new Bond(a1Z, a2Z, Order.DOUBLE));
+        acZ.addBond(new Bond(a1Z, a3Z, Order.SINGLE));
+        acZ.addBond(new Bond(a2Z, a4Z, Order.SINGLE));
 
         InChIGenerator genZ = getFactory().getInChIGenerator(acZ);
         Assert.assertEquals(INCHI_RET.OKAY, genZ.getReturnStatus());
@@ -601,11 +600,11 @@ public class InChIGeneratorTest extends CDKTestCase {
         acL.addAtom(a5L);
         acL.addAtom(a6L);
 
-        acL.addBond(new Bond(a1L, a2L, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a1L, a3L, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a1L, a4L, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a2L, a5L, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a2L, a6L, CDKConstants.BONDORDER_DOUBLE));
+        acL.addBond(new Bond(a1L, a2L, Order.SINGLE));
+        acL.addBond(new Bond(a1L, a3L, Order.SINGLE));
+        acL.addBond(new Bond(a1L, a4L, Order.SINGLE));
+        acL.addBond(new Bond(a2L, a5L, Order.SINGLE));
+        acL.addBond(new Bond(a2L, a6L, Order.DOUBLE));
 
         InChIGenerator genL = getFactory().getInChIGenerator(acL);
         Assert.assertEquals(INCHI_RET.OKAY, genL.getReturnStatus());
@@ -630,11 +629,11 @@ public class InChIGeneratorTest extends CDKTestCase {
         acD.addAtom(a5D);
         acD.addAtom(a6D);
 
-        acD.addBond(new Bond(a1D, a2D, CDKConstants.BONDORDER_SINGLE));
-        acD.addBond(new Bond(a1D, a3D, CDKConstants.BONDORDER_SINGLE));
-        acD.addBond(new Bond(a1D, a4D, CDKConstants.BONDORDER_SINGLE));
-        acD.addBond(new Bond(a2D, a5D, CDKConstants.BONDORDER_SINGLE));
-        acD.addBond(new Bond(a2D, a6D, CDKConstants.BONDORDER_DOUBLE));
+        acD.addBond(new Bond(a1D, a2D, Order.SINGLE));
+        acD.addBond(new Bond(a1D, a3D, Order.SINGLE));
+        acD.addBond(new Bond(a1D, a4D, Order.SINGLE));
+        acD.addBond(new Bond(a2D, a5D, Order.SINGLE));
+        acD.addBond(new Bond(a2D, a6D, Order.DOUBLE));
 
         InChIGenerator genD = getFactory().getInChIGenerator(acD);
         Assert.assertEquals(INCHI_RET.OKAY, genD.getReturnStatus());
@@ -669,12 +668,12 @@ public class InChIGeneratorTest extends CDKTestCase {
         acL.addAtom(a5);
         acL.addAtom(a6);
 
-        acL.addBond(new Bond(a1, a1H, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a1, a3, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a1, a4, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a2, a5, CDKConstants.BONDORDER_SINGLE));
-        acL.addBond(new Bond(a2, a6, CDKConstants.BONDORDER_DOUBLE));
+        acL.addBond(new Bond(a1, a1H, Order.SINGLE));
+        acL.addBond(new Bond(a1, a2, Order.SINGLE));
+        acL.addBond(new Bond(a1, a3, Order.SINGLE));
+        acL.addBond(new Bond(a1, a4, Order.SINGLE));
+        acL.addBond(new Bond(a2, a5, Order.SINGLE));
+        acL.addBond(new Bond(a2, a6, Order.DOUBLE));
 
         ITetrahedralChirality chirality = new TetrahedralChirality(a1, ligandAtoms, Stereo.ANTI_CLOCKWISE);
         acL.addStereoElement(chirality);
@@ -699,9 +698,9 @@ public class InChIGeneratorTest extends CDKTestCase {
         acE.addAtom(a3E);
         acE.addAtom(a4E);
 
-        acE.addBond(new Bond(a1E, a2E, CDKConstants.BONDORDER_DOUBLE));
-        acE.addBond(new Bond(a1E, a3E, CDKConstants.BONDORDER_SINGLE));
-        acE.addBond(new Bond(a2E, a4E, CDKConstants.BONDORDER_SINGLE));
+        acE.addBond(new Bond(a1E, a2E, Order.DOUBLE));
+        acE.addBond(new Bond(a1E, a3E, Order.SINGLE));
+        acE.addBond(new Bond(a2E, a4E, Order.SINGLE));
 
         IBond[] ligands = new IBond[2];
         ligands[0] = acE.getBond(1);

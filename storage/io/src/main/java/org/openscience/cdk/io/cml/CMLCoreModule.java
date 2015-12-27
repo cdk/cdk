@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -1578,16 +1579,16 @@ public class CMLCoreModule implements ICMLModule {
 
                     if ("S".equals(bondOrder)) {
                         //                        cdo.setObjectProperty("Bond", "order", "1");
-                        currentBond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                        currentBond.setOrder(Order.SINGLE);
                     } else if ("D".equals(bondOrder)) {
                         //                        cdo.setObjectProperty("Bond", "order", "2");
-                        currentBond.setOrder(CDKConstants.BONDORDER_DOUBLE);
+                        currentBond.setOrder(Order.DOUBLE);
                     } else if ("T".equals(bondOrder)) {
                         //                        cdo.setObjectProperty("Bond", "order", "3");
-                        currentBond.setOrder(CDKConstants.BONDORDER_TRIPLE);
+                        currentBond.setOrder(Order.TRIPLE);
                     } else if ("A".equals(bondOrder)) {
                         //                        cdo.setObjectProperty("Bond", "order", "1.5");
-                        currentBond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                        currentBond.setOrder(Order.SINGLE);
                         currentBond.setFlag(CDKConstants.ISAROMATIC, true);
                     } else {
                         //                        cdo.setObjectProperty("Bond", "order", bondOrder);

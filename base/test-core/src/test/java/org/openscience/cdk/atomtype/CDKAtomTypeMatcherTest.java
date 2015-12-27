@@ -139,7 +139,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.sp2", "C.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -153,7 +153,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom2.setFormalCharge(+1);
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_TRIPLE);
+        mol.addBond(0, 1, Order.TRIPLE);
 
         String[] expectedTypes = {"C.sp", "C.plus.sp1"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -167,7 +167,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addSingleElectron(1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_TRIPLE);
+        mol.addBond(0, 1, Order.TRIPLE);
 
         String[] expectedTypes = {"C.sp", "C.radical.sp1"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -180,7 +180,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom atom2 = new Atom("N");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.sp2", "N.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -194,7 +194,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addSingleElectron(1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.sp2", "N.sp2.radical"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -208,7 +208,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addSingleElectron(1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.sp2", "C.radical.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -241,19 +241,19 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom10);
         mol.addAtom(atom11);
         mol.addAtom(atom12);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(0, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(4, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 5, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 6, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 7, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(3, 8, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(5, 6, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(7, 9, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(7, 10, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(8, 11, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(8, 9, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(0, 2, Order.DOUBLE);
+        mol.addBond(0, 3, Order.SINGLE);
+        mol.addBond(4, 1, Order.SINGLE);
+        mol.addBond(1, 5, Order.SINGLE);
+        mol.addBond(2, 6, Order.SINGLE);
+        mol.addBond(2, 7, Order.SINGLE);
+        mol.addBond(3, 8, Order.DOUBLE);
+        mol.addBond(5, 6, Order.DOUBLE);
+        mol.addBond(7, 9, Order.SINGLE);
+        mol.addBond(7, 10, Order.DOUBLE);
+        mol.addBond(8, 11, Order.SINGLE);
+        mol.addBond(8, 9, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp2", "N.planar3", "C.sp2", "N.sp2", "C.sp3", "C.sp2", "N.sp2", "C.sp2", "C.sp2",
                 "N.amide", "O.sp2", "N.sp3"};
@@ -269,8 +269,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_TRIPLE);
-        mol.addBond(2, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.TRIPLE);
+        mol.addBond(2, 1, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp", "C.sp", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -283,7 +283,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"O.sp2", "C.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -301,9 +301,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom1);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp2.co2", "C.sp2", "O.minus.co2", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -317,7 +317,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
         mol.addSingleElectron(0);
 
         String[] expectedTypes = {"O.plus.sp2.radical", "C.sp2"};
@@ -357,7 +357,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -372,8 +372,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(0, 2, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp3", "C.sp3", "Li"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -386,7 +386,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_TRIPLE);
+        mol.addBond(0, 1, Order.TRIPLE);
 
         String[] expectedTypes = {"N.sp1", "C.sp"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -405,9 +405,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         atom3.setFormalCharge(-1);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(0, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(0, 2, Order.SINGLE);
+        mol.addBond(0, 3, Order.SINGLE);
 
         String[] expectedTypes = {"N.plus.sp2", "O.sp2", "O.minus", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -424,9 +424,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(0, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(0, 2, Order.DOUBLE);
+        mol.addBond(0, 3, Order.SINGLE);
 
         String[] expectedTypes = {"N.nitro", "O.sp2", "O.sp2", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -439,7 +439,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
 
         String[] expectedTypes = {"N.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -454,7 +454,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addSingleElectron(0);
         atom.setFormalCharge(+1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
 
         String[] expectedTypes = {"N.plus.sp3.radical", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -467,7 +467,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"N.sp2", "C.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -483,7 +483,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom2.setHybridization(thisHybridization);
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.sp2", "C.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -655,9 +655,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
 
         String[] expectedTypes = {"O.minus", "S.inyl.charged", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -674,9 +674,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp2", "S.inyl", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -695,10 +695,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 2, Order.DOUBLE);
+        mol.addBond(1, 2, Order.DOUBLE);
+        mol.addBond(2, 3, Order.SINGLE);
+        mol.addBond(2, 4, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp2", "O.sp2", "S.onyl", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -715,9 +715,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom1);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 2, Order.DOUBLE);
+        mol.addBond(1, 2, Order.DOUBLE);
+        mol.addBond(2, 3, Order.DOUBLE);
 
         String[] expectedTypes = {"O.sp2", "O.sp2", "S.trioxide", "O.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -732,8 +732,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp2", "C.sp2", "N.amide"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -752,10 +752,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp2", "N.oxide", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -770,8 +770,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
 
         String[] expectedTypes = {"S.2", "C.sp2", "N.thioamide"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -796,9 +796,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom1);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(2, 3, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp2", "C.sp2", "N.amide", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -817,10 +817,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(3, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(2, 3, Order.SINGLE);
+        mol.addBond(3, 4, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp2", "C.sp2", "N.amide", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -841,12 +841,12 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(3, 4, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(4, 5, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(5, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(2, 3, Order.SINGLE);
+        mol.addBond(3, 4, Order.SINGLE);
+        mol.addBond(4, 5, Order.SINGLE);
+        mol.addBond(5, 1, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp2", "C.sp2", "N.amide", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -863,9 +863,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
 
         String[] expectedTypes = {"S.2", "C.sp2", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -884,10 +884,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.DOUBLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp2", "S.onyl", "O.sp2", "O.sp3", "O.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -939,10 +939,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom3.setFormalCharge(-1);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"O.minus", "S.onyl.charged", "O.minus", "O.sp3", "O.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -965,12 +965,12 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom5);
         mol.addAtom(atom6);
         mol.addAtom(atom7);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 5, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 6, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
+        mol.addBond(1, 5, Order.SINGLE);
+        mol.addBond(1, 6, Order.SINGLE);
 
         String[] expectedTypes = {"F", "S.octahedral", "F", "F", "F", "F", "F"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1016,12 +1016,12 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom5);
         mol.addAtom(atom6);
         mol.addAtom(atom7);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 5, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 6, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
+        mol.addBond(1, 5, Order.SINGLE);
+        mol.addBond(1, 6, Order.SINGLE);
 
         String[] expectedTypes = {"F", "Cr", "F", "F", "F", "F", "F"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1040,10 +1040,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"F", "Xe.3", "F", "F", "F"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1062,10 +1062,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"O.sp2", "P.ate", "O.sp3", "O.sp3", "O.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1088,10 +1088,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp3", "P.ate.charged", "C.sp3", "C.sp3", "O.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1112,10 +1112,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"O.minus", "P.ate.charged", "O.sp3", "O.sp3", "O.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1148,10 +1148,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"H", "N.plus", "H", "H", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1167,8 +1167,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addSingleElectron(1);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
 
         String[] expectedTypes = {"H", "N.sp3.radical", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1187,10 +1187,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp3", "Si.sp3", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1209,10 +1209,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp3", "Sn.sp3", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1232,10 +1232,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp3", "As.plus", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1252,9 +1252,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
 
         String[] expectedTypes = {"H", "P.ine", "H", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1304,8 +1304,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp3", "P.ine", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1323,8 +1323,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp2", "P.irane", "C.sp3"}; // FIXME: compare with previous test... can't both be P.ine...
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1342,9 +1342,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
 
         String[] expectedTypes = {"H", "C.plus.planar", "H", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1379,7 +1379,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         oxygen.setFormalCharge(-1);
         mol.addAtom(atom);
         mol.addAtom(oxygen);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
 
         String[] expectedTypes = {"H", "O.minus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1408,9 +1408,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom1);
         mol.addAtom(atom2);
         mol.addAtom(oxygen);
-        mol.addBond(0, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 3, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(2, 3, Order.SINGLE);
 
         String[] expectedTypes = {"H", "H", "H", "O.plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1430,10 +1430,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(oxygen);
         mol.addAtom(carbon);
-        mol.addBond(0, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 4, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(3, 4, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
+        mol.addBond(2, 4, Order.SINGLE);
+        mol.addBond(3, 4, Order.DOUBLE);
 
         String[] expectedTypes = {"H", "H", "H", "O.plus.sp2", "C.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1490,7 +1490,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom hydrogen = new Atom("H");
         mol.addAtom(atom);
         mol.addAtom(hydrogen);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
         String[] expectedTypes = new String[]{"Cl", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
@@ -1498,7 +1498,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom = new Atom("I");
         mol.addAtom(atom);
         mol.addAtom(hydrogen);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
         expectedTypes = new String[]{"I", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
@@ -1506,7 +1506,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom = new Atom("Br");
         mol.addAtom(atom);
         mol.addAtom(hydrogen);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
         expectedTypes = new String[]{"Br", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
@@ -1514,7 +1514,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom = new Atom("F");
         mol.addAtom(atom);
         mol.addAtom(hydrogen);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
         expectedTypes = new String[]{"F", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
@@ -1573,8 +1573,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         atom2.setFormalCharge(-1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
 
         String[] expectedTypes = {"F", "I.minus.5", "F"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1615,9 +1615,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_TRIPLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(2, 3, Order.TRIPLE);
 
         String[] expectedTypes = new String[]{"C.sp3", "N.minus.sp3", "N.plus.sp1", "N.sp1"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1652,9 +1652,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.DOUBLE);
+        mol.addBond(2, 3, Order.DOUBLE);
 
         String[] expectedTypes = new String[]{"C.sp3", "N.sp2", "N.plus.sp1", "N.minus.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1676,11 +1676,11 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(3, 4, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(4, 0, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.DOUBLE);
+        mol.addBond(2, 3, Order.SINGLE);
+        mol.addBond(3, 4, Order.DOUBLE);
+        mol.addBond(4, 0, Order.SINGLE);
         String[] expectedTypes = new String[]{"Hg.minus", "O.plus.sp2", "C.sp2", "C.sp2", "N.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
@@ -1777,9 +1777,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom1);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(2, 3, Order.SINGLE);
         String[] expectedTypes = new String[]{"O.sp3", "Po", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
@@ -1955,12 +1955,12 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         cp.getAtom(4).setFormalCharge(-1);
         cp.getAtom(4).setHybridization(IAtomType.Hybridization.PLANAR3);
         cp.addAtom(new Atom("H"));
-        cp.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        cp.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        cp.addBond(2, 3, CDKConstants.BONDORDER_DOUBLE);
-        cp.addBond(3, 4, CDKConstants.BONDORDER_SINGLE);
-        cp.addBond(4, 0, CDKConstants.BONDORDER_SINGLE);
-        cp.addBond(4, 5, CDKConstants.BONDORDER_SINGLE);
+        cp.addBond(0, 1, Order.DOUBLE);
+        cp.addBond(1, 2, Order.SINGLE);
+        cp.addBond(2, 3, Order.DOUBLE);
+        cp.addBond(3, 4, Order.SINGLE);
+        cp.addBond(4, 0, Order.SINGLE);
+        cp.addBond(4, 5, Order.SINGLE);
 
         String[] expectedTypes = new String[]{"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.minus.planar", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, cp);
@@ -1983,16 +1983,16 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         ferrocene.getAtom(9).setFormalCharge(-1);
         ferrocene.addAtom(new Atom("Fe"));
         ferrocene.getAtom(10).setFormalCharge(+2);
-        ferrocene.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        ferrocene.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        ferrocene.addBond(2, 3, CDKConstants.BONDORDER_DOUBLE);
-        ferrocene.addBond(3, 4, CDKConstants.BONDORDER_SINGLE);
-        ferrocene.addBond(4, 0, CDKConstants.BONDORDER_SINGLE);
-        ferrocene.addBond(5, 6, CDKConstants.BONDORDER_DOUBLE);
-        ferrocene.addBond(6, 7, CDKConstants.BONDORDER_SINGLE);
-        ferrocene.addBond(7, 8, CDKConstants.BONDORDER_DOUBLE);
-        ferrocene.addBond(8, 9, CDKConstants.BONDORDER_SINGLE);
-        ferrocene.addBond(9, 5, CDKConstants.BONDORDER_SINGLE);
+        ferrocene.addBond(0, 1, Order.DOUBLE);
+        ferrocene.addBond(1, 2, Order.SINGLE);
+        ferrocene.addBond(2, 3, Order.DOUBLE);
+        ferrocene.addBond(3, 4, Order.SINGLE);
+        ferrocene.addBond(4, 0, Order.SINGLE);
+        ferrocene.addBond(5, 6, Order.DOUBLE);
+        ferrocene.addBond(6, 7, Order.SINGLE);
+        ferrocene.addBond(7, 8, Order.DOUBLE);
+        ferrocene.addBond(8, 9, Order.SINGLE);
+        ferrocene.addBond(9, 5, Order.SINGLE);
 
         String[] expectedTypes = new String[]{"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.minus.planar", "C.sp2", "C.sp2",
                 "C.sp2", "C.sp2", "C.minus.planar", "Fe.2plus"};
@@ -2007,11 +2007,11 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         furan.addAtom(new Atom("C"));
         furan.addAtom(new Atom("C"));
         furan.addAtom(new Atom("O"));
-        furan.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        furan.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        furan.addBond(2, 3, CDKConstants.BONDORDER_DOUBLE);
-        furan.addBond(3, 4, CDKConstants.BONDORDER_SINGLE);
-        furan.addBond(4, 0, CDKConstants.BONDORDER_SINGLE);
+        furan.addBond(0, 1, Order.DOUBLE);
+        furan.addBond(1, 2, Order.SINGLE);
+        furan.addBond(2, 3, Order.DOUBLE);
+        furan.addBond(3, 4, Order.SINGLE);
+        furan.addBond(4, 0, Order.SINGLE);
         String[] expectedTypes = new String[]{"C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.planar3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, furan);
     }
@@ -2029,10 +2029,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.DOUBLE);
+        mol.addBond(1, 3, Order.DOUBLE);
+        mol.addBond(1, 4, Order.DOUBLE);
 
         String[] expectedTypes = new String[]{"O.sp3", "Cl.perchlorate", "O.sp2", "O.sp2", "O.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2100,10 +2100,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom4.setFormalCharge(-1);
         mol.addAtom(atom5);
         atom5.setFormalCharge(-1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = new String[]{"O.sp3", "Cl.perchlorate.charged", "O.minus", "O.minus", "O.minus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2120,9 +2120,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.DOUBLE);
+        mol.addBond(1, 3, Order.DOUBLE);
 
         String[] expectedTypes = new String[]{"O.sp3", "Cl.chlorate", "O.sp2", "O.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2448,7 +2448,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtomContainer molecule = MoleculeFactory.makePyridineOxide();
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext())
-            bonds.next().setOrder(CDKConstants.BONDORDER_SINGLE);
+            bonds.next().setOrder(Order.SINGLE);
         for (int i = 0; i < 6; i++) {
             molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
         }
@@ -2517,8 +2517,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(carbon1);
         mol.addAtom(carbon2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(0, 2, Order.SINGLE);
 
         String[] expectedTypes = {"F.plus.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2536,8 +2536,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(carbon1);
         mol.addAtom(carbon2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(0, 2, Order.SINGLE);
 
         String[] expectedTypes = {"Cl.plus.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2555,8 +2555,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(carbon1);
         mol.addAtom(carbon2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(0, 2, Order.SINGLE);
 
         String[] expectedTypes = {"Br.plus.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2574,8 +2574,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(carbon1);
         mol.addAtom(carbon2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(0, 2, Order.SINGLE);
 
         String[] expectedTypes = {"I.plus.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2593,8 +2593,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(carbon1);
         mol.addAtom(carbon2);
         mol.addAtom(carbon3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
 
         String[] expectedTypes = {"C.plus.sp2", "C.sp2", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2611,7 +2611,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
         mol.addAtom(atom1);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_TRIPLE);
+        mol.addBond(0, 1, Order.TRIPLE);
 
         String[] expectedTypes = {"C.minus.sp1", "O.plus.sp1"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2631,8 +2631,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom1);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(0, 2, Order.SINGLE);
 
         String[] expectedTypes = {"O.plus.sp2", "C.sp2", "C.minus.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2651,8 +2651,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom1);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(0, 2, Order.SINGLE);
 
         String[] expectedTypes = {"C.minus.sp2", "C.sp2", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2673,8 +2673,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
 
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_TRIPLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.TRIPLE);
 
         String[] expectedTypes = {"C.sp3", "N.plus.sp1", "C.minus.sp1"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2701,8 +2701,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(new Atom("Zn"));
         mol.addAtom(new Atom("Cl"));
         mol.addAtom(new Atom("Cl"));
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(0, 2, Order.SINGLE);
 
         String[] expectedTypes = {"Zn", "Cl", "Cl"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3078,9 +3078,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addSingleElectron(1);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp3", "C.radical.planar", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3097,8 +3097,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addSingleElectron(0);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(2, 1, Order.SINGLE);
 
         String[] expectedTypes = {"O.plus.radical", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3113,7 +3113,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         atom2.setFormalCharge(+1);
         mol.addSingleElectron(1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp3", "F.plus.radical"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3128,7 +3128,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         atom2.setFormalCharge(+1);
         mol.addSingleElectron(1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp3", "Cl.plus.radical"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3143,7 +3143,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         atom2.setFormalCharge(+1);
         mol.addSingleElectron(1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp3", "Br.plus.radical"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3158,7 +3158,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         atom2.setFormalCharge(+1);
         mol.addSingleElectron(1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
 
         String[] expectedTypes = {"C.sp3", "I.plus.radical"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3172,7 +3172,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         atom2.setFormalCharge(+1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.sp2", "F.plus.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3186,7 +3186,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         atom2.setFormalCharge(+1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.sp2", "Cl.plus.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3200,7 +3200,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         atom2.setFormalCharge(+1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.sp2", "Br.plus.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3214,7 +3214,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         atom2.setFormalCharge(+1);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.sp2", "I.plus.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3245,8 +3245,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addSingleElectron(0);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(2, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(2, 1, Order.SINGLE);
 
         String[] expectedTypes = {"N.plus.sp2.radical", "C.sp2", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3263,8 +3263,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(2, 1, Order.SINGLE);
 
         String[] expectedTypes = {"F", "C.plus.planar", "C.minus.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);

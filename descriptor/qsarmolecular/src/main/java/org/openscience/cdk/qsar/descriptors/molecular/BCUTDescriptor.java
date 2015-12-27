@@ -28,6 +28,7 @@ import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -269,11 +270,11 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
                         if (bond.contains(local.getAtom(i)) && bond.contains(local.getAtom(j))) {
                             if (bond.getFlag(CDKConstants.ISAROMATIC))
                                 matrix[i][j] = 0.15;
-                            else if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE)
+                            else if (bond.getOrder() == Order.SINGLE)
                                 matrix[i][j] = 0.1;
-                            else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE)
+                            else if (bond.getOrder() == Order.DOUBLE)
                                 matrix[i][j] = 0.2;
-                            else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) matrix[i][j] = 0.3;
+                            else if (bond.getOrder() == Order.TRIPLE) matrix[i][j] = 0.3;
 
                             if (local.getConnectedBondsCount(i) == 1 || local.getConnectedBondsCount(j) == 1) {
                                 matrix[i][j] += 0.01;

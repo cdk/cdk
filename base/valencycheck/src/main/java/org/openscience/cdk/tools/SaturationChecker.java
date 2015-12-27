@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -243,7 +244,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
      */
     public void unsaturate(IAtomContainer atomContainer) {
         for (IBond bond : atomContainer.bonds())
-            bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+            bond.setOrder(Order.SINGLE);
     }
 
     /**
@@ -251,7 +252,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
      */
     public void unsaturateBonds(IAtomContainer container) {
         for (IBond bond : container.bonds())
-            bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+            bond.setOrder(Order.SINGLE);
     }
 
     /**

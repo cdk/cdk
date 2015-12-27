@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -133,9 +134,9 @@ public class DeAromatizationTool {
         int counter = 0;
         for (IBond bond : ring.bonds()) {
             if (counter % 2 == 0) {
-                bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                bond.setOrder(Order.SINGLE);
             } else {
-                bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
+                bond.setOrder(Order.DOUBLE);
             }
             counter++;
         }

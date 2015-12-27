@@ -32,6 +32,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -146,13 +147,13 @@ public class SMARTSTest extends CDKTestCase {
             QueryAtomContainer query1 = new QueryAtomContainer(builder);
             query1.addAtom(c1);
             query1.addAtom(c2);
-            query1.addBond(new OrderQueryBond(c1, c2, CDKConstants.BONDORDER_SINGLE, builder));
+            query1.addBond(new OrderQueryBond(c1, c2, Order.SINGLE, builder));
             Assert.assertTrue(uiTester.isSubgraph(c, query1));
 
             QueryAtomContainer query = new QueryAtomContainer(builder);
             query.addAtom(c1);
             query.addAtom(c2);
-            query.addBond(new AnyOrderQueryBond(c1, c2, CDKConstants.BONDORDER_SINGLE, builder));
+            query.addBond(new AnyOrderQueryBond(c1, c2, Order.SINGLE, builder));
             Assert.assertTrue(uiTester.isSubgraph(c, query));
 
         } catch (CDKException exception) {

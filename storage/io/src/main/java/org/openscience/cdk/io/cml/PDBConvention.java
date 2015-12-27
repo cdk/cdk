@@ -34,6 +34,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IPDBAtom;
@@ -287,7 +288,7 @@ public class PDBConvention extends CMLCoreModule {
                         //                                (new Integer(atom2)).toString());
                         currentBond = currentMolecule.getBuilder().newInstance(IBond.class,
                                 currentMolecule.getAtom(Integer.parseInt(connect_root) - 1),
-                                currentMolecule.getAtom(Integer.parseInt(atom) - 1), CDKConstants.BONDORDER_SINGLE);
+                                currentMolecule.getAtom(Integer.parseInt(atom) - 1), Order.SINGLE);
                         currentMolecule.addBond(currentBond);
                     }
                 }

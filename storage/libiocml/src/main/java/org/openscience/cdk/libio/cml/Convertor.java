@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -680,11 +681,11 @@ public class Convertor {
         }
 
         IBond.Order border = cdkBond.getOrder();
-        if (border == CDKConstants.BONDORDER_SINGLE) {
+        if (border == Order.SINGLE) {
             cmlBond.setOrder("S");
-        } else if (border == CDKConstants.BONDORDER_DOUBLE) {
+        } else if (border == Order.DOUBLE) {
             cmlBond.setOrder("D");
-        } else if (border == CDKConstants.BONDORDER_TRIPLE) {
+        } else if (border == Order.TRIPLE) {
             cmlBond.setOrder("T");
         } else {
             CMLScalar scalar = new CMLScalar();

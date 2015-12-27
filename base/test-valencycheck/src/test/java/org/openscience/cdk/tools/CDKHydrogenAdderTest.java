@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
@@ -96,7 +97,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         IAtom newAtom2 = new Atom(Elements.OXYGEN);
         molecule.addAtom(newAtom);
         molecule.addAtom(newAtom2);
-        molecule.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        molecule.addBond(0, 1, Order.DOUBLE);
         IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
         Assert.assertNotNull(type);
         AtomTypeManipulator.configure(newAtom, type);
@@ -119,7 +120,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         IAtom newAtom2 = new Atom(Elements.OXYGEN);
         molecule.addAtom(newAtom);
         molecule.addAtom(newAtom2);
-        molecule.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        molecule.addBond(0, 1, Order.SINGLE);
         IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
         Assert.assertNotNull(type);
         AtomTypeManipulator.configure(newAtom, type);
@@ -142,7 +143,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         IAtom newAtom2 = new Atom(Elements.NITROGEN);
         molecule.addAtom(newAtom);
         molecule.addAtom(newAtom2);
-        molecule.addBond(0, 1, CDKConstants.BONDORDER_TRIPLE);
+        molecule.addBond(0, 1, Order.TRIPLE);
         IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
         Assert.assertNotNull(type);
         AtomTypeManipulator.configure(newAtom, type);
@@ -165,7 +166,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         IAtom newAtom2 = new Atom(Elements.NITROGEN);
         molecule.addAtom(newAtom);
         molecule.addAtom(newAtom2);
-        molecule.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        molecule.addBond(0, 1, Order.SINGLE);
         IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
         Assert.assertNotNull(type);
         AtomTypeManipulator.configure(newAtom, type);
@@ -188,7 +189,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         IAtom newAtom2 = new Atom(Elements.NITROGEN);
         molecule.addAtom(newAtom);
         molecule.addAtom(newAtom2);
-        molecule.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        molecule.addBond(0, 1, Order.DOUBLE);
         IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
         Assert.assertNotNull(type);
         AtomTypeManipulator.configure(newAtom, type);
@@ -755,7 +756,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         mol.addAtom(mol.getBuilder().newInstance(IAtom.class, "C"));
         mol.addAtom(mol.getBuilder().newInstance(IAtom.class, "O"));
         mol.addBond(mol.getBuilder().newInstance(IBond.class, mol.getAtom(0), mol.getAtom(1),
-                CDKConstants.BONDORDER_SINGLE));
+                Order.SINGLE));
         addExplicitHydrogens(mol);
         int hCount = 0;
         Iterator<IAtom> neighbors = mol.getConnectedAtomsList(mol.getAtom(0)).iterator();
@@ -779,11 +780,11 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         mol.addAtom(mol.getBuilder().newInstance(IAtom.class, "C"));
         mol.addAtom(mol.getBuilder().newInstance(IAtom.class, "S"));
         mol.addBond(mol.getBuilder().newInstance(IBond.class, mol.getAtom(0), mol.getAtom(1),
-                CDKConstants.BONDORDER_DOUBLE));
+                Order.DOUBLE));
         mol.addBond(mol.getBuilder().newInstance(IBond.class, mol.getAtom(1), mol.getAtom(2),
-                CDKConstants.BONDORDER_SINGLE));
+                Order.SINGLE));
         mol.addBond(mol.getBuilder().newInstance(IBond.class, mol.getAtom(2), mol.getAtom(3),
-                CDKConstants.BONDORDER_SINGLE));
+                Order.SINGLE));
         addExplicitHydrogens(mol);
         int hCount = 0;
         Iterator<IAtom> neighbors = mol.getConnectedAtomsList(mol.getAtom(0)).iterator();

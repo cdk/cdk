@@ -44,15 +44,28 @@ public class CDKConstants {
 
     public final static Object      UNSET                        = null;
 
-    /** A bond of degree 1.0. */
+    /** A bond of degree 1.0.
+     *
+     * @deprecated Use {@link IBond.Order} SINGLE directly.
+     */
     public final static IBond.Order BONDORDER_SINGLE             = IBond.Order.SINGLE;
 
-    /** A bond of degree 2.0. */
+    /** A bond of degree 2.0.
+     *
+     * @deprecated Use {@link IBond.Order} DOUBLE directly.
+     */
     public final static IBond.Order BONDORDER_DOUBLE             = IBond.Order.DOUBLE;
 
-    /** A bond of degree 3.0. */
+    /** A bond of degree 3.0.
+     *
+     * @deprecated Use {@link IBond.Order} TRIPLE directly.
+     */
     public final static IBond.Order BONDORDER_TRIPLE             = IBond.Order.TRIPLE;
 
+    /** A bond of degree 4.0.
+    *
+    * @deprecated Use {@link IBond.Order} QUADRUPLE directly.
+    */
     public final static IBond.Order BONDORDER_QUADRUPLE          = IBond.Order.QUADRUPLE;
 
     /** A positive atom parity. */
