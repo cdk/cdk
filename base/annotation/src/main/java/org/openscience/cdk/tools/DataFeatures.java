@@ -44,6 +44,7 @@ package org.openscience.cdk.tools;
  **/
 public class DataFeatures {
 
+	/** Indicated that no feature are defined. */
     public final static int NONE                               = 0;
 
     // The int allows for up to 750 different properties. Should
