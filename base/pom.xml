@@ -21,7 +21,6 @@
         <module>test-core</module>
         <module>test-standard</module>
         <module>test-valencycheck</module>
-        <module>annotation</module>
         <module>data</module>
         <module>silent</module>
         <module>datadebug</module>
