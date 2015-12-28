@@ -27,6 +27,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -52,7 +53,7 @@ public class AminoAcidManipulator {
         java.util.List<IBond> bonds = acid.getConnectedBondsList(acid.getCTerminus());
         // ok, look for the oxygen which is singly bonded
         for (IBond bond : bonds) {
-            if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
+            if (bond.getOrder() == Order.SINGLE) {
                 for (int j = 0; j < bond.getAtomCount(); j++) {
                     if (bond.getAtom(j).getSymbol().equals("O")) {
                         // yes, we found a singly bonded oxygen!
@@ -75,6 +76,6 @@ public class AminoAcidManipulator {
         IAtom acidicOxygen = acid.getBuilder().newInstance(IAtom.class, "O");
         acid.addAtom(acidicOxygen);
         acid.addBond(acid.getBuilder().newInstance(IBond.class, acid.getCTerminus(), acidicOxygen,
-                CDKConstants.BONDORDER_SINGLE));
+                Order.SINGLE));
     }
 }

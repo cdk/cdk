@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -372,20 +373,20 @@ public class Mol2Reader extends DefaultChemObjectReader {
                                 IBond bond = molecule.getBuilder().newInstance(IBond.class,
                                         molecule.getAtom(atom1 - 1), molecule.getAtom(atom2 - 1));
                                 if ("1".equals(orderStr)) {
-                                    bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                                    bond.setOrder(Order.SINGLE);
                                 } else if ("2".equals(orderStr)) {
-                                    bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
+                                    bond.setOrder(Order.DOUBLE);
                                 } else if ("3".equals(orderStr)) {
-                                    bond.setOrder(CDKConstants.BONDORDER_TRIPLE);
+                                    bond.setOrder(Order.TRIPLE);
                                 } else if ("am".equals(orderStr) || "ar".equals(orderStr)) {
-                                    bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                                    bond.setOrder(Order.SINGLE);
                                     bond.setFlag(CDKConstants.ISAROMATIC, true);
                                     bond.getAtom(0).setFlag(CDKConstants.ISAROMATIC, true);
                                     bond.getAtom(1).setFlag(CDKConstants.ISAROMATIC, true);
                                 } else if ("du".equals(orderStr)) {
-                                    bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                                    bond.setOrder(Order.SINGLE);
                                 } else if ("un".equals(orderStr)) {
-                                    bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                                    bond.setOrder(Order.SINGLE);
                                 }
                                 molecule.addBond(bond);
                             }

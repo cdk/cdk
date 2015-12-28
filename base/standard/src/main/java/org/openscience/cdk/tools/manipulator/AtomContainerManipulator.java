@@ -48,6 +48,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -405,7 +406,7 @@ public class AtomContainerManipulator {
                         hydrogen.setImplicitHydrogenCount(0);
                         hydrogens.add(hydrogen);
                         newBonds.add(atom.getBuilder().newInstance(IBond.class, atom, hydrogen,
-                                CDKConstants.BONDORDER_SINGLE));
+                                Order.SINGLE));
 
                         if (hNeighbor.get(atom) == null) hNeighbor.put(atom, hydrogen);
 

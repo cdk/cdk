@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -172,7 +173,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         IAtomContainer molecule = MoleculeFactory.makePyridineOxide();
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext())
-            bonds.next().setOrder(CDKConstants.BONDORDER_SINGLE);
+            bonds.next().setOrder(Order.SINGLE);
         for (int i = 0; i < 6; i++) {
             molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
         }

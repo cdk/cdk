@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -241,7 +242,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond.getOrder());
+        Assert.assertEquals(Order.SINGLE, bond.getOrder());
         Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
     }
 
@@ -254,7 +255,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond.getOrder());
+        Assert.assertEquals(Order.DOUBLE, bond.getOrder());
         Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
     }
 

@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.AtomContainer;
@@ -44,11 +45,6 @@ import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Checks the functionality of the AtomType-MMFF94AtomTypeMatcher.
@@ -182,7 +178,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         // making sure the order matches the test results
         mol.addAtom(carbon);
         mol.addAtom(oxygen);
-        mol.addBond(builder.newInstance(IBond.class, carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
+        mol.addBond(builder.newInstance(IBond.class, carbon, oxygen, Order.SINGLE));
 
         addExplicitHydrogens(mol);
 
@@ -216,7 +212,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         // making sure the order matches the test results
         mol.addAtom(carbon);
         mol.addAtom(nitrogen);
-        mol.addBond(builder.newInstance(IBond.class, carbon, nitrogen, CDKConstants.BONDORDER_SINGLE));
+        mol.addBond(builder.newInstance(IBond.class, carbon, nitrogen, Order.SINGLE));
 
         addExplicitHydrogens(mol);
 
@@ -250,8 +246,8 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addAtom(carbon);
         mol.addAtom(oxygen);
         mol.addAtom(carbon2);
-        mol.addBond(builder.newInstance(IBond.class, carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
-        mol.addBond(builder.newInstance(IBond.class, carbon2, oxygen, CDKConstants.BONDORDER_SINGLE));
+        mol.addBond(builder.newInstance(IBond.class, carbon, oxygen, Order.SINGLE));
+        mol.addBond(builder.newInstance(IBond.class, carbon2, oxygen, Order.SINGLE));
 
         addExplicitHydrogens(mol);
 
@@ -283,7 +279,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         // making sure the order matches the test results
         mol.addAtom(carbon);
         mol.addAtom(sulfur);
-        mol.addBond(builder.newInstance(IBond.class, carbon, sulfur, CDKConstants.BONDORDER_SINGLE));
+        mol.addBond(builder.newInstance(IBond.class, carbon, sulfur, Order.SINGLE));
 
         addExplicitHydrogens(mol);
 
@@ -315,7 +311,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         // making sure the order matches the test results
         mol.addAtom(carbon);
         mol.addAtom(chlorine);
-        mol.addBond(builder.newInstance(IBond.class, carbon, chlorine, CDKConstants.BONDORDER_SINGLE));
+        mol.addBond(builder.newInstance(IBond.class, carbon, chlorine, Order.SINGLE));
 
         addExplicitHydrogens(mol);
 
@@ -349,22 +345,22 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
             mol.addAtom(carbon);
         }
         IBond ringBond = builder
-                .newInstance(IBond.class, mol.getAtom(0), mol.getAtom(1), CDKConstants.BONDORDER_DOUBLE);
+                .newInstance(IBond.class, mol.getAtom(0), mol.getAtom(1), Order.DOUBLE);
         ringBond.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(ringBond);
-        ringBond = builder.newInstance(IBond.class, mol.getAtom(1), mol.getAtom(2), CDKConstants.BONDORDER_SINGLE);
+        ringBond = builder.newInstance(IBond.class, mol.getAtom(1), mol.getAtom(2), Order.SINGLE);
         ringBond.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(ringBond);
-        ringBond = builder.newInstance(IBond.class, mol.getAtom(2), mol.getAtom(3), CDKConstants.BONDORDER_DOUBLE);
+        ringBond = builder.newInstance(IBond.class, mol.getAtom(2), mol.getAtom(3), Order.DOUBLE);
         ringBond.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(ringBond);
-        ringBond = builder.newInstance(IBond.class, mol.getAtom(3), mol.getAtom(4), CDKConstants.BONDORDER_SINGLE);
+        ringBond = builder.newInstance(IBond.class, mol.getAtom(3), mol.getAtom(4), Order.SINGLE);
         ringBond.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(ringBond);
-        ringBond = builder.newInstance(IBond.class, mol.getAtom(4), mol.getAtom(5), CDKConstants.BONDORDER_DOUBLE);
+        ringBond = builder.newInstance(IBond.class, mol.getAtom(4), mol.getAtom(5), Order.DOUBLE);
         ringBond.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(ringBond);
-        ringBond = builder.newInstance(IBond.class, mol.getAtom(5), mol.getAtom(0), CDKConstants.BONDORDER_SINGLE);
+        ringBond = builder.newInstance(IBond.class, mol.getAtom(5), mol.getAtom(0), Order.SINGLE);
         ringBond.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(ringBond);
 

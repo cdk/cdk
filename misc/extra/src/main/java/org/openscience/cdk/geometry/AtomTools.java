@@ -27,10 +27,10 @@ import java.util.List;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  * A set of static utility classes for geometric calculations on Atoms.
@@ -75,7 +75,7 @@ public class AtomTools {
                         noCoords.addAtom(refAtom);
                         // bond is required to extract ligands
                         noCoords.addBond(atomContainer.getBuilder().newInstance(IBond.class, atom, refAtom,
-                                CDKConstants.BONDORDER_SINGLE));
+                                Order.SINGLE));
                     }
                 }
             }

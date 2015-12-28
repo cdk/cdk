@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.atomtype;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,19 +31,17 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
-
-import static org.hamcrest.CoreMatchers.is;
 
 /**
  * This class tests the perception of Sybyl atom types, which uses
@@ -275,7 +275,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.2", "C.2"};
         assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
@@ -288,7 +288,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtom atom2 = new Atom("N");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
 
         String[] expectedTypes = {"C.2", "N.2"};
         assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
@@ -303,8 +303,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_TRIPLE);
-        mol.addBond(2, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.TRIPLE);
+        mol.addBond(2, 1, Order.SINGLE);
 
         String[] expectedTypes = {"C.1", "C.1", "C.3"};
         assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
@@ -375,8 +375,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
 
         String[] expectedTypes = {"O.2", "C.2", "N.am"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -391,8 +391,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
 
         String[] expectedTypes = {"O.co2", "C.2", "O.co2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -422,7 +422,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
 
         String[] expectedTypes = {"N.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -463,10 +463,10 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"H", "N.4", "H", "H", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -479,7 +479,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
 
         String[] expectedTypes = {"O.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -496,9 +496,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
 
         String[] expectedTypes = {"O.2", "S.O", "C.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -517,10 +517,10 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(2, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(2, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 2, Order.DOUBLE);
+        mol.addBond(1, 2, Order.DOUBLE);
+        mol.addBond(2, 3, Order.SINGLE);
+        mol.addBond(2, 4, Order.SINGLE);
 
         String[] expectedTypes = {"O.2", "O.2", "S.O2", "C.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -538,9 +538,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
 
         String[] expectedTypes = {"H", "C.cat", "H", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -630,8 +630,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
 
         String[] expectedTypes = {"S.2", "C.2", "N.am"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -721,16 +721,16 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         ferrocene.getAtom(9).setFormalCharge(-1);
         ferrocene.addAtom(new Atom("Fe"));
         ferrocene.getAtom(10).setFormalCharge(+2);
-        ferrocene.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        ferrocene.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        ferrocene.addBond(2, 3, CDKConstants.BONDORDER_DOUBLE);
-        ferrocene.addBond(3, 4, CDKConstants.BONDORDER_SINGLE);
-        ferrocene.addBond(4, 0, CDKConstants.BONDORDER_SINGLE);
-        ferrocene.addBond(5, 6, CDKConstants.BONDORDER_DOUBLE);
-        ferrocene.addBond(6, 7, CDKConstants.BONDORDER_SINGLE);
-        ferrocene.addBond(7, 8, CDKConstants.BONDORDER_DOUBLE);
-        ferrocene.addBond(8, 9, CDKConstants.BONDORDER_SINGLE);
-        ferrocene.addBond(9, 5, CDKConstants.BONDORDER_SINGLE);
+        ferrocene.addBond(0, 1, Order.DOUBLE);
+        ferrocene.addBond(1, 2, Order.SINGLE);
+        ferrocene.addBond(2, 3, Order.DOUBLE);
+        ferrocene.addBond(3, 4, Order.SINGLE);
+        ferrocene.addBond(4, 0, Order.SINGLE);
+        ferrocene.addBond(5, 6, Order.DOUBLE);
+        ferrocene.addBond(6, 7, Order.SINGLE);
+        ferrocene.addBond(7, 8, Order.DOUBLE);
+        ferrocene.addBond(8, 9, Order.SINGLE);
+        ferrocene.addBond(9, 5, Order.SINGLE);
 
         String[] expectedTypes = new String[]{"C.2", "C.2", "C.2", "C.2", "Any", "C.2", "C.2", "C.2", "C.2", "Any",
                 "Fe"};
@@ -744,7 +744,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtom atom2 = new Atom("C");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_TRIPLE);
+        mol.addBond(0, 1, Order.TRIPLE);
 
         String[] expectedTypes = {"N.1", "C.1"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -775,8 +775,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(atom2);
         mol.addAtom(atom3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(0, 2, Order.SINGLE);
 
         String[] expectedTypes = {"O.3", "C.3", "Li"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -795,10 +795,10 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"C.3", "Sn", "C.3", "C.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -810,8 +810,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(new Atom("Zn"));
         mol.addAtom(new Atom("Cl"));
         mol.addAtom(new Atom("Cl"));
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(0, 2, Order.SINGLE);
 
         String[] expectedTypes = {"Zn", "Cl", "Cl"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -854,10 +854,10 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         mol.addAtom(atom3);
         mol.addAtom(atom4);
         mol.addAtom(atom5);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
-        mol.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 3, CDKConstants.BONDORDER_SINGLE);
-        mol.addBond(1, 4, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.DOUBLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
+        mol.addBond(1, 4, Order.SINGLE);
 
         String[] expectedTypes = {"O.2", "P.3", "O.3", "O.3", "O.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);

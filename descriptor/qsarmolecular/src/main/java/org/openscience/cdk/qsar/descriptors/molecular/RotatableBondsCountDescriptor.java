@@ -25,6 +25,7 @@ import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -160,7 +161,7 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
             IAtom atom0 = bond.getAtom(0);
             IAtom atom1 = bond.getAtom(1);
             if (atom0.getSymbol().equals("H") || atom1.getSymbol().equals("H")) continue;
-            if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
+            if (bond.getOrder() == Order.SINGLE) {
                 if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE))
                         && (BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom1), IBond.Order.TRIPLE))) {
                     if (!bond.getFlag(CDKConstants.ISINRING)) {
@@ -205,7 +206,7 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
         if (atom0.getSymbol().equals("C") && atom1.getSymbol().equals("N")) {
             for (IAtom neighbor : ac.getConnectedAtomsList(atom0)) {
                 if (neighbor.getSymbol().equals("O")
-                        && ac.getBond(atom0, neighbor).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
+                        && ac.getBond(atom0, neighbor).getOrder() == Order.DOUBLE) {
                     return true;
                 }
             }

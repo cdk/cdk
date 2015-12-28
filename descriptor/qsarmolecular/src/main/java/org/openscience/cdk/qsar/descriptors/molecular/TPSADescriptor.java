@@ -24,6 +24,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -261,11 +262,11 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
                 for (IBond connectedBond : connectedBonds) {
                     if (connectedBond.getFlag(CDKConstants.ISAROMATIC))
                         aromaticBondCount++;
-                    else if (connectedBond.getOrder() == CDKConstants.BONDORDER_SINGLE)
+                    else if (connectedBond.getOrder() == Order.SINGLE)
                         singleBondCount++;
-                    else if (connectedBond.getOrder() == CDKConstants.BONDORDER_DOUBLE)
+                    else if (connectedBond.getOrder() == Order.DOUBLE)
                         doubleBondCount++;
-                    else if (connectedBond.getOrder() == CDKConstants.BONDORDER_TRIPLE) tripleBondCount++;
+                    else if (connectedBond.getOrder() == Order.TRIPLE) tripleBondCount++;
                 }
                 int formalCharge = atom.getFormalCharge();
                 List<IAtom> connectedAtoms = ac.getConnectedAtomsList(atom);

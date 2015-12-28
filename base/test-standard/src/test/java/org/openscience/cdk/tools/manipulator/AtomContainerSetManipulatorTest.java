@@ -27,13 +27,13 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
@@ -195,7 +195,7 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
         hexaneNitrogen.removeBond(0);
         IRing cycloHexaneNitrogen = builder.newInstance(IRing.class, 6, "N");
         IRing cycloHexeneNitrogen = builder.newInstance(IRing.class, 6, "N");
-        cycloHexeneNitrogen.getBond(0).setOrder(CDKConstants.BONDORDER_DOUBLE);
+        cycloHexeneNitrogen.getBond(0).setOrder(Order.DOUBLE);
 
         // Add them to a IAtomContainerSet
         IAtomContainerSet atomContainerSet = builder.newInstance(IAtomContainerSet.class);

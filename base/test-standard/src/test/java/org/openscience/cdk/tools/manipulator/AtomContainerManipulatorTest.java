@@ -48,6 +48,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -112,7 +113,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.getAtom(0).setImplicitHydrogenCount(2);
         mol.addAtom(new Atom("C"));
         mol.getAtom(1).setImplicitHydrogenCount(2);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(0, 1, Order.DOUBLE);
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(1, mol.getBondCount());
 
@@ -128,7 +129,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("C"));
         mol.getAtom(0).setImplicitHydrogenCount(3);
         mol.getAtom(1).setImplicitHydrogenCount(3);
-        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 1, Order.SINGLE);
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(1, mol.getBondCount());
 
@@ -498,14 +499,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "B"));
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "H"));
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "H"));
-        borane.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
-        borane.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        borane.addBond(2, 3, CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
-        borane.addBond(2, 4, CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
-        borane.addBond(3, 5, CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
-        borane.addBond(4, 5, CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
-        borane.addBond(5, 6, CDKConstants.BONDORDER_SINGLE);
-        borane.addBond(5, 7, CDKConstants.BONDORDER_SINGLE);
+        borane.addBond(0, 2, Order.SINGLE);
+        borane.addBond(1, 2, Order.SINGLE);
+        borane.addBond(2, 3, Order.SINGLE); // REALLY 3-CENTER-2-ELECTRON
+        borane.addBond(2, 4, Order.SINGLE); // REALLY 3-CENTER-2-ELECTRON
+        borane.addBond(3, 5, Order.SINGLE); // REALLY 3-CENTER-2-ELECTRON
+        borane.addBond(4, 5, Order.SINGLE); // REALLY 3-CENTER-2-ELECTRON
+        borane.addBond(5, 6, Order.SINGLE);
+        borane.addBond(5, 7, Order.SINGLE);
         for (IAtom atom : borane.atoms())
             atom.setImplicitHydrogenCount(0);
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(borane);
@@ -733,7 +734,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetMaxBondOrder() {
-        Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, AtomContainerManipulator.getMaximumBondOrder(ac));
+        Assert.assertEquals(Order.DOUBLE, AtomContainerManipulator.getMaximumBondOrder(ac));
     }
 
     @Test
@@ -750,7 +751,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         container.addAtom(atom1);
         container.addAtom(atom2);
-        container.addBond(new Bond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
+        container.addBond(new Bond(atom1, atom2, Order.SINGLE));
 
         double totalCharge = AtomContainerManipulator.getTotalCharge(container);
 
@@ -784,7 +785,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         container.addAtom(atom1);
         container.addAtom(atom2);
-        container.addBond(new Bond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
+        container.addBond(new Bond(atom1, atom2, Order.SINGLE));
 
         Assert.assertEquals(0, AtomContainerManipulator.countExplicitHydrogens(container, atom1));
         Assert.assertEquals(0, AtomContainerManipulator.countExplicitHydrogens(container, atom2));
@@ -792,7 +793,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         for (int i = 0; i < 3; i++) {
             IAtom h = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
             container.addAtom(h);
-            container.addBond(new Bond(atom1, h, CDKConstants.BONDORDER_SINGLE));
+            container.addBond(new Bond(atom1, h, Order.SINGLE));
         }
         Assert.assertEquals(3, AtomContainerManipulator.countExplicitHydrogens(container, atom1));
     }
@@ -806,7 +807,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         container.addAtom(atom1);
         container.addAtom(atom2);
-        container.addBond(new Bond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
+        container.addBond(new Bond(atom1, atom2, Order.SINGLE));
 
         // no atom type perception, so implicit count is 0
         Assert.assertEquals(0, AtomContainerManipulator.countHydrogens(container, atom1));
@@ -822,7 +823,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         for (int i = 0; i < 3; i++) {
             IAtom h = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
             container.addAtom(h);
-            container.addBond(new Bond(atom1, h, CDKConstants.BONDORDER_SINGLE));
+            container.addBond(new Bond(atom1, h, Order.SINGLE));
         }
         Assert.assertEquals(6, AtomContainerManipulator.countHydrogens(container, atom1));
 
@@ -868,7 +869,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         container.addAtom(atom1);
         container.addAtom(atom2);
-        container.addBond(new Bond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
+        container.addBond(new Bond(atom1, atom2, Order.SINGLE));
 
         IAtom atom3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "Br");
 
@@ -885,7 +886,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         container.addAtom(atom1);
         container.addAtom(atom2);
-        container.addBond(new Bond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
+        container.addBond(new Bond(atom1, atom2, Order.SINGLE));
         container.addLonePair(1);
 
         IAtom atom3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "Br");
@@ -903,7 +904,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         container.addAtom(atom1);
         container.addAtom(atom2);
-        container.addBond(new Bond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
+        container.addBond(new Bond(atom1, atom2, Order.SINGLE));
         container.addSingleElectron(1);
 
         IAtom atom3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "Br");
@@ -938,14 +939,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "B"));
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "H"));
         borane.addAtom(borane.getBuilder().newInstance(IAtom.class, "H"));
-        borane.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
-        borane.addBond(1, 2, CDKConstants.BONDORDER_SINGLE);
-        borane.addBond(2, 3, CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
-        borane.addBond(2, 4, CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
-        borane.addBond(3, 5, CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
-        borane.addBond(4, 5, CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
-        borane.addBond(5, 6, CDKConstants.BONDORDER_SINGLE);
-        borane.addBond(5, 7, CDKConstants.BONDORDER_SINGLE);
+        borane.addBond(0, 2, Order.SINGLE);
+        borane.addBond(1, 2, Order.SINGLE);
+        borane.addBond(2, 3, Order.SINGLE); // REALLY 3-CENTER-2-ELECTRON
+        borane.addBond(2, 4, Order.SINGLE); // REALLY 3-CENTER-2-ELECTRON
+        borane.addBond(3, 5, Order.SINGLE); // REALLY 3-CENTER-2-ELECTRON
+        borane.addBond(4, 5, Order.SINGLE); // REALLY 3-CENTER-2-ELECTRON
+        borane.addBond(5, 6, Order.SINGLE);
+        borane.addBond(5, 7, Order.SINGLE);
         for (IAtom atom : borane.atoms())
             atom.setImplicitHydrogenCount(0);
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(borane);

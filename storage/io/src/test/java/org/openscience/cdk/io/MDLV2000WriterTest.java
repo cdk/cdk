@@ -386,7 +386,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         carbon.setProperty(CDKConstants.COMMENT, "Carbon comment");
         IAtom oxygen = builder.newInstance(IAtom.class, "O");
         oxygen.setProperty(CDKConstants.COMMENT, "Oxygen comment");
-        IBond bond = builder.newInstance(IBond.class, carbon, oxygen, CDKConstants.BONDORDER_DOUBLE);
+        IBond bond = builder.newInstance(IBond.class, carbon, oxygen, Order.DOUBLE);
 
         IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(oxygen);

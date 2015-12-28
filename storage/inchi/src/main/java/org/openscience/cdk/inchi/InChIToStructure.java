@@ -42,6 +42,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -208,11 +209,11 @@ public class InChIToStructure {
 
             INCHI_BOND_TYPE type = iBo.getBondType();
             if (type == INCHI_BOND_TYPE.SINGLE) {
-                cBo.setOrder(CDKConstants.BONDORDER_SINGLE);
+                cBo.setOrder(Order.SINGLE);
             } else if (type == INCHI_BOND_TYPE.DOUBLE) {
-                cBo.setOrder(CDKConstants.BONDORDER_DOUBLE);
+                cBo.setOrder(Order.DOUBLE);
             } else if (type == INCHI_BOND_TYPE.TRIPLE) {
-                cBo.setOrder(CDKConstants.BONDORDER_TRIPLE);
+                cBo.setOrder(Order.TRIPLE);
             } else if (type == INCHI_BOND_TYPE.ALTERN) {
                 cBo.setFlag(CDKConstants.ISAROMATIC, true);
             } else {

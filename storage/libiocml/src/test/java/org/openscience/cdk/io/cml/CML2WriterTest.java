@@ -43,6 +43,7 @@ import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -157,7 +158,7 @@ public class CML2WriterTest extends CDKTestCase {
         molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class, Elements.CARBON));
         molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class, Elements.HYDROGEN));
         molecule.getAtom(0).setImplicitHydrogenCount(3);
-        molecule.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        molecule.addBond(0, 1, Order.SINGLE);
         CMLWriter cmlWriter = new CMLWriter(writer);
 
         cmlWriter.write(molecule);

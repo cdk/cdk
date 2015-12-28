@@ -31,6 +31,7 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  * @cdk.module test-standard
@@ -146,7 +147,7 @@ public class AtomContainerComparatorTest extends CDKTestCase {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IRing cycloHexaneNitrogen = builder.newInstance(IRing.class, 6, "N");
         IRing cycloHexeneNitrogen = builder.newInstance(IRing.class, 6, "N");
-        cycloHexeneNitrogen.getBond(0).setOrder(CDKConstants.BONDORDER_DOUBLE);
+        cycloHexeneNitrogen.getBond(0).setOrder(Order.DOUBLE);
 
         // Instantiate the comparator
         Comparator<IAtomContainer> comparator = new AtomContainerComparator();

@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 
@@ -212,8 +213,8 @@ public class CDKHueckelAromaticityDetector {
             while (neighborBonds.hasNext()) {
                 IBond neighborBond = neighborBonds.next();
                 if (!neighborBond.getFlag(CDKConstants.ISINRING)
-                        && neighborBond.getOrder() == CDKConstants.BONDORDER_DOUBLE
-                        || neighborBond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
+                        && neighborBond.getOrder() == Order.DOUBLE
+                        || neighborBond.getOrder() == Order.TRIPLE) {
                     if (!("N.sp2.3".equals(atom.getAtomTypeName()) && "O.sp2".equals(neighborBond
                             .getConnectedAtom(atom).getAtomTypeName()))) return true;
                 }

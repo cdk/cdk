@@ -29,6 +29,7 @@ import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 import javax.vecmath.Point2d;
 
@@ -215,7 +216,7 @@ public class BondTools {
         int lengthParent = container.getConnectedAtomsList(parent).size() + hcount;
 
         if (container.getBond(atom, parent) != null) {
-            if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE
+            if (container.getBond(atom, parent).getOrder() == Order.DOUBLE
                     && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N")))
                     && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N")))) {
                 List<IAtom> atoms = container.getConnectedAtomsList(atom);
@@ -272,7 +273,7 @@ public class BondTools {
         boolean doubleBond = false;
         IAtom nextAtom = null;
         for (IAtom atom : atoms) {
-            if (atom != parent && container.getBond(atom, a).getOrder() == CDKConstants.BONDORDER_DOUBLE
+            if (atom != parent && container.getBond(atom, a).getOrder() == Order.DOUBLE
                     && isEndOfDoubleBond(container, atom, a, doubleBondConfiguration)) {
                 doubleBond = true;
                 nextAtom = atom;

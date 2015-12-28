@@ -25,7 +25,6 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -33,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -263,13 +263,13 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         c2.setImplicitHydrogenCount(2);
         mol.addAtom(c1);
         mol.addAtom(c2);
-        IBond bond = new Bond(c1, c2, CDKConstants.BONDORDER_SINGLE);
+        IBond bond = new Bond(c1, c2, Order.SINGLE);
         mol.addBond(bond);
         findAndConfigureAtomTypesForAllAtoms(mol);
         Assert.assertFalse(checker.isSaturated(mol));
 
         // sanity check
-        bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
+        bond.setOrder(Order.DOUBLE);
         mol.addBond(bond);
         findAndConfigureAtomTypesForAllAtoms(mol);
         Assert.assertFalse(checker.isSaturated(mol));
