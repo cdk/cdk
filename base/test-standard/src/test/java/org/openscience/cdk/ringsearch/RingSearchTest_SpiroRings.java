@@ -24,6 +24,7 @@ package org.openscience.cdk.ringsearch;
 
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 import java.util.List;
@@ -41,7 +42,7 @@ import static org.junit.Assert.assertTrue;
  */
 public final class RingSearchTest_SpiroRings {
 
-    private final IAtomContainer spiro = MoleculeFactory.makeSpiroRings();
+    private final IAtomContainer spiro = MoleculeFactory.makeSpiroRings(SilentChemObjectBuilder.getInstance());
 
     @Test
     public void testCyclic() {

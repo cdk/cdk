@@ -39,6 +39,7 @@ import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -61,8 +62,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
 
     @Test
     public void testRegression() throws Exception {
-        IAtomContainer mol1 = MoleculeFactory.makeIndole();
-        IAtomContainer mol2 = MoleculeFactory.makePyrrole();
+        IAtomContainer mol1 = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol2 = MoleculeFactory.makePyrrole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter();
@@ -208,7 +209,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     public void testgetBitFingerprint_IAtomContainer() throws java.lang.Exception {
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter();
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         IBitFingerprint bs = fingerprinter.getBitFingerprint(mol);
         Assert.assertNotNull(bs);
@@ -220,10 +221,10 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter();
         Assert.assertNotNull(fingerprinter);
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
         Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
@@ -234,10 +235,10 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter(512);
         Assert.assertNotNull(fingerprinter);
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
         Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
@@ -248,10 +249,10 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter(1024);
         Assert.assertNotNull(fingerprinter);
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
         Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
@@ -261,7 +262,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     public void testFingerprinterBitSetSize() throws Exception {
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter(1024);
         Assert.assertNotNull(fingerprinter);
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
         Assert.assertEquals(1024, bs.length()); // highest set bit
@@ -316,7 +317,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
 
     @Test
     public void testBondPermutation2() throws CDKException {
-        IAtomContainer pamine = MoleculeFactory.makeCyclopentane();
+        IAtomContainer pamine = MoleculeFactory.makeCyclopentane(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pamine);
         ShortestPathFingerprinter fp = new ShortestPathFingerprinter();
         IBitFingerprint bs1 = fp.getBitFingerprint(pamine);
@@ -331,7 +332,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
 
     @Test
     public void testAtomPermutation2() throws CDKException {
-        IAtomContainer pamine = MoleculeFactory.makeCyclopentane();
+        IAtomContainer pamine = MoleculeFactory.makeCyclopentane(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pamine);
         ShortestPathFingerprinter fp = new ShortestPathFingerprinter();
         IBitFingerprint bs1 = fp.getBitFingerprint(pamine);

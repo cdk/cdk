@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -86,7 +87,7 @@ public class MoleculeBuilder {
                 currentChain.add(currentMolecule.getBuilder().newInstance(IRing.class, length, "C"));
             } //Else must not be cyclic
             else {
-                currentChain = MoleculeFactory.makeAlkane(length);
+                currentChain = MoleculeFactory.makeAlkane(SilentChemObjectBuilder.getInstance(), length);
             }
         } else {
             currentChain = currentMolecule.getBuilder().newInstance(IAtomContainer.class);
@@ -248,7 +249,7 @@ public class MoleculeBuilder {
         }
         //Benzene
         else if ("phenyl".equals(funGroupToken)) {
-            IAtomContainer benzene = MoleculeFactory.makeBenzene();
+            IAtomContainer benzene = MoleculeFactory.makeBenzene(SilentChemObjectBuilder.getInstance());
             //Detect Aromacity in the benzene ring.
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);

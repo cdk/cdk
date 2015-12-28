@@ -36,6 +36,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.smiles.SmilesParser;
 
 import org.openscience.cdk.modeling.builder3d.AtomPlacer3D;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Tests not-yet-tested functionalities of {@link AtomPlacer3D}.
@@ -51,7 +52,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Test
     public void testAllHeavyAtomsPlaced_benzene() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = MoleculeFactory.makeBenzene(SilentChemObjectBuilder.getInstance());
         for (IAtom atom : benzene.atoms()) {
             atom.setFlag(CDKConstants.ISPLACED, true);
         }
@@ -61,7 +62,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Test
     @Override
     public void testNumberOfUnplacedHeavyAtoms_IAtomContainer() {
-        IAtomContainer molecule = MoleculeFactory.makeAlkane(5);
+        IAtomContainer molecule = MoleculeFactory.makeAlkane(SilentChemObjectBuilder.getInstance(), 5);
         for (int i = 0; i < 3; i++) {
             (molecule.getAtom(i)).setFlag(CDKConstants.ISPLACED, true);
         }
@@ -73,7 +74,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Override
     public void testGetPlacedHeavyAtoms_IAtomContainer_IAtom() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene(SilentChemObjectBuilder.getInstance());
         for (int j = 0; j < 3; j++) {
             (molecule.getAtom(j)).setFlag(CDKConstants.ISPLACED, true);
         }
@@ -91,7 +92,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Override
     public void testGetPlacedHeavyAtom_IAtomContainer_IAtom_IAtom() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer molecule = MoleculeFactory.makeAlkane(7);
+        IAtomContainer molecule = MoleculeFactory.makeAlkane(SilentChemObjectBuilder.getInstance(), 7);
         for (int j = 0; j < 5; j++) {
             molecule.getAtom(j).setFlag(CDKConstants.ISPLACED, true);
         }
@@ -108,7 +109,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Override
     public void testGetPlacedHeavyAtom_IAtomContainer_IAtom() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer molecule = MoleculeFactory.makeCyclohexane();
+        IAtomContainer molecule = MoleculeFactory.makeCyclohexane(SilentChemObjectBuilder.getInstance());
         //		for(IAtom a : m.atoms()) a.setFlag(CDKConstants.ISPLACED, true);
         for (int i = 0; i < 3; i++) {
             molecule.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
@@ -127,7 +128,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Override
     public void testGeometricCenterAllPlacedAtoms_IAtomContainer() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer molecule = MoleculeFactory.makeAlkane(2);
+        IAtomContainer molecule = MoleculeFactory.makeAlkane(SilentChemObjectBuilder.getInstance(), 2);
         for (IAtom atom : molecule.atoms()) {
             atom.setFlag(CDKConstants.ISPLACED, true);
         }
@@ -144,7 +145,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Test
     public void testGetUnplacedRingHeavyAtom_IAtomContainer_IAtom() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer molecule = MoleculeFactory.makeCyclopentane();
+        IAtomContainer molecule = MoleculeFactory.makeCyclopentane(SilentChemObjectBuilder.getInstance());
 
         for (IAtom atom : molecule.atoms())
             atom.setFlag(CDKConstants.ISINRING, true);
@@ -175,7 +176,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Test
     public void testGetFarthestAtom_Point3d_IAtomContainer() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene(SilentChemObjectBuilder.getInstance());
 
         molecule.getAtom(0).setPoint3d(new Point3d(0.0, 0.0, 0.0));
         molecule.getAtom(1).setPoint3d(new Point3d(1.0, 1.0, 1.0));
@@ -193,8 +194,8 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Test
     public void testGetNextPlacedHeavyAtomWithUnplacedRingNeighbour_IAtomContainer() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer acyclicAlkane = MoleculeFactory.makeAlkane(3);
-        IAtomContainer cycloPentane = MoleculeFactory.makeCyclopentane();
+        IAtomContainer acyclicAlkane = MoleculeFactory.makeAlkane(SilentChemObjectBuilder.getInstance(), 3);
+        IAtomContainer cycloPentane = MoleculeFactory.makeCyclopentane(SilentChemObjectBuilder.getInstance());
 
         //MoleculeFactory does not set ISINRING flags for cyclic molecules
         Assert.assertEquals(false, cycloPentane.getAtom(0).getFlag(CDKConstants.ISINRING));
@@ -219,8 +220,8 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Test
     public void testGetNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour_IAtomContainer() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
-        IAtomContainer acyclicAlkane = MoleculeFactory.makeAlkane(5);
+        IAtomContainer benzene = MoleculeFactory.makeBenzene(SilentChemObjectBuilder.getInstance());
+        IAtomContainer acyclicAlkane = MoleculeFactory.makeAlkane(SilentChemObjectBuilder.getInstance(), 5);
 
         for (IAtom atom : benzene.atoms())
             atom.setFlag(CDKConstants.ISINRING, true);
@@ -251,8 +252,8 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Test
     public void testGetNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour_IAtomContainer() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer cyclobutane = MoleculeFactory.makeCyclobutane();
-        IAtomContainer acyclicAlkane = MoleculeFactory.makeAlkane(6);
+        IAtomContainer cyclobutane = MoleculeFactory.makeCyclobutane(SilentChemObjectBuilder.getInstance());
+        IAtomContainer acyclicAlkane = MoleculeFactory.makeAlkane(SilentChemObjectBuilder.getInstance(), 6);
 
         for (IAtom atom : cyclobutane.atoms()) {
             atom.setFlag(CDKConstants.ISINRING, true);
@@ -362,7 +363,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     @Test
     public void testMarkPlaced_IAtomContainer() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
-        IAtomContainer molecule = MoleculeFactory.makeAlkane(5);
+        IAtomContainer molecule = MoleculeFactory.makeAlkane(SilentChemObjectBuilder.getInstance(), 5);
         IAtomContainer placedMolecule = atmplacer.markPlaced(molecule);
         for (IAtom atom : placedMolecule.atoms()) {
             Assert.assertTrue(atom.getFlag(CDKConstants.ISPLACED));

@@ -32,6 +32,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -42,8 +43,8 @@ public class LingoSimilarityTest extends CDKTestCase {
 
     @Test
     public void testLingoSim() throws Exception {
-        IAtomContainer mol1 = MoleculeFactory.makeIndole();
-        IAtomContainer mol2 = MoleculeFactory.makeIndole();
+        IAtomContainer mol1 = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol2 = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
         addImplicitHydrogens(mol1);
         addImplicitHydrogens(mol2);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);

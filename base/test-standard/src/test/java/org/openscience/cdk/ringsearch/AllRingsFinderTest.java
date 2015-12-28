@@ -35,10 +35,12 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.ChemFile;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -71,7 +73,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testFindAllRings_IAtomContainer() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
-        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
+        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren(SilentChemObjectBuilder.getInstance());
         //display(molecule);
 
         ringSet = arf.findAllRings(molecule);
@@ -86,12 +88,12 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testBondsWithinRing() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
-        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
+        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren(SilentChemObjectBuilder.getInstance());
         //display(molecule);
 
         ringSet = arf.findAllRings(molecule);
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
-            Ring ring = (Ring) ringSet.getAtomContainer(i);
+            IRing ring = (IRing)ringSet.getAtomContainer(i);
             for (int j = 0; j < ring.getBondCount(); j++) {
                 IBond ec = ring.getBond(j);
 
@@ -106,7 +108,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     @Test
     public void testFindAllRings_IAtomContainer_boolean() throws Exception {
         AllRingsFinder arf = new AllRingsFinder();
-        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
+        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren(SilentChemObjectBuilder.getInstance());
         arf.findAllRings(molecule);
     }
 
@@ -114,7 +116,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testSetTimeout_long() throws Exception {
         AllRingsFinder arf = new AllRingsFinder();
         arf.setTimeout(1);
-        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
+        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren(SilentChemObjectBuilder.getInstance());
         arf.findAllRings(molecule);
     }
 

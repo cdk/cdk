@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -282,7 +283,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
     @Test
     public void testAromaticSystem() throws Exception {
 
-        IAtomContainer mol = MoleculeFactory.makeAzulene();
+        IAtomContainer mol = MoleculeFactory.makeAzulene(SilentChemObjectBuilder.getInstance());
         Assert.assertNotNull("Created molecule was null", mol);
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -307,7 +308,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      */
     @Test
     public void testAlphaPinene() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer mol = MoleculeFactory.makeAlphaPinene(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Assert.assertNotNull("Created molecule was null", mol);
@@ -331,7 +332,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      */
     @Test
     public void testPyrimidine() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makePyrimidine();
+        IAtomContainer mol = MoleculeFactory.makePyrimidine(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Assert.assertNotNull("Created molecule was null", mol);
@@ -354,7 +355,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      */
     @Test
     public void testBiphenyl() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeBiphenyl();
+        IAtomContainer mol = MoleculeFactory.makeBiphenyl(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Assert.assertNotNull("Created molecule was null", mol);
@@ -379,7 +380,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      */
     @Test
     public void testImidazole() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeImidazole();
+        IAtomContainer mol = MoleculeFactory.makeImidazole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         Assert.assertNotNull("Created molecule was null", mol);

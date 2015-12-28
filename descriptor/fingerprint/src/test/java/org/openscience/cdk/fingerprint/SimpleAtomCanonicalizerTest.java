@@ -6,6 +6,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -22,7 +23,7 @@ public class SimpleAtomCanonicalizerTest {
     @Test
     public void testCanonicalizeAtoms() throws CDKException {
 
-        IAtomContainer container = MoleculeFactory.makeAdenine();
+        IAtomContainer container = MoleculeFactory.makeAdenine(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
 
         Collection<IAtom> atoms = new SimpleAtomCanonicalizer().canonicalizeAtoms(container);

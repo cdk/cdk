@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -52,8 +53,8 @@ public class PathToolsTest extends CDKTestCase {
 
     @BeforeClass
     public static void setUp() {
-        molecule = MoleculeFactory.makeAlphaPinene();
-        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        molecule = MoleculeFactory.makeAlphaPinene(SilentChemObjectBuilder.getInstance());
+        sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
 
     @Test

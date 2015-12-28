@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.matchers.QueryChemObject;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -89,7 +90,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
 
     @Test
     public void testMapTemplates_IAtomContainer_double() throws Exception {
-        IAtomContainer ac = MoleculeFactory.makeBicycloRings();
+        IAtomContainer ac = MoleculeFactory.makeBicycloRings(SilentChemObjectBuilder.getInstance());
         TemplateHandler3D th3d = TemplateHandler3D.getInstance();
         ForceFieldConfigurator ffc = new ForceFieldConfigurator();
         ffc.setForceFieldConfigurator("mm2", ac.getBuilder());

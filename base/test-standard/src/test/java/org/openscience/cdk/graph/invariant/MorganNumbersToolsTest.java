@@ -23,7 +23,6 @@ import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -31,6 +30,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -50,8 +50,8 @@ public class MorganNumbersToolsTest extends CDKTestCase {
         // This is an array with the expected Morgan Numbers for a-pinene
         long[] reference = {28776, 17899, 23549, 34598, 31846, 36393, 9847, 45904, 15669, 15669};
 
-        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
-        long[] morganNumbers = MorganNumbersTools.getMorganNumbers((AtomContainer) mol);
+        IAtomContainer mol = MoleculeFactory.makeAlphaPinene(SilentChemObjectBuilder.getInstance());
+        long[] morganNumbers = MorganNumbersTools.getMorganNumbers(mol);
         Assert.assertEquals(reference.length, morganNumbers.length);
         for (int f = 0; f < morganNumbers.length; f++) {
             //logger.debug(morganNumbers[f]);
@@ -64,8 +64,8 @@ public class MorganNumbersToolsTest extends CDKTestCase {
         // This is an array with the expected Morgan Numbers for a-pinene
         String[] reference = {"C-457", "C-428", "C-325", "C-354", "C-325", "C-428", "N-251"};
 
-        IAtomContainer mol = MoleculeFactory.makePhenylAmine();
-        String[] morganNumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol((AtomContainer) mol);
+        IAtomContainer mol = MoleculeFactory.makePhenylAmine(SilentChemObjectBuilder.getInstance());
+        String[] morganNumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(mol);
         Assert.assertEquals(reference.length, morganNumbers.length);
         for (int f = 0; f < morganNumbers.length; f++) {
             //logger.debug(morganNumbers[f]);

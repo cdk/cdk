@@ -29,6 +29,7 @@ import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -297,7 +298,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
     @Test
     public void testGetFragmentsAsContainers() throws Exception {
 
-        IAtomContainer biphenyl = MoleculeFactory.makeBiphenyl();
+        IAtomContainer biphenyl = MoleculeFactory.makeBiphenyl(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl);
         Aromaticity.cdkLegacy().apply(biphenyl);
 
