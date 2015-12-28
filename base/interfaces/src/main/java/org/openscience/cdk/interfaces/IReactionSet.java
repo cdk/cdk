@@ -73,7 +73,7 @@ public interface IReactionSet extends IChemObject {
     /**
      * Removes all instances of a reaction from this IReactionSet.
      *
-     * @param relevantReaction
+     * @param relevantReaction the reaction to remove
      */
     public void removeReaction(IReaction relevantReaction);
 

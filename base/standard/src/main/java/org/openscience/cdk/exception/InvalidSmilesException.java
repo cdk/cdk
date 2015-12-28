@@ -1,4 +1,5 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *                    2015  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,6 +26,8 @@ package org.openscience.cdk.exception;
 
 
 /**
+ * Exception thrown when an error is occured during SMILES parsing.
+ *
  * @cdk.module standard
  * @cdk.githash
  */
@@ -32,10 +35,21 @@ public class InvalidSmilesException extends CDKException {
 
     private static final long serialVersionUID = 1932255464874201495L;
 
+    /**
+     * Constructs a new exception with a custom message.
+     *
+     * @param message the custom message detailing what may be wrong with the SMILES.
+     */
     public InvalidSmilesException(String message) {
         super(message);
     }
 
+    /**
+     * Constructs a new exception with a custom message and a stacktrace.
+     *
+     * @param message   the custom message detailing what may be wrong with the SMILES.
+     * @param exception the underlying exception
+     */
     public InvalidSmilesException(String message, Exception exception) {
         super(message, exception);
     }
