@@ -11,6 +11,7 @@
     </parent>
     <name>cdk-base</name>
     <modules>
+        <module>annotation</module>
         <module>interfaces</module>
         <module>atomtype</module>
         <module>core</module>
