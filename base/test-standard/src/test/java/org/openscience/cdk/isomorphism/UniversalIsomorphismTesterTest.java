@@ -58,7 +58,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AliphaticSymbolAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
@@ -80,8 +80,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
 
     @Test
     public void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception {
-        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
-        IAtomContainer frag1 = MoleculeFactory.makeCyclohexene(); //one double bond in ring
+        IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
+        IAtomContainer frag1 = TestMoleculeFactory.makeCyclohexene(); //one double bond in ring
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         Aromaticity.cdkLegacy().apply(mol);
@@ -133,8 +133,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
 
     @Test
     public void test2() throws java.lang.Exception {
-        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
-        IAtomContainer frag1 = MoleculeFactory.makeCyclohexane(); // no double bond in ring
+        IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
+        IAtomContainer frag1 = TestMoleculeFactory.makeCyclohexane(); // no double bond in ring
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         Aromaticity.cdkLegacy().apply(mol);
@@ -149,8 +149,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
 
     @Test
     public void test3() throws java.lang.Exception {
-        IAtomContainer mol = MoleculeFactory.makeIndole();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer mol = TestMoleculeFactory.makeIndole();
+        IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         Aromaticity.cdkLegacy().apply(mol);
@@ -178,8 +178,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         int[] result1 = {6, 5, 7, 8, 0};
         int[] result2 = {3, 4, 2, 1, 0};
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer mol = TestMoleculeFactory.makeIndole();
+        IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
         Aromaticity.cdkLegacy().apply(mol);
@@ -357,8 +357,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
 
     @Test
     public void testGetSubgraphAtomsMap_Butane() throws Exception {
-        IAtomContainer mol1 = MoleculeFactory.makeAlkane(4);
-        IAtomContainer mol2 = MoleculeFactory.makeAlkane(4);
+        IAtomContainer mol1 = TestMoleculeFactory.makeAlkane(4);
+        IAtomContainer mol2 = TestMoleculeFactory.makeAlkane(4);
 
         // Test for atom mapping between the mols
         List<RMap> maplist = uiTester.getSubgraphAtomsMap(mol2, mol1);
@@ -372,8 +372,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
 
     @Test
     public void testGetSubgraphAtomsMaps_Butane() throws Exception {
-        IAtomContainer mol1 = MoleculeFactory.makeAlkane(4);
-        IAtomContainer mol2 = MoleculeFactory.makeAlkane(4);
+        IAtomContainer mol1 = TestMoleculeFactory.makeAlkane(4);
+        IAtomContainer mol2 = TestMoleculeFactory.makeAlkane(4);
 
         List<List<RMap>> list = uiTester.getSubgraphAtomsMaps(mol1, mol2);
         Assert.assertNotNull(list);

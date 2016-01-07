@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -57,21 +57,21 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test
     public void testSSSRFinder_IAtomContainer() {
-        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         SSSRFinder finder = new SSSRFinder(molecule);
         Assert.assertNotNull(finder);
     }
 
     @Test
     public void testFindSSSR() {
-        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         Assert.assertEquals(2, ringSet.getAtomContainerCount());
     }
 
     @Test
     public void testFindSSSR_IAtomContainer() {
-        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         SSSRFinder sssrFinder = new SSSRFinder(molecule);
         IRingSet ringSet = sssrFinder.findSSSR();
         Assert.assertEquals(2, ringSet.getAtomContainerCount());

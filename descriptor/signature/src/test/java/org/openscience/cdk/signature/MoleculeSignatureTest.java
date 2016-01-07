@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import signature.AbstractVertexSignature;
 
@@ -267,7 +267,7 @@ public class MoleculeSignatureTest extends CDKTestCase {
 
     @Test
     public void testCyclohexaneWithHydrogens() {
-        IAtomContainer cyclohexane = MoleculeFactory.makeCyclohexane();
+        IAtomContainer cyclohexane = TestMoleculeFactory.makeCyclohexane();
         for (int i = 0; i < 6; i++) {
             addHydrogens(cyclohexane, cyclohexane.getAtom(i), 2);
         }

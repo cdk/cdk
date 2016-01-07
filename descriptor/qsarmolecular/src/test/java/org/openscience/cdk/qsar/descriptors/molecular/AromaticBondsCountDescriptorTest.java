@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -57,7 +57,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testViaFlags() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         for (Iterator bonds = molecule.bonds().iterator(); bonds.hasNext();) {
             ((IBond) bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
         }

@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -179,7 +179,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     @Test
     public void testIndoleAgainstItself() throws Exception {
 
-        IAtomContainer indole = MoleculeFactory.makeIndole();
+        IAtomContainer indole = TestMoleculeFactory.makeIndole();
         addImplicitHydrogens(indole);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(indole);
         Aromaticity.cdkLegacy().apply(indole);

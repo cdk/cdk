@@ -37,7 +37,7 @@ import org.openscience.cdk.fingerprint.IntArrayFingerprint;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.BitSet;
@@ -57,8 +57,8 @@ public class TanimotoTest extends CDKTestCase {
 
     @Test
     public void testTanimoto1() throws java.lang.Exception {
-        IAtomContainer mol1 = MoleculeFactory.makeIndole();
-        IAtomContainer mol2 = MoleculeFactory.makePyrrole();
+        IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
+        IAtomContainer mol2 = TestMoleculeFactory.makePyrrole();
         Fingerprinter fingerprinter = new Fingerprinter();
         BitSet bs1 = fingerprinter.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = fingerprinter.getBitFingerprint(mol2).asBitSet();
@@ -69,8 +69,8 @@ public class TanimotoTest extends CDKTestCase {
 
     @Test
     public void testTanimoto2() throws java.lang.Exception {
-        IAtomContainer mol1 = MoleculeFactory.makeIndole();
-        IAtomContainer mol2 = MoleculeFactory.makeIndole();
+        IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
+        IAtomContainer mol2 = TestMoleculeFactory.makeIndole();
         Fingerprinter fingerprinter = new Fingerprinter();
         BitSet bs1 = fingerprinter.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = fingerprinter.getBitFingerprint(mol2).asBitSet();
@@ -81,8 +81,8 @@ public class TanimotoTest extends CDKTestCase {
 
     @Test
     public void testCalculate_BitFingerprint() throws java.lang.Exception {
-        IAtomContainer mol1 = MoleculeFactory.makeIndole();
-        IAtomContainer mol2 = MoleculeFactory.makePyrrole();
+        IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
+        IAtomContainer mol2 = TestMoleculeFactory.makePyrrole();
         Fingerprinter fp = new Fingerprinter();
         double similarity = Tanimoto.calculate(fp.getBitFingerprint(mol1), fp.getBitFingerprint(mol2));
         Assert.assertEquals(0.3939, similarity, 0.01);
@@ -90,8 +90,8 @@ public class TanimotoTest extends CDKTestCase {
 
     @Test
     public void testExactMatch() throws Exception {
-        IAtomContainer mol1 = MoleculeFactory.makeIndole();
-        IAtomContainer mol2 = MoleculeFactory.makeIndole();
+        IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
+        IAtomContainer mol2 = TestMoleculeFactory.makeIndole();
         addImplicitHydrogens(mol1);
         addImplicitHydrogens(mol2);
         LingoFingerprinter fingerprinter = new LingoFingerprinter();
@@ -174,8 +174,8 @@ public class TanimotoTest extends CDKTestCase {
 
     @Test
     public void testCompareBitSetandBitFingerprintTanimoto() throws Exception {
-        IAtomContainer mol1 = MoleculeFactory.make123Triazole();
-        IAtomContainer mol2 = MoleculeFactory.makeImidazole();
+        IAtomContainer mol1 = TestMoleculeFactory.make123Triazole();
+        IAtomContainer mol2 = TestMoleculeFactory.makeImidazole();
         Fingerprinter fingerprinter = new Fingerprinter();
         BitSet bs1 = fingerprinter.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = fingerprinter.getBitFingerprint(mol2).asBitSet();

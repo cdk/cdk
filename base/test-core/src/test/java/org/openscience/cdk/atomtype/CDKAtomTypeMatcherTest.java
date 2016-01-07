@@ -47,7 +47,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.AtomType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
@@ -491,14 +491,14 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testPiperidine() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makePiperidine();
+        IAtomContainer molecule = TestMoleculeFactory.makePiperidine();
         String[] expectedTypes = {"N.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testTetrahydropyran() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makeTetrahydropyran();
+        IAtomContainer molecule = TestMoleculeFactory.makeTetrahydropyran();
         String[] expectedTypes = {"O.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
@@ -779,7 +779,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testAdenine() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeAdenine();
+        IAtomContainer mol = TestMoleculeFactory.makeAdenine();
         String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "N.sp2", "N.sp2", "N.planar3", "N.sp2", "N.sp3", "C.sp2",
                 "C.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2141,7 +2141,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testAzulene() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makeAzulene();
+        IAtomContainer molecule = TestMoleculeFactory.makeAzulene();
         String[] expectedTypes = new String[]{"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
                 "C.sp2", "C.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
@@ -2150,7 +2150,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testIndole() throws Exception {
         String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "N.planar3"};
-        IAtomContainer molecule = MoleculeFactory.makeIndole();
+        IAtomContainer molecule = TestMoleculeFactory.makeIndole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
@@ -2160,7 +2160,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testno937() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.planar3", "C.sp2", "N.sp2", "C.sp2", "C.sp3"};
-        IAtomContainer molecule = MoleculeFactory.makePyrrole();
+        IAtomContainer molecule = TestMoleculeFactory.makePyrrole();
         molecule.getAtom(3).setSymbol("N");
         molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class, "C"));
         molecule.addBond(1, 5, IBond.Order.SINGLE);
@@ -2199,14 +2199,14 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testPyrrole() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.planar3", "C.sp2", "C.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makePyrrole();
+        IAtomContainer molecule = TestMoleculeFactory.makePyrrole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testPyrrole_SingleOrDouble() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.planar3", "C.sp2", "C.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makePyrrole();
+        IAtomContainer molecule = TestMoleculeFactory.makePyrrole();
         for (IBond bond : molecule.bonds()) {
             bond.setOrder(IBond.Order.UNSET);
             bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
@@ -2220,56 +2220,56 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testPyrroleAnion() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.minus.planar3", "C.sp2", "C.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makePyrroleAnion();
+        IAtomContainer molecule = TestMoleculeFactory.makePyrroleAnion();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testImidazole() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.planar3", "C.sp2", "N.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makeImidazole();
+        IAtomContainer molecule = TestMoleculeFactory.makeImidazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testPyrazole() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.planar3", "N.sp2", "C.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makePyrazole();
+        IAtomContainer molecule = TestMoleculeFactory.makePyrazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void test124Triazole() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.planar3", "N.sp2", "C.sp2", "N.sp2"};
-        IAtomContainer molecule = MoleculeFactory.make124Triazole();
+        IAtomContainer molecule = TestMoleculeFactory.make124Triazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void test123Triazole() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.planar3", "N.sp2", "N.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.make123Triazole();
+        IAtomContainer molecule = TestMoleculeFactory.make123Triazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testTetrazole() throws Exception {
         String[] expectedTypes = {"N.sp2", "N.planar3", "N.sp2", "N.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makeTetrazole();
+        IAtomContainer molecule = TestMoleculeFactory.makeTetrazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testOxazole() throws Exception {
         String[] expectedTypes = {"C.sp2", "O.planar3", "C.sp2", "N.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makeOxazole();
+        IAtomContainer molecule = TestMoleculeFactory.makeOxazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testIsoxazole() throws Exception {
         String[] expectedTypes = {"C.sp2", "O.planar3", "N.sp2", "C.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makeIsoxazole();
+        IAtomContainer molecule = TestMoleculeFactory.makeIsoxazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
@@ -2278,35 +2278,35 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testIsothiazole() throws Exception {
         String[] expectedTypes = {"C.sp2", "S.planar3", "N.sp2", "C.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makeIsothiazole();
+        IAtomContainer molecule = TestMoleculeFactory.makeIsothiazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testThiadiazole() throws Exception {
         String[] expectedTypes = {"C.sp2", "S.planar3", "C.sp2", "N.sp2", "N.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makeThiadiazole();
+        IAtomContainer molecule = TestMoleculeFactory.makeThiadiazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testOxadiazole() throws Exception {
         String[] expectedTypes = {"C.sp2", "O.planar3", "C.sp2", "N.sp2", "N.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makeOxadiazole();
+        IAtomContainer molecule = TestMoleculeFactory.makeOxadiazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testPyridine() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makePyridine();
+        IAtomContainer molecule = TestMoleculeFactory.makePyridine();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testPyridine_SingleOrDouble() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makePyridine();
+        IAtomContainer molecule = TestMoleculeFactory.makePyridine();
         for (IBond bond : molecule.bonds()) {
             bond.setOrder(IBond.Order.UNSET);
             bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
@@ -2376,7 +2376,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testChargedSulphurSpecies() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.sp2", "C.sp2", "C.sp2", "S.plus", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makePyridine();
+        IAtomContainer molecule = TestMoleculeFactory.makePyridine();
         molecule.getAtom(4).setSymbol("S");
         molecule.getAtom(4).setFormalCharge(+1);
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
@@ -2385,7 +2385,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testPyridineOxide_Charged() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.plus.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.minus"};
-        IAtomContainer molecule = MoleculeFactory.makePyridineOxide();
+        IAtomContainer molecule = TestMoleculeFactory.makePyridineOxide();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
@@ -2445,7 +2445,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testPyridineOxideCharged_SP2() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.plus.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.minus"};
-        IAtomContainer molecule = MoleculeFactory.makePyridineOxide();
+        IAtomContainer molecule = TestMoleculeFactory.makePyridineOxide();
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext())
             bonds.next().setOrder(Order.SINGLE);
@@ -2458,28 +2458,28 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testPyrimidine() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.sp2", "C.sp2", "N.sp2", "C.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makePyrimidine();
+        IAtomContainer molecule = TestMoleculeFactory.makePyrimidine();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testPyridazine() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.sp2", "N.sp2", "C.sp2", "C.sp2", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makePyridazine();
+        IAtomContainer molecule = TestMoleculeFactory.makePyridazine();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testTriazine() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.sp2", "C.sp2", "N.sp2", "C.sp2", "N.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makeTriazine();
+        IAtomContainer molecule = TestMoleculeFactory.makeTriazine();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testThiazole() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.sp2", "C.sp2", "S.planar3", "C.sp2"};
-        IAtomContainer molecule = MoleculeFactory.makeThiazole();
+        IAtomContainer molecule = TestMoleculeFactory.makeThiazole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
@@ -3414,7 +3414,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
      */
     @Test
     public void testIodosobenzene() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeBenzene();
+        IAtomContainer mol = TestMoleculeFactory.makeBenzene();
         IAtom iodine = mol.getBuilder().newInstance(IAtom.class, "I");
         IAtom oxygen = mol.getBuilder().newInstance(IAtom.class, "O");
         mol.addAtom(iodine);
@@ -3431,7 +3431,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
      */
     @Test
     public void testIodoxybenzene() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeBenzene();
+        IAtomContainer mol = TestMoleculeFactory.makeBenzene();
         IAtom iodine = mol.getBuilder().newInstance(IAtom.class, "I");
         IAtom oxygen1 = mol.getBuilder().newInstance(IAtom.class, "O");
         IAtom oxygen2 = mol.getBuilder().newInstance(IAtom.class, "O");
@@ -3451,7 +3451,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
      */
     @Test
     public void testThiobenzamideSOxide() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeBenzene();
+        IAtomContainer mol = TestMoleculeFactory.makeBenzene();
         IAtom carbon = mol.getBuilder().newInstance(IAtom.class, "C");
         IAtom sulphur = mol.getBuilder().newInstance(IAtom.class, "S");
         IAtom oxygen = mol.getBuilder().newInstance(IAtom.class, "O");

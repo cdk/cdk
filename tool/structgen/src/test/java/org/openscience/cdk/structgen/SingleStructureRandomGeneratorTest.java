@@ -27,7 +27,7 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -57,7 +57,7 @@ public class SingleStructureRandomGeneratorTest {
     }
 
     private AtomContainer getBunchOfUnbondedAtoms() {
-        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         fixCarbonHCount(molecule);
         molecule.removeAllElectronContainers();
         return (AtomContainer) molecule;

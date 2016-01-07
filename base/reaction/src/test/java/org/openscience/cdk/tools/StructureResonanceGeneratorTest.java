@@ -46,7 +46,7 @@ import org.openscience.cdk.reaction.type.SharingLonePairReaction;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
@@ -1116,7 +1116,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     @Test
     public void testCyclobutadiene() throws Exception {
         // anti-aromatic
-        IAtomContainer molecule = MoleculeFactory.makeCyclobutadiene();
+        IAtomContainer molecule = TestMoleculeFactory.makeCyclobutadiene();
         addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
@@ -1135,7 +1135,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBenzene() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);

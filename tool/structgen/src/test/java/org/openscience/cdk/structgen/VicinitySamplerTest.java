@@ -34,7 +34,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * @cdk.module test-structgen
@@ -50,7 +50,7 @@ public class VicinitySamplerTest extends CDKTestCase {
 
     @Test
     public void testVicinitySampler_sample() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeEthylPropylPhenantren();
+        IAtomContainer mol = TestMoleculeFactory.makeEthylPropylPhenantren();
 
         Isotopes.getInstance().configureAtoms(mol);
         addImplicitHydrogens(mol);

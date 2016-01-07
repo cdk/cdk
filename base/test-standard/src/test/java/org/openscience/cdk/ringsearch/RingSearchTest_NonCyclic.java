@@ -24,7 +24,7 @@ package org.openscience.cdk.ringsearch;
 
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
@@ -39,7 +39,7 @@ import static org.junit.Assert.assertTrue;
  */
 public final class RingSearchTest_NonCyclic {
 
-    private final IAtomContainer nonCyclic = MoleculeFactory.makeBranchedAliphatic();
+    private final IAtomContainer nonCyclic = TestMoleculeFactory.makeBranchedAliphatic();
 
     @Test
     public void testCyclic() {

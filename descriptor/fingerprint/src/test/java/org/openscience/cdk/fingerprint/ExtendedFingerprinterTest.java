@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
 /**
@@ -66,9 +66,9 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         IFingerprinter fingerprinter = new ExtendedFingerprinter();
         Assert.assertNotNull(fingerprinter);
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = TestMoleculeFactory.makeIndole();
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
         Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
         Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
@@ -79,11 +79,11 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         ExtendedFingerprinter fingerprinter = new ExtendedFingerprinter();
         Assert.assertNotNull(fingerprinter);
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = TestMoleculeFactory.makeIndole();
         IRingSet rs = Cycles.sssr(mol).toRingSet();
         List<IRingSet> rslist = RingPartitioner.partitionRings(rs);
         BitSet bs = fingerprinter.getBitFingerprint(mol, rs, rslist).asBitSet();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
         Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
         Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
@@ -101,9 +101,9 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
         Assert.assertNotNull(fingerprinter);
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = TestMoleculeFactory.makeIndole();
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
         Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
         Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
@@ -114,9 +114,9 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         IFingerprinter fingerprinter = new ExtendedFingerprinter(512, 7);
         Assert.assertNotNull(fingerprinter);
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = TestMoleculeFactory.makeIndole();
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
         Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
         Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
@@ -418,7 +418,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
      */
     @Test
     public void testMoleculeInvariance() throws Exception, CloneNotSupportedException {
-        IAtomContainer mol = MoleculeFactory.makePyrrole();
+        IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         IAtomContainer clone = (IAtomContainer) mol.clone();
 
         // should pass since we have not explicitly detected aromaticity
