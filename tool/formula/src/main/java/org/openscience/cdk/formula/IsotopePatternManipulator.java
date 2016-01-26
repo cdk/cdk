@@ -119,7 +119,7 @@ public class IsotopePatternManipulator {
 
             int length = listISO.size() - 1;
             for (int i = length; i >= 0; i--) {
-                double mass = 100000;
+                double mass = Double.MAX_VALUE;
                 IsotopeContainer isoHighest = null;
                 for (IsotopeContainer isoContainer : listISO) {
                     if (isoContainer.getMass() < mass) {
