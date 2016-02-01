@@ -437,6 +437,12 @@ final class NonplanarBonds {
         if (!iCyclic && jCyclic) return true;
         if (iCyclic && !jCyclic) return false;
 
+        // avoid placing on pseudo atoms
+        if (container.getAtom(i).getAtomicNumber() > 0 && container.getAtom(j).getAtomicNumber() == 0)
+            return true;
+        if (container.getAtom(i).getAtomicNumber() == 0 && container.getAtom(j).getAtomicNumber() > 0)
+            return false;
+
         // prioritise atoms with fewer neighbors
         if (graph[i].length < graph[j].length) return true;
         if (graph[i].length > graph[j].length) return false;
