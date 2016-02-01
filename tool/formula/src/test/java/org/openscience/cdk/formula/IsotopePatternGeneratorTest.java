@@ -255,4 +255,17 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
         Assert.assertEquals(1, isoPattern.getNumberOfIsotopes());
 
     }
+    
+    /**
+     * Calculate isotopes for C10000 (failed in CDK 1.5.12).
+     */
+    @Test
+    public void testCalculateIsotopesC10000() {
+        IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C10000", builder);
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
+        IsotopePattern isos = isotopeGe.getIsotopes(molFor);
+        Assert.assertEquals(44, isos.getNumberOfIsotopes());
+        for (int i = 0; i < isos.getNumberOfIsotopes(); i++)
+            Assert.assertTrue(isos.getIsotope(i).getMass() > 120085);
+    }
 }

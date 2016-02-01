@@ -1,5 +1,7 @@
 package org.openscience.cdk.formula;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -73,29 +75,25 @@ public class IsotopePatternManipulator {
      */
     public static IsotopePattern sortByIntensity(IsotopePattern isotopeP) {
         try {
-            IsotopePattern isoSort = new IsotopePattern();
-            List<IsotopeContainer> listISO = ((IsotopePattern) isotopeP.clone()).getIsotopes();
+            
+            IsotopePattern isoSort = (IsotopePattern) isotopeP.clone();
+            
+            // Do nothing for empty isotope pattern
+            if (isoSort.getNumberOfIsotopes() == 0)
+                return isoSort;
 
-            int length = listISO.size() - 1;
-            for (int i = length; i >= 0; i--) {
-                double intensity = 0;
-                IsotopeContainer isoHighest = null;
-                for (IsotopeContainer isoContainer : listISO) {
-                    if (isoContainer.getIntensity() > intensity) {
-                        isoHighest = isoContainer;
-                        intensity = isoContainer.getIntensity();
-                    }
+            // Sort the isotopes
+            List<IsotopeContainer> listISO = isoSort.getIsotopes();
+            Collections.sort(listISO, new Comparator<IsotopeContainer>() {
+                @Override
+                public int compare(IsotopeContainer o1, IsotopeContainer o2) {
+                    return Double.compare(o2.getIntensity(),o1.getIntensity());
                 }
-                if (isoHighest != null) {
-                    if (i == length)
-                        isoSort.setMonoIsotope((IsotopeContainer) isoHighest.clone());
-                    else
-                        isoSort.addIsotope((IsotopeContainer) isoHighest.clone());
-                }
-                listISO.remove(isoHighest);
-
-            }
-            isoSort.setCharge(isotopeP.getCharge());
+            });
+           
+            // Set the monoisotopic peak to the one with highest intensity
+            isoSort.setMonoIsotope(listISO.get(0));
+            
             return isoSort;
 
         } catch (CloneNotSupportedException e) {
@@ -114,28 +112,24 @@ public class IsotopePatternManipulator {
      */
     public static IsotopePattern sortByMass(IsotopePattern isotopeP) {
         try {
-            IsotopePattern isoSort = new IsotopePattern();
-            List<IsotopeContainer> listISO = ((IsotopePattern) isotopeP.clone()).getIsotopes();
+            IsotopePattern isoSort = (IsotopePattern) isotopeP.clone();
+            
+            // Do nothing for empty isotope pattern
+            if (isoSort.getNumberOfIsotopes() == 0) 
+                return isoSort;
 
-            int length = listISO.size() - 1;
-            for (int i = length; i >= 0; i--) {
-                double mass = 100000;
-                IsotopeContainer isoHighest = null;
-                for (IsotopeContainer isoContainer : listISO) {
-                    if (isoContainer.getMass() < mass) {
-                        isoHighest = isoContainer;
-                        mass = isoContainer.getMass();
-                    }
+            // Sort the isotopes
+            List<IsotopeContainer> listISO = isoSort.getIsotopes();
+            Collections.sort(listISO, new Comparator<IsotopeContainer>() {
+                @Override
+                public int compare(IsotopeContainer o1, IsotopeContainer o2) {
+                    return Double.compare(o1.getMass(),o2.getMass());
                 }
-                if (i == length)
-                    isoSort.setMonoIsotope((IsotopeContainer) isoHighest.clone());
-                else
-                    isoSort.addIsotope((IsotopeContainer) isoHighest.clone());
-
-                listISO.remove(isoHighest);
-
-            }
-            isoSort.setCharge(isotopeP.getCharge());
+            });
+           
+            // Set the monoisotopic peak to the one with lowest mass
+            isoSort.setMonoIsotope(listISO.get(0));
+            
             return isoSort;
 
         } catch (CloneNotSupportedException e) {

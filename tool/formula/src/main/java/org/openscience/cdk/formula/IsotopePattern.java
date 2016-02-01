@@ -29,12 +29,14 @@ public class IsotopePattern {
     }
 
     /**
-     * Set the mono isotope object.
+     * Set the mono isotope object. Adds the isoContainer to the isotope 
+     *                  pattern, if it is not already added. 
      *
      *  @param isoContainer   The IsotopeContainer object
      */
     public void setMonoIsotope(IsotopeContainer isoContainer) {
-        isotopeCList.add(isoContainer);
+        if (!isotopeCList.contains(isoContainer)) 
+            isotopeCList.add(isoContainer);
         monoIsotopePosition = isotopeCList.indexOf(isoContainer);
     }
 

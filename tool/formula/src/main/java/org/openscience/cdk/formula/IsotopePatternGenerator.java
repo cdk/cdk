@@ -55,7 +55,8 @@ public class IsotopePatternGenerator {
     private double             minAbundance   = .1;
 
     /**
-     *  Constructor for the IsotopeGenerator.
+     *  Constructor for the IsotopeGenerator. The minimum abundance is set to 
+     *                          0.1 (10% abundance) by default. 
      */
     public IsotopePatternGenerator() {
         this(0.1);
@@ -65,7 +66,7 @@ public class IsotopePatternGenerator {
      * Constructor for the IsotopeGenerator.
      *
      * @param minAb Minimal abundance of the isotopes to be added
-     * 				in the combinatorial search
+     * 				in the combinatorial search (scale 0.0 to 1.0)
      *
      */
     public IsotopePatternGenerator(double minAb) {
