@@ -26,6 +26,7 @@ package org.openscience.cdk.layout;
 
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -442,6 +443,156 @@ public class NonPlanarBondsTest {
         for (IBond bond : m.bonds()) {
             assertThat(bond.getStereo(), is(IBond.Stereo.NONE));   
         }
+    }
+
+    /**
+     * {@code SMILES: *CN=C(N)N}
+     */
+    @Test
+    public void dontMarkGuanidineAsUnspecified() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("R", 0, 0.00, 0.00));
+        m.addAtom(atom("C", 2, 1.30, -0.75));
+        m.addAtom(atom("N", 0, 2.60, -0.00));
+        m.addAtom(atom("C", 0, 3.90, -0.75));
+        m.addAtom(atom("N", 2, 5.20, -0.00));
+        m.addAtom(atom("N", 2, 3.90, -2.25));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(3, 5, IBond.Order.SINGLE);
+        NonplanarBonds.assign(m);
+        for (IBond bond : m.bonds())
+            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+    }
+
+    /**
+     * {@code SMILES: *CN=C(CCC)CCC[H]}
+     */
+    @Test
+    public void dontUnspecifiedDueToHRepresentation() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("R", 0, 0.00, 0.00));
+        m.addAtom(atom("C", 2, 1.30, -0.75));
+        m.addAtom(atom("N", 0, 2.60, -0.00));
+        m.addAtom(atom("C", 0, 3.90, -0.75));
+        m.addAtom(atom("C", 2, 3.90, -2.25));
+        m.addAtom(atom("C", 2, 2.60, -3.00));
+        m.addAtom(atom("C", 3, 2.60, -4.50));
+        m.addAtom(atom("C", 2, 5.20, -0.00));
+        m.addAtom(atom("C", 2, 6.50, -0.75));
+        m.addAtom(atom("C", 2, 7.79, -0.00));
+        m.addAtom(atom("H", 0, 9.09, -0.75));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(5, 6, IBond.Order.SINGLE);
+        m.addBond(3, 7, IBond.Order.SINGLE);
+        m.addBond(7, 8, IBond.Order.SINGLE);
+        m.addBond(8, 9, IBond.Order.SINGLE);
+        m.addBond(9, 10, IBond.Order.SINGLE);
+        NonplanarBonds.assign(m);
+        for (IBond bond : m.bonds())
+            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+    }
+
+    /**
+     * {@code SMILES: *CN=C(CCC)CCC}
+     */
+    @Test
+    public void dontMarkUnspecifiedForLinearEqualChains() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("R", 0, 0.00, -0.00));
+        m.addAtom(atom("C", 2, 1.30, -0.75));
+        m.addAtom(atom("N", 0, 2.60, -0.00));
+        m.addAtom(atom("C", 0, 3.90, -0.75));
+        m.addAtom(atom("C", 2, 5.20, -0.00));
+        m.addAtom(atom("C", 2, 6.50, -0.75));
+        m.addAtom(atom("C", 3, 7.79, -0.00));
+        m.addAtom(atom("C", 2, 3.90, -2.25));
+        m.addAtom(atom("C", 2, 5.20, -3.00));
+        m.addAtom(atom("C", 3, 5.20, -4.50));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(5, 6, IBond.Order.SINGLE);
+        m.addBond(3, 7, IBond.Order.SINGLE);
+        m.addBond(7, 8, IBond.Order.SINGLE);
+        m.addBond(8, 9, IBond.Order.SINGLE);
+        NonplanarBonds.assign(m);
+        for (IBond bond : m.bonds())
+            assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
+    }
+
+    /**
+     * {@code SMILES: *CN=C1CCCCC1}
+     */
+    @Test
+    public void markUnspecifiedForCyclicLigands() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("R", 0, -4.22, 3.05));
+        m.addAtom(atom("C", 2, -2.92, 2.30));
+        m.addAtom(atom("N", 0, -1.62, 3.05));
+        m.addAtom(atom("C", 0, -0.32, 2.30));
+        m.addAtom(atom("C", 2, -0.33, 0.80));
+        m.addAtom(atom("C", 2, 0.97, 0.05));
+        m.addAtom(atom("C", 2, 2.27, 0.80));
+        m.addAtom(atom("C", 2, 2.27, 2.30));
+        m.addAtom(atom("C", 2, 0.97, 3.05));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(5, 6, IBond.Order.SINGLE);
+        m.addBond(6, 7, IBond.Order.SINGLE);
+        m.addBond(7, 8, IBond.Order.SINGLE);
+        m.addBond(3, 8, IBond.Order.SINGLE);
+        Cycles.markRingAtomsAndBonds(m);
+        NonplanarBonds.assign(m);
+        int wavyCount = 0;
+        for (IBond bond : m.bonds())
+            if (bond.getStereo() == IBond.Stereo.UP_OR_DOWN)
+                wavyCount++;
+        assertThat(wavyCount, is(1));
+    }
+
+    /**
+     * {@code SMILES: *CN=C(CCC)CCN}
+     */
+    @Test
+    public void unspecifiedMarkedOnDifferentLigands() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("R", 0, 0.00, -0.00));
+        m.addAtom(atom("C", 2, 1.30, -0.75));
+        m.addAtom(atom("N", 0, 2.60, -0.00));
+        m.addAtom(atom("C", 0, 3.90, -0.75));
+        m.addAtom(atom("C", 2, 5.20, -0.00));
+        m.addAtom(atom("C", 2, 6.50, -0.75));
+        m.addAtom(atom("C", 3, 7.79, -0.00));
+        m.addAtom(atom("C", 2, 3.90, -2.25));
+        m.addAtom(atom("C", 2, 5.20, -3.00));
+        m.addAtom(atom("N", 2, 5.20, -4.50));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(5, 6, IBond.Order.SINGLE);
+        m.addBond(3, 7, IBond.Order.SINGLE);
+        m.addBond(7, 8, IBond.Order.SINGLE);
+        m.addBond(8, 9, IBond.Order.SINGLE);
+        NonplanarBonds.assign(m);
+        int wavyCount = 0;
+        for (IBond bond : m.bonds())
+            if (bond.getStereo() == IBond.Stereo.UP_OR_DOWN)
+                wavyCount++;
+        assertThat(wavyCount, is(1));
     }
 
     static IAtom atom(String symbol, int hCount, double x, double y) {
