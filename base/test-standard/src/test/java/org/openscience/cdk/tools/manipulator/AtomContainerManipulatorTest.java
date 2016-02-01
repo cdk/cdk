@@ -914,6 +914,17 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
+    public void testReplaceAtom_stereochemistry() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("N[C@H](CC)O");
+        IAtom newAtom = bldr.newInstance(IAtom.class, "Cl");
+        newAtom.setImplicitHydrogenCount(0);
+        AtomContainerManipulator.replaceAtomByAtom(mol, mol.getAtom(0), newAtom);
+        assertThat(SmilesGenerator.isomeric().create(mol), is("Cl[C@H](CC)O"));
+    }
+
+    @Test
     public void testGetHeavyAtoms_IAtomContainer() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer container = builder.newInstance(IAtomContainer.class);

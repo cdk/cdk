@@ -60,6 +60,7 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
@@ -126,38 +127,52 @@ public class AtomContainerManipulator {
         throw new CDKException("no suc atom");
     }
 
-    public static boolean replaceAtomByAtom(IAtomContainer container, IAtom atom, IAtom newAtom) {
-        if (!container.contains(atom)) {
-            // it should complain
-            return false;
-        } else {
-            container.setAtom(container.getAtomNumber(atom), newAtom);
-            for (IElectronContainer eContainer : container.electronContainers()) {
-                if (eContainer instanceof IBond) {
-                    IBond bond = (IBond) eContainer;
-                    if (bond.contains(atom)) {
-                        for (int j = 0; j < bond.getAtomCount(); j++) {
-                            if (atom.equals(bond.getAtom(j))) {
-                                bond.setAtom(newAtom, j);
-                                break;
-                            }
-                        }
-                    }
-                } else if (eContainer instanceof ILonePair) {
-                    ILonePair lonePair = (ILonePair) eContainer;
-                    if (atom.equals(lonePair.getAtom())) {
-                        lonePair.setAtom(newAtom);
-                    }
-                } else if (eContainer instanceof ISingleElectron) {
-                    ISingleElectron singleElectron = (ISingleElectron) eContainer;
-                    if (atom.equals(singleElectron.getAtom())) {
-                        singleElectron.setAtom(newAtom);
-                    }
-                }
+    /**
+     * Substitute one atom in a container for another adjusting bonds, single electrons, lone pairs, and stereochemistry
+     * as required.
+     *
+     * @param container the container to replace the atom of
+     * @param oldAtom the atom to replace
+     * @param newAtom the atom to insert
+     * @return whether replacement was made
+     */
+    public static boolean replaceAtomByAtom(final IAtomContainer container, final IAtom oldAtom, final IAtom newAtom) {
+
+        Map<IAtom,IAtom> atomremap = new HashMap<>();
+
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            IAtom atom = container.getAtom(i);
+            if (atom == oldAtom) {
+                container.setAtom(i, newAtom);
+                atomremap.put(oldAtom, newAtom);
+            } else {
+                atomremap.put(atom, atom);
             }
-            return true;
         }
-        // FIXME - also need to handle stereochemistry
+
+        if (!atomremap.containsKey(oldAtom))
+            return false;
+
+        Map<IBond,IBond> bondremap = new HashMap<>();
+        for (IBond bond : container.bonds()) {
+            bondremap.put(bond, bond);
+            for (int i = 0; i < bond.getAtomCount(); i++)
+                if (bond.getAtom(i) == oldAtom)
+                    bond.setAtom(newAtom, i);
+        }
+        for (ISingleElectron ec : container.singleElectrons())
+            if (ec.getAtom() == oldAtom)
+                ec.setAtom(newAtom);
+        for (ILonePair lp : container.lonePairs())
+            if (lp.getAtom() == oldAtom)
+                lp.setAtom(newAtom);
+
+        List<IStereoElement> stereoremapped = new ArrayList<>();
+        for (IStereoElement se : container.stereoElements())
+            stereoremapped.add(se.map(atomremap, bondremap));
+        container.setStereoElements(stereoremapped);
+
+        return true;
     }
 
     /**
