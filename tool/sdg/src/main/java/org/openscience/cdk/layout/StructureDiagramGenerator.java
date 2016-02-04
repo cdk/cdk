@@ -870,11 +870,19 @@ public class StructureDiagramGenerator {
         final IChemObjectBuilder bldr = frags.get(0).getBuilder();
 
         // make the bonds
-        final List<IBond> ionicBonds = new ArrayList<>();
+        final List<IBond> ionicBonds = new ArrayList<>(cations.size());
         for (int i = 0; i < cations.size(); i++) {
             final IAtom beg = cations.get(i);
             final IAtom end = anions.get(i);
-            ionicBonds.add(bldr.newInstance(IBond.class, beg, end));
+
+            boolean unique = true;
+            for (IBond bond : ionicBonds)
+                if (bond.getAtom(0).equals(beg) && bond.getAtom(1).equals(end) ||
+                    bond.getAtom(1).equals(beg) && bond.getAtom(0).equals(end))
+                    unique = false;
+
+            if (unique)
+                ionicBonds.add(bldr.newInstance(IBond.class, beg, end));
         }
 
         // we could merge the fragments here using union-find structures
