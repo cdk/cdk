@@ -959,6 +959,15 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
                    closeTo(SDG.getBondLength(), 0.001));
     }
 
+    @Test
+    public void ethaneHCL() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("Cl.CC");
+        layout(mol);
+        for (IAtom atom : mol.atoms())
+            assertNotNull(atom.getPoint2d());
+    }
+
     // An extreme test case suggest by Roger Sayle showing Humpty Dumpty reassembly
     @Test
     public void multipleSalts() throws Exception {
