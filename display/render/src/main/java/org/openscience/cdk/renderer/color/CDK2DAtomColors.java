@@ -93,7 +93,7 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
     private static final Color hexBFA6A6 = new Color(0xBFA6A6);
     private static final Color hexF0C8A0 = new Color(0xF0C8A0);
     private static final Color hexFF8000 = new Color(0xFF8000);
-    private static final Color hexFFFF30 = new Color(0xFFFF30);
+    private static final Color hexFFFF30 = new Color(0xC6C62C);
     private static final Color hex1FF01F = new Color(0x1FF01F);
     private static final Color hex80D1E3 = new Color(0x80D1E3);
     private static final Color hex8F40D4 = new Color(0x8F40D4);
