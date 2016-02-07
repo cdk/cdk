@@ -66,6 +66,7 @@ final class ReactionDepiction extends Depiction {
     private final int                 arrowIdx;
     private final IReaction.Direction direction;
     private final double              arrowHeight;
+    private final double              minArrowWidth;
 
     // dimensions and spacing of side components
     private final Dimensions sideDim;
@@ -101,9 +102,9 @@ final class ReactionDepiction extends Depiction {
         // wide but we want it tall
         this.sideComps.addAll(agents);
         Dimension sideGrid = Dimensions.determineGrid(sideComps.size());
-        sideDim = Dimensions.ofGrid(sideComps,
-                                    yOffsetSide = new double[sideGrid.width + 1],
-                                    xOffsetSide = new double[sideGrid.height + 1]);
+        Dimensions prelimSideDim = Dimensions.ofGrid(sideComps,
+                                                     yOffsetSide = new double[sideGrid.width + 1],
+                                                     xOffsetSide = new double[sideGrid.height + 1]);
 
         // build the main components, we add a 'plus' between each molecule
         for (Bounds reactant : reactants) {
@@ -159,21 +160,29 @@ final class ReactionDepiction extends Depiction {
         }
 
         // arrow params
-        this.arrowIdx = Math.max(reactants.size() + reactants.size() - 1, 0);
-        this.direction = direction;
-        this.arrowHeight = plus.height();
-
-        // when no side component we still want an arrow, since the
-        // arrow is drawn as big as needed we simply put some points
-        // in the bounds object and all dimensions work out okay
-        if (sideComps.isEmpty()) {
-            mainComp.get(arrowIdx).add(0, 0);
-            mainComp.get(arrowIdx).add(4 * arrowHeight, arrowHeight);
-        }
+        this.arrowIdx      = Math.max(reactants.size() + reactants.size() - 1, 0);
+        this.direction     = direction;
+        this.arrowHeight   = plus.height();
+        this.minArrowWidth = 4 * arrowHeight;
 
         mainDim = Dimensions.ofGrid(mainComp,
                                     yOffsets = new double[nRow + 1],
                                     xOffsets = new double[nCol + 1]);
+
+        // avoid v. small arrows
+        if (prelimSideDim.w < minArrowWidth) {
+            // adjust x-offset so side components are centered
+            double xAdjust = (minArrowWidth - prelimSideDim.w) / 2;
+            for (int i = 0; i < xOffsetSide.length; i++)
+                xOffsetSide[i] += xAdjust;
+            this.sideDim = new Dimensions(minArrowWidth, prelimSideDim.h);
+        } else {
+            // arrow padding
+            for (int i = 0; i < xOffsetSide.length; i++)
+                xOffsetSide[i] += arrowHeight;
+            this.sideDim = new Dimensions(2*arrowHeight + prelimSideDim.w,
+                                          prelimSideDim.h);
+        }
     }
 
     @Override
@@ -218,11 +227,9 @@ final class ReactionDepiction extends Depiction {
         double mainCompOffset = 0;
 
         // shift product x-offset to make room for the arrow / side components
-        if (!sideComps.isEmpty()) {
-            mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * firstRowHeight / 2;
-            for (int i = arrowIdx + 1; i < xOffsets.length; i++) {
-                xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
-            }
+        mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * firstRowHeight / 2;
+        for (int i = arrowIdx + 1; i < xOffsets.length; i++) {
+            xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
         }
 
         // MAIN COMPONENTS DRAW
@@ -247,7 +254,10 @@ final class ReactionDepiction extends Depiction {
             // intercept arrow draw and make it as big as need
             if (i == arrowIdx) {
                 w = rescale * (xOffsets[i + 1] - xOffsets[i]) + (nSideCol - 1) * padding;
-                draw(visitor, 1, createArrow(w, arrowHeight * rescale), rect(x, y, w, h));
+                draw(visitor,
+                     1, // no zoom since arrows is drawn as big as needed
+                     createArrow(w, arrowHeight * rescale),
+                     rect(x, y, w, h));
                 continue;
             }
 
@@ -357,11 +367,9 @@ final class ReactionDepiction extends Depiction {
         double mainCompOffset = 0;
 
         // shift product x-offset to make room for the arrow / side components
-        if (!sideComps.isEmpty()) {
-            mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * firstRowHeight / 2;
-            for (int i = arrowIdx + 1; i < xOffsets.length; i++) {
-                xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
-            }
+        mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * firstRowHeight / 2;
+        for (int i = arrowIdx + 1; i < xOffsets.length; i++) {
+            xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
         }
 
         // MAIN COMPONENTS DRAW
@@ -386,7 +394,10 @@ final class ReactionDepiction extends Depiction {
             // intercept arrow draw and make it as big as need
             if (i == arrowIdx) {
                 w = rescale * (xOffsets[i + 1] - xOffsets[i]) + (nSideCol - 1) * padding;
-                draw(visitor, 1, createArrow(w, arrowHeight * rescale), rect(x, y, w, h));
+                draw(visitor,
+                     1, // no zoom since arrows is drawn as big as needed
+                     createArrow(w, arrowHeight * rescale),
+                     rect(x, y, w, h));
                 continue;
             }
 
@@ -523,23 +534,24 @@ final class ReactionDepiction extends Depiction {
         Bounds arrow = new Bounds();
         Path2D path = new Path2D.Double();
         final double headThickness = minHeight / 3;
-        final double inset = 0.8;
+        final double inset         = 0.8;
+        final double headLength    = minHeight;
         switch (direction) {
             case FORWARD:
-                arrow.add(new LineElement(0, 0, minWidth + minHeight, 0, minHeight / 14, Color.BLACK));
-                path.moveTo(minWidth + minHeight + minHeight, 0);
-                path.lineTo(minWidth + inset * minHeight, +headThickness);
-                path.lineTo(minWidth + minHeight, 0);
-                path.lineTo(minWidth + inset * minHeight, -headThickness);
+                arrow.add(new LineElement(0, 0, minWidth - 0.5 * headLength, 0, minHeight / 14, Color.BLACK));
+                path.moveTo(minWidth, 0);
+                path.lineTo(minWidth - headLength, +headThickness);
+                path.lineTo(minWidth - inset * headLength, 0);
+                path.lineTo(minWidth - headLength, -headThickness);
                 path.closePath();
                 arrow.add(GeneralPath.shapeOf(path, fgcol));
                 break;
             case BACKWARD:
-                arrow.add(new LineElement(0, 0, minWidth + minHeight, 0, minHeight / 14, Color.BLACK));
-                path.moveTo(-minHeight, 0);
-                path.lineTo((1 - inset) * minHeight, +headThickness);
-                path.lineTo(0, 0);
-                path.lineTo((1 - inset) * minHeight, -headThickness);
+                arrow.add(new LineElement(0.5 * headLength, 0, minWidth, 0, minHeight / 14, Color.BLACK));
+                path.moveTo(0, 0);
+                path.lineTo(minHeight, +headThickness);
+                path.lineTo(minHeight - (1 - inset) * minHeight, 0);
+                path.lineTo(minHeight, -headThickness);
                 path.closePath();
                 arrow.add(GeneralPath.shapeOf(path, fgcol));
                 break;
