@@ -330,6 +330,11 @@ final class StandardSgroupGenerator {
                     break;
             }
 
+            // connectivity doesn't matter if symmetric... which is hard to test
+            // here but we can certainly ignore it for single atoms (e.g. methylene)
+            if (sgroup.getAtoms().size() == 1)
+                connectivity = null;
+
             return generateSgroupBrackets(sgroup, brackets,
                                           subscript,
                                           connectivity);
