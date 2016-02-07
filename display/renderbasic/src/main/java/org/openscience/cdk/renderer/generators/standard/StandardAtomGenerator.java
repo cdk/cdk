@@ -45,7 +45,7 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
 
 /**
  * Generates {@link AtomSymbol} instances with positioned adjuncts.
- *
+ * <p/>
  * <p/> Note the generator is purposefully not an {@link org.openscience.cdk.renderer.generators.IGenerator}
  * and is intended as part be called from the StandardGenerator.
  *
@@ -53,29 +53,31 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  */
 final class StandardAtomGenerator {
 
-    /** Default options for spacing and sizing adjuncts, could be configruable parameters. */
+    /**
+     * Default options for spacing and sizing adjuncts, could be configruable parameters.
+     */
     private final static double DEFAULT_ADJUNCT_SPACING_RATIO = 0.15d;
     private final static double DEFAULT_SUBSCRIPT_SIZE        = 0.6d;
 
     /**
      * The font used in the symbol.
      */
-    private final Font          font;
+    private final Font font;
 
     /**
      * Relative size of the adjunct sub/super script labels (0-1).
      */
-    private final double        scriptSize;
+    private final double scriptSize;
 
     /**
      * The absolute distance to 'pad' adjunct positioning with.
      */
-    private final double        padding;
+    private final double padding;
 
     /**
      * Text outline is immutable so we can create a hydrogen are reuse it.
      */
-    private final TextOutline   defaultHydrogenLabel;
+    private final TextOutline defaultHydrogenLabel;
 
     /**
      * Create a standard atom generator using the specified font.
@@ -129,8 +131,8 @@ final class StandardAtomGenerator {
             }
 
             return generatePeriodicSymbol(number, unboxSafely(atom.getImplicitHydrogenCount(), 0),
-                    unboxSafely(mass, -1), unboxSafely(atom.getFormalCharge(), 0),
-                    container.getConnectedSingleElectronsCount(atom), position);
+                                          unboxSafely(mass, -1), unboxSafely(atom.getFormalCharge(), 0),
+                                          container.getConnectedSingleElectronsCount(atom), position);
         }
     }
 
@@ -140,6 +142,118 @@ final class StandardAtomGenerator {
      * @return the atom symbol
      */
     AtomSymbol generatePseudoSymbol(String label, HydrogenPosition position) {
+
+        final Font italicFont = font.deriveFont(Font.BOLD)
+                                    .deriveFont(Font.ITALIC);
+        List<TextOutline> outlines = new ArrayList<>(3);
+
+        int beg = 0;
+        int pos = 0;
+        int len = label.length();
+
+        // upper case followed by lower case
+        while (pos < len && isUpperCase(label.charAt(pos)))
+            pos++;
+        if (label.charAt(0) != 'R') // Ar is not A^r but 'Ra' is R^a etc
+            while (pos < len && isLowerCase(label.charAt(pos)))
+                pos++;
+
+        if (pos > beg) {
+            outlines.add(new TextOutline(label.substring(beg, pos), italicFont));
+            beg = pos;
+            // 2a etc.
+            while (pos < len && isDigit(label.charAt(pos)))
+                pos++;
+            while (pos < len && isLowerCase(label.charAt(pos)))
+                pos++;
+
+            if (pos > beg) {
+                TextOutline outline = new TextOutline(label.substring(beg, pos), italicFont);
+                outline = outline.resize(scriptSize, scriptSize);
+                outline = positionSuperscript(outlines.get(0), outline);
+                outlines.add(outline);
+            }
+
+            int numPrimes = 0;
+            PRIMES:
+            while (pos < len) {
+                switch (label.charAt(pos)) {
+                    case '\'': numPrimes++; break;
+                    case '`': numPrimes++;  break;
+                    case '‘': numPrimes++;  break;
+                    case '’': numPrimes++;  break;
+                    case '‛': numPrimes++;  break;
+                    case '“': numPrimes+=2; break;
+                    case '”': numPrimes+=2; break;
+                    case '′': numPrimes++;  break;
+                    case '″': numPrimes+=2; break;
+                    case '‴': numPrimes+=3; break;
+                    case '⁗': numPrimes+=4; break;
+                    case '‵': numPrimes++;  break;
+                    case '‶': numPrimes+=2; break;
+                    case '‷': numPrimes+=3; break;
+                    case '´': numPrimes++;  break;
+                    case 'ˊ': numPrimes++;  break;
+                    case '́': numPrimes++;  break;
+                    case '˝': numPrimes+=2; break;
+                    case '̋': numPrimes+=2; break;
+                    default: break PRIMES;
+                }
+                pos++;
+            }
+
+            if (pos < len) {
+                return new AtomSymbol(new TextOutline(label, italicFont), Collections.<TextOutline>emptyList());
+            } else {
+                TextOutline outline = null;
+                TextOutline ref = outlines.get(outlines.size()-1);
+                switch (numPrimes) {
+                    case 0: break;
+                    case 1: outline = new TextOutline("′", font); break;
+                    case 2: outline = new TextOutline("″", font); break;
+                    case 3: outline = new TextOutline("‴", font); break;
+                    default:
+                        String lab = "";
+                        while (numPrimes-->0)
+                            lab += "′";
+                        outline = new TextOutline(lab, font);
+                        break;
+                }
+                if (outline != null) {
+                    if (outlines.size() > 1)
+                        outline = outline.resize(scriptSize, scriptSize);
+                    outline = positionSuperscript(ref, outline);
+                    outlines.add(outline);
+                }
+            }
+
+            // line up text
+            for (int i = 1; i < outlines.size(); i++) {
+                TextOutline ref = outlines.get(i - 1);
+                TextOutline curr = outlines.get(i);
+                outlines.set(i, positionAfter(ref, curr));
+            }
+
+            return new AtomSymbol(outlines.get(0),
+                                  outlines.subList(1, outlines.size()));
+        } else {
+            return new AtomSymbol(new TextOutline(label, italicFont), Collections.<TextOutline>emptyList());
+        }
+    }
+
+    private boolean isUpperCase(char c) {
+        return c >= 'A' && c <= 'Z';
+    }
+
+    private boolean isLowerCase(char c) {
+        return c >= 'a' && c <= 'z';
+    }
+
+    private boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
+
+    AtomSymbol generateAbbreviatedSymbol(String label, HydrogenPosition position) {
         List<String> tokens = new ArrayList<>();
         if (AbbreviationLabel.parse(label, tokens)) {
             return generateAbbreviationSymbol(tokens, position);
@@ -151,7 +265,7 @@ final class StandardAtomGenerator {
     /**
      * Generate a formatted abbreviation AtomSymbol for the given Hydrogen position.
      *
-     * @param tokens the parsed tokens
+     * @param tokens   the parsed tokens
      * @param position hydrogen position - determines if we reverse the label
      * @return the generated symbol
      */
@@ -187,11 +301,11 @@ final class StandardAtomGenerator {
 
         // position the outlines relative to each other
         for (int i = 1; i < outlines.size(); i++) {
-            TextOutline ref  = outlines.get(i - 1);
+            TextOutline ref = outlines.get(i - 1);
             TextOutline curr = outlines.get(i);
             // charge aligns to symbol not a subscript part
             if (fTexts.get(i).style == AbbreviationLabel.STYLE_SUPSCRIPT &&
-                fTexts.get(i-1).style == AbbreviationLabel.STYLE_SUBSCRIPT && i > 1) {
+                fTexts.get(i - 1).style == AbbreviationLabel.STYLE_SUBSCRIPT && i > 1) {
                 ref = outlines.get(i - 2);
             }
             outlines.set(i, positionAfter(ref, curr));
@@ -225,7 +339,7 @@ final class StandardAtomGenerator {
      * @return laid out atom symbol
      */
     AtomSymbol generatePeriodicSymbol(final int number, final int hydrogens, final int mass, final int charge,
-            final int unpaired, HydrogenPosition position) {
+                                      final int unpaired, HydrogenPosition position) {
 
         TextOutline element = new TextOutline(Elements.ofNumber(number).symbol(), font);
         TextOutline hydrogenAdjunct = defaultHydrogenLabel;
@@ -233,7 +347,7 @@ final class StandardAtomGenerator {
         // the hydrogen count, charge, and mass adjuncts are script size
         TextOutline hydrogenCount = new TextOutline(Integer.toString(hydrogens), font).resize(scriptSize, scriptSize);
         TextOutline chargeAdjunct = new TextOutline(chargeAdjunctText(charge, unpaired), font).resize(scriptSize,
-                scriptSize);
+                                                                                                      scriptSize);
         TextOutline massAdjunct = new TextOutline(Integer.toString(mass), font).resize(scriptSize, scriptSize);
 
         // position each adjunct relative to the element label and each other
@@ -296,7 +410,7 @@ final class StandardAtomGenerator {
         final Rectangle2D hydrogenBounds = label.getBounds();
         final Rectangle2D hydrogenCountBounds = subscript.getBounds();
         subscript = subscript.translate((hydrogenBounds.getMaxX() + padding) - hydrogenCountBounds.getMinX(),
-                (hydrogenBounds.getMaxY() + (hydrogenCountBounds.getHeight() / 2)) - hydrogenCountBounds.getMaxY());
+                                        (hydrogenBounds.getMaxY() + (hydrogenCountBounds.getHeight() / 2)) - hydrogenCountBounds.getMaxY());
         return subscript;
     }
 
@@ -329,7 +443,7 @@ final class StandardAtomGenerator {
      * @return positioned charge label
      */
     TextOutline positionChargeLabel(int hydrogens, HydrogenPosition position, TextOutline charge, TextOutline element,
-            TextOutline hydrogen) {
+                                    TextOutline hydrogen) {
 
         final Rectangle2D chargeBounds = charge.getBounds();
 
@@ -343,7 +457,7 @@ final class StandardAtomGenerator {
         else if (hydrogens > 1 && position == Above) referenceBounds = hydrogen.getBounds();
 
         return charge.translate((referenceBounds.getMaxX() + padding) - chargeBounds.getMinX(),
-                (referenceBounds.getMinY() - (chargeBounds.getHeight() / 2)) - chargeBounds.getMinY());
+                                (referenceBounds.getMinY() - (chargeBounds.getHeight() / 2)) - chargeBounds.getMinY());
     }
 
     /**
@@ -358,7 +472,7 @@ final class StandardAtomGenerator {
         final Rectangle2D elementBounds = elementLabel.getBounds();
         final Rectangle2D massBounds = massLabel.getBounds();
         return massLabel.translate((elementBounds.getMinX() - padding) - massBounds.getMaxX(),
-                (elementBounds.getMinY() - (massBounds.getHeight() / 2)) - massBounds.getMinY());
+                                   (elementBounds.getMinY() - (massBounds.getHeight() / 2)) - massBounds.getMinY());
     }
 
     /**
@@ -376,7 +490,7 @@ final class StandardAtomGenerator {
      * @return required adjustment to x-axis
      */
     private double hydrogenXDodge(int hydrogens, int mass, TextOutline elementLabel, TextOutline hydrogenLabel,
-            TextOutline hydrogenCount, TextOutline massLabel) {
+                                  TextOutline hydrogenCount, TextOutline massLabel) {
         if (mass < 0 && hydrogens > 1) {
             return (elementLabel.getBounds().getMinX() - padding) - hydrogenCount.getBounds().getMaxX();
         } else if (mass >= 0) {
@@ -417,9 +531,11 @@ final class StandardAtomGenerator {
         return value != null ? value : defaultValue;
     }
 
-    /** Characters used in the charge label. */
+    /**
+     * Characters used in the charge label.
+     */
     private static final char BULLET = '•', // '\u2022'
-            PLUS = '+', MINUS = '−'; // '\u2212' and not a hyphen
+            PLUS                     = '+', MINUS = '−'; // '\u2212' and not a hyphen
 
     /**
      * Create the charge adjunct text for the specified charge and number of unpaired electrons.

@@ -360,6 +360,34 @@ public class StandardAtomGeneratorTest {
     }
 
     @Test
+    public void RgroupSymbol2A() {
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R2a", HydrogenPosition.Right);
+        List<Shape> shapes = atomSymbol.getOutlines();
+        assertThat(shapes.size(), is(2));
+    }
+
+    @Test
+    public void RgroupSymbolY() {
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("Y1a2", HydrogenPosition.Right);
+        List<Shape> shapes = atomSymbol.getOutlines();
+        assertThat(shapes.size(), is(1));
+    }
+
+    @Test
+    public void RgroupSymbolPrime() {
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R'", HydrogenPosition.Right);
+        List<Shape> shapes = atomSymbol.getOutlines();
+        assertThat(shapes.size(), is(2));
+    }
+
+    @Test
+    public void RgroupSymbolNumberedPrime() {
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R2'", HydrogenPosition.Right);
+        List<Shape> shapes = atomSymbol.getOutlines();
+        assertThat(shapes.size(), is(3));
+    }
+
+    @Test
     public void pseudoSymbol() {
         AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("Protein", HydrogenPosition.Right);
         List<Shape> shapes = atomSymbol.getOutlines();
