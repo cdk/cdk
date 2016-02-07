@@ -341,7 +341,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                     auxVectors.add(hPosition.vector());
 
                 if (remapped) {
-                    symbols[i] = atomGenerator.generatePseudoSymbol(symbolRemap.get(atom), hPosition);
+                    symbols[i] = atomGenerator.generateAbbreviatedSymbol(symbolRemap.get(atom), hPosition);
                 } else {
                     symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
                 }
