@@ -22,20 +22,20 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @cdk.module test-standard
@@ -50,9 +50,9 @@ public class FingerprinterToolTest extends CDKTestCase {
     public void testIsSubset_BitSet_BitSet() throws java.lang.Exception {
         Fingerprinter fingerprinter = new Fingerprinter();
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole(SilentChemObjectBuilder.getInstance());
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
         assertTrue(FingerprinterTool.isSubset(bs, bs1));
     }

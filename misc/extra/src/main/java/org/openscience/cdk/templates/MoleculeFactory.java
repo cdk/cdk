@@ -23,17 +23,15 @@ import java.io.IOException;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -49,18 +47,18 @@ public class MoleculeFactory {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoleculeFactory.class);
 
-    public static IAtomContainer makeAlphaPinene() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
-        mol.addAtom(new Atom("C")); // 10
+    public static IAtomContainer makeAlphaPinene(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 10
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -87,31 +85,31 @@ public class MoleculeFactory {
      *
      * @cdk.created 2003-08-15
      */
-    public static IAtomContainer makeAlkane(int chainLength) {
-        IAtomContainer currentChain = new AtomContainer();
+    public static IAtomContainer makeAlkane(IChemObjectBuilder builder, int chainLength) {
+        IAtomContainer currentChain = builder.newInstance(IAtomContainer.class);
 
         //Add the initial atom
-        currentChain.addAtom(new Atom("C"));
+        currentChain.addAtom(builder.newInstance(IAtom.class, "C"));
 
         //Add further atoms and bonds as needed, a pair at a time.
         for (int atomCount = 1; atomCount < chainLength; atomCount++) {
-            currentChain.addAtom(new Atom("C"));
+            currentChain.addAtom(builder.newInstance(IAtom.class, "C"));
             currentChain.addBond(atomCount, atomCount - 1, IBond.Order.SINGLE);
         }
 
         return currentChain;
     }
 
-    public static IAtomContainer makeEthylCyclohexane() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
+    public static IAtomContainer makeEthylCyclohexane(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -129,14 +127,14 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C6H10/c1-2-4-6-5-3-1/h1-2H,3-6H2
      */
-    public static IAtomContainer makeCyclohexene() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
+    public static IAtomContainer makeCyclohexene(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -152,14 +150,14 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C6H12/c1-2-4-6-5-3-1/h1-6H2
      */
-    public static IAtomContainer makeCyclohexane() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
+    public static IAtomContainer makeCyclohexane(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -175,13 +173,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C5H10/c1-2-4-5-3-1/h1-5H2
      */
-    public static IAtomContainer makeCyclopentane() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
+    public static IAtomContainer makeCyclopentane(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -196,12 +194,12 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C4H8/c1-2-4-3-1/h1-4H2
      */
-    public static IAtomContainer makeCyclobutane() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makeCyclobutane(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -215,12 +213,12 @@ public class MoleculeFactory {
          *
          * @cdk.inchi InChI=1/C4H4/c1-2-4-3-1/h1-4H
      */
-    public static IAtomContainer makeCyclobutadiene() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makeCyclobutadiene(IChemObjectBuilder builder) {
+    	IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
@@ -229,14 +227,14 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makePropylCycloPropane() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makePropylCycloPropane(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
         mol.addBond(2, 0, IBond.Order.SINGLE); // 3
@@ -252,20 +250,20 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C12H10/c1-3-7-11(8-4-1)12-9-5-2-6-10-12/h1-10H
      */
-    public static IAtomContainer makeBiphenyl() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
-        mol.addAtom(new Atom("C")); // 10
-        mol.addAtom(new Atom("C")); // 11
+    public static IAtomContainer makeBiphenyl(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 10
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 11
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -284,22 +282,22 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makePhenylEthylBenzene() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
-        mol.addAtom(new Atom("C")); // 10
-        mol.addAtom(new Atom("C")); // 11
-        mol.addAtom(new Atom("C")); // 12
-        mol.addAtom(new Atom("C")); // 13
+    public static IAtomContainer makePhenylEthylBenzene(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 10
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 11
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 12
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 13
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -320,15 +318,15 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makePhenylAmine() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("N")); // 6
+    public static IAtomContainer makePhenylAmine(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 6
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -342,14 +340,14 @@ public class MoleculeFactory {
     }
 
     /* build a molecule from 4 condensed triangles */
-    public static IAtomContainer make4x3CondensedRings() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
+    public static IAtomContainer make4x3CondensedRings(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -364,18 +362,18 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makeSpiroRings() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
+    public static IAtomContainer makeSpiroRings(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -391,16 +389,16 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makeBicycloRings() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
+    public static IAtomContainer makeBicycloRings(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -414,18 +412,18 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makeFusedRings() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
+    public static IAtomContainer makeFusedRings(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -442,19 +440,19 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makeMethylDecaline() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
-        mol.addAtom(new Atom("C")); // 10
+    public static IAtomContainer makeMethylDecaline(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 10
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -472,27 +470,27 @@ public class MoleculeFactory {
 
     }
 
-    public static IAtomContainer makeEthylPropylPhenantren() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
-        mol.addAtom(new Atom("C")); // 10
-        mol.addAtom(new Atom("C")); // 11
-        mol.addAtom(new Atom("C")); // 12
-        mol.addAtom(new Atom("C")); // 13
-        mol.addAtom(new Atom("C")); // 14
-        mol.addAtom(new Atom("C")); // 15
-        mol.addAtom(new Atom("C")); // 16
-        mol.addAtom(new Atom("C")); // 17
-        mol.addAtom(new Atom("C")); // 18
+    public static IAtomContainer makeEthylPropylPhenantren(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 10
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 11
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 12
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 13
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 14
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 15
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 16
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 17
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 18
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
@@ -519,25 +517,25 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makeSteran() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
-        mol.addAtom(new Atom("C")); // 10
-        mol.addAtom(new Atom("C")); // 11
-        mol.addAtom(new Atom("C")); // 12
-        mol.addAtom(new Atom("C")); // 13
-        mol.addAtom(new Atom("C")); // 14
-        mol.addAtom(new Atom("C")); // 15
-        mol.addAtom(new Atom("C")); // 16
+    public static IAtomContainer makeSteran(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 10
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 11
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 12
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 13
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 14
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 15
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 16
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -569,18 +567,18 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H
      */
-    public static IAtomContainer makeAzulene() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
+    public static IAtomContainer makeAzulene(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -602,17 +600,17 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H
      */
-    public static IAtomContainer makeIndole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("N")); // 8
+    public static IAtomContainer makeIndole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 8
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -633,13 +631,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
      */
-    public static IAtomContainer makePyrrole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makePyrrole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -655,15 +653,15 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C4H4N/c1-2-4-5-3-1/h1-4H/q-1
      */
-    public static IAtomContainer makePyrroleAnion() {
-        IAtomContainer mol = new AtomContainer();
-        IAtom nitrogenAnion = new Atom("N");
+    public static IAtomContainer makePyrroleAnion(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        IAtom nitrogenAnion = builder.newInstance(IAtom.class, "N");
         nitrogenAnion.setFormalCharge(-1);
-        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
         mol.addAtom(nitrogenAnion); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -679,13 +677,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C3H4N2/c1-2-5-3-4-1/h1-3H,(H,4,5)/f/h4H
      */
-    public static IAtomContainer makeImidazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("N")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makeImidazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -701,13 +699,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
      */
-    public static IAtomContainer makePyrazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("N")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makePyrazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -723,13 +721,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
      */
-    public static IAtomContainer make124Triazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("N")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("N")); // 4
+    public static IAtomContainer make124Triazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -745,13 +743,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C2H3N3/c1-2-4-5-3-1/h1-2H,(H,3,4,5)/f/h5H
      */
-    public static IAtomContainer make123Triazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("N")); // 2
-        mol.addAtom(new Atom("N")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer make123Triazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -767,13 +765,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)/f/h4H
      */
-    public static IAtomContainer makeTetrazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("N")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("N")); // 2
-        mol.addAtom(new Atom("N")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makeTetrazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -789,13 +787,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C3H3NO/c1-2-5-3-4-1/h1-3H
      */
-    public static IAtomContainer makeOxazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("O")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("N")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makeOxazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "O")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -811,13 +809,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
      */
-    public static IAtomContainer makeIsoxazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("O")); // 1
-        mol.addAtom(new Atom("N")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makeIsoxazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "O")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -833,13 +831,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C3H3NS/c1-2-4-5-3-1/h1-3H
      */
-    public static IAtomContainer makeIsothiazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("S")); // 1
-        mol.addAtom(new Atom("N")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makeIsothiazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "S")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -855,13 +853,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C2H2N2S/c1-3-4-2-5-1/h1-2H
      */
-    public static IAtomContainer makeThiadiazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("S")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("N")); // 3
-        mol.addAtom(new Atom("N")); // 4
+    public static IAtomContainer makeThiadiazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "S")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -877,13 +875,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C2H2N2O/c1-3-4-2-5-1/h1-2H
      */
-    public static IAtomContainer makeOxadiazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("O")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("N")); // 3
-        mol.addAtom(new Atom("N")); // 4
+    public static IAtomContainer makeOxadiazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "O")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -899,14 +897,14 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
      */
-    public static IAtomContainer makePyridine() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
+    public static IAtomContainer makePyridine(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -923,16 +921,16 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H
      */
-    public static IAtomContainer makePyridineOxide() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
+    public static IAtomContainer makePyridineOxide(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
         mol.getAtom(1).setFormalCharge(1);
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("O")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "O")); // 6
         mol.getAtom(6).setFormalCharge(-1);
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
@@ -951,14 +949,14 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C4H4N2/c1-2-5-4-6-3-1/h1-4H
      */
-    public static IAtomContainer makePyrimidine() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("N")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
+    public static IAtomContainer makePyrimidine(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -975,14 +973,14 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
      */
-    public static IAtomContainer makePyridazine() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("N")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
+    public static IAtomContainer makePyridazine(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -999,14 +997,14 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
      */
-    public static IAtomContainer makeTriazine() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("N")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("N")); // 5
+    public static IAtomContainer makeTriazine(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 5
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -1023,13 +1021,13 @@ public class MoleculeFactory {
      *
      * @cdk.inchi InChI=1/C3H3NS/c1-2-5-3-4-1/h1-3H
      */
-    public static IAtomContainer makeThiazole() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("N")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("S")); // 3
-        mol.addAtom(new Atom("C")); // 4
+    public static IAtomContainer makeThiazole(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "N")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "S")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
@@ -1040,18 +1038,18 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makeSingleRing() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        //		mol.addAtom(new Atom("C")); // 6
-        //		mol.addAtom(new Atom("C")); // 7
-        //		mol.addAtom(new Atom("C")); // 8
-        //		mol.addAtom(new Atom("C")); // 9
+    public static IAtomContainer makeSingleRing(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        //		mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        //		mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        //		mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        //		mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -1068,22 +1066,22 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makeDiamantane() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
-        mol.addAtom(new Atom("C")); // 10
-        mol.addAtom(new Atom("C")); // 11
-        mol.addAtom(new Atom("C")); // 12
-        mol.addAtom(new Atom("C")); // 13
+    public static IAtomContainer makeDiamantane(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 10
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 11
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 12
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 13
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -1107,27 +1105,27 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makeBranchedAliphatic() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("C")); // 8
-        mol.addAtom(new Atom("C")); // 9
-        mol.addAtom(new Atom("C")); // 10
-        mol.addAtom(new Atom("C")); // 11
-        mol.addAtom(new Atom("C")); // 12
-        mol.addAtom(new Atom("C")); // 13
-        mol.addAtom(new Atom("C")); // 14
-        mol.addAtom(new Atom("C")); // 15
-        mol.addAtom(new Atom("C")); // 16
-        mol.addAtom(new Atom("C")); // 17
-        mol.addAtom(new Atom("C")); // 18
+    public static IAtomContainer makeBranchedAliphatic(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 10
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 11
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 12
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 13
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 14
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 15
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 16
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 17
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 18
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -1151,14 +1149,14 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makeBenzene() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
+    public static IAtomContainer makeBenzene(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
@@ -1169,16 +1167,16 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makeQuinone() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("O")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("O")); // 7
+    public static IAtomContainer makeQuinone(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "O")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "O")); // 7
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -1191,15 +1189,15 @@ public class MoleculeFactory {
         return mol;
     }
 
-    public static IAtomContainer makePiperidine() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("N"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("H"));
+    public static IAtomContainer makePiperidine(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "N"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "H"));
 
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
@@ -1214,14 +1212,14 @@ public class MoleculeFactory {
 
     }
 
-    public static IAtomContainer makeTetrahydropyran() {
-        IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("O"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
-        mol.addAtom(new Atom("C"));
+    public static IAtomContainer makeTetrahydropyran(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "O"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
 
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
@@ -1234,9 +1232,9 @@ public class MoleculeFactory {
 
     }
 
-    public static IAtomContainer loadMolecule(String inFile) {
+    public static IAtomContainer loadMolecule(IChemObjectBuilder builder, String inFile) {
         MDLReader mr = null;
-        ChemFile chemFile = null;
+        IChemFile chemFile = null;
         IChemSequence chemSequence = null;
         IChemModel chemModel = null;
         IAtomContainerSet setOfMolecules = null;
@@ -1244,7 +1242,7 @@ public class MoleculeFactory {
         try {
             FileInputStream fis = new FileInputStream(inFile);
             mr = new MDLReader(fis);
-            chemFile = (ChemFile) mr.read((ChemObject) new ChemFile());
+            chemFile = mr.read(builder.newInstance(IChemFile.class));
             mr.close();
             chemSequence = chemFile.getChemSequence(0);
             chemModel = chemSequence.getChemModel(0);
@@ -1265,8 +1263,8 @@ public class MoleculeFactory {
     /**
      * @cdk.inchi InChI=1/C5H5N5/c6-4-3-5(9-1-7-3)10-2-8-4/h1-2H,(H3,6,7,8,9,10)/f/h7H,6H2
      */
-    public static IAtomContainer makeAdenine() {
-        IAtomContainer mol = new AtomContainer(); // Adenine
+    public static IAtomContainer makeAdenine(IChemObjectBuilder builder) {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class); // Adenine
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(21.0223, -17.2946));
         mol.addAtom(a1);

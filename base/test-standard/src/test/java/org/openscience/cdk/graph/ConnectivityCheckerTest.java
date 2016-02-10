@@ -68,9 +68,9 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     public void testPartitionIntoMolecules_IAtomContainer() {
         //logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
-        atomCon.add(MoleculeFactory.make4x3CondensedRings());
-        atomCon.add(MoleculeFactory.makeAlphaPinene());
-        atomCon.add(MoleculeFactory.makeSpiroRings());
+        atomCon.add(MoleculeFactory.make4x3CondensedRings(SilentChemObjectBuilder.getInstance()));
+        atomCon.add(MoleculeFactory.makeAlphaPinene(SilentChemObjectBuilder.getInstance()));
+        atomCon.add(MoleculeFactory.makeSpiroRings(SilentChemObjectBuilder.getInstance()));
         IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         Assert.assertNotNull(moleculeSet);
         Assert.assertEquals(3, moleculeSet.getAtomContainerCount());
@@ -106,9 +106,9 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     public void testPartitionIntoMolecules_IsConnected_Consistency() {
         //logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
-        atomCon.add(MoleculeFactory.make4x3CondensedRings());
-        atomCon.add(MoleculeFactory.makeAlphaPinene());
-        atomCon.add(MoleculeFactory.makeSpiroRings());
+        atomCon.add(MoleculeFactory.make4x3CondensedRings(SilentChemObjectBuilder.getInstance()));
+        atomCon.add(MoleculeFactory.makeAlphaPinene(SilentChemObjectBuilder.getInstance()));
+        atomCon.add(MoleculeFactory.makeSpiroRings(SilentChemObjectBuilder.getInstance()));
         IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         Assert.assertNotNull(moleculeSet);
         Assert.assertEquals(3, moleculeSet.getAtomContainerCount());
@@ -170,7 +170,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
      */
     @Test
     public void testIsConnected_IAtomContainer() {
-        IAtomContainer spiro = MoleculeFactory.makeSpiroRings();
+        IAtomContainer spiro = MoleculeFactory.makeSpiroRings(SilentChemObjectBuilder.getInstance());
         Assert.assertTrue(ConnectivityChecker.isConnected(spiro));
     }
 

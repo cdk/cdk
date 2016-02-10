@@ -86,7 +86,7 @@ public class MoleculeBuilder {
                 currentChain.add(currentMolecule.getBuilder().newInstance(IRing.class, length, "C"));
             } //Else must not be cyclic
             else {
-                currentChain = MoleculeFactory.makeAlkane(length);
+                currentChain = MoleculeFactory.makeAlkane(currentMolecule.getBuilder(), length);
             }
         } else {
             currentChain = currentMolecule.getBuilder().newInstance(IAtomContainer.class);
@@ -248,7 +248,7 @@ public class MoleculeBuilder {
         }
         //Benzene
         else if ("phenyl".equals(funGroupToken)) {
-            IAtomContainer benzene = MoleculeFactory.makeBenzene();
+            IAtomContainer benzene = MoleculeFactory.makeBenzene(currentMolecule.getBuilder());
             //Detect Aromacity in the benzene ring.
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);

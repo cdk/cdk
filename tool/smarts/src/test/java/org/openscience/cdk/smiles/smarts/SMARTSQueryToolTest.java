@@ -179,7 +179,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     @Test
     public void testIndoleAgainstItself() throws Exception {
 
-        IAtomContainer indole = MoleculeFactory.makeIndole();
+        IAtomContainer indole = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
         addImplicitHydrogens(indole);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(indole);
         Aromaticity.cdkLegacy().apply(indole);

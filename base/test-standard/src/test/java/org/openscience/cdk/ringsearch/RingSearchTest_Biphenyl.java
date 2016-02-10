@@ -24,6 +24,7 @@ package org.openscience.cdk.ringsearch;
 
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 import java.util.List;
@@ -40,7 +41,7 @@ import static org.junit.Assert.assertTrue;
  */
 public final class RingSearchTest_Biphenyl {
 
-    private final IAtomContainer biphenyl = MoleculeFactory.makeBiphenyl();
+    private final IAtomContainer biphenyl = MoleculeFactory.makeBiphenyl(SilentChemObjectBuilder.getInstance());
 
     @Test
     public void testCyclic() {

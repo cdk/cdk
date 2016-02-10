@@ -174,7 +174,7 @@ public class INChIReader extends DefaultChemObjectReader {
     @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            return (T) readChemFile();
+            return (T) readChemFile((IChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -187,7 +187,7 @@ public class INChIReader extends DefaultChemObjectReader {
      *
      * @return ChemFile with the content read from the input
      */
-    private IChemFile readChemFile() {
+    private IChemFile readChemFile(IChemFile file) {
         IChemFile cf = null;
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
@@ -195,7 +195,7 @@ public class INChIReader extends DefaultChemObjectReader {
         } catch (SAXException e) {
             logger.warn("Cannot deactivate validation.");
         }
-        INChIHandler handler = new INChIHandler();
+        INChIHandler handler = new INChIHandler(file.getBuilder());
         parser.setContentHandler(handler);
         try {
             parser.parse(new InputSource(input));

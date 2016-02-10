@@ -42,6 +42,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -142,7 +143,7 @@ public class SMARTSTest extends CDKTestCase {
             SymbolQueryAtom c1 = new SymbolQueryAtom(new org.openscience.cdk.Atom("C"));
             SymbolAndChargeQueryAtom c2 = new SymbolAndChargeQueryAtom(new org.openscience.cdk.Atom("C"));
 
-            IAtomContainer c = MoleculeFactory.makeAlkane(2);
+            IAtomContainer c = MoleculeFactory.makeAlkane(SilentChemObjectBuilder.getInstance(), 2);
 
             QueryAtomContainer query1 = new QueryAtomContainer(builder);
             query1.addAtom(c1);

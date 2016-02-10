@@ -30,7 +30,6 @@ import java.util.Map;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -38,11 +37,11 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.tools.GridGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -65,6 +64,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 public class ProteinPocketFinder {
 
     private final ILoggingTool logger          = LoggingToolFactory.createLoggingTool(ProteinPocketFinder.class);
+    private IChemObjectBuilder builder;
 
     int                        solvantValue    = 0;
     int                        proteinInterior = -1;
@@ -88,14 +88,16 @@ public class ProteinPocketFinder {
      * @param biopolymerFile The file name containing the protein
      * @param cubicGrid	     if true generate the grid
      */
-    public ProteinPocketFinder(String biopolymerFile, boolean cubicGrid) {
+    public ProteinPocketFinder(IChemObjectBuilder builder, String biopolymerFile, boolean cubicGrid) {
+    	this.builder = builder;
         readBioPolymer(biopolymerFile);
         if (cubicGrid) {
             createCubicGrid();
         }
     }
 
-    public ProteinPocketFinder(String biopolymerFile, double latticeConstant, boolean cubicGrid) {
+    public ProteinPocketFinder(IChemObjectBuilder builder, String biopolymerFile, double latticeConstant, boolean cubicGrid) {
+    	this.builder = builder;
         readBioPolymer(biopolymerFile);
         this.latticeConstant = latticeConstant;
         gridGenerator.setLatticeConstant(this.latticeConstant);
@@ -106,13 +108,15 @@ public class ProteinPocketFinder {
         }
     }
 
-    public ProteinPocketFinder(String biopolymerFile, double[][][] grid) {
+    public ProteinPocketFinder(IChemObjectBuilder builder, String biopolymerFile, double[][][] grid) {
+    	this.builder = builder;
         this.grid = grid;
         gridGenerator.setGrid(grid);
         readBioPolymer(biopolymerFile);
     }
 
     public ProteinPocketFinder(IBioPolymer protein, double[][][] grid) {
+    	this.builder = protein.getBuilder();
         this.protein = protein;
         this.grid = grid;
         gridGenerator.setGrid(grid);
@@ -126,7 +130,7 @@ public class ProteinPocketFinder {
             // Read PDB file
             FileReader fileReader = new FileReader(biopolymerFile);
             ISimpleChemObjectReader reader = new ReaderFactory().createReader(fileReader);
-            IChemFile chemFile = (IChemFile) reader.read((IChemObject) new ChemFile());
+            IChemFile chemFile = (IChemFile) reader.read(builder.newInstance(IChemFile.class));
             // Get molecule from ChemFile
             IChemSequence chemSequence = chemFile.getChemSequence(0);
             IChemModel chemModel = chemSequence.getChemModel(0);
@@ -205,7 +209,7 @@ public class ProteinPocketFinder {
         int[] minMax = {0, 0, 0, 0, 0, 0};
 
         for (int i = 0; i < atoms.length; i++) {
-            if (((PDBAtom) atoms[i]).getHetAtom()) {
+            if (((IPDBAtom) atoms[i]).getHetAtom()) {
                 continue;
             }
             gridPoint = gridGenerator.getGridPointFrom3dCoordinates(atoms[i].getPoint3d());

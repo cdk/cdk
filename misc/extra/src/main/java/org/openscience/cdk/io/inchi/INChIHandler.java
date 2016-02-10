@@ -18,13 +18,12 @@
  */
 package org.openscience.cdk.io.inchi;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomContainerSet;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
@@ -53,9 +52,10 @@ public class INChIHandler extends DefaultHandler {
     private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
     private INChIContentProcessorTool inchiTool;
 
-    private ChemFile                  chemFile;
-    private ChemSequence              chemSequence;
-    private ChemModel                 chemModel;
+    private IChemObjectBuilder        builder;
+    private IChemFile                 chemFile;
+    private IChemSequence             chemSequence;
+    private IChemModel                chemModel;
     private IAtomContainerSet         setOfMolecules;
     private IAtomContainer            tautomer;
 
@@ -65,7 +65,8 @@ public class INChIHandler extends DefaultHandler {
     /**
      * Constructor for the IChIHandler.
      **/
-    public INChIHandler() {
+    public INChIHandler(IChemObjectBuilder builder) {
+    	this.builder = builder;
         inchiTool = new INChIContentProcessorTool();
     }
 
@@ -77,10 +78,10 @@ public class INChIHandler extends DefaultHandler {
 
     @Override
     public void startDocument() {
-        chemFile = new ChemFile();
-        chemSequence = new ChemSequence();
-        chemModel = new ChemModel();
-        setOfMolecules = new AtomContainerSet();
+        chemFile = builder.newInstance(IChemFile.class);
+        chemSequence = builder.newInstance(IChemSequence.class);
+        chemModel = builder.newInstance(IChemModel.class);
+        setOfMolecules = builder.newInstance(IAtomContainerSet.class);
     }
 
     @Override
@@ -101,8 +102,11 @@ public class INChIHandler extends DefaultHandler {
         } else if ("formula".equals(local)) {
             if (tautomer != null) {
                 logger.info("Parsing <formula> chars: ", currentChars);
-                tautomer = new AtomContainer(inchiTool.processFormula(
-                        setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars));
+                tautomer = builder.newInstance(IAtomContainer.class,
+                	inchiTool.processFormula(
+                        setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars
+                    )
+                );
             } else {
                 logger.warn("Cannot set atom info for empty tautomer");
             }
@@ -140,7 +144,7 @@ public class INChIHandler extends DefaultHandler {
                 if (atts.getQName(i).equals("version")) logger.info("INChI version: ", atts.getValue(i));
             }
         } else if ("structure".equals(local)) {
-            tautomer = new AtomContainer();
+            tautomer = builder.newInstance(IAtomContainer.class);
         } else {
             // skip all other elements
         }
@@ -158,7 +162,7 @@ public class INChIHandler extends DefaultHandler {
         currentChars += new String(ch, start, length);
     }
 
-    public ChemFile getChemFile() {
+    public IChemFile getChemFile() {
         return chemFile;
     }
 

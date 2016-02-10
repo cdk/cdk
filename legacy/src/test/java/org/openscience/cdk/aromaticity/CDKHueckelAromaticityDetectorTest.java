@@ -163,14 +163,14 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
     @Test
     public void testPyridineOxide() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makePyridineOxide();
+        IAtomContainer molecule = MoleculeFactory.makePyridineOxide(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(molecule));
     }
 
     @Test
     public void testPyridineOxide_SP2() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makePyridineOxide();
+        IAtomContainer molecule = MoleculeFactory.makePyridineOxide(SilentChemObjectBuilder.getInstance());
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext())
             bonds.next().setOrder(Order.SINGLE);
@@ -233,7 +233,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testAzulene() throws Exception {
         boolean[] testResults = {true, true, true, true, true, true, true, true, true, true};
-        IAtomContainer molecule = MoleculeFactory.makeAzulene();
+        IAtomContainer molecule = MoleculeFactory.makeAzulene(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(molecule));
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -247,7 +247,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testIndole() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makeIndole();
+        IAtomContainer molecule = MoleculeFactory.makeIndole(SilentChemObjectBuilder.getInstance());
         boolean testResults[] = {true, true, true, true, true, true, true, true, true};
         //boolean isAromatic = false;
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
@@ -263,7 +263,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testPyrrole() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makePyrrole();
+        IAtomContainer molecule = MoleculeFactory.makePyrrole(SilentChemObjectBuilder.getInstance());
         boolean testResults[] = {true, true, true, true, true};
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(molecule));
@@ -278,7 +278,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testThiazole() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makeThiazole();
+        IAtomContainer molecule = MoleculeFactory.makeThiazole(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Assert.assertTrue("Molecule is not detected as aromatic", Aromaticity.cdkLegacy().apply(molecule));
 
@@ -447,7 +447,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testQuinone() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makeQuinone();
+        IAtomContainer molecule = MoleculeFactory.makeQuinone(SilentChemObjectBuilder.getInstance());
         boolean[] testResults = {false, false, false, false, false, false, false, false};
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
@@ -487,7 +487,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testBenzene() throws Exception {
-        IAtomContainer molecule = MoleculeFactory.makeBenzene();
+        IAtomContainer molecule = MoleculeFactory.makeBenzene(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -498,7 +498,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testCyclobutadiene() throws Exception {
         // anti-aromatic
-        IAtomContainer molecule = MoleculeFactory.makeCyclobutadiene();
+        IAtomContainer molecule = MoleculeFactory.makeCyclobutadiene(SilentChemObjectBuilder.getInstance());
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         Assert.assertFalse(Aromaticity.cdkLegacy().apply(molecule));
