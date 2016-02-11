@@ -92,7 +92,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC=CC(C)=O");
         //logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-        Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(5, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     @Test
