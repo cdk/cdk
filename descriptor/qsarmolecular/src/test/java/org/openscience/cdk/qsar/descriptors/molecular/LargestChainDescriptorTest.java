@@ -115,4 +115,40 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
+    @Test
+    public void test8LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("Cc1nn(c(c1)N)c1nc2c(s1)cccc2");
+        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    public void test9LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("Nc1c(cn[nH]1)C#N");
+        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    public void test10LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("OCc1ccccc1CN");
+        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    public void test11LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("COc1ccc(cc1)c1noc(c1)Cn1nc(C)c(c(c1=O)C#N)C");
+        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
 }
