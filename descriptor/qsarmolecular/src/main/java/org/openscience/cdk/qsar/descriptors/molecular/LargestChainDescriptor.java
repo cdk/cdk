@@ -18,25 +18,21 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.graph.SpanningTree;
+import org.openscience.cdk.graph.AllPairsShortestPaths;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class that returns the number of atoms in the largest chain.
@@ -168,76 +164,32 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
      */
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
-        IAtomContainer container;
-        try {
-            container = (IAtomContainer) atomContainer.clone();
-        } catch (CloneNotSupportedException e) {
-            return getDummyDescriptorValue(e);
+
+        if (checkRingSystem)
+            Cycles.markRingAtomsAndBonds(atomContainer);
+
+        // make a subset molecule only including acyclic non-hydrogen atoms
+        final Set<IAtom> included = new HashSet<>();
+        for (IAtom atom : atomContainer.atoms()) {
+            if (!atom.isInRing() && atom.getAtomicNumber() != 1)
+                included.add(atom);
         }
+        IAtomContainer subset = subsetMol(atomContainer, included);
 
-        //logger.debug("LargestChainDescriptor");
-        boolean[] originalFlag4 = new boolean[container.getAtomCount()];
-        for (int i = 0; i < originalFlag4.length; i++) {
-            originalFlag4[i] = container.getAtom(i).getFlag(CDKConstants.VISITED);
-        }
-        if (checkRingSystem) {
-            IRingSet rs;
-            try {
-                rs = new SpanningTree(container).getBasicRings();
-            } catch (NoSuchAtomException e) {
-                return getDummyDescriptorValue(e);
+        AllPairsShortestPaths apsp = new AllPairsShortestPaths(subset);
+
+        int max = 0;
+        int numAtoms = subset.getAtomCount();
+        for (int i = 0; i < numAtoms; i++) {
+            for (int j = i+1; j < numAtoms; j++) {
+                int len = apsp.from(i).pathTo(j).length;
+                if (len > max)
+                    max = len;
             }
-            for (int i = 0; i < container.getAtomCount(); i++) {
-                if (rs.contains(container.getAtom(i))) {
-                    container.getAtom(i).setFlag(CDKConstants.ISINRING, true);
-                }
-            }
-        }
-
-        if (checkAromaticity) {
-            try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-                Aromaticity.cdkLegacy().apply(container);
-            } catch (CDKException e) {
-                return getDummyDescriptorValue(e);
-            }
-        }
-
-        // get rid of hydrogens in our local copy
-        container = AtomContainerManipulator.removeHydrogens(container);
-
-        int largestChainAtomsCount = 0;
-        //IAtom[] atoms = container.getAtoms();
-        ArrayList<IAtom> startSphere;
-        ArrayList<IAtom> path;
-
-        //logger.debug("Set all atoms to Visited False");
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            for (IAtom a : container.atoms()) a.setFlag(CDKConstants.VISITED, false);
-
-            IAtom atomi = container.getAtom(i);
-            // chain sp3
-            //logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
-            if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING))
-                    & !atomi.getFlag(CDKConstants.VISITED)) {
-                //logger.debug("...... -> containercepted");
-                startSphere = new ArrayList<IAtom>();
-                path = new ArrayList<IAtom>();
-                startSphere.add(atomi);
-                try {
-                    breadthFirstSearch(container, startSphere, path);
-                } catch (CDKException e) {
-                    return getDummyDescriptorValue(e);
-                }
-                if (path.size() > largestChainAtomsCount) {
-                    largestChainAtomsCount = path.size();
-                }
-            }
-
         }
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                largestChainAtomsCount), getDescriptorNames());
+                max), getDescriptorNames());
     }
 
     /**
@@ -254,50 +206,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
-    }
-
-    /**
-     * Performs a breadthFirstSearch in an AtomContainer starting with a
-     * particular sphere, which usually consists of one start atom, and searches
-     * for a pi system.
-     *
-     * @param container The AtomContainer to
-     *                  be searched
-     * @param sphere    A sphere of atoms to
-     *                  start the search with
-     * @param path      A ArrayList which stores the atoms belonging to the pi system
-     * @throws org.openscience.cdk.exception.CDKException
-     *          Description of the
-     *          Exception
-     */
-    private void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws CDKException {
-        IAtom atom;
-        IAtom nextAtom;
-        List<IAtom> newSphere = new ArrayList<IAtom>();
-        //logger.debug("Start of breadthFirstSearch");
-        for (int i = 0; i < sphere.size(); i++) {
-            atom = sphere.get(i);
-            //logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
-            List<IBond> bonds = container.getConnectedBondsList(atom);
-            for (IBond bond : bonds) {
-                nextAtom = bond.getConnectedAtom(atom);
-                if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC) && !nextAtom.getFlag(CDKConstants.ISINRING))
-                        & !nextAtom.getFlag(CDKConstants.VISITED)) {
-                    //logger.debug("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
-                    path.add(nextAtom);
-                    //logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
-                    nextAtom.setFlag(CDKConstants.VISITED, true);
-                    if (container.getConnectedBondsCount(nextAtom) > 1) {
-                        newSphere.add(nextAtom);
-                    }
-                } else {
-                    nextAtom.setFlag(CDKConstants.VISITED, true);
-                }
-            }
-        }
-        if (newSphere.size() > 0) {
-            breadthFirstSearch(container, newSphere, path);
-        }
     }
 
     /**
@@ -322,5 +230,18 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
     @Override
     public Object getParameterType(String name) {
         return true;
+    }
+
+    private static IAtomContainer subsetMol(IAtomContainer mol, Set<IAtom> include) {
+        IAtomContainer cpy = mol.getBuilder().newInstance(IAtomContainer.class, mol.getAtomCount(), mol.getBondCount(), 0, 0);
+        for (IAtom atom : mol.atoms()) {
+            if (include.contains(atom))
+                cpy.addAtom(atom);
+        }
+        for (IBond bond : mol.bonds()) {
+            if (include.contains(bond.getAtom(0)) && include.contains(bond.getAtom(1)))
+                cpy.addBond(bond);
+        }
+        return cpy;
     }
 }
