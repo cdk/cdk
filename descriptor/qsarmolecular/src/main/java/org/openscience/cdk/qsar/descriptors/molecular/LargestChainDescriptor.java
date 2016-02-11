@@ -210,13 +210,11 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
         //IAtom[] atoms = container.getAtoms();
         ArrayList<IAtom> startSphere;
         ArrayList<IAtom> path;
-        //Set all VisitedFlags to False
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            container.getAtom(i).setFlag(CDKConstants.VISITED, false);
-        }
 
         //logger.debug("Set all atoms to Visited False");
         for (int i = 0; i < container.getAtomCount(); i++) {
+            for (IAtom a : container.atoms()) a.setFlag(CDKConstants.VISITED, false);
+
             IAtom atomi = container.getAtom(i);
             // chain sp3
             //logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
