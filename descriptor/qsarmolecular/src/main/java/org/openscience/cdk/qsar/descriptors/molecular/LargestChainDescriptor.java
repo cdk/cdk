@@ -45,9 +45,9 @@ import java.util.Set;
  * <td>Description</td>
  * </tr>
  * <tr>
- * <td>checkAromaticity</td>
+ * <td>checkAromaticity (deprecated)</td>
  * <td>false</td>
- * <td>True is the aromaticity has to be checked</td>
+ * <td>Old parameter is now ignored</td>
  * </tr>
  * <tr>
  * <td>checkRingSystem</td>
@@ -102,8 +102,9 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
     /**
      * Sets the parameters attribute of the LargestChain object.
      * <p/>
-     * This descriptor takes one parameter, which should be Boolean to indicate whether
-     * aromaticity has been checked (TRUE) or not (FALSE).
+     * This descriptor takes two parameters, which should be Booleans to indicate whether
+     * aromaticity and ring member ship needs been checked (TRUE) or not (FALSE). The first
+     * parameter (aromaticity) is deprecated and ignored.
      *
      * @param params The new parameters value
      * @throws CDKException if more than one parameter or a non-Boolean parameter is specified
@@ -149,14 +150,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
 
     /**
      * Calculate the count of atoms of the largest chain in the supplied {@link IAtomContainer}.
-     * <p/>
-     * <p>The method require two parameters:
-     * <ol>
-     * <li>if checkAromaticity is true, the method check the aromaticity,
-     * <li>if false, means that the aromaticity has already been checked
-     * </ol>
-     * <p/>
-     * <p>Same for checkRingSystem, if true the CDKConstant.ISINRING will be set
      *
      * @param atomContainer The {@link IAtomContainer} for which this descriptor is to be calculated
      * @return the number of atoms in the largest chain of this AtomContainer
