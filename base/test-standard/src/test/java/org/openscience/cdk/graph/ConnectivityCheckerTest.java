@@ -40,7 +40,7 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -68,9 +68,9 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     public void testPartitionIntoMolecules_IAtomContainer() {
         //logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
-        atomCon.add(MoleculeFactory.make4x3CondensedRings());
-        atomCon.add(MoleculeFactory.makeAlphaPinene());
-        atomCon.add(MoleculeFactory.makeSpiroRings());
+        atomCon.add(TestMoleculeFactory.make4x3CondensedRings());
+        atomCon.add(TestMoleculeFactory.makeAlphaPinene());
+        atomCon.add(TestMoleculeFactory.makeSpiroRings());
         IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         Assert.assertNotNull(moleculeSet);
         Assert.assertEquals(3, moleculeSet.getAtomContainerCount());
@@ -106,9 +106,9 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     public void testPartitionIntoMolecules_IsConnected_Consistency() {
         //logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
-        atomCon.add(MoleculeFactory.make4x3CondensedRings());
-        atomCon.add(MoleculeFactory.makeAlphaPinene());
-        atomCon.add(MoleculeFactory.makeSpiroRings());
+        atomCon.add(TestMoleculeFactory.make4x3CondensedRings());
+        atomCon.add(TestMoleculeFactory.makeAlphaPinene());
+        atomCon.add(TestMoleculeFactory.makeSpiroRings());
         IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         Assert.assertNotNull(moleculeSet);
         Assert.assertEquals(3, moleculeSet.getAtomContainerCount());
@@ -170,7 +170,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
      */
     @Test
     public void testIsConnected_IAtomContainer() {
-        IAtomContainer spiro = MoleculeFactory.makeSpiroRings();
+        IAtomContainer spiro = TestMoleculeFactory.makeSpiroRings();
         Assert.assertTrue(ConnectivityChecker.isConnected(spiro));
     }
 

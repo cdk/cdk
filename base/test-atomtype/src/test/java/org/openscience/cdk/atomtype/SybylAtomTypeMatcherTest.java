@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -82,7 +82,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
         IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
-        IAtomContainer ethane = MoleculeFactory.makeAlkane(2);
+        IAtomContainer ethane = TestMoleculeFactory.makeAlkane(2);
         String[] expectedTypes = {"C.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, ethane);
     }
@@ -128,7 +128,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
      */
     @Test
     public void testBenzene() throws Exception {
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
 
         // test if the perceived atom types match that
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
@@ -140,7 +140,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     public void testAdenine() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeAdenine();
+        IAtomContainer mol = TestMoleculeFactory.makeAdenine();
         String[] expectedTypes = {"C.ar", "C.ar", "C.ar", "N.ar", "N.ar", "N.ar", "N.ar", "N.3", "C.ar", "C.ar"};
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
         IAtomType[] types = matcher.findMatchingAtomTypes(mol);
@@ -154,7 +154,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
      */
     @Test
     public void testBenzene_AtomContainer() throws Exception {
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
 
         // test if the perceived atom types match that
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
@@ -752,7 +752,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     public void testAniline() throws Exception {
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         IAtom nitrogen = benzene.getBuilder().newInstance(IAtom.class, "N");
         benzene.addAtom(nitrogen);
         benzene.addBond(benzene.getBuilder().newInstance(IBond.class, benzene.getAtom(0), nitrogen, IBond.Order.SINGLE));

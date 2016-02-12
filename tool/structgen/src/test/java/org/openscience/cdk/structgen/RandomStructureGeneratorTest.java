@@ -24,7 +24,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import javax.vecmath.Vector2d;
 import java.util.Vector;
@@ -43,7 +43,7 @@ public class RandomStructureGeneratorTest extends CDKTestCase {
 
     @Test
     public void testTwentyRandomStructures() {
-        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
         RandomGenerator rg = new RandomGenerator(molecule);
         IAtomContainer result = null;
         for (int f = 0; f < 50; f++) {

@@ -26,7 +26,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * This class tests the RingPartitioner class.
@@ -48,7 +48,7 @@ public class RingPartitionerTest extends CDKTestCase {
 
     @Test
     public void testConvertToAtomContainer_IRingSet() {
-        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
 
         IRingSet ringSet = Cycles.sssr(molecule).toRingSet();
         IAtomContainer ac = RingPartitioner.convertToAtomContainer(ringSet);
@@ -58,17 +58,17 @@ public class RingPartitionerTest extends CDKTestCase {
 
     @Test
     public void testPartitionIntoRings() {
-        IAtomContainer azulene = MoleculeFactory.makeAzulene();
+        IAtomContainer azulene = TestMoleculeFactory.makeAzulene();
         IRingSet ringSet = Cycles.sssr(azulene).toRingSet();
         List<IRingSet> list = RingPartitioner.partitionRings(ringSet);
         Assert.assertEquals(1, list.size());
 
-        IAtomContainer biphenyl = MoleculeFactory.makeBiphenyl();
+        IAtomContainer biphenyl = TestMoleculeFactory.makeBiphenyl();
         ringSet = Cycles.sssr(biphenyl).toRingSet();
         list = RingPartitioner.partitionRings(ringSet);
         Assert.assertEquals(2, list.size());
 
-        IAtomContainer spiro = MoleculeFactory.makeSpiroRings();
+        IAtomContainer spiro = TestMoleculeFactory.makeSpiroRings();
         ringSet = Cycles.sssr(spiro).toRingSet();
         list = RingPartitioner.partitionRings(ringSet);
         Assert.assertEquals(1, list.size());

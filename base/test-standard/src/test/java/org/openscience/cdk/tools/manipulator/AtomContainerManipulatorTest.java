@@ -59,7 +59,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.TetrahedralChirality;
-import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 
@@ -72,12 +71,12 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Before
     public void setUp() {
-        ac = MoleculeFactory.makeAlphaPinene();
+        ac = TestMoleculeFactory.makeAlphaPinene();
     }
 
     @Test
     public void testExtractSubstructure() throws CloneNotSupportedException {
-        IAtomContainer source = MoleculeFactory.makeEthylCyclohexane();
+        IAtomContainer source = TestMoleculeFactory.makeEthylCyclohexane();
         IAtomContainer ringSubstructure = AtomContainerManipulator.extractSubstructure(source, 0, 1, 2, 3, 4, 5);
         Assert.assertEquals(6, ringSubstructure.getAtomCount());
         Assert.assertEquals(6, ringSubstructure.getBondCount());
@@ -834,7 +833,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
      */
     @Test
     public void testGetImplicitHydrogenCount_unperceived() throws Exception {
-        IAtomContainer container = MoleculeFactory.makeAdenine();
+        IAtomContainer container = TestMoleculeFactory.makeAdenine();
         Assert.assertEquals("Container has not been atom-typed - should have 0 implicit hydrogens", 0,
                 AtomContainerManipulator.getImplicitHydrogenCount(container));
     }
@@ -852,7 +851,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
      */
     @Test
     public void testGetImplicitHydrogenCount_adenine() throws Exception {
-        IAtomContainer container = MoleculeFactory.makeAdenine();
+        IAtomContainer container = TestMoleculeFactory.makeAdenine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
         CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance()).addImplicitHydrogens(container);
         Assert.assertEquals("Adenine should have 5 implicit hydrogens", 5,
@@ -990,7 +989,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     public void testAnonymise() throws Exception {
 
-        IAtomContainer cyclohexane = MoleculeFactory.makeCyclohexane();
+        IAtomContainer cyclohexane = TestMoleculeFactory.makeCyclohexane();
 
         cyclohexane.getAtom(0).setSymbol("O");
         cyclohexane.getAtom(2).setSymbol("O");
@@ -1002,7 +1001,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         IAtomContainer anonymous = AtomContainerManipulator.anonymise(cyclohexane);
 
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(anonymous, MoleculeFactory.makeCyclohexane()));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(anonymous, TestMoleculeFactory.makeCyclohexane()));
 
         assertThat(anonymous.getAtom(0).getSymbol(), is("C"));
         assertThat(anonymous.getAtom(2).getSymbol(), is("C"));
@@ -1017,7 +1016,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     public void skeleton() throws Exception {
 
-        IAtomContainer adenine = MoleculeFactory.makeAdenine();
+        IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
         IAtomContainer skeleton = AtomContainerManipulator.skeleton(adenine);
 
         assertThat(skeleton, is(not(sameInstance(adenine))));

@@ -27,7 +27,7 @@ import org.openscience.cdk.iupac.parser.NomParser;
 import org.openscience.cdk.iupac.parser.ParseException;
 import org.openscience.cdk.iupac.parser.TokenMgrError;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * JUnit test routines for the core parser.
@@ -52,7 +52,7 @@ public class ParserTest extends CDKTestCase {
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
-        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(2);
+        IAtomContainer correctMolecule = TestMoleculeFactory.makeAlkane(2);
 
         Assert.assertTrue("The molecule built by the parser isn't the same as the expected one",
                 comparer.isIsomorphic(parserMolecule, correctMolecule));
@@ -66,7 +66,7 @@ public class ParserTest extends CDKTestCase {
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
-        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(5);
+        IAtomContainer correctMolecule = TestMoleculeFactory.makeAlkane(5);
 
         Assert.assertTrue("The molecule built by the parser isn't the same as the expected one",
                 comparer.isIsomorphic(parserMolecule, correctMolecule));
@@ -80,7 +80,7 @@ public class ParserTest extends CDKTestCase {
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
-        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(7);
+        IAtomContainer correctMolecule = TestMoleculeFactory.makeAlkane(7);
 
         Assert.assertTrue("The molecule built by the parser isn't the same as the expected one",
                 comparer.isIsomorphic(parserMolecule, correctMolecule));
@@ -89,7 +89,7 @@ public class ParserTest extends CDKTestCase {
     @Test
     public void testEicosane() throws Exception {
         IAtomContainer parserMolecule = NomParser.generate("Eicosane", SilentChemObjectBuilder.getInstance());
-        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(20);
+        IAtomContainer correctMolecule = TestMoleculeFactory.makeAlkane(20);
 
         Assert.assertTrue("The molecule built by the parser isn't the same as the expected one",
                 comparer.isIsomorphic(parserMolecule, correctMolecule));

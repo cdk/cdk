@@ -24,7 +24,7 @@ package org.openscience.cdk.ringsearch;
 
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ import static org.junit.Assert.assertTrue;
  */
 public final class RingSearchTest_Benzene {
 
-    private final IAtomContainer benzene = MoleculeFactory.makeBenzene();
+    private final IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
 
     @Test
     public void testCyclic() {

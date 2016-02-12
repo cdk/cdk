@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * @cdk.module test-core
@@ -170,7 +170,7 @@ public class SpanningTreeTest extends CDKTestCase {
 
     @Test
     public void testGetSpanningTreeForPyridine() throws NoSuchAtomException {
-        IAtomContainer mol = MoleculeFactory.makePyridine();
+        IAtomContainer mol = TestMoleculeFactory.makePyridine();
         SpanningTree spanningTree = new SpanningTree(mol);
         Assert.assertEquals(6, spanningTree.getBondsCyclicCount());
         Assert.assertEquals(6, spanningTree.getCyclicFragmentsContainer().getAtomCount());

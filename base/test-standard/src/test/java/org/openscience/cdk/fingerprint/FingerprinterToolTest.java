@@ -31,7 +31,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -50,9 +50,9 @@ public class FingerprinterToolTest extends CDKTestCase {
     public void testIsSubset_BitSet_BitSet() throws java.lang.Exception {
         Fingerprinter fingerprinter = new Fingerprinter();
 
-        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer mol = TestMoleculeFactory.makeIndole();
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        IAtomContainer frag1 = TestMoleculeFactory.makePyrrole();
         BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
         assertTrue(FingerprinterTool.isSubset(bs, bs1));
     }

@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class RingSearchTest_Fused {
 
-    private final IAtomContainer fusedRings = MoleculeFactory.makeFusedRings();
+    private final IAtomContainer fusedRings = TestMoleculeFactory.makeFusedRings();
 
     @Test
     public void testCyclic_Int() {

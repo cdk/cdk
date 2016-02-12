@@ -21,9 +21,8 @@
 
 package org.openscience.cdk.iupac.parser;
 
-import java.util.Iterator;
-import java.util.List;
-
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -35,10 +34,12 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Takes in parsed Tokens from NomParser and contains rules
@@ -86,7 +87,7 @@ public class MoleculeBuilder {
                 currentChain.add(currentMolecule.getBuilder().newInstance(IRing.class, length, "C"));
             } //Else must not be cyclic
             else {
-                currentChain = MoleculeFactory.makeAlkane(length);
+                currentChain = makeAlkane(length);
             }
         } else {
             currentChain = currentMolecule.getBuilder().newInstance(IAtomContainer.class);
@@ -248,7 +249,7 @@ public class MoleculeBuilder {
         }
         //Benzene
         else if ("phenyl".equals(funGroupToken)) {
-            IAtomContainer benzene = MoleculeFactory.makeBenzene();
+            IAtomContainer benzene = makeBenzene();
             //Detect Aromacity in the benzene ring.
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
@@ -459,5 +460,48 @@ public class MoleculeBuilder {
         hAdder.addImplicitHydrogens(currentMolecule);
 
         return currentMolecule;
+    }
+
+    private static IAtomContainer makeBenzene() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(new Atom("C")); // 1
+        mol.addAtom(new Atom("C")); // 2
+        mol.addAtom(new Atom("C")); // 3
+        mol.addAtom(new Atom("C")); // 4
+        mol.addAtom(new Atom("C")); // 5
+
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
+        mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(3, 4, IBond.Order.DOUBLE); // 4
+        mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+        mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
+        return mol;
+    }
+
+    /**
+     * Generate an Alkane (chain of carbons with no hydrogens) of a given length.
+     *
+     * <p>This method was written by Stephen Tomkinson.
+     *
+     * @param chainLength The number of carbon atoms to have in the chain.
+     * @return A molecule containing a bonded chain of carbons.
+     *
+     * @cdk.created 2003-08-15
+     */
+    private static IAtomContainer makeAlkane(int chainLength) {
+        IAtomContainer currentChain = new AtomContainer();
+
+        //Add the initial atom
+        currentChain.addAtom(new Atom("C"));
+
+        //Add further atoms and bonds as needed, a pair at a time.
+        for (int atomCount = 1; atomCount < chainLength; atomCount++) {
+            currentChain.addAtom(new Atom("C"));
+            currentChain.addBond(atomCount, atomCount - 1, IBond.Order.SINGLE);
+        }
+
+        return currentChain;
     }
 }

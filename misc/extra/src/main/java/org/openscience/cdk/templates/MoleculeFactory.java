@@ -44,7 +44,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.keyword templates
  * @cdk.githash
+ * @deprecated Old CDK class primarily for testing, for CDK Tests please use TestMoleculeFactory in cdk-data (testjar).
  */
+@Deprecated
 public class MoleculeFactory {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoleculeFactory.class);

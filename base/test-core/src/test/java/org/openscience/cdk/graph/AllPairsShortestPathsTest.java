@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertArrayEquals;
@@ -69,7 +69,7 @@ public class AllPairsShortestPathsTest {
     @Test
     public void testFrom_Atom_Benzene() throws Exception {
 
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         AllPairsShortestPaths asp = new AllPairsShortestPaths(benzene);
 
         IAtom c1 = benzene.getAtom(0);
@@ -121,7 +121,7 @@ public class AllPairsShortestPathsTest {
     @Test
     public void testFrom_Int_Benzene() throws Exception {
 
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         AllPairsShortestPaths asp = new AllPairsShortestPaths(benzene);
 
         //    1 - 2

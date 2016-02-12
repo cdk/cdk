@@ -25,7 +25,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * @cdk.module test-standard
@@ -38,7 +38,7 @@ public class BFSShortestPathTest extends CDKTestCase {
 
     @Test
     public void testFindPathBetween_Graph_Object_Object() {
-        IAtomContainer apinene = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer apinene = TestMoleculeFactory.makeAlphaPinene();
         SimpleGraph graph = MoleculeGraphs.getMoleculeGraph(apinene);
         Object startVertex = graph.vertexSet().toArray()[0];
         Object endVertex = graph.vertexSet().toArray()[5];

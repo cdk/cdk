@@ -32,7 +32,7 @@ import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -68,7 +68,7 @@ public class ShortestPathsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_Container_MissingAtom() {
-        new ShortestPaths(MoleculeFactory.makeBenzene(), new Atom());
+        new ShortestPaths(TestMoleculeFactory.makeBenzene(), new Atom());
     }
 
     @Test
@@ -106,7 +106,7 @@ public class ShortestPathsTest {
     @Test
     public void testPathTo_Atom_Benzene() {
 
-        IAtomContainer simple = MoleculeFactory.makeBenzene();
+        IAtomContainer simple = TestMoleculeFactory.makeBenzene();
 
         ShortestPaths paths = new ShortestPaths(simple, simple.getAtom(0));
 
@@ -121,7 +121,7 @@ public class ShortestPathsTest {
     @Test
     public void testPathTo_Int_Benzene() {
 
-        IAtomContainer simple = MoleculeFactory.makeBenzene();
+        IAtomContainer simple = TestMoleculeFactory.makeBenzene();
 
         ShortestPaths paths = new ShortestPaths(simple, simple.getAtom(0));
 
@@ -131,7 +131,7 @@ public class ShortestPathsTest {
 
     @Test
     public void testIsPrecedingPathTo() {
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         int[][] graph = GraphUtil.toAdjList(benzene);
         int[] order = new int[]{0, 1, 2, 3, 4, 5};
         ShortestPaths paths = new ShortestPaths(graph, benzene, 0, order);
@@ -165,7 +165,7 @@ public class ShortestPathsTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testIsPrecedingPathTo_OutOfBounds() {
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
         assertFalse(paths.isPrecedingPathTo(-1));
     }
@@ -369,7 +369,7 @@ public class ShortestPathsTest {
     @Test
     public void testPathsTo_Atom_Benzene() {
 
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
 
         ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
 
@@ -425,7 +425,7 @@ public class ShortestPathsTest {
     @Test
     public void testPathsTo_Int_Benzene() {
 
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
 
         ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
 
@@ -613,7 +613,7 @@ public class ShortestPathsTest {
     @Test
     public void testAtomsTo_Atom_Benzene() {
 
-        IAtomContainer simple = MoleculeFactory.makeBenzene();
+        IAtomContainer simple = TestMoleculeFactory.makeBenzene();
 
         IAtom c1 = simple.getAtom(0);
         IAtom c2 = simple.getAtom(1);
@@ -633,7 +633,7 @@ public class ShortestPathsTest {
     @Test
     public void testAtomsTo_Int_Benzene() {
 
-        IAtomContainer simple = MoleculeFactory.makeBenzene();
+        IAtomContainer simple = TestMoleculeFactory.makeBenzene();
 
         IAtom c1 = simple.getAtom(0);
         IAtom c2 = simple.getAtom(1);
@@ -835,7 +835,7 @@ public class ShortestPathsTest {
     @Test
     public void testNPathsTo_Atom_Benzene() {
 
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
 
         ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
 
@@ -851,7 +851,7 @@ public class ShortestPathsTest {
     @Test
     public void testNPathsTo_Int_Benzene() {
 
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
 
         ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
 
@@ -1074,7 +1074,7 @@ public class ShortestPathsTest {
     @Test
     public void testDistanceTo_Atom_Benzene() {
 
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
 
         ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
 
@@ -1090,7 +1090,7 @@ public class ShortestPathsTest {
     @Test
     public void testDistanceTo_Int_Benzene() {
 
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
 
         ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
 
@@ -1105,7 +1105,7 @@ public class ShortestPathsTest {
 
     @Test
     public void testDistanceTo_Int_Benzene_limited() {
-        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+        IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
 
         ShortestPaths paths = new ShortestPaths(GraphUtil.toAdjList(benzene), benzene, 0, 2, null);
 

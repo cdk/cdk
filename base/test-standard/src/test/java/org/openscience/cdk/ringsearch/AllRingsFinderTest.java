@@ -40,7 +40,7 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -71,7 +71,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testFindAllRings_IAtomContainer() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
-        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
+        IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
         //display(molecule);
 
         ringSet = arf.findAllRings(molecule);
@@ -86,7 +86,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testBondsWithinRing() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
-        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
+        IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
         //display(molecule);
 
         ringSet = arf.findAllRings(molecule);
@@ -106,7 +106,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     @Test
     public void testFindAllRings_IAtomContainer_boolean() throws Exception {
         AllRingsFinder arf = new AllRingsFinder();
-        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
+        IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
         arf.findAllRings(molecule);
     }
 
@@ -114,7 +114,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testSetTimeout_long() throws Exception {
         AllRingsFinder arf = new AllRingsFinder();
         arf.setTimeout(1);
-        IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
+        IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
         arf.findAllRings(molecule);
     }
 
