@@ -36,13 +36,16 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import uk.ac.ebi.beam.Bond;
 
 import javax.vecmath.Point2d;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
@@ -179,7 +182,7 @@ final class NonplanarBonds {
         }
 
         // Unspecified double bond, indicated with an up/down wavy bond
-        for (IBond bond : findUnspecifiedDoubleBonds()) {
+        for (IBond bond : findUnspecifiedDoubleBonds(g)) {
             labelUnspecified(bond);
         }
     }
@@ -583,7 +586,7 @@ final class NonplanarBonds {
      * 
      * @return set of double bonds
      */
-    private List<IBond> findUnspecifiedDoubleBonds() {
+    private List<IBond> findUnspecifiedDoubleBonds(int[][] adjList) {
         List<IBond> unspecifiedDoubleBonds = new ArrayList<>();
         for (IBond bond : container.bonds()) {
             // non-double bond, ignore it
@@ -611,12 +614,97 @@ final class NonplanarBonds {
             
             if (!hasOnlyPlainBonds(beg, bond) || !hasOnlyPlainBonds(end, bond))
                 continue;
-            
+
+            if (hasLinearEqualPaths(adjList, beg, end) || hasLinearEqualPaths(adjList, end, beg))
+                continue;
+
             unspecifiedDoubleBonds.add(bond);
         }
         return unspecifiedDoubleBonds;
     }
 
+    private boolean hasLinearEqualPaths(int[][] adjList, int start, int prev) {
+        int a = -1;
+        int b = -1;
+        for (int w : adjList[start]) {
+            if (w == prev)    continue;
+            else if (a == -1) a = w;
+            else if (b == -1) b = w;
+            else return false; // ???
+        }
+        if (b < 0)
+            return false;
+        Set<IAtom> visit = new HashSet<>();
+        IAtom aAtom = container.getAtom(a);
+        IAtom bAtom = container.getAtom(b);
+        visit.add(container.getAtom(start));
+        if (aAtom.isInRing() || bAtom.isInRing())
+            return false;
+        IAtom aNext = aAtom;
+        IAtom bNext = bAtom;
+        while (aNext != null && bNext != null) {
+            aAtom = aNext;
+            bAtom = bNext;
+            visit.add(aAtom);
+            visit.add(bAtom);
+            aNext = null;
+            bNext = null;
+
+            // different atoms
+            if (notEqual(aAtom.getAtomicNumber(), bAtom.getAtomicNumber()))
+                return false;
+            if (notEqual(aAtom.getFormalCharge(), bAtom.getFormalCharge()))
+                return false;
+            if (notEqual(aAtom.getMassNumber(), bAtom.getMassNumber()))
+                return false;
+
+            int hCntA = aAtom.getImplicitHydrogenCount();
+            int hCntB = bAtom.getImplicitHydrogenCount();
+            int cntA = 0, cntB = 0;
+            for (int w : adjList[atomToIndex.get(aAtom)]) {
+                IAtom atom = container.getAtom(w);
+                if (visit.contains(atom))
+                    continue;
+                // hydrogen
+                if (atom.getAtomicNumber() == 1 && adjList[w].length == 1) {
+                    hCntA++;
+                    continue;
+                }
+                aNext = cntA == 0 ? atom : null;
+                cntA++;
+            }
+            for (int w : adjList[atomToIndex.get(bAtom)]) {
+                IAtom atom = container.getAtom(w);
+                if (visit.contains(atom))
+                    continue;
+                // hydrogen
+                if (atom.getAtomicNumber() == 1 && adjList[w].length == 1) {
+                    hCntB++;
+                    continue;
+                }
+                bNext = cntB == 0 ? atom : null;
+                cntB++;
+            }
+
+            // hydrogen counts are different
+            if (hCntA != hCntB)
+                return false;
+
+            // differing in co
+            if (cntA != cntB || (cntA > 1 && cntB > 1))
+                return false;
+        }
+
+        if (aNext != null || bNext != null)
+            return false;
+
+        // traversed the path till the end
+        return true;
+    }
+
+    private boolean notEqual(Integer a, Integer b) {
+        return a == null ? b != null : !a.equals(b);
+    }
 
     /**
      * Check that an atom (v:index) is only adjacent to plain single bonds (may be a bold or
