@@ -92,16 +92,11 @@ public class IsotopePatternGenerator {
         }
         String mf = MolecularFormulaManipulator.getString(molFor, true);
 
-        // Divide the chemical formula into tokens (element and coefficients)
-        HashMap<String, Integer> tokens = new HashMap<String, Integer>();
         IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(mf, builder);
-        for (IIsotope isos : molecularFormula.isotopes())
-            tokens.put(isos.getSymbol(), molecularFormula.getIsotopeCount(isos));
 
-        int atomCount;
         for (IIsotope isos : molecularFormula.isotopes()) {
             String elementSymbol = isos.getSymbol();
-            atomCount = tokens.get(elementSymbol);
+            int atomCount = molecularFormula.getIsotopeCount(isos);
 
             for (int i = 0; i < atomCount; i++) {
                 if (!calculateAbundanceAndMass(elementSymbol)) {
@@ -112,7 +107,6 @@ public class IsotopePatternGenerator {
         IsotopePattern isoP = IsotopePatternManipulator.sortAndNormalizedByIntensity(abundance_Mass);
         isoP = cleanAbundance(isoP, minAbundance);
         IsotopePattern isoPattern = IsotopePatternManipulator.sortByMass(isoP);
-
         return isoPattern;
 
     }
@@ -167,7 +161,7 @@ public class IsotopePatternGenerator {
 
                     if (abundance == 0) continue;
 
-                    newAbundance = totalAbundance * abundance * 0.01f;
+                    newAbundance = totalAbundance * abundance * 0.01;
                     mass += currentISOPattern.getIsotopes().get(j).getMass();
 
                     // Filter duplicated masses
@@ -178,7 +172,7 @@ public class IsotopePatternGenerator {
                     }
 
                     // Filter isotopes too small
-                    if (isNotZero(newAbundance)) {
+                    if (newAbundance > 1E-10) {
                         isotopeMassAndAbundance.put(mass, newAbundance);
                     }
                     previousMass = 0;
@@ -213,21 +207,6 @@ public class IsotopePatternGenerator {
         }
 
         return 0.0d;
-    }
-
-    /**
-     * Detection if the value is zero.
-     *
-     * @param number The number to analyze
-     * @return       TRUE, if it zero
-     */
-    private boolean isNotZero(double number) {
-        double pow = (double) Math.pow(10, 6);
-        int fraction = (int) (number * pow);
-
-        if (fraction <= 0) return false;
-
-        return true;
     }
 
     /**
