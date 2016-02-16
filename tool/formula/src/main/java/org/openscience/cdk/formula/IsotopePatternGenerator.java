@@ -210,21 +210,6 @@ public class IsotopePatternGenerator {
     }
 
     /**
-     * Detection if the value is zero.
-     *
-     * @param number The number to analyze
-     * @return       TRUE, if it zero
-     */
-    private boolean isNotZero(double number) {
-        double pow = (double) Math.pow(10, 6);
-        int fraction = (int) (number * pow);
-
-        if (fraction <= 0) return false;
-
-        return true;
-    }
-
-    /**
      * Normalize the intensity (relative abundance) of all isotopes in relation
      * of the most abundant isotope.
      *
