@@ -502,6 +502,26 @@ public class CircularFingerprinter implements IFingerprinter {
         if (fp.iteration < newFP.iteration || fp.hashCode < newFP.hashCode) return;
         fplist.set(hit, newFP);
     }
+    
+    /**
+     * Determines the structural fragment corresponding to particular FP object
+     * and returns it as SMARTS/SMILES notation.
+     * This function must be called immediately after calculate() function since it uses the
+     * internal state of CircularFingerprint object. 
+     * 
+     * 
+     * @param fp the fingerprint
+     * @return the fragment as smarts/smiles
+     */
+    public String getFPSmarts(FP fp)
+    {
+    	int n = fp.atoms.length;
+    	String atStr[] = new String[n];
+    	String indStr[] = new String[n];
+    	
+    	//TODO
+    	return null;
+    }
 
     // ------------ molecule analysis: cached cheminformatics ------------
 
