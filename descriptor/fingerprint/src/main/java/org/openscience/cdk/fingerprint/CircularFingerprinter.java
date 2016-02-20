@@ -510,21 +510,69 @@ public class CircularFingerprinter implements IFingerprinter {
      * internal state of CircularFingerprint object. 
      * 
      * 
-     * @param fp the fingerprint
+     * @param fp - the fingerprint
+     * @param molecule - the molecule for which the fingerprints were calculated
      * @return the fragment as smarts/smiles
      */
-    public String getFPSmarts(FP fp, IAtomContainer originalMol)
-    {
+    public String getFPSmarts(FP fp, IAtomContainer molecule)
+    {	
+    	if (fp.atoms == null)
+    		return null;
+    	
     	int n = fp.atoms.length;
+    	if (n == 0)
+    		return null;
+    	
+    	if (n==1)	
+    		return getAtomSmarts(molecule, fp.atoms[0]);
+    	
     	String atStr[] = new String[n];
     	String indStr[] = new String[n];
-    	int layer[] = new int [n];
+    	int atLayer[] = new int [n];
     	
     	for (int i = 0; i < n; i++)
-    		layer[i] = -1;
+    		atLayer[i] = -1;
     	
+    	//Scan atom layers
     	//TODO
+    	
     	return null;
+    }
+    
+    private String getAtomSmarts(IAtomContainer mol, int atNum)
+    {	
+    	IAtom at = mol.getAtom(atNum);
+    	Integer chrg = at.getFormalCharge();
+    	String atStr = at.getSymbol();
+    	
+    	if (chrg != null)
+    		if (chrg != 0)
+    		{
+    			atStr = "[" + atStr + getChargeSmartsStr(chrg) + "]";
+    			return atStr;
+    		}	
+    	
+    	if (atStr.equals("C")||atStr.equals("N")||atStr.equals("O")||atStr.equals("S")||atStr.equals("P")
+    			||atStr.equals("B")||atStr.equals("Cl")||atStr.equals("Br")||atStr.equals("I")||atStr.equals("F"))
+    		return atStr;
+    	
+    	return atStr = "[" + atStr + "]";
+    }
+    
+    private String getChargeSmartsStr(int chrg)
+    {
+    	if (chrg == -1)
+    		return "-";    	
+    	if (chrg == +1)
+    		return "+";
+    	
+    	if (chrg > 0)
+    		return "+" + chrg;
+    	else
+    		if (chrg < 0)
+    			return "" + chrg;
+    		else    	
+    			return ""; // case chrg == 0
     }
 
     // ------------ molecule analysis: cached cheminformatics ------------
