@@ -513,11 +513,15 @@ public class CircularFingerprinter implements IFingerprinter {
      * @param fp the fingerprint
      * @return the fragment as smarts/smiles
      */
-    public String getFPSmarts(FP fp)
+    public String getFPSmarts(FP fp, IAtomContainer originalMol)
     {
     	int n = fp.atoms.length;
     	String atStr[] = new String[n];
     	String indStr[] = new String[n];
+    	int layer[] = new int [n];
+    	
+    	for (int i = 0; i < n; i++)
+    		layer[i] = -1;
     	
     	//TODO
     	return null;
@@ -1257,6 +1261,14 @@ public class CircularFingerprinter implements IFingerprinter {
         for (int n = atomAdj[a1].length - 1; n >= 0; n--)
             if (atomAdj[a1][n] == a2) return bondAdj[a1][n];
         return -1;
+    }
+    
+    // convecience: find value within array
+    private int findArrayIndex(int value, int array[]){
+    	for (int i = 0; i < array.length; i++)
+    		if (value == array[i])
+    			return i;
+    	return -1;
     }
 
     /*
