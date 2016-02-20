@@ -545,18 +545,24 @@ public class CircularFingerprinter implements IFingerprinter {
     	Integer chrg = at.getFormalCharge();
     	String atStr = at.getSymbol();
     	
+    	
+    	String chStr = ""; 
     	if (chrg != null)
     		if (chrg != 0)
     		{
-    			atStr = "[" + atStr + getChargeSmartsStr(chrg) + "]";
-    			return atStr;
+    			chStr  = getChargeSmartsStr(chrg);
     		}	
-    	
-    	if (atStr.equals("C")||atStr.equals("N")||atStr.equals("O")||atStr.equals("S")||atStr.equals("P")
+    	/*
+    	if (!FlagBrackets)
+    	{	
+    		if (atStr.equals("C")||atStr.equals("N")||atStr.equals("O")||atStr.equals("S")||atStr.equals("P")
     			||atStr.equals("B")||atStr.equals("Cl")||atStr.equals("Br")||atStr.equals("I")||atStr.equals("F"))
-    		return atStr;
+    			FlagBrackets = true;
+    	}
+    	*/
     	
-    	return atStr = "[" + atStr + "]";
+    	
+    	return atStr = "[" + atStr + chStr + "]";
     }
     
     private String getChargeSmartsStr(int chrg)
