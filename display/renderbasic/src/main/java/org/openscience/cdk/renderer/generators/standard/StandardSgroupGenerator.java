@@ -270,7 +270,7 @@ final class StandardSgroupGenerator {
         // middle of all of those which were hidden
         final Point2d labelCoords = GeometryUtil.get2DCenter(sgroup.getAtoms());
         ElementGroup group = new ElementGroup();
-        for (Shape outline : atomGenerator.generatePseudoSymbol(label, HydrogenPosition.Right)
+        for (Shape outline : atomGenerator.generateAbbreviatedSymbol(label, HydrogenPosition.Right)
                                           .resize(1 / scale, 1 / -scale)
                                           .getOutlines())
             group.add(GeneralPath.shapeOf(outline, foreground));
