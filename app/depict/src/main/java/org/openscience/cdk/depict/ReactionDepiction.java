@@ -538,7 +538,7 @@ final class ReactionDepiction extends Depiction {
         final double headLength    = minHeight;
         switch (direction) {
             case FORWARD:
-                arrow.add(new LineElement(0, 0, minWidth - 0.5 * headLength, 0, minHeight / 14, Color.BLACK));
+                arrow.add(new LineElement(0, 0, minWidth - 0.5 * headLength, 0, minHeight / 14, fgcol));
                 path.moveTo(minWidth, 0);
                 path.lineTo(minWidth - headLength, +headThickness);
                 path.lineTo(minWidth - inset * headLength, 0);
@@ -547,7 +547,7 @@ final class ReactionDepiction extends Depiction {
                 arrow.add(GeneralPath.shapeOf(path, fgcol));
                 break;
             case BACKWARD:
-                arrow.add(new LineElement(0.5 * headLength, 0, minWidth, 0, minHeight / 14, Color.BLACK));
+                arrow.add(new LineElement(0.5 * headLength, 0, minWidth, 0, minHeight / 14, fgcol));
                 path.moveTo(0, 0);
                 path.lineTo(minHeight, +headThickness);
                 path.lineTo(minHeight - (1 - inset) * minHeight, 0);
