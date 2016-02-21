@@ -26,18 +26,20 @@ package org.openscience.cdk.depict;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AtomicNumberAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalConnectionAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtom;
@@ -46,6 +48,7 @@ import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -54,8 +57,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -110,10 +116,13 @@ import static org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAto
  */
 public class Abbreviations implements Iterable<String> {
 
-    private final Map<Pattern, String> connectedAbbreviations    = new LinkedHashMap<>();
+    private static final int MAX_FRAG = 50;
+
+    private final Map<String, String>  connectedAbbreviations     = new LinkedHashMap<>();
     private final Map<String, String>  disconnectedAbbreviations = new LinkedHashMap<>();
     private final Set<String>          labels                    = new LinkedHashSet<>();
     private final Set<String>          disabled                  = new HashSet<>();
+    private final SmilesGenerator      usmigen                   = SmilesGenerator.unique();
 
     private final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
@@ -152,6 +161,142 @@ public class Abbreviations implements Iterable<String> {
                        : labels.contains(label) && disabled.add(label);
     }
 
+    private static Set<IBond> findCutBonds(IAtomContainer mol, EdgeToBondMap bmap, int[][] adjlist) {
+        Set<IBond> cuts = new HashSet<>();
+        int numAtoms = mol.getAtomCount();
+        for (int i = 0; i < numAtoms; i++) {
+            final IAtom atom = mol.getAtom(i);
+            int deg  = adjlist[i].length;
+            int elem = atom.getAtomicNumber();
+
+            if (elem == 6 && deg <= 2 || deg < 2)
+                continue;
+
+            for (int w : adjlist[i]) {
+                IBond bond = bmap.get(i, w);
+                if (adjlist[w].length >= 2 && !bond.isInRing()) {
+                    cuts.add(bond);
+                }
+            }
+        }
+        return cuts;
+    }
+
+    private static final String CUT_BOND = "cutbond";
+
+    private static List<IAtomContainer> makeCut(IBond cut, IAtomContainer mol, Map<IAtom,Integer> idx, int[][] adjlist) {
+
+        IAtom beg = cut.getAtom(0);
+        IAtom end = cut.getAtom(1);
+
+        Set<IAtom>   bvisit = new LinkedHashSet<>();
+        Set<IAtom>   evisit = new LinkedHashSet<>();
+        Deque<IAtom> queue = new ArrayDeque<>();
+
+        bvisit.add(beg);
+        evisit.add(end);
+
+        queue.add(beg);
+        bvisit.add(end); // stop visits
+        while (!queue.isEmpty()) {
+            IAtom atom = queue.poll();
+            bvisit.add(atom);
+            for (int w : adjlist[idx.get(atom)]) {
+                IAtom nbr = mol.getAtom(w);
+                if (!bvisit.contains(nbr))
+                    queue.add(nbr);
+            }
+        }
+        bvisit.remove(end);
+
+        queue.add(end);
+        evisit.add(beg); // stop visits
+        while (!queue.isEmpty()) {
+            IAtom atom = queue.poll();
+            evisit.add(atom);
+            for (int w : adjlist[idx.get(atom)]) {
+                IAtom nbr = mol.getAtom(w);
+                if (!evisit.contains(nbr))
+                    queue.add(nbr);
+            }
+        }
+        evisit.remove(beg);
+
+        IChemObjectBuilder bldr = mol.getBuilder();
+        IAtomContainer bfrag = bldr.newInstance(IAtomContainer.class);
+        IAtomContainer efrag = bldr.newInstance(IAtomContainer.class);
+
+        final int diff = bvisit.size() - evisit.size();
+
+        if (diff < -10)
+            evisit.clear();
+        else if (diff > 10)
+            bvisit.clear();
+
+        if (!bvisit.isEmpty()) {
+            bfrag.addAtom(bldr.newInstance(IPseudoAtom.class));
+            for (IAtom atom : bvisit)
+                bfrag.addAtom(atom);
+            bfrag.addBond(0, 1, cut.getOrder());
+            bfrag.getBond(0).setProperty(CUT_BOND, cut);
+        }
+
+        if (!evisit.isEmpty()) {
+            efrag.addAtom(bldr.newInstance(IPseudoAtom.class));
+            for (IAtom atom : evisit)
+                efrag.addAtom(atom);
+            efrag.addBond(0, 1, cut.getOrder());
+            efrag.getBond(0).setProperty(CUT_BOND, cut);
+        }
+
+        for (IBond bond : mol.bonds()) {
+            IAtom a1 = bond.getAtom(0);
+            IAtom a2 = bond.getAtom(1);
+            if (bvisit.contains(a1) && bvisit.contains(a2))
+                bfrag.addBond(bond);
+            else if (evisit.contains(a1) && evisit.contains(a2))
+                efrag.addBond(bond);
+        }
+
+        List<IAtomContainer> res = new ArrayList<>();
+        if (!bfrag.isEmpty())
+            res.add(bfrag);
+        if (!efrag.isEmpty())
+            res.add(efrag);
+        return res;
+    }
+
+    private static List<IAtomContainer> generateFragments(IAtomContainer mol) {
+
+        final EdgeToBondMap bmap    = EdgeToBondMap.withSpaceFor(mol);
+        final int[][]       adjlist = GraphUtil.toAdjList(mol, bmap);
+
+        Cycles.markRingAtomsAndBonds(mol, adjlist, bmap);
+
+        Set<IBond> cuts = findCutBonds(mol, bmap, adjlist);
+
+        Map<IAtom,Integer> atmidx = new HashMap<>();
+        for (IAtom atom : mol.atoms())
+            atmidx.put(atom, atmidx.size());
+
+        // frags are ordered by biggest to smallest
+        List<IAtomContainer> frags = new ArrayList<>();
+
+        for (IBond cut : cuts) {
+            if (frags.size() >= MAX_FRAG)
+                break;
+            frags.addAll(makeCut(cut, mol, atmidx, adjlist));
+        }
+
+        Collections.sort(frags, new Comparator<IAtomContainer>() {
+            @Override
+            public int compare(IAtomContainer a, IAtomContainer b) {
+                return -Integer.compare(a.getBondCount(), b.getBondCount());
+            }
+        });
+        return frags;
+    }
+
     /**
      * Find all enabled abbreviations in the provided molecule. They are not
      * added to the existing Sgroups and may need filtering.
@@ -173,7 +318,7 @@ public class Abbreviations implements Iterable<String> {
         // disconnected abbreviations, salts, common reagents, large compounds
         if (usedAtoms.isEmpty()) {
             try {
-                String cansmi = SmilesGenerator.unique().create(mol);
+                String cansmi = usmigen.create(AtomContainerManipulator.copyAndSuppressedHydrogens(mol));
                 String label = disconnectedAbbreviations.get(cansmi);
                 if (label != null && !disabled.contains(label)) {
                     Sgroup sgroup = new Sgroup();
@@ -187,69 +332,49 @@ public class Abbreviations implements Iterable<String> {
             }
         }
 
-
-        // attached abbreviations
-        SmartsMatchers.prepare(mol, false);
-
         final List<Sgroup> newSgroups = new ArrayList<>();
-        for (Map.Entry<Pattern, String> e : connectedAbbreviations.entrySet()) {
-            if (disabled.contains(e.getValue()))
-                continue;
-            for (Map<IAtom, IAtom> atoms : e.getKey()
-                                            .matchAll(mol)
-                                            .uniqueAtoms()
-                                            .toAtomMap()) {
+        List<IAtomContainer> fragments = generateFragments(mol);
+
+        for (IAtomContainer frag : fragments) {
+            try {
+                final String smi = usmigen.create(AtomContainerManipulator.copyAndSuppressedHydrogens(frag));
+                final String label = connectedAbbreviations.get(smi);
+
+                if (label == null || disabled.contains(label))
+                    continue;
+
                 boolean overlap = false;
-                final Set<IAtom> atomset = new HashSet<>(atoms.values());
-                for (IAtom atom : atomset) {
-                    if (usedAtoms.contains(atom)) {
+
+                // note: first atom is '*'
+                int numAtoms = frag.getAtomCount();
+                int numBonds = frag.getBondCount();
+                for (int i = 1; i < numAtoms; i++) {
+                    if (usedAtoms.contains(frag.getAtom(i))) {
                         overlap = true;
                         break;
                     }
                 }
 
-                // this hit overlaps with an existing one
+                // overlaps with previous assignment
                 if (overlap)
                     continue;
 
                 // create new abbreviation SGroup
                 Sgroup sgroup = new Sgroup();
                 sgroup.setType(SgroupType.CtabAbbreviation);
-                sgroup.setSubscript(e.getValue());
-                for (IAtom atom : atomset)
+                sgroup.setSubscript(label);
+                sgroup.addBond(frag.getBond(0).getProperty(CUT_BOND, IBond.class));
+                for (int i = 1; i < numAtoms; i++) {
+                    IAtom atom = frag.getAtom(i);
+                    usedAtoms.add(atom);
                     sgroup.addAtom(atom);
-
-                // find crossing bonds
-                boolean skip = false;
-                for (IBond bond : mol.bonds()) {
-                    IAtom beg = bond.getAtom(0);
-                    IAtom end = bond.getAtom(1);
-                    if (atomset.contains(beg) && !atomset.contains(end)) {
-                        if (end.getAtomicNumber() == 1) {
-                            sgroup.addAtom(end);
-                            if (mol.getConnectedBondsCount(end) > 1)
-                                skip = true;
-                        } else {
-                            sgroup.addBond(bond);
-                        }
-                    } else if (!atomset.contains(beg) && atomset.contains(end)) {
-                        if (end.getAtomicNumber() == 1) {
-                            sgroup.addAtom(end);
-                            if (mol.getConnectedBondsCount(end) > 1)
-                                skip = true;
-                        } else {
-                            sgroup.addBond(bond);
-                        }
-                    }
                 }
 
-                if (!skip || !sgroup.getBonds().isEmpty()) {
-                    usedAtoms.addAll(sgroup.getAtoms());
-                    newSgroups.add(sgroup);
-                }
+                newSgroups.add(sgroup);
+            } catch (CDKException e) {
+                // ignore
             }
         }
-
         return newSgroups;
     }
 
@@ -369,10 +494,14 @@ public class Abbreviations implements Iterable<String> {
     }
 
     private boolean addConnectedAbbreviation(IAtomContainer mol, String label) {
-        connectedAbbreviations.put(Pattern.findSubstructure(matchExact(mol)),
-                                   label);
-        labels.add(label);
-        return true;
+        try {
+            connectedAbbreviations.put(usmigen.create(mol),
+                                       label);
+            labels.add(label);
+            return true;
+        } catch (CDKException e) {
+            return false;
+        }
     }
 
     /**

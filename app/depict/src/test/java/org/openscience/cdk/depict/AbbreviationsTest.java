@@ -106,6 +106,7 @@ public class AbbreviationsTest {
         IAtomContainer mol = smi("CCCCc1ccc([H])cc1");
         factory.add("*c1ccccc1 Ph");
         List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("Ph"));
         assertThat(sgroups.get(0).getAtoms().size(), is(7));
         assertThat(sgroups.get(0).getBonds().size(), is(1));
