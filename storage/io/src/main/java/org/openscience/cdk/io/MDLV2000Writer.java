@@ -475,7 +475,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         }
                     }
                 }
-                
+
                 line += String.format(" 0  0  %d  0  0", parity);
             }
 
@@ -584,11 +584,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 if (bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED
                     || bond.getStereo() == IBond.Stereo.UP_OR_DOWN_INVERTED) {
                     // turn around atom coding to correct for inv stereo
-                    line = formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1, 3);
-                    line += formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1, 3);
+                    line = formatMDLInt(atomindex.get(bond.getAtom(1)) + 1, 3);
+                    line += formatMDLInt(atomindex.get(bond.getAtom(0)) + 1, 3);
                 } else {
-                    line = formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1, 3);
-                    line += formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1, 3);
+                    line = formatMDLInt(atomindex.get(bond.getAtom(0)) + 1, 3);
+                    line += formatMDLInt(atomindex.get(bond.getAtom(1)) + 1, 3);
                 }
                 int bondType;
                 if (writeAromaticBondTypes.isSet() && bond.getFlag(CDKConstants.ISAROMATIC))
@@ -757,7 +757,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             }
         }
 
-        writeSgroups(container, writer);
+        writeSgroups(container, writer, atomindex);
 
         // close molecule
         writer.write("M  END");
@@ -765,7 +765,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.flush();
     }
 
-    private void writeSgroups(IAtomContainer container, BufferedWriter writer) throws IOException {
+    private void writeSgroups(IAtomContainer container, BufferedWriter writer, Map<IAtom,Integer> atomidxs) throws IOException {
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null)
             return;
@@ -804,7 +804,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.write(formatMDLInt(atoms.size(), 3));
                 for (IAtom atom : atoms) {
                     writer.write(' ');
-                    writer.write(formatMDLInt(1+container.getAtomNumber(atom), 3));
+                    writer.write(formatMDLInt(1+atomidxs.get(atom), 3));
                 }
                 writer.newLine();
             }
@@ -903,7 +903,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             writer.write(formatMDLInt(atoms.size(), 3));
                             for (IAtom atom : atoms) {
                                 writer.write(' ');
-                                writer.write(formatMDLInt(1+container.getAtomNumber(atom), 3));
+                                writer.write(formatMDLInt(1+atomidxs.get(atom), 3));
                             }
                             writer.newLine();
                         }
