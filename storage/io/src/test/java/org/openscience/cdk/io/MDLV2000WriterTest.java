@@ -54,6 +54,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -764,6 +765,42 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             assertThat(output, containsString("M  STY  3   1 COM   2 COM   3 FOR"));
             assertThat(output, containsString("M  SNC  1   1   1"));
             assertThat(output, containsString("M  SNC  1   2   2"));
+        }
+    }
+
+    @Test
+    public void roundtripAtomParityExpH() throws Exception {
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withExpH.mol"));
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mdlr.read(new AtomContainer()));
+            String output = sw.toString();
+            assertThat(output, containsString("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"));
+        }
+    }
+
+    @Test
+    public void roundtripAtomParityImplH() throws Exception {
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withImplH.mol"));
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mdlr.read(new AtomContainer()));
+            String output = sw.toString();
+            assertThat(output, containsString("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"));
+        }
+    }
+
+    @Test
+    public void roundtripAtomParityImplModified() throws Exception {
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withImplH.mol"));
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            AtomContainer mol = mdlr.read(new AtomContainer());
+            ITetrahedralChirality tc = (ITetrahedralChirality) mol.stereoElements().iterator().next();
+            tc.setStereo(tc.getStereo().invert());
+            mdlw.write(mol);
+            String output = sw.toString();
+            assertThat(output, containsString("    0.0000    0.0000    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n"));
         }
     }
 }

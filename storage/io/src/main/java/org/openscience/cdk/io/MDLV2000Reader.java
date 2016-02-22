@@ -41,6 +41,9 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -52,6 +55,7 @@ import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.stereo.StereoElementFactory;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -66,6 +70,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -307,6 +312,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     private IAtomContainer readAtomContainer(IAtomContainer molecule) throws CDKException {
 
         IAtomContainer outputContainer = null;
+        Map<IAtom,Integer> parities = new HashMap<>();
+
         int linecount = 0;
         String title = null;
         String remark = null;
@@ -381,7 +388,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 line = input.readLine();
                 linecount++;
 
-                final IAtom atom = readAtomFast(line, molecule.getBuilder(), linecount);
+                final IAtom atom = readAtomFast(line, molecule.getBuilder(), parities, linecount);
 
                 atoms[i] = atom;
 
@@ -441,6 +448,42 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     outputContainer.addAtom(atom);
                 for (IBond bond : bonds)
                     outputContainer.addBond(bond);
+            }
+
+            // create 0D stereochemistry
+            Parities:
+            for (Map.Entry<IAtom,Integer> e : parities.entrySet()) {
+                int parity = e.getValue();
+                if (parity != 1 && parity != 2)
+                    continue; // 3=unspec
+                int idx = 0;
+                IAtom   focus    = e.getKey();
+                IAtom[] carriers = new IAtom[4];
+                int hidx = -1;
+                for (IAtom nbr : molecule.getConnectedAtomsList(focus)) {
+                    if (idx == 4)
+                        continue Parities; // too many neighbors
+                    if (nbr.getAtomicNumber() == 1) {
+                        if (hidx >= 0)
+                            continue Parities;
+                        hidx = idx;
+                    }
+                    carriers[idx++] = nbr;
+                }
+                // to few neighbors, or already have a hydrogen defined
+                if (idx < 3 || idx < 4 && hidx >= 0)
+                    continue;
+                if (idx == 3)
+                    carriers[idx++] = focus;
+
+                if (idx == 4) {
+                    Stereo winding = parity == 1 ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE;
+                    // H is always at back, even if explicit! At least this seems to be the case.
+                    // we adjust the winding as needed
+                    if (hidx == 0 || hidx == 2)
+                        winding = winding.invert();
+                    molecule.addStereoElement(new TetrahedralChirality(focus, carriers, winding));
+                }
             }
 
             // read PROPERTY block
@@ -578,6 +621,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         return sb.toString();
     }
 
+    IAtom readAtomFast(String line, IChemObjectBuilder builder, int lineNum) throws CDKException, IOException {
+        return readAtomFast(line, builder, Collections.<IAtom,Integer>emptyMap(), lineNum);
+    }
+
     /**
      * Parse an atom line from the atom block using the format: {@code
      * xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee}
@@ -594,10 +641,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      *
      * @param line    input line
      * @param builder chem object builder to create the atom
+     * @param parities map of atom parities for creation 0D stereochemistry
      * @param lineNum the line number - for printing error messages
      * @return a new atom instance
      */
-    IAtom readAtomFast(String line, IChemObjectBuilder builder, int lineNum) throws CDKException, IOException {
+    IAtom readAtomFast(String line, IChemObjectBuilder builder, Map<IAtom,Integer> parities, int lineNum) throws CDKException, IOException {
 
         // The line may be truncated and it's checked in reverse at the specified
         // lengths:
@@ -652,6 +700,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         atom.setPoint3d(new Point3d(x, y, z));
         atom.setFormalCharge(charge);
         atom.setStereoParity(parity);
+        if (parity != 0)
+            parities.put(atom, parity);
 
         // if there was a mass difference, set the mass number
         if (massDiff != 0 && atom.getAtomicNumber() > 0)

@@ -35,6 +35,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -57,6 +58,8 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -361,6 +364,15 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write(line);
         writer.newLine();
 
+        // index stereo elements for setting atom parity values
+        Map<IAtom,ITetrahedralChirality> atomstereo = new HashMap<>();
+        Map<IAtom,Integer> atomindex = new HashMap<>();
+        for (IStereoElement element : container.stereoElements())
+                if (element instanceof ITetrahedralChirality)
+                    atomstereo.put(((ITetrahedralChirality) element).getChiralAtom(), (ITetrahedralChirality) element);
+        for (IAtom atom : container.atoms())
+            atomindex.put(atom, atomindex.size());
+
         // write Atom block
         for (int f = 0; f < container.getAtomCount(); f++) {
             IAtom atom = container.getAtom(f);
@@ -430,7 +442,42 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             } else {
                 line += formatMDLString(container.getAtom(f).getSymbol(), 3);
             }
-            line += String.format(" 0  0  %d  0  0", atom.getStereoParity() == null ? 0 : atom.getStereoParity());
+
+            final ITetrahedralChirality tc = atomstereo.get(atom);
+            if (tc == null) {
+                line += " 0  0  0  0  0";
+            } else {
+                int parity = tc.getStereo() == ITetrahedralChirality.Stereo.CLOCKWISE ? 1 : 2;
+                int swaps  = 0;
+                IAtom   focus    = tc.getChiralAtom();
+                IAtom[] carriers = tc.getLigands();
+
+                int hidx = -1;
+                for (int i = 0; i < 4; i++) {
+                    // hydrogen position
+                    if (carriers[i] == focus || carriers[i].getAtomicNumber() == 1) {
+                        if (hidx >= 0) parity = 0;
+                        hidx = i;
+                    }
+                }
+
+                if (parity != 0) {
+                    for (int i = 0; i < 4; i++) {
+                        for (int j = i + 1; j < 4; j++) {
+                            int a = atomindex.get(carriers[i]);
+                            int b = atomindex.get(carriers[j]);
+                            if (a == hidx)
+                                a = container.getAtomCount();
+                            if (b == hidx)
+                                b = container.getAtomCount();
+                            if (a > b)
+                                parity ^= 0x3;
+                        }
+                    }
+                }
+
+                line += String.format(" 0  0  %d  0  0", parity);
+            }
 
             // write valence - this is a bit of pain as the CDK has both
             // valence and implied hydrogen counts making life a lot more
@@ -537,11 +584,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 if (bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED
                     || bond.getStereo() == IBond.Stereo.UP_OR_DOWN_INVERTED) {
                     // turn around atom coding to correct for inv stereo
-                    line = formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1, 3);
-                    line += formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1, 3);
+                    line = formatMDLInt(atomindex.get(bond.getAtom(1)) + 1, 3);
+                    line += formatMDLInt(atomindex.get(bond.getAtom(0)) + 1, 3);
                 } else {
-                    line = formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1, 3);
-                    line += formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1, 3);
+                    line = formatMDLInt(atomindex.get(bond.getAtom(0)) + 1, 3);
+                    line += formatMDLInt(atomindex.get(bond.getAtom(1)) + 1, 3);
                 }
                 int bondType;
                 if (writeAromaticBondTypes.isSet() && bond.getFlag(CDKConstants.ISAROMATIC))
@@ -710,7 +757,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             }
         }
 
-        writeSgroups(container, writer);
+        writeSgroups(container, writer, atomindex);
 
         // close molecule
         writer.write("M  END");
@@ -718,7 +765,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.flush();
     }
 
-    private void writeSgroups(IAtomContainer container, BufferedWriter writer) throws IOException {
+    private void writeSgroups(IAtomContainer container, BufferedWriter writer, Map<IAtom,Integer> atomidxs) throws IOException {
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null)
             return;
@@ -757,7 +804,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.write(formatMDLInt(atoms.size(), 3));
                 for (IAtom atom : atoms) {
                     writer.write(' ');
-                    writer.write(formatMDLInt(1+container.getAtomNumber(atom), 3));
+                    writer.write(formatMDLInt(1+atomidxs.get(atom), 3));
                 }
                 writer.newLine();
             }
@@ -856,7 +903,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             writer.write(formatMDLInt(atoms.size(), 3));
                             for (IAtom atom : atoms) {
                                 writer.write(' ');
-                                writer.write(formatMDLInt(1+container.getAtomNumber(atom), 3));
+                                writer.write(formatMDLInt(1+atomidxs.get(atom), 3));
                             }
                             writer.newLine();
                         }
