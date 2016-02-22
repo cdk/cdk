@@ -99,7 +99,9 @@ public interface IAtom extends IAtomType {
      * @param  stereoParity  The stereo parity for this atom
      * @see    org.openscience.cdk.CDKConstants for predefined values.
      * @see    #getStereoParity
+     * @deprecated use {@link IStereoElement}s for storing stereochemistry
      */
+    @Deprecated
     public void setStereoParity(Integer stereoParity);
 
     /**
@@ -137,7 +139,9 @@ public interface IAtom extends IAtomType {
      * @return    The stereo parity for this atom
      * @see       org.openscience.cdk.CDKConstants
      * @see       #setStereoParity
+     * @deprecated use {@link IStereoElement}s for storing stereochemistry
      */
+    @Deprecated
     public Integer getStereoParity();
 
     /**

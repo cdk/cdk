@@ -65,6 +65,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
@@ -1659,6 +1661,35 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             sgroup = sgroups.get(1);
             assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
             assertThat((Integer) sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
+        }
+    }
+
+    @Test public void testReading0DStereochemistry() throws Exception {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withImplH.mol"))) {
+            IAtomContainer container = mdlr.read(new AtomContainer());
+            Iterable<IStereoElement> selements = container.stereoElements();
+            Iterator<IStereoElement> siter = selements.iterator();
+            assertTrue(siter.hasNext());
+            IStereoElement se = siter.next();
+            assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
+            assertThat(((ITetrahedralChirality) se).getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
+            assertThat(((ITetrahedralChirality) se).getLigands(), is(new IAtom[]{container.getAtom(1), container.getAtom(3), container.getAtom(4), container.getAtom(0)}));
+            assertFalse(siter.hasNext());
+        }
+    }
+
+    // explicit Hydrogen can reverse winding
+    @Test public void testReading0DStereochemistryWithHydrogen() throws Exception {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withExpH.mol"))) {
+            IAtomContainer container = mdlr.read(new AtomContainer());
+            Iterable<IStereoElement> selements = container.stereoElements();
+            Iterator<IStereoElement> siter = selements.iterator();
+            assertTrue(siter.hasNext());
+            IStereoElement se = siter.next();
+            assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
+            assertThat(((ITetrahedralChirality) se).getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+            assertThat(((ITetrahedralChirality) se).getLigands(), is(new IAtom[]{container.getAtom(0), container.getAtom(2), container.getAtom(3), container.getAtom(4)}));
+            assertFalse(siter.hasNext());
         }
     }
 }
