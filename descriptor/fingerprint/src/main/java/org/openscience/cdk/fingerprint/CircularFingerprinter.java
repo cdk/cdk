@@ -30,6 +30,7 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -42,6 +43,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+
+
 
 /**
  *  <p>Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6
@@ -113,6 +116,7 @@ public class CircularFingerprinter implements IFingerprinter {
             this.atoms = atoms;
         }
     }
+    
 
     // ------------ private members ------------
 
@@ -504,6 +508,19 @@ public class CircularFingerprinter implements IFingerprinter {
         fplist.set(hit, newFP);
     }
     
+    
+    HashMap<Integer, AtomNode> nodes = new HashMap<Integer, AtomNode>();
+	HashMap<Integer, String> atomIndexes = new HashMap<Integer, String>();
+	List<Integer> ringClosures = new ArrayList<Integer>();
+    int curIndex;
+	
+    public class AtomNode 
+    {
+    	public int parent;
+    	public int atom;
+    	public int indexes[] = new int[3];
+    }
+    
     /**
      * Determines the structural fragment corresponding to particular FP object
      * and returns it as SMARTS/SMILES notation.
@@ -524,9 +541,11 @@ public class CircularFingerprinter implements IFingerprinter {
     	if (n == 0)
     		return null;
     	
+    	//This is temporary code
     	if (n==1)	
     		return getAtomSmarts(molecule, fp.atoms[0]);
     	
+    	/*
     	String atStr[] = new String[n];
     	String indexStr[] = new String[n];
     	int addBonds[][] = new int [n][];
@@ -538,13 +557,33 @@ public class CircularFingerprinter implements IFingerprinter {
     		indexStr[i] = "";
     		addBonds [i] = null; 
     	}
+    	*/
     	
-    	//Handle first atoms
+    	List<Integer> traversedAtoms = new ArrayList<Integer>();    	
+    	nodes.clear();
+		atomIndexes.clear();
+		ringClosures.clear();
+		curIndex = 1;
     	
-    	
-    	//Scan atom layers of the first atom
+    	//Set initial node
+		AtomNode node = new AtomNode();
+		node.parent = -1;
+		node.atom = fp.atoms[0];
+		traversedAtoms.add(node.atom);
+		nodes.put(node.atom, node);
+		    	
+		return nodeToString(fp.atoms[0]);
+    }
+    
+    
+    /**
+     * Recursive approach
+     * @param atomNum
+     * @return
+     */
+    String nodeToString(int atomNum) 
+    {
     	//TODO
-    	
     	return null;
     }
     
