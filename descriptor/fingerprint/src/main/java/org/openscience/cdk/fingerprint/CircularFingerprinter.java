@@ -508,10 +508,13 @@ public class CircularFingerprinter implements IFingerprinter {
         fplist.set(hit, newFP);
     }
     
-    
+    //Helper variables for getFPSmarts() function
     HashMap<Integer, AtomNode> nodes = new HashMap<Integer, AtomNode>();
 	HashMap<Integer, String> atomIndexes = new HashMap<Integer, String>();
+	List<Integer> traversedAtoms = new ArrayList<Integer>();    
 	List<Integer> ringClosures = new ArrayList<Integer>();
+	FP curFP = null;
+	IAtomContainer curFPMolecule = null;
     int curIndex;
 	
     public class AtomNode 
@@ -519,6 +522,7 @@ public class CircularFingerprinter implements IFingerprinter {
     	public int parent;
     	public int atom;
     	public int indexes[] = new int[3];
+    	public List<Integer> externalBonds = new ArrayList<Integer>();
     }
     
     /**
@@ -545,6 +549,9 @@ public class CircularFingerprinter implements IFingerprinter {
     	if (n==1)	
     		return getAtomSmarts(molecule, fp.atoms[0]);
     	
+    	curFP = fp;
+    	curFPMolecule = molecule;
+    	
     	/*
     	String atStr[] = new String[n];
     	String indexStr[] = new String[n];
@@ -559,8 +566,9 @@ public class CircularFingerprinter implements IFingerprinter {
     	}
     	*/
     	
-    	List<Integer> traversedAtoms = new ArrayList<Integer>();    	
+    		
     	nodes.clear();
+    	traversedAtoms.clear();
 		atomIndexes.clear();
 		ringClosures.clear();
 		curIndex = 1;
@@ -581,10 +589,72 @@ public class CircularFingerprinter implements IFingerprinter {
      * @param atomNum
      * @return
      */
-    String nodeToString(int atomNum) 
+    String nodeToString(int atom) 
     {
+    	StringBuffer sb = new StringBuffer();
+    	AtomNode curNode = nodes.get(atom);
+    	List<String> branches = new ArrayList<String>();
+    	
+    	for (int i = 0; i < atomAdj[atom].length; i++)
+    	{
+    		int neighborAt = atomAdj[atom][i];
+    		if (neighborAt == curNode.parent)
+				continue;
+    		
+    		int neighborBo = bondAdj[atom][i];
+    		
+    		AtomNode neighborNode = nodes.get(neighborAt);
+    		if (neighborNode == null) // This node has not been registered yet
+			{
+				//Check for external atom (e.g. atom which is not in the fp.atoms[]
+    			//TODO - if so add it as a branch -* or =* ...
+    			
+    			// Registering a new Node and a new branch
+    			AtomNode newNode = new AtomNode();
+    			newNode.atom = neighborAt;
+				newNode.parent = atom;
+				traversedAtoms.add(newNode.atom);
+				nodes.put(newNode.atom, newNode);
+				
+				String bond_str = bondToString(bondOrder[neighborBo]);
+				String newBranch = bond_str + nodeToString(neighborAt);
+				branches.add(newBranch);
+			}
+    		else
+    		{
+    			// Handle ring closure: adding indexes to both atoms
+    			//TODO
+    		}
+    	}
+    	
+    	// Add atom from the current node
     	//TODO
-    	return null;
+    	
+    	// Add atom from the current node
+    	//TODO
+    	
+    	// Add branches
+    	if (branches.size() == 0)
+			return (sb.toString());
+
+		for (int i = 0; i < branches.size() - 1; i++)
+			sb.append("(" + branches.get(i).toString() + ")");
+		sb.append(branches.get(branches.size() - 1).toString());
+    	
+    	return sb.toString();
+    }
+    
+    private String bondToString(int boOrder)
+    {
+    	switch (boOrder)
+    	{
+    	case 2:
+    		return "=";
+    	case 3:
+    		return "#";
+    	default:
+    		return ""; 
+    	}
     }
     
     private String getAtomSmarts(IAtomContainer mol, int atNum)
