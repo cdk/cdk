@@ -30,6 +30,7 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.zip.CRC32;
@@ -527,13 +528,21 @@ public class CircularFingerprinter implements IFingerprinter {
     		return getAtomSmarts(molecule, fp.atoms[0]);
     	
     	String atStr[] = new String[n];
-    	String indStr[] = new String[n];
+    	String indexStr[] = new String[n];
+    	int addBonds[][] = new int [n][];
     	int atLayer[] = new int [n];
     	
     	for (int i = 0; i < n; i++)
+    	{	
     		atLayer[i] = -1;
+    		indexStr[i] = "";
+    		addBonds [i] = null; 
+    	}
     	
-    	//Scan atom layers
+    	//Handle first atoms
+    	
+    	
+    	//Scan atom layers of the first atom
     	//TODO
     	
     	return null;
@@ -545,24 +554,35 @@ public class CircularFingerprinter implements IFingerprinter {
     	Integer chrg = at.getFormalCharge();
     	String atStr = at.getSymbol();
     	
+    	boolean FlagBrackets = false;
     	
     	String chStr = ""; 
     	if (chrg != null)
     		if (chrg != 0)
     		{
     			chStr  = getChargeSmartsStr(chrg);
+    			FlagBrackets = true;
     		}	
-    	/*
+    	
     	if (!FlagBrackets)
     	{	
     		if (atStr.equals("C")||atStr.equals("N")||atStr.equals("O")||atStr.equals("S")||atStr.equals("P")
     			||atStr.equals("B")||atStr.equals("Cl")||atStr.equals("Br")||atStr.equals("I")||atStr.equals("F"))
+    		{
+    			//do nothing
+    		}	
+    		else
     			FlagBrackets = true;
     	}
-    	*/
     	
+    	//Handle aromaticity
+    	if (atomArom[atNum])
+    		atStr = atStr.toLowerCase();
     	
-    	return atStr = "[" + atStr + chStr + "]";
+    	if (FlagBrackets)
+    		atStr = "[" + atStr + chStr + "]";
+    	
+    	return atStr;
     }
     
     private String getChargeSmartsStr(int chrg)
