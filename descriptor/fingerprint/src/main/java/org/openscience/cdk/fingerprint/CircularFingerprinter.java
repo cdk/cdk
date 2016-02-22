@@ -546,26 +546,19 @@ public class CircularFingerprinter implements IFingerprinter {
     		return null;
     	
     	//This is temporary code
-    	if (n==1)	
-    		return getAtomSmarts(molecule, fp.atoms[0]);
+    	if (n==1)
+    	{	
+    		StringBuffer sb = new StringBuffer();
+    		sb.append(getAtomSmarts(molecule, fp.atoms[0]));
+    		
+    		//Handle "external" neighbors if needed
+    		//TODO
+    		
+    		return sb.toString();
+    	}	
     	
     	curFP = fp;
     	curFPMolecule = molecule;
-    	
-    	/*
-    	String atStr[] = new String[n];
-    	String indexStr[] = new String[n];
-    	int addBonds[][] = new int [n][];
-    	int atLayer[] = new int [n];
-    	
-    	for (int i = 0; i < n; i++)
-    	{	
-    		atLayer[i] = -1;
-    		indexStr[i] = "";
-    		addBonds [i] = null; 
-    	}
-    	*/
-    	
     		
     	nodes.clear();
     	traversedAtoms.clear();
@@ -598,16 +591,21 @@ public class CircularFingerprinter implements IFingerprinter {
     	for (int i = 0; i < atomAdj[atom].length; i++)
     	{
     		int neighborAt = atomAdj[atom][i];
+    		
     		if (neighborAt == curNode.parent)
-				continue;
+				continue; //This is the parent atom (it is already traversed)
     		
     		int neighborBo = bondAdj[atom][i];
     		
     		AtomNode neighborNode = nodes.get(neighborAt);
     		if (neighborNode == null) // This node has not been registered yet
 			{
-				//Check for external atom (e.g. atom which is not in the fp.atoms[]
-    			//TODO - if so add it as a branch -* or =* ...
+				//Check for external atom (e.g. it is a neighbor atom which is not in the fp.atoms[] array)
+    			if (findArrayIndex(neighborAt, curFP.atoms) != -1)
+    			{	
+    				branches.add(bondToString1(bondOrder[neighborBo]) + "*");
+    				continue;
+    			}
     			
     			// Registering a new Node and a new branch
     			AtomNode newNode = new AtomNode();
@@ -616,9 +614,8 @@ public class CircularFingerprinter implements IFingerprinter {
 				traversedAtoms.add(newNode.atom);
 				nodes.put(newNode.atom, newNode);
 				
-				String bond_str = bondToString(bondOrder[neighborBo]);
-				String newBranch = bond_str + nodeToString(neighborAt);
-				branches.add(newBranch);
+				//recursion 
+				branches.add(bondToString1(bondOrder[neighborBo]) + nodeToString(neighborAt));
 			}
     		else
     		{
@@ -628,9 +625,9 @@ public class CircularFingerprinter implements IFingerprinter {
     	}
     	
     	// Add atom from the current node
-    	//TODO
+    	sb.append(getAtomSmarts(curFPMolecule, atom));
     	
-    	// Add atom from the current node
+    	// Add indexes
     	//TODO
     	
     	// Add branches
@@ -644,10 +641,12 @@ public class CircularFingerprinter implements IFingerprinter {
     	return sb.toString();
     }
     
-    private String bondToString(int boOrder)
+    
+    private String bondToString1(int boOrder)
     {
     	switch (boOrder)
     	{
+    	//'-' is codes as default 
     	case 2:
     		return "=";
     	case 3:
