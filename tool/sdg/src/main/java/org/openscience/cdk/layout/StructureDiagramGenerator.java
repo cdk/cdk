@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.AtomMatcher;
@@ -527,7 +528,57 @@ public class StructureDiagramGenerator {
 
         // choose the orientation in which to display the structure
         if (selectOrientation) {
-            selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
+
+            // check for attachment points, these override the direction which we rorate structures
+            IAtom begAttach = null;
+            for (IAtom atom : molecule.atoms()) {
+                if (atom instanceof IPseudoAtom && ((IPseudoAtom) atom).getAttachPointNum() == 1) {
+                    begAttach = atom;
+                    break;
+                }
+            }
+
+            // no attachment point, rorate to maximise horizontal spread etc.
+            if (begAttach == null) {
+                selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
+            }
+            // use attachment point bond to rotate
+            else {
+                final List<IBond> attachBonds = molecule.getConnectedBondsList(begAttach);
+                if (attachBonds.size() == 1) {
+                    IAtom end = attachBonds.get(0).getConnectedAtom(begAttach);
+                    Point2d xyBeg = begAttach.getPoint2d();
+                    Point2d xyEnd = end.getPoint2d();
+
+                    // snap to horizontal '*-(end)-{rest of molecule}'
+                    GeometryUtil.rotate(molecule,
+                                        GeometryUtil.get2DCenter(molecule),
+                                        -Math.atan2(xyEnd.y - xyBeg.y, xyEnd.x - xyBeg.x));
+
+                    // put the larger part of the structure is above the bond so fragments are drawn
+                    // semi-consistently
+                    double ylo = 0;
+                    double yhi = 0;
+                    for (IAtom atom : molecule.atoms()) {
+                        double yDelta = xyBeg.y - atom.getPoint2d().y;
+                        if (yDelta > 0 && yDelta > yhi) {
+                            yhi = yDelta;
+                        } else if (yDelta < 0 && yDelta < ylo) {
+                            ylo = yDelta;
+                        }
+                    }
+
+                    // mirror points if larger part is below
+                    if (Math.abs(ylo) < yhi)
+                        for (IAtom atom : molecule.atoms())
+                            atom.getPoint2d().y = -atom.getPoint2d().y;
+
+                    // rotate pointing downwards 30-degrees
+                    GeometryUtil.rotate(molecule,
+                                        GeometryUtil.get2DCenter(molecule),
+                                        -Math.toRadians(30));
+                }
+            }
         }
     }
 
