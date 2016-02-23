@@ -545,6 +545,7 @@ public class CircularFingerprinter implements IFingerprinter {
     	if (n == 0)
     		return null;
     	
+    	/*
     	//This is temporary code
     	if (n==1)
     	{	
@@ -555,7 +556,8 @@ public class CircularFingerprinter implements IFingerprinter {
     		//TODO
     		
     		return sb.toString();
-    	}	
+    	}
+    	*/	
     	
     	curFP = fp;
     	curFPMolecule = molecule;
@@ -601,7 +603,7 @@ public class CircularFingerprinter implements IFingerprinter {
     		if (neighborNode == null) // This node has not been registered yet
 			{
 				//Check for external atom (e.g. it is a neighbor atom which is not in the fp.atoms[] array)
-    			if (findArrayIndex(neighborAt, curFP.atoms) != -1)
+    			if (findArrayIndex(neighborAt, curFP.atoms) == -1)
     			{	
     				branches.add(bondToString1(bondOrder[neighborBo]) + "*");
     				continue;
