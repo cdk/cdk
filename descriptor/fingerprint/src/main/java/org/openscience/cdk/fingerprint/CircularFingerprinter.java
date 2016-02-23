@@ -591,7 +591,18 @@ public class CircularFingerprinter implements IFingerprinter {
 				//Check for external atom (e.g. it is a neighbor atom which is not in the fp.atoms[] array)
     			if (findArrayIndex(neighborAt, curFP.atoms) == -1)
     			{	
-    				branches.add(bondToString1(bondOrder[neighborBo]) + "*");
+    				String bond_str = "";
+    				if (bondArom[neighborBo])
+    				{
+    					//aromatic bond is represented as ""
+    					branches.add(":a");
+    				}
+    				else
+    				{	
+    					bond_str = bondToString1(bondOrder[neighborBo]);
+    					branches.add(bond_str + "*");
+    				}
+    				
     				continue;
     			}
     			
@@ -602,8 +613,12 @@ public class CircularFingerprinter implements IFingerprinter {
 				traversedAtoms.add(newNode.atom);
 				nodes.put(newNode.atom, newNode);
 				
+				String bond_str = "";
+				if (!bondArom[neighborBo]) //aromatic bond is represented as ""
+					bond_str = bondToString1(bondOrder[neighborBo]);
+				
 				//recursion 
-				branches.add(bondToString1(bondOrder[neighborBo]) + nodeToString(neighborAt));
+				branches.add(bond_str + nodeToString(neighborAt));
 			}
     		else
     		{
@@ -612,7 +627,10 @@ public class CircularFingerprinter implements IFingerprinter {
 				if (!ringClosures.contains(neighborBo)) {
 					ringClosures.add(neighborBo);
 					String ind = ((curIndex > 9) ? "%" : "") + curIndex;
-					addIndexToAtom(bondToString1(bondOrder[neighborBo]) + ind, atom);
+					String bond_str = "";
+					if (!bondArom[neighborBo]) //aromatic bond is represented as ""
+						bond_str = bondToString1(bondOrder[neighborBo]);
+					addIndexToAtom(bond_str + ind, atom);
 					addIndexToAtom(ind, neighborAt);
 					curIndex++;
 				}
@@ -653,7 +671,7 @@ public class CircularFingerprinter implements IFingerprinter {
     {
     	switch (boOrder)
     	{
-    	//'-' is codes as default 
+    	//'-' is coded as default "" 
     	case 2:
     		return "=";
     	case 3:
