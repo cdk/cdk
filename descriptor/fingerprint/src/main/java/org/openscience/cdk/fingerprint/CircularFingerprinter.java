@@ -545,20 +545,6 @@ public class CircularFingerprinter implements IFingerprinter {
     	if (n == 0)
     		return null;
     	
-    	/*
-    	//This is temporary code
-    	if (n==1)
-    	{	
-    		StringBuffer sb = new StringBuffer();
-    		sb.append(getAtomSmarts(molecule, fp.atoms[0]));
-    		
-    		//Handle "external" neighbors if needed
-    		//TODO
-    		
-    		return sb.toString();
-    	}
-    	*/	
-    	
     	curFP = fp;
     	curFPMolecule = molecule;
     		
@@ -575,7 +561,7 @@ public class CircularFingerprinter implements IFingerprinter {
 		traversedAtoms.add(node.atom);
 		nodes.put(node.atom, node);
 		    	
-		return nodeToString(fp.atoms[0]);
+		return nodeToString(fp.atoms[0]);  //traverse recursively all atoms 
     }
     
     
@@ -621,8 +607,15 @@ public class CircularFingerprinter implements IFingerprinter {
 			}
     		else
     		{
-    			// Handle ring closure: adding indexes to both atoms
-    			//TODO
+    			// Handle ring closure: adding indexes to both atoms    			
+				
+				if (!ringClosures.contains(neighborBo)) {
+					ringClosures.add(neighborBo);
+					String ind = ((curIndex > 9) ? "%" : "") + curIndex;
+					addIndexToAtom(bondToString1(bondOrder[neighborBo]) + ind, atom);
+					addIndexToAtom(ind, neighborAt);
+					curIndex++;
+				}
     		}
     	}
     	
@@ -630,7 +623,8 @@ public class CircularFingerprinter implements IFingerprinter {
     	sb.append(getAtomSmarts(curFPMolecule, atom));
     	
     	// Add indexes
-    	//TODO
+    	if (atomIndexes.containsKey(atom))
+			sb.append(atomIndexes.get(atom));
     	
     	// Add branches
     	if (branches.size() == 0)
@@ -642,6 +636,17 @@ public class CircularFingerprinter implements IFingerprinter {
     	
     	return sb.toString();
     }
+    
+    void addIndexToAtom(String ind, int atom) 
+    {	
+		if (atomIndexes.containsKey(atom)) {
+			String old_ind = atomIndexes.get(atom);
+			atomIndexes.remove(atom);
+			atomIndexes.put(atom, old_ind + ind);
+		} 
+		else
+			atomIndexes.put(atom, ind);
+	}
     
     
     private String bondToString1(int boOrder)
