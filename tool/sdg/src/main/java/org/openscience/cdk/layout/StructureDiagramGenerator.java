@@ -315,7 +315,7 @@ public class StructureDiagramGenerator {
      * @throws CDKException if an error occurs
      */
     public void generateCoordinates(Vector2d firstBondVector) throws CDKException {
-        generateCoordinates(firstBondVector, false);
+        generateCoordinates(firstBondVector, false, false);
     }
 
     /**
@@ -325,9 +325,10 @@ public class StructureDiagramGenerator {
      *
      * @param firstBondVector the vector of the first bond to lay out
      * @param isConnected     the 'molecule' attribute is guaranteed to be connected (we have checked)
+     * @param isSubLayout     the 'molecule' attribute is guaranteed to be connected (we have checked)
      * @throws CDKException problem occurred during layout
      */
-    private void generateCoordinates(Vector2d firstBondVector, boolean isConnected) throws CDKException {
+    private void generateCoordinates(Vector2d firstBondVector, boolean isConnected, boolean isSubLayout) throws CDKException {
 
         int safetyCounter = 0;
         /*
@@ -500,6 +501,14 @@ public class StructureDiagramGenerator {
             layoutNextRingSystem();
         } while (!atomPlacer.allPlaced(molecule) && safetyCounter <= molecule.getAtomCount());
 
+        if (!isSubLayout) {
+            assignStereochem(molecule);
+        }
+        refinePlacement(molecule);
+        finalizeLayout(molecule);
+    }
+
+    private void assignStereochem(IAtomContainer molecule) {
         // correct double-bond stereo, this changes the layout and in reality
         // should be done during the initial placement
         CorrectGeometricConfiguration.correct(molecule);
@@ -507,7 +516,9 @@ public class StructureDiagramGenerator {
         // assign up/down labels, this doesn't not alter layout and could be
         // done on-demand (e.g. when writing a MDL Molfile)
         NonplanarBonds.assign(molecule);
+    }
 
+    private void refinePlacement(IAtomContainer molecule) {
         AtomPlacer.prioritise(molecule);
 
         // refine the layout by rotating, bending, and stretching bonds
@@ -518,8 +529,6 @@ public class StructureDiagramGenerator {
         if (selectOrientation) {
             selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
         }
-
-        finalizeLayout(molecule);
     }
 
     /**
@@ -641,7 +650,7 @@ public class StructureDiagramGenerator {
         // generate the sub-layouts
         for (IAtomContainer fragment : frags) {
             setMolecule(fragment, false);
-            generateCoordinates(DEFAULT_BOND_VECTOR, true);
+            generateCoordinates(DEFAULT_BOND_VECTOR, true, true);
             limits.add(GeometryUtil.getMinMax(fragment));
         }
 
@@ -688,6 +697,7 @@ public class StructureDiagramGenerator {
         }
 
         // finalize
+        assignStereochem(mol);
         finalizeLayout(mol);
     }
 
