@@ -508,29 +508,28 @@ public class CircularFingerprinter implements IFingerprinter {
         fplist.set(hit, newFP);
     }
     
+    // ------------ Generation of fingerprint smarts ------------
+    
     //Helper variables for getFPSmarts() function
-    HashMap<Integer, AtomNode> nodes = new HashMap<Integer, AtomNode>();
-	HashMap<Integer, String> atomIndexes = new HashMap<Integer, String>();
-	List<Integer> traversedAtoms = new ArrayList<Integer>();    
-	List<Integer> ringClosures = new ArrayList<Integer>();
-	FP curFP = null;
-	IAtomContainer curFPMolecule = null;
-    int curIndex;
+    private HashMap<Integer, AtomNode> nodes = new HashMap<Integer, AtomNode>();
+    private HashMap<Integer, String> atomIndexes = new HashMap<Integer, String>();
+    private List<Integer> traversedAtoms = new ArrayList<Integer>();    
+    private List<Integer> ringClosures = new ArrayList<Integer>();
+    private FP curFP = null;
+    private IAtomContainer curFPMolecule = null;
+    private int curIndex;
 	
     public class AtomNode 
     {
     	public int parent;
     	public int atom;
-    	public int indexes[] = new int[3];
-    	public List<Integer> externalBonds = new ArrayList<Integer>();
     }
     
     /**
      * Determines the structural fragment corresponding to particular FP object
-     * and returns it as SMARTS/SMILES notation.
+     * and returns it as SMARTS notation.
      * This function must be called immediately after calculate() function since it uses the
      * internal state of CircularFingerprint object. 
-     * 
      * 
      * @param fp - the fingerprint
      * @param molecule - the molecule for which the fingerprints were calculated
@@ -561,12 +560,12 @@ public class CircularFingerprinter implements IFingerprinter {
 		traversedAtoms.add(node.atom);
 		nodes.put(node.atom, node);
 		    	
-		return nodeToString(fp.atoms[0]);  //traverse recursively all atoms 
+		return nodeToString(fp.atoms[0]);  //traverse recursively all layers of the atom 
     }
     
     
     /**
-     * Recursive approach
+     * Recursive generation of a smarts string for particular AtomNode
      * @param atomNum
      * @return
      */
@@ -602,7 +601,6 @@ public class CircularFingerprinter implements IFingerprinter {
     					bond_str = bondToString1(bondOrder[neighborBo]);
     					branches.add(bond_str + "*");
     				}
-    				
     				continue;
     			}
     			
@@ -621,8 +619,7 @@ public class CircularFingerprinter implements IFingerprinter {
 				branches.add(bond_str + nodeToString(neighborAt));
 			}
     		else
-    		{
-    			// Handle ring closure: adding indexes to both atoms    			
+    		{	// Handle ring closure: adding indexes to both atoms    			
 				
 				if (!ringClosures.contains(neighborBo)) {
 					ringClosures.add(neighborBo);
@@ -655,7 +652,7 @@ public class CircularFingerprinter implements IFingerprinter {
     	return sb.toString();
     }
     
-    void addIndexToAtom(String ind, int atom) 
+    private void addIndexToAtom(String ind, int atom) 
     {	
 		if (atomIndexes.containsKey(atom)) {
 			String old_ind = atomIndexes.get(atom);
@@ -671,7 +668,7 @@ public class CircularFingerprinter implements IFingerprinter {
     {
     	switch (boOrder)
     	{
-    	//'-' is coded as default "" 
+    	//single bond ('-') is coded as "" by default
     	case 2:
     		return "=";
     	case 3:
@@ -734,6 +731,7 @@ public class CircularFingerprinter implements IFingerprinter {
     			return ""; // case chrg == 0
     }
 
+    
     // ------------ molecule analysis: cached cheminformatics ------------
 
     // summarize preliminary information about the molecular structure, to make sure the rest all goes quickly
