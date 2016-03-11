@@ -81,7 +81,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    file format, SDF
  *
  * @see        org.openscience.cdk.io.MDLV2000Reader
+ * @deprecated This reader is only for molfiles without a version tag, typically the most
+ *             common molfile now encountered is V2000 and the {@link MDLV2000Reader} should be used
+ *             instead. The V2000 reader can actually read files missing the version tag when
+ *             in relaxed mode.
  */
+@Deprecated
 public class MDLReader extends DefaultChemObjectReader {
 
     BufferedReader               input          = null;
