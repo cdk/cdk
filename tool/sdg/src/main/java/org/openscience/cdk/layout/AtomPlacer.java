@@ -921,7 +921,7 @@ public class AtomPlacer {
         if (bonds.size() != 2)
             return false;
 
-        int numSgl = atom.getImplicitHydrogenCount();
+        int numSgl = atom.getImplicitHydrogenCount() == null ? 0 : atom.getImplicitHydrogenCount();
         int numDbl = 0;
         int numTpl = 0;
 
