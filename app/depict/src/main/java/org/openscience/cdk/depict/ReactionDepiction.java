@@ -169,8 +169,8 @@ final class ReactionDepiction extends Depiction {
                                     yOffsets = new double[nRow + 1],
                                     xOffsets = new double[nCol + 1]);
 
-        // avoid v. small arrows
-        if (prelimSideDim.w < minArrowWidth) {
+        // avoid v. small arrows, we take in to account the padding provided by the arrow head height/length
+        if (prelimSideDim.w < minArrowWidth - arrowHeight - arrowHeight) {
             // adjust x-offset so side components are centered
             double xAdjust = (minArrowWidth - prelimSideDim.w) / 2;
             for (int i = 0; i < xOffsetSide.length; i++)
