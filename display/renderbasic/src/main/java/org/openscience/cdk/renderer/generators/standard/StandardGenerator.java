@@ -539,7 +539,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param stroke    the stroke width
      * @return generated outer glow
      */
-    private static IRenderingElement outerGlow(IRenderingElement element, Color color, double glowWidth, double stroke) {
+    static IRenderingElement outerGlow(IRenderingElement element, Color color, double glowWidth, double stroke) {
         if (element instanceof ElementGroup) {
             ElementGroup orgGroup = (ElementGroup) element;
             ElementGroup newGroup = new ElementGroup();
