@@ -182,6 +182,11 @@ final class ReactionDepiction extends Depiction {
             double xAdjust = (minArrowWidth - middleRequired) / 2;
             for (int i = 0; i < xOffsetSide.length; i++)
                 xOffsetSide[i] += xAdjust;
+            // need to recenter agents
+            if (conditions.width() > prelimSideDim.w) {
+                for (int i = 0; i < xOffsetSide.length; i++)
+                    xOffsetSide[i] += (conditions.width() - prelimSideDim.w) / 2;
+            }
             // update side dims
             this.sideDim = new Dimensions(minArrowWidth, prelimSideDim.h);
             this.condDim = new Dimensions(minArrowWidth, conditions.height());
