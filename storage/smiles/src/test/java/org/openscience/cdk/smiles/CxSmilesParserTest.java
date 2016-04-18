@@ -168,9 +168,9 @@ public class CxSmilesParserTest {
 
     @Test public void dataSgroups() {
         CxSmilesState state = new CxSmilesState();
-        assertThat(CxSmilesParser.processCx("|SgD::Conditions:Heat&#10;Hv:::|", state), is(not(-1)));
+        assertThat(CxSmilesParser.processCx("|SgD::cdk&#58;ReactionConditions:Heat&#10;Hv|", state), is(not(-1)));
         assertThat(state.dataSgroups,
-                   hasItem(new CxSmilesState.DataSgroup(new ArrayList<Integer>(), "Conditions", "Heat\nHv", "", "", "")));
+                   hasItem(new CxSmilesState.DataSgroup(new ArrayList<Integer>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
     }
 
     @Test public void unescape() {

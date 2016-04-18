@@ -190,6 +190,9 @@ final class CxSmilesParser {
 
     private static boolean processDataSgroups(CharIter iter, CxSmilesState state) {
 
+        if (state.dataSgroups == null)
+            state.dataSgroups = new ArrayList<>(4);
+
         final List<Integer> atomset = new ArrayList<>();
         if (!processIntList(iter, COMMA_SEPARATOR, atomset))
             return false;
@@ -199,7 +202,7 @@ final class CxSmilesParser {
         int beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
-        final String field = iter.substr(beg, iter.pos);
+        final String field = unescape(iter.substr(beg, iter.pos));
 
         if (!iter.nextIf(':'))
             return false;
@@ -208,29 +211,35 @@ final class CxSmilesParser {
             iter.next();
         final String value = unescape(iter.substr(beg, iter.pos));
 
-        if (!iter.nextIf(':'))
-            return false;
+        if (!iter.nextIf(':')) {
+            state.dataSgroups.add(new CxSmilesState.DataSgroup(atomset, field, value, "", "", ""));
+            return true;
+        }
+
         beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
-        final String operator = iter.substr(beg, iter.pos);
+        final String operator = unescape(iter.substr(beg, iter.pos));
 
-        if (!iter.nextIf(':'))
-            return false;
+        if (!iter.nextIf(':')) {
+            state.dataSgroups.add(new CxSmilesState.DataSgroup(atomset, field, value, operator, "", ""));
+            return true;
+        }
+
         beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
-        final String unit = iter.substr(beg, iter.pos);
+        final String unit = unescape(iter.substr(beg, iter.pos));
 
-        if (!iter.nextIf(':'))
-            return false;
+        if (!iter.nextIf(':')) {
+            state.dataSgroups.add(new CxSmilesState.DataSgroup(atomset, field, value, operator, unit, ""));
+            return true;
+        }
+
         beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
-        final String tag = iter.substr(beg, iter.pos);
-
-        if (state.dataSgroups == null)
-            state.dataSgroups = new ArrayList<>(4);
+        final String tag = unescape(iter.substr(beg, iter.pos));
 
         state.dataSgroups.add(new CxSmilesState.DataSgroup(atomset, field, value, operator, unit, tag));
 
