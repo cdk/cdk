@@ -27,6 +27,7 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -163,6 +164,13 @@ public class CxSmilesParserTest {
         assertThat(CxSmilesParser.processCx("|Sg:n:1,2,3:m:ht|", state), is(not(-1)));
         assertThat(state.sgroups,
                    hasItem(new CxSmilesState.PolymerSgroup("n", Arrays.asList(1, 2, 3), "m", "ht")));
+    }
+
+    @Test public void dataSgroups() {
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx("|SgD::Conditions:Heat&#10;Hv:::|", state), is(not(-1)));
+        assertThat(state.dataSgroups,
+                   hasItem(new CxSmilesState.DataSgroup(new ArrayList<Integer>(), "Conditions", "Heat\nHv", "", "", "")));
     }
 
     @Test public void unescape() {

@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
@@ -40,6 +41,7 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.smiles.CxSmilesState.DataSgroup;
 import org.openscience.cdk.smiles.CxSmilesState.PolymerSgroup;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import uk.ac.ebi.beam.Graph;
@@ -299,7 +301,7 @@ public final class SmilesParser {
                     atomToMol.put(atom, mol);
                 }
 
-                assignCxSmilesInfo(mol.getBuilder(), atoms, atomToMol, cxstate);
+                assignCxSmilesInfo(mol.getBuilder(), mol, atoms, atomToMol, cxstate);
             }
         }
     }
@@ -343,7 +345,7 @@ public final class SmilesParser {
                     }
                 }
 
-                assignCxSmilesInfo(rxn.getBuilder(), atoms, atomToMol, cxstate);
+                assignCxSmilesInfo(rxn.getBuilder(), rxn, atoms, atomToMol, cxstate);
             }
         }
     }
@@ -432,6 +434,7 @@ public final class SmilesParser {
      * @param cxstate   the CXSMILES state to read from
      */
     private void assignCxSmilesInfo(IChemObjectBuilder bldr,
+                                    IChemObject chemObj,
                                     List<IAtom> atoms,
                                     Map<IAtom, IAtomContainer> atomToMol,
                                     CxSmilesState cxstate) {
@@ -533,6 +536,15 @@ public final class SmilesParser {
                 for (Integer endpt : e.getValue())
                     sgroup.addAtom(atoms.get(endpt));
                 sgroupMap.put(mol, sgroup);
+            }
+        }
+
+        // data sgroups
+        if (cxstate.dataSgroups != null) {
+            for (DataSgroup dsgroup : cxstate.dataSgroups) {
+                if (dsgroup.field != null && dsgroup.field.startsWith("cdk:")) {
+                    chemObj.setProperty(dsgroup.field, dsgroup.value);
+                }
             }
         }
 

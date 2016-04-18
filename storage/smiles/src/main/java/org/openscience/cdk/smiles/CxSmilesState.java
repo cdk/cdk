@@ -26,7 +26,6 @@ package org.openscience.cdk.smiles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Light-weight intermediate data-structure for transferring information CDK to/from
@@ -41,6 +40,7 @@ final class CxSmilesState {
     Map<Integer, Radical>       atomRads    = null;
     Map<Integer, List<Integer>> positionVar = null;
     List<PolymerSgroup>         sgroups     = null;
+    List<DataSgroup>            dataSgroups = null;
     boolean                     zCoords     = false;
 
     enum Radical {
@@ -51,6 +51,63 @@ final class CxSmilesState {
         Trivalent,
         TrivalentDoublet,
         TrivalentQuartet
+    }
+
+    static final class DataSgroup {
+        final List<Integer> atoms;
+        final String       field;
+        final String       value;
+        final String       operator;
+        final String       unit;
+        final String       tag;
+
+        public DataSgroup(List<Integer> atoms, String field, String value, String operator, String unit, String tag) {
+            this.atoms = atoms;
+            this.field = field;
+            this.value = value;
+            this.operator = operator;
+            this.unit = unit;
+            this.tag = tag;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            DataSgroup that = (DataSgroup) o;
+
+            if (atoms != null ? !atoms.equals(that.atoms) : that.atoms != null) return false;
+            if (field != null ? !field.equals(that.field) : that.field != null) return false;
+            if (value != null ? !value.equals(that.value) : that.value != null) return false;
+            if (operator != null ? !operator.equals(that.operator) : that.operator != null) return false;
+            if (unit != null ? !unit.equals(that.unit) : that.unit != null) return false;
+            return tag != null ? tag.equals(that.tag) : that.tag == null;
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result = atoms != null ? atoms.hashCode() : 0;
+            result = 31 * result + (field != null ? field.hashCode() : 0);
+            result = 31 * result + (value != null ? value.hashCode() : 0);
+            result = 31 * result + (operator != null ? operator.hashCode() : 0);
+            result = 31 * result + (unit != null ? unit.hashCode() : 0);
+            result = 31 * result + (tag != null ? tag.hashCode() : 0);
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return "DataSgroup{" +
+                   "atoms=" + atoms +
+                   ", field='" + field + '\'' +
+                   ", value='" + value + '\'' +
+                   ", operator='" + operator + '\'' +
+                   ", unit='" + unit + '\'' +
+                   ", tag='" + tag + '\'' +
+                   '}';
+        }
     }
 
     static final class PolymerSgroup {

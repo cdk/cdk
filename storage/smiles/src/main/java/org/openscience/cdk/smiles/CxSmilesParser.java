@@ -188,6 +188,55 @@ final class CxSmilesParser {
         return c == ':' || c == ',' || c == '|';
     }
 
+    private static boolean processDataSgroups(CharIter iter, CxSmilesState state) {
+
+        final List<Integer> atomset = new ArrayList<>();
+        if (!processIntList(iter, COMMA_SEPARATOR, atomset))
+            return false;
+
+        if (!iter.nextIf(':'))
+            return false;
+        int beg = iter.pos;
+        while (iter.hasNext() && !isSgroupDelim(iter.curr()))
+            iter.next();
+        final String field = iter.substr(beg, iter.pos);
+
+        if (!iter.nextIf(':'))
+            return false;
+        beg = iter.pos;
+        while (iter.hasNext() && !isSgroupDelim(iter.curr()))
+            iter.next();
+        final String value = unescape(iter.substr(beg, iter.pos));
+
+        if (!iter.nextIf(':'))
+            return false;
+        beg = iter.pos;
+        while (iter.hasNext() && !isSgroupDelim(iter.curr()))
+            iter.next();
+        final String operator = iter.substr(beg, iter.pos);
+
+        if (!iter.nextIf(':'))
+            return false;
+        beg = iter.pos;
+        while (iter.hasNext() && !isSgroupDelim(iter.curr()))
+            iter.next();
+        final String unit = iter.substr(beg, iter.pos);
+
+        if (!iter.nextIf(':'))
+            return false;
+        beg = iter.pos;
+        while (iter.hasNext() && !isSgroupDelim(iter.curr()))
+            iter.next();
+        final String tag = iter.substr(beg, iter.pos);
+
+        if (state.dataSgroups == null)
+            state.dataSgroups = new ArrayList<>(4);
+
+        state.dataSgroups.add(new CxSmilesState.DataSgroup(atomset, field, value, operator, unit, tag));
+
+        return true;
+    }
+
     /**
      * Polymer Sgroups describe variations of repeating units. Only the atoms and not crossing bonds are written.
      *
@@ -373,10 +422,17 @@ final class CxSmilesParser {
                         return -1;
                     break;
                 case 'S': // Sgroup polymers
-                    if (!iter.nextIf("g:"))
+                    if (iter.nextIf("g:")) {
+                        if (!processPolymerSgroups(iter, state))
+                            return -1;
+                    }
+                    else if (iter.nextIf("gD:")) {
+                        if (!processDataSgroups(iter, state))
+                            return -1;
+                    }
+                    else {
                         return -1;
-                    if (!processPolymerSgroups(iter, state))
-                        return -1;
+                    }
                     break;
                 case 'm': // positional variation
                     if (!iter.nextIf(':'))
