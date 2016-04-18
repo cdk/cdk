@@ -448,7 +448,6 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 line += " 0  0  0  0  0";
             } else {
                 int parity = tc.getStereo() == ITetrahedralChirality.Stereo.CLOCKWISE ? 1 : 2;
-                int swaps  = 0;
                 IAtom   focus    = tc.getChiralAtom();
                 IAtom[] carriers = tc.getLigands();
 
@@ -466,9 +465,9 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         for (int j = i + 1; j < 4; j++) {
                             int a = atomindex.get(carriers[i]);
                             int b = atomindex.get(carriers[j]);
-                            if (a == hidx)
+                            if (i == hidx)
                                 a = container.getAtomCount();
-                            if (b == hidx)
+                            if (j == hidx)
                                 b = container.getAtomCount();
                             if (a > b)
                                 parity ^= 0x3;
