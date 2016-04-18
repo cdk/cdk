@@ -343,6 +343,12 @@ public class CDKConstants {
     public static final String      CTAB_SGROUPS                 = "cdk:CtabSgroups";
 
 
+    /**
+     * Property for reaction objects where the conditions of reactions can be placed.
+     */
+    public static final String      REACTION_CONDITIONS          = "cdk:ReactionConditions";
+
+
     /* **************************************
      * Some predefined property names for * AtomTypes *
      * **************************************

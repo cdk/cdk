@@ -439,23 +439,37 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
 
     /**
-     * Make an embedded text label for display in a CDK renderer.
+     * Make an embedded text label for display in a CDK renderer. If a piece of text contains newlines
+     * they are centred aligned below each other with a line height of 1.4.
      *
-     * @param font the font to embedded
-     * @param text the text label
+     * @param font  the font to embedded
+     * @param text  the text label
      * @param color the color
      * @param scale the resize, should include the model scale
      * @return pre-rendered element
      */
     public static IRenderingElement embedText(Font font, String text, Color color, double scale) {
 
-        final TextOutline outline = new TextOutline(text, font).resize(scale, -scale);
+        final String[] lines = text.split("\n");
 
         ElementGroup group = new ElementGroup();
-        group.add(GeneralPath.shapeOf(outline.getOutline(), color));
-        Rectangle2D logicalBounds = outline.getLogicalBounds();
-        group.add(new Bounds(logicalBounds.getMinX(), logicalBounds.getMinY(),
-                             logicalBounds.getMaxX(), logicalBounds.getMaxY()));
+
+        double yOffset = 0;
+        double lineHeight = 1.4d;
+
+        for (String line : lines) {
+            TextOutline outline = new TextOutline(line, font).resize(scale, -scale);
+            Point2D center = outline.getCenter();
+            outline = outline.translate(-center.getX(), -(center.getY() + yOffset));
+
+            yOffset += lineHeight * outline.getBounds().getHeight();
+
+            group.add(GeneralPath.shapeOf(outline.getOutline(), color));
+            Rectangle2D logicalBounds = outline.getLogicalBounds();
+            group.add(new Bounds(logicalBounds.getMinX(), logicalBounds.getMinY(),
+                                 logicalBounds.getMaxX(), logicalBounds.getMaxY()));
+        }
+
         return group;
     }
 
