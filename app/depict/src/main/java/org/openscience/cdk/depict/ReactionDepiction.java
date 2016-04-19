@@ -325,11 +325,11 @@ final class ReactionDepiction extends Depiction {
         // CONDITIONS DRAW
         if (!conditions.isEmpty()) {
             yBase += mainCompOffset;        // back to top
-            yBase += mainRequired.h / 2;    // now on center line (arrow)
-            yBase += padding;               // now just bellow
+            yBase += (fitting * mainRequired.h) / 2;    // now on center line (arrow)
+            yBase += arrowHeight;           // now just bellow
             draw(visitor, zoom, conditions, rect(xBase,
                                                  yBase,
-                                                 condRequired.w, condRequired.h));
+                                                 fitting * condRequired.w, fitting * condRequired.h));
         }
 
         // reset shared xOffsets
@@ -474,12 +474,12 @@ final class ReactionDepiction extends Depiction {
 
         // CONDITIONS DRAW
         if (!conditions.isEmpty()) {
-            yBase += mainCompOffset;        // back to top
-            yBase += mainRequired.h / 2;    // now on center line (arrow)
-            yBase += padding;               // now just bellow
+            yBase += mainCompOffset;         // back to top
+            yBase += (fitting * mainRequired.h) / 2;     // now on center line (arrow)
+            yBase += arrowHeight;            // now just bellow
             draw(visitor, zoom, conditions, rect(xBase,
                                                  yBase,
-                                                 condRequired.w, condRequired.h));
+                                                 fitting * condRequired.w, fitting * condRequired.h));
         }
 
         // reset shared xOffsets
