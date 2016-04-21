@@ -69,6 +69,7 @@ final class StandardSgroupGenerator {
     private final Color                 foreground;
     private final double                labelScale;
     private final StandardAtomGenerator atomGenerator;
+    private final RendererModel         parameters;
 
     private StandardSgroupGenerator(RendererModel parameters, StandardAtomGenerator atomGenerator, double stroke,
                                     Font font, Color foreground) {
@@ -82,6 +83,7 @@ final class StandardSgroupGenerator {
         // foreground is based on the carbon color
         this.foreground = foreground;
         this.atomGenerator = atomGenerator;
+        this.parameters = parameters;
     }
 
     static IRenderingElement generate(RendererModel parameters, double stroke, Font font, Color foreground,
@@ -116,7 +118,10 @@ final class StandardSgroupGenerator {
                 // no or empty label, skip it
                 if (sgroup.getSubscript() == null || sgroup.getSubscript().isEmpty())
                     continue;
-                contractAbbreviation(container, symbolRemap, sgroup);
+
+                // only contract if the atoms are either partially or fully highlighted
+                if (checkAbbreviationHighlight(container, sgroup))
+                    contractAbbreviation(container, symbolRemap, sgroup);
             } else if (sgroup.getType() == SgroupType.CtabMultipleGroup) {
                 hideMultipleParts(container, sgroup);
             } else if (sgroup.getType() == SgroupType.ExtMulticenter) {
@@ -133,6 +138,58 @@ final class StandardSgroupGenerator {
                 }
             }
         }
+    }
+
+    /**
+     * Checks whether the given abbreviation Sgroup either has no highlight or is fully highlighted. If an
+     * abbreviation is partially highlighted we don't want to contract it as this would hide the part
+     * being highlighted.
+     *
+     * @param container molecule
+     * @param sgroup abbreviation Sgroup
+     * @return the abbreviation can be contracted
+     */
+    private static boolean checkAbbreviationHighlight(IAtomContainer container, Sgroup sgroup) {
+        assert sgroup.getType() == SgroupType.CtabAbbreviation;
+
+        Set<IAtom> sgroupAtoms = sgroup.getAtoms();
+        int atomHighlight = 0;
+        int bondHighlight = 0;
+        int numSgroupAtoms = sgroupAtoms.size();
+        int numSgroupBonds = 0;
+
+        Color color = null;
+        Color refcolor = null;
+
+        for (IAtom atom : sgroupAtoms) {
+            if ((color = atom.getProperty(StandardGenerator.HIGHLIGHT_COLOR)) != null) {
+                atomHighlight++;
+                if (refcolor == null)
+                    refcolor = color;
+                else if (!color.equals(refcolor))
+                    return false; // multi-colored
+            } else if (atomHighlight != 0) {
+                return false; // fail fast
+            }
+        }
+        for (IBond bond : container.bonds()) {
+            IAtom beg = bond.getAtom(0);
+            IAtom end = bond.getAtom(1);
+            if (sgroupAtoms.contains(beg) && sgroupAtoms.contains(end)) {
+                numSgroupBonds++;
+                if ((color = bond.getProperty(StandardGenerator.HIGHLIGHT_COLOR)) != null) {
+                    bondHighlight++;
+                    if (refcolor == null)
+                        refcolor = color;
+                    else if (!color.equals(refcolor))
+                        return false; // multi-colored
+                } else if (bondHighlight != 0) {
+                    return false; // fail fast
+                }
+            }
+        }
+        return atomHighlight + bondHighlight == 0 || (atomHighlight == numSgroupAtoms &&
+                                                      bondHighlight == numSgroupBonds);
     }
 
     /**
@@ -228,7 +285,7 @@ final class StandardSgroupGenerator {
 
             switch (sgroup.getType()) {
                 case CtabAbbreviation:
-                    result.add(generateAbbreviationSgroup(sgroup));
+                    result.add(generateAbbreviationSgroup(container, sgroup));
                     break;
                 case CtabMultipleGroup:
                     result.add(generateMultipleSgroup(sgroup));
@@ -272,21 +329,45 @@ final class StandardSgroupGenerator {
         }
     }
 
-    private IRenderingElement generateAbbreviationSgroup(Sgroup sgroup) {
+    private IRenderingElement generateAbbreviationSgroup(IAtomContainer mol, Sgroup sgroup) {
         String label = sgroup.getSubscript();
         // already handled by symbol remapping
         if (sgroup.getBonds().size() > 0 || label == null || label.isEmpty()) {
             return new ElementGroup();
         }
+        if (!checkAbbreviationHighlight(mol, sgroup))
+            return new ElementGroup();
         // we're showing a label where there were no atoms before, we put it in the
         // middle of all of those which were hidden
-        final Point2d labelCoords = GeometryUtil.get2DCenter(sgroup.getAtoms());
-        ElementGroup group = new ElementGroup();
+        Set<IAtom> sgroupAtoms = sgroup.getAtoms();
+        assert !sgroupAtoms.isEmpty();
+
+        Color highlight = sgroupAtoms.iterator().next().getProperty(StandardGenerator.HIGHLIGHT_COLOR);
+        final StandardGenerator.HighlightStyle style = parameters.get(StandardGenerator.Highlighting.class);
+        final double glowWidth = parameters.get(StandardGenerator.OuterGlowWidth.class);
+
+        final Point2d labelCoords = GeometryUtil.get2DCenter(sgroupAtoms);
+
+        ElementGroup labelgroup = new ElementGroup();
         for (Shape outline : atomGenerator.generateAbbreviatedSymbol(label, HydrogenPosition.Right)
                                           .resize(1 / scale, 1 / -scale)
-                                          .getOutlines())
-            group.add(GeneralPath.shapeOf(outline, foreground));
-        return MarkedElement.markupAtom(group, null);
+                                          .getOutlines()) {
+            if (highlight != null && style == StandardGenerator.HighlightStyle.Colored) {
+                labelgroup.add(GeneralPath.shapeOf(outline, highlight));
+            } else {
+                labelgroup.add(GeneralPath.shapeOf(outline, foreground));
+            }
+        }
+
+        if (highlight != null && style == StandardGenerator.HighlightStyle.OuterGlow) {
+            ElementGroup group = new ElementGroup();
+            // outer glow needs to be being the label
+            group.add(StandardGenerator.outerGlow(labelgroup, highlight, glowWidth, stroke));
+            group.add(labelgroup);
+            return group;
+        } else {
+            return MarkedElement.markupAtom(labelgroup, null);
+        }
     }
 
     /**

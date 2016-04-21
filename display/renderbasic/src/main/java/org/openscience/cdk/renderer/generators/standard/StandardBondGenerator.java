@@ -645,9 +645,9 @@ final class StandardBondGenerator {
             } else {
                 return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
             }
-        } else if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1)) {
+        } else if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1) && (!hasDisplayedSymbol(atom2) || atom2Bonds.isEmpty())) {
             return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds);
-        } else if (atom2Bonds.size() == 1 && !hasDisplayedSymbol(atom2)) {
+        } else if (atom2Bonds.size() == 1 && !hasDisplayedSymbol(atom2) && (!hasDisplayedSymbol(atom1) || atom1Bonds.isEmpty())) {
             return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds);
         } else if (specialOffsetBondNextToWedge(atom1, atom1Bonds) && !hasDisplayedSymbol(atom1)) {
             return generateOffsetDoubleBond(bond, atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds);

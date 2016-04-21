@@ -498,10 +498,16 @@ public final class DepictionGenerator {
                 productTitles.add(copy.generateTitle(product));
         }
 
+        final Bounds conditions = generateReactionConditions(rxn, fgcol);
+
         return new ReactionDepiction(model,
                                      reactantBounds, productBounds, agentBounds,
                                      plus, rxn.getDirection(), dimensions,
-                                     reactantTitles, productTitles, title, fgcol);
+                                     reactantTitles,
+                                     productTitles,
+                                     title,
+                                     conditions,
+                                     fgcol);
     }
 
     /**
@@ -646,6 +652,16 @@ public final class DepictionGenerator {
         final double scale = 1 / getParameterValue(BasicSceneGenerator.Scale.class) * getParameterValue(RendererModel.TitleFontScale.class);
         return new Bounds(MarkedElement.markup(StandardGenerator.embedText(font, title, getParameterValue(RendererModel.TitleColor.class), scale),
                                                "title"));
+    }
+
+    private Bounds generateReactionConditions(IReaction chemObj, Color fg) {
+        String title = chemObj.getProperty(CDKConstants.REACTION_CONDITIONS);
+        if (title == null || title.isEmpty())
+            return new Bounds();
+        final double scale = 1 / getParameterValue(BasicSceneGenerator.Scale.class);
+
+        return new Bounds(MarkedElement.markup(StandardGenerator.embedText(font, title, fg, scale),
+                                               "conditions"));
     }
 
 

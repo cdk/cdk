@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.AtomMatcher;
@@ -315,7 +316,7 @@ public class StructureDiagramGenerator {
      * @throws CDKException if an error occurs
      */
     public void generateCoordinates(Vector2d firstBondVector) throws CDKException {
-        generateCoordinates(firstBondVector, false);
+        generateCoordinates(firstBondVector, false, false);
     }
 
     /**
@@ -325,9 +326,10 @@ public class StructureDiagramGenerator {
      *
      * @param firstBondVector the vector of the first bond to lay out
      * @param isConnected     the 'molecule' attribute is guaranteed to be connected (we have checked)
+     * @param isSubLayout     the 'molecule' attribute is guaranteed to be connected (we have checked)
      * @throws CDKException problem occurred during layout
      */
-    private void generateCoordinates(Vector2d firstBondVector, boolean isConnected) throws CDKException {
+    private void generateCoordinates(Vector2d firstBondVector, boolean isConnected, boolean isSubLayout) throws CDKException {
 
         int safetyCounter = 0;
         /*
@@ -500,6 +502,14 @@ public class StructureDiagramGenerator {
             layoutNextRingSystem();
         } while (!atomPlacer.allPlaced(molecule) && safetyCounter <= molecule.getAtomCount());
 
+        if (!isSubLayout) {
+            assignStereochem(molecule);
+        }
+        refinePlacement(molecule);
+        finalizeLayout(molecule);
+    }
+
+    private void assignStereochem(IAtomContainer molecule) {
         // correct double-bond stereo, this changes the layout and in reality
         // should be done during the initial placement
         CorrectGeometricConfiguration.correct(molecule);
@@ -507,7 +517,9 @@ public class StructureDiagramGenerator {
         // assign up/down labels, this doesn't not alter layout and could be
         // done on-demand (e.g. when writing a MDL Molfile)
         NonplanarBonds.assign(molecule);
+    }
 
+    private void refinePlacement(IAtomContainer molecule) {
         AtomPlacer.prioritise(molecule);
 
         // refine the layout by rotating, bending, and stretching bonds
@@ -516,10 +528,58 @@ public class StructureDiagramGenerator {
 
         // choose the orientation in which to display the structure
         if (selectOrientation) {
-            selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
-        }
 
-        finalizeLayout(molecule);
+            // check for attachment points, these override the direction which we rorate structures
+            IAtom begAttach = null;
+            for (IAtom atom : molecule.atoms()) {
+                if (atom instanceof IPseudoAtom && ((IPseudoAtom) atom).getAttachPointNum() == 1) {
+                    begAttach = atom;
+                    break;
+                }
+            }
+
+            // no attachment point, rorate to maximise horizontal spread etc.
+            if (begAttach == null) {
+                selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
+            }
+            // use attachment point bond to rotate
+            else {
+                final List<IBond> attachBonds = molecule.getConnectedBondsList(begAttach);
+                if (attachBonds.size() == 1) {
+                    IAtom end = attachBonds.get(0).getConnectedAtom(begAttach);
+                    Point2d xyBeg = begAttach.getPoint2d();
+                    Point2d xyEnd = end.getPoint2d();
+
+                    // snap to horizontal '*-(end)-{rest of molecule}'
+                    GeometryUtil.rotate(molecule,
+                                        GeometryUtil.get2DCenter(molecule),
+                                        -Math.atan2(xyEnd.y - xyBeg.y, xyEnd.x - xyBeg.x));
+
+                    // put the larger part of the structure is above the bond so fragments are drawn
+                    // semi-consistently
+                    double ylo = 0;
+                    double yhi = 0;
+                    for (IAtom atom : molecule.atoms()) {
+                        double yDelta = xyBeg.y - atom.getPoint2d().y;
+                        if (yDelta > 0 && yDelta > yhi) {
+                            yhi = yDelta;
+                        } else if (yDelta < 0 && yDelta < ylo) {
+                            ylo = yDelta;
+                        }
+                    }
+
+                    // mirror points if larger part is below
+                    if (Math.abs(ylo) < yhi)
+                        for (IAtom atom : molecule.atoms())
+                            atom.getPoint2d().y = -atom.getPoint2d().y;
+
+                    // rotate pointing downwards 30-degrees
+                    GeometryUtil.rotate(molecule,
+                                        GeometryUtil.get2DCenter(molecule),
+                                        -Math.toRadians(30));
+                }
+            }
+        }
     }
 
     /**
@@ -641,7 +701,7 @@ public class StructureDiagramGenerator {
         // generate the sub-layouts
         for (IAtomContainer fragment : frags) {
             setMolecule(fragment, false);
-            generateCoordinates(DEFAULT_BOND_VECTOR, true);
+            generateCoordinates(DEFAULT_BOND_VECTOR, true, true);
             limits.add(GeometryUtil.getMinMax(fragment));
         }
 
@@ -688,6 +748,7 @@ public class StructureDiagramGenerator {
         }
 
         // finalize
+        assignStereochem(mol);
         finalizeLayout(mol);
     }
 
