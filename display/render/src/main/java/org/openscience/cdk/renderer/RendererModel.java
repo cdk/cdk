@@ -271,7 +271,12 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public void registerParameters(IGenerator<? extends IChemObject> generator) {
         for (IGeneratorParameter<?> param : generator.getParameters()) {
-            renderingParameters.put(param.getClass().getName(), param);
+            try {
+                renderingParameters.put(param.getClass().getName(),
+                                        param.getClass().newInstance());
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new IllegalStateException("Could not create a copy of rendering parameter.");
+            }
         }
     }
 
