@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 import org.openscience.cdk.renderer.color.IAtomColorer;
@@ -52,6 +53,7 @@ import java.awt.Font;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -198,7 +200,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         ElementGroup annotations = new ElementGroup();
 
-        AtomSymbol[] symbols = generateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, stroke);
+        AtomSymbol[] symbols = generateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, foreground, stroke);
         IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke,
                                                                                font, annotations);
 
@@ -297,7 +299,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     private AtomSymbol[] generateAtomSymbols(IAtomContainer container,
                                              Map<IAtom, String> symbolRemap,
                                              SymbolVisibility visibility,
-                                             RendererModel parameters, ElementGroup annotations, double stroke) {
+                                             RendererModel parameters,
+                                             ElementGroup annotations,
+                                             Color foreground,
+                                             double stroke) {
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
         final double annDist = parameters.get(AnnotationDistance.class)
@@ -309,6 +314,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         AtomSymbol[] symbols = new AtomSymbol[container.getAtomCount()];
         IChemObjectBuilder builder = container.getBuilder();
 
+        // check if we should annotate attachment point numbers (maxAttach>1)
+        // and queue them all up for processing
+        List<IPseudoAtom> attachPoints = new ArrayList<>();
+        int maxAttach = 0;
+
         for (int i = 0; i < container.getAtomCount(); i++) {
 
             final IAtom atom = container.getAtom(i);
@@ -316,6 +326,13 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             if (isHiddenFully(atom))
                 continue;
 
+            if (atom instanceof IPseudoAtom) {
+                int attachNum = ((IPseudoAtom) atom).getAttachPointNum();
+                if (attachNum > 0)
+                    attachPoints.add((IPseudoAtom) atom);
+                if (attachNum > maxAttach)
+                    maxAttach = attachNum;
+            }
 
             boolean remapped = symbolRemap.containsKey(atom);
             final List<IBond> bonds     = container.getConnectedBondsList(atom);
@@ -346,30 +363,30 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                     symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
                 }
 
-                if (symbols[i] == null)
-                    continue;
+                if (symbols[i] != null) {
 
-                // defines how the element is aligned on the atom point, when
-                // aligned to the left, the first character 'e.g. Cl' is used.
-                if (visNeighbors.size() == 1) {
-                    if (hPosition == Left) {
-                        symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
+                    // defines how the element is aligned on the atom point, when
+                    // aligned to the left, the first character 'e.g. Cl' is used.
+                    if (visNeighbors.size() == 1) {
+                        if (hPosition == Left) {
+                            symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
+                        } else {
+                            symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Left);
+                        }
                     }
-                    else {
-                        symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Left);
-                    }
+
+                    final Point2d p = atom.getPoint2d();
+
+                    if (p == null) throw new IllegalArgumentException("Atom did not have 2D coordinates");
+
+                    // center and scale the symbol, y-axis scale is inverted because CDK y-axis
+                    // is inverse of Java 2D
+                    symbols[i] = symbols[i].resize(1 / scale, 1 / -scale).center(p.x, p.y);
                 }
-
-                final Point2d p = atom.getPoint2d();
-
-                if (p == null) throw new IllegalArgumentException("Atom did not have 2D coordinates");
-
-                // center and scale the symbol, y-axis scale is inverted because CDK y-axis
-                // is inverse of Java 2D
-                symbols[i] = symbols[i].resize(1 / scale, 1 / -scale).center(p.x, p.y);
             }
 
-            final String label = getAnnotationLabel(atom);
+            String label = getAnnotationLabel(atom);
+
             if (label != null) {
 
                 // to ensure consistent draw distance we need to adjust the annotation distance
@@ -389,6 +406,55 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                     annotations.add(GeneralPath.shapeOf(annOutline.getOutline(), annColor));
                 }
             }
+        }
+
+        // label attachment points
+        if (maxAttach > 1) {
+
+            List<TextOutline> attachNumOutlines = new ArrayList<>();
+            double maxRadius = 0;
+
+            for (IPseudoAtom atom : attachPoints) {
+                int attachNum = atom.getAttachPointNum();
+
+                // to ensure consistent draw distance we need to adjust the annotation distance
+                // depending on whether we are drawing next to an atom symbol or not.
+                final double strokeAdjust = -halfStroke;
+
+                final Vector2d vector = newAttachPointAnnotationVector(atom,
+                                                                       container.getConnectedBondsList(atom),
+                                                                       new ArrayList<Vector2d>());
+
+                final TextOutline outline = generateAnnotation(atom.getPoint2d(),
+                                                                  Integer.toString(attachNum),
+                                                                  vector,
+                                                                  1.75 * annDist + strokeAdjust,
+                                                                  annScale,
+                                                                  font.deriveFont(Font.BOLD),
+                                                                  null);
+
+                attachNumOutlines.add(outline);
+
+                double w = outline.getBounds().getWidth();
+                double h = outline.getBounds().getHeight();
+                double r = Math.sqrt(w * w + h * h)/2;
+                if (r > maxRadius)
+                    maxRadius = r;
+            }
+
+            final Color bg = parameters.get(BasicSceneGenerator.BackgroundColor.class);
+
+            for (TextOutline outline : attachNumOutlines) {
+                ElementGroup group = new ElementGroup();
+                group.add(new OvalElement(outline.getCenter().getX(),
+                                          outline.getCenter().getY(),
+                                          2*stroke + maxRadius,
+                                          true,
+                                          foreground));
+                group.add(GeneralPath.shapeOf(outline.getOutline(), bg));
+                annotations.add(group);
+            }
+
         }
 
         return symbols;
@@ -485,7 +551,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
     static String getAnnotationLabel(IChemObject chemObject) {
         Object obj = chemObject.getProperty(ANNOTATION_LABEL);
-        return obj instanceof String ? (String) obj : null;
+        return obj != null ? obj.toString() : null;
     }
 
     private Color getHighlightColor(IChemObject bond, RendererModel parameters) {
@@ -660,6 +726,26 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             if (auxVectors.size() > 0) vectors.addAll(auxVectors);
             return VecmathUtil.newVectorInLargestGap(vectors);
         }
+    }
+
+    static Vector2d newAttachPointAnnotationVector(IAtom atom, List<IBond> bonds, List<Vector2d> auxVectors) {
+        if (bonds.isEmpty())
+            return new Vector2d(0, -1);
+        else if (bonds.size() > 1)
+            return newAtomAnnotationVector(atom, bonds, auxVectors);
+
+        // only one bond (as expected)
+        Vector2d bondVector = VecmathUtil.newUnitVector(atom, bonds.get(0));
+        Vector2d perpVector = VecmathUtil.newPerpendicularVector(bondVector);
+
+        // want the annotation below
+        if (perpVector.y > 0)
+            perpVector.negate();
+
+        Vector2d vector = new Vector2d((bondVector.x + perpVector.x) / 2,
+                                       (bondVector.y + perpVector.y) / 2);
+        vector.normalize();
+        return vector;
     }
 
     /**
