@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.layout;
 
+import com.google.common.collect.Multimap;
 import org.openscience.cdk.graph.AllPairsShortestPaths;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -373,8 +374,7 @@ final class LayoutRefiner {
                 if (delta > ROTATE_DELTA_THRESHOLD ||
                     (delta > 1 && congestion.contribution(pair.fst, pair.snd) < MIN_SCORE)) {
                     continue Pair;
-                }
-                else {
+                } else {
 
                     // almost no difference from flipping... bond is probably symmetric
                     // mark to avoid in future iterations
@@ -491,9 +491,10 @@ final class LayoutRefiner {
      * @param pair   congested atom pair
      * @param stack  best result vertices
      * @param coords best result coords
+     * @param firstVisit visit map to avoid repeating work
      * @return congestion score of best result
      */
-    private double bend(AtomPair pair, IntStack stack, Point2d[] coords) {
+    private double bend(AtomPair pair, IntStack stack, Point2d[] coords, Map<IBond,AtomPair> firstVisit) {
 
         stackBackup.clear();
 
@@ -556,6 +557,13 @@ final class LayoutRefiner {
             for (IBond bond : pair.bndAt) {
                 if (bond.isInRing()) continue;
 
+                // has this bond already been tested as part of another pair
+                AtomPair first = firstVisit.get(bond);
+                if (first == null)
+                    firstVisit.put(bond, first = pair);
+                if (first != pair)
+                    continue;
+
                 final IAtom beg = bond.getAtom(0);
                 final IAtom end = bond.getAtom(1);
                 final int begPriority = beg.getProperty(AtomPlacer.PRIORITY);
@@ -577,7 +585,7 @@ final class LayoutRefiner {
                 congestion.update(visited, stack.xs, stack.len);
 
                 if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD &&
-                        congestion.score() < min) {
+                    congestion.score() < min) {
                     backupCoords(coords, stack);
                     stackBackup.copyFrom(stack);
                     min = congestion.score();
@@ -616,9 +624,10 @@ final class LayoutRefiner {
      * @param pair   congested atom pair
      * @param stack  best result vertices
      * @param coords best result coords
+     * @param firstVisit visit map to avoid repeating work
      * @return congestion score of best result
      */
-    private double stretch(AtomPair pair, IntStack stack, Point2d[] coords) {
+    private double stretch(AtomPair pair, IntStack stack, Point2d[] coords, Map<IBond,AtomPair> firstVisit) {
 
         stackBackup.clear();
 
@@ -629,6 +638,13 @@ final class LayoutRefiner {
 
             // don't stretch ring bonds
             if (bond.isInRing())
+                continue;
+
+            // has this bond already been tested as part of another pair
+            AtomPair first = firstVisit.get(bond);
+            if (first == null)
+                firstVisit.put(bond, first = pair);
+            if (first != pair)
                 continue;
 
             final IAtom beg = bond.getAtom(0);
@@ -668,7 +684,6 @@ final class LayoutRefiner {
         return min;
     }
 
-
     /**
      * Resolves conflicts either by bending bonds or stretching bonds in the
      * shortest path between an overlapping pair. Bending and stretch are tried
@@ -677,6 +692,11 @@ final class LayoutRefiner {
      * @param pairs pairs
      */
     private void bendOrStretch(Collection<AtomPair> pairs) {
+
+        // without checking which bonds have been bent/stretch already we
+        // could end up repeating a lot of repeated work to no avail
+        Map<IBond,AtomPair> bendVisit    = new HashMap<>();
+        Map<IBond,AtomPair> stretchVisit = new HashMap<>();
 
         IntStack bendStack = new IntStack(atoms.length);
         IntStack stretchStack = new IntStack(atoms.length);
@@ -693,8 +713,8 @@ final class LayoutRefiner {
 
                 // attempt both bending and stretching storing the
                 // best result in the provided buffer
-                double bendScore = bend(pair, bendStack, buffer1);
-                double stretchScore = stretch(pair, stretchStack, buffer2);
+                double bendScore    = bend(pair, bendStack, buffer1, bendVisit);
+                double stretchScore = stretch(pair, stretchStack, buffer2, stretchVisit);
 
                 // bending is better than stretching
                 if (bendScore < stretchScore && bendScore < score) {
