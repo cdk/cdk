@@ -358,7 +358,7 @@ public final class DepictionGenerator {
         final List<Bounds> titles = new ArrayList<>();
         if (copy.getParameterValue(BasicSceneGenerator.ShowMoleculeTitle.class)) {
             for (IAtomContainer mol : mols)
-                titles.add(copy.generateTitle(mol));
+                titles.add(copy.generateTitle(mol, model.get(BasicSceneGenerator.Scale.class)));
         }
 
         // remove current highlight buffer
@@ -488,17 +488,17 @@ public final class DepictionGenerator {
         resetCoords(agents, agentScales);
 
         final Bounds emptyBounds = new Bounds();
-        final Bounds title = copy.getParameterValue(BasicSceneGenerator.ShowReactionTitle.class) ? copy.generateTitle(rxn) : emptyBounds;
+        final Bounds title = copy.getParameterValue(BasicSceneGenerator.ShowReactionTitle.class) ? copy.generateTitle(rxn, scale) : emptyBounds;
         final List<Bounds> reactantTitles = new ArrayList<>();
         final List<Bounds> productTitles = new ArrayList<>();
         if (copy.getParameterValue(BasicSceneGenerator.ShowMoleculeTitle.class)) {
             for (IAtomContainer reactant : reactants)
-                reactantTitles.add(copy.generateTitle(reactant));
+                reactantTitles.add(copy.generateTitle(reactant, scale));
             for (IAtomContainer product : products)
-                productTitles.add(copy.generateTitle(product));
+                productTitles.add(copy.generateTitle(product, scale));
         }
 
-        final Bounds conditions = generateReactionConditions(rxn, fgcol);
+        final Bounds conditions = generateReactionConditions(rxn, fgcol, model.get(BasicSceneGenerator.Scale.class));
 
         return new ReactionDepiction(model,
                                      reactantBounds, productBounds, agentBounds,
@@ -645,22 +645,20 @@ public final class DepictionGenerator {
      * @param chemObj molecule or reaction
      * @return bound element
      */
-    private Bounds generateTitle(IChemObject chemObj) {
+    private Bounds generateTitle(IChemObject chemObj, double scale) {
         String title = chemObj.getProperty(CDKConstants.TITLE);
         if (title == null || title.isEmpty())
             return new Bounds();
-        final double scale = 1 / getParameterValue(BasicSceneGenerator.Scale.class) * getParameterValue(RendererModel.TitleFontScale.class);
+        scale = 1 / scale * getParameterValue(RendererModel.TitleFontScale.class);
         return new Bounds(MarkedElement.markup(StandardGenerator.embedText(font, title, getParameterValue(RendererModel.TitleColor.class), scale),
                                                "title"));
     }
 
-    private Bounds generateReactionConditions(IReaction chemObj, Color fg) {
+    private Bounds generateReactionConditions(IReaction chemObj, Color fg, double scale) {
         String title = chemObj.getProperty(CDKConstants.REACTION_CONDITIONS);
         if (title == null || title.isEmpty())
             return new Bounds();
-        final double scale = 1 / getParameterValue(BasicSceneGenerator.Scale.class);
-
-        return new Bounds(MarkedElement.markup(StandardGenerator.embedText(font, title, fg, scale),
+        return new Bounds(MarkedElement.markup(StandardGenerator.embedText(font, title, fg, 1/scale),
                                                "conditions"));
     }
 
