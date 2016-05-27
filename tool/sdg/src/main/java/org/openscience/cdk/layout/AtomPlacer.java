@@ -362,23 +362,15 @@ public class AtomPlacer {
             nextAtom.setFlag(CDKConstants.ISPLACED, true);
             boolean trans = false;
 
-            // quick fix to handle geometry of cumulated, CC=C=CC, ideally it
-            // would be useful to know the geometries
-            if (prevBond != null && IBond.Order.DOUBLE.equals(prevBond.getOrder())
-                    && IBond.Order.DOUBLE.equals(currBond.getOrder())) {
+            if (prevBond != null && isColinear(atom, molecule.getConnectedBondsList(atom))) {
 
                 int atomicNumber = atom.getAtomicNumber();
                 int charge = atom.getFormalCharge();
 
-                if (charge == 0
-                        && (Elements.Carbon.number() == atomicNumber || Elements.Germanium.number() == atomicNumber || Elements.Silicon
-                                .number() == atomicNumber)) {
-
-                    // double length of the last bond to determing next placement
-                    Point2d p = new Point2d(prevBond.getConnectedAtom(atom).getPoint2d());
-                    p.interpolate(atom.getPoint2d(), 2);
-                    nextAtom.setPoint2d(p);
-                }
+                // double length of the last bond to determing next placement
+                Point2d p = new Point2d(prevBond.getConnectedAtom(atom).getPoint2d());
+                p.interpolate(atom.getPoint2d(), 2);
+                nextAtom.setPoint2d(p);
             }
 
             if (GeometryUtil.has2DCoordinates(atomContainer)) {
@@ -431,7 +423,7 @@ public class AtomPlacer {
                 previousAtom.getPoint2d().y - atom.getPoint2d().y);
         double addAngle = Math.toRadians(120);
         if (!trans) addAngle = Math.toRadians(60);
-        if (shouldBeLinear(atom, molecule)) addAngle = Math.toRadians(180);
+        if (isColinear(atom, molecule.getConnectedBondsList(atom))) addAngle = Math.toRadians(180);
 
         angle += addAngle;
         Vector2d vec1 = new Vector2d(Math.cos(angle), Math.sin(angle));
@@ -919,6 +911,54 @@ public class AtomPlacer {
         return prev;
     }
 
+    /**
+     * -C#N
+     * -[N+]#[C-]
+     * -C=[N+]=N
+     * -N=[N+]=N
+     */
+    boolean isColinear(IAtom atom, List<IBond> bonds) {
+        if (bonds.size() != 2)
+            return false;
+
+        int numSgl = atom.getImplicitHydrogenCount() == null ? 0 : atom.getImplicitHydrogenCount();
+        int numDbl = 0;
+        int numTpl = 0;
+
+        for (IBond bond : bonds) {
+            switch (bond.getOrder()) {
+                case SINGLE:
+                    numSgl++;
+                    break;
+                case DOUBLE:
+                    numDbl++;
+                    break;
+                case TRIPLE:
+                    numTpl++;
+                    break;
+                case QUADRUPLE:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        switch (atom.getAtomicNumber()) {
+            case 6:
+            case 7:
+            case 14:
+            case 32:
+                if (numTpl == 1 && numSgl == 1)
+                    return true;
+                if (numDbl == 2 && numSgl == 0)
+                    return true;
+                break;
+        }
+
+        return false;
+    }
+
+    @Deprecated
     static public boolean shouldBeLinear(IAtom atom, IAtomContainer molecule) {
         int sum = 0;
         List bonds = molecule.getConnectedBondsList(atom);
