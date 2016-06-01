@@ -803,4 +803,34 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             assertThat(output, containsString("    0.0000    0.0000    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n"));
         }
     }
+
+    @Test(expected = CDKException.class)
+    public void aromaticBondTypes() throws Exception {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        IBond bond = builder.newInstance(IBond.class, mol.getAtom(0), mol.getAtom(1), Order.UNSET);
+        bond.setIsAromatic(true);
+        mol.addBond(bond);
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mol);
+        }
+    }
+
+    @Test
+    public void aromaticBondTypesEnabled() throws Exception {
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        IBond bond = builder.newInstance(IBond.class, mol.getAtom(0), mol.getAtom(1), Order.UNSET);
+        bond.setIsAromatic(true);
+        mol.addBond(bond);
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.setWriteAromaticBondTypes(true);
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(), containsString("  1  2  4  0  0  0  0 \n"));
+    }
 }
