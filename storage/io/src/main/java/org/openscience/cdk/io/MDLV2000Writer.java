@@ -588,7 +588,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     line += formatMDLInt(atomindex.get(bond.getAtom(1)) + 1, 3);
                 }
 
-                int bondType;
+                int bondType = 0;
 
                 if (bond instanceof CTFileQueryBond) {
                     // Could do ordinal()-1 but this is clearer
@@ -619,32 +619,31 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             break;
                     }
                 } else {
-                    if (bond.getOrder() == null)
-                        throw new CDKException("Bond at idx " + container.getBondNumber(bond) + " has null bond order.");
-                    switch (bond.getOrder()) {
-                        case SINGLE:
-                        case DOUBLE:
-                        case TRIPLE:
-                            if (writeAromaticBondTypes.isSet() && bond.isAromatic())
-                                bondType = 4;
-                            else
-                                bondType = bond.getOrder().numeric();
-                            break;
-                        case UNSET:
-                            if (bond.isAromatic()) {
-                                if (!writeAromaticBondTypes.isSet())
-                                    throw new CDKException("Bond at idx " + container.getBondNumber(bond) + " was an unspecific aromatic bond which should only be used for querie in Molfiles. These can be written if desired by enabling the option 'WriteAromaticBondTypes'.");
-                                bondType = 4;
-                            } else {
-                                throw new CDKException("Bond at idx " + container.getBondNumber(bond) + ", " + bond.getOrder() + " is not supported by Molfile");
-                            }
-                            break;
-                        default:
-                            throw new CDKException("Bond at idx " + container.getBondNumber(bond) + ", " + bond.getOrder() + " is not supported by Molfile");
+                    if (bond.getOrder() != null) {
+                        switch (bond.getOrder()) {
+                            case SINGLE:
+                            case DOUBLE:
+                            case TRIPLE:
+                                if (writeAromaticBondTypes.isSet() && bond.isAromatic())
+                                    bondType = 4;
+                                else
+                                    bondType = bond.getOrder().numeric();
+                                break;
+                            case UNSET:
+                                if (bond.isAromatic()) {
+                                    if (!writeAromaticBondTypes.isSet())
+                                        throw new CDKException("Bond at idx " + container.getBondNumber(bond) + " was an unspecific aromatic bond which should only be used for querie in Molfiles. These can be written if desired by enabling the option 'WriteAromaticBondTypes'.");
+                                    bondType = 4;
+                                }
+                                break;
+                        }
                     }
-                    line += formatMDLInt(bondType, 3);
                 }
 
+                if (bondType == 0)
+                    throw new CDKException("Bond at idx=" + container.getBondNumber(bond) + " is not supported by Molfile, bond=" + bond.getOrder());
+
+                line += formatMDLInt(bondType, 3);
                 line += "  ";
                 switch (bond.getStereo()) {
                     case UP:
