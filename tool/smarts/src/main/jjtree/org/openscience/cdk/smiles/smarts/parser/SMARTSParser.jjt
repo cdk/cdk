@@ -295,8 +295,7 @@ TOKEN_MGR_DECLS : {
 
 /**
  *                     Start ::= <ReactionExpression> <#_WS>
- *        ReactionExpression ::= <GroupExpression> (">>" <GroupExpression>)? |
- *                               ">" <GroupExpression> ">" | ">>" <GroupExpression>
+ *        ReactionExpression ::= <GroupExpression>? (">" <GroupExpression>? ">" <GroupExpression>?)?
  *           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
  *          SmartsExpression ::= <AtomExpression> ( 
  									( [ <LowAndBond> ] ( <Digit> | <AtomExpression> ) ) |
@@ -341,11 +340,24 @@ ASTStart Start() #Start : {}
 
 void ReactionExpression() #Reaction : {}
 {
-    GroupExpression() ( ">>" [GroupExpression()] )?
-    |
-    ">" GroupExpression() ">"
-    |
-    ">>" GroupExpression()
+    [GroupExpression()]
+    (
+      ">"
+      {
+        if(jjtree.nodeArity() > 0)
+          ((ASTGroup)jjtree.peekNode()).setRole(ASTGroup.ROLE_REACTANT);
+      }
+      [
+        GroupExpression()
+        {
+          ((ASTGroup)jjtree.peekNode()).setRole(ASTGroup.ROLE_AGENT);
+        }
+      ]
+      ">"
+      [
+        GroupExpression(){((ASTGroup)jjtree.peekNode()).setRole(ASTGroup.ROLE_PRODUCT);}
+      ]
+    )?
 }
 
 void GroupExpression() #Group : {}

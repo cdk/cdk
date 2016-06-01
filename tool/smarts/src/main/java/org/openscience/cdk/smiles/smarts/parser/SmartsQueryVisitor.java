@@ -50,6 +50,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.MassAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.NonCHHeavyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.PeriodicGroupNumberAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.ReactionRole;
 import org.openscience.cdk.isomorphism.matchers.smarts.RecursiveSmartsAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.RingBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.RingIdentifierAtom;
@@ -211,13 +212,48 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
         return node.jjtGetChild(0).jjtAccept(this, data);
     }
 
-    // TODO: No QueryReaction API
     public Object visit(ASTReaction node, Object data) {
-        return node.jjtGetChild(0).jjtAccept(this, data);
+        IAtomContainer query = new QueryAtomContainer(builder);
+        for (int grpIdx = 0; grpIdx < node.jjtGetNumChildren(); grpIdx++) {
+
+            int rollback = query.getAtomCount();
+
+            ASTGroup group = (ASTGroup) node.jjtGetChild(grpIdx);
+            group.jjtAccept(this, query);
+
+            // fill in the roles for newly create atoms
+            if (group.getRole() != ASTGroup.ROLE_ANY) {
+                IQueryAtom roleQueryAtom = null;
+
+                // use single instances
+                switch (group.getRole()) {
+                    case ASTGroup.ROLE_REACTANT:
+                        roleQueryAtom = ReactionRole.RoleReactant;
+                        break;
+                    case ASTGroup.ROLE_AGENT:
+                        roleQueryAtom = ReactionRole.RoleAgent;
+                        break;
+                    case ASTGroup.ROLE_PRODUCT:
+                        roleQueryAtom = ReactionRole.RoleProduct;
+                        break;
+                }
+
+                if (roleQueryAtom != null) {
+                    while (rollback < query.getAtomCount()) {
+                        query.setAtom(rollback, LogicalOperatorAtom.and(roleQueryAtom, (IQueryAtom) query.getAtom(rollback)));
+                        rollback++;
+                    }
+                }
+            }
+        }
+        return query;
     }
 
     public Object visit(ASTGroup node, Object data) {
-        IAtomContainer fullQuery = new QueryAtomContainer(builder);
+        IAtomContainer fullQuery = (IAtomContainer) data;
+
+        if (fullQuery == null)
+            fullQuery = new QueryAtomContainer(builder);
 
         // keeps track of component grouping
         int[] components = new int[0];
