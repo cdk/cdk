@@ -17,6 +17,8 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
+import org.openscience.cdk.isomorphism.matchers.smarts.ReactionRole;
+
 /**
  * An AST node. It represents the group notation (.) of smarts.
  *
@@ -27,6 +29,13 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.keyword SMARTS AST
  */
 class ASTGroup extends SimpleNode {
+
+    static final int ROLE_REACTANT = ReactionRole.ROLE_REACTANT;
+    static final int ROLE_AGENT    = ReactionRole.ROLE_AGENT;
+    static final int ROLE_PRODUCT  = ReactionRole.ROLE_PRODUCT;
+    static final int ROLE_ANY      = ReactionRole.ROLE_ANY;
+
+    private int role = ROLE_ANY;
 
     /**
      * Creates a new instance
@@ -45,6 +54,14 @@ class ASTGroup extends SimpleNode {
      */
     public ASTGroup(SMARTSParser p, int id) {
         super(p, id);
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public int getRole() {
+        return this.role;
     }
 
     /*
