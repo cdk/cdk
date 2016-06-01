@@ -288,7 +288,7 @@ final class StandardSgroupGenerator {
                     result.add(generateAbbreviationSgroup(container, sgroup));
                     break;
                 case CtabMultipleGroup:
-                    result.add(generateMultipleSgroup(sgroup));
+                    result.add(generateMultipleSgroup(sgroup, symbolMap));
                     break;
                 case CtabAnyPolymer:
                 case CtabMonomer:
@@ -315,13 +315,13 @@ final class StandardSgroupGenerator {
         return result;
     }
 
-    private IRenderingElement generateMultipleSgroup(Sgroup sgroup) {
+    private IRenderingElement generateMultipleSgroup(Sgroup sgroup, Map<IAtom, AtomSymbol> symbolMap) {
         // just draw the brackets - multiplied group parts have already been hidden in prep phase
         List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
         if (brackets != null) {
             return generateSgroupBrackets(sgroup,
                                           brackets,
-                                          Collections.<IAtom, AtomSymbol>emptyMap(),
+                                          symbolMap,
                                           (String) sgroup.getValue(SgroupKey.CtabSubScript),
                                           null);
         } else {
@@ -485,7 +485,10 @@ final class StandardSgroupGenerator {
         boolean round = style != null && style == 1;
         ElementGroup result = new ElementGroup();
 
-        Set<IAtom> atoms = sgroup.getAtoms();
+        Set<IAtom> atoms  = sgroup.getType() == SgroupType.CtabMultipleGroup ?
+                                (Set<IAtom>) sgroup.getValue(SgroupKey.CtabParentAtomList) :
+                                sgroup.getAtoms();
+
         Set<IBond> crossingBonds = sgroup.getBonds();
 
         // easy to depict in correct orientation, we just
@@ -512,6 +515,7 @@ final class StandardSgroupGenerator {
                 AtomSymbol symbol = symbols.get(atoms.iterator().next());
 
                 Rectangle2D bounds = symbol.getConvexHull().outline().getBounds2D();
+
                 // make slightly large
                 bounds.setRect(bounds.getMinX() - 2 * stroke,
                                bounds.getMinY() - 2 * stroke,
