@@ -64,6 +64,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -573,10 +574,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         }
 
         // write Bond block
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
-
+        for (IBond bond : container.bonds()) {
             if (bond.getAtomCount() != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
             } else {
@@ -589,14 +587,63 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     line = formatMDLInt(atomindex.get(bond.getAtom(0)) + 1, 3);
                     line += formatMDLInt(atomindex.get(bond.getAtom(1)) + 1, 3);
                 }
+
                 int bondType;
-                if (writeAromaticBondTypes.isSet() && bond.getFlag(CDKConstants.ISAROMATIC))
-                    bondType = 4;
-                else if (Order.QUADRUPLE == bond.getOrder())
-                    throw new CDKException("MDL molfiles do not support quadruple bonds.");
-                else
-                    bondType = bond.getOrder().numeric();
-                line += formatMDLInt(bondType, 3);
+
+                if (bond instanceof CTFileQueryBond) {
+                    // Could do ordinal()-1 but this is clearer
+                    switch (((CTFileQueryBond) bond).getType()) {
+                        case SINGLE:
+                            bondType = 1;
+                            break;
+                        case DOUBLE:
+                            bondType = 2;
+                            break;
+                        case TRIPLE:
+                            bondType = 3;
+                            break;
+                        case AROMATIC:
+                            bondType = 4;
+                            break;
+                        case SINGLE_OR_DOUBLE:
+                            bondType = 5;
+                            break;
+                        case SINGLE_OR_AROMATIC:
+                            bondType = 6;
+                            break;
+                        case DOUBLE_OR_AROMATIC:
+                            bondType = 7;
+                            break;
+                        case ANY:
+                            bondType = 8;
+                            break;
+                    }
+                } else {
+                    if (bond.getOrder() == null)
+                        throw new CDKException("Bond at idx " + container.getBondNumber(bond) + " has null bond order.");
+                    switch (bond.getOrder()) {
+                        case SINGLE:
+                        case DOUBLE:
+                        case TRIPLE:
+                            if (writeAromaticBondTypes.isSet() && bond.isAromatic())
+                                bondType = 4;
+                            else
+                                bondType = bond.getOrder().numeric();
+                            break;
+                        case UNSET:
+                            if (bond.isAromatic()) {
+                                if (!writeAromaticBondTypes.isSet())
+                                    throw new CDKException("Bond at idx " + container.getBondNumber(bond) + " was an unspecific aromatic bond which should only be used for querie in Molfiles. These can be written if desired by enabling the option 'WriteAromaticBondTypes'.");
+                                bondType = 4;
+                            } else {
+                                throw new CDKException("Bond at idx " + container.getBondNumber(bond) + ", " + bond.getOrder() + " is not supported by Molfile");
+                            }
+                            break;
+                        default:
+                            throw new CDKException("Bond at idx " + container.getBondNumber(bond) + ", " + bond.getOrder() + " is not supported by Molfile");
+                    }
+                    line += formatMDLInt(bondType, 3);
+                }
 
                 line += "  ";
                 switch (bond.getStereo()) {
@@ -1028,6 +1075,19 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                                                                  "Should aromatic bonds be written as bond type 4?", "false"));
         writeQueryFormatValencies = addSetting(new BooleanIOSetting("WriteQueryFormatValencies",
                                                                     IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
+    }
+
+    /**
+     * Convenience method to set the option for writing aromatic bond types.
+     *
+     * @param val the value.
+     */
+    public void setWriteAromaticBondTypes(boolean val) {
+        try {
+            writeAromaticBondTypes.setSetting(Boolean.toString(val));
+        } catch (CDKException e) {
+            // ignored can't happen since we are statically typed here
+        }
     }
 
     public void customizeJob() {
