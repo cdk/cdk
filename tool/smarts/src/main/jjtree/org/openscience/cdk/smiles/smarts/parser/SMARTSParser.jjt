@@ -638,21 +638,21 @@ void PrimitiveAtomExpression() : {}
 }
 
 void TotalHCount() #TotalHCount : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <H> { jjtThis.setCount(1); } [ ( <DIGIT> { digits.append(token.image); } )+ 
     { jjtThis.setCount( Integer.parseInt(digits.toString()) ); } ]
 }
 
 void ImplicitHCount() #ImplicitHCount: 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <h> { jjtThis.setCount(1); } [ ( <DIGIT> { digits.append(token.image); } )+ 
     { jjtThis.setCount( Integer.parseInt(digits.toString()) ); } ]
 }
 
 void ExplicitConnectivity() #ExplicitConnectivity : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <D> { jjtThis.setNumOfConnection(1); } 
     [ ( <DIGIT> { digits.append(token.image); } )+ 
@@ -660,7 +660,7 @@ void ExplicitConnectivity() #ExplicitConnectivity :
 }
 
 void AtomicNumber() #AtomicNumber : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     "#" ( <DIGIT> { digits.append(token.image); } )+ 
     { jjtThis.setNumber( Integer.parseInt(digits.toString()) ); }
@@ -677,7 +677,7 @@ void HybridizationNumber() #HybrdizationNumber :
 }
         
 void Charge() #Charge : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     // Here assuming nobody will write anything like -----------... 
     // with more than 8 of them
@@ -711,7 +711,7 @@ void RingConnectivity() #RingConnectivity : {}
 }
 
 void PeriodicGroupNumber() throws ParseException #PeriodicGroupNumber :
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <G> { }
     ( <DIGIT> { digits.append(token.image); } )+
@@ -722,7 +722,7 @@ void PeriodicGroupNumber() throws ParseException #PeriodicGroupNumber :
 }
 
 void TotalConnectivity() #TotalConnectivity : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <X> { jjtThis.setNumOfConnection(1); } 
     [ ( <DIGIT> { digits.append(token.image); } )+ 
@@ -730,7 +730,7 @@ void TotalConnectivity() #TotalConnectivity :
 }
 
 void Valence() #Valence : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <v> { jjtThis.setOrder(1); } 
     [ ( <DIGIT> { digits.append(token.image); })+ 
@@ -738,7 +738,7 @@ void Valence() #Valence :
 }
 
 void RingMembership() #RingMembership : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <R> { jjtThis.setNumOfMembership(-1); }
     [ ( <DIGIT> { digits.append(token.image); } )+ 
@@ -746,7 +746,7 @@ void RingMembership() #RingMembership :
 }
 
 void SmallestRingSize() #SmallestRingSize : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <r> { jjtThis.setSize(-1); }
     [ ( <DIGIT> { digits.append(token.image); } )+ 
@@ -774,7 +774,7 @@ void AnyAtom() #AnyAtom : {}
 }
 
 void AtomicMass() #AtomicMass : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     ( <DIGIT> { digits.append(token.image); } )+
     {
@@ -788,7 +788,7 @@ void RingIdentifier() #RingIdentifier: {}
 }
 
 void Chirality() #Chirality : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     "@" { jjtThis.setClockwise(false); }
     (
