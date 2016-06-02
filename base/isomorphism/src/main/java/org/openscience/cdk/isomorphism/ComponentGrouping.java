@@ -116,9 +116,11 @@ public final class ComponentGrouping implements Predicate<int[]> {
         this.queryComponents  = grouping;
         this.targetComponents = targetComponents;
         int max = 0;
-        for (int i = 0; i < targetComponents.length; i++)
-            if (targetComponents[i] > max)
-                max = targetComponents[i];
+        if (targetComponents != null) {
+            for (int i = 0; i < targetComponents.length; i++)
+                if (targetComponents[i] > max)
+                    max = targetComponents[i];
+        }
         this.maxComponentIdx = max;
     }
 
