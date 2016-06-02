@@ -621,15 +621,14 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTLowAndExpression node, Object data) {
-        Object left = node.jjtGetChild(0).jjtAccept(this, data);
-        if (node.jjtGetNumChildren() == 1) {
-            return left;
+        IAtom expr = (IAtom) node.jjtGetChild(0).jjtAccept(this, data);
+        if (node.jjtGetNumChildren() > 1) {
+            IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this, data);
+            expr = LogicalOperatorAtom.and((IQueryAtom) expr, right);
         }
-        IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this, data);
-        IAtom res =  LogicalOperatorAtom.and((IQueryAtom) left, right);
         if (node.getMapIdx()>0)
-            res.setProperty(CDKConstants.ATOM_ATOM_MAPPING, node.getMapIdx());
-        return res;
+            expr.setProperty(CDKConstants.ATOM_ATOM_MAPPING, node.getMapIdx());
+        return expr;
     }
 
     public Object visit(ASTOrExpression node, Object data) {
