@@ -19,6 +19,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -241,9 +242,13 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
                 if (roleQueryAtom != null) {
                     while (rollback < query.getAtomCount()) {
+                        IAtom org = query.getAtom(rollback);
+                        IAtom rep = LogicalOperatorAtom.and(roleQueryAtom, (IQueryAtom) org);
+                        // ensure AAM is propagated
+                        rep.setProperty(CDKConstants.ATOM_ATOM_MAPPING, org.getProperty(CDKConstants.ATOM_ATOM_MAPPING));
                         AtomContainerManipulator.replaceAtomByAtom(query,
-                                                                   query.getAtom(rollback),
-                                                                   LogicalOperatorAtom.and(roleQueryAtom, (IQueryAtom) query.getAtom(rollback)));
+                                                                   org,
+                                                                   rep);
                         rollback++;
                     }
                 }
@@ -621,7 +626,10 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             return left;
         }
         IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this, data);
-        return LogicalOperatorAtom.and((IQueryAtom) left, right);
+        IAtom res =  LogicalOperatorAtom.and((IQueryAtom) left, right);
+        if (node.getMapIdx()>0)
+            res.setProperty(CDKConstants.ATOM_ATOM_MAPPING, node.getMapIdx());
+        return res;
     }
 
     public Object visit(ASTOrExpression node, Object data) {
