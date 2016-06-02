@@ -25,6 +25,7 @@
 package org.openscience.cdk.isomorphism;
 
 import com.google.common.base.Predicate;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -65,8 +66,7 @@ public final class ComponentGrouping implements Predicate<int[]> {
     /** The required  (query) and the targetComponents of the target. */
     private final int[]               queryComponents, targetComponents;
 
-    /** Connected components of the target. */
-    private final ConnectedComponents cc;
+    private final int maxComponentIdx;
 
     /**
      * Create a predicate to match components for the provided query and target.
@@ -78,21 +78,31 @@ public final class ComponentGrouping implements Predicate<int[]> {
      * @param target target structure
      */
     public ComponentGrouping(IAtomContainer query, IAtomContainer target) {
-        this(query, GraphUtil.toAdjList(target));
+        this(query.getProperty(KEY, int[].class),
+             query.getProperty(KEY) != null ? determineComponents(target) : null);
     }
 
-    /**
-     * Create a predicate to match components for the provided query and target.
-     * The target is pre-converted to an adjacency list ({@link
-     * GraphUtil#toAdjList(IAtomContainer)}) and the query components extracted
-     * from the property {@link #KEY} in the query.
-     *
-     * @param query  query structure
-     * @param target target structure
-     */
-    public ComponentGrouping(IAtomContainer query, int[][] target) {
-        this(query.getProperty(KEY, int[].class), query.getProperty(KEY) != null ? new ConnectedComponents(target)
-                : null);
+    private static int[] determineComponents(IAtomContainer target) {
+        int[] components = null;
+        // no atoms -> no components
+        if (target.isEmpty())
+            components = new int[0];
+        // defined by reaction grouping
+        if (components == null && target.getAtom(0).getProperty(CDKConstants.REACTION_GROUP) != null) {
+            components = new int[target.getAtomCount()];
+            for (int i = 0; i < target.getAtomCount(); i++) {
+                Integer grp = target.getAtom(i).getProperty(CDKConstants.REACTION_GROUP);
+                if (grp == null) {
+                    components = null;
+                    break;
+                }
+                components[i] = grp;
+            }
+        }
+        // calculate from connection table
+        if (components == null)
+            components = new ConnectedComponents(GraphUtil.toAdjList(target)).components();
+        return components;
     }
 
     /**
@@ -102,10 +112,14 @@ public final class ComponentGrouping implements Predicate<int[]> {
      * @param grouping  query grouping
      * @param cc        connected component of the target
      */
-    public ComponentGrouping(int[] grouping, ConnectedComponents cc) {
-        this.queryComponents = grouping;
-        this.cc = cc;
-        this.targetComponents = cc != null ? cc.components() : null;
+    public ComponentGrouping(int[] grouping, int[] targetComponents) {
+        this.queryComponents  = grouping;
+        this.targetComponents = targetComponents;
+        int max = 0;
+        for (int i = 0; i < targetComponents.length; i++)
+            if (targetComponents[i] > max)
+                max = targetComponents[i];
+        this.maxComponentIdx = max;
     }
 
     /**
@@ -123,7 +137,7 @@ public final class ComponentGrouping implements Predicate<int[]> {
 
         // bidirectional map of query/target components, last index
         // of query components holds the count
-        int[] usedBy = new int[cc.nComponents() + 1];
+        int[] usedBy = new int[maxComponentIdx+1];
         int[] usedIn = new int[queryComponents[mapping.length] + 1];
 
         // verify we don't have any collisions

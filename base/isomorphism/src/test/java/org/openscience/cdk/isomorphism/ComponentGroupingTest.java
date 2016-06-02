@@ -111,7 +111,7 @@ public class ComponentGroupingTest {
     }
 
     static ComponentGrouping create(int[] grouping, IAtomContainer container) {
-        return new ComponentGrouping(grouping, new ConnectedComponents(GraphUtil.toAdjList(container)));
+        return new ComponentGrouping(grouping, new ConnectedComponents(GraphUtil.toAdjList(container)).components());
     }
 
 }
