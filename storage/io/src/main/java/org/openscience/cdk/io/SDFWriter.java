@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -67,28 +68,37 @@ public class SDFWriter extends DefaultChemObjectWriter {
     private Set<String>               propertiesToWrite;
 
     /**
-     * Constructs a new SDFWriter that writes to the given {@link Writer}.
+     * Create an SDfile writer that will output directly to the provided buffered writer.
      *
-     * @param   out  The {@link Writer} to write to
+     * @param wtr writer
      */
-    public SDFWriter(Writer out) {
-        if (out instanceof BufferedWriter) {
-            writer = (BufferedWriter) out;
-        } else {
-            writer = new BufferedWriter(out);
-        }
+    public SDFWriter(BufferedWriter wtr) {
+        this.writer = wtr;
         initIOSettings();
     }
 
     /**
-     * Constructs a new MDLWriter that can write to a given
-     * {@link OutputStream}.
+     * Create an SDfile writer, the provided writer is buffered
+     * if it's not an instance of BufferedWriter. For flush control
+     * etc please create with {@link BufferedWriter}.
      *
-     * @param   output  The {@link OutputStream} to write to
+     * @param wtr writer
+     */
+    public SDFWriter(Writer wtr) {
+        this(ensureBuffered(wtr));
+        initIOSettings();
+    }
+
+    /**
+     * Create an SDfile writer, the provided output stream is wrapped
+     * in a UTF-8 buffered writer.
+     *
+     * @param output out stream
      */
     public SDFWriter(OutputStream output) {
-        this(new OutputStreamWriter(output));
+        this(new OutputStreamWriter(output, StandardCharsets.UTF_8));
     }
+
 
     public SDFWriter() {
         this(new StringWriter());
@@ -100,11 +110,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
      * @param out The {@link Writer} to write to
      */
     public SDFWriter(Writer out, Set<String> propertiesToWrite) {
-        if (out instanceof BufferedWriter) {
-            writer = (BufferedWriter) out;
-        } else {
-            writer = new BufferedWriter(out);
-        }
+        this(out);
         initIOSettings();
         this.propertiesToWrite = propertiesToWrite;
     }
@@ -124,6 +130,18 @@ public class SDFWriter extends DefaultChemObjectWriter {
      */
     public SDFWriter(Set<String> propertiesToWrite) {
         this(new StringWriter(), propertiesToWrite);
+    }
+
+    /**
+     * Ensures a writer is buffered.
+     *
+     * @param wtr writer, may be buffered
+     * @return a BufferedWriter
+     */
+    private static BufferedWriter ensureBuffered(Writer wtr) {
+        if (wtr == null) throw new NullPointerException("Provided writer was null");
+        return wtr instanceof BufferedWriter ? (BufferedWriter) wtr
+                                             : new BufferedWriter(wtr);
     }
 
     @Override
