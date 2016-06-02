@@ -22,17 +22,26 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @cdk.module standard
@@ -257,4 +266,135 @@ public class ReactionManipulator {
         return null;
     }
 
+    /**
+     * Assigns a reaction role and group id to all atoms in a molecule.
+     *
+     * @param mol molecule
+     * @param role role to assign
+     * @param grpId group id
+     */
+    private static void assignRoleAndGrp(IAtomContainer mol, ReactionRole role, int grpId) {
+        for (IAtom atom : mol.atoms()) {
+            atom.setProperty(CDKConstants.REACTION_ROLE, role);
+            atom.setProperty(CDKConstants.REACTION_GROUP, grpId);
+        }
+    }
+
+    /**
+     * <p>Converts a reaction to an 'inlined' reaction stored as a molecule. All
+     * reactants, agents, products are added to the molecule as disconnected
+     * components with atoms flagged as to their role {@link ReactionRole} and
+     * component group.</p>
+     * <p>
+     * The inlined reaction, stored in a molecule can be converted back to an explicit
+     * reaction with {@link #toReaction}. Data stored on the individual components (e.g.
+     * titles is lost in the conversion).
+     * </p>
+     *
+     * @param rxn reaction to convert
+     * @return inlined reaction stored in a molecule
+     * @see #toReaction
+     */
+    public static IAtomContainer toMolecule(IReaction rxn) {
+        if (rxn == null)
+            throw new IllegalArgumentException("Null reaction provided");
+        final IChemObjectBuilder bldr = rxn.getBuilder();
+        final IAtomContainer mol = bldr.newInstance(IAtomContainer.class);
+        mol.setProperties(rxn.getProperties());
+        mol.setID(rxn.getID());
+        int grpId = 0;
+        for (IAtomContainer comp : rxn.getReactants().atomContainers()) {
+            assignRoleAndGrp(comp, ReactionRole.Reactant, ++grpId);
+            mol.add(comp);
+        }
+        for (IAtomContainer comp : rxn.getAgents().atomContainers()) {
+            assignRoleAndGrp(comp, ReactionRole.Agent, ++grpId);
+            mol.add(comp);
+        }
+        for (IAtomContainer comp : rxn.getProducts().atomContainers()) {
+            assignRoleAndGrp(comp, ReactionRole.Product, ++grpId);
+            mol.add(comp);
+        }
+        return mol;
+    }
+
+    /**
+     * <p>Converts an 'inlined' reaction stored in a molecule back to a reaction.</p>
+     *
+     * @param mol molecule to convert
+     * @return reaction
+     * @see #toMolecule(IReaction)
+     */
+    public static IReaction toReaction(IAtomContainer mol) {
+        if (mol == null)
+            throw new IllegalArgumentException("Null molecule provided");
+        final IChemObjectBuilder bldr = mol.getBuilder();
+        final IReaction          rxn  = bldr.newInstance(IReaction.class);
+        rxn.setProperties(mol.getProperties());
+        rxn.setID(mol.getID());
+
+        Map<Integer,IAtomContainer> components = new HashMap<>();
+
+        // split atoms
+        for (IAtom atom : mol.atoms()) {
+            ReactionRole role   = atom.getProperty(CDKConstants.REACTION_ROLE);
+            Integer      grpIdx = atom.getProperty(CDKConstants.REACTION_GROUP);
+
+            if (role == null || role == ReactionRole.None)
+                throw new IllegalArgumentException("Atom " + mol.getAtomNumber(atom) + " had undefined role");
+            if (grpIdx == null)
+                throw new IllegalArgumentException("Atom " + mol.getAtomNumber(atom) + " had no reaction group id");
+
+            IAtomContainer comp = components.get(grpIdx);
+
+            // new component, and add to appropriate role
+            if (comp == null) {
+                components.put(grpIdx, comp = bldr.newInstance(IAtomContainer.class, 20, 20, 0, 0));
+                switch (role) {
+                    case Reactant:
+                        rxn.addReactant(comp);
+                        break;
+                    case Product:
+                        rxn.addProduct(comp);
+                        break;
+                    case Agent:
+                        rxn.addAgent(comp);
+                        break;
+                }
+            }
+
+            comp.addAtom(atom);
+        }
+
+        // split bonds
+        for (IBond bond : mol.bonds()) {
+            IAtom beg = bond.getAtom(0);
+            IAtom end = bond.getAtom(1);
+            Integer begIdx = beg.getProperty(CDKConstants.REACTION_GROUP);
+            Integer endIdx = end.getProperty(CDKConstants.REACTION_GROUP);
+            if (begIdx == null || endIdx == null)
+                throw new IllegalArgumentException("Bond " + mol.getBondNumber(bond) + " had atoms with no reaction group id");
+            if (!begIdx.equals(endIdx))
+                throw new IllegalArgumentException("Bond " + mol.getBondNumber(bond) + " had atoms with different reaction group id");
+            components.get(begIdx).addBond(bond);
+        }
+
+        // split stereochemistry
+        for (IStereoElement se : mol.stereoElements()) {
+            IAtom focus = null;
+            if (se instanceof ITetrahedralChirality) {
+                focus = ((ITetrahedralChirality) se).getChiralAtom();
+            } else if (se instanceof IDoubleBondStereochemistry) {
+                focus = ((IDoubleBondStereochemistry) se).getStereoBond().getAtom(0);
+            } else if (se instanceof ExtendedTetrahedral) {
+                focus = ((ExtendedTetrahedral) se).focus();
+            }
+            if (focus == null)
+                throw new IllegalArgumentException("Stereochemistry had no focus");
+            Integer grpIdx = focus.getProperty(CDKConstants.REACTION_GROUP);
+            components.get(grpIdx).addStereoElement(se);
+        }
+
+        return rxn;
+    }
 }

@@ -32,6 +32,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -41,7 +42,12 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.MDLRXNReader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * @cdk.module test-standard
@@ -289,6 +295,19 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
         Assert.assertEquals(2, ReactionManipulator.getAllProducts(reaction).getAtomContainerCount());
+    }
+
+    @Test public void inliningReactions() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IReaction reaction = smipar.parseReactionSmiles("CCO.CC(=O)O>[H+]>CCOC(=O)C.O ethyl esterification");
+        SmilesGenerator smigen = SmilesGenerator.isomeric();
+        // convert to molecule
+        IAtomContainer mol = ReactionManipulator.toMolecule(reaction);
+        assertThat(smigen.create(mol),
+                   is("CCO.CC(=O)O.[H+].CCOC(=O)C.O"));
+        assertThat(smigen.createReactionSMILES(ReactionManipulator.toReaction(mol)),
+                   is("CCO.CC(=O)O>[H+]>CCOC(=O)C.O"));
     }
 
 }
