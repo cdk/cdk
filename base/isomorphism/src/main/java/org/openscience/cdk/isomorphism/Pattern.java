@@ -25,6 +25,8 @@
 package org.openscience.cdk.isomorphism;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  * A structural pattern for finding an exact matching in a target compound.
@@ -76,6 +78,26 @@ public abstract class Pattern {
     }
 
     /**
+     * Determine if there is a mapping of this pattern in the {@code target}
+     * reaction.
+     *
+     * <blockquote><pre>
+     * Pattern        pattern = ...; // create pattern
+     * for (IReaction r : rs) {
+     *     if (pattern.matches(r)) {
+     *         // found mapping!
+     *     }
+     * }
+     * </pre></blockquote>
+     *
+     * @param target the reaction to search for the pattern in
+     * @return the mapping from the pattern to the target
+     */
+    public final boolean matches(IReaction target) {
+        return matches(ReactionManipulator.toMolecule(target));
+    }
+
+    /**
      * Find all mappings of this pattern in the {@code target}. Stereochemistry
      * should not be checked to allow filtering with {@link
      * Mappings#stereochemistry()}.
@@ -107,6 +129,31 @@ public abstract class Pattern {
      * @see Mappings
      */
     public abstract Mappings matchAll(IAtomContainer target);
+
+    /**
+     * Find all mappings of this pattern in the {@code target} reaction.
+     *
+     * <blockquote><pre>
+     * Pattern pattern = Pattern.findSubstructure(query);
+     * for (IReaction r : rs) {
+     *     for (int[] mapping : pattern.matchAll(r)) {
+     *         // found mapping
+     *     }
+     * }
+     * </pre></blockquote>
+     *
+     * The reaction is inlined into a molecule and vs mapped id's correspond
+     * to the absolute atom index in the reaction when considered as reactants, agents,
+     * products {@see ReactionManipulator#toMolecule}.
+     *
+     * @param target the reaction to search for the pattern in
+     * @return the mapping from the pattern to the target
+     * @see Mappings
+     * @see ReactionManipulator#toMolecule(IReaction)
+     */
+    public final Mappings matchAll(IReaction target) {
+        return matchAll(ReactionManipulator.toMolecule(target));
+    }
 
     /**
      * Create a pattern which can be used to find molecules which contain the
