@@ -17,7 +17,7 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-import org.openscience.cdk.isomorphism.matchers.smarts.ReactionRole;
+import org.openscience.cdk.isomorphism.matchers.smarts.ReactionRoleQueryAtom;
 
 /**
  * An AST node. It represents the group notation (.) of smarts.
@@ -30,10 +30,10 @@ import org.openscience.cdk.isomorphism.matchers.smarts.ReactionRole;
  */
 class ASTGroup extends SimpleNode {
 
-    static final int ROLE_REACTANT = ReactionRole.ROLE_REACTANT;
-    static final int ROLE_AGENT    = ReactionRole.ROLE_AGENT;
-    static final int ROLE_PRODUCT  = ReactionRole.ROLE_PRODUCT;
-    static final int ROLE_ANY      = ReactionRole.ROLE_ANY;
+    static final int ROLE_REACTANT = ReactionRoleQueryAtom.ROLE_REACTANT;
+    static final int ROLE_AGENT    = ReactionRoleQueryAtom.ROLE_AGENT;
+    static final int ROLE_PRODUCT  = ReactionRoleQueryAtom.ROLE_PRODUCT;
+    static final int ROLE_ANY      = ReactionRoleQueryAtom.ROLE_ANY;
 
     private int role = ROLE_ANY;
 

@@ -22,13 +22,15 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Matches atoms with a particular role in a reaction.
  */
-public class ReactionRole extends SMARTSAtom {
+public class ReactionRoleQueryAtom extends SMARTSAtom {
 
     public static final int ROLE_REACTANT = 0x1;
     public static final int ROLE_AGENT    = 0x2;
@@ -37,18 +39,30 @@ public class ReactionRole extends SMARTSAtom {
 
     private final int role;
 
-    public final static ReactionRole RoleReactant = new ReactionRole(null, ROLE_REACTANT);
-    public final static ReactionRole RoleAgent = new ReactionRole(null, ROLE_AGENT);
-    public final static ReactionRole RoleProduct = new ReactionRole(null, ROLE_PRODUCT);
+    public final static ReactionRoleQueryAtom RoleReactant = new ReactionRoleQueryAtom(null, ROLE_REACTANT);
+    public final static ReactionRoleQueryAtom RoleAgent    = new ReactionRoleQueryAtom(null, ROLE_AGENT);
+    public final static ReactionRoleQueryAtom RoleProduct  = new ReactionRoleQueryAtom(null, ROLE_PRODUCT);
 
-    public ReactionRole(IChemObjectBuilder builder, int role) {
+    public ReactionRoleQueryAtom(IChemObjectBuilder builder, int role) {
         super(builder);
         this.role = role;
     }
 
     @Override
     public boolean matches(IAtom atom) {
-        return true; // TODO
+        ReactionRole atomRole = atom.getProperty(CDKConstants.REACTION_ROLE);
+        if (atomRole == null)
+            return this.role == ROLE_ANY;
+        switch (atomRole) {
+            case Reactant:
+                return (this.role & ROLE_REACTANT) != 0;
+            case Agent:
+                return (this.role & ROLE_AGENT) != 0;
+            case Product:
+                return (this.role & ROLE_PRODUCT) != 0;
+            default:
+                return false;
+        }
     }
 
     @Override

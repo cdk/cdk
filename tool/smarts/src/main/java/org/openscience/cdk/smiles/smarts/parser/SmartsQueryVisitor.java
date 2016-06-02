@@ -50,7 +50,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.MassAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.NonCHHeavyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.PeriodicGroupNumberAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.ReactionRole;
+import org.openscience.cdk.isomorphism.matchers.smarts.ReactionRoleQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.RecursiveSmartsAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.RingBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.RingIdentifierAtom;
@@ -67,6 +67,7 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -228,19 +229,21 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 // use single instances
                 switch (group.getRole()) {
                     case ASTGroup.ROLE_REACTANT:
-                        roleQueryAtom = ReactionRole.RoleReactant;
+                        roleQueryAtom = ReactionRoleQueryAtom.RoleReactant;
                         break;
                     case ASTGroup.ROLE_AGENT:
-                        roleQueryAtom = ReactionRole.RoleAgent;
+                        roleQueryAtom = ReactionRoleQueryAtom.RoleAgent;
                         break;
                     case ASTGroup.ROLE_PRODUCT:
-                        roleQueryAtom = ReactionRole.RoleProduct;
+                        roleQueryAtom = ReactionRoleQueryAtom.RoleProduct;
                         break;
                 }
 
                 if (roleQueryAtom != null) {
                     while (rollback < query.getAtomCount()) {
-                        query.setAtom(rollback, LogicalOperatorAtom.and(roleQueryAtom, (IQueryAtom) query.getAtom(rollback)));
+                        AtomContainerManipulator.replaceAtomByAtom(query,
+                                                                   query.getAtom(rollback),
+                                                                   LogicalOperatorAtom.and(roleQueryAtom, (IQueryAtom) query.getAtom(rollback)));
                         rollback++;
                     }
                 }
