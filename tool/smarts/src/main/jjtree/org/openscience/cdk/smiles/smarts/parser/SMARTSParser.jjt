@@ -300,7 +300,7 @@ TOKEN_MGR_DECLS : {
  *          SmartsExpression ::= <AtomExpression> ( 
  									( [ <LowAndBond> ] ( <Digit> | <AtomExpression> ) ) |
  									( "(" [ <LowAndBond> ] <SmartsExpression> ")" ) )*
- 		      AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> "]" ) | <ExplicitAtomExpression>
+ 		      AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> [:<Digit>+] "]" ) | <ExplicitAtomExpression>
  *                LowAndBond ::= <OrBond> [ ";" <AndBond> ]
  *                    OrBond ::= <ExplicitHighAndBond> [ "," <OrBond> ]
  *       ExplicitHighAndBond ::= <ImplicitHighAndBond> [ "&" <ExplicitHighAndBond> ]
@@ -442,6 +442,7 @@ ASTAtom	 AtomExpression() #Atom :
 	Token secondToken;
 	Token rightBracket;
 	ASTAtomicMass massNode = null;
+	StringBuilder mapidx = new StringBuilder();
 }
 {
 	( 
@@ -459,6 +460,11 @@ secondToken = getToken(2); }
 					jjtree.pushNode(topNode);
 				}
 	    	}
+	    	// Optional atom map idx
+	    	( ":"
+	    	  ( <DIGIT> {mapidx.append(token.image);} )+
+	    	  {((ASTLowAndExpression)jjtree.peekNode()).setMapIdx(Integer.parseInt(mapidx.toString()));}
+	    	)?
 	    	<R_BRACKET> { token_source.SwitchTo(SMARTSParserConstants.DEFAULT); rightBracket = token; }
 	    	{   
 	    		Token HToken = null;
