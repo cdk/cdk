@@ -462,7 +462,8 @@ secondToken = getToken(2); }
 	    	}
 	    	// Optional atom map idx
 	    	( ":"
-	    	  ( <DIGIT> {mapidx.append(token.image);} )+
+	    	  [ "?" ]
+	    	  ( <DIGIT> { mapidx.append(token.image); } )+
 	    	  {((ASTLowAndExpression)jjtree.peekNode()).setMapIdx(Integer.parseInt(mapidx.toString()));}
 	    	)?
 	    	<R_BRACKET> { token_source.SwitchTo(SMARTSParserConstants.DEFAULT); rightBracket = token; }
