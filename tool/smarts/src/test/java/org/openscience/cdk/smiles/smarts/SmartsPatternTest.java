@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.smiles.smarts;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -31,6 +32,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -118,6 +120,66 @@ public class SmartsPatternTest {
         assertTrue(SmartsPattern.create("([Na+].[OH-])>>", bldr).matches(rsmi("[Na+].[OH-]>> |f:0.1|")));
         // this one can't match because we don't know if NaOH is one component from the input smiles
         assertFalse(SmartsPattern.create("([Na+].[OH-])>>", bldr).matches(rsmi("[Na+].[OH-]>>")));
+    }
+
+    @Test public void noMaps() throws Exception {
+        assertThat(SmartsPattern.create("C>>C", null).matchAll(rsmi("CC>>CC")).count(),
+                   is(4));
+    }
+
+    @Test public void noMapsInQueryMapsInTargetIgnored() throws Exception {
+        assertThat(SmartsPattern.create("C>>C", null).matchAll(rsmi("[C:7][C:8]>>[C:7][C:8]")).count(),
+                   is(4));
+    }
+
+    @Test public void unpairedMapIsQueryIsIgnored() throws Exception {
+        assertThat(SmartsPattern.create("[C:1]>>C", null).matchAll(rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).count(),
+                   is(4));
+        assertThat(SmartsPattern.create("C>>[C:1]", null).matchAll(rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).count(),
+                   is(4));
+    }
+
+    @Test
+    public void noMapsInTarget() throws Exception {
+        assertThat(SmartsPattern.create("[C:1]>>[C:1]", null).matchAll(rsmi("C>>C")).count(),
+                   is(0));
+    }
+
+    @Ignore("Not supported yet")
+    public void optionalMapping() throws Exception {
+        assertThat(SmartsPattern.create("[C:?1]>>[C:?1]", null).matchAll(rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).count(),
+                   is(2));
+        assertThat(SmartsPattern.create("[C:?1]>>[C:?1]", null).matchAll(rsmi("CC>>CC")).count(),
+                   is(4));
+    }
+    @Test
+    public void mappedMatch() throws Exception {
+        assertThat(SmartsPattern.create("[C:1]>>[C:1]", null).matchAll(rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).count(),
+                   is(2));
+    }
+
+    @Test
+    public void mismatchedQueryMapsIgnored() throws Exception {
+        assertThat(SmartsPattern.create("[C:1]>>[C:2]", null).matchAll(rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).count(),
+                   is(4));
+    }
+
+    // map :1 in query binds only to :7 in target
+    @Test public void atomMapsWithOrLogic1() throws Exception {
+        assertThat(SmartsPattern.create("[C:1][C:1]>>[C:1]", null).matchAll(rsmi("[CH3:7][CH3:7]>>[CH3:7][CH3:7]")).count(),
+                   is(4));
+    }
+
+    // map :1 in query binds to :7 or :8 in target
+    @Test public void atomMapsWithOrLogic2() throws Exception {
+        assertThat(SmartsPattern.create("[C:1][C:1]>>[C:1]", null).matchAll(rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).count(),
+                   is(4));
+    }
+
+    // map :1 in query binds only to :7 in target
+    @Test public void atomMapsWithOrLogic3() throws Exception {
+        assertThat(SmartsPattern.create("[C:1][C:1]>>[C:1]", null).matchAll(rsmi("[CH3:7][CH3:7]>>[CH3:7][CH3:8]")).count(),
+                   is(2));
     }
 
     IAtomContainer smi(String smi) throws Exception {

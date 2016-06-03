@@ -81,11 +81,13 @@ public final class SmartsPattern extends Pattern {
     private final Pattern        pattern;
 
     /** Include invariants about ring size / number. */
-    private final boolean        ringInfo;
+    private final boolean        ringInfo, hasStereo, hasCompGrp, hasRxnMap;
 
     /** Aromaticity model. */
     private final Aromaticity    arom = new Aromaticity(ElectronDonation.daylight(), Cycles.or(Cycles.all(),
                                               Cycles.relevant()));
+
+
 
     /**
      * Internal constructor.
@@ -105,7 +107,10 @@ public final class SmartsPattern extends Pattern {
         // X<num>, R and @ are cheap and done always but R<num>, r<num> are not
         // we inspect the SMARTS pattern string to determine if ring
         // size or number queries are needed
-        this.ringInfo = ringSizeOrNumber(smarts);
+        this.ringInfo   = ringSizeOrNumber(smarts);
+        this.hasStereo  = query.stereoElements().iterator().hasNext();
+        this.hasCompGrp = query.getProperty(ComponentGrouping.KEY) != null;
+        this.hasRxnMap  = smarts.contains(":");
     }
 
     /**
@@ -158,12 +163,13 @@ public final class SmartsPattern extends Pattern {
 
         Mappings mappings = pattern.matchAll(target);
 
-        // stereochemistry and component grouping filters are skipped if the
-        // query does not contain them
-        if (query.stereoElements().iterator().hasNext())
+        // apply required post-match filters
+        if (hasStereo)
             mappings = mappings.filter(new SmartsStereoMatch(query, target));
-        if (query.getProperty(ComponentGrouping.KEY) != null)
+        if (hasCompGrp)
             mappings = mappings.filter(new ComponentGrouping(query, target));
+        if (hasRxnMap)
+            mappings = mappings.filter(new SmartsAtomAtomMapFilter(query, target));
 
         // Note: Mappings is lazy, we can't reset aromaticity etc as the
         // substructure match may not have finished
