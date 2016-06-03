@@ -20,6 +20,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -226,17 +227,21 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             // fill in the roles for newly create atoms
             if (group.getRole() != ASTGroup.ROLE_ANY) {
                 IQueryAtom roleQueryAtom = null;
+                ReactionRole role = null;
 
                 // use single instances
                 switch (group.getRole()) {
                     case ASTGroup.ROLE_REACTANT:
                         roleQueryAtom = ReactionRoleQueryAtom.RoleReactant;
+                        role = ReactionRole.Reactant;
                         break;
                     case ASTGroup.ROLE_AGENT:
                         roleQueryAtom = ReactionRoleQueryAtom.RoleAgent;
+                        role = ReactionRole.Agent;
                         break;
                     case ASTGroup.ROLE_PRODUCT:
                         roleQueryAtom = ReactionRoleQueryAtom.RoleProduct;
+                        role = ReactionRole.Product;
                         break;
                 }
 
@@ -246,6 +251,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                         IAtom rep = LogicalOperatorAtom.and(roleQueryAtom, (IQueryAtom) org);
                         // ensure AAM is propagated
                         rep.setProperty(CDKConstants.ATOM_ATOM_MAPPING, org.getProperty(CDKConstants.ATOM_ATOM_MAPPING));
+                        rep.setProperty(CDKConstants.REACTION_ROLE, role);
                         AtomContainerManipulator.replaceAtomByAtom(query,
                                                                    org,
                                                                    rep);
