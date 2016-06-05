@@ -208,7 +208,7 @@ public class StructureDiagramGenerator {
         ringPlacer.setMolecule(this.molecule);
         ringPlacer.setAtomPlacer(this.atomPlacer);
         macroPlacer = new MacroCycleLayout(mol);
-        selectOrientation = true;
+        selectOrientation = afix.isEmpty();
     }
 
     /**
