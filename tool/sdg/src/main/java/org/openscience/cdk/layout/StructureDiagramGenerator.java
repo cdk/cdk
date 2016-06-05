@@ -394,6 +394,31 @@ public class StructureDiagramGenerator {
             }
         }
 
+        // initial layout seeding either from a ring system of longest chain
+        seedLayout();
+
+        // Now, do the layout of the rest of the molecule
+        for (int i = 0; !AtomPlacer.allPlaced(molecule) && i < numAtoms; i++) {
+            logger.debug("*** Start of handling the rest of the molecule. ***");
+            // layout for all acyclic parts of the molecule which are
+            // connected to the parts which have already been laid out.
+            layoutAcyclicParts();
+            // layout cyclic parts of the molecule which
+            // are connected to the parts which have already been laid out.
+            layoutCyclicParts();
+        }
+
+        if (!isSubLayout)
+            assignStereochem(molecule);
+
+        refinePlacement(molecule);
+        finalizeLayout(molecule);
+    }
+
+    private void seedLayout() throws CDKException {
+
+        int numAtoms = this.molecule.getAtomCount();
+        int numBonds = this.molecule.getBondCount();
         // Compute the circuit rank (https://en.wikipedia.org/wiki/Circuit_rank).
         // Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939)
         final int circuitrank = numBonds - numAtoms + 1;
@@ -477,23 +502,6 @@ public class StructureDiagramGenerator {
                 atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(RAD_30), Math.sin(RAD_30)), bondLength);
             logger.debug("Placed longest aliphatic chain");
         }
-
-        // Now, do the layout of the rest of the molecule
-        for (int i = 0; !AtomPlacer.allPlaced(molecule) && i < numAtoms; i++) {
-            logger.debug("*** Start of handling the rest of the molecule. ***");
-            // layout for all acylic parts of the molecule which are
-            // connected to the parts which have already been laid out.
-            handleAliphatics();
-            // layout cyclic parts of the molecule which
-            // are connected to the parts which have already been laid out.
-            layoutNextRingSystem();
-        }
-
-        if (!isSubLayout)
-            assignStereochem(molecule);
-
-        refinePlacement(molecule);
-        finalizeLayout(molecule);
     }
 
     private void assignStereochem(IAtomContainer molecule) {
@@ -1218,7 +1226,7 @@ public class StructureDiagramGenerator {
      *
      * @throws CDKException if an error occurs
      */
-    private void handleAliphatics() throws CDKException {
+    private void layoutAcyclicParts() throws CDKException {
         logger.debug("Start of handleAliphatics");
 
         int safetyCounter = 0;
@@ -1293,7 +1301,7 @@ public class StructureDiagramGenerator {
      *
      * @throws CDKException if an error occurs
      */
-    private void layoutNextRingSystem() throws CDKException {
+    private void layoutCyclicParts() throws CDKException {
         logger.debug("Start of layoutNextRingSystem()");
 
         resetUnplacedRings();
