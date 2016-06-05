@@ -35,6 +35,7 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -802,6 +803,28 @@ public class AtomPlacer {
     }
 
     /**
+     * Copy placed atoms/bonds from one container to another.
+     *
+     * @param dest destination container
+     * @param src source container
+     */
+    static void copyPlaced(IRing dest, IAtomContainer src) {
+        for (IBond bond : src.bonds()) {
+            IAtom beg = bond.getAtom(0);
+            IAtom end = bond.getAtom(1);
+            if (beg.getFlag(CDKConstants.ISPLACED)) {
+                dest.addAtom(beg);
+                if (end.getFlag(CDKConstants.ISPLACED)) {
+                    dest.addAtom(end);
+                    dest.addBond(bond);
+                }
+            } else if (end.getFlag(CDKConstants.ISPLACED)) {
+                dest.addAtom(end);
+            }
+        }
+    }
+
+    /**
      *  Sums up the degrees of atoms in an atomcontainer
      *
      *@param  ac  The atomcontainer to be processed
@@ -976,4 +999,5 @@ public class AtomPlacer {
     static Vector2d newVector(Tuple2d to, Tuple2d from) {
         return new Vector2d(to.x-from.x, to.y-from.y);
     }
+
 }
