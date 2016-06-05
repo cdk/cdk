@@ -415,33 +415,35 @@ public class StructureDiagramGenerator {
         finalizeLayout(molecule);
     }
 
+    /**
+     * Determine if any atoms in a connected molecule are fixed (i.e. already have coordinates/
+     * have been placed).
+     *
+     * @param mol the moleucle to check
+     * @return atoms are fixed
+     */
+    private boolean hasFixedPart(final IAtomContainer mol) {
+        if (afix.isEmpty()) return false;
+        for (IAtom atom : mol.atoms())
+            if (afix.contains(atom))
+                return true;
+        return false;
+    }
+
     private void seedLayout() throws CDKException {
 
-        int numAtoms = this.molecule.getAtomCount();
-        int numBonds = this.molecule.getBondCount();
+        final int numAtoms = this.molecule.getAtomCount();
+        final int numBonds = this.molecule.getBondCount();
         // Compute the circuit rank (https://en.wikipedia.org/wiki/Circuit_rank).
         // Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939)
         final int circuitrank = numBonds - numAtoms + 1;
-        if (circuitrank > 0) {
+        if (hasFixedPart(molecule)) {
+            // no seeding needed as the molecule has atoms with coordinates, just calc rings if needed
+            if (circuitrank > 0)
+                prepareRingSystems();
+        } else if (circuitrank > 0) {
             logger.debug("*** Start of handling rings. ***");
-            Cycles.markRingAtomsAndBonds(molecule);
-
-            // compute SSSR/MCB
-            sssr = Cycles.sssr(molecule).toRingSet();
-
-            if (sssr.getAtomContainerCount() < 1)
-                throw new IllegalStateException("Molecule expected to have rings, but had none?");
-
-            // Give a handle of our molecule to the ringPlacer
-            ringPlacer.setMolecule(molecule);
-            ringPlacer.checkAndMarkPlaced(sssr);
-
-            // Partition the smallest set of smallest rings into disconnected
-            // ring system. The RingPartioner returns a Vector containing
-            // RingSets. Each of the RingSets contains rings that are connected
-            // to each other either as bridged ringsystems, fused rings or via
-            // spiro connections.
-            ringSystems = RingPartitioner.partitionRings(sssr);
+            prepareRingSystems();
 
             // We got our ring systems now, sort by number of bonds (largest first)
             Collections.sort(ringSystems, new Comparator<IRingSet>() {
@@ -502,6 +504,27 @@ public class StructureDiagramGenerator {
                 atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(RAD_30), Math.sin(RAD_30)), bondLength);
             logger.debug("Placed longest aliphatic chain");
         }
+    }
+
+    private void prepareRingSystems() {
+        Cycles.markRingAtomsAndBonds(molecule);
+
+        // compute SSSR/MCB
+        sssr = Cycles.sssr(molecule).toRingSet();
+
+        if (sssr.getAtomContainerCount() < 1)
+            throw new IllegalStateException("Molecule expected to have rings, but had none?");
+
+        // Give a handle of our molecule to the ringPlacer
+        ringPlacer.setMolecule(molecule);
+        ringPlacer.checkAndMarkPlaced(sssr);
+
+        // Partition the smallest set of smallest rings into disconnected
+        // ring system. The RingPartioner returns a Vector containing
+        // RingSets. Each of the RingSets contains rings that are connected
+        // to each other either as bridged ringsystems, fused rings or via
+        // spiro connections.
+        ringSystems = RingPartitioner.partitionRings(sssr);
     }
 
     private void assignStereochem(IAtomContainer molecule) {
