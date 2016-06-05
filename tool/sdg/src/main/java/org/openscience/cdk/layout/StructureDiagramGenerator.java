@@ -1417,17 +1417,19 @@ public class StructureDiagramGenerator {
             IRing partiallyPlacedRing = molecule.getBuilder().newInstance(IRing.class);
 
             // partially laid out ring system
-            for (IRingSet ringset : ringSystems) {
-                for (IAtomContainer ring : ringset.atomContainers()) {
-                    if (!ring.getFlag(CDKConstants.ISPLACED)) {
+            if (ringSystems != null) {
+                for (IRingSet ringset : ringSystems) {
+                    for (IAtomContainer ring : ringset.atomContainers()) {
+                        if (!ring.getFlag(CDKConstants.ISPLACED)) {
 
-                        partiallyPlacedRing.removeAllElements();
-                        AtomPlacer.copyPlaced(partiallyPlacedRing, ring);
+                            partiallyPlacedRing.removeAllElements();
+                            AtomPlacer.copyPlaced(partiallyPlacedRing, ring);
 
-                        if (partiallyPlacedRing.getAtomCount() < ring.getAtomCount()) {
-                            ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.FUSED, bondLength);
-                            ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.BRIDGED, bondLength);
-                            ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.SPIRO, bondLength);
+                            if (partiallyPlacedRing.getAtomCount() < ring.getAtomCount()) {
+                                ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.FUSED, bondLength);
+                                ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.BRIDGED, bondLength);
+                                ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.SPIRO, bondLength);
+                            }
                         }
                     }
                 }
