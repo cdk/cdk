@@ -112,6 +112,8 @@ public class StructureDiagramGenerator {
     private AtomPlacer       atomPlacer        = new AtomPlacer();
     private MacroCycleLayout macroPlacer       = null;
     private List<IRingSet>   ringSystems       = null;
+    private Set<IAtom>       afix              = null;
+    private Set<IBond>       bfix              = null;
     private boolean          useIdentTemplates = true;
 
     // show we orient the structure (false: keep de facto ring systems drawn
@@ -151,16 +153,25 @@ public class StructureDiagramGenerator {
         setMolecule(molecule, false);
     }
 
+    public void setMolecule(IAtomContainer mol, boolean clone) {
+        setMolecule(mol, clone, Collections.<IAtom>emptySet(), Collections.<IBond>emptySet());
+    }
+
     /**
-     * Assings a molecule to be layed out. Call generateCoordinates() to do the
-     * actual layout.
+     * Assigns a molecule to be laid out. After, setting the molecule call generateCoordinates() to assign
+     * 2D coordinates. An optional set of atoms/bonds can be parsed in to allow partial layout, these will
+     * be 'fixed' in place. This only applies to non-cloned molecules, and only atoms with coordinates can
+     * be fixed.
      *
      * @param mol   the molecule for which coordinates are to be generated.
      * @param clone Should the whole process be performed with a cloned copy?
+     * @param afix  Atoms that should be fixed in place, coordinates are not changed.
+     * @param bfix  Bonds that should be fixed in place, they will not be flipped, bent, or streched.
      */
-    public void setMolecule(IAtomContainer mol, boolean clone) {
-        IAtom atom = null;
+    public void setMolecule(IAtomContainer mol, boolean clone, Set<IAtom> afix, Set<IBond> bfix) {
         if (clone) {
+            if (!afix.isEmpty() || !bfix.isEmpty())
+                throw new IllegalArgumentException("Laying out a cloned molecule, can't fix atom or bonds.");
             try {
                 this.molecule = (IAtomContainer) mol.clone();
             } catch (CloneNotSupportedException e) {
@@ -170,13 +181,27 @@ public class StructureDiagramGenerator {
         } else {
             this.molecule = mol;
         }
-        for (int f = 0; f < molecule.getAtomCount(); f++) {
-            atom = molecule.getAtom(f);
-            atom.setPoint2d(null);
-            atom.setFlag(CDKConstants.ISPLACED, false);
-            atom.setFlag(CDKConstants.VISITED, false);
-            atom.setFlag(CDKConstants.ISINRING, false);
-            atom.setFlag(CDKConstants.ISALIPHATIC, false);
+        this.afix = afix;
+        this.bfix = bfix;
+        for (IAtom atom : molecule.atoms()) {
+
+            boolean afixed = afix.contains(atom);
+
+            if (afixed && atom.getPoint2d() == null) {
+                afixed = false;
+                afix.remove(atom);
+            }
+
+            if (afixed) {
+                atom.setFlag(CDKConstants.ISPLACED, true);
+                atom.setFlag(CDKConstants.VISITED, true);
+            } else {
+                atom.setPoint2d(null);
+                atom.setFlag(CDKConstants.ISPLACED, false);
+                atom.setFlag(CDKConstants.VISITED, false);
+                atom.setFlag(CDKConstants.ISINRING, false);
+                atom.setFlag(CDKConstants.ISALIPHATIC, false);
+            }
         }
         atomPlacer.setMolecule(this.molecule);
         ringPlacer.setMolecule(this.molecule);
