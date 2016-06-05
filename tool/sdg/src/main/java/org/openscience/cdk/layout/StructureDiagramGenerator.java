@@ -400,11 +400,6 @@ public class StructureDiagramGenerator {
             // compute SSSR/MCB
             sssr = Cycles.sssr(molecule).toRingSet();
 
-            /*
-             * Order the rings because SSSRFinder.findSSSR() returns rings in an
-             * undeterministic order.
-             */
-            AtomContainerSetManipulator.sort(sssr);
             if (sssr.getAtomContainerCount() < 1)
                 throw new IllegalStateException("Molecule expected to have rings, but had none?");
 
