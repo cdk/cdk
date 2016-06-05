@@ -1331,8 +1331,8 @@ public class StructureDiagramGenerator {
     private void layoutCyclicParts() throws CDKException {
         logger.debug("Start of layoutNextRingSystem()");
 
-        resetUnplacedRings();
-        IAtomContainer tempAc = AtomPlacer.getPlacedAtoms(molecule);
+        // resetUnplacedRings();
+        IAtomContainer placedAtoms = AtomPlacer.getPlacedAtoms(molecule);
         logger.debug("Finding attachment bond to already placed part...");
         IBond nextRingAttachmentBond = getNextBondWithUnplacedRingAtom();
         if (nextRingAttachmentBond != null) {
@@ -1345,23 +1345,16 @@ public class StructureDiagramGenerator {
             IAtom ringAttachmentAtom = getRingAtom(nextRingAttachmentBond);
             IAtom chainAttachmentAtom = getOtherBondAtom(ringAttachmentAtom, nextRingAttachmentBond);
 
-            /*
-             * Get ring system which ringAttachmentAtom is part of
-             */
+            // Get ring system which ringAttachmentAtom is part of
             IRingSet nextRingSystem = getRingSystemOfAtom(ringSystems, ringAttachmentAtom);
 
-            /*
-             * Get all rings of nextRingSytem as one IAtomContainer
-             */
-            IAtomContainer ringSystem = tempAc.getBuilder().newInstance(IAtomContainer.class);
-            for (Iterator containers = RingSetManipulator.getAllAtomContainers(nextRingSystem).iterator(); containers
-                    .hasNext(); )
-                ringSystem.add((IAtomContainer) containers.next());
+            // Get all rings of nextRingSytem as one IAtomContainer
+            IAtomContainer ringSystem = RingSetManipulator.getAllInOneContainer(nextRingSystem);
 
             /*
              * Save coordinates of ringAttachmentAtom and chainAttachmentAtom
              */
-            Point2d oldRingAttachmentAtomPoint = ringAttachmentAtom.getPoint2d();
+            Point2d oldRingAttachmentAtomPoint  = ringAttachmentAtom.getPoint2d();
             Point2d oldChainAttachmentAtomPoint = chainAttachmentAtom.getPoint2d();
 
             /*
@@ -1372,10 +1365,10 @@ public class StructureDiagramGenerator {
             /*
              * Place all the substituents of next ring system
              */
-            AtomPlacer.markNotPlaced(tempAc);
+            AtomPlacer.markNotPlaced(placedAtoms);
             IAtomContainer placedRingSubstituents = ringPlacer.placeRingSubstituents(nextRingSystem, bondLength);
             ringSystem.add(placedRingSubstituents);
-            AtomPlacer.markPlaced(tempAc);
+            AtomPlacer.markPlaced(placedAtoms);
 
             /*
              * Move and rotate the laid out ring system to match the geometry of
@@ -1418,8 +1411,28 @@ public class StructureDiagramGenerator {
             GeometryUtil.rotate(ringSystem, oldPoint1, angleDiff);
 
             logger.debug("...done translating/rotating new ringset to fit old attachment bond orientation.");
-        } else
+        } else {
             logger.debug("...no bond found");
+
+            IRing partiallyPlacedRing = molecule.getBuilder().newInstance(IRing.class);
+
+            // partially laid out ring system
+            for (IRingSet ringset : ringSystems) {
+                for (IAtomContainer ring : ringset.atomContainers()) {
+                    if (!ring.getFlag(CDKConstants.ISPLACED)) {
+
+                        partiallyPlacedRing.removeAllElements();
+                        AtomPlacer.copyPlaced(partiallyPlacedRing, ring);
+
+                        if (partiallyPlacedRing.getAtomCount() < ring.getAtomCount()) {
+                            ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.FUSED, bondLength);
+                            ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.BRIDGED, bondLength);
+                            ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.SPIRO, bondLength);
+                        }
+                    }
+                }
+            }
+        }
 
         logger.debug("End of layoutNextRingSystem()");
     }

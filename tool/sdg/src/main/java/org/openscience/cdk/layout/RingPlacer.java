@@ -58,6 +58,7 @@ public class RingPlacer {
     // indicate we want to snap to regular polygons for bridges, not generally applicable
     // but useful for macro cycles
     static final   String       SNAP_HINT = "sdg.snap.bridged";
+    public static final double RAD_30 = Math.toRadians(-30);
     final static   boolean      debug     = false;
     private static ILoggingTool logger    = LoggingToolFactory.createLoggingTool(RingPlacer.class);
 
@@ -681,6 +682,13 @@ public class RingPlacer {
         return new Vector2d(Math.cos(rotangle) * newRingPerpendicular, Math.sin(rotangle) * newRingPerpendicular);
     }
 
+    private void rotate(Vector2d vec, double rad) {
+        double rx = (vec.x * Math.cos(rad)) - (vec.y * Math.sin(rad));
+        double ry = (vec.x * Math.sin(rad)) + (vec.y * Math.cos(rad));
+        vec.x = rx;
+        vec.y = ry;
+    }
+
     /**
      * Layout all rings in the given RingSet that are connected to a given Ring
      *
@@ -708,6 +716,51 @@ public class RingPlacer {
                     final Vector2d tempVector = (new Vector2d(sharedAtomsCenter));
                     final Vector2d newRingCenterVector = new Vector2d(tempVector);
                     newRingCenterVector.sub(new Vector2d(oldRingCenter));
+
+                    // zero (or v. small ring center)
+                    if (Math.abs(newRingCenterVector.x) < 0.001 && Math.abs(newRingCenterVector.y) < 0.001) {
+
+                        // first see if we can use terminal bonds
+                        IAtomContainer terminalOnly = molecule.getBuilder().newInstance(IAtomContainer.class);
+
+                        for (IAtom atom : ring.atoms()) {
+                            if (ring.getConnectedBondsCount(atom) == 1)
+                                terminalOnly.addAtom(atom);
+                        }
+
+                        if (terminalOnly.getAtomCount() == 2) {
+                            newRingCenterVector.set(GeometryUtil.get2DCenter(terminalOnly));
+                            newRingCenterVector.sub(oldRingCenter);
+                            connectedRing.setProperty(RingPlacer.SNAP_HINT, true);
+                        }
+                        else {
+                            // project coordinates on 12 axis (30 degree snaps) and choose one with most spread
+                            Vector2d vec = new Vector2d(0, 1);
+                            double   bestLen = -Double.MAX_VALUE;
+
+                            for (int i = 0; i < 12; i++) {
+                                Vector2d orth = new Vector2d(-vec.y, vec.x);
+                                orth.normalize();
+                                double min = Double.MAX_VALUE, max = -Double.MAX_VALUE;
+                                for (IAtom atom : sharedAtoms.atoms()) {
+                                    // s: scalar projection
+                                    double s = orth.dot(new Vector2d(atom.getPoint2d()));
+                                    if (s < min)
+                                        min = s;
+                                    if (s > max)
+                                        max = s;
+                                }
+                                double len = max - min;
+                                if (len > bestLen) {
+                                    bestLen = len;
+                                    newRingCenterVector.set(vec);
+                                }
+                                rotate(vec, RAD_30);
+                            }
+                        }
+
+                    }
+
                     final Vector2d oldRingCenterVector = new Vector2d(newRingCenterVector);
                     logger.debug("placeConnectedRing -> tempVector: " + tempVector + ", tempVector.length: "
                             + tempVector.length());
