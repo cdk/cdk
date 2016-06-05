@@ -54,6 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+import uk.ac.ebi.beam.Atom;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -528,6 +529,9 @@ public class StructureDiagramGenerator {
     }
 
     private void assignStereochem(IAtomContainer molecule) {
+        if (!molecule.stereoElements().iterator().hasNext())
+            return;
+
         // correct double-bond stereo, this changes the layout and in reality
         // should be done during the initial placement
         CorrectGeometricConfiguration.correct(molecule);
@@ -1328,7 +1332,7 @@ public class StructureDiagramGenerator {
         logger.debug("Start of layoutNextRingSystem()");
 
         resetUnplacedRings();
-        IAtomContainer tempAc = atomPlacer.getPlacedAtoms(molecule);
+        IAtomContainer tempAc = AtomPlacer.getPlacedAtoms(molecule);
         logger.debug("Finding attachment bond to already placed part...");
         IBond nextRingAttachmentBond = getNextBondWithUnplacedRingAtom();
         if (nextRingAttachmentBond != null) {
@@ -1368,10 +1372,10 @@ public class StructureDiagramGenerator {
             /*
              * Place all the substituents of next ring system
              */
-            atomPlacer.markNotPlaced(tempAc);
+            AtomPlacer.markNotPlaced(tempAc);
             IAtomContainer placedRingSubstituents = ringPlacer.placeRingSubstituents(nextRingSystem, bondLength);
             ringSystem.add(placedRingSubstituents);
-            atomPlacer.markPlaced(tempAc);
+            AtomPlacer.markPlaced(tempAc);
 
             /*
              * Move and rotate the laid out ring system to match the geometry of
@@ -1489,18 +1493,15 @@ public class StructureDiagramGenerator {
      * @return the next bond with an unplaced ring atom
      */
     private IBond getNextBondWithUnplacedRingAtom() {
-        Iterator bonds = molecule.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
-
-            if (bond.getAtom(0).getPoint2d() != null && bond.getAtom(1).getPoint2d() != null) {
-                if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) && !bond.getAtom(0).getFlag(CDKConstants.ISPLACED)
-                    && bond.getAtom(0).getFlag(CDKConstants.ISINRING)) {
+        for (IBond bond : molecule.bonds()) {
+            IAtom beg = bond.getAtom(0);
+            IAtom end = bond.getAtom(1);
+            if (beg.getPoint2d() != null && end.getPoint2d() != null) {
+                if (end.getFlag(CDKConstants.ISPLACED) && !beg.getFlag(CDKConstants.ISPLACED) && beg.isInRing()) {
                     return bond;
                 }
 
-                if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) && !bond.getAtom(1).getFlag(CDKConstants.ISPLACED)
-                    && bond.getAtom(1).getFlag(CDKConstants.ISINRING)) {
+                if (beg.getFlag(CDKConstants.ISPLACED) && !end.getFlag(CDKConstants.ISPLACED) && end.isInRing()) {
                     return bond;
                 }
             }
