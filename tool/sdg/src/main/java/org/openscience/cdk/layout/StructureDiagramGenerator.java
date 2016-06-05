@@ -297,7 +297,9 @@ public class StructureDiagramGenerator {
      *
      * @throws CDKException if an error occurs
      * @see #generateCoordinates
+     * @deprecated use {@link #generateCoordinates()}
      */
+    @Deprecated
     public void generateExperimentalCoordinates() throws CDKException {
         generateExperimentalCoordinates(DEFAULT_BOND_VECTOR);
     }
@@ -308,7 +310,9 @@ public class StructureDiagramGenerator {
      *
      * @param firstBondVector the vector of the first bond to lay out
      * @throws CDKException if an error occurs
+     * @deprecated use {@link #generateCoordinates()}
      */
+    @Deprecated
     public void generateExperimentalCoordinates(Vector2d firstBondVector) throws CDKException {
         // first make a shallow copy: Atom/Bond references are kept
         IAtomContainer original = molecule;
