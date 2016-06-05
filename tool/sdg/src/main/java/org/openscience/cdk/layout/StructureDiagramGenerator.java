@@ -545,7 +545,7 @@ public class StructureDiagramGenerator {
         AtomPlacer.prioritise(molecule);
 
         // refine the layout by rotating, bending, and stretching bonds
-        LayoutRefiner refiner = new LayoutRefiner(molecule);
+        LayoutRefiner refiner = new LayoutRefiner(molecule, bfix);
         refiner.refine();
 
         // choose the orientation in which to display the structure

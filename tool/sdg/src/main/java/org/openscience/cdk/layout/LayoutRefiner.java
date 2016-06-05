@@ -125,13 +125,16 @@ final class LayoutRefiner {
     // in the same ring system
     private final int[] ringsystems;
 
+    private final Set<IBond> fixed;
+
     /**
      * Create a new layout refiner for the provided molecule.
      * 
      * @param mol molecule to refine
      */
-    public LayoutRefiner(IAtomContainer mol) {
+     LayoutRefiner(IAtomContainer mol, Set<IBond> fixed) {
         this.mol = mol;
+        this.fixed = fixed;
         this.bondMap = GraphUtil.EdgeToBondMap.withSpaceFor(mol);
         this.adjList = GraphUtil.toAdjList(mol, bondMap);
         this.idxs = new HashMap<>();
@@ -333,6 +336,8 @@ final class LayoutRefiner {
                 // only try each bond once per phase and skip
                 if (!tried.add(bond))
                     continue;
+                if (fixed.contains(bond))
+                    continue;
 
                 // those we have found to probably be symmetric
                 if (probablySymmetric.contains(bond))
@@ -430,7 +435,8 @@ final class LayoutRefiner {
                 continue;
 
             for (IBond bond : acyclic) {
-
+                if (fixed.contains(bond))
+                    continue;
                 Arrays.fill(visited, false);
                 stackBackup.len = visit(visited, stackBackup.xs, v, idxs.get(bond.getConnectedAtom(atom)), 0);
 
@@ -461,12 +467,15 @@ final class LayoutRefiner {
         // > 3 bonds
         if (pair.bndAt.length != 3)
             return false;
+        if (fixed.contains(pair.bndAt[0]) || fixed.contains(pair.bndAt[2]))
+            return false;
         // we want *!@*@*!@*
         if (!pair.bndAt[0].isInRing() || pair.bndAt[1].isInRing() || pair.bndAt[2].isInRing())
             return false;
         // non-terminals
         if (adjList[pair.fst].length > 1 || adjList[pair.snd].length > 1)
             return false;
+
 
         IAtom fst = atoms[pair.fst];
 
@@ -509,6 +518,9 @@ final class LayoutRefiner {
 
             final IBond bndA = pair.bndAt[2];
             final IBond bndB = pair.bndAt[3];
+
+            if (fixed.contains(bndA) || fixed.contains(bndB))
+                return Integer.MAX_VALUE;
 
             final IAtom pivotA = getCommon(bndA, pair.bndAt[1]);
             final IAtom pivotB = getCommon(bndB, pair.bndAt[0]);
@@ -556,6 +568,7 @@ final class LayoutRefiner {
             // try bending all bonds and accept the best one
             for (IBond bond : pair.bndAt) {
                 if (bond.isInRing()) continue;
+                if (fixed.contains(bond)) continue;
 
                 // has this bond already been tested as part of another pair
                 AtomPair first = firstVisit.get(bond);
@@ -639,6 +652,7 @@ final class LayoutRefiner {
             // don't stretch ring bonds
             if (bond.isInRing())
                 continue;
+            if (fixed.contains(bond)) continue;
 
             // has this bond already been tested as part of another pair
             AtomPair first = firstVisit.get(bond);
