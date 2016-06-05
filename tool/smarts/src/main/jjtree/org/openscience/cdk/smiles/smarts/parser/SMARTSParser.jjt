@@ -295,13 +295,12 @@ TOKEN_MGR_DECLS : {
 
 /**
  *                     Start ::= <ReactionExpression> <#_WS>
- *        ReactionExpression ::= <GroupExpression> (">>" <GroupExpression>)? |
- *                               ">" <GroupExpression> ">" | ">>" <GroupExpression>
+ *        ReactionExpression ::= <GroupExpression>? (">" <GroupExpression>? ">" <GroupExpression>?)?
  *           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
  *          SmartsExpression ::= <AtomExpression> ( 
  									( [ <LowAndBond> ] ( <Digit> | <AtomExpression> ) ) |
  									( "(" [ <LowAndBond> ] <SmartsExpression> ")" ) )*
- 		      AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> "]" ) | <ExplicitAtomExpression>
+ 		      AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> [:<Digit>+] "]" ) | <ExplicitAtomExpression>
  *                LowAndBond ::= <OrBond> [ ";" <AndBond> ]
  *                    OrBond ::= <ExplicitHighAndBond> [ "," <OrBond> ]
  *       ExplicitHighAndBond ::= <ImplicitHighAndBond> [ "&" <ExplicitHighAndBond> ]
@@ -341,11 +340,24 @@ ASTStart Start() #Start : {}
 
 void ReactionExpression() #Reaction : {}
 {
-    GroupExpression() ( ">>" [GroupExpression()] )?
-    |
-    ">" GroupExpression() ">"
-    |
-    ">>" GroupExpression()
+    [GroupExpression()]
+    (
+      ">"
+      {
+        if(jjtree.nodeArity() > 0)
+          ((ASTGroup)jjtree.peekNode()).setRole(ASTGroup.ROLE_REACTANT);
+      }
+      [
+        GroupExpression()
+        {
+          ((ASTGroup)jjtree.peekNode()).setRole(ASTGroup.ROLE_AGENT);
+        }
+      ]
+      ">"
+      [
+        GroupExpression(){((ASTGroup)jjtree.peekNode()).setRole(ASTGroup.ROLE_PRODUCT);}
+      ]
+    )?
 }
 
 void GroupExpression() #Group : {}
@@ -430,6 +442,7 @@ ASTAtom	 AtomExpression() #Atom :
 	Token secondToken;
 	Token rightBracket;
 	ASTAtomicMass massNode = null;
+	StringBuilder mapidx = new StringBuilder();
 }
 {
 	( 
@@ -447,6 +460,12 @@ secondToken = getToken(2); }
 					jjtree.pushNode(topNode);
 				}
 	    	}
+	    	// Optional atom map idx
+	    	( ":"
+	    	  [ "?" ]
+	    	  ( <DIGIT> { mapidx.append(token.image); } )+
+	    	  {((ASTLowAndExpression)jjtree.peekNode()).setMapIdx(Integer.parseInt(mapidx.toString()));}
+	    	)?
 	    	<R_BRACKET> { token_source.SwitchTo(SMARTSParserConstants.DEFAULT); rightBracket = token; }
 	    	{   
 	    		Token HToken = null;
@@ -620,21 +639,21 @@ void PrimitiveAtomExpression() : {}
 }
 
 void TotalHCount() #TotalHCount : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <H> { jjtThis.setCount(1); } [ ( <DIGIT> { digits.append(token.image); } )+ 
     { jjtThis.setCount( Integer.parseInt(digits.toString()) ); } ]
 }
 
 void ImplicitHCount() #ImplicitHCount: 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <h> { jjtThis.setCount(1); } [ ( <DIGIT> { digits.append(token.image); } )+ 
     { jjtThis.setCount( Integer.parseInt(digits.toString()) ); } ]
 }
 
 void ExplicitConnectivity() #ExplicitConnectivity : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <D> { jjtThis.setNumOfConnection(1); } 
     [ ( <DIGIT> { digits.append(token.image); } )+ 
@@ -642,7 +661,7 @@ void ExplicitConnectivity() #ExplicitConnectivity :
 }
 
 void AtomicNumber() #AtomicNumber : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     "#" ( <DIGIT> { digits.append(token.image); } )+ 
     { jjtThis.setNumber( Integer.parseInt(digits.toString()) ); }
@@ -659,7 +678,7 @@ void HybridizationNumber() #HybrdizationNumber :
 }
         
 void Charge() #Charge : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     // Here assuming nobody will write anything like -----------... 
     // with more than 8 of them
@@ -693,7 +712,7 @@ void RingConnectivity() #RingConnectivity : {}
 }
 
 void PeriodicGroupNumber() throws ParseException #PeriodicGroupNumber :
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <G> { }
     ( <DIGIT> { digits.append(token.image); } )+
@@ -704,7 +723,7 @@ void PeriodicGroupNumber() throws ParseException #PeriodicGroupNumber :
 }
 
 void TotalConnectivity() #TotalConnectivity : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <X> { jjtThis.setNumOfConnection(1); } 
     [ ( <DIGIT> { digits.append(token.image); } )+ 
@@ -712,7 +731,7 @@ void TotalConnectivity() #TotalConnectivity :
 }
 
 void Valence() #Valence : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <v> { jjtThis.setOrder(1); } 
     [ ( <DIGIT> { digits.append(token.image); })+ 
@@ -720,7 +739,7 @@ void Valence() #Valence :
 }
 
 void RingMembership() #RingMembership : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <R> { jjtThis.setNumOfMembership(-1); }
     [ ( <DIGIT> { digits.append(token.image); } )+ 
@@ -728,7 +747,7 @@ void RingMembership() #RingMembership :
 }
 
 void SmallestRingSize() #SmallestRingSize : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     <r> { jjtThis.setSize(-1); }
     [ ( <DIGIT> { digits.append(token.image); } )+ 
@@ -756,7 +775,7 @@ void AnyAtom() #AnyAtom : {}
 }
 
 void AtomicMass() #AtomicMass : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     ( <DIGIT> { digits.append(token.image); } )+
     {
@@ -770,7 +789,7 @@ void RingIdentifier() #RingIdentifier: {}
 }
 
 void Chirality() #Chirality : 
-{ StringBuffer digits = new StringBuffer(); }
+{ StringBuilder digits = new StringBuilder(); }
 {
     "@" { jjtThis.setClockwise(false); }
     (

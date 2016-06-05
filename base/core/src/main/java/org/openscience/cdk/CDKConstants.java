@@ -285,6 +285,22 @@ public class CDKConstants {
      */
     public static final String      RELEVANT_RINGS               = "cdk:RelevantRings";
 
+    /**
+     * Property used for reactions when converted to/from molecules. It defines what role and atom
+     * has an a reaction.
+     *
+     * Used in. ReactionManipulator.toMolecule and ReactionManipulator.toReaction.
+     */
+    public static final String      REACTION_ROLE                = "cdk:ReactionRole";
+
+    /**
+     * Property used for reactions when converted to/from molecules. It defines fragment grouping, for example
+     * when handling ionic components.
+     *
+     * Used in. ReactionManipulator.toMolecule and ReactionManipulator.toReaction.
+     */
+    public static final String      REACTION_GROUP               = "cdk:ReactionGroup";
+
     /* **************************************
      * Some predefined property names for * Atoms *
      * **************************************

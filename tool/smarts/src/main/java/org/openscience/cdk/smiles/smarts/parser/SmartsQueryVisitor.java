@@ -19,6 +19,8 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -50,6 +52,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.MassAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.NonCHHeavyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.PeriodicGroupNumberAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.ReactionRoleQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.RecursiveSmartsAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.RingBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.RingIdentifierAtom;
@@ -66,6 +69,7 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -211,13 +215,59 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
         return node.jjtGetChild(0).jjtAccept(this, data);
     }
 
-    // TODO: No QueryReaction API
     public Object visit(ASTReaction node, Object data) {
-        return node.jjtGetChild(0).jjtAccept(this, data);
+        IAtomContainer query = new QueryAtomContainer(builder);
+        for (int grpIdx = 0; grpIdx < node.jjtGetNumChildren(); grpIdx++) {
+
+            int rollback = query.getAtomCount();
+
+            ASTGroup group = (ASTGroup) node.jjtGetChild(grpIdx);
+            group.jjtAccept(this, query);
+
+            // fill in the roles for newly create atoms
+            if (group.getRole() != ASTGroup.ROLE_ANY) {
+                IQueryAtom roleQueryAtom = null;
+                ReactionRole role = null;
+
+                // use single instances
+                switch (group.getRole()) {
+                    case ASTGroup.ROLE_REACTANT:
+                        roleQueryAtom = ReactionRoleQueryAtom.RoleReactant;
+                        role = ReactionRole.Reactant;
+                        break;
+                    case ASTGroup.ROLE_AGENT:
+                        roleQueryAtom = ReactionRoleQueryAtom.RoleAgent;
+                        role = ReactionRole.Agent;
+                        break;
+                    case ASTGroup.ROLE_PRODUCT:
+                        roleQueryAtom = ReactionRoleQueryAtom.RoleProduct;
+                        role = ReactionRole.Product;
+                        break;
+                }
+
+                if (roleQueryAtom != null) {
+                    while (rollback < query.getAtomCount()) {
+                        IAtom org = query.getAtom(rollback);
+                        IAtom rep = LogicalOperatorAtom.and(roleQueryAtom, (IQueryAtom) org);
+                        // ensure AAM is propagated
+                        rep.setProperty(CDKConstants.ATOM_ATOM_MAPPING, org.getProperty(CDKConstants.ATOM_ATOM_MAPPING));
+                        rep.setProperty(CDKConstants.REACTION_ROLE, role);
+                        AtomContainerManipulator.replaceAtomByAtom(query,
+                                                                   org,
+                                                                   rep);
+                        rollback++;
+                    }
+                }
+            }
+        }
+        return query;
     }
 
     public Object visit(ASTGroup node, Object data) {
-        IAtomContainer fullQuery = new QueryAtomContainer(builder);
+        IAtomContainer fullQuery = (IAtomContainer) data;
+
+        if (fullQuery == null)
+            fullQuery = new QueryAtomContainer(builder);
 
         // keeps track of component grouping
         int[] components = new int[0];
@@ -577,12 +627,14 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTLowAndExpression node, Object data) {
-        Object left = node.jjtGetChild(0).jjtAccept(this, data);
-        if (node.jjtGetNumChildren() == 1) {
-            return left;
+        IAtom expr = (IAtom) node.jjtGetChild(0).jjtAccept(this, data);
+        if (node.jjtGetNumChildren() > 1) {
+            IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this, data);
+            expr = LogicalOperatorAtom.and((IQueryAtom) expr, right);
         }
-        IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this, data);
-        return LogicalOperatorAtom.and((IQueryAtom) left, right);
+        if (node.getMapIdx()>0)
+            expr.setProperty(CDKConstants.ATOM_ATOM_MAPPING, node.getMapIdx());
+        return expr;
     }
 
     public Object visit(ASTOrExpression node, Object data) {

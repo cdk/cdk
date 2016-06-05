@@ -1544,6 +1544,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
 
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
-        throw new UnsupportedOperationException();
+        this.stereoElements.clear();
+        this.stereoElements.addAll(elements);
     }
 }

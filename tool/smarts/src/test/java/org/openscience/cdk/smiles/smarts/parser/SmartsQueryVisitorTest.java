@@ -1281,4 +1281,28 @@ public class SmartsQueryVisitorTest extends CDKTestCase {
         visit("[$([C;#12]=1CCCCC1)]");
     }
 
+    @Test
+    public void reaction() throws Exception {
+        visit("CCO.CC(=O)O>[H+]>CCOC(=O)C.O");
+    }
+
+    @Test
+    public void reactionNoAgents() throws Exception {
+        visit("CCO.CC(=O)O>>CCOC(=O)C.O");
+    }
+
+    @Test
+    public void reactionNoProduct() throws Exception {
+        visit("CCO.CC(=O)O>>");
+    }
+
+    @Test
+    public void reactionNoReactant() throws Exception {
+        visit(">>CCOC(=O)C.O");
+    }
+
+    @Test
+    public void reactionOnlyAgents() throws Exception {
+        visit(">>CCOC(=O)C.O");
+    }
 }
