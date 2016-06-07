@@ -399,7 +399,8 @@ public class StructureDiagramGenerator {
         seedLayout();
 
         // Now, do the layout of the rest of the molecule
-        for (int i = 0; !AtomPlacer.allPlaced(molecule) && i < numAtoms; i++) {
+        int iter = 0;
+        for (; !AtomPlacer.allPlaced(molecule) && iter < numAtoms; iter++) {
             logger.debug("*** Start of handling the rest of the molecule. ***");
             // layout for all acyclic parts of the molecule which are
             // connected to the parts which have already been laid out.
@@ -444,9 +445,15 @@ public class StructureDiagramGenerator {
         // Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939)
         final int circuitrank = numBonds - numAtoms + 1;
         if (hasFixedPart(molecule)) {
+
             // no seeding needed as the molecule has atoms with coordinates, just calc rings if needed
-            if (circuitrank > 0)
+            if (circuitrank > 0) {
                 prepareRingSystems();
+                for (IRingSet rset : ringSystems) {
+                    if (rset.getFlag(CDKConstants.ISPLACED))
+                        ringPlacer.placeRingSubstituents(rset, bondLength);
+                }
+            }
         } else if (circuitrank > 0) {
             logger.debug("*** Start of handling rings. ***");
             prepareRingSystems();
@@ -1336,7 +1343,7 @@ public class StructureDiagramGenerator {
     private void layoutCyclicParts() throws CDKException {
         logger.debug("Start of layoutNextRingSystem()");
 
-        // resetUnplacedRings();
+        resetUnplacedRings();
         IAtomContainer placedAtoms = AtomPlacer.getPlacedAtoms(molecule);
         logger.debug("Finding attachment bond to already placed part...");
         IBond nextRingAttachmentBond = getNextBondWithUnplacedRingAtom();
@@ -1428,15 +1435,21 @@ public class StructureDiagramGenerator {
                         if (!ring.getFlag(CDKConstants.ISPLACED)) {
 
                             partiallyPlacedRing.removeAllElements();
+                            for (IAtom atom : ring.atoms())
+                                if (atom.getPoint2d() != null)
+                                    atom.setFlag(CDKConstants.ISPLACED, true);
                             AtomPlacer.copyPlaced(partiallyPlacedRing, ring);
 
-                            if (partiallyPlacedRing.getAtomCount() < ring.getAtomCount()) {
+                            if (partiallyPlacedRing.getAtomCount() > 0 && partiallyPlacedRing.getAtomCount() < ring.getAtomCount()) {
                                 ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.FUSED, bondLength);
                                 ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.BRIDGED, bondLength);
                                 ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.SPIRO, bondLength);
                             }
                         }
                     }
+
+                    if (allPlaced(ringset))
+                        ringPlacer.placeRingSubstituents(ringset, bondLength);
                 }
             }
         }
