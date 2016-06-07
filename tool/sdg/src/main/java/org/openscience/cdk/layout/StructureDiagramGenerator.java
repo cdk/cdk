@@ -409,11 +409,16 @@ public class StructureDiagramGenerator {
             layoutCyclicParts();
         }
 
-        if (!isSubLayout)
-            assignStereochem(molecule);
+        // display reasonable error on failed layout, otherwise we'll have a NPE somewhere
+        if (iter == numAtoms && !AtomPlacer.allPlaced(molecule))
+            throw new CDKException("Could not generate layout? If a set of 'fixed' atoms were provided"
+                                       + " try removing these and regenerating the layout.");
 
         refinePlacement(molecule);
         finalizeLayout(molecule);
+
+        if (!isSubLayout)
+            assignStereochem(molecule);
     }
 
     /**
