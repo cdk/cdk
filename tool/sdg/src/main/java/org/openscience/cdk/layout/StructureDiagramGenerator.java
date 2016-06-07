@@ -543,8 +543,39 @@ public class StructureDiagramGenerator {
             if (circuitrank > 0) {
                 prepareRingSystems();
                 for (IRingSet rset : ringSystems) {
-                    if (rset.getFlag(CDKConstants.ISPLACED))
+                    if (rset.getFlag(CDKConstants.ISPLACED)) {
                         ringPlacer.placeRingSubstituents(rset, bondLength);
+                    } else {
+
+                        List<IRing> placed   = new ArrayList<>();
+                        List<IRing> unplaced = new ArrayList<>();
+
+                        for (IAtomContainer ring : rset.atomContainers()) {
+                            if (ring.getFlag(CDKConstants.ISPLACED))
+                                placed.add((IRing)ring);
+                            else
+                                unplaced.add((IRing) ring);
+                        }
+
+                        while (!unplaced.isEmpty()) {
+                            for (IAtomContainer ring : placed) {
+                                ringPlacer.placeConnectedRings(rset, (IRing) ring, RingPlacer.FUSED, bondLength);
+                                ringPlacer.placeConnectedRings(rset, (IRing) ring, RingPlacer.BRIDGED, bondLength);
+                                ringPlacer.placeConnectedRings(rset, (IRing) ring, RingPlacer.SPIRO, bondLength);
+                            }
+                            Iterator<IRing> unplacedIter = unplaced.iterator();
+                            placed.clear();
+                            while (unplacedIter.hasNext()) {
+                                IRing ring = unplacedIter.next();
+                                if (ring.getFlag(CDKConstants.ISPLACED)) {
+                                    unplacedIter.remove();
+                                    placed.add(ring);
+                                }
+                            }
+                            if (placed.isEmpty())
+                                break;
+                        }
+                    }
                 }
             }
         } else if (circuitrank > 0) {
