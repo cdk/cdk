@@ -825,12 +825,20 @@ public class StructureDiagramGenerator {
         List<double[]> limits = new ArrayList<>();
         final int numFragments = frags.size();
 
+        // avoid overwriting our state
+        Set<IAtom> afixbackup = new HashSet<>(afix);
+        Set<IBond> bfixbackup = new HashSet<>(bfix);
+
         // generate the sub-layouts
         for (IAtomContainer fragment : frags) {
-            setMolecule(fragment, false);
+            setMolecule(fragment, false, afix, bfix);
             generateCoordinates(DEFAULT_BOND_VECTOR, true, true);
             limits.add(GeometryUtil.getMinMax(fragment));
         }
+
+        // restore
+        afix = afixbackup;
+        bfix = bfixbackup;
 
         final int nRow = (int) Math.floor(Math.sqrt(numFragments));
         final int nCol = (int) Math.ceil(numFragments / (double) nRow);
