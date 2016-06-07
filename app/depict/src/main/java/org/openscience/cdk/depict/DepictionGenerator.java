@@ -175,11 +175,6 @@ public final class DepictionGenerator {
     private final List<IGenerator<IAtomContainer>> gens = new ArrayList<>();
 
     /**
-     * Structure diagram generator instance.
-     */
-    private final StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-
-    /**
      * Flag to indicate atom numbers should be displayed.
      */
     private boolean annotateAtomNum = false;
@@ -239,8 +234,6 @@ public final class DepictionGenerator {
         // since it depends on raster (px) vs vector (mm)
         setParam(BasicSceneGenerator.Margin.class, AUTOMATIC);
         setParam(RendererModel.Padding.class, AUTOMATIC);
-
-        sdg.setUseTemplates(false);
     }
 
     /**
@@ -457,6 +450,7 @@ public final class DepictionGenerator {
         myHighlight.putAll(highlight);
         highlight.clear();
 
+        ensure2dLayout(rxn);
         final List<Double> reactantScales = prepareCoords(reactants);
         final List<Double> productScales = prepareCoords(products);
         final List<Double> agentScales = prepareCoords(agents);
@@ -672,11 +666,8 @@ public final class DepictionGenerator {
      */
     private boolean ensure2dLayout(IAtomContainer container) throws CDKException {
         if (!GeometryUtil.has2DCoordinates(container)) {
-            // SDG - mutable state is not thread safe :(
-            synchronized (sdg) {
-                sdg.setMolecule(container, false);
-                sdg.generateCoordinates();
-            }
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            sdg.generateCoordinates(container);
             return true;
         }
         return false;
@@ -689,12 +680,8 @@ public final class DepictionGenerator {
      * @throws CDKException coordinates could not be generated
      */
     private void ensure2dLayout(IReaction rxn) throws CDKException {
-        for (IAtomContainer mol : rxn.getReactants().atomContainers())
-            ensure2dLayout(mol);
-        for (IAtomContainer mol : rxn.getProducts().atomContainers())
-            ensure2dLayout(mol);
-        for (IAtomContainer mol : rxn.getAgents().atomContainers())
-            ensure2dLayout(mol);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(rxn);
     }
 
     /**
