@@ -592,17 +592,20 @@ public class RingPlacer {
     public void checkAndMarkPlaced(IRingSet rs) {
         IRing ring = null;
         boolean allPlaced = true;
+        boolean ringsetPlaced = true;
         for (int i = 0; i < rs.getAtomContainerCount(); i++) {
             ring = (IRing) rs.getAtomContainer(i);
             allPlaced = true;
             for (int j = 0; j < ring.getAtomCount(); j++) {
                 if (!((IAtom) ring.getAtom(j)).getFlag(CDKConstants.ISPLACED)) {
                     allPlaced = false;
+                    ringsetPlaced = false;
                     break;
                 }
             }
             ring.setFlag(CDKConstants.ISPLACED, allPlaced);
         }
+        rs.setFlag(CDKConstants.ISPLACED, ringsetPlaced);
     }
 
     /**
