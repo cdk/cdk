@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.AtomMatcher;
@@ -153,6 +154,98 @@ public class StructureDiagramGenerator {
     public StructureDiagramGenerator(IAtomContainer molecule) {
         this();
         setMolecule(molecule, false);
+    }
+
+    /**
+     * <p>Convenience method for generating 2D coordinates.</p>
+     *
+     * <p>The method is short-hand for calling:</p>
+     * <pre>
+     * sdg.setMolecule(mol, false);
+     * sdg.generateCoordinates();
+     * </pre>
+     *
+     * @param mol molecule to layout
+     * @throws CDKException problem with layout
+     */
+    public final void generateCoordinates(IAtomContainer mol) throws CDKException {
+        setMolecule(mol, false);
+        generateCoordinates();
+    }
+
+    /**
+     * <p>Convenience method to generate 2D coordinates for a reaction. If atom-atom
+     * maps are present on a reaction, the substructures are automatically aligned.</p>
+     *
+     * @param reaction reaction to layout
+     * @throws CDKException problem with layout
+     */
+    public final void generateCoordinates(final IReaction reaction) throws CDKException {
+        final Map<IntTuple,IBond> bmap = new HashMap<>();
+
+        for (IAtomContainer product : reaction.getProducts().atomContainers()) {
+            setMolecule(product, false);
+            generateCoordinates();
+            for (IBond bond : product.bonds()) {
+                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                if (begidx != null && endidx != null) {
+                    bmap.put(new IntTuple(begidx, endidx), bond); // overwrite is allowed
+                }
+            }
+        }
+        final Set<IAtom> afix = new HashSet<>();
+        final Set<IBond> bfix = new HashSet<>();
+        for (IAtomContainer mol : reaction.getAgents().atomContainers()) {
+            copyMappedCoords(bmap, afix, bfix, mol);
+            setMolecule(mol, false, afix, bfix);
+            generateCoordinates();
+        }
+        for (IAtomContainer mol : reaction.getReactants().atomContainers()) {
+            copyMappedCoords(bmap, afix, bfix, mol);
+            setMolecule(mol, false, afix, bfix);
+            generateCoordinates();
+        }
+    }
+
+    private static void copyMappedCoords(Map<IntTuple, IBond> bmap,
+                                         Set<IAtom> afix, Set<IBond> bfix,
+                                         IAtomContainer mol) {
+        afix.clear();
+        bfix.clear();
+        if (!bmap.isEmpty()) {
+            // we only copy coordinates for bonded atoms
+            for (IBond bond : mol.bonds()) {
+                IAtom beg = bond.getAtom(0);
+                IAtom end = bond.getAtom(1);
+                Integer begmapidx = beg.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endmapidx = end.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                if (begmapidx != null && endmapidx != null) {
+                    IBond mbond = bmap.get(new IntTuple(begmapidx, endmapidx));
+                    if (mbond != null) {
+                        IAtom mbeg = mbond.getAtom(0);
+                        IAtom mend = mbond.getAtom(1);
+                        if (mbeg.getProperty(CDKConstants.ATOM_ATOM_MAPPING).equals(begmapidx)) {
+                            beg.setPoint2d(new Point2d(mbeg.getPoint2d()));
+                            end.setPoint2d(new Point2d(mend.getPoint2d()));
+                            afix.add(beg);
+                            afix.add(end);
+                        } else {
+                            beg.setPoint2d(new Point2d(mend.getPoint2d()));
+                            end.setPoint2d(new Point2d(mbeg.getPoint2d()));
+                            afix.add(beg);
+                            afix.add(end);
+                        }
+                    }
+                }
+            }
+        }
+        if (!afix.isEmpty()) {
+            for (IBond bond : mol.bonds()) {
+                if (afix.contains(bond.getAtom(0)) && afix.contains(bond.getAtom(1)))
+                    bfix.add(bond);
+            }
+        }
     }
 
     public void setMolecule(IAtomContainer mol, boolean clone) {
@@ -1533,7 +1626,6 @@ public class StructureDiagramGenerator {
                 if (end.getFlag(CDKConstants.ISPLACED) && !beg.getFlag(CDKConstants.ISPLACED) && beg.isInRing()) {
                     return bond;
                 }
-
                 if (beg.getFlag(CDKConstants.ISPLACED) && !end.getFlag(CDKConstants.ISPLACED) && end.isInRing()) {
                     return bond;
                 }
@@ -2188,6 +2280,31 @@ public class StructureDiagramGenerator {
                 return brackets != null && !brackets.isEmpty();
             default:
                 return false;
+        }
+    }
+
+    private static final class IntTuple {
+        private final int beg, end;
+
+        public IntTuple(int beg, int end) {
+            this.beg = beg;
+            this.end = end;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            IntTuple that = (IntTuple) o;
+
+            return (this.beg == that.beg && this.end == that.end) ||
+                   (this.beg == that.end && this.end == that.beg);
+        }
+
+        @Override
+        public int hashCode() {
+            return beg ^ end;
         }
     }
 }
