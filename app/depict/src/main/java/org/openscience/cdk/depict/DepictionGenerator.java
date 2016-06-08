@@ -195,6 +195,11 @@ public final class DepictionGenerator {
     private Color[] atomMapColors = null;
 
     /**
+     * Reactions are aligned such that mapped atoms have the same coordinates on the left/right.
+     */
+    private boolean alignMappedReactions = true;
+
+    /**
      * Object that should be highlighted
      */
     private Map<IChemObject, Color> highlight = new HashMap<>();
@@ -681,6 +686,7 @@ public final class DepictionGenerator {
      */
     private void ensure2dLayout(IReaction rxn) throws CDKException {
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.setAlignMappedReaction(alignMappedReactions);
         sdg.generateCoordinates(rxn);
     }
 
@@ -851,6 +857,19 @@ public final class DepictionGenerator {
     public DepictionGenerator withRxnTitle() {
         return withParam(BasicSceneGenerator.ShowReactionTitle.class,
                          true);
+    }
+
+    /**
+     * Specifies that reactions with atom-atom mappings should have their reactants/product
+     * coordinates aligned. Default: true.
+     *
+     * @param val setting value
+     * @return new generator for method chaining
+     */
+    public DepictionGenerator withMappedRxnAlign(boolean val) {
+        DepictionGenerator copy = new DepictionGenerator();
+        copy.alignMappedReactions = val;
+        return copy;
     }
 
     /**
