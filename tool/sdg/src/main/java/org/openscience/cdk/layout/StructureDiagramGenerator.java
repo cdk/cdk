@@ -111,18 +111,18 @@ public class StructureDiagramGenerator {
     private IRingSet       sssr;
     private double bondLength = DEFAULT_BOND_LENGTH;
     private Vector2d firstBondVector;
-    private RingPlacer       ringPlacer        = new RingPlacer();
-    private AtomPlacer       atomPlacer        = new AtomPlacer();
-    private MacroCycleLayout macroPlacer       = null;
-    private List<IRingSet>   ringSystems       = null;
-    private Set<IAtom>       afix              = null;
-    private Set<IBond>       bfix              = null;
-    private boolean          useIdentTemplates = true;
+    private RingPlacer       ringPlacer          = new RingPlacer();
+    private AtomPlacer       atomPlacer          = new AtomPlacer();
+    private MacroCycleLayout macroPlacer         = null;
+    private List<IRingSet>   ringSystems         = null;
+    private Set<IAtom>       afix                = null;
+    private Set<IBond>       bfix                = null;
+    private boolean          useIdentTemplates   = true;
+    private boolean          alignMappedReaction = true;
 
     // show we orient the structure (false: keep de facto ring systems drawn
     // the right way up)
     private boolean selectOrientation = true;
-
 
     /**
      * Identity templates - for laying out primary ring system.
@@ -176,6 +176,7 @@ public class StructureDiagramGenerator {
     /**
      * <p>Convenience method to generate 2D coordinates for a reaction. If atom-atom
      * maps are present on a reaction, the substructures are automatically aligned.</p>
+     * <p>This feature can be disabled by changing the {@link #setAlignMappedReaction(boolean)}</p>
      *
      * @param reaction reaction to layout
      * @throws CDKException problem with layout
@@ -186,6 +187,8 @@ public class StructureDiagramGenerator {
         for (IAtomContainer product : reaction.getProducts().atomContainers()) {
             setMolecule(product, false);
             generateCoordinates();
+            if (!alignMappedReaction)
+                continue;
             for (IBond bond : product.bonds()) {
                 Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                 Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
@@ -373,6 +376,15 @@ public class StructureDiagramGenerator {
      */
     public void setMolecule(IAtomContainer molecule) {
         setMolecule(molecule, true);
+    }
+
+    /**
+     * Set whether reaction reactants should be allignned to their product.
+     *
+     * @param align align setting
+     */
+    public void setAlignMappedReaction(boolean align) {
+        this.alignMappedReaction = align;
     }
 
     /**
