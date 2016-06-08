@@ -256,6 +256,7 @@ public final class DepictionGenerator {
         this.highlight.putAll(org.highlight);
         this.gens.addAll(org.gens);
         this.params.putAll(org.params);
+        this.alignMappedReactions = org.alignMappedReactions;
     }
 
     private <U, T extends IGeneratorParameter<U>> U getParameterValue(Class<T> key) {
@@ -867,7 +868,7 @@ public final class DepictionGenerator {
      * @return new generator for method chaining
      */
     public DepictionGenerator withMappedRxnAlign(boolean val) {
-        DepictionGenerator copy = new DepictionGenerator();
+        DepictionGenerator copy = new DepictionGenerator(this);
         copy.alignMappedReactions = val;
         return copy;
     }
