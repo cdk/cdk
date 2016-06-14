@@ -186,6 +186,12 @@ final class AbbreviationLabel {
                 continue;
             }
 
+            if (c == '/') {
+                tokens.add(Character.toString(c));
+                i++;
+                continue;
+            }
+
             // SYMBOL Tokens
             // optional prefix o- m- p- etc.
             if ((last = findPrefix(PREFIX_TRIE, label, i, -1)) > 0) {

@@ -26,6 +26,8 @@ package org.openscience.cdk.depict;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.graph.ConnectedComponents;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
@@ -77,7 +79,7 @@ import static org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAto
  * Utility class for abbreviating (sub)structures. Using either self assigned structural
  * motifs or pre-loading a common set a structure depiction can be made more concise with
  * the use of abbreviations (sometimes called superatoms). <p/>
- *
+ * <p>
  * Basic usage:
  * <pre>{@code
  * Abbreviations abrv = new Abbreviations();
@@ -99,10 +101,10 @@ import static org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAto
  * // set/update the CDKConstants.CTAB_SGROUPS property of mol
  * List<Sgroup> sgroups = abrv.generate(mol);
  * }</pre>
- *
+ * <p>
  * Predefined sets of abbreviations can be loaded, the following are
  * on the classpath.
- *
+ * <p>
  * <pre>{@code
  * // https://www.github.com/openbabel/superatoms
  * abrv.loadFromFile("obabel_superatoms.smi");
@@ -118,11 +120,11 @@ public class Abbreviations implements Iterable<String> {
 
     private static final int MAX_FRAG = 50;
 
-    private final Map<String, String>  connectedAbbreviations     = new LinkedHashMap<>();
-    private final Map<String, String>  disconnectedAbbreviations = new LinkedHashMap<>();
-    private final Set<String>          labels                    = new LinkedHashSet<>();
-    private final Set<String>          disabled                  = new HashSet<>();
-    private final SmilesGenerator      usmigen                   = SmilesGenerator.unique();
+    private final Map<String, String> connectedAbbreviations    = new LinkedHashMap<>();
+    private final Map<String, String> disconnectedAbbreviations = new LinkedHashMap<>();
+    private final Set<String>         labels                    = new LinkedHashSet<>();
+    private final Set<String>         disabled                  = new HashSet<>();
+    private final SmilesGenerator     usmigen                   = SmilesGenerator.unique();
 
     private final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
@@ -166,7 +168,7 @@ public class Abbreviations implements Iterable<String> {
         int numAtoms = mol.getAtomCount();
         for (int i = 0; i < numAtoms; i++) {
             final IAtom atom = mol.getAtom(i);
-            int deg  = adjlist[i].length;
+            int deg = adjlist[i].length;
             int elem = atom.getAtomicNumber();
 
             if (elem == 6 && deg <= 2 || deg < 2)
@@ -184,13 +186,14 @@ public class Abbreviations implements Iterable<String> {
 
     private static final String CUT_BOND = "cutbond";
 
-    private static List<IAtomContainer> makeCut(IBond cut, IAtomContainer mol, Map<IAtom,Integer> idx, int[][] adjlist) {
+    private static List<IAtomContainer> makeCut(IBond cut, IAtomContainer mol, Map<IAtom, Integer> idx,
+                                                int[][] adjlist) {
 
         IAtom beg = cut.getAtom(0);
         IAtom end = cut.getAtom(1);
 
-        Set<IAtom>   bvisit = new LinkedHashSet<>();
-        Set<IAtom>   evisit = new LinkedHashSet<>();
+        Set<IAtom> bvisit = new LinkedHashSet<>();
+        Set<IAtom> evisit = new LinkedHashSet<>();
         Deque<IAtom> queue = new ArrayDeque<>();
 
         bvisit.add(beg);
@@ -268,14 +271,14 @@ public class Abbreviations implements Iterable<String> {
 
     private static List<IAtomContainer> generateFragments(IAtomContainer mol) {
 
-        final EdgeToBondMap bmap    = EdgeToBondMap.withSpaceFor(mol);
-        final int[][]       adjlist = GraphUtil.toAdjList(mol, bmap);
+        final EdgeToBondMap bmap = EdgeToBondMap.withSpaceFor(mol);
+        final int[][] adjlist = GraphUtil.toAdjList(mol, bmap);
 
         Cycles.markRingAtomsAndBonds(mol, adjlist, bmap);
 
         Set<IBond> cuts = findCutBonds(mol, bmap, adjlist);
 
-        Map<IAtom,Integer> atmidx = new HashMap<>();
+        Map<IAtom, Integer> atmidx = new HashMap<>();
         for (IAtom atom : mol.atoms())
             atmidx.put(atom, atmidx.size());
 
@@ -318,8 +321,10 @@ public class Abbreviations implements Iterable<String> {
         // disconnected abbreviations, salts, common reagents, large compounds
         if (usedAtoms.isEmpty()) {
             try {
-                String cansmi = usmigen.create(AtomContainerManipulator.copyAndSuppressedHydrogens(mol));
+                IAtomContainer copy = AtomContainerManipulator.copyAndSuppressedHydrogens(mol);
+                String cansmi = usmigen.create(copy);
                 String label = disconnectedAbbreviations.get(cansmi);
+
                 if (label != null && !disabled.contains(label)) {
                     Sgroup sgroup = new Sgroup();
                     sgroup.setType(SgroupType.CtabAbbreviation);
@@ -327,7 +332,42 @@ public class Abbreviations implements Iterable<String> {
                     for (IAtom atom : mol.atoms())
                         sgroup.addAtom(atom);
                     return Collections.singletonList(sgroup);
+                } else if (cansmi.contains(".")) {
+                    List<Sgroup> newSgroups = new ArrayList<>();
+                    for (IAtomContainer part : ConnectivityChecker.partitionIntoMolecules(mol).atomContainers()) {
+                        cansmi = usmigen.create(part);
+                        label = disconnectedAbbreviations.get(cansmi);
+                        if (label != null && !disabled.contains(label)) {
+                            Sgroup sgroup = new Sgroup();
+                            sgroup.setType(SgroupType.CtabAbbreviation);
+                            sgroup.setSubscript(label);
+                            for (IAtom atom : part.atoms())
+                                sgroup.addAtom(atom);
+                            newSgroups.add(sgroup);
+                        }
+                    }
+                    if (!newSgroups.isEmpty()) {
+                        // merge together
+                        if (newSgroups.size() > 1) {
+                            Sgroup combined = new Sgroup();
+                            label = null;
+                            for (Sgroup sgroup : newSgroups) {
+                                if (label == null)
+                                    label = sgroup.getSubscript();
+                                else
+                                    label += "/" + sgroup.getSubscript();
+                                for (IAtom atom : sgroup.getAtoms())
+                                    combined.addAtom(atom);
+                            }
+                            combined.setSubscript(label);
+                            combined.setType(SgroupType.CtabAbbreviation);
+                            newSgroups.clear();
+                            newSgroups.add(combined);
+                        }
+                        return newSgroups;
+                    }
                 }
+
             } catch (CDKException ignored) {
             }
         }
@@ -390,7 +430,7 @@ public class Abbreviations implements Iterable<String> {
      */
     public int apply(final IAtomContainer mol) {
         List<Sgroup> newSgroups = generate(mol);
-        List<Sgroup> sgroups    = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
 
         if (sgroups == null)
             sgroups = new ArrayList<>();
@@ -518,12 +558,12 @@ public class Abbreviations implements Iterable<String> {
     /**
      * Add an abbreviation to the factory. Abbreviations can be of various flavour based
      * on the number of attachments:
-     *
+     * <p>
      * <p/>
      * <b>Detached</b> - zero attachments, the abbreviation covers the whole structure (e.g. THF) <p/>
      * <b>Terminal</b> - one attachment, covers substituents (e.g. Ph for Phenyl)<p/>
      * <b>Linker</b> - [NOT SUPPORTED YET] two attachments, covers long repeated chains (e.g. PEG4) <p/>
-     *
+     * <p>
      * Attachment points (if present) must be specified with zero element atoms. <p/>
      * <pre>
      * *c1ccccc1 Ph
@@ -591,7 +631,7 @@ public class Abbreviations implements Iterable<String> {
      * *c1ccccc1 Ph
      * *c1ccccc1 OAc
      * </pre>
-     *
+     * <p>
      * Available:
      * <pre>
      * obabel_superatoms.smi - https://www.github.com/openbabel/superatoms
