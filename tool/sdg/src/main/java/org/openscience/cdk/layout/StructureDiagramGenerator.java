@@ -72,6 +72,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
@@ -184,6 +185,8 @@ public class StructureDiagramGenerator {
     public final void generateCoordinates(final IReaction reaction) throws CDKException {
         final Map<IntTuple,IBond> bmap = new HashMap<>();
 
+        final Set<IBond> duplicated = new HashSet<>();
+
         for (IAtomContainer product : reaction.getProducts().atomContainers()) {
             setMolecule(product, false);
             generateCoordinates();
@@ -193,9 +196,19 @@ public class StructureDiagramGenerator {
                 Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                 Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                 if (begidx != null && endidx != null) {
-                    bmap.put(new IntTuple(begidx, endidx), bond); // overwrite is allowed
+                    // overwrite is allowed but stored for fixing later
+                    IBond old = bmap.put(new IntTuple(begidx, endidx), bond);
+                    if (old != null)
+                        duplicated.add(old);
                 }
             }
+            // remove bad maps
+            for (IBond bond : duplicated) {
+                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                bmap.remove(new IntTuple(begidx, endidx));
+            }
+
         }
         final Set<IAtom> afix = new HashSet<>();
         final Set<IBond> bfix = new HashSet<>();
@@ -214,6 +227,8 @@ public class StructureDiagramGenerator {
     private static void copyMappedCoords(Map<IntTuple, IBond> bmap,
                                          Set<IAtom> afix, Set<IBond> bfix,
                                          IAtomContainer mol) {
+        // stiochiometry can mess up alignment
+        Set<Integer> mapvisit = new TreeSet<>();
         afix.clear();
         bfix.clear();
         if (!bmap.isEmpty()) {
@@ -224,6 +239,8 @@ public class StructureDiagramGenerator {
                 Integer begmapidx = beg.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                 Integer endmapidx = end.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                 if (begmapidx != null && endmapidx != null) {
+                    if (!mapvisit.add(begmapidx)) continue; // already have coords for beg in this mol
+                    if (!mapvisit.add(endmapidx)) continue; // already have coords for end in this mol
                     IBond mbond = bmap.get(new IntTuple(begmapidx, endmapidx));
                     if (mbond != null) {
                         IAtom mbeg = mbond.getAtom(0);
