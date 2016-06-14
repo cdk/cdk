@@ -1288,7 +1288,9 @@ public class StructureDiagramGenerator {
         } else {
             // attempt ring peeling and retemplate
             final IRingSet core = getRingSetCore(rs);
-            if (core.getAtomContainerCount() > 0 && lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
+            if (core.getAtomContainerCount() > 0 &&
+                core.getAtomContainerCount() < rs.getAtomContainerCount() &&
+                lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
                 for (IAtomContainer container : core.atomContainers())
                     container.setFlag(CDKConstants.ISPLACED, true);
             }
@@ -1357,8 +1359,10 @@ public class StructureDiagramGenerator {
                 int numAttach = 0;
                 for (IBond bond : ring.bonds()) {
                     for (IRing attached : ringlookup.get(bond)) {
-                        if (attached != ring && ringsystem.contains(attached))
+                        if (attached != ring && ringsystem.contains(attached)) {
                             numAttach++;
+                            break;
+                        }
                     }
                 }
                 if (numAttach <= 1)
