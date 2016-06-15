@@ -908,7 +908,7 @@ public class StructureDiagramGenerator {
 
         // calc the max widths/height of each row, we also add some
         // spacing
-        double spacing = 1.5 * bondLength;
+        double spacing = bondLength;
         for (int i = 0; i < numFragments; i++) {
             // +1 because first offset is always 0
             int col = 1 + i % nCol;
