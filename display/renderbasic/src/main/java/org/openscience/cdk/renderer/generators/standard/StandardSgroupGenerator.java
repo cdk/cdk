@@ -350,6 +350,7 @@ final class StandardSgroupGenerator {
 
         ElementGroup labelgroup = new ElementGroup();
         for (Shape outline : atomGenerator.generateAbbreviatedSymbol(label, HydrogenPosition.Right)
+                                          .center(labelCoords.x, labelCoords.y)
                                           .resize(1 / scale, 1 / -scale)
                                           .getOutlines()) {
             if (highlight != null && style == StandardGenerator.HighlightStyle.Colored) {
