@@ -80,10 +80,18 @@ public class ConnectivityChecker {
      * @cdk.dictref   blue-obelisk:graphPartitioning
      */
     public static IAtomContainerSet partitionIntoMolecules(IAtomContainer container) {
-
         ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjList(container));
-        int[] components = cc.components();
-        IAtomContainer[] containers = new IAtomContainer[cc.nComponents() + 1];
+        return partitionIntoMolecules(container, cc.components());
+    }
+
+    public static IAtomContainerSet partitionIntoMolecules(IAtomContainer container, int[] components) {
+
+        int maxComponentIndex = 0;
+        for (int component : components)
+            if (component > maxComponentIndex)
+                maxComponentIndex = component;
+
+        IAtomContainer[] containers = new IAtomContainer[maxComponentIndex + 1];
         Map<IAtom, IAtomContainer> componentsMap = new HashMap<IAtom, IAtomContainer>(2 * container.getAtomCount());
 
         for (int i = 1; i < containers.length; i++)
@@ -96,8 +104,12 @@ public class ConnectivityChecker {
             containers[components[i]].addAtom(container.getAtom(i));
         }
 
-        for (IBond bond : container.bonds())
-            componentsMap.get(bond.getAtom(0)).addBond(bond);
+        for (IBond bond : container.bonds()) {
+            IAtomContainer begComp = componentsMap.get(bond.getAtom(0));
+            IAtomContainer endComp = componentsMap.get(bond.getAtom(1));
+            if (begComp == endComp)
+                begComp.addBond(bond);
+        }
 
         for (ISingleElectron electron : container.singleElectrons())
             componentsMap.get(electron.getAtom()).addSingleElectron(electron);
