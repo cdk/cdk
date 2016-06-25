@@ -24,10 +24,13 @@
 package org.openscience.cdk.graph;
 
 import com.google.common.collect.Maps;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.Arrays.copyOf;
 
@@ -74,6 +77,52 @@ public class GraphUtil {
             if (v < 0 || w < 0)
                 throw new IllegalArgumentException("bond at index " + container.getBondNumber(bond)
                         + " contained an atom not pressent in molecule");
+
+            graph[v][degree[v]++] = w;
+            graph[w][degree[w]++] = v;
+
+            // if the vertex degree of v or w reaches capacity, double the size
+            if (degree[v] == graph[v].length) graph[v] = copyOf(graph[v], degree[v] * 2);
+            if (degree[w] == graph[w].length) graph[w] = copyOf(graph[w], degree[w] * 2);
+        }
+
+        for (int v = 0; v < n; v++) {
+            graph[v] = copyOf(graph[v], degree[v]);
+        }
+
+        return graph;
+    }
+
+    /**
+     * Create an adjacent list representation of the {@literal container} that only
+     * includes bonds that are in the set provided as an argument.
+     *
+     * @param container the molecule
+     * @return adjacency list representation stored as an {@literal int[][]}.
+     * @throws NullPointerException     the container was null
+     * @throws IllegalArgumentException a bond was found which contained atoms
+     *                                  not in the molecule
+     */
+    public static int[][] toAdjListSubgraph(IAtomContainer container, Set<IBond> include) {
+
+        if (container == null) throw new NullPointerException("atom container was null");
+
+        int n = container.getAtomCount();
+
+        int[][] graph = new int[n][DEFAULT_DEGREE];
+        int[] degree = new int[n];
+
+        for (IBond bond : container.bonds()) {
+
+            if (!include.contains(bond))
+                continue;
+
+            int v = container.getAtomNumber(bond.getAtom(0));
+            int w = container.getAtomNumber(bond.getAtom(1));
+
+            if (v < 0 || w < 0)
+                throw new IllegalArgumentException("bond at index " + container.getBondNumber(bond)
+                                                   + " contained an atom not pressent in molecule");
 
             graph[v][degree[v]++] = w;
             graph[w][degree[w]++] = v;

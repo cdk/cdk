@@ -39,9 +39,12 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @cdk.module standard
@@ -396,5 +399,88 @@ public class ReactionManipulator {
         }
 
         return rxn;
+    }
+
+    /**
+     * Bi-direction int-tuple for looking up bonds by index.
+     */
+    private static final class IntTuple {
+        private final int beg, end;
+
+        public IntTuple(int beg, int end) {
+            this.beg = beg;
+            this.end = end;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            IntTuple that = (IntTuple) o;
+            return (this.beg == that.beg && this.end == that.end) ||
+                   (this.beg == that.end && this.end == that.beg);
+        }
+
+        @Override
+        public int hashCode() {
+            return beg ^ end;
+        }
+    }
+
+    /**
+     * Collect the set of bonds that mapped in both a reactant and a product. The method uses
+     * the {@link CDKConstants#ATOM_ATOM_MAPPING} property of atoms.
+     *
+     * @param reaction reaction
+     * @return mapped bonds
+     */
+    public static Set<IBond> findMappedBonds(IReaction reaction) {
+        Set<IBond> mapped = new HashSet<>();
+
+        // first we collect the occurrance of mapped bonds from reacants then products
+        Set<IntTuple> mappedReactantBonds = new HashSet<>();
+        Set<IntTuple> mappedProductBonds  = new HashSet<>();
+        for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
+            for (IBond bond : reactant.bonds()) {
+                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                if (begidx != null && endidx != null)
+                    mappedReactantBonds.add(new IntTuple(begidx, endidx));
+            }
+        }
+        // fail fast
+        if (mappedReactantBonds.isEmpty())
+            return Collections.emptySet();
+
+        for (IAtomContainer product : reaction.getProducts().atomContainers()) {
+            for (IBond bond : product.bonds()) {
+                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                if (begidx != null && endidx != null)
+                    mappedProductBonds.add(new IntTuple(begidx, endidx));
+            }
+        }
+        // fail fast
+        if (mappedProductBonds.isEmpty())
+            return Collections.emptySet();
+
+        // repeat above but now store any that are different or unmapped as being mapped
+        for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
+            for (IBond bond : reactant.bonds()) {
+                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                if (begidx != null && endidx != null && mappedProductBonds.contains(new IntTuple(begidx, endidx)))
+                    mapped.add(bond);
+            }
+        }
+        for (IAtomContainer product : reaction.getProducts().atomContainers()) {
+            for (IBond bond : product.bonds()) {
+                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                if (begidx != null && endidx != null && mappedReactantBonds.contains(new IntTuple(begidx, endidx)))
+                    mapped.add(bond);
+            }
+        }
+        return mapped;
     }
 }
