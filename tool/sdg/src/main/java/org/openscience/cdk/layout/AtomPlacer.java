@@ -445,68 +445,47 @@ public class AtomPlacer {
     }
 
     /**
-     *  Populates the corners of a polygon with atoms. Used to place atoms in a
-     *  geometrically regular way around a ring center or another atom. If this is
-     *  used to place the bonding partner of an atom (and not to draw a ring) we
-     *  want to place the atoms such that those with highest "weight" are placed
-     *  farmost away from the rest of the molecules. The "weight" mentioned here is
-     *  calculated by a modified morgan number algorithm.
+     * Populates the corners of a polygon with atoms. Used to place atoms in a
+     * geometrically regular way around a ring center or another atom. If this is
+     * used to place the bonding partner of an atom (and not to draw a ring) we
+     * want to place the atoms such that those with highest "weight" are placed
+     * furthermost away from the rest of the molecules. The "weight" mentioned here is
+     * calculated by a modified morgan number algorithm.
      *
-     *@param  atomsToDraw     All the atoms to draw
-     *@param  startAngle      A start angle, giving the angle of the most clockwise
-     *      atom which has already been placed
-     *@param  addAngle        An angle to be added to startAngle for each atom from
-     *      atomsToDraw
-     *@param  rotationCenter  The center of a ring, or an atom for which the
-     *      partners are to be placed
-     *@param  radius          The radius of the polygon to be populated: bond
-     *      length or ring radius
+     * @param atoms     All the atoms to draw
+     * @param thetaBeg  A start angle (in radians), giving the angle of the most clockwise
+     *                  atom which has already been placed
+     * @param thetaStep An angle (in radians) to be added for each atom from
+     *                  atomsToDraw
+     * @param center    The center of a ring, or an atom for which the
+     *                  partners are to be placed
+     * @param radius    The radius of the polygon to be populated: bond
+     *                  length or ring radius
      */
-    public void populatePolygonCorners(List<IAtom> atomsToDraw, Point2d rotationCenter, double startAngle,
-            double addAngle, double radius) {
-        double angle = startAngle;
-        double newX;
-        double newY;
-        double x;
-        double y;
-        logger.debug("populatePolygonCorners->startAngle: ", Math.toDegrees(angle));
-        List<Point2d> points = new ArrayList<Point2d>(atomsToDraw.size());
-        //IAtom atom = null;
+    public void populatePolygonCorners(final List<IAtom> atoms,
+                                       final Point2d center,
+                                       final double thetaBeg,
+                                       final double thetaStep,
+                                       final double radius) {
+        final int numAtoms = atoms.size();
+        double theta = thetaBeg;
 
-        logger.debug("  centerX:", rotationCenter.x);
-        logger.debug("  centerY:", rotationCenter.y);
-        logger.debug("  radius :", radius);
+        logger.debug("populatePolygonCorners(numAtoms=", numAtoms, ", center=", center, ", thetaBeg=", Math.toDegrees(thetaBeg), ", r=", radius);
 
-        for (int i = 0; i < atomsToDraw.size(); i++) {
-            angle = angle + addAngle;
-            if (angle >= 2.0 * Math.PI) {
-                angle -= 2.0 * Math.PI;
+        for (IAtom atom : atoms) {
+            theta += thetaStep;
+            if (thetaBeg >= 2.0 * Math.PI) {
+                System.err.println("???");
+                theta -= 2.0 * Math.PI;
             }
-            logger.debug("populatePolygonCorners->angle: ", Math.toDegrees(angle));
-            x = Math.cos(angle) * radius;
-            y = Math.sin(angle) * radius;
-            newX = x + rotationCenter.x;
-            newY = y + rotationCenter.y;
-            logger.debug("  newX:", newX);
-            logger.debug("  newY:", newY);
-            points.add(new Point2d(newX, newY));
+            double x = Math.cos(theta) * radius;
+            double y = Math.sin(theta) * radius;
+            double newX = x + center.x;
+            double newY = y + center.y;
+            atom.setPoint2d(new Point2d(newX, newY));
+            atom.setFlag(CDKConstants.ISPLACED, true);
+            logger.debug("populatePolygonCorners - angle=", Math.toDegrees(theta), ", newX=", newX, ", newY=", newY);
         }
-
-        for (int i = 0; i < atomsToDraw.size(); i++) {
-            IAtom connectAtom = atomsToDraw.get(i);
-            connectAtom.setPoint2d((Point2d) points.get(i));
-            connectAtom.setFlag(CDKConstants.ISPLACED, true);
-
-            if (logger.isDebugEnabled() && connectAtom != null) {
-                try {
-                    logger.debug("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1)
-                            + " placed at " + connectAtom.getPoint2d());
-                } catch (Exception exc) {
-                    // nothing to catch here. This is just for logging
-                }
-            }
-        }
-
     }
 
     /**
