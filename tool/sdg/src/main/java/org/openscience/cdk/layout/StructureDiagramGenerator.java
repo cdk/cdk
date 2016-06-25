@@ -29,6 +29,7 @@ import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
+import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
@@ -54,8 +55,8 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-import uk.ac.ebi.beam.Atom;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -72,7 +73,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
@@ -183,89 +183,94 @@ public class StructureDiagramGenerator {
      * @throws CDKException problem with layout
      */
     public final void generateCoordinates(final IReaction reaction) throws CDKException {
-        final Map<IntTuple,IBond> bmap = new HashMap<>();
 
-        final Set<IBond> duplicated = new HashSet<>();
+        // layout products and agents
+        for (IAtomContainer mol : reaction.getProducts().atomContainers())
+            generateCoordinates(mol);
+        for (IAtomContainer mol : reaction.getAgents().atomContainers())
+            generateCoordinates(mol);
 
-        for (IAtomContainer product : reaction.getProducts().atomContainers()) {
-            setMolecule(product, false);
-            generateCoordinates();
-            if (!alignMappedReaction)
-                continue;
-            for (IBond bond : product.bonds()) {
-                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                if (begidx != null && endidx != null) {
-                    // overwrite is allowed but stored for fixing later
-                    IBond old = bmap.put(new IntTuple(begidx, endidx), bond);
-                    if (old != null)
-                        duplicated.add(old);
-                }
-            }
-            // remove bad maps
-            for (IBond bond : duplicated) {
-                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                bmap.remove(new IntTuple(begidx, endidx));
-            }
+        // do not align = simple layout of reactants
+        if (alignMappedReaction) {
+            final Set<IBond> mapped = ReactionManipulator.findMappedBonds(reaction);
 
-        }
-        final Set<IAtom> afix = new HashSet<>();
-        final Set<IBond> bfix = new HashSet<>();
-        for (IAtomContainer mol : reaction.getAgents().atomContainers()) {
-            copyMappedCoords(bmap, afix, bfix, mol);
-            setMolecule(mol, false, afix, bfix);
-            generateCoordinates();
-        }
-        for (IAtomContainer mol : reaction.getReactants().atomContainers()) {
-            copyMappedCoords(bmap, afix, bfix, mol);
-            setMolecule(mol, false, afix, bfix);
-            generateCoordinates();
-        }
-    }
+            Multimap<Integer, Map<Integer, IAtom>> refmap = HashMultimap.create();
 
-    private static void copyMappedCoords(Map<IntTuple, IBond> bmap,
-                                         Set<IAtom> afix, Set<IBond> bfix,
-                                         IAtomContainer mol) {
-        // stiochiometry can mess up alignment
-        Set<Integer> mapvisit = new TreeSet<>();
-        afix.clear();
-        bfix.clear();
-        if (!bmap.isEmpty()) {
-            // we only copy coordinates for bonded atoms
-            for (IBond bond : mol.bonds()) {
-                IAtom beg = bond.getAtom(0);
-                IAtom end = bond.getAtom(1);
-                Integer begmapidx = beg.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endmapidx = end.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                if (begmapidx != null && endmapidx != null) {
-                    if (!mapvisit.add(begmapidx)) continue; // already have coords for beg in this mol
-                    if (!mapvisit.add(endmapidx)) continue; // already have coords for end in this mol
-                    IBond mbond = bmap.get(new IntTuple(begmapidx, endmapidx));
-                    if (mbond != null) {
-                        IAtom mbeg = mbond.getAtom(0);
-                        IAtom mend = mbond.getAtom(1);
-                        if (mbeg.getProperty(CDKConstants.ATOM_ATOM_MAPPING).equals(begmapidx)) {
-                            beg.setPoint2d(new Point2d(mbeg.getPoint2d()));
-                            end.setPoint2d(new Point2d(mend.getPoint2d()));
-                            afix.add(beg);
-                            afix.add(end);
-                        } else {
-                            beg.setPoint2d(new Point2d(mend.getPoint2d()));
-                            end.setPoint2d(new Point2d(mbeg.getPoint2d()));
-                            afix.add(beg);
-                            afix.add(end);
-                        }
+            for (IAtomContainer mol : reaction.getProducts().atomContainers()) {
+                Cycles.markRingAtomsAndBonds(mol);
+                final ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjListSubgraph(mol, mapped));
+                final IAtomContainerSet parts = ConnectivityChecker.partitionIntoMolecules(mol, cc.components());
+                for (IAtomContainer part : parts.atomContainers()) {
+                    // skip single atoms (unmapped)
+                    if (part.getAtomCount() == 1)
+                        continue;
+                    final Map<Integer, IAtom> map = new HashMap<>();
+                    for (IAtom atom : part.atoms()) {
+                        // safe as substructure should only be mapped bonds and therefore atoms!
+                        int idx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                        if (map.put(idx, atom) == null)
+                            refmap.put(idx, map);
                     }
                 }
             }
-        }
-        if (!afix.isEmpty()) {
-            for (IBond bond : mol.bonds()) {
-                if (afix.contains(bond.getAtom(0)) && afix.contains(bond.getAtom(1)))
-                    bfix.add(bond);
+
+            Set<IAtom> afix = new HashSet<>();
+            Set<IBond> bfix = new HashSet<>();
+
+            for (IAtomContainer mol : reaction.getReactants().atomContainers()) {
+                Cycles.markRingAtomsAndBonds(mol);
+                final ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjListSubgraph(mol, mapped));
+                final IAtomContainerSet parts = ConnectivityChecker.partitionIntoMolecules(mol, cc.components());
+
+                // we only aligned the largest part
+                IAtomContainer largest = null;
+                for (IAtomContainer part : parts.atomContainers()) {
+                    if (largest == null || part.getBondCount() > largest.getBondCount())
+                        largest = part;
+                }
+
+                afix.clear();
+                bfix.clear();
+
+                if (largest != null && largest.getAtomCount() > 1) {
+
+                    int idx = largest.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+
+                    // select the largest and use those coordinates
+                    Map<Integer, IAtom> reference = select(refmap.get(idx));
+                    for (IAtom atom : largest.atoms()) {
+                        idx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                        final IAtom src = reference.get(idx);
+                        if (src == null) continue;
+                        atom.setPoint2d(new Point2d(src.getPoint2d()));
+                        afix.add(atom);
+                    }
+                }
+
+                if (!afix.isEmpty()) {
+                    for (IBond bond : mol.bonds()) {
+                        if (afix.contains(bond.getAtom(0)) && afix.contains(bond.getAtom(1)))
+                            bfix.add(bond);
+                    }
+                }
+
+                setMolecule(mol, false, afix, bfix);
+                generateCoordinates();
             }
+
+        } else {
+            for (IAtomContainer mol : reaction.getReactants().atomContainers())
+                generateCoordinates(mol);
         }
+    }
+
+    private Map<Integer, IAtom> select(Collection<Map<Integer, IAtom>> refs) {
+        Map<Integer, IAtom> largest = Collections.emptyMap();
+        for (Map<Integer, IAtom> ref : refs) {
+            if (ref.size() > largest.size())
+                largest = ref;
+        }
+        return largest;
     }
 
     public void setMolecule(IAtomContainer mol, boolean clone) {
