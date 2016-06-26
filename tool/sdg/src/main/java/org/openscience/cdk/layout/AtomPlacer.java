@@ -474,10 +474,6 @@ public class AtomPlacer {
 
         for (IAtom atom : atoms) {
             theta += thetaStep;
-            if (thetaBeg >= 2.0 * Math.PI) {
-                System.err.println("???");
-                theta -= 2.0 * Math.PI;
-            }
             double x = Math.cos(theta) * radius;
             double y = Math.sin(theta) * radius;
             double newX = x + center.x;
@@ -718,7 +714,7 @@ public class AtomPlacer {
      *      atoms in an AtomContainer
      *@exception  java.lang.Exception  Description of the Exception
      */
-    static public String listNumbers(IAtomContainer mol, List<IAtom> ac) throws java.lang.Exception {
+    static public String listNumbers(IAtomContainer mol, List<IAtom> ac) {
         String s = "Numbers: ";
         for (int f = 0; f < ac.size(); f++) {
             s += (mol.getAtomNumber((IAtom) ac.get(f)) + 1) + " ";
