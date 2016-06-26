@@ -214,8 +214,8 @@ public class StructureDiagramGenerator {
                 }
             }
 
-            Set<IAtom> afix = new HashSet<>();
-            Set<IBond> bfix = new HashSet<>();
+            Map<IAtom,IAtom> afix = new HashMap<>();
+            Set<IBond>       bfix = new HashSet<>();
 
             for (IAtomContainer mol : reaction.getReactants().atomContainers()) {
                 Cycles.markRingAtomsAndBonds(mol);
@@ -243,18 +243,34 @@ public class StructureDiagramGenerator {
                         final IAtom src = reference.get(idx);
                         if (src == null) continue;
                         atom.setPoint2d(new Point2d(src.getPoint2d()));
-                        afix.add(atom);
+                        afix.put(atom, src);
                     }
                 }
 
                 if (!afix.isEmpty()) {
                     for (IBond bond : mol.bonds()) {
-                        if (afix.contains(bond.getAtom(0)) && afix.contains(bond.getAtom(1)))
-                            bfix.add(bond);
+                        if (afix.containsKey(bond.getAtom(0)) && afix.containsKey(bond.getAtom(1))) {
+                            // only fix acyclic bonds if the source atoms were also acyclic
+                            if (!bond.isInRing()) {
+                                IAtom srcBeg = afix.get(bond.getAtom(0));
+                                IAtom srcEnd = afix.get(bond.getAtom(1));
+                                for (IAtomContainer product : reaction.getProducts().atomContainers()) {
+                                    IBond srcBond = product.getBond(srcBeg, srcEnd);
+                                    if (srcBond != null) {
+                                        if (!srcBond.isInRing())
+                                            bfix.add(bond); // safe to add
+                                        break;
+                                    }
+                                }
+                            } else {
+                                bfix.add(bond);
+                            }
+                        }
                     }
                 }
 
-                setMolecule(mol, false, afix, bfix);
+                System.err.println(afix.size() + " " + bfix.size());
+                setMolecule(mol, false, afix.keySet(), bfix);
                 generateCoordinates();
             }
 

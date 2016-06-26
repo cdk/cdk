@@ -423,8 +423,12 @@ final class LayoutRefiner {
 
     private int numFixedMoved(final int[] xs, final int len) {
         int cnt = 0;
+        Set<IAtom> amoved = new HashSet<>();
         for (int i = 0; i < len; i++) {
-            if (afix.contains(mol.getAtom(xs[i])))
+            amoved.add(mol.getAtom(xs[i]));
+        }
+        for (IBond bond : bfix) {
+            if (amoved.contains(bond.getAtom(0)) && amoved.contains(bond.getAtom(1)))
                 cnt++;
         }
         return cnt;
