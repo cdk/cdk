@@ -629,44 +629,34 @@ public class StructureDiagramGenerator {
             logger.debug("*** Start of handling rings. ***");
             prepareRingSystems();
 
-            // We got our ring systems now, sort by number of bonds (largest first)
-            Collections.sort(ringSystems, new Comparator<IRingSet>() {
-                @Override
-                public int compare(IRingSet a, IRingSet b) {
-                    return -Integer.compare(AtomContainerSetManipulator.getBondCount(a),
-                                            AtomContainerSetManipulator.getBondCount(b));
-                }
-            });
+            // We got our ring systems now choose the best one based on size and
+            // number of heteroatoms
+            RingPlacer.countHetero(ringSystems);
+            Collections.sort(ringSystems, RingPlacer.RING_COMPARATOR);
 
-             // Do the layout for the larges/most complex connected ring system
-            int largest = 0;
-            int numComplex = 0;
-            int largestSize = (ringSystems.get(0)).getAtomContainerCount();
-            if (largestSize > 1)
-                numComplex++;
-            logger.debug("We have " + ringSystems.size() + " ring system(s).");
-            for (int f = 1; f < ringSystems.size(); f++) {
-                logger.debug("RingSet " + f + " has size " + (ringSystems.get(f)).getAtomContainerCount());
-                int size = (ringSystems.get(f)).getAtomContainerCount();
-                if (size > 1)
-                    numComplex++;
-                if (size > largestSize) {
-                    largestSize = (ringSystems.get(f)).getAtomContainerCount();
-                    largest = f;
+            int respect = layoutRingSet(firstBondVector, ringSystems.get(0));
+
+            // rotate monocyclic and when >= 4 polycyclic
+            if (respect == 1) {
+                if (ringSystems.get(0).getAtomContainerCount() == 1) {
+                    respect = 0;
+                } else if (ringSystems.size() >= 4) {
+                    int numPoly = 0;
+                    for (IRingSet rset : ringSystems)
+                        if (rset.getAtomContainerCount() > 1)
+                            numPoly++;
+                    if (numPoly >= 4)
+                        respect = 0;
                 }
             }
-            logger.debug("Largest RingSystem is at RingSet collection's position " + largest);
-            logger.debug("Size of Largest RingSystem: " + largestSize);
 
-            int respect = layoutRingSet(firstBondVector, ringSystems.get(largest));
-
-            if (respect == 1 && numComplex == 1 || respect == 2)
+            if (respect == 1 || respect == 2)
                 selectOrientation = false;
 
             logger.debug("First RingSet placed");
 
             // place of all the directly connected atoms of this ring system
-            ringPlacer.placeRingSubstituents(ringSystems.get(largest), bondLength);
+            ringPlacer.placeRingSubstituents(ringSystems.get(0), bondLength);
         } else {
 
             logger.debug("*** Start of handling purely aliphatic molecules. ***");
