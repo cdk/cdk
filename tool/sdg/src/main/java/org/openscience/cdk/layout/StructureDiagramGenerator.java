@@ -542,11 +542,19 @@ public class StructureDiagramGenerator {
             throw new CDKException("Could not generate layout? If a set of 'fixed' atoms were provided"
                                        + " try removing these and regenerating the layout.");
 
+        if (!isSubLayout) {
+            // correct double-bond stereo, this changes the layout and in reality
+            // should be done during the initial placement
+            if (molecule.stereoElements().iterator().hasNext())
+                CorrectGeometricConfiguration.correct(molecule);
+        }
+
         refinePlacement(molecule);
         finalizeLayout(molecule);
 
         if (!isSubLayout)
             assignStereochem(molecule);
+
     }
 
     /**
@@ -704,10 +712,6 @@ public class StructureDiagramGenerator {
     private void assignStereochem(IAtomContainer molecule) {
         if (!molecule.stereoElements().iterator().hasNext())
             return;
-
-        // correct double-bond stereo, this changes the layout and in reality
-        // should be done during the initial placement
-        CorrectGeometricConfiguration.correct(molecule);
 
         // assign up/down labels, this doesn't not alter layout and could be
         // done on-demand (e.g. when writing a MDL Molfile)
@@ -949,6 +953,11 @@ public class StructureDiagramGenerator {
             GeometryUtil.translate2D(frags.get(i),
                                      dest.x - curr.x, dest.y - curr.y);
         }
+
+        // correct double-bond stereo, this changes the layout and in reality
+        // should be done during the initial placement
+        if (molecule.stereoElements().iterator().hasNext())
+            CorrectGeometricConfiguration.correct(molecule);
 
         // finalize
         assignStereochem(mol);
