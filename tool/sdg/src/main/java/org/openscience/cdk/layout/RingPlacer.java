@@ -39,6 +39,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -223,6 +224,14 @@ public class RingPlacer {
         return treatedAtoms;
     }
 
+    private static double det(double xa, double ya, double xb, double yb, double xc, double yc) {
+        return (xa - xc) * (yb - yc) - (ya - yc) * (xb - xc);
+    }
+
+    private static double det(Point2d a, Point2d b, Point2d c) {
+        return det(a.x, a.y, b.x, b.y, c.x, c.y);
+    }
+
     /**
      * Generated coordinates for a given ring, which is connected to another ring a bridged ring,
      * i.e. it shares more than two atoms with another ring.
@@ -238,11 +247,24 @@ public class RingPlacer {
         IAtom[] bridgeAtoms = getBridgeAtoms(sharedAtoms);
         IAtom bondAtom1 = bridgeAtoms[0];
         IAtom bondAtom2 = bridgeAtoms[1];
+        List<IAtom> otherAtoms = new ArrayList<>();
+        for (IAtom atom : sharedAtoms.atoms())
+            if (atom != bondAtom1 && atom != bondAtom2)
+                otherAtoms.add(atom);
+
+        final boolean snap = ring.getProperty(SNAP_HINT) != null && ring.getProperty(SNAP_HINT, Boolean.class);
+
+        boolean swap = snap ? det(bondAtom1.getPoint2d(), GeometryUtil.get2DCenter(otherAtoms), bondAtom2.getPoint2d()) < 0
+                            : det(bondAtom1.getPoint2d(), GeometryUtil.get2DCenter(otherAtoms), bondAtom2.getPoint2d()) > 0;
+
+        if (swap) {
+            IAtom tmp = bondAtom1;
+            bondAtom1 = bondAtom2;
+            bondAtom2 = tmp;
+        }
 
         Vector2d bondAtom1Vector = new Vector2d(bondAtom1.getPoint2d());
         Vector2d bondAtom2Vector = new Vector2d(bondAtom2.getPoint2d());
-
-        final boolean snap = ring.getProperty(SNAP_HINT) != null && ring.getProperty(SNAP_HINT, Boolean.class);
 
         Point2d midPoint   = getMidPoint(bondAtom1Vector, bondAtom2Vector);
         Point2d ringCenter = null;
@@ -255,9 +277,7 @@ public class RingPlacer {
                                                 new Vector2d(midPoint.x - sharedAtomsCenter.x, midPoint.y - sharedAtomsCenter.y));
 
             offset = 0;
-            for (IAtom atom : sharedAtoms.atoms()) {
-                if (atom == bondAtom1 || atom == bondAtom2)
-                    continue;
+            for (IAtom atom : otherAtoms) {
                 double dist = atom.getPoint2d().distance(midPoint);
                 if (dist > offset)
                     offset = dist;
@@ -270,92 +290,44 @@ public class RingPlacer {
         ringCenterVector.scale(radius-offset);
         ringCenter.add(ringCenterVector);
 
+        bondAtom1Vector.sub(ringCenter);
+        bondAtom2Vector.sub(ringCenter);
 
-        Vector2d originRingCenterVector = new Vector2d(ringCenter);
+        final int numUnplaced = ring.getRingSize() - sharedAtoms.getAtomCount();
 
-        bondAtom1Vector.sub(originRingCenterVector);
-        bondAtom2Vector.sub(originRingCenterVector);
+        double dot = bondAtom2Vector.x * bondAtom1Vector.x + bondAtom2Vector.y * bondAtom1Vector.y;
+        double det = bondAtom2Vector.x * bondAtom1Vector.y - bondAtom2Vector.y * bondAtom1Vector.x;
 
-        double occupiedAngle = bondAtom1Vector.angle(bondAtom2Vector);
+        // theta remain/step
+        double tRemain = Math.atan2(det, dot);
+        if (tRemain < 0) tRemain = Math.PI + (Math.PI + tRemain);
+        double tStep   = tRemain / (numUnplaced + 1);
 
-        double remainingAngle = (2 * Math.PI) - occupiedAngle;
-        double addAngle = remainingAngle / (ring.getRingSize() - sharedAtoms.getAtomCount() + 1);
-
-        logger.debug("placeBridgedRing->occupiedAngle: " + Math.toDegrees(occupiedAngle));
-        logger.debug("placeBridgedRing->remainingAngle: " + Math.toDegrees(remainingAngle));
-
-        logger.debug("placeBridgedRing->addAngle: " + Math.toDegrees(addAngle));
-
-        IAtom startAtom;
-
-        double centerX = ringCenter.x;
-        double centerY = ringCenter.y;
-
-        double xDiff = bondAtom1.getPoint2d().x - bondAtom2.getPoint2d().x;
-        double yDiff = bondAtom1.getPoint2d().y - bondAtom2.getPoint2d().y;
+        logger.debug("placeBridgedRing->tRemain: " + Math.toDegrees(tRemain));
+        logger.debug("placeBridgedRing->tStep: " + Math.toDegrees(tStep));
 
         double startAngle;
+        int direction = -1;
 
-        int direction = 1;
-        // if bond is vertical
-        if (xDiff == 0) {
-            logger.debug("placeBridgedRing->Bond is vertical");
-            //starts with the lower Atom
-            if (bondAtom1.getPoint2d().y > bondAtom2.getPoint2d().y) {
-                startAtom = bondAtom1;
-            } else {
-                startAtom = bondAtom2;
-            }
+        startAngle = GeometryUtil.getAngle(bondAtom1.getPoint2d().x - ringCenter.x, bondAtom1.getPoint2d().y - ringCenter.y);
 
-            //changes the drawing direction
-            if (centerX < sharedAtomsCenter.x) {
-                direction = 1;
-            } else {
-                direction = -1;
-            }
-        }
-
-        // if bond is not vertical
-        else {
-            //starts with the left Atom
-            if (bondAtom1.getPoint2d().x > bondAtom2.getPoint2d().x) {
-                startAtom = bondAtom1;
-            } else {
-                startAtom = bondAtom2;
-            }
-
-            //changes the drawing direction
-            if (centerY - sharedAtomsCenter.y > (centerX - sharedAtomsCenter.x) * yDiff / xDiff) {
-                direction = 1;
-            } else {
-                direction = -1;
-            }
-        }
-        startAngle = GeometryUtil.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y
-                - ringCenter.y);
-
-        IAtom currentAtom = startAtom;
+        IAtom currentAtom = bondAtom1;
         IBond currentBond = sharedAtoms.getConnectedBondsList(currentAtom).get(0);
 
-        Vector atomsToDraw = new Vector();
+        List<IAtom> atoms = new ArrayList<>();
         for (int i = 0; i < ring.getBondCount(); i++) {
             currentBond = ring.getNextBond(currentBond, currentAtom);
             currentAtom = currentBond.getConnectedAtom(currentAtom);
             if (!sharedAtoms.contains(currentAtom)) {
-                atomsToDraw.addElement(currentAtom);
+                atoms.add(currentAtom);
             }
         }
-        try {
-            logger.debug("placeBridgedRing->atomsToPlace: " + AtomPlacer.listNumbers(molecule, atomsToDraw));
-            logger.debug("placeBridgedRing->startAtom is: " + (molecule.getAtomNumber(startAtom) + 1));
-            logger.debug("placeBridgedRing->startAngle: " + Math.toDegrees(startAngle));
-            logger.debug("placeBridgedRing->addAngle: " + Math.toDegrees(addAngle));
-        } catch (Exception exc) {
-            logger.debug("Caught an exception while logging in RingPlacer");
-        }
 
-        addAngle = addAngle * direction;
-        atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
+        logger.debug("placeBridgedRing->atomsToPlace: " + AtomPlacer.listNumbers(molecule, atoms));
+        logger.debug("placeBridgedRing->startAngle: " + Math.toDegrees(startAngle));
+        logger.debug("placeBridgedRing->tStep: " + Math.toDegrees(tStep));
+
+        atomPlacer.populatePolygonCorners(atoms, ringCenter, startAngle, -tStep, radius);
     }
 
     /**
@@ -524,14 +496,12 @@ public class RingPlacer {
             atomsToDraw.addElement(currentAtom);
         }
         addAngle = addAngle * direction;
-        try {
-            logger.debug("placeFusedRing->startAngle: " + Math.toDegrees(startAngle));
-            logger.debug("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));
-            logger.debug("placeFusedRing->startAtom is: " + (molecule.getAtomNumber(startAtom) + 1));
-            logger.debug("AtomsToDraw: " + AtomPlacer.listNumbers(molecule, atomsToDraw));
-        } catch (Exception exc) {
-            logger.debug("Caught an exception while logging in RingPlacer");
-        }
+
+        logger.debug("placeFusedRing->startAngle: " + Math.toDegrees(startAngle));
+        logger.debug("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));
+        logger.debug("placeFusedRing->startAtom is: " + (molecule.getAtomNumber(startAtom) + 1));
+        logger.debug("AtomsToDraw: " + AtomPlacer.listNumbers(molecule, atomsToDraw));
+
         atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
     }
 
