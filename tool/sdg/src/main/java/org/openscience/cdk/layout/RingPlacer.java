@@ -40,6 +40,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -791,5 +793,68 @@ public class RingPlacer {
 
     public void setAtomPlacer(AtomPlacer atomPlacer) {
         this.atomPlacer = atomPlacer;
+    }
+
+
+    /**
+     * Sorts ring systems prioritising the most complex. To sort correctly,
+     * {@link #countHetero(List)} must first be invoked.
+     */
+    static final Comparator<IRingSet> RING_COMPARATOR = new Comparator<IRingSet>() {
+        @Override
+        public int compare(IRingSet a, IRingSet b) {
+
+            // polycyclic better
+            int cmp = Boolean.compare(a.getAtomContainerCount() == 1, b.getAtomContainerCount() == 1);
+            if (cmp != 0) return cmp;
+
+            // more hetero atoms better
+            Integer numHeteroRingA = a.getProperty(NUM_HETERO_RINGS);
+            Integer numHeteroRingB = b.getProperty(NUM_HETERO_RINGS);
+            if (numHeteroRingA == null) numHeteroRingA = 0;
+            if (numHeteroRingB == null) numHeteroRingB = 0;
+            cmp = -Integer.compare(numHeteroRingA, numHeteroRingB);
+            if (cmp != 0) return cmp;
+
+            // more hetero rings better
+            Integer numHeteroAtomA = a.getProperty(NUM_HETERO_ATOMS);
+            Integer numHeteroAtomB = b.getProperty(NUM_HETERO_ATOMS);
+            if (numHeteroAtomA == null) numHeteroAtomA = 0;
+            if (numHeteroAtomB == null) numHeteroAtomB = 0;
+            cmp = -Integer.compare(numHeteroAtomA, numHeteroAtomB);
+            if (cmp != 0) return cmp;
+
+            // more rings better
+            return -Integer.compare(a.getAtomContainerCount(), b.getAtomContainerCount());
+        }
+    };
+
+    private static final String NUM_HETERO_RINGS = "sdg:numHeteroRings";
+    private static final String NUM_HETERO_ATOMS = "sdg:numHeteroAtoms";
+
+    /**
+     * Counds the number of hetero atoms and hetero rings in a ringset. The
+     * properties {@code sdg:numHeteroRings} and {@code sdg:numHeteroAtoms}
+     * are set.
+     *
+     * @param rsets ring systems
+     */
+    static void countHetero(List<IRingSet> rsets) {
+        for (IRingSet rset : rsets) {
+            int numHeteroAtoms = 0;
+            int numHeteroRings = 0;
+            for (IAtomContainer ring : rset.atomContainers()) {
+                int prevNumHeteroAtoms = numHeteroAtoms;
+                for (IAtom atom : ring.atoms()) {
+                    Integer elem = atom.getAtomicNumber();
+                    if (elem != null && elem != 6 && elem != 1)
+                        numHeteroAtoms++;
+                }
+                if (numHeteroAtoms > prevNumHeteroAtoms)
+                    numHeteroRings++;
+            }
+            rset.setProperty(NUM_HETERO_ATOMS, numHeteroAtoms);
+            rset.setProperty(NUM_HETERO_RINGS, numHeteroRings);
+        }
     }
 }
