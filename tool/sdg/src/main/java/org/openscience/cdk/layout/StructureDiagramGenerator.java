@@ -581,17 +581,27 @@ public class StructureDiagramGenerator {
                         ringPlacer.placeRingSubstituents(rset, bondLength);
                     } else {
 
-                        List<IRing> placed   = new ArrayList<>();
+                        List<IRing> placed = new ArrayList<>();
                         List<IRing> unplaced = new ArrayList<>();
 
                         for (IAtomContainer ring : rset.atomContainers()) {
                             if (ring.getFlag(CDKConstants.ISPLACED))
-                                placed.add((IRing)ring);
+                                placed.add((IRing) ring);
                             else
                                 unplaced.add((IRing) ring);
                         }
 
-                        while (!unplaced.isEmpty()) {
+                        // partially laid out rings
+                        if (placed.isEmpty()) {
+                            for (IRing ring : unplaced) {
+                                if (ringPlacer.completePartiallyPlacedRing(rset, ring, bondLength))
+                                    placed.add(ring);
+                            }
+                            unplaced.removeAll(placed);
+                        }
+
+                        while (!unplaced.isEmpty() && !placed.isEmpty()) {
+
                             for (IAtomContainer ring : placed) {
                                 ringPlacer.placeConnectedRings(rset, (IRing) ring, RingPlacer.FUSED, bondLength);
                                 ringPlacer.placeConnectedRings(rset, (IRing) ring, RingPlacer.BRIDGED, bondLength);
@@ -606,8 +616,11 @@ public class StructureDiagramGenerator {
                                     placed.add(ring);
                                 }
                             }
-                            if (placed.isEmpty())
-                                break;
+                        }
+
+                        if (allPlaced(rset)) {
+                            rset.setFlag(CDKConstants.ISPLACED, true);
+                            ringPlacer.placeRingSubstituents(rset, bondLength);
                         }
                     }
                 }
@@ -1596,28 +1609,11 @@ public class StructureDiagramGenerator {
         } else {
             logger.debug("...no bond found");
 
-            IRing partiallyPlacedRing = molecule.getBuilder().newInstance(IRing.class);
-
             // partially laid out ring system
             if (ringSystems != null) {
                 for (IRingSet ringset : ringSystems) {
-                    for (IAtomContainer ring : ringset.atomContainers()) {
-                        if (!ring.getFlag(CDKConstants.ISPLACED)) {
-
-                            partiallyPlacedRing.removeAllElements();
-                            for (IAtom atom : ring.atoms())
-                                if (atom.getPoint2d() != null)
-                                    atom.setFlag(CDKConstants.ISPLACED, true);
-                            AtomPlacer.copyPlaced(partiallyPlacedRing, ring);
-
-                            if (partiallyPlacedRing.getAtomCount() > 0 && partiallyPlacedRing.getAtomCount() < ring.getAtomCount()) {
-                                ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.FUSED, bondLength);
-                                ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.BRIDGED, bondLength);
-                                ringPlacer.placeConnectedRings(ringset, partiallyPlacedRing, RingPlacer.SPIRO, bondLength);
-                            }
-                        }
-                    }
-
+                    for (IAtomContainer ring : ringset.atomContainers())
+                        ringPlacer.completePartiallyPlacedRing(ringset, (IRing) ring, bondLength);
                     if (allPlaced(ringset))
                         ringPlacer.placeRingSubstituents(ringset, bondLength);
                 }

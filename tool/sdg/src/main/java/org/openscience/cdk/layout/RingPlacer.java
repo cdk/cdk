@@ -506,6 +506,33 @@ public class RingPlacer {
     }
 
     /**
+     * Completes the layout of a partiallyed laid out ring.
+     *
+     * @param rset ring set
+     * @param ring the ring to complete
+     * @param bondLength the bond length
+     */
+    boolean completePartiallyPlacedRing(IRingSet rset, IRing ring, double bondLength) {
+        if (ring.getFlag(CDKConstants.ISPLACED))
+            return true;
+        IRing partiallyPlacedRing = molecule.getBuilder().newInstance(IRing.class);
+        for (IAtom atom : ring.atoms())
+            if (atom.getPoint2d() != null)
+                atom.setFlag(CDKConstants.ISPLACED, true);
+        AtomPlacer.copyPlaced(partiallyPlacedRing, ring);
+
+        if (partiallyPlacedRing.getAtomCount() > 0 && partiallyPlacedRing.getAtomCount() < ring.getAtomCount()) {
+            placeConnectedRings(rset, partiallyPlacedRing, RingPlacer.FUSED, bondLength);
+            placeConnectedRings(rset, partiallyPlacedRing, RingPlacer.BRIDGED, bondLength);
+            placeConnectedRings(rset, partiallyPlacedRing, RingPlacer.SPIRO, bondLength);
+            ring.setFlag(CDKConstants.ISPLACED, true);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Get the middle of two provide points.
      *
      * @param a first point
