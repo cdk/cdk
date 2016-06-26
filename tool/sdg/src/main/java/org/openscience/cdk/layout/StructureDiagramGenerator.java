@@ -269,7 +269,6 @@ public class StructureDiagramGenerator {
                     }
                 }
 
-                System.err.println(afix.size() + " " + bfix.size());
                 setMolecule(mol, false, afix.keySet(), bfix);
                 generateCoordinates();
             }
