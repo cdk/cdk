@@ -548,7 +548,7 @@
                         <ruleset>/pmd/custom.xml</ruleset>
                     </rulesets>
                     <excludes>
-                        <exclude>**/smsd/*.java</exclude>
+                        <exclude>.*/smsd/*.java</exclude>
                     </excludes>
                     <excludeRoots>
                         <excludeRoot>${basedir}/target/generated-sources/javacc</excludeRoot>
