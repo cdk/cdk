@@ -25,7 +25,6 @@ package org.openscience.cdk.templates;
 
 import javax.vecmath.Point2d;
 
-import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -1295,7 +1294,6 @@ public class TestMoleculeFactory {
     /**
      * InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
      */
-    @Test
     public static IAtomContainer makeNaphthalene() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -1357,7 +1355,6 @@ public class TestMoleculeFactory {
     /**
      * @cdk.inchi InChI=1/C14H10/c1-2-6-12-10-14-8-4-3-7-13(14)9-11(12)5-1/h1-10H
      */
-    @Test
     public static IAtomContainer makeAnthracene() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -1442,7 +1439,6 @@ public class TestMoleculeFactory {
      * octacyclo[17.2.2.2¹,⁴.2⁴,⁷.2⁷,¹⁰.2¹⁰,¹³.2¹³,¹⁶.2¹⁶,¹⁹]pentatriacontane
      * @cdk.inchi InChI=1/C35H56/c1-2-30-6-3-29(1)4-7-31(8-5-29)13-15-33(16-14-31)21-23-35(24-22-33)27-25-34(26-28-35)19-17-32(11-9-30,12-10-30)18-20-34/h1-28H2
      */
-    @Test
     public static IAtomContainer makeCyclophaneLike() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -1642,7 +1638,6 @@ public class TestMoleculeFactory {
      * octacyclo[24.2.2.2²,⁵.2⁶,⁹.2¹⁰,¹³.2¹⁴,¹⁷.2¹⁸,²¹.2²²,²⁵]dotetracontane
      * @cdk.inchi InChI=1/C42H70/c1-2-30-4-3-29(1)31-5-7-33(8-6-31)35-13-15-37(16-14-35)39-21-23-41(24-22-39)42-27-25-40(26-28-42)38-19-17-36(18-20-38)34-11-9-32(30)10-12-34/h29-42H,1-28H2
      */
-    @Test
     public static IAtomContainer makeGappedCyclophaneLike() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
