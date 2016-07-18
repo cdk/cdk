@@ -47,6 +47,13 @@ public class CxSmilesParserTest {
     }
 
     @Test
+    public void escapedAtomLabels() {
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx("|$R&#39;;;;;;;$|", state), is(not(-1)));
+        assertThat(state.atomLabels, hasEntry(0, "R'"));
+    }
+
+    @Test
     public void atomValues() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|$_AV:;;;5;;;;;8$|", state), is(not(-1)));
