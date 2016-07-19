@@ -77,8 +77,24 @@ final class CxSmilesParser {
                 return true;
             } else {
                 final int beg = iter.pos - 1;
+                int rollback = beg;
                 while (iter.hasNext()) {
-                    if (iter.curr() == ';' || iter.curr() == '$')
+
+                    // correct step over of escaped label
+                    if (iter.curr() == '&') {
+                        rollback = iter.pos;
+                        if (iter.nextIf('&') && iter.nextIf('#') && iter.nextIfDigit()) {
+                            while (iter.nextIfDigit()){} // more digits
+                            if (!iter.nextIf(';'))
+                                iter.pos = rollback;
+                        } else {
+                            iter.pos = rollback;
+                        }
+                    }
+
+                    if (iter.curr() == ';')
+                        break;
+                    if (iter.curr() == '$')
                         break;
                     iter.next();
                 }
@@ -579,6 +595,13 @@ final class CxSmilesParser {
          */
         boolean nextIf(char c) {
             if (!hasNext() || str.charAt(pos) != c)
+                return false;
+            pos++;
+            return true;
+        }
+
+        boolean nextIfDigit() {
+            if (!hasNext() || !isDigit(str.charAt(pos)))
                 return false;
             pos++;
             return true;
