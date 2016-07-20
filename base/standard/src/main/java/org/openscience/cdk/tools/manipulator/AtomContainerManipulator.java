@@ -146,6 +146,8 @@ public class AtomContainerManipulator {
                 container.setAtom(i, newAtom);
                 atomremap.put(oldAtom, newAtom);
             } else {
+                if (atom == newAtom)
+                    throw new IllegalArgumentException("Cannot replace atom with one from the same molecule.");
                 atomremap.put(atom, atom);
             }
         }
