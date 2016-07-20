@@ -26,6 +26,7 @@ package org.openscience.cdk.smiles;
 
 import com.google.common.collect.Maps;
 
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -267,6 +268,8 @@ final class CDKToBeam {
             case QUADRUPLE:
                 return Bond.QUADRUPLE;
             default:
+                if (!this.aromatic && b.getFlag(CDKConstants.ISAROMATIC))
+                    throw new CDKException("Cannot write Kekulé SMILES output due to aromatic bond with unset bond order - molecule should be Kekulized");
                 throw new CDKException("Unsupported bond order: " + order);
         }
     }

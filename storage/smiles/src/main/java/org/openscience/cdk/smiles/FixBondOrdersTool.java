@@ -65,7 +65,9 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
  * @author Lucy Entwistle
  * @cdk.module smiles
  * @cdk.githash
+ * @deprecated use {@link org.openscience.cdk.aromaticity.Kekulization}
  */
+@Deprecated
 public class FixBondOrdersTool {
 
     private boolean interrupted;
