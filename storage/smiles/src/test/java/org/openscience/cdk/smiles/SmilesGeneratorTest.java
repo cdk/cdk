@@ -1199,6 +1199,13 @@ public class SmilesGeneratorTest extends CDKTestCase {
                    is(canon("Clc1ccc(Cl)c2[nH]c([nH0]c21)C(F)(F)F")));
     }
 
+    @Test(expected = CDKException.class)
+    public void warnOnBadInput() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        smipar.kekulise(false);
+        IAtomContainer mol = smipar.parseSmiles("c1ccccc1");
+        System.err.println(SmilesGenerator.isomeric().create(mol));
+    }
 
     /**
      * @see https://tech.knime.org/forum/cdk/buggy-behavior-of-molecule-to-cdk-node

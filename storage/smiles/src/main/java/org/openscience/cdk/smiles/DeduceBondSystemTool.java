@@ -123,6 +123,13 @@ public class DeduceBondSystemTool {
      * @throws CDKException if something went wrong.
      */
     public IAtomContainer fixAromaticBondOrders(IAtomContainer atomContainer) throws CDKException {
+
+        // preset all bond orders to single
+        for (IBond bond : atomContainer.bonds()) {
+            if (bond.isAromatic() && bond.getOrder() == IBond.Order.UNSET)
+                bond.setOrder(IBond.Order.SINGLE);
+        }
+
         // OK, we take advantage here from the fact that this class does not take
         // into account rings larger than 7 atoms. See fixAromaticBondOrders().
         IRingSet rs = allRingsFinder.findAllRings(atomContainer, 7);

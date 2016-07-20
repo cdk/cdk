@@ -196,7 +196,7 @@ public class BeamToCDKTest {
             assertThat(a.getImplicitHydrogenCount(), is(1));
         }
         for (IBond b : ac.bonds()) {
-            assertThat(b.getOrder(), is(IBond.Order.SINGLE));
+            assertThat(b.getOrder(), is(IBond.Order.UNSET));
             assertTrue(b.getFlag(CDKConstants.ISAROMATIC));
         }
     }
@@ -253,7 +253,7 @@ public class BeamToCDKTest {
         }
 
         for (IBond b : ac.bonds()) {
-            assertThat(b.getOrder(), is(IBond.Order.SINGLE));
+            assertThat(b.getOrder(), is(IBond.Order.UNSET));
             assertTrue(b.getFlag(CDKConstants.ISAROMATIC));
         }
     }

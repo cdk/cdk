@@ -192,9 +192,11 @@ public class CDKTestCase {
      *
      * @param container the atom container to check
      */
-    protected void assertAllSingleAndAromatic(IAtomContainer container) throws Exception {
-        for (Iterator<IBond> bonds = container.bonds().iterator(); bonds.hasNext();)
-            Assert.assertEquals(IBond.Order.SINGLE, bonds.next().getOrder());
+    protected void assertAllSingleOrAromatic(IAtomContainer container) throws Exception {
+        for (IBond bond : container.bonds()) {
+            if (!bond.isAromatic())
+                Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
+        }
 
         for (IAtom atom : container.atoms()) {
             if (atom.getSymbol().equals("H"))
