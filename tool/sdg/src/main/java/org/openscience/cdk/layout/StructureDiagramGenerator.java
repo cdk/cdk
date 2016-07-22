@@ -2135,9 +2135,16 @@ public class StructureDiagramGenerator {
                         newvisit.clear();
                         for (Integer idx : visited) {
                             IAtom visitedAtom = mol.getAtom(idx);
+                            if (e.getKey().contains(visitedAtom) || e.getValue().contains(visitedAtom))
+                                continue;
                             for (Map.Entry<Set<IAtom>, IAtom> e2 : mapping.entries()) {
                                 if (e2.getKey().contains(visitedAtom)) {
                                     int other = idxs.get(e2.getValue());
+                                    if (!visited.contains(other) && newvisit.add(other)) {
+                                        visit(newvisit, adjlist, other);
+                                    }
+                                } else if (e2.getValue() == visitedAtom) {
+                                    int other = idxs.get(e2.getKey().iterator().next());
                                     if (!visited.contains(other) && newvisit.add(other)) {
                                         visit(newvisit, adjlist, other);
                                     }
