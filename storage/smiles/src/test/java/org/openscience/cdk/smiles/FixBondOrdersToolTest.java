@@ -74,6 +74,7 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         smilesParser.kekulise(false);
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         molecule = fbot.kekuliseAromaticRings(molecule);
@@ -95,11 +96,11 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         smilesParser.kekulise(false);
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
-
         molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
         int doubleBondCount = 0;
         for (int i = 0; i < molecule.getBondCount(); i++) {

@@ -360,7 +360,6 @@ final class BeamToCDK {
                 if (atoms[u].isAromatic() && atoms[v].isAromatic()) {
                     bond.setIsAromatic(true);
                     bond.setOrder(IBond.Order.UNSET);
-                    bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
                     atoms[u].setIsAromatic(true);
                     atoms[v].setIsAromatic(true);
                 }

@@ -75,6 +75,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         smilesParser.kekulise(false);
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         molecule = dbst.fixAromaticBondOrders(molecule);
@@ -96,12 +97,13 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         smilesParser.kekulise(false);
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-
         molecule = dbst.fixAromaticBondOrders(molecule);
         Assert.assertNotNull(molecule);
 
         molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+
         int doubleBondCount = 0;
         for (int i = 0; i < molecule.getBondCount(); i++) {
             IBond bond = molecule.getBond(i);
@@ -164,6 +166,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         smilesParser.kekulise(false);
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.setSingleOrDoubleFlags(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         DeduceBondSystemTool dbst = new DeduceBondSystemTool(new AllRingsFinder());
