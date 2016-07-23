@@ -2128,6 +2128,32 @@ public class StructureDiagramGenerator {
                     // get all atoms connected to the part we will move
                     Set<Integer> visited = new HashSet<>();
                     visit(visited, adjlist, atomIdx);
+
+                    // gather up other position group
+                    Set<Integer> newvisit = new HashSet<>();
+                    do {
+                        newvisit.clear();
+                        for (Integer idx : visited) {
+                            IAtom visitedAtom = mol.getAtom(idx);
+                            if (e.getKey().contains(visitedAtom) || e.getValue().contains(visitedAtom))
+                                continue;
+                            for (Map.Entry<Set<IAtom>, IAtom> e2 : mapping.entries()) {
+                                if (e2.getKey().contains(visitedAtom)) {
+                                    int other = idxs.get(e2.getValue());
+                                    if (!visited.contains(other) && newvisit.add(other)) {
+                                        visit(newvisit, adjlist, other);
+                                    }
+                                } else if (e2.getValue() == visitedAtom) {
+                                    int other = idxs.get(e2.getKey().iterator().next());
+                                    if (!visited.contains(other) && newvisit.add(other)) {
+                                        visit(newvisit, adjlist, other);
+                                    }
+                                }
+                            }
+                        }
+                        visited.addAll(newvisit);
+                    } while (!newvisit.isEmpty());
+
                     IAtomContainer frag = mol.getBuilder().newInstance(IAtomContainer.class);
                     for (Integer visit : visited)
                         frag.addAtom(mol.getAtom(visit));

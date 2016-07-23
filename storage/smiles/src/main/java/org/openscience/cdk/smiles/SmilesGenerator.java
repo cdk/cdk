@@ -176,7 +176,10 @@ public final class SmilesGenerator {
     /**
      * Create the generic SMILES generator.
      * @see #generic()
+     * @deprecated some consideration is needed on what SMILES is required e.g. SmilesGenerator.unique()
+     *             vs SmilesGenerator.isomeric();
      */
+    @Deprecated
     public SmilesGenerator() {
         this(false, false, false, false);
     }

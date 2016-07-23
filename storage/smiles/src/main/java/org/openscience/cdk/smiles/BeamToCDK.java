@@ -355,12 +355,15 @@ final class BeamToCDK {
                 bond.setIsAromatic(true);
                 atoms[u].setIsAromatic(true);
                 atoms[v].setIsAromatic(true);
+                break;
             case IMPLICIT:
                 if (atoms[u].isAromatic() && atoms[v].isAromatic()) {
                     bond.setIsAromatic(true);
+                    bond.setOrder(IBond.Order.UNSET);
                     atoms[u].setIsAromatic(true);
                     atoms[v].setIsAromatic(true);
                 }
+                break;
         }
 
         return bond;
