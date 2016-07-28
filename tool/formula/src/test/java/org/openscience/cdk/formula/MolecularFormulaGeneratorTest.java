@@ -31,7 +31,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * Checks the functionality of the MolecularFormulaGenerator.
+ * Checks the functionality of the FastFormulaGenerator.
  *
  * @cdk.module test-formula
  */
@@ -39,6 +39,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder
             .getInstance();
+
 
     /**
      * Test the getNextFormula() method
@@ -476,6 +477,9 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         Assert.assertEquals(1, mfSet.size());
         Assert.assertEquals("C374H623N103O116S", MolecularFormulaManipulator
                 .getString(mfSet.getMolecularFormula(0)));
+
+
+        //////////////////
     }
 
     /**
