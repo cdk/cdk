@@ -31,7 +31,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * Checks the functionality of the FastFormulaGenerator.
+ * Checks the functionality of the MolecularFormulaGenerator.
  *
  * @cdk.module test-formula
  */
