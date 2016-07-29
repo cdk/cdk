@@ -464,7 +464,7 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
         mfRange.addIsotope(n, 0, 10);
 
         MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 230.002, 230.004, mfRange);
-        Assert.assertTrue("generator implementation should be instance of FullEnumerationFormulaGenerator", generator.formulaGenerator instanceof RoundRobinFormulaGenerator);
+        Assert.assertTrue("generator implementation should be instance of RoundRobinFormulaGenerator", generator.formulaGenerator instanceof RoundRobinFormulaGenerator);
     }
 
     /**
