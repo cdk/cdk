@@ -40,7 +40,6 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
     private final IChemObjectBuilder builder = SilentChemObjectBuilder
             .getInstance();
 
-
     /**
      * Test the getNextFormula() method
      */
@@ -380,6 +379,92 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
             }
         }
         Assert.assertTrue("The molecular formula H2O should be found", found);
+    }
+
+    /**
+     * MolecularFormulaGenerator should use full enumeration method when smallest element has large weight
+     */
+    @Test
+    public void testUseFullEnumerationWhenNoHydrogen() throws Exception {
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+        IIsotope n = ifac.getMajorIsotope("N");
+        IIsotope o = ifac.getMajorIsotope("O");
+
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(c, 0, 50);
+        mfRange.addIsotope(o, 0, 30);
+        mfRange.addIsotope(n, 0, 10);
+
+        MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 1023.000, 1023.002, mfRange);
+        Assert.assertTrue("generator implementation should be instance of FullEnumerationFormulaGenerator", generator.formulaGenerator instanceof FullEnumerationFormulaGenerator);
+    }
+
+    /**
+     * MolecularFormulaGenerator should use full enumeration method when the mass deviation is very large (i.e. as
+     * large as the smallest weight)
+     */
+    @Test
+    public void testUseFullEnumerationWhenSuperLargeMassDeviation() throws Exception {
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope n = ifac.getMajorIsotope("N");
+        IIsotope o = ifac.getMajorIsotope("O");
+
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(c, 0, 20);
+        mfRange.addIsotope(h, 0, 30);
+        mfRange.addIsotope(o, 0, 15);
+        mfRange.addIsotope(n, 0, 10);
+
+        MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 13, 14, mfRange);
+        Assert.assertTrue("generator implementation should be instance of FullEnumerationFormulaGenerator", generator.formulaGenerator instanceof FullEnumerationFormulaGenerator);
+    }
+
+
+    /**
+     * MolecularFormulaGenerator should use full enumeration method when mass to decompose is too large to encode
+     * it as 32 bit integer with default blowup factor
+     */
+    @Test
+    public void testUseFullEnumerationWhenExceedIntegerSpace() throws Exception {
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope n = ifac.getMajorIsotope("N");
+        IIsotope o = ifac.getMajorIsotope("O");
+
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(c, 0, 20);
+        mfRange.addIsotope(h, 0, 30);
+        mfRange.addIsotope(o, 0, 15);
+        mfRange.addIsotope(n, 0, 10);
+
+        MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 1300000, 1300000.1, mfRange);
+        Assert.assertTrue("generator implementation should be instance of FullEnumerationFormulaGenerator", generator.formulaGenerator instanceof FullEnumerationFormulaGenerator);
+    }
+
+
+    /**
+     * MolecularFormulaGenerator should use Round Robin when using proper input
+     */
+    @Test
+    public void testUseRoundRobinWheneverPossible() throws Exception {
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope n = ifac.getMajorIsotope("N");
+        IIsotope o = ifac.getMajorIsotope("O");
+
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        mfRange.addIsotope(c, 0, 20);
+        mfRange.addIsotope(h, 0, 30);
+        mfRange.addIsotope(o, 0, 15);
+        mfRange.addIsotope(n, 0, 10);
+
+        MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 230.002, 230.004, mfRange);
+        Assert.assertTrue("generator implementation should be instance of FullEnumerationFormulaGenerator", generator.formulaGenerator instanceof RoundRobinFormulaGenerator);
     }
 
     /**
