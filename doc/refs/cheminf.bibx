@@ -1452,5 +1452,26 @@ Method </bibtex:title>
             <bibtex:pages>4396-4403</bibtex:pages>
         </bibtex:article>
     </bibtex:entry>
-    
+
+    <bibtex:entry id="Boecker2008">
+        <bibtex:article>
+            <bibtex:title>DECOMP--from interpreting Mass Spectrometry peaks to solving the Money Changing Problem.</bibtex:title>
+            <bibtex:author>Böcker, Sebastian and Lipták, Zsuzsanna and Martin, Marcel and Pervukhin, Anton and Sudek, Henner</bibtex:author>
+            <bibtex:year>2008</bibtex:year>
+            <bibtex:journal>Bioinformatics</bibtex:journal>
+            <bibtex:volume>24</bibtex:volume>
+            <bibtex:number>4</bibtex:number>
+            <bibtex:pages>591--593</bibtex:pages>
+            <bibtex:url>http://bioinformatics.oxfordjournals.org/cgi/reprint/24/4/591?ijkey=1lM50Bkzz4SCLsa</bibtex:url>
+        </bibtex:article>
+    </bibtex:entry>
+    <bibtex:entry id="Duehrkop2013">
+        <bibtex:inproceedings>
+            <bibtex:author>Dührkop, Kai and Ludwig, Marcus and Meusel, Marvin and Böcker, Sebastian</bibtex:author>
+            <bibtex:title>Faster mass decomposition</bibtex:title>
+            <bibtex:year>2013</bibtex:year>
+            <bibtex:booktitle>Proc. of Workshop on Algorithms in Bioinformatics (WABI 2013)</bibtex:booktitle>
+            <bibtex:url>http://arxiv.org/abs/1307.7805</bibtex:url>
+        </bibtex:inproceedings>
+    </bibtex:entry>
 </bibtex:file>
