@@ -527,12 +527,11 @@ public final class GeometryUtil {
     }
 
     /**
-     * Calculates the center of mass for the <code>Atom</code>s in the AtomContainer for the 2D
-     * coordinates. See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap
-     * renderingCoordinates) for details on coordinate sets
+     * Calculates the center of mass for the <code>Atom</code>s in the AtomContainer.
      *
      * @param ac AtomContainer for which the center of mass is calculated
-     * @return Description of the Return Value
+     * @return The center of mass of the molecule, or <code>NULL</code> if the molecule
+     * does not have 3D coordinates or if any of the atoms do not have a valid atomic mass
      * @cdk.keyword center of mass
      * @cdk.dictref blue-obelisk:calculate3DCenterOfMass
      */
