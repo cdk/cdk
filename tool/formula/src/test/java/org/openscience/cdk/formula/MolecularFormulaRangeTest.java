@@ -375,4 +375,17 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         Assert.assertEquals(8, ((MolecularFormulaRange) clone).getIsotopeCountMax(flu));
         Assert.assertEquals(10, ((MolecularFormulaRange) clone).getIsotopeCountMax(h1));
     }
+    
+    /**
+     * Test what happens when null isotope is added to MF range.
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void testNull() throws Exception {
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
+        IIsotope carb = builder.newInstance(IIsotope.class, "C");
+        IIsotope nul = null;
+        mfRange.addIsotope(carb, 2, 5);
+        mfRange.addIsotope(nul, 3, 7);
+    }
+    
 }
