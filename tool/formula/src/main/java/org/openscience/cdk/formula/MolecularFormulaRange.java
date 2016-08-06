@@ -64,6 +64,10 @@ public class MolecularFormulaRange implements Cloneable {
      *
      */
     public void addIsotope(IIsotope isotope, int countMin, int countMax) {
+        
+        if (isotope == null) 
+            throw new IllegalArgumentException("Isotope must not be null");
+        
         boolean flag = false;
         for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
             IIsotope thisIsotope = it.next();
