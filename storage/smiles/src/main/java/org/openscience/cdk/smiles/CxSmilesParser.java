@@ -76,27 +76,29 @@ final class CxSmilesParser {
                 // end of atom label
                 return true;
             } else {
-                final int beg = iter.pos - 1;
+                iter.pos--; // push back
+                final int beg = iter.pos;
                 int rollback = beg;
                 while (iter.hasNext()) {
-
                     // correct step over of escaped label
                     if (iter.curr() == '&') {
                         rollback = iter.pos;
                         if (iter.nextIf('&') && iter.nextIf('#') && iter.nextIfDigit()) {
                             while (iter.nextIfDigit()){} // more digits
-                            if (!iter.nextIf(';'))
+                            if (!iter.nextIf(';')) {
                                 iter.pos = rollback;
+                            } else {
+                            }
                         } else {
                             iter.pos = rollback;
                         }
                     }
-
-                    if (iter.curr() == ';')
+                    else if (iter.curr() == ';')
                         break;
-                    if (iter.curr() == '$')
+                    else if (iter.curr() == '$')
                         break;
-                    iter.next();
+                    else
+                        iter.next();
                 }
                 dest.put(atomIdx, unescape(iter.substr(beg, iter.pos)));
                 atomIdx++;
