@@ -417,6 +417,13 @@ final class NonplanarBonds {
         return rank;
     }
 
+    private boolean isSp3Carbon(IAtom atom, int deg) {
+        Integer elem = atom.getAtomicNumber();
+        Integer hcnt = atom.getImplicitHydrogenCount();
+        if (elem == null || hcnt == null) return false;
+        return elem == 6 && hcnt <= 1 && deg + hcnt == 4;
+    }
+
     /**
      * Does the atom at index {@code i} have priority over the atom at index
      * {@code j} for the tetrahedral atom {@code focus}.
@@ -434,6 +441,18 @@ final class NonplanarBonds {
         if (doubleBondElements[i] == null && doubleBondElements[j] != null) return true;
         if (doubleBondElements[i] != null && doubleBondElements[j] == null) return false;
 
+        IAtom iAtom = container.getAtom(i);
+        IAtom jAtom = container.getAtom(j);
+
+        boolean iIsSp3 = isSp3Carbon(iAtom, graph[i].length);
+        boolean jIsSp3 = isSp3Carbon(jAtom, graph[j].length);
+        if (iIsSp3 != jIsSp3)
+            return !iIsSp3;
+
+        // avoid possible Sp3 centers
+        if (tetrahedralElements[i] == null && tetrahedralElements[j] != null) return true;
+        if (tetrahedralElements[i] != null && tetrahedralElements[j] == null) return false;
+
         // prioritise acyclic bonds
         boolean iCyclic = focus >= 0 ? ringSearch.cyclic(focus, i) : ringSearch.cyclic(i);
         boolean jCyclic = focus >= 0 ? ringSearch.cyclic(focus, j) : ringSearch.cyclic(j);
@@ -441,9 +460,9 @@ final class NonplanarBonds {
         if (iCyclic && !jCyclic) return false;
 
         // avoid placing on pseudo atoms
-        if (container.getAtom(i).getAtomicNumber() > 0 && container.getAtom(j).getAtomicNumber() == 0)
+        if (iAtom.getAtomicNumber() > 0 && jAtom.getAtomicNumber() == 0)
             return true;
-        if (container.getAtom(i).getAtomicNumber() == 0 && container.getAtom(j).getAtomicNumber() > 0)
+        if (iAtom.getAtomicNumber() == 0 && jAtom.getAtomicNumber() > 0)
             return false;
 
         // prioritise atoms with fewer neighbors
@@ -451,9 +470,9 @@ final class NonplanarBonds {
         if (graph[i].length > graph[j].length) return false;
 
         // prioritise by atomic number
-        if (container.getAtom(i).getAtomicNumber() < container.getAtom(j).getAtomicNumber())
+        if (iAtom.getAtomicNumber() < jAtom.getAtomicNumber())
             return true;
-        if (container.getAtom(i).getAtomicNumber() > container.getAtom(j).getAtomicNumber())
+        if (iAtom.getAtomicNumber() > jAtom.getAtomicNumber())
             return false;
 
         return false;
