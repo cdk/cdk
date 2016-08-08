@@ -725,8 +725,9 @@ public class StructureDiagramGenerator {
     }
 
     private void assignStereochem(IAtomContainer molecule) {
-        if (!molecule.stereoElements().iterator().hasNext())
-            return;
+        // XXX: can't check this unless we store 'unspecified' double bonds
+        // if (!molecule.stereoElements().iterator().hasNext())
+        //     return;
 
         // assign up/down labels, this doesn't not alter layout and could be
         // done on-demand (e.g. when writing a MDL Molfile)
