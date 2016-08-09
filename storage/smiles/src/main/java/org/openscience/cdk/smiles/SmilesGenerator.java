@@ -170,32 +170,24 @@ import java.lang.reflect.Method;
  */
 public final class SmilesGenerator {
 
-    private final boolean   isomeric, canonical, aromatic, classes;
+    private final int options;
     private final CDKToBeam converter;
 
     /**
      * Create the generic SMILES generator.
      * @see #generic()
-     * @deprecated some consideration is needed on what SMILES is required e.g. SmilesGenerator.unique()
-     *             vs SmilesGenerator.isomeric();
+     * @deprecated use {@link #SmilesGenerator(int)} configuring with {@link SmiOpt}.
      */
     @Deprecated
     public SmilesGenerator() {
-        this(false, false, false, false);
+        this(0);
     }
 
-    /**
-     * Create the SMILES generator.
-     *
-     * @param isomeric include isotope and stereo configurations in produced
-     *                 SMILES
-     */
-    private SmilesGenerator(boolean isomeric, boolean canonical, boolean aromatic, boolean classes) {
-        this.isomeric = isomeric;
-        this.canonical = canonical;
-        this.aromatic = aromatic;
-        this.classes = classes;
-        this.converter = new CDKToBeam(isomeric, aromatic, classes);
+    public SmilesGenerator(int options) {
+        this.options = options;
+        this.converter = new CDKToBeam(SmiOpt.isSet(options, SmiOpt.Isomeric),
+                                       SmiOpt.isSet(options, SmiOpt.UseAromaticSymbols),
+                                       SmiOpt.isSet(options, SmiOpt.AtomAtomMap));
     }
 
     /**
@@ -213,7 +205,7 @@ public final class SmilesGenerator {
      * @return a generator for aromatic SMILES
      */
     public SmilesGenerator aromatic() {
-        return new SmilesGenerator(isomeric, canonical, true, classes);
+        return new SmilesGenerator(this.options | SmiOpt.UseAromaticSymbols);
     }
 
     /**
@@ -231,7 +223,7 @@ public final class SmilesGenerator {
      * @return a generator for SMILES with atom classes
      */
     public SmilesGenerator withAtomClasses() {
-        return new SmilesGenerator(isomeric, canonical, aromatic, true);
+        return new SmilesGenerator(this.options | SmiOpt.AtomAtomMap);
     }
 
     /**
@@ -243,7 +235,7 @@ public final class SmilesGenerator {
      * @return a new arbitrary SMILES generator
      */
     public static SmilesGenerator generic() {
-        return new SmilesGenerator(false, false, false, false);
+        return new SmilesGenerator(0);
     }
 
     /**
@@ -254,7 +246,7 @@ public final class SmilesGenerator {
      * @return a new isomeric SMILES generator
      */
     public static SmilesGenerator isomeric() {
-        return new SmilesGenerator(true, false, false, false);
+        return new SmilesGenerator(SmiOpt.Isomeric);
     }
 
     /**
@@ -264,7 +256,7 @@ public final class SmilesGenerator {
      * @return a new unique SMILES generator
      */
     public static SmilesGenerator unique() {
-        return new SmilesGenerator(false, true, false, false);
+        return new SmilesGenerator(SmiOpt.Canonical);
     }
 
     /**
@@ -276,7 +268,7 @@ public final class SmilesGenerator {
      * @return a new absolute SMILES generator
      */
     public static SmilesGenerator absolute() {
-        return new SmilesGenerator(true, true, false, false);
+        return new SmilesGenerator(SmiOpt.Absolute);
     }
 
     /**
@@ -372,14 +364,14 @@ public final class SmilesGenerator {
             Graph g = converter.toBeamGraph(molecule);
 
             // apply the canonical labelling
-            if (canonical) {
+            if (SmiOpt.isSet(options, SmiOpt.Canonical)) {
 
                 // determine the output order
                 int[] labels = labels(molecule);
 
                 g = g.permute(labels).resonate();
 
-                if (isomeric) {
+                if (SmiOpt.isSet(options, SmiOpt.StereoCisTrans)) {
 
                     // FIXME: required to ensure canonical double bond labelling
                     g.sort(new Graph.VisitHighOrderFirst());
@@ -471,7 +463,9 @@ public final class SmilesGenerator {
      * @see Canon
      */
     private int[] labels(final IAtomContainer molecule) throws CDKException {
-        long[] labels = isomeric ? inchiNumbers(molecule) : Canon.label(molecule, GraphUtil.toAdjList(molecule));
+        // FIXME: use SmiOpt.InChiLabelling
+        long[] labels = SmiOpt.isSet(options, SmiOpt.Isomeric) ? inchiNumbers(molecule)
+                                                               : Canon.label(molecule, GraphUtil.toAdjList(molecule));
         int[] cpy = new int[labels.length];
         for (int i = 0; i < labels.length; i++)
             cpy[i] = (int) labels[i] - 1;
