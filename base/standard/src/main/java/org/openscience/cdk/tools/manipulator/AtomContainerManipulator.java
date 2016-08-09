@@ -845,7 +845,8 @@ public class AtomContainerManipulator {
         if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() != 0) return false;
         // molecule hydrogen
         List<IAtom> neighbors = container.getConnectedAtomsList(atom);
-        if (neighbors.size() == 1 && neighbors.get(0).getSymbol().equals("H")) return false;
+        if (neighbors.size() == 1 && (neighbors.get(0).getSymbol().equals("H") ||
+                                      neighbors.get(0) instanceof IPseudoAtom)) return false;
         // what about bridging hydrogens?
         // hydrogens with atom-atom mapping?
         return true;
@@ -894,9 +895,14 @@ public class AtomContainerManipulator {
         // hydrogen is either not attached to 0 or 2 neighbors
         if (graph[v].length != 1) return false;
 
-        // okay the hydrogen has one neighbor, if that neighbor is not a
-        // hydrogen (i.e. molecular hydrogen) then we can suppress it
-        return !"H".equals(container.getAtom(graph[v][0]).getSymbol());
+        // okay the hydrogen has one neighbor, if that neighbor is a
+        // hydrogen (i.e. molecular hydrogen) then we can not suppress it
+        if ("H".equals(container.getAtom(graph[v][0]).getSymbol()))
+            return false;
+        // can not nicely suppress hydrogens on pseudo atoms
+        if (container.getAtom(graph[v][0]) instanceof IPseudoAtom)
+            return false;
+        return true;
     }
 
     /**

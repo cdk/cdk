@@ -55,6 +55,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.silent.PseudoAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -218,6 +219,19 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
         Assert.assertEquals(2, ac.getAtomCount());
         Assert.assertTrue(ac.getFlag(CDKConstants.ISAROMATIC));
+    }
+
+    @Test
+    public void dontSuppressHydrogensOnPseudoAtoms() throws Exception {
+        IAtomContainer mol = new AtomContainer(); // *[H]
+        mol.addAtom(new PseudoAtom("*"));
+        mol.addAtom(new Atom("H"));
+        mol.getAtom(0).setImplicitHydrogenCount(0);
+        mol.getAtom(1).setImplicitHydrogenCount(1);
+        mol.addBond(0, 1, Order.SINGLE);
+        Assert.assertEquals(2, mol.getAtomCount());
+        IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
+        Assert.assertEquals(2, ac.getAtomCount());
     }
 
     private IAtomContainer getChiralMolTemplate() {
