@@ -41,7 +41,7 @@ final class CxSmilesState {
     Map<Integer, List<Integer>> positionVar = null;
     List<PolymerSgroup>         sgroups     = null;
     List<DataSgroup>            dataSgroups = null;
-    boolean                     zCoords     = false;
+    boolean                     coordFlag   = false;
 
     enum Radical {
         Monovalent,
