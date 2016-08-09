@@ -185,9 +185,7 @@ public final class SmilesGenerator {
 
     public SmilesGenerator(int options) {
         this.options = options;
-        this.converter = new CDKToBeam(SmiOpt.isSet(options, SmiOpt.Isomeric),
-                                       SmiOpt.isSet(options, SmiOpt.UseAromaticSymbols),
-                                       SmiOpt.isSet(options, SmiOpt.AtomAtomMap));
+        this.converter = new CDKToBeam(options);
     }
 
     /**
