@@ -27,6 +27,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
@@ -37,6 +38,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -198,6 +200,20 @@ public class CxSmilesTest {
 
     @Test public void genericReaction() throws Exception {
         IReaction rxn = smipar.parseReactionSmiles("C1=CC(=CC=C1)C(CC(N)=O)=O.*C>C1(=CC=CC=C1)N.C*.C1=CC(=CC=C1)C=2C=C(C3=C(N2)C=CC=C3)O.C*.C*> |$;;;;;;;;;;;;R22;;;;;;;;;;;;;;;;;;;;;;;;;;;;;R22$,f:0.1,2.3,4.5.6,m:13:0.1.2.3.4.5,21:14.15.16.17.18.19,40:23.24.25.26.27.28,42:29.30.31.32.33.34.35.36.37.38|");
+    }
+
+    @Test public void trailingAtomLabelSemiColonAndAtomValues() throws Exception {
+        IAtomContainer mol = smipar.parseSmiles("[H]C1=C([H])N2C(=O)C(=C([O-])[N+](CC3=CN=C(Cl)S3)=C2C(C)=C1[H])C1=CC(*)=CC=C1.** |$;;;;;;;;;;;;;;;;;;;;;;;;;;R;;;;RA;$,$_AV:;;;;;;;;;;;;;;;;;;;;;;;;2;;;4;5;6;;$,c:1,18,22,29,31,t:7,12,14,26,m:31:29.28.27.25.24.23|");
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        assertThat(mol.getAtom(26), is(instanceOf(IPseudoAtom.class)));
+        assertThat(mol.getAtom(30), is(instanceOf(IPseudoAtom.class)));
+        assertThat(((IPseudoAtom)mol.getAtom(26)).getLabel(), is("R"));
+        assertThat(((IPseudoAtom)mol.getAtom(30)).getLabel(), is("RA"));
+        assertThat(mol.getAtom(24).getProperty(CDKConstants.COMMENT), CoreMatchers.<Object>is("2"));
+        assertThat(mol.getAtom(27).getProperty(CDKConstants.COMMENT), CoreMatchers.<Object>is("4"));
+        assertThat(mol.getAtom(28).getProperty(CDKConstants.COMMENT), CoreMatchers.<Object>is("5"));
+        assertThat(mol.getAtom(29).getProperty(CDKConstants.COMMENT), CoreMatchers.<Object>is("6"));
+        assertThat(sgroups.size(), is(1));
     }
 
 

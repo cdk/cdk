@@ -73,6 +73,7 @@ final class CxSmilesParser {
 
             char c = iter.next();
             if (c == '$') {
+                iter.nextIf(','); // optional
                 // end of atom label
                 return true;
             } else {
@@ -410,10 +411,14 @@ final class CxSmilesParser {
             switch (iter.next()) {
                 case '$': // atom labels and values
                     // dest is atom labels by default
-                    Map<Integer, String> dest = state.atomLabels = new TreeMap<>();
+                    Map<Integer, String> dest;
+
                     // check for atom values
                     if (iter.nextIf("_AV:"))
                         dest = state.atomValues = new TreeMap<>();
+                    else
+                        dest = state.atomLabels = new TreeMap<>();
+
                     if (!processAtomLabels(iter, dest))
                         return -1;
                     break;
