@@ -42,13 +42,13 @@ public final class SmiOpt {
     public static final int StereoExTetrahedral = 0x400;
     public static final int Stereo              = StereoTetrahedral | StereoCisTrans | StereoExTetrahedral;
 
-    public static final int Cx2dCoordinates    = 0x01000;
-    public static final int Cx3dCoordinates    = 0x02000;
+    public static final int Cx2dCoordinates    = 0x001000;
+    public static final int Cx3dCoordinates    = 0x002000;
     public static final int CxCoordinates      = Cx3dCoordinates | Cx2dCoordinates;
     public static final int CxAtomLabel        = 0x008000;
     public static final int CxAtomValue        = 0x010000;
     public static final int CxRadical          = 0x020000;
-    public static final int CxMulticenter      = 0x030000;
+    public static final int CxMulticenter      = 0x040000;
     public static final int CxPolymer          = 0x080000;
     public static final int CxFragmentGroup    = 0x100000;
     public static final int CxSmiles           = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer;
@@ -57,6 +57,8 @@ public final class SmiOpt {
     public static final int UniversalSmiles = InChILabelling | Stereo | Isotope;
     public static final int Absolute        = UniversalSmiles;
     public static final int Isomeric        = Stereo | Isotope;
+    public static final int Unique          = Canonical;
+    public static final int Generic         = 0;
 
     static boolean isSet(int opts, int opt) {
         return (opts & opt) != 0;

@@ -26,19 +26,23 @@ package org.openscience.cdk.smiles;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.silent.Atom;
+import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.PseudoAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -216,5 +220,132 @@ public class CxSmilesTest {
         assertThat(sgroups.size(), is(1));
     }
 
+    @Test public void generateLabelledSmiles() throws CDKException {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(1).setImplicitHydrogenCount(2);
+        mol.addAtom(new PseudoAtom("R1"));
+        mol.getAtom(2).setImplicitHydrogenCount(0);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxAtomLabel);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("CC* |$;;R1$|"));
+    }
+
+    @Test public void generateCanonLabelledSmiles() throws CDKException {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setImplicitHydrogenCount(3);
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(1).setImplicitHydrogenCount(2);
+        mol.addAtom(new PseudoAtom("R1"));
+        mol.getAtom(2).setImplicitHydrogenCount(0);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.Canonical |
+                                                     SmiOpt.CxAtomLabel);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("*CC |$R1$|"));
+    }
+
+    @Test public void roundTripMulticenter() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.UseAromaticSymbols |
+                                                     SmiOpt.CxMulticenter);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|"));
+    }
+
+    @Test public void canonMulticenter() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.UseAromaticSymbols |
+                                                     SmiOpt.CxMulticenter |
+                                                     SmiOpt.Canonical);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("*Cl.c1ccccc1 |m:0:2.3.4.5.6.7|"));
+    }
+
+
+    @Test public void roundTripPEGn() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("CCCOCCO |Sg:n:1,2,3::ht|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxPolymer);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("CCCOCCO |Sg:n:1,2,3:n:ht|"));
+    }
+
+    @Test public void canonPEGn() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("CCCOCCO |Sg:n:1,2,3::ht|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.Canonical |
+                                                     SmiOpt.CxPolymer);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("OCCOCCC |Sg:n:3,4,5:n:ht|"));
+    }
+
+    @Test public void coordsEtOH() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("CCO |(,,;1,1,;2,2,)|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxCoordinates);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("CCO |(,,;1,1,;2,2,)|"));
+    }
+
+    @Test public void canonCoordsEtOH() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("CCO |(,,;1,1,;2,2,)|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.Canonical |
+                                                     SmiOpt.CxCoordinates);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("OCC |(2,2,;1,1,;,,)|"));
+    }
+
+    @Test public void noCoordsOptEtOH() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("CCO |(,,;1,1,;2,2,)|");
+        SmilesGenerator smigen = new SmilesGenerator(0);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("CCO"));
+    }
+
+    @Test public void noCoordsInEtOH() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("CCO");
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxCoordinates);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("CCO"));
+    }
+
+    @Test public void roundTripRadicals() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxRadical);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|"));
+    }
+
+    @Test public void canonRadicals() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxRadical |
+                                                     SmiOpt.Canonical);
+        String smi = smigen.create(mol);
+        assertThat(smi, is("[C]1CO[CH][CH]C1 |^1:3,4,^2:0|"));
+    }
 
 }

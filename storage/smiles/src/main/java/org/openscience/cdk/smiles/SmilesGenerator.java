@@ -22,18 +22,34 @@
  */
 package org.openscience.cdk.smiles;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.invariant.Canon;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupKey;
 import uk.ac.ebi.beam.Functions;
 import uk.ac.ebi.beam.Graph;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Generate a SMILES {@cdk.cite WEI88, WEI89} string for a provided structure.
@@ -201,6 +217,7 @@ public final class SmilesGenerator {
      * </pre></blockquote>
      *
      * @return a generator for aromatic SMILES
+     * @deprecated configure with {@link SmiOpt}
      */
     public SmilesGenerator aromatic() {
         return new SmilesGenerator(this.options | SmiOpt.UseAromaticSymbols);
@@ -219,7 +236,9 @@ public final class SmilesGenerator {
      * </pre></blockquote>
      *
      * @return a generator for SMILES with atom classes
+     * @deprecated configure with {@link SmiOpt}
      */
+    @Deprecated
     public SmilesGenerator withAtomClasses() {
         return new SmilesGenerator(this.options | SmiOpt.AtomAtomMap);
     }
@@ -233,7 +252,7 @@ public final class SmilesGenerator {
      * @return a new arbitrary SMILES generator
      */
     public static SmilesGenerator generic() {
-        return new SmilesGenerator(0);
+        return new SmilesGenerator(SmiOpt.Generic);
     }
 
     /**
@@ -254,7 +273,7 @@ public final class SmilesGenerator {
      * @return a new unique SMILES generator
      */
     public static SmilesGenerator unique() {
-        return new SmilesGenerator(SmiOpt.Canonical);
+        return new SmilesGenerator(SmiOpt.Unique);
     }
 
     /**
@@ -392,9 +411,20 @@ public final class SmilesGenerator {
                     canorder[i] = order[labels[i]];
                 System.arraycopy(canorder, 0, order, 0, order.length);
 
+                if (SmiOpt.isSet(options, SmiOpt.CxSmilesWithCoords)) {
+                    smiles += CxSmilesGenerator.generate(getCxSmilesState(molecule),
+                                                         options, null, order);
+                }
+
                 return smiles;
             } else {
-                return g.toSmiles(order);
+                String smiles = g.toSmiles(order);
+
+                if (SmiOpt.isSet(options, SmiOpt.CxSmilesWithCoords)) {
+                    smiles += CxSmilesGenerator.generate(getCxSmilesState(molecule), options, null, order);
+                }
+
+                return smiles;
             }
         } catch (IOException e) {
             throw new CDKException(e.getMessage());
@@ -498,6 +528,187 @@ public final class SmilesGenerator {
             throw new CDKException("An InChI could not be generated and used to canonise SMILES: " + e.getMessage(), e);
         } catch (IllegalAccessException e) {
             throw new CDKException("Could not access method to obtain InChI numbers.");
+        }
+    }
+
+    private static Integer ensureNotNull(Integer x) {
+        if (x == null)
+            throw new IllegalArgumentException("Inconsistent CXSMILES state! Check the SGroups.");
+        return x;
+    }
+
+    private List<Integer> toAtomIdxs(Collection<IAtom> atoms, Map<IAtom, Integer> atomidx) {
+        List<Integer> idxs = new ArrayList<>(atoms.size());
+        for (IAtom atom : atoms)
+            idxs.add(ensureNotNull(atomidx.get(atom)));
+        return idxs;
+    }
+
+    private CxSmilesState getCxSmilesState(IAtomContainer mol) {
+        CxSmilesState state = new CxSmilesState();
+        state.atomCoords = new ArrayList<>();
+        state.coordFlag = false;
+
+        // set the atom labels, values, and coordinates,
+        // and build the atom->idx map required by other parts
+        Map<IAtom, Integer> atomidx = new IdentityHashMap<>();
+        for (int idx = 0; idx < mol.getAtomCount(); idx++) {
+            IAtom atom = mol.getAtom(idx);
+            if (atom instanceof IPseudoAtom) {
+
+                if (state.atomLabels == null)
+                    state.atomLabels = new HashMap<>();
+
+                IPseudoAtom pseudo = (IPseudoAtom) atom;
+                if (pseudo.getAttachPointNum() > 0) {
+                    state.atomLabels.put(idx, "_AP" + pseudo.getAttachPointNum());
+                } else {
+                    if (!"*".equals(pseudo.getLabel()))
+                        state.atomLabels.put(idx, pseudo.getLabel());
+                }
+            }
+            Object comment = atom.getProperty(CDKConstants.COMMENT);
+            if (comment != null) {
+                if (state.atomValues == null)
+                    state.atomValues = new HashMap<>();
+                state.atomValues.put(idx, comment.toString());
+            }
+            atomidx.put(atom, idx);
+
+            Point2d p2 = atom.getPoint2d();
+            Point3d p3 = atom.getPoint3d();
+
+            if (SmiOpt.isSet(options, SmiOpt.Cx2dCoordinates) && p2 != null) {
+                state.atomCoords.add(new double[]{p2.x, p2.y, 0});
+                state.coordFlag = true;
+            } else if (SmiOpt.isSet(options, SmiOpt.Cx3dCoordinates) && p3 != null) {
+                state.atomCoords.add(new double[]{p3.x, p3.y, p3.z});
+                state.coordFlag = true;
+            } else if (SmiOpt.isSet(options, SmiOpt.CxCoordinates)) {
+                state.atomCoords.add(new double[3]);
+            }
+        }
+
+        if (!state.coordFlag)
+            state.atomCoords = null;
+
+        // radicals
+        if (mol.getSingleElectronCount() > 0) {
+            state.atomRads = new HashMap<>();
+            for (ISingleElectron radical : mol.singleElectrons()) {
+                CxSmilesState.Radical val = state.atomRads.get(ensureNotNull(atomidx.get(radical.getAtom())));
+
+                // 0->1, 1->2, 2->3
+                if (val == null)
+                    val = CxSmilesState.Radical.Monovalent;
+                else if (val == CxSmilesState.Radical.Monovalent)
+                    val = CxSmilesState.Radical.Divalent;
+                else if (val == CxSmilesState.Radical.Divalent)
+                    val = CxSmilesState.Radical.Trivalent;
+                else if (val == CxSmilesState.Radical.Trivalent)
+                    throw new IllegalArgumentException("Invalid radical state, can not be more than trivalent");
+
+                state.atomRads.put(atomidx.get(radical.getAtom()),
+                                   val);
+            }
+        }
+
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            state.sgroups = new ArrayList<>();
+            state.positionVar = new HashMap<>();
+            for (Sgroup sgroup : sgroups) {
+                switch (sgroup.getType()) {
+                    // polymer SRU
+                    case CtabStructureRepeatUnit:
+                    case CtabMonomer:
+                    case CtabMer:
+                    case CtabCopolymer:
+                    case CtabCrossLink:
+                    case CtabModified:
+                    case CtabMixture:
+                    case CtabFormulation:
+                    case CtabAnyPolymer:
+                    case CtabGeneric:
+                    case CtabComponent:
+                    case CtabGraft:
+                        state.sgroups.add(new CxSmilesState.PolymerSgroup(getSgroupPolymerKey(sgroup),
+                                                                          toAtomIdxs(sgroup.getAtoms(), atomidx),
+                                                                          sgroup.getSubscript(),
+                                                                          (String) sgroup.getValue(SgroupKey.CtabConnectivity)));
+                        break;
+
+                    case ExtMulticenter:
+                        IAtom beg = null;
+                        List<IAtom> ends = new ArrayList<>();
+                        Set<IBond> bonds = sgroup.getBonds();
+                        if (bonds.size() != 1)
+                            throw new IllegalArgumentException("Multicenter Sgroup in inconsistent state!");
+                        IBond bond = bonds.iterator().next();
+                        for (IAtom atom : sgroup.getAtoms()) {
+                            if (bond.contains(atom)) {
+                                if (beg != null)
+                                    throw new IllegalArgumentException("Multicenter Sgroup in inconsistent state!");
+                                beg = atom;
+                            } else {
+                                ends.add(atom);
+                            }
+                        }
+                        state.positionVar.put(ensureNotNull(atomidx.get(beg)),
+                                              toAtomIdxs(ends, atomidx));
+                        break;
+                    case CtabAbbreviation:
+                    case CtabMultipleGroup:
+                        // display shortcuts are not output
+                        break;
+                    default:
+                        throw new UnsupportedOperationException("Unsupported Sgroup Polymer");
+
+                }
+            }
+        }
+
+        return state;
+    }
+
+    private static String getSgroupPolymerKey(Sgroup sgroup) {
+        switch (sgroup.getType()) {
+            case CtabStructureRepeatUnit:
+                return "n";
+            case CtabMonomer:
+                return "mon";
+            case CtabMer:
+                return "mer";
+            case CtabCopolymer:
+                String subtype = sgroup.getValue(SgroupKey.CtabSubType);
+                if (subtype == null)
+                    return "co";
+                switch (subtype) {
+                    case "RAN":
+                        return "ran";
+                    case "ALT":
+                        return "alt";
+                    case "BLO":
+                        return "blk";
+                }
+            case CtabCrossLink:
+                return "xl";
+            case CtabModified:
+                return "mod";
+            case CtabMixture:
+                return "mix";
+            case CtabFormulation:
+                return "f";
+            case CtabAnyPolymer:
+                return "any";
+            case CtabGeneric:
+                return "gen";
+            case CtabComponent:
+                return "c";
+            case CtabGraft:
+                return "grf";
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
