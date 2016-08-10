@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 import org.xml.sax.Attributes;
 
 /**
- * Core CML 1.x and 2.x elements are parsed by this class.
+ * Core CML 1.x and 2.x elements are parsed by this class (see {@cdk.cite WIL01}).
  *
  * <p>Please file a bug report if this parser fails to parse
  * a certain element or attribute value in a valid CML document.
