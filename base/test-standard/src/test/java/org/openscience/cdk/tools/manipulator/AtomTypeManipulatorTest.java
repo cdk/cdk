@@ -85,4 +85,32 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         assertThat(atom.getSymbol(), is("C"));
         assertThat(atom.getAtomicNumber(), is(6));
     }
+
+    /**
+     * @cdk.bug 1322
+     */
+    @Test
+    public void aromaticityIsNotOverwritten() {
+        IAtom atom = new Atom(Elements.CARBON);
+        atom.setFlag(CDKConstants.ISAROMATIC, true);
+        IAtomType atomType = new AtomType(Elements.Unknown.toIElement());
+        atomType.setFlag(CDKConstants.ISAROMATIC, false);
+        atomType.setAtomTypeName("C.sp3");
+        AtomTypeManipulator.configure(atom, atomType);
+        assertThat(atom.getFlag(CDKConstants.ISAROMATIC), is(true));
+    }
+
+    /**
+     * @cdk.bug 1322
+     */
+    @Test
+    public void aromaticitySetIfForType() {
+        IAtom atom = new Atom(Elements.CARBON);
+        atom.setFlag(CDKConstants.ISAROMATIC, false);
+        IAtomType atomType = new AtomType(Elements.Unknown.toIElement());
+        atomType.setFlag(CDKConstants.ISAROMATIC, true);
+        atomType.setAtomTypeName("C.am");
+        AtomTypeManipulator.configure(atom, atomType);
+        assertThat(atom.getFlag(CDKConstants.ISAROMATIC), is(true));
+    }
 }
