@@ -26,7 +26,6 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @cdk.module ioformats
  * @cdk.githash
- * @cdk.set    io-formats
  */
 public class ChemDrawFormat extends AbstractResourceFormat implements IChemFormat {
 

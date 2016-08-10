@@ -25,7 +25,6 @@ import java.util.List;
 /**
  * @cdk.module ioformats
  * @cdk.githash
- * @cdk.set     io-formats
  */
 public class PubChemCompoundXMLFormat extends AbstractResourceFormat implements IChemFormatMatcher {
 

@@ -27,7 +27,6 @@ import java.util.List;
  *
  * @cdk.module ioformats
  * @cdk.githash
- * @cdk.set    io-formats
  */
 public class MDLRXNV3000Format extends AbstractResourceFormat implements IChemFormatMatcher {
 

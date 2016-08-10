@@ -26,7 +26,6 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @cdk.module ioformats
  * @cdk.githash
- * @cdk.set    io-formats
  */
 public class DMol3Format extends AbstractResourceFormat implements IChemFormat {
 
