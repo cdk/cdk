@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2015  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2012-2016  Egon Willighagen <egonw@users.sf.net>
  *               2012-2014  John May <john.wilkinsonmay@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -348,4 +348,36 @@ final class ImmutableAtomType implements IAtomType {
 		return this.electronValency;
 	}
 
+    @Override
+    public String toString() {
+        StringBuffer resultString = new StringBuffer(64);
+        resultString.append("ImmutableAtomType(").append(hashCode());
+        if (getAtomTypeName() != null) {
+            resultString.append(", N:").append(getAtomTypeName());
+        }
+        if (getMaxBondOrder() != null) {
+            resultString.append(", MBO:").append(getMaxBondOrder());
+        }
+        if (getBondOrderSum() != null) {
+            resultString.append(", BOS:").append(getBondOrderSum());
+        }
+        if (getFormalCharge() != null) {
+            resultString.append(", FC:").append(getFormalCharge());
+        }
+        if (getHybridization() != null) {
+            resultString.append(", H:").append(getHybridization());
+        }
+        if (getFormalNeighbourCount() != null) {
+            resultString.append(", NC:").append(getFormalNeighbourCount());
+        }
+        if (getCovalentRadius() != null) {
+            resultString.append(", CR:").append(getCovalentRadius());
+        }
+        if (getValency() != null) {
+            resultString.append(", EV:").append(getValency());
+        }
+        resultString.append(", ").append(super.toString());
+        resultString.append(')');
+        return resultString.toString();
+    }
 }

@@ -2518,6 +2518,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (atom.getFormalCharge() != CDKConstants.UNSET && !atom.getFormalCharge().equals(type.getFormalCharge()))
             return false;
 
+        // confirm single electron count
+        if (type.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT) != null) {
+            int count = countSingleElectrons(container, atom);
+            if (count != type.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT, Integer.class).intValue())
+                return false;
+        }
+
         return true;
     }
 
