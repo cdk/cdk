@@ -73,7 +73,6 @@ import java.util.List;
  * @cdk.created    2006-10-20
  * @cdk.module     reaction
  * @cdk.githash
- * @cdk.set        reaction-types
  *
  * @see RadicalSiteRearrangementMechanism
  **/

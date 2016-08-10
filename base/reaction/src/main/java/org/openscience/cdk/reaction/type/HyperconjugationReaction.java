@@ -68,7 +68,6 @@ import java.util.Iterator;
  * @cdk.created    2006-07-04
  * @cdk.module     reaction
  * @cdk.githash
- * @cdk.set        reaction-types
  *
  **/
 public class HyperconjugationReaction extends ReactionEngine implements IReactionProcess {
