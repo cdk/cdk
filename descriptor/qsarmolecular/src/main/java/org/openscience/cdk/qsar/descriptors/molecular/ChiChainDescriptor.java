@@ -77,7 +77,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.created 2006-11-12
  * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:chiChain
  * @cdk.keyword chi chain index
  * @cdk.keyword descriptor

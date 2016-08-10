@@ -58,7 +58,6 @@ import java.util.List;
  * @cdk.created 2006-1-03
  * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:largestPiSystem
  */
 public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

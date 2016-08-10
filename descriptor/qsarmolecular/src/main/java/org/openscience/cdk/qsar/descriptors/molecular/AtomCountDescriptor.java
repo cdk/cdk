@@ -55,7 +55,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.created 2004-11-13
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomCount
  */
 public class AtomCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

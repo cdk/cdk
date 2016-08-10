@@ -59,7 +59,6 @@ import java.util.List;
  * @cdk.created 2006-05-18
  * @cdk.module  qsarbond
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialTCharge
  *
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor

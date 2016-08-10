@@ -56,7 +56,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.module qsarmolecular
  * @cdk.githash
  *
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:fractionalPSA
  * @cdk.keyword volume
  * @cdk.keyword descriptor

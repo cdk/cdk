@@ -83,7 +83,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @author     Todd Martin
  * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.set    qsar-descriptors
  * @cdk.keyword logP
  * @cdk.keyword lipophilicity
  * @cdk.keyword refractivity

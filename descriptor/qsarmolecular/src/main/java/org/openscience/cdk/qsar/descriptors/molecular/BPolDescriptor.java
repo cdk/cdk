@@ -62,7 +62,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created 2004-11-13
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bpol
  */
 public class BPolDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

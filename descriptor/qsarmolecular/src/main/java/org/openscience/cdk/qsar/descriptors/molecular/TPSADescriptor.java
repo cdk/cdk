@@ -69,7 +69,6 @@ import java.util.List;
  * @cdk.created 2004-11-03
  * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:tpsa
  * @cdk.keyword TPSA
  * @cdk.keyword total polar surface area

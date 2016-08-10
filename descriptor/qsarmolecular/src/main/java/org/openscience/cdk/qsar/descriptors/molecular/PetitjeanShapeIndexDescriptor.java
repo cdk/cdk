@@ -66,7 +66,6 @@ import javax.vecmath.Point3d;
  * @cdk.created 2006-01-14
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:petitjeanShapeIndex
  * @cdk.keyword Petit-Jean, shape index
  */

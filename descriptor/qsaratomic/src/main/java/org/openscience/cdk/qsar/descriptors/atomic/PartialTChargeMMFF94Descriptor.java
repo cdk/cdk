@@ -42,7 +42,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created 2006-04-11
  * @cdk.module qsaratomic
  * @cdk.githash
- * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:partialTChargeMMFF94
  * @cdk.bug 1628461
  * @see MMFF94PartialCharges

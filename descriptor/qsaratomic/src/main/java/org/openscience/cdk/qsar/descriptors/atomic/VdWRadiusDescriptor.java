@@ -51,7 +51,6 @@ import java.io.IOException;
  * @cdk.created    2004-11-13
  * @cdk.module     qsaratomic
  * @cdk.githash
- * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:vdwradius
  */
 public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

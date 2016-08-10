@@ -52,7 +52,6 @@ import java.util.Iterator;
  * @cdk.created 2006-05-08
  * @cdk.module  qsarbond
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialSigmaCharge
  *
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor
