@@ -51,7 +51,6 @@ import java.util.Map;
  *@cdk.created    2004-11-13
  *@cdk.module     qsaratomic
  * @cdk.githash
- *@cdk.set        qsar-descriptors
  *@cdk.dictref qsar-descriptors:period
  */
 public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

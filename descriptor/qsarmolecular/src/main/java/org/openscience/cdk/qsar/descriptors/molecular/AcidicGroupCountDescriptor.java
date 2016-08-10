@@ -44,7 +44,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author      egonw
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:acidicGroupCount
  */
 public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

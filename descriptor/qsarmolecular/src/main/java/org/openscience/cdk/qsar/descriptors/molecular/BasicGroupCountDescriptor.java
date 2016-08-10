@@ -43,7 +43,6 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  * @author      egonw
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:acidicGroupCount
  */
 public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

@@ -55,7 +55,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created 2004-11-03
  * @cdk.module  qsaratomic
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
  */
 public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

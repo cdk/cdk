@@ -133,7 +133,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created 2005-05-16
  * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:CPSA
  */
 public class CPSADescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

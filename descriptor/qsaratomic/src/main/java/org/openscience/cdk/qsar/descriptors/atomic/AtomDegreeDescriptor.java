@@ -54,7 +54,6 @@ import java.util.List;
  * @cdk.created 2004-11-13
  * @cdk.module  qsaratomic
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomDegree
  */
 public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

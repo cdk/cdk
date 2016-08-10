@@ -37,7 +37,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *
  * @cdk.module     qsarmolecular
  * @cdk.githash
- * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:mannholdLogP
  *
  * @cdk.keyword LogP

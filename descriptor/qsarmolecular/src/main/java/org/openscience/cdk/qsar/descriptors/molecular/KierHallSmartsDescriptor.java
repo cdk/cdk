@@ -299,7 +299,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author Rajarshi Guha
  * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierHallSmarts
  */
 public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

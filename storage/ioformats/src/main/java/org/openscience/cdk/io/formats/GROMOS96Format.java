@@ -27,7 +27,6 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @cdk.module ioformats
  * @cdk.githash
- * @cdk.set    io-formats
  */
 public class GROMOS96Format extends AbstractResourceFormat implements IChemFormat {
 

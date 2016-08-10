@@ -41,7 +41,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created 2006-8-22
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:NilaComplexity
  */
 public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

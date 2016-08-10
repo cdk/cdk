@@ -73,7 +73,6 @@ import java.util.Iterator;
  * @cdk.created    2006-06-09
  * @cdk.module     reaction
  * @cdk.githash
- * @cdk.set        reaction-types
  *
  * @see HeterolyticCleavageMechanism
  **/

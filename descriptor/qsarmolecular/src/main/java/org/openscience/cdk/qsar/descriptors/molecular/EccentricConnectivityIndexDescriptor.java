@@ -65,7 +65,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created     2005-03-19
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
  */
 public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

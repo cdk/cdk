@@ -50,7 +50,6 @@ import org.openscience.cdk.qsar.result.IntegerArrayResult;
  * @cdk.module qsarmolecular
  * @cdk.githash
  *
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:smallrings
  * @cdk.keyword smallrings
  * @cdk.keyword descriptor

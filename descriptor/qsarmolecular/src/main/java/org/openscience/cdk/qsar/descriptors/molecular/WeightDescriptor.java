@@ -60,7 +60,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.created 2004-11-13
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:weight
  */
 public class WeightDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
