@@ -28,8 +28,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
- * Class with utilities for the <code>AtomType</code> class.
- * - changed 21/7/05 by cho: add properties for mmff94 atom type
+ * Class with utilities for the {@link IAtomType} class.
  *
  * @author     mfe4
  * @author     egonw
@@ -40,7 +39,7 @@ public class AtomTypeManipulator {
 
     /**
      * Method that assign properties to an atom given a particular atomType.
-     * An <code>IllegalArgumentException</code> is thrown if the given <code>IAtomType</code>
+     * An {@link IllegalArgumentException} is thrown if the given {@link IAtomType}
      * is null. <b>This method overwrites non-null values.</b>
      *
      * @param  atom     Atom to configure
@@ -58,14 +57,14 @@ public class AtomTypeManipulator {
         // we set the atom type name, but nothing else
         atom.setAtomTypeName(atomType.getAtomTypeName());
 
-        // configuring aotm type information is not really valid
+        // configuring atom type information is not really valid
         // for pseudo atoms - first because they basically have no
         // type information and second because they may have information
         // associated with them from another context, which should not be
         // overwritten. So we only do the stuff below if we have a non pseudoatom
         //
         // a side effect of this is that it is probably not valid to get the atom
-        // type of a peudo atom. I think this is OK, since you can always check
+        // type of a pseudo atom. I think this is OK, since you can always check
         // whether an atom is a pseudo atom without looking at its atom type
         if (!(atom instanceof IPseudoAtom)) {
             atom.setSymbol(atomType.getSymbol());
