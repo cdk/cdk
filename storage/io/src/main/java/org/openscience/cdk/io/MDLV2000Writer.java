@@ -24,6 +24,33 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -45,34 +72,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
-import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.formats.MDLFormat;
-import org.openscience.cdk.io.setting.BooleanIOSetting;
-import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
-import org.openscience.cdk.sgroup.Sgroup;
-import org.openscience.cdk.sgroup.SgroupBracket;
-import org.openscience.cdk.sgroup.SgroupKey;
-import org.openscience.cdk.sgroup.SgroupType;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * Writes MDL molfiles, which contains a single molecule (see {@cdk.cite DAL92}).
@@ -118,7 +117,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      */
     public enum SPIN_MULTIPLICITY {
 
-        NONE(0, 0), SINGLET(2, 1), DOUBLET(1, 2), TRIPLET(3, 2);
+        None(0, 0),
+        Monovalent(2, 1),
+        DivalentSinglet(1, 2),
+        DivalentTriplet(3, 2);
 
         // the radical SDF value
         private final int value;
@@ -158,13 +160,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         public static SPIN_MULTIPLICITY ofValue(int value) throws CDKException {
             switch (value) {
                 case 0:
-                    return NONE;
+                    return None;
                 case 1:
-                    return DOUBLET;
+                    return DivalentSinglet;
                 case 2:
-                    return SINGLET;
+                    return Monovalent;
                 case 3:
-                    return TRIPLET;
+                    return DivalentTriplet;
                 default:
                     throw new CDKException("unknown spin multiplicity: " + value);
             }
@@ -712,13 +714,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     case 0:
                         continue;
                     case 1:
-                        atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.SINGLET);
+                        atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.Monovalent);
                         break;
                     case 2:
-                        atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.DOUBLET);
-                        break;
-                    case 3:
-                        atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.TRIPLET);
+                        // information loss, divalent but singlet or triplet?
+                        atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.DivalentSinglet);
                         break;
                     default:
                         logger.debug("Invalid number of radicals found: " + eCount);
