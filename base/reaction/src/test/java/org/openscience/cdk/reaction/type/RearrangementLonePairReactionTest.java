@@ -75,7 +75,6 @@ import java.util.List;
  *
  * @cdk.created    2006-05-05
  * @cdk.module     test-reaction
- * @cdk.set        reaction-types
  *
  **/
 /**

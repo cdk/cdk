@@ -67,7 +67,6 @@ import java.util.Iterator;
  * @cdk.created    2006-05-05
  * @cdk.module     reaction
  * @cdk.githash
- * @cdk.set        reaction-types
  *
  * @see RadicalSiteIonizationMechanism
  **/
