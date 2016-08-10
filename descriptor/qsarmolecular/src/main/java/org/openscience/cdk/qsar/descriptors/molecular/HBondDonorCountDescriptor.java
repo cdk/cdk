@@ -63,7 +63,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.created 2005-22-07
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:hBondDonors
  */
 public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

@@ -52,7 +52,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.created 2006-05-03
  * @cdk.module  qsaratomic
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:effectivePolarizability
  * @see Polarizability
  */

@@ -61,7 +61,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created 2006-1-03
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:largestAliphaticChain
  */
 public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

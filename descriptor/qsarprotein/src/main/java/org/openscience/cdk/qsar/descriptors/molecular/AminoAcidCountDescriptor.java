@@ -58,7 +58,6 @@ import java.util.List;
  * @cdk.created 2006-01-15
  * @cdk.module  qsarprotein
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:aminoAcidsCount
  */
 public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

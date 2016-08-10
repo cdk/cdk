@@ -49,7 +49,6 @@ import java.util.Iterator;
  * @cdk.created 2007-03-01
  * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.set qsar-descriptors
  */
 
 public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDescriptor implements

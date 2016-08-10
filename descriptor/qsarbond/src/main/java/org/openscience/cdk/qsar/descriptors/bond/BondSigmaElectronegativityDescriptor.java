@@ -51,7 +51,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created 2006-05-08
  * @cdk.module  qsarbond
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondSigmaElectronegativity
  *
  * @see Electronegativity

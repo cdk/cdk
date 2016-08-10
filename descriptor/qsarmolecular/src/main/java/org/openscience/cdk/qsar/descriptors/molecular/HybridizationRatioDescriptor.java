@@ -45,7 +45,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author Rajarshi Guha
  * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:hybratio
  */
 public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

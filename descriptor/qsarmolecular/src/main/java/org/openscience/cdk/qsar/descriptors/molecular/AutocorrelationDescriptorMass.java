@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created 2007-02-08
  * @cdk.module  qsarmolecular
  * @cdk.githash
- * @cdk.set     qsar-descriptors
  */
 public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 

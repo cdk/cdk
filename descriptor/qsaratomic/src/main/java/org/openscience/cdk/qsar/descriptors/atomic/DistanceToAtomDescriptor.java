@@ -50,7 +50,6 @@ import javax.vecmath.Point3d;
  *@cdk.created    2004-11-13
  *@cdk.module     qsaratomic
  * @cdk.githash
- *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:distanceToAtom
  */
 public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {

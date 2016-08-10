@@ -42,7 +42,6 @@ import java.util.List;
  * @cdk.created 2004-11-03
  * @cdk.module qsaratomic
  * @cdk.githash
- * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:protonPartialCharge
  */
 public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
