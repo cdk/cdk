@@ -26,7 +26,6 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @cdk.module ioformats
  * @cdk.githash
- * @cdk.set    io-formats
  */
 public class Chem3D_Cartesian_1Format extends AbstractResourceFormat implements IChemFormat {
 

@@ -23,7 +23,6 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * @cdk.module ioformats
  * @cdk.githash
- * @cdk.set    io-formats
  */
 public class GhemicalSPMFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 

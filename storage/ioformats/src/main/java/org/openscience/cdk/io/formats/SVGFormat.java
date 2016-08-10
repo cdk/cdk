@@ -21,7 +21,6 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module ioformats
  * @cdk.githash
- * @cdk.set    io-formats
  */
 public class SVGFormat extends AbstractResourceFormat implements IResourceFormat {
 
