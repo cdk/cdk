@@ -82,7 +82,8 @@ public class AtomTypeManipulator {
             if (constant != null) {
                 atom.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, constant);
             }
-            atom.setFlag(CDKConstants.ISAROMATIC, atomType.getFlag(CDKConstants.ISAROMATIC));
+            if (atomType.getFlag(CDKConstants.ISAROMATIC))
+                atom.setFlag(CDKConstants.ISAROMATIC, atomType.getFlag(CDKConstants.ISAROMATIC));
 
             Object color = atomType.getProperty("org.openscience.cdk.renderer.color");
             if (color != null) {
