@@ -3086,6 +3086,22 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.bug 1382
+     */
+    @Test
+    public void testCarbonDiradical() throws Exception {
+        IAtomContainer mol = new AtomContainer();
+        IAtom atom = new Atom("C");
+        mol.addAtom(atom);
+        mol.addSingleElectron(0);
+        mol.addSingleElectron(0);
+
+        IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
+        IAtomType foundType = atm.findMatchingAtomType(mol, atom);
+        Assert.assertEquals("X", foundType.getAtomTypeName());
+    }
+
     @Test
     public void testEthoxyEthaneRadical() throws Exception {
         IAtomContainer mol = new AtomContainer();
