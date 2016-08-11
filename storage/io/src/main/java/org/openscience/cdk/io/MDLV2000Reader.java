@@ -504,7 +504,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     hasQueryBonds = true; // also counts aromatic bond as query
                 } else {
                     int unpaired = outputContainer.getConnectedSingleElectronsCount(outputContainer.getAtom(i));
-                    applyMDLValenceModel(outputContainer.getAtom(i), valence + unpaired);
+                    applyMDLValenceModel(outputContainer.getAtom(i), valence + unpaired, unpaired);
                 }
             }
 
@@ -542,13 +542,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * 0 - this is the case when a query bond was read for an atom.
      *
      * @param atom            the atom to apply the model to
+     * @param unpaired        unpaired electron count
      * @param explicitValence the explicit valence (bond order sum)
      */
-    private void applyMDLValenceModel(IAtom atom, int explicitValence) {
+    private void applyMDLValenceModel(IAtom atom, int explicitValence, int unpaired) {
 
         if (atom.getValency() != null) {
             if (atom.getValency() >= explicitValence)
-                atom.setImplicitHydrogenCount(atom.getValency() - explicitValence);
+                atom.setImplicitHydrogenCount(atom.getValency() - (explicitValence - unpaired));
             else
                 atom.setImplicitHydrogenCount(0);
         } else {

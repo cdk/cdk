@@ -47,8 +47,10 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -151,6 +153,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     public IAtomContainer readConnectionTable(IChemObjectBuilder builder) throws CDKException {
+
+
         logger.info("Reading CTAB block");
         IAtomContainer readData = builder.newInstance(IAtomContainer.class);
         boolean foundEND = false;
@@ -175,6 +179,27 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             }
             lastLine = readLine();
         }
+
+        for (IAtom atom : readData.atoms()) {
+            // XXX: slow method is slow
+            int valence = 0;
+            for (IBond bond : readData.getConnectedBondsList(atom)) {
+                if (bond instanceof IQueryBond || bond.getOrder() == IBond.Order.UNSET) {
+                    valence = -1;
+                    break;
+                }
+                else {
+                    valence += bond.getOrder().numeric();
+                }
+            }
+            if (valence < 0) {
+                logger.warn("Cannot set valence for atom with query bonds"); // also counts aromatic bond as query
+            } else {
+                final int unpaired = readData.getConnectedSingleElectronsCount(atom);
+                applyMDLValenceModel(atom, valence + unpaired, unpaired);
+            }
+        }
+
         return readData;
     }
 
@@ -310,13 +335,41 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         String key = keys.next();
                         String value = options.get(key);
                         try {
-                            if (key.equals("CHG")) {
-                                int charge = Integer.parseInt(value);
-                                if (charge != 0) { // zero is no charge specified
-                                    atom.setFormalCharge(charge);
-                                }
-                            } else {
-                                logger.warn("Not parsing key: " + key);
+                            switch (key) {
+                                case "CHG":
+                                    int charge = Integer.parseInt(value);
+                                    if (charge != 0) { // zero is no charge specified
+                                        atom.setFormalCharge(charge);
+                                    }
+                                    break;
+                                case "RAD":
+                                    int numElectons = MDLV2000Writer.SPIN_MULTIPLICITY.ofValue(Integer.parseInt(value))
+                                                                                      .getSingleElectrons();
+                                    while (numElectons-- > 0) {
+                                        readData.addSingleElectron(readData.getBuilder().newInstance(ISingleElectron.class, atom));
+                                    }
+                                    break;
+                                case "VAL":
+                                    if (!(atom instanceof IPseudoAtom)) {
+                                        try {
+                                            int valence = Integer.parseInt(value);
+                                            if (valence != 0) {
+                                                //15 is defined as 0 in mol files
+                                                if (valence == 15)
+                                                    atom.setValency(0);
+                                                else
+                                                    atom.setValency(valence);
+                                            }
+                                        } catch (Exception exception) {
+                                            handleError("Could not parse valence information field", lineNumber, 0, 0, exception);
+                                        }
+                                    } else {
+                                        logger.error("Cannot set valence information for a non-element!");
+                                    }
+                                    break;
+                                default:
+                                    logger.warn("Not parsing key: " + key);
+                                    break;
                             }
                         } catch (Exception exception) {
                             String error = "Error while parsing key/value " + key + "=" + value + ": "
@@ -408,27 +461,32 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     for (String key : options.keySet()) {
                         String value = options.get(key);
                         try {
-                            if (key.equals("CFG")) {
-                                int configuration = Integer.parseInt(value);
-                                if (configuration == 0) {
-                                    bond.setStereo(IBond.Stereo.NONE);
-                                } else if (configuration == 1) {
-                                    bond.setStereo(IBond.Stereo.UP);
-                                } else if (configuration == 2) {
-                                    bond.setStereo((IBond.Stereo) CDKConstants.UNSET);
-                                } else if (configuration == 3) {
-                                    bond.setStereo(IBond.Stereo.DOWN);
-                                }
-                            } else if (key.equals("ENDPTS")) {
-                                String[] endptStr = value.split(" ");
-                                // skip first value that is count
-                                for (int i = 1; i < endptStr.length; i++) {
-                                    endpts.add(readData.getAtom(Integer.parseInt(endptStr[i]) - 1));
-                                }
-                            } else if (key.equals("ATTACH")) {
-                                attach = value;
-                            } else {
-                                logger.warn("Not parsing key: " + key);
+                            switch (key) {
+                                case "CFG":
+                                    int configuration = Integer.parseInt(value);
+                                    if (configuration == 0) {
+                                        bond.setStereo(IBond.Stereo.NONE);
+                                    } else if (configuration == 1) {
+                                        bond.setStereo(IBond.Stereo.UP);
+                                    } else if (configuration == 2) {
+                                        bond.setStereo((IBond.Stereo) CDKConstants.UNSET);
+                                    } else if (configuration == 3) {
+                                        bond.setStereo(IBond.Stereo.DOWN);
+                                    }
+                                    break;
+                                case "ENDPTS":
+                                    String[] endptStr = value.split(" ");
+                                    // skip first value that is count
+                                    for (int i = 1; i < endptStr.length; i++) {
+                                        endpts.add(readData.getAtom(Integer.parseInt(endptStr[i]) - 1));
+                                    }
+                                    break;
+                                case "ATTACH":
+                                    attach = value;
+                                    break;
+                                default:
+                                    logger.warn("Not parsing key: " + key);
+                                    break;
                             }
                         } catch (Exception exception) {
                             String error = "Error while parsing key/value " + key + "=" + value + ": "
@@ -625,5 +683,39 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     private void initIOSettings() {}
+
+    /**
+     * Applies the MDL valence model to atoms using the explicit valence (bond
+     * order sum) and charge to determine the correct number of implicit
+     * hydrogens. The model is not applied if the explicit valence is less than
+     * 0 - this is the case when a query bond was read for an atom.
+     *
+     * @param atom            the atom to apply the model to
+     * @param explicitValence the explicit valence (bond order sum)
+     */
+    private void applyMDLValenceModel(IAtom atom, int explicitValence, int unpaired) {
+
+        if (atom.getValency() != null) {
+            if (atom.getValency() >= explicitValence)
+                atom.setImplicitHydrogenCount(atom.getValency() - (explicitValence - unpaired));
+            else
+                atom.setImplicitHydrogenCount(0);
+        } else {
+            Integer element = atom.getAtomicNumber();
+            if (element == null) element = 0;
+
+            Integer charge = atom.getFormalCharge();
+            if (charge == null) charge = 0;
+
+            int implicitValence = MDLValence.implicitValence(element, charge, explicitValence);
+            if (implicitValence < explicitValence) {
+                atom.setValency(explicitValence);
+                atom.setImplicitHydrogenCount(0);
+            } else {
+                atom.setValency(implicitValence);
+                atom.setImplicitHydrogenCount(implicitValence - explicitValence);
+            }
+        }
+    }
 
 }

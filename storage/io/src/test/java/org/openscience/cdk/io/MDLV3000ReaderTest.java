@@ -137,4 +137,12 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             assertThat(sgroups.get(0).getType(), is(SgroupType.ExtMulticenter));
         }
     }
+
+    @Test public void radicalsInCH3() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("CH3.mol"))) {
+            IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
+            assertThat(container.getSingleElectronCount(), is(1));
+            assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(3));
+        }
+    }
 }
