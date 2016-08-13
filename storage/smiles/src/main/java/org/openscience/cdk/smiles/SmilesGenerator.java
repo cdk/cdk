@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
@@ -373,7 +374,44 @@ public final class SmilesGenerator {
      * @throws CDKException SMILES could not be created
      */
     public String create(IAtomContainer molecule, int[] order) throws CDKException {
+        return create(molecule, this.options, order);
+    }
 
+    /**
+     * Create a SMILES string and obtain the order which the atoms were
+     * written. The output order allows one to arrange auxiliary atom data in the
+     * order that a SMILES string will be read. A simple example is seen below
+     * where 2D coordinates are stored with a SMILES string. In reality a more
+     * compact binary encoding would be used instead of printing the coordinates
+     * as a string.
+     *
+     * <blockquote><pre>
+     * IAtomContainer  mol = ...;
+     * SmilesGenerator sg  = SmilesGenerator.generic();
+     *
+     * int   n     = mol.getAtomCount();
+     * int[] order = new int[n];
+     *
+     * // the order array is filled up as the SMILES is generated
+     * String smi = sg.create(mol, order);
+     *
+     * // load the coordinates array such that they are in the order the atoms
+     * // are read when parsing the SMILES
+     * Point2d[] coords = new Point2d[mol.getAtomCount()];
+     * for (int i = 0; i < coords.length; i++)
+     *     coords[order[i]] = container.getAtom(i).getPoint2d();
+     *
+     * // SMILES string suffixed by the coordinates
+     * String smi2d = smi + " " + Arrays.toString(coords);
+     *
+     * </pre></blockquote>
+     *
+     * @param molecule the molecule to write
+     * @param order    array to store the output order of atoms
+     * @return the SMILES string
+     * @throws CDKException SMILES could not be created
+     */
+    public String create(IAtomContainer molecule, int options, int[] order) throws CDKException {
         try {
             if (order.length != molecule.getAtomCount())
                 throw new IllegalArgumentException("the array for storing output order should be"
@@ -441,6 +479,12 @@ public final class SmilesGenerator {
         return create(reaction, new int[ReactionManipulator.getAtomCount(reaction)]);
     }
 
+    private void safeAddSgroups(List<Sgroup> sgroups, IAtomContainer mol) {
+        List<Sgroup> molSgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (molSgroups != null)
+            sgroups.addAll(molSgroups);
+    }
+
     /**
      * Generate a SMILES for the given <code>Reaction</code>.
      *
@@ -458,14 +502,19 @@ public final class SmilesGenerator {
         IAtomContainer    agentPart    = reaction.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer    productPart  = reaction.getBuilder().newInstance(IAtomContainer.class);
 
-        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
-            reactantPart.add(reactants.getAtomContainer(i));
+        List<Sgroup> sgroups = new ArrayList<>();
+
+        for (IAtomContainer reactant : reactants.atomContainers()) {
+            reactantPart.add(reactant);
+            safeAddSgroups(sgroups, reactant);
         }
-        for (int i = 0; i < agents.getAtomContainerCount(); i++) {
-            agentPart.add(agents.getAtomContainer(i));
+        for (IAtomContainer agent : agents.atomContainers()) {
+            agentPart.add(agent);
+            safeAddSgroups(sgroups, agent);
         }
-        for (int i = 0; i < products.getAtomContainerCount(); i++) {
-            productPart.add(products.getAtomContainer(i));
+        for (IAtomContainer product : products.atomContainers()) {
+            productPart.add(product);
+            safeAddSgroups(sgroups, product);
         }
 
         int[] reactantOrder = new int[reactantPart.getAtomCount()];
@@ -478,14 +527,31 @@ public final class SmilesGenerator {
                                    " expected: " + expectedSize);
         }
 
-        String smi = create(reactantPart, reactantOrder) + ">" +
-                           create(agentPart, agentOrder) + ">" +
-                           create(productPart, productOrder);
+        // we need to make sure we generate without the CXSMILES layers
+        String smi = create(reactantPart, options ^ SmiOpt.CxSmilesWithCoords, reactantOrder) + ">" +
+                     create(agentPart,    options ^ SmiOpt.CxSmilesWithCoords, agentOrder) + ">" +
+                     create(productPart,  options ^ SmiOpt.CxSmilesWithCoords, productOrder);
 
-        // copy ordering back to unified array
-        System.arraycopy(reactantOrder, 0, ordering, 0, reactantOrder.length);
-        System.arraycopy(agentOrder, 0, ordering, reactantOrder.length, agentOrder.length);
-        System.arraycopy(productOrder, 0, ordering, reactantOrder.length + agentOrder.length, productOrder.length);
+        // copy ordering back to unified array and adjust values
+        int agentBeg = reactantOrder.length;
+        int agentEnd = reactantOrder.length + agentOrder.length;
+        int prodEnd  = reactantOrder.length + agentOrder.length + productOrder.length;
+        System.arraycopy(reactantOrder, 0, ordering, 0, agentBeg);
+        System.arraycopy(agentOrder, 0, ordering, agentBeg, agentEnd-agentBeg);
+        System.arraycopy(productOrder, 0, ordering, agentEnd, prodEnd-agentEnd);
+        for (int i = agentBeg; i < agentEnd; i++)
+            ordering[i] += agentBeg;
+        for (int i = agentEnd; i < prodEnd; i++)
+            ordering[i] += agentEnd;
+
+        if (SmiOpt.isSet(options, SmiOpt.CxSmilesWithCoords)) {
+            IAtomContainer unified = reaction.getBuilder().newInstance(IAtomContainer.class);
+            unified.add(reactantPart);
+            unified.add(agentPart);
+            unified.add(productPart);
+            unified.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+            smi += CxSmilesGenerator.generate(getCxSmilesState(unified), options, null, ordering);
+        }
 
         return smi;
     }
