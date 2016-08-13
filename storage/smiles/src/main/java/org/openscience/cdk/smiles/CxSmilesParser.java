@@ -75,6 +75,7 @@ final class CxSmilesParser {
             if (c == '$') {
                 iter.nextIf(','); // optional
                 // end of atom label
+                iter.nextIf(','); // optional
                 return true;
             } else {
                 iter.pos--; // push back
@@ -549,7 +550,7 @@ final class CxSmilesParser {
                 return true;
             }
         }
-        // ran of end
+        // ran off end
         return false;
     }
 

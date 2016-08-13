@@ -351,7 +351,7 @@ public class CxSmilesTest {
     @Test public void roundTripReactionAtomLabelsAndFragmentGroups() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
-        IReaction rxn = smipar.parseReactionSmiles("CC(C)c1ccccc1.ClC([*])=O>ClCCl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)c1ccc(cc1)C([*])=O |$;;;;;;;;;;;R1;;;;;;;;;;;;;;;;;;;R1$,f:3.4.5.6|");
+        IReaction rxn = smipar.parseReactionSmiles("CC(C)c1ccccc1.ClC([*])=O>ClCCl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)c1ccc(cc1)C([*])=O |$;;;;;;;;;;;R1;;;;;;;;;;;;;;;;;;;R1;$,f:3.4.5.6|");
         SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxAtomLabel |
                                                      SmiOpt.CxFragmentGroup);
         assertThat(smigen.create(rxn),
@@ -361,8 +361,8 @@ public class CxSmilesTest {
     @Test public void canonicalReactionAtomLabelsAndFragmentGroups() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
-        IReaction rxn1 = smipar.parseReactionSmiles("CC(C)c1ccccc1.ClC([*])=O>[Al+3].[Cl-].[Cl-].[Cl-].ClCCl>CC(C)c1ccc(cc1)C([*])=O |$;;;;;;;;;;;R1;;;;;;;;;;;;;;;;;;;R1$,f:2.3.4.5|");
-        IReaction rxn2 = smipar.parseReactionSmiles("ClC([*])=O.CC(C)c1ccccc1>[Al+3].[Cl-].[Cl-].[Cl-].ClCCl>CC(C)c1ccc(cc1)C([*])=O |$;;R1;;;;;;;;;;;;;;;;;;;;;;;;;;;;R1$,f:2.3.5.4|");
+        IReaction rxn1 = smipar.parseReactionSmiles("CC(C)c1ccccc1.ClC([*])=O>[Al+3].[Cl-].[Cl-].[Cl-].ClCCl>CC(C)c1ccc(cc1)C([*])=O |$;;;;;;;;;;;R1;;;;;;;;;;;;;;;;;;;R1;$,f:2.3.4.5|");
+        IReaction rxn2 = smipar.parseReactionSmiles("ClC([*])=O.CC(C)c1ccccc1>[Al+3].[Cl-].[Cl-].[Cl-].ClCCl>CC(C)c1ccc(cc1)C([*])=O |$;;R1;;;;;;;;;;;;;;;;;;;;;;;;;;;;R1;$,f:2.3.5.4|");
         SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxAtomLabel |
                                                      SmiOpt.CxFragmentGroup |
                                                      SmiOpt.Canonical);
