@@ -24,6 +24,7 @@ package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.invariant.Canon;
 import org.openscience.cdk.interfaces.IAtom;
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -550,7 +552,56 @@ public final class SmilesGenerator {
             unified.add(agentPart);
             unified.add(productPart);
             unified.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
-            smi += CxSmilesGenerator.generate(getCxSmilesState(unified), options, null, ordering);
+
+            // base CXSMILES state information
+            final CxSmilesState cxstate = getCxSmilesState(unified);
+
+            int[] components = null;
+
+            // extra state info on fragment grouping, specific to reactions
+            if (SmiOpt.isSet(options, SmiOpt.CxFragmentGroup)) {
+
+                cxstate.fragGroups = new ArrayList<>();
+
+                // calculate the connected components
+                components = new ConnectedComponents(GraphUtil.toAdjList(unified)).components();
+
+                // AtomContainerSet is ordered so this is safe, it was actually a set we
+                // would need some extra data structures
+                Set<Integer> tmp = new HashSet<>();
+                int beg = 0, end = 0;
+                for (IAtomContainer mol : reactants.atomContainers()) {
+                    end = end + mol.getAtomCount();
+                    tmp.clear();
+                    for (int i = beg; i < end; i++)
+                        tmp.add(components[i]);
+                    if (tmp.size() > 1)
+                        cxstate.fragGroups.add(new ArrayList<>(tmp));
+                    beg = end;
+                }
+                for (IAtomContainer mol : agents.atomContainers()) {
+                    end = end + mol.getAtomCount();
+                    tmp.clear();
+                    for (int i = beg; i < end; i++)
+                        tmp.add(components[i]);
+                    if (tmp.size() > 1)
+                        cxstate.fragGroups.add(new ArrayList<>(tmp));
+                    beg = end;
+                }
+                for (IAtomContainer mol : products.atomContainers()) {
+                    end = end + mol.getAtomCount();
+                    tmp.clear();
+                    for (int i = beg; i < end; i++)
+                        tmp.add(components[i]);
+                    if (tmp.size() > 1)
+                        cxstate.fragGroups.add(new ArrayList<>(tmp));
+                    beg = end;
+                }
+
+            }
+
+
+            smi += CxSmilesGenerator.generate(cxstate, options, components, ordering);
         }
 
         return smi;

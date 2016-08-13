@@ -29,6 +29,7 @@ import org.openscience.cdk.smiles.CxSmilesState.PolymerSgroup;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -107,21 +108,31 @@ public class CxSmilesGenerator {
             }
 
             // get the output component order
-            int[] compMap = new int[maxCompId + 1];
+            final int[] compMap = new int[maxCompId + 1];
             int compId = 1;
-            for (int idx : ordering) {
+            for (int idx : invorder) {
                 int component = components[idx];
-                if (component == 0)
+                if (compMap[component] == 0)
                     compMap[component] = compId++;
             }
+            // index vs number, we need to output index
+            for (int i = 0; i < compMap.length; i++)
+                compMap[i]--;
+
+            final Comparator<Integer> compComp = new Comparator<Integer>() {
+                @Override
+                public int compare(Integer a, Integer b) {
+                    return Integer.compare(compMap[a], compMap[b]);
+                }
+            };
 
             List<List<Integer>> fragGroupCpy = new ArrayList<>(state.fragGroups);
             for (List<Integer> idxs : fragGroupCpy)
-                Collections.sort(idxs, invComp);
+                Collections.sort(idxs, compComp);
             Collections.sort(fragGroupCpy, new Comparator<List<Integer>>() {
                 @Override
                 public int compare(List<Integer> a, List<Integer> b) {
-                    return CxSmilesGenerator.compare(invComp, a, b);
+                    return CxSmilesGenerator.compare(compComp, a, b);
                 }
             });
 
@@ -130,7 +141,7 @@ public class CxSmilesGenerator {
             sb.append(':');
             for (int i = 0; i < fragGroupCpy.size(); i++) {
                 if (i > 0) sb.append(',');
-                appendIntegers(invorder, '.', sb, fragGroupCpy.get(i));
+                appendIntegers(compMap, '.', sb, fragGroupCpy.get(i));
             }
         }
 
