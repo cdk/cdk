@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import uk.ac.ebi.beam.Functions;
 import uk.ac.ebi.beam.Graph;
 
@@ -431,6 +432,15 @@ public final class SmilesGenerator {
         }
     }
 
+    @Deprecated
+    public String createReactionSMILES(IReaction reaction) throws CDKException {
+        return create(reaction);
+    }
+
+    public String create(IReaction reaction) throws CDKException {
+        return create(reaction, new int[ReactionManipulator.getAtomCount(reaction)]);
+    }
+
     /**
      * Generate a SMILES for the given <code>Reaction</code>.
      *
@@ -438,32 +448,46 @@ public final class SmilesGenerator {
      * @return the SMILES representation of the reaction
      * @throws org.openscience.cdk.exception.CDKException if there is an error during SMILES generation
      */
-    public String createReactionSMILES(IReaction reaction) throws CDKException {
-        StringBuffer reactionSMILES = new StringBuffer();
+    public String create(IReaction reaction, int[] ordering) throws CDKException {
+
         IAtomContainerSet reactants = reaction.getReactants();
+        IAtomContainerSet agents    = reaction.getAgents();
+        IAtomContainerSet products  = reaction.getProducts();
+
+        IAtomContainer    reactantPart = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer    agentPart    = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer    productPart  = reaction.getBuilder().newInstance(IAtomContainer.class);
+
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
-            reactionSMILES.append(create(reactants.getAtomContainer(i)));
-            if (i + 1 < reactants.getAtomContainerCount()) {
-                reactionSMILES.append('.');
-            }
+            reactantPart.add(reactants.getAtomContainer(i));
         }
-        reactionSMILES.append('>');
-        IAtomContainerSet agents = reaction.getAgents();
         for (int i = 0; i < agents.getAtomContainerCount(); i++) {
-            reactionSMILES.append(create(agents.getAtomContainer(i)));
-            if (i + 1 < agents.getAtomContainerCount()) {
-                reactionSMILES.append('.');
-            }
+            agentPart.add(agents.getAtomContainer(i));
         }
-        reactionSMILES.append('>');
-        IAtomContainerSet products = reaction.getProducts();
         for (int i = 0; i < products.getAtomContainerCount(); i++) {
-            reactionSMILES.append(create(products.getAtomContainer(i)));
-            if (i + 1 < products.getAtomContainerCount()) {
-                reactionSMILES.append('.');
-            }
+            productPart.add(products.getAtomContainer(i));
         }
-        return reactionSMILES.toString();
+
+        int[] reactantOrder = new int[reactantPart.getAtomCount()];
+        int[] agentOrder    = new int[agentPart.getAtomCount()];
+        int[] productOrder  = new int[productPart.getAtomCount()];
+
+        final int expectedSize = reactantOrder.length + agentOrder.length + productOrder.length;
+        if (expectedSize != ordering.length) {
+            throw new CDKException("Output ordering array does not have correct amount of space: " + ordering.length +
+                                   " expected: " + expectedSize);
+        }
+
+        String smi = create(reactantPart, reactantOrder) + ">" +
+                           create(agentPart, agentOrder) + ">" +
+                           create(productPart, productOrder);
+
+        // copy ordering back to unified array
+        System.arraycopy(reactantOrder, 0, ordering, 0, reactantOrder.length);
+        System.arraycopy(agentOrder, 0, ordering, reactantOrder.length, agentOrder.length);
+        System.arraycopy(productOrder, 0, ordering, reactantOrder.length + agentOrder.length, productOrder.length);
+
+        return smi;
     }
 
     /**
