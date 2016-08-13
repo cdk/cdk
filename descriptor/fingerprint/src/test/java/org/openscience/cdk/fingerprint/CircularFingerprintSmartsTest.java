@@ -10,10 +10,16 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+/**
+ * @cdk.module test-standard
+ */
 public class CircularFingerprintSmartsTest extends CDKTestCase {
 
 	private static ILoggingTool logger = LoggingToolFactory
 			.createLoggingTool(CircularFingerprintSmartsTest.class);
+
+	public static SmilesParser parser = new SmilesParser(
+			SilentChemObjectBuilder.getInstance());
 
 	@Test
 	public void testMol1() throws Exception {
@@ -88,8 +94,6 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 		// expectedFPSmarts[][] is a double array because for each smarts
 		// several equivalent variants
 		// of the smarts are given e.g. CCC C(C)C
-		SmilesParser parser = new SmilesParser(
-				SilentChemObjectBuilder.getInstance());
 		IAtomContainer mol = parser.parseSmiles(moleculeSmiles);
 
 		CircularFingerprinter circ = new CircularFingerprinter();
