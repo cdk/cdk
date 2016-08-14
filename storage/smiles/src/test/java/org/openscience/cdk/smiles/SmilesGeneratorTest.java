@@ -49,7 +49,6 @@ import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.graph.Cycles;
@@ -1224,7 +1223,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IReaction r1 = smipar.parseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
         IReaction r2 = smipar.parseReactionSmiles("C(CC(=O)Cl)CCl.CC(C)C1=CC=CC=C1>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
         IReaction r3 = smipar.parseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>C(Cl)Cl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.Canonical);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Canonical);
         assertThat(smigen.create(r1), is(smigen.create(r2)));
         assertThat(smigen.create(r2), is(smigen.create(r3)));
     }

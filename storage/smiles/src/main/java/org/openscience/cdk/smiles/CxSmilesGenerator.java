@@ -23,21 +23,16 @@
 
 package org.openscience.cdk.smiles;
 
-import com.google.common.collect.Lists;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.smiles.CxSmilesState.PolymerSgroup;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 public class CxSmilesGenerator {
 
@@ -75,7 +70,7 @@ public class CxSmilesGenerator {
 
     static String generate(CxSmilesState state, int opts, int[] components, final int[] ordering) {
 
-        if (!SmiOpt.isSet(opts, SmiOpt.CxSmilesWithCoords))
+        if (!SmiFlavour.isSet(opts, SmiFlavour.CxSmilesWithCoords))
             return "";
 
         final int[] invorder = inverse(ordering);
@@ -98,7 +93,7 @@ public class CxSmilesGenerator {
         };
 
         // Fragment Grouping
-        if (SmiOpt.isSet(opts, SmiOpt.CxFragmentGroup) &&
+        if (SmiFlavour.isSet(opts, SmiFlavour.CxFragmentGroup) &&
             state.fragGroups != null && !state.fragGroups.isEmpty()) {
 
             int maxCompId = 0;
@@ -146,7 +141,7 @@ public class CxSmilesGenerator {
         }
 
         // Atom Labels
-        if (SmiOpt.isSet(opts, SmiOpt.CxAtomLabel) &&
+        if (SmiFlavour.isSet(opts, SmiFlavour.CxAtomLabel) &&
             state.atomLabels != null && !state.atomLabels.isEmpty()) {
 
             if (sb.length() > 2)
@@ -167,7 +162,7 @@ public class CxSmilesGenerator {
         }
 
         // 2D/3D Coordinates
-        if (SmiOpt.isSet(opts, SmiOpt.CxCoordinates) &&
+        if (SmiFlavour.isSet(opts, SmiFlavour.CxCoordinates) &&
             state.atomCoords != null && !state.atomCoords.isEmpty()) {
             DecimalFormat fmt = new DecimalFormat("#.##");
             if (sb.length() > 2) sb.append(',');
@@ -188,7 +183,7 @@ public class CxSmilesGenerator {
         }
 
         // Multicenter/Positional variation bonds
-        if (SmiOpt.isSet(opts, SmiOpt.CxMulticenter) &&
+        if (SmiFlavour.isSet(opts, SmiFlavour.CxMulticenter) &&
             state.positionVar != null && !state.positionVar.isEmpty()) {
 
             if (sb.length() > 2) sb.append(',');
@@ -221,7 +216,7 @@ public class CxSmilesGenerator {
 
 
         // *CCO* |$_AP1;;;;_AP2$,Sg:n:1,2,3::ht|
-        if (SmiOpt.isSet(opts, SmiOpt.CxPolymer) &&
+        if (SmiFlavour.isSet(opts, SmiFlavour.CxPolymer) &&
             state.sgroups != null && !state.sgroups.isEmpty()) {
             List<PolymerSgroup> sgroups = new ArrayList<>(state.sgroups);
 
@@ -254,7 +249,7 @@ public class CxSmilesGenerator {
         }
 
         // [C]1[CH][CH]CCC1 |^1:1,2,^3:0|
-        if (SmiOpt.isSet(opts, SmiOpt.CxRadical) &&
+        if (SmiFlavour.isSet(opts, SmiFlavour.CxRadical) &&
             state.atomRads != null && !state.atomRads.isEmpty()) {
             Map<CxSmilesState.Radical, List<Integer>> radinv = new TreeMap<>();
             for (Map.Entry<Integer, CxSmilesState.Radical> e : state.atomRads.entrySet()) {

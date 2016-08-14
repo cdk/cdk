@@ -230,7 +230,7 @@ public class CxSmilesTest {
         mol.getAtom(2).setImplicitHydrogenCount(0);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxAtomLabel);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.CxAtomLabel);
         String smi = smigen.create(mol);
         assertThat(smi, is("CC* |$;;R1$|"));
     }
@@ -245,8 +245,8 @@ public class CxSmilesTest {
         mol.getAtom(2).setImplicitHydrogenCount(0);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.Canonical |
-                                                     SmiOpt.CxAtomLabel);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Canonical |
+                                                     SmiFlavour.CxAtomLabel);
         String smi = smigen.create(mol);
         assertThat(smi, is("*CC |$R1$|"));
     }
@@ -255,8 +255,8 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.UseAromaticSymbols |
-                                                     SmiOpt.CxMulticenter);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.UseAromaticSymbols |
+                                                     SmiFlavour.CxMulticenter);
         String smi = smigen.create(mol);
         assertThat(smi, is("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|"));
     }
@@ -265,9 +265,9 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.UseAromaticSymbols |
-                                                     SmiOpt.CxMulticenter |
-                                                     SmiOpt.Canonical);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.UseAromaticSymbols |
+                                                     SmiFlavour.CxMulticenter |
+                                                     SmiFlavour.Canonical);
         String smi = smigen.create(mol);
         assertThat(smi, is("*Cl.c1ccccc1 |m:0:2.3.4.5.6.7|"));
     }
@@ -277,7 +277,7 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("CCCOCCO |Sg:n:1,2,3::ht|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxPolymer);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.CxPolymer);
         String smi = smigen.create(mol);
         assertThat(smi, is("CCCOCCO |Sg:n:1,2,3:n:ht|"));
     }
@@ -286,8 +286,8 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("CCCOCCO |Sg:n:1,2,3::ht|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.Canonical |
-                                                     SmiOpt.CxPolymer);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Canonical |
+                                                     SmiFlavour.CxPolymer);
         String smi = smigen.create(mol);
         assertThat(smi, is("OCCOCCC |Sg:n:3,4,5:n:ht|"));
     }
@@ -296,7 +296,7 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("CCO |(,,;1,1,;2,2,)|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxCoordinates);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.CxCoordinates);
         String smi = smigen.create(mol);
         assertThat(smi, is("CCO |(,,;1,1,;2,2,)|"));
     }
@@ -305,8 +305,8 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("CCO |(,,;1,1,;2,2,)|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.Canonical |
-                                                     SmiOpt.CxCoordinates);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Canonical |
+                                                     SmiFlavour.CxCoordinates);
         String smi = smigen.create(mol);
         assertThat(smi, is("OCC |(2,2,;1,1,;,,)|"));
     }
@@ -324,7 +324,7 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("CCO");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxCoordinates);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.CxCoordinates);
         String smi = smigen.create(mol);
         assertThat(smi, is("CCO"));
     }
@@ -333,7 +333,7 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxRadical);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.CxRadical);
         String smi = smigen.create(mol);
         assertThat(smi, is("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|"));
     }
@@ -342,8 +342,8 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxRadical |
-                                                     SmiOpt.Canonical);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.CxRadical |
+                                                     SmiFlavour.Canonical);
         String smi = smigen.create(mol);
         assertThat(smi, is("[C]1CO[CH][CH]C1 |^1:3,4,^2:0|"));
     }
@@ -352,8 +352,8 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
         IReaction rxn = smipar.parseReactionSmiles("CC(C)c1ccccc1.ClC([*])=O>ClCCl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)c1ccc(cc1)C([*])=O |$;;;;;;;;;;;R1;;;;;;;;;;;;;;;;;;;R1;$,f:3.4.5.6|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxAtomLabel |
-                                                     SmiOpt.CxFragmentGroup);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.CxAtomLabel |
+                                                     SmiFlavour.CxFragmentGroup);
         assertThat(smigen.create(rxn),
                    is("CC(C)C1=CC=CC=C1.ClC(*)=O>ClCCl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)C1=CC=C(C=C1)C(*)=O |f:3.4.5.6,$;;;;;;;;;;;R1;;;;;;;;;;;;;;;;;;;R1$|"));
     }
@@ -363,9 +363,9 @@ public class CxSmilesTest {
         SmilesParser smipar = new SmilesParser(bldr);
         IReaction rxn1 = smipar.parseReactionSmiles("CC(C)c1ccccc1.ClC([*])=O>[Al+3].[Cl-].[Cl-].[Cl-].ClCCl>CC(C)c1ccc(cc1)C([*])=O |$;;;;;;;;;;;R1;;;;;;;;;;;;;;;;;;;R1;$,f:2.3.4.5|");
         IReaction rxn2 = smipar.parseReactionSmiles("ClC([*])=O.CC(C)c1ccccc1>[Al+3].[Cl-].[Cl-].[Cl-].ClCCl>CC(C)c1ccc(cc1)C([*])=O |$;;R1;;;;;;;;;;;;;;;;;;;;;;;;;;;;R1;$,f:2.3.5.4|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiOpt.CxAtomLabel |
-                                                     SmiOpt.CxFragmentGroup |
-                                                     SmiOpt.Canonical);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.CxAtomLabel |
+                                                     SmiFlavour.CxFragmentGroup |
+                                                     SmiFlavour.Canonical);
         assertThat(smigen.create(rxn1),
                    is(smigen.create(rxn2)));
     }
