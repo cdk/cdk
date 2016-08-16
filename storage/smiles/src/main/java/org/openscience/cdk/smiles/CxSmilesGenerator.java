@@ -161,6 +161,27 @@ public class CxSmilesGenerator {
             sb.append('$');
         }
 
+        // Atom Values
+        if (SmiFlavour.isSet(opts, SmiFlavour.CxAtomValue) &&
+            state.atomValues != null && !state.atomValues.isEmpty()) {
+
+            if (sb.length() > 2)
+                sb.append(',');
+            sb.append("$_AV:");
+            int nonempty_cnt = 0;
+            for (int idx : invorder) {
+                String label = state.atomValues.get(idx);
+                if (label == null || label.isEmpty()) label = "";
+                else nonempty_cnt++;
+                sb.append(encode_alias(label));
+                // don't need to write anymore more ';'
+                if (nonempty_cnt == state.atomValues.size())
+                    break;
+                sb.append(";");
+            }
+            sb.append('$');
+        }
+
         // 2D/3D Coordinates
         if (SmiFlavour.isSet(opts, SmiFlavour.CxCoordinates) &&
             state.atomCoords != null && !state.atomCoords.isEmpty()) {

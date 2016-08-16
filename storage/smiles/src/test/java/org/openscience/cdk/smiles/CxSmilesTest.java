@@ -370,4 +370,12 @@ public class CxSmilesTest {
                    is(smigen.create(rxn2)));
     }
 
+    @Test public void canonAtomLabels() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("c1ccccc1O |$_AV:0;1;2;3;4;5;6$|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Canonical | SmiFlavour.CxAtomValue);
+        assertThat(smigen.create(mol), is("OC=1C=CC=CC1 |$_AV:6;5;0;1;2;3;4$|"));
+    }
+
 }
