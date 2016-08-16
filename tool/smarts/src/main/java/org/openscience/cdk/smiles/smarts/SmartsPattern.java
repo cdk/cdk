@@ -190,6 +190,17 @@ public final class SmartsPattern extends Pattern {
     }
 
     /**
+     * Default SMARTS pattern constructor, passes in a null chem object builder.
+     *
+     * @param smarts SMARTS pattern string
+     * @return a SMARTS pattern
+     * @throws IOException problem with SMARTS string syntax/semantics
+     */
+    public static SmartsPattern create(String smarts) throws IOException {
+        return new SmartsPattern(smarts, null);
+    }
+
+    /**
      * Checks a smarts string for !R, R<num> or r<num>. If found then the more
      * expensive ring info needs to be initlised before querying.
      *
