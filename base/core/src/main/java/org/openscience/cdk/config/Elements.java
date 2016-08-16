@@ -154,38 +154,46 @@ public enum Elements {
     Darmstadtium(110, "Ds", 7, 10, null, null, null),
     Roentgenium(111, "Rg", 7, 11, null, null, null),
     Copernicium(112, "Cn", 7, 12, null, null, null),
+    @Deprecated
     Ununtrium(113, "Uut", 0, 0, null, null, null),
+    Nihonium(113, "Nh", 0, 0, null, null, null),
     Flerovium(114, "Fl", 0, 0, null, null, null),
+    @Deprecated
     Ununpentium(115, "Uup", 0, 0, null, null, null),
+    Moscovium(115, "Mc", 0, 0, null, null, null),
     Livermorium(116, "Lv", 0, 0, null, null, null),
+    @Deprecated
     Ununseptium(117, "Uus", 0, 0, null, null, null),
-    Ununoctium(118, "Uuo", 0, 0, null, null, null);
+    Tennessine(117, "Ts", 0, 0, null, null, null),
+    @Deprecated
+    Ununoctium(118, "Uuo", 0, 0, null, null, null),
+    Oganesson(118, "Og", 0, 0, null, null, null);
 
     /**
      * Atomic number, periodic table period and group.
      */
-    private final int                  number, period, group;
+    private final int number, period, group;
 
     /**
      * The symbol of the element.
      */
-    private final String               symbol;
+    private final String symbol;
 
     /**
      * Covalent radius (<i>r<sub>cov</sub></i>), van der Waals radius
      * (<i>r<sub>w</sub></i>) and Pauling electronegativity.
      */
-    private final Double               rCov, rW, electronegativity;
+    private final Double rCov, rW, electronegativity;
 
     /**
      * An {@link IElement} instance of this element.
      */
-    private final IElement             instance;
+    private final IElement instance;
 
     /**
      * Lookup elements by atomic number.
      */
-    static final Elements[]            NUMER_MAP = new Elements[119];
+    static final Elements[] NUMER_MAP = new Elements[119];
 
     /**
      * Lookup elements by symbol / name.
@@ -209,6 +217,12 @@ public enum Elements {
 
         SYMBOL_MAP.put("uuh", Livermorium); // 2012
         SYMBOL_MAP.put("ununhexium", Livermorium);
+
+        // 2016
+        SYMBOL_MAP.put("uut", Nihonium);
+        SYMBOL_MAP.put("uup", Moscovium);
+        SYMBOL_MAP.put("uus", Tennessine);
+        SYMBOL_MAP.put("uuo", Oganesson);
 
         // alternative spellings
         SYMBOL_MAP.put("sulphur", Sulfur);
