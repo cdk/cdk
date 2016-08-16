@@ -75,7 +75,6 @@ final class CxSmilesParser {
             if (c == '$') {
                 iter.nextIf(','); // optional
                 // end of atom label
-                iter.nextIf(','); // optional
                 return true;
             } else {
                 iter.pos--; // push back
