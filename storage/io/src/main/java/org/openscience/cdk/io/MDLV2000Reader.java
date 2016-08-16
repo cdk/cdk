@@ -41,8 +41,6 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
@@ -506,7 +504,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     hasQueryBonds = true; // also counts aromatic bond as query
                 } else {
                     int unpaired = outputContainer.getConnectedSingleElectronsCount(outputContainer.getAtom(i));
-                    applyMDLValenceModel(outputContainer.getAtom(i), valence + unpaired);
+                    applyMDLValenceModel(outputContainer.getAtom(i), valence + unpaired, unpaired);
                 }
             }
 
@@ -544,13 +542,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * 0 - this is the case when a query bond was read for an atom.
      *
      * @param atom            the atom to apply the model to
+     * @param unpaired        unpaired electron count
      * @param explicitValence the explicit valence (bond order sum)
      */
-    private void applyMDLValenceModel(IAtom atom, int explicitValence) {
+    private void applyMDLValenceModel(IAtom atom, int explicitValence, int unpaired) {
 
         if (atom.getValency() != null) {
             if (atom.getValency() >= explicitValence)
-                atom.setImplicitHydrogenCount(atom.getValency() - explicitValence);
+                atom.setImplicitHydrogenCount(atom.getValency() - (explicitValence - unpaired));
             else
                 atom.setImplicitHydrogenCount(0);
         } else {
@@ -1886,24 +1885,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     StringTokenizer st = new StringTokenizer(line.substring(9));
                     for (int i = 1; i <= infoCount; i++) {
                         int atomNumber = Integer.parseInt(st.nextToken().trim());
-                        int spinMultiplicity = Integer.parseInt(st.nextToken().trim());
-                        MDLV2000Writer.SPIN_MULTIPLICITY spin = MDLV2000Writer.SPIN_MULTIPLICITY.NONE;
-                        if (spinMultiplicity > 0) {
+                        int rad = Integer.parseInt(st.nextToken().trim());
+                        MDLV2000Writer.SPIN_MULTIPLICITY spin = MDLV2000Writer.SPIN_MULTIPLICITY.None;
+                        if (rad > 0) {
                             IAtom radical = container.getAtom(atomNumber - 1);
-                            switch (spinMultiplicity) {
-                                case 1:
-                                    spin = MDLV2000Writer.SPIN_MULTIPLICITY.DOUBLET;
-                                    break;
-                                case 2:
-                                    spin = MDLV2000Writer.SPIN_MULTIPLICITY.SINGLET;
-                                    break;
-                                case 3:
-                                    spin = MDLV2000Writer.SPIN_MULTIPLICITY.TRIPLET;
-                                    break;
-                                default:
-                                    logger.debug("Invalid spin multiplicity found: " + spinMultiplicity);
-                                    break;
-                            }
+                            spin = MDLV2000Writer.SPIN_MULTIPLICITY.ofValue(rad);
                             for (int j = 0; j < spin.getSingleElectrons(); j++) {
                                 container.addSingleElectron(container.getBuilder().newInstance(ISingleElectron.class,
                                         radical));

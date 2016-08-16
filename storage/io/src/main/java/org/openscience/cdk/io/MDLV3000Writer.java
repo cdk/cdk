@@ -221,7 +221,16 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
             final int chg  = nullAsZero(atom.getFormalCharge());
             final int mass = nullAsZero(atom.getMassNumber());
             final int hcnt = nullAsZero(atom.getImplicitHydrogenCount());
-            final int rad  = mol.getConnectedSingleElectronsCount(atom);
+            final int elec = mol.getConnectedSingleElectronsCount(atom);
+            int rad  = 0;
+            switch (elec) {
+                case 1: // 2
+                    rad = MDLV2000Writer.SPIN_MULTIPLICITY.Monovalent.getValue();
+                    break;
+                case 2: // 1 or 3? Information loss as to which
+                    rad = MDLV2000Writer.SPIN_MULTIPLICITY.DivalentSinglet.getValue();
+                    break;
+            }
 
             int expVal = 0;
             for (IBond bond : mol.getConnectedBondsList(atom)) {
