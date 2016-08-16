@@ -189,7 +189,7 @@ public class CxSmilesGenerator {
             if (sb.length() > 2) sb.append(',');
             sb.append('(');
             for (int i = 0; i < ordering.length; i++) {
-                double[] xyz = state.atomCoords.get(ordering[i]);
+                double[] xyz = state.atomCoords.get(invorder[i]);
                 if (i != 0) sb.append(';');
                 if (xyz[0] != 0)
                     sb.append(fmt.format(xyz[0]));

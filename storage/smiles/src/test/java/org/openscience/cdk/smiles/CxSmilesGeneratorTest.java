@@ -58,7 +58,7 @@ public class CxSmilesGeneratorTest {
                                          new double[]{0, 3, 0},
                                          new double[]{1.5, 1.5, 0});
         assertThat(CxSmilesGenerator.generate(state, SmiFlavour.CxCoordinates, new int[0], new int[]{1, 2, 0}),
-                   is(" |(,3,;1.5,1.5,;,1.5,)|"));
+                   is(" |(1.5,1.5,;,1.5,;,3,)|"));
     }
 
     @Test
