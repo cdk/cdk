@@ -438,9 +438,10 @@ public class AtomContainerManipulator {
             atomContainer.addBond(bond);
 
         // update tetrahedral elements with an implicit part
-        for (IStereoElement se : atomContainer.stereoElements()) {
-            if (se instanceof ITetrahedralChirality) {
-                ITetrahedralChirality tc = (ITetrahedralChirality) se;
+        List<IStereoElement> stereos = new ArrayList<>();
+        for (IStereoElement stereo : atomContainer.stereoElements()) {
+            if (stereo instanceof ITetrahedralChirality) {
+                ITetrahedralChirality tc = (ITetrahedralChirality) stereo;
 
                 IAtom focus = tc.getChiralAtom();
                 IAtom[] neighbors = tc.getLigands();
@@ -448,16 +449,24 @@ public class AtomContainerManipulator {
 
                 // in sulfoxide - the implicit part of the tetrahedral centre
                 // is a lone pair
-                if (hydrogen == null) continue;
 
-                for (int i = 0; i < tc.getLigands().length; i++) {
-                    if (neighbors[i] == focus) {
-                        neighbors[i] = hydrogen;
-                        break;
+                if (hydrogen != null) {
+                    for (int i = 0; i < 4; i++) {
+                        if (neighbors[i] == focus) {
+                            neighbors[i] = hydrogen;
+                            break;
+                        }
                     }
+                    // neighbors is a copy so need to create a new stereocenter
+                    stereos.add(new TetrahedralChirality(focus, neighbors, tc.getStereo()));
+                } else {
+                    stereos.add(stereo);
                 }
+            } else {
+                stereos.add(stereo);
             }
         }
+        atomContainer.setStereoElements(stereos);
 
     }
 
