@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -180,6 +181,12 @@ public class SmartsPatternTest {
     @Test public void atomMapsWithOrLogic3() throws Exception {
         assertThat(SmartsPattern.create("[C:1][C:1]>>[C:1]", null).matchAll(rsmi("[CH3:7][CH3:7]>>[CH3:7][CH3:8]")).count(),
                    is(2));
+    }
+
+    @Test
+    public void stereo_ring_closures() throws Exception {
+        Pattern ptrn = SmartsPattern.create("[C@@]1(O[C@@]([C@@]([C@]([C@]1(C)O)(C)O)(O)C)(O)C)(O)C");
+        assertTrue(ptrn.matches(smi("[C@@]1(O[C@@]([C@@]([C@]([C@]1(C)O)(C)O)(O)C)(O)C)(O)C")));
     }
 
     IAtomContainer smi(String smi) throws Exception {

@@ -425,7 +425,7 @@ void SmartsExpression() #Smarts :
 					ringId.jjtAddChild(bond, 0);
 				}
 				ringId.setRingId(ringIdToken);
-				atom.jjtAddChild(ringId, atom.jjtGetNumChildren());
+				jjtree.pushNode(ringId);
 	  		}	
 	  		|
 	  		atom = AtomExpression()

@@ -103,8 +103,6 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     // current atoms with a ring identifier
     private RingIdentifierAtom[]                ringAtoms;
 
-    private Multimap<IAtom, RingIdentifierAtom> ringAtomLookup = HashMultimap.create(10, 2);
-
     // query
     private IQueryAtomContainer                 query;
 
@@ -153,56 +151,63 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     public Object visit(ASTAtom node, Object data) {
         IQueryAtom atom = (IQueryAtom) node.jjtGetChild(0).jjtAccept(this, data);
         for (int i = 1; i < node.jjtGetNumChildren(); i++) { // if there are ring identifiers
-            ASTRingIdentifier ringIdentifier = (ASTRingIdentifier) node.jjtGetChild(i);
-            RingIdentifierAtom ringIdAtom = (RingIdentifierAtom) ringIdentifier.jjtAccept(this, atom);
-
-            // if there is already a RingIdentifierAtom, create a bond between
-            // them and add the bond to the query
-            int ringId = ringIdentifier.getRingId();
-
-            // ring digit > 9 - expand capacity
-            if (ringId >= ringAtoms.length) ringAtoms = Arrays.copyOf(ringAtoms, 100);
-
-            // Ring Open
-            if (ringAtoms[ringId] == null) {
-                ringAtoms[ringId] = ringIdAtom;
-                ringAtomLookup.put(atom, ringIdAtom);
-            }
-
-            // Ring Close
-            else {
-                IQueryBond ringBond;
-                // first check if the two bonds ma
-                if (ringAtoms[ringId].getRingBond() == null) {
-                    if (ringIdAtom.getRingBond() == null) {
-                        if (atom instanceof AromaticSymbolAtom
-                                && ringAtoms[ringId].getAtom() instanceof AromaticSymbolAtom) {
-                            ringBond = new AromaticQueryBond(builder);
-                        } else {
-                            ringBond = new RingBond(builder);
-                        }
-                    } else {
-                        ringBond = ringIdAtom.getRingBond();
-                    }
-                } else {
-                    // Here I assume the bond are always same. This should be checked by the parser already
-                    ringBond = ringAtoms[ringId].getRingBond();
-                }
-                ((IBond) ringBond).setAtoms(new IAtom[]{ringAtoms[ringId].getAtom(), atom});
-                query.addBond((IBond) ringBond);
-
-                // if the connected atoms was tracking neighbors, replace the
-                // placeholder reference
-                if (neighbors.containsKey(ringAtoms[ringId].getAtom())) {
-                    List<IAtom> localNeighbors = neighbors.get(ringAtoms[ringId].getAtom());
-                    localNeighbors.set(localNeighbors.indexOf(ringAtoms[ringId]), atom);
-                }
-
-                ringAtomLookup.remove(ringAtoms[ringId].getAtom(), ringIdAtom);
-                ringAtoms[ringId] = null;
-            }
+            throw new IllegalStateException();
         }
         return atom;
+    }
+
+    private void handleRingClosure(IQueryAtom atom, ASTRingIdentifier ringIdentifier) {
+        RingIdentifierAtom ringIdAtom = (RingIdentifierAtom) ringIdentifier.jjtAccept(this, atom);
+
+        // if there is already a RingIdentifierAtom, create a bond between
+        // them and add the bond to the query
+        int ringId = ringIdentifier.getRingId();
+
+        // ring digit > 9 - expand capacity
+        if (ringId >= ringAtoms.length) ringAtoms = Arrays.copyOf(ringAtoms, 100);
+
+        // Ring Open
+        if (ringAtoms[ringId] == null) {
+            ringAtoms[ringId] = ringIdAtom;
+            if (neighbors.containsKey(atom)) {
+                neighbors.get(atom).add(ringIdAtom);
+            }
+        }
+
+        // Ring Close
+        else {
+            IQueryBond ringBond;
+            // first check if the two bonds ma
+            if (ringAtoms[ringId].getRingBond() == null) {
+                if (ringIdAtom.getRingBond() == null) {
+                    if (atom instanceof AromaticSymbolAtom
+                            && ringAtoms[ringId].getAtom() instanceof AromaticSymbolAtom) {
+                        ringBond = new AromaticQueryBond(builder);
+                    } else {
+                        ringBond = new RingBond(builder);
+                    }
+                } else {
+                    ringBond = ringIdAtom.getRingBond();
+                }
+            } else {
+                // Here I assume the bond are always same. This should be checked by the parser already
+                ringBond = ringAtoms[ringId].getRingBond();
+            }
+            ((IBond) ringBond).setAtoms(new IAtom[]{ringAtoms[ringId].getAtom(), atom});
+            query.addBond((IBond) ringBond);
+
+            // if the connected atoms was tracking neighbors, replace the
+            // placeholder reference
+            if (neighbors.containsKey(ringAtoms[ringId].getAtom())) {
+                List<IAtom> localNeighbors = neighbors.get(ringAtoms[ringId].getAtom());
+                localNeighbors.set(localNeighbors.indexOf(ringAtoms[ringId]), atom);
+            }
+            if (neighbors.containsKey(atom)) {
+                neighbors.get(atom).add(ringAtoms[ringId].getAtom());
+            }
+
+            ringAtoms[ringId] = null;
+        }
     }
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmartsQueryVisitor.class);
@@ -360,17 +365,17 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             query.addBond(bond);
             bond = null;
         }
+
+        // first ATOM in expresion
         query.addAtom(atom);
 
         if (tetrahedral.get(query.getAtomCount() - 1)) {
             List<IAtom> localNeighbors = new ArrayList<IAtom>(query.getConnectedAtomsList(atom));
             localNeighbors.add(atom);
-            // placeholders for ring closure
-            for (RingIdentifierAtom ringIdAtom : ringAtomLookup.get(atom))
-                localNeighbors.add(ringIdAtom);
             neighbors.put(atom, localNeighbors);
         }
 
+        // now process the rest of the bonds/atoms
         for (int i = 1; i < node.jjtGetNumChildren(); i++) {
             Node child = node.jjtGetChild(i);
             if (child instanceof ASTLowAndBond) {
@@ -390,9 +395,6 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 if (tetrahedral.get(query.getAtomCount() - 1)) {
                     List<IAtom> localNeighbors = new ArrayList<IAtom>(query.getConnectedAtomsList(newAtom));
                     localNeighbors.add(newAtom);
-                    // placeholders for ring closure
-                    for (RingIdentifierAtom ringIdAtom : ringAtomLookup.get(newAtom))
-                        localNeighbors.add(ringIdAtom);
                     neighbors.put(newAtom, localNeighbors);
                 }
 
@@ -401,6 +403,10 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             } else if (child instanceof ASTSmarts) { // another smarts
                 child.jjtAccept(this, new Object[]{atom, bond});
                 bond = null;
+            } else if (child instanceof ASTRingIdentifier) {
+                handleRingClosure(atom, (ASTRingIdentifier) child);
+            } else {
+                throw new IllegalStateException("Unhandled node type: " + child.getClass());
             }
         }
 
