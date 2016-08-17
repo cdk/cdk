@@ -2500,6 +2500,24 @@ public class SmilesParserTest extends CDKTestCase {
         load("50-00-0");
     }
 
+    @Test
+    public void atomBasedDbStereo() throws Exception {
+        assertThat(SmilesGenerator.isomeric().create(load("F[C@H]=[C@@H]F")),
+                   is("F/C=C/F"));
+        assertThat(SmilesGenerator.isomeric().create(load("F[C@H]=[C@H]F")),
+                   is("F/C=C\\F"));
+        assertThat(SmilesGenerator.isomeric().create(load("F[C@@H]=[C@H]F")),
+                   is("F/C=C/F"));
+        assertThat(SmilesGenerator.isomeric().create(load("F[C@@H]=[C@@H]F")),
+                   is("F/C=C\\F"));
+    }
+
+    @Test
+    public void atomBasedDbStereoReversing() throws Exception {
+        assertThat(SmilesGenerator.isomeric().create(load("[C@H](F)=[C@@H]F")),
+                   is("F/C=C\\F"));
+    }
+
     /**
      * Counts aromatic atoms in a molecule.
      * @param mol molecule for which to count aromatic atoms.
