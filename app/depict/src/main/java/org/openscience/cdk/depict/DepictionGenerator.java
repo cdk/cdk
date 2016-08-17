@@ -21,6 +21,7 @@ package org.openscience.cdk.depict;
 import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,12 +44,15 @@ import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.standard.SelectionVisibility;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -180,6 +184,11 @@ public final class DepictionGenerator {
     private boolean annotateAtomNum = false;
 
     /**
+     * Flag to indicate atom values should be displayed.
+     */
+    private boolean annotateAtomVal = false;
+
+    /**
      * Flag to indicate atom maps should be displayed.
      */
     private boolean annotateAtomMap = false;
@@ -248,6 +257,7 @@ public final class DepictionGenerator {
      */
     private DepictionGenerator(DepictionGenerator org) {
         this.annotateAtomMap = org.annotateAtomMap;
+        this.annotateAtomVal = org.annotateAtomVal;
         this.annotateAtomNum = org.annotateAtomNum;
         this.highlightAtomMap = org.highlightAtomMap;
         this.atomMapColors = org.atomMapColors;
@@ -603,6 +613,13 @@ public final class DepictionGenerator {
                 atom.setProperty(StandardGenerator.ANNOTATION_LABEL,
                                  Integer.toString(atomNum++));
             }
+        } else if (annotateAtomVal) {
+            for (IAtom atom : molecule.atoms()) {
+                if (atom.getProperty(StandardGenerator.ANNOTATION_LABEL) != null)
+                    throw new UnsupportedOperationException("Multiple annotation labels are not supported.");
+                atom.setProperty(StandardGenerator.ANNOTATION_LABEL,
+                                 atom.getProperty(CDKConstants.COMMENT));
+            }
         } else if (annotateAtomMap) {
             for (IAtom atom : molecule.atoms()) {
                 if (atom.getProperty(StandardGenerator.ANNOTATION_LABEL) != null)
@@ -772,10 +789,30 @@ public final class DepictionGenerator {
      * @see StandardGenerator#ANNOTATION_LABEL
      */
     public DepictionGenerator withAtomNumbers() {
-        if (annotateAtomMap)
-            throw new IllegalArgumentException();
+        if (annotateAtomMap || annotateAtomVal)
+            throw new IllegalArgumentException("Can not annotated atom numbers, atom values or maps are already annotated");
         DepictionGenerator copy = new DepictionGenerator(this);
         copy.annotateAtomNum = true;
+        return copy;
+    }
+
+    /**
+     * Display atom numbers on the molecule or reaction. The numbers are based on the
+     * ordering of atoms in the molecule data structure and not a systematic system
+     * such as IUPAC numbering.
+     * <p/>
+     * Note: A depiction can not have both atom numbers and atom maps visible
+     * (but this can be achieved by manually setting the annotation).
+     *
+     * @return new generator for method chaining
+     * @see #withAtomMapNumbers()
+     * @see StandardGenerator#ANNOTATION_LABEL
+     */
+    public DepictionGenerator withAtomValues() {
+        if (annotateAtomNum || annotateAtomMap)
+            throw new IllegalArgumentException("Can not annotated atom values, atom numbers or maps are already annotated");
+        DepictionGenerator copy = new DepictionGenerator(this);
+        copy.annotateAtomVal = true;
         return copy;
     }
 
@@ -794,7 +831,7 @@ public final class DepictionGenerator {
      */
     public DepictionGenerator withAtomMapNumbers() {
         if (annotateAtomNum)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Can not annotated atom maps, atom numbers or values are already annotated");
         DepictionGenerator copy = new DepictionGenerator(this);
         copy.annotateAtomMap = true;
         return copy;
