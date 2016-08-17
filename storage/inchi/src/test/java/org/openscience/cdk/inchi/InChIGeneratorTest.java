@@ -19,10 +19,12 @@
  */
 package org.openscience.cdk.inchi;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -38,11 +40,15 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
@@ -854,5 +860,17 @@ public class InChIGeneratorTest extends CDKTestCase {
             assertThat(generator.getInchi(), is("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1"));
 
         }
+    }
+
+    @Test
+    public void timeout() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        String smiles = "C(CCCNC(=N)N)(COCC(COP([O])(=O)OCCCCCCNC(NC1=CC(=C(C=C1)C2(C3=CC=C(C=C3OC=4C2=CC=C(C4)O)O)C)C(=O)[O])=S)OP(=O)([O])OCC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(=N)N)CCCNC(=N)N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP(OCC(COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCCNC(N)=N)CCC/[NH]=C(/N)\\[NH])OP([O])(=O)CCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP([O])(=O)OCC(COCC(CCCNC(N)=N)(CCCNC(N)=N)CCC/[NH]=C(\\[NH])/N)OP(OCC(COCC(CCCNC(N)=N)(CCC/[NH]=C(/N)\\[NH])CCCNC(N)=N)O=P([O])(OCC(COP(=OC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(N)=N)CCCNC(N)=N)COP([O])(=O)OC(COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP([O])(=O)OC(COP(OC(COP(OC(COP(=O)([O])OC(COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(N)=N)CCCNC(=N)N)COP([O])(=O)OCCCCCCNC(NC=5C=CC(=C(C5)C(=O)[O])C6(C7=CC=C(C=C7OC=8C6=CC=C(C8)O)O)C)=S)COCC(CCCNC(N)=N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)([O])=O)([O])=O)COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(=N)N)CCCNC(=N)N)([O])[O])(C)COP(OCCCCCCO)(=O)[O])[O])(=O)[O])([O])=O)(CCC/[NH]=C(\\[NH])/[NH])CCCNC(=N)N";
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
+        InChIGenerator generator = inchiFact.getInChIGenerator(mol, "W0.01");
+        assertThat(generator.getReturnStatus(), is(INCHI_RET.ERROR));
+        assertThat(generator.getLog(), containsString("Time limit exceeded"));
     }
 }

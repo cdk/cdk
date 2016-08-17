@@ -147,7 +147,7 @@ public class InChIGenerator {
     protected InChIGenerator(IAtomContainer atomContainer, String options, boolean ignoreAromaticBonds)
             throws CDKException {
         try {
-            input = new JniInchiInput(options);
+            input = new JniInChIInputAdapter(options);
             generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
             auxNone = input.getOptions() != null && input.getOptions().contains("AuxNone");
         } catch (JniInchiException jie) {
@@ -169,7 +169,7 @@ public class InChIGenerator {
     protected InChIGenerator(IAtomContainer atomContainer, List<INCHI_OPTION> options, boolean ignoreAromaticBonds)
             throws CDKException {
         try {
-            input = new JniInchiInput(options);
+            input = new JniInChIInputAdapter(options);
             generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
             auxNone = input.getOptions() != null && input.getOptions().contains("AuxNone");
         } catch (JniInchiException jie) {
