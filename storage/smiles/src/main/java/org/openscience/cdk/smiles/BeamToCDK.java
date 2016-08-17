@@ -46,6 +46,7 @@ import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import static uk.ac.ebi.beam.Configuration.Type.DoubleBond;
 import static uk.ac.ebi.beam.Configuration.Type.ExtendedTetrahedral;
 import static uk.ac.ebi.beam.Configuration.Type.Tetrahedral;
 
@@ -176,23 +177,104 @@ final class BeamToCDK {
 
             // if either atom is not incident to a directional label there
             // is no configuration
-            if (first == null || second == null) continue;
+            if (first != null && second != null) {
 
-            // if the directions (relative to the double bond) are the
-            // same then they are on the same side - otherwise they
-            // are opposite
-            Conformation conformation = first.bond(u) == second.bond(v) ? Conformation.TOGETHER : Conformation.OPPOSITE;
+                // if the directions (relative to the double bond) are the
+                // same then they are on the same side - otherwise they
+                // are opposite
+                Conformation conformation = first.bond(u) == second.bond(v) ? Conformation.TOGETHER : Conformation.OPPOSITE;
 
-            // get the stereo bond and build up the ligands for the
-            // stereo-element - linear search could be improved with
-            // map or API change to double bond element
-            IBond db = ac.getBond(ac.getAtom(u), ac.getAtom(v));
+                // get the stereo bond and build up the ligands for the
+                // stereo-element - linear search could be improved with
+                // map or API change to double bond element
+                IBond db = ac.getBond(ac.getAtom(u), ac.getAtom(v));
 
-            IBond[] ligands = new IBond[]{ac.getBond(ac.getAtom(u), ac.getAtom(first.other(u))),
-                    ac.getBond(ac.getAtom(v), ac.getAtom(second.other(v)))};
+                IBond[] ligands = new IBond[]{ac.getBond(ac.getAtom(u), ac.getAtom(first.other(u))),
+                                              ac.getBond(ac.getAtom(v), ac.getAtom(second.other(v)))};
 
-            ac.addStereoElement(new DoubleBondStereochemistry(db, ligands, conformation));
+                ac.addStereoElement(new DoubleBondStereochemistry(db, ligands, conformation));
+            }
+            // extension F[C@]=[C@@]F
+            else {
+                Configuration uConf = g.configurationOf(u);
+                Configuration vConf = g.configurationOf(v);
+                if (uConf.type() == Configuration.Type.DoubleBond &&
+                    vConf.type() == Configuration.Type.DoubleBond) {
 
+
+                    int[] nbrs = new int[6];
+                    int[] uNbrs = g.neighbors(u);
+                    int[] vNbrs = g.neighbors(v);
+
+                    if (uNbrs.length < 2 || uNbrs.length > 3)
+                        continue;
+                    if (vNbrs.length < 2 || vNbrs.length > 3)
+                        continue;
+
+                    int idx   = 0;
+                    System.arraycopy(uNbrs, 0, nbrs, idx, uNbrs.length);
+                    idx += uNbrs.length;
+                    if (uNbrs.length == 2) nbrs[idx++] = u;
+                    System.arraycopy(vNbrs, 0, nbrs, idx, vNbrs.length);
+                    idx += vNbrs.length;
+                    if (vNbrs.length == 2) nbrs[idx] = v;
+                    Arrays.sort(nbrs, 0, 3);
+                    Arrays.sort(nbrs, 3, 6);
+
+                    int vPos = Arrays.binarySearch(nbrs, 0, 3, v);
+                    int uPos = Arrays.binarySearch(nbrs, 3, 6, u);
+
+                    int uhi = 0, ulo = 0;
+                    int vhi = 0, vlo = 0;
+
+                    uhi = nbrs[(vPos + 1) % 3];
+                    ulo = nbrs[(vPos + 2) % 3];
+                    vhi = nbrs[3 + ((uPos + 1) % 3)];
+                    vlo = nbrs[3 + ((uPos + 2) % 3)];
+
+                    if (uConf.shorthand() == Configuration.CLOCKWISE) {
+                        int tmp = uhi;
+                        uhi = ulo;
+                        ulo = tmp;
+                    }
+                    if (vConf.shorthand() == Configuration.ANTI_CLOCKWISE) {
+                        int tmp = vhi;
+                        vhi = vlo;
+                        vlo = tmp;
+                    }
+
+                    DoubleBondStereochemistry.Conformation conf = null;
+                    IBond[] bonds = new IBond[2];
+
+                    if (uhi != u) {
+                        bonds[0] = ac.getBond(ac.getAtom(u), ac.getAtom(uhi));
+                        if (vhi != v) {
+                            // System.err.println(uhi + "\\=/" + vhi);
+                            conf = Conformation.TOGETHER;
+                            bonds[1] = ac.getBond(ac.getAtom(v), ac.getAtom(vhi));
+                        } else if (vlo != v) {
+                            // System.err.println(uhi + "\\=\\" + vlo);
+                            conf = Conformation.OPPOSITE;
+                            bonds[1] = ac.getBond(ac.getAtom(v), ac.getAtom(vlo));
+                        }
+                    } else if (ulo != u) {
+                        bonds[0] = ac.getBond(ac.getAtom(u), ac.getAtom(ulo));
+                        if (vhi != v) {
+                            // System.err.println(ulo + "/=/" + vhi);
+                            conf = Conformation.OPPOSITE;
+                            bonds[1] = ac.getBond(ac.getAtom(v), ac.getAtom(vhi));
+                        } else if (vlo != v) {
+                            // System.err.println(ulo + "/=\\" + vlo);
+                            conf = Conformation.TOGETHER;
+                            bonds[1] = ac.getBond(ac.getAtom(v), ac.getAtom(vlo));
+                        }
+                    }
+
+                    ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(ac.getAtom(u), ac.getAtom(v)),
+                                                                      bonds,
+                                                                      conf));
+                }
+            }
         }
     }
 
