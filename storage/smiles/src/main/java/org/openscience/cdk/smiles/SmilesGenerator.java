@@ -22,46 +22,83 @@
  */
 package org.openscience.cdk.smiles;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.invariant.Canon;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import uk.ac.ebi.beam.Functions;
 import uk.ac.ebi.beam.Graph;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * Generate a SMILES {@cdk.cite WEI88, WEI89} string for a provided structure.
- * The generator can produce several <i>flavour</i> of SMILES.
- * <p/>
+ * SMILES {@cdk.cite WEI88, WEI89} provides a compact representation of
+ * chemical structures and reactions.
+ * <br>
+ * Different <i>flavours</i> of SMILES can be generated and are fully configurable.
+ * The standard flavours of SMILES defined by Daylight are:
  * <ul>
- *     <li>generic - non-canonical SMILES string, different atom ordering
+ *     <li><b>Generic</b> - non-canonical SMILES string, different atom ordering
  *         produces different SMILES. No isotope or stereochemistry encoded.
  *         </li>
- *     <li>unique - canonical SMILES string, different atom ordering
+ *     <li><b>Unique</b> - canonical SMILES string, different atom ordering
  *         produces the same* SMILES. No isotope or stereochemistry encoded.
  *         </li>
- *     <li>isomeric - non-canonical SMILES string, different atom ordering
+ *     <li><b>Isomeric</b> - non-canonical SMILES string, different atom ordering
  *         produces different SMILES. Isotope and stereochemistry is encoded.
  *         </li>
- *     <li>absolute - canonical SMILES string, different atom ordering
+ *     <li><b>Absolute</b> - canonical SMILES string, different atom ordering
  *         produces the same SMILES. Isotope and stereochemistry is encoded.</li>
  * </ul>
+ *
+ * To output a given flavour the flags in {@link SmiFlavour} are used:
+ *
+ * <pre>
+ * SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Isomeric);
+ * </pre>
+ * {@link SmiFlavour} provides more fine grained control, for example,
+ * for the following is equivalent to {@link SmiFlavour#Isomeric}:
+ * <pre>
+ * SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Stereo |
+ *                                              SmiFlavour.AtomicMass);
+ * </pre>
+ * Bitwise logic can be used such that we can remove options:
+ * {@link SmiFlavour#Isomeric} <code>^</code> {@link SmiFlavour#AtomicMass}
+ * will generate isomeric SMILES without atomic mass.
+ *
  *
  * <p/>
  * A generator instance is created using one of the static methods, the SMILES
  * are then created by invoking {@link #create(IAtomContainer)}.
  * <blockquote><pre>
  * IAtomContainer  ethanol = ...;
- * SmilesGenerator sg      = SmilesGenerator.generic();
- * String          smi     = sg.create(ethanol); // CCO or OCC
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Generic);
+ * String          smi     = sg.create(ethanol); // CCO, C(C)O, C(O)C, or OCC
  *
- * SmilesGenerator sg      = SmilesGenerator.unique();
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Unique);
  * String          smi     = sg.create(ethanol); // only CCO
  * </pre></blockquote>
  *
@@ -77,60 +114,45 @@ import java.lang.reflect.Method;
  *
  * By default the generator will not write aromatic SMILES. Kekulé SMILES are
  * generally preferred for compatibility and aromaticity can easily be
- * reperceived. Modifying a generator to produce {@link #aromatic()} SMILES
- * will use the {@link org.openscience.cdk.CDKConstants#ISAROMATIC} flags.
- * These flags can be set manually or with the
- * {@link org.openscience.cdk.aromaticity.Aromaticity} utility.
+ * re-perceived by most tool kits whilst kekulisation may fail. If you
+ * really want aromatic SMILES the following code demonstrates
+ *
  * <blockquote><pre>
  * IAtomContainer  benzene = ...;
  *
- * // with no flags set the output is always kekule
- * SmilesGenerator sg      = SmilesGenerator.generic();
+ * // 'benzene' molecule has no arom flags, we always get Kekulé output
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Generic);
  * String          smi     = sg.create(benzene); // C1=CC=CC=C1
  *
- * SmilesGenerator sg      = SmilesGenerator.generic()
- *                                          .aromatic();
- * String          smi     = sg.create(ethanol); // C1=CC=CC=C1
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Generic |
+ *                                               SmiFlavour.UseAromaticSymbols);
+ * String          smi     = sg.create(benzene); // C1=CC=CC=C1 flags not set!
  *
+ * // Note, in practice we'd use an aromaticity algorithm
  * for (IAtom a : benzene.atoms())
- *     a.setFlag(CDKConstants.ISAROMATIC, true);
+ *     a.setIsAromatic(true);
  * for (IBond b : benzene.bond())
- *     b.setFlag(CDKConstants.ISAROMATIC, true);
+ *     a.setIsAromatic(true);
  *
- * // with flags set, the aromatic generator encodes this information
- * SmilesGenerator sg      = SmilesGenerator.generic();
+ * // 'benzene' molecule now has arom flags, we always get aromatic SMILES if we request it
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Generic);
  * String          smi     = sg.create(benzene); // C1=CC=CC=C1
  *
- * SmilesGenerator sg      = SmilesGenerator.generic()
- *                                          .aromatic();
- * String          smi     = sg.create(ethanol); // c1ccccc1
- * </pre></blockquote>
- * <p/>
- * By default atom classes are not written. Atom classes can be written but
- * creating a generator {@link #withAtomClasses()}.
- *
- * <blockquote><pre>
- * IAtomContainer  benzene = ...;
- *
- * // see CDKConstants for property key
- * benzene.getAtom(3)
- *        .setProperty(ATOM_ATOM_MAPPING, 42);
- *
- * SmilesGenerator sg      = SmilesGenerator.generic();
- * String          smi     = sg.create(benzene); // C1=CC=CC=C1
- *
- * SmilesGenerator sg      = SmilesGenerator.generic()
- *                                          .withAtomClasses();
- * String          smi     = sg.create(ethanol); // C1=CC=[CH:42]C=C1
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Generic |
+ *                                               SmiFlavour.UseAromaticSymbols);
+ * String          smi     = sg.create(benzene); // c1ccccc1
  * </pre></blockquote>
  * <p/>
  *
- * Auxiliary data can be stored with SMILES by knowing the output order of
- * atoms. The following example demonstrates the storage of 2D coordinates.
+ * It can be useful to know the output order of SMILES. On input the order of the atoms
+ * reflects the atom index. If we know this order we can refer to atoms by index and
+ * associate data with the SMILES string.
+ * The output order is obtained by parsing in an auxiliary array during creation. The
+ * following snippet demonstrates how we can write coordinates in order.
  *
  * <blockquote><pre>
  * IAtomContainer  mol = ...;
- * SmilesGenerator sg  = SmilesGenerator.generic();
+ * SmilesGenerator sg  = new SmilesGenerator(SmiFlavor.Generic);
  *
  * int   n     = mol.getAtomCount();
  * int[] order = new int[n];
@@ -149,7 +171,18 @@ import java.lang.reflect.Method;
  *
  * </pre></blockquote>
  *
- * * the unique SMILES generation uses a fast equitable labelling procedure
+ * Using the output order of SMILES forms the basis of
+ * <a href="https://www.chemaxon.com/marvin-archive/latest/help/formats/cxsmiles-doc.html">
+ * ChemAxon Extended SMILES (CXSMILES)</a> which can also be generated. Extended SMILES
+ * allows additional structure data to be serialized including, atom labels/values, fragment
+ * grouping (for salts in reactions), polymer repeats, multi center bonds, and coordinates.
+ * The CXSMILES layer is appended after the SMILES so that parser which don't interpret it
+ * can ignore it.
+ * <p/>
+ * The two aggregate flavours are {@link SmiFlavour#CxSmiles} and {@link SmiFlavour#CxSmilesWithCoords}.
+ * As with other flavours, fine grain control is possible {@see SmiFlavour}.
+ * <p/><p/>
+ * <b>*</b> the unique SMILES generation uses a fast equitable labelling procedure
  *   and as such there are some structures which may not be unique. The number
  *   of such structures is generally minimal.
  *
@@ -170,50 +203,45 @@ import java.lang.reflect.Method;
  */
 public final class SmilesGenerator {
 
-    private final boolean   isomeric, canonical, aromatic, classes;
-    private final CDKToBeam converter;
+    private final int       flavour;
 
     /**
      * Create the generic SMILES generator.
      * @see #generic()
-     * @deprecated some consideration is needed on what SMILES is required e.g. SmilesGenerator.unique()
-     *             vs SmilesGenerator.isomeric();
+     * @deprecated use {@link #SmilesGenerator(int)} configuring with {@link SmiFlavour}.
      */
     @Deprecated
     public SmilesGenerator() {
-        this(false, false, false, false);
+        this(0);
     }
 
     /**
-     * Create the SMILES generator.
-     *
-     * @param isomeric include isotope and stereo configurations in produced
-     *                 SMILES
-     */
-    private SmilesGenerator(boolean isomeric, boolean canonical, boolean aromatic, boolean classes) {
-        this.isomeric = isomeric;
-        this.canonical = canonical;
-        this.aromatic = aromatic;
-        this.classes = classes;
-        this.converter = new CDKToBeam(isomeric, aromatic, classes);
-    }
-
-    /**
-     * The generator should write aromatic (lower-case) SMILES. This option is
-     * not recommended as different parsers can interpret where bonds should be
-     * placed.
+     * Create a SMILES generator with the specified {@link SmiFlavour}.
      *
      * <blockquote><pre>
-     * IAtomContainer  container = ...;
-     * SmilesGenerator smilesGen = SmilesGenerator.unique()
-     *                                            .aromatic();
-     * smilesGen.createSMILES(container);
+     * SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Stereo |
+     *                                              SmiFlavour.Canonical);
      * </pre></blockquote>
      *
+     * @param flavour SMILES flavour flags {@see SmiFlavour}
+     */
+    public SmilesGenerator(int flavour) {
+        this.flavour   = flavour;
+    }
+
+    /**
+     * Derived a new generator that writes aromatic atoms in lower case.
+     * The preferred way of doing this is now to use the {@link #SmilesGenerator(int)} constructor:
+     *
+     * <pre>
+     * SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.UseAromaticSymbols);
+     * </pre>
+     *
      * @return a generator for aromatic SMILES
+     * @deprecated configure with {@link SmiFlavour}
      */
     public SmilesGenerator aromatic() {
-        return new SmilesGenerator(isomeric, canonical, true, classes);
+        return new SmilesGenerator(this.flavour | SmiFlavour.UseAromaticSymbols);
     }
 
     /**
@@ -229,9 +257,11 @@ public final class SmilesGenerator {
      * </pre></blockquote>
      *
      * @return a generator for SMILES with atom classes
+     * @deprecated configure with {@link SmiFlavour}
      */
+    @Deprecated
     public SmilesGenerator withAtomClasses() {
-        return new SmilesGenerator(isomeric, canonical, aromatic, true);
+        return new SmilesGenerator(this.flavour | SmiFlavour.AtomAtomMap);
     }
 
     /**
@@ -243,7 +273,7 @@ public final class SmilesGenerator {
      * @return a new arbitrary SMILES generator
      */
     public static SmilesGenerator generic() {
-        return new SmilesGenerator(false, false, false, false);
+        return new SmilesGenerator(SmiFlavour.Generic);
     }
 
     /**
@@ -254,7 +284,7 @@ public final class SmilesGenerator {
      * @return a new isomeric SMILES generator
      */
     public static SmilesGenerator isomeric() {
-        return new SmilesGenerator(true, false, false, false);
+        return new SmilesGenerator(SmiFlavour.Isomeric);
     }
 
     /**
@@ -264,7 +294,7 @@ public final class SmilesGenerator {
      * @return a new unique SMILES generator
      */
     public static SmilesGenerator unique() {
-        return new SmilesGenerator(false, true, false, false);
+        return new SmilesGenerator(SmiFlavour.Unique);
     }
 
     /**
@@ -276,7 +306,7 @@ public final class SmilesGenerator {
      * @return a new absolute SMILES generator
      */
     public static SmilesGenerator absolute() {
-        return new SmilesGenerator(true, true, false, false);
+        return new SmilesGenerator(SmiFlavour.Absolute);
     }
 
     /**
@@ -329,16 +359,17 @@ public final class SmilesGenerator {
     }
 
     /**
-     * Create a SMILES string and obtain the order which the atoms were
-     * written. The output order allows one to arrange auxiliary atom data in the
+     * Creates a SMILES string of the flavour specified in the constructor
+     * and write the output order to the provided array.
+     * <br>
+     * The output order allows one to arrange auxiliary atom data in the
      * order that a SMILES string will be read. A simple example is seen below
-     * where 2D coordinates are stored with a SMILES string. In reality a more
-     * compact binary encoding would be used instead of printing the coordinates
-     * as a string.
+     * where 2D coordinates are stored with a SMILES string. This method
+     * forms the basis of CXSMILES.
      *
      * <blockquote><pre>
      * IAtomContainer  mol = ...;
-     * SmilesGenerator sg  = SmilesGenerator.generic();
+     * SmilesGenerator sg  = new SmilesGenerator();
      *
      * int   n     = mol.getAtomCount();
      * int[] order = new int[n];
@@ -363,23 +394,61 @@ public final class SmilesGenerator {
      * @throws CDKException SMILES could not be created
      */
     public String create(IAtomContainer molecule, int[] order) throws CDKException {
+        return create(molecule, this.flavour, order);
+    }
 
+    /**
+     * Creates a SMILES string of the flavour specified as a parameter
+     * and write the output order to the provided array.
+     * <br>
+     * The output order allows one to arrange auxiliary atom data in the
+     * order that a SMILES string will be read. A simple example is seen below
+     * where 2D coordinates are stored with a SMILES string. This method
+     * forms the basis of CXSMILES.
+     *
+     * <blockquote><pre>
+     * IAtomContainer  mol = ...;
+     * SmilesGenerator sg  = new SmilesGenerator();
+     *
+     * int   n     = mol.getAtomCount();
+     * int[] order = new int[n];
+     *
+     * // the order array is filled up as the SMILES is generated
+     * String smi = sg.create(mol, order);
+     *
+     * // load the coordinates array such that they are in the order the atoms
+     * // are read when parsing the SMILES
+     * Point2d[] coords = new Point2d[mol.getAtomCount()];
+     * for (int i = 0; i < coords.length; i++)
+     *     coords[order[i]] = container.getAtom(i).getPoint2d();
+     *
+     * // SMILES string suffixed by the coordinates
+     * String smi2d = smi + " " + Arrays.toString(coords);
+     *
+     * </pre></blockquote>
+     *
+     * @param molecule the molecule to write
+     * @param order    array to store the output order of atoms
+     * @return the SMILES string
+     * @throws CDKException a valid SMILES could not be created
+     */
+    public static String create(IAtomContainer molecule, int flavour, int[] order) throws CDKException {
         try {
             if (order.length != molecule.getAtomCount())
                 throw new IllegalArgumentException("the array for storing output order should be"
                         + "the same length as the number of atoms");
 
-            Graph g = converter.toBeamGraph(molecule);
+            Graph g = CDKToBeam.toBeamGraph(molecule, flavour);
 
             // apply the canonical labelling
-            if (canonical) {
+            if (SmiFlavour.isSet(flavour, SmiFlavour.Canonical)) {
 
                 // determine the output order
-                int[] labels = labels(molecule);
+                int[] labels = labels(flavour, molecule);
 
                 g = g.permute(labels).resonate();
 
-                if (isomeric) {
+                if (SmiFlavour.isSet(flavour, SmiFlavour.StereoCisTrans)) {
 
                     // FIXME: required to ensure canonical double bond labelling
                     g.sort(new Graph.VisitHighOrderFirst());
@@ -402,9 +471,20 @@ public final class SmilesGenerator {
                     canorder[i] = order[labels[i]];
                 System.arraycopy(canorder, 0, order, 0, order.length);
 
+                if (SmiFlavour.isSet(flavour, SmiFlavour.CxSmilesWithCoords)) {
+                    smiles += CxSmilesGenerator.generate(getCxSmilesState(flavour, molecule),
+                                                         flavour, null, order);
+                }
+
                 return smiles;
             } else {
-                return g.toSmiles(order);
+                String smiles = g.toSmiles(order);
+
+                if (SmiFlavour.isSet(flavour, SmiFlavour.CxSmilesWithCoords)) {
+                    smiles += CxSmilesGenerator.generate(getCxSmilesState(flavour, molecule), flavour, null, order);
+                }
+
+                return smiles;
             }
         } catch (IOException e) {
             throw new CDKException(e.getMessage());
@@ -412,38 +492,153 @@ public final class SmilesGenerator {
     }
 
     /**
-     * Generate a SMILES for the given <code>Reaction</code>.
+     * Create a SMILES for a reaction.
      *
-     * @param reaction the reaction in question
-     * @return the SMILES representation of the reaction
-     * @throws org.openscience.cdk.exception.CDKException if there is an error during SMILES generation
+     * @param reaction CDK reaction instance
+     * @return reaction SMILES
+     * @deprecated use {@link #create(IAtomContainer)}
+     * @throws CDKException a valid SMILES could not be created
      */
+    @Deprecated
     public String createReactionSMILES(IReaction reaction) throws CDKException {
-        StringBuffer reactionSMILES = new StringBuffer();
+        return create(reaction);
+    }
+
+    /**
+     * Create a SMILES for a reaction of the flavour specified in the constructor.
+     *
+     * @param reaction CDK reaction instance
+     * @return reaction SMILES
+     */
+    public String create(IReaction reaction) throws CDKException {
+        return create(reaction, new int[ReactionManipulator.getAtomCount(reaction)]);
+    }
+
+    // utility method that safely collects the Sgroup from a molecule
+    private void safeAddSgroups(List<Sgroup> sgroups, IAtomContainer mol) {
+        List<Sgroup> molSgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (molSgroups != null)
+            sgroups.addAll(molSgroups);
+    }
+
+    /**
+     * Create a SMILES for a reaction of the flavour specified in the constructor and
+     * write the output order to the provided array.
+     *
+     * @param reaction CDK reaction instance
+     * @return reaction SMILES
+     */
+    public String create(IReaction reaction, int[] ordering) throws CDKException {
+
         IAtomContainerSet reactants = reaction.getReactants();
-        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
-            reactionSMILES.append(create(reactants.getAtomContainer(i)));
-            if (i + 1 < reactants.getAtomContainerCount()) {
-                reactionSMILES.append('.');
-            }
+        IAtomContainerSet agents    = reaction.getAgents();
+        IAtomContainerSet products  = reaction.getProducts();
+
+        IAtomContainer    reactantPart = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer    agentPart    = reaction.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer    productPart  = reaction.getBuilder().newInstance(IAtomContainer.class);
+
+        List<Sgroup> sgroups = new ArrayList<>();
+
+        for (IAtomContainer reactant : reactants.atomContainers()) {
+            reactantPart.add(reactant);
+            safeAddSgroups(sgroups, reactant);
         }
-        reactionSMILES.append('>');
-        IAtomContainerSet agents = reaction.getAgents();
-        for (int i = 0; i < agents.getAtomContainerCount(); i++) {
-            reactionSMILES.append(create(agents.getAtomContainer(i)));
-            if (i + 1 < agents.getAtomContainerCount()) {
-                reactionSMILES.append('.');
-            }
+        for (IAtomContainer agent : agents.atomContainers()) {
+            agentPart.add(agent);
+            safeAddSgroups(sgroups, agent);
         }
-        reactionSMILES.append('>');
-        IAtomContainerSet products = reaction.getProducts();
-        for (int i = 0; i < products.getAtomContainerCount(); i++) {
-            reactionSMILES.append(create(products.getAtomContainer(i)));
-            if (i + 1 < products.getAtomContainerCount()) {
-                reactionSMILES.append('.');
-            }
+        for (IAtomContainer product : products.atomContainers()) {
+            productPart.add(product);
+            safeAddSgroups(sgroups, product);
         }
-        return reactionSMILES.toString();
+
+        int[] reactantOrder = new int[reactantPart.getAtomCount()];
+        int[] agentOrder    = new int[agentPart.getAtomCount()];
+        int[] productOrder  = new int[productPart.getAtomCount()];
+
+        final int expectedSize = reactantOrder.length + agentOrder.length + productOrder.length;
+        if (expectedSize != ordering.length) {
+            throw new CDKException("Output ordering array does not have correct amount of space: " + ordering.length +
+                                   " expected: " + expectedSize);
+        }
+
+        // we need to make sure we generate without the CXSMILES layers
+        String smi = create(reactantPart, flavour &~ SmiFlavour.CxSmilesWithCoords, reactantOrder) + ">" +
+                     create(agentPart, flavour &~ SmiFlavour.CxSmilesWithCoords, agentOrder) + ">" +
+                     create(productPart, flavour &~ SmiFlavour.CxSmilesWithCoords, productOrder);
+
+        // copy ordering back to unified array and adjust values
+        int agentBeg = reactantOrder.length;
+        int agentEnd = reactantOrder.length + agentOrder.length;
+        int prodEnd  = reactantOrder.length + agentOrder.length + productOrder.length;
+        System.arraycopy(reactantOrder, 0, ordering, 0, agentBeg);
+        System.arraycopy(agentOrder, 0, ordering, agentBeg, agentEnd-agentBeg);
+        System.arraycopy(productOrder, 0, ordering, agentEnd, prodEnd-agentEnd);
+        for (int i = agentBeg; i < agentEnd; i++)
+            ordering[i] += agentBeg;
+        for (int i = agentEnd; i < prodEnd; i++)
+            ordering[i] += agentEnd;
+
+        if (SmiFlavour.isSet(flavour, SmiFlavour.CxSmilesWithCoords)) {
+            IAtomContainer unified = reaction.getBuilder().newInstance(IAtomContainer.class);
+            unified.add(reactantPart);
+            unified.add(agentPart);
+            unified.add(productPart);
+            unified.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+
+            // base CXSMILES state information
+            final CxSmilesState cxstate = getCxSmilesState(flavour, unified);
+
+            int[] components = null;
+
+            // extra state info on fragment grouping, specific to reactions
+            if (SmiFlavour.isSet(flavour, SmiFlavour.CxFragmentGroup)) {
+
+                cxstate.fragGroups = new ArrayList<>();
+
+                // calculate the connected components
+                components = new ConnectedComponents(GraphUtil.toAdjList(unified)).components();
+
+                // AtomContainerSet is ordered so this is safe, it was actually a set we
+                // would need some extra data structures
+                Set<Integer> tmp = new HashSet<>();
+                int beg = 0, end = 0;
+                for (IAtomContainer mol : reactants.atomContainers()) {
+                    end = end + mol.getAtomCount();
+                    tmp.clear();
+                    for (int i = beg; i < end; i++)
+                        tmp.add(components[i]);
+                    if (tmp.size() > 1)
+                        cxstate.fragGroups.add(new ArrayList<>(tmp));
+                    beg = end;
+                }
+                for (IAtomContainer mol : agents.atomContainers()) {
+                    end = end + mol.getAtomCount();
+                    tmp.clear();
+                    for (int i = beg; i < end; i++)
+                        tmp.add(components[i]);
+                    if (tmp.size() > 1)
+                        cxstate.fragGroups.add(new ArrayList<>(tmp));
+                    beg = end;
+                }
+                for (IAtomContainer mol : products.atomContainers()) {
+                    end = end + mol.getAtomCount();
+                    tmp.clear();
+                    for (int i = beg; i < end; i++)
+                        tmp.add(components[i]);
+                    if (tmp.size() > 1)
+                        cxstate.fragGroups.add(new ArrayList<>(tmp));
+                    beg = end;
+                }
+
+            }
+
+
+            smi += CxSmilesGenerator.generate(cxstate, flavour, components, ordering);
+        }
+
+        return smi;
     }
 
     /**
@@ -470,8 +665,10 @@ public final class SmilesGenerator {
      * @return the permutation
      * @see Canon
      */
-    private int[] labels(final IAtomContainer molecule) throws CDKException {
-        long[] labels = isomeric ? inchiNumbers(molecule) : Canon.label(molecule, GraphUtil.toAdjList(molecule));
+    private static int[] labels(int flavour, final IAtomContainer molecule) throws CDKException {
+        // FIXME: use SmiOpt.InChiLabelling
+        long[] labels = SmiFlavour.isSet(flavour, SmiFlavour.Isomeric) ? inchiNumbers(molecule)
+                                                                       : Canon.label(molecule, GraphUtil.toAdjList(molecule));
         int[] cpy = new int[labels.length];
         for (int i = 0; i < labels.length; i++)
             cpy[i] = (int) labels[i] - 1;
@@ -488,7 +685,7 @@ public final class SmilesGenerator {
      * @return the inchi numbers
      * @throws CDKException the inchi numbers could not be obtained
      */
-    private long[] inchiNumbers(IAtomContainer container) throws CDKException {
+    private static long[] inchiNumbers(IAtomContainer container) throws CDKException {
         // TODO: create an interface so we don't have to dynamically load the
         // class each time
         String cname = "org.openscience.cdk.graph.invariant.InChINumbersTools";
@@ -506,6 +703,190 @@ public final class SmilesGenerator {
             throw new CDKException("An InChI could not be generated and used to canonise SMILES: " + e.getMessage(), e);
         } catch (IllegalAccessException e) {
             throw new CDKException("Could not access method to obtain InChI numbers.");
+        }
+    }
+
+    // utility safety check to guard against invalid state
+    private static Integer ensureNotNull(Integer x) {
+        if (x == null)
+            throw new IllegalStateException("Inconsistent CXSMILES state! Check the SGroups.");
+        return x;
+    }
+
+    // utility method maps the atoms to their indicies using the provided map.
+    private static List<Integer> toAtomIdxs(Collection<IAtom> atoms, Map<IAtom, Integer> atomidx) {
+        List<Integer> idxs = new ArrayList<>(atoms.size());
+        for (IAtom atom : atoms)
+            idxs.add(ensureNotNull(atomidx.get(atom)));
+        return idxs;
+    }
+
+    // Creates a CxSmilesState from a molecule with atom labels, repeat units, multicenter bonds etc
+    private static CxSmilesState getCxSmilesState(int flavour, IAtomContainer mol) {
+        CxSmilesState state = new CxSmilesState();
+        state.atomCoords = new ArrayList<>();
+        state.coordFlag = false;
+
+        // set the atom labels, values, and coordinates,
+        // and build the atom->idx map required by other parts
+        Map<IAtom, Integer> atomidx = new IdentityHashMap<>();
+        for (int idx = 0; idx < mol.getAtomCount(); idx++) {
+            IAtom atom = mol.getAtom(idx);
+            if (atom instanceof IPseudoAtom) {
+
+                if (state.atomLabels == null)
+                    state.atomLabels = new HashMap<>();
+
+                IPseudoAtom pseudo = (IPseudoAtom) atom;
+                if (pseudo.getAttachPointNum() > 0) {
+                    state.atomLabels.put(idx, "_AP" + pseudo.getAttachPointNum());
+                } else {
+                    if (!"*".equals(pseudo.getLabel()))
+                        state.atomLabels.put(idx, pseudo.getLabel());
+                }
+            }
+            Object comment = atom.getProperty(CDKConstants.COMMENT);
+            if (comment != null) {
+                if (state.atomValues == null)
+                    state.atomValues = new HashMap<>();
+                state.atomValues.put(idx, comment.toString());
+            }
+            atomidx.put(atom, idx);
+
+            Point2d p2 = atom.getPoint2d();
+            Point3d p3 = atom.getPoint3d();
+
+            if (SmiFlavour.isSet(flavour, SmiFlavour.Cx2dCoordinates) && p2 != null) {
+                state.atomCoords.add(new double[]{p2.x, p2.y, 0});
+                state.coordFlag = true;
+            } else if (SmiFlavour.isSet(flavour, SmiFlavour.Cx3dCoordinates) && p3 != null) {
+                state.atomCoords.add(new double[]{p3.x, p3.y, p3.z});
+                state.coordFlag = true;
+            } else if (SmiFlavour.isSet(flavour, SmiFlavour.CxCoordinates)) {
+                state.atomCoords.add(new double[3]);
+            }
+        }
+
+        if (!state.coordFlag)
+            state.atomCoords = null;
+
+        // radicals
+        if (mol.getSingleElectronCount() > 0) {
+            state.atomRads = new HashMap<>();
+            for (ISingleElectron radical : mol.singleElectrons()) {
+                CxSmilesState.Radical val = state.atomRads.get(ensureNotNull(atomidx.get(radical.getAtom())));
+
+                // 0->1, 1->2, 2->3
+                if (val == null)
+                    val = CxSmilesState.Radical.Monovalent;
+                else if (val == CxSmilesState.Radical.Monovalent)
+                    val = CxSmilesState.Radical.Divalent;
+                else if (val == CxSmilesState.Radical.Divalent)
+                    val = CxSmilesState.Radical.Trivalent;
+                else if (val == CxSmilesState.Radical.Trivalent)
+                    throw new IllegalArgumentException("Invalid radical state, can not be more than trivalent");
+
+                state.atomRads.put(atomidx.get(radical.getAtom()),
+                                   val);
+            }
+        }
+
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            state.sgroups = new ArrayList<>();
+            state.positionVar = new HashMap<>();
+            for (Sgroup sgroup : sgroups) {
+                switch (sgroup.getType()) {
+                    // polymer SRU
+                    case CtabStructureRepeatUnit:
+                    case CtabMonomer:
+                    case CtabMer:
+                    case CtabCopolymer:
+                    case CtabCrossLink:
+                    case CtabModified:
+                    case CtabMixture:
+                    case CtabFormulation:
+                    case CtabAnyPolymer:
+                    case CtabGeneric:
+                    case CtabComponent:
+                    case CtabGraft:
+                        state.sgroups.add(new CxSmilesState.PolymerSgroup(getSgroupPolymerKey(sgroup),
+                                                                          toAtomIdxs(sgroup.getAtoms(), atomidx),
+                                                                          sgroup.getSubscript(),
+                                                                          (String) sgroup.getValue(SgroupKey.CtabConnectivity)));
+                        break;
+
+                    case ExtMulticenter:
+                        IAtom beg = null;
+                        List<IAtom> ends = new ArrayList<>();
+                        Set<IBond> bonds = sgroup.getBonds();
+                        if (bonds.size() != 1)
+                            throw new IllegalArgumentException("Multicenter Sgroup in inconsistent state!");
+                        IBond bond = bonds.iterator().next();
+                        for (IAtom atom : sgroup.getAtoms()) {
+                            if (bond.contains(atom)) {
+                                if (beg != null)
+                                    throw new IllegalArgumentException("Multicenter Sgroup in inconsistent state!");
+                                beg = atom;
+                            } else {
+                                ends.add(atom);
+                            }
+                        }
+                        state.positionVar.put(ensureNotNull(atomidx.get(beg)),
+                                              toAtomIdxs(ends, atomidx));
+                        break;
+                    case CtabAbbreviation:
+                    case CtabMultipleGroup:
+                        // display shortcuts are not output
+                        break;
+                    default:
+                        throw new UnsupportedOperationException("Unsupported Sgroup Polymer");
+
+                }
+            }
+        }
+
+        return state;
+    }
+
+    private static String getSgroupPolymerKey(Sgroup sgroup) {
+        switch (sgroup.getType()) {
+            case CtabStructureRepeatUnit:
+                return "n";
+            case CtabMonomer:
+                return "mon";
+            case CtabMer:
+                return "mer";
+            case CtabCopolymer:
+                String subtype = sgroup.getValue(SgroupKey.CtabSubType);
+                if (subtype == null)
+                    return "co";
+                switch (subtype) {
+                    case "RAN":
+                        return "ran";
+                    case "ALT":
+                        return "alt";
+                    case "BLO":
+                        return "blk";
+                }
+            case CtabCrossLink:
+                return "xl";
+            case CtabModified:
+                return "mod";
+            case CtabMixture:
+                return "mix";
+            case CtabFormulation:
+                return "f";
+            case CtabAnyPolymer:
+                return "any";
+            case CtabGeneric:
+                return "gen";
+            case CtabComponent:
+                return "c";
+            case CtabGraft:
+                return "grf";
+            default:
+                throw new IllegalArgumentException();
         }
     }
 

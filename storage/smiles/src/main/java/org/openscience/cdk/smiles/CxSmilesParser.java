@@ -166,7 +166,7 @@ final class CxSmilesParser {
             double z = readDouble(iter);
             iter.nextIf(';');
 
-            state.zCoords = state.zCoords || z != 0;
+            state.coordFlag = state.coordFlag || z != 0;
             state.atomCoords.add(new double[]{x, y, z});
         }
         return false;
@@ -549,7 +549,7 @@ final class CxSmilesParser {
                 return true;
             }
         }
-        // ran of end
+        // ran off end
         return false;
     }
 

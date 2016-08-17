@@ -60,6 +60,10 @@ public class ReactionManipulator {
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             count += reactants.getAtomContainer(i).getAtomCount();
         }
+        IAtomContainerSet agents = reaction.getAgents();
+        for (int i = 0; i < agents.getAtomContainerCount(); i++) {
+            count += agents.getAtomContainer(i).getAtomCount();
+        }
         IAtomContainerSet products = reaction.getProducts();
         for (int i = 0; i < products.getAtomContainerCount(); i++) {
             count += products.getAtomContainer(i).getAtomCount();
@@ -73,6 +77,10 @@ public class ReactionManipulator {
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             count += reactants.getAtomContainer(i).getBondCount();
         }
+        IAtomContainerSet agents = reaction.getAgents();
+        for (int i = 0; i < agents.getAtomContainerCount(); i++) {
+            count += agents.getAtomContainer(i).getBondCount();
+        }
         IAtomContainerSet products = reaction.getProducts();
         for (int i = 0; i < products.getAtomContainerCount(); i++) {
             count += products.getAtomContainer(i).getBondCount();
@@ -84,6 +92,13 @@ public class ReactionManipulator {
         IAtomContainerSet reactants = reaction.getReactants();
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             IAtomContainer mol = reactants.getAtomContainer(i);
+            if (mol.contains(atom)) {
+                mol.removeAtomAndConnectedElectronContainers(atom);
+            }
+        }
+        IAtomContainerSet agents = reaction.getReactants();
+        for (int i = 0; i < agents.getAtomContainerCount(); i++) {
+            IAtomContainer mol = agents.getAtomContainer(i);
             if (mol.contains(atom)) {
                 mol.removeAtomAndConnectedElectronContainers(atom);
             }
@@ -101,6 +116,13 @@ public class ReactionManipulator {
         IAtomContainerSet reactants = reaction.getReactants();
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             IAtomContainer mol = reactants.getAtomContainer(i);
+            if (mol.contains(electrons)) {
+                mol.removeElectronContainer(electrons);
+            }
+        }
+        IAtomContainerSet agents = reaction.getReactants();
+        for (int i = 0; i < agents.getAtomContainerCount(); i++) {
+            IAtomContainer mol = agents.getAtomContainer(i);
             if (mol.contains(electrons)) {
                 mol.removeElectronContainer(electrons);
             }
@@ -124,6 +146,7 @@ public class ReactionManipulator {
         IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
 
         moleculeSet.add(getAllReactants(reaction));
+        moleculeSet.add(getAllAgents(reaction));
         moleculeSet.add(getAllProducts(reaction));
 
         return moleculeSet;
@@ -155,6 +178,15 @@ public class ReactionManipulator {
         IAtomContainerSet reactants = reaction.getReactants();
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             moleculeSet.addAtomContainer(reactants.getAtomContainer(i));
+        }
+        return moleculeSet;
+    }
+
+    public static IAtomContainerSet getAllAgents(IReaction reaction) {
+        IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet agents = reaction.getAgents();
+        for (int i = 0; i < agents.getAtomContainerCount(); i++) {
+            moleculeSet.addAtomContainer(agents.getAtomContainer(i));
         }
         return moleculeSet;
     }

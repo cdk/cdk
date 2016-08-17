@@ -49,7 +49,6 @@ import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.graph.Cycles;
@@ -62,6 +61,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.CMLReader;
@@ -674,7 +674,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         gold.getAtom(0).setImplicitHydrogenCount(0);
 
         SmilesGenerator sg = new SmilesGenerator();
-        String smiles = sg.createReactionSMILES(reaction);
+        String smiles = sg.create(reaction);
         //logger.debug("Generated SMILES: " + smiles);
         Assert.assertEquals("C>*>[Au]", smiles);
     }
@@ -1216,6 +1216,16 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(in);
         Assert.assertEquals("C(\\N)=C/C=C/1\\N=C1", SmilesGenerator.isomeric().create(mol));
+    }
+
+    @Test public void canonicalReactions() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction r1 = smipar.parseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
+        IReaction r2 = smipar.parseReactionSmiles("C(CC(=O)Cl)CCl.CC(C)C1=CC=CC=C1>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
+        IReaction r3 = smipar.parseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>C(Cl)Cl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Canonical);
+        assertThat(smigen.create(r1), is(smigen.create(r2)));
+        assertThat(smigen.create(r2), is(smigen.create(r3)));
     }
 
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {

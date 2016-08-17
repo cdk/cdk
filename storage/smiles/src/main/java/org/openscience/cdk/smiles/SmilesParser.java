@@ -478,7 +478,7 @@ public final class SmilesParser {
             final int numAtoms = atoms.size();
             final int numCoords = cxstate.atomCoords.size();
             final int lim = Math.min(numAtoms, numCoords);
-            if (cxstate.zCoords) {
+            if (cxstate.coordFlag) {
                 for (int i = 0; i < lim; i++)
                     atoms.get(i).setPoint3d(new Point3d(cxstate.atomCoords.get(i)));
             } else {

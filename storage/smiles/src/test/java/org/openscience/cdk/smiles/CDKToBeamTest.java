@@ -276,38 +276,38 @@ public class CDKToBeamTest {
 
     @Test
     public void adeneine() throws Exception {
-        Graph g = convert(TestMoleculeFactory.makeAdenine());
+        Graph g = convert(TestMoleculeFactory.makeAdenine(), 0);
         assertThat(g.toSmiles(), is("C12=C(N=CN=C1N)NC=N2"));
     }
 
     @Test
     public void benzene_kekule() throws Exception {
-        Graph g = convert(TestMoleculeFactory.makeBenzene());
+        Graph g = convert(TestMoleculeFactory.makeBenzene(), 0);
         assertThat(g.toSmiles(), is("C=1C=CC=CC1"));
     }
 
     @Test
     public void benzene() throws Exception {
         IAtomContainer ac = TestMoleculeFactory.makeBenzene();
-        Graph g = convert(ac, true, true);
+        Graph g = convert(ac, true, SmiFlavour.UseAromaticSymbols);
         assertThat(g.toSmiles(), is("c1ccccc1"));
     }
 
     @Test
     public void imidazole_kekule() throws Exception {
-        Graph g = convert(TestMoleculeFactory.makeImidazole(), false, true);
+        Graph g = convert(TestMoleculeFactory.makeImidazole(), false, 0);
         assertThat(g.toSmiles(), is("C=1NC=NC1"));
     }
 
     @Test
     public void imidazole() throws Exception {
-        Graph g = convert(TestMoleculeFactory.makeImidazole(), true, true);
+        Graph g = convert(TestMoleculeFactory.makeImidazole(), true, SmiFlavour.UseAromaticSymbols);
         assertThat(g.toSmiles(), is("c1[nH]cnc1"));
     }
 
     @Test
     public void imidazole_ignoreAromatic() throws Exception {
-        Graph g = convert(TestMoleculeFactory.makeImidazole(), true, true, false, true);
+        Graph g = convert(TestMoleculeFactory.makeImidazole(), true, 0);
         assertThat(g.toSmiles(), is("C=1NC=NC1"));
     }
 
@@ -317,7 +317,7 @@ public class CDKToBeamTest {
         IAtom a = new Atom("C");
         a.setMassNumber(13);
         ac.addAtom(a);
-        Graph g = convert(ac);
+        Graph g = convert(ac, SmiFlavour.AtomicMass);
         assertThat(g.atom(0).isotope(), is(13));
         assertThat(g.toSmiles(), is("[13CH4]"));
     }
@@ -328,7 +328,7 @@ public class CDKToBeamTest {
         IAtom a = new Atom("C");
         a.setMassNumber(13);
         ac.addAtom(a);
-        Graph g = convert(ac, false, false); // non-isomeric
+        Graph g = convert(ac, false, 0); // non-isomeric
         assertThat(g.atom(0).isotope(), is(-1));
         assertThat(g.toSmiles(), is("C"));
     }
@@ -339,7 +339,7 @@ public class CDKToBeamTest {
         IAtom a = new Atom("N");
         a.setFormalCharge(+1);
         ac.addAtom(a);
-        Graph g = convert(ac);
+        Graph g = convert(ac, 0);
         assertThat(g.atom(0).charge(), is(+1));
         assertThat(g.toSmiles(), is("[NH4+]"));
     }
@@ -350,7 +350,7 @@ public class CDKToBeamTest {
         IAtom a = new Atom("O");
         a.setFormalCharge(-1);
         ac.addAtom(a);
-        Graph g = convert(ac);
+        Graph g = convert(ac, 0);
         assertThat(g.atom(0).charge(), is(-1));
         assertThat(g.toSmiles(), is("[OH-]"));
     }
@@ -361,7 +361,7 @@ public class CDKToBeamTest {
         IAtom a = new Atom("O");
         a.setFormalCharge(-2);
         ac.addAtom(a);
-        Graph g = convert(ac);
+        Graph g = convert(ac, 0);
         assertThat(g.atom(0).charge(), is(-2));
         assertThat(g.toSmiles(), is("[O-2]"));
     }
@@ -385,7 +385,7 @@ public class CDKToBeamTest {
 
         ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
                 OPPOSITE));
-        Graph g = convert(ac);
+        Graph g = convert(ac, SmiFlavour.StereoCisTrans);
         assertThat(g.toSmiles(), is("F/C=C/F"));
     }
 
@@ -408,7 +408,7 @@ public class CDKToBeamTest {
 
         ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
                 TOGETHER));
-        Graph g = convert(ac);
+        Graph g = convert(ac, SmiFlavour.StereoCisTrans);
         assertThat(g.toSmiles(), is("F/C=C\\F"));
     }
 
@@ -439,7 +439,7 @@ public class CDKToBeamTest {
                 ac.getAtom(5), // H
         }, CLOCKWISE));
 
-        Graph g = convert(ac);
+        Graph g = convert(ac, SmiFlavour.StereoTetrahedral);
         assertThat(g.toSmiles(), is("CC[C@@](C)(O)[H]"));
     }
 
@@ -470,7 +470,7 @@ public class CDKToBeamTest {
                 ac.getAtom(5), // H
         }, ANTI_CLOCKWISE));
 
-        Graph g = convert(ac);
+        Graph g = convert(ac, SmiFlavour.StereoTetrahedral);
         assertThat(g.toSmiles(), is("CC[C@](C)(O)[H]"));
     }
 
@@ -497,7 +497,7 @@ public class CDKToBeamTest {
 
         ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
                 TOGETHER));
-        Graph g = convert(ac);
+        Graph g = convert(ac, SmiFlavour.UseAromaticSymbols);
         assertThat(g.toSmiles(), is("F[CH]:[CH]F"));
     }
 
@@ -517,7 +517,7 @@ public class CDKToBeamTest {
         ac.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING, 3);
         ac.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING, 1);
         ac.getAtom(2).setProperty(CDKConstants.ATOM_ATOM_MAPPING, 2);
-        assertThat(convert(ac).toSmiles(), is("[CH3:3][CH2:1][OH:2]"));
+        assertThat(convert(ac, SmiFlavour.AtomAtomMap).toSmiles(), is("[CH3:3][CH2:1][OH:2]"));
     }
 
     @Test
@@ -537,7 +537,7 @@ public class CDKToBeamTest {
                 m.getAtom(3), m.getAtom(4)}, ANTI_CLOCKWISE);
         m.setStereoElements(Collections.singletonList(element));
 
-        assertThat(convert(m).toSmiles(), is("CC=[C@]=CC"));
+        assertThat(convert(m, SmiFlavour.Stereo).toSmiles(), is("CC=[C@]=CC"));
     }
 
     @Test
@@ -557,7 +557,7 @@ public class CDKToBeamTest {
                 m.getAtom(3), m.getAtom(4)}, CLOCKWISE);
         m.setStereoElements(Collections.singletonList(element));
 
-        assertThat(convert(m).toSmiles(), is("CC=[C@@]=CC"));
+        assertThat(convert(m, SmiFlavour.Stereo).toSmiles(), is("CC=[C@@]=CC"));
     }
 
     @Test
@@ -588,7 +588,7 @@ public class CDKToBeamTest {
                     m.getAtom(atoms[i][1]), m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])}, stereos[i]);
             m.setStereoElements(Collections.singletonList(element));
 
-            assertThat(convert(m).toSmiles(), is("CC(=[C@@]=C(C)[H])[H]"));
+            assertThat(convert(m, SmiFlavour.Stereo).toSmiles(), is("CC(=[C@@]=C(C)[H])[H]"));
 
         }
     }
@@ -621,24 +621,19 @@ public class CDKToBeamTest {
                     m.getAtom(atoms[i][1]), m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])}, stereos[i]);
             m.setStereoElements(Collections.singletonList(element));
 
-            assertThat(convert(m).toSmiles(), is("CC(=[C@]=C(C)[H])[H]"));
+            assertThat(convert(m, SmiFlavour.Stereo).toSmiles(), is("CC(=[C@]=C(C)[H])[H]"));
 
         }
     }
 
-    static Graph convert(IAtomContainer ac) throws Exception {
-        return convert(ac, false, true);
+    static Graph convert(IAtomContainer ac, int options) throws Exception {
+        return convert(ac, false, options);
     }
 
-    static Graph convert(IAtomContainer ac, boolean perceiveAromaticity, boolean isomeric) throws Exception {
-        return convert(ac, perceiveAromaticity, isomeric, true, true);
-    }
-
-    static Graph convert(IAtomContainer ac, boolean perceiveAromaticity, boolean isomeric, boolean aromatic,
-            boolean atomClasses) throws Exception {
+    static Graph convert(IAtomContainer ac, boolean perceiveAromaticity, int options) throws Exception {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(ac);
         if (perceiveAromaticity) Aromaticity.cdkLegacy().apply(ac);
-        return new CDKToBeam(isomeric, aromatic, atomClasses).toBeamGraph(ac);
+        return new CDKToBeam(options).toBeamGraph(ac);
     }
 }
