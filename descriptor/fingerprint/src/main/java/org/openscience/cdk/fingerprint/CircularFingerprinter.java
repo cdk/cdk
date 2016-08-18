@@ -39,6 +39,7 @@ import java.util.zip.CRC32;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import com.google.common.primitives.Ints;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -519,10 +520,10 @@ public class CircularFingerprinter implements IFingerprinter {
     private IAtomContainer curFPMolecule = null;
     private int curIndex;
 	
-    public class AtomNode 
+    private static class AtomNode
     {
-    	public int parent;
-    	public int atom;
+    	private int parent;
+        private int atom;
     }
     
     /**
@@ -566,12 +567,12 @@ public class CircularFingerprinter implements IFingerprinter {
     
     /**
      * Recursive generation of a smarts string for particular AtomNode
-     * @param atomNum
-     * @return
+     * @param atom index of atom
+     * @return SMARTS expression
      */
-    String nodeToString(int atom) 
+    private String nodeToString(int atom)
     {
-    	StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
     	AtomNode curNode = nodes.get(atom);
     	List<String> branches = new ArrayList<String>();
     	
@@ -588,7 +589,7 @@ public class CircularFingerprinter implements IFingerprinter {
     		if (neighborNode == null) // This node has not been registered yet
 			{
 				//Check for external atom (e.g. it is a neighbor atom which is not in the fp.atoms[] array)
-    			if (findArrayIndex(neighborAt, curFP.atoms) == -1)
+    			if (Ints.indexOf(curFP.atoms, neighborAt) == -1)
     			{	
     				String bond_str = "";
     				if (bondArom[neighborBo])
@@ -646,21 +647,18 @@ public class CircularFingerprinter implements IFingerprinter {
 			return (sb.toString());
 
 		for (int i = 0; i < branches.size() - 1; i++)
-			sb.append("(" + branches.get(i).toString() + ")");
-		sb.append(branches.get(branches.size() - 1).toString());
-    	
+			sb.append("(").append(branches.get(i)).append(")");
+		sb.append(branches.get(branches.size() - 1));
+
     	return sb.toString();
     }
     
-    private void addIndexToAtom(String ind, int atom) 
-    {	
-		if (atomIndexes.containsKey(atom)) {
-			String old_ind = atomIndexes.get(atom);
-			atomIndexes.remove(atom);
-			atomIndexes.put(atom, old_ind + ind);
-		} 
-		else
-			atomIndexes.put(atom, ind);
+    private void addIndexToAtom(String ind, final int atom)
+    {
+        final String curr = atomIndexes.get(atom);
+		if (curr != null)
+		    ind = curr + ind;
+        atomIndexes.put(atom, ind);
 	}
     
     
@@ -684,32 +682,39 @@ public class CircularFingerprinter implements IFingerprinter {
     	Integer chrg = at.getFormalCharge();
     	String atStr = at.getSymbol();
     	
-    	boolean FlagBrackets = false;
+    	boolean complex = false;
     	
     	String chStr = ""; 
     	if (chrg != null)
-    		if (chrg != 0)
+    		if (chrg != 0) // +0 ?
     		{
     			chStr  = getChargeSmartsStr(chrg);
-    			FlagBrackets = true;
-    		}	
-    	
-    	if (!FlagBrackets)
-    	{	
-    		if (atStr.equals("C")||atStr.equals("N")||atStr.equals("O")||atStr.equals("S")||atStr.equals("P")
-    			||atStr.equals("B")||atStr.equals("Cl")||atStr.equals("Br")||atStr.equals("I")||atStr.equals("F"))
-    		{
-    			//do nothing
-    		}	
-    		else
-    			FlagBrackets = true;
-    	}
-    	
-    	//Handle aromaticity
+    			complex = true;
+    		}
+
+        switch (at.getAtomicNumber()) {
+            case 5:  // B
+            case 6:  // C
+            case 7:  // N
+            case 8:  // O
+            case 15: // P
+            case 16: // S
+            case 9:  // F
+            case 17: // Cl
+            case 35: // Br
+            case 53: // I
+                break;
+            default:
+                complex = true;
+                break;
+        }
+
+
+        //Handle aromaticity
     	if (atomArom[atNum])
     		atStr = atStr.toLowerCase();
     	
-    	if (FlagBrackets)
+    	if (complex)
     		atStr = "[" + atStr + chStr + "]";
     	
     	return atStr;
@@ -1468,14 +1473,6 @@ public class CircularFingerprinter implements IFingerprinter {
         return -1;
     }
     
-    // convecience: find value within array
-    private int findArrayIndex(int value, int array[]){
-    	for (int i = 0; i < array.length; i++)
-    		if (value == array[i])
-    			return i;
-    	return -1;
-    }
-
     /*
      * for debugging convenience: revive if necessary private void wr(String
      * str) {System.out.println(str);} private String arrayStr(int[] val) { if
