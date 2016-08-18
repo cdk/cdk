@@ -32,7 +32,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * Used to store and return data of a particular isotope.
+ * Used to store and return data of a particular isotope. The classes
+ * {@link Isotopes} extends this class and is to be used to get isotope
+ * information.
  *
  * @cdk.module core
  * @cdk.githash
