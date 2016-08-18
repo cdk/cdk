@@ -1,5 +1,5 @@
 /* Copyright (C) 2001-2007  Christoph Steinbeck <steinbeck@users.sf.net>
- *                    2013  Egon Willighagen <egonw@users.sf.net>
+ *               2013,2016  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -36,8 +36,14 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * List of isotopes. Data is taken from the Blue Obelisk Data Repository,
- * version 10.
+ * List of isotopes. Data is taken from the <a href="https://github.com/egonw/bodr">Blue Obelisk Data Repository</a>,
+ * <a href="https://github.com/egonw/bodr/releases/tag/BODR-10">version 10</a> {@cdk.cite BODR10}.
+ * The data set is described in the first Blue Obelisk paper {@cdk.cite Guha2006}.
+ *
+ * <p>The <code>isotopes.dat</code> file that is used by this class is a binary class
+ * of this data, improving loading times over the BODR XML representation. It is created
+ * from the original BODR files using tools from the <code>cdk-build-util</code>
+ * repository.
  *
  * @author      egonw
  * @cdk.module  core
