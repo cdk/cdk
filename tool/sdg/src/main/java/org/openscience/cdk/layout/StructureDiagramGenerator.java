@@ -83,7 +83,7 @@ import java.util.Set;
  * StructureDiagramGenerator sdg = new StructureDiagramGenerator();
  * sdg.setMolecule(someMolecule);
  * sdg.generateCoordinates();
- * Molecule layedOutMol = sdg.getMolecule();
+ * IAtomContainer layedOutMol = sdg.getMolecule();
  * </pre>
  * <p/>
  * <p>The method will fail if the molecule is disconnected. The
