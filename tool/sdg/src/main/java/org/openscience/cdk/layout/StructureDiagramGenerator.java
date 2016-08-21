@@ -436,7 +436,7 @@ public class StructureDiagramGenerator {
 
     /**
      * This method uses generateCoordinates, but it removes the hydrogens first,
-     * lays out the structuren and then adds them again.
+     * lays out the structure and then adds them again.
      *
      * @throws CDKException if an error occurs
      * @see #generateCoordinates
