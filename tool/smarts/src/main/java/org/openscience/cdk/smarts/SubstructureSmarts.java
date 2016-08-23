@@ -264,7 +264,7 @@ public final class SubstructureSmarts {
             if (avisit[nbr] == 0) {
                 // peripheral bond
                 if (remain > 0) sb.append('(');
-                sb.append(mol.getBond(bidx).isAromatic() ? ':' : bexpr[bidx]);
+                sb.append(bexpr[bidx]);
                 sb.append(mol.getAtom(nbr).isAromatic() ? 'a' : '*');
                 if (remain > 0) sb.append(')');
             } else {

@@ -62,7 +62,7 @@ public class SubstructureSmartsTest {
         String smarts = generate("[nH]1ccc2c1cccc2",
                                  true,
                                  makeSeq(0,4));
-        assertThat(smarts, is("n(ccc(:a):a):a"));
+        assertThat(smarts, is("n(ccc(a)a)a"));
     }
 
     @Test

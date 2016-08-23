@@ -88,10 +88,10 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 		String molSmiles = "c1ccccc1";
 		String expectedFPSmarts[][] = {
 
-				{ "c(:a):a" },
-				{ "c(:a)cc:a", "c(c:a)c:a", "c(cc:a):a" },
-				{ "c(:a)cccc:a", "c(c:a)ccc:a", "c(cc:a)cc:a", "c(ccc:a)c:a",
-						"c(cccc:a):a" },
+				{ "c(a)a" },
+				{ "c(a)cca", "c(ca)ca", "c(cca)a" },
+				{ "c(a)cccca", "c(ca)ccca", "c(cca)cca", "c(ccca)ca",
+						"c(cccca)a" },
 				{ "c1ccccc1", "c(c1)cccc1", "c(cc1)ccc1", "c(ccc1)cc1",
 						"c(cccc1)c1" } };
 		checkFPSmartsForMolecule(molSmiles, expectedFPSmarts);
