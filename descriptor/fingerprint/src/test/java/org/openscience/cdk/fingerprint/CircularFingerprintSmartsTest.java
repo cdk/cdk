@@ -1,6 +1,5 @@
 package org.openscience.cdk.fingerprint;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.fingerprint.CircularFingerprinter.FP;
@@ -9,6 +8,14 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.everyItem;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIn.isIn;
 
 /**
  * @cdk.module test-standard
@@ -91,6 +98,11 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 
 	private void checkFPSmartsForMolecule(String moleculeSmiles,
 			String expectedFPSmarts[][]) throws Exception {
+
+        Set<String> expected = new HashSet<>();
+        for (String[] strs : expectedFPSmarts)
+            Collections.addAll(expected, strs);
+
 		// expectedFPSmarts[][] is a double array because for each smarts
 		// several equivalent variants
 		// of the smarts are given e.g. CCC C(C)C
@@ -99,22 +111,13 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 		CircularFingerprinter circ = new CircularFingerprinter();
 		circ.calculate(mol);
 		int numFP = circ.getFPCount();
+
+        Set<String> actual = new HashSet<>();
 		for (int i = 0; i < numFP; i++) {
 			FP fp = circ.getFP(i);
-			String smarts = circ.getFPSmarts(fp, mol);
-			int res = findSmarts(smarts, expectedFPSmarts);
-			Assert.assertEquals("serching fp smarts: " + smarts, true, res >= 0);
+            actual.add(circ.getFPSmarts(fp, mol));
 		}
-	}
 
-	private int findSmarts(String smarts, String smartsSet[][]) {
-		for (int i = 0; i < smartsSet.length; i++) {
-			String s[] = smartsSet[i];
-			for (int k = 0; k < s.length; k++)
-				if (s[k].equals(smarts))
-					return i;
-		}
-		return -1;
+		assertThat(actual, everyItem(isIn(expected)));
 	}
-
 }
