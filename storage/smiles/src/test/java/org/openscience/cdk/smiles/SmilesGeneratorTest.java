@@ -644,7 +644,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     @Test
     public void testPseudoAtom() throws Exception {
         IAtom atom = new PseudoAtom("Star");
-        SmilesGenerator sg = new SmilesGenerator();
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
         String smiles = "";
         IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(atom);
@@ -673,7 +673,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         methane.getAtom(0).setImplicitHydrogenCount(4);
         gold.getAtom(0).setImplicitHydrogenCount(0);
 
-        SmilesGenerator sg = new SmilesGenerator();
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
         String smiles = sg.create(reaction);
         //logger.debug("Generated SMILES: " + smiles);
         Assert.assertEquals("C>*>[Au]", smiles);
@@ -1215,7 +1215,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String in = "C(/N)=C\\C=C\\1/N=C1";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(in);
-        Assert.assertEquals("C(\\N)=C/C=C/1\\N=C1", SmilesGenerator.isomeric().create(mol));
+        Assert.assertEquals("C(\\N)=C/C=C/1N=C1", SmilesGenerator.isomeric().create(mol));
     }
 
     @Test public void canonicalReactions() throws Exception {
@@ -1223,7 +1223,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IReaction r1 = smipar.parseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
         IReaction r2 = smipar.parseReactionSmiles("C(CC(=O)Cl)CCl.CC(C)C1=CC=CC=C1>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
         IReaction r3 = smipar.parseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>C(Cl)Cl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
-        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Canonical);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical);
         assertThat(smigen.create(r1), is(smigen.create(r2)));
         assertThat(smigen.create(r2), is(smigen.create(r3)));
     }

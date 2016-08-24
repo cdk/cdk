@@ -30,9 +30,9 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 /**
  * Flags for customising SMILES generation.
  */
-public final class SmiFlavour {
+public final class SmiFlavor {
 
-    private SmiFlavour() {
+    private SmiFlavor() {
     }
 
     /**
@@ -171,6 +171,13 @@ public final class SmiFlavour {
      * Output canonical SMILES with stereochemistry, atomic masses.
      */
     public static final int Absolute            = Canonical | Isomeric;
+
+
+    /**
+     * Default SMILES output write Stereochemistry, Atomic Mass, and CXSMILES layers. The
+     * ordering is not canonical.
+     */
+    public static final int Default             = Stereo | AtomicMass | CxSmiles;
 
     /**
      * Output canonical SMILES with stereochemistry, atomic masses using the

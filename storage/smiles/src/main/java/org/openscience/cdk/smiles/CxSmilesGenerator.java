@@ -70,7 +70,7 @@ public class CxSmilesGenerator {
 
     static String generate(CxSmilesState state, int opts, int[] components, final int[] ordering) {
 
-        if (!SmiFlavour.isSet(opts, SmiFlavour.CxSmilesWithCoords))
+        if (!SmiFlavor.isSet(opts, SmiFlavor.CxSmilesWithCoords))
             return "";
 
         final int[] invorder = inverse(ordering);
@@ -93,7 +93,7 @@ public class CxSmilesGenerator {
         };
 
         // Fragment Grouping
-        if (SmiFlavour.isSet(opts, SmiFlavour.CxFragmentGroup) &&
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxFragmentGroup) &&
             state.fragGroups != null && !state.fragGroups.isEmpty()) {
 
             int maxCompId = 0;
@@ -141,7 +141,7 @@ public class CxSmilesGenerator {
         }
 
         // Atom Labels
-        if (SmiFlavour.isSet(opts, SmiFlavour.CxAtomLabel) &&
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxAtomLabel) &&
             state.atomLabels != null && !state.atomLabels.isEmpty()) {
 
             if (sb.length() > 2)
@@ -162,7 +162,7 @@ public class CxSmilesGenerator {
         }
 
         // Atom Values
-        if (SmiFlavour.isSet(opts, SmiFlavour.CxAtomValue) &&
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxAtomValue) &&
             state.atomValues != null && !state.atomValues.isEmpty()) {
 
             if (sb.length() > 2)
@@ -183,7 +183,7 @@ public class CxSmilesGenerator {
         }
 
         // 2D/3D Coordinates
-        if (SmiFlavour.isSet(opts, SmiFlavour.CxCoordinates) &&
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxCoordinates) &&
             state.atomCoords != null && !state.atomCoords.isEmpty()) {
             DecimalFormat fmt = new DecimalFormat("#.##");
             if (sb.length() > 2) sb.append(',');
@@ -204,7 +204,7 @@ public class CxSmilesGenerator {
         }
 
         // Multicenter/Positional variation bonds
-        if (SmiFlavour.isSet(opts, SmiFlavour.CxMulticenter) &&
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxMulticenter) &&
             state.positionVar != null && !state.positionVar.isEmpty()) {
 
             if (sb.length() > 2) sb.append(',');
@@ -237,7 +237,7 @@ public class CxSmilesGenerator {
 
 
         // *CCO* |$_AP1;;;;_AP2$,Sg:n:1,2,3::ht|
-        if (SmiFlavour.isSet(opts, SmiFlavour.CxPolymer) &&
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxPolymer) &&
             state.sgroups != null && !state.sgroups.isEmpty()) {
             List<PolymerSgroup> sgroups = new ArrayList<>(state.sgroups);
 
@@ -270,7 +270,7 @@ public class CxSmilesGenerator {
         }
 
         // [C]1[CH][CH]CCC1 |^1:1,2,^3:0|
-        if (SmiFlavour.isSet(opts, SmiFlavour.CxRadical) &&
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxRadical) &&
             state.atomRads != null && !state.atomRads.isEmpty()) {
             Map<CxSmilesState.Radical, List<Integer>> radinv = new TreeMap<>();
             for (Map.Entry<Integer, CxSmilesState.Radical> e : state.atomRads.entrySet()) {

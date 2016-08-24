@@ -37,7 +37,7 @@ public class CxSmilesGeneratorTest {
     @Test
     public void emptyCXSMILES() {
         CxSmilesState state = new CxSmilesState();
-        assertThat(CxSmilesGenerator.generate(state, SmiFlavour.CxSmiles, new int[0], new int[0]),
+        assertThat(CxSmilesGenerator.generate(state, SmiFlavor.CxSmiles, new int[0], new int[0]),
                    is(""));
     }
 
@@ -47,7 +47,7 @@ public class CxSmilesGeneratorTest {
         state.positionVar = new HashMap<>();
         state.positionVar.put(0, Arrays.asList(4, 5, 6, 7));
         state.positionVar.put(2, Arrays.asList(4, 6, 5, 7));
-        assertThat(CxSmilesGenerator.generate(state, SmiFlavour.CxMulticenter, new int[0], new int[]{7, 6, 5, 4, 3, 2, 1, 0}),
+        assertThat(CxSmilesGenerator.generate(state, SmiFlavor.CxMulticenter, new int[0], new int[]{7, 6, 5, 4, 3, 2, 1, 0}),
                    is(" |m:5:0.1.2.3,7:0.1.2.3|"));
     }
 
@@ -57,7 +57,7 @@ public class CxSmilesGeneratorTest {
         state.atomCoords = Arrays.asList(new double[]{0, 1.5, 0},
                                          new double[]{0, 3, 0},
                                          new double[]{1.5, 1.5, 0});
-        assertThat(CxSmilesGenerator.generate(state, SmiFlavour.CxCoordinates, new int[0], new int[]{1, 2, 0}),
+        assertThat(CxSmilesGenerator.generate(state, SmiFlavor.CxCoordinates, new int[0], new int[]{1, 2, 0}),
                    is(" |(1.5,1.5,;,1.5,;,3,)|"));
     }
 
@@ -67,7 +67,7 @@ public class CxSmilesGeneratorTest {
         state.sgroups = new ArrayList<>(1);
         state.sgroups.add(new CxSmilesState.PolymerSgroup("n", Arrays.asList(2,3), "n", "ht"));
         state.sgroups.add(new CxSmilesState.PolymerSgroup("n", Arrays.asList(5), "m", "ht"));
-        assertThat(CxSmilesGenerator.generate(state, SmiFlavour.CxPolymer, new int[0], new int[]{7, 6, 5, 4, 3, 2, 1, 0}),
+        assertThat(CxSmilesGenerator.generate(state, SmiFlavor.CxPolymer, new int[0], new int[]{7, 6, 5, 4, 3, 2, 1, 0}),
                    is(" |Sg:n:2:m:ht,Sg:n:4,5:n:ht|"));
     }
 
@@ -78,7 +78,7 @@ public class CxSmilesGeneratorTest {
         state.atomRads.put(2, CxSmilesState.Radical.Monovalent);
         state.atomRads.put(6, CxSmilesState.Radical.Monovalent);
         state.atomRads.put(4, CxSmilesState.Radical.Divalent);
-        assertThat(CxSmilesGenerator.generate(state, SmiFlavour.CxSmiles, new int[0], new int[]{7, 6, 5, 4, 3, 2, 1, 0}),
+        assertThat(CxSmilesGenerator.generate(state, SmiFlavor.CxSmiles, new int[0], new int[]{7, 6, 5, 4, 3, 2, 1, 0}),
                    is(" |^1:1,5,^2:3|"));
     }
 

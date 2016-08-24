@@ -94,7 +94,7 @@ final class CDKToBeam {
 
     /** Create a isomeric and aromatic converter. */
     CDKToBeam() {
-        this(SmiFlavour.AtomicMass | SmiFlavour.AtomAtomMap | SmiFlavour.UseAromaticSymbols);
+        this(SmiFlavor.AtomicMass | SmiFlavor.AtomAtomMap | SmiFlavor.UseAromaticSymbols);
     }
 
     CDKToBeam(int flavour) {
@@ -144,15 +144,15 @@ final class CDKToBeam {
         }
 
         // configure stereo-chemistry by encoding the stereo-elements
-        if (SmiFlavour.isSet(flavour, SmiFlavour.Stereo)) {
+        if (SmiFlavor.isSet(flavour, SmiFlavor.Stereo)) {
             for (IStereoElement se : ac.stereoElements()) {
-                if (SmiFlavour.isSet(flavour, SmiFlavour.StereoTetrahedral) &&
+                if (SmiFlavor.isSet(flavour, SmiFlavor.StereoTetrahedral) &&
                     se instanceof ITetrahedralChirality) {
                     addTetrahedralConfiguration((ITetrahedralChirality) se, gb, indices);
-                } else if (SmiFlavour.isSet(flavour, SmiFlavour.StereoCisTrans) &&
+                } else if (SmiFlavor.isSet(flavour, SmiFlavor.StereoCisTrans) &&
                            se instanceof IDoubleBondStereochemistry) {
                     addGeometricConfiguration((IDoubleBondStereochemistry) se, flavour, gb, indices);
-                } else if (SmiFlavour.isSet(flavour, SmiFlavour.StereoExTetrahedral) &&
+                } else if (SmiFlavor.isSet(flavour, SmiFlavor.StereoExTetrahedral) &&
                            se instanceof ExtendedTetrahedral) {
                     addExtendedTetrahedralConfiguration((ExtendedTetrahedral) se, gb, indices);
                 }
@@ -175,7 +175,7 @@ final class CDKToBeam {
      */
     static Atom toBeamAtom(final IAtom a, final int flavour) {
 
-        final boolean aromatic = SmiFlavour.isSet(flavour, SmiFlavour.UseAromaticSymbols) && a.getFlag(CDKConstants.ISAROMATIC);
+        final boolean aromatic = SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && a.getFlag(CDKConstants.ISAROMATIC);
         final Integer charge = a.getFormalCharge();
         final String symbol = checkNotNull(a.getSymbol(), "An atom had an undefined symbol");
 
@@ -195,7 +195,7 @@ final class CDKToBeam {
         if (charge != null) ab.charge(charge);
 
         // use the mass number to specify isotope?
-        if (SmiFlavour.isSet(flavour, SmiFlavour.AtomicMass)) {
+        if (SmiFlavor.isSet(flavour, SmiFlavor.AtomicMass)) {
             Integer massNumber = a.getMassNumber();
             if (massNumber != null) {
                 // XXX: likely causing some overhead but okay for now
@@ -210,7 +210,7 @@ final class CDKToBeam {
         }
 
         Integer atomClass = a.getProperty(ATOM_ATOM_MAPPING);
-        if (SmiFlavour.isSet(flavour, SmiFlavour.AtomAtomMap) && atomClass != null) {
+        if (SmiFlavor.isSet(flavour, SmiFlavor.AtomAtomMap) && atomClass != null) {
             ab.atomClass(atomClass);
         }
 
@@ -248,7 +248,7 @@ final class CDKToBeam {
      */
     private static Bond toBeamEdgeLabel(IBond b, int flavour) throws CDKException {
 
-        if (SmiFlavour.isSet(flavour, SmiFlavour.UseAromaticSymbols) && b.getFlag(CDKConstants.ISAROMATIC)) return Bond.AROMATIC;
+        if (SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && b.getFlag(CDKConstants.ISAROMATIC)) return Bond.AROMATIC;
 
         if (b.getOrder() == null) throw new CDKException("A bond had undefined order, possible query bond?");
 
@@ -264,7 +264,7 @@ final class CDKToBeam {
             case QUADRUPLE:
                 return Bond.QUADRUPLE;
             default:
-                if (!SmiFlavour.isSet(flavour, SmiFlavour.UseAromaticSymbols) && b.getFlag(CDKConstants.ISAROMATIC))
+                if (!SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && b.getFlag(CDKConstants.ISAROMATIC))
                     throw new CDKException("Cannot write Kekulé SMILES output due to aromatic bond with unset bond order - molecule should be Kekulized");
                 throw new CDKException("Unsupported bond order: " + order);
         }
@@ -283,7 +283,7 @@ final class CDKToBeam {
         IBond[] bs = dbs.getBonds();
 
         // don't try to set a configuration on aromatic bonds
-        if (SmiFlavour.isSet(flavour, SmiFlavour.UseAromaticSymbols) && db.getFlag(CDKConstants.ISAROMATIC)) return;
+        if (SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && db.getFlag(CDKConstants.ISAROMATIC)) return;
 
         int u = indices.get(db.getAtom(0));
         int v = indices.get(db.getAtom(1));
