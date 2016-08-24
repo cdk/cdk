@@ -206,13 +206,15 @@ public final class SmilesGenerator {
     private final int       flavour;
 
     /**
-     * Create the generic SMILES generator.
-     * @see #generic()
+     * Create the SMILES generator, the default output is described by: {@link SmiFlavor#Default}
+     * but is best to choose/set this flavor.
+     *
+     * @see SmiFlavor#Default
      * @deprecated use {@link #SmilesGenerator(int)} configuring with {@link SmiFlavor}.
      */
     @Deprecated
     public SmilesGenerator() {
-        this(0);
+        this(SmiFlavor.Default);
     }
 
     /**

@@ -172,6 +172,13 @@ public final class SmiFlavor {
      */
     public static final int Absolute            = Canonical | Isomeric;
 
+
+    /**
+     * Default SMILES output write Stereochemistry, Atomic Mass, and CXSMILES layers. The
+     * ordering is not canonical.
+     */
+    public static final int Default             = Stereo | AtomicMass | CxSmiles;
+
     /**
      * Output canonical SMILES with stereochemistry, atomic masses using the
      * InChI labelling algorithm {@cite OBoyle12}. With delocalised charges
