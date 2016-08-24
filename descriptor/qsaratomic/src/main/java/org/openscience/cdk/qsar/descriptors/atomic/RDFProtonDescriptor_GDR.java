@@ -446,7 +446,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
                 LOGGER.debug("GDR prob dist.: " + sum + " at distance " + ghd);
             }
         } else {
-            return getDummyDescriptorValue(new CDKException("Some error occured. Please report"));
+            return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues,
                 getDescriptorNames());

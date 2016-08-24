@@ -138,7 +138,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     /**
      * Writes the content from object to output.
      *
-     * @param   object  IChemObject of which the data is outputted.
+     * @param   object  IChemObject of which the data is given as output.
      */
     @Override
     public void write(IChemObject object) throws CDKException {
@@ -169,7 +169,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     /**
      * Writes the content from molecule to output.
      *
-     * @param   molecule  Molecule of which the data is outputted.
+     * @param   molecule  Molecule of which the data is given as output.
      */
     public void writeAtomContainer(IAtomContainer molecule) {
         SmilesGenerator sg = new SmilesGenerator();

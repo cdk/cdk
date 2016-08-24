@@ -1257,7 +1257,7 @@ public class MoleculeFactory {
             }
         } catch (CDKException | IOException exc) {
             // we just return null if something went wrong
-            logger.error("An exception occured while loading a molecule: " + inFile);
+            logger.error("An exception occurred while loading a molecule: " + inFile);
             logger.debug(exc);
         }
 

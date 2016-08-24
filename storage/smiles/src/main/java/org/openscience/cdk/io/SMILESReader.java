@@ -125,8 +125,8 @@ public class SMILESReader extends DefaultChemObjectReader {
     }
 
     /**
-     * reads the content from a XYZ input. It can only return a
-     * IChemObject of type ChemFile
+     * Reads the content from a XYZ input. It can only return a
+     * {@link IChemObject} of type {@link IChemFile}.
      *
      * @param object class must be of type ChemFile
      *
@@ -157,7 +157,7 @@ public class SMILESReader extends DefaultChemObjectReader {
      *  Private method that actually parses the input to read a ChemFile
      *  object.
      *
-     * @param som The set of molecules that came fron the file
+     * @param som The set of molecules that came from the file
      * @return A ChemFile containing the data parsed from input.
      */
     private IAtomContainerSet readAtomContainerSet(IAtomContainerSet som) {

@@ -353,7 +353,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         // Generate 2D coordinates
         layout(molecule);
 
-        // Test completed, no timeout occured
+        // Test completed, no timeout occurred
     }
 
     /**
@@ -706,7 +706,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         // rebuild 2D coordinates
         layout(molecule);
 
-        // test completed, no timeout occured
+        // test completed, no timeout occurred
     }
 
     /**

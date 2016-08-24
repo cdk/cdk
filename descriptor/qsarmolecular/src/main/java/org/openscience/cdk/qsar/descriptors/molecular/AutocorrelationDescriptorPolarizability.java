@@ -82,7 +82,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
         try {
             molecule = (IAtomContainer) container.clone();
         } catch (CloneNotSupportedException e) {
-            return getDummyDescriptorValue(new CDKException("Error occured during clone " + e));
+            return getDummyDescriptorValue(new CDKException("Error occurred during clone " + e));
         }
 
         // add H's in case they're not present

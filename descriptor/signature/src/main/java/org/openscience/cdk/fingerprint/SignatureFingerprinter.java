@@ -42,7 +42,7 @@ public class SignatureFingerprinter implements IFingerprinter {
     private int signatureDepth;
 
     /**
-     * Initialize the fingerprinter with a defult signature depth of 1.
+     * Initialize the fingerprinter with a default signature depth of 1.
      */
     public SignatureFingerprinter() {
         this(1);

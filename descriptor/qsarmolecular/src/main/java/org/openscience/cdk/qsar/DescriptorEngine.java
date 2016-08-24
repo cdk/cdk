@@ -161,7 +161,7 @@ public class DescriptorEngine {
      * on the <code>DescriptorSpecification</code> object for that descriptor
      *
      * @param molecule The molecule for which we want to calculate descriptors
-     * @throws CDKException if an error occured during descriptor calculation or the descriptors and/or
+     * @throws CDKException if an error occurred during descriptor calculation or the descriptors and/or
      *                      specifications have not been initialized
      */
     public void process(IAtomContainer molecule) throws CDKException {

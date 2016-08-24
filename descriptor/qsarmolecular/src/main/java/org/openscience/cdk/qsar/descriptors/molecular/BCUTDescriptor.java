@@ -315,7 +315,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
             molecule = (IAtomContainer) container.clone();
         } catch (CloneNotSupportedException e) {
             logger.debug("Error during clone");
-            return getDummyDescriptorValue(new CDKException("Error occured during clone " + e));
+            return getDummyDescriptorValue(new CDKException("Error occurred during clone " + e));
         }
 
         // add H's in case they're not present

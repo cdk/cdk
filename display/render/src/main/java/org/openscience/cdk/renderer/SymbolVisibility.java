@@ -185,7 +185,7 @@ public abstract class SymbolVisibility {
          *
          * @param atom  an atom
          * @param bonds bonds connected to the atom
-         * @return whether the atom has parallele bonds
+         * @return whether the atom has parallel bonds
          */
         private static boolean hasParallelBonds(IAtom atom, List<IBond> bonds) {
             if (bonds.size() != 2) return false;
