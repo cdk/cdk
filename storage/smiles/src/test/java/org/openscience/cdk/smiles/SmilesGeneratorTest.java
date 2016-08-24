@@ -1223,7 +1223,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IReaction r1 = smipar.parseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
         IReaction r2 = smipar.parseReactionSmiles("C(CC(=O)Cl)CCl.CC(C)C1=CC=CC=C1>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
         IReaction r3 = smipar.parseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>C(Cl)Cl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
-        SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Canonical);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical);
         assertThat(smigen.create(r1), is(smigen.create(r2)));
         assertThat(smigen.create(r2), is(smigen.create(r3)));
     }

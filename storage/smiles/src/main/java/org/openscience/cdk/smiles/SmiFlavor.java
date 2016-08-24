@@ -30,9 +30,9 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 /**
  * Flags for customising SMILES generation.
  */
-public final class SmiFlavour {
+public final class SmiFlavor {
 
-    private SmiFlavour() {
+    private SmiFlavor() {
     }
 
     /**

@@ -74,19 +74,19 @@ import java.util.Set;
  *         produces the same SMILES. Isotope and stereochemistry is encoded.</li>
  * </ul>
  *
- * To output a given flavour the flags in {@link SmiFlavour} are used:
+ * To output a given flavour the flags in {@link SmiFlavor} are used:
  *
  * <pre>
- * SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Isomeric);
+ * SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);
  * </pre>
- * {@link SmiFlavour} provides more fine grained control, for example,
- * for the following is equivalent to {@link SmiFlavour#Isomeric}:
+ * {@link SmiFlavor} provides more fine grained control, for example,
+ * for the following is equivalent to {@link SmiFlavor#Isomeric}:
  * <pre>
- * SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Stereo |
- *                                              SmiFlavour.AtomicMass);
+ * SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo |
+ *                                              SmiFlavor.AtomicMass);
  * </pre>
  * Bitwise logic can be used such that we can remove options:
- * {@link SmiFlavour#Isomeric} <code>^</code> {@link SmiFlavour#AtomicMass}
+ * {@link SmiFlavor#Isomeric} <code>^</code> {@link SmiFlavor#AtomicMass}
  * will generate isomeric SMILES without atomic mass.
  *
  *
@@ -95,10 +95,10 @@ import java.util.Set;
  * are then created by invoking {@link #create(IAtomContainer)}.
  * <blockquote><pre>
  * IAtomContainer  ethanol = ...;
- * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Generic);
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavor.Generic);
  * String          smi     = sg.create(ethanol); // CCO, C(C)O, C(O)C, or OCC
  *
- * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Unique);
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavor.Unique);
  * String          smi     = sg.create(ethanol); // only CCO
  * </pre></blockquote>
  *
@@ -121,11 +121,11 @@ import java.util.Set;
  * IAtomContainer  benzene = ...;
  *
  * // 'benzene' molecule has no arom flags, we always get Kekulé output
- * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Generic);
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavor.Generic);
  * String          smi     = sg.create(benzene); // C1=CC=CC=C1
  *
- * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Generic |
- *                                               SmiFlavour.UseAromaticSymbols);
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavor.Generic |
+ *                                               SmiFlavor.UseAromaticSymbols);
  * String          smi     = sg.create(benzene); // C1=CC=CC=C1 flags not set!
  *
  * // Note, in practice we'd use an aromaticity algorithm
@@ -135,11 +135,11 @@ import java.util.Set;
  *     a.setIsAromatic(true);
  *
  * // 'benzene' molecule now has arom flags, we always get aromatic SMILES if we request it
- * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Generic);
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavor.Generic);
  * String          smi     = sg.create(benzene); // C1=CC=CC=C1
  *
- * SmilesGenerator sg      = new SmilesGenerator(SmiFlavour.Generic |
- *                                               SmiFlavour.UseAromaticSymbols);
+ * SmilesGenerator sg      = new SmilesGenerator(SmiFlavor.Generic |
+ *                                               SmiFlavor.UseAromaticSymbols);
  * String          smi     = sg.create(benzene); // c1ccccc1
  * </pre></blockquote>
  * <p/>
@@ -179,8 +179,8 @@ import java.util.Set;
  * The CXSMILES layer is appended after the SMILES so that parser which don't interpret it
  * can ignore it.
  * <p/>
- * The two aggregate flavours are {@link SmiFlavour#CxSmiles} and {@link SmiFlavour#CxSmilesWithCoords}.
- * As with other flavours, fine grain control is possible {@see SmiFlavour}.
+ * The two aggregate flavours are {@link SmiFlavor#CxSmiles} and {@link SmiFlavor#CxSmilesWithCoords}.
+ * As with other flavours, fine grain control is possible {@see SmiFlavor}.
  * <p/><p/>
  * <b>*</b> the unique SMILES generation uses a fast equitable labelling procedure
  *   and as such there are some structures which may not be unique. The number
@@ -208,7 +208,7 @@ public final class SmilesGenerator {
     /**
      * Create the generic SMILES generator.
      * @see #generic()
-     * @deprecated use {@link #SmilesGenerator(int)} configuring with {@link SmiFlavour}.
+     * @deprecated use {@link #SmilesGenerator(int)} configuring with {@link SmiFlavor}.
      */
     @Deprecated
     public SmilesGenerator() {
@@ -216,14 +216,14 @@ public final class SmilesGenerator {
     }
 
     /**
-     * Create a SMILES generator with the specified {@link SmiFlavour}.
+     * Create a SMILES generator with the specified {@link SmiFlavor}.
      *
      * <blockquote><pre>
-     * SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.Stereo |
-     *                                              SmiFlavour.Canonical);
+     * SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo |
+     *                                              SmiFlavor.Canonical);
      * </pre></blockquote>
      *
-     * @param flavour SMILES flavour flags {@see SmiFlavour}
+     * @param flavour SMILES flavour flags {@see SmiFlavor}
      */
     public SmilesGenerator(int flavour) {
         this.flavour   = flavour;
@@ -234,14 +234,14 @@ public final class SmilesGenerator {
      * The preferred way of doing this is now to use the {@link #SmilesGenerator(int)} constructor:
      *
      * <pre>
-     * SmilesGenerator smigen = new SmilesGenerator(SmiFlavour.UseAromaticSymbols);
+     * SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
      * </pre>
      *
      * @return a generator for aromatic SMILES
-     * @deprecated configure with {@link SmiFlavour}
+     * @deprecated configure with {@link SmiFlavor}
      */
     public SmilesGenerator aromatic() {
-        return new SmilesGenerator(this.flavour | SmiFlavour.UseAromaticSymbols);
+        return new SmilesGenerator(this.flavour | SmiFlavor.UseAromaticSymbols);
     }
 
     /**
@@ -257,11 +257,11 @@ public final class SmilesGenerator {
      * </pre></blockquote>
      *
      * @return a generator for SMILES with atom classes
-     * @deprecated configure with {@link SmiFlavour}
+     * @deprecated configure with {@link SmiFlavor}
      */
     @Deprecated
     public SmilesGenerator withAtomClasses() {
-        return new SmilesGenerator(this.flavour | SmiFlavour.AtomAtomMap);
+        return new SmilesGenerator(this.flavour | SmiFlavor.AtomAtomMap);
     }
 
     /**
@@ -273,7 +273,7 @@ public final class SmilesGenerator {
      * @return a new arbitrary SMILES generator
      */
     public static SmilesGenerator generic() {
-        return new SmilesGenerator(SmiFlavour.Generic);
+        return new SmilesGenerator(SmiFlavor.Generic);
     }
 
     /**
@@ -284,7 +284,7 @@ public final class SmilesGenerator {
      * @return a new isomeric SMILES generator
      */
     public static SmilesGenerator isomeric() {
-        return new SmilesGenerator(SmiFlavour.Isomeric);
+        return new SmilesGenerator(SmiFlavor.Isomeric);
     }
 
     /**
@@ -294,7 +294,7 @@ public final class SmilesGenerator {
      * @return a new unique SMILES generator
      */
     public static SmilesGenerator unique() {
-        return new SmilesGenerator(SmiFlavour.Unique);
+        return new SmilesGenerator(SmiFlavor.Unique);
     }
 
     /**
@@ -306,7 +306,7 @@ public final class SmilesGenerator {
      * @return a new absolute SMILES generator
      */
     public static SmilesGenerator absolute() {
-        return new SmilesGenerator(SmiFlavour.Absolute);
+        return new SmilesGenerator(SmiFlavor.Absolute);
     }
 
     /**
@@ -441,14 +441,14 @@ public final class SmilesGenerator {
             Graph g = CDKToBeam.toBeamGraph(molecule, flavour);
 
             // apply the canonical labelling
-            if (SmiFlavour.isSet(flavour, SmiFlavour.Canonical)) {
+            if (SmiFlavor.isSet(flavour, SmiFlavor.Canonical)) {
 
                 // determine the output order
                 int[] labels = labels(flavour, molecule);
 
                 g = g.permute(labels).resonate();
 
-                if (SmiFlavour.isSet(flavour, SmiFlavour.StereoCisTrans)) {
+                if (SmiFlavor.isSet(flavour, SmiFlavor.StereoCisTrans)) {
 
                     // FIXME: required to ensure canonical double bond labelling
                     g.sort(new Graph.VisitHighOrderFirst());
@@ -471,7 +471,7 @@ public final class SmilesGenerator {
                     canorder[i] = order[labels[i]];
                 System.arraycopy(canorder, 0, order, 0, order.length);
 
-                if (SmiFlavour.isSet(flavour, SmiFlavour.CxSmilesWithCoords)) {
+                if (SmiFlavor.isSet(flavour, SmiFlavor.CxSmilesWithCoords)) {
                     smiles += CxSmilesGenerator.generate(getCxSmilesState(flavour, molecule),
                                                          flavour, null, order);
                 }
@@ -480,7 +480,7 @@ public final class SmilesGenerator {
             } else {
                 String smiles = g.toSmiles(order);
 
-                if (SmiFlavour.isSet(flavour, SmiFlavour.CxSmilesWithCoords)) {
+                if (SmiFlavor.isSet(flavour, SmiFlavor.CxSmilesWithCoords)) {
                     smiles += CxSmilesGenerator.generate(getCxSmilesState(flavour, molecule), flavour, null, order);
                 }
 
@@ -564,9 +564,9 @@ public final class SmilesGenerator {
         }
 
         // we need to make sure we generate without the CXSMILES layers
-        String smi = create(reactantPart, flavour &~ SmiFlavour.CxSmilesWithCoords, reactantOrder) + ">" +
-                     create(agentPart, flavour &~ SmiFlavour.CxSmilesWithCoords, agentOrder) + ">" +
-                     create(productPart, flavour &~ SmiFlavour.CxSmilesWithCoords, productOrder);
+        String smi = create(reactantPart, flavour &~ SmiFlavor.CxSmilesWithCoords, reactantOrder) + ">" +
+                     create(agentPart, flavour &~ SmiFlavor.CxSmilesWithCoords, agentOrder) + ">" +
+                     create(productPart, flavour &~ SmiFlavor.CxSmilesWithCoords, productOrder);
 
         // copy ordering back to unified array and adjust values
         int agentBeg = reactantOrder.length;
@@ -580,7 +580,7 @@ public final class SmilesGenerator {
         for (int i = agentEnd; i < prodEnd; i++)
             ordering[i] += agentEnd;
 
-        if (SmiFlavour.isSet(flavour, SmiFlavour.CxSmilesWithCoords)) {
+        if (SmiFlavor.isSet(flavour, SmiFlavor.CxSmilesWithCoords)) {
             IAtomContainer unified = reaction.getBuilder().newInstance(IAtomContainer.class);
             unified.add(reactantPart);
             unified.add(agentPart);
@@ -593,7 +593,7 @@ public final class SmilesGenerator {
             int[] components = null;
 
             // extra state info on fragment grouping, specific to reactions
-            if (SmiFlavour.isSet(flavour, SmiFlavour.CxFragmentGroup)) {
+            if (SmiFlavor.isSet(flavour, SmiFlavor.CxFragmentGroup)) {
 
                 cxstate.fragGroups = new ArrayList<>();
 
@@ -667,8 +667,8 @@ public final class SmilesGenerator {
      */
     private static int[] labels(int flavour, final IAtomContainer molecule) throws CDKException {
         // FIXME: use SmiOpt.InChiLabelling
-        long[] labels = SmiFlavour.isSet(flavour, SmiFlavour.Isomeric) ? inchiNumbers(molecule)
-                                                                       : Canon.label(molecule, GraphUtil.toAdjList(molecule));
+        long[] labels = SmiFlavor.isSet(flavour, SmiFlavor.Isomeric) ? inchiNumbers(molecule)
+                                                                     : Canon.label(molecule, GraphUtil.toAdjList(molecule));
         int[] cpy = new int[labels.length];
         for (int i = 0; i < labels.length; i++)
             cpy[i] = (int) labels[i] - 1;
@@ -756,13 +756,13 @@ public final class SmilesGenerator {
             Point2d p2 = atom.getPoint2d();
             Point3d p3 = atom.getPoint3d();
 
-            if (SmiFlavour.isSet(flavour, SmiFlavour.Cx2dCoordinates) && p2 != null) {
+            if (SmiFlavor.isSet(flavour, SmiFlavor.Cx2dCoordinates) && p2 != null) {
                 state.atomCoords.add(new double[]{p2.x, p2.y, 0});
                 state.coordFlag = true;
-            } else if (SmiFlavour.isSet(flavour, SmiFlavour.Cx3dCoordinates) && p3 != null) {
+            } else if (SmiFlavor.isSet(flavour, SmiFlavor.Cx3dCoordinates) && p3 != null) {
                 state.atomCoords.add(new double[]{p3.x, p3.y, p3.z});
                 state.coordFlag = true;
-            } else if (SmiFlavour.isSet(flavour, SmiFlavour.CxCoordinates)) {
+            } else if (SmiFlavor.isSet(flavour, SmiFlavor.CxCoordinates)) {
                 state.atomCoords.add(new double[3]);
             }
         }
