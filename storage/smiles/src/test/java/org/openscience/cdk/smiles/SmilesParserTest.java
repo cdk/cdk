@@ -2515,7 +2515,7 @@ public class SmilesParserTest extends CDKTestCase {
     @Test
     public void atomBasedDbStereoReversing() throws Exception {
         assertThat(SmilesGenerator.isomeric().create(load("[C@H](F)=[C@@H]F")),
-                   is("F/C=C\\F"));
+                   is("C(\\F)=C\\F"));
     }
 
     /**

@@ -644,7 +644,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     @Test
     public void testPseudoAtom() throws Exception {
         IAtom atom = new PseudoAtom("Star");
-        SmilesGenerator sg = new SmilesGenerator();
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
         String smiles = "";
         IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(atom);
@@ -673,7 +673,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         methane.getAtom(0).setImplicitHydrogenCount(4);
         gold.getAtom(0).setImplicitHydrogenCount(0);
 
-        SmilesGenerator sg = new SmilesGenerator();
+        SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
         String smiles = sg.create(reaction);
         //logger.debug("Generated SMILES: " + smiles);
         Assert.assertEquals("C>*>[Au]", smiles);
@@ -1215,7 +1215,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String in = "C(/N)=C\\C=C\\1/N=C1";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(in);
-        Assert.assertEquals("C(\\N)=C/C=C/1\\N=C1", SmilesGenerator.isomeric().create(mol));
+        Assert.assertEquals("C(\\N)=C/C=C/1N=C1", SmilesGenerator.isomeric().create(mol));
     }
 
     @Test public void canonicalReactions() throws Exception {
