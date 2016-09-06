@@ -108,13 +108,14 @@ final class BeamToCDK {
      * Convert a Beam ChemicalGraph to a CDK IAtomContainer.
      *
      * @param g Beam graph instance
+     * @param kekule the input has been kekulzied
      * @return the CDK {@link IAtomContainer} for the input
      * @throws IllegalArgumentException the Beam graph was not 'expanded' - and
      *                                  contained organic subset atoms. If this
      *                                  happens use the Beam Functions.expand()
      *                                  to
      */
-    IAtomContainer toAtomContainer(Graph g) {
+    IAtomContainer toAtomContainer(Graph g, boolean kekule) {
 
         IAtomContainer ac = emptyContainer();
         IAtom[] atoms = new IAtom[g.order()];
@@ -125,7 +126,7 @@ final class BeamToCDK {
         for (int i = 0; i < g.order(); i++)
             atoms[i] = toCDKAtom(g.atom(i), g.implHCount(i));
         for (Edge e : g.edges())
-            bonds[j++] = toCDKBond(e, atoms);
+            bonds[j++] = toCDKBond(e, atoms, kekule);
 
         // atom-centric stereo-specification (only tetrahedral ATM)
         for (int u = 0; u < g.order(); u++) {
@@ -422,7 +423,7 @@ final class BeamToCDK {
      * @param atoms the already converted atoms
      * @return new bond instance
      */
-    IBond toCDKBond(Edge edge, IAtom[] atoms) {
+    IBond toCDKBond(Edge edge, IAtom[] atoms, boolean kekule) {
 
         int u = edge.either();
         int v = edge.other(u);
@@ -439,7 +440,7 @@ final class BeamToCDK {
                 atoms[v].setIsAromatic(true);
                 break;
             case IMPLICIT:
-                if (atoms[u].isAromatic() && atoms[v].isAromatic()) {
+                if (!kekule && atoms[u].isAromatic() && atoms[v].isAromatic()) {
                     bond.setIsAromatic(true);
                     bond.setOrder(IBond.Order.UNSET);
                     atoms[u].setIsAromatic(true);

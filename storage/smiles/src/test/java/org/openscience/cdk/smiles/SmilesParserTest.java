@@ -36,10 +36,12 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -63,6 +65,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -2516,6 +2519,15 @@ public class SmilesParserTest extends CDKTestCase {
     public void atomBasedDbStereoReversing() throws Exception {
         assertThat(SmilesGenerator.isomeric().create(load("[C@H](F)=[C@@H]F")),
                    is("C(\\F)=C\\F"));
+    }
+
+    @Test
+    public void azuleneHasAllBondOrdersSet() throws Exception {
+        IAtomContainer mol = load("c1ccc-2cccccc12");
+        for (IBond bond : mol.bonds()) {
+            if (bond.getOrder() == null || bond.getOrder() == IBond.Order.UNSET)
+                fail("Unset bond order");
+        }
     }
 
     /**
