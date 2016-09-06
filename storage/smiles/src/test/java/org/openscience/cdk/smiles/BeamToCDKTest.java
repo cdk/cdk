@@ -156,7 +156,7 @@ public class BeamToCDKTest {
     public void singleBondEdge() {
         IAtom[] atoms = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class),
                 mock(IAtom.class), mock(IAtom.class)};
-        IBond b = g2c.toCDKBond(Bond.SINGLE.edge(0, 5), atoms);
+        IBond b = g2c.toCDKBond(Bond.SINGLE.edge(0, 5), atoms, true);
         assertThat(b.getOrder(), is(IBond.Order.SINGLE));
         assertFalse(b.getFlag(CDKConstants.ISAROMATIC));
         assertThat(b.getAtom(0), is(atoms[0]));
@@ -167,7 +167,7 @@ public class BeamToCDKTest {
     public void aromaticBondEdge() {
         IAtom[] atoms = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class),
                 mock(IAtom.class), mock(IAtom.class)};
-        IBond b = g2c.toCDKBond(Bond.AROMATIC.edge(0, 5), atoms);
+        IBond b = g2c.toCDKBond(Bond.AROMATIC.edge(0, 5), atoms, true);
         assertThat(b.getOrder(), is(IBond.Order.SINGLE));
         assertTrue(b.getFlag(CDKConstants.ISAROMATIC));
         assertThat(b.getAtom(0), is(atoms[0]));
@@ -178,7 +178,7 @@ public class BeamToCDKTest {
     public void doubleBondEdge() {
         IAtom[] atoms = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class),
                 mock(IAtom.class), mock(IAtom.class)};
-        IBond b = g2c.toCDKBond(Bond.DOUBLE.edge(0, 5), atoms);
+        IBond b = g2c.toCDKBond(Bond.DOUBLE.edge(0, 5), atoms, true);
         assertThat(b.getOrder(), is(IBond.Order.DOUBLE));
         assertFalse(b.getFlag(CDKConstants.ISAROMATIC));
         assertThat(b.getAtom(0), is(atoms[0]));
@@ -548,7 +548,7 @@ public class BeamToCDKTest {
     IAtomContainer convert(String smi) throws IOException {
         BeamToCDK g2c = new BeamToCDK(SilentChemObjectBuilder.getInstance());
         Graph g = Graph.fromSmiles(smi);
-        return g2c.toAtomContainer(g);
+        return g2c.toAtomContainer(g, false);
     }
 
 }

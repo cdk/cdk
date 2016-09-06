@@ -244,7 +244,8 @@ public final class SmilesParser {
 
             // convert the Beam object model to the CDK - note exception thrown
             // if a kekule structure could not be assigned.
-            IAtomContainer mol = beamToCDK.toAtomContainer(kekulise ? g.kekule() : g);
+            IAtomContainer mol = beamToCDK.toAtomContainer(kekulise ? g.kekule() : g,
+                                                           kekulise);
 
             if (!isRxnPart) {
                 try {
