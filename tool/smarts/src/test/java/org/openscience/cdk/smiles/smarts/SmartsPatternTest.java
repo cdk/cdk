@@ -183,6 +183,12 @@ public class SmartsPatternTest {
                    is(2));
     }
 
+    @Test public void CCBondForming() throws Exception {
+        assertThat(SmartsPattern.create("([C:1]).([C:2])>>[C:1][C:2]", null)
+                                .matchAll(rsmi("[C-:13]#[N:14].[K+].[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1]Br)[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2>>[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1][C:13]#[N:14])[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2 |f:0.1|")).count(),
+                   is(2));
+    }
+
     @Test
     public void stereo_ring_closures() throws Exception {
         Pattern ptrn = SmartsPattern.create("[C@@]1(O[C@@]([C@@]([C@]([C@]1(C)O)(C)O)(O)C)(O)C)(O)C");
