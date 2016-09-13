@@ -77,7 +77,7 @@ import java.util.Map;
  * }</pre>
  * <p/>
  * <h4>One Line Quick Use</h4>
- * For simplifed use we can create a generator and use it once for a single depiction.
+ * For simplified use we can create a generator and use it once for a single depiction.
  * <pre>{@code
  * new DepictionGenerator().depict(mol)
  *                         .writeTo("~/mol.png");
