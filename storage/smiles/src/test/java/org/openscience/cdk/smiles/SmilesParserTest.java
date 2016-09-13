@@ -2575,4 +2575,10 @@ public class SmilesParserTest extends CDKTestCase {
         return parser.parseSmiles(smi);
     }
 
+    public void testNoTitle() throws InvalidSmilesException {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parser.parseSmiles("CCC");
+        Assert.assertNull(mol.getProperty("cdk:Title"));
+    }
+
 }
