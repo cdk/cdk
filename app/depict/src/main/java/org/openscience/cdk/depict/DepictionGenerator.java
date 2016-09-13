@@ -521,7 +521,7 @@ public final class DepictionGenerator {
     }
 
     /**
-     * Internal - makes a map of the highlights for reaciton mapping.
+     * Internal - makes a map of the highlights for reaction mapping.
      *
      * @param reactants reaction reactants
      * @param products  reaction products
