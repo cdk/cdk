@@ -23,7 +23,10 @@
 
 package org.openscience.cdk.depict;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectedComponents;
@@ -61,6 +64,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
@@ -127,6 +131,7 @@ public class Abbreviations implements Iterable<String> {
     private final SmilesGenerator     usmigen                   = SmilesGenerator.unique();
 
     private final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private boolean contractOnHetero = true;
 
     public Abbreviations() {
     }
@@ -161,6 +166,17 @@ public class Abbreviations implements Iterable<String> {
     public boolean setEnabled(String label, boolean enabled) {
         return enabled ? labels.contains(label) && disabled.remove(label)
                        : labels.contains(label) && disabled.add(label);
+    }
+
+    /**
+     * Set whether abbreviations should be further contracted when they are connected
+     * to a heteroatom, for example -NH-Boc becomes -NHBoc. By default this option
+     * is enabled.
+     *
+     * @param val on/off
+     */
+    public void setContractOnHetero(boolean val) {
+        this.contractOnHetero = val;
     }
 
     private static Set<IBond> findCutBonds(IAtomContainer mol, EdgeToBondMap bmap, int[][] adjlist) {
@@ -374,6 +390,7 @@ public class Abbreviations implements Iterable<String> {
 
         final List<Sgroup> newSgroups = new ArrayList<>();
         List<IAtomContainer> fragments = generateFragments(mol);
+        Multimap<IAtom, Sgroup> sgroupAdjs = ArrayListMultimap.create();
 
         for (IAtomContainer frag : fragments) {
             try {
@@ -403,19 +420,178 @@ public class Abbreviations implements Iterable<String> {
                 Sgroup sgroup = new Sgroup();
                 sgroup.setType(SgroupType.CtabAbbreviation);
                 sgroup.setSubscript(label);
-                sgroup.addBond(frag.getBond(0).getProperty(CUT_BOND, IBond.class));
+
+                IBond attachBond = frag.getBond(0).getProperty(CUT_BOND, IBond.class);
+                IAtom attachAtom = null;
+                sgroup.addBond(attachBond);
                 for (int i = 1; i < numAtoms; i++) {
                     IAtom atom = frag.getAtom(i);
                     usedAtoms.add(atom);
                     sgroup.addAtom(atom);
+                    if (attachBond.getAtom(0) == atom)
+                        attachAtom = attachBond.getAtom(1);
+                    else if (attachBond.getAtom(1) == atom)
+                        attachAtom = attachBond.getAtom(0);
                 }
 
+                if (attachAtom != null)
+                    sgroupAdjs.put(attachAtom, sgroup);
                 newSgroups.add(sgroup);
-            } catch (CDKException e) {
+
+             } catch (CDKException e) {
                 // ignore
             }
         }
+
+        // now collapse
+        for (IAtom attach : mol.atoms()) {
+            if (usedAtoms.contains(attach))
+                continue;
+
+            // skip charged or isotopic labelled, C or R/*, H, He
+            if ((attach.getFormalCharge() != null && attach.getFormalCharge() != 0)
+                || attach.getMassNumber() != null
+                || attach.getAtomicNumber() == 6
+                || attach.getAtomicNumber() < 2)
+                continue;
+
+            int hcount = attach.getImplicitHydrogenCount();
+            Set<IAtom> xatoms   = new HashSet<>();
+            Set<IBond> xbonds   = new HashSet<>();
+            Set<IBond> newbonds = new HashSet<>();
+            xatoms.add(attach);
+
+            List<String> nbrSymbols = new ArrayList<>();
+            Set<Sgroup> todelete = new HashSet<>();
+            for (Sgroup sgroup : sgroupAdjs.get(attach)) {
+                if (containsChargeChar(sgroup.getSubscript()))
+                    continue;
+                xbonds.addAll(sgroup.getBonds());
+                xatoms.addAll(sgroup.getAtoms());
+                nbrSymbols.add(sgroup.getSubscript());
+                todelete.add(sgroup);
+            }
+            for (IBond bond : mol.getConnectedBondsList(attach)) {
+                if (!xbonds.contains(bond)) {
+                    IAtom nbr = bond.getConnectedAtom(attach);
+                    // contract terminal bonds
+                    if (mol.getConnectedBondsCount(nbr) == 1) {
+                        if (nbr.getMassNumber() != null ||
+                            (nbr.getFormalCharge() != null && nbr.getFormalCharge() != 0)) {
+                            newbonds.add(bond);
+                        } else if (nbr.getAtomicNumber() == 1) {
+                            hcount++;
+                            xatoms.add(nbr);
+                        } else if (nbr.getAtomicNumber() > 0){
+                            nbrSymbols.add(newSymbol(nbr.getAtomicNumber(), nbr.getImplicitHydrogenCount()));
+                            xatoms.add(nbr);
+                        }
+                    } else {
+                        newbonds.add(bond);
+                    }
+                }
+            }
+
+            if (newbonds.size() < 1 || newbonds.size() > 3 || nbrSymbols.isEmpty())
+                continue;
+
+            // create the symbol
+            StringBuilder sb = new StringBuilder();
+            sb.append(newSymbol(attach.getAtomicNumber(), hcount));
+            String prev  = null;
+            int    count = 0;
+            Collections.sort(nbrSymbols, new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    int cmp = Integer.compare(o1.length(), o2.length());
+                    if (cmp != 0) return cmp;
+                    return o1.compareTo(o2);
+                }
+            });
+            for (String nbrSymbol : nbrSymbols) {
+                if (nbrSymbol.equals(prev)) {
+                    count++;
+                } else {
+                    appendGroup(sb, prev, count, count == 0 || countUpper(prev) > 1);
+                    prev = nbrSymbol;
+                    count = 1;
+                }
+            }
+            appendGroup(sb, prev, count, false);
+
+            // remove existing
+            newSgroups.removeAll(todelete);
+
+            // create new
+            Sgroup newSgroup = new Sgroup();
+            newSgroup.setType(SgroupType.CtabAbbreviation);
+            newSgroup.setSubscript(sb.toString());
+            for (IBond bond : newbonds)
+                newSgroup.addBond(bond);
+            for (IAtom atom : xatoms)
+                newSgroup.addAtom(atom);
+
+            newSgroups.add(newSgroup);
+            usedAtoms.addAll(xatoms);
+        }
+
         return newSgroups;
+    }
+
+    /**
+     * Count number of upper case chars.
+     */
+    private int countUpper(String str) {
+        if (str == null)
+            return 0;
+        int num = 0;
+        for (int i = 0; i < str.length(); i++)
+            if (Character.isUpperCase(str.charAt(i)))
+                num++;
+        return num;
+    }
+
+    private boolean containsChargeChar(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            final char c = str.charAt(i);
+            if (c == '-' || c == '+')
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if last char is a digit.
+     */
+    private boolean digitAtEnd(String str) {
+        return Character.isDigit(str.charAt(str.length()-1));
+    }
+
+    private String newSymbol(int atomnum, int hcount) {
+        StringBuilder sb = new StringBuilder();
+        Elements elem = Elements.ofNumber(atomnum);
+        if (elem == Elements.Carbon && hcount == 3)
+            return "Me";
+        sb.append(elem.symbol());
+        if (hcount > 0) {
+            sb.append('H');
+            if (hcount > 1)
+                sb.append(hcount);
+        }
+        return sb.toString();
+    }
+
+    private void appendGroup(StringBuilder sb, String group, int coef, boolean useParen) {
+        if (coef <= 0 || group == null || group.isEmpty()) return;
+        if (!useParen)
+            useParen = coef > 1 && (countUpper(group) > 1 || digitAtEnd(group));
+        if (useParen)
+            sb.append('(');
+        sb.append(group);
+        if (useParen)
+            sb.append(')');
+        if (coef > 1)
+            sb.append(coef);
     }
 
     /**
