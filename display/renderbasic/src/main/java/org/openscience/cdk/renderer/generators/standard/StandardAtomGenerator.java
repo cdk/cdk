@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Above;
+import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Below;
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Right;
 
@@ -279,6 +280,11 @@ final class StandardAtomGenerator {
 
         final Font italicFont = font.deriveFont(Font.ITALIC);
 
+        if (position == Below || position == Above)
+            AbbreviationLabel.reduce(fTexts, 1, fTexts.size());
+        else
+            AbbreviationLabel.reduce(fTexts, 0, fTexts.size());
+
         // convert to outlines
         final List<TextOutline> outlines = new ArrayList<>(fTexts.size());
         for (FormattedText fText : fTexts) {
@@ -321,7 +327,18 @@ final class StandardAtomGenerator {
             for (index = 0; index < outlines.size(); index++)
                 if ((fTexts.get(index).style & 0x1) == 0) break;
         }
+
         TextOutline primary = outlines.remove(index);
+
+        if (position == Below || position == Above) {
+            double offsetX = primary.getBounds().getX() - outlines.get(0).getBounds().getX();
+            double offsetY = position == Below
+                             ? padding + primary.getBounds().getHeight()
+                             : -primary.getBounds().getHeight() - padding;
+            for (int i = 0; i < outlines.size(); i++) {
+                outlines.set(i, outlines.get(i).translate(offsetX, offsetY));
+            }
+        }
 
         return new AtomSymbol(primary, outlines);
     }
