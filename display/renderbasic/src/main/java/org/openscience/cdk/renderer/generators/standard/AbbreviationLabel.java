@@ -307,18 +307,23 @@ final class AbbreviationLabel {
             }
         }
 
-        // merge adjacent text together if it is of the same style
-        List<FormattedText> res = new ArrayList<>(texts.size());
+        return texts;
+    }
+
+    static void reduce(List<FormattedText> texts, int from, int to) {
+        List<FormattedText> tmp = new ArrayList<>(texts.size());
         FormattedText prev = null;
-        for (FormattedText curr : texts) {
+        tmp.addAll(texts.subList(0, from));
+        for (FormattedText curr : texts.subList(from, to)) {
             if (prev == null || prev.style != curr.style) {
-                res.add(prev = curr);
+                tmp.add(prev = curr);
             } else {
                 prev.text += curr.text;
             }
         }
-
-        return res;
+        tmp.addAll(texts.subList(to, texts.size()));
+        texts.clear();
+        texts.addAll(tmp);
     }
 
     /**
