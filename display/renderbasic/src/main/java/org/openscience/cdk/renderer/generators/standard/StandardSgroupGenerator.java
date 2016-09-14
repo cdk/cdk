@@ -236,9 +236,21 @@ final class StandardSgroupGenerator {
         final Set<IBond> crossing = sgroup.getBonds();
         final Set<IAtom> atoms = sgroup.getAtoms();
 
-        // only do 0,1 attachments for now
-        if (crossing.size() > 1)
-            return;
+        // only do 0,1 attachments for now unless they're all connected to the same atom
+        if (crossing.size() > 1) {
+            IAtom internal = null;
+            for (IBond bond : crossing) {
+                IAtom beg = bond.getAtom(0);
+                IAtom end = bond.getAtom(1);
+                if (atoms.contains(beg)) {
+                    if (internal != null && internal != beg) return; // can't do it
+                    internal = beg;
+                } else if (atoms.contains(end)) {
+                    if (internal != null && internal != end) return; // can't do it
+                    internal = end;
+                }
+            }
+        }
 
         for (IAtom atom : atoms) {
             StandardGenerator.hide(atom);
