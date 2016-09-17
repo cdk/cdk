@@ -25,8 +25,10 @@ package org.openscience.cdk.renderer.generators.standard;
 
 import org.openscience.cdk.config.Elements;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 /**
@@ -247,6 +249,13 @@ final class AbbreviationLabel {
         return false;
     }
 
+    private static boolean isNumber(String str) {
+        for (int i = 0; i < str.length(); i++)
+            if (!isDigit(str.charAt(i)))
+                return false;
+        return true;
+    }
+
     /**
      * Reverse a list of tokens for display, flipping
      * brackets as needed.
@@ -255,11 +264,24 @@ final class AbbreviationLabel {
      */
     static void reverse(List<String> tokens) {
         Collections.reverse(tokens);
-        // now flip brackets
+        // now flip brackets and move numbers
+        Deque<String> numbers = new ArrayDeque<>();
         for (int i = 0; i < tokens.size(); i++) {
             String token = tokens.get(i);
-            if (token.equals("(")) tokens.set(i, ")");
-            else if (token.equals(")")) tokens.set(i, "(");
+            if (token.equals("(")) {
+                tokens.set(i, ")");
+                tokens.add(i+1, numbers.pop());
+                i++;
+            }
+            else if (token.equals(")")) {
+                tokens.set(i, "(");
+                if (i>0 && isNumber(tokens.get(i - 1))) {
+                    numbers.push(tokens.remove(i - 1));
+                    i--;
+                } else {
+                    numbers.push("");
+                }
+            }
         }
     }
 
@@ -307,18 +329,23 @@ final class AbbreviationLabel {
             }
         }
 
-        // merge adjacent text together if it is of the same style
-        List<FormattedText> res = new ArrayList<>(texts.size());
+        return texts;
+    }
+
+    static void reduce(List<FormattedText> texts, int from, int to) {
+        List<FormattedText> tmp = new ArrayList<>(texts.size());
         FormattedText prev = null;
-        for (FormattedText curr : texts) {
+        tmp.addAll(texts.subList(0, from));
+        for (FormattedText curr : texts.subList(from, to)) {
             if (prev == null || prev.style != curr.style) {
-                res.add(prev = curr);
+                tmp.add(prev = curr);
             } else {
                 prev.text += curr.text;
             }
         }
-
-        return res;
+        tmp.addAll(texts.subList(to, texts.size()));
+        texts.clear();
+        texts.addAll(tmp);
     }
 
     /**

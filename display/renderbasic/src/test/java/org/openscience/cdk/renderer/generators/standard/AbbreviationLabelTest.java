@@ -101,6 +101,7 @@ public class AbbreviationLabelTest {
         List<String> tokens = new ArrayList<>();
         assertTrue(AbbreviationLabel.parse("Fe(acac)3", tokens));
         List<AbbreviationLabel.FormattedText> formatted = AbbreviationLabel.format(tokens);
+        AbbreviationLabel.reduce(formatted, 0, formatted.size());
         assertThat(formatted.get(0).text, is("Fe(acac)"));
         assertThat(formatted.get(0).style, is(0));
         assertThat(formatted.get(1).text, is("3"));
@@ -133,6 +134,14 @@ public class AbbreviationLabelTest {
     }
 
     @Test
+    public void reversingBracketsWithNumbers() {
+        List<String> tokens = new ArrayList<>();
+        assertTrue(AbbreviationLabel.parse("B(OH)2", tokens));
+        AbbreviationLabel.reverse(tokens);
+        assertThat(Joiner.on("").join(tokens), is("(HO)2B"));
+    }
+
+    @Test
     public void nonAbbreviationLabel() {
         List<String> tokens = new ArrayList<>();
         assertFalse(AbbreviationLabel.parse("A Random Label - Don't Reverse", tokens));
@@ -143,6 +152,7 @@ public class AbbreviationLabelTest {
     public void formatOPO3() {
         List<String> tokens = Arrays.asList("O", "P", "O3", "-2");
         List<AbbreviationLabel.FormattedText> texts = AbbreviationLabel.format(tokens);
+        AbbreviationLabel.reduce(texts, 0, texts.size());
         assertThat(texts.size(), is(3));
         assertThat(texts.get(0).text, is("OPO"));
         assertThat(texts.get(0).style, is(AbbreviationLabel.STYLE_NORMAL));
@@ -167,6 +177,7 @@ public class AbbreviationLabelTest {
     public void formatOPO3H2() {
         List<String> tokens = Arrays.asList("O", "P", "O3", "H2");
         List<AbbreviationLabel.FormattedText> texts = AbbreviationLabel.format(tokens);
+        AbbreviationLabel.reduce(texts, 0, texts.size());
         assertThat(texts.size(), is(4));
         assertThat(texts.get(0).text, is("OPO"));
         assertThat(texts.get(0).style, is(0));

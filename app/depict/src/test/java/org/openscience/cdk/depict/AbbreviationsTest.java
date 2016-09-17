@@ -23,8 +23,10 @@
 
 package org.openscience.cdk.depict;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -167,6 +169,82 @@ public class AbbreviationsTest {
         mol.setProperty(CDKConstants.CTAB_SGROUPS, Collections.singletonList(sgroup));
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(0));
+    }
+
+    @Test public void NHBocFromHeteroCollapse() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        factory.add("*C(=O)OC(C)(C)C Boc");
+        IAtomContainer mol = smi("c1ccccc1NC(=O)OC(C)(C)C");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("NHBoc"));
+        assertThat(sgroups.get(0).getBonds().size(), is(1));
+        assertThat(sgroups.get(0).getAtoms().size(), is(8));
+    }
+
+    @Test public void NHBocFromHeteroCollapseExplicitH() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        factory.add("*C(=O)OC(C)(C)C Boc");
+        IAtomContainer mol = smi("c1ccccc1N([H])C(=O)OC(C)(C)C");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("NHBoc"));
+        assertThat(sgroups.get(0).getBonds().size(), is(1));
+        assertThat(sgroups.get(0).getAtoms().size(), is(9));
+    }
+
+    @Test public void NBocClFromHeteroCollapseExplicit() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        factory.add("*C(=O)OC(C)(C)C Boc");
+        IAtomContainer mol = smi("c1ccccc1N(Cl)C(=O)OC(C)(C)C");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("N(Cl)Boc"));
+        assertThat(sgroups.get(0).getBonds().size(), is(1));
+        assertThat(sgroups.get(0).getAtoms().size(), is(9));
+    }
+
+    @Test public void NBoc2FromHeteroCollapse() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        factory.add("*C(=O)OC(C)(C)C Boc");
+        IAtomContainer mol = smi("c1cc2ccccc2cc1N(C(=O)OC(C)(C)C)C(=O)OC(C)(C)C");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("NBoc2"));
+        assertThat(sgroups.get(0).getBonds().size(), is(1));
+        assertThat(sgroups.get(0).getAtoms().size(), is(15));
+    }
+
+    @Test public void iPrFromHeteroCollapse() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        factory.add("*C(C)C iPr");
+        IAtomContainer mol = smi("[CH3:27][CH:19]([CH3:28])[C:20]1=[N:26][C:23](=[CH:22][S:21]1)[C:24](=[O:25])O");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("iPr"));
+        assertThat(sgroups.get(0).getBonds().size(), is(1));
+        assertThat(sgroups.get(0).getAtoms().size(), is(3));
+    }
+
+    @Test public void NBocFromHeteroCollapseExplicitH() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        factory.add("*C(=O)OC(C)(C)C Boc");
+        IAtomContainer mol = smi("c1cc2ccccc2ccn1C(=O)OC(C)(C)C");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("NBoc"));
+        assertThat(sgroups.get(0).getBonds().size(), is(2));
+        assertThat(sgroups.get(0).getAtoms().size(), is(8));
+    }
+
+    @Test public void SO3minusFromHeteroCollapseNone() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        factory.add("*S(=O)(=O)[O-] SO3-");
+        IAtomContainer mol = smi("c1ccccc1N(S(=O)(=O)[O-])S(=O)(=O)[O-]");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(2));
+        assertThat(sgroups.get(0).getSubscript(), is("SO3-"));
+        assertThat(sgroups.get(1).getSubscript(), is("SO3-"));
     }
 
     @Test
