@@ -275,8 +275,13 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             fullQuery = new QueryAtomContainer(builder);
 
         // keeps track of component grouping
-        int[] components = new int[0];
+        int[] components = fullQuery.getProperty(ComponentGrouping.KEY) != null ? fullQuery.getProperty(ComponentGrouping.KEY, int[].class)
+                                                                                : new int[0];
         int maxId = 0;
+        if (components.length > 0) {
+            for (int id : components)
+                if (id > maxId) maxId = id;
+        }
 
         for (int i = 0; i < node.jjtGetNumChildren(); i++) {
             ASTSmarts smarts = (ASTSmarts) node.jjtGetChild(i);
@@ -286,7 +291,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             smarts.jjtAccept(this, null);
 
             // update component info
-            if (smarts.componentId() > 0) {
+            if (components.length > 0 || smarts.componentId() > 0) {
                 components = Arrays.copyOf(components, 1 + fullQuery.getAtomCount() + query.getAtomCount());
                 int id = smarts.componentId();
                 Arrays.fill(components, fullQuery.getAtomCount(), components.length, id);
