@@ -91,18 +91,21 @@ final class AbbreviationLabel {
     //    OTHER DEALINGS IN THE SOFTWARE.
     //
     //    For more information, please refer to <http://unlicense.org/>
-    private final static String[] SYMBOL_LIST = new String[]{"acac", "Ace", "Acetyl", "Acyl", "Ad", "All", "Alloc", "Allyl",
-                                                             "Amyl", "AOC", "BDMS", "Benzoyl", "Benzyl", "Bn", "BOC",
-                                                             "Boc", "BOM", "Bromo", "Bs", "Bu", "But", "Butyl", "Bz",
-                                                             "Bzl", "Cbz", "Chloro", "CoA", "D", "Dan", "Dansyl",
-                                                             "DEIPS", "DEM", "Dip", "Dmb", "DPA", "DTBMS", "EE", "EOM",
-                                                             "Et", "Ethyl", "Fluoro", "FMOC", "Fmoc", "Formyl",
-                                                             "Heptyl", "Hexyl", "Iodo", "IPDMS", "Me", "MEM", "Mesityl",
-                                                             "Mesyl", "Methoxy", "Methyl", "MOM", "Ms", "Nitro", "Oct",
-                                                             "Octyl", "PAB", "Pentyl", "Ph", "Phenyl", "Pivaloyl",
-                                                             "PMB", "Pro", "Propargyl", "Propyl", "Pv", "R", "SEM", "T",
-                                                             "TBDMS", "TBDPS", "TES", "Tf", "THP", "THPO", "TIPS",
-                                                             "TMS", "Tos", "Tosyl", "Tr", "Troc", "Vinyl", "Voc", "Z"};
+    private final static String[] SYMBOL_LIST = new String[]{"acac", "Ace", "Acetyl", "Acyl", "Ad", "All", "Alloc", "Allyl", "Amyl", "AOC",
+                                                             "BDMS", "Benzoyl", "Benzyl", "Bn", "BOC", "Boc", "BOM", "Bromo", "Bs", "Bu", "But", "Butyl", "Bz", "Bzl",
+                                                             "Car", "Cbz", "Chloro", "CoA", "Cy",
+                                                             "dppf", "dppp", "dba", "D", "Dan", "Dansyl", "DEIPS", "DEM", "Dip", "Dmb", "DPA", "DTBMS",
+                                                             "EE", "EOM", "Et", "Ethyl",
+                                                             "Fluoro", "FMOC", "Fmoc", "Formyl",
+                                                             "Heptyl", "Hexyl",
+                                                             "Iodo", "IPDMS",
+                                                             "Me", "MEM", "Mesityl", "Mesyl", "Methoxy", "Methyl", "MOM", "Ms",
+                                                             "Nitro",
+                                                             "Oct", "Octyl",
+                                                             "PAB", "Pentyl", "Ph", "Phenyl", "Pivaloyl", "PMB", "Pro", "Propargyl", "Propyl", "Pv",
+                                                             "R", "SEM",
+                                                             "T", "TBDMS", "TBDPS", "TES", "Tf", "THP", "THPO", "TIPS", "TMS", "Tos", "Tol", "Tosyl", "Tr", "Troc",
+                                                             "Vinyl", "Voc", "Z"};
 
     private static Trie PREFIX_TRIE = new Trie();
     private static Trie ITAL_PREFIX_TRIE = new Trie();
