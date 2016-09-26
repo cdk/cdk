@@ -273,6 +273,19 @@ public class StructureDiagramGenerator {
                 generateCoordinates();
             }
 
+            // reorder reactants such that they are in the same order they appear on the right
+            reaction.getReactants().sortAtomContainers(new Comparator<IAtomContainer>() {
+                @Override
+                public int compare(IAtomContainer a, IAtomContainer b) {
+                    Point2d aCenter = GeometryUtil.get2DCenter(a);
+                    Point2d bCenter = GeometryUtil.get2DCenter(b);
+                    if (aCenter == null || bCenter == null)
+                        return 0;
+                    else
+                        return Double.compare(aCenter.x, bCenter.x);
+                }
+            });
+
         } else {
             for (IAtomContainer mol : reaction.getReactants().atomContainers())
                 generateCoordinates(mol);
