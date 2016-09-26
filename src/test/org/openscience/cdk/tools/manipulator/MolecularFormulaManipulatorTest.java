@@ -549,7 +549,19 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         Assert.assertEquals("C<sub>10</sub><sup>1-</sup>", MolecularFormulaManipulator.getHTML(formula,true,false));
     }
     @Test 
-    public void testGetHTML_IMolecularFormulaWhitIsotope() {
+    public void testGetHTML_IMolecularFormula_arrayString_boolean_boolean() {
+		IMolecularFormula formula = new MolecularFormula();
+		formula.addIsotope(builder.newInstance(IIsotope.class,"C"), 2);
+		formula.addIsotope(builder.newInstance(IIsotope.class,"H"), 2);
+		
+		String[] newOrder = new String[2];
+		newOrder[0] = "H";
+		newOrder[1] = "C";
+		
+        Assert.assertEquals("H<sub>2</sub>C<sub>2</sub>", MolecularFormulaManipulator.getHTML(formula,false,false));
+    }
+    @Test 
+    public void testGetHTML_IMolecularFormulaWithIsotope() {
     	MolecularFormula formula = new MolecularFormula();
     	formula.addIsotope(ifac.getMajorIsotope("C"),2);
     	formula.addIsotope(ifac.getMajorIsotope("H"),6);
@@ -557,7 +569,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     }
 
     @Test 
-    public void testGetHTML_IMolecularFormulaWhitIsotopeAndCharge() {
+    public void testGetHTML_IMolecularFormulaWithIsotopeAndCharge() {
     	MolecularFormula formula = new MolecularFormula();
     	formula.addIsotope(ifac.getMajorIsotope("C"),2);
     	formula.addIsotope(ifac.getMajorIsotope("H"),6);
