@@ -169,9 +169,13 @@ public class CDKConstants {
      */
     public static final int IS_TYPEABLE = 11;
     /**
+     * Flag used for marking uncertainty of the bond order.
+     */
+    public final static int SINGLE_OR_DOUBLE = 12;
+    /**
      * Maximum flags array index.
      */
-    public final static int MAX_FLAG_INDEX = 12;
+    public final static int MAX_FLAG_INDEX = 13;
     /**
      * Flag used for JUnit testing the pointer functionality.
      */
