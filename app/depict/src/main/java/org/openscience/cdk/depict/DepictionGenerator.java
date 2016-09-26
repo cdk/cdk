@@ -436,6 +436,8 @@ public final class DepictionGenerator {
      */
     public Depiction depict(IReaction rxn) throws CDKException {
 
+        ensure2dLayout(rxn); // can reorder components!
+
         final Color fgcol = getParameterValue(StandardGenerator.AtomColor.class).getAtomColor(rxn.getBuilder()
                                                                                                  .newInstance(IAtom.class, "C"));
 
@@ -466,7 +468,6 @@ public final class DepictionGenerator {
         myHighlight.putAll(highlight);
         highlight.clear();
 
-        ensure2dLayout(rxn);
         final List<Double> reactantScales = prepareCoords(reactants);
         final List<Double> productScales = prepareCoords(products);
         final List<Double> agentScales = prepareCoords(agents);
