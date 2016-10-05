@@ -27,6 +27,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.ConnectedComponents;
@@ -54,9 +55,9 @@ import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+import uk.ac.ebi.beam.Element;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -907,6 +908,88 @@ public class StructureDiagramGenerator {
         return count;
     }
 
+    private final double adjustForHydrogen(IAtom atom, IAtomContainer mol) {
+        Integer hcnt = atom.getImplicitHydrogenCount();
+        if (hcnt == null || hcnt == 0)
+            return 0;
+        List<IBond> bonds = mol.getConnectedBondsList(atom);
+
+        int pos = 0; // right
+
+        // isolated atoms, HCl vs NH4+ etc
+        if (bonds.isEmpty()) {
+            Elements elem = Elements.ofNumber(atom.getAtomicNumber());
+            // see HydrogenPosition for canonical list
+            switch (elem) {
+                case Oxygen:
+                case Sulfur:
+                case Selenium:
+                case Tellurium:
+                case Fluorine:
+                case Chlorine:
+                case Bromine:
+                case Iodine:
+                    pos = -1; // left
+                    break;
+                default:
+                    pos = +1; // right
+                    break;
+            }
+        } else if (bonds.size() == 1) {
+            IAtom  other  = bonds.get(0).getConnectedAtom(atom);
+            double deltaX = atom.getPoint2d().x - other.getPoint2d().x;
+            if (Math.abs(deltaX) > 0.05)
+                pos = (int) Math.signum(deltaX);
+        }
+        return pos * (bondLength/2);
+    }
+
+    /**
+     * Similar to the method {@link GeometryUtil#getMinMax(IAtomContainer)} but considers
+     * heteroatoms with hydrogens.
+     *
+     * @param mol molecule
+     * @return the min/max x and y bounds
+     */
+    private final double[] getAprxBounds(IAtomContainer mol) {
+        double maxX = -Double.MAX_VALUE;
+        double maxY = -Double.MAX_VALUE;
+        double minX = Double.MAX_VALUE;
+        double minY = Double.MAX_VALUE;
+        IAtom[] boundedAtoms = new IAtom[4];
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            IAtom atom = mol.getAtom(i);
+            if (atom.getPoint2d() != null) {
+                if (atom.getPoint2d().x < minX) {
+                    minX = atom.getPoint2d().x;
+                    boundedAtoms[0] = atom;
+                }
+                if (atom.getPoint2d().y < minY) {
+                    minY = atom.getPoint2d().y;
+                    boundedAtoms[1] = atom;
+                }
+                if (atom.getPoint2d().x > maxX) {
+                    maxX = atom.getPoint2d().x;
+                    boundedAtoms[2] = atom;
+                }
+                if (atom.getPoint2d().y > maxY) {
+                    maxY = atom.getPoint2d().y;
+                    boundedAtoms[3] = atom;
+                }
+            }
+        }
+        double[] minmax = new double[4];
+        minmax[0] = minX;
+        minmax[1] = minY;
+        minmax[2] = maxX;
+        minmax[3] = maxY;
+        double minXAdjust = adjustForHydrogen(boundedAtoms[0], mol);
+        double maxXAdjust = adjustForHydrogen(boundedAtoms[1], mol);
+        if (minXAdjust < 0) minmax[0] += minXAdjust;
+        if (maxXAdjust > 0) minmax[1] += maxXAdjust;
+        return minmax;
+    }
+
     private void generateFragmentCoordinates(IAtomContainer mol, List<IAtomContainer> frags) throws CDKException {
         final List<IBond> ionicBonds = makeIonicBonds(frags);
 
@@ -934,7 +1017,8 @@ public class StructureDiagramGenerator {
         for (IAtomContainer fragment : frags) {
             setMolecule(fragment, false, afix, bfix);
             generateCoordinates(DEFAULT_BOND_VECTOR, true, true);
-            limits.add(GeometryUtil.getMinMax(fragment));
+            lengthenIonicBonds(ionicBonds, fragment);
+            limits.add(getAprxBounds(fragment));
         }
 
         // restore
@@ -991,6 +1075,80 @@ public class StructureDiagramGenerator {
         // finalize
         assignStereochem(mol);
         finalizeLayout(mol);
+    }
+
+    private void lengthenIonicBonds(List<IBond> ionicBonds, IAtomContainer fragment) {
+
+        final IChemObjectBuilder bldr = fragment.getBuilder();
+
+        if (ionicBonds.isEmpty())
+            return;
+
+        IAtomContainer newfrag = bldr.newInstance(IAtomContainer.class);
+        IAtom[] atoms = new IAtom[fragment.getAtomCount()];
+        for (int i = 0; i < atoms.length; i++)
+            atoms[i] = fragment.getAtom(i);
+        newfrag.setAtoms(atoms);
+
+        for (IBond bond : fragment.bonds()) {
+            if (!ionicBonds.contains(bond)) {
+                newfrag.addBond(bond);
+            } else {
+                Integer numBegIonic = bond.getAtom(0).getProperty("ionicDegree");
+                Integer numEndIonic = bond.getAtom(1).getProperty("ionicDegree");
+                if (numBegIonic == null) numBegIonic = 0;
+                if (numEndIonic == null) numEndIonic = 0;
+                numBegIonic++;
+                numEndIonic++;
+                bond.getAtom(0).setProperty("ionicDegree", numBegIonic);
+                bond.getAtom(1).setProperty("ionicDegree", numEndIonic);
+            }
+        }
+
+        if (newfrag.getBondCount() == fragment.getBondCount())
+            return;
+
+        IAtomContainerSet subfragments = ConnectivityChecker.partitionIntoMolecules(newfrag);
+        Map<IAtom, IAtomContainer> atomToFrag = new HashMap<>();
+
+        // index atom->fragment
+        for (IAtomContainer subfragment : subfragments.atomContainers())
+            for (IAtom atom : subfragment.atoms())
+                atomToFrag.put(atom, subfragment);
+
+        for (IBond bond : ionicBonds) {
+            IAtom beg = bond.getAtom(0);
+            IAtom end = bond.getAtom(1);
+
+            // select which bond to stretch from
+            Integer numBegIonic = bond.getAtom(0).getProperty("ionicDegree");
+            Integer numEndIonic = bond.getAtom(1).getProperty("ionicDegree");
+            if (numBegIonic == null || numEndIonic == null)
+                continue;
+            if (numBegIonic > numEndIonic) {
+                IAtom tmp = beg;
+                beg = end;
+                end = tmp;
+            } else if (numBegIonic == numEndIonic && numBegIonic > 1) {
+                // can't stretch these
+                continue;
+            }
+
+            IAtomContainer begFrag  = atomToFrag.get(beg);
+            IAtomContainer endFrags = bldr.newInstance(IAtomContainer.class);
+            if (begFrag == null)
+                continue;
+            for (IAtomContainer mol : subfragments.atomContainers()) {
+                if (mol != begFrag)
+                    endFrags.add(mol);
+            }
+            double dx = end.getPoint2d().x - beg.getPoint2d().x;
+            double dy = end.getPoint2d().y - beg.getPoint2d().y;
+            Vector2d bondVec = new Vector2d(dx, dy);
+            bondVec.normalize();
+            bondVec.scale(bondLength/2); // 1.5 bond length
+            GeometryUtil.translate2D(endFrags, bondVec);
+        }
     }
 
     /**
