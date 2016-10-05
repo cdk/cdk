@@ -90,10 +90,16 @@ public class JniInChIInputAdapter extends JniInchiInput {
             // 1,5 tautomer option
             else if ("15T".equals(op)) {
                 sbOptions.append('-').append("15T");
+                if (tok.hasMoreTokens()) {
+                    sbOptions.append(" ");
+                }
             }
             // keto-enol tautomer option
             else if ("KET".equals(op)) {
                 sbOptions.append('-').append("KET");
+                if (tok.hasMoreTokens()) {
+                    sbOptions.append(" ");
+                }
             } else {
                 throw new JniInchiException("Unrecognised InChI option");
             }
