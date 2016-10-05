@@ -191,7 +191,7 @@ final class AbbreviationLabel {
                 continue;
             }
 
-            if (c == '/') {
+            if (c == '/' || c == '·') {
                 tokens.add(Character.toString(c));
                 i++;
                 continue;

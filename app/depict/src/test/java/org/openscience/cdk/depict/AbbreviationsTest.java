@@ -199,7 +199,7 @@ public class AbbreviationsTest {
         IAtomContainer mol = smi("c1ccccc1N(Cl)C(=O)OC(C)(C)C");
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
-        assertThat(sgroups.get(0).getSubscript(), is("N(Cl)Boc"));
+        assertThat(sgroups.get(0).getSubscript(), is("NClBoc"));
         assertThat(sgroups.get(0).getBonds().size(), is(1));
         assertThat(sgroups.get(0).getAtoms().size(), is(9));
     }
@@ -245,6 +245,15 @@ public class AbbreviationsTest {
         assertThat(sgroups.size(), is(2));
         assertThat(sgroups.get(0).getSubscript(), is("SO3-"));
         assertThat(sgroups.get(1).getSubscript(), is("SO3-"));
+    }
+
+    @Test public void hclSaltOfEdci() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        factory.add("CCN=C=NCCCN(C)C EDCI");
+        IAtomContainer mol = smi("CCN=C=NCCCN(C)C.Cl");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("EDCI·HCl"));
     }
 
     @Test

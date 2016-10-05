@@ -174,6 +174,27 @@ public class AbbreviationLabelTest {
     }
 
     @Test
+    public void NEt3DotHCl() {
+        List<String> tokens = new ArrayList<>();
+        assertTrue(AbbreviationLabel.parse("NEt3·HCl", tokens));
+        assertThat(tokens.size(), is(5));
+        assertThat(tokens.get(0), is("N"));
+        assertThat(tokens.get(1), is("Et3"));
+        assertThat(tokens.get(2), is("·"));
+        assertThat(tokens.get(3), is("H"));
+        assertThat(tokens.get(4), is("Cl"));
+        List<AbbreviationLabel.FormattedText> formatted = AbbreviationLabel.format(tokens);
+        AbbreviationLabel.reduce(formatted, 0, formatted.size());
+        assertThat(formatted.size(), is(3));
+        assertThat(formatted.get(0).text, is("NEt"));
+        assertThat(formatted.get(0).style, is(AbbreviationLabel.STYLE_NORMAL));
+        assertThat(formatted.get(1).text, is("3"));
+        assertThat(formatted.get(1).style, is(AbbreviationLabel.STYLE_SUBSCRIPT));
+        assertThat(formatted.get(2).text, is("·HCl"));
+        assertThat(formatted.get(2).style, is(AbbreviationLabel.STYLE_NORMAL));
+    }
+
+    @Test
     public void formatOPO3H2() {
         List<String> tokens = Arrays.asList("O", "P", "O3", "H2");
         List<AbbreviationLabel.FormattedText> texts = AbbreviationLabel.format(tokens);
