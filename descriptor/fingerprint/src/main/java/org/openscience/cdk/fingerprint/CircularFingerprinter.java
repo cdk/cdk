@@ -30,6 +30,8 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.zip.CRC32;
@@ -41,6 +43,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+
+
 
 /**
  *  <p>Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6
@@ -112,6 +116,7 @@ public class CircularFingerprinter implements IFingerprinter {
             this.atoms = atoms;
         }
     }
+    
 
     // ------------ private members ------------
 
@@ -502,7 +507,231 @@ public class CircularFingerprinter implements IFingerprinter {
         if (fp.iteration < newFP.iteration || fp.hashCode < newFP.hashCode) return;
         fplist.set(hit, newFP);
     }
+    
+    // ------------ Generation of fingerprint smarts ------------
+    
+    //Helper variables for getFPSmarts() function
+    private HashMap<Integer, AtomNode> nodes = new HashMap<Integer, AtomNode>();
+    private HashMap<Integer, String> atomIndexes = new HashMap<Integer, String>();
+    private List<Integer> traversedAtoms = new ArrayList<Integer>();    
+    private List<Integer> ringClosures = new ArrayList<Integer>();
+    private FP curFP = null;
+    private IAtomContainer curFPMolecule = null;
+    private int curIndex;
+	
+    public class AtomNode 
+    {
+    	public int parent;
+    	public int atom;
+    }
+    
+    /**
+     * Determines the structural fragment corresponding to particular FP object
+     * and returns it as SMARTS notation.
+     * This function must be called immediately after calculate() function since it uses the
+     * internal state of CircularFingerprint object. 
+     * 
+     * @param fp - the fingerprint
+     * @param molecule - the molecule for which the fingerprints were calculated
+     * @return the fragment as smarts/smiles
+     */
+    public String getFPSmarts(FP fp, IAtomContainer molecule)
+    {	
+    	if (fp.atoms == null)
+    		return null;
+    	
+    	int n = fp.atoms.length;
+    	if (n == 0)
+    		return null;
+    	
+    	curFP = fp;
+    	curFPMolecule = molecule;
+    		
+    	nodes.clear();
+    	traversedAtoms.clear();
+		atomIndexes.clear();
+		ringClosures.clear();
+		curIndex = 1;
+    	
+    	//Set initial node
+		AtomNode node = new AtomNode();
+		node.parent = -1;
+		node.atom = fp.atoms[0];
+		traversedAtoms.add(node.atom);
+		nodes.put(node.atom, node);
+		    	
+		return nodeToString(fp.atoms[0]);  //traverse recursively all layers of the atom 
+    }
+    
+    
+    /**
+     * Recursive generation of a smarts string for particular AtomNode
+     * @param atomNum
+     * @return
+     */
+    String nodeToString(int atom) 
+    {
+    	StringBuffer sb = new StringBuffer();
+    	AtomNode curNode = nodes.get(atom);
+    	List<String> branches = new ArrayList<String>();
+    	
+    	for (int i = 0; i < atomAdj[atom].length; i++)
+    	{
+    		int neighborAt = atomAdj[atom][i];
+    		
+    		if (neighborAt == curNode.parent)
+				continue; //This is the parent atom (it is already traversed)
+    		
+    		int neighborBo = bondAdj[atom][i];
+    		
+    		AtomNode neighborNode = nodes.get(neighborAt);
+    		if (neighborNode == null) // This node has not been registered yet
+			{
+				//Check for external atom (e.g. it is a neighbor atom which is not in the fp.atoms[] array)
+    			if (findArrayIndex(neighborAt, curFP.atoms) == -1)
+    			{	
+    				String bond_str = "";
+    				if (bondArom[neighborBo])
+    				{
+    					//aromatic bond is represented as ""
+    					branches.add(":a");
+    				}
+    				else
+    				{	
+    					bond_str = bondToString1(bondOrder[neighborBo]);
+    					branches.add(bond_str + "*");
+    				}
+    				continue;
+    			}
+    			
+    			// Registering a new Node and a new branch
+    			AtomNode newNode = new AtomNode();
+    			newNode.atom = neighborAt;
+				newNode.parent = atom;
+				traversedAtoms.add(newNode.atom);
+				nodes.put(newNode.atom, newNode);
+				
+				String bond_str = "";
+				if (!bondArom[neighborBo]) //aromatic bond is represented as ""
+					bond_str = bondToString1(bondOrder[neighborBo]);
+				
+				//recursion 
+				branches.add(bond_str + nodeToString(neighborAt));
+			}
+    		else
+    		{	// Handle ring closure: adding indexes to both atoms    			
+				
+				if (!ringClosures.contains(neighborBo)) {
+					ringClosures.add(neighborBo);
+					String ind = ((curIndex > 9) ? "%" : "") + curIndex;
+					String bond_str = "";
+					if (!bondArom[neighborBo]) //aromatic bond is represented as ""
+						bond_str = bondToString1(bondOrder[neighborBo]);
+					addIndexToAtom(bond_str + ind, atom);
+					addIndexToAtom(ind, neighborAt);
+					curIndex++;
+				}
+    		}
+    	}
+    	
+    	// Add atom from the current node
+    	sb.append(getAtomSmarts(curFPMolecule, atom));
+    	
+    	// Add indexes
+    	if (atomIndexes.containsKey(atom))
+			sb.append(atomIndexes.get(atom));
+    	
+    	// Add branches
+    	if (branches.size() == 0)
+			return (sb.toString());
 
+		for (int i = 0; i < branches.size() - 1; i++)
+			sb.append("(" + branches.get(i).toString() + ")");
+		sb.append(branches.get(branches.size() - 1).toString());
+    	
+    	return sb.toString();
+    }
+    
+    private void addIndexToAtom(String ind, int atom) 
+    {	
+		if (atomIndexes.containsKey(atom)) {
+			String old_ind = atomIndexes.get(atom);
+			atomIndexes.remove(atom);
+			atomIndexes.put(atom, old_ind + ind);
+		} 
+		else
+			atomIndexes.put(atom, ind);
+	}
+    
+    
+    private String bondToString1(int boOrder)
+    {
+    	switch (boOrder)
+    	{
+    	//single bond ('-') is coded as "" by default
+    	case 2:
+    		return "=";
+    	case 3:
+    		return "#";
+    	default:
+    		return ""; 
+    	}
+    }
+    
+    private String getAtomSmarts(IAtomContainer mol, int atNum)
+    {	
+    	IAtom at = mol.getAtom(atNum);
+    	Integer chrg = at.getFormalCharge();
+    	String atStr = at.getSymbol();
+    	
+    	boolean FlagBrackets = false;
+    	
+    	String chStr = ""; 
+    	if (chrg != null)
+    		if (chrg != 0)
+    		{
+    			chStr  = getChargeSmartsStr(chrg);
+    			FlagBrackets = true;
+    		}	
+    	
+    	if (!FlagBrackets)
+    	{	
+    		if (atStr.equals("C")||atStr.equals("N")||atStr.equals("O")||atStr.equals("S")||atStr.equals("P")
+    			||atStr.equals("B")||atStr.equals("Cl")||atStr.equals("Br")||atStr.equals("I")||atStr.equals("F"))
+    		{
+    			//do nothing
+    		}	
+    		else
+    			FlagBrackets = true;
+    	}
+    	
+    	//Handle aromaticity
+    	if (atomArom[atNum])
+    		atStr = atStr.toLowerCase();
+    	
+    	if (FlagBrackets)
+    		atStr = "[" + atStr + chStr + "]";
+    	
+    	return atStr;
+    }
+    
+    private String getChargeSmartsStr(int chrg)
+    {
+    	if (chrg == -1)
+    		return "-";    	
+    	if (chrg == +1)
+    		return "+";
+    	
+    	if (chrg > 0)
+    		return "+" + chrg;
+    	else
+    		if (chrg < 0)
+    			return "" + chrg;
+    		else    	
+    			return ""; // case chrg == 0
+    }
+
+    
     // ------------ molecule analysis: cached cheminformatics ------------
 
     // summarize preliminary information about the molecular structure, to make sure the rest all goes quickly
@@ -1237,6 +1466,14 @@ public class CircularFingerprinter implements IFingerprinter {
         for (int n = atomAdj[a1].length - 1; n >= 0; n--)
             if (atomAdj[a1][n] == a2) return bondAdj[a1][n];
         return -1;
+    }
+    
+    // convecience: find value within array
+    private int findArrayIndex(int value, int array[]){
+    	for (int i = 0; i < array.length; i++)
+    		if (value == array[i])
+    			return i;
+    	return -1;
     }
 
     /*
