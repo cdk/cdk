@@ -24,6 +24,7 @@
 package org.openscience.cdk.depict;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
@@ -494,6 +495,7 @@ public class Abbreviations implements Iterable<String> {
                 nbrSymbols.add(sgroup.getSubscript());
                 todelete.add(sgroup);
             }
+            int numSGrpNbrs = nbrSymbols.size();
             for (IBond bond : mol.getConnectedBondsList(attach)) {
                 if (!xbonds.contains(bond)) {
                     IAtom nbr = bond.getConnectedAtom(attach);
@@ -515,7 +517,12 @@ public class Abbreviations implements Iterable<String> {
                 }
             }
 
-            if (newbonds.size() < 1 || newbonds.size() > 3 || nbrSymbols.isEmpty())
+            // reject if no symbols
+            // reject if no bonds (<1), except if all symbols are identical... (HashSet.size==1)
+            // reject if more that 2 bonds
+            if (nbrSymbols.isEmpty() ||
+                newbonds.size() < 1 && (new HashSet<>(nbrSymbols).size() != 1) ||
+                newbonds.size() > 2)
                 continue;
 
             // create the symbol
