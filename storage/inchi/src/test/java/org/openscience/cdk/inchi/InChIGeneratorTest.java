@@ -873,4 +873,76 @@ public class InChIGeneratorTest extends CDKTestCase {
         assertThat(generator.getReturnStatus(), is(INCHI_RET.ERROR));
         assertThat(generator.getLog(), containsString("Time limit exceeded"));
     }
+
+    /**
+     * Standard inchi for guanine.
+     * @cdk.smiles NC1=NC2=C(N=CN2)C(=O)N1
+     */
+    @Test
+    public void guanine_std() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        String smiles = "NC1=NC2=C(N=CN2)C(=O)N1";
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
+        InChIGenerator inchigen = inchiFact.getInChIGenerator(mol);
+        assertThat(inchigen.getReturnStatus(), is(INCHI_RET.OKAY));
+        assertThat(inchigen.getInchi(), is("InChI=1S/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,6,7,8,9,10,11)"));
+    }
+
+    /**
+     * Ensures KET (Keto-enol) option can be passed to InChI for guanine.
+     * @cdk.smiles NC1=NC2=C(N=CN2)C(=O)N1
+     */
+    @Test
+    public void guanine_ket() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        String smiles = "NC1=NC2=C(N=CN2)C(=O)N1";
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
+        InChIGenerator inchigen = inchiFact.getInChIGenerator(mol, "KET");
+        assertThat(inchigen.getReturnStatus(),
+                   is(INCHI_RET.OKAY));
+        assertThat(inchigen.getInchi(),
+                   is("InChI=1/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,2,6,7,8,9,10,11)"));
+    }
+
+    /**
+     * Standard test for aminopropenol.
+     * @cdk.smiles N\C=C/C=O
+     */
+    @Test
+    public void aminopropenol_std() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        String smiles = "N\\C=C/C=O";
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
+        InChIGenerator stdinchi = inchiFact.getInChIGenerator(mol);
+        assertThat(stdinchi.getReturnStatus(), is(INCHI_RET.OKAY));
+        assertThat(stdinchi.getInchi(),
+                   is("InChI=1S/C3H5NO/c4-2-1-3-5/h1-3H,4H2/b2-1-"));
+        InChIGenerator inchigen = inchiFact.getInChIGenerator(mol, "15T");
+        assertThat(inchigen.getReturnStatus(), is(INCHI_RET.OKAY));
+        assertThat(inchigen.getInchi(),
+                   is("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)"));
+    }
+
+    /**
+     * Ensures 15T (1,5-shifts) option can be passed to InChI for aminopropenol.
+     * @cdk.smiles N\C=C/C=O
+     */
+    @Test
+    public void aminopropenol_15T() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        String smiles = "N\\C=C/C=O";
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
+        InChIGenerator inchigen = inchiFact.getInChIGenerator(mol, "15T");
+        assertThat(inchigen.getReturnStatus(), is(INCHI_RET.OKAY));
+        assertThat(inchigen.getInchi(),
+                   is("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)"));
+    }
 }
