@@ -529,7 +529,7 @@ public class StructureDiagramGenerator {
         if (numAtoms == 1) {
             molecule.getAtom(0).setPoint2d(new Point2d(0, 0));
             return;
-        } else if (molecule.getBondCount() == 1) {
+        } else if (molecule.getBondCount() == 1 && molecule.getAtomCount() == 2) {
             double xOffset = 0;
             for (IAtom atom : molecule.atoms()) {
                 atom.setPoint2d(new Point2d(xOffset, 0));
