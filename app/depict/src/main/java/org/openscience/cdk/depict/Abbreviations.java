@@ -24,6 +24,7 @@
 package org.openscience.cdk.depict;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
@@ -54,6 +55,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import uk.ac.ebi.beam.Element;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -64,6 +66,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -123,6 +126,11 @@ import static org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAto
 public class Abbreviations implements Iterable<String> {
 
     private static final int MAX_FRAG = 50;
+
+    /**
+     * Symbol for joining disconnected fragments.
+     */
+    private static final String INTERPUNCT = "·";
 
     private final Map<String, String> connectedAbbreviations    = new LinkedHashMap<>();
     private final Map<String, String> disconnectedAbbreviations = new LinkedHashMap<>();
@@ -349,38 +357,54 @@ public class Abbreviations implements Iterable<String> {
                         sgroup.addAtom(atom);
                     return Collections.singletonList(sgroup);
                 } else if (cansmi.contains(".")) {
-                    List<Sgroup> newSgroups = new ArrayList<>();
+                    List<Sgroup> complexAbbr = new ArrayList<>(4); // e.g. NEt3
+                    List<Sgroup> simpleAbbr  = new ArrayList<>(4); // e.g. HCl
                     for (IAtomContainer part : ConnectivityChecker.partitionIntoMolecules(mol).atomContainers()) {
-                        cansmi = usmigen.create(part);
-                        label = disconnectedAbbreviations.get(cansmi);
-                        if (label != null && !disabled.contains(label)) {
-                            Sgroup sgroup = new Sgroup();
-                            sgroup.setType(SgroupType.CtabAbbreviation);
-                            sgroup.setSubscript(label);
-                            for (IAtom atom : part.atoms())
+                        if (part.getAtomCount() == 1) {
+                            IAtom atom = part.getAtom(0);
+                            label = getBasicElementSymbol(atom);
+                            if (label != null) {
+                                Sgroup sgroup = new Sgroup();
+                                sgroup.setType(SgroupType.CtabAbbreviation);
+                                sgroup.setSubscript(label);
                                 sgroup.addAtom(atom);
-                            newSgroups.add(sgroup);
+                                simpleAbbr.add(sgroup);
+                            }
+                        } else {
+                            cansmi = usmigen.create(part);
+                            label = disconnectedAbbreviations.get(cansmi);
+                            if (label != null && !disabled.contains(label)) {
+                                Sgroup sgroup = new Sgroup();
+                                sgroup.setType(SgroupType.CtabAbbreviation);
+                                sgroup.setSubscript(label);
+                                for (IAtom atom : part.atoms())
+                                    sgroup.addAtom(atom);
+                                complexAbbr.add(sgroup);
+                            }
                         }
                     }
-                    if (!newSgroups.isEmpty()) {
-                        // merge together
-                        if (newSgroups.size() > 1) {
+                    if (!complexAbbr.isEmpty()) {
+                        // merge together the abbreviations, iff there is at least
+                        // one complex abbr
+                        if (complexAbbr.size() > 0 &&
+                            complexAbbr.size() + simpleAbbr.size() > 1) {
                             Sgroup combined = new Sgroup();
                             label = null;
-                            for (Sgroup sgroup : newSgroups) {
+                            complexAbbr.addAll(simpleAbbr);
+                            for (Sgroup sgroup : complexAbbr) {
                                 if (label == null)
                                     label = sgroup.getSubscript();
                                 else
-                                    label += "/" + sgroup.getSubscript();
+                                    label += INTERPUNCT + sgroup.getSubscript();
                                 for (IAtom atom : sgroup.getAtoms())
                                     combined.addAtom(atom);
                             }
                             combined.setSubscript(label);
                             combined.setType(SgroupType.CtabAbbreviation);
-                            newSgroups.clear();
-                            newSgroups.add(combined);
+                            complexAbbr.clear();
+                            complexAbbr.add(combined);
                         }
-                        return newSgroups;
+                        return complexAbbr;
                     }
                 }
 
@@ -471,6 +495,7 @@ public class Abbreviations implements Iterable<String> {
                 nbrSymbols.add(sgroup.getSubscript());
                 todelete.add(sgroup);
             }
+            int numSGrpNbrs = nbrSymbols.size();
             for (IBond bond : mol.getConnectedBondsList(attach)) {
                 if (!xbonds.contains(bond)) {
                     IAtom nbr = bond.getConnectedAtom(attach);
@@ -483,7 +508,7 @@ public class Abbreviations implements Iterable<String> {
                             hcount++;
                             xatoms.add(nbr);
                         } else if (nbr.getAtomicNumber() > 0){
-                            nbrSymbols.add(newSymbol(nbr.getAtomicNumber(), nbr.getImplicitHydrogenCount()));
+                            nbrSymbols.add(newSymbol(nbr.getAtomicNumber(), nbr.getImplicitHydrogenCount(), false));
                             xatoms.add(nbr);
                         }
                     } else {
@@ -492,12 +517,17 @@ public class Abbreviations implements Iterable<String> {
                 }
             }
 
-            if (newbonds.size() < 1 || newbonds.size() > 3 || nbrSymbols.isEmpty())
+            // reject if no symbols
+            // reject if no bonds (<1), except if all symbols are identical... (HashSet.size==1)
+            // reject if more that 2 bonds
+            if (nbrSymbols.isEmpty() ||
+                newbonds.size() < 1 && (new HashSet<>(nbrSymbols).size() != 1) ||
+                newbonds.size() > 2)
                 continue;
 
             // create the symbol
             StringBuilder sb = new StringBuilder();
-            sb.append(newSymbol(attach.getAtomicNumber(), hcount));
+            sb.append(newSymbol(attach.getAtomicNumber(), hcount, newbonds.size() == 0));
             String prev  = null;
             int    count = 0;
             Collections.sort(nbrSymbols, new Comparator<String>() {
@@ -567,16 +597,25 @@ public class Abbreviations implements Iterable<String> {
         return Character.isDigit(str.charAt(str.length()-1));
     }
 
-    private String newSymbol(int atomnum, int hcount) {
+    private String newSymbol(int atomnum, int hcount, boolean prefix) {
         StringBuilder sb = new StringBuilder();
         Elements elem = Elements.ofNumber(atomnum);
         if (elem == Elements.Carbon && hcount == 3)
             return "Me";
-        sb.append(elem.symbol());
-        if (hcount > 0) {
-            sb.append('H');
-            if (hcount > 1)
-                sb.append(hcount);
+        if (prefix) {
+            if (hcount > 0) {
+                sb.append('H');
+                if (hcount > 1)
+                    sb.append(hcount);
+            }
+            sb.append(elem.symbol());
+        } else {
+            sb.append(elem.symbol());
+            if (hcount > 0) {
+                sb.append('H');
+                if (hcount > 1)
+                    sb.append(hcount);
+            }
         }
         return sb.toString();
     }
@@ -781,6 +820,33 @@ public class Abbreviations implements Iterable<String> {
             if (line.charAt(i) == ' ' || line.charAt(i) == '\t')
                 return line.substring(i + 1).trim();
         return "";
+    }
+
+    private static String getBasicElementSymbol(IAtom atom) {
+        if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0)
+            return null;
+        if (atom.getMassNumber() != null && atom.getMassNumber() != 0)
+            return null;
+        if (atom.getAtomicNumber() == null || atom.getAtomicNumber() < 1)
+            return null;
+        Integer hcnt = atom.getImplicitHydrogenCount();
+        if (hcnt == null) return null;
+        Elements elem = Elements.ofNumber(atom.getAtomicNumber());
+        final String hsym = (hcnt > 0) ? ((hcnt > 1) ? ("H" + hcnt) : "H") : "";
+        // see HydrogenPosition for canonical list
+        switch (elem) {
+            case Oxygen:
+            case Sulfur:
+            case Selenium:
+            case Tellurium:
+            case Fluorine:
+            case Chlorine:
+            case Bromine:
+            case Iodine:
+                return hsym + elem.symbol();
+            default:
+                return elem.symbol() + hsym;
+        }
     }
 
     private int loadSmiles(final InputStream in) throws IOException {

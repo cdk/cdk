@@ -104,7 +104,7 @@ final class AbbreviationLabel {
                                                              "Oct", "Octyl",
                                                              "PAB", "Pentyl", "Ph", "Phenyl", "Pivaloyl", "PMB", "Pro", "Propargyl", "Propyl", "Pv",
                                                              "R", "SEM",
-                                                             "T", "TBDMS", "TBDPS", "TES", "Tf", "THP", "THPO", "TIPS", "TMS", "Tos", "Tol", "Tosyl", "Tr", "Troc",
+                                                             "T", "TBDMS", "Trt", "TBDPS", "TES", "Tf", "THP", "THPO", "TIPS", "TMS", "Tos", "Tol", "Tosyl", "Tr", "Troc",
                                                              "Vinyl", "Voc", "Z"};
 
     private static Trie PREFIX_TRIE = new Trie();
@@ -191,7 +191,7 @@ final class AbbreviationLabel {
                 continue;
             }
 
-            if (c == '/') {
+            if (c == '/' || c == '·') {
                 tokens.add(Character.toString(c));
                 i++;
                 continue;

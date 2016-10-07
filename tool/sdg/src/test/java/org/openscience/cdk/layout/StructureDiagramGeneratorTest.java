@@ -67,6 +67,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -1214,5 +1215,29 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
                          mol.getAtom(i + 12).getPoint2d(),
                          0.01);
         }
+    }
+
+    /**
+     * These molecules are laid out 'H2N=NH2.H2N=NH2', ensure we give them more space than
+     * usual (bond length)
+     */
+    @Test
+    public void dihydroazine() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("N=N.N=N");
+        layout(mol);
+        assertThat(mol.getAtom(2).getPoint2d().x - mol.getAtom(1).getPoint2d().x,
+                   is(greaterThan(SDG.getBondLength())));
+
+    }
+
+    @Test
+    public void NH4OH() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[NH4+].[OH-]");
+        layout(mol);
+        assertThat(mol.getAtom(1).getPoint2d().x - mol.getAtom(0).getPoint2d().x,
+                   is(greaterThan(SDG.getBondLength())));
+
     }
 }
