@@ -59,7 +59,7 @@ public class LingoFingerprinter implements IFingerprinter {
                                                             or(all(), relevant()));
 
     /**
-     * Initialize the fingerprinter with a defult substring length of 4.
+     * Initialize the fingerprinter with a default substring length of 4.
      */
     public LingoFingerprinter() {
         this(4);

@@ -67,7 +67,7 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      * @param text     the text string
      * @param xCoord   the world x-coordinate of where the text should be placed
      * @param yCoord   the world y-coordinate of where the text should be placed
-     * @param graphics the graphics to which the text is outputted
+     * @param graphics the graphics to which the text is provided as output
      * @return         the screen coordinates
      */
     protected Rectangle2D getTextBounds(String text, double xCoord, double yCoord, Graphics2D graphics) {
@@ -94,7 +94,7 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      * @param text     the text string
      * @param xCoord   the world x-coordinate of where the text should be placed
      * @param yCoord   the world y-coordinate of where the text should be placed
-     * @param graphics the graphics to which the text is outputted
+     * @param graphics the graphics to which the text is provided as output
      * @return         the screen coordinates
      */
     protected Point getTextBasePoint(String text, double xCoord, double yCoord, Graphics2D graphics) {

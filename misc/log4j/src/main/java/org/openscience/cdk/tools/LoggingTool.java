@@ -135,7 +135,7 @@ public class LoggingTool implements ILoggingTool {
             logger.debug("Properties file not found!");
         } catch (Exception e) {
             toSTDOUT = true;
-            logger.debug("Unknown error occured: ", e.getMessage());
+            logger.debug("Unknown error occurred: ", e.getMessage());
         }
         /* **************************************************************
          * but some JVMs (i.e. MSFT) won't pass the SecurityException to this
@@ -163,7 +163,7 @@ public class LoggingTool implements ILoggingTool {
     }
 
     /**
-     * Forces the <code>LoggingTool</code> to configurate the Log4J toolkit.
+     * Forces the <code>LoggingTool</code> to configure the Log4J toolkit.
      * Normally this should be done by the application that uses the CDK library,
      * but is available for convenience.
      */
@@ -176,7 +176,7 @@ public class LoggingTool implements ILoggingTool {
             localLogger.error("Properties file not found: ", e.getMessage());
             localLogger.debug(e);
         } catch (Exception e) {
-            localLogger.error("Unknown error occured: ", e.getMessage());
+            localLogger.error("Unknown error occurred: ", e.getMessage());
             localLogger.debug(e);
         }
     }

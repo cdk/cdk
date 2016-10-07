@@ -112,11 +112,11 @@ public class PCSubstanceXMLReader extends DefaultChemObjectReader {
                 builder = object.getBuilder();
                 return (T) readMolecule();
             } catch (IOException e) {
-                throw new CDKException("An IO Exception occured while reading the file.", e);
+                throw new CDKException("An IO Exception occurred while reading the file.", e);
             } catch (CDKException e) {
                 throw e;
             } catch (Exception e) {
-                throw new CDKException("An error occured: " + e.getMessage(), e);
+                throw new CDKException("An error occurred: " + e.getMessage(), e);
             }
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");

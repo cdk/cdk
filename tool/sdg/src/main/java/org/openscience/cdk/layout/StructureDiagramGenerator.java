@@ -323,7 +323,7 @@ public class StructureDiagramGenerator {
             try {
                 this.molecule = (IAtomContainer) mol.clone();
             } catch (CloneNotSupportedException e) {
-                logger.error("Should clone, but exception occured: ", e.getMessage());
+                logger.error("Should clone, but exception occurred: ", e.getMessage());
                 logger.debug(e);
             }
         } else {

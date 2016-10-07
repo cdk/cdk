@@ -649,7 +649,7 @@ public class CDKRMapHandler {
     }
 
     /**
-     * Returns true if a time out occured else false
+     * Returns true if a time out occurred else false
      * @return the timeoutFlag
      */
     public boolean isTimeoutFlag() {

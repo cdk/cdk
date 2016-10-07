@@ -26,7 +26,7 @@ package org.openscience.cdk.exception;
 
 
 /**
- * Exception thrown when an error is occured during SMILES parsing.
+ * Exception thrown when an error is occurred during SMILES parsing.
  *
  * @cdk.module standard
  * @cdk.githash

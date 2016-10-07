@@ -63,7 +63,7 @@ public class InChITautomerGenerator {
     private final static ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(InChITautomerGenerator.class);
 
     /**
-     * Public method to get tautomers for an input molecule, based on the InChI which will be calculated by jniinchi.
+     * Public method to get tautomers for an input molecule, based on the InChI which will be calculated by JNI-InChI.
      * @param molecule molecule for which to generate tautomers
      * @return a list of tautomers, if any
      * @throws CDKException

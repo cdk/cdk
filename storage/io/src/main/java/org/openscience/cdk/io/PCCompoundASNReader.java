@@ -119,11 +119,11 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
             try {
                 return (T) readChemFile((IChemFile) object);
             } catch (IOException e) {
-                throw new CDKException("An IO Exception occured while reading the file.", e);
+                throw new CDKException("An IO Exception occurred while reading the file.", e);
             } catch (CDKException e) {
                 throw e;
             } catch (Exception e) {
-                throw new CDKException("An error occured.", e);
+                throw new CDKException("An error occurred.", e);
             }
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");

@@ -41,7 +41,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /**
- * Adjusts parts of an AtomContainer to the congiguratin of a fragment.
+ * Adjusts parts of an AtomContainer to the configuration of a fragment.
  *
  * @author        shk3
  * @cdk.created   2004-03-04
@@ -51,7 +51,7 @@ import org.w3c.dom.NodeList;
 public class Normalizer {
 
     /**
-     *  The method takes an xml files like the following:<br>
+     *  The method takes an XML files like the following:<br>
      *  &lt;replace-set&gt;<br>
      *  &lt;replace&gt;O=N=O&lt;/replace&gt;<br>
      *  &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;<br>
