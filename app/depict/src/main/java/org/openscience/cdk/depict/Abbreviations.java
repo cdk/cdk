@@ -508,7 +508,7 @@ public class Abbreviations implements Iterable<String> {
                             hcount++;
                             xatoms.add(nbr);
                         } else if (nbr.getAtomicNumber() > 0){
-                            nbrSymbols.add(newSymbol(nbr.getAtomicNumber(), nbr.getImplicitHydrogenCount()));
+                            nbrSymbols.add(newSymbol(nbr.getAtomicNumber(), nbr.getImplicitHydrogenCount(), false));
                             xatoms.add(nbr);
                         }
                     } else {
@@ -527,7 +527,7 @@ public class Abbreviations implements Iterable<String> {
 
             // create the symbol
             StringBuilder sb = new StringBuilder();
-            sb.append(newSymbol(attach.getAtomicNumber(), hcount));
+            sb.append(newSymbol(attach.getAtomicNumber(), hcount, newbonds.size() == 0));
             String prev  = null;
             int    count = 0;
             Collections.sort(nbrSymbols, new Comparator<String>() {
@@ -597,16 +597,25 @@ public class Abbreviations implements Iterable<String> {
         return Character.isDigit(str.charAt(str.length()-1));
     }
 
-    private String newSymbol(int atomnum, int hcount) {
+    private String newSymbol(int atomnum, int hcount, boolean prefix) {
         StringBuilder sb = new StringBuilder();
         Elements elem = Elements.ofNumber(atomnum);
         if (elem == Elements.Carbon && hcount == 3)
             return "Me";
-        sb.append(elem.symbol());
-        if (hcount > 0) {
-            sb.append('H');
-            if (hcount > 1)
-                sb.append(hcount);
+        if (prefix) {
+            if (hcount > 0) {
+                sb.append('H');
+                if (hcount > 1)
+                    sb.append(hcount);
+            }
+            sb.append(elem.symbol());
+        } else {
+            sb.append(elem.symbol());
+            if (hcount > 0) {
+                sb.append('H');
+                if (hcount > 1)
+                    sb.append(hcount);
+            }
         }
         return sb.toString();
     }
