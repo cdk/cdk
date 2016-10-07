@@ -5,7 +5,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.fingerprint.CircularFingerprinter.FP;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.smarts.SubstructureSmarts;
+import org.openscience.cdk.smarts.SmartsFragmentExtractor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -111,7 +111,7 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 
 		CircularFingerprinter circ = new CircularFingerprinter();
 		circ.calculate(mol);
-        SubstructureSmarts subsmarts = new SubstructureSmarts(mol);
+        SmartsFragmentExtractor subsmarts = new SmartsFragmentExtractor(mol);
         subsmarts.setIncludePeripheralBonds(true);
 		int numFP = circ.getFPCount();
 

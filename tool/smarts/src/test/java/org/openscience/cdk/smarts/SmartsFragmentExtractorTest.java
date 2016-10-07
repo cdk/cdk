@@ -32,13 +32,13 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class SubstructureSmartsTest {
+public class SmartsFragmentExtractorTest {
 
-    private String generate(String smi, boolean peripheral, int[] idxs) throws Exception {
+    private String generate(String smi, int mode, int[] idxs) throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
-        SubstructureSmarts subsmarts = new SubstructureSmarts(mol);
-        subsmarts.setIncludePeripheralBonds(peripheral);
+        SmartsFragmentExtractor subsmarts = new SmartsFragmentExtractor(mol);
+        subsmarts.setMode(mode);
         return subsmarts.generate(idxs);
     }
 
@@ -50,17 +50,33 @@ public class SubstructureSmartsTest {
     }
 
     @Test
-    public void indole() throws Exception {
-        String smarts = generate("[nH]1ccc2c1cccc2",
-                                 false,
-                                 makeSeq(0,4));
-        assertThat(smarts, is("nccc"));
+    public void methylExact() throws Exception {
+        String smarts = generate("CC(C)CCC",
+                                 SmartsFragmentExtractor.MODE_EXACT,
+                                 makeSeq(0,1));
+        assertThat(smarts, is("[CH3v4X4+0]"));
     }
 
     @Test
-    public void indoleWithPeripheral() throws Exception {
+    public void methylForJCompoundMap() throws Exception {
+        String smarts = generate("CC(C)CCC",
+                                 SmartsFragmentExtractor.MODE_JCOMPOUNDMAPPER,
+                                 makeSeq(0,1));
+        assertThat(smarts, is("C*"));
+    }
+
+    @Test
+    public void indole() throws Exception {
         String smarts = generate("[nH]1ccc2c1cccc2",
-                                 true,
+                                 SmartsFragmentExtractor.MODE_EXACT,
+                                 makeSeq(0,4));
+        assertThat(smarts, is("[nH1v3X3+0][cH1v4X3+0][cH1v4X3+0][cH0v4X3+0]"));
+    }
+
+    @Test
+    public void indoleForJCompoundMap() throws Exception {
+        String smarts = generate("[nH]1ccc2c1cccc2",
+                                 SmartsFragmentExtractor.MODE_JCOMPOUNDMAPPER,
                                  makeSeq(0,4));
         assertThat(smarts, is("n(ccc(a)a)a"));
     }
@@ -68,7 +84,7 @@ public class SubstructureSmartsTest {
     @Test
     public void biphenylIncludesSingleBond() throws Exception {
         String smarts = generate("c1ccccc1-c1ccccc1",
-                                 false,
+                                 SmartsFragmentExtractor.MODE_EXACT,
                                  makeSeq(0,12));
         assertThat(smarts, containsString("-"));
     }
@@ -76,10 +92,10 @@ public class SubstructureSmartsTest {
     @Test
     public void fullereneC60() throws Exception {
         String smarts = generate("c12c3c4c5c1c1c6c7c2c2c8c3c3c9c4c4c%10c5c5c1c1c6c6c%11c7c2c2c7c8c3c3c8c9c4c4c9c%10c5c5c1c1c6c6c%11c2c2c7c3c3c8c4c4c9c5c1c1c6c2c3c41",
-                                 false,
+                                 SmartsFragmentExtractor.MODE_EXACT,
                                  makeSeq(0,60));
         assertThat(smarts,
-                   is("c12c3c4c5c1c1c6c7c2c2c8c3c3c9c4c4c%10c5c5c1c1c6c6c%11c7c2c2c7c8c3c3c8c9c4c4c9c%10c5c5c1c1c6c6c%11c2c2c7c3c3c8c4c4c9c5c1c1c6c2c3c41"));
+                   is("[cH0v4X3+0]12[cH0v4X3+0]3[cH0v4X3+0]4[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]7[cH0v4X3+0]2[cH0v4X3+0]2[cH0v4X3+0]8[cH0v4X3+0]3[cH0v4X3+0]3[cH0v4X3+0]9[cH0v4X3+0]4[cH0v4X3+0]4[cH0v4X3+0]%10[cH0v4X3+0]5[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]6[cH0v4X3+0]%11[cH0v4X3+0]7[cH0v4X3+0]2[cH0v4X3+0]2[cH0v4X3+0]7[cH0v4X3+0]8[cH0v4X3+0]3[cH0v4X3+0]3[cH0v4X3+0]8[cH0v4X3+0]9[cH0v4X3+0]4[cH0v4X3+0]4[cH0v4X3+0]9[cH0v4X3+0]%10[cH0v4X3+0]5[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]6[cH0v4X3+0]%11[cH0v4X3+0]2[cH0v4X3+0]2[cH0v4X3+0]7[cH0v4X3+0]3[cH0v4X3+0]3[cH0v4X3+0]8[cH0v4X3+0]4[cH0v4X3+0]4[cH0v4X3+0]9[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]2[cH0v4X3+0]3[cH0v4X3+0]41"));
     }
 
 }
