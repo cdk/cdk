@@ -408,10 +408,11 @@ public final class SmartsFragmentExtractor {
         if (chg == null) chg = 0;
 
 
-        if (chg < -1 || chg > +1) {
+        if (chg <= -1 || chg >= +1) {
             if (chg >= 0) sb.append('+');
             else sb.append('-');
-            sb.append(Math.abs(chg));
+            int abs = Math.abs(chg);
+            if (abs > 1) sb.append(abs);
             complex = true;
         } else if (mode == MODE_EXACT) {
             sb.append("+0");

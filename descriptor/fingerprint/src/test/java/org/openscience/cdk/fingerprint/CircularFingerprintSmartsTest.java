@@ -112,7 +112,7 @@ public class CircularFingerprintSmartsTest extends CDKTestCase {
 		CircularFingerprinter circ = new CircularFingerprinter();
 		circ.calculate(mol);
         SmartsFragmentExtractor subsmarts = new SmartsFragmentExtractor(mol);
-        subsmarts.setIncludePeripheralBonds(true);
+        subsmarts.setMode(SmartsFragmentExtractor.MODE_JCOMPOUNDMAPPER);
 		int numFP = circ.getFPCount();
 
         Set<String> actual = new HashSet<>();
