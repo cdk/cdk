@@ -327,7 +327,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         boolean testResults[] = {false, false, false, false, false, false, false, false};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-        IAtomContainer mol = sp.parseSmiles("O=c1cccccc1"); // tropone
+        IAtomContainer mol = sp.parseSmiles("O=C1C=CC=CC=C1"); // tropone
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertFalse(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         Assert.assertEquals(testResults.length, mol.getAtomCount());
