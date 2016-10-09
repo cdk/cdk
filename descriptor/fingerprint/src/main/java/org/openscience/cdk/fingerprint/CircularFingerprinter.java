@@ -30,6 +30,8 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.zip.CRC32;
@@ -37,10 +39,13 @@ import java.util.zip.CRC32;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import com.google.common.primitives.Ints;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+
+
 
 /**
  *  <p>Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6
@@ -112,6 +117,7 @@ public class CircularFingerprinter implements IFingerprinter {
             this.atoms = atoms;
         }
     }
+    
 
     // ------------ private members ------------
 
@@ -1238,7 +1244,7 @@ public class CircularFingerprinter implements IFingerprinter {
             if (atomAdj[a1][n] == a2) return bondAdj[a1][n];
         return -1;
     }
-
+    
     /*
      * for debugging convenience: revive if necessary private void wr(String
      * str) {System.out.println(str);} private String arrayStr(int[] val) { if
