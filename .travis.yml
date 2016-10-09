@@ -1,2 +1,2 @@
 language: java
-script: mvn test -DskipTests
+script: mvn test -fn
