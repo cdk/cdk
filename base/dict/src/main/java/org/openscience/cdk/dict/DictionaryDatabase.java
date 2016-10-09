@@ -25,6 +25,7 @@ package org.openscience.cdk.dict;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
@@ -43,6 +44,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module     dict
  */
 public class DictionaryDatabase {
+
+    private static final Map<String,Dictionary> cache = new HashMap<>();
 
     public final static String      DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
 
@@ -76,23 +79,29 @@ public class DictionaryDatabase {
             databaseLocator += "." + type.substring(0, type.length() - 6);
         else
             databaseLocator += "." + type;
-        logger.info("Reading dictionary from ", databaseLocator);
-        try {
-            InputStreamReader reader = new InputStreamReader(this.getClass().getClassLoader()
-                    .getResourceAsStream(databaseLocator));
-            if (type.equals("owl")) {
-                dictionary = OWLFile.unmarshal(reader);
-            } else if (type.equals("owl_React")) {
-                dictionary = OWLReact.unmarshal(reader);
-            } else { // assume XML using Castor
-                dictionary = Dictionary.unmarshal(reader);
-            }
-        } catch (Exception exception) {
-            dictionary = null;
-            logger.error("Could not read dictionary ", databaseLocator);
-            logger.debug(exception);
+        if (cache.containsKey(databaseLocator)) {
+            return cache.get(databaseLocator);
         }
-        return dictionary;
+        else {
+            logger.info("Reading dictionary from ", databaseLocator);
+            try {
+                InputStreamReader reader = new InputStreamReader(this.getClass().getClassLoader()
+                                                                     .getResourceAsStream(databaseLocator));
+                if (type.equals("owl")) {
+                    dictionary = OWLFile.unmarshal(reader);
+                } else if (type.equals("owl_React")) {
+                    dictionary = OWLReact.unmarshal(reader);
+                } else { // assume XML using Castor
+                    dictionary = Dictionary.unmarshal(reader);
+                }
+            } catch (Exception exception) {
+                dictionary = null;
+                logger.error("Could not read dictionary ", databaseLocator);
+                logger.debug(exception);
+            }
+            cache.put(databaseLocator, dictionary);
+            return dictionary;
+        }
     }
 
     /**

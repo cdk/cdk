@@ -95,7 +95,7 @@ public class Dictionary {
         return dict;
     }
 
-    public void addEntry(Entry entry) {
+    void addEntry(Entry entry) {
         entries.put(entry.getID().toLowerCase(), entry);
     }
 
