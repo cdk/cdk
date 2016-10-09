@@ -42,6 +42,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
@@ -887,11 +888,11 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         for (IAtom atom : mol.atoms())
             assertNotNull(atom.getPoint2d());
         assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(1).getPoint2d()),
-                   closeTo(SDG.getBondLength(), 0.001));
+                   closeTo(1.5*SDG.getBondLength(), 0.001));
         assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(2).getPoint2d()),
-                   closeTo(SDG.getBondLength(), 0.001));
+                   closeTo(1.5*SDG.getBondLength(), 0.001));
         assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(3).getPoint2d()),
-                   closeTo(SDG.getBondLength(), 0.001));
+                   closeTo(1.5*SDG.getBondLength(), 0.001));
     }
 
     @Test
@@ -902,9 +903,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         for (IAtom atom : mol.atoms())
             assertNotNull(atom.getPoint2d());
         assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(1).getPoint2d()),
-                   closeTo(SDG.getBondLength(), 0.001));
+                   closeTo(1.5*SDG.getBondLength(), 0.001));
         assertThat(mol.getAtom(4).getPoint2d().distance(mol.getAtom(5).getPoint2d()),
-                   closeTo(SDG.getBondLength(), 0.001));
+                   closeTo(1.5*SDG.getBondLength(), 0.001));
     }
 
     // subjective... since the real structure is lattice but looks better than a grid
@@ -918,8 +919,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         for (int i = 2; i < 5; i++) {
             double distLi = mol.getAtom(0).getPoint2d().distance(mol.getAtom(i).getPoint2d());
             double distAl = mol.getAtom(1).getPoint2d().distance(mol.getAtom(i).getPoint2d());
-            double diffLi = distLi - SDG.getBondLength();
-            double diffAl = distAl - SDG.getBondLength();
+            double diffLi = distLi - 1.5*SDG.getBondLength();
+            double diffAl = distAl - 1.5*SDG.getBondLength();
             if (Math.abs(diffLi) > 0.001 && Math.abs(diffAl) > 0.001)
                 fail("Chlorine must be bond length from Al or Li atoms");
         }
@@ -933,7 +934,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         for (IAtom atom : mol.atoms())
             assertNotNull(atom.getPoint2d());
         assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(1).getPoint2d()),
-                   closeTo(SDG.getBondLength(), 0.001));
+                   closeTo(1.5*SDG.getBondLength(), 0.001));
     }
 
     // SMILES have been shuffled the smiles to make it harder... otherwise we
@@ -945,8 +946,10 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         layout(mol);
         for (IAtom atom : mol.atoms())
             assertNotNull(atom.getPoint2d());
-        assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(2).getPoint2d()),
-                   closeTo(SDG.getBondLength(), 0.001));
+        assertThat(mol.getAtom(0).getAtomicNumber(), is(17));
+        assertThat(mol.getAtom(15).getAtomicNumber(), is(7));
+        assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(15).getPoint2d()),
+                   closeTo(1.5*SDG.getBondLength(), 0.001));
     }
 
     @Test
@@ -957,7 +960,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         for (IAtom atom : mol.atoms())
             assertNotNull(atom.getPoint2d());
         assertThat(mol.getAtom(0).getPoint2d().distance(mol.getAtom(1).getPoint2d()),
-                   closeTo(SDG.getBondLength(), 0.001));
+                   closeTo(1.5*SDG.getBondLength(), 0.001));
     }
 
     @Test
@@ -1004,7 +1007,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         // platin has two chlorines...
         int ptFound = 0;
         for (IAtom chlorine : chlorines) {
-            double delta = chlorine.getPoint2d().distance(platinum.getPoint2d()) - SDG.getBondLength();
+            double delta = chlorine.getPoint2d().distance(platinum.getPoint2d()) - 1.5*SDG.getBondLength();
             if (Math.abs(delta) < 0.01)
                 ptFound++;
         }
@@ -1014,7 +1017,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         for (IAtom potassium : potassiums) {
             int kFound = 0;
             for (IAtom oxygen : oxygens) {
-                double delta = oxygen.getPoint2d().distance(potassium.getPoint2d()) - SDG.getBondLength();
+                double delta = oxygen.getPoint2d().distance(potassium.getPoint2d()) - 1.5*SDG.getBondLength();
                 if (Math.abs(delta) < 0.01)
                     kFound++;
             }
@@ -1025,7 +1028,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         for (IAtom aluminium : aluminiums) {
             int clFound = 0;
             for (IAtom chlorine : chlorines) {
-                double delta = chlorine.getPoint2d().distance(aluminium.getPoint2d()) - SDG.getBondLength();
+                double delta = chlorine.getPoint2d().distance(aluminium.getPoint2d()) - 1.5*SDG.getBondLength();
                 if (Math.abs(delta) < 0.01)
                     clFound++;
             }
