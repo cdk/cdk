@@ -168,6 +168,7 @@ public class InChIGeneratorFactory {
      * @throws CDKException  if the generator cannot be instantiated
      */
     public InChIGenerator getInChIGenerator(IAtomContainer container, List<INCHI_OPTION> options) throws CDKException {
+        if (options == null) throw new IllegalArgumentException("Null options");
         return (new InChIGenerator(container, options, ignoreAromaticBonds));
     }
 
