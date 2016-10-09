@@ -57,15 +57,15 @@ import org.xml.sax.SAXParseException;
  */
 public class XMLIsotopeFactoryTest extends CDKTestCase {
 
-    boolean                      standAlone           = false;
+    boolean standAlone = false;
 
-    final static AtomTypeFactory atf                  = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
+    final static AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
 
-    private static final String  JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+    private static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 
-    private static final String  W3C_XML_SCHEMA       = "http://www.w3.org/2001/XMLSchema";
+    private static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
-    static File                  tmpCMLSchema;
+    static File tmpCMLSchema;
 
     static {
         try {
@@ -220,35 +220,21 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(atomTypeList);
         File tmpInput = copyFileToTmp(shortcut, ".cmlinput", ins, "../../io/cml/data/cml25b1.xsd", "file://"
-                + tmpCMLSchema.getAbsolutePath());
+                                                                                                   + tmpCMLSchema.getAbsolutePath());
         Assert.assertNotNull("Could not find the atom type list CML source", ins);
 
-        if (System.getProperty("java.version").indexOf("1.6") != -1
-                || System.getProperty("java.version").indexOf("1.7") != -1) {
+        InputStream cmlSchema = new FileInputStream(tmpCMLSchema);
+        Assert.assertNotNull("Could not find the CML schema", cmlSchema);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        factory.setValidating(true);
+        factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
+        factory.setAttribute(JAXP_SCHEMA_LANGUAGE, cmlSchema);
+        factory.setFeature("http://apache.org/xml/features/validation/schema", true);
 
-            InputStream cmlSchema = new FileInputStream(tmpCMLSchema);
-            Assert.assertNotNull("Could not find the CML schema", cmlSchema);
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
-            factory.setValidating(true);
-            factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
-            factory.setAttribute(JAXP_SCHEMA_LANGUAGE, cmlSchema);
-            factory.setFeature("http://apache.org/xml/features/validation/schema", true);
-
-            DocumentBuilder parser = factory.newDocumentBuilder();
-            parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
-            parser.parse(new FileInputStream(tmpInput));
-        } else if (System.getProperty("java.version").indexOf("1.5") != -1) {
-            DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document document = parser.parse(tmpInput);
-            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Source schemaFile = new StreamSource(tmpCMLSchema);
-            Schema schema = factory.newSchema(schemaFile);
-            Validator validator = schema.newValidator();
-            validator.validate(new DOMSource(document));
-        } else {
-            Assert.fail("Don't know how to validate with Java version: " + System.getProperty("java.version"));
-        }
+        DocumentBuilder parser = factory.newDocumentBuilder();
+        parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
+        parser.parse(new FileInputStream(tmpInput));
     }
 
     @Test
@@ -273,11 +259,11 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
      * @param in          InputStream to copy from
      * @param toReplace   String to replace. Null, if nothing needs to be replaced.
      * @param replaceWith String that replaces the toReplace. Null, if nothing needs to be replaced.
-     *
-     * @return            The temporary file/
+     * @return The temporary file/
      * @throws IOException
      */
-    private static File copyFileToTmp(String prefix, String suffix, InputStream in, String toReplace, String replaceWith)
+    private static File copyFileToTmp(String prefix, String suffix, InputStream in, String toReplace,
+                                      String replaceWith)
             throws IOException {
         File tmpFile = File.createTempFile(prefix, suffix);
         FileOutputStream out = new FileOutputStream(tmpFile);
@@ -285,7 +271,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
         int i = 0;
         while ((i = in.read(buf)) != -1) {
             if (toReplace != null && replaceWith != null && i >= toReplace.length()
-                    && new String(buf).contains(toReplace)) {
+                && new String(buf).contains(toReplace)) {
                 // a replacement has been defined
                 String newString = new String(buf).replaceAll(toReplace, replaceWith);
                 out.write(newString.getBytes());
