@@ -24,7 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.limitations.tools.SaturationCheckerTest;
 
 /**
- * TestSuite that runs all JUnit tests that fail bacause of limitations of
+ * TestSuite that runs all JUnit tests that fail because of limitations of
  * certain algorithms.
  *
  * @cdk.module test-extra

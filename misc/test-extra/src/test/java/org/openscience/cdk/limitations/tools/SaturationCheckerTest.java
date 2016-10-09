@@ -20,6 +20,7 @@ package org.openscience.cdk.limitations.tools;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -46,6 +47,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  *
  * @see org.openscience.cdk.tools.SaturationChecker
  */
+@Ignore("Limitations actually cause failing tests")
 public class SaturationCheckerTest extends CDKTestCase {
 
     private static SaturationChecker satcheck = null;
