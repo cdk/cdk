@@ -33,10 +33,12 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -129,6 +131,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
 
     @Test
+    @Category(SlowTest.class)
     public void testModelBuilder3D_Konstanz() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
@@ -204,6 +207,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
      * @cdk.bug 1315823
      */
     @Test
+    @Category(SlowTest.class)
     public void testModelBuilder3D_232() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
@@ -360,6 +364,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
      * @cdk.bug 1241421
      */
     @Test
+    @Category(SlowTest.class)
     public void testModelBuilder3D_bug_1241421() throws Exception {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String filename = "data/mdl/bug1241421.mol";
@@ -374,6 +379,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
 
     @Test
+    @Category(SlowTest.class)
     public void testModelBuilder3D_reserpine() throws Exception {
         ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
         String filename = "data/mdl/reserpine.mol";
