@@ -97,7 +97,7 @@ public class MDLV3000WriterTest {
         mol.getAtom(0).setImplicitHydrogenCount(3);
         mol.addSingleElectron(0);
         String res = writeToStr(mol);
-        assertThat(res, CoreMatchers.containsString("M  V30 1 C 0 0 0 0 RAD=1 VAL=3\n"));
+        assertThat(res, CoreMatchers.containsString("M  V30 1 C 0 0 0 0 RAD=2 VAL=3\n"));
     }
 
     @Test(expected = CDKException.class)

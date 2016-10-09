@@ -20,8 +20,10 @@ package org.openscience.cdk.charges;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -66,6 +68,7 @@ public class StabilizationChargesTest extends CDKTestCase {
      * @throws Exception
      */
     @Test
+    @Category(SlowTest.class)
     public void testCalculatePositive_IAtomContainer_IAtom() throws Exception {
 
         StabilizationCharges sc = new StabilizationCharges();

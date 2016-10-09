@@ -21,6 +21,8 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -56,6 +58,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
      * @throws Exception
      */
     @Test
+    @Category(SlowTest.class)
     public void testStabilizationPlusChargeDescriptor() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -80,6 +83,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
      *
      */
     @Test
+    @Category(SlowTest.class)
     public void testNotCharged() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -106,6 +110,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
      * @throws Exception
      */
     @Test
+    @Category(SlowTest.class)
     public void testStabilizationPlusChargeDescriptor2() throws Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -133,6 +138,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
      * @throws Exception
      */
     @Test
+    @Category(SlowTest.class)
     public void testStabilizationComparative() throws Exception {
 
         IAtomContainer mol1 = builder.newInstance(IAtomContainer.class);
@@ -186,6 +192,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
      *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
      */
     @Test
+    @Category(SlowTest.class)
     public void testCompareIonized() throws Exception {
 
         IAtomContainer molA = builder.newInstance(IAtomContainer.class);

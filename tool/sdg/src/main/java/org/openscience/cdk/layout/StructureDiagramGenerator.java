@@ -1129,7 +1129,7 @@ public class StructureDiagramGenerator {
                 IAtom tmp = beg;
                 beg = end;
                 end = tmp;
-            } else if (numBegIonic == numEndIonic && numBegIonic > 1) {
+            } else if (numBegIonic.equals(numEndIonic) && numBegIonic > 1) {
                 // can't stretch these
                 continue;
             }
