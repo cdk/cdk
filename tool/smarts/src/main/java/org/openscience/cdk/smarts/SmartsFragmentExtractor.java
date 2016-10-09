@@ -40,7 +40,8 @@ import java.util.Locale;
  * The alternative mode, {@link #MODE_JCOMPOUNDMAPPER}, only captures the element,
  * non-zero charge, and peripheral bonds. Although the later looks cleaner, the
  * peripheral bonds intend to capture the connectivity of the terminal atoms but
- * since the valence is not bounded further substitution is still allowed.
+ * since the valence is not bounded further substitution is still allowed. This
+ * mirrors functionality from jCompoundMapper {@cdk.cite Hinselmann2011}.
  *
  * <p>The difference is easily demonstrated for methyl. Consider the compound
  * of 2-methylpentane {@code CC(C)CCC}, if we extract one of the methyl atoms

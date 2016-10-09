@@ -16,7 +16,7 @@
       <bibtex:pages>80-90</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="batchelor13">
     <bibtex:inproceedings>
       <bibtex:author>Colin Batchelor and Ken Karapetyan and Valery Tkachenko and Anthony Williams</bibtex:author>
@@ -26,7 +26,7 @@
       <bibtex:url>http://www.slideshare.net/RSC-Chemistry/20130724-cisrg-sugarsbatchelor</bibtex:url>
     </bibtex:inproceedings>
   </bibtex:entry>
-  
+
   <bibtex:entry id="BER2001">
     <bibtex:misc>
       <bibtex:author>Bernstein, H.J.</bibtex:author>
@@ -34,18 +34,6 @@
       <bibtex:url>http://www.openrasmol.org/doc/rasmol.html#cpkcolours</bibtex:url>
     </bibtex:misc>
   </bibtex:entry>
-  
-  <bibtex:entry id="Brecher08">
-      <bibtex:article>
-        <bibtex:author>Jonathan Brecher</bibtex:author>
-        <bibtex:title>Graphical representation standards for chemical structure diagrams (IUPAC Recommendations 2008)</bibtex:title>
-        <bibtex:journal>Pure Appl. Chem</bibtex:journal>
-        <bibtex:year>2008</bibtex:year>
-        <bibtex:volume>80</bibtex:volume>
-        <bibtex:number>2</bibtex:number>
-        <bibtex:pages>277–410</bibtex:pages>
-      </bibtex:article>
-    </bibtex:entry>
 
   <bibtex:entry id="BGdV04a">
     <bibtex:article>
@@ -57,7 +45,29 @@
       <bibtex:pages>51-62</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
+
+  <bibtex:entry id="BODR10">
+    <bibtex:misc>
+      <bibtex:author>Willighagen, E. and Hutchinson, G. and Niehaus, C. and Buchwald, J. and Pfeiffer, M. and Leidert, D. and Brefort, J.</bibtex:author>
+      <bibtex:title>Blue Obelisk Data Repository (version 10)</bibtex:title>
+      <bibtex:journal>Figshare</bibtex:journal>
+      <bibtex:year>2014</bibtex:year>
+      <bibtex:doi>10.6084/m9.figshare.1025775.v1</bibtex:doi>
+    </bibtex:misc>
+  </bibtex:entry>
+
+  <bibtex:entry id="Brecher08">
+    <bibtex:article>
+      <bibtex:author>Jonathan Brecher</bibtex:author>
+      <bibtex:title>Graphical representation standards for chemical structure diagrams (IUPAC Recommendations 2008)</bibtex:title>
+      <bibtex:journal>Pure Appl. Chem</bibtex:journal>
+      <bibtex:year>2008</bibtex:year>
+      <bibtex:volume>80</bibtex:volume>
+      <bibtex:number>2</bibtex:number>
+      <bibtex:pages>277–410</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="Cahn1966">
     <bibtex:article>
       <bibtex:author>Cahn, R.S. and Ingold, C. and Prelog, V.</bibtex:author>
@@ -76,7 +86,7 @@
       <bibtex:title>A New Effective Algorithm for the Unambiguous Identification of the Stereochemical Characteristics of Compounds During Their Registration in Databases</bibtex:title>
       <bibtex:journal>Molecules</bibtex:journal>
       <bibtex:year>2001</bibtex:year>
-      <bibtex:volume>6</bibtex:volume>      
+      <bibtex:volume>6</bibtex:volume>
       <bibtex:pages>915-926</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
@@ -92,17 +102,17 @@
       <bibtex:pages>1107-23</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
-   <bibtex:entry id="Clark13">
-      <bibtex:article>
-        <bibtex:author>Clark A.</bibtex:author>
-        <bibtex:title>Rendering Molecular Sketches for Publication Quality Output</bibtex:title>
-        <bibtex:journal>Molecular Informatics</bibtex:journal>
-        <bibtex:year>2013</bibtex:year>
-        <bibtex:volume>32</bibtex:volume>      
-        <bibtex:pages>291-301</bibtex:pages>
-      </bibtex:article>
-    </bibtex:entry>
+
+  <bibtex:entry id="Clark13">
+    <bibtex:article>
+      <bibtex:author>Clark A.</bibtex:author>
+      <bibtex:title>Rendering Molecular Sketches for Publication Quality Output</bibtex:title>
+      <bibtex:journal>Molecular Informatics</bibtex:journal>
+      <bibtex:year>2013</bibtex:year>
+      <bibtex:volume>32</bibtex:volume>
+      <bibtex:pages>291-301</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
 
   <bibtex:entry id="Downs89">
     <bibtex:article>
@@ -126,12 +136,12 @@
       <bibtex:pages>359-360</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="BGdV04b">
     <bibtex:techreport>
       <bibtex:author>Berger, F. and Gritzmann, P. and De Vries, S.</bibtex:author>
       <bibtex:title>Cyclic Invariants for Molecular Graphs</bibtex:title>
-      <bibtex:institution>Lehrstuhl f�r Angewandte Geometrie und Diskrete Mathematik, Technische Universit�t M�nchen</bibtex:institution>
+      <bibtex:institution>Lehrstuhl für Angewandte Geometrie und Diskrete Mathematik, Technische Universität München</bibtex:institution>
       <bibtex:year>2004</bibtex:year>
       <bibtex:url>http://www-m9.ma.tum.de/dm/cycles/</bibtex:url>
     </bibtex:techreport>
@@ -156,7 +166,7 @@
       <bibtex:title>Constitutional Formulae generated from Connectivity
         Information: the Program MDRAW</bibtex:title>
       <bibtex:journal>Journal of Chemical Research</bibtex:journal>
-      <bibtex:year>1991</bibtex:year> 
+      <bibtex:year>1991</bibtex:year>
       <bibtex:pages>2601-2689</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
@@ -207,7 +217,7 @@
       <bibtex:pages>225-227</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="BUR97">
     <bibtex:article>
       <bibtex:author>Burden, F.R.</bibtex:author>
@@ -218,7 +228,7 @@
       <bibtex:pages>309-314</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-    
+
   <bibtex:entry id="Cordella04">
     <bibtex:article>
       <bibtex:author>Cordella Luigi P and Foggia Pasquale and Carlo Sansone and Vento Mario </bibtex:author>
@@ -229,7 +239,7 @@
       <bibtex:pages>10</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="CHE03">
     <bibtex:article>
       <bibtex:author>Cherkasov, A.</bibtex:author>
@@ -261,8 +271,8 @@
   <bibtex:entry id="ERTL2000">
     <bibtex:article>
       <bibtex:author>Ertl, P. and Rohde, B. and Selzer, P.</bibtex:author>
-      <bibtex:title>Fast Calculation of Molecular Polar Surface Area as a Sum of 
-         Fragment-Based Contributions and Its Application to the Prediction of 
+      <bibtex:title>Fast Calculation of Molecular Polar Surface Area as a Sum of
+         Fragment-Based Contributions and Its Application to the Prediction of
          Drug Transport Properties</bibtex:title>
       <bibtex:journal>J. Med. Chem.</bibtex:journal>
       <bibtex:year>2000</bibtex:year>
@@ -300,7 +310,7 @@
       <bibtex:pages>707-720</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
+
    <bibtex:entry id="FAU04">
     <bibtex:article>
       <bibtex:author>Faulon, J. L., Collins, M. J., and Carr, R. D.</bibtex:author>
@@ -374,14 +384,15 @@
     </bibtex:article>
   </bibtex:entry>
 
-  <bibtex:entry id="Green1994">
+  <bibtex:entry id="Guha2006">
     <bibtex:article>
-      <bibtex:author>Green and Kahn and Savoy and Sprague and Teig</bibtex:author>
-      <bibtex:title>Chemical Function Queries for 3D Database Search</bibtex:title>
-      <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
-      <bibtex:year>1994</bibtex:year>
-      <bibtex:volume>34</bibtex:volume>
-      <bibtex:pages>1297-1308</bibtex:pages>
+      <bibtex:author>Guha, R. and Howard, M.T. and Hutchison, G.R. and Murray-Rust, P. and Rzepa, H. and Steinbeck, S. and Wegner, J. and Willighagen, E.L.</bibtex:author>
+      <bibtex:title>The Blue Obelisks - Interoperability in Chemical Informatics</bibtex:title>
+      <bibtex:journal>J. Chem. Inf. Model.</bibtex:journal>
+      <bibtex:year>2006</bibtex:year>
+      <bibtex:volume>46</bibtex:volume>
+      <bibtex:pages>991-998</bibtex:pages>
+      <bibtex:doi>10.1021/ci050400b</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
 
@@ -394,7 +405,62 @@
       <bibtex:adress>Thecn. Univ. Munchen</bibtex:adress>
     </bibtex:phdthesis>
   </bibtex:entry>
-  
+
+  <bibtex:entry id="Halgren96a">
+      <bibtex:article>
+        <bibtex:author>T. A. Halgren</bibtex:author>
+        <bibtex:title>Merck Molecular Force Field. I. Basis, Form, Scope, Parametrization, and Performance of MMFF94</bibtex:title>
+        <bibtex:journal>J. Comput. Chem</bibtex:journal>
+        <bibtex:year>1996</bibtex:year>
+        <bibtex:volume>17</bibtex:volume>
+        <bibtex:pages>490-519</bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="Halgren96b">
+        <bibtex:article>
+          <bibtex:author>T. A. Halgren</bibtex:author>
+          <bibtex:title>Merck Molecular Force Field. II. MMFF94 van der Waals and Electrostatic Parameters for Intermolecular Interactions</bibtex:title>
+          <bibtex:journal>J. Comput. Chem</bibtex:journal>
+          <bibtex:year>1996</bibtex:year>
+          <bibtex:volume>17</bibtex:volume>
+          <bibtex:pages>520-552</bibtex:pages>
+        </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="Halgren96c">
+        <bibtex:article>
+          <bibtex:author>T. A. Halgren</bibtex:author>
+          <bibtex:title>Merck Molecular Force Field. III. Molecular Geometries and Vibrational Frequencies for MMFF94</bibtex:title>
+          <bibtex:journal>J. Comput. Chem</bibtex:journal>
+          <bibtex:year>1996</bibtex:year>
+          <bibtex:volume>17</bibtex:volume>
+          <bibtex:pages>553-586</bibtex:pages>
+        </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="Halgren96d">
+        <bibtex:article>
+          <bibtex:author>T. A. Halgren</bibtex:author>
+          <bibtex:title>Merck Molecular Force Field. IV. Conformational Energies and Geometries for MMFF94</bibtex:title>
+          <bibtex:journal>J. Comput. Chem</bibtex:journal>
+          <bibtex:year>1996</bibtex:year>
+          <bibtex:volume>17</bibtex:volume>
+          <bibtex:pages>587-615</bibtex:pages>
+        </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="Halgren96e">
+        <bibtex:article>
+          <bibtex:author>T. A. Halgren</bibtex:author>
+          <bibtex:title>Merck Molecular Force Field. V. Extension of MMFF94 Using Experimental Data, Additional Computational Data, and Empirical Rules</bibtex:title>
+          <bibtex:journal>J. Comput. Chem</bibtex:journal>
+          <bibtex:year>1996</bibtex:year>
+          <bibtex:volume>17</bibtex:volume>
+          <bibtex:pages>616-641</bibtex:pages>
+        </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="HAN90">
     <bibtex:article>
       <bibtex:author>Tonnelier, C. and Jauffret, Ph. and Hanser, Th. and Jauffret, Ph. and Kaufmann, G.</bibtex:author>
@@ -420,7 +486,7 @@
   <bibtex:entry id="HAN96">
     <bibtex:article>
       <bibtex:author>Hanser, Th. and Jauffret, Ph. and Kaufmann, G.</bibtex:author>
-      <bibtex:title>A New Algorithm for Exhaustive Ring Perception in a 
+      <bibtex:title>A New Algorithm for Exhaustive Ring Perception in a
         Molecular Graph</bibtex:title>
       <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
       <bibtex:year>1996</bibtex:year>
@@ -428,6 +494,21 @@
       <bibtex:pages>1146-1152</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+
+  <bibtex:entry id="Hinselmann2011">
+    <bibtex:article>
+      <bibtex:author>Hinselmann&#44 and Georg and Rosenbaum&#44 and Lars and Jahn&#44 and Andreas and Fechner&#44 and Nikolas and Zell&#44 and Andreas</bibtex:author>
+      <bibtex:title>jCompoundMapper: An open source Java library and command&#45;line tool for chemical fingerprints</bibtex:title>
+      <bibtex:journal>Journal of Cheminformatics</bibtex:journal>
+      <bibtex:year>2011</bibtex:year>
+      <bibtex:volume>3</bibtex:volume>
+      <bibtex:pages>1&#x2013;14</bibtex:pages>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:url>http://dx.doi.org/10.1186/1758&#45;2946&#45;3&#45;3</bibtex:url>
+      <bibtex:doi>10.1186/1758&#45;2946&#45;3&#45;3</bibtex:doi>
+    </bibtex:article>
+  </bibtex:entry>
+
 
   <bibtex:entry id="HEL99">
     <bibtex:inbook>
@@ -441,6 +522,17 @@
       <bibtex:editor>Lipkowitz, K. B. and Boyd, D. B.</bibtex:editor>
       <bibtex:address>New York</bibtex:address>
     </bibtex:inbook>
+  </bibtex:entry>
+
+  <bibtex:entry id="BGdV04a">
+    <bibtex:article>
+      <bibtex:author>Berger, F. and Gritzmann, P. and De Vries, S.</bibtex:author>
+      <bibtex:title>Minimum cycle bases for network graphs</bibtex:title>
+      <bibtex:journal>Algorithmica</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:number>1</bibtex:number>
+      <bibtex:pages>51-62</bibtex:pages>
+    </bibtex:article>
   </bibtex:entry>
 
   <bibtex:entry id="HEL01">
@@ -498,7 +590,7 @@
        <bibtex:pages>318</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="Ihlenfeldt93">
     <bibtex:article>
         <bibtex:author>Wolf Dietrich Ihlenfeldt and Johann Gasteiger</bibtex:author>
@@ -589,6 +681,19 @@ obtained by accurate mass spectrometry</bibtex:title>
       </bibtex:book>
   </bibtex:entry>
 
+  <bibtex:entry id="Pluskal2012">
+    <bibtex:article>
+      <bibtex:title>Highly accurate chemical formula prediction tool utilizing high-resolution mass spectra, MS/MS fragmentation, heuristic rules, and isotope pattern matching</bibtex:title>
+      <bibtex:author>Pluskal, Tomas and Uehara, Taisuke and Yanagida, Mitsuhiro</bibtex:author>
+      <bibtex:year>2012</bibtex:year>
+      <bibtex:journal>Analytical Chemistry</bibtex:journal>
+      <bibtex:volume>84</bibtex:volume>
+      <bibtex:number>10</bibtex:number>
+      <bibtex:pages>4396-4403</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
+
   <bibtex:entry id="MAR89">
     <bibtex:article>
       <bibtex:author>Marston, C.C.</bibtex:author>
@@ -671,7 +776,7 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:url>http://www.csaszar.org/interesting/The_Open_Source_Reader.pdf</bibtex:url>
     </bibtex:book>
   </bibtex:entry>
-  
+
   <bibtex:entry id="PEA99">
     <bibtex:article>
       <bibtex:author>Pearlman, R.S. and Smith, K.M.</bibtex:author>
@@ -744,17 +849,6 @@ obtained by accurate mass spectrometry</bibtex:title>
     </bibtex:article>
   </bibtex:entry>
 
-  <bibtex:entry id="Rogers2010">
-    <bibtex:article>
-      <bibtex:author>Rogers and Hahn</bibtex:author>
-      <bibtex:journal>J. Chem. Inf. Mod.</bibtex:journal>
-      <bibtex:year>2010</bibtex:year>
-      <bibtex:volume>50</bibtex:volume>
-      <bibtex:pages>742-754</bibtex:pages>
-      <bibtex:doi>10.1021/ci100050t</bibtex:doi>
-    </bibtex:article>
-  </bibtex:entry>
-
   <bibtex:entry id="SMILESTUT">
     <bibtex:misc>
       <bibtex:title>SMILES Tutorial</bibtex:title>
@@ -768,7 +862,7 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:url>http://www.daylight.com/dayhtml/smiles/ssmiles.html</bibtex:url>
     </bibtex:misc>
   </bibtex:entry>
-  
+
   <bibtex:entry id="SCH84">
     <bibtex:article>
       <bibtex:author>Von Scholley, A.</bibtex:author>
@@ -833,7 +927,7 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:url>http://www.cdk.org/</bibtex:url>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="Steffen09">
     <bibtex:article>
       <bibtex:author>Andreas Steffen, Thierry Kogej, Christian Tyrchan and Ola Engkvist</bibtex:author>
@@ -845,7 +939,7 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:doi>10.1021/ci800326z</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="Shelley83">
     <bibtex:article>
       <bibtex:author>Shelley CA</bibtex:author>
@@ -856,7 +950,7 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:number>61</bibtex:number>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="Grant06">
     <bibtex:article>
       <bibtex:author>J.A. Grant, J.A. Haigh, B.T. Pickup, A. Nicholls and R.A. Sayle</bibtex:author>
@@ -954,7 +1048,7 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:pages>97-101</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="Wiener1947">
     <bibtex:article>
       <bibtex:author>Wiener, Harry</bibtex:author>
@@ -983,7 +1077,7 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:pages>273-282</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
- 
+
   <bibtex:entry id="WES98">
     <bibtex:article>
         <bibtex:author>Wessel, M.D. and Jurs, P.C. and Tolan, J.W. and Muskal, S.M.
@@ -1009,7 +1103,7 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:pages>2323-2329</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-  
+
   <bibtex:entry id="MH1997">
     <bibtex:article>
         <bibtex:author>Hendlich, M. and Rippmann, F. and Bernickel, G.
@@ -1044,12 +1138,12 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:year>2001</bibtex:year>
       <bibtex:volume>4</bibtex:volume>
       <bibtex:abstract>
-        This article describes the first opensource Java implementation of import 
-        filters for the Chemical Markup Language (CML). The filters support CML conventions 
+        This article describes the first opensource Java implementation of import
+        filters for the Chemical Markup Language (CML). The filters support CML conventions
         and were tested with two opensource project: Jmol, a 3D molecular viewer, and
-        JChemPaint, a chemical editor. Furthermore, the use of conventions in CML is 
-        explained and the reason for using conventions is pointed out. Finally, the 
-        implementation is compared with two recently developed techniques for handling 
+        JChemPaint, a chemical editor. Furthermore, the use of conventions in CML is
+        explained and the reason for using conventions is pointed out. Finally, the
+        implementation is compared with two recently developed techniques for handling
         CML data.
       </bibtex:abstract>
       <bibtex:keywords>XML, CML, Java</bibtex:keywords>
@@ -1128,7 +1222,7 @@ obtained by accurate mass spectrometry</bibtex:title>
           </bibtex:author>
           <bibtex:title>A QSPR Analysis of HPLC Column Capacity
 Factors for a set of High-Energy Materials Using Electronic Van der Waals
-Surface Property Descriptors Computed by the Transferable Atom Equivalent 
+Surface Property Descriptors Computed by the Transferable Atom Equivalent
 Method </bibtex:title>
           <bibtex:journal>Journal of Computational Chemistry</bibtex:journal>
           <bibtex:year>1997</bibtex:year>
@@ -1145,6 +1239,19 @@ Method </bibtex:title>
           <bibtex:year>2003</bibtex:year>
           <bibtex:volume>24</bibtex:volume>
           <bibtex:pages>512-529</bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="Liu2011">
+      <bibtex:article>
+          <bibtex:author>Liu, R. and Rallo, R. and George, S. and Ji, Z. and Nair, S. and Nel, A.E. and Cohen, Y.</bibtex:author>
+          <bibtex:title>Classification NanoSAR development for cytotoxicity of metal oxide nanoparticles</bibtex:title>
+          <bibtex:journal>Small</bibtex:journal>
+          <bibtex:year>2011</bibtex:year>
+          <bibtex:volume>7</bibtex:volume>
+          <bibtex:number>8</bibtex:number>
+          <bibtex:pages>1118-1126</bibtex:pages>
+          <bibtex:doi>10.1002/smll.201002366</bibtex:doi>
       </bibtex:article>
   </bibtex:entry>
 
@@ -1183,6 +1290,7 @@ Method </bibtex:title>
             <bibtex:year>1986</bibtex:year>
             <bibtex:volume>7</bibtex:volume>
             <bibtex:pages>565-577</bibtex:pages>
+            <bibtex:doi>10.1002/jcc.540070419</bibtex:doi>
         </bibtex:article>
     </bibtex:entry>
 
@@ -1195,6 +1303,7 @@ Method </bibtex:title>
             <bibtex:year>1987</bibtex:year>
             <bibtex:volume>27</bibtex:volume>
             <bibtex:pages>21-35</bibtex:pages>
+            <bibtex:doi>10.1021/ci00053a005</bibtex:doi>
         </bibtex:article>
     </bibtex:entry>
 
@@ -1218,6 +1327,7 @@ Method </bibtex:title>
             <bibtex:year>1995</bibtex:year>
             <bibtex:volume>35</bibtex:volume>
             <bibtex:pages>1039-1045</bibtex:pages>
+            <bibtex:doi>10.1021/ci00028a014</bibtex:doi>
         </bibtex:article>
     </bibtex:entry>
 
@@ -1233,6 +1343,7 @@ Method </bibtex:title>
             <bibtex:year>2004</bibtex:year>
             <bibtex:volume>9</bibtex:volume>
             <bibtex:pages>1004-1009</bibtex:pages>
+            <bibtex:doi>10.3390/91201004</bibtex:doi>
         </bibtex:article>
     </bibtex:entry>
 
@@ -1246,8 +1357,9 @@ Method </bibtex:title>
             <bibtex:year>2000</bibtex:year>
             <bibtex:volume>18</bibtex:volume>
             <bibtex:pages>464-477</bibtex:pages>
+            <bibtex:doi>10.1016/S1093-3263(00)00068-1</bibtex:doi>
         </bibtex:article>
-    </bibtex:entry> 
+    </bibtex:entry>
 
     <bibtex:entry id="IUPAC2006">
         <bibtex:article>
@@ -1257,6 +1369,7 @@ Method </bibtex:title>
             <bibtex:year>2006</bibtex:year>
             <bibtex:volume>78</bibtex:volume>
             <bibtex:pages>1897-1970</bibtex:pages>
+            <bibtex:doi>10.1351/pac200678101897</bibtex:doi>
         </bibtex:article>
     </bibtex:entry>
 
@@ -1268,6 +1381,7 @@ Method </bibtex:title>
             <bibtex:year>2009</bibtex:year>
             <bibtex:volume>1</bibtex:volume>
             <bibtex:pages>12</bibtex:pages>
+            <bibtex:doi>10.1186/1758-2946-1-12</bibtex:doi>
         </bibtex:article>
     </bibtex:entry>
 
@@ -1279,6 +1393,7 @@ Method </bibtex:title>
             <bibtex:year>2010</bibtex:year>
             <bibtex:volume>ASAP</bibtex:volume>
             <bibtex:pages></bibtex:pages>
+            <bibtex:doi>10.1021/jm1008456</bibtex:doi>
         </bibtex:article>
     </bibtex:entry>
 
@@ -1290,6 +1405,7 @@ Method </bibtex:title>
             <bibtex:year>2005</bibtex:year>
             <bibtex:volume>45</bibtex:volume>
             <bibtex:pages>386-393</bibtex:pages>
+            <bibtex:doi>10.1021/ci0496797</bibtex:doi>
         </bibtex:article>
     </bibtex:entry>
 
@@ -1314,7 +1430,7 @@ Method </bibtex:title>
       <bibtex:pages>2-4</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
-   
+
   <bibtex:entry id="Zhao2003">
     <bibtex:article>
       <bibtex:author>Zhao, Yuan H. and Abraham, Michael H. and Zissimos, Andreas M.</bibtex:author>
@@ -1327,7 +1443,7 @@ Method </bibtex:title>
       <bibtex:doi>10.1021/jo034808o</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
-   
+
   <bibtex:entry id="Thalheim2010">
         <bibtex:article>
             <bibtex:author>Thalheim, T. and Vollmer, A. and Ebert, R. and Kuehne, R. and Schuurmann, G.</bibtex:author>
@@ -1336,11 +1452,12 @@ Method </bibtex:title>
             <bibtex:year>2010</bibtex:year>
             <bibtex:volume>50</bibtex:volume>
             <bibtex:pages>1223-1232</bibtex:pages>
+            <bibtex:doi>10.1021/ci1001179</bibtex:doi>
         </bibtex:article>
    </bibtex:entry>
-   
+
   <bibtex:entry id="RojasCherto2011">
-    <bibtex:article>	
+    <bibtex:article>
       <bibtex:author>Rojas-Cherto, Miguel and Kasper, Piotr T and Willighagen, Egon L and Vreeken, R. and Hankemeier, Thomas and Reijmers, Theo</bibtex:author>
       <bibtex:title>Elemental Composition determination based on MSn</bibtex:title>
       <bibtex:journal>Bioinformatics</bibtex:journal>
@@ -1350,20 +1467,20 @@ Method </bibtex:title>
       <bibtex:pages></bibtex:pages>
       <bibtex:doi>10.1093/bioinformatics/btr409</bibtex:doi>
     </bibtex:article>
-    
+
   </bibtex:entry>
 
   <bibtex:entry id="Klekota01112008">
   	<bibtex:article>
       <bibtex:author>Klekota, Justin and Roth, Frederick P.</bibtex:author>
       <bibtex:title>Chemical substructures that enrich for biological activity</bibtex:title>
-      <bibtex:volume>24</bibtex:volume> 
-      <bibtex:number>21</bibtex:number> 
-      <bibtex:pages>2518-2525</bibtex:pages> 
-      <bibtex:year>2008</bibtex:year> 
+      <bibtex:volume>24</bibtex:volume>
+      <bibtex:number>21</bibtex:number>
+      <bibtex:pages>2518-2525</bibtex:pages>
+      <bibtex:year>2008</bibtex:year>
       <bibtex:doi>10.1093/bioinformatics/btn479</bibtex:doi>
-      <bibtex:URL>http://bioinformatics.oxfordjournals.org/content/24/21/2518.abstract</bibtex:URL> 
-      <bibtex:eprint>http://bioinformatics.oxfordjournals.org/content/24/21/2518.full.pdf+html</bibtex:eprint> 
+      <bibtex:URL>http://bioinformatics.oxfordjournals.org/content/24/21/2518.abstract</bibtex:URL>
+      <bibtex:eprint>http://bioinformatics.oxfordjournals.org/content/24/21/2518.full.pdf+html</bibtex:eprint>
       <bibtex:journal>Bioinformatics</bibtex:journal>
   	</bibtex:article>
   </bibtex:entry>
@@ -1377,15 +1494,15 @@ Method </bibtex:title>
             <bibtex:journal>Journal of the Association for Computing Machinery</bibtex:journal>
             <bibtex:volume>23</bibtex:volume>
             <bibtex:number>1</bibtex:number>
+            <bibtex:doi>10.1145/321921.321925</bibtex:doi>
         </bibtex:article>
-    </bibtex:entry>  
-    
+    </bibtex:entry>
+
   <bibtex:entry id="Vismara97">
     <bibtex:article>
       <bibtex:author>Vismara, Philippe</bibtex:author>
       <bibtex:title>Union of all the minimum cycle bases of a graph</bibtex:title>
-      <bibtex:year>1997</bibtex:year> 
-      <bibtex:doi>10.1.1.47.3674</bibtex:doi>
+      <bibtex:year>1997</bibtex:year>
       <bibtex:url>http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.47.3674</bibtex:url>
       <bibtex:journal>Combinatorics</bibtex:journal>
       <bibtex:volume>4</bibtex:volume>
@@ -1416,9 +1533,22 @@ Method </bibtex:title>
             <bibtex:journal>J. Chem. Inf. Comput. Sci</bibtex:journal>
             <bibtex:volume>33</bibtex:volume>
             <bibtex:pages>812-825</bibtex:pages>
+            <bibtex:doi>10.1021/ci00016a003</bibtex:doi>
         </bibtex:article>
-    </bibtex:entry>  
-    
+    </bibtex:entry>
+
+    <bibtex:entry id="Rogers2010">
+        <bibtex:article>
+             <bibtex:author>Rogers and Hahn</bibtex:author>
+             <bibtex:title>Extended-connectivity fingerprints</bibtex:title>
+             <bibtex:journal>J. Chem. Inf. Mod.</bibtex:journal>
+             <bibtex:year>2010</bibtex:year>
+             <bibtex:volume>50</bibtex:volume>
+             <bibtex:pages>742-754</bibtex:pages>
+             <bibtex:doi>10.1021/ci100050t</bibtex:doi>
+         </bibtex:article>
+    </bibtex:entry>
+
     <bibtex:entry id="OBoyle12">
         <bibtex:article>
             <bibtex:title>Towards a Universal SMILES representation - A standard method to generate canonical SMILES based on the InChI</bibtex:title>
@@ -1427,9 +1557,10 @@ Method </bibtex:title>
             <bibtex:journal>Journal of Cheminformatics</bibtex:journal>
             <bibtex:volume>4</bibtex:volume>
             <bibtex:number>22</bibtex:number>
+            <bibtex:doi>10.1186/1758-2946-4-22</bibtex:doi>
         </bibtex:article>
     </bibtex:entry>
-    
+
     <bibtex:entry id="Edmonds65">
         <bibtex:article>
             <bibtex:title>Paths, trees and flowers</bibtex:title>
@@ -1474,4 +1605,7 @@ Method </bibtex:title>
             <bibtex:url>http://arxiv.org/abs/1307.7805</bibtex:url>
         </bibtex:inproceedings>
     </bibtex:entry>
+
+    <!-- DO NOT EDIT. INSTEAD EDIT THIS FILE: https://github.com/cdk/cdk-build-util/blob/master/src/main/resources/net/sf/cdk/tools/doclets/cheminf.bibx -->
+
 </bibtex:file>
