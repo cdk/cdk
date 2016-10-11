@@ -92,6 +92,7 @@ org.openscience.cdk.sgroup
 org.openscience.cdk.signature
 org.openscience.cdk.silent
 org.openscience.cdk.similarity
+org.openscience.cdk.smarts
 org.openscience.cdk.smiles
 org.openscience.cdk.smiles.smarts
 org.openscience.cdk.smiles.smarts.parser
