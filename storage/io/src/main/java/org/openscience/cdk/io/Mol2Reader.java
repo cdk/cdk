@@ -316,7 +316,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         if (ATOM_TYPE_ALIASES.containsKey(atomTypeStr))
                             atomTypeStr = ATOM_TYPE_ALIASES.get(atomTypeStr);
 
-                        IAtom atom = molecule.getBuilder().newInstance(IAtom.class, "X");
+                        IAtom atom = molecule.getBuilder().newInstance(IAtom.class);
                         IAtomType atomType;
                         try {
                             atomType = atFactory.getAtomType(atomTypeStr);

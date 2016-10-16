@@ -191,7 +191,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     @Test
     public void testNonExistingType() throws Exception {
         IAtomContainer mol = new AtomContainer();
-        IAtom atom = new Atom("Error");
+        IAtom atom = new Atom();
         mol.addAtom(atom);
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
         IAtomType type = matcher.findMatchingAtomType(mol, atom);
