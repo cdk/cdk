@@ -51,7 +51,7 @@ public class DebugFragmentAtom extends FragmentAtom {
 
     private static final long serialVersionUID = 0L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugFragmentAtom.class);
+    private static final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugFragmentAtom.class);
 
     public DebugFragmentAtom() {
         super();

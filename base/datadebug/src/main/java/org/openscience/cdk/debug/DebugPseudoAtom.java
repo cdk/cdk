@@ -45,7 +45,7 @@ public class DebugPseudoAtom extends PseudoAtom implements IPseudoAtom {
 
     private static final long serialVersionUID = -5935090219383862070L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugPseudoAtom.class);
+    private static final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugPseudoAtom.class);
 
     public DebugPseudoAtom() {
         super();
