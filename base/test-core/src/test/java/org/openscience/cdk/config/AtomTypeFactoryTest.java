@@ -235,7 +235,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     @Test
     public void testConfigure_IAtom() throws Exception {
         IAtomType atomType;
-        IAtom atom = new org.openscience.cdk.Atom("X");
+        IAtom atom = new org.openscience.cdk.Atom();
         atom.setAtomTypeName("C.ar");
         AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mol2_atomtypes.xml",
                 new ChemObject().getBuilder());
