@@ -532,6 +532,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             mass = (str.charAt(pos++) - '0');
             while (pos < len && isDigit(str.charAt(pos)))
                 mass = 10 * mass + (str.charAt(pos++) - '0');
+        } else if ("R".equals(str)) {
+            atom.setAtomicNumber(0);
+            atom.setSymbol("R");
+            return true;
         }
 
         // atom symbol

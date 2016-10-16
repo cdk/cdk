@@ -519,6 +519,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             atom.setAtomicNumber(elem.number());
             atom.setSymbol(elem.symbol());
             return true;
+        } else if ("R".equals(str)) {
+            atom.setAtomicNumber(0);
+            atom.setSymbol("R");
+            return true;
         }
 
         final int len = str.length();
