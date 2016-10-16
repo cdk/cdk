@@ -27,6 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -51,7 +52,7 @@ public class CDK2DAtomColorsTest extends CDKTestCase {
         CDK2DAtomColors colors = new CDK2DAtomColors();
 
         Assert.assertNotNull(colors);
-        IAtom imaginary = new Atom("Ix");
+        IAtom imaginary = new PseudoAtom("Ix");
         Assert.assertEquals(new Color(0, 0, 0), colors.getAtomColor(imaginary, Color.BLACK));
     }
 }
