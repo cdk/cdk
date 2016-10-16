@@ -81,7 +81,7 @@ public class InChIGeneratorTest extends CDKTestCase {
     @Test
     public void testGetInchiFromChlorineAtom() throws Exception {
         IAtomContainer ac = new AtomContainer();
-        ac.addAtom(new Atom("Cl"));
+        ac.addAtom(new Atom("ClH"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals("InChI=1/ClH/h1H", gen.getInchi());
@@ -153,7 +153,7 @@ public class InChIGeneratorTest extends CDKTestCase {
     @Test
     public void testGetInchiFromChlorine37Atom() throws Exception {
         IAtomContainer ac = new AtomContainer();
-        IAtom a = new Atom("Cl");
+        IAtom a = new Atom("ClH");
         a.setMassNumber(37);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
@@ -394,7 +394,7 @@ public class InChIGeneratorTest extends CDKTestCase {
     @Test
     public void testGetStandardInchiFromChlorineAtom() throws Exception {
         IAtomContainer ac = new AtomContainer();
-        ac.addAtom(new Atom("Cl"));
+        ac.addAtom(new Atom("ClH"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
         Assert.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
         Assert.assertEquals("InChI=1S/ClH/h1H", gen.getInchi());
@@ -424,7 +424,7 @@ public class InChIGeneratorTest extends CDKTestCase {
     @Test
     public void testGetStandardInchiFromChlorine37Atom() throws Exception {
         IAtomContainer ac = new AtomContainer();
-        IAtom a = new Atom("Cl");
+        IAtom a = new Atom("ClH");
         a.setMassNumber(37);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
@@ -738,11 +738,11 @@ public class InChIGeneratorTest extends CDKTestCase {
     @Test
     public void r_penta_2_3_diene_impl_h() throws Exception {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("CH3"));
+        m.addAtom(new Atom("CH"));
         m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("CH"));
+        m.addAtom(new Atom("CH3"));
         m.addBond(0, 1, IBond.Order.SINGLE);
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.DOUBLE);
@@ -767,11 +767,11 @@ public class InChIGeneratorTest extends CDKTestCase {
     @Test
     public void s_penta_2_3_diene_impl_h() throws Exception {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("CH3"));
+        m.addAtom(new Atom("CH"));
         m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("CH"));
+        m.addAtom(new Atom("CH3"));
         m.addBond(0, 1, IBond.Order.SINGLE);
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.DOUBLE);
@@ -797,11 +797,11 @@ public class InChIGeneratorTest extends CDKTestCase {
     @Test
     public void r_penta_2_3_diene_expl_h() throws Exception {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("CH3"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("CH3"));
         m.addAtom(new Atom("H"));
         m.addAtom(new Atom("H"));
         m.addBond(0, 1, IBond.Order.SINGLE);
@@ -831,11 +831,11 @@ public class InChIGeneratorTest extends CDKTestCase {
     @Test
     public void s_penta_2_3_diene_expl_h() throws Exception {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("CH3"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
-        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("CH3"));
         m.addAtom(new Atom("H"));
         m.addAtom(new Atom("H"));
         m.addBond(0, 1, IBond.Order.SINGLE);
