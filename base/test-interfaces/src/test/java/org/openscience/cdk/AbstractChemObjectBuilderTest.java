@@ -418,14 +418,14 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
     @Test
     public void testNewPDBAtom_String() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPDBAtom atom = builder.newInstance(IPDBAtom.class, "O.3");
+        IPDBAtom atom = builder.newInstance(IPDBAtom.class, "O");
         Assert.assertNotNull(atom);
     }
 
     @Test
     public void testNewPDBAtom_String_Point3D() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPDBAtom atom = builder.newInstance(IPDBAtom.class, "O.3", new Point3d(1, 2, 3));
+        IPDBAtom atom = builder.newInstance(IPDBAtom.class, "O", new Point3d(1, 2, 3));
         Assert.assertNotNull(atom);
     }
 

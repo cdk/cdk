@@ -43,8 +43,8 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
     public void testAddAtom_IAtom() {
         IPolymer oPolymer = (IPolymer) newChemObject();
 
-        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C1");
-        IAtom oAtom2 = oPolymer.getBuilder().newInstance(IAtom.class, "C2");
+        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom2 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
         oPolymer.addAtom(oAtom1);
         oPolymer.addAtom(oAtom2);
 
@@ -58,9 +58,9 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         IMonomer oMono1 = oPolymer.getBuilder().newInstance(IMonomer.class);
         oMono1.setMonomerName(new String("TRP279"));
         IMonomer oMono2 = null;
-        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C1");
-        IAtom oAtom2 = oPolymer.getBuilder().newInstance(IAtom.class, "C2");
-        IAtom oAtom3 = oPolymer.getBuilder().newInstance(IAtom.class, "C3");
+        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom2 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom3 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
 
         oPolymer.addAtom(oAtom1);
         oPolymer.addAtom(oAtom2, oMono1);
@@ -88,9 +88,9 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oMono1.setMonomerName(new String("TRP279"));
         IMonomer oMono2 = oPolymer.getBuilder().newInstance(IMonomer.class);
         oMono2.setMonomerName(new String("HOH"));
-        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C1");
-        IAtom oAtom2 = oPolymer.getBuilder().newInstance(IAtom.class, "C2");
-        IAtom oAtom3 = oPolymer.getBuilder().newInstance(IAtom.class, "C3");
+        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom2 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom3 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
         oPolymer.addAtom(oAtom1);
         oPolymer.addAtom(oAtom2, oMono1);
         oPolymer.addAtom(oAtom3, oMono2);
@@ -107,9 +107,9 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oMono1.setMonomerName(new String("TRP279"));
         IMonomer oMono2 = oPolymer.getBuilder().newInstance(IMonomer.class);
         oMono2.setMonomerName(new String("HOH"));
-        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C1");
-        IAtom oAtom2 = oPolymer.getBuilder().newInstance(IAtom.class, "C2");
-        IAtom oAtom3 = oPolymer.getBuilder().newInstance(IAtom.class, "C3");
+        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom2 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom3 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
         oPolymer.addAtom(oAtom1, oMono1);
         oPolymer.addAtom(oAtom2, oMono1);
         oPolymer.addAtom(oAtom3, oMono2);
@@ -128,9 +128,9 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oMono1.setMonomerName(new String("TRP279"));
         IMonomer oMono2 = oPolymer.getBuilder().newInstance(IMonomer.class);
         oMono2.setMonomerName(new String("HOH"));
-        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C1");
-        IAtom oAtom2 = oPolymer.getBuilder().newInstance(IAtom.class, "C2");
-        IAtom oAtom3 = oPolymer.getBuilder().newInstance(IAtom.class, "C3");
+        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom2 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom3 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
         oPolymer.addAtom(oAtom1);
         oPolymer.addAtom(oAtom2, oMono1);
         oPolymer.addAtom(oAtom3, oMono2);
@@ -150,7 +150,7 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         IPolymer oPolymer = (IPolymer) newChemObject();
         IMonomer oMono1 = oPolymer.getBuilder().newInstance(IMonomer.class);
         oMono1.setMonomerName(new String("TRP279"));
-        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C1");
+        IAtom oAtom1 = oPolymer.getBuilder().newInstance(IAtom.class, "C");
         oPolymer.addAtom(oAtom1, oMono1);
         Assert.assertTrue(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
         Assert.assertEquals(1, oPolymer.getAtomCount());
@@ -171,8 +171,8 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oMono1.setMonomerName(new String("TRP279"));
         IMonomer oMono2 = polymer.getBuilder().newInstance(IMonomer.class);
         oMono2.setMonomerName(new String("HOH"));
-        IAtom oAtom2 = polymer.getBuilder().newInstance(IAtom.class, "C2");
-        IAtom oAtom3 = polymer.getBuilder().newInstance(IAtom.class, "C3");
+        IAtom oAtom2 = polymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom3 = polymer.getBuilder().newInstance(IAtom.class, "C");
         polymer.addAtom(oAtom2, oMono1);
         polymer.addAtom(oAtom3, oMono2);
         Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();

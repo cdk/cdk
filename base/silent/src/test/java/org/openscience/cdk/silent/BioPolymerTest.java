@@ -64,11 +64,11 @@ public class BioPolymerTest extends AbstractBioPolymerTest {
         oMono2.setMonomerName(new String("HOH"));
         IMonomer oMono3 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
         oMono3.setMonomerName(new String("GLYA16"));
-        IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C1");
-        IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C2");
-        IAtom oAtom3 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C3");
-        IAtom oAtom4 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C4");
-        IAtom oAtom5 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C5");
+        IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom3 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom4 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
+        IAtom oAtom5 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
 
         oBioPolymer.addAtom(oAtom1);
         oBioPolymer.addAtom(oAtom2, oStrand1);

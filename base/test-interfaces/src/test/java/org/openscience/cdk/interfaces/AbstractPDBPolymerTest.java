@@ -63,9 +63,9 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oMono1.setMonomerName(new String("TRP279"));
         IMonomer oMono2 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
         oMono2.setMonomerName(new String("HOH"));
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
-        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C2");
-        IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C3");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1);
         pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand2);
@@ -93,9 +93,9 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oMono1.setMonomerName(new String("TRP279"));
         IMonomer oMono2 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
         oMono2.setMonomerName(new String("HOH"));
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
-        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C2");
-        IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C3");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1);
         pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand2);
@@ -124,9 +124,9 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oMono1.setMonomerName(new String("TRP279"));
         IMonomer oMono2 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
         oMono2.setMonomerName(new String("HOH"));
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
-        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C2");
-        IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C3");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand2);
@@ -139,8 +139,8 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
     public void testAddAtom_IPDBAtom() {
         IPDBPolymer pdbPolymer = (IPDBPolymer) newChemObject();
 
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
-        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C2");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1);
         pdbPolymer.addAtom(oPDBAtom2);
 
@@ -154,9 +154,9 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oStrand1.setStrandName("A");
         IPDBMonomer oMono1 = pdbPolymer.getBuilder().newInstance(IPDBMonomer.class);
         oMono1.setMonomerName(new String("TRP279"));
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
-        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C2");
-        IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C3");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom2, oStrand1);
         pdbPolymer.addAtom(oPDBAtom3, oMono1, oStrand1);
@@ -173,9 +173,9 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oStrand1.setStrandName("A");
         IPDBMonomer oMono1 = pdbPolymer.getBuilder().newInstance(IPDBMonomer.class);
         oMono1.setMonomerName(new String("TRP279"));
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
-        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C2");
-        IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C3");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom2, oStrand1);
         pdbPolymer.addAtom(oPDBAtom3, oMono1, oStrand1);
@@ -192,7 +192,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oMono1.setMonomerName(new String("TRP279"));
         IStrand oStrand1 = pdbPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 
         Assert.assertEquals(1, pdbPolymer.getMonomer("TRP279", "A").getAtomCount());
@@ -206,7 +206,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oStrand1.setStrandName("A");
         IMonomer oMono1 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
         oMono1.setMonomerName(new String("TRP279"));
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 
         Assert.assertEquals(1, pdbPolymer.getStrandCount());
@@ -220,7 +220,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oStrand1.setStrandName("A");
         IMonomer oMono1 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
         oMono1.setMonomerName(new String("TRP279"));
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 
         Assert.assertEquals(oStrand1, pdbPolymer.getStrand("A"));
@@ -238,8 +238,8 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oMono1.setMonomerName(new String("TRP279"));
         IMonomer oMono2 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
         oMono2.setMonomerName(new String("GLY123"));
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
-        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C2");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom2, oMono2, oStrand2);
         Map<String, IStrand> strands = new Hashtable<String, IStrand>();
@@ -257,7 +257,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oStrand1.setStrandName("A");
         IMonomer oMono1 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
         oMono1.setMonomerName(new String("TRP279"));
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 
         Assert.assertTrue(pdbPolymer.getStrandNames().contains(oStrand1.getStrandName()));
@@ -279,8 +279,8 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         oMono1.setMonomerName(new String("TRP279"));
         IMonomer oMono2 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
         oMono2.setMonomerName(new String("GLY123"));
-        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C1");
-        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C2");
+        IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
+        IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
         pdbPolymer.addAtom(oPDBAtom2, oMono2, oStrand2);
         Map<String, IStrand> strands = new Hashtable<String, IStrand>();
