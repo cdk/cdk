@@ -108,7 +108,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
 
         oxt = false;
         hetAtom = false;
-
+        super.hydrogenCount = null;
         super.charge = Double.valueOf(0.0);
         super.formalCharge = Integer.valueOf(0);
     }
