@@ -45,7 +45,7 @@ public class DebugAtom extends Atom implements IAtom {
 
     private static final long serialVersionUID = 188945429187084868L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtom.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugAtom.class);
 
     public DebugAtom() {
         super();
