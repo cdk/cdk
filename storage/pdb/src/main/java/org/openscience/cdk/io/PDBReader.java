@@ -40,6 +40,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.graph.rebond.RebondTool;
@@ -549,15 +550,60 @@ public class PDBReader extends DefaultChemObjectReader {
     private static boolean isUpper(char c) {
         return c >= 'A' && c <= 'Z';
     }
+    private static boolean isLower(char c) {
+        return c >= 'a' && c <= 'z';
+    }
+    private static boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
 
     private String parseAtomSymbol(String str) {
+
         if (str == null || str.isEmpty())
             return null;
-        int pos = 0;
+
         final int len = str.length();
-        while (pos < len && isUpper(str.charAt(pos)))
-            pos++;
-        return str.substring(0, pos);
+
+        StringBuilder sym = new StringBuilder();
+
+        // try grabbing from end of line
+
+        if (len > 76 && isUpper(str.charAt(76))) {
+            sym.append(str.charAt(76));
+            if (len > 77 && isUpper(str.charAt(77)))
+                sym.append(Character.toLowerCase(str.charAt(77)));
+            else if (len > 77 && isLower(str.charAt(77)))
+                sym.append(Character.toLowerCase(str.charAt(77)));
+        } else if (len > 76 &&str.charAt(76) == ' ') {
+            if (len > 77 && isUpper(str.charAt(77)))
+                sym.append(str.charAt(77));
+        }
+
+        if (sym.length() > 0)
+            return sym.toString();
+
+        // try getting from PDB atom name
+        if (len > 13 && isUpper(str.charAt(13))) {
+            if (str.charAt(12) == ' ') {
+                sym.append(str.charAt(13));
+                if (isLower(str.charAt(14)))
+                    sym.append(str.charAt(14));
+            } else if (isUpper(str.charAt(12))) {
+                if (str.charAt(0) == 'A' && str.charAt(12) == 'H') {
+                    sym.append('H'); // ATOM record H is always H
+                } else {
+                    sym.append(str.charAt(12));
+                    sym.append(Character.toLowerCase(str.charAt(13)));
+                }
+            } else if (isDigit(str.charAt(12))) {
+                sym.append(str.charAt(13));
+            }
+        }
+
+        if (sym.length() > 0)
+            return sym.toString();
+
+        return null;
     }
 
     /**
@@ -591,7 +637,7 @@ public class PDBReader extends DefaultChemObjectReader {
         boolean isHetatm = cLine.substring(0, 6).equals("HETATM");
         String  atomName = cLine.substring(12, 16).trim();
         String  resName  = cLine.substring(17, 20).trim();
-        String  symbol   = parseAtomSymbol(atomName);
+        String  symbol   = parseAtomSymbol(cLine);
 
         if (symbol == null)
             handleError("Cannot parse symbol from " + atomName);
