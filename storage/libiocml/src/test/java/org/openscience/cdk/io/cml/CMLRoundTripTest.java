@@ -508,7 +508,7 @@ public class CMLRoundTripTest extends CDKTestCase {
 
         IAtomContainer product = reaction.getBuilder().newInstance(IAtomContainer.class);
         product.setID("product");
-        atom = reaction.getBuilder().newInstance(IAtom.class, "X");
+        atom = reaction.getBuilder().newInstance(IAtom.class, "R");
         product.addAtom(atom);
         reaction.addProduct(product);
 
@@ -725,6 +725,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     public void testUnsetHydrogenCount() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
+        atom.setImplicitHydrogenCount(null);
         Assert.assertNull(atom.getImplicitHydrogenCount());
         mol.addAtom(atom);
 

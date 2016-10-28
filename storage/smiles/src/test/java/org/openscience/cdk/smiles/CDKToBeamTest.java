@@ -85,7 +85,7 @@ public class CDKToBeamTest {
 
     @Test
     public void unknownSymbol() throws Exception {
-        IAtom a = new Atom("ALA");
+        IAtom a = new PseudoAtom("ALA");
         a.setImplicitHydrogenCount(0);
         assertThat(new CDKToBeam().toBeamAtom(a).element(), is(Element.Unknown));
     }
@@ -165,9 +165,9 @@ public class CDKToBeamTest {
     // the hydrogens are set to null
     @Test
     public void pseudoAtom_nullH() throws Exception {
-        assertThat(new CDKToBeam().toBeamAtom(new Atom("R")).hydrogens(), is(0));
-        assertThat(new CDKToBeam().toBeamAtom(new Atom("*")).hydrogens(), is(0));
-        assertThat(new CDKToBeam().toBeamAtom(new Atom("R1")).hydrogens(), is(0));
+        assertThat(new CDKToBeam().toBeamAtom(new PseudoAtom("R")).hydrogens(), is(0));
+        assertThat(new CDKToBeam().toBeamAtom(new PseudoAtom("*")).hydrogens(), is(0));
+        assertThat(new CDKToBeam().toBeamAtom(new PseudoAtom("R1")).hydrogens(), is(0));
     }
 
     @SuppressWarnings("unchecked")

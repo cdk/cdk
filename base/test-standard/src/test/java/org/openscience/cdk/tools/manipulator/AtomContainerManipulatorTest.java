@@ -565,7 +565,9 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test(expected = IllegalArgumentException.class)
     public void getNaturalExactMassNeedsHydrogens() {
         IAtomContainer mol = new AtomContainer();
-        mol.addAtom(new Atom("C"));
+        IAtom atom = new Atom("C");
+        atom.setImplicitHydrogenCount(null);
+        mol.addAtom(atom);
         AtomContainerManipulator.getNaturalExactMass(mol);
     }
 
@@ -1031,7 +1033,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertThat(anonymous.getAtom(0).getSymbol(), is("C"));
         assertThat(anonymous.getAtom(2).getSymbol(), is("C"));
         assertNull(anonymous.getAtom(1).getAtomTypeName());
-        assertNull(anonymous.getAtom(4).getImplicitHydrogenCount());
+        assertThat(anonymous.getAtom(4).getImplicitHydrogenCount(), is(0));
         assertFalse(anonymous.getAtom(3).getFlag(CDKConstants.ISAROMATIC));
 
         assertFalse(anonymous.getBond(1).getFlag(CDKConstants.ISAROMATIC));

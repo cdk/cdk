@@ -1870,6 +1870,8 @@ public class TestMoleculeFactory {
 
     private static void configureAtoms(IAtomContainer mol) {
         try {
+            for (IAtom atom : mol.atoms())
+                atom.setImplicitHydrogenCount(null);
             Isotopes.getInstance().configureAtoms(mol);
         } catch (Exception exc) {
             logger.error("Could not configure molecule!");

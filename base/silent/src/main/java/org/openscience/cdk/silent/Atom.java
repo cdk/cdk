@@ -28,6 +28,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
@@ -115,21 +116,72 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     * Constructs an Atom from a String containing an element symbol.
+     * Create a new atom with of the specified element.
      *
-     * @param elementSymbol The String describing the element for the Atom
+     * @param elem atomic number
      */
-    public Atom(String elementSymbol) {
-        this(new Element(elementSymbol, PeriodicTable.getAtomicNumber(elementSymbol)));
-        this.formalCharge = 0;
+    public Atom(int elem) {
+        this(elem, 0, 0);
     }
 
     /**
-         * Constructs an Atom from an Element and a Point3d.
-         *
-         * @param   elementSymbol   The symbol of the atom
-         * @param   point3d         The 3D coordinates of the atom
-         */
+     * Create a new atom with of the specified element and hydrogen count.
+     *
+     * @param elem atomic number
+     * @param hcnt hydrogen count
+     */
+    public Atom(int elem, int hcnt) {
+        this(elem, hcnt, 0);
+    }
+
+    /**
+     * Create a new atom with of the specified element, hydrogen count, and formal charge.
+     *
+     * @param elem atomic number
+     * @param hcnt hydrogen count
+     * @param fchg formal charge
+     */
+    public Atom(int elem, int hcnt, int fchg) {
+        super((String)null);
+        setAtomicNumber(elem);
+        setSymbol(Elements.ofNumber(elem).symbol());
+        setImplicitHydrogenCount(hcnt);
+        setFormalCharge(fchg);
+    }
+
+    /**
+     * Constructs an Atom from a string containing an element symbol and optionally
+     * the atomic mass, hydrogen count, and formal charge. The symbol grammar allows
+     * easy construction from common symbols, for example:
+     *
+     * <pre>
+     *     new Atom("NH+");   // nitrogen cation with one hydrogen
+     *     new Atom("OH");    // hydroxy
+     *     new Atom("O-");    // oxygen anion
+     *     new Atom("13CH3"); // methyl isotope 13
+     * </pre>
+     *
+     * <pre>
+     *     atom := {mass}? {symbol} {hcnt}? {fchg}?
+     *     mass := \d+
+     *     hcnt := 'H' \d+
+     *     fchg := '+' \d+? | '-' \d+?
+     * </pre>
+     *
+     * @param symbol string with the element symbol
+     */
+    public Atom(String symbol) {
+        super((String)null);
+        if (!parseAtomSymbol(this, symbol))
+            throw new IllegalArgumentException("Cannot pass atom symbol: " + symbol);
+    }
+
+    /**
+     * Constructs an Atom from an Element and a Point3d.
+     *
+     * @param   elementSymbol   The symbol of the atom
+     * @param   point3d         The 3D coordinates of the atom
+     */
     public Atom(String elementSymbol, Point3d point3d) {
         this(elementSymbol);
         this.point3d = point3d;
@@ -448,4 +500,117 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
         return (IAtom) clone;
     }
 
+    private static boolean isUpper(char c) {
+        return c >= 'A' && c <= 'Z';
+    }
+
+    private static boolean isLower(char c) {
+        return c >= 'a' && c <= 'z';
+    }
+
+    private static boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
+
+    private static boolean parseAtomSymbol(IAtom atom, String str) {
+
+        Elements elem = Elements.ofString(str);
+        if (elem != Elements.Unknown) {
+            atom.setAtomicNumber(elem.number());
+            atom.setSymbol(elem.symbol());
+            return true;
+        } else if ("R".equals(str)) {
+            atom.setAtomicNumber(0);
+            atom.setSymbol("R");
+            return true;
+        } else if ("D".equals(str)) {
+            atom.setAtomicNumber(1);
+            atom.setMassNumber(2);
+            atom.setSymbol("H");
+            return true;
+        } else if ("T".equals(str)) {
+            atom.setAtomicNumber(1);
+            atom.setMassNumber(3);
+            atom.setSymbol("H");
+            return true;
+        }
+
+        final int len = str.length();
+        int pos = 0;
+
+        int mass = -1;
+        int anum = 0;
+        int hcnt = 0;
+        int chg = 0;
+
+        // optional mass
+        if (pos < len && isDigit(str.charAt(pos))) {
+            mass = (str.charAt(pos++) - '0');
+            while (pos < len && isDigit(str.charAt(pos)))
+                mass = 10 * mass + (str.charAt(pos++) - '0');
+        }
+
+        // atom symbol
+        if (pos < len && isUpper(str.charAt(pos))) {
+            int beg = pos;
+            pos++;
+            while (pos < len && isLower(str.charAt(pos)))
+                pos++;
+            elem = Elements.ofString(str.substring(beg, pos));
+            if (elem == Elements.Unknown)
+                return false;
+            anum = elem.number();
+
+            // optional fields after atom symbol
+            while (pos < len) {
+                switch (str.charAt(pos)) {
+                    case 'H':
+                        pos++;
+                        if (pos < len && isDigit(str.charAt(pos))) {
+                            while (pos < len && isDigit(str.charAt(pos)))
+                                hcnt = 10 * hcnt + (str.charAt(pos++) - '0');
+                        } else {
+                            hcnt = 1;
+                        }
+                        break;
+                    case '+':
+                        pos++;
+                        if (pos < len && isDigit(str.charAt(pos))) {
+                            chg = (str.charAt(pos++) - '0');
+                            while (pos < len && isDigit(str.charAt(pos)))
+                                chg = 10 * chg + (str.charAt(pos++) - '0');
+                        } else {
+                            chg = +1;
+                        }
+                        break;
+                    case '-':
+                        pos++;
+                        if (pos < len && isDigit(str.charAt(pos))) {
+                            chg = (str.charAt(pos++) - '0');
+                            while (pos < len && isDigit(str.charAt(pos)))
+                                chg = 10 * chg + (str.charAt(pos++) - '0');
+                            chg *= -1;
+                        } else {
+                            chg = -1;
+                        }
+                        break;
+                    default:
+                        return false;
+                }
+            }
+        } else {
+            return false;
+        }
+
+        if (mass < 0)
+            atom.setMassNumber(null);
+        else
+            atom.setMassNumber(mass);
+        atom.setAtomicNumber(anum);
+        atom.setSymbol(Elements.ofNumber(anum).symbol());
+        atom.setImplicitHydrogenCount(hcnt);
+        atom.setFormalCharge(chg);
+
+        return pos == len && len > 0;
+    }
 }

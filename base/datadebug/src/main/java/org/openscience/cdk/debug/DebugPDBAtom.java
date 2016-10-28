@@ -37,7 +37,7 @@ public class DebugPDBAtom extends PDBAtom implements IPDBAtom {
 
     private static final long serialVersionUID = -2432127382224382452L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugPDBAtom.class);
+    private static final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugPDBAtom.class);
 
     public DebugPDBAtom(IElement element) {
         super(element);

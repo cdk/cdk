@@ -124,7 +124,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testNonExistingType() throws Exception {
         IAtomContainer mol = new AtomContainer();
-        IAtom atom = new Atom("Error");
+        IAtom atom = new Atom();
         mol.addAtom(atom);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         IAtomType type = matcher.findMatchingAtomType(mol, atom);

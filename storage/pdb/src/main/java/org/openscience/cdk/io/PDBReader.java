@@ -40,6 +40,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.graph.rebond.RebondTool;
@@ -104,8 +105,6 @@ public class PDBReader extends DefaultChemObjectReader {
      */
     private List<IBond>            bondsFromConnectRecords;
 
-    private static AtomTypeFactory pdbFactory;
-
     /**
      * A mapping between HETATM 3-letter codes + atomNames to CDK atom type
      * names; for example "RFB.N13" maps to "N.planar3".
@@ -139,7 +138,6 @@ public class PDBReader extends DefaultChemObjectReader {
     public PDBReader(Reader oIn) {
         _oInput = new BufferedReader(oIn);
         initIOSettings();
-        pdbFactory = null;
         hetDictionary = null;
         cdkAtomTypeFactory = null;
     }
@@ -194,16 +192,6 @@ public class PDBReader extends DefaultChemObjectReader {
     @Override
     public <T extends IChemObject> T read(T oObj) throws CDKException {
         if (oObj instanceof IChemFile) {
-            if (pdbFactory == null) {
-                try {
-                    pdbFactory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/pdb_atomtypes.xml",
-                            ((IChemFile) oObj).getBuilder());
-                } catch (Exception exception) {
-                    logger.debug(exception);
-                    throw new CDKException("Could not setup list of PDB atom types! " + exception.getMessage(),
-                            exception);
-                }
-            }
             return (T) readChemFile((IChemFile) oObj);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
@@ -483,7 +471,7 @@ public class PDBReader extends DefaultChemObjectReader {
                     } // ignore all other commands
                 }
             } while (_oInput.ready() && (cRead != null));
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (IOException | IllegalArgumentException | CDKException e) {
             logger.error("Found a problem at line:");
             logger.error(cRead);
             logger.error("01234567890123456789012345678901234567890123456789012345678901234567890123456789");
@@ -559,6 +547,65 @@ public class PDBReader extends DefaultChemObjectReader {
         return true;
     }
 
+    private static boolean isUpper(char c) {
+        return c >= 'A' && c <= 'Z';
+    }
+    private static boolean isLower(char c) {
+        return c >= 'a' && c <= 'z';
+    }
+    private static boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
+
+    private String parseAtomSymbol(String str) {
+
+        if (str == null || str.isEmpty())
+            return null;
+
+        final int len = str.length();
+
+        StringBuilder sym = new StringBuilder();
+
+        // try grabbing from end of line
+
+        if (len > 76 && isUpper(str.charAt(76))) {
+            sym.append(str.charAt(76));
+            if (len > 77 && isUpper(str.charAt(77)))
+                sym.append(Character.toLowerCase(str.charAt(77)));
+            else if (len > 77 && isLower(str.charAt(77)))
+                sym.append(Character.toLowerCase(str.charAt(77)));
+        } else if (len > 76 &&str.charAt(76) == ' ') {
+            if (len > 77 && isUpper(str.charAt(77)))
+                sym.append(str.charAt(77));
+        }
+
+        if (sym.length() > 0)
+            return sym.toString();
+
+        // try getting from PDB atom name
+        if (len > 13 && isUpper(str.charAt(13))) {
+            if (str.charAt(12) == ' ') {
+                sym.append(str.charAt(13));
+                if (isLower(str.charAt(14)))
+                    sym.append(str.charAt(14));
+            } else if (isUpper(str.charAt(12))) {
+                if (str.charAt(0) == 'A' && str.charAt(12) == 'H') {
+                    sym.append('H'); // ATOM record H is always H
+                } else {
+                    sym.append(str.charAt(12));
+                    sym.append(Character.toLowerCase(str.charAt(13)));
+                }
+            } else if (isDigit(str.charAt(12))) {
+                sym.append(str.charAt(13));
+            }
+        }
+
+        if (sym.length() > 0)
+            return sym.toString();
+
+        return null;
+    }
+
     /**
      * Creates an <code>Atom</code> and sets properties to their values from
      * the ATOM or HETATM record. If the line is shorter than 80 characters, the
@@ -569,7 +616,7 @@ public class PDBReader extends DefaultChemObjectReader {
      * @return the <code>Atom</code> created from the record.
      * @throws RuntimeException if the line is too short (less than 59 characters).
      */
-    private PDBAtom readAtom(String cLine, int lineLength) {
+    private PDBAtom readAtom(String cLine, int lineLength) throws CDKException {
         // a line can look like (two in old format, then two in new format):
         //
         //           1         2         3         4         5         6         7
@@ -586,62 +633,41 @@ public class PDBReader extends DefaultChemObjectReader {
         if (lineLength < 59) {
             throw new RuntimeException("PDBReader error during readAtom(): line too short");
         }
-        String elementSymbol;
-        if (cLine.length() > 78) {
-            elementSymbol = cLine.substring(76, 78).trim();
-            if (elementSymbol.length() == 0) {
-                elementSymbol = cLine.substring(12, 14).trim();
-            }
-        } else {
-            elementSymbol = cLine.substring(12, 14).trim();
-        }
 
-        if (elementSymbol.length() == 2) {
-            // ensure that the second char is lower case
-            if (Character.isDigit(elementSymbol.charAt(0))) {
-                elementSymbol = elementSymbol.substring(1);
-            } else {
-                elementSymbol = elementSymbol.charAt(0) + elementSymbol.substring(1).toLowerCase();
-            }
-        }
+        boolean isHetatm = cLine.substring(0, 6).equals("HETATM");
+        String  atomName = cLine.substring(12, 16).trim();
+        String  resName  = cLine.substring(17, 20).trim();
+        String  symbol   = parseAtomSymbol(cLine);
 
-        String rawAtomName = cLine.substring(12, 16).trim();
-        String resName = cLine.substring(17, 20).trim();
-        boolean isHetatm;
-        try {
-            IAtomType type = pdbFactory.getAtomType(resName + "." + rawAtomName);
-            elementSymbol = type.getSymbol();
-            isHetatm = false;
-        } catch (NoSuchAtomTypeException e) {
-            logger.error("Did not recognize PDB atom type: " + resName + "." + rawAtomName);
-            isHetatm = true;
-        }
-        PDBAtom oAtom = new PDBAtom(elementSymbol, new Point3d(Double.parseDouble(cLine.substring(30, 38)),
+        if (symbol == null)
+            handleError("Cannot parse symbol from " + atomName);
+
+        PDBAtom oAtom = new PDBAtom(symbol, new Point3d(Double.parseDouble(cLine.substring(30, 38)),
                 Double.parseDouble(cLine.substring(38, 46)), Double.parseDouble(cLine.substring(46, 54))));
         if (useHetDictionary.isSet() && isHetatm) {
-            String cdkType = typeHetatm(resName, rawAtomName);
+            String cdkType = typeHetatm(resName, atomName);
             oAtom.setAtomTypeName(cdkType);
             if (cdkType != null) {
                 try {
                     cdkAtomTypeFactory.configure(oAtom);
                 } catch (CDKException cdke) {
-                    logger.warn("Could not configure", resName, " ", rawAtomName);
+                    logger.warn("Could not configure", resName, " ", atomName);
                 }
             }
         }
 
         oAtom.setRecord(cLine);
         oAtom.setSerial(Integer.parseInt(cLine.substring(6, 11).trim()));
-        oAtom.setName(rawAtomName.trim());
+        oAtom.setName(atomName.trim());
         oAtom.setAltLoc(cLine.substring(16, 17).trim());
         oAtom.setResName(resName);
         oAtom.setChainID(cLine.substring(21, 22).trim());
         oAtom.setResSeq(cLine.substring(22, 26).trim());
         oAtom.setICode(cLine.substring(26, 27).trim());
         if (useHetDictionary.isSet() && isHetatm) {
-            oAtom.setID(oAtom.getResName() + "." + rawAtomName);
+            oAtom.setID(oAtom.getResName() + "." + atomName);
         } else {
-            oAtom.setAtomTypeName(oAtom.getResName() + "." + rawAtomName);
+            oAtom.setAtomTypeName(oAtom.getResName() + "." + atomName);
         }
         if (lineLength >= 59) {
             String frag = cLine.substring(54, Math.min(lineLength, 60)).trim();

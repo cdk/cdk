@@ -214,7 +214,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         Assert.assertNotNull(type);
         AtomTypeManipulator.configure(atom, type);
 
-        Assert.assertNull(atom.getImplicitHydrogenCount());
+        Assert.assertNotEquals((Integer) 2, atom.getImplicitHydrogenCount());
         adder.addImplicitHydrogens(mol);
         Assert.assertEquals(1, mol.getAtomCount());
         Assert.assertNotNull(atom.getImplicitHydrogenCount());
