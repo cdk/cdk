@@ -487,6 +487,19 @@ final class StandardSgroupGenerator {
         }
     }
 
+    private static boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
+
+    private static boolean isUnsignedInt(String str) {
+        int pos = 0;
+        int len = str.length();
+        while (pos < len)
+            if (!isDigit(str.charAt(pos++)))
+                return false;
+        return true;
+    }
+
     private IRenderingElement generateSgroupBrackets(Sgroup sgroup,
                                                      List<SgroupBracket> brackets,
                                                      Map<IAtom, AtomSymbol> symbols,
@@ -516,16 +529,16 @@ final class StandardSgroupGenerator {
         // override bracket layout around single atoms to bring them in closer
         if (atoms.size() == 1) {
 
-            double scriptscale = labelScale;
+            IAtom atom = atoms.iterator().next();
 
-            TextOutline leftBracket = new TextOutline("(", font).resize(1 / scale, 1 / -scale);
-            TextOutline rightBracket = new TextOutline(")", font).resize(1 / scale, 1 / -scale);
+            // e.g. 2 HCL, 8 H2O etc.
+            if (isUnsignedInt(subscriptSuffix) &&
+                crossingBonds.isEmpty() &&
+                symbols.containsKey(atom)) {
+                TextOutline prefix = new TextOutline('·' + subscriptSuffix, font).resize(1/scale,1/-scale);
+                Rectangle2D prefixBounds = prefix.getLogicalBounds();
 
-            Point2D leftCenter = leftBracket.getCenter();
-            Point2D rightCenter = rightBracket.getCenter();
-
-            if (symbols.containsKey(atoms.iterator().next())) {
-                AtomSymbol symbol = symbols.get(atoms.iterator().next());
+                AtomSymbol symbol = symbols.get(atom);
 
                 Rectangle2D bounds = symbol.getConvexHull().outline().getBounds2D();
 
@@ -535,42 +548,68 @@ final class StandardSgroupGenerator {
                                bounds.getWidth() + 4 * stroke,
                                bounds.getHeight() + 4 * stroke);
 
-                leftBracket = leftBracket.translate(bounds.getMinX() - 0.1 - leftCenter.getX(),
-                                                    symbol.getAlignmentCenter().getY() - leftCenter.getY());
-                rightBracket = rightBracket.translate(bounds.getMaxX() + 0.1 - rightCenter.getX(),
-                                                      symbol.getAlignmentCenter().getY() - rightCenter.getY());
-            }
-            else {
-                Point2d p = atoms.iterator().next().getPoint2d();
-                leftBracket = leftBracket.translate(p.x - 0.2 - leftCenter.getX(),
-                                                    p.y - leftCenter.getY());
-                rightBracket = rightBracket.translate(p.x + 0.2 - rightCenter.getX(),
-                                                      p.y - rightCenter.getY());
-            }
+                prefix = prefix.translate(bounds.getMinX() - prefixBounds.getMaxX(),
+                                          symbol.getAlignmentCenter().getY() - prefixBounds.getCenterY());
 
-            result.add(GeneralPath.shapeOf(leftBracket.getOutline(), foreground));
-            result.add(GeneralPath.shapeOf(rightBracket.getOutline(), foreground));
-
-            Rectangle2D rightBracketBounds = rightBracket.getBounds();
-
-            // subscript/superscript suffix annotation
-            if (subscriptSuffix != null && !subscriptSuffix.isEmpty()) {
-                TextOutline subscriptOutline = leftAlign(makeText(subscriptSuffix.toLowerCase(Locale.ROOT),
-                                                                  new Point2d(rightBracketBounds.getMaxX(),
-                                                                              rightBracketBounds.getMinY()-0.1),
-                                                                  new Vector2d(-0.5 * rightBracketBounds.getWidth(), 0),
-                                                                  scriptscale));
-                result.add(GeneralPath.shapeOf(subscriptOutline.getOutline(), foreground));
+                result.add(GeneralPath.shapeOf(prefix.getOutline(), foreground));
             }
-            if (superscriptSuffix != null && !superscriptSuffix.isEmpty()) {
-                TextOutline superscriptOutline = leftAlign(makeText(superscriptSuffix.toLowerCase(Locale.ROOT),
-                                                                    new Point2d(rightBracketBounds.getMaxX(),
-                                                                                rightBracketBounds.getMaxY()+0.1),
-                                                                    new Vector2d(-rightBracketBounds.getWidth(),0),
-                                                                    scriptscale));
-                result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
-            }
+            // e.g. CC(O)nCC
+            else if (crossingBonds.size()>0) {
 
+                double scriptscale = labelScale;
+
+                TextOutline leftBracket = new TextOutline("(", font).resize(1 / scale, 1 / -scale);
+                TextOutline rightBracket = new TextOutline(")", font).resize(1 / scale, 1 / -scale);
+
+                Point2D leftCenter = leftBracket.getCenter();
+                Point2D rightCenter = rightBracket.getCenter();
+
+                if (symbols.containsKey(atom)) {
+                    AtomSymbol symbol = symbols.get(atom);
+
+                    Rectangle2D bounds = symbol.getConvexHull().outline().getBounds2D();
+
+                    // make slightly large
+                    bounds.setRect(bounds.getMinX() - 2 * stroke,
+                                   bounds.getMinY() - 2 * stroke,
+                                   bounds.getWidth() + 4 * stroke,
+                                   bounds.getHeight() + 4 * stroke);
+
+                    leftBracket = leftBracket.translate(bounds.getMinX() - 0.1 - leftCenter.getX(),
+                                                        symbol.getAlignmentCenter().getY() - leftCenter.getY());
+                    rightBracket = rightBracket.translate(bounds.getMaxX() + 0.1 - rightCenter.getX(),
+                                                          symbol.getAlignmentCenter().getY() - rightCenter.getY());
+                } else {
+                    Point2d p = atoms.iterator().next().getPoint2d();
+                    leftBracket = leftBracket.translate(p.x - 0.2 - leftCenter.getX(),
+                                                        p.y - leftCenter.getY());
+                    rightBracket = rightBracket.translate(p.x + 0.2 - rightCenter.getX(),
+                                                          p.y - rightCenter.getY());
+                }
+
+                result.add(GeneralPath.shapeOf(leftBracket.getOutline(), foreground));
+                result.add(GeneralPath.shapeOf(rightBracket.getOutline(), foreground));
+
+                Rectangle2D rightBracketBounds = rightBracket.getBounds();
+
+                // subscript/superscript suffix annotation
+                if (subscriptSuffix != null && !subscriptSuffix.isEmpty()) {
+                    TextOutline subscriptOutline = leftAlign(makeText(subscriptSuffix.toLowerCase(Locale.ROOT),
+                                                                      new Point2d(rightBracketBounds.getMaxX(),
+                                                                                  rightBracketBounds.getMinY() - 0.1),
+                                                                      new Vector2d(-0.5 * rightBracketBounds.getWidth(), 0),
+                                                                      scriptscale));
+                    result.add(GeneralPath.shapeOf(subscriptOutline.getOutline(), foreground));
+                }
+                if (superscriptSuffix != null && !superscriptSuffix.isEmpty()) {
+                    TextOutline superscriptOutline = leftAlign(makeText(superscriptSuffix.toLowerCase(Locale.ROOT),
+                                                                        new Point2d(rightBracketBounds.getMaxX(),
+                                                                                    rightBracketBounds.getMaxY() + 0.1),
+                                                                        new Vector2d(-rightBracketBounds.getWidth(), 0),
+                                                                        scriptscale));
+                    result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
+                }
+            }
         } else if (!pairs.isEmpty()) {
 
             SgroupBracket suffixBracket = null;
