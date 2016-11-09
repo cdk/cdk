@@ -1241,7 +1241,7 @@ final class StandardBondGenerator {
      */
     static Map<IBond, IAtomContainer> ringPreferenceMap(IAtomContainer container) {
 
-        final IRingSet relevantRings = Cycles.relevant(container).toRingSet();
+        final IRingSet relevantRings = Cycles.sssr(container).toRingSet();
         final List<IAtomContainer> rings = AtomContainerSetManipulator.getAllAtomContainers(relevantRings);
 
         Collections.sort(rings, new RingBondOffsetComparator());
