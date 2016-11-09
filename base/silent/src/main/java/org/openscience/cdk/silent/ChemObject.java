@@ -302,11 +302,17 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
         this.identifier = identifier;
     }
 
+    private boolean isPowerOfTwo(int num) {
+        return (num == 1) || (num & (num-1)) == 0;
+    }
+
     /**
      * @inheritDoc
      */
     @Override
     public void setFlag(int mask, boolean value) {
+        if (mask > Short.MAX_VALUE || !isPowerOfTwo(mask))
+            throw new IllegalArgumentException("setFlag() must be provided a valid CDKConstant and not used for custom properties");
         // set/unset a bit in the flags value
         if (value)
             flags |= mask;

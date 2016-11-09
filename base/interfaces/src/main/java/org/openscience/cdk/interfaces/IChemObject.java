@@ -205,7 +205,9 @@ public interface IChemObject extends ICDKObject {
     /**
      * Sets the value of some flag. The flag is a mask from a given
      * CDKConstant (e.g. {@link org.openscience.cdk.CDKConstants#ISAROMATIC}
-     * or {@link org.openscience.cdk.CDKConstants#VISITED}).
+     * or {@link org.openscience.cdk.CDKConstants#VISITED}). The flags are
+     * intrinsic internal properties and should not be used to store custom
+     * values, please use {@link #setProperty(Object, Object)}.
      *
      * <pre>{@code
      * // set this chem object to be aromatic
