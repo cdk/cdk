@@ -526,7 +526,9 @@ public class StructureDiagramGenerator {
         // coordinates to simplest: 0,0. See bug #780545
         logger.debug("Entry point of generateCoordinates()");
         logger.debug("We have a molecules with " + numAtoms + " atoms.");
-        if (numAtoms == 1) {
+        if (numAtoms == 0) {
+            return;
+        } if (numAtoms == 1) {
             molecule.getAtom(0).setPoint2d(new Point2d(0, 0));
             return;
         } else if (molecule.getBondCount() == 1 && molecule.getAtomCount() == 2) {
@@ -1501,7 +1503,7 @@ public class StructureDiagramGenerator {
         int result = 0;
 
         // Check for an exact match (identity) on the entire ring system
-        if (lookupRingSystem(rs, molecule, !macro || rs.getAtomContainerCount() > 1)) {
+        if (!macro && lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
             for (IAtomContainer container : rs.atomContainers())
                 container.setFlag(CDKConstants.ISPLACED, true);
             rs.setFlag(CDKConstants.ISPLACED, true);
