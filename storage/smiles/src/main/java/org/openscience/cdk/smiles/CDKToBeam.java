@@ -248,7 +248,11 @@ final class CDKToBeam {
      */
     private static Bond toBeamEdgeLabel(IBond b, int flavour) throws CDKException {
 
-        if (SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && b.getFlag(CDKConstants.ISAROMATIC)) return Bond.AROMATIC;
+        if (SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && b.isAromatic()) {
+            if (!b.getAtom(0).isAromatic() || !b.getAtom(1).isAromatic())
+                throw new IllegalStateException("Aromatic bond connects non-aromatic atomic atoms");
+            return Bond.AROMATIC;
+        }
 
         if (b.getOrder() == null) throw new CDKException("A bond had undefined order, possible query bond?");
 
@@ -264,7 +268,7 @@ final class CDKToBeam {
             case QUADRUPLE:
                 return Bond.QUADRUPLE;
             default:
-                if (!SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && b.getFlag(CDKConstants.ISAROMATIC))
+                if (!SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && b.isAromatic())
                     throw new CDKException("Cannot write Kekulé SMILES output due to aromatic bond with unset bond order - molecule should be Kekulized");
                 throw new CDKException("Unsupported bond order: " + order);
         }

@@ -129,6 +129,18 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertNull(chemObject.getID());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void setFlagThatIsTooBig() {
+        IChemObject chemObject = newChemObject();
+        chemObject.setFlag(1 << 17, true);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setFlagThatIsInvalid() {
+        IChemObject chemObject = newChemObject();
+        chemObject.setFlag(999, true);
+    }
+
     @Test
     public void testSetFlags_arrayboolean() {
         IChemObject chemObject = newChemObject();

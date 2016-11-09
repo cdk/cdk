@@ -1228,6 +1228,16 @@ public class SmilesGeneratorTest extends CDKTestCase {
         assertThat(smigen.create(r2), is(smigen.create(r3)));
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void inconsistentAromaticState() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("c1ccccc1");
+        for (IAtom atom : mol.atoms())
+            atom.setIsAromatic(false);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
+        smigen.create(mol);
+    }
+
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
         return new TetrahedralChirality(container.getAtom(central), new IAtom[]{container.getAtom(a1),
                                                                                 container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},
