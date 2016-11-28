@@ -119,17 +119,26 @@ public interface IMolecularFormula extends ICDKObject {
      * Sets the charge of this IMolecularFormula, since there is no atom
      * associated with the charge the number of a given isotope is not modified.
      *
-     * <pre>{@code
-     *   // Correct usage
-     *   IMolecularFormula phenolate = MolecularFormulaManipulator.getMolecularFormula("C6H5O", builder)
-     *   mf.setCharge(-1);
-     *   // MF=C6H5O-
+     * <pre>
+     * // Correct usage
+     * IMolecularFormula phenolate = MolecularFormulaManipulator.getMolecularFormula("C6H5O", builder)
+     * mf.setCharge(-1);
+     * // MF=C6H5O-
      *
-     *   // Wrong! the H6 is not automatically adjust
-     *   IMolecularFormula phenolate = MolecularFormulaManipulator.getMolecularFormula("C6H6O", builder)
-     *   mf.setCharge(-1);
-     *   // MF=C6H6O- (wrong)
-     * }</pre>
+     * // Wrong! the H6 is not automatically adjust
+     * IMolecularFormula phenolate = MolecularFormulaManipulator.getMolecularFormula("C6H6O", builder)
+     * mf.setCharge(-1);
+     * // MF=C6H6O- (wrong)
+     * </pre>
+     *
+     * If you wish to adjust the protonation of a formula try the convenience method of the {@code
+     * MolecularFormulaManipulator}:
+     *
+     * <pre>
+     * IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[C6H5O]-", bldr);
+     * MolecularFormulaManipulator.adjustProtonation(mf, +1);
+     * MolecularFormulaManipulator.getString(mf); // "C6H6O"
+     * </pre>
      *
      * @param  charge  The partial charge
      *
