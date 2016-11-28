@@ -147,12 +147,7 @@ public class MolecularFormula implements IMolecularFormula {
     }
 
     /**
-     *  Returns the partial charge of this IMolecularFormula. If the charge
-     *  has not been set the return value is Double.NaN.
-     *
-     * @return the charge of this IMolecularFormula
-     *
-     * @see    #setCharge
+     * {@inheritDoc}
      */
     @Override
     public Integer getCharge() {
@@ -211,11 +206,7 @@ public class MolecularFormula implements IMolecularFormula {
     }
 
     /**
-     *  Sets the partial charge of this IMolecularFormula.
-     *
-     * @param  charge  The partial charge
-     *
-     * @see    #getCharge
+     * {@inheritDoc}
      */
     @Override
     public void setCharge(Integer charge) {

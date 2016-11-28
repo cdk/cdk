@@ -116,7 +116,20 @@ public interface IMolecularFormula extends ICDKObject {
     public void removeAllIsotopes();
 
     /**
-     *  Sets the partial charge of this IMolecularFormula.
+     * Sets the charge of this IMolecularFormula, since there is no atom
+     * associated with the charge the number of a given isotope is not modified.
+     *
+     * <pre>{@code
+     *   // Correct usage
+     *   IMolecularFormula phenolate = MolecularFormulaManipulator.getMolecularFormula("C6H5O", builder)
+     *   mf.setCharge(-1);
+     *   // MF=C6H5O-
+     *
+     *   // Wrong! the H6 is not automatically adjust
+     *   IMolecularFormula phenolate = MolecularFormulaManipulator.getMolecularFormula("C6H6O", builder)
+     *   mf.setCharge(-1);
+     *   // MF=C6H6O- (wrong)
+     * }</pre>
      *
      * @param  charge  The partial charge
      *
@@ -125,8 +138,8 @@ public interface IMolecularFormula extends ICDKObject {
     public void setCharge(Integer charge);
 
     /**
-     *  Returns the partial charge of this IMolecularFormula. If the charge
-     *  has not been set the return value is Double.NaN.
+     * Access the charge of this IMolecularFormula. If the charge
+     * has not been set the return value is null.
      *
      * @return the charge of this IMolecularFormula
      *
