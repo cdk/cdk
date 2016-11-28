@@ -47,7 +47,6 @@ public class IsotopePatternGenerator {
 
     private IChemObjectBuilder builder        = null;
     private IsotopeFactory     isoFactory;
-    private IsotopePattern     abundance_Mass = null;
 
     private ILoggingTool       logger         = LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class);
 
@@ -94,13 +93,13 @@ public class IsotopePatternGenerator {
 
         IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(mf, builder);
 
+        IsotopePattern abundance_Mass = null;
+
         for (IIsotope isos : molecularFormula.isotopes()) {
             String elementSymbol = isos.getSymbol();
             int atomCount = molecularFormula.getIsotopeCount(isos);
-
             for (int i = 0; i < atomCount; i++) {
-                if (!calculateAbundanceAndMass(elementSymbol)) {
-                }
+                abundance_Mass = calculateAbundanceAndMass(abundance_Mass, elementSymbol);
             }
         }
 
@@ -121,13 +120,13 @@ public class IsotopePatternGenerator {
      * @param elementSymbol  The chemical element symbol
      * @return the calculation was successful
      */
-    private boolean calculateAbundanceAndMass(String elementSymbol) {
+    private IsotopePattern calculateAbundanceAndMass(IsotopePattern isotopePattern, String elementSymbol) {
 
         IIsotope[] isotopes = isoFactory.getIsotopes(elementSymbol);
 
-        if (isotopes == null) return false;
+        if (isotopes == null) return isotopePattern;
 
-        if (isotopes.length == 0) return false;
+        if (isotopes.length == 0) return isotopePattern;
 
         double mass, previousMass, abundance, totalAbundance, newAbundance;
 
@@ -143,21 +142,18 @@ public class IsotopePatternGenerator {
 
         // Verify if there is a previous calculation. If it exists, add the new
         // isotopes
-        if (abundance_Mass == null) {
-
-            abundance_Mass = currentISOPattern;
-            return true;
-
+        if (isotopePattern == null) {
+            isotopePattern = currentISOPattern;
         } else {
-            for (int i = 0; i < abundance_Mass.getNumberOfIsotopes(); i++) {
-                totalAbundance = abundance_Mass.getIsotopes().get(i).getIntensity();
+            for (int i = 0; i < isotopePattern.getNumberOfIsotopes(); i++) {
+                totalAbundance = isotopePattern.getIsotopes().get(i).getIntensity();
 
                 if (totalAbundance == 0) continue;
 
                 for (int j = 0; j < currentISOPattern.getNumberOfIsotopes(); j++) {
 
                     abundance = currentISOPattern.getIsotopes().get(j).getIntensity();
-                    mass = abundance_Mass.getIsotopes().get(i).getMass();
+                    mass = isotopePattern.getIsotopes().get(i).getMass();
 
                     if (abundance == 0) continue;
 
@@ -180,14 +176,14 @@ public class IsotopePatternGenerator {
             }
 
             Iterator<Double> itr = isotopeMassAndAbundance.keySet().iterator();
-            abundance_Mass = new IsotopePattern();
+            isotopePattern = new IsotopePattern();
             while (itr.hasNext()) {
                 mass = itr.next();
-                abundance_Mass.addIsotope(new IsotopeContainer(mass, isotopeMassAndAbundance.get(mass)));
+                isotopePattern.addIsotope(new IsotopeContainer(mass, isotopeMassAndAbundance.get(mass)));
             }
         }
 
-        return true;
+        return isotopePattern;
 
     }
 
