@@ -231,6 +231,8 @@ public class CDKToBeamTest {
         Map<IAtom, Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
+        when(u.isAromatic()).thenReturn(true);
+        when(v.isAromatic()).thenReturn(true);
         CDKToBeam c2g = new CDKToBeam();
         assertThat(c2g.toBeamEdge(b, mock), is(uk.ac.ebi.beam.Bond.AROMATIC.edge(0, 1)));
     }
@@ -492,13 +494,15 @@ public class CDKToBeamTest {
         ac.addBond(0, 1, SINGLE);
         ac.addBond(1, 2, DOUBLE);
         ac.addBond(2, 3, SINGLE);
+        ac.getAtom(1).setIsAromatic(true);
+        ac.getAtom(2).setIsAromatic(true);
 
         ac.getBond(1).setFlag(CDKConstants.ISAROMATIC, true);
 
         ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
                 TOGETHER));
         Graph g = convert(ac, SmiFlavor.UseAromaticSymbols);
-        assertThat(g.toSmiles(), is("F[CH]:[CH]F"));
+        assertThat(g.toSmiles(), is("FccF"));
     }
 
     @Test

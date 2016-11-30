@@ -21,6 +21,8 @@ package org.openscience.cdk.tools.manipulator;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1249,5 +1251,74 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[PO4]3–",
                                                                                bldr);
         assertThat(mf.getCharge(), is(-3));
+    }
+
+    @Test public void deprotonatePhenol() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("C6H6O", bldr);
+        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, -1));
+        assertThat(MolecularFormulaManipulator.getString(mf), is("C6H5O"));
+        assertThat(mf.getCharge(), is(-1));
+    }
+
+    @Test public void protonatePhenolate() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[C6H5O]-", bldr);
+        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
+        assertThat(MolecularFormulaManipulator.getString(mf), is("C6H6O"));
+        assertThat(mf.getCharge(), is(0));
+        assertThat(mf.getIsotopeCount(), is(3));
+    }
+
+    @Test public void protonatePhenolateMajorIsotopes() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("[C6H5O]-", bldr);
+        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
+        assertThat(MolecularFormulaManipulator.getString(mf), is("C6H6O"));
+        assertThat(mf.getCharge(), is(0));
+        assertThat(mf.getIsotopeCount(), is(3));
+    }
+
+    @Test public void deprontateHCl() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("HCl", bldr);
+        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, -1));
+        assertThat(MolecularFormulaManipulator.getString(mf), is("Cl"));
+        assertThat(mf.getCharge(), is(-1));
+        assertThat(mf.getIsotopeCount(), is(1));
+    }
+
+    @Test public void prontateChloride() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[Cl]-", bldr);
+        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
+        assertThat(MolecularFormulaManipulator.getString(mf), is("ClH"));
+        assertThat(mf.getCharge(), is(0));
+        assertThat(mf.getIsotopeCount(), is(2));
+    }
+
+    @Test public void deprontateChloride() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[Cl]-", bldr);
+        assertFalse(MolecularFormulaManipulator.adjustProtonation(mf, -1));
+    }
+
+    @Test public void protonateDeuteratedPhenolate() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = bldr.newInstance(IMolecularFormula.class);
+        // [C6DH4O]- (parser not good enough ATM so need to create like this)
+        IIsotope deuterium = Isotopes.getInstance().getIsotope("H", 2);
+        IIsotope hydrogen = Isotopes.getInstance().getMajorIsotope(1);
+        mf.addIsotope(deuterium, 1);
+        mf.addIsotope(hydrogen, 4);
+        mf.addIsotope(Isotopes.getInstance().getMajorIsotope(6), 6);
+        mf.addIsotope(Isotopes.getInstance().getMajorIsotope(8), 1);
+        mf.setCharge(-1);
+        assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, +1));
+        assertThat(MolecularFormulaManipulator.getString(mf), is("C6H6O"));
+        assertThat(mf.getCharge(), is(0));
+        assertThat(mf.getIsotopeCount(), is(4));
+        assertThat(mf.getIsotopeCount(deuterium), is(1));
+        assertThat(mf.getIsotopeCount(hydrogen), is(5));
     }
 }

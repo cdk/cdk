@@ -299,7 +299,7 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
     public void testGetIsotopes_IMolecularFormula_Charged() {
         IsotopePatternGenerator isogen = new IsotopePatternGenerator(.1);
         
-        IMolecularFormula mfPositive = MolecularFormulaManipulator.getMolecularFormula("C6H12O6Na", builder);
+        IMolecularFormula mfPositive = MolecularFormulaManipulator.getMolecularFormula("C6H11O6Na", builder);
         mfPositive.setCharge(1);
         IsotopePattern ip1 = isogen.getIsotopes(mfPositive);
         Assert.assertEquals(1, ip1.getNumberOfIsotopes());
@@ -312,5 +312,24 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
 
         Assert.assertNotEquals(ip1.getIsotope(0).getMass(), ip2.getIsotope(0).getMass());
     }
+
+    @Test
+    public void testGetIsotopes_IMolecularFormula_deprotonate() {
+        IsotopePatternGenerator isogen = new IsotopePatternGenerator(.1);
+
+        IMolecularFormula mf1 = MolecularFormulaManipulator.getMolecularFormula("C6H12O6", builder);
+        MolecularFormulaManipulator.adjustProtonation(mf1, -1);
+        IsotopePattern ip1 = isogen.getIsotopes(mf1);
+        Assert.assertEquals(1, ip1.getNumberOfIsotopes());
+
+        isogen = new IsotopePatternGenerator(.1);
+        IMolecularFormula mf2 = MolecularFormulaManipulator.getMolecularFormula("C6H11O6", builder);
+        IsotopePattern ip2 = isogen.getIsotopes(mf2);
+        Assert.assertEquals(1, ip2.getNumberOfIsotopes());
+
+        Assert.assertEquals(ip1.getIsotope(0).getMass(), ip2.getIsotope(0).getMass(), 0.001);
+    }
+
+
 
 }

@@ -1168,4 +1168,78 @@ public class MolecularFormulaManipulator {
         }
         return finalformula;
     }
+
+    /**
+     * Adjust the protonation of a molecular formula. This utility method adjusts the hydrogen isotope count
+     * and charge at the same time.
+     *
+     * <pre>
+     * IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[C6H5O]-", bldr);
+     * MolecularFormulaManipulator.adjustProtonation(mf, +1); // now "C6H6O"
+     * MolecularFormulaManipulator.adjustProtonation(mf, -1); // now "C6H5O-"
+     * </pre>
+     *
+     * The return value indicates whether the protonation could be adjusted:
+     *
+     * <pre>
+     * IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[Cl]-", bldr);
+     * MolecularFormulaManipulator.adjustProtonation(mf, +0); // false still "[Cl]-"
+     * MolecularFormulaManipulator.adjustProtonation(mf, +1); // true now "HCl"
+     * MolecularFormulaManipulator.adjustProtonation(mf, -1); // true now "[Cl]-" (again)
+     * MolecularFormulaManipulator.adjustProtonation(mf, -1); // false still "[Cl]-" (no H to remove!)
+     * </pre>
+     *
+     * The method tries to select an existing hydrogen isotope to augment. If no hydrogen isotopes are found
+     * a new major isotope (<sup>1</sup>H) is created.
+     *
+     * @param mf molecular formula
+     * @param hcnt the number of hydrogens to add/remove, (&gt;0 protonate:, &lt;0: deprotonate)
+     * @return the protonation was be adjusted
+     */
+    public static boolean adjustProtonation(IMolecularFormula mf, int hcnt) {
+        if (mf == null) throw new NullPointerException("No formula provided");
+        if (hcnt == 0) return false; // no protons to add
+
+        final IChemObjectBuilder bldr = mf.getBuilder();
+        final int                chg  = mf.getCharge() != null ? mf.getCharge() : 0;
+
+        IIsotope proton = null;
+        int pcount = 0;
+
+        for (IIsotope iso : mf.isotopes()) {
+            if ("H".equals(iso.getSymbol())) {
+                final int count = mf.getIsotopeCount(iso);
+                if (count < hcnt)
+                    continue;
+                // acceptable
+                if (proton == null &&
+                    (iso.getMassNumber() == null || iso.getMassNumber() == 1)) {
+                    proton = iso;
+                    pcount = count;
+                }
+                // better
+                else if (proton != null &&
+                           iso.getMassNumber() != null && iso.getMassNumber() == 1 &&
+                           proton.getMassNumber() == null) {
+                    proton = iso;
+                    pcount = count;
+                }
+            }
+        }
+
+
+        if (proton == null && hcnt < 0) {
+            return false;
+        } else if (proton == null && hcnt > 0) {
+            proton = bldr.newInstance(IIsotope.class, "H");
+            proton.setMassNumber(1);
+        }
+
+        mf.removeIsotope(proton);
+        if (pcount + hcnt > 0)
+            mf.addIsotope(proton, pcount + hcnt);
+        mf.setCharge(chg + hcnt);
+
+        return true;
+    }
 }
