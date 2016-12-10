@@ -23,12 +23,16 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import net.sf.jniinchi.INCHI_OPTION;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -210,6 +214,36 @@ public class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, Order.SINGLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
+        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals("InChI=1/C2H6/c1-2/h1-2H3", gen.getInchi());
+        Assert.assertEquals("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.getInchiKey());
+    }
+
+    /**
+     * Test generation of non-standard InChIs.
+     *
+     * @throws Exception
+     * @cdk.bug 1384
+     * @see <a href="https://sourceforge.net/p/cdk/bugs/1384/">BUG:1384</a>
+     */
+    @Test
+    public void nonStandardInChIWithEnumOptions() throws Exception {
+        IAtomContainer ac = new AtomContainer();
+        IAtom a1 = new Atom("C");
+        IAtom a2 = new Atom("C");
+        a1.setImplicitHydrogenCount(3);
+        a2.setImplicitHydrogenCount(3);
+        ac.addAtom(a1);
+        ac.addAtom(a2);
+        ac.addBond(new Bond(a1, a2, Order.SINGLE));
+        List<INCHI_OPTION> options = new ArrayList<INCHI_OPTION>();
+        options.add(INCHI_OPTION.FixedH);
+        options.add(INCHI_OPTION.SAbs);
+        options.add(INCHI_OPTION.SAsXYZ);
+        options.add(INCHI_OPTION.SPXYZ);
+        options.add(INCHI_OPTION.FixSp3Bug);
+        options.add(INCHI_OPTION.AuxNone);
+        InChIGenerator gen = getFactory().getInChIGenerator(ac, options);
         Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals("InChI=1/C2H6/c1-2/h1-2H3", gen.getInchi());
         Assert.assertEquals("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.getInchiKey());
