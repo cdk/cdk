@@ -19,11 +19,6 @@
             <artifactId>vecmath</artifactId>
         </dependency>
         <dependency>
-            <groupId>xpp3</groupId>
-            <artifactId>xpp3</artifactId>
-            <version>1.1.4c</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>

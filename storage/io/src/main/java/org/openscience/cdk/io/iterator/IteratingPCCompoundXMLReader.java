@@ -34,9 +34,11 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
 import org.openscience.cdk.io.pubchemxml.PubChemXMLHelper;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.XMLEvent;
 
 /**
  * Iterating PubChem PCCompound ASN.1 XML reader.
@@ -56,9 +58,10 @@ import org.xmlpull.v1.XmlPullParserFactory;
 public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
     private Reader             primarySource;
-    private XmlPullParser      parser;
+    private XMLStreamReader    parser;
     private PubChemXMLHelper   parserHelper;
     private IChemObjectBuilder builder;
+    private final XMLInputFactory xmlfact;
 
     private boolean            nextAvailableIsKnown;
     private boolean            hasNext;
@@ -69,20 +72,19 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
      *
      * @param in      The input stream
      * @param builder The builder
-     * @throws org.xmlpull.v1.XmlPullParserException if there is an error isn setting up the XML parser
+     * @throws XMLStreamException if there is an error isn setting up the XML parser
      */
     public IteratingPCCompoundXMLReader(Reader in, IChemObjectBuilder builder) throws IOException,
-            XmlPullParserException {
+                                                                                      XMLStreamException {
         this.builder = builder;
         parserHelper = new PubChemXMLHelper(builder);
 
         // initiate the pull parser
-        XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
-                System.getProperty(XmlPullParserFactory.PROPERTY_NAME), null);
-        factory.setNamespaceAware(true);
-        parser = factory.newPullParser();
+        xmlfact = XMLInputFactory.newFactory();
+        xmlfact.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, true);
+
+        parser = xmlfact.createXMLStreamReader(in);
         primarySource = in;
-        parser.setInput(primarySource);
 
         nextMolecule = null;
         nextAvailableIsKnown = false;
@@ -111,12 +113,12 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
             hasNext = false;
 
             try {
-                if (parser.next() == XmlPullParser.END_DOCUMENT) return false;
+                if (parser.next() == XMLEvent.END_DOCUMENT) return false;
 
-                while (parser.next() != XmlPullParser.END_DOCUMENT) {
-                    if (parser.getEventType() == XmlPullParser.START_TAG) {
+                while (parser.next() != XMLEvent.END_DOCUMENT) {
+                    if (parser.getEventType() == XMLEvent.START_ELEMENT) {
                         //                		System.out.println("start: '" + parser.getName() + "'");
-                        if (parser.getName().equals("PC-Compound")) {
+                        if (parser.getLocalName().equals("PC-Compound")) {
                             hasNext = true;
                             break;
                         }
@@ -163,8 +165,8 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
     public void setReader(Reader reader) throws CDKException {
         primarySource = reader;
         try {
-            parser.setInput(primarySource);
-        } catch (XmlPullParserException e) {
+            parser = xmlfact.createXMLStreamReader(reader);
+        } catch (XMLStreamException e) {
             throw new CDKException("Error while opening the input:" + e.getMessage(), e);
         }
         nextMolecule = null;

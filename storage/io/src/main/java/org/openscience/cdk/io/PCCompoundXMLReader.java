@@ -35,8 +35,10 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstanceXMLFormat;
 import org.openscience.cdk.io.pubchemxml.PubChemXMLHelper;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.XMLEvent;
 
 /**
  * Reads an object from ASN.1 XML formated input for PubChem Compound entries.
@@ -52,7 +54,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 public class PCCompoundXMLReader extends DefaultChemObjectReader {
 
     private Reader             input;
-    private XmlPullParser      parser;
+    private XMLStreamReader    parser;
     private PubChemXMLHelper   parserHelper;
     private IChemObjectBuilder builder;
 
@@ -83,12 +85,10 @@ public class PCCompoundXMLReader extends DefaultChemObjectReader {
     @Override
     public void setReader(Reader input) throws CDKException {
         try {
-            XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
-                    System.getProperty(XmlPullParserFactory.PROPERTY_NAME), null);
-            factory.setNamespaceAware(true);
-            parser = factory.newPullParser();
+            XMLInputFactory xmlfact = XMLInputFactory.newFactory();
+            xmlfact.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, true);
+            parser = xmlfact.createXMLStreamReader(input);
             this.input = input;
-            parser.setInput(input);
         } catch (Exception exception) {
             throw new CDKException("Error while creating reader: " + exception.getMessage(), exception);
         }
@@ -132,9 +132,9 @@ public class PCCompoundXMLReader extends DefaultChemObjectReader {
 
     private IAtomContainer readMolecule() throws Exception {
         boolean foundCompound = false;
-        while (parser.next() != XmlPullParser.END_DOCUMENT) {
-            if (parser.getEventType() == XmlPullParser.START_TAG) {
-                if (parser.getName().equals("PC-Compound")) {
+        while (parser.next() != XMLEvent.END_DOCUMENT) {
+            if (parser.getEventType() == XMLEvent.START_ELEMENT) {
+                if (parser.getLocalName().equals("PC-Compound")) {
                     foundCompound = true;
                     break;
                 }
