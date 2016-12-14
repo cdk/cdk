@@ -359,7 +359,7 @@ final class StandardBondGenerator {
 
                 final double theta = refVector.angle(unit);
 
-                if (theta > threshold) {
+                if (theta > threshold && theta + threshold + threshold < Math.PI) {
                     c = intersection(b, newUnitVector(b, c), toPoint, refVector);
                     d = intersection(a, newUnitVector(a, d), toPoint, refVector);
 
@@ -444,7 +444,8 @@ final class StandardBondGenerator {
             }
 
             // only slant if the angle isn't shallow
-            if (refVector.angle(unit) > threshold) {
+            double theta = refVector.angle(unit);
+            if (theta > threshold && theta + threshold + threshold < Math.PI) {
                 hatchAngle = refVector;
             }
         }

@@ -355,7 +355,7 @@
             <id>ebi-repo</id>
             <name>EBI Maven Repository</name>
             <url>
-                http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo/
+                http://www.ebi.ac.uk/~maven/m2repo
             </url>
             <releases>
                 <enabled>true</enabled>

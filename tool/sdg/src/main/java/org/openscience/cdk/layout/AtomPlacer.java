@@ -420,6 +420,14 @@ public class AtomPlacer {
             logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: "
                     + distanceMeasure);
         }
+
+        final Point2d a = previousAtom.getPoint2d();
+        final Point2d b = atom.getPoint2d();
+
+        if (isColinear(atom, molecule.getConnectedBondsList(atom))) {
+            return new Vector2d(b.x-a.x, b.y-a.y);
+        }
+
         double angle = GeometryUtil.getAngle(previousAtom.getPoint2d().x - atom.getPoint2d().x,
                 previousAtom.getPoint2d().y - atom.getPoint2d().y);
         double addAngle = Math.toRadians(120);
