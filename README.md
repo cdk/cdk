@@ -86,9 +86,7 @@ After you compiled the code, you can do "mvn test" to run the test suite of non-
 tests.
 Upon "mvn test", you should see something like:
 
-test:
-Running org.openscience.cdk.test.CDKTests
-Tests run: 1065, Failures: 7, Errors: 1, Time elapsed: 27,55 sec
+    Tests run: 199, Failures: 0, Errors: 0, Skipped: 0
 
 As you can see, the vast majority of tests ran successfully, but that there
 are failures and errors. 
