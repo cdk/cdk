@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>cdk-renderbasic</artifactId>
+	<version>1.5.14-OUTER_GLOW_WHITE_EDGE</version>
 
     <name>cdk-renderbasic</name>
     <dependencies>

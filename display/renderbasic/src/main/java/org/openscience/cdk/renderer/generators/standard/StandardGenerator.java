@@ -24,6 +24,22 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Shape;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -45,22 +61,6 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Shape;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
 
 /**
  * The standard generator creates {@link IRenderingElement}s for the atoms and bonds of a structure
@@ -152,7 +152,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          *
          * @see StandardGenerator.OuterGlowWidth
          */
-        OuterGlow
+        OuterGlow,
+        
+        OuterGlowWhiteEdge
     }
 
     private final IGeneratorParameter<?> atomColor = new AtomColor(), visibility = new Visibility(),
@@ -220,7 +222,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 continue;
 
             Color highlight = getHighlightColor(bond, parameters);
-            if (highlight != null && style == HighlightStyle.OuterGlow) {
+            if (highlight != null && (style == HighlightStyle.OuterGlow || style == HighlightStyle.OuterGlowWhiteEdge)) {
                 backLayer.add(MarkedElement.markup(outerGlow(bondElements[i], highlight, glowWidth, stroke), "outerglow"));
             }
             if (highlight != null && style == HighlightStyle.Colored) {
@@ -243,8 +245,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             if (symbols[i] == null) {
                 // we add a 'ball' around atoms with no symbols (e.g. carbons)
-                if (highlight != null && style == HighlightStyle.OuterGlow) {
-                    backLayer.add(MarkedElement.markup(new OvalElement(atom.getPoint2d().x, atom.getPoint2d().y,1.75 * glowWidth * stroke, true, highlight),
+                if (highlight != null && (style == HighlightStyle.OuterGlow || style == HighlightStyle.OuterGlowWhiteEdge)) {
+                	double glowWidthExt = glowWidth;
+                	if (style == HighlightStyle.OuterGlowWhiteEdge && highlight.equals(Color.WHITE)) {
+                		glowWidthExt *= 1.75;
+                	}
+                    backLayer.add(MarkedElement.markup(new OvalElement(atom.getPoint2d().x, atom.getPoint2d().y,1.75 * glowWidthExt * stroke, true, highlight),
                                                        "outerglow"));
                 }
                 continue;
@@ -261,8 +267,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 annotations.add(MarkedElement.markup(GeneralPath.shapeOf(shape, annotationColor), "annotation"));
             }
 
-            if (highlight != null && style == HighlightStyle.OuterGlow) {
-                backLayer.add(MarkedElement.markup(outerGlow(symbolElements, highlight, glowWidth, stroke), "outerglow"));
+            if (highlight != null && (style == HighlightStyle.OuterGlow || style == HighlightStyle.OuterGlowWhiteEdge)) {
+            	double glowWidthExt = glowWidth;
+            	if (style == HighlightStyle.OuterGlowWhiteEdge && highlight.equals(Color.WHITE)) {
+            		glowWidthExt *= 1.75;
+            	}
+                backLayer.add(MarkedElement.markup(outerGlow(symbolElements, highlight, glowWidthExt, stroke), "outerglow"));
             }
 
             if (highlight != null && style == HighlightStyle.Colored) {
@@ -270,6 +280,35 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             } else {
                 middleLayer.add(MarkedElement.markupAtom(symbolElements, atom));
             }
+        }
+        
+        if (style == HighlightStyle.OuterGlowWhiteEdge) {
+	        for (int i = 0; i < container.getAtomCount(); i++) {
+	            IAtom atom = container.getAtom(i);
+	
+	            if (isHidden(atom))
+	                continue;
+	
+	            Color highlight = getHighlightColor(atom, parameters);
+	            Color color = highlight != null && style == HighlightStyle.Colored ? highlight : coloring
+	                    .getAtomColor(atom);
+	
+	            if (symbols[i] == null) {
+	                continue;
+	            }
+	
+	            ElementGroup symbolElements = new ElementGroup();
+	            for (Shape shape : symbols[i].getOutlines()) {
+	                GeneralPath path = GeneralPath.shapeOf(shape, color);
+	                symbolElements.add(path);
+	            }
+	
+	            if (highlight != null && !highlight.equals(Color.WHITE)) {
+	            	double glowWidthEdge = glowWidth * 0.4;
+	            	Color edgeColor = new Color(255, 255, 255, 175);
+	                backLayer.add(MarkedElement.markup(outerGlow(symbolElements, edgeColor, glowWidthEdge, stroke), "outerglow"));
+	            }
+	        }  
         }
 
         // Add the Sgroups display elements to the front layer
