@@ -337,15 +337,17 @@ public final class DepictionGenerator {
      */
     public Depiction depict(Iterable<IAtomContainer> mols, int nrow, int ncol) throws CDKException {
 
+        List<LayoutBackup> layoutBackups = new ArrayList<>();
         int molId = 0;
         for (IAtomContainer mol : mols) {
             setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+            layoutBackups.add(new LayoutBackup(mol));
         }
 
         // ensure we have coordinates, generate them if not
         // we also rescale the molecules such that all bond
         // lengths are the same.
-        List<Double> scaleFactors = prepareCoords(mols);
+        prepareCoords(mols);
 
         // highlight parts
         for (Map.Entry<IChemObject, Color> e : highlight.entrySet())
@@ -361,7 +363,8 @@ public final class DepictionGenerator {
         final List<Bounds> molElems = copy.generate(molList, model, 1);
 
         // reset molecule coordinates
-        resetCoords(mols, scaleFactors);
+        for (LayoutBackup backup : layoutBackups)
+            backup.reset();
 
         // generate titles (if enabled)
         final List<Bounds> titles = new ArrayList<>();
@@ -387,37 +390,11 @@ public final class DepictionGenerator {
      * @return coordinates
      * @throws CDKException
      */
-    private List<Double> prepareCoords(Iterable<IAtomContainer> mols) throws CDKException {
-        List<Double> scaleFactors = new ArrayList<>();
+    private void prepareCoords(Iterable<IAtomContainer> mols) throws CDKException {
         for (IAtomContainer mol : mols) {
-            if (ensure2dLayout(mol)) {
-                scaleFactors.add(Double.NaN);
-            } else if (mol.getBondCount() > 0) {
+            if (!ensure2dLayout(mol) && mol.getBondCount() > 0) {
                 final double factor = GeometryUtil.getScaleFactor(mol, 1.5);
                 GeometryUtil.scaleMolecule(mol, factor);
-                scaleFactors.add(factor);
-            } else {
-                scaleFactors.add(1d); // no bonds
-            }
-        }
-        return scaleFactors;
-    }
-
-    /**
-     * Reset the coordinates to their position before rendering.
-     *
-     * @param mols   molecules
-     * @param scales how molecules were scaled
-     */
-    private static void resetCoords(Iterable<IAtomContainer> mols, List<Double> scales) {
-        Iterator<Double> it = scales.iterator();
-        for (IAtomContainer mol : mols) {
-            final double factor = it.next();
-            if (!Double.isNaN(factor)) {
-                GeometryUtil.scaleMolecule(mol, 1 / factor);
-            } else {
-                for (IAtom atom : mol.atoms())
-                    atom.setPoint2d(null);
             }
         }
     }
@@ -444,20 +421,24 @@ public final class DepictionGenerator {
         final List<IAtomContainer> reactants = toList(rxn.getReactants());
         final List<IAtomContainer> products = toList(rxn.getProducts());
         final List<IAtomContainer> agents = toList(rxn.getAgents());
+        List<LayoutBackup> layoutBackups = new ArrayList<>();
 
         // set ids for tagging elements
         int molId = 0;
         for (IAtomContainer mol : reactants) {
             setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
             setIfMissing(mol, MarkedElement.CLASS_KEY, "reactant");
+            layoutBackups.add(new LayoutBackup(mol));
         }
         for (IAtomContainer mol : products) {
             setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
             setIfMissing(mol, MarkedElement.CLASS_KEY, "product");
+            layoutBackups.add(new LayoutBackup(mol));
         }
         for (IAtomContainer mol : agents) {
             setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
             setIfMissing(mol, MarkedElement.CLASS_KEY, "agent");
+            layoutBackups.add(new LayoutBackup(mol));
         }
 
         final Map<IChemObject, Color> myHighlight = new HashMap<>();
@@ -468,9 +449,9 @@ public final class DepictionGenerator {
         myHighlight.putAll(highlight);
         highlight.clear();
 
-        final List<Double> reactantScales = prepareCoords(reactants);
-        final List<Double> productScales = prepareCoords(products);
-        final List<Double> agentScales = prepareCoords(agents);
+        prepareCoords(reactants);
+        prepareCoords(products);
+        prepareCoords(agents);
 
         // highlight parts
         for (Map.Entry<IChemObject, Color> e : myHighlight.entrySet())
@@ -494,9 +475,8 @@ public final class DepictionGenerator {
         Bounds plus = copy.generatePlusSymbol(scale, fgcol);
 
         // reset the coordinates to how they were before we invoked depict
-        resetCoords(reactants, reactantScales);
-        resetCoords(products, productScales);
-        resetCoords(agents, agentScales);
+        for (LayoutBackup backup : layoutBackups)
+            backup.reset();
 
         final Bounds emptyBounds = new Bounds();
         final Bounds title = copy.getParameterValue(BasicSceneGenerator.ShowReactionTitle.class) ? copy.generateTitle(rxn, scale) : emptyBounds;
@@ -1141,5 +1121,41 @@ public final class DepictionGenerator {
     private static String getDefaultOsFont() {
         // TODO: Native Font Support - choose best for Win/Linux/OS X etc
         return Font.SANS_SERIF;
+    }
+
+  /**
+   * Utility class for storing coordinates and bond types and resetting them after use.
+   */
+  private static final class LayoutBackup {
+        private final Point2d[]      coords;
+        private final IBond.Stereo[] btypes;
+        private final IAtomContainer mol;
+
+        public LayoutBackup(IAtomContainer mol) {
+            final int numAtoms = mol.getAtomCount();
+            final int numBonds = mol.getAtomCount();
+            this.coords = new Point2d[numAtoms];
+            this.btypes = new IBond.Stereo[numBonds];
+            this.mol = mol;
+            for (int i = 0; i < numAtoms; i++) {
+                IAtom atom = mol.getAtom(i);
+                coords[i] = atom.getPoint2d();
+                if (coords[i] != null)
+                    atom.setPoint2d(new Point2d(coords[i])); // copy
+            }
+            for (int i = 0; i < numBonds; i++) {
+                IBond bond = mol.getBond(i);
+                btypes[i] = bond.getStereo();
+            }
+        }
+
+        void reset() {
+            final int numAtoms = mol.getAtomCount();
+            final int numBonds = mol.getAtomCount();
+            for (int i = 0; i < numAtoms; i++)
+                mol.getAtom(i).setPoint2d(coords[i]);
+            for (int i = 0; i < numBonds; i++)
+                mol.getBond(i).setStereo(btypes[i]);
+        }
     }
 }

@@ -856,6 +856,10 @@ public class CircularFingerprinter implements IFingerprinter {
 
         // fill in existing positions, including "fake" Z coordinate if wedges are being used
         Point2d a2d = atom.getPoint2d();
+
+        // for safety in case the bond type (bond stereo) is set but no coords are
+        if (a2d == null && a3d == null) return null;
+
         final float x0 = a3d != null ? (float) a3d.x : (float) a2d.x;
         final float y0 = a3d != null ? (float) a3d.y : (float) a2d.y;
         final float z0 = a3d != null ? (float) a3d.z : 0;
