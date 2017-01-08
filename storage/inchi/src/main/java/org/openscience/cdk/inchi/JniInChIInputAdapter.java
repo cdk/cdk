@@ -34,6 +34,16 @@ public class JniInChIInputAdapter extends JniInchiInput {
 
     public static final String FIVE_SECOND_TIMEOUT = "-W5";
 
+    /**
+     * Flag indicating windows or linux.
+     */
+    private static final boolean IS_WINDOWS = System.getProperty("os.name", "").toLowerCase().startsWith("windows");
+
+    /**
+     * Switch character for passing options. / in windows, - on other systems.
+     */
+    private static final String FLAG_CHAR = IS_WINDOWS ? "/" : "-";
+
     public JniInChIInputAdapter(String options) throws JniInchiException {
         this.options = options == null ? "" : checkOptions(options);
     }
@@ -76,12 +86,12 @@ public class JniInChIInputAdapter extends JniInchiInput {
 
             INCHI_OPTION option = INCHI_OPTION.valueOfIgnoreCase(op);
             if (option != null) {
-                sbOptions.append('-').append(option.name());
+                sbOptions.append(FLAG_CHAR).append(option.name());
                 if (tok.hasMoreTokens()) {
                     sbOptions.append(" ");
                 }
             } else if (isTimeoutOptions(op)) {
-                sbOptions.append('-').append(op);
+                sbOptions.append(FLAG_CHAR).append(op);
                 hasUserSpecifiedTimeout = true;
                 if (tok.hasMoreTokens()) {
                     sbOptions.append(" ");
@@ -89,14 +99,14 @@ public class JniInChIInputAdapter extends JniInchiInput {
             }
             // 1,5 tautomer option
             else if ("15T".equals(op)) {
-                sbOptions.append('-').append("15T");
+                sbOptions.append(FLAG_CHAR).append("15T");
                 if (tok.hasMoreTokens()) {
                     sbOptions.append(" ");
                 }
             }
             // keto-enol tautomer option
             else if ("KET".equals(op)) {
-                sbOptions.append('-').append("KET");
+                sbOptions.append(FLAG_CHAR).append("KET");
                 if (tok.hasMoreTokens()) {
                     sbOptions.append(" ");
                 }
@@ -122,7 +132,7 @@ public class JniInChIInputAdapter extends JniInchiInput {
         StringBuilder sbOptions = new StringBuilder();
 
         for (INCHI_OPTION op : ops) {
-            sbOptions.append('-').append(op.name()).append(" ");
+            sbOptions.append(FLAG_CHAR).append(op.name()).append(" ");
         }
 
         if (sbOptions.length() > 0)
