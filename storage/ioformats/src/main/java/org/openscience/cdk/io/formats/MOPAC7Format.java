@@ -44,7 +44,7 @@ public class MOPAC7Format extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-mopac-out";
     }
 
     /** {@inheritDoc} */

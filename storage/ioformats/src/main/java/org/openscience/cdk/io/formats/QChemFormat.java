@@ -46,7 +46,7 @@ public class QChemFormat extends SimpleChemFormatMatcher implements IChemFormatM
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-qchem-output";
     }
 
     /** {@inheritDoc} */

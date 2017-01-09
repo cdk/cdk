@@ -46,7 +46,7 @@ public class GamessFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return "chemical/x-gamess-input";
+        return "chemical/x-gamess-output";
     }
 
     /** {@inheritDoc} */

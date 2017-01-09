@@ -46,7 +46,7 @@ public class Gaussian03Format extends SimpleChemFormatMatcher implements IChemFo
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-gaussian-log";
     }
 
     /** {@inheritDoc} */
