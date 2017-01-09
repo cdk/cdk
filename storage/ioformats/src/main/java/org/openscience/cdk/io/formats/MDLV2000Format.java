@@ -44,7 +44,7 @@ public class MDLV2000Format extends SimpleChemFormatMatcher implements IChemForm
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-mdl-molfile";
     }
 
     /** {@inheritDoc} */

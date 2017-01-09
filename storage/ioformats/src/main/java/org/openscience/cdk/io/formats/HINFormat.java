@@ -48,7 +48,7 @@ public class HINFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-hin";
     }
 
     /** {@inheritDoc} */

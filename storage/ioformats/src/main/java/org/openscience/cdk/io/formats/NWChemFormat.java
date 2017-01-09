@@ -46,7 +46,7 @@ public class NWChemFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-nwchem-output";
     }
 
     /** {@inheritDoc} */
