@@ -48,7 +48,7 @@ public class ChemtoolFormat extends AbstractResourceFormat implements IChemForma
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "application/x-chemtool";
     }
 
     /** {@inheritDoc} */

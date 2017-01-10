@@ -42,7 +42,7 @@ public class SVGFormat extends AbstractResourceFormat implements IResourceFormat
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "image/svg+xml";
     }
 
     /** {@inheritDoc} */

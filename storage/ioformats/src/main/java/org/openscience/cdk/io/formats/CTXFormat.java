@@ -44,7 +44,7 @@ public class CTXFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-ctx";
     }
 
     /** {@inheritDoc} */

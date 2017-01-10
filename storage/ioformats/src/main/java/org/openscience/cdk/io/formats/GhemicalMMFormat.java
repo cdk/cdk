@@ -46,7 +46,7 @@ public class GhemicalMMFormat extends SimpleChemFormatMatcher implements IChemFo
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "application/x-ghemical";
     }
 
     /** {@inheritDoc} */

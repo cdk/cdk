@@ -48,7 +48,7 @@ public class TurboMoleFormat extends AbstractResourceFormat implements IChemForm
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-turbomole-coord";
     }
 
     /** {@inheritDoc} */

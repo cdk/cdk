@@ -44,7 +44,7 @@ public class INChIPlainTextFormat extends SimpleChemFormatMatcher implements ICh
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-inchi";
     }
 
     /** {@inheritDoc} */

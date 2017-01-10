@@ -47,7 +47,7 @@ public class Chem3D_Cartesian_1Format extends AbstractResourceFormat implements 
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-chem3d";
     }
 
     /** {@inheritDoc} */
