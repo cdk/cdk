@@ -45,7 +45,7 @@ public class Chem3D_Cartesian_2Format extends AbstractResourceFormat implements 
 
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-chem3d";
     }
 
     @Override

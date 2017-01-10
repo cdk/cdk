@@ -46,7 +46,7 @@ public class ShelXFormat extends SimpleChemFormatMatcher implements IChemFormatM
     /** {@inheritDoc} */
     @Override
     public String getMIMEType() {
-        return null;
+        return "chemical/x-shelx";
     }
 
     /** {@inheritDoc} */
