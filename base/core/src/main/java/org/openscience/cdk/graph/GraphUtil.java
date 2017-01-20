@@ -190,7 +190,7 @@ public class GraphUtil {
      * graph} to {@literal include} in the subgraph. The provided vertices also
      * provide the mapping between vertices in the subgraph and the original.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * int[][] g  = toAdjList(naphthalene);
      * int[]   vs = new int[]{0, 1, 2, 3, 4, 5};
      *
@@ -199,7 +199,7 @@ public class GraphUtil {
      * for(int v = 0; v < h.length; v++) {
      *     // vs[v] is 'v' in 'g'
      * }
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param graph   adjacency list graph
      * @param include the vertices of he graph to include in the subgraph

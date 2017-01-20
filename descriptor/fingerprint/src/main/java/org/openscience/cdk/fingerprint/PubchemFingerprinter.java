@@ -66,12 +66,12 @@ import java.util.Map;
  * 
  * Some SMARTS patterns have been modified from the original code, since they
  * were based on explicit H matching. As a result, we replace the explicit H's
- * with a query of the #N&!H0 where N is the atomic number. Thus bit 344 was
- * originally <code>[#6](~[#6])([H])</code> but is written here as
- * <code>[#6&!H0]~[#6]</code>. In some cases, where the H count can be reduced
+ * with a query of the {@code #<N>&!H0} where {@code <N>} is the atomic number. Thus bit 344 was
+ * originally {@code [#6](~[#6])([H])} but is written here as
+ * {@code [#6&!H0]~[#6]}. In some cases, where the H count can be reduced
  * to single possibility we directly use that H count. An example is bit 35,
- * which was <code>[#6](~[#6])(~[#6])(~[#6])([H])</code> and is rewritten as
- * <code>[#6H1](~[#6])(~[#6])(~[#6]</code>.
+ * which was {@code [#6](~[#6])(~[#6])(~[#6])([H])} and is rewritten as
+ * {@code [#6H1](~[#6])(~[#6])(~[#6])}.
  * 
  *
  * <b>Warning - this class is not thread-safe and uses stores intermediate steps

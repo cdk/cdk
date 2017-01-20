@@ -150,7 +150,7 @@ import java.util.Set;
  * The output order is obtained by parsing in an auxiliary array during creation. The
  * following snippet demonstrates how we can write coordinates in order.
  *
- * <blockquote><pre>
+ * <blockquote><pre>{@code
  * IAtomContainer  mol = ...;
  * SmilesGenerator sg  = new SmilesGenerator(SmiFlavor.Generic);
  *
@@ -169,7 +169,7 @@ import java.util.Set;
  * // SMILES string suffixed by the coordinates
  * String smi2d = smi + " " + Arrays.toString(coords);
  *
- * </pre></blockquote>
+ * }</pre></blockquote>
  *
  * Using the output order of SMILES forms the basis of
  * <a href="https://www.chemaxon.com/marvin-archive/latest/help/formats/cxsmiles-doc.html">
@@ -178,7 +178,7 @@ import java.util.Set;
  * grouping (for salts in reactions), polymer repeats, multi center bonds, and coordinates.
  * The CXSMILES layer is appended after the SMILES so that parser which don't interpret it
  * can ignore it.
- * 
+ *
  * The two aggregate flavours are {@link SmiFlavor#CxSmiles} and {@link SmiFlavor#CxSmilesWithCoords}.
  * As with other flavours, fine grain control is possible {@see SmiFlavor}.
  * <p/>
@@ -369,7 +369,7 @@ public final class SmilesGenerator {
      * where 2D coordinates are stored with a SMILES string. This method
      * forms the basis of CXSMILES.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer  mol = ...;
      * SmilesGenerator sg  = new SmilesGenerator();
      *
@@ -388,7 +388,7 @@ public final class SmilesGenerator {
      * // SMILES string suffixed by the coordinates
      * String smi2d = smi + " " + Arrays.toString(coords);
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param molecule the molecule to write
      * @param order    array to store the output order of atoms
@@ -408,7 +408,7 @@ public final class SmilesGenerator {
      * where 2D coordinates are stored with a SMILES string. This method
      * forms the basis of CXSMILES.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer  mol = ...;
      * SmilesGenerator sg  = new SmilesGenerator();
      *
@@ -427,7 +427,7 @@ public final class SmilesGenerator {
      * // SMILES string suffixed by the coordinates
      * String smi2d = smi + " " + Arrays.toString(coords);
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param molecule the molecule to write
      * @param order    array to store the output order of atoms

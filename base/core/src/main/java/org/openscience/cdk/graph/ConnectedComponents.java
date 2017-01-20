@@ -5,13 +5,13 @@ import java.util.Arrays;
 /**
  * Compute the connected components of an adjacency list.
  *
- * <blockquote><pre>
+ * <blockquote><pre>{@code
  *     int[][]             g          = GraphUtil.toAdjList(container(l
  *     ConnectedComponents cc         = new ConnectedComponents(g);
  *     int[]               components = cc.components();
  *     for (int v = 0; v < g.length; v++)
  *         components[v];
- * </pre></blockquote>
+ * }</pre></blockquote>
  *
  * @author John May
  * @cdk.module core

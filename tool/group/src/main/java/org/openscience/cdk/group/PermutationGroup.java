@@ -51,9 +51,9 @@ import java.util.List;
  *
  * <p>
  * Now let orb(0) = {g(0) : g &isin; G} be the orbit of 0 under G. Then |orb(0)|
- * (the size of the orbit) is n<sub>0</sub> for some integer 0 < n<sub>0</sub>
- * <= n and write orb(0) = {x<sub>0,1</sub>, x<sub>0,2</sub>, ...,
- * x<sub>0,n<sub>0</sub></sub>} and for each i, 1 <= i <= n<sub>0</sub> choose
+ * (the size of the orbit) is n<sub>0</sub> for some integer 0 &lt; n<sub>0</sub>
+ * &le; n and write orb(0) = {x<sub>0,1</sub>, x<sub>0,2</sub>, ...,
+ * x<sub>0,n<sub>0</sub></sub>} and for each i, 1 &le; i &le; n<sub>0</sub> choose
  * some h<sub>0,1</sub> in G such that h<sub>0,i</sub>(0) = x<sub>0,1</sub>. Set
  * U<sub>0</sub> = {h<sub>0,1</sub>, ..., h<sub>0,n<sub>0</sub></sub>}.
  * </p>

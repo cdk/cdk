@@ -453,10 +453,10 @@ public final class Cycles {
     /**
      * Use an auxiliary cycle finder if the primary method was intractable.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * // all cycles or all cycles size <= 6
      * CycleFinder cf = Cycles.or(Cycles.all(), Cycles.all(6));
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * It is possible to nest multiple levels.
      *

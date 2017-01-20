@@ -262,10 +262,10 @@ public class GridGenerator {
     /**
      * Method transforms the grid into pmesh format. Only grid points
      * with specific value defined with cutoff are considered.
-     * <pre>
+     * <pre>{@code
      * cutoff <0, the values considered must be <=cutoff
      * cutoff >0, the values considered must be >=cutoff
-     * </pre>
+     * }</pre>
      */
     public void writeGridInPmeshFormat(String outPutFileName, double cutOff) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(outPutFileName + ".pmesh"));

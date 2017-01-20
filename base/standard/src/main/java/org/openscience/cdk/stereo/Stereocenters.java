@@ -135,7 +135,7 @@ public final class Stereocenters {
      * Determine the stereocenter atoms in the provided container based on
      * connectivity.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer container = ...;
      * Stereocenters  centers   = Stereocenters.of(container);
      * for (int i = 0; i < container.getAtomCount(); i++) {
@@ -143,7 +143,7 @@ public final class Stereocenters {
      *
      *     }
      * }
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param container input container
      * @return the stereocenters

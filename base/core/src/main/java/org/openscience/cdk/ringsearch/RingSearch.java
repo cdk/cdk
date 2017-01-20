@@ -64,7 +64,7 @@ import java.util.Set;
  * </ol>
  *
  * <h4>Example Usage</h4>
- * <blockquote><pre>
+ * <blockquote><pre>{@cdoe
  * // construct the search for a given molecule, if an adjacency list
  * // representation (int[][]) is available this can be passed to the
  * // constructor for improved performance
@@ -92,8 +92,8 @@ import java.util.Set;
  * }
  * for(IAtomContainer fragment : ringSearch.isolatedRingFragments()){
  *     ....
- * }                *
- * </pre></blockquote>
+ * }
+ * }</pre></blockquote>
  *
  * @author John May
  * @cdk.module core
@@ -193,7 +193,7 @@ public final class RingSearch {
     /**
      * Determine whether the provided atom belongs to a ring (is cyclic).
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer mol        = ...;
      * RingSearch     ringSearch = new RingSearch(mol);
      *
@@ -202,7 +202,7 @@ public final class RingSearch {
      *         ...
      *     }
      * }
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param atom an atom
      * @return whether the atom is in a ring
@@ -232,7 +232,7 @@ public final class RingSearch {
     /**
      * Determine whether the vertex at index <i>i</i> is a cyclic vertex.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer  mol    = ...;
      * RingSearch      tester = new RingSearch(mol);
      *
@@ -242,7 +242,7 @@ public final class RingSearch {
      *         ...
      *     }
      * }
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param i atom index
      * @return whether the vertex at the given index is in a cycle
@@ -263,7 +263,7 @@ public final class RingSearch {
     /**
      * Construct the sets of vertices which belong to isolated rings.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer  biphenyl   = ...;
      * RingSearch      ringSearch = new RingSearch(biphenyl);
      *
@@ -273,7 +273,7 @@ public final class RingSearch {
      * isolated[0].length; // 6 vertices in one benzene
      * isolated[1].length; // 6 vertices in the other benzene
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @return array of isolated fragments, defined by the vertices in the
      *         fragment
@@ -285,7 +285,7 @@ public final class RingSearch {
     /**
      * Construct the sets of vertices which belong to fused ring systems.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer  mol        = ...;
      * RingSearch      ringSearch = new RingSearch(mol);
      *
@@ -296,7 +296,7 @@ public final class RingSearch {
      * fused[1].length; // e.g. 10 vertices in the second system
      * fused[2].length; // e.g. 4 vertices in the third system
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @return array of fused fragments, defined by the vertices in the
      *         fragment

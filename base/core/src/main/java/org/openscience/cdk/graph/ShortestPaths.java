@@ -35,7 +35,7 @@ import java.util.Arrays;
  * the paths. When no path is found (i.e. not-connected) an empty path is always
  * returned. 
  *
- * <blockquote><pre>
+ * <blockquote><pre>{@code
  * IAtomContainer benzene = MoleculeFactory.makeBenzene();
  *
  * IAtom c1 = benzene.getAtom(0);
@@ -57,6 +57,7 @@ import java.util.Arrays;
  * int[][] paths = sp.pathsTo(c4);
  * int[] org = paths[0];  // paths[0] == path
  * int[] alt = paths[1];
+ * }
  * </pre></blockquote>
  *
  *  If shortest paths from multiple start atoms are required {@link
@@ -273,7 +274,7 @@ public final class ShortestPaths {
      * is a member of a different fragment, or the vertex is not present in the
      * container at all.
      *
-     * <pre>
+     * <pre>{@code
      * ShortestPaths sp = ...;
      *
      * // reconstruct first path
@@ -283,7 +284,7 @@ public final class ShortestPaths {
      * if(sp.nPathsTo(5) == 1){
      *     int[] path = sp.pathTo(5); // reconstruct the path
      * }
-     * </pre>
+     * }</pre>
      *
      * @param end the <i>end</i> vertex to find a path to
      * @return path from the <i>start</i> to the <i>end</i> vertex
@@ -307,7 +308,7 @@ public final class ShortestPaths {
      * a member of a different fragment, or the atom is not present in the
      * container at all.
      *
-     * <pre>
+     * <pre>{@code
      * ShortestPaths sp   = ...;
      * IAtom         end  = ...;
      *
@@ -318,7 +319,7 @@ public final class ShortestPaths {
      * if(sp.nPathsTo(end) == 1){
      *     int[] path = sp.pathTo(end); // reconstruct the path
      * }
-     * </pre>
+     * }</pre>
      *
      * @param end the <i>end</i> vertex to find a path to
      * @return path from the <i>start</i> to the <i>end</i> vertex
@@ -358,7 +359,7 @@ public final class ShortestPaths {
      * at maximum 1024 paths). It is safer to check the number of paths ({@link
      * #nPathsTo(int)}) before attempting to reconstruct all shortest paths.
      *
-     * <pre>
+     * <pre>{@code
      * int           threshold = 20;
      * ShortestPaths sp        = ...;
      *
@@ -369,7 +370,7 @@ public final class ShortestPaths {
      * if(sp.nPathsTo(5) < threshold){
      *     int[][] path = sp.pathsTo(5); // reconstruct shortest paths
      * }
-     * </pre>
+     * }</pre>
      *
      * @param end the end vertex
      * @return all shortest paths from the start to the end vertex
@@ -387,7 +388,7 @@ public final class ShortestPaths {
      * size arrays of vertex indices. When there is no path an empty array is
      * returned. It is considered there to be no path if the end vertex belongs
      * to the same container but is a member of a different fragment, or the
-     * vertex is not present in the container at all. 
+     * vertex is not present in the container at all.
      *
      * <b>Important:</b> for every possible branch the number of possible paths
      * doubles and could be in the order of tens of thousands. Although the
@@ -395,7 +396,7 @@ public final class ShortestPaths {
      * at maximum 1024 paths). It is safer to check the number of paths ({@link
      * #nPathsTo(int)}) before attempting to reconstruct all shortest paths.
      *
-     * <pre>
+     * <pre>{@code
      * int           threshold = 20;
      * ShortestPaths sp        = ...;
      * IAtom         end       = ...;
@@ -407,7 +408,7 @@ public final class ShortestPaths {
      * if(sp.nPathsTo(end) < threshold){
      *     int[][] path = sp.pathsTo(end); // reconstruct shortest paths
      * }
-     * </pre>
+     * }</pre>
      *
      * @param end the end atom
      * @return all shortest paths from the start to the end vertex
@@ -425,7 +426,7 @@ public final class ShortestPaths {
      * is a member of a different fragment, or the vertex is not present in the
      * container at all.
      *
-     * <pre>
+     * <pre>{@code
      * ShortestPaths sp = ...;
      *
      * // reconstruct a shortest path
@@ -435,7 +436,7 @@ public final class ShortestPaths {
      * if(sp.nPathsTo(5) == 1){
      *     IAtom[] path = sp.atomsTo(5); // reconstruct shortest path
      * }
-     * </pre>
+     * }</pre>
      *
      * @param end the <i>end</i> vertex to find a path to
      * @return path from the <i>start</i> to the <i>end</i> atoms as fixed size
@@ -467,7 +468,7 @@ public final class ShortestPaths {
      * container at all.
      *
      *
-     * <pre>
+     * <pre>{@code
      * ShortestPaths sp   = ...;
      * IAtom         end  = ...;
      *
@@ -478,7 +479,7 @@ public final class ShortestPaths {
      * if(sp.nPathsTo(end) == 1){
      *     IAtom[] path = sp.atomsTo(end); // reconstruct shortest path
      * }
-     * </pre>
+     * }</pre>
      *
      * @param end the <i>end</i> atom to find a path to
      * @return path from the <i>start</i> to the <i>end</i> atoms as fixed size
@@ -497,13 +498,13 @@ public final class ShortestPaths {
      * vertex belongs to the same container but is a member of a different
      * fragment, or the vertex is not present in the container at all.
      *
-     * <pre>
+     * <pre>{@code
      * ShortestPaths sp   = ...;
      *
      * sp.nPathsTo(5); // number of paths
      *
      * sp.nPathsTo(-1); // returns 0 - there are no paths
-     * </pre>
+     * }</pre>
      *
      * @param end the <i>end</i> vertex to which the number of paths will be
      *            returned
@@ -519,7 +520,7 @@ public final class ShortestPaths {
      * atom belongs to the same container but is a member of a different
      * fragment, or the atom is not present in the container at all.
      *
-     * <pre>
+     * <pre>{@code
      * ShortestPaths sp   = ...;
      * IAtom         end  = ...l
      *
@@ -527,7 +528,7 @@ public final class ShortestPaths {
      *
      * sp.nPathsTo(null);           // returns 0 - there are no paths
      * sp.nPathsTo(new Atom("C"));  // returns 0 - there are no paths
-     * </pre>
+     * }</pre>
      *
      * @param end the <i>end</i> vertex to which the number of paths will be
      *            returned
@@ -543,7 +544,7 @@ public final class ShortestPaths {
      * Formally, there is a path if the distance is less then the number of
      * vertices.
      *
-     * <pre>
+     * <pre>{@code
      * IAtomContainer container = ...;
      * ShortestPaths  sp        = ...; // start = 0
      *
@@ -552,7 +553,7 @@ public final class ShortestPaths {
      * if(sp.distanceTo(5) < n) {
      *     // these is a path from 0 to 5
      * }
-     * </pre>
+     * }</pre>
      *
      * Conveniently the distance is also the index of the last vertex in the
      * path.
@@ -582,7 +583,7 @@ public final class ShortestPaths {
      * Formally, there is a path if the distance is less then the number of
      * atoms.
      *
-     * <pre>
+     * <pre>{@code
      * IAtomContainer container = ...;
      * ShortestPaths  sp        = ...; // start atom
      * IAtom          end       = ...;
@@ -592,13 +593,13 @@ public final class ShortestPaths {
      * if( sp.distanceTo(end) < n ) {
      *     // these is a path from start to end
      * }
-     *
+     * }
      * </pre>
      *
      * Conveniently the distance is also the index of the last vertex in the
      * path.
      *
-     * <pre>
+     * <pre>{@code
      * IAtomContainer container = ...;
      * ShortestPaths  sp        = ...; // start atom
      * IAtom          end       = ...;
@@ -606,7 +607,7 @@ public final class ShortestPaths {
      * int atoms = sp.atomsTo(end);
      * // end == atoms[sp.distanceTo(end)];
      *
-     * </pre>
+     * }</pre>
      *
      * @param end atom to measure the distance to
      * @return distance to the given atom

@@ -82,7 +82,7 @@ package org.openscience.cdk.tools;
  * </pre>
  *
  * <p>In addition to the methods specific in the interfance, implementations
- * must also implement the static method <code>create(Class<?>)</code> which
+ * must also implement the static method {@code create(Class<?>)} which
  * can be used by the {@link LoggingToolFactory} to instantiate the
  * implementation.
  *

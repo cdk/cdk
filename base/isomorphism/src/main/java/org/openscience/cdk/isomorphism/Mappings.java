@@ -57,12 +57,12 @@ import java.util.Map;
  * The primary function is to provide an iterable of matches - each match is
  * a permutation (mapping) of the query graph indices (atom indices).
  *
- * <blockquote><pre>
+ * <blockquote><pre>{@code
  * for (int[] p : mappings) {
  *     for (int i = 0; i < p.length; i++)
  *         // query.getAtom(i) is mapped to target.getAtom(p[i]);
  * }
- * </pre></blockquote>
+ * }</pre></blockquote>
  *
  * The matches can be filtered to provide only those that have valid
  * stereochemistry.
@@ -181,7 +181,7 @@ public final class Mappings implements Iterable<int[]> {
      * Filter the mappings and keep only those which match the provided
      * predicate (Guava).
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      *
      *     final IAtomContainer query;
      *     final IAtomContainer target;
@@ -195,7 +195,7 @@ public final class Mappings implements Iterable<int[]> {
      *                                        return input[0] == 0;
      *                                    }});
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param predicate a predicate
      * @return fluent-api reference
@@ -208,7 +208,7 @@ public final class Mappings implements Iterable<int[]> {
      * Map the mappings to another type. Each mapping is transformed using the
      * provided function.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      *
      *     final IAtomContainer query;
      *     final IAtomContainer target;
@@ -217,7 +217,7 @@ public final class Mappings implements Iterable<int[]> {
      *                                .matchAll(target);
      *
      *     // a string that indicates the mapping of atom elements and numbers
-     *     Iterable&lt;String&gt; strs = mappings.map(new Function&lt;int[], String&gt;() {
+     *     Iterable&lt;String&gt; strs = mappings.map(new Function<int[], String>() {
      *         public String apply(int[] input) {
      *             StringBuilder sb = new StringBuilder();
      *             for (int i = 0; i &lt; input.length; i++) {
@@ -231,7 +231,7 @@ public final class Mappings implements Iterable<int[]> {
      *             return sb.toString();
      *         }});
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param f function to transform a mapping
      * @return iterable of the transformed type
