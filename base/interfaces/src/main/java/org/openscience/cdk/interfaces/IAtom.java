@@ -169,7 +169,7 @@ public interface IAtom extends IAtomType {
      *
      * @return ring status
      * @see #getFlag(int)
-     * @see @see org.openscience.cdk.graph.RingFinder
+     * @see org.openscience.cdk.graph.RingFinder
      */
     boolean isInRing();
 
