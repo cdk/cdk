@@ -82,7 +82,7 @@ public final class SelectionVisibility extends SymbolVisibility {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model) {

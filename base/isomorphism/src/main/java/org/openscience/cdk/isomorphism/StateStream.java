@@ -61,13 +61,13 @@ final class StateStream implements Iterator<int[]> {
         this.next = state.nMax() == 0 || state.mMax() == 0 ? null : findNext(); // first-mapping
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public boolean hasNext() {
         return next != null;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public int[] next() {
         int[] ret = next;
@@ -75,7 +75,7 @@ final class StateStream implements Iterator<int[]> {
         return ret;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public void remove() {
         throw new UnsupportedOperationException("a graph matching cannot be removed");

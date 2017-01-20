@@ -69,7 +69,7 @@ public interface IMonomer extends IAtomContainer {
     public void setMonomerType(String cMonomerType);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IMonomer clone() throws CloneNotSupportedException;

@@ -123,7 +123,7 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator implements 
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public long[] generate(IAtomContainer container) {

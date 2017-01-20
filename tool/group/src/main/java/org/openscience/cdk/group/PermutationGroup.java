@@ -403,7 +403,7 @@ public class PermutationGroup {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public String toString() {

@@ -136,7 +136,7 @@ public interface IBioPolymer extends IPolymer {
     public Map<String, IStrand> getStrands();
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IBioPolymer clone() throws CloneNotSupportedException;

@@ -819,7 +819,7 @@ public final class Cycles {
          */
         abstract int[][] apply(int[][] graph, int length) throws Intractable;
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule) throws Intractable {
             return find(molecule, molecule.getAtomCount());
@@ -855,7 +855,7 @@ public final class Cycles {
             return new Cycles(walks.toArray(new int[walks.size()][0]), molecule, bondMap);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
 
@@ -980,19 +980,19 @@ public final class Cycles {
             this.predefinedLength = length;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule) throws Intractable {
             return find(molecule, molecule.getAtomCount());
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int length) throws Intractable {
             return find(molecule, GraphUtil.toAdjList(molecule), length);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
             RingSearch ringSearch = new RingSearch(molecule, graph);
@@ -1057,19 +1057,19 @@ public final class Cycles {
             this.auxiliary = auxiliary;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule) throws Intractable {
             return find(molecule, molecule.getAtomCount());
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int length) throws Intractable {
             return find(molecule, GraphUtil.toAdjList(molecule), length);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
             try {
@@ -1098,19 +1098,19 @@ public final class Cycles {
             this.primary = primary;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule) throws Intractable {
             return find(molecule, molecule.getAtomCount());
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int length) throws Intractable {
             return find(molecule, GraphUtil.toAdjList(molecule), length);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
 

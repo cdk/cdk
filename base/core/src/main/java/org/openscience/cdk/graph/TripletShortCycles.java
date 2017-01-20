@@ -545,7 +545,7 @@ public final class TripletShortCycles {
             return p;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int compareTo(final Path that) {
             if (this.len() > that.len()) return +1;

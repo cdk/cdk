@@ -81,7 +81,7 @@ final class ConjugatedAtomEncoder implements AtomEncoder {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int encode(IAtom atom, IAtomContainer container) {

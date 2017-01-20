@@ -48,7 +48,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
 public final class DoubleBondElementEncoderFactory implements StereoEncoderFactory {
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {

@@ -287,7 +287,7 @@ public class DebugSubstance extends AtomContainerSet implements ISubstance {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

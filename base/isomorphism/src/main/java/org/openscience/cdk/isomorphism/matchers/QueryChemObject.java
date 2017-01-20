@@ -229,7 +229,7 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public <T> T getProperty(Object description, Class<T> c) {
@@ -285,7 +285,7 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void setFlag(int mask, boolean value) {
@@ -298,14 +298,14 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean getFlag(int mask) {
         return (flags & mask) != 0;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public void setProperties(Map<Object, Object> properties) {
         this.properties = null;
@@ -328,7 +328,7 @@ public class QueryChemObject implements IChemObject {
     private boolean doNotification = true;
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void setFlags(boolean[] flagsNew) {
@@ -337,7 +337,7 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean[] getFlags() {
@@ -351,7 +351,7 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public Short getFlagValue() {

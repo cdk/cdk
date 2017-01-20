@@ -75,7 +75,7 @@ final class DaylightModel extends ElectronDonation {
     private static final int ARSENIC    = 33;
     private static final int SELENIUM   = 34;
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 

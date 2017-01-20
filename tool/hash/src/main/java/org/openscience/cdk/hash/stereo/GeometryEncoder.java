@@ -87,7 +87,7 @@ final class GeometryEncoder implements StereoEncoder {
      * parity this may changed with the next {@code current[]} values and so
      * 'false' is returned.
      *
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean encode(long[] current, long[] next) {
@@ -119,7 +119,7 @@ final class GeometryEncoder implements StereoEncoder {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void reset() {

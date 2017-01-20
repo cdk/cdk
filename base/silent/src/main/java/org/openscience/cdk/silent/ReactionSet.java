@@ -245,7 +245,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

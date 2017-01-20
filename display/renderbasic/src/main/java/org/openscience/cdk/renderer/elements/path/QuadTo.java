@@ -81,7 +81,7 @@ public class QuadTo extends PathElement {
         return new float[]{(float) coords[0], (float) coords[1], (float) coords[2], (float) coords[3]};
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public void points(double[] coords) {
         coords[0] = this.coords[0];

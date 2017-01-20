@@ -118,7 +118,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
     /** Property key. */
     public static final String     ID_MAP           = "cdk.highlight.id";
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
 
@@ -225,7 +225,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         return AffineTransform.getRotateInstance(theta, x1, y1).createTransformedShape(s);
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(new IGeneratorParameter<?>[]{highlightRadius, highlightPalette});
@@ -325,7 +325,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Color color(int id) {
@@ -404,7 +404,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
             }
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Color color(int id) {
             if (id < 0) throw new IllegalArgumentException("id should be positive");

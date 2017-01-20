@@ -113,7 +113,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean contains(IAtom atom) {
@@ -124,7 +124,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {

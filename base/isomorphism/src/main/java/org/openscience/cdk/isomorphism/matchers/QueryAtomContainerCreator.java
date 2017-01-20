@@ -243,7 +243,7 @@ public class QueryAtomContainerCreator {
             super(builder);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IAtom atom) {
             return true;
@@ -257,7 +257,7 @@ public class QueryAtomContainerCreator {
             super(builder);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IAtom atom) {
             return atom.getFlag(CDKConstants.ISAROMATIC);
@@ -271,7 +271,7 @@ public class QueryAtomContainerCreator {
             super(either, other, Order.UNSET, builder);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IBond bond) {
             return bond != null && bond.getOrder() != Order.UNSET;
@@ -285,7 +285,7 @@ public class QueryAtomContainerCreator {
             super(either, other, Order.UNSET, builder);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IBond bond) {
             return bond.getFlag(CDKConstants.ISAROMATIC);

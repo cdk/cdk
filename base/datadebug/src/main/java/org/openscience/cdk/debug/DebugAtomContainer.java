@@ -69,7 +69,7 @@ public class DebugAtomContainer extends AtomContainer implements IAtomContainer 
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
@@ -729,7 +729,7 @@ public class DebugAtomContainer extends AtomContainer implements IAtomContainer 
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

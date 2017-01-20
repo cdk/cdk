@@ -421,7 +421,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

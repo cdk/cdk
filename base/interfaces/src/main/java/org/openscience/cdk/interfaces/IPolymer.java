@@ -86,7 +86,7 @@ public interface IPolymer extends IAtomContainer {
     public void removeMonomer(String name);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IPolymer clone() throws CloneNotSupportedException;

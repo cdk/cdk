@@ -412,13 +412,13 @@ final class EdmondsMaximumMatching {
             this.second = second;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int hashCode() {
             return 31 * first + second;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;

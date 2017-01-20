@@ -372,7 +372,7 @@ public class GraphUtil {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public boolean equals(Object o) {
@@ -385,7 +385,7 @@ public class GraphUtil {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int hashCode() {

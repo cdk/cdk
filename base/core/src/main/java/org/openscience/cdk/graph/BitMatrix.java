@@ -212,7 +212,7 @@ final class BitMatrix {
         return -1;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder((4 + n) * m);

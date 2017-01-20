@@ -631,7 +631,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     public boolean isEmpty();
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IAtomContainer clone() throws CloneNotSupportedException;

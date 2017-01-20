@@ -93,7 +93,7 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean contains(IAtom atom) {

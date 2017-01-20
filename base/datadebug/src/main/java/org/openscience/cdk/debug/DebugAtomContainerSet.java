@@ -286,7 +286,7 @@ public class DebugAtomContainerSet extends AtomContainerSet implements IAtomCont
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

@@ -284,7 +284,7 @@ public interface IBond extends IElectronContainer {
      */
     void setIsInRing(boolean ring);
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public IBond clone() throws CloneNotSupportedException;
 }

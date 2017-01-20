@@ -524,7 +524,7 @@ public final class Mappings implements Iterable<int[]> {
         return uniqueAtoms().count();
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public Iterator<int[]> iterator() {
         return iterable.iterator();
@@ -547,7 +547,7 @@ public final class Mappings implements Iterable<int[]> {
             this.target = target;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Map<IAtom, IAtom> apply(int[] mapping) {
             ImmutableMap.Builder<IAtom, IAtom> map = ImmutableMap.builder();
@@ -579,7 +579,7 @@ public final class Mappings implements Iterable<int[]> {
             GraphUtil.toAdjList(target, bonds2);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Map<IBond, IBond> apply(int[] mapping) {
             ImmutableMap.Builder<IBond, IBond> map = ImmutableMap.builder();
@@ -616,7 +616,7 @@ public final class Mappings implements Iterable<int[]> {
             GraphUtil.toAdjList(target, bonds2);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Map<IChemObject, IChemObject> apply(int[] mapping) {
             ImmutableMap.Builder<IChemObject, IChemObject> map = ImmutableMap.builder();

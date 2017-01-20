@@ -76,7 +76,7 @@ import java.util.TreeMap;
 final class MinimumEquivalentCyclicSet extends EquivalentSetFinder {
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph) {

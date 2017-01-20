@@ -63,7 +63,7 @@ abstract class AtomSuppression {
      */
     private static final class AnyHydrogens extends AtomSuppression {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         Suppressed suppress(IAtomContainer container) {
             BitSet hydrogens = new BitSet();
@@ -78,7 +78,7 @@ abstract class AtomSuppression {
     /** Suppresses any pseudo atom. */
     private static final class AnyPseudos extends AtomSuppression {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         Suppressed suppress(IAtomContainer container) {
             BitSet hydrogens = new BitSet();

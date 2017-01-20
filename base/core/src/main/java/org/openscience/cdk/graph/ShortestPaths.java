@@ -654,14 +654,14 @@ public final class ShortestPaths {
             this.v = v;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int[][] toPaths(int n) {
             // only every one shortest path at source
             return new int[][]{toPath(n)};
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int[] toPath(int n) {
             // create the path of the given length
@@ -691,7 +691,7 @@ public final class ShortestPaths {
             this.parent = parent;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int[][] toPaths(int n) {
 
@@ -706,7 +706,7 @@ public final class ShortestPaths {
 
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int[] toPath(int n) {
             int[] path = parent.toPath(n);
@@ -737,7 +737,7 @@ public final class ShortestPaths {
             this.right = right;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int[][] toPaths(int n) {
 
@@ -754,7 +754,7 @@ public final class ShortestPaths {
             return paths;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int[] toPath(int n) {
             // use the left as the first path

@@ -58,7 +58,7 @@ public interface IRing extends IAtomContainer {
     public int getBondOrderSum();
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IRing clone() throws CloneNotSupportedException;

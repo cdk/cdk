@@ -831,7 +831,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<?> intf() {
@@ -839,7 +839,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<?> type(int i) {
@@ -848,7 +848,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int n() {
@@ -880,7 +880,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<?> intf() {
@@ -888,7 +888,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<?> type(int i) {
@@ -896,7 +896,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int n() {
@@ -934,7 +934,7 @@ public class DynamicFactory {
         public abstract int n();
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public boolean equals(Object o) {
@@ -977,7 +977,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int hashCode() {
@@ -1031,7 +1031,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public String toString() {
@@ -1056,7 +1056,7 @@ public class DynamicFactory {
     protected static class DefaultInterfaceProvider implements InterfaceProvider {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<?>[] getInterfaces(Class<?> c) {
@@ -1115,7 +1115,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
@@ -1126,7 +1126,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<T> getDeclaringClass() {
@@ -1184,7 +1184,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<T> getDeclaringClass() {
@@ -1214,7 +1214,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
@@ -1223,7 +1223,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<T> getDeclaringClass() {
@@ -1251,7 +1251,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
@@ -1260,7 +1260,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<T> getDeclaringClass() {

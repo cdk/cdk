@@ -139,7 +139,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IRing clone() throws CloneNotSupportedException {

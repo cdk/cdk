@@ -225,7 +225,7 @@ public final class Matching {
         return new Matching(capacity);
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(4 * match.length);

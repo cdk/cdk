@@ -110,7 +110,7 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator implements 
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public long[] generate(IAtomContainer container) {

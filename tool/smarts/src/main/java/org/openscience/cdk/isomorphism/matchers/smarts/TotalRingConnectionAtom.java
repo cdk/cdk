@@ -51,7 +51,7 @@ public final class TotalRingConnectionAtom extends SMARTSAtom {
         this.ringConnectivity = ringConnectivity;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
         return invariants(atom).ringConnectivity() == ringConnectivity;

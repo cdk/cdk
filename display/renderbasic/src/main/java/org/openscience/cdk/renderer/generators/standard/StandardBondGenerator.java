@@ -1331,7 +1331,7 @@ final class StandardBondGenerator {
         RingBondOffsetComparator() {}
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int compare(IAtomContainer containerA, IAtomContainer containerB) {

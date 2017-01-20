@@ -54,7 +54,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
     ATOMIC_NUMBER {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
@@ -70,7 +70,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
     MASS_NUMBER {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
@@ -87,7 +87,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
     FORMAL_CHARGE {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
@@ -103,7 +103,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
     N_CONNECTED_ATOMS {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
@@ -118,7 +118,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
     BOND_ORDER_SUM {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
@@ -133,7 +133,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
     ORBITAL_HYBRIDIZATION {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
@@ -149,7 +149,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
     FREE_RADICALS {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {

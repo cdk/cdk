@@ -60,7 +60,7 @@ final class Tetrahedral3DParity extends GeometricParity {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int parity() {

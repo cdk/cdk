@@ -104,7 +104,7 @@ public abstract class SymbolVisibility {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public boolean visible(IAtom atom, List<IBond> bonds, RendererModel model) {

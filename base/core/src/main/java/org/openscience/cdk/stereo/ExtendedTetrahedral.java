@@ -180,7 +180,7 @@ public final class ExtendedTetrahedral implements IStereoElement {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean contains(IAtom atom) {
@@ -190,7 +190,7 @@ public final class ExtendedTetrahedral implements IStereoElement {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
@@ -199,7 +199,7 @@ public final class ExtendedTetrahedral implements IStereoElement {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IChemObjectBuilder getBuilder() {

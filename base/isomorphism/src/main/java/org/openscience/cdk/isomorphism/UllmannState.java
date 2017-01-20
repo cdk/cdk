@@ -101,13 +101,13 @@ final class UllmannState extends State {
         }
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int nextN(int n) {
         return size; // we progress down the rows of the matrix
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int nextM(int n, int m) {
         for (int i = m + 1; i < g2.length; i++)
@@ -115,19 +115,19 @@ final class UllmannState extends State {
         return g2.length;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int nMax() {
         return g1.length;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int mMax() {
         return g2.length;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     boolean add(int n, int m) {
 
@@ -150,7 +150,7 @@ final class UllmannState extends State {
         }
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     void remove(int n, int m) {
         size--;
@@ -229,13 +229,13 @@ final class UllmannState extends State {
         return false;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int[] mapping() {
         return Arrays.copyOf(m1, m1.length);
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int size() {
         return size;

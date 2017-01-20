@@ -253,7 +253,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

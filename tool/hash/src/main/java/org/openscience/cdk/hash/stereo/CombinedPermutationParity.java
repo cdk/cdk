@@ -50,7 +50,7 @@ final class CombinedPermutationParity extends PermutationParity {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int parity(long[] current) {

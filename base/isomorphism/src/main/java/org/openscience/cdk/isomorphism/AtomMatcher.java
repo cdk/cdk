@@ -76,7 +76,7 @@ public abstract class AtomMatcher {
     /** A matcher defines all atoms as compatible. */
     private static final class AnyMatcher extends AtomMatcher {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IAtom atom1, IAtom atom2) {
             return true;
@@ -89,7 +89,7 @@ public abstract class AtomMatcher {
      */
     private static final class QueryMatcher extends AtomMatcher {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IAtom atom1, IAtom atom2) {
             return ((IQueryAtom) atom1).matches(atom2);
@@ -102,7 +102,7 @@ public abstract class AtomMatcher {
      */
     private static final class ElementMatcher extends AtomMatcher {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IAtom atom1, IAtom atom2) {
             return atomicNumber(atom1) == atomicNumber(atom2);

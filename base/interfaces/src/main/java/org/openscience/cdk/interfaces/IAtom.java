@@ -182,7 +182,7 @@ public interface IAtom extends IAtomType {
     void setIsInRing(boolean ring);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IAtom clone() throws CloneNotSupportedException;

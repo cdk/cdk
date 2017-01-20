@@ -121,7 +121,7 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IPDBPolymer clone() throws CloneNotSupportedException {

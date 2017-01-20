@@ -67,7 +67,7 @@ final class UniqueAtomMatches implements Predicate<int[]> {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean apply(int[] input) {

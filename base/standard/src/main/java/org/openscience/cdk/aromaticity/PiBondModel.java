@@ -41,7 +41,7 @@ import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
  */
 final class PiBondModel extends ElectronDonation {
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 

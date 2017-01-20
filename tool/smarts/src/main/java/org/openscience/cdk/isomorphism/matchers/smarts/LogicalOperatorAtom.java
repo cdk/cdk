@@ -206,13 +206,13 @@ public class LogicalOperatorAtom extends SMARTSAtom {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IAtom atom) {
             return left.matches(atom) && right.matches(atom);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
             // contract dictates that left.matches() & right.matches() are known to be true
@@ -255,13 +255,13 @@ public class LogicalOperatorAtom extends SMARTSAtom {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IAtom atom) {
             return left.matches(atom) || right.matches(atom);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
             // we know the left or right was true, for each side which matched try to verify
@@ -306,13 +306,13 @@ public class LogicalOperatorAtom extends SMARTSAtom {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IAtom atom) {
             return chiral || !expression.matches(atom);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
             return !expression.chiralityMatches(target, tParity, permParity);

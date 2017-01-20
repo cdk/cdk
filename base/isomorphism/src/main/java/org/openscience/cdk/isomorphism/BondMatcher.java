@@ -93,7 +93,7 @@ public abstract class BondMatcher {
      */
     private static final class OrderMatcher extends BondMatcher {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IBond bond1, IBond bond2) {
             return bond1.getFlag(ISAROMATIC) && bond2.getFlag(ISAROMATIC) || bond1.getOrder() == bond2.getOrder();
@@ -107,7 +107,7 @@ public abstract class BondMatcher {
      */
     private static final class StrictOrderMatcher extends BondMatcher {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IBond bond1, IBond bond2) {
             return bond1.getFlag(ISAROMATIC) == bond2.getFlag(ISAROMATIC)
@@ -118,7 +118,7 @@ public abstract class BondMatcher {
     /** All bonds are considered compatible. */
     private static final class AnyMatcher extends BondMatcher {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IBond bond1, IBond bond2) {
             return true;
@@ -131,7 +131,7 @@ public abstract class BondMatcher {
      */
     private static final class QueryMatcher extends BondMatcher {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean matches(IBond bond1, IBond bond2) {
             return ((IQueryBond) bond1).matches(bond2);

@@ -56,7 +56,7 @@ final class BasicPermutationParity extends PermutationParity {
      * The number values to check is typically small ({@literal < 5}) and thus
      * we use brute-force to count the number of inversions.
      *
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int parity(long[] current) {

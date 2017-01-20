@@ -194,7 +194,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) throws IllegalArgumentException {

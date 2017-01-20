@@ -108,7 +108,7 @@ public class DebugChemObject extends ChemObject implements IChemObject {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public <T> T getProperty(Object description, Class<T> c) {
@@ -151,7 +151,7 @@ public class DebugChemObject extends ChemObject implements IChemObject {
         return super.getFlag(flagType);
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public void setProperties(Map<Object, Object> properties) {
         logger.debug("Setting properties: ", properties);

@@ -47,7 +47,7 @@ public class UniColor implements IAtomColorer {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public Color getAtomColor(IAtom atom) {
@@ -55,7 +55,7 @@ public class UniColor implements IAtomColorer {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {

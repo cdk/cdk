@@ -94,7 +94,7 @@ public interface ITetrahedralChirality extends IStereoElement {
     void setStereo(Stereo stereo);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);

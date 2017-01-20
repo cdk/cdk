@@ -123,7 +123,7 @@ public interface IStrand extends IAtomContainer {
     public Map<String, IMonomer> getMonomers();
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IStrand clone() throws CloneNotSupportedException;

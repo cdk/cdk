@@ -86,7 +86,7 @@ public class CubicTo extends PathElement {
                 (float) coords[4], (float) coords[5]};
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public void points(double[] coords) {
         coords[0] = this.coords[0];

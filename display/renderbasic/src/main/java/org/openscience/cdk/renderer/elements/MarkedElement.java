@@ -99,7 +99,7 @@ public final class MarkedElement implements IRenderingElement {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void accept(IRenderingVisitor visitor) {

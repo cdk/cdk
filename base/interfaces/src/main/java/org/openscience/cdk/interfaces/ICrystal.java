@@ -138,7 +138,7 @@ public interface ICrystal extends IAtomContainer {
     public void setZ(Integer value);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public ICrystal clone() throws CloneNotSupportedException;

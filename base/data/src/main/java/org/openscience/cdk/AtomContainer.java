@@ -198,7 +198,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
@@ -1278,7 +1278,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
             removeSingleElectron((ISingleElectron) electronContainer);
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public void removeAtomAndConnectedElectronContainers(IAtom atom) {
         int position = getAtomNumber(atom);
@@ -1312,7 +1312,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void removeAllElements() {
@@ -1698,7 +1698,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

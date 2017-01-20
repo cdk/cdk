@@ -175,7 +175,7 @@ public final class Ullmann extends Pattern {
             this.bondMatcher = bondMatcher;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Iterator<int[]> iterator() {
             return new StateStream(new UllmannState(container1, container2, g1, g2, bonds1, bonds2, atomMatcher,

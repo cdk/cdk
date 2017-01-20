@@ -74,7 +74,7 @@ public interface IPDBMonomer extends IMonomer {
     public void setResSeq(String newResSeq);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IPDBMonomer clone() throws CloneNotSupportedException;

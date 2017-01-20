@@ -112,13 +112,13 @@ public final class VentoFoggia extends Pattern {
         this.queryMatching = query instanceof IQueryAtomContainer;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public int[] match(IAtomContainer target) {
         return matchAll(target).stereochemistry().first();
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public Mappings matchAll(final IAtomContainer target) {
         EdgeToBondMap bonds2 = EdgeToBondMap.withSpaceFor(target);
@@ -229,7 +229,7 @@ public final class VentoFoggia extends Pattern {
             this.subgraph = subgraph;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Iterator<int[]> iterator() {
             if (subgraph) {

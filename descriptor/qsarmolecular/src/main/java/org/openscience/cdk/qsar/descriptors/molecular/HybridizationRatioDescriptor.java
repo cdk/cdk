@@ -57,7 +57,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
     /**
      * Returns a {@link DescriptorSpecification} which specifies which descriptor is implemented by this class.
      *
-     * @inheritDoc
+     *{@inheritDoc}
      * @return An object containing the descriptor specification
      */
     @Override
@@ -98,7 +98,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      *
      * @param e the exception
      * @return a dummy value

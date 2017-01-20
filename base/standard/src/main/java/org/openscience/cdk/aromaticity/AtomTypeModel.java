@@ -77,7 +77,7 @@ final class AtomTypeModel extends ElectronDonation {
         this.exocyclic = exocyclic;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 

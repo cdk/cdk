@@ -53,7 +53,7 @@ public class RingMembershipAtom extends SMARTSAtom {
         this.ringNumber = num;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
         return ringNumber < 0 ? invariants(atom).ringConnectivity() > 0 : ringNumber == invariants(atom).ringNumber();

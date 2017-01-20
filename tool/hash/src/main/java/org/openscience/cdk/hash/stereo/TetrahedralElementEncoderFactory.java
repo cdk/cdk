@@ -48,7 +48,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
 public final class TetrahedralElementEncoderFactory implements StereoEncoderFactory {
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {

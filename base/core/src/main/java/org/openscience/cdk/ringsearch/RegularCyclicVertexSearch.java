@@ -268,7 +268,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean cyclic(int v) {
@@ -276,7 +276,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean cyclic(int u, int v) {
@@ -306,7 +306,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int[] cyclic() {
@@ -314,7 +314,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int[][] isolated() {
@@ -326,7 +326,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int[][] fused() {

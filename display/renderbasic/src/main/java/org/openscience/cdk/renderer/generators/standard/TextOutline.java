@@ -241,7 +241,7 @@ final class TextOutline {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public String toString() {

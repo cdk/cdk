@@ -61,7 +61,7 @@ import java.util.TreeSet;
 final class AllEquivalentCyclicSet extends EquivalentSetFinder {
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph) {

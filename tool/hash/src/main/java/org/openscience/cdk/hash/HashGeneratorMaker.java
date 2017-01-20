@@ -367,7 +367,7 @@ public final class HashGeneratorMaker {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public StereoEncoder create(IAtomContainer container, int[][] graph) {

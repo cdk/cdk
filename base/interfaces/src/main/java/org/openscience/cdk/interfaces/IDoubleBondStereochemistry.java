@@ -85,7 +85,7 @@ public interface IDoubleBondStereochemistry extends IStereoElement {
     public Conformation getStereo();
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);

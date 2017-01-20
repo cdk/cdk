@@ -120,7 +120,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IMonomer clone() throws CloneNotSupportedException {

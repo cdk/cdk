@@ -82,7 +82,7 @@ import java.util.TreeMap;
 final class MinimumEquivalentCyclicSetUnion extends EquivalentSetFinder {
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph) {

@@ -94,7 +94,7 @@ public class Partition {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean equals(Object o) {
@@ -109,7 +109,7 @@ public class Partition {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int hashCode() {
@@ -415,7 +415,7 @@ public class Partition {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public String toString() {

@@ -104,7 +104,7 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IPDBMonomer clone() throws CloneNotSupportedException {
