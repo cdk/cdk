@@ -40,7 +40,6 @@ public interface IElement extends IChemObject {
      *   IsotopeFactory if = IsotopeFactory.getInstance(element.getNewBuilder());
      *   if.configure(element);
      * </pre>
-     * </p>
      *
      * @return The atomic number of this element
      *
