@@ -40,7 +40,7 @@ import java.util.TreeSet;
  * The ESSSR should not be confused with the extended set of smallest rings
  * (ESSR) {@cdk.cite Downs89}. 
  *
- * <h4>Algorithm</h4>  To our knowledge no algorithm has been published for
+ * <b>Algorithm</b>  To our knowledge no algorithm has been published for
  * the ESSSR. The <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">PubChem
  * Specifications</a> states - <i>"An ESSSR ring is any ring which does not
  * share three consecutive atoms with any other ring in the chemical structure.
@@ -61,7 +61,7 @@ import java.util.TreeSet;
  * different phenyl rings it is easy to see the shortest cycle through
  * <i>-u-v-w-</i> is the 10 member envelope ring.
  *
- * <h4>Canonical and Non-Canonical Generation</h4>
+ * <b>Canonical and Non-Canonical Generation</b>
  *
  * The algorithm can generate a canonical or non-canonical (preferred) set of
  * cycles. As one can see from the above description depending on the order we
@@ -79,7 +79,7 @@ import java.util.TreeSet;
  * of cycles for a graph this is not true for subgraphs. For two graphs
  * <i>G</i>, <i>H</i> and a canonical ordering (<i>π</i>). If <i>H</i> is a
  * subgraph of <i>G</i> then for two vertices <i>u</i>, <i>v</i>. It follows
- * that <i>π(u)</i> < <i>π(v)</i> ∈ <i>H</i> ⇏ <i>π(u)</i> < <i>π(v)</i> ∈
+ * that <i>π(u)</i> &lt; <i>π(v)</i> ∈ <i>H</i> ⇏ <i>π(u)</i> &lt; <i>π(v)</i> ∈
  * <i>G</i>. In other words, we can canonically label a graph and inspect the
  * ordering of vertices <i>u</i> and <i>v</i>. We now take a subgraph which
  * contains both <i>u</i> and <i>v</i> - the ordering does not need to be the
@@ -107,19 +107,20 @@ import java.util.TreeSet;
  * may be absent which would be present if the subgraph was used.
  *
  * <table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <caption></caption>
  * <tr><th>PubChem CID</th><th>Diagram</th><th rowspan="2">Size of Rings in
- * ESSSR <br/>(fingerprints only store cycles |C| &lt;=
+ * ESSSR <br>(fingerprints only store cycles |C| &lt;=
  * 10)</th><th>Source</th></tr>
- * <tr/>
+ * <tr></tr>
  * <tr>
  * <td>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=135973">135973</a></td>
- * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=135973"/></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=135973" alt="Compound Image"></td>
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>{3, 3, 4}</td></tr>
  * <tr><td>{3, 3, 4}</td></tr>
  * <tr><td>{3, 3, 4}</td></tr>
  * </table></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>Canonical</td></tr>
  * <tr><td>Non-canonical</td></tr>
  * <tr><td>PubChem Fingerprint</td></tr>
@@ -127,13 +128,13 @@ import java.util.TreeSet;
  * </tr>
  * <tr>
  * <td>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=9249">9249</a></td>
- * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=9249"/></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=9249"  alt="Compound Image"></td>
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>{3, 3, <b style="color: #FF4444;"><u>4</u></b>, 6, 6}</td> </tr>
  * <tr><td>{3, 3, 4, 6, 6}</td></tr>
  * <tr><td>{3, 3, 6, 6}</td></tr>
  * </table></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>Canonical - <i>4 member cycle only added if found before larger 6
  * member cycles</i></td></tr>
  * <tr><td>Non-canonical</td></tr>
@@ -142,13 +143,13 @@ import java.util.TreeSet;
  * </tr>
  * <tr>
  * <td>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=931">931</a></td>
- * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=931"/></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=931"  alt="Compound Image"></td>
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>{6, 6, 10}</td></tr>
  * <tr><td>{6, 6, 10}</td></tr>
  * <tr><td>{6, 6, 10}</td></tr>
  * </table></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>Canonical</td></tr>
  * <tr><td>Non-canonical</td></tr>
  * <tr><td>PubChem Fingerprint</td></tr>
@@ -156,14 +157,14 @@ import java.util.TreeSet;
  * </tr>
  * <tr>
  * <td>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5702">5702</a></td>
- * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5702"/></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5702"  alt="Compound Image"></td>
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>{6, 6, 6, 6, <b style="color: #FF4444;"><u>10</u></b>, <b
  * style="color: #FF4444;"><u>10</u></b>, 20, 22, 22, 24, 24}</td></tr>
  * <tr><td>{6, 6, 6, 6, 10, 10, 20, 22, 22, 24, 24}</td></tr>
  * <tr><td>{6, 6, 6, 6}</td></tr>
  * </table></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>Canonical - <i>10 member cycles only added if found before larger
  * cycles</i></td></tr>
  * <tr><td>Non-canonical</td></tr>
@@ -172,14 +173,14 @@ import java.util.TreeSet;
  * </tr>
  * <tr>
  * <td>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=1211">1211</a></td>
- * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1211"/></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1211"  alt="Compound Image"></td>
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>{6, 6, 6, 6, 6, 6, <b style="color: #FF4444;"><u>10</u></b>, <b
  * style="color: #FF4444;"><u>10</u></b>, 18, 18, 20, 20, 22, 22, 22}</td></tr>
  * <tr><td>{6, 6, 6, 6, 6, 6, 10, 10, 18, 18, 20, 20, 22, 22, 22}</td></tr>
  * <tr><td>{6, 6, 6, 6, 6, 6, 10, 10}</td></tr>
  * </table></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>Canonical - <i>10 member cycles only added if found before larger
  * cycles</i></td></tr>
  * <tr><td>Non-canonical</td></tr>
@@ -188,13 +189,13 @@ import java.util.TreeSet;
  * </tr>
  * <tr>
  * <td>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=17858819">17858819</a></td>
- * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=17858819"/></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=17858819" alt="Compound Image"></td>
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>{5, 6, 9}</td></tr>
  * <tr><td>{5, 6, 9}</td></tr>
  * <tr><td>{5, 6, 9}</td></tr>
  * </table></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>Canonical</td></tr>
  * <tr><td>Non-canonical</td></tr>
  * <tr><td>PubChem Fingerprint</td></tr>
@@ -202,15 +203,15 @@ import java.util.TreeSet;
  * </tr>
  * <tr>
  * <td>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=1909">1909</a></td>
- * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1909"/></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1909" alt="Compound Image"></td>
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>{5, 5, 5, 6, <b style="color: #FF4444;"><u>9</u></b>, 16, 17, 17,
  * 17,
  * 18}</td></tr>
  * <tr><td>{5, 5, 5, 6, 9, 16, 17, 17, 17, 18}</td></tr>
  * <tr><td>{5, 5, 5, 6}</td></tr>
  * </table></td>
- * <td><table style="font-family: courier; font-size: 9pt; color: #666666;">
+ * <td><table style="font-family: courier; font-size: 9pt; color: #666666;"><caption></caption>
  * <tr><td>Canonical - <i>9 member cycle only added if found before larger
  * cycles</i></td></tr>
  * <tr><td>Non-canonical</td></tr>
