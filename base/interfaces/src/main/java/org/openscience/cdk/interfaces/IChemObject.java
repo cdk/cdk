@@ -116,7 +116,7 @@ public interface IChemObject extends ICDKObject {
      * cast to the required type. This does however mean if the wrong type is
      * provided then a runtime ClassCastException will be thrown.
      *
-     * <p/>
+     *
      * <pre>{@code
      *
      *     IAtom atom = new Atom("C");
@@ -149,7 +149,7 @@ public interface IChemObject extends ICDKObject {
 
     /**
      * Access a property of the given description and cast the specified class.
-     * <p/>
+     * 
      * <pre>{@code
      *
      *     IAtom atom = new Atom("C");

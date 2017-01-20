@@ -51,7 +51,7 @@ import java.util.Map;
  * {@link Palette} to determine the color. The size of the highlight is
  * specified with the {@link HighlightRadius} parameter.
  *
- * <p/>
+ * 
  * Basic usage:
  * <blockquote><pre>{@code
  * // create with the highlight generator

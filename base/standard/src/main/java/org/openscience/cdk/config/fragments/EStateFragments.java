@@ -32,7 +32,7 @@ package org.openscience.cdk.config.fragments;
 
 /**
  * A class representing the 79 E-state atom types in terms of SMARTS.
- * <p/>
+ * 
  * These fragments were originally described in {@cdk.cite HALL1995} and were
  * converted into SMARTS forms by the <a href="http://www.rdkit.org">RDKit</a> project
  *
@@ -47,7 +47,7 @@ public class EStateFragments {
 
     /**
      * The names of the fragments.
-     * <p/>
+     * 
      * See <a href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">
      * here</a> for the corresponding chemical groups
      */

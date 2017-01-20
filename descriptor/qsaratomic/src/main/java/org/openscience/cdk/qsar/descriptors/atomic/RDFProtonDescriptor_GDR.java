@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * shift {@cdk.cite AiresDeSousa2002}. It only applies to (explicit) hydrogen atoms,
  * requires aromaticity to be perceived (possibly done via a parameter), and
  * needs 3D coordinates for all atoms.
- * <p/>
+ * 
  * <p>This descriptor uses these parameters:
  * <table border="1">
  * <tr>

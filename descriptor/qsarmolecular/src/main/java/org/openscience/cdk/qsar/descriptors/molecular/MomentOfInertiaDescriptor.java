@@ -51,7 +51,7 @@ import Jama.Matrix;
  * are also well know modeling variables. This descriptor calculates the MI values
  * along the X, Y and Z axes as well as the ratio's X/Y, X/Z and Y/Z. Finally it also
  * calculates the radius of gyration of the molecule.
- * <p/>
+ * 
  * The descriptor generates 7 values in the following order
  * <ul>
  * <li>MOMI-X - MI along X axis
@@ -64,7 +64,7 @@ import Jama.Matrix;
  * </ul>
  * One important aspect of the algorithm is that if the eigenvalues of the MI tensor
  * are below 1e-3, then the ratio's are set to a default of 1000.
- * <p/>
+ * 
  * <p>This descriptor uses these parameters:
  * <table border="1">
  * <tr>
@@ -265,7 +265,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

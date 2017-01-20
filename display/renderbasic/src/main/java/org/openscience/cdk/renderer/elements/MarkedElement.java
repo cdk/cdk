@@ -37,10 +37,10 @@ import java.util.List;
  * element (or group of elements). The id should be unique per depiction.
  * The primary use case it to be able to set the 'id' and 'class'
  * attributes in SVG.
- * <p/>
+ * 
  * To set the mol, atom, or bond id set a String property to {@link #ID_KEY}.
  * Similarly, the {@link #CLASS_KEY} can be used to set the classes.
- * <p/>
+ * 
  * <pre>{@code
  * IAtomContainer mol;
  * atom.setProperty(MarkedElement.ID_KEY, "my_atm_id");

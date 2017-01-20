@@ -37,7 +37,7 @@ import org.openscience.cdk.qsar.AtomValenceTool;
 
 /**
  * Utility methods for chi index calculations.
- * <p/>
+ * 
  * These methods are common to all the types of chi index calculations and can
  * be used to evaluate path, path-cluster, cluster and chain chi indices.
  *
@@ -49,7 +49,7 @@ class ChiIndexUtils {
 
     /**
      * Gets the fragments from a target <code>AtomContainer</code> matching a set of query fragments.
-     * <p/>
+     * 
      * This method returns a list of lists. Each list contains the atoms of the target <code>AtomContainer</code>
      * that arise in the mapping of bonds in the target molecule to the bonds in the query fragment.
      * The query fragments should be constructed
@@ -120,7 +120,7 @@ class ChiIndexUtils {
 
     /**
      * Evaluates the valence corrected chi index for a set of fragments.
-     * <p/>
+     * 
      * This method takes into account the S and P atom types described in
      * Kier & Hall (1986), page 20 for which empirical delta V values are used.
      *
@@ -183,7 +183,7 @@ class ChiIndexUtils {
 
     /**
      * Evaluates the empirical delt V for some S environments.
-     * <p/>
+     * 
      * The method checks to see whether a S atom is in a -S-S-,
      * -SO-, -SO2- group and returns the empirical values noted
      * in Kier & Hall (1986), page 20.
@@ -217,7 +217,7 @@ class ChiIndexUtils {
 
     /**
      * Checks whether the P atom is in a PO environment.
-     * <p/>
+     * 
      * This environment is noted in Kier & Hall (1986), page 20
      *
      * @param atom          The P atom in question
@@ -244,7 +244,7 @@ class ChiIndexUtils {
 
     /**
      * Converts a set of bond mappings to a unique set of atom paths.
-     * <p/>
+     * 
      * This method accepts a <code>List</code> of bond mappings. It first
      * reduces the set to a unique set of bond maps and then for each bond map
      * converts it to a series of atoms making up the bonds.

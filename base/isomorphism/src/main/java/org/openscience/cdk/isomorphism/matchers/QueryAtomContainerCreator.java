@@ -172,7 +172,7 @@ public class QueryAtomContainerCreator {
 
     /**
      * Creates a QueryAtomContainer with wildcard atoms and wildcard bonds.
-     * <p/>
+     * 
      * This method thus allows the user to search based only on connectivity.
      *
      * @param container   The AtomContainer that stands as the model

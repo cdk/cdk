@@ -31,7 +31,7 @@ import java.util.*;
 /**
  * Generic CTab Sgroup (substructure group) that stores all other types of group. This representation
  * is allows reading from CTfiles (e.g. Molfile, SDfile).
- * <p/>
+ * 
  * The class uses a key-value store for Sgroup attributes simplifying both input and output.
  */
 public class Sgroup {

@@ -37,14 +37,14 @@ import java.util.List;
 
 /**
  * Evaluates the weighted path descriptors.
- * <p/>
+ * 
  * These decsriptors were described  by Randic ({@cdk.cite RAN84}) and characterize molecular
  * branching. Five descriptors are calculated, based on the implementation in the ADAPT
  * software package. Note that the descriptor is based on identifying <b>all</b> pahs between pairs of
  * atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
  * The class returns a <code>DoubleArrayResult</code> containing the five
  * descriptors in the order described below.
- * <p/>
+ * 
  * <center>
  * <table border=1>
  * <caption><a name="dmwp">DMWP</a></caption>
@@ -53,7 +53,7 @@ import java.util.List;
  * <td>WTPT2</td><td> molecular ID / number of atoms</td></tr><tr>
  * <td>WTPT3</td><td> sum of path lengths starting
  * from heteroatoms</td></tr><tr>
- * <p/>
+ * 
  * <td>WTPT4</td><td> sum of path lengths starting
  * from oxygens</td></tr><tr>
  * <td>WTPT5</td><td> sum of path lengths starting
@@ -243,7 +243,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

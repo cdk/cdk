@@ -36,11 +36,11 @@ import javax.vecmath.Point3d;
 
 /**
  * Evaluates the Petitjean shape indices,
- * <p/>
+ * 
  * These original Petitjean number was described by Petitjean ({@cdk.cite PET92})
  * and considered the molecular graph. This class also implements the geometric analog
  * of the topological shape index described by Bath et al ({@cdk.cite BAT95}).
- * <p/>
+ * 
  * The descriptor returns a <code>DoubleArrayResult</code> which contains
  * <ol>
  * <li>topoShape - topological shape index
@@ -191,7 +191,7 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

@@ -110,7 +110,7 @@ public class InChIGeneratorFactory {
      * INCHI_BOND_TYPE.ALTERN is considered special in contrast to single, double, and triple bonds,
      * and is not bulletproof. If the molecule has clearly defined single and double bonds,
      * the option can be used to force the class not to use the alternating bond type.
-     * <p/>
+     * 
      * http://www.inchi-trust.org/fileadmin/user_upload/html/inchifaq/inchi-faq.html#16.3
      *
      * @param ignore if aromatic bonds should be treated as bonds of type single and double

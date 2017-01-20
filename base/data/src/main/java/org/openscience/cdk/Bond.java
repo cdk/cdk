@@ -32,12 +32,12 @@ import java.util.List;
 /**
  * Implements the concept of a covalent bond between two or more atoms. A bond is
  * considered to be a number of electrons connecting two or more  of atoms.
- * <p/>
+ * 
  * It should be noted that the majority of applications will consider 2-center bonds,
  * especially since the bond orders currently supported are really only valid for
  * 2-center bonds. However the code does support multi-center bonds, though the
  * orders may not make sense at this point.
- * <p/>
+ * 
  * In general code that assumes bonds are 2-centered can use this class seamlessly, as
  * the semantics are identical to the older versions. Care shoud be exercised when
  * using multi-center bonds using this class as the orders may not make sense.
@@ -54,7 +54,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
     /**
      * Determines if a de-serialized object is compatible with this class.
-     * <p/>
+     * 
      * This value must only be changed if and only if the new version
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
@@ -235,11 +235,11 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
     /**
      * Returns the atom connected to the given atom.
-     * <p/>
+     * 
      * This method is only strictly relevant for 2-center bonds
      * since in multi-center bonds, a given atom will be connected
      * to multiple atoms.
-     * <p/>
+     * 
      * If called for a multi-center bond, then the next atom in the
      * atom list is returned. This is probably not what is expected and
      * hence the user should instead call
@@ -261,7 +261,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
     /**
      * Returns all the atoms in the bond connected to the specified atom.
-     * <p/>
+     * 
      * Though this can be used for traditional 2-center bonds, it is oriented
      * towards multi-center bonds, where a single atom is connected to multiple
      * atoms.

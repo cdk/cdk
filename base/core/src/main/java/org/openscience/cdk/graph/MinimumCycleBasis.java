@@ -37,7 +37,7 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * basis with the two rings of size six and two bases with either ring of size
  * six and the perimeter ring of size 10. The weights of each basis are 12
  * (6+6), 16 (6+10), 16 (6+10). The basis of the two six member rings has
- * minimum weight (12) and is thus the MCB of <i>naphthalene</i>.<p/>
+ * minimum weight (12) and is thus the MCB of <i>naphthalene</i>.
  *
  * The Smallest Set of Smallest Rings (SSSR) is normally used interchangeably
  * with MCB although traditionally their meaning was different {@cdk.cite

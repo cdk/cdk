@@ -81,11 +81,11 @@ public class InChINumbersTools {
      * order and the InChI canonical labels should be obtained from the
      * reconnected metal layer (/R:) in preference to the initial layer, and
      * then from the fixed hydrogen labels (/F:) in preference to the standard
-     * labels (/N:)." <p/>
+     * labels (/N:)." 
      *
      * The labels are also adjust for "Rule E: If the start atom is a negatively
      * charged oxygen atom, start instead at any carbonyl oxygen attached to the
-     * same neighbour." <p/>
+     * same neighbour." 
      *
      * All unlabelled atoms (e.g. hydrogens) are assigned the same label which
      * is different but larger then all other labels. The hydrogen

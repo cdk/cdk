@@ -41,7 +41,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * a system with an even number of cumulated pi bonds. Examples include,
  * (R)-laballenic acid (CHEBI:38401) and (S)-laballenic acid (CHEBI:38402).
  *
- * <p/>
+ * 
  *
  * The extended tetrahedral stereochemistry can be represented and handled the
  * same as normal tetrahedral stereochemistry. However the handling of the
@@ -61,7 +61,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * p2, p3}}, the first two and last two entries should be attached to the same
  * terminal atom (t0 or t1). For convenience the terminal atoms can be found with
  * {@link #findTerminalAtoms(IAtomContainer)}.
- * <p/>
+ * 
  * <pre>{@code
  * p0           p2          p0   p2
  *  \          /              \ /
@@ -74,7 +74,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * anti-clockwise when the centre (t0/f/t1) is viewed from the first peripheral
  * atom {@code p0}.
  *
- * <p/>
+ * 
  * If any of the peripherals are implicit hydrogen atoms, then the terminal atom
  * to which the hydrogen is attached can be used as a placeholder.
  *

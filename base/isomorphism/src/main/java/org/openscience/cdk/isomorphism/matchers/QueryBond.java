@@ -215,11 +215,11 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
 
     /**
      * Returns the atom connected to the given atom.
-     * <p/>
+     * 
      * This method is only strictly relevant for 2-center query bonds
      * since in multi-center query bonds, a given atom will be connected
      * to multiple atoms.
-     * <p/>
+     * 
      * If called for a multi-center query bond, then the next atom in the
      * atom list is returned. This is probably not what is expected and
      * hence the user should instead call
@@ -241,7 +241,7 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
 
     /**
      * Returns all the atoms in the query bond connected to the specified atom.
-     * <p/>
+     * 
      * Though this can be used for traditional 2-center query bonds, it is oriented
      * towards multi-center query bonds, where a single atom is connected to multiple
      * atoms.

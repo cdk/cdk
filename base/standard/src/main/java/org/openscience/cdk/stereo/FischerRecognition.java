@@ -48,13 +48,13 @@ import static org.openscience.cdk.stereo.Stereocenters.Type.Tetracoordinate;
 /**
  * Recognize the configuration of tetrahedral stereocenters depicted as
  * Fischer projection. Fischer projection is a convenient means of depicting
- * 3D geometry commonly used in depicting carbohydrates. <p/>
+ * 3D geometry commonly used in depicting carbohydrates. 
  * 
  * Fischer projection depicts tetrahedral stereocenters as though they were 
  * coplanar with the four substituents at cardinal directions (up,right,down, 
  * and left). The horizontal bonds (right and left) are interpreted as pointing
  * out of the plane towards the viewer; They are not depicted with non-planar
- * wedge bonds. <p/>
+ * wedge bonds. 
  * 
  * This class provides the recognition of Fischer projections. Each asymmetric
  * carbon is checked as to whether it's 2D depiction is coplanar with cardinal

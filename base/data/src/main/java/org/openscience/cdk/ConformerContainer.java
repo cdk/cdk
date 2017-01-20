@@ -31,12 +31,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * A memory-efficient data structure to store conformers for a single molecule.
- * <p/>
+ * 
  * Since all the conformers for a given molecule only differ in their 3D coordinates
  * this data structure stores a single {@link IAtomContainer} containing the atom and bond
  * details and a List of 3D coordinate sets, each element being the set of 3D coordinates
  * for a given conformer.
- * <p/>
+ * 
  * The class behaves in many ways as a List<IAtomContainer> object, though a few methods are not
  * implemented. Though it is possible to add conformers by hand, this data structure is
  * probably best used in combination with {@link org.openscience.cdk.io.iterator.IteratingMDLConformerReader} as
@@ -80,11 +80,11 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Create a ConformerContainer object from a single molecule object.
-     * <p/>
+     * 
      * Using this constructor, the resultant conformer container will
      * contain a single conformer. More conformers can be added using the
      * {@link #add} method.
-     * <p/>
+     * 
      * Note that the constructor will use the title of the input molecule
      * when adding new molecules as conformers. That is, the title of any molecule
      * to be added as a conformer should match the title of the input molecule.
@@ -100,7 +100,7 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Create a ConformerContainer from an array of molecules.
-     * <p/>
+     * 
      * This constructor can be used when you have an array of conformers of a given
      * molecule. Note that this constructor will assume that all molecules in the
      * input array will have the same title.
@@ -127,7 +127,7 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Get the title of the conformers.
-     * <p/>
+     * 
      * Note that all conformers for a given molecule will have the same
      * title.
      *
@@ -159,7 +159,7 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Checks to see whether the specified conformer is currently stored.
-     * <p/>
+     * 
      * This method first checks whether the title of the supplied molecule
      * matches the stored title. If not, it returns false. If the title matches
      * it then checks all the coordinates to see whether they match. If all
@@ -186,7 +186,7 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Returns the conformers in the form of an array of IAtomContainers.
-     * <p/>
+     * 
      * Beware that if you have a large number of conformers you may run out
      * memory during construction of the array since IAtomContainer's are not
      * light weight objects!
@@ -219,13 +219,13 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Add a conformer to the end of the list.
-     * <p/>
+     * 
      * This method allows you to add a IAtomContainer object as another conformer.
      * Before adding it ensures that the title of specific object matches the
      * stored title for these conformers. It will also check that the number of
      * atoms in the specified molecule match the number of atoms in the current set
      * of conformers.
-     * <p/>
+     * 
      * This method will not check for duplicate conformers.
      *
      * @param atomContainer The new conformer to add.
@@ -365,7 +365,7 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Returns the lowest index at which the specific IAtomContainer appears in the list or -1 if is not found.
-     * <p/>
+     * 
      * A given IAtomContainer will occur in the list if the title matches the stored title for
      * the conformers in this container and if the coordinates for each atom in the specified molecule
      * are equal to the coordinates of the corresponding atoms in a conformer.
@@ -399,7 +399,7 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Returns the highest index at which the specific IAtomContainer appears in the list or -1 if is not found.
-     * <p/>
+     * 
      * A given IAtomContainer will occur in the list if the title matches the stored title for
      * the conformers in this container and if the coordinates for each atom in the specified molecule
      * are equal to the coordinates of the corresponding atoms in a conformer.

@@ -64,7 +64,7 @@ import java.util.Map;
 
 /**
  * A high-level API for depicting molecules and reactions.
- * <p/>
+ * 
  * <h4>General Usage</h4>
  * Create a generator and reuse it for multiple depictions. Configure how
  * the depiction will look using {@code with...()} methods.
@@ -75,7 +75,7 @@ import java.util.Map;
  *   dg.depict(mol).writeTo("~/mol.png");
  * }
  * }</pre>
- * <p/>
+ * 
  * <h4>One Line Quick Use</h4>
  * For simplified use we can create a generator and use it once for a single depiction.
  * <pre>{@code
@@ -86,19 +86,19 @@ import java.util.Map;
  * through a variety of API calls.
  * <pre>{@code
  * Depiction depiction = new DepictionGenerator().depict(mol);
- * <p/>
+ * 
  * // quick use, format determined by name by path
  * depiction.writeTo("~/mol.png");
  * depiction.writeTo("~/mol.svg");
  * depiction.writeTo("~/mol.pdf");
  * depiction.writeTo("~/mol.jpg");
- * <p/>
+ * 
  * // manually specify the format
  * depiction.writeTo(Depiction.SVG_FMT, "~/mol");
- * <p/>
+ * 
  * // convert to a Java buffered image
  * BufferedImage img = depiction.toImg();
- * <p/>
+ * 
  * // get the SVG XML string
  * String svg = depiction.toSvgStr();
  * }</pre>
@@ -761,7 +761,7 @@ public final class DepictionGenerator {
      * Display atom numbers on the molecule or reaction. The numbers are based on the
      * ordering of atoms in the molecule data structure and not a systematic system
      * such as IUPAC numbering.
-     * <p/>
+     * 
      * Note: A depiction can not have both atom numbers and atom maps visible
      * (but this can be achieved by manually setting the annotation).
      *
@@ -781,7 +781,7 @@ public final class DepictionGenerator {
      * Display atom numbers on the molecule or reaction. The numbers are based on the
      * ordering of atoms in the molecule data structure and not a systematic system
      * such as IUPAC numbering.
-     * <p/>
+     * 
      * Note: A depiction can not have both atom numbers and atom maps visible
      * (but this can be achieved by manually setting the annotation).
      *
@@ -800,7 +800,7 @@ public final class DepictionGenerator {
     /**
      * Display atom-atom mapping numbers on a reaction. Each atom map index
      * is loaded from the property {@link CDKConstants#ATOM_ATOM_MAPPING}.
-     * <p/>
+     * 
      * Note: A depiction can not have both atom numbers and atom
      * maps visible (but this can be achieved by manually setting
      * the annotation).
@@ -965,7 +965,7 @@ public final class DepictionGenerator {
     /**
      * Highlight the provided set of atoms and bonds in the depiction in the
      * specified color.
-     * <p/>
+     * 
      * Calling this methods appends to the current highlight buffer. The buffer
      * is cleared after each depiction is generated (e.g. {@link #depict(IAtomContainer)}).
      *
@@ -985,8 +985,8 @@ public final class DepictionGenerator {
      * Specify a desired size of depiction. The units depend on the output format with
      * raster images using pixels and vector graphics using millimeters. By default depictions
      * are only ever made smaller if you would also like to make depictions fill all available
-     * space use the {@link #withFillToFit()} option. <p/>
-     * <p/>
+     * space use the {@link #withFillToFit()} option. 
+     * 
      * Currently the size must either both be precisely specified (e.g. 256x256) or
      * automatic (e.g. {@link #AUTOMATIC}x{@link #AUTOMATIC}) you cannot for example
      * specify a fixed height and automatic width.
@@ -1036,7 +1036,7 @@ public final class DepictionGenerator {
      * depiction and is used for uniformly making depictions bigger. If
      * you would like to simply fill all available space (not recommended)
      * use {@link #withFillToFit()}.
-     * <p/>
+     * 
      * The zoom is a scaling factor, specifying a zoom of 2 is double size,
      * 0.5 half size, etc.
      *

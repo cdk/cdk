@@ -4,7 +4,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 /**
  * An AST node. It represents the periodic group number of an element.
- * <p/>
+ * 
  * This is not specified in the original Daylight specification, but
  * is support by MOE. The IUPAC numbering is used, so that carbon is
  * in group 14. Valid values are 1 to 18.

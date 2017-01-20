@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * {@link IMolecularDescriptor} that reports the fraction of sp3 carbons to sp2 carbons.
- * <p/>
+ * 
  * Note that it only considers carbon atoms and rather than use a simple ratio
  * it reports the value of N<sub>sp3</sub>/ (N<sub>sp3</sub> + N<sub>sp2</sub>).
  * The original form of the descriptor (i.e., simple ratio) has been used to
@@ -139,7 +139,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link DescriptorValue} object; this method

@@ -88,7 +88,7 @@ import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.toVec
  * {@link org.openscience.cdk.renderer.generators.standard.StandardGenerator}. A new bond generator
  * is required for each container instance.
  *
- * <p/> The bonds generated are: <ul> <li> {@link #generateSingleBond} - delegates to one of the
+ *  The bonds generated are: <ul> <li> {@link #generateSingleBond} - delegates to one of the
  * following types: <ul> <li>{@link #generatePlainSingleBond} - single line between two atoms</li>
  * <li>{@link #generateBoldWedgeBond} - wedged up stereo </li> <li>{@link #generateHashedWedgeBond}
  * - wedged down stereo bond </li> <li>{@link #generateWavyBond} - up or down bond </li> </ul> </li>

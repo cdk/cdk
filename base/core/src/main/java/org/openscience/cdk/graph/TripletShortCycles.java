@@ -38,9 +38,9 @@ import java.util.TreeSet;
  * ESSSR.
  *
  * The ESSSR should not be confused with the extended set of smallest rings
- * (ESSR) {@cdk.cite Downs89}. <p/>
+ * (ESSR) {@cdk.cite Downs89}. 
  *
- * <h4>Algorithm</h4> <p/> To our knowledge no algorithm has been published for
+ * <h4>Algorithm</h4>  To our knowledge no algorithm has been published for
  * the ESSSR. The <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">PubChem
  * Specifications</a> states - <i>"An ESSSR ring is any ring which does not
  * share three consecutive atoms with any other ring in the chemical structure.
@@ -55,7 +55,7 @@ import java.util.TreeSet;
  * in the basis</li> <li>If no such cycle can be found compute the shortest
  * cycle which travels through <i>-u-v-w-</i> and add it to the basis. The
  * shortest cycle is the shortest path from <i>u</i> to <i>w</i> which does not
- * travel through <i>v</i></li> </ol> <p/> In the case of <i>naphthalene</i> the
+ * travel through <i>v</i></li> </ol>  In the case of <i>naphthalene</i> the
  * minimum cycle basis is the two phenyl rings. Taking either bridgehead atom of
  * <i>naphthalene</i> to be <i>v</i> and choosing <i>u</i> and <i>w</i> to be in
  * different phenyl rings it is easy to see the shortest cycle through
@@ -67,13 +67,13 @@ import java.util.TreeSet;
  * cycles. As one can see from the above description depending on the order we
  * check each triple (-u-v-w-) and add it to basis we may end up with a
  * different set.
- * <p/>
+ * 
  *
  * To avoid this PubChem fingerprints uses a canonical labelling ensuring the
  * vertices are always checked in the same order. The vertex order used by this
  * class is the natural order of the vertices as provided in the graph. To
  * ensure the generated set is always the same vertices should be ordered
- * beforehand or the non-canonical option should be used.<p/>
+ * beforehand or the non-canonical option should be used.
  *
  * Although this canonical sorting allows one to reliable generate the same set
  * of cycles for a graph this is not true for subgraphs. For two graphs
@@ -84,7 +84,7 @@ import java.util.TreeSet;
  * ordering of vertices <i>u</i> and <i>v</i>. We now take a subgraph which
  * contains both <i>u</i> and <i>v</i> - the ordering does not need to be the
  * same as the full graph. This means that a subgraph may contain a ring in its
- * ESSSR which does not belong to the ESSSR of the full graph.<p/>
+ * ESSSR which does not belong to the ESSSR of the full graph.
  *
  * To resolve this problem you can turn off the <i>canonical</i> option. This
  * relaxes the existing condition (Step 2.) and adds all shortest cycles through
@@ -93,7 +93,7 @@ import java.util.TreeSet;
  * <i>G</i> then ESSSR of <i>H</i> will be a subset of the ESSSR or <i>G</i>.
  * Alternatively one may consider using the {@link RelevantCycles} which is the
  * the smallest set of short cycles which is <i>uniquely</i> defined for a
- * graph. <p/>
+ * graph. 
  *
  * To better explain the issue with the canonical labelling several examples are
  * shown below. The table outlining the size of rings found for each molecule

@@ -31,13 +31,13 @@ import java.util.BitSet;
 /**
  * A matching is an independent edge set of a graph. This is a set of edges that
  * share no common vertices. A matching is perfect if every vertex in the graph
- * is matched. Each vertex can be matched with exactly one other vertex.<p/>
+ * is matched. Each vertex can be matched with exactly one other vertex.
  *
  * This class provides storage and manipulation of a matching. A new match is
  * added with {@link #match(int, int)}, any existing match for the newly matched
  * vertices is no-longer available. The status of a vertex can be queried with
  * {@link #matched(int)} and the matched vertex obtained with {@link
- * #other(int)}. <p/>
+ * #other(int)}. 
  *
  * @author John May
  * @cdk.module standard

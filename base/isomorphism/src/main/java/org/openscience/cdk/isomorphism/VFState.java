@@ -31,7 +31,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
 /**
  * Vento-Foggia (VF) state for matching isomorphisms (identity) {@cdk.cite
- * Cordella04}. <p/> Note: no heuristics or sorting are performed as all and
+ * Cordella04}.  Note: no heuristics or sorting are performed as all and
  * should be checked externally
  *
  * @author John May
@@ -92,7 +92,7 @@ final class VFState extends AbstractVFState {
      * (terminal) then the number of such edges should be equal in g1 compared
      * to g2 (1-look-ahead). If the edge is unmapped and non-terminal then the
      * number of such edges should be equal in g1 compared to g2 (2-look-ahead).
-     * <p/>
+     * 
      *
      * @param n a candidate vertex from g1
      * @param m a candidate vertex from g2

@@ -36,7 +36,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * mapped vertices is isomorphic. Under such a procedure propane ({@code CCC})
  * is not considered a substructure of cyclopropane ({@code C1CC1}). The term
  * subgraph-isomorphism is often conflated and it is really
- * subgraph-monomorphism that is required for substructure matching. <p/>
+ * subgraph-monomorphism that is required for substructure matching. 
  *
  * Note: no heuristics or sorting are performed at all and should be checked
  * externally
@@ -96,11 +96,11 @@ final class VFSubState extends AbstractVFState {
      * (terminal) then the number of such edges should be less or equal in g1
      * compared to g2 (1-look-ahead). If the edge is unmapped and non-terminal
      * then the number of such edges should be less or equal in g1 compared to
-     * g2 (2-look-ahead). <p/> The above feasibility rules are for
+     * g2 (2-look-ahead).  The above feasibility rules are for
      * subgraph-isomorphism and have been adapted for subgraph-monomorphism. For
      * a monomorphism a mapped edge in g2 does not have to be present in g1. The
      * 2-look-ahead also requires summing the terminal and remaining counts (or
-     * sorting the vertices). <p/> The semantic feasibility verifies that the
+     * sorting the vertices).  The semantic feasibility verifies that the
      * labels the label n, m are compatabile and that the label on each matched
      * edge is compatabile.
      *

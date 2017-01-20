@@ -36,7 +36,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * A structure pattern which utilises the Vento-Foggia (VF) algorithm {@cdk.cite
  * Cordella04}.
  *
- * <p/>
+ * 
  *
  * Find and count the number molecules which contain the query substructure.
  *
@@ -49,7 +49,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *     if (pattern.matches(m))
  *         hits++;
  * </pre></blockquote>
- * <p/>
+ * 
  *
  * Finding the matching to molecules which contain the query substructure. It is
  * more efficient to obtain the {@link #match} and check it's size rather than

@@ -45,11 +45,11 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Evaluates chi path cluster descriptors.
- * <p/>
+ * 
  * The code currently evluates the simple and valence chi chain descriptors of orders 3, 4,5 and 6.
  * It utilizes the graph isomorphism code of the CDK to find fragments matching
  * SMILES strings representing the fragments corresponding to each type of chain.
- * <p/>
+ * 
  * The order of the values returned is
  * <ol>
  * <li>SPC-4 - Simple path cluster, order 4
@@ -59,8 +59,8 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * <li>VPC-5 - Valence path cluster, order 5
  * <li>VPC-6 - Valence path cluster, order 6
  * </ol>
- * <p/>
- * <p/>
+ * 
+ * 
  * <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
  * the various fragments. As a result calculations may be slow. In addition, recent
  * versions of Molconn-Z use simplified fragment definitions (i.e., rings without
@@ -182,7 +182,7 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

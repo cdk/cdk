@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
  * Settings are stored in a {@link Map} using the name of the setting as the key. The name is
  * normalised (lowercase and whitespace removal) to allow 'fuzzy' setting access. This means
  * that character case differences do not affect the retrieval of objects.
- * <p/>
+ * 
  * <b>Usage:</b>
  * <pre>{@code
  * // create the manager and add a setting
@@ -155,11 +155,11 @@ public class SettingManager<T extends ISetting> {
      * name an {@link InvalidParameterException} will be thrown. The method is generic
      * to allow simplified access to settings. This however means that if the incorrect
      * type is provided a {@link ClassCastException} may be thrown.
-     * <p/>
+     * 
      * <pre>{@code
      * SettingManager manager = ...;
      * manger.add(new BooleanIOSetting("name", ...));
-     * <p/>
+     * 
      * BooleanIOSetting setting = manager.get("Name"); // okay
      * OptionIOSetting setting  = manager.get("Name"); // class cast exception
      * }</pre>
@@ -185,15 +185,15 @@ public class SettingManager<T extends ISetting> {
     /**
      * Convenience method that allows specification of return ISetting type so that you can nest the call to
      * access the setting value.
-     * <p/>
+     * 
      * <pre>{@code
      * SettingManager manager = ...;
      * manger.add(new BooleanIOSetting("Setting", ...));
-     * <p/>
+     * 
      * if(manager.get("Setting", BooleanIOSetting.class).isSet()){
      *     // do something
      * }
-     * <p/>
+     * 
      * }</pre>
      *
      * @param name name of the setting to retrieve
@@ -234,7 +234,7 @@ public class SettingManager<T extends ISetting> {
      * Compatibility method generates an array of ISetting objects. This method
      * wraps a call to {@link Collection#toArray(Object[])}} and so is used the same way.
      * Note: it is preferable to use the collection's accessor {@link #getSettings()}
-     * <p/>
+     * 
      * Usage: <pre>{@code
      * IOSetting[] settings = manager.toArray(new IOSetting[0]);
      * }</pre>

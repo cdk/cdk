@@ -49,7 +49,7 @@ import org.openscience.cdk.ringsearch.RingSearch;
  *      have it's hydrogen count set.
  *     </li>
  * </ul>
- * <p/>
+ * 
  * To obtain an instance of the model simply invoke the named method.
  * <blockquote><pre>
  * ElectronDonation model = ElectronDonation.cdk();
@@ -76,7 +76,7 @@ public abstract class ElectronDonation {
     /**
      * Use the preset CDK atom types to determine the electron contribution of
      * atoms. If an atom type has not been perceived or hybridisation is unset a
-     * runtime exception is thrown. <p/> The model accepts cyclic atoms which
+     * runtime exception is thrown.  The model accepts cyclic atoms which
      * are {@link org.openscience.cdk.interfaces.IAtom.Hybridization#SP2} or
      * {@link org.openscience.cdk.interfaces.IAtom.Hybridization#PLANAR3}
      * hybridised. The {@link org.openscience.cdk.CDKConstants#PI_BOND_COUNT} and
@@ -88,7 +88,7 @@ public abstract class ElectronDonation {
      * <li>S.2: 2 electrons </li> <li>S.planar3: 2 electrons </li>
      * <li>C.minus.planar: 2 electrons </li> <li>O.planar3: 2 electrons </li>
      * <li>N.sp2.3: 1 electron </li> <li>C.sp2: 1 electron </li> </ul>
-     * <p/>
+     * 
      * Exocyclic pi bonds are not allowed to contribute.
      *
      * @return electron donation model to use for aromaticity perception
@@ -101,7 +101,7 @@ public abstract class ElectronDonation {
     /**
      * Use the preset CDK atom types to determine the electron contribution of
      * atoms. If an atom type has not been perceived or hybridisation is unset a
-     * runtime exception is thrown. <p/> The model accepts cyclic atoms which
+     * runtime exception is thrown.  The model accepts cyclic atoms which
      * are {@link org.openscience.cdk.interfaces.IAtom.Hybridization#SP2} or
      * {@link org.openscience.cdk.interfaces.IAtom.Hybridization#PLANAR3}
      * hybridised. The {@link org.openscience.cdk.CDKConstants#PI_BOND_COUNT} and
@@ -113,7 +113,7 @@ public abstract class ElectronDonation {
      * <li>S.2: 2 electrons </li> <li>S.planar3: 2 electrons </li>
      * <li>C.minus.planar: 2 electrons </li> <li>O.planar3: 2 electrons </li>
      * <li>N.sp2.3: 1 electron </li> <li>C.sp2: 1 electron </li> </ul>
-     * <p/>
+     * 
      * Exocyclic pi bonds are not allowed to contribute.
      *
      * @return electron donation model to use for aromaticity perception
@@ -142,14 +142,14 @@ public abstract class ElectronDonation {
      * as such may not match exactly. If you find an inconsistency please add a
      * request for enhancement to the patch tracker. One known limitation is
      * that this model does not currently consider unknown/pseudo atoms '*'.
-     * <p/>
+     * 
      *
      * The model makes a couple of assumptions which it will not correct for.
      * Checked assumptions cause the model to throw a runtime exception. <ul>
      * <li>there should be no valence errors (unchecked)</li> <li>every atom has
      * a set implicit hydrogen count (checked)</li> <li>every bond has defined
      * order, single, double etc (checked)</li> <li>atomic number of non-pseudo
-     * atoms is set (checked)</li> </ul> <p/>
+     * atoms is set (checked)</li> </ul> 
      *
      * The aromaticity model in SMILES was designed to simplify canonicalisation
      * and express symmetry in a molecule. The contributed electrons can be

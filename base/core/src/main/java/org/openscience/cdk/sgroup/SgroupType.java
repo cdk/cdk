@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * Enumeration of Ctab Sgroup types.
- * <p/>
+ * 
  * <br/>
  * <b>Display shortcuts</b>
  * <ul>

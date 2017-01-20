@@ -395,7 +395,7 @@ public class PathTools {
 
     /**
      * Returns the number of vertices that are a distance 'd' apart.
-     * <p/>
+     * 
      * In this method, d is the topological distance (ie edge count).
      *
      * @param atomContainer The molecule to consider
@@ -420,7 +420,7 @@ public class PathTools {
 
     /**
      * Returns a list of atoms in the shortest path between two atoms.
-     * <p/>
+     * 
      * This method uses the Djikstra algorithm to find all the atoms in the shortest
      * path between the two specified atoms. The start and end atoms are also included
      * in the path returned
@@ -497,7 +497,7 @@ public class PathTools {
 
     /**
      * Get a list of all the paths between two atoms.
-     * <p/>
+     * 
      * If the two atoms are the same an empty list is returned. Note that this problem
      * is NP-hard and so can take a long time for large graphs.
      *
@@ -531,7 +531,7 @@ public class PathTools {
 
     /**
      * Get the paths starting from an atom of specified length.
-     * <p/>
+     * 
      * This method returns a set of paths. Each path is a <code>List</code> of atoms that
      * make up the path (ie they are sequentially connected).
      *
@@ -566,7 +566,7 @@ public class PathTools {
 
     /**
      * Get all the paths starting from an atom of length 0 upto the specified length.
-     * <p/>
+     * 
      * This method returns a set of paths. Each path is a <code>List</code> of atoms that
      * make up the path (ie they are sequentially connected).
      *
@@ -605,7 +605,7 @@ public class PathTools {
     /**
      * Get all the paths starting from an atom of length 0 up to the specified
      * length. If the number of paths exceeds the the set {@code limit} then an
-     * exception is thrown. <p/> This method returns a set of paths. Each path
+     * exception is thrown.  This method returns a set of paths. Each path
      * is a <code>List</code> of atoms that make up the path (ie they are
      * sequentially connected).
      *

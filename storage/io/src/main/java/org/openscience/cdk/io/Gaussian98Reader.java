@@ -53,12 +53,12 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 /**
  * A reader for Gaussian98 output. Gaussian 98 is a quantum chemistry program
  * by Gaussian, Inc. (<a href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
- * <p/>
+ * 
  * <p>Molecular coordinates, energies, and normal coordinates of vibrations are
  * read. Each set of coordinates is added to the ChemFile in the order they are
  * found. Energies and vibrations are associated with the previously read set
  * of coordinates.
- * <p/>
+ * 
  * <p>This reader was developed from a small set of example output files, and
  * therefore, is not guaranteed to properly read all Gaussian98 output. If you
  * have problems, please contact the author of this code, not the developers of

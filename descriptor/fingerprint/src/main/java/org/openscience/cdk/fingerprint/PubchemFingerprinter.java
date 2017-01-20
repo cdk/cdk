@@ -38,7 +38,7 @@ import java.util.Map;
 
 /**
  * Generates a Pubchem fingerprint for a molecule.
- * <p/>
+ * 
  * These fingerprints are described
  * <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">
  * here</a> and are of the structural key type, of length 881. See
@@ -47,8 +47,8 @@ import java.util.Map;
  * based on the public domain code made available by the NCGC
  * <a href="http://www.ncgc.nih.gov/pub/openhts/code/NCGC_PubChemFP.java.txt">
  * here</a>
- * <p/>
- * <p/>
+ * 
+ * 
  * A fingerprint is generated for an AtomContainer with this code: <pre>
  *   Molecule molecule = new Molecule();
  *   PubchemFingerprinter fprinter = new PubchemFingerprinter();
@@ -59,11 +59,11 @@ import java.util.Map;
  * Note that the fingerprinter assumes that you have detected aromaticity and
  * atom types before evaluating the fingerprint. Also the fingerprinter
  * expects that explicit H's are present
- * <p/>
+ * 
  * Note that this fingerprint is not particularly fast, as it will perform
  * ring detection using {@link org.openscience.cdk.ringsearch.AllRingsFinder}
  * as well as multiple SMARTS queries.
- * <p/>
+ * 
  * Some SMARTS patterns have been modified from the original code, since they
  * were based on explicit H matching. As a result, we replace the explicit H's
  * with a query of the #N&!H0 where N is the atomic number. Thus bit 344 was
@@ -72,7 +72,7 @@ import java.util.Map;
  * to single possibility we directly use that H count. An example is bit 35,
  * which was <code>[#6](~[#6])(~[#6])(~[#6])([H])</code> and is rewritten as
  * <code>[#6H1](~[#6])(~[#6])(~[#6]</code>.
- * <p/>
+ * 
  *
  * <b>Warning - this class is not thread-safe and uses stores intermediate steps
  * internally. Please use a seperate instance of the class for each thread.</b>
@@ -102,7 +102,7 @@ public class PubchemFingerprinter implements IFingerprinter {
 
     /**
      * Calculate 881 bit Pubchem fingerprint for a molecule.
-     * <p/>
+     * 
      * See
      * <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">here</a>
      * for a description of each bit position.
@@ -323,7 +323,7 @@ public class PubchemFingerprinter implements IFingerprinter {
 
     /**
      * Returns the fingerprint generated for a molecule as a byte[].
-     * <p/>
+     * 
      * Note that this should be immediately called after calling
      * {@link #getBitFingerprint(org.openscience.cdk.interfaces.IAtomContainer)}
      *

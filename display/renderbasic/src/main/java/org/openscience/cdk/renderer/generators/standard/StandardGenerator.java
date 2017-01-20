@@ -67,16 +67,16 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  * diagram. These are generated together allowing the bonds to drawn cleanly without overlap. The
  * generate is heavily based on ideas documented in {@cdk.cite Brecher08} and {@cdk.cite Clark13}.
  *
- * <p/>
+ * 
  *
  * Atom symbols are provided as {@link GeneralPath} outlines. This allows the depiction to be
  * independent of the system used to view the diagram (primarily important for vector graphic
- * depictions). The font used to generate the diagram must be provided to the constructor. <p/>
+ * depictions). The font used to generate the diagram must be provided to the constructor. 
  *
  * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. The style of
  * highlight is set with the {@link Highlighting} parameter.
  *
- * <p/>
+ * 
  *
  * The <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki
  * page</a> provides extended details of using and configuring this generator.

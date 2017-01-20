@@ -84,7 +84,7 @@ public class AtomContainerManipulator {
      * Extract a substructure from an atom container, in the form of a new
      * cloned atom container with only the atoms with indices in atomIndices and
      * bonds that connect these atoms.
-     * <p/>
+     * 
      * Note that this may result in a disconnected atom container.
      *
      * @param atomContainer the source container to extract from

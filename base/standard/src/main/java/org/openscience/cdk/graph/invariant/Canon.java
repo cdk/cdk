@@ -41,7 +41,7 @@ import java.util.Arrays;
  * can be shattered ties are artificially broken and rank shattering continues.
  * Unlike the original description rank stability is not maintained reducing
  * the number of values to rank at each stage to only those which are equivalent.
- * <p/>
+ * 
  *
  * The initial set of invariants is basic and are - <i>
  * "sufficient for the purpose of obtaining unique notation for simple SMILES,
@@ -122,7 +122,7 @@ public final class Canon {
      * does not consider isomer information or stereochemistry. This method
      * allows provision of a custom array of initial invariants.
      *
-     * <p/>
+     * 
      * The current
      * implementation does not fully distinguish all structure topologies
      * but in practise performs well in the majority of cases. A complete
@@ -272,7 +272,7 @@ public final class Canon {
 
     /**
      * Generate the initial invariants for each atom in the {@code container}.
-     * The labels use the invariants described in {@cdk.cite WEI89}. <p/>
+     * The labels use the invariants described in {@cdk.cite WEI89}. 
      *
      * The bits in the low 32-bits are: {@code 0000000000xxxxXXXXeeeeeeescchhhh}
      * where:

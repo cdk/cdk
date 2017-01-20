@@ -40,14 +40,14 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
 /**
  * Assign MMFF aromatic atom types from the preliminary symbolic type. The assignment is described
- * in the appendix of {@cdk.cite Halgren96a}:<p/>
+ * in the appendix of {@cdk.cite Halgren96a}:
  *
  * For non-hydrogen atoms, the assignment of symbolic MMFF atom types takes place in two stages. In
  * the first, a provisional atom type is assigned based on local connectivity. In the second,
  * aromatic systems are perceived, and properly qualified aromatic atom types are assigned based on
  * ring size and, for five-membered rings, on the position within the ring. Information in this file
  * (MMFFAROM.PAR) is used to make the proper correspondence between provisional and final (aromatic)
- * atom types. <p/>
+ * atom types. 
  *
  * The column labeled "L5" refers, in the case of 5-ring systems, to the position of the atom in
  * question relative to the unique pi-lone-pair containing heteroatom (which itself occupies
@@ -56,7 +56,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * the "IM CAT" or "N5 ANION" column must also be matched for such ionic species to convert the
  * "OLD" (preliminary) to "AROM" (aromatic) symbolic atom type. Note: in matching the "OLD" symbolic
  * atom types, an "exact" match is first attempted. If this match fails, a wild-carded match, using
- * for example "C*" is then employed. <p/>
+ * for example "C*" is then employed. 
  *
  * This class implements this in three stages. Firstly, the aromatic rings are found with {@link
  * #findAromaticRings(int[][], int[], int[])}. These rings are then parsed to {@link

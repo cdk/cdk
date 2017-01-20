@@ -65,7 +65,7 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
  * A factory class to provide implementation independent {@link ICDKObject}s.
- * <p/>
+ * 
  * <pre>{@code
  *     IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
  *
@@ -164,7 +164,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
     }
 
     /**
-     * Access the singleton instance of this SilentChemObjectBuilder. <p/>
+     * Access the singleton instance of this SilentChemObjectBuilder. 
      * <pre>{@code
      *
      * // get the builder instance

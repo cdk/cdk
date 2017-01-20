@@ -85,7 +85,7 @@ public class Mmff {
     /**
      * Assign MMFF Symbolic atom types. The symbolic type can be accessed with
      * {@link IAtom#getAtomTypeName()}. An atom of unknown type is assigned the
-     * symbolic type {@code 'UNK'}. <p/>
+     * symbolic type {@code 'UNK'}. 
      * All atoms, including hydrogens must be explicitly represented.
      *
      * @param mol molecule

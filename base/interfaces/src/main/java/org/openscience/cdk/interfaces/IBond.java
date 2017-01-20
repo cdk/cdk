@@ -51,7 +51,7 @@ public interface IBond extends IElectronContainer {
 
         /**
          * Access a numeric value for the number of bonded electron pairs.
-         * <p/>
+         * 
          * <pre>{@code
          * Order.SINGLE.numeric()    // 1
          * Order.DOUBLE.numeric()    // 2

@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * Represents a colleciton of pharmacophore groups and constraints.
- * <p/>
+ * 
  * This extends {@link org.openscience.cdk.isomorphism.matchers.QueryAtomContainer} since
  * we need to be able to support things such as exclusion volumes, which cannot (easily)
  * be represented as atom or bond analogs.

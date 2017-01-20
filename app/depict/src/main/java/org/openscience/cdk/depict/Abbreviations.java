@@ -85,7 +85,7 @@ import static org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAto
 /**
  * Utility class for abbreviating (sub)structures. Using either self assigned structural
  * motifs or pre-loading a common set a structure depiction can be made more concise with
- * the use of abbreviations (sometimes called superatoms). <p/>
+ * the use of abbreviations (sometimes called superatoms). 
  * <p>
  * Basic usage:
  * <pre>{@code
@@ -774,12 +774,12 @@ public class Abbreviations implements Iterable<String> {
      * Add an abbreviation to the factory. Abbreviations can be of various flavour based
      * on the number of attachments:
      * <p>
-     * <p/>
-     * <b>Detached</b> - zero attachments, the abbreviation covers the whole structure (e.g. THF) <p/>
-     * <b>Terminal</b> - one attachment, covers substituents (e.g. Ph for Phenyl)<p/>
-     * <b>Linker</b> - [NOT SUPPORTED YET] two attachments, covers long repeated chains (e.g. PEG4) <p/>
+     * 
+     * <b>Detached</b> - zero attachments, the abbreviation covers the whole structure (e.g. THF) 
+     * <b>Terminal</b> - one attachment, covers substituents (e.g. Ph for Phenyl)
+     * <b>Linker</b> - [NOT SUPPORTED YET] two attachments, covers long repeated chains (e.g. PEG4) 
      * <p>
-     * Attachment points (if present) must be specified with zero element atoms. <p/>
+     * Attachment points (if present) must be specified with zero element atoms. 
      * <pre>
      * *c1ccccc1 Ph
      * *OC(=O)C OAc

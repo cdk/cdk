@@ -41,7 +41,7 @@ import java.util.TreeSet;
  * to uniform atom environments but is much more demanding then the simpler
  * {@link MinimumEquivalentCyclicSet}.
  *
- * <p/><br/> The easiest way to use this class is with the {@link
+ * <br/> The easiest way to use this class is with the {@link
  * org.openscience.cdk.hash.HashGeneratorMaker}.
  * <blockquote><pre>
  * MoleculeHashGenerator generator =

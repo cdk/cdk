@@ -43,7 +43,7 @@ public class AtomMappingTools {
     /**
      * Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest
      * AtomContainer) atomContainer.
-     * <p/>
+     * 
      * Only for similar and aligned molecules with coordinates!
      *
      * @param firstAtomContainer  the (largest) first aligned AtomContainer which is the reference

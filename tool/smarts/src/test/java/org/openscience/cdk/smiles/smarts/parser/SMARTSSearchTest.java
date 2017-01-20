@@ -1891,7 +1891,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     /**
      * @cdk.bug 2871303
-     * <p/>
+     * 
      * Note that this test passes, and really indicates that
      * the SMARTS below is not a correct one for vinylogous
      * esters

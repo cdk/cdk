@@ -61,7 +61,7 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.UP_OR_DOWN_INVERTED;
  * stereocentres in a 2D depiction. Labels are assigned to atoms using the following priority. <ol> <li>bond to non-stereo atoms</li> <li>acyclic
  * bonds</li> <li>bonds to atoms with lower degree (i.e. terminal)</li> <li>lower atomic number</li>
  * </ol>
- * <p/>
+ * 
  * Unspecified bonds are also marked.
  * 
  * @author John May

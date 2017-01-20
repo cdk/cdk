@@ -68,11 +68,11 @@ public class InvPair implements java.io.Serializable {
 
     /**
      * Set the value of the seed.
-     * <p/>
+     * 
      * Note that use of this method implies that a new prime number is desired.
      * If so, make sure to call {@link #setPrime()} to ensure that a new prime
      * number is obtained using the new seed.
-     * <p/>
+     * 
      * Todo make the following robust!
      *
      * @see #getCurr()
@@ -152,7 +152,7 @@ public class InvPair implements java.io.Serializable {
 
     /**
      * Sets the prime number based on the current seed.
-     * <p/>
+     * 
      * Note that if you change the seed via {@link #setCurr(long)}, you should make
      * sure to call this method so that a new prime number is available via
      * {@link #getPrime()}

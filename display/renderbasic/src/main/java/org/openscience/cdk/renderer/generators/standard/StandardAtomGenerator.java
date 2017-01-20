@@ -46,8 +46,8 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
 
 /**
  * Generates {@link AtomSymbol} instances with positioned adjuncts.
- * <p/>
- * <p/> Note the generator is purposefully not an {@link org.openscience.cdk.renderer.generators.IGenerator}
+ * 
+ *  Note the generator is purposefully not an {@link org.openscience.cdk.renderer.generators.IGenerator}
  * and is intended as part be called from the StandardGenerator.
  *
  * @author John May

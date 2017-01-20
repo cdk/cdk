@@ -60,7 +60,7 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
 
     /**
      * Create a query distance constraint between two query groups.
-     * <p/>
+     * 
      * This constructor allows you to define a query distance constraint
      * such that the distance between the two query groups is exact
      * (i.e., not a range).
@@ -80,7 +80,7 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
 
     /**
      * Checks whether the query distance constraint matches a target distance.
-     * <p/>
+     * 
      * This method checks whether a query constraint is satisfied by an observed
      * distance (represented by a {@link PharmacophoreBond} in the target molecule.
      * Note that distance are compared upto 2 decimal places.

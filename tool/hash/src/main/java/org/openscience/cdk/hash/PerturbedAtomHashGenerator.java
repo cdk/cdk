@@ -41,7 +41,7 @@ import java.util.Set;
  * |<i>S</i>| different invariant values with the original value to produce a
  * unique value of each atom. There may still be duplicate values but providing
  * the depth is appropriate then the atoms are truly equivalent.
- * <p/><br/>
+ * <br/>
  * The class requires a lot of configuration however it can be easily built with
  * the {@link HashGeneratorMaker}.
  * <blockquote><pre>

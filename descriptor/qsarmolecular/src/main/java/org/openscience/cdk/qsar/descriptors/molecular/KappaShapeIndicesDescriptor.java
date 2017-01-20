@@ -39,14 +39,14 @@ import java.util.ArrayList;
  * In the following description, n denotes the number of atoms in the hydrogen suppressed graph,
  * m is the number of bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2
  * and let p3 denote the number of paths of length 3".
- * <p/>
+ * 
  * Returns three values in the order
  * <ol>
  * <li>Kier1 -  First kappa shape index
  * <li>Kier2 - Second kappa shape index
  * <li>Kier3 -  Third kappa (&kappa;) shape index
  * </ol>
- * <p/>
+ * 
  * <p>This descriptor does not have any parameters.
  *
  * @author mfe4
@@ -242,7 +242,7 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

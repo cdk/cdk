@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Calculates 29 Charged Partial Surface Area (CPSA) descriptors.
- * <p/>
+ * 
  * The CPSA's were developed by Stanton et al. ({@cdk.cite STA90}) and
  * are related to the Polar Surface Area descriptors. The original
  * implementation was in the ADAPT software package and the the definitions
@@ -103,7 +103,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * </tr>
  * </tbody>
  * </table>
- * <p/>
+ * 
  * <b>NOTE</b>: The values calculated by this implementation will differ from those
  * calculated by the original ADAPT implementation of the CPSA descriptors. This
  * is because the original implementation used an analytical surface area algorithm
@@ -111,10 +111,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * This implementation uses a numerical
  * algorithm to obtain surface areas (see {@link NumericalSurface}) and obtains partial
  * charges using the Gasteiger-Marsilli algorithm (see {@link GasteigerMarsiliPartialCharges}).
- * <p/>
+ * 
  * However, a comparison of the values calculated by the two implementations indicates
  * that they are qualitatively the same.
- * <p/>
+ * 
  * <p>This descriptor uses these parameters:
  * <table border="1">
  * <tr>
@@ -387,7 +387,7 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

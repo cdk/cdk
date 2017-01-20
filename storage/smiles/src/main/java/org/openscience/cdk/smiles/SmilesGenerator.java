@@ -90,7 +90,7 @@ import java.util.Set;
  * will generate isomeric SMILES without atomic mass.
  *
  *
- * <p/>
+ * 
  * A generator instance is created using one of the static methods, the SMILES
  * are then created by invoking {@link #create(IAtomContainer)}.
  * <blockquote><pre>
@@ -102,7 +102,7 @@ import java.util.Set;
  * String          smi     = sg.create(ethanol); // only CCO
  * </pre></blockquote>
  *
- * <p/>
+ * 
  *
  * The isomeric and absolute generator encode tetrahedral and double bond
  * stereochemistry using {@link org.openscience.cdk.interfaces.IStereoElement}s
@@ -110,7 +110,7 @@ import java.util.Set;
  * written it may need to be determined from 2D/3D coordinates using
  * {@link org.openscience.cdk.stereo.StereoElementFactory}.
  *
- * <p/>
+ * 
  *
  * By default the generator will not write aromatic SMILES. Kekulé SMILES are
  * generally preferred for compatibility and aromaticity can easily be
@@ -142,7 +142,7 @@ import java.util.Set;
  *                                               SmiFlavor.UseAromaticSymbols);
  * String          smi     = sg.create(benzene); // c1ccccc1
  * </pre></blockquote>
- * <p/>
+ * 
  *
  * It can be useful to know the output order of SMILES. On input the order of the atoms
  * reflects the atom index. If we know this order we can refer to atoms by index and
@@ -178,10 +178,10 @@ import java.util.Set;
  * grouping (for salts in reactions), polymer repeats, multi center bonds, and coordinates.
  * The CXSMILES layer is appended after the SMILES so that parser which don't interpret it
  * can ignore it.
- * <p/>
+ * 
  * The two aggregate flavours are {@link SmiFlavor#CxSmiles} and {@link SmiFlavor#CxSmilesWithCoords}.
  * As with other flavours, fine grain control is possible {@see SmiFlavor}.
- * <p/><p/>
+ * <p/>
  * <b>*</b> the unique SMILES generation uses a fast equitable labelling procedure
  *   and as such there are some structures which may not be unique. The number
  *   of such structures is generally minimal.

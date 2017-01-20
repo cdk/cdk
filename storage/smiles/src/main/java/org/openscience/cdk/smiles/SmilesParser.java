@@ -61,7 +61,7 @@ import java.util.Set;
 /**
  * Read molecules and reactions from a SMILES {@cdk.cite SMILESTUT} string.
  *
- * <b>Example usage</b><p/>
+ * <b>Example usage</b>
  *
  * <blockquote><pre>
  * try {
@@ -71,9 +71,9 @@ import java.util.Set;
  *     System.err.println(e.getMessage());
  * }
  * </pre>
- * </blockquote><p/>
+ * </blockquote>
  *
- * <b>Reading Aromatic SMILES</b><p/>
+ * <b>Reading Aromatic SMILES</b>
  *
  * Aromatic SMILES are automatically kekulised producing a structure with
  * assigned bond orders. The aromatic specification on the atoms is maintained
@@ -88,9 +88,9 @@ import java.util.Set;
  * placed the returned structure would differ depending on the atom input order.
  * If you wish to skip the kekulistation (not recommended) then it can be
  * disabled with {@link #kekulise}. SMILES can be verified for validity with the
- * <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.<p/>
+ * <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.
  *
- * <b>Unsupported Features</b><p/>
+ * <b>Unsupported Features</b>
  *
  * The following features are not supported by this parser. <ul> <li>variable
  * order of bracket atom attributes, '[C-H]', '[CH@]' are considered invalid.
@@ -102,7 +102,7 @@ import java.util.Set;
  * (cumulated double bonds)</li> <li>trigonal bipyramidal stereochemistry</li>
  * <li>octahedral stereochemistry</li> </il>
  *
- * <b>Atom Class</b><p/>
+ * <b>Atom Class</b>
  *
  * The atom class is stored as the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
  * property.
@@ -117,7 +117,7 @@ import java.util.Set;
  *                       .getProperty(CDKConstants.ATOM_ATOM_MAPPING); // null
  *
  * </pre>
- * </blockquote><p/>
+ * </blockquote>
  *
  *
  * @author Christoph Steinbeck

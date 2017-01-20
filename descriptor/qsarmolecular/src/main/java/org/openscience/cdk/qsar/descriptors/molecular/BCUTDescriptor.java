@@ -48,7 +48,7 @@ import Jama.Matrix;
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
  * Described by Pearlman et al. {@cdk.cite PEA99}.
- * <p/>
+ * 
  * <p>The descriptor is based on a weighted version of the Burden matrix {@cdk.cite BUR89, BUR97}
  * which takes into account both the connectivity as well as atomic
  * properties of a molecule. The weights are a variety of atom properties placed along the
@@ -62,17 +62,17 @@ import Jama.Matrix;
  * classes of descriptor in a single ArrayList (in the order shown above). However it is also
  * possible to supply a parameter list indicating how many of the highest and lowest eigenvalues
  * (for each class of descriptor) are required. The descriptor works with the hydrogen depleted molecule.
- * <p/>
+ * 
  * A side effect of specifying the number of highest and lowest eigenvalues is that it is possible
  * to get two copies of all the eigenvalues. That is, if a molecule has 5 heavy atoms, then specifying
  * the 5 highest eigenvalues returns all of them, and specifying the 5 lowest eigenvalues returns
  * all of them, resulting in two copies of all the eigenvalues.
- * <p/>
+ * 
  * <p> Note that it is possible to
  * specify an arbitrarily large number of eigenvalues to be returned. However if the number
  * (i.e., nhigh or nlow) is larger than the number of heavy atoms, the remaining eignevalues
  * will be NaN.
- * <p/>
+ * 
  * Given the above description, if the aim is to gt all the eigenvalues for a molecule, you should
  * set nlow to 0 and specify the number of heavy atoms (or some large number) for nhigh (or vice versa).
  * <p>This descriptor uses these parameters:
@@ -98,10 +98,10 @@ import Jama.Matrix;
  * <td>Whether aromaticity should be checked</td>
  * </tr>
  * </table>
- * <p/>
+ * 
  * Returns an array of values in the following order
  * <ol>
- * <p/>
+ * 
  * <li>BCUTw-1l, BCUTw-2l ... - <i>nhigh</i> lowest atom weighted BCUTS
  * <li>BCUTw-1h, BCUTw-2h ... - <i>nlow</i> highest atom weighted BCUTS
  * <li>BCUTc-1l, BCUTc-2l ... - <i>nhigh</i> lowest partial charge weighted BCUTS
@@ -489,7 +489,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

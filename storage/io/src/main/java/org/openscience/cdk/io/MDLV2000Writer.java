@@ -83,7 +83,7 @@ import java.util.regex.Pattern;
  * writer.write((IAtomContainer)molecule);
  * writer.close();
  * </pre>
- * <p/>
+ * 
  * <p>The writer has two IO settings: one for writing 2D coordinates, even if
  * 3D coordinates are given for the written data; the second writes aromatic
  * bonds as bond type 4, which is, strictly speaking, a query bond type, but

@@ -41,13 +41,13 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 /**
  * Compute the set of all rings in a molecule. This set includes <i>every</i>
  * cyclic path of atoms. As the set is exponential it can be very large and is
- * often impractical (e.g. fullerenes). <p/>
+ * often impractical (e.g. fullerenes). 
  *
  * To avoid combinatorial explosion there is a configurable threshold, at which
  * the computation aborts. The {@link Threshold} values have been precomputed on
  * PubChem-Compound and can be used with the {@link AllRingsFinder#usingThreshold(Threshold)}.
  * Alternatively, other ring sets which are a subset of this set offer a
- * tractable alternative. <p/>
+ * tractable alternative. 
  *
  * <blockquote><pre>
  * AllRingsFinder arf = new AllRingsFinder();
