@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  * @cdk.iooptions
  *
- * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class GhemicalMMReader extends DefaultChemObjectReader {
 

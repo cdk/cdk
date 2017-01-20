@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.module core
  * @cdk.githash
  *
- * @author     Bradley A. Smith <bradley@baysmith.com>
+ * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
  *
  * @cdk.keyword    atom, type
  */

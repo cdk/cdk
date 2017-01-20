@@ -38,7 +38,7 @@ import org.xml.sax.Attributes;
  * @cdk.module libiomd
  * @cdk.githash
  *
- * @author Ola Spjuth <ola.spjuth@farmbio.uu.se>
+ * @author Ola Spjuth &lt;ola.spjuth@farmbio.uu.se&gt;
  *
  */
 public class MDMoleculeConvention extends CMLCoreModule {

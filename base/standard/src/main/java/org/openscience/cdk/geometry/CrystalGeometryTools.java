@@ -37,7 +37,7 @@ import javax.vecmath.Vector3d;
  * @cdk.module standard
  * @cdk.githash
  *
- * @author  Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  *
  * @cdk.keyword fractional coordinates, crystal
  */

@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * query and target molecules.
  * @cdk.module test-smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public class Molecules {
 

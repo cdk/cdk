@@ -47,7 +47,7 @@ import org.openscience.cdk.graph.BiconnectivityInspector;
  *
  * A minimum cycle basis is a Matroid.
  *
- * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
+ * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  *
  * @cdk.module standard

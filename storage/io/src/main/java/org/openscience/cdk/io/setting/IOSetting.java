@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.ISetting;
  * @cdk.module io
  * @cdk.githash
  *
- * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public abstract class IOSetting implements ISetting {
 

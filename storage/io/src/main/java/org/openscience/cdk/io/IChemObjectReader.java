@@ -40,7 +40,7 @@ import org.openscience.cdk.io.iterator.IIteratingChemObjectReader;
  * @cdk.module io
  * @cdk.githash
  *
- * @author     Egon Willighagen <egonw@users.sf.net>
+ * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @see ISimpleChemObjectReader
  * @see IIteratingChemObjectReader
  **/

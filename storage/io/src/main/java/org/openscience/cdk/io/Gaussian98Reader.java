@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * have problems, please contact the author of this code, not the developers of
  * Gaussian98.
  *
- * @author Bradley A. Smith <yeldar@home.com>
+ * @author Bradley A. Smith &lt;yeldar@home.com&gt;
  * @author Egon Willighagen
  * @author Christoph Steinbeck
  * @cdk.module io

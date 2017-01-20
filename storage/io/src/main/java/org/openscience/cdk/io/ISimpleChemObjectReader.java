@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @see DefaultChemObjectReader
  *
- * @author Egon Willighagen <egonw@users.sf.net>
+ * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  **/
 public interface ISimpleChemObjectReader extends IChemObjectReader {
 

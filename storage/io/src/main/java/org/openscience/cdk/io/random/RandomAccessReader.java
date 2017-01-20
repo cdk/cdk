@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Subsequent access for a record N uses this index to seek the record and return the molecule.
  * Useful for very big files.
  *
- * @author     Nina Jeliazkova <nina@acad.bg>
+ * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.module io
  * @cdk.githash
  */

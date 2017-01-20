@@ -51,7 +51,7 @@ import org._3pq.jgrapht.graph.Subgraph;
 /**
  * Auxiliary class for <code>CycleBasis</code>.
  *
- * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
+ * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  *
  * @cdk.module standard

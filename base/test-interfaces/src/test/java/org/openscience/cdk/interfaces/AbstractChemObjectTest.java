@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.diff.ChemObjectDiff;
 /**
  * Tests the functionality of {@link IChemObject} implementations.
  *
- * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @cdk.module  test-interfaces
  * @cdk.created 2001-08-09
  */

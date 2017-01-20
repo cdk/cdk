@@ -32,7 +32,7 @@ import java.util.Map;
  * @cdk.module  interfaces
  * @cdk.githash
  *
- * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-06
  *
  * @cdk.keyword polymer

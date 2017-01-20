@@ -53,7 +53,7 @@ import java.util.Iterator;
  *
  * @cdk.module test-io
  *
- * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class CML23FragmentsTest extends CDKTestCase {
 

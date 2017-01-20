@@ -56,7 +56,7 @@ import org.openscience.cdk.smsd.algorithm.vflib.builder.NodeBuilder;
  * Interface for the Node (atomss) in graph.
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public interface INode {
 

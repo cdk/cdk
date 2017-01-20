@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Helper tool to create IChemObjectWriters.
  *
- * @author Egon Willighagen <ewilligh@uni-koeln.de>
+ * @author Egon Willighagen &lt;ewilligh@uni-koeln.de&gt;
  * @cdk.module io
  * @cdk.githash
  **/

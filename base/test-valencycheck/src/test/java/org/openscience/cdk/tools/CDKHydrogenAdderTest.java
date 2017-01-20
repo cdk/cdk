@@ -60,7 +60,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @cdk.module  test-valencycheck
  *
- * @author      Egon Willighagen <egonw@users.sf.net>
+ * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2007-07-28
  */
 public class CDKHydrogenAdderTest extends CDKTestCase {

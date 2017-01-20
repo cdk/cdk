@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Entry in a Dictionary for reactions.
  *
- * @author       Miguel Rojas <miguelrojasch@users.sf.net>
+ * @author Miguel Rojas &lt;miguelrojasch@users.sf.net&gt;
  * @cdk.created  2008-01-01
  * @cdk.keyword  dictionary
  * @cdk.module   dict

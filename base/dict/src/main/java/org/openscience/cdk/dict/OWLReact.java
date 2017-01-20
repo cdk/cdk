@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Dictionary with entries build from an OWL React.
  *
- * @author       Miguel Rojas <miguelrojasch@users.sf.net>
+ * @author Miguel Rojas &lt;miguelrojasch@users.sf.net&gt;
  * @cdk.created  2008-01-01
  * @cdk.keyword  dictionary
  * @cdk.module   dict

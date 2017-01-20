@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.xml.sax.Attributes;
 
 /**
- * @author Egon Willighagen <elw38@cam.ac.uk>
+ * @author Egon Willighagen &lt;elw38@cam.ac.uk&gt;
  *
  * @cdk.module io
  * @cdk.githash

@@ -28,7 +28,7 @@ import java.util.List;
  * are specified by double[3] arrays containing the components
  * of the vector.
  *
- * @author Bradley A. Smith <yeldar@home.com>
+ * @author Bradley A. Smith &lt;yeldar@home.com&gt;
  * @cdk.githash
  */
 public class Vibration {

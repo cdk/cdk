@@ -58,7 +58,7 @@ import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
  * @cdk.githash
  * @cdk.iooptions
  *
- * @author      Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2004-08-01
  *
  * @cdk.keyword file format, INChI

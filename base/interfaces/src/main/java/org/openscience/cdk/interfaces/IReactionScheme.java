@@ -23,7 +23,7 @@ package org.openscience.cdk.interfaces;
  * This is designed to contain a set of reactions which are linked in
  * some way but without hard coded semantics.
  *
- * @author      miguelrojasch <miguelrojasch@yahoo.es>
+ * @author miguelrojasch &lt;miguelrojasch@yahoo.es&gt;
  * @cdk.module  interfaces
  * @cdk.githash
  */

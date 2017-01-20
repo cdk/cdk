@@ -64,7 +64,7 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQueryCompiler;
  * This class creates an template for MCS/substructure query.
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public class QueryCompiler implements IQueryCompiler {
 

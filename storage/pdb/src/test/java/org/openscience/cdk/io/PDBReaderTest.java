@@ -52,8 +52,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module test-pdb
  *
- * @author      Edgar Luttmann <edgar@uni-paderborn.de>
- * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+ * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
+ * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @cdk.created 2001-08-09
  */
 public class PDBReaderTest extends SimpleChemObjectReaderTest {

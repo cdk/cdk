@@ -45,7 +45,7 @@ import org.openscience.cdk.io.CMLReader;
  *
  * @cdk.module test-io
  *
- * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class CMLFragmentsTest extends CDKTestCase {
 

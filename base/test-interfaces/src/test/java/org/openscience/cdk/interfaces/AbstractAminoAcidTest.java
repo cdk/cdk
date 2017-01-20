@@ -30,7 +30,7 @@ import org.junit.Test;
  *
  * @cdk.module test-interfaces
  *
- * @author  Edgar Luttman <edgar@uni-paderborn.de>
+ * @author Edgar Luttman &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09
  */
 public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {

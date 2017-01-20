@@ -39,7 +39,7 @@ import org.openscience.cdk.math.Vector;
  * J = &lt;d/dr phi_i | d/dr phi_j><br>
  * V = &lt;phi_i | 1/r | phi_j><br>
  *
- * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-06-14
  * @cdk.module  qm

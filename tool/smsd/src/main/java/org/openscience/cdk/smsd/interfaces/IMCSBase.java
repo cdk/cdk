@@ -34,7 +34,7 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  * Interface that holds basic core interface for all MCS algorithm.
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public interface IMCSBase {
 

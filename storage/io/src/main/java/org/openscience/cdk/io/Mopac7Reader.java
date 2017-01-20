@@ -48,7 +48,7 @@ import org.openscience.cdk.io.formats.MOPAC7Format;
  * "IONIZATION POTENTIAL", "ELECTRONIC ENERGY","CORE-CORE REPULSION","MOLECULAR WEIGHT".<p>
  * Doesn't update structure coordinates ! (TODO fix)
  *
- * @author      Nina Jeliazkova <nina@acad.bg>
+ * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.githash
  * @cdk.module  io
  */

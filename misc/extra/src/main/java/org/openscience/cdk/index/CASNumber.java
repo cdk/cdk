@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
  * </ul>
  * </p>
  *
- * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.githash
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  *

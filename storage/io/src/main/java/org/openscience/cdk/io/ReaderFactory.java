@@ -46,8 +46,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module io
  * @cdk.githash
  *
- * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @author  Bradley A. Smith <bradley@baysmith.com>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
+ * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
  */
 public class ReaderFactory {
 

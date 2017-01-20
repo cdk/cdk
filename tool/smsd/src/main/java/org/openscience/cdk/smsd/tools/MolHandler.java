@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Class that handles molecules for MCS search.
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public class MolHandler {
 

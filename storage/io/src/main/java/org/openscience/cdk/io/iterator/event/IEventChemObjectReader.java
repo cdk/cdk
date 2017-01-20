@@ -35,7 +35,7 @@ import org.openscience.cdk.io.IChemObjectIO;
  *
  * @see org.openscience.cdk.io.IChemObjectIO
  *
- * @author      Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2005-01-25
  */
 public interface IEventChemObjectReader extends IChemObjectIO {

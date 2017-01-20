@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module io
  * @cdk.githash
  *
- * @author  Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2003-10-01
  *
  * @cdk.keyword file format, CDK source code

@@ -36,7 +36,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
  * @cdk.module test-smsd
  * @cdk.require java1.6+

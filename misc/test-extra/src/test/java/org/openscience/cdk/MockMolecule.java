@@ -30,7 +30,7 @@ import javax.vecmath.Point3d;
  *
  * @cdk.module test-extra
  *
- * @author  Edgar Luttmann <edgar@uni-paderborn.de>
+ * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09
  */
 public class MockMolecule extends AtomContainer {

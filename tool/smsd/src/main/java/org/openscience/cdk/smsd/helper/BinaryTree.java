@@ -29,7 +29,7 @@ package org.openscience.cdk.smsd.helper;
  * Class to construct a Binary tree for McGregor search.
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public class BinaryTree {
 

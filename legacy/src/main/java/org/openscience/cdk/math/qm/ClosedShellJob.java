@@ -32,7 +32,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Calculates the orbitals and orbital energies of electron systems
  * with closed shells
  *
- * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-06-14
  * @cdk.module  qm

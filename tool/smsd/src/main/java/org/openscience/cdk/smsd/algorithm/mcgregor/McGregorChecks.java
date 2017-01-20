@@ -43,7 +43,7 @@ import org.openscience.cdk.smsd.helper.BinaryTree;
  * Class to perform check/methods for McGregor class.
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public class McGregorChecks {
 

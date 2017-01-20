@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Saves small molecules in a rudimentary PDB format. It does not allow
  * writing of PDBProtein data structures.
  *
- * @author      Gilleain Torrance <gilleain.torrance@gmail.com>
+ * @author Gilleain Torrance &lt;gilleain.torrance@gmail.com&gt;
  * @cdk.module pdb
  * @cdk.iooptions
  * @cdk.githash

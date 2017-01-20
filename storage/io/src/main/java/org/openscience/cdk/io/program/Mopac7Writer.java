@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Prepares input file for running MOPAC.
  * Optimization is switched on if there are no coordinates.
  *
- * @author      Nina Jeliazkova <nina@acad.bg>
+ * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.githash
  * @cdk.module  io
  */

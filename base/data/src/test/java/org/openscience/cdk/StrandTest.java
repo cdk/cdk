@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  *
- * @author     Martin Eklund <martin.eklund@farmbio.uu.se>
+ * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @cdk.module test-data
  */
 public class StrandTest extends AbstractStrandTest {

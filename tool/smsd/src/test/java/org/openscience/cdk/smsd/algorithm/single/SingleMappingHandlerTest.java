@@ -45,7 +45,7 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  * Unit testing for the {@link SingleMappingHandler} class.
  *
  * @author     egonw
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
  * @cdk.module test-smsd
  */

@@ -51,7 +51,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  * @cdk.module io
  * @cdk.githash
  *
- * @author       Egon Willighagen <egonw@users.sf.net>
+ * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created  2008-05-05
  */
 public class PubChemXMLHelper {

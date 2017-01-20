@@ -41,7 +41,7 @@ import java.util.Iterator;
 /**
  * Writer that outputs in the HIN format.
  *
- * @author Rajarshi Guha <rajarshi@presidency.com>
+ * @author Rajarshi Guha &lt;rajarshi@presidency.com&gt;
  * @cdk.module io
  * @cdk.githash
  * @cdk.created 2004-01-27

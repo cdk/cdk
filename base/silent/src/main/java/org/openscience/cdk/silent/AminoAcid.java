@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.module  silent
  * @cdk.githash
  *
- * @author      Egon Willighagen <e.willighagen@science.ru.nl>
+ * @author Egon Willighagen &lt;e.willighagen@science.ru.nl&gt;
  * @cdk.created 2005-08-11
  * @cdk.keyword amino acid
  */

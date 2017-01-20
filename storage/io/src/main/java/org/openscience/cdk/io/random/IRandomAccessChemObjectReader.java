@@ -29,7 +29,7 @@ import java.util.ListIterator;
 /**
  * Extension of {@link java.util.ListIterator}.
  *
- * @author     Nina Jeliazkova <nina@acad.bg>
+ * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.module io
  * @cdk.githash
  */

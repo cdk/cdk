@@ -53,8 +53,8 @@ import static org.openscience.cdk.io.formats.IChemFormatMatcher.MatchResult;
  * @cdk.module  ioformats
  * @cdk.githash
  *
- * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @author  Bradley A. Smith <bradley@baysmith.com>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
+ * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
  */
 public class FormatFactory {
 

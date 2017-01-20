@@ -32,7 +32,7 @@ import org.openscience.cdk.math.IFunction;
 /**
  * This class handles a set of function for the GraphRenderer
  *
- * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-07-02
  * @cdk.module  qm

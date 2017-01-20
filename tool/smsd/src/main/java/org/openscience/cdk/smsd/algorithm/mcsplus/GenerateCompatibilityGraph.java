@@ -43,7 +43,7 @@ import org.openscience.cdk.smsd.helper.LabelContainer;
  * It also markes edges in the compatibility graph as c-edges or d-edges.
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public final class GenerateCompatibilityGraph {
 

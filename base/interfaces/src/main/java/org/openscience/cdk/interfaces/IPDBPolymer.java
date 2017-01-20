@@ -31,7 +31,7 @@ import java.util.Collection;
  * @cdk.module  interfaces
  * @cdk.githash
  *
- * @author      Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * @author Miguel Rojas &lt;miguel.rojas@uni-koeln.de&gt;
  * @cdk.created 2006-11-20
  *
  * @cdk.keyword polymer

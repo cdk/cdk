@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @see org.openscience.cdk.io.SMILESReader
  *
- * @author     Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created    2004-12-16
  *
  * @cdk.keyword    file format, SMILES

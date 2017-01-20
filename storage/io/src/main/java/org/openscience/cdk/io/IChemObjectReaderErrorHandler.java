@@ -27,7 +27,7 @@ package org.openscience.cdk.io;
  * @cdk.module io
  * @cdk.githash
  *
- * @author     Egon Willighagen <egonw@users.sf.net>
+ * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  */
 public interface IChemObjectReaderErrorHandler {
 

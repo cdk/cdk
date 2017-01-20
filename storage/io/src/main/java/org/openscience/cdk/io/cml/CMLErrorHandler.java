@@ -36,7 +36,7 @@ import org.xml.sax.SAXParseException;
  * @cdk.module io
  * @cdk.githash
  *
- * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  **/
 public class CMLErrorHandler implements ErrorHandler {
 

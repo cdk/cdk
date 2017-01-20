@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  * @cdk.iooptions
  *
- * @author  Bradley A. Smith <bradley@baysmith.com>
+ * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
  * @author  J. Daniel Gezelter
  * @author  Egon Willighagen
  */

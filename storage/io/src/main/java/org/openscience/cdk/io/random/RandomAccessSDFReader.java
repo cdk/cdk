@@ -44,7 +44,7 @@ import org.openscience.cdk.io.listener.IReaderListener;
  * Random access of SDF file. Doesn't load molecules in memory, uses prebuilt
  * index and seeks to find the correct record offset.
  *
- * @author     Nina Jeliazkova <nina@acad.bg>
+ * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.module io
  * @cdk.githash
  */

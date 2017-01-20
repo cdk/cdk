@@ -75,7 +75,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @see org.openscience.cdk.io.MDLV2000Reader
  * @see org.openscience.cdk.io.MDLV3000Reader
  *
- * @author     Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created    2003-10-19
  *
  * @cdk.keyword    file format, MDL molfile
