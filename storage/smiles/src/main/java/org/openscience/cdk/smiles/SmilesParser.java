@@ -100,7 +100,7 @@ import java.util.Set;
  * <li>atom class indication - <i>this information is loaded but not annotated
  * on the structure</i> </li> <li>extended tetrahedral stereochemistry
  * (cumulated double bonds)</li> <li>trigonal bipyramidal stereochemistry</li>
- * <li>octahedral stereochemistry</li> </il>
+ * <li>octahedral stereochemistry</li> </ul>
  *
  * <b>Atom Class</b>
  *

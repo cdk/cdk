@@ -34,9 +34,9 @@ import java.util.List;
  *  }
  *  </pre>
  * If you do need an explicit Iterator then use
- * <pre>
+ * <pre>{@code
  * Iterator<IBond> bondIter = atomContainer.bonds().iterator();
- * </pre>
+ * }</pre>
  *
  * @cdk.module interfaces
  * @cdk.githash

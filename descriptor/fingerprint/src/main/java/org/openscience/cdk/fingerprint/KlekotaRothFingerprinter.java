@@ -9,8 +9,8 @@ package org.openscience.cdk.fingerprint;
 
 
 /**
- * SMARTS based substructure fingerprint based on <emph>Chemical substructures
- * that enrich for biological activity</emph> {@cdk.cite Klekota01112008}.
+ * SMARTS based substructure fingerprint based on <b>Chemical substructures
+ * that enrich for biological activity</b> {@cdk.cite Klekota01112008}.
  *
  * Presence of 4860 substructures
  *

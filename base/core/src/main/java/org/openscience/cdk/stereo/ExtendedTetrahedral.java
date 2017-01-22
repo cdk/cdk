@@ -79,9 +79,9 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * to which the hydrogen is attached can be used as a placeholder.
  *
  * @author John May
- * @cdk.keywords extended tetrahedral
- * @cdk.keywords allene
- * @cdk.keywords axial chirality
+ * @cdk.keyword extended tetrahedral
+ * @cdk.keyword allene
+ * @cdk.keyword axial chirality
  */
 public final class ExtendedTetrahedral implements IStereoElement {
 

@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * details and a List of 3D coordinate sets, each element being the set of 3D coordinates
  * for a given conformer.
  * 
- * The class behaves in many ways as a List<IAtomContainer> object, though a few methods are not
+ * The class behaves in many ways as a {@code List<IAtomContainer>} object, though a few methods are not
  * implemented. Though it is possible to add conformers by hand, this data structure is
  * probably best used in combination with {@link org.openscience.cdk.io.iterator.IteratingMDLConformerReader} as
  * <pre>

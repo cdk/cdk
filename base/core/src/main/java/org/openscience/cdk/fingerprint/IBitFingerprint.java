@@ -90,7 +90,7 @@ public interface IBitFingerprint extends Serializable {
      * Sets the bit at the specified index to the specified value.
      *
      * @param index the index of the bit to change
-     * @param value the new value for the bit at position <code>index</index>
+     * @param value the new value for the bit at position <code>index</code>
      */
     public void set(int index, boolean value);
 

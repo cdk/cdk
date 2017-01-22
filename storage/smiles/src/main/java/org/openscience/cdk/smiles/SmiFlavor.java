@@ -181,7 +181,7 @@ public final class SmiFlavor {
 
     /**
      * Output canonical SMILES with stereochemistry, atomic masses using the
-     * InChI labelling algorithm {@cite OBoyle12}. With delocalised charges
+     * InChI labelling algorithm {@cdk.cite OBoyle12}. With delocalised charges
      * the generated SMILES can be non-canonical.
      */
     public static final int UniversalSmiles     = InChILabelling | Isomeric;

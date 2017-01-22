@@ -64,7 +64,7 @@ import java.util.Set;
  * </ol>
  *
  * <h4>Example Usage</h4>
- * <blockquote><pre>{@cdoe
+ * <blockquote><pre>{@code
  * // construct the search for a given molecule, if an adjacency list
  * // representation (int[][]) is available this can be passed to the
  * // constructor for improved performance
@@ -296,7 +296,7 @@ public final class RingSearch {
      * fused[1].length; // e.g. 10 vertices in the second system
      * fused[2].length; // e.g. 4 vertices in the third system
      *
-     * }</pre></blockquote>
+     * </pre></blockquote>
      *
      * @return array of fused fragments, defined by the vertices in the
      *         fragment

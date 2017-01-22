@@ -339,7 +339,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
     }
 
     /**
-     * Opens the file index <filename>_cdk.index</filename> in a temporary folder, as specified by "java.io.tmpdir" property.
+     * Opens the file index file <code>_cdk.index</code> in a temporary folder, as specified by "java.io.tmpdir" property.
      *
      * @param filename the name of the file for which the index was generated
      * @return a file object representing the index file

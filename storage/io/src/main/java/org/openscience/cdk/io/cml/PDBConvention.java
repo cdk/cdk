@@ -51,7 +51,7 @@ import org.xml.sax.Attributes;
  * <p>This is a lousy implementation, though. Problems that will arise:
  * <ul>
  *   <li>when this new convention is adopted in the root element no
- *     currentFrame was set. This is done when <list sequence=""> is found
+ *     currentFrame was set. This is done when {@code <list sequence="">} is found
  *   <li>multiple sequences are not yet supported
  *   <li>the frame is now added when the doc is ended, which will result in problems
  *     but work for one sequence files made by PDB2CML v.??
