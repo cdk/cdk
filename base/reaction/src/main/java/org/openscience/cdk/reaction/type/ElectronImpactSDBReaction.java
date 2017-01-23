@@ -40,7 +40,7 @@ import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which make an electron impact for Sigma Bond Dissociation.</p>
- * This reaction type is a representation of the processes which occurs in the mass spectrometer.</p>
+ * <p>This reaction type is a representation of the processes which occurs in the mass spectrometer.</p>
  *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();

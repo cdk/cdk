@@ -90,11 +90,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <code></code><br>
  * <code>String inchi = gen.getInchi();</code><br>
  * <code>String auxinfo = gen.getAuxInfo();</code><br>
- * <p><tt><b>
- * TODO: distinguish between singlet and undefined spin multiplicity<br/>
- * TODO: double bond and allene parities<br/>
- * TODO: problem recognising bond stereochemistry<br/>
- * </b></tt>
+ * <p>
+ * <b>
+ * TODO: distinguish between singlet and undefined spin multiplicity<br>
+ * TODO: double bond and allene parities<br>
+ * TODO: problem recognising bond stereochemistry<br>
+ * </b>
  *
  * @author Sam Adams
  *

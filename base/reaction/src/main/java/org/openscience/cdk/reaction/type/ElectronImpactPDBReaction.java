@@ -40,7 +40,7 @@ import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which make an electron impact for pi-Bond Dissociation.</p>
- * This reaction type is a representation of the processes which occurs in the mass spectrometer.</p>
+ * <p>This reaction type is a representation of the processes which occurs in the mass spectrometer.</p>
  * <p>It is processed by the RemovingSEofPBMechanism class</p>
  *
  * <pre>

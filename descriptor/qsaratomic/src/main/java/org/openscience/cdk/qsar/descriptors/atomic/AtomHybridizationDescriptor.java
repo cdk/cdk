@@ -34,8 +34,8 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 /**
  *  This class returns the hybridization of an atom.
  *
- * <p>This descriptor uses these parameters:
  * <table border="1">
+ *   <caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

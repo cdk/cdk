@@ -715,12 +715,11 @@ public class AtomPlacer {
      *  given molecule. I.e. the number the is listesd is the position of each atom
      *  in the molecule.
      *
-     *@param  ac                       The Vector for which the placed atoms are to
+     * @param  ac                       The Vector for which the placed atoms are to
      *      be listed
-     *@param  mol                      Description of the Parameter
-     *@return                          A string with the numbers of all placed
+     * @param  mol                      Description of the Parameter
+     * @return                          A string with the numbers of all placed
      *      atoms in an AtomContainer
-     *@exception  java.lang.Exception  Description of the Exception
      */
     static public String listNumbers(IAtomContainer mol, List<IAtom> ac) {
         String s = "Numbers: ";

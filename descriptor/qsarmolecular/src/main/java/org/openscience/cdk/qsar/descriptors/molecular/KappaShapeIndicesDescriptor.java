@@ -113,7 +113,6 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
      *
      * @param container AtomContainer
      * @return kier1, kier2 and kier3 are returned as arrayList of doubles
-     * @throws CDKException Possible Exceptions
      */
     @Override
     public DescriptorValue calculate(IAtomContainer container) {

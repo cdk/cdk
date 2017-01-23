@@ -66,7 +66,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  Substructure</p>
  *
  *  <p>It also has a set of robust chemical filters (i.e. bond energy, fragment
- *  count, stereo & bond match) to sort the reported MCS solutions in a chemically
+ *  count, stereo &amp; bond match) to sort the reported MCS solutions in a chemically
  *  relevant manner. Each comparison can be made with or without using the bond
  *  sensitive mode and with implicit or explicit hydrogens.</p>
  *
@@ -76,8 +76,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  *
  * <p>An example for <b>Substructure search</b>:</p>
- *  <font color="#003366">
- *  <pre>
+ *  <pre>{@code
  *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
  *  // Benzene
  *  IAtomContainer A1 = sp.parseSmiles("C1=CC=CC=C1");
@@ -108,13 +107,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *   }
  *   System.out.println("");
  *  }
- *
- *  </pre>
- *  </font>
+ *  }</pre>
  *
  * <p>An example for <b>MCS search</b>:</p>
- *  <font color="#003366">
- *  <pre>
+ *  <pre>{@code
  *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
  *  // Benzene
  *  IAtomContainer A1 = sp.parseSmiles("C1=CC=CC=C1");
@@ -144,9 +140,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *      System.out.println(eAtom.getSymbol() + " " + pAtom.getSymbol());
  *  }
  *  System.out.println("");
- *
- *  </pre>
- *  </font>
+ *  }</pre>
  *
  * @cdk.require java1.5+
  *

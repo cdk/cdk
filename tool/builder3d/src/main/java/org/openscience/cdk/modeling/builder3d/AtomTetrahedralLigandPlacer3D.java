@@ -79,10 +79,10 @@ public class AtomTetrahedralLigandPlacer3D {
      *  geometry elsewhere. Bond lengths are computed from covalent radii or taken
      *  out of a parameter set if available. Angles are tetrahedral or trigonal
      *
-     *@param  atomContainer  the set of atoms involved
+     * @param  atomContainer  the set of atoms involved
      * @throws CDKException
-     *@cdk.keyword           coordinate calculation
-     *@cdk.keyword           3D model
+     * @cdk.keyword           coordinate calculation
+     * @cdk.keyword           3D model
      */
     public void add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer) throws CDKException {
         IAtom refAtom = null;
@@ -126,7 +126,6 @@ public class AtomTetrahedralLigandPlacer3D {
      *@param  atom2          movable atom
      *@param  point2         coordinates for atom 2
      *@return                new coordinates for atom 2
-     *@exception  Exception  Description of the Exception
      */
     public Point3d rescaleBondLength(IAtom atom1, IAtom atom2, Point3d point2) {
         Point3d point1 = atom1.getPoint3d();
@@ -171,18 +170,18 @@ public class AtomTetrahedralLigandPlacer3D {
      *  vector is resultant of BA, CA, DA fails if atom itself has no coordinates
      *  or >4 ligands
      *
-     *@param  refAtom        (A) to which new ligands coordinates could be added
-     *@param  length         A-X length
-     *@param  angle          B-A-X angle (used in certain cases)
-     *@param  nwanted        Description of the Parameter
-     *@param  noCoords       Description of the Parameter
-     *@param  withCoords     Description of the Parameter
-     *@param  atomC          Description of the Parameter
-     *@return                Point3D[] points calculated. If request could not be
+     * @param  refAtom        (A) to which new ligands coordinates could be added
+     * @param  length         A-X length
+     * @param  angle          B-A-X angle (used in certain cases)
+     * @param  nwanted        Description of the Parameter
+     * @param  noCoords       Description of the Parameter
+     * @param  withCoords     Description of the Parameter
+     * @param  atomC          Description of the Parameter
+     * @return                Point3D[] points calculated. If request could not be
      *      fulfilled (e.g. too many atoms, or strange geometry, returns empty
      *      array (zero length, not null)
      * @throws CDKException
-     *@cdk.keyword           coordinate generation
+     * @cdk.keyword           coordinate generation
      */
 
     public Point3d[] get3DCoordinatesForLigands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
@@ -693,11 +692,10 @@ public class AtomTetrahedralLigandPlacer3D {
     /**
      *  Gets the angleKey attribute of the AtomPlacer3D object.
      *
-     *@param  id1            Description of the Parameter
-     *@param  id2            Description of the Parameter
-     *@param  id3            Description of the Parameter
-     *@return                The angleKey value
-     *@exception  Exception  Description of the Exception
+     * @param  id1            Description of the Parameter
+     * @param  id2            Description of the Parameter
+     * @param  id3            Description of the Parameter
+     * @return                The angleKey value
      */
     public double getAngleValue(String id1, String id2, String id3) {
         String akey = "";

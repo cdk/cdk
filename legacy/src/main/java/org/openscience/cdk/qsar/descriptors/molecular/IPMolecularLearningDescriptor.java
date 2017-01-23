@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  * @cdk.dictref      qsar-descriptors:ionizationPotential
  * @cdk.keyword      ionization potential
  *
- * @see IPAtomicHOSEDescriptor
+ * @see org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptor
  * @see IPBondLearningDescriptor
  */
 @Deprecated

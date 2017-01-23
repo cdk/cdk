@@ -79,7 +79,7 @@ import org.openscience.cdk.smsd.tools.TimeManager;
  *  both model is performed by the RTools class. In this way the CDKRGraph
  *  class may be reused in other graph context (conceptual graphs,....)
  *
- *  <p><bitSet>Important note</bitSet>: This implementation of the algorithm has not been
+ *  <p><b>Important note</b>: This implementation of the algorithm has not been
  *                      optimized for speed at this stage. It has been
  *                      written with the goal to clearly retrace the
  *                      principle of the underlined search method. There is

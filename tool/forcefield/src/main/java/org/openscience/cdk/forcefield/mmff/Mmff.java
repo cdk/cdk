@@ -46,13 +46,15 @@ import java.util.Set;
  *     <li>{@cdk.cite Halgren96d}</li>
  *     <li>{@cdk.cite Halgren96e}</li>     
  * </ul>
- * 
- * <h4>Atom Types</h4>
+ *
+ * <br>
+ * <b>Atom Types</b>
  * 
  * Symbolic atom types are assigned with {@link Mmff#assignAtomTypes(IAtomContainer)}.
  * The atom type name can be accessed with {@link IAtom#getAtomTypeName()}.
- * 
- * <h4>Partial Charges</h4>
+ *
+ * <br>
+ * <b>Partial Charges</b>
  * 
  * Partial charges are assigned with {@link Mmff#partialCharges(IAtomContainer)}.
  * Atom types must be assigned before calling this function. Effective formal

@@ -68,13 +68,13 @@ public class PharmacophoreUtils {
      * available as the <i>"description"</i> property of the {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
      * 
      * Example usage is
-     * <pre>
+     * <pre>{@code
      * List<PharmacophoreQuery> defs = readPharmacophoreDefinitions("mydefs.xml");
      * System.out.println("Number of definitions = "+defs.size());
      * for (int i = 0; i < defs.size(); i++) {
      *     System.out.println("Desc: "+defs.get(i).getProperty("description");
      * }
-     * </pre>
+     * }</pre>
      *
      * @param filename The file to read the definitions from
      * @return A list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects
@@ -116,13 +116,13 @@ public class PharmacophoreUtils {
      * available as the <i>"description"</i> property of the {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
      * 
      * Example usage is
-     * <pre>
+     * <pre>{@code
      * List<PharmacophoreQuery> defs = readPharmacophoreDefinitions"mydefs.xml");
      * System.out.println("Number of definitions = "+defs.size());
      * for (int i = 0; i < defs.size(); i++) {
      *     System.out.println("Desc: "+defs.get(i).getProperty("description");
      * }
-     * </pre>
+     * }</pre>
      *
      * @param ins The stream to read the definitions from
      * @return A list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects

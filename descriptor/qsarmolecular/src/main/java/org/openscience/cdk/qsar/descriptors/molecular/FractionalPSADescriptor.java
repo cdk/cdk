@@ -104,7 +104,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
     /**
      * Calculates the topological polar surface area and expresses it as a ratio to molecule size.
      *
-     * @param atomContainer The {@link IAtomContainer} whose volume is to be calculated
+     * @param mol The {@link IAtomContainer} whose volume is to be calculated
      * @return descriptor(s) retaining to polar surface area
      */
     @Override

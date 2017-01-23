@@ -101,13 +101,13 @@ import Jama.Matrix;
  * 
  * Returns an array of values in the following order
  * <ol>
- * 
  * <li>BCUTw-1l, BCUTw-2l ... - <i>nhigh</i> lowest atom weighted BCUTS
  * <li>BCUTw-1h, BCUTw-2h ... - <i>nlow</i> highest atom weighted BCUTS
  * <li>BCUTc-1l, BCUTc-2l ... - <i>nhigh</i> lowest partial charge weighted BCUTS
  * <li>BCUTc-1h, BCUTc-2h ... - <i>nlow</i> highest partial charge weighted BCUTS
  * <li>BCUTp-1l, BCUTp-2l ... - <i>nhigh</i> lowest polarizability weighted BCUTS
  * <li>BCUTp-1h, BCUTp-2h ... - <i>nlow</i> highest polarizability weighted BCUTS
+ * </ol>
  *
  * @author Rajarshi Guha
  * @cdk.created 2004-11-30

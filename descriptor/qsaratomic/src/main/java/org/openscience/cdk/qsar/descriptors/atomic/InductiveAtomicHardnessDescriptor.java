@@ -40,41 +40,26 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  Inductive atomic hardness of an atom in a polyatomic system can be defined
  *  as the "resistance" to a change of the atomic charge. Only works with 3D coordinates, which must be calculated beforehand. <p>
  *
- *  This descriptor uses these parameters:
- *  <tableborder="1">
- *
+ *  <table border="1">
+ *    <caption>Parameters for this descriptor:</caption>
  *    <tr>
- *
  *      <td>
  *        Name
  *      </td>
- *
  *      <td>
  *        Default
  *      </td>
- *
  *      <td>
  *        Description
  *      </td>
- *
  *    </tr>
- *
  *    <tr>
- *
+ *      <td></td>
+ *      <td></td>
  *      <td>
- *
+ *        <i>no parameters</i>
  *      </td>
- *
- *      <td>
- *
- *      </td>
- *
- *      <td>
- *        no parameters
- *      </td>
- *
  *    </tr>
- *
  *  </table>
  *
  *

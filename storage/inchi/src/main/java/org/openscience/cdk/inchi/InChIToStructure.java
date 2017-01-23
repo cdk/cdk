@@ -60,7 +60,8 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * but may have atom parities set.  Double bond and allene stereochemistry are
  * not currently recorded.
  *
- * <h3>Example usage</h3>
+ * <br>
+ * <b>Example usage</b>
  *
  * <code>// Generate factory - throws CDKException if native code does not load</code><br>
  * <code>InChIGeneratorFactory factory = new InChIGeneratorFactory();</code><br>
@@ -80,7 +81,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * <code>}</code><br>
  * <code></code><br>
  * <code>IAtomContainer container = intostruct.getAtomContainer();</code><br>
- * <p><tt><b>
+ * <p><br>
  *
  * @author Sam Adams
  *

@@ -56,6 +56,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <th>Name</th>
  * <th>Pattern</th>
  * </tr>
+ * </thead>
  * <tbody>
  * <tr>
  * <td>0</td><td>khs.sLi</td><td>[LiD1]-*</td>
