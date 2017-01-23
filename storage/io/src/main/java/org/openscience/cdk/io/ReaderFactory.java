@@ -38,10 +38,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * of GZiped files can be detected too.
  *
  * A typical example is:
- * <pre>
- *   StringReader stringReader = "&lt;molecule/>";
+ * <pre>{@code
+ *   StringReader stringReader = "<molecule/>";
  *   ChemObjectReader reader = new ReaderFactory().createReader(stringReader);
- * </pre>
+ * }</pre>
  *
  * @cdk.module io
  * @cdk.githash

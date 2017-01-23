@@ -51,11 +51,11 @@ import java.util.Set;
  * minimum cycle bases (SSSRs). <b>Important</b> the cycle sets returned are not
  * ordered in the path of the cycle.
  *
- * <br/> <h4>Further Explanation</h4> The diagram below illustrates the isolated
+ * <br> <h4>Further Explanation</h4> The diagram below illustrates the isolated
  * and fused sets of cyclic atoms. The colored circles indicate the atoms and
- * bonds that are returned for each molecules. <br/><br/> <img alt="isolated and
- * fused cycle systems" src="http://i56.photobucket.com/albums/g187/johnymay/isolated-and-fused-cycles-01_zpse0311377.png"/>
- * <br/>  <ol type="a"> <li>Two separate isolated cycles</li> <li>Two
+ * bonds that are returned for each molecules. <br><br> <img alt="isolated and
+ * fused cycle systems" src="http://i56.photobucket.com/albums/g187/johnymay/isolated-and-fused-cycles-01_zpse0311377.png">
+ * <br>  <ol type="a"> <li>Two separate isolated cycles</li> <li>Two
  * separate fused cycle systems. The bridged systems are fused but separate from
  * each other</li> <li>Fused rings - a single fused cycle system</li> <li>Spiro
  * rings - three separate isolated systems, no bonds are shared</li>

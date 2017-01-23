@@ -45,10 +45,10 @@ import static org.openscience.cdk.io.formats.IChemFormatMatcher.MatchResult;
  * of GZiped files can be detected too.
  *
  * A typical example is:
- * <pre>
- *   StringReader stringReader = new StringReader("&lt;molecule/>");
+ * <pre>{@code
+ *   StringReader stringReader = new StringReader("<molecule/>");
  *   IChemFormat format = new FormatFactory().guessFormat(stringReader);
- * </pre>
+ * }</pre>
  *
  * @cdk.module  ioformats
  * @cdk.githash

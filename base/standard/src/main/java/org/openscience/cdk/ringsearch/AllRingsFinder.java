@@ -303,13 +303,13 @@ public final class AllRingsFinder {
      * and provides a more meaningful measure of what to expect based on
      * precomputed percentiles. It is important to consider that, higher is not
      * always better - generally the large values generate many more rings then
-     * can be reasonably be handled.<br/>
+     * can be reasonably be handled.<br>
      *
      * The latest results were calculated on PubChem Compound (Dec' 12) and
      * summarised below.
      *
      * <table style="width: 100%;"> <tr><th>Maximum Degree</th><th>Percent
-     * (%)</th><th>Completed<br /> (ring systems)</th><th>Uncompleted<br />
+     * (%)</th><th>Completed<br> (ring systems)</th><th>Uncompleted<br>
      * (ring systems)</th></tr> <tr><td>&nbsp;</td></tr>
      * <tr><td>72</td><td>99.95</td><td>17834013</td><td>8835</td></tr>
      * <tr><td>84</td><td>99.96</td><td>17835876</td><td>6972</td></tr>

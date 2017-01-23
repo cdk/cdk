@@ -181,7 +181,7 @@ import java.util.Set;
  *
  * The two aggregate flavours are {@link SmiFlavor#CxSmiles} and {@link SmiFlavor#CxSmilesWithCoords}.
  * As with other flavours, fine grain control is possible {@see SmiFlavor}.
- * <p/>
+ * <br>
  * <b>*</b> the unique SMILES generation uses a fast equitable labelling procedure
  *   and as such there are some structures which may not be unique. The number
  *   of such structures is generally minimal.

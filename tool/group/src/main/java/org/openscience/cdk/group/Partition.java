@@ -168,7 +168,7 @@ public class Partition {
 
     /**
      * Check whether the cells are ordered such that for cells i and j,
-     * first(j) > first(i) and last(j) > last(i).
+     * first(j) &gt; first(i) and last(j) &gt; last(i).
      *
      * @return true if all cells in the partition are ordered
      */

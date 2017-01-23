@@ -160,7 +160,7 @@ public class AtomTools {
      *    (i) 1 points  required; if A, B, C, D coplanar, no points.
      *       else vector is resultant of BA, CA, DA
 
-     * fails if atom itself has no coordinates or >4 ligands
+     * fails if atom itself has no coordinates or &gt;4 ligands
      *
      * @param atomContainer describing the ligands of refAtom. It could be the
      * whole molecule, or could be a selected subset of ligands

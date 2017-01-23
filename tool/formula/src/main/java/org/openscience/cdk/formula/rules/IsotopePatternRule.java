@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *   </tr>
  *   <tr>
  *     <td>isotopePattern</td>
- *     <td>List <Double[]></td>
+ *     <td><pre>{@code List <Double[]>}</pre></td>
  *     <td>The Isotope Pattern to compare</td>
  *   </tr>
  * </table>

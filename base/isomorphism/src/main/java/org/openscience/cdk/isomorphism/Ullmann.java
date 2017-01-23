@@ -56,7 +56,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * test if it {@link #matches} first. These methods automatically verify
  * stereochemistry.
  *
- * <blockquote><pre>
+ * <blockquote><pre>{@code
  * IAtomContainer query   = ...;
  * Pattern        pattern = Ullmann.findSubstructure(query);
  *
@@ -66,7 +66,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *     if (match.length > 0)
  *         hits++;
  * }
- * </pre></blockquote>
+ * }</pre></blockquote>
  *
  * @author John May
  * @cdk.module isomorphism

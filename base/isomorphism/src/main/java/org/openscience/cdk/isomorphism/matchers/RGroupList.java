@@ -186,10 +186,10 @@ public class RGroupList {
      * <LI>n - m : n through m ;</LI>
      * <LI>&#62; n : greater than n ;</LI>
      * <LI>&#60; n : fewer than n ;</LI>
-     * <LI>default (blank) is > 0 ;</LI>
+     * <LI>default (blank) is &gt; 0 ;</LI>
      * </UL>
      * Any combination of the preceding values is also
-     * allowed; for example "1, 3-7, 9, >11".
+     * allowed; for example "1, 3-7, 9, &gt;11".
      * @param occ String to validate.
      * @return true if valid String provided.
      */
@@ -249,11 +249,12 @@ public class RGroupList {
     /**
      * Matches the 'occurrence' condition with a provided maximum number of
      * RGroup attachments. Returns the valid occurrences (numeric) for these
-     * two combined. If none found, returns empty list.<P>
+     * two combined. If none found, returns empty list.
+     * <br>
      * Example: if R1 occurs 3 times attached to some root structure, then
-     * stating ">5" as an occurrence for that RGoupList does not make
-     * sense: the example R1 can occur 0..3 times. Empty would be returned.<BR>
-     * If the occurence would be >2, then 3 would be returned. Etcetera.
+     * stating "&gt;5" as an occurrence for that RGoupList does not make
+     * sense: the example R1 can occur 0..3 times. Empty would be returned.<br>
+     * If the occurence would be &gt;2, then 3 would be returned. Etcetera.
      *
      * @param maxAttachments number of attachments
      * @return valid values by combining a max for R# with the occurrence cond.

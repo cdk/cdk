@@ -29,7 +29,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * <code>IMolecularDescriptor</code>, <code>IAtomicDescriptor</code> and
  * <code>IBondDescriptor</code>.
  *
- * <p><b>Calculated results</b><br />
+ * <p><b>Calculated results</b><br>
  * The results calculated by the descriptor can have various types, which
  * extend the IDescriptorResult, and is embedded in a
  * <code>DescriptorValue</code>. Currently, there are five result types:
@@ -55,7 +55,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * on the used descriptor parameters. The length must not depend on the
  * IAtomContainer, but only on the parameters.
  *
- * <p><b>Parameters</b><br />
+ * <p><b>Parameters</b><br>
  * A descriptor may have parameters that specify how the descriptor
  * is calculated, or to what level of detail. For example, the atom
  * count descriptor may calculate counts for all elements, or just
