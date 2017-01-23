@@ -44,7 +44,7 @@ import java.util.Iterator;
  * <p>Based on the valence bond model of bonding, hyperconjugation can be described as
  * "double bond - no bond resonance"</p>
  * <p>This reaction could be represented like</p>
- * <pre>[C+]-C => C=C + [H+] </pre>
+ * <pre>[C+]-C =&gt; C=C + [H+] </pre>
  *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();

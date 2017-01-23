@@ -168,7 +168,7 @@ public class AtomTetrahedralLigandPlacer3D {
      *  vectors at angle ang, whose resultant is 2i (3) 3 ligands(B, C, D) of
      *  refAtom A (i) 1 points required; if A, B, C, D coplanar, no points. else
      *  vector is resultant of BA, CA, DA fails if atom itself has no coordinates
-     *  or >4 ligands
+     *  or &gt;4 ligands
      *
      * @param  refAtom        (A) to which new ligands coordinates could be added
      * @param  length         A-X length
@@ -723,7 +723,7 @@ public class AtomTetrahedralLigandPlacer3D {
      *  set Atoms in respect to stereoinformation.
      *	take placed neighbours to stereocenter
      *		create a x b
-     *	     if right handed system (spatproduct >0)
+     *	     if right handed system (spatproduct &gt;0)
      *			if unplaced is not up (relative to stereocenter)
      *				n=b x a
      *	     Determine angle between n and possible ligand place points

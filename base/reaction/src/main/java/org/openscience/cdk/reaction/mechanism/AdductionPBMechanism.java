@@ -37,7 +37,7 @@ import java.util.ArrayList;
  * <p>This mechanism adduct together two fragments due to a double bond.
  * The second fragment will be deficient in charge.
  * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
- * <p>This reaction could be represented as A=B + [C+] => [A+]-B-C</p>
+ * <p>This reaction could be represented as A=B + [C+] =&gt; [A+]-B-C</p>
  *
  *
  * @author         miguelrojasch

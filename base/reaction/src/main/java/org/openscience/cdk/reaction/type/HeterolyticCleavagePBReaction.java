@@ -45,10 +45,10 @@ import java.util.Iterator;
  * As there are two directions for displacing a bond in a polar manner,
  * each case is investigated twice:</p>
  *
- * <pre>A=B => [A+]-|[B-]</pre>
- * <pre>A=B => |[A-]-[B+]</pre>
+ * <pre>A=B =&gt; [A+]-|[B-]</pre>
+ * <pre>A=B =&gt; |[A-]-[B+]</pre>
  *
- * <p>It will not be created structures no possible, e.g; C=O => [C-][O+].</p>
+ * <p>It will not be created structures no possible, e.g; C=O =&gt; [C-][O+].</p>
  * <p>Below you have an example how to initiate the mechanism.</p>
  * <p>It is processed by the HeterolyticCleavageMechanism class</p>
  * <pre>

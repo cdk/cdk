@@ -91,12 +91,12 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * 	-Atomtyp 7 is -0.137<br>
  *  -Atomtype 81 is -0.447<br>
  *  -pi system does not consider P or S<br>
- *  -ring system >3<br>
- *  -aromatic ring systems >=6<br>
+ *  -ring system &gt;3<br>
+ *  -aromatic ring systems &ge;6<br>
  *  -N atomtypes: (ring) is always (ring)c<br>
  *  -F 83 is not 0.375, the program uses 0.512 [2005-11-21]<br>
  *  -hydrophobic carbon is 1-3 relationship not 1-4 [2005-11-22]<br>
- *  -Atomtyp C 34/35/36 perception corrected [2005-11-22]; before Atomtyp perception ring perception is done -> slows run time<br>
+ *  -Atomtype C 34/35/36 perception corrected [2005-11-22]; before Atomtype perception ring perception is done -&gt; slows run time<br>
  *
  *
  *

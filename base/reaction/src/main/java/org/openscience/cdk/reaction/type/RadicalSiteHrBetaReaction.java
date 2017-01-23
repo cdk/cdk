@@ -46,7 +46,7 @@ import java.util.Iterator;
 
 /**
  * <p>
- * This reaction could be represented as [A*]-(C)_3-C4[H] => A([H])-(C_3)-[C4*]. Due to
+ * This reaction could be represented as [A*]-(C)_3-C4[H] =&gt; A([H])-(C_3)-[C4*]. Due to
  * the single electron of atom A the proton is moved.</p>
  * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
  *

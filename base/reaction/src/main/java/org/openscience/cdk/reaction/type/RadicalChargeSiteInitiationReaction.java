@@ -40,7 +40,7 @@ import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which participate mass spectrum process. Homolitic dissocitation.
- * This reaction could be represented as A-B-[c*+] => [A*] + B=[C+].</p>
+ * This reaction could be represented as A-B-[c*+] =&gt; [A*] + B=[C+].</p>
  * <p>Make sure that the molecule has the corresponend lone pair electrons
  * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
  * <p>It is processed by the RadicalSiteIonizationMechanism class</p>

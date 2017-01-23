@@ -42,7 +42,7 @@ import java.util.Iterator;
  * <p>IReactionProcess which breaks the bond homogeneously leading to radical ions.
  * It is also called homogeneous bond-breaking.Depending of the bond order,
  * the bond will be removed or simply the order decreased.</p>
- * <pre>A-B => [A*] + [B*]</pre>
+ * <pre>A-B =&gt; [A*] + [B*]</pre>
  * <p>It is processed by the HomolyticCleavageMechanism class</p>
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();

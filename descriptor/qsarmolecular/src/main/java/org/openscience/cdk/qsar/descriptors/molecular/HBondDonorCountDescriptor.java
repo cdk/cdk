@@ -34,8 +34,8 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
  * The following groups are counted as hydrogen bond donors:
  * <ul>
- * <li>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge >= 0)</li>
- * <li>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge >= 0)</li>
+ * <li>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge &ge; 0)</li>
+ * <li>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge &ge; 0)</li>
  * </ul>
  * <p>
  * This descriptor uses no parameters.

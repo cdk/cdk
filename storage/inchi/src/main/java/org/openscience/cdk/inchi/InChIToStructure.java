@@ -412,10 +412,10 @@ public class InChIToStructure {
      * <p>Returns warning flags, see INCHIDIFF in inchicmp.h.
      *
      * <p>[x][y]:
-     * <br>x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
-     * <br>x=1 => Disconnected layer if Reconnected layer is present
-     * <br>y=1 => Main layer or Mobile-H
-     * <br>y=0 => Fixed-H layer
+     * <br>x=0 =&gt; Reconnected if present in InChI otherwise Disconnected/Normal
+     * <br>x=1 =&gt; Disconnected layer if Reconnected layer is present
+     * <br>y=1 =&gt; Main layer or Mobile-H
+     * <br>y=0 =&gt; Fixed-H layer
      */
     public long[][] getWarningFlags() {
         return (output.getWarningFlags());

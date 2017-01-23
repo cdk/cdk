@@ -40,7 +40,7 @@ import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance.
- * This reaction could be represented as |A-B=C => [A+]=B-[C-]. Due to
+ * This reaction could be represented as |A-B=C =&gt; [A+]=B-[C-]. Due to
  * excess of charge of the atom B, the double bond in the position 2 is
  * displaced.</p>
  * <p>Make sure that the molecule has the correspond lone pair electrons

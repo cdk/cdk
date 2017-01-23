@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * <p>This mechanism displaces the charge(radical, charge + or charge -) because of
  * a double bond which is associated.
  * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
- * <p>This reaction could be represented as [A*]-Y=Z => A=Z-[Y*]</p>
+ * <p>This reaction could be represented as [A*]-Y=Z =&gt; A=Z-[Y*]</p>
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10

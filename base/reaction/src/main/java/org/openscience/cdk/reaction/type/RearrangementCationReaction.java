@@ -40,7 +40,7 @@ import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance.
- * This reaction could be represented as [A+]-B=C => A=B-[c+]. Due to
+ * This reaction could be represented as [A+]-B=C =&gt; A=B-[c+]. Due to
  * deficiency of charge of the atom A, the double bond is desplaced.</p>
  * <p>Make sure that the molecule has the corresponend lone pair electrons
  * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
