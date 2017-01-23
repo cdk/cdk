@@ -740,16 +740,6 @@
                 </plugins>
             </build>
         </profile>
-        <!-- Disable doclint... introduced in Java 8 and there are too many errors in CDK doc ATM. -->
-        <profile>
-            <id>doclint-java8-disable</id>
-            <activation>
-                <jdk>[1.8,)</jdk>
-            </activation>
-            <properties>
-                <javadoc.opts>-Xdoclint:none</javadoc.opts>
-            </properties>
-        </profile>
     </profiles>
 
     <dependencies>
