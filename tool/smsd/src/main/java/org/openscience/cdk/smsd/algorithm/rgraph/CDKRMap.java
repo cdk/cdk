@@ -32,7 +32,7 @@ package org.openscience.cdk.smsd.algorithm.rgraph;
  *  (bond) in G2, G1 and G2 being the compared graphs in a RGraph context.
  *
  * @author Stephane Werner, IXELIS &lt;mail@ixelis.net&gt;,
- *              Syed Asad Rahman <asad@ebi.ac.uk> (modified the orignal code)
+ *              Syed Asad Rahman &gt;asad@ebi.ac.uk&lt; (modified the orignal code)
  * @cdk.created 2002-07-24
  * @cdk.module  smsd
  * @cdk.githash

@@ -39,13 +39,13 @@ import java.util.List;
  * <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
  * The following groups are counted as hydrogen bond acceptors:
  * <ul>
- * <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge <= 0) <b>except</b>
+ * <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge &le; 0) <b>except</b>
  * <ol>
  * <li>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</li>
  * <li>an oxygen that is adjacent to a nitrogen</li>
  * </ol>
  * </li>
- * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b>
+ * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge &le; 0) <b>except</b>
  * <ol>
  * <li>a nitrogen that is adjacent to an oxygen</li>
  * </ol>

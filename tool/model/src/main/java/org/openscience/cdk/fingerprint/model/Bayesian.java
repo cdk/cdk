@@ -286,7 +286,7 @@ public class Bayesian {
      * Converts a raw Bayesian prediction and transforms it into a probability-like range, i.e. most values within the domain
      * are between 0..1, and assigning a cutoff of activie = scaled_prediction > 0.5 is reasonable. The transform (scale/translation)
      * is determined by the ROC-analysis, if any. The resulting value can be used as a probability by capping the values so that
-     * 0 <= p <= 1.
+     * 0 &le; p &le; 1.
      * 
      * @param pred raw prediction, as provided by the predict(..) method
      * @return scaled prediction	

@@ -258,9 +258,9 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
      * Create an auto generating palette which will generate colors using the
      * provided parameters.
      *
-     * @param saturation color saturation, 0.0 < x < 1.0
-     * @param brightness color brightness, 0.0 < x < 1.0
-     * @param alpha color alpha (transparency), 0 < x < 255
+     * @param saturation color saturation, 0.0 &lt; x &lt; 1.0
+     * @param brightness color brightness, 0.0 &lt; x &lt; 1.0
+     * @param alpha color alpha (transparency), 0 &lt; x &lt; 255
      * @return a palette to use in highlighting
      */
     public static Palette createAutoPalette(float saturation, float brightness, int alpha) {
@@ -271,9 +271,9 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
      * Create an auto generating palette which will generate colors using the
      * provided parameters.
      *
-     * @param saturation color saturation, 0.0 < x < 1.0
-     * @param brightness color brightness, 0.0 < x < 1.0
-     * @param transparent generate transparent colors, 0 < x < 255
+     * @param saturation color saturation, 0.0 &lt; x &lt; 1.0
+     * @param brightness color brightness, 0.0 &lt; x &lt; 1.0
+     * @param transparent generate transparent colors, 0 &lt; x &lt; 255
      * @return a palette to use in highlighting
      */
     public static Palette createAutoGenPalette(float saturation, float brightness, boolean transparent) {

@@ -60,7 +60,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.module smsd
  * @cdk.githash
  * @author Richard L. Apodaca &lt;rapodaca at metamolecular.com&gt; 2007-2009,
- *         Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
+ *         Syed Asad Rahman &gt;asad@ebi.ac.uk&lt; 2009-2010
  */
 public class PathGraph {
 

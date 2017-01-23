@@ -117,7 +117,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * </p>
  *
  * @author      Stephane Werner from IXELIS mail@ixelis.net,
- *              Syed Asad Rahman <asad@ebi.ebi.uk> (modified the orignal code)
+ *              Syed Asad Rahman &lt;asad@ebi.ebi.uk&gt; (modified the orignal code)
  * @cdk.created 2002-07-17
  * @cdk.require java1.5+
  * @cdk.module  smsd
