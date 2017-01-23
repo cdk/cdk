@@ -37,8 +37,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  *  This class evaluates if a proton is joined to a conjugated system.
  *
- * <p>This descriptor uses these parameters:
- * <table>
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

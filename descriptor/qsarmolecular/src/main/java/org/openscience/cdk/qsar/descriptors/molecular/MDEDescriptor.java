@@ -42,10 +42,10 @@ import java.util.List;
  * in addition it calculates variants where O and N are considered (as found in the DEDGE routine
  * from ADAPT).
  * 
- * * The variants are described below:
+ *
  * <center>
  * <table border=1>
- * 
+ * <caption>Table 1 - Description of the different MDE descriptors generated</caption>
  * <tr>
  * <td>MDEC-11</td><td> molecular distance edge between all primary carbons</td></tr><tr>
  * <td>MDEC-12</td><td> molecular distance edge between all primary and secondary carbons</td></tr><tr>

@@ -57,26 +57,26 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * SMARTS matching should use this rather than using SMARTSParser (and UniversalIsomorphismTester) directly. Example
  * usage would be
  * 
- * <pre>
+ * <pre>{@code
  * SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
- * IAtomContainer atomContainer = sp.parseSmiles(&quot;CC(=O)OC(=O)C&quot;);
- * SMARTSQueryTool querytool = new SMARTSQueryTool(&quot;O=CO&quot;);
+ * IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
+ * SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO");
  * boolean status = querytool.matches(atomContainer);
  * if (status) {
  *    int nmatch = querytool.countMatches();
  *    List mappings = querytool.getMatchingAtoms();
- *    for (int i = 0; i &lt; nmatch; i++) {
+ *    for (int i = 0; i < nmatch; i++) {
  *       List atomIndices = (List) mappings.get(i);
  *    }
  * }
- * </pre>
- * <h3>Unsupported Features</h3> <ul> <li>Component level grouping <li>Stereochemistry <li>Reaction support </ul>
+ * }</pre>
  * <h3>SMARTS Extensions</h3>
  * 
  * Currently the CDK supports the following SMARTS symbols, that are not described in the Daylight specification.
  * However they are supported by other packages and are noted as such.
  * 
- * <table border=1 cellpadding=3> <thead> <tr> <th>Symbol</th><th>Meaning</th><th>Default</th><th>Notes</th> </tr>
+ * <table border=1 cellpadding=3><caption>Table 1 - Supported Extensions</caption> <thead>
+ * <tr> <th>Symbol</th><th>Meaning</th><th>Default</th><th>Notes</th> </tr>
  * </thead> <tbody> <tr> <td>Gx</td><td>Periodic group number</td><td>None</td><td>x must be specified and must be a
  * number between 1 and 18. This symbol is supported by the MOE SMARTS implementation</td> <tr> <td>#X</td><td>Any
  * non-carbon heavy element</td><td>None</td><td>This symbol is supported by the MOE SMARTS implementation</td> </tr>

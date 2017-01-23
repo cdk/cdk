@@ -53,8 +53,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * requires aromaticity to be perceived (possibly done via a parameter), and
  * needs 3D coordinates for all atoms.
  * 
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>

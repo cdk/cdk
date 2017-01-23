@@ -50,6 +50,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * 
  * <table border=1 cellpadding=5>
+ * <caption>SMARTS patterns used by the descriptor</caption>
  * <thead>
  * <tr>
  * <th>Serial</th>
