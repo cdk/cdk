@@ -165,8 +165,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 
     /**
      * The actual writing of the output.
-     * @throws CDKException
-     * @throws IOException
+     * @throws CDKException could not write RGroup query
      */
     @Override
     public void write(IChemObject object) throws CDKException {

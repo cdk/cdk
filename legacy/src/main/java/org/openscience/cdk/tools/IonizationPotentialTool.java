@@ -215,7 +215,6 @@ public class IonizationPotentialTool {
      * @param container  The IAtomContainer which contain the IAtom
      * @param atom       The IAtom to calculate
      * @return           An Array containing the results
-     * @throws Exception
      */
     public static double[] getQSARs(IAtomContainer container, IAtom atom) throws CDKException {
         Electronegativity electronegativity = new Electronegativity();
@@ -291,7 +290,6 @@ public class IonizationPotentialTool {
      * @param container  The IAtomContainer which contain the IAtom
      * @param bond       The IBond to calculate
      * @return           An Array containing the results
-     * @throws Exception
      */
     public static double[] getQSARs(IAtomContainer container, IBond bond) throws CDKException {
         Electronegativity electronegativity = new Electronegativity();

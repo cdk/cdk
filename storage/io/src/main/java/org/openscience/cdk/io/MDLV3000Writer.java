@@ -636,7 +636,6 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     /**
      * Writes a molecule to the V3000 format. {@inheritDoc}
      *
-     * @throws IOException  low-level IO error
      * @throws CDKException state exception (e.g undef bonds), unsupported format feature,
      *                      object not supported etc
      */

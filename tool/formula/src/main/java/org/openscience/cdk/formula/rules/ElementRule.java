@@ -64,9 +64,6 @@ public class ElementRule implements IRule {
 
     /**
      *  Constructor for the ElementRule object.
-     *
-     *  @throws IOException            If an error occurs when reading atom type information
-     *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public ElementRule() {}
 

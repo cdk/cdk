@@ -51,7 +51,6 @@ public class GIMatrix {
      * must contain a fixed number of lines and columns, otherwise an exception will be thrown.
      * Array must be at leat 1x1.
      * @param array an array of integer (first index is the line, second is the column)
-     * @exception BadMatrixFormatException in case the given array is unproper to construct a matrix
      */
     public GIMatrix(int[][] array) {
         double[][] temp = new double[array.length][];
@@ -439,7 +438,7 @@ public class GIMatrix {
      * such that b(i,j) = a(j,i) for every i,j i.e. it is the symmetrical reflection of the matrix along its
      * diagonal. The matrix must be square to use this method, otherwise an exception will be thrown.
      * @return the matrix's transpose as a Matrix object
-     * @exception BadMatrixFormatException if the matrix is not square
+     * @exception MatrixNotInvertibleException if the matrix is not square
      */
     public GIMatrix inverse() throws MatrixNotInvertibleException {
         try {

@@ -316,7 +316,6 @@ public final class SmilesGenerator {
      *
      * @param molecule the molecule to create the SMILES of
      * @return a SMILES string
-     * @throws CDKException SMILES could not be generated
      * @deprecated use #create
      */
     @Deprecated
@@ -335,7 +334,6 @@ public final class SmilesGenerator {
      *
      * @param reaction the reaction to create the SMILES of
      * @return a reaction SMILES string
-     * @throws CDKException SMILES could not be generated
      * @deprecated use #createReactionSMILES
      */
     @Deprecated

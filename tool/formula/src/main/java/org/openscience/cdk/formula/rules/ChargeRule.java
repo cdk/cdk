@@ -57,9 +57,6 @@ public class ChargeRule implements IRule {
 
     /**
      *  Constructor for the ChargeRule object.
-     *
-     *  @throws IOException            If an error occurs when reading atom type information
-     *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public ChargeRule() {}
 
