@@ -308,7 +308,8 @@ public final class AllRingsFinder {
      * The latest results were calculated on PubChem Compound (Dec' 12) and
      * summarised below.
      *
-     * <table style="width: 100%;"> <tr><th>Maximum Degree</th><th>Percent
+     * <table style="width: 100%;"><caption>Table 1. Num of structures processable in PubChem Compound (Dec 2012) as a result of
+     * setting the max degree</caption><tr><th>Maximum Degree</th><th>Percent
      * (%)</th><th>Completed<br> (ring systems)</th><th>Uncompleted<br>
      * (ring systems)</th></tr> <tr><td>&nbsp;</td></tr>
      * <tr><td>72</td><td>99.95</td><td>17834013</td><td>8835</td></tr>

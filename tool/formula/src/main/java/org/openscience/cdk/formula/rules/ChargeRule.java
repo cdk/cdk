@@ -30,8 +30,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * a specific value. As default it is defined as neutral == 0.0.
  *
  *
- * <p>This rule uses these parameters:
  * <table border="1">
+ *   <caption>Table 1: Parameters set by this rule.</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

@@ -43,8 +43,9 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *  <p>The equation used is: D = 1 + [0.5 SUM_i(N_i(V_I-2))]</p>
  *  <p>where D is the unsaturation, i is the total number of different elements in the composition, N_i the number
  *  of atoms of element i, and Vi is the common valence of the atom i.</p>
- * <p>This rule uses these parameters:
+ *
  * <table border="1">
+ *   <caption>Table 1: Parameters set by this rule.</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

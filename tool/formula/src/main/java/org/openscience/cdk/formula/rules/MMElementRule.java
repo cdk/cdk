@@ -37,8 +37,8 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * The rules is based from Tobias Kind paper with the title "Seven Golden Rules for heuristic
  * filtering of molecular formula" {@cdk.cite kind2007}.
  *
- * <p>This rule uses these parameters:
  * <table border="1">
+ *   <caption>Table 1: Parameters set by this rule.</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

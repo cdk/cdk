@@ -32,8 +32,8 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * <p>If a compound has no nitrogen atom or an even number of nitrogen atoms, then the m/e value of [M]+ will be even.</p>
  *
  *
- * <p>This rule uses these parameters:
  * <table border="1">
+ *   <caption>Table 1: Parameters set by this rule.</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

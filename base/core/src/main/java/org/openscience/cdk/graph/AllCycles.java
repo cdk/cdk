@@ -93,7 +93,8 @@ public final class AllCycles {
      * (Dec '12) which would successfully complete for a given degree are listed
      * below.
      *
-     * <table> <tr><th>Percent</th><th>Max Degree</th></tr>
+     * <table><caption>Table 1. Num of structures processable in PubChem Compound (Dec 2012) as a result of
+     * setting the max degree</caption><tr><th>Percent</th><th>Max Degree</th></tr>
      * <tr><td>99%</td><td>9</td></tr> <tr><td>99.95%</td><td>72</td></tr>
      * <tr><td>99.96%</td><td>84</td></tr> <tr><td>99.97%</td><td>126</td></tr>
      * <tr><td>99.98%</td><td>216</td></tr> <tr><td>99.99%</td><td>684</td></tr>

@@ -38,6 +38,7 @@ import java.util.Map;
  *
 
  * <table>
+ * <caption>Table: 1: Default substructure patterns (SMARTS) for each bit position</caption>
  * <thead>
  * <tr>
  * <td>Bit position</td><td>Description</td><td>Pattern</td>
