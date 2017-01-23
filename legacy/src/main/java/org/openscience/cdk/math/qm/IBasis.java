@@ -84,7 +84,7 @@ public interface IBasis {
     public Vector getValues(int index, Matrix x);
 
     /**
-     * Calculate the overlap integral S = &lt;phi_i|phi_j>.
+     * Calculate the overlap integral S = &lt;phi_i|phi_j&gt;.
      *
      * @param i Index of the first base
      * @param j Index of the second base
@@ -92,7 +92,7 @@ public interface IBasis {
     public double calcS(int i, int j);
 
     /**
-     * Calculates the impulse J = -&lt;d/dr chi_i | d/dr chi_j>.
+     * Calculates the impulse J = -&lt;d/dr chi_i | d/dr chi_j&gt;.
      *
      * @param i Index of the first base
      * @param j Index of the second base
@@ -100,7 +100,7 @@ public interface IBasis {
     public double calcJ(int i, int j);
 
     /**
-     * Calculates the potential V = &lt;chi_i | 1/r | chi_j>.
+     * Calculates the potential V = &lt;chi_i | 1/r | chi_j&gt;.
      *
      * @param i Index of the first base
      * @param j Index of the second base
@@ -109,7 +109,7 @@ public interface IBasis {
 
     /**
      * Calculates a two eletron fout center integral
-     * I = &ltchi_i chi_j | 1/r12 | chi_k chi_l >.
+     * I = &lt;chi_i chi_j | 1/r12 | chi_k chi_l &gt;.
      *
      * @param i Index of the first base
      * @param j Index of the second base

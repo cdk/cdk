@@ -636,7 +636,7 @@ public class Abbreviations implements Iterable<String> {
     /**
      * Generates and assigns abbreviations to a molecule. Abbrevations are first
      * generated with {@link #generate} and the filtered based on
-     * the coverage. Currently only abbreviations that cover 100%, or < 40% of the
+     * the coverage. Currently only abbreviations that cover 100%, or &lt; 40% of the
      * atoms are assigned.
      *
      * @param mol molecule
@@ -868,16 +868,19 @@ public class Abbreviations implements Iterable<String> {
     }
 
     /**
-     * Load a set of abbreviations from a classpath resource or file.
+     * Load a set of abbreviations from a classpath resource or file in SMILES format. The title is seperated
+     * by a space.
+     *
      * <pre>
      * *c1ccccc1 Ph
      * *c1ccccc1 OAc
      * </pre>
      * <p>
      * Available:
-     * <pre>
-     * obabel_superatoms.smi - https://www.github.com/openbabel/superatoms
-     * </code>
+     * <dl>
+     * <dt>obabel_superatoms.smi</dt>
+     * <dd><a href="https://www.github.com/openbabel/superatoms"><code>https://www.github.com/openbabel/superatoms</code></a></dd>
+     * </dl>
      *
      * @param path classpath or filesystem path to a SMILES file
      * @return the number of loaded abbreviation

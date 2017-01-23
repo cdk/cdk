@@ -64,8 +64,9 @@ import java.util.Map;
 
 /**
  * A high-level API for depicting molecules and reactions.
- * 
- * <h4>General Usage</h4>
+ *
+ * <br>
+ * <b>General Usage</b>
  * Create a generator and reuse it for multiple depictions. Configure how
  * the depiction will look using {@code with...()} methods.
  * <pre>{@code
@@ -75,8 +76,9 @@ import java.util.Map;
  *   dg.depict(mol).writeTo("~/mol.png");
  * }
  * }</pre>
- * 
- * <h4>One Line Quick Use</h4>
+ *
+ * <br>
+ * <b>One Line Quick Use</b>
  * For simplified use we can create a generator and use it once for a single depiction.
  * <pre>{@code
  * new DepictionGenerator().depict(mol)
