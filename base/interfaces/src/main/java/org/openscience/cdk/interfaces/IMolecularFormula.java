@@ -249,7 +249,7 @@ public interface IMolecularFormula extends ICDKObject {
      * @param <T>         generic type (of provided class)
      * @return the value stored for the specified description.
      * @see #getProperty(Object)
-     * @see #addProperties(java.util.Map)
+     * @see #getProperties()
      */
     public <T> T getProperty(Object description, Class<T> c);
 

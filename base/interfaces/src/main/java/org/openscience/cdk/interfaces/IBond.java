@@ -272,7 +272,7 @@ public interface IBond extends IElectronContainer {
      *
      * @return ring status
      * @see #getFlag(int)
-     * @see org.openscience.cdk.graph.RingFinder
+     * @see org.openscience.cdk.ringsearch.RingSearch
      */
     boolean isInRing();
 

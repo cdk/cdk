@@ -87,8 +87,8 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     /**
      *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
      *
-     *  Note that some constructors ({@link #AtomType(String)} and
-     * {@link #AtomType(String, String)} ) will explicitly set this field to 0
+     *  Note that some constructors e.g. ({@link org.openscience.cdk.silent.AtomType#AtomType(String)} and
+     * {@link org.openscience.cdk.silent.AtomType#AtomType(String, String)} ) will explicitly set this field to 0
      */
     protected Integer                 formalCharge         = (Integer) CDKConstants.UNSET;
 
