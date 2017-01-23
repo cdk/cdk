@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *   </tr>
  *   <tr>
  *     <td>massRange</td>
- *     <td>< 500</td>
+ *     <td>&lt; 500</td>
  *     <td>Mass to take account</td>
  *   </tr>
  * </table>

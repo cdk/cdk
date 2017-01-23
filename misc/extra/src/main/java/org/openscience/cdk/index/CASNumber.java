@@ -29,12 +29,12 @@ import java.util.regex.Pattern;
 /**
  * Tools to work with CAS registry numbers.
  *
- * <p><b>References:</b>
+ * <br>
+ * <b>References:</b>
  * <ul>
  * 	<li><a href="http://www.cas.org/EO/regsys.html">A CAS Registry Number</a></li>
  * 	<li><a href="http://www.cas.org/EO/checkdig.html">Check Digit Verification of CAS Registry Numbers</a></li>
  * </ul>
- * </p>
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.githash

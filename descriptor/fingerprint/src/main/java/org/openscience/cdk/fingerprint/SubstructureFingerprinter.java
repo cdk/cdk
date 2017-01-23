@@ -317,7 +317,7 @@ import java.util.Map;
  * <tr><td>270</td><td>Boronic acid derivative</td><td>{@code [BX3]([!#6])([!#6])[!#6]}</td></tr>
  * <tr><td>271</td><td>Borohydride</td><td>{@code [BH1,BH2,BH3,BH4]}</td></tr>
  * <tr><td>272</td><td>Quaternary boron</td><td>{@code [BX4]}</td></tr>
- * <tr><td>273</td><td>Aromatic</td><td>a</td></tr>
+ * <tr><td>273</td><td>Aromatic</td><td>{@code a}</td></tr>
  * <tr><td>274</td><td>Heterocyclic</td><td>{@code [!#6;!R0]}</td></tr>
  * <tr><td>275</td><td>Epoxide</td><td>{@code [OX2r3]1[#6r3][#6r3]1}</td></tr>
  * <tr><td>276</td><td>NH aziridine</td><td>{@code [NX3H1r3]1[#6r3][#6r3]1}</td></tr>
@@ -330,10 +330,10 @@ import java.util.Map;
  * <tr><td>283</td><td>Sugar pattern 2 reducing</td><td>{@code [OX2;$([r5]1@C(!@[OX2H1])@C@C@C1),$([r6]1@C(!@[OX2H1])@C@C@C@C1)]}</td></tr>
  * <tr><td>284</td><td>Sugar pattern 2 alpha</td><td>{@code [OX2;$([r5]1@[C@@](!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C1),$([r6]1@[C@@](!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C@C1)]}</td></tr>
  * <tr><td>285</td><td>Sugar pattern 2 beta</td><td>{@code [OX2;$([r5]1@[C@](!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C1),$([r6]1@[C@](!@[OX2,NX3,SX2,FX1,ClX1,BrX1,IX1])@C@C@C@C1)]}</td></tr>
- * <tr><td>286</td><td>Conjugated double bond</td><td>*=*[*]=,#,:[*]</td></tr>
- * <tr><td>287</td><td>Conjugated tripple bond</td><td>*#*[*]=,#,:[*]</td></tr>
- * <tr><td>288</td><td>Cis double bond</td><td>*&#47[D2]=[D2]/*</td></tr>
- * <tr><td>289</td><td>Trans double bond</td><td>*&#47[D2]=[D2]/*</td></tr>
+ * <tr><td>286</td><td>Conjugated double bond</td><td>{@code *=*[*]=,#,:[*]}</td></tr>
+ * <tr><td>287</td><td>Conjugated tripple bond</td><td>{@code *#*[*]=,#,:[*]}</td></tr>
+ * <tr><td>288</td><td>Cis double bond</td><td>{@code *&#47[D2]=[D2]/*}</td></tr>
+ * <tr><td>289</td><td>Trans double bond</td><td>{@code *&#47[D2]=[D2]/*}</td></tr>
  * <tr><td>290</td><td>Mixed anhydrides</td><td>{@code [$(*=O),$([#16,#14,#5]),$([#7]([#6]=[OX1]))][#8X2][$(*=O),$([#16,#14,#5]),$([#7]([#6]=[OX1]))]}</td></tr>
  * <tr><td>291</td><td>Halogen on hetero</td><td>{@code [FX1,ClX1,BrX1,IX1][!#6]}</td></tr>
  * <tr><td>292</td><td>Halogen multi subst</td><td>{@code [F,Cl,Br,I;!$([X1]);!$([X0-])]}</td></tr>
@@ -342,7 +342,7 @@ import java.util.Map;
  * <tr><td>295</td><td>Charged</td><td>{@code [!+0]}</td></tr>
  * <tr><td>296</td><td>Anion</td><td>{@code [-1,-2,-3,-4,-5,-6,-7]}</td></tr>
  * <tr><td>297</td><td>Kation</td><td>{@code [+1,+2,+3,+4,+5,+6,+7]}</td></tr>
- * <tr><td>298</td><td>Salt</td><td>([-1,-2,-3,-4,-5,-6,-7]).([+1,+2,+3,+4,+5,+6,+7])</td></tr>
+ * <tr><td>298</td><td>Salt</td><td>{@code ([-1,-2,-3,-4,-5,-6,-7]).([+1,+2,+3,+4,+5,+6,+7])}</td></tr>
  * <tr><td>299</td><td>1,3-Tautomerizable</td><td>{@code [$([#7X2,OX1,SX1]=*[!H0;!$([a;!n])]),$([#7X3,OX2,SX2;!H0]*=*),$([#7X3,OX2,SX2;!H0]*:n)]}</td></tr>
  * <tr><td>300</td><td>1,5-Tautomerizable</td><td>{@code [$([#7X2,OX1,SX1]=,:**=,:*[!H0;!$([a;!n])]),$([#7X3,OX2,SX2;!H0]*=**=*),$([#7X3,OX2,SX2;!H0]*=,:**:n)]}</td></tr>
  * <tr><td>301</td><td>Rotatable bond</td><td>{@code [!$(*#*)&!D1]-!@[!$(*#*)&!D1]}</td></tr>

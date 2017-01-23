@@ -26,7 +26,7 @@ package org.openscience.cdk.interfaces;
  * <ul>
  *   <li><code>[C5H5]-</code></li>
  *   <li><code>C6H6</code></li>
- *   <li><code><sup>12</sup>C5</sup><sup>13</sup>CH6</code></li>
+ *   <li><code><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></code></li>
  * </ul>
  *
  * @cdk.module  interfaces

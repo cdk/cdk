@@ -175,7 +175,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     /**
      *  Gets the NaturalAbundance attribute of the Isotope object.
      *
-     *  <p>Once instantiated all field not filled by passing parameters
+     * <p>Once instantiated all field not filled by passing parameters
      * to the constructor are null. Isotopes can be configured by using
      * the IsotopeFactory.configure() method:
      * </p>

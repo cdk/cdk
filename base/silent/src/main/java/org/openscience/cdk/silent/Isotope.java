@@ -172,13 +172,12 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      *  <p>Once instantiated all field not filled by passing parameters
      * to the constructor are null. Isotopes can be configured by using
-     * the IsotopeFactory.configure() method:
+     * the IsotopeFactory.configure() method:</p>
      * <pre>
      *   Isotope isotope = new Isotope("C", 13);
      *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
      *   if.configure(isotope);
      * </pre>
-     * </p>
      *
      * @return    The NaturalAbundance value
      *
@@ -193,13 +192,12 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *  Gets the ExactMass attribute of the Isotope object.
      *  <p>Once instantiated all field not filled by passing parameters
      * to the constructor are null. Isotopes can be configured by using
-     * the IsotopeFactory.configure() method:
+     * the IsotopeFactory.configure() method:</p>
      * <pre>
      *   Isotope isotope = new Isotope("C", 13);
      *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
      *   if.configure(isotope);
      * </pre>
-     * </p>
      *
      * @return    The ExactMass value
      *
@@ -215,13 +213,12 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * <p>Once instantiated all field not filled by passing parameters
      * to the constructor are null. Isotopes can be configured by using
-     * the IsotopeFactory.configure() method:
+     * the IsotopeFactory.configure() method:</p>
      * <pre>
      *   Isotope isotope = new Isotope("C", 13);
      *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
      *   if.configure(isotope);
      * </pre>
-     * </p>
      *
      * @return The atomic mass of this element
      *

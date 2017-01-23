@@ -51,7 +51,7 @@ import java.util.Set;
  * minimum cycle bases (SSSRs). <b>Important</b> the cycle sets returned are not
  * ordered in the path of the cycle.
  *
- * <br> <h4>Further Explanation</h4> The diagram below illustrates the isolated
+ * <br> <b>Further Explanation</b> The diagram below illustrates the isolated
  * and fused sets of cyclic atoms. The colored circles indicate the atoms and
  * bonds that are returned for each molecules. <br><br> <img alt="isolated and
  * fused cycle systems" src="http://i56.photobucket.com/albums/g187/johnymay/isolated-and-fused-cycles-01_zpse0311377.png">
@@ -63,7 +63,8 @@ import java.util.Set;
  * the smaller rings </li> <li>One isolated system and one fused system</li>
  * </ol>
  *
- * <h4>Example Usage</h4>
+ * <br>
+ * <b>Example Usage</b>
  * <blockquote><pre>{@code
  * // construct the search for a given molecule, if an adjacency list
  * // representation (int[][]) is available this can be passed to the
@@ -296,7 +297,7 @@ public final class RingSearch {
      * fused[1].length; // e.g. 10 vertices in the second system
      * fused[2].length; // e.g. 4 vertices in the third system
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @return array of fused fragments, defined by the vertices in the
      *         fragment

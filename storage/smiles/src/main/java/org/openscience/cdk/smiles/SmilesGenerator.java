@@ -180,7 +180,7 @@ import java.util.Set;
  * can ignore it.
  *
  * The two aggregate flavours are {@link SmiFlavor#CxSmiles} and {@link SmiFlavor#CxSmilesWithCoords}.
- * As with other flavours, fine grain control is possible {@see SmiFlavor}.
+ * As with other flavours, fine grain control is possible {@link SmiFlavor}.
  * <br>
  * <b>*</b> the unique SMILES generation uses a fast equitable labelling procedure
  *   and as such there are some structures which may not be unique. The number
@@ -225,7 +225,7 @@ public final class SmilesGenerator {
      *                                              SmiFlavor.Canonical);
      * </pre></blockquote>
      *
-     * @param flavour SMILES flavour flags {@see SmiFlavor}
+     * @param flavour SMILES flavour flags {@link SmiFlavor}
      */
     public SmilesGenerator(int flavour) {
         this.flavour   = flavour;

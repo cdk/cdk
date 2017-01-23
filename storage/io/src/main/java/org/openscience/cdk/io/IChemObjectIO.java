@@ -64,7 +64,7 @@ public interface IChemObjectIO extends Closeable {
     /**
      * Closes this IChemObjectIO's resources.
      *
-     * @throws throws an {@link IOException} when the wrapper IO class cannot be closed.
+     * @throws IOException when the wrapper IO class cannot be closed.
      */
     @Override
     public void close() throws IOException;

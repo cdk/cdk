@@ -47,15 +47,14 @@ import java.util.List;
  *
  * and G<sub>0</sub>, G<sub>1</sub>, G<sub>2</sub>, ..., G<sub>n-1</sub> are
  * subgroups of G.
- * </p>
  *
  * <p>
  * Now let orb(0) = {g(0) : g &isin; G} be the orbit of 0 under G. Then |orb(0)|
  * (the size of the orbit) is n<sub>0</sub> for some integer 0 &lt; n<sub>0</sub>
  * &le; n and write orb(0) = {x<sub>0,1</sub>, x<sub>0,2</sub>, ...,
- * x<sub>0,n&#8320;</sub>} and for each i, 1 &le; i &le; n<sub>0</sub> choose
+ * x<sub>0,n₀</sub>} and for each i, 1 &le; i &le; n<sub>0</sub> choose
  * some h<sub>0,1</sub> in G such that h<sub>0,i</sub>(0) = x<sub>0,1</sub>. Set
- * U<sub>0</sub> = {h<sub>0,1</sub>, ..., h<sub>0,n&#8320;</sub>}.
+ * U<sub>0</sub> = {h<sub>0,1</sub>, ..., h<sub>0,n₀</sub>}.
  * </p>
  *
  * <p>

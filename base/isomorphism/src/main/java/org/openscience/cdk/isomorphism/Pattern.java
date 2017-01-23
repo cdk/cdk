@@ -144,7 +144,7 @@ public abstract class Pattern {
      *
      * The reaction is inlined into a molecule and vs mapped id's correspond
      * to the absolute atom index in the reaction when considered as reactants, agents,
-     * products {@see ReactionManipulator#toMolecule}.
+     * products {@link ReactionManipulator#toMolecule}.
      *
      * @param target the reaction to search for the pattern in
      * @return the mapping from the pattern to the target
