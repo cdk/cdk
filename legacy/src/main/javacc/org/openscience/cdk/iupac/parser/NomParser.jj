@@ -39,7 +39,6 @@ import java.util.*;
  * @author Stephen Tomkinson
  *
  * @cdk.keyword IUPAC name
- * @cdk.githash
  * @deprecated The OPSIN (<a href="http://opsin.ch.cam.ac.uk/">http://opsin.ch.cam.ac.uk/</a>) tool
  *             offers a more comprehensive alternative to this parsers functionality. 
  */
