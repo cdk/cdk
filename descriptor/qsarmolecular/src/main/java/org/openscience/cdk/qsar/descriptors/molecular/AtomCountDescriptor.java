@@ -34,8 +34,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * It is
  * possible to use the wild card symbol '*' as element type to get the count of
  * all atoms.
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

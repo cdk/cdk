@@ -31,8 +31,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 /**
  *  This class returns the number of bonds on the shortest path between two atoms.
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

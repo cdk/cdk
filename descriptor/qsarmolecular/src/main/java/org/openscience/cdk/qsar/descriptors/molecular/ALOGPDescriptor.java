@@ -59,8 +59,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * then do not use descriptor if have this  value for any
  * chemicals in cluster?
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

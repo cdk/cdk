@@ -37,8 +37,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  based on a function which is extracted from Weka(J48) from
  *  experimental values (NIST data).
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

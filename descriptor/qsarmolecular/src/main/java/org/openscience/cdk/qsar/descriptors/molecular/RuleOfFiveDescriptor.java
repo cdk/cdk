@@ -33,8 +33,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * Lipinski's Rule Of 5.
  * See <a href="http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five">http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five</a>.
  *
-  * <p>This descriptor uses these parameters:
- * <table border="1">
+  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

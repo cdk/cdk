@@ -42,8 +42,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * This descriptor assumes 2-centered bonds.
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

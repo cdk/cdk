@@ -36,8 +36,7 @@ import java.util.Iterator;
 /**
  * This Class contains a method that returns the number of aromatic atoms in an AtomContainer.
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

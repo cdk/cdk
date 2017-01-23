@@ -41,8 +41,7 @@ import java.util.List;
  *  The calculation of bond total Partial charge is calculated
  *  determining the difference the Partial Total Charge on atoms
  *  A and B of a bond. Based in Gasteiger Charge.
- *  <p>This descriptor uses these parameters:
- * <table border="1">
+ *  <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

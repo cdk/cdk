@@ -37,8 +37,7 @@ import java.util.Set;
 /**
  * Class that returns the number of atoms in the largest chain.
  * 
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>

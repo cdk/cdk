@@ -44,8 +44,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  *
  * The descriptor assumes that explicit hydrogens have been added to the molecule
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

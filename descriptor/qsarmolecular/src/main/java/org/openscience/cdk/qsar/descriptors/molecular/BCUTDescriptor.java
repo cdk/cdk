@@ -75,8 +75,7 @@ import Jama.Matrix;
  * 
  * Given the above description, if the aim is to gt all the eigenvalues for a molecule, you should
  * set nlow to 0 and specify the number of heavy atoms (or some large number) for nhigh (or vice versa).
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>

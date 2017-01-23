@@ -92,8 +92,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Lapl8 Lapl9 Lapl10
  * </pre>
  * 
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>

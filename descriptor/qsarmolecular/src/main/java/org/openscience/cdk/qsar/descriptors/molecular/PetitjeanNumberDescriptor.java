@@ -37,8 +37,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  The graph diameter D is defined as the largest vertex eccentricity in the graph.
  *  (http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html)
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

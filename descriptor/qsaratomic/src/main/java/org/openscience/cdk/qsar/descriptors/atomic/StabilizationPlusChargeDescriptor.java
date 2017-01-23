@@ -36,8 +36,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  obtaining the charges. The method is based following {@cdk.cite Saller85}.
  *  The value is calculated looking for resonance structures which can stabilize the charge.
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

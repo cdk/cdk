@@ -115,8 +115,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * However, a comparison of the values calculated by the two implementations indicates
  * that they are qualitatively the same.
  * 
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>

@@ -47,8 +47,7 @@ import javax.vecmath.Point3d;
  * <li>geomShape - geometric shape index
  * </ol>
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

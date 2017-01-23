@@ -33,8 +33,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *   1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned.
  *   (definition from MOE tutorial on line)
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

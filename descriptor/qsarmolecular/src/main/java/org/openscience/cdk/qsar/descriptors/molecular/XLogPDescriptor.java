@@ -63,8 +63,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * <p>For description of the methodology see Ref. {@cdk.cite WANG97} and {@cdk.cite WANG00}.
  * Actually one molecular factor is missing (presence of para Hs donor pair).
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

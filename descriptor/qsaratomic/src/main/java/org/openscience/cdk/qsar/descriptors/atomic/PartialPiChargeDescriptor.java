@@ -35,8 +35,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  <p>The calculation of pi partial charges in pi-bonded systems of an heavy
  *  atom was made by Saller-Gasteiger. It is based on the qualitative concept of resonance and
  *  implemented with the Partial Equalization of Pi-Electronegativity (PEPE).</p>
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

@@ -37,8 +37,7 @@ import java.util.Iterator;
  *  The calculation of bond-pi Partial charge is calculated
  *  determining the difference the Partial Pi Charge on atoms
  *  A and B of a bond. Based in Gasteiger Charge.
- *  <p>This descriptor uses these parameters:
- * <table border="1">
+ *  <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

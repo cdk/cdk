@@ -48,8 +48,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * <li>C3SP3	singly bound carbon bound to three other carbons
  * <li>C4SP3	singly bound carbon bound to four other carbons
  * </ul>
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>

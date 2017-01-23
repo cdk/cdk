@@ -46,8 +46,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * i<sup>th</sup> atom to the atom farthest from it) and V(i) is the vertex degree of the
  * i<sup>th</sup> atom.
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

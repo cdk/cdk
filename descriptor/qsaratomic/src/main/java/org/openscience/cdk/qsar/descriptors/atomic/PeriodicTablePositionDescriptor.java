@@ -33,8 +33,7 @@ import java.util.Map;
 /**
  *  This class returns the period in the periodic table of an atom belonging to an atom container
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

@@ -41,8 +41,7 @@ import java.util.List;
  *  Partial Equalization of Electronegativity method (PEOE-PEPE) from Gasteiger. </p>
  *  <p>They are obtained by summation of the results of the calculations on
  *  sigma- and pi-charges. </p>
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

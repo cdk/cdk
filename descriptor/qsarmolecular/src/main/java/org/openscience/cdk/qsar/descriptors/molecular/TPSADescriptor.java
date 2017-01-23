@@ -45,8 +45,7 @@ import java.util.List;
  * Calculation of topological polar surface area based on fragment
  * contributions (TPSA) {@cdk.cite ERTL2000}.
  * 
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>
