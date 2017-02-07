@@ -84,7 +84,7 @@ class MathTools {
     }
 
     static boolean isEven(int intValue) {
-        return intValue % 2 == 0;
+        return (intValue & 0x1) == 0;
     }
 
 }
