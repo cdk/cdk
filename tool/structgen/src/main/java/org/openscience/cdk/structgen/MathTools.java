@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.math;
+package org.openscience.cdk.structgen;
 
 
 /**
@@ -25,7 +25,7 @@ package org.openscience.cdk.math;
  * @cdk.module standard
  * @cdk.githash
  */
-public class MathTools {
+class MathTools {
 
     /**
      * Analog of Math.max that returns the largest double value in an array of doubles.
@@ -33,7 +33,7 @@ public class MathTools {
      * @param   values  the values to be searched for the largest value among them
      * @return   the largest value among a set of given values
      */
-    public static double max(double[] values) {
+    static double max(double[] values) {
         double max = values[0];
         for (double value : values)
             if (value > max) max = value;
@@ -46,7 +46,7 @@ public class MathTools {
      * @param   values  the values to be searched for the smallest value among them
      * @return   the smallest value among a set of given values
      */
-    public static double min(double[] values) {
+    static double min(double[] values) {
         double min = values[0];
         for (double value : values)
             if (value < min) min = value;
@@ -56,7 +56,7 @@ public class MathTools {
     /**
      * Analog of Math.max that returns the largest int value in an array of ints.
      **/
-    public static int max(int[] values) {
+    static int max(int[] values) {
         int max = values[0];
         for (int value : values) {
             if (value > max) {
@@ -69,7 +69,7 @@ public class MathTools {
     /**
      * Analog of Math.max that returns the largest int value in an array of ints.
      **/
-    public static int min(int[] values) {
+    static int min(int[] values) {
         int min = values[0];
         for (int value : values) {
             if (value < min) {
@@ -79,11 +79,11 @@ public class MathTools {
         return min;
     }
 
-    public static boolean isOdd(int intValue) {
+    static boolean isOdd(int intValue) {
         return !MathTools.isEven(intValue);
     }
 
-    public static boolean isEven(int intValue) {
+    static boolean isEven(int intValue) {
         return intValue % 2 == 0;
     }
 
