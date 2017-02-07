@@ -22,9 +22,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.io.InputStream;
-import java.util.BitSet;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
@@ -39,9 +36,11 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.smiles.FixBondOrdersTool;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.InputStream;
+import java.util.BitSet;
 
 import static org.hamcrest.CoreMatchers.is;
 
