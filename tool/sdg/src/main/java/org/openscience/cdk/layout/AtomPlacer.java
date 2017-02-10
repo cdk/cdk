@@ -60,6 +60,7 @@ import java.util.List;
  */
 public class AtomPlacer {
 
+    private static final double ANGLE_120 = Math.toRadians(120);
     public final static boolean debug = true;
     public static final String PRIORITY = "Weight";
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomPlacer.class);
@@ -177,13 +178,7 @@ public class AtomPlacer {
             return;
         }
 
-        // If the atom is a macrocycle and the substituents are terminal we allow these to point these into the ring
-        final boolean isInMacrocycle = atom.getProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT) != null &&
-                                       atom.getProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT, Boolean.class);
-        if (isInMacrocycle &&
-            placedNeighbours.getAtomCount() == 2 &&
-            molecule.getBond(atom, placedNeighbours.getAtom(0)).isInRing() &&
-            molecule.getBond(atom, placedNeighbours.getAtom(1)).isInRing()) {
+        if (doAngleSnap(atom, placedNeighbours)) {
 
             int numTerminal = 0;
             for (IAtom unplaced : unplacedNeighbours.atoms())
@@ -302,6 +297,26 @@ public class AtomPlacer {
         //        }
         logger.debug("After check: distributePartners->startAngle: " + startAngle);
         populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, radius);
+    }
+
+    private boolean doAngleSnap(IAtom atom, IAtomContainer placedNeighbours) {
+        if (placedNeighbours.getAtomCount() != 2)
+            return false;
+        IBond b1 = molecule.getBond(atom, placedNeighbours.getAtom(0));
+        if (!b1.isInRing())
+            return false;
+        IBond b2 = molecule.getBond(atom, placedNeighbours.getAtom(1));
+        if (!b2.isInRing())
+            return false;
+
+        Point2d p1 = atom.getPoint2d();
+        Point2d p2 = placedNeighbours.getAtom(0).getPoint2d();
+        Point2d p3 = placedNeighbours.getAtom(1).getPoint2d();
+
+        Vector2d v1 = newVector(p2, p1);
+        Vector2d v2 = newVector(p3, p1);
+
+        return Math.abs(v2.angle(v1) - ANGLE_120) < 0.01;
     }
 
     /**
