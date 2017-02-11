@@ -76,7 +76,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
      * despite the fact that they are a sub graph of each other according to the
      * UniversalIsomorphismTester.isSubgraph().
      *
-     * @author  Hugo Lafayette <hugo.lafayette@laposte.net>
+     * @author Hugo Lafayette &lt;hugo.lafayette@laposte.net&gt;
      *
      * @throws  CloneNotSupportedException
      * @throws  Exception

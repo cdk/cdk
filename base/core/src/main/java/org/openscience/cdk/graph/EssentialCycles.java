@@ -195,25 +195,25 @@ public final class EssentialCycles {
             super(null, path);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         BitSet edges(int[] path) {
             return initial.toEdgeVector(path);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         int[][] family() {
             return new int[][]{path()};
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         int sizeOfFamily() {
             return 1;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public String toString() {
             return Arrays.toString(path());

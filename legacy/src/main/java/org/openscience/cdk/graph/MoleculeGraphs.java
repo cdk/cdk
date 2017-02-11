@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * Utility class to create a molecule graph for use with JGraphT.
  *
- * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
+ * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  *
  * @cdk.module standard

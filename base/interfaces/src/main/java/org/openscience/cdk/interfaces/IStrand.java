@@ -32,7 +32,7 @@ import java.util.Map;
  * @cdk.module  interfaces
  * @cdk.githash
  * @cdk.created 2004-12-20
- * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+ * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  */
 public interface IStrand extends IAtomContainer {
 
@@ -123,7 +123,7 @@ public interface IStrand extends IAtomContainer {
     public Map<String, IMonomer> getMonomers();
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IStrand clone() throws CloneNotSupportedException;

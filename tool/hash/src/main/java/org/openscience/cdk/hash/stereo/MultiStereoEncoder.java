@@ -58,7 +58,7 @@ final class MultiStereoEncoder implements StereoEncoder {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean encode(long[] current, long[] next) {
@@ -75,7 +75,7 @@ final class MultiStereoEncoder implements StereoEncoder {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void reset() {

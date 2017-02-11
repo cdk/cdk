@@ -36,9 +36,8 @@ import java.util.Set;
 
 /**
  * Class that returns the number of atoms in the largest chain.
- * <p/>
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * 
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>
@@ -55,7 +54,7 @@ import java.util.Set;
  * <td>True is the CDKConstant.ISINRING has to be set</td>
  * </tr>
  * </table>
- * <p/>
+ * 
  * Returns a single value named <i>nAtomLAC</i>. Note that a chain exists if there
  * are two or more atoms. Thus single atom molecules will return 0
  *
@@ -79,7 +78,7 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
     /**
      * Returns a <code>Map</code> which specifies which descriptor
      * is implemented by this class.
-     * <p/>
+     * 
      * These fields are used in the map:
      * <ul>
      * <li>Specification-Reference: refers to an entry in a unique dictionary
@@ -100,7 +99,7 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
 
     /**
      * Sets the parameters attribute of the LargestChain object.
-     * <p/>
+     * 
      * This descriptor takes two parameters, which should be Booleans to indicate whether
      * aromaticity and ring member ship needs been checked (TRUE) or not (FALSE). The first
      * parameter (aromaticity) is deprecated and ignored.
@@ -186,7 +185,7 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

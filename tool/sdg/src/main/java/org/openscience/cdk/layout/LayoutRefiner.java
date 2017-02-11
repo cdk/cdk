@@ -47,11 +47,11 @@ import java.util.Set;
 
 /**
  * An overlap resolver that tries to resolve overlaps by rotating (reflecting),
- * bending, and stretching bonds. <p/>
+ * bending, and stretching bonds. 
  * 
  * The RBS (rotate, bend, stretch) algorithm is first described by {@cdk.cite Shelley83},
  * and later in more detail by {@cdk.cite HEL99}.
- * <p/>
+ * 
  * Essentially we have a measure of {@link Congestion}. From that we find 
  * un-bonded atoms that contribute significantly (i.e. overlap). To resolve
  * that overlap we try resolving the overlap by changing (acyclic) bonds in the

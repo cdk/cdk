@@ -91,7 +91,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
  *
  *  <p>With the <code>isSubgraph()</code> method, the second, and only the second
- *  argument <tBond>may</tBond> be atom IQueryAtomContainer, which allows one to do MQL like queries.
+ *  argument <i>may</i> be atom IQueryAtomContainer, which allows one to do MQL like queries.
  *  The first IAtomContainer must never be an IQueryAtomContainer. An example:<pre>
  *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
  *  IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
@@ -117,7 +117,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * </p>
  *
  * @author      Stephane Werner from IXELIS mail@ixelis.net,
- *              Syed Asad Rahman <asad@ebi.ebi.uk> (modified the orignal code)
+ *              Syed Asad Rahman &lt;asad@ebi.ebi.uk&gt; (modified the orignal code)
  * @cdk.created 2002-07-17
  * @cdk.require java1.5+
  * @cdk.module  smsd

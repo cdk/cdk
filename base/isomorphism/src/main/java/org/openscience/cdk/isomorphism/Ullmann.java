@@ -36,7 +36,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * A structure pattern which utilises the Ullmann algorithm {@cdk.cite
  * Ullmann76}.
  *
- * <p/>
+ * 
  *
  * Find and count the number molecules which contain the query substructure.
  *
@@ -49,14 +49,14 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *     if (pattern.matches(m))
  *         hits++;
  * </pre></blockquote>
- * <p/>
+ * 
  *
  * Finding the matching to molecules which contain the query substructure. It is
  * more efficient to obtain the {@link #match} and check it's size rather than
  * test if it {@link #matches} first. These methods automatically verify
  * stereochemistry.
  *
- * <blockquote><pre>
+ * <blockquote><pre>{@code
  * IAtomContainer query   = ...;
  * Pattern        pattern = Ullmann.findSubstructure(query);
  *
@@ -66,7 +66,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *     if (match.length > 0)
  *         hits++;
  * }
- * </pre></blockquote>
+ * }</pre></blockquote>
  *
  * @author John May
  * @cdk.module isomorphism
@@ -175,7 +175,7 @@ public final class Ullmann extends Pattern {
             this.bondMatcher = bondMatcher;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Iterator<int[]> iterator() {
             return new StateStream(new UllmannState(container1, container2, g1, g2, bonds1, bonds2, atomMatcher,

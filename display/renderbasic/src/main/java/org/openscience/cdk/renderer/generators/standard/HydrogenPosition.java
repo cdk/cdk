@@ -201,7 +201,7 @@ enum HydrogenPosition {
             this.offset = offset;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public String toString() {
             return String.format("%.2f, %.2f", extent, offset);

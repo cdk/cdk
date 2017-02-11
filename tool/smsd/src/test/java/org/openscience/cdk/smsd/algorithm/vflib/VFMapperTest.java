@@ -61,8 +61,8 @@ import org.openscience.cdk.smsd.algorithm.vflib.map.VFMapper;
 
 /**
  *
- * @author Richard L. Apodaca <rapodaca at metamolecular.com>
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Richard L. Apodaca &lt;rapodaca at metamolecular.com&gt;
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
  * @cdk.module test-smsd
  * @cdk.require java1.6+

@@ -51,14 +51,14 @@ import java.util.Set;
 
 /**
  * An implementation of the Murcko fragmenation method {@cdk.cite MURCKO96}.
- * <p/>
+ * 
  * As an implementation of {@link IFragmenter} this class will return
  * the Murcko frameworks (i.e., ring systems + linkers) along with
  * the ring systems ia getFragments. The
  * class also provides methods to extract the ring systems and frameworks
  * separately. For all these methods, the user can retrieve the substructures
  * as canonical SMILES strings or as {@link IAtomContainer} objects.
- * <p/>
+ * 
  * Note that in contrast to the original paper which implies that a single molecule
  * has a single framework, this class returns multiple frameworks consisting of all
  * combinations of ring systems and linkers. The "true" Murcko framework is simply
@@ -88,7 +88,7 @@ public class MurckoFragmenter implements IFragmenter {
 
     /**
      * Instantiate Murcko fragmenter.
-     * <p/>
+     * 
      * Considers fragments with 5 or more atoms and generates multiple
      * frameworks if available.
      */
@@ -341,7 +341,7 @@ public class MurckoFragmenter implements IFragmenter {
 
     /**
      * This returns the frameworks and ring systems from a Murcko fragmentation.
-     * <p/>
+     * 
      * To get frameworks, ring systems and side chains seperately, use the
      * respective functions
      *

@@ -233,7 +233,7 @@ public class DebugChemModel extends ChemModel implements IChemModel {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

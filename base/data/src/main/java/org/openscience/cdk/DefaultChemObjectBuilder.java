@@ -71,7 +71,7 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
  * A factory class to provide implementation independent {@link ICDKObject}s.
- * <p/>
+ * 
  * <pre>{@code
  *     IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
  *
@@ -169,7 +169,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
     }
 
     /**
-     * Access the singleton instance of this DefaultChemObjectBuilder. <p/>
+     * Access the singleton instance of this DefaultChemObjectBuilder. 
      * <pre>{@code
      *
      * // get the builder instance
@@ -199,7 +199,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) {

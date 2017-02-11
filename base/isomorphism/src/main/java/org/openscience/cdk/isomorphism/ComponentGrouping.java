@@ -110,7 +110,7 @@ public final class ComponentGrouping implements Predicate<int[]> {
      * and target (connected components).
      *
      * @param grouping  query grouping
-     * @param cc        connected component of the target
+     * @param targetComponents connected component of the target
      */
     public ComponentGrouping(int[] grouping, int[] targetComponents) {
         this.queryComponents  = grouping;

@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IReaction;
  * you have a start reaction and final reaction. Each reaction is included
  * in a step of the chain.
  *
- * @author      miguelrojasch <miguelrojasch@yahoo.es>
+ * @author miguelrojasch &lt;miguelrojasch@yahoo.es&gt;
  * @cdk.module  extra
  * @cdk.githash
  */

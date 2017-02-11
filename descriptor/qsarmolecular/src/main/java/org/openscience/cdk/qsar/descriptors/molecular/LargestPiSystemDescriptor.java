@@ -37,9 +37,8 @@ import java.util.List;
 
 /**
  * Class that returns the number of atoms in the largest pi system.
- * <p/>
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * 
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>
@@ -51,7 +50,7 @@ import java.util.List;
  * <td>True is the aromaticity has to be checked</td>
  * </tr>
  * </table>
- * <p/>
+ * 
  * Returns a single value named <i>nAtomPi</i>
  *
  * @author chhoppe from EUROSCREEN
@@ -73,7 +72,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
     /**
      * Returns a <code>Map</code> which specifies which descriptor
      * is implemented by this class.
-     * <p/>
+     * 
      * These fields are used in the map:
      * <ul>
      * <li>Specification-Reference: refers to an entry in a unique dictionary
@@ -94,7 +93,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
 
     /**
      * Sets the parameters attribute of the LargestPiSystemDescriptor object.
-     * <p/>
+     * 
      * This descriptor takes one parameter, which should be Boolean to indicate whether
      * aromaticity has been checked (TRUE) or not (FALSE).
      *
@@ -140,7 +139,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
 
     /**
      * Calculate the count of atoms of the largest pi system in the supplied {@link IAtomContainer}.
-     * <p/>
+     * 
      * <p>The method require one parameter:
      * <ol>
      * <li>if checkAromaticity is true, the method check the aromaticity,
@@ -207,7 +206,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

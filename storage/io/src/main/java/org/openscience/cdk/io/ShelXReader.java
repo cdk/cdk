@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <p>A reader for ShelX files. It currently supports ShelXL.
  *
  * <p>The ShelXL format is described on the net:
- * <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html"
+ * <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html">
  * http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
  *
  * @cdk.module io

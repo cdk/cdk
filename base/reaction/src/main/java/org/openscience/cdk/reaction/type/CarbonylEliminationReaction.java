@@ -40,7 +40,7 @@ import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which participate mass spectrum process.
- * This reaction could be represented as RC-C#[O+] => R[C] + |C#[O+]</p>
+ * This reaction could be represented as RC-C#[O+] =&gt; R[C] + |C#[O+]</p>
  * <p>Make sure that the molecule has the correspond lone pair electrons
  * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
  * <p>It is processed by the HeterolyticCleavageMechanism class</p>

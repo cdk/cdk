@@ -39,7 +39,7 @@ import java.util.List;
  * <p>This mechanism displaces the charge (lonePair) because of
  * deficiency of charge.
  * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
- * <p>This reaction could be represented as [A*]-B| => A=[B*]</p>
+ * <p>This reaction could be represented as [A*]-B| =&gt; A=[B*]</p>
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10

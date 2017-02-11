@@ -34,8 +34,8 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
  * The following groups are counted as hydrogen bond donors:
  * <ul>
- * <li>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge >= 0)</li>
- * <li>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge >= 0)</li>
+ * <li>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge &ge; 0)</li>
+ * <li>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge &ge; 0)</li>
  * </ul>
  * <p>
  * This descriptor uses no parameters.
@@ -45,8 +45,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *
  * Returns a single value named <i>nHBDon</i>.
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -166,7 +165,7 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

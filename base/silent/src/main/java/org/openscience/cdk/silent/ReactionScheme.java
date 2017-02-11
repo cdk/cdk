@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IReactionScheme;
  * This is designed to contain a set of reactions which are linked in
  * some way but without hard coded semantics.
  *
- * @author      miguelrojasch <miguelrojasch@yahoo.es>
+ * @author miguelrojasch &lt;miguelrojasch@yahoo.es&gt;
  * @cdk.module  silent
  * @cdk.keyword reaction
  */

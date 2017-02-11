@@ -48,28 +48,28 @@ import org.xml.sax.Attributes;
 /**
  * Implements the PDB convention used by PDB2CML.
  *
- * <p>This is a lousy implementation, though. Problems that will arise:
+ * <p>This is a lousy implementation, though. Problems that will arise:</p>
  * <ul>
  *   <li>when this new convention is adopted in the root element no
- *     currentFrame was set. This is done when <list sequence=""> is found
- *   <li>multiple sequences are not yet supported
+ *     currentFrame was set. This is done when {@code <list sequence="">} is found</li>
+ *   <li>multiple sequences are not yet supported</li>
  *   <li>the frame is now added when the doc is ended, which will result in problems
- *     but work for one sequence files made by PDB2CML v.??
- * <ul>
+ *     but work for one sequence files made by PDB2CML v.??</li>
+ * </ul>
  *
- * <p>What is does:
+ * <p>What is does:</p>
  * <ul>
- *   <li>work for now
+ *   <li>work for now</li>
  *   <li>give an idea on the API of the plugable CML import filter
- *     (a real one will be made)
+ *     (a real one will be made)</li>
  *   <li>read CML files generated with Steve Zara's PDB 2 CML converter
- *     (of which version 1999 produces invalid CML 1.0)
+ *     (of which version 1999 produces invalid CML 1.0)</li>
  * </ul>
  *
  * @cdk.module io
  * @cdk.githash
  *
- * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class PDBConvention extends CMLCoreModule {
 

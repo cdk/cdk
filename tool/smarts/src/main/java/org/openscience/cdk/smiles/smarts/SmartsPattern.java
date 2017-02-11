@@ -114,7 +114,7 @@ public final class SmartsPattern extends Pattern {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int[] match(IAtomContainer container) {

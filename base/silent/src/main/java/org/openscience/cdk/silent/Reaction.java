@@ -45,7 +45,7 @@ import java.util.Map;
  * @cdk.module  silent
  * @cdk.githash
  *
- * @author      Egon Willighagen <elw38@cam.ac.uk>
+ * @author Egon Willighagen &lt;elw38@cam.ac.uk&gt;
  * @cdk.created 2003-02-13
  * @cdk.keyword reaction
  */

@@ -43,8 +43,8 @@ import java.util.Iterator;
  * As most commonly encountered, this reaction results in the formal migration
  * of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond</p>
  *
- * <pre>[X-] + [Na+] => X -Na</pre>
- * <pre>|X + [Na+]   => [X+]-Na</pre>
+ * <pre>[X-] + [Na+] =&gt; X -Na</pre>
+ * <pre>|X + [Na+]   =&gt; [X+]-Na</pre>
  *
  * <p>Below you have an example how to initiate the mechanism.</p>
  * <p>It is processed by the AdductionLPMechanism class</p>

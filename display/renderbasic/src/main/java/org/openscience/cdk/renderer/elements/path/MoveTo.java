@@ -76,7 +76,7 @@ public class MoveTo extends PathElement {
         return new float[]{(float) coords[0], (float) coords[1]};
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public void points(double[] coords) {
         coords[0] = this.coords[0];

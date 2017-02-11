@@ -69,7 +69,7 @@ import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
  * supported) V3000 format. Unlikely the V2000 format that is limited to 999 atoms or bonds
  * V3000 can write arbitrarily large molecules. Beyond this the format removes some (but not all)
  * ambiguities and simplifies output values with tagging (e.g 'CHG=-1' instead of '5').
- * <p/>
+ * 
  * Supported Features:
  * <ul>
  *     <li>Atom Block, non-query features</li>
@@ -414,7 +414,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * for implicit hydrogens. Old applications (Symyx Draw) seem to push any
      * hydrogen to (implied) the last position but newer applications
      * (Accelrys/BioVia Draw) only do so for implicit hydrogens (makes more sense).
-     * <p/>
+     * 
      * To avoid the ambiguity for those who read 0D stereo (bad anyways) we
      * actually do push all hydrogens atoms to the back of the atom list giving
      * them highest value (4) when writing parity values.
@@ -636,7 +636,6 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     /**
      * Writes a molecule to the V3000 format. {@inheritDoc}
      *
-     * @throws IOException  low-level IO error
      * @throws CDKException state exception (e.g undef bonds), unsupported format feature,
      *                      object not supported etc
      */

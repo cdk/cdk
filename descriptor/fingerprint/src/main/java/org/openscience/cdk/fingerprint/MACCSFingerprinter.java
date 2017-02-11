@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * This fingerprinter generates 166 bit MACCS keys.
- * <p/>
+ * 
  * The SMARTS patterns for each of the features was taken from
  * <a href="http://www.rdkit.org"> RDKit</a>. However given that there is no
  * official and explicit listing of the original key definitions, the results
@@ -61,7 +61,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * defs do not provide a definition and I can't find an official description
  * of them.
  *
- * <p/><b>Warning - MACCS substructure keys cannot be used for substructure
+ * <b>Warning - MACCS substructure keys cannot be used for substructure
  * filtering. It is possible for some keys to match substructures and not match
  * the superstructures. Some keys check for hydrogen counts which may not be
  * preserved in a superstructure.</b>

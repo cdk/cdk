@@ -305,7 +305,7 @@ public class BondTools {
      *
      *@param  atom          The atom which is the center
      *@param  container  The atomContainer the atom is in
-     *@return            0=is not tetrahedral;>1 is a certain depiction of
+     *@return            0=is not tetrahedral; &gt;1 is a certain depiction of
      *      tetrahedrality (evaluated in parse chain)
      */
     public static int isTetrahedral(IAtomContainer container, IAtom atom, boolean strict) {

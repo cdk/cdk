@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * <p>This mechanism adduct together two fragments. The second fragment will be deficient in charge.
  * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
- * <p>This reaction could be represented as A + [B+] => A-B</p>
+ * <p>This reaction could be represented as A + [B+] =&gt; A-B</p>
  *
  *
  * @author         miguelrojasch

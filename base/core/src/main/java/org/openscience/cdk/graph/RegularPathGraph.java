@@ -116,7 +116,7 @@ final class RegularPathGraph extends PathGraph {
             graph[v].add(edge);
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public int degree(final int x) {
         return graph[x].size();
@@ -159,7 +159,7 @@ final class RegularPathGraph extends PathGraph {
         return reduced;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     void remove(final int x, final List<int[]> cycles) {
 
@@ -285,13 +285,13 @@ final class RegularPathGraph extends PathGraph {
             super(u, v, EMPTY_SET);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         ArrayBuilder reconstruct(ArrayBuilder ab) {
             return ab.append(other(ab.prev()));
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         int len() {
             return 2;
@@ -321,13 +321,13 @@ final class RegularPathGraph extends PathGraph {
             this.f = f;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         ArrayBuilder reconstruct(ArrayBuilder ab) {
             return u == ab.prev() ? f.reconstruct(e.reconstruct(ab)) : e.reconstruct(f.reconstruct(ab));
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         int len() {
             return Long.bitCount(xs) + 2;

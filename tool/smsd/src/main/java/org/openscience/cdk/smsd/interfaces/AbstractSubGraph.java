@@ -27,7 +27,7 @@ package org.openscience.cdk.smsd.interfaces;
  * Interface class for reporting only substructure searches.
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public abstract class AbstractSubGraph {
 

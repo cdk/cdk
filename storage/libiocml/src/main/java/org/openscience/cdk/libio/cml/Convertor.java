@@ -107,7 +107,7 @@ public class Convertor {
     /**
      * Constructs a CML convertor.
      *
-     * @param useCMLIDs Uses object IDs like 'a1' instead of 'a&lt;hash>'.
+     * @param useCMLIDs Uses object IDs like 'a1' instead of 'a&lt;hash&gt;'.
      * @param prefix    Namespace prefix to use. If null, then no prefix is used;
      */
     public Convertor(boolean useCMLIDs, String prefix) {

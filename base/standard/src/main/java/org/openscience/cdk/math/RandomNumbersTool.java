@@ -47,7 +47,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Sets the base generator to be used by this class.
-     * <p/>
+     * 
      *
      * @param base_random a <code>java.util.Random</code> subclass.
      */
@@ -68,7 +68,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Returns the seed being used by this random number generator.
-     * <p/>
+     * 
      *
      * @return the <code>long</code> seed.
      */
@@ -87,7 +87,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Generates a random integer between <code>0</code> and <code>1</code>.
-     * <p/>
+     * 
      *
      * @return a random integer between <code>0</code> and <code>1</code>.
      */
@@ -97,7 +97,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Generates a random integer between the specified values.
-     * <p/>
+     * 
      *
      * @param lo the lower bound for the generated integer.
      * @param hi the upper bound for the generated integer.
@@ -109,7 +109,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Generates a random long between <code>0</code> and <code>1</code>.
-     * <p/>
+     * 
      *
      * @return a random long between <code>0</code> and <code>1</code>.
      */
@@ -119,7 +119,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Generates a random long between the specified values.
-     * <p/>
+     * 
      *
      * @param lo the lower bound for the generated long.
      * @param hi the upper bound for the generated long.
@@ -149,7 +149,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Generates a random float between <code>0</code> and <code>1</code>.
-     * <p/>
+     * 
      *
      * @return a random float between <code>0</code> and <code>1</code>.
      */
@@ -159,7 +159,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Generates a random float between the specified values.
-     * <p/>
+     * 
      *
      * @param lo the lower bound for the generated float.
      * @param hi the upper bound for the generated float.
@@ -171,7 +171,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Generates a random double between <code>0</code> and <code>1</code>.
-     * <p/>
+     * 
      *
      * @return a random double between <code>0</code> and <code>1</code>.
      */
@@ -181,7 +181,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Generates a random double between the specified values.
-     * <p/>
+     * 
      *
      * @param lo the lower bound for the generated double.
      * @param hi the upper bound for the generated double.
@@ -193,7 +193,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Generates a random boolean.
-     * <p/>
+     * 
      *
      * @return a random boolean.
      */
@@ -203,7 +203,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Generates a random bit: either <code>0</code> or <code>1</code>.
-     * <p/>
+     * 
      *
      * @return a random bit.
      */
@@ -213,7 +213,7 @@ public class RandomNumbersTool extends Random {
 
     /**
      * Returns a boolean value based on a biased coin toss.
-     * <p/>
+     * 
      *
      * @param p the probability of success.
      * @return <code>true</code> if a success was found; <code>false</code>
@@ -226,7 +226,7 @@ public class RandomNumbersTool extends Random {
     /**
      * Generates a random float from a Gaussian distribution with the specified
      * deviation.
-     * <p/>
+     * 
      *
      * @param dev the desired deviation.
      * @return a random float from a Gaussian distribution with deviation
@@ -239,7 +239,7 @@ public class RandomNumbersTool extends Random {
     /**
      * Generates a random double from a Gaussian distribution with the specified
      * deviation.
-     * <p/>
+     * 
      *
      * @param dev the desired deviation.
      * @return a random double from a Gaussian distribution with deviation
@@ -252,7 +252,7 @@ public class RandomNumbersTool extends Random {
     /**
      * Generates a random double from an Exponential distribution with the specified
      * mean value.
-     * <p/>
+     * 
      *
      * @param mean the desired mean value.
      * @return a random double from an Exponential distribution with mean value

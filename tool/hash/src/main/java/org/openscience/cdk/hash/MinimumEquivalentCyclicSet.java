@@ -44,7 +44,7 @@ import java.util.TreeMap;
  * of writing (Feb, 2013) there are only 128 molecules (64 false positives) in
  * PubChem-Compound (46E6 molecules) which are not separated. In many data sets
  * this method will suffice however the exact {@link AllEquivalentCyclicSet} is
- * provided. <p/><br/>
+ * provided. <br/>
  *
  * This method is currently the default used by the {@link
  * org.openscience.cdk.hash.HashGeneratorMaker} but can also be explicitly
@@ -76,7 +76,7 @@ import java.util.TreeMap;
 final class MinimumEquivalentCyclicSet extends EquivalentSetFinder {
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph) {

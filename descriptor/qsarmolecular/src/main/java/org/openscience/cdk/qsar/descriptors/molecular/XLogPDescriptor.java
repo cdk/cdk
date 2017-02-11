@@ -63,8 +63,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * <p>For description of the methodology see Ref. {@cdk.cite WANG97} and {@cdk.cite WANG00}.
  * Actually one molecular factor is missing (presence of para Hs donor pair).
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -91,12 +90,12 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * 	-Atomtyp 7 is -0.137<br>
  *  -Atomtype 81 is -0.447<br>
  *  -pi system does not consider P or S<br>
- *  -ring system >3<br>
- *  -aromatic ring systems >=6<br>
+ *  -ring system &gt;3<br>
+ *  -aromatic ring systems &ge;6<br>
  *  -N atomtypes: (ring) is always (ring)c<br>
  *  -F 83 is not 0.375, the program uses 0.512 [2005-11-21]<br>
  *  -hydrophobic carbon is 1-3 relationship not 1-4 [2005-11-22]<br>
- *  -Atomtyp C 34/35/36 perception corrected [2005-11-22]; before Atomtyp perception ring perception is done -> slows run time<br>
+ *  -Atomtype C 34/35/36 perception corrected [2005-11-22]; before Atomtype perception ring perception is done -&gt; slows run time<br>
  *
  *
  *
@@ -981,7 +980,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

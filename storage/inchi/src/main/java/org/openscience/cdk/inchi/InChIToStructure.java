@@ -60,7 +60,8 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * but may have atom parities set.  Double bond and allene stereochemistry are
  * not currently recorded.
  *
- * <h3>Example usage</h3>
+ * <br>
+ * <b>Example usage</b>
  *
  * <code>// Generate factory - throws CDKException if native code does not load</code><br>
  * <code>InChIGeneratorFactory factory = new InChIGeneratorFactory();</code><br>
@@ -80,7 +81,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * <code>}</code><br>
  * <code></code><br>
  * <code>IAtomContainer container = intostruct.getAtomContainer();</code><br>
- * <p><tt><b>
+ * <p><br>
  *
  * @author Sam Adams
  *
@@ -411,10 +412,10 @@ public class InChIToStructure {
      * <p>Returns warning flags, see INCHIDIFF in inchicmp.h.
      *
      * <p>[x][y]:
-     * <br>x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
-     * <br>x=1 => Disconnected layer if Reconnected layer is present
-     * <br>y=1 => Main layer or Mobile-H
-     * <br>y=0 => Fixed-H layer
+     * <br>x=0 =&gt; Reconnected if present in InChI otherwise Disconnected/Normal
+     * <br>x=1 =&gt; Disconnected layer if Reconnected layer is present
+     * <br>y=1 =&gt; Main layer or Mobile-H
+     * <br>y=0 =&gt; Fixed-H layer
      */
     public long[][] getWarningFlags() {
         return (output.getWarningFlags());

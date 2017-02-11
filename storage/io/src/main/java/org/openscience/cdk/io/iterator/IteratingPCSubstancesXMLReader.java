@@ -48,7 +48,7 @@ import javax.xml.stream.events.XMLEvent;
  * @cdk.githash
  * @cdk.iooptions
  *
- * @author       Egon Willighagen <egonw@users.sf.net>
+ * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created  2008-05-05
  *
  * @cdk.keyword  file format, ASN

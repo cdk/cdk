@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module ioformats
  * @cdk.githash
  *
- * @author      Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2004-10-25
  */
 public interface IChemFormat extends IResourceFormat {

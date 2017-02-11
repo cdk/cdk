@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.module  interfaces
  * @cdk.githash
  *
- * @author      Egon Willighagen <e.willighagen@science.ru.nl>
+ * @author Egon Willighagen &lt;e.willighagen@science.ru.nl&gt;
  * @cdk.created 2005-12-05
  * @cdk.keyword amino acid
  */
@@ -72,7 +72,7 @@ public interface IAminoAcid extends IMonomer {
     public void addCTerminus(IAtom atom);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IAminoAcid clone() throws CloneNotSupportedException;

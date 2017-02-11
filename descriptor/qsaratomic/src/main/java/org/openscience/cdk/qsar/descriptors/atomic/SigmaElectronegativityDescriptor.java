@@ -35,8 +35,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * the Gasteiger-Marsili parameters and q is the sigma charge. For the actual
  * calculation it uses the {@link Electronegativity} class.
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

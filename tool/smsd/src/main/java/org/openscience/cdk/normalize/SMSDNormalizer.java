@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * before subjecting it for MCS search. eg. aromatizeMolecule
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public class SMSDNormalizer extends AtomContainerManipulator {
 

@@ -169,7 +169,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     /**
      * Set whether we should we round coordinates to ints, this tries to circumvent
-     * graphical glitches from AWT where floating points are truncated (e.g. 1.6 -> 1)
+     * graphical glitches from AWT where floating points are truncated (e.g. 1.6 -&gt; 1)
      * which causes notable defect such as parallel lines that aren't parallel.
      *
      * @param val rounding mode

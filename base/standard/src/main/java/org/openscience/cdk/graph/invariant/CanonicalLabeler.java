@@ -43,7 +43,7 @@ import java.util.List;
  * @cdk.module standard
  * @cdk.githash
  *
- * @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
+ * @author Oliver Horlacher &lt;oliver.horlacher@therastrat.com&gt;
  * @cdk.created  2002-02-26
  *
  * @cdk.keyword canonicalization

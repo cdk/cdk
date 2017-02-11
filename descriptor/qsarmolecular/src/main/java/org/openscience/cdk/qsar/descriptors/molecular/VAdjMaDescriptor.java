@@ -33,8 +33,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *   1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned.
  *   (definition from MOE tutorial on line)
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -129,7 +128,7 @@ public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMo
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

@@ -26,7 +26,7 @@ import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 
 /**
  * Represents a query pharmacophore group.
- * <p/>
+ * 
  * This class is meant to be used to construct pharmacophore queries in conjunction
  * with {@link org.openscience.cdk.pharmacophore.PharmacophoreQueryBond} and an
  * {@link org.openscience.cdk.isomorphism.matchers.QueryAtomContainer}.
@@ -82,7 +82,7 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
 
     /**
      * Checks whether this query atom matches a target atom.
-     * <p/>
+     * 
      * Currently a query pharmacophore atom will match a target pharmacophore group if the
      * symbols of the two groups match. This is based on the assumption that
      * pharmacophore groups with the same symbol will have the same SMARTS

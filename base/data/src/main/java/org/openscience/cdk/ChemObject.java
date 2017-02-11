@@ -265,7 +265,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public <T> T getProperty(Object description, Class<T> c) {
@@ -379,7 +379,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean getFlag(int mask) {
@@ -387,14 +387,14 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public Short getFlagValue() {
         return flags;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public void setProperties(Map<Object, Object> properties) {
         this.properties = null;

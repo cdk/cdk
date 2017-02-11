@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.githash
  * @cdk.iooptions
  *
- * @author  Fabian Dortu <Fabian.Dortu@wanadoo.be>
+ * @author Fabian Dortu &lt;Fabian.Dortu@wanadoo.be&gt;
  */
 public class VASPReader extends DefaultChemObjectReader {
 

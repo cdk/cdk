@@ -51,30 +51,30 @@ public class PharmacophoreUtils {
 
     /**
      * Read in a set of pharmacophore definitions to create pharmacophore queries.
-     * <p/>
+     * 
      * Pharmacophore queries can be saved in an XML format which is described XXX. The
      * file can contain multiple definitions. This method will process all the definitions
      * and return a list fo {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects which can be used with
      * the {@link PharmacophoreMatcher} class.
-     * <p/>
+     * 
      * The current schema for the document allows one to specify angle and distance
      * constraints. Currently the CDK does not support angle constraints, so they are
      * ignored.
-     * <p/>
+     * 
      * The schema also specifies a <i>units</i> attribute for a given constraint. The
      * current reader ignores this and assumes that all distances are in Angstroms.
-     * <p/>
+     * 
      * Finally, if there is a description associated with a pharmacophore definition, it is
      * available as the <i>"description"</i> property of the {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
-     * <p/>
+     * 
      * Example usage is
-     * <pre>
+     * <pre>{@code
      * List<PharmacophoreQuery> defs = readPharmacophoreDefinitions("mydefs.xml");
      * System.out.println("Number of definitions = "+defs.size());
      * for (int i = 0; i < defs.size(); i++) {
      *     System.out.println("Desc: "+defs.get(i).getProperty("description");
      * }
-     * </pre>
+     * }</pre>
      *
      * @param filename The file to read the definitions from
      * @return A list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects
@@ -99,30 +99,30 @@ public class PharmacophoreUtils {
 
     /**
      * Read in a set of pharmacophore definitions to create pharmacophore queries.
-     * <p/>
+     * 
      * Pharmacophore queries can be saved in an XML format which is described XXX. The
      * file can contain multiple definitions. This method will process all the definitions
      * and return a list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects which can be used with
      * the {@link PharmacophoreMatcher} class.
-     * <p/>
+     * 
      * The current schema for the document allows one to specify angle and distance
      * constraints.
-     * <p/>
+     * 
      * The schema also specifies a <i>units</i> attribute for a given constraint. The
      * current reader ignores this and assumes that all distances are in Angstroms and
      * angles are in degrees.
-     * <p/>
+     * 
      * Finally, if there is a description associated with a pharmacophore definition, it is
      * available as the <i>"description"</i> property of the {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
-     * <p/>
+     * 
      * Example usage is
-     * <pre>
+     * <pre>{@code
      * List<PharmacophoreQuery> defs = readPharmacophoreDefinitions"mydefs.xml");
      * System.out.println("Number of definitions = "+defs.size());
      * for (int i = 0; i < defs.size(); i++) {
      *     System.out.println("Desc: "+defs.get(i).getProperty("description");
      * }
-     * </pre>
+     * }</pre>
      *
      * @param ins The stream to read the definitions from
      * @return A list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects

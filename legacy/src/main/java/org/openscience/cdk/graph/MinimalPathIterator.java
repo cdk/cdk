@@ -42,7 +42,7 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 /**
  * Iterates over all shortest paths between two vertices in an undirected, unweighted graph.
  *
- * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
+ * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  *
  * @cdk.module standard

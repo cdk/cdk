@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.module  interfaces
  * @cdk.githash
  *
- * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-06
  *
  * @cdk.keyword monomer
@@ -69,7 +69,7 @@ public interface IMonomer extends IAtomContainer {
     public void setMonomerType(String cMonomerType);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IMonomer clone() throws CloneNotSupportedException;

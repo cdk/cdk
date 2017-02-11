@@ -30,7 +30,7 @@ package org.openscience.cdk.io.formats;
  * @cdk.module ioformats
  * @cdk.githash
  *
- * @author      Egon Willighagen <egonw@users.sf.net>
+ * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2006-03-04
  */
 public interface IResourceFormat {

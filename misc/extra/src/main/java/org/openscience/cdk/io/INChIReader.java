@@ -55,7 +55,7 @@ import org.xml.sax.XMLReader;
  * @cdk.githash
  * @cdk.iooptions
  *
- * @author      Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2004-05-17
  *
  * @cdk.keyword file format, INChI

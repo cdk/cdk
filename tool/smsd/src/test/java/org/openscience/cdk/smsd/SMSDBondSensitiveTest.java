@@ -39,7 +39,7 @@ import org.openscience.cdk.smsd.interfaces.Algorithm;
 import org.openscience.cdk.smsd.tools.ExtAtomContainerManipulator;
 
 /**
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
  * @cdk.module test-smsd
  * @cdk.require java1.6+

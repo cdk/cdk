@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Debugging data class.
  *
- * @author      miguelrojasch <miguelrojasch@yahoo.es>
+ * @author miguelrojasch &lt;miguelrojasch@yahoo.es&gt;
  * @cdk.module datadebug
  * @cdk.githash
  */

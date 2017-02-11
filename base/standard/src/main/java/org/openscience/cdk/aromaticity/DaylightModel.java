@@ -41,14 +41,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * generating SMILES. The model was interpreted from various resources and as
  * such may not match exactly. If you find an inconsistency please add a request
  * for enhancement to the patch tracker. One known limitation is that this model
- * does not currently consider unknown/pseudo atoms '*'. <p/>
+ * does not currently consider unknown/pseudo atoms '*'. 
  *
  * The model makes a couple of assumptions which it will not correct for.
  * Checked assumptions cause the model to throw a runtime exception. <ul>
  * <li>there should be no valence errors (unchecked)</li> <li>every atom has a
  * set implicit hydrogen count (checked)</li> <li>every bond has defined order,
  * single, double etc (checked)</li> <li>atomic number of non-pseudo atoms is
- * set (checked)</li> </ul> <p/>
+ * set (checked)</li> </ul> 
  *
  * The aromaticity model in SMILES was designed to simplify canonicalisation and
  * express symmetry in a molecule. The contributed electrons can be summarised
@@ -75,7 +75,7 @@ final class DaylightModel extends ElectronDonation {
     private static final int ARSENIC    = 33;
     private static final int SELENIUM   = 34;
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 

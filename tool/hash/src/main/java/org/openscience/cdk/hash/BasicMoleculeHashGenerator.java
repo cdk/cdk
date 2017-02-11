@@ -83,7 +83,7 @@ final class BasicMoleculeHashGenerator implements MoleculeHashGenerator {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public long generate(IAtomContainer container) {

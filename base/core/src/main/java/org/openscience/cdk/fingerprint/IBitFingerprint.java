@@ -57,7 +57,7 @@ public interface IBitFingerprint extends Serializable {
      * <code>true</code>.
      *
      * @param  fingerprint the fingerprint with which to perform the AND operation
-     * @throws {@link IllegalArgumentException} if the two fingerprints are
+     * @throws IllegalArgumentException if the two fingerprints are
      * not of same size
      */
     public void and(IBitFingerprint fingerprint);
@@ -71,7 +71,7 @@ public interface IBitFingerprint extends Serializable {
      * bit in the bit set argument has the value <code>true</code>.
      *
      * @param  fingerprint the fingerprint with which to perform the OR operation
-     * @throws {@link IllegalArgumentException} if the two fingerprints are
+     * @throws IllegalArgumentException if the two fingerprints are
      * not of same size
      */
     public void or(IBitFingerprint fingerprint);
@@ -90,7 +90,7 @@ public interface IBitFingerprint extends Serializable {
      * Sets the bit at the specified index to the specified value.
      *
      * @param index the index of the bit to change
-     * @param value the new value for the bit at position <code>index</index>
+     * @param value the new value for the bit at position <code>index</code>
      */
     public void set(int index, boolean value);
 
@@ -104,7 +104,7 @@ public interface IBitFingerprint extends Serializable {
 
     /**
      * Sets the bit at the specified index to true.
-     * @param i
+     * @param i index
      */
     public void set(int i);
 

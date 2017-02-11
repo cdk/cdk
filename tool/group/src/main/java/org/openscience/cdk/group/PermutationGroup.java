@@ -31,31 +31,30 @@ import java.util.List;
  * A permutation group with a Schreier-Sims representation. For a number n, a
  * list of permutation sets is stored (U0,...,Un-1). All n! permutations of
  * [0...n-1] can be reconstructed from this list by backtracking - see, for
- * example, the <a href="#generateAll">generateAll<a/> method.
+ * example, the <a href="#generateAll">generateAll</a> method.
  * </p>
  *
  * <p>
  * So if G is a group on X = {0, 1, 2, 3, ..., n-1}, then:
  *
- * <pre>
- *      G<sub>0</sub> = {g &isin; G  : g(0) = 0}
- *      G<sub>1</sub> = {g &isin; G<sub>0</sub> : g(1) = 1}
- *      G<sub>2</sub> = {g &isin; G<sub>1</sub> : g(2) = 2}
- *      ...
- *      G<sub>n-1</sub> = {g in G<sub>n-2</sub> : g(n - 1) = n - 1} = {I}
- * </pre>
+ * <blockquote>
+ *      G<sub>0</sub> = {g &isin; G  : g(0) = 0} <br>
+ *      G<sub>1</sub> = {g &isin; G<sub>0</sub> : g(1) = 1} <br>
+ *      G<sub>2</sub> = {g &isin; G<sub>1</sub> : g(2) = 2} <br>
+ *      ... <br>
+ *      G<sub>n-1</sub> = {g in G<sub>n-2</sub> : g(n - 1) = n - 1} = {I} <br>
+ * </blockquote>
  *
  * and G<sub>0</sub>, G<sub>1</sub>, G<sub>2</sub>, ..., G<sub>n-1</sub> are
  * subgroups of G.
- * </p>
  *
  * <p>
  * Now let orb(0) = {g(0) : g &isin; G} be the orbit of 0 under G. Then |orb(0)|
- * (the size of the orbit) is n<sub>0</sub> for some integer 0 < n<sub>0</sub>
- * <= n and write orb(0) = {x<sub>0,1</sub>, x<sub>0,2</sub>, ...,
- * x<sub>0,n<sub>0</sub></sub>} and for each i, 1 <= i <= n<sub>0</sub> choose
+ * (the size of the orbit) is n<sub>0</sub> for some integer 0 &lt; n<sub>0</sub>
+ * &le; n and write orb(0) = {x<sub>0,1</sub>, x<sub>0,2</sub>, ...,
+ * x<sub>0,n₀</sub>} and for each i, 1 &le; i &le; n<sub>0</sub> choose
  * some h<sub>0,1</sub> in G such that h<sub>0,i</sub>(0) = x<sub>0,1</sub>. Set
- * U<sub>0</sub> = {h<sub>0,1</sub>, ..., h<sub>0,n<sub>0</sub></sub>}.
+ * U<sub>0</sub> = {h<sub>0,1</sub>, ..., h<sub>0,n₀</sub>}.
  * </p>
  *
  * <p>
@@ -403,7 +402,7 @@ public class PermutationGroup {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public String toString() {

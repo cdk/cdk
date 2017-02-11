@@ -90,7 +90,7 @@ import java.util.Set;
  * will generate isomeric SMILES without atomic mass.
  *
  *
- * <p/>
+ * 
  * A generator instance is created using one of the static methods, the SMILES
  * are then created by invoking {@link #create(IAtomContainer)}.
  * <blockquote><pre>
@@ -102,7 +102,7 @@ import java.util.Set;
  * String          smi     = sg.create(ethanol); // only CCO
  * </pre></blockquote>
  *
- * <p/>
+ * 
  *
  * The isomeric and absolute generator encode tetrahedral and double bond
  * stereochemistry using {@link org.openscience.cdk.interfaces.IStereoElement}s
@@ -110,7 +110,7 @@ import java.util.Set;
  * written it may need to be determined from 2D/3D coordinates using
  * {@link org.openscience.cdk.stereo.StereoElementFactory}.
  *
- * <p/>
+ * 
  *
  * By default the generator will not write aromatic SMILES. Kekulé SMILES are
  * generally preferred for compatibility and aromaticity can easily be
@@ -142,7 +142,7 @@ import java.util.Set;
  *                                               SmiFlavor.UseAromaticSymbols);
  * String          smi     = sg.create(benzene); // c1ccccc1
  * </pre></blockquote>
- * <p/>
+ * 
  *
  * It can be useful to know the output order of SMILES. On input the order of the atoms
  * reflects the atom index. If we know this order we can refer to atoms by index and
@@ -150,7 +150,7 @@ import java.util.Set;
  * The output order is obtained by parsing in an auxiliary array during creation. The
  * following snippet demonstrates how we can write coordinates in order.
  *
- * <blockquote><pre>
+ * <blockquote><pre>{@code
  * IAtomContainer  mol = ...;
  * SmilesGenerator sg  = new SmilesGenerator(SmiFlavor.Generic);
  *
@@ -169,7 +169,7 @@ import java.util.Set;
  * // SMILES string suffixed by the coordinates
  * String smi2d = smi + " " + Arrays.toString(coords);
  *
- * </pre></blockquote>
+ * }</pre></blockquote>
  *
  * Using the output order of SMILES forms the basis of
  * <a href="https://www.chemaxon.com/marvin-archive/latest/help/formats/cxsmiles-doc.html">
@@ -178,10 +178,10 @@ import java.util.Set;
  * grouping (for salts in reactions), polymer repeats, multi center bonds, and coordinates.
  * The CXSMILES layer is appended after the SMILES so that parser which don't interpret it
  * can ignore it.
- * <p/>
+ *
  * The two aggregate flavours are {@link SmiFlavor#CxSmiles} and {@link SmiFlavor#CxSmilesWithCoords}.
- * As with other flavours, fine grain control is possible {@see SmiFlavor}.
- * <p/><p/>
+ * As with other flavours, fine grain control is possible {@link SmiFlavor}.
+ * <br>
  * <b>*</b> the unique SMILES generation uses a fast equitable labelling procedure
  *   and as such there are some structures which may not be unique. The number
  *   of such structures is generally minimal.
@@ -225,7 +225,7 @@ public final class SmilesGenerator {
      *                                              SmiFlavor.Canonical);
      * </pre></blockquote>
      *
-     * @param flavour SMILES flavour flags {@see SmiFlavor}
+     * @param flavour SMILES flavour flags {@link SmiFlavor}
      */
     public SmilesGenerator(int flavour) {
         this.flavour   = flavour;
@@ -316,7 +316,6 @@ public final class SmilesGenerator {
      *
      * @param molecule the molecule to create the SMILES of
      * @return a SMILES string
-     * @throws CDKException SMILES could not be generated
      * @deprecated use #create
      */
     @Deprecated
@@ -335,7 +334,6 @@ public final class SmilesGenerator {
      *
      * @param reaction the reaction to create the SMILES of
      * @return a reaction SMILES string
-     * @throws CDKException SMILES could not be generated
      * @deprecated use #createReactionSMILES
      */
     @Deprecated
@@ -369,7 +367,7 @@ public final class SmilesGenerator {
      * where 2D coordinates are stored with a SMILES string. This method
      * forms the basis of CXSMILES.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer  mol = ...;
      * SmilesGenerator sg  = new SmilesGenerator();
      *
@@ -388,7 +386,7 @@ public final class SmilesGenerator {
      * // SMILES string suffixed by the coordinates
      * String smi2d = smi + " " + Arrays.toString(coords);
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param molecule the molecule to write
      * @param order    array to store the output order of atoms
@@ -408,7 +406,7 @@ public final class SmilesGenerator {
      * where 2D coordinates are stored with a SMILES string. This method
      * forms the basis of CXSMILES.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer  mol = ...;
      * SmilesGenerator sg  = new SmilesGenerator();
      *
@@ -427,7 +425,7 @@ public final class SmilesGenerator {
      * // SMILES string suffixed by the coordinates
      * String smi2d = smi + " " + Arrays.toString(coords);
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param molecule the molecule to write
      * @param order    array to store the output order of atoms

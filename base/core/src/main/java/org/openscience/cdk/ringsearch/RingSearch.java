@@ -51,11 +51,11 @@ import java.util.Set;
  * minimum cycle bases (SSSRs). <b>Important</b> the cycle sets returned are not
  * ordered in the path of the cycle.
  *
- * <br/> <h4>Further Explanation</h4> The diagram below illustrates the isolated
+ * <br> <b>Further Explanation</b> The diagram below illustrates the isolated
  * and fused sets of cyclic atoms. The colored circles indicate the atoms and
- * bonds that are returned for each molecules. <br/><br/> <img alt="isolated and
- * fused cycle systems" src="http://i56.photobucket.com/albums/g187/johnymay/isolated-and-fused-cycles-01_zpse0311377.png"/>
- * <br/> <p/> <ol type="a"> <li>Two separate isolated cycles</li> <li>Two
+ * bonds that are returned for each molecules. <br><br> <img alt="isolated and
+ * fused cycle systems" src="http://i56.photobucket.com/albums/g187/johnymay/isolated-and-fused-cycles-01_zpse0311377.png">
+ * <br>  <ol type="a"> <li>Two separate isolated cycles</li> <li>Two
  * separate fused cycle systems. The bridged systems are fused but separate from
  * each other</li> <li>Fused rings - a single fused cycle system</li> <li>Spiro
  * rings - three separate isolated systems, no bonds are shared</li>
@@ -63,8 +63,9 @@ import java.util.Set;
  * the smaller rings </li> <li>One isolated system and one fused system</li>
  * </ol>
  *
- * <h4>Example Usage</h4>
- * <blockquote><pre>
+ * <br>
+ * <b>Example Usage</b>
+ * <blockquote><pre>{@code
  * // construct the search for a given molecule, if an adjacency list
  * // representation (int[][]) is available this can be passed to the
  * // constructor for improved performance
@@ -92,8 +93,8 @@ import java.util.Set;
  * }
  * for(IAtomContainer fragment : ringSearch.isolatedRingFragments()){
  *     ....
- * }                *
- * </pre></blockquote>
+ * }
+ * }</pre></blockquote>
  *
  * @author John May
  * @cdk.module core
@@ -193,7 +194,7 @@ public final class RingSearch {
     /**
      * Determine whether the provided atom belongs to a ring (is cyclic).
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer mol        = ...;
      * RingSearch     ringSearch = new RingSearch(mol);
      *
@@ -202,7 +203,7 @@ public final class RingSearch {
      *         ...
      *     }
      * }
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param atom an atom
      * @return whether the atom is in a ring
@@ -232,7 +233,7 @@ public final class RingSearch {
     /**
      * Determine whether the vertex at index <i>i</i> is a cyclic vertex.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer  mol    = ...;
      * RingSearch      tester = new RingSearch(mol);
      *
@@ -242,7 +243,7 @@ public final class RingSearch {
      *         ...
      *     }
      * }
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param i atom index
      * @return whether the vertex at the given index is in a cycle
@@ -263,7 +264,7 @@ public final class RingSearch {
     /**
      * Construct the sets of vertices which belong to isolated rings.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer  biphenyl   = ...;
      * RingSearch      ringSearch = new RingSearch(biphenyl);
      *
@@ -273,7 +274,7 @@ public final class RingSearch {
      * isolated[0].length; // 6 vertices in one benzene
      * isolated[1].length; // 6 vertices in the other benzene
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @return array of isolated fragments, defined by the vertices in the
      *         fragment
@@ -285,7 +286,7 @@ public final class RingSearch {
     /**
      * Construct the sets of vertices which belong to fused ring systems.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer  mol        = ...;
      * RingSearch      ringSearch = new RingSearch(mol);
      *
@@ -296,7 +297,7 @@ public final class RingSearch {
      * fused[1].length; // e.g. 10 vertices in the second system
      * fused[2].length; // e.g. 4 vertices in the third system
      *
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @return array of fused fragments, defined by the vertices in the
      *         fragment

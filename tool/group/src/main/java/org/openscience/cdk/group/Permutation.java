@@ -75,7 +75,7 @@ public final class Permutation {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean equals(Object other) {
@@ -88,7 +88,7 @@ public final class Permutation {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int hashCode() {
@@ -253,7 +253,7 @@ public final class Permutation {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public String toString() {

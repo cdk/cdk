@@ -45,7 +45,7 @@ import java.util.List;
  *
  * <p>Additional related algorithms from {@cdk.cite BGdV04b}.
  *
- * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
+ * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  * @cdk.module standard
  * @cdk.githash

@@ -39,21 +39,23 @@ import java.util.List;
  * <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
  * The following groups are counted as hydrogen bond acceptors:
  * <ul>
- * <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
+ * <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge &le; 0) <b>except</b>
  * <ol>
  * <li>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</li>
  * <li>an oxygen that is adjacent to a nitrogen</li>
  * </ol>
- * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
+ * </li>
+ * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge &le; 0) <b>except</b>
  * <ol>
  * <li>a nitrogen that is adjacent to an oxygen</li>
  * </ol>
+ * </li>
  * </ul>
  *
  * Returns a single value named <i>nHBAcc</i>.
  *
- * <p>This descriptor uses these parameters:
  * <table>
+ *   <caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -205,7 +207,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

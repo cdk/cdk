@@ -31,7 +31,7 @@ import org.junit.Test;
 /**
  * Tests the functionality of {@link IStrand} implementations.
  *
- * @author     Martin Eklund <martin.eklund@farmbio.uu.se>
+ * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @cdk.module test-interfaces
  */
 public abstract class AbstractStrandTest extends AbstractAtomContainerTest {

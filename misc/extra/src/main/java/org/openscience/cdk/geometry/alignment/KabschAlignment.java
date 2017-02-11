@@ -172,8 +172,8 @@ public class KabschAlignment {
      * The algorithm allows for atom weighting and the default is 1.0 for all
      * atoms.
      *
-     * @param al1 An array of {@link Atom} objects
-     * @param al2 An array of {@link Atom} objects. This array will have its coordinates rotated
+     * @param al1 An array of {@link IAtom} objects
+     * @param al2 An array of {@link IAtom} objects. This array will have its coordinates rotated
      *            so that the RMDS is minimized to the coordinates of the first array
      * @throws CDKException if the number of Atom's are not the same in the two arrays
      */
@@ -196,9 +196,9 @@ public class KabschAlignment {
     /**
      * Sets up variables for the alignment algorithm.
      *
-     * @param al1 An array of {@link Atom} objects
-     * @param al2 An array of {@link Atom} objects. This array will have its coordinates rotated
-     *            so that the RMDS is minimized to the coordinates of the first array
+     * @param al1 An array of {@link IAtom} objects
+     * @param al2 An array of {@link IAtom} objects. This array will have its coordinates rotated
+     *            so that the RMSD is minimized to the coordinates of the first array
      * @param wts A vector atom weights.
      * @throws CDKException if the number of Atom's are not the same in the two arrays or
      *                         length of the weight vector is not the same as the Atom arrays

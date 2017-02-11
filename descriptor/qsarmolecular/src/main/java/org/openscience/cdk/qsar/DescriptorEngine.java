@@ -51,14 +51,14 @@ import java.util.jar.JarFile;
 
 /**
  * A class that provides access to automatic descriptor calculation and more.
- * <p/>
+ * 
  * <p>The aim of this class is to provide an easy to use interface to automatically evaluate
  * all the CDK descriptors for a given molecule. Note that at a given time this class
  * will evaluate all <i>atomic</i> or <i>molecular</i> descriptors but not both.
- * <p/>
+ * 
  * <p>The available descriptors are determined by scanning all the jar files in the users CLASSPATH
  * and selecting classes that belong to the CDK QSAR atomic or molecular descriptors package.
- * <p/>
+ * 
  * <p>An example of its usage would be
  * <pre>
  * Molecule someMolecule;
@@ -66,7 +66,7 @@ import java.util.jar.JarFile;
  * DescriptorEngine descriptoEngine = new DescriptorEngine(DescriptorEngine.MOLECULAR, null);
  * descriptorEngine.process(someMolecule);
  * </pre>
- * <p/>
+ * 
  * <p>The class allows the user to obtain a List of all the available descriptors in terms of their
  * Java class names as well as instances of each descriptor class.   For each descriptor, it is possible to
  * obtain its classification as described in the CDK descriptor-algorithms OWL dictionary.
@@ -92,24 +92,24 @@ public class DescriptorEngine {
 
     /**
      * Instantiates the DescriptorEngine.
-     * <p/>
+     * 
      * This constructor instantiates the engine but does not perform any initialization. As a result calling
      * the <code>process()</code> method will fail. To use the engine via this constructor you should use
      * the following code
-     * <p/>
+     * 
      * <pre>
      * List classNames = DescriptorEngine.getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.molecular",
      *                                                          null);
      * DescriptorEngine engine = DescriptorEngine(classNames);
-     * <p/>
+     * 
      * List instances =  engine.instantiateDescriptors(classNames);
      * List specs = engine.initializeSpecifications(instances)
      * engine.setDescriptorInstances(instances);
      * engine.setDescriptorSpecifications(specs);
-     * <p/>
+     * 
      * engine.process(someAtomContainer);
      * </pre>
-     * <p/>
+     * 
      * This approach allows one to use find classes using the interface based approach ({@link #getDescriptorClassNameByInterface(String, String[])}.
      * If you use this method it is preferable to specify the jar files to examine
      */
@@ -154,7 +154,7 @@ public class DescriptorEngine {
 
     /**
      * Calculates all available (or only those specified) descriptors for a molecule.
-     * <p/>
+     * 
      * The results for a given descriptor as well as associated parameters and
      * specifications are used to create a <code>DescriptorValue</code>
      * object which is then added to the molecule as a property keyed
@@ -215,17 +215,17 @@ public class DescriptorEngine {
 
     /**
      * Returns the type of the descriptor as defined in the descriptor dictionary.
-     * <p/>
+     * 
      * The method will look for the identifier specified by the user in the QSAR descriptor
      * dictionary. If a corresponding entry is found, first child element that is called
      * "isClassifiedAs" is returned. Note that the OWL descriptor spec allows both the class of
      * descriptor (electronic, topological etc) as well as the type of descriptor (molecular, atomic)
      * to be specified in an "isClassifiedAs" element. Thus we ignore any such element that
      * indicates the descriptors class.
-     * <p/>
+     * 
      * The method assumes that any descriptor entry will have only one "isClassifiedAs" entry describing
      * the descriptors type.
-     * <p/>
+     * 
      * The descriptor can be identified either by the name of the class implementing the descriptor
      * or else the specification reference value of the descriptor which can be obtained from an instance
      * of the descriptor class.
@@ -269,17 +269,17 @@ public class DescriptorEngine {
 
     /**
      * Returns the type of the descriptor as defined in the descriptor dictionary.
-     * <p/>
+     * 
      * The method will look for the identifier specified by the user in the QSAR descriptor
      * dictionary. If a corresponding entry is found, first child element that is called
      * "isClassifiedAs" is returned. Note that the OWL descriptor spec allows both the class of
      * descriptor (electronic, topological etc) as well as the type of descriptor (molecular, atomic)
      * to be specified in an "isClassifiedAs" element. Thus we ignore any such element that
      * indicates the descriptors class.
-     * <p/>
+     * 
      * The method assumes that any descriptor entry will have only one "isClassifiedAs" entry describing
      * the descriptors type.
-     * <p/>
+     * 
      * The descriptor can be identified it DescriptorSpecification object
      *
      * @param descriptorSpecification A DescriptorSpecification object
@@ -292,14 +292,14 @@ public class DescriptorEngine {
 
     /**
      * Returns the class(es) of the decsriptor as defined in the descriptor dictionary.
-     * <p/>
+     * 
      * The method will look for the identifier specified by the user in the QSAR descriptor
      * dictionary. If a corresponding entry is found, the meta-data list is examined to
      * look for a dictRef attribute that contains a descriptorClass value. if such an attribute is
      * found, the value of the contents attribute  add to a list. Since a descriptor may be classed in
      * multiple ways (geometric and electronic for example), in general, a given descriptor will
      * have multiple classes associated with it.
-     * <p/>
+     * 
      * The descriptor can be identified either by the name of the class implementing the descriptor
      * or else the specification reference value of the descriptor which can be obtained from an instance
      * of the descriptor class.
@@ -346,14 +346,14 @@ public class DescriptorEngine {
 
     /**
      * Returns the class(es) of the descriptor as defined in the descriptor dictionary.
-     * <p/>
+     * 
      * The method will look for the identifier specified by the user in the QSAR descriptor
      * dictionary. If a corresponding entry is found, the meta-data list is examined to
      * look for a dictRef attribute that contains a descriptorClass value. if such an attribute is
      * found, the value of the contents attribute  add to a list. Since a descriptor may be classed in
      * multiple ways (geometric and electronic for example), in general, a given descriptor will
      * have multiple classes associated with it.
-     * <p/>
+     * 
      * The descriptor can be identified by its DescriptorSpecification object.
      *
      * @param descriptorSpecification A DescriptorSpecification object
@@ -367,7 +367,7 @@ public class DescriptorEngine {
 
     /**
      * Gets the definition of the descriptor.
-     * <p/>
+     * 
      * All descriptors in the descriptor dictioanry will have a definition element. This function
      * returns the value of that element. Many descriptors also have a description element which is
      * more detailed. However the value of these elements can contain arbitrary mark up (such as MathML)
@@ -399,7 +399,7 @@ public class DescriptorEngine {
 
     /**
      * Gets the definition of the descriptor.
-     * <p/>
+     * 
      * All descriptors in the descriptor dictioanry will have a definition element. This function
      * returns the value of that element. Many descriptors also have a description element which is
      * more detailed. However the value of these elements can contain arbitrary mark up (such as MathML)
@@ -514,7 +514,7 @@ public class DescriptorEngine {
 
     /**
      * Returns a list containing the classes that implement a specific interface.
-     * <p/>
+     * 
      * The interface name specified can be null or an empty string. In this case the interface name
      * is automatcally set to <i>IDescriptor</i>.  Specifying <i>IDescriptor</i> will
      * return all available descriptor classes. Valid interface names are
@@ -597,7 +597,7 @@ public class DescriptorEngine {
 
     /**
      * Returns a list containing the classes found in the specified descriptor package.
-     * <p/>
+     * 
      * The package name specified can be null or an empty string. In this case the package name
      * is automatcally set to "org.openscience.cdk.qsar.descriptors" and as a result will return
      * classes corresponding to both atomic and molecular descriptors.

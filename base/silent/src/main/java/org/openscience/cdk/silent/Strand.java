@@ -38,8 +38,8 @@ import java.util.Map;
  * @cdk.module  silent
  * @cdk.githash
  * @cdk.created 2004-12-20
- * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
- * @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
+ * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
+ * @author Ola Spjuth &lt;ola.spjuth@farmbio.uu.se&gt;
  */
 public class Strand extends AtomContainer implements java.io.Serializable, IStrand {
 

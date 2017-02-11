@@ -47,26 +47,26 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * treat different resonance forms as equivalent. Each has its own implications
  * the first in physicochemical attributes and the second in similarity,
  * depiction and storage.
- * <p/>
+ * 
  * To address the resonance forms, several simplified (sometimes conflicting)
  * models have arisen. Generally the models <b>loosely</b> follow
  * <a href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's rule</a>
  * for determining aromaticity. A common omission being that planarity is not
  * tested and chemical compounds which are non-planar can be perceived
  * as aromatic. An example of one such compound is, cyclodeca-1,3,5,7,9-pentaene.
- * <p/>
+ * 
  * Although there is not a single universally accepted model there are models
  * which may better suited for a specific use (<a href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</a>).
  * The different models are often ill-defined or unpublished but it is important
  * to acknowledge that there are differences (see. <a href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</a>).
- * <p/>
+ * 
  * Although models may get more complicated (e.g. considering tautomers)
  * normally the reasons for differences are:
  * <ul>
  *     <li>the atoms allowed and how many electrons each contributes</li>
  *     <li>the rings/cycles are tested</li>
  * </ul>
- * <p/>
+ * 
  * This implementation allows configuration of these via an {@link
  * ElectronDonation} model and {@link CycleFinder}. To obtain an instance
  * of the electron donation model use one of the factory methods,
@@ -111,7 +111,7 @@ public final class Aromaticity {
      * cycles in a molecule. The total electron donation from each atom in each
      * cycle is counted and checked. If the electron contribution is equal to
      * {@code 4n + 2} for a {@code n >= 0} then the cycle is considered
-     * aromatic. <p/> Changing the electron contribution model or which cycles
+     * aromatic.  Changing the electron contribution model or which cycles
      * are tested affects which atoms/bonds are found to be aromatic. There are
      * several {@link ElectronDonation} models and {@link
      * org.openscience.cdk.graph.Cycles} available. A good choice for the cycles
@@ -213,7 +213,7 @@ public final class Aromaticity {
      * the result is the same irrespective of existing aromatic flags. If you
      * require aromatic flags to be preserved the {@link
      * #findBonds(IAtomContainer)} can be used to find bonds without setting any
-     * flags. <p/>
+     * flags. 
      *
      * <blockquote><pre>
      * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),

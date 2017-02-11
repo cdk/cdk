@@ -54,7 +54,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @cdk.module test-qm
  *
- * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.created 2001-06-09
  *
  * @cdk.keyword command line util

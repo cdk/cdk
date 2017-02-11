@@ -68,7 +68,7 @@ final class UniqueBondMatches implements Predicate<int[]> {
         this(g, 10);
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public boolean apply(int[] input) {
         return unique.add(toEdgeSet(input));
@@ -107,13 +107,13 @@ final class UniqueBondMatches implements Predicate<int[]> {
             this.v = v;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int hashCode() {
             return u ^ v;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;

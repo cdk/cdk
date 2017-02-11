@@ -44,7 +44,7 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
 
     /**
      * Create a query angle constraint between three query groups.
-     * <p/>
+     * 
      * Note that the angle is only considered upto 2 decimal places.
      *
      * @param atom1 The first pharmacophore group
@@ -62,11 +62,11 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
 
     /**
      * Create a query angle constraint between three query groups.
-     * <p/>
+     * 
      * This constructor allows you to define a query angle constraint
      * such that the angle between the three query groups is exact
      * (i.e., not a range).
-     * <p/>
+     * 
      * Note that the angle is only considered upto 2 decimal places.
      *
      * @param atom1 The first pharmacophore group
@@ -83,7 +83,7 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
 
     /**
      * Checks whether the query angle constraint matches a target distance.
-     * <p/>
+     * 
      * This method checks whether a query constraint is satisfied by an observed
      * angle (represented by a {@link org.openscience.cdk.pharmacophore.PharmacophoreAngleBond} in the target molecule.
      * Note that angles are compared upto 2 decimal places.

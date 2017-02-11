@@ -28,9 +28,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * An atom container atom permutor that uses ranking and unranking to calculate
- * the next permutation in the series.</p>
+ * the next permutation in the series.
  *
- * <p>Typical use:<pre>
+ * <p>Typical use:</p><pre>
  * AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(container);
  * while (permutor.hasNext()) {
  *   IAtomContainer permutedContainer = permutor.next();

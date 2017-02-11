@@ -201,7 +201,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
      * Produces a HOSE code for Atom <code>root</code> in the {@link IAtomContainer} <code>ac</code>. The HOSE
      * code is produced for the number of spheres given by <code>noOfSpheres</code>.
      * IMPORTANT: if you want aromaticity to be included in the code, you need
-     * to run the IAtomContainer <code>ac</code> to the {@link CDKHueckelAromaticityDetector} prior to
+     * to run the IAtomContainer <code>ac</code> to the {@link org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector} prior to
      * using <code>getHOSECode()</code>. This method only gives proper results if the molecule is
      * fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
      * This method is known to fail for protons sometimes.
@@ -222,7 +222,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
     * Produces a HOSE code for Atom <code>root</code> in the {@link IAtomContainer} <code>ac</code>. The HOSE
     * code is produced for the number of spheres given by <code>noOfSpheres</code>.
     * IMPORTANT: if you want aromaticity to be included in the code, you need
-    * to run the IAtomContainer <code>ac</code> to the {@link CDKHueckelAromaticityDetector} prior to
+    * to run the IAtomContainer <code>ac</code> to the {@link org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector} prior to
     * using <code>getHOSECode()</code>. This method only gives proper results if the molecule is
     * fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
     * This method is known to fail for protons sometimes.

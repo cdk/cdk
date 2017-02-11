@@ -24,7 +24,7 @@ package org.openscience.cdk.interfaces;
  * @cdk.module  interfaces
  * @cdk.githash
  *
- * @author      Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * @author Miguel Rojas &lt;miguel.rojas@uni-koeln.de&gt;
  * @cdk.created 2006-11-20
  *
  * @cdk.keyword pdbpolymer
@@ -74,7 +74,7 @@ public interface IPDBMonomer extends IMonomer {
     public void setResSeq(String newResSeq);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IPDBMonomer clone() throws CloneNotSupportedException;

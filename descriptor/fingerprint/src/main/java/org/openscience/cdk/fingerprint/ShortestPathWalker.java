@@ -217,7 +217,7 @@ public final class ShortestPathWalker {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public String toString() {

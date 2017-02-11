@@ -36,8 +36,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  correspond with other to compare.
  *
  *
- * <p>This rule uses these parameters:
  * <table border="1">
+ *   <caption>Table 1: Parameters set by this rule.</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *   </tr>
  *   <tr>
  *     <td>isotopePattern</td>
- *     <td>List <Double[]></td>
+ *     <td><pre>{@code List <Double[]>}</pre></td>
  *     <td>The Isotope Pattern to compare</td>
  *   </tr>
  * </table>
@@ -70,9 +70,6 @@ public class IsotopePatternRule implements IRule {
 
     /**
      *  Constructor for the IsotopePatternRule object.
-     *
-     *  @throws IOException            If an error occurs when reading atom type information
-     *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public IsotopePatternRule() {
         isotopeGe = new IsotopePatternGenerator(0.01);

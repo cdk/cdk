@@ -87,8 +87,8 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     /**
      *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
      *
-     *  Note that some constructors ({@link #AtomType(String)} and
-     * {@link #AtomType(String, String)} ) will explicitly set this field to 0
+     *  Note that some constructors e.g. ({@link org.openscience.cdk.silent.AtomType#AtomType(String)} and
+     * {@link org.openscience.cdk.silent.AtomType#AtomType(String, String)} ) will explicitly set this field to 0
      */
     protected Integer                 formalCharge         = (Integer) CDKConstants.UNSET;
 
@@ -487,12 +487,12 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *  <p>Once instantiated all field not filled by passing parameters
      * to the constructor are null. Isotopes can be configured by using
      * the IsotopeFactory.configure() method:
+     * </p>
      * <pre>
      *   Isotope isotope = new Isotope("C", 13);
      *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
      *   if.configure(isotope);
      * </pre>
-     * </p>
      *
      * @return    The NaturalAbundance value
      *
@@ -508,12 +508,12 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *  <p>Once instantiated all field not filled by passing parameters
      * to the constructor are null. Isotopes can be configured by using
      * the IsotopeFactory.configure() method:
+     * </p>
      * <pre>
      *   Isotope isotope = new Isotope("C", 13);
      *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
      *   if.configure(isotope);
      * </pre>
-     * </p>
      *
      * @return    The ExactMass value
      *
@@ -530,12 +530,12 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * <p>Once instantiated all field not filled by passing parameters
      * to the constructor are null. Isotopes can be configured by using
      * the IsotopeFactory.configure() method:
+     * </p>
      * <pre>
      *   Isotope isotope = new Isotope("C", 13);
      *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
      *   if.configure(isotope);
      * </pre>
-     * </p>
      *
      * @return The atomic mass of this element
      *
@@ -562,15 +562,14 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     /**
      * Returns the atomic number of this element.
      *
-     *  <p>Once instantiated all field not filled by passing parameters
+     * <p>Once instantiated all field not filled by passing parameters
      * to the constructor are null. Elements can be configured by using
-     * the IsotopeFactory.configure() method:
+     * the IsotopeFactory.configure() method:</p>
      * <pre>
      *   Element element = new Element("C");
      *   IsotopeFactory if = IsotopeFactory.getInstance(element.getNewBuilder());
      *   if.configure(element);
      * </pre>
-     * </p>
      *
      * @return The atomic number of this element
      *

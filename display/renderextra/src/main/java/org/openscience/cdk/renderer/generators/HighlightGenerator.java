@@ -51,7 +51,7 @@ import java.util.Map;
  * {@link Palette} to determine the color. The size of the highlight is
  * specified with the {@link HighlightRadius} parameter.
  *
- * <p/>
+ * 
  * Basic usage:
  * <blockquote><pre>{@code
  * // create with the highlight generator
@@ -118,7 +118,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
     /** Property key. */
     public static final String     ID_MAP           = "cdk.highlight.id";
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
 
@@ -225,7 +225,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         return AffineTransform.getRotateInstance(theta, x1, y1).createTransformedShape(s);
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(new IGeneratorParameter<?>[]{highlightRadius, highlightPalette});
@@ -258,9 +258,9 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
      * Create an auto generating palette which will generate colors using the
      * provided parameters.
      *
-     * @param saturation color saturation, 0.0 < x < 1.0
-     * @param brightness color brightness, 0.0 < x < 1.0
-     * @param alpha color alpha (transparency), 0 < x < 255
+     * @param saturation color saturation, 0.0 &lt; x &lt; 1.0
+     * @param brightness color brightness, 0.0 &lt; x &lt; 1.0
+     * @param alpha color alpha (transparency), 0 &lt; x &lt; 255
      * @return a palette to use in highlighting
      */
     public static Palette createAutoPalette(float saturation, float brightness, int alpha) {
@@ -271,9 +271,9 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
      * Create an auto generating palette which will generate colors using the
      * provided parameters.
      *
-     * @param saturation color saturation, 0.0 < x < 1.0
-     * @param brightness color brightness, 0.0 < x < 1.0
-     * @param transparent generate transparent colors, 0 < x < 255
+     * @param saturation color saturation, 0.0 &lt; x &lt; 1.0
+     * @param brightness color brightness, 0.0 &lt; x &lt; 1.0
+     * @param transparent generate transparent colors, 0 &lt; x &lt; 255
      * @return a palette to use in highlighting
      */
     public static Palette createAutoGenPalette(float saturation, float brightness, boolean transparent) {
@@ -325,7 +325,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Color color(int id) {
@@ -404,7 +404,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
             }
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Color color(int id) {
             if (id < 0) throw new IllegalArgumentException("id should be positive");

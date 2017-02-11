@@ -347,20 +347,20 @@ public abstract class StereoElementFactory {
             super(container, graph, bondMap);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         ITetrahedralChirality createTetrahedral(IAtom atom, Stereocenters stereocenters) {
             return createTetrahedral(container.getAtomNumber(atom), stereocenters);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         IDoubleBondStereochemistry createGeometric(IBond bond, Stereocenters stereocenters) {
             return createGeometric(container.getAtomNumber(bond.getAtom(0)), container.getAtomNumber(bond.getAtom(1)),
                     stereocenters);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         ITetrahedralChirality createTetrahedral(int v, Stereocenters stereocenters) {
 
@@ -431,7 +431,7 @@ public abstract class StereoElementFactory {
             return new TetrahedralChirality(focus, neighbors, winding);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         IDoubleBondStereochemistry createGeometric(int u, int v, Stereocenters stereocenters) {
 
@@ -472,7 +472,7 @@ public abstract class StereoElementFactory {
                     conformation);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         ExtendedTetrahedral createExtendedTetrahedral(int v, Stereocenters stereocenters) {
 
@@ -691,20 +691,20 @@ public abstract class StereoElementFactory {
             super(container, graph, bondMap);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         ITetrahedralChirality createTetrahedral(IAtom atom, Stereocenters stereocenters) {
             return createTetrahedral(container.getAtomNumber(atom), stereocenters);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         IDoubleBondStereochemistry createGeometric(IBond bond, Stereocenters stereocenters) {
             return createGeometric(container.getAtomNumber(bond.getAtom(0)), container.getAtomNumber(bond.getAtom(1)),
                     stereocenters);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         ITetrahedralChirality createTetrahedral(int v, Stereocenters stereocenters) {
 
@@ -736,7 +736,7 @@ public abstract class StereoElementFactory {
             return new TetrahedralChirality(focus, neighbors, winding);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         IDoubleBondStereochemistry createGeometric(int u, int v, Stereocenters stereocenters) {
 
@@ -767,7 +767,7 @@ public abstract class StereoElementFactory {
             return new DoubleBondStereochemistry(bond, new IBond[]{bondMap.get(u, x), bondMap.get(v, w),}, conformation);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         ExtendedTetrahedral createExtendedTetrahedral(int v, Stereocenters stereocenters) {
 

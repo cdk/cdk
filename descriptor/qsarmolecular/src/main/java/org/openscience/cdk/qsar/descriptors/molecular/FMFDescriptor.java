@@ -33,7 +33,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  * An implementation of the FMF descriptor characterizing complexity of a molecule.
- * <p/>
+ * 
  * The descriptor is described in {@cdk.cite YANG2010} and is an approach to
  * characterizing molecular complexity based on the Murcko framework present
  * in the molecule. The descriptor is the ratio of heavy atoms in the framework to the
@@ -94,7 +94,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
      * allows you to do the same thing, without actually calculating the descriptor.
-     * <p/>
+     * 
      * <p>Additionally, the length indicated by the result type must match the actual
      * length of a descriptor calculated with the current parameters. Typically, the
      * length of array result types vary with the values of the parameters. See
@@ -110,7 +110,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
     /**
      * Returns a <code>Map</code> which specifies which descriptor
      * is implemented by this class.
-     * <p/>
+     * 
      * These fields are used in the map:
      * <ul>
      * <li>Specification-Reference: refers to an entry in a unique dictionary
@@ -155,7 +155,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
 
     /**
      * Sets the parameters for this descriptor.
-     * <p/>
+     * 
      * This method does nothing, since the descriptor has no parameters
      *
      * @param params An array of Object containing the parameters for this descriptor
@@ -180,7 +180,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
 
     /**
      * Returns an array of names for each descriptor value calculated.
-     * <p/>
+     * 
      * Since this descriptor returns a single value, the array has a single element,
      * viz., "FMF"
      * @return A 1-element string array, with the value "FMF"

@@ -44,7 +44,7 @@ public final class ExplicitConnectionAtom extends SMARTSAtom {
         this.degree = degree;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
         // XXX: this is incorrect but bug 824 expects this behaviour. The reason

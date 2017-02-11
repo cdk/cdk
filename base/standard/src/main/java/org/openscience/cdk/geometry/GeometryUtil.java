@@ -1106,7 +1106,7 @@ public final class GeometryUtil {
     }
 
     /**
-     * Determines the normalized vector orthogonal on the vector p1->p2.
+     * Determines the normalized vector orthogonal on the vector p1-&gt;p2.
      *
      * @param point1 Description of the Parameter
      * @param point2 Description of the Parameter

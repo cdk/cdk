@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * <p>This mechanism displaces an Atom or substructure (R) from one position to an other.
  * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
- * <p>This reaction could be represented as [A*]-(X)_n-Y-Z => A(Z)-(X)_n-[Y*]</p>
+ * <p>This reaction could be represented as [A*]-(X)_n-Y-Z =&gt; A(Z)-(X)_n-[Y*]</p>
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10

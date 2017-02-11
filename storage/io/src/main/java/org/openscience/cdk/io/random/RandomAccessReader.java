@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Subsequent access for a record N uses this index to seek the record and return the molecule.
  * Useful for very big files.
  *
- * @author     Nina Jeliazkova <nina@acad.bg>
+ * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.module io
  * @cdk.githash
  */
@@ -339,7 +339,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
     }
 
     /**
-     * Opens the file index <filename>_cdk.index</filename> in a temporary folder, as specified by "java.io.tmpdir" property.
+     * Opens the file index file <code>_cdk.index</code> in a temporary folder, as specified by "java.io.tmpdir" property.
      *
      * @param filename the name of the file for which the index was generated
      * @return a file object representing the index file

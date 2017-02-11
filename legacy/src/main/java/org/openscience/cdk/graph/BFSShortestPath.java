@@ -35,7 +35,7 @@ import java.util.List;
  * Utility class that finds the shortest bond path between two atoms using
  * a breadth first search.
  *
- * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
+ * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  * @cdk.module  standard
  * @cdk.githash

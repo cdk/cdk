@@ -39,7 +39,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  * @cdk.module io
  * @cdk.githash
  *
- * @author  Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2003-07-18
  * @cdk.require swing
  */

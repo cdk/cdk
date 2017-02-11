@@ -34,7 +34,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * The calculation of total partial charges of an heavy atom is based on MMFF94
  * model.
  *
- * <p>This descriptor uses these parameters: <table border="1"> <tr>
+ * <table border="1"><caption>Parameters for this descriptor</caption><tr>
  * <td>Name</td> <td>Default</td> <td>Description</td> </tr> <tr> <td></td>
  * <td></td> <td>no parameters</td> </tr> </table>
  *

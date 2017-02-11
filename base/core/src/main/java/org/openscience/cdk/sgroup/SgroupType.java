@@ -28,8 +28,8 @@ import java.util.Map;
 
 /**
  * Enumeration of Ctab Sgroup types.
- * <p/>
- * <br/>
+ * 
+ * <br>
  * <b>Display shortcuts</b>
  * <ul>
  * <li>SUP, abbreviation Sgroup (formerly called superatom)</li>

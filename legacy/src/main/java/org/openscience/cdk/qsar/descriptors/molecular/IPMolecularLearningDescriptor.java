@@ -44,8 +44,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  *
  * The descriptor assumes that explicit hydrogens have been added to the molecule
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -65,7 +64,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  * @cdk.dictref      qsar-descriptors:ionizationPotential
  * @cdk.keyword      ionization potential
  *
- * @see IPAtomicHOSEDescriptor
+ * @see org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptor
  * @see IPBondLearningDescriptor
  */
 @Deprecated
@@ -214,7 +213,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

@@ -30,7 +30,7 @@ import java.util.Set;
 import static org.openscience.cdk.config.Elements.*;
 
 /**
- * Represents elements of the Periodic Table. <p/> This utility class was
+ * Represents elements of the Periodic Table.  This utility class was
  * previously useful when one wants generic properties of elements such as
  * atomic number, VdW radius etc. The new approach to this is to use the
  * {@link Elements} enumeration.

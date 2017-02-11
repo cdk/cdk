@@ -109,7 +109,7 @@ final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator implem
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public long[] generate(IAtomContainer container) {

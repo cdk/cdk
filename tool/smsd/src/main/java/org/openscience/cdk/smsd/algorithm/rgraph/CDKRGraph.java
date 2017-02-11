@@ -79,7 +79,7 @@ import org.openscience.cdk.smsd.tools.TimeManager;
  *  both model is performed by the RTools class. In this way the CDKRGraph
  *  class may be reused in other graph context (conceptual graphs,....)
  *
- *  <p><bitSet>Important note</bitSet>: This implementation of the algorithm has not been
+ *  <p><b>Important note</b>: This implementation of the algorithm has not been
  *                      optimized for speed at this stage. It has been
  *                      written with the goal to clearly retrace the
  *                      principle of the underlined search method. There is
@@ -90,7 +90,7 @@ import org.openscience.cdk.smsd.tools.TimeManager;
  *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
  *
  * @author      Stephane Werner from IXELIS mail@ixelis.net,
- *              Syed Asad Rahman <asad@ebi.ac.uk> (modified the orignal code)
+ *              Syed Asad Rahman &gt;asad@ebi.ac.uk&lt; (modified the orignal code)
  * @cdk.created 2002-07-17
  * @cdk.require java1.4+
  * @cdk.module  smsd

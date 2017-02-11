@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  *
  * @cdk.module test-data
  *
- * @author  Edgar Luttman <edgar@uni-paderborn.de>
+ * @author Edgar Luttman &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09
  */
 public class AminoAcidTest extends AbstractAminoAcidTest {

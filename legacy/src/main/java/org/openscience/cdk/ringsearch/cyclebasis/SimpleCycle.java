@@ -37,7 +37,7 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
 /**
  * A cycle in a graph G is a subgraph in which every vertex has even degree.
  *
- * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
+ * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  * @cdk.module standard
  * @cdk.githash

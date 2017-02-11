@@ -67,7 +67,7 @@ import java.util.regex.Pattern;
  *  <li>Currently only the CircularFingerprinter fingerprints are supported (i.e. ECFP_n and FCFP_n).</li>
  *
  *  <li>Model building is done by selecting the fingerprinting method and folding size, then providing
- *  a series of molecules & responses. Individual model contributions are kept around in order to
+ *  a series of molecules &amp; responses. Individual model contributions are kept around in order to
  *  produce the analysis data (e.g. the ROC curve), but is discarded during serialise/deserialise
  *  cycles.
  *  
@@ -284,9 +284,9 @@ public class Bayesian {
 
     /**
      * Converts a raw Bayesian prediction and transforms it into a probability-like range, i.e. most values within the domain
-     * are between 0..1, and assigning a cutoff of activie = scaled_prediction > 0.5 is reasonable. The transform (scale/translation)
+     * are between 0..1, and assigning a cutoff of activie = scaled_prediction &gt; 0.5 is reasonable. The transform (scale/translation)
      * is determined by the ROC-analysis, if any. The resulting value can be used as a probability by capping the values so that
-     * 0 <= p <= 1.
+     * 0 &le; p &le; 1.
      * 
      * @param pred raw prediction, as provided by the predict(..) method
      * @return scaled prediction	
@@ -530,7 +530,7 @@ public class Bayesian {
      * Reads the incoming stream and attempts to convert it into an instantiated model. The input most be compatible
      * with the format used by the serialise() method, otherwise an exception will be thrown.
      * 
-     * @param str string containing the serialised model
+     * @param rdr reader
      * @return instantiated model that can be used for predictions
      */
     public static Bayesian deserialise(BufferedReader rdr) throws IOException {

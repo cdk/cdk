@@ -220,7 +220,7 @@ public final class Bounds implements IRenderingElement {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void accept(IRenderingVisitor visitor) {
@@ -228,7 +228,7 @@ public final class Bounds implements IRenderingElement {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public String toString() {

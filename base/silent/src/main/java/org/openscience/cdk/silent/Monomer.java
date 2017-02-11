@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IMonomer;
  * @cdk.module  silent
  * @cdk.githash
  *
- * @author     Edgar Luttmann <edgar@uni-paderborn.de>
+ * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created    2001-08-06
  *
  * @cdk.keyword    monomer
@@ -118,7 +118,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IMonomer clone() throws CloneNotSupportedException {

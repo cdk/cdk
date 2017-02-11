@@ -32,8 +32,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *  was made by Marsilli-Gasteiger. It is implemented with the Partial Equalization
  *  of Orbital Electronegativity (PEOE).
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

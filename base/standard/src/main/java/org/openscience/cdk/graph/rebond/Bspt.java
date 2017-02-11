@@ -35,8 +35,8 @@ import java.util.Enumeration;
  * <pre>
  *    mySplitDimension = (parentSplitDimension + 1) % 3;
  * </pre>
- *  A split value is stored in the node. Values which are <= splitValue are
- *  stored down the left branch. Values which are >= splitValue are stored
+ *  A split value is stored in the node. Values which are &le; splitValue are
+ *  stored down the left branch. Values which are &ge; splitValue are stored
  *  down the right branch. When this happens, the search must proceed down
  *  both branches.
  *  Planar and crystalline substructures can generate values which are == along

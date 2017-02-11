@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * Class to handle mappings of target molecule based on the query.
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public class TargetProcessor {
 

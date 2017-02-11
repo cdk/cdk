@@ -54,7 +54,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     private SettingManager<IOSetting>   settings  = new SettingManager<IOSetting>();
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public List<IChemObjectIOListener> getListeners() {
@@ -62,7 +62,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void addChemObjectIOListener(IChemObjectIOListener listener) {
@@ -70,7 +70,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void removeChemObjectIOListener(IChemObjectIOListener listener) {
@@ -78,7 +78,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public <S extends IOSetting> S addSetting(IOSetting setting) {
@@ -86,7 +86,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public void addSettings(Collection<IOSetting> settings) {
@@ -105,7 +105,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean hasSetting(String name) {
@@ -113,7 +113,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public <S extends IOSetting> S getSetting(String name) {
@@ -121,7 +121,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public <S extends IOSetting> S getSetting(String name, Class<S> c) {
@@ -129,7 +129,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IOSetting[] getIOSettings() {
@@ -137,7 +137,7 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public Collection<IOSetting> getSettings() {

@@ -36,7 +36,7 @@ import java.util.ArrayList;
 /**
  * <p>This mechanism produces the tautomerization chemical reaction between two tautomers.
  * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
- * <p>This reaction could be represented as X=Y-Z-H => X(H)-Y=Z</p>
+ * <p>This reaction could be represented as X=Y-Z-H =&gt; X(H)-Y=Z</p>
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10

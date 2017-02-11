@@ -30,7 +30,7 @@ import java.util.Map;
  * four ligands is important, and defines together with the {@link Stereo} to spatial geometry around the chiral atom.
  * The first ligand points towards to observer, and the three other ligands point away from the observer; the
  * {@link Stereo} then defines the order of the second, third, and fourth ligand to be clockwise or anti-clockwise.
- * <p/>
+ * 
  * If the tetrahedral centre has an implicit hydrogen or lone pair then the
  * chiral atom is also stored as one of the ligands. This serves as a
  * placeholder to indicate where the implicit hydrogen or lone pair would be.
@@ -94,7 +94,7 @@ public interface ITetrahedralChirality extends IStereoElement {
     void setStereo(Stereo stereo);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);

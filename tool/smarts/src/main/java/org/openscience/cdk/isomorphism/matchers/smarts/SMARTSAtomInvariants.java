@@ -44,12 +44,12 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * are utilised as additional information for the {@link SMARTSAtom}s to match.
  * The values provide additional invariants which are not defined in the {@link
  * IAtom} API and avoids storing multiple properties in a type unsafe map
- * ({@link IAtom#setProperty(Object, Object)}). <p/> Depending on the SMARTS
+ * ({@link IAtom#setProperty(Object, Object)}).  Depending on the SMARTS
  * implementation different values for the ring information may be set. The
  * choice of ring set affects {@link #ringNumber()} and {@link #ringSize()}.
  * Some implementations store all ring sizes whilst others (Daylight) store only
  * the smallest. The {@link #degree()} also depends on whether hydrogens are
- * suppressed or represented as explicit atoms. <p/> The {@link
+ * suppressed or represented as explicit atoms.  The {@link
  * #configureDaylightWithRingInfo(IAtomContainer)} and {@link
  * #configureDaylightWithoutRingInfo(IAtomContainer)} static utilities create
  * and set the invariants following the Daylight implementation. The invariants

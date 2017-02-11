@@ -51,7 +51,7 @@ public interface IBond extends IElectronContainer {
 
         /**
          * Access a numeric value for the number of bonded electron pairs.
-         * <p/>
+         * 
          * <pre>{@code
          * Order.SINGLE.numeric()    // 1
          * Order.DOUBLE.numeric()    // 2
@@ -272,7 +272,7 @@ public interface IBond extends IElectronContainer {
      *
      * @return ring status
      * @see #getFlag(int)
-     * @see @see org.openscience.cdk.graph.RingFinder
+     * @see org.openscience.cdk.ringsearch.RingSearch
      */
     boolean isInRing();
 
@@ -284,7 +284,7 @@ public interface IBond extends IElectronContainer {
      */
     void setIsInRing(boolean ring);
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public IBond clone() throws CloneNotSupportedException;
 }

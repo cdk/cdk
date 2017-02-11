@@ -48,7 +48,7 @@ import org._3pq.jgrapht.graph.Subgraph;
  * Two edges belong to the same biconnected component if and only if they are
  * identical or both belong to a simple cycle.
  *
- * @author Ulrich Bauer <ulrich.bauer@alumni.tum.de>
+ * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
  *
  * @cdk.module standard
  * @cdk.githash

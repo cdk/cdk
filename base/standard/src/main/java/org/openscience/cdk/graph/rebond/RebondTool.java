@@ -65,7 +65,7 @@ public class RebondTool {
     /**
      * Rebonding using a Binary Space Partition Tree. Note, that any bonds
      * defined will be deleted first. It assumes the unit of 3D space to
-     * be 1 &Acircle;ngstrom.
+     * be 1 Å.
      */
     public void rebond(IAtomContainer container) throws CDKException {
         container.removeAllBonds();

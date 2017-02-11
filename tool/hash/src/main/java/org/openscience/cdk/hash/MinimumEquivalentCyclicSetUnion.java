@@ -59,7 +59,7 @@ import java.util.TreeMap;
  * and CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=20673269">20673269</a></td></tr>
  * </table>
  *
- * <p/><br/> The easiest way to use this class is with the {@link
+ * <br/> The easiest way to use this class is with the {@link
  * org.openscience.cdk.hash.HashGeneratorMaker}.
  * <blockquote><pre>
  * MoleculeHashGenerator generator =
@@ -82,7 +82,7 @@ import java.util.TreeMap;
 final class MinimumEquivalentCyclicSetUnion extends EquivalentSetFinder {
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph) {

@@ -44,7 +44,7 @@ import java.util.Collection;
  *
  * @see DefaultChemObjectReader
  *
- * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  **/
 public interface IChemObjectIO extends Closeable {
 
@@ -64,7 +64,7 @@ public interface IChemObjectIO extends Closeable {
     /**
      * Closes this IChemObjectIO's resources.
      *
-     * @throws throws an {@link IOException} when the wrapper IO class cannot be closed.
+     * @throws IOException when the wrapper IO class cannot be closed.
      */
     @Override
     public void close() throws IOException;

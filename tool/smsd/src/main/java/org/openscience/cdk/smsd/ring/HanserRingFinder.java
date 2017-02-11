@@ -75,7 +75,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  *
  * @cdk.module smsd
  * @cdk.githash
- * @author Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt; 2009-2010
  *
  */
 public class HanserRingFinder implements RingFinder {

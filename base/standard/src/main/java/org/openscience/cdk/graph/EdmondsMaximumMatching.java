@@ -35,11 +35,11 @@ import java.util.Map;
 
 /**
  * Maximum matching in general graphs using Edmond's Blossom Algorithm
- * {@cdk.cite Edmonds65}. <p/>
+ * {@cdk.cite Edmonds65}. 
  *
  * This implementation was adapted from D Eppstein's python implementation (<a
  * href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</a>)
- * providing efficient tree traversal and handling of blossoms. <p/>
+ * providing efficient tree traversal and handling of blossoms. 
  *
  * @author John May
  * @see <a href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom
@@ -180,7 +180,7 @@ final class EdmondsMaximumMatching {
      * An edge was found which connects two 'even' vertices in the forest. If
      * the vertices have the same root we have a blossom otherwise we have
      * identified an augmenting path. This method checks for these cases and
-     * responds accordingly. <p/>
+     * responds accordingly. 
      *
      * If an augmenting path was found - then it's edges are alternated and the
      * method returns true. Otherwise if a blossom was found - it is contracted
@@ -412,13 +412,13 @@ final class EdmondsMaximumMatching {
             this.second = second;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int hashCode() {
             return 31 * first + second;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;

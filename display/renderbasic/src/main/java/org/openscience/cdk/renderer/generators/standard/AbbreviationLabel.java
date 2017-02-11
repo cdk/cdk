@@ -33,12 +33,12 @@ import java.util.List;
 
 /**
  * Utility class for handling/formatting abbreviation (superatom) labels.
- * <p/>
+ * 
  * Depending on orientation a label may need to be reversed. For example
  * consider '-OAc', if the bond exits from the right it is preferable to
  * write it 'AcO-'. Other labels don't need reversing at all (e.g. tBu).
  * We reverse labels by spiting them up into 'tokens', reversing token order, * and then joining them back together.
- * <p/>
+ * 
  * Abbreviation labels that are formulas benefit from sub and subscripting
  * certain parts. For example OPO3H2 looks better with the digits 3 and 2
  * rendered in subscript.
@@ -147,13 +147,13 @@ final class AbbreviationLabel {
      * Split a label it to recognised tokens for reversing, the
      * validity of the label is not checked! The method is intended
      * for zero/single attachments only and linkers are not supported.
-     * <p/>
-     * <p/>
-     * Example: <p/>
+     * 
+     * 
+     * Example: 
      * {@code NHCH2Ph -> N,H,C,H2,Ph -> reverse/join -> PhH2CHN}
-     * <p/>
-     * <p/>
-     * <p/>
+     * 
+     * 
+     * 
      * The method return value signals whether formula
      * formatting (sub- and super- script) can be applied.
      *

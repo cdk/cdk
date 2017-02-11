@@ -35,11 +35,11 @@ import org.openscience.cdk.math.Vector;
  * </pre>
  *
  * <p>
- * S = &lt;phi_i|phi_j><br>
- * J = &lt;d/dr phi_i | d/dr phi_j><br>
- * V = &lt;phi_i | 1/r | phi_j><br>
+ * S = &lt;phi_i|phi_j&gt;<br>
+ * J = &lt;d/dr phi_i | d/dr phi_j&gt;<br>
+ * V = &lt;phi_i | 1/r | phi_j&gt;<br>
  *
- * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-06-14
  * @cdk.module  qm

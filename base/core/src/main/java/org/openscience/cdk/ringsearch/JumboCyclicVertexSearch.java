@@ -180,7 +180,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean cyclic(int v) {
@@ -188,7 +188,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean cyclic(int u, int v) {
@@ -215,7 +215,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int[] cyclic() {
@@ -223,7 +223,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int[][] isolated() {
@@ -235,7 +235,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int[][] fused() {

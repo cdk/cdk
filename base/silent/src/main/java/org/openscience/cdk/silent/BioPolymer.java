@@ -39,7 +39,7 @@ import java.util.Map;
  * @cdk.module  silent
  * @cdk.githash
  *
- * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @author      Martin Eklund
  * @cdk.created 2001-08-06
  *

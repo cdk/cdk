@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Prepares input file for running MOPAC.
  * Optimization is switched on if there are no coordinates.
  *
- * @author      Nina Jeliazkova <nina@acad.bg>
+ * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.githash
  * @cdk.module  io
  */
@@ -68,8 +68,6 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
 
     /**
      * Creates a writer to serialize a molecule as Mopac7 input.
-     *
-     * @throws Exception
      */
     public Mopac7Writer() throws IOException {
         this(new BufferedWriter(new StringWriter()));
@@ -80,7 +78,6 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
      * given {@link OutputStream}.
      *
      * @param  out {@link OutputStream} to which the output is written
-     * @throws     Exception
      */
     public Mopac7Writer(OutputStream out) throws IOException {
         this(new BufferedWriter(new OutputStreamWriter(out)));
@@ -91,7 +88,6 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
      * given {@link Writer}.
      *
      * @param  out {@link Writer} to which the output is written
-     * @throws     Exception
      */
     public Mopac7Writer(Writer out) throws IOException {
         numberFormat = NumberFormat.getInstance(Locale.US);
@@ -100,8 +96,8 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
         initIOSettings();
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     public synchronized void write(IChemObject arg0) throws CDKException {
         customizeJob();
         if (arg0 instanceof IAtomContainer)

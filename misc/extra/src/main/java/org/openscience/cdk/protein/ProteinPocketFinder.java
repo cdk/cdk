@@ -843,7 +843,7 @@ public class ProteinPocketFinder {
     }
 
     /**
-     * Method writes the PSP points (>=minPSPocket) to pmesh format.
+     * Method writes the PSP points (&ge;minPSPocket) to pmesh format.
      */
     public void pspGridToPmesh(String outPutFileName) {
         try {

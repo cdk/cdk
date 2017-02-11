@@ -47,7 +47,7 @@ public final class TotalValencyAtom extends SMARTSAtom {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean matches(IAtom atom) {

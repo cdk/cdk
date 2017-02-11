@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IReaction;
  * indicates a field for this object. The name may be appended
  * by :'number' to allow for more than one reference.
  *
- * @author     Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.githash
  * @cdk.created    2003-08-06
  * @cdk.keyword    dictionary, implicit CDK references

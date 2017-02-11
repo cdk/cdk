@@ -31,9 +31,8 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * between the tolerance range give a experimental mass. As default
  * the mass to range is 0.0.
  *
- *
- * <p>This rule uses these parameters:
  * <table border="1">
+ *   <caption>Table 1: Parameters set by this rule.</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -66,9 +65,6 @@ public class ToleranceRangeRule implements IRule {
 
     /**
      *  Constructor for the ToleranceRangeRule object.
-     *
-     *  @throws IOException            If an error occurs when reading atom type information
-     *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public ToleranceRangeRule() {}
 

@@ -239,7 +239,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
     public void stateChanged(IChemObjectChangeEvent event) {}
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

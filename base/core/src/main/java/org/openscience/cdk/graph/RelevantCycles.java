@@ -40,7 +40,7 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * in number but can be checked (see {@link #size()}) before construction
  * {@cdk.cite Vismara97}.
  *
- * <blockquote><pre>
+ * <blockquote><pre>{@code
  * // import static org.openscience.cdk.graph.GraphUtil.*;
  * IAtomContainer m = ...;
  *
@@ -69,7 +69,7 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  *         }
  *     }
  * }
- *
+ * }
  * </pre></blockquote>
  *
  * @author John May
@@ -139,7 +139,7 @@ public final class RelevantCycles {
     /**
      * Reconstruct the paths of all relevant cycles.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * RelevantCycles relevant = ...
      *
      * // ensure the number is manageable
@@ -148,7 +148,7 @@ public final class RelevantCycles {
      *     // process the path
      *   }
      * }
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @return array of vertex paths
      */

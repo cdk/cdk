@@ -106,20 +106,20 @@ public class DescriptorValue implements Serializable {
 
     /**
      * Returns an array of names for each descriptor value calculated.
-     * <p/>
+     * 
      * Many descriptors return multiple values. In general it is useful for the
      * descriptor to indicate the names for each value. When a descriptor creates
      * a <code>DescriptorValue</code> object, it should supply an array of names equal
      * in length to the number of descriptor calculated.
-     * <p/>
+     * 
      * In many cases, these names can be as simple as X1, X2, ..., XN where X is a prefix
      * and 1, 2, ..., N are the indices. On the other hand it is also possible to return
      * other arbitrary names, which should be documented in the JavaDocs for the descriptor
      * (e.g., the CPSA descriptor).
-     * <p/>
+     * 
      * Note that by default if a descriptor returns a single value (such as {@link org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor}
      * the return array will have a single element
-     * <p/>
+     * 
      * In case a descriptor creates a <code>DescriptorValue</code> object with no names, this
      * method will generate a set of names based on the {@link DescriptorSpecification} object
      * supplied at instantiation.

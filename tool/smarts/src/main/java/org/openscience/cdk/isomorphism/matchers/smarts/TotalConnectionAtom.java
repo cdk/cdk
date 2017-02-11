@@ -47,7 +47,7 @@ public final class TotalConnectionAtom extends SMARTSAtom {
         this.connectivity = connectivity;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
         return invariants(atom).connectivity() == connectivity;

@@ -111,19 +111,19 @@ abstract class AbstractVFState extends State {
         return mMax();
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     final int nMax() {
         return g1.length;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     final int mMax() {
         return g2.length;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     final boolean add(int n, int m) {
         if (!feasible(n, m)) return false;
@@ -137,7 +137,7 @@ abstract class AbstractVFState extends State {
         return true;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     final void remove(int n, int m) {
         m1[n] = m2[m] = UNMAPPED;
@@ -158,13 +158,13 @@ abstract class AbstractVFState extends State {
      */
     abstract boolean feasible(int n, int m);
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int[] mapping() {
         return Arrays.copyOf(m1, m1.length);
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     int size() {
         return size;

@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @see org.openscience.cdk.io.PCCompoundASNReader
  *
- * @author       Egon Willighagen <egonw@users.sf.net>
+ * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created  2008-05-05
  *
  * @cdk.keyword  file format, ASN

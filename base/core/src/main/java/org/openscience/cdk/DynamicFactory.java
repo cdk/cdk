@@ -44,16 +44,16 @@ import java.util.TreeSet;
  * implementations. Instances can be created by registering a construction key
  * ({@link ConstructorKey}) with a corresponding creator ({@link Creator}). In
  * most cases a class can simply be registered by providing an interface and an
- * implementation {@link #register(Class, Class)}.<p/>
+ * implementation {@link #register(Class, Class)}.
  *
  * Internally the factory stores the object creators in a symbol table which
- * allows near constant time access for all registered classes. <p/>
+ * allows near constant time access for all registered classes. 
  *
  * In cases of a non-direct parameter match (e.g. {@code Atom(Atom)} can resolve
  * to {@code Atom(Element)}) the constructor is matched by invoking {@link
  * #find(ConstructorKey)}. If a constructor was found the new key will be
  * registered with cache to avoid the overhead of finding the correct
- * constructor again. <p/>
+ * constructor again. 
  *
  * <pre>{@code
  *
@@ -82,12 +82,12 @@ import java.util.TreeSet;
  *                      });
  *
  * }</pre>
- * <p/> It is not always convenient to specify a custom {@link Creator} for
+ *  It is not always convenient to specify a custom {@link Creator} for
  * every construction type but the objects may still need some modification
  * directly after creation. The factory provides {@link CreationModifier} which
  * is invoked directly after object creation. This allows changing the default
  * of creation. As an example it is possible to set a non-null charge on all
- * atoms that are created. <p/>
+ * atoms that are created. 
  *
  * <pre>{@code
  *      // import static org.openscience.cdk.DynamicFactory.CreationModifier;
@@ -99,10 +99,10 @@ import java.util.TreeSet;
  *                      }));
  * }</pre>
  *
- * <p/>
+ * 
  *
  * It is also possible change the object creation based on the input parameters.
- * <p/>
+ * 
  *
  * <pre>{@code
  * factory.register(key(IAtom.class, String.class),
@@ -287,7 +287,7 @@ public class DynamicFactory {
      * Explicitly register a concrete class with a provided interface and a
      * given modifier. The {@link Creator} will be automatically created for all
      * public constructors. The modifier is incorporated into the {@link
-     * Creator} and is invoked directly after instantiation. <p/>
+     * Creator} and is invoked directly after instantiation. 
      *
      *
      * <pre>{@code
@@ -335,7 +335,7 @@ public class DynamicFactory {
     }
 
     /**
-     * Register a specific constructor with an explicit interface. <p/>
+     * Register a specific constructor with an explicit interface. 
      *
      * <pre>{@code
      *     // only register construction of IAtom using a string - Atom("C")
@@ -355,7 +355,7 @@ public class DynamicFactory {
 
     /**
      * Register a specific constructor with a creation modifier to an explicit
-     * interface. <p/>
+     * interface. 
      *
      * <pre>{@code
      *      // only register construction of IAtom using a string - Atom("C")
@@ -405,7 +405,7 @@ public class DynamicFactory {
     /**
      * Register a constructor key with a defined {@link Creator}. The key
      * defines the interface and parameters of the creation and the creator
-     * actually creates the object. <p/>
+     * actually creates the object. 
      *
      * <pre>{@code
      *     // import static org.openscience.cdk.DynamicFactory.key;
@@ -831,7 +831,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<?> intf() {
@@ -839,7 +839,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<?> type(int i) {
@@ -848,7 +848,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int n() {
@@ -880,7 +880,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<?> intf() {
@@ -888,7 +888,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<?> type(int i) {
@@ -896,7 +896,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int n() {
@@ -934,7 +934,7 @@ public class DynamicFactory {
         public abstract int n();
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public boolean equals(Object o) {
@@ -956,7 +956,7 @@ public class DynamicFactory {
         /**
          * Indicates whether this key has multiple parameters and they are of
          * uniform type. If there are less then two types this method will
-         * return false. <p/> {@code new Object[]{ Atom, Bond, Atom } } // false
+         * return false.  {@code new Object[]{ Atom, Bond, Atom } } // false
          * {@code new Object[]{ Atom, Atom, Atom } } // true
          *
          * @return whether the key is uniform
@@ -977,7 +977,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public int hashCode() {
@@ -1031,7 +1031,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public String toString() {
@@ -1056,7 +1056,7 @@ public class DynamicFactory {
     protected static class DefaultInterfaceProvider implements InterfaceProvider {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<?>[] getInterfaces(Class<?> c) {
@@ -1115,7 +1115,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
@@ -1126,7 +1126,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<T> getDeclaringClass() {
@@ -1184,7 +1184,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<T> getDeclaringClass() {
@@ -1214,7 +1214,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
@@ -1223,7 +1223,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<T> getDeclaringClass() {
@@ -1251,7 +1251,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
@@ -1260,7 +1260,7 @@ public class DynamicFactory {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Class<T> getDeclaringClass() {

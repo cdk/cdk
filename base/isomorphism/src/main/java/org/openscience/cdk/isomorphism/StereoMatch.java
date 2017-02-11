@@ -43,7 +43,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
 /**
  * Filters out (sub)graph-isomorphism matches that have invalid stereochemistry
  * configuration. The class is not currently set up to handle partial mappings
- * (MCS) but could easily be extended to handle such cases. <p/> The class
+ * (MCS) but could easily be extended to handle such cases.  The class
  * implements the Guava predicate and can be used easily filter the mappings.
  *
  * <blockquote><pre>{@code

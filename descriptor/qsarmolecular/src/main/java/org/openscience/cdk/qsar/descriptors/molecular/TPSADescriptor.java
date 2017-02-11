@@ -44,9 +44,8 @@ import java.util.List;
 /**
  * Calculation of topological polar surface area based on fragment
  * contributions (TPSA) {@cdk.cite ERTL2000}.
- * <p/>
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * 
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>
@@ -58,10 +57,10 @@ import java.util.List;
  * <td>If true, it will check aromaticity</td>
  * </tr>
  * </table>
- * <p/>
+ * 
  * This descriptor works properly with AtomContainers whose atoms contain either <b>explicit hydrogens</b> or
  * <b>implicit hydrogens</b>.
- * <p/>
+ * 
  * Returns a single value named <i>TopoPSA</i>
  *
  * @author mfe4
@@ -154,7 +153,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
     /**
      * Sets the parameters attribute of the  TPSADescriptor object.
-     * <p/>
+     * 
      * The descriptor takes a Boolean parameter to indicate whether
      * the descriptor routine should check for aromaticity (TRUE) or
      * not (FALSE).
@@ -203,12 +202,12 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
     /**
      * Calculates the TPSA for an atom container.
-     * <p/>
+     * 
      * Before calling this method, you may want to set the parameter
      * indicating that aromaticity should be checked. If no parameter is specified
      * (or if it is set to FALSE) then it is assumed that aromaticaity has already been
      * checked.
-     * <p/>
+     * 
      * Prior to calling this method it is necessary to either add implicit or explicit hydrogens
      * using {@link CDKHydrogenAdder#addImplicitHydrogens(IAtomContainer)} or
      * {@link AtomContainerManipulator#convertImplicitToExplicitHydrogens(IAtomContainer)}.
@@ -331,7 +330,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

@@ -277,7 +277,7 @@ final class ConvexHull {
             this.reference = reference;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int compare(Point2D a, Point2D b) {
             final double deltaX1 = a.getX() - reference.getX();
@@ -306,7 +306,7 @@ final class ConvexHull {
      */
     static final class CompareYThenX implements Comparator<Point2D> {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public int compare(Point2D a, Point2D b) {
             if (a.getY() < b.getY()) return -1;

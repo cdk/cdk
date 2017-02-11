@@ -30,7 +30,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Reads an isotope list in CML2 format. An example definition is:
- * <pre>
+ * <pre>{@code
  * <isotopeList id="H">
  *   <isotope id="H1" isotopeNumber="1" elementTyp="H">
  *     <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
@@ -43,7 +43,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *     <scalar dictRef="cdk:atomicNumber">1</scalar>
  *   </isotope>
  * </isotopeList>
- * </pre>
+ * }</pre>
  *
  * @cdk.module  extra
  * @cdk.githash

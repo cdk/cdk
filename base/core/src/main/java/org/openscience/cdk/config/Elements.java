@@ -298,7 +298,7 @@ public enum Elements {
      * size of an atom that forms part of one covalent bond.
      *
      * @return covalent radius - null if not available
-     * @see <a href="http://en.wikipedia.org/wiki/Covalent_radius>Covalent radius</a>
+     * @see <a href="http://en.wikipedia.org/wiki/Covalent_radius">Covalent radius</a>
      */
     public Double covalentRadius() {
         return rCov;
@@ -310,7 +310,7 @@ public enum Elements {
      * atom.
      *
      * @return van der Waals radius - null if not available
-     * @see <a href="http://en.wikipedia.org/wiki/Van_der_Waals_radius>Van de Waals radius</a>
+     * @see <a href="http://en.wikipedia.org/wiki/Van_der_Waals_radius">Van de Waals radius</a>
      */
     public Double vdwRadius() {
         return rW;
@@ -324,7 +324,7 @@ public enum Elements {
      * available 'null' is returned.
      *
      * @return Pauling electronegativity - null if not available
-     * @see <a href="http://en.wikipedia.org/wiki/Electronegativity#Pauling_electronegativity>Pauling Electronegativity</a>
+     * @see <a href="http://en.wikipedia.org/wiki/Electronegativity#Pauling_electronegativity">Pauling Electronegativity</a>
      */
     public Double electronegativity() {
         return electronegativity;

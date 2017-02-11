@@ -563,13 +563,13 @@ final class InitialCycles {
             this.y = y;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         BitSet edges(int[] path) {
             return toEdgeVector(path);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         int[][] family() {
 
@@ -586,7 +586,7 @@ final class InitialCycles {
             return paths;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         int sizeOfFamily() {
             return paths.nPathsTo(p) * paths.nPathsTo(q);
@@ -609,13 +609,13 @@ final class InitialCycles {
             z = pathToZ[pathToY.length - 1];
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         BitSet edges(int[] path) {
             return toEdgeVector(path);
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         int[][] family() {
             int[][] pathsToY = paths.pathsTo(y);
@@ -631,7 +631,7 @@ final class InitialCycles {
             return paths;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         int sizeOfFamily() {
             return paths.nPathsTo(y) * paths.nPathsTo(z);

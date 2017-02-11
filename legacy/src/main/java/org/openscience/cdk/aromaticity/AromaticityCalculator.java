@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IRing;
  * @cdk.module standard
  * @cdk.githash
  *
- * @author     Oliver Horlacher <oliver.horlacher@therastrat.com>
+ * @author Oliver Horlacher &lt;oliver.horlacher@therastrat.com&gt;
  * @cdk.created    2002-03-14
  *
  * @cdk.keyword aromaticity detector

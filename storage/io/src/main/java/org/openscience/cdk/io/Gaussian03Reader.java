@@ -61,8 +61,8 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * <p>This code was adaptated by Jonathan from Gaussian98Reader written by
  * Bradley, and ported to CDK by Egon.
  *
- * @author Jonathan C. Rienstra-Kiracofe <jrienst@emory.edu>
- * @author Bradley A. Smith <yeldar@home.com>
+ * @author Jonathan C. Rienstra-Kiracofe &lt;jrienst@emory.edu&gt;
+ * @author Bradley A. Smith &lt;yeldar@home.com&gt;
  * @author Egon Willighagen
  * @cdk.module io
  * @cdk.githash

@@ -41,39 +41,39 @@ import java.util.List;
  * This class evaluates the 10 MDE descriptors described by Liu et al. and
  * in addition it calculates variants where O and N are considered (as found in the DEDGE routine
  * from ADAPT).
- * <p/>
- * * The variants are described below:
+ * 
+ *
  * <center>
  * <table border=1>
- * <p/>
+ * <caption>Table 1 - Description of the different MDE descriptors generated</caption>
  * <tr>
  * <td>MDEC-11</td><td> molecular distance edge between all primary carbons</td></tr><tr>
  * <td>MDEC-12</td><td> molecular distance edge between all primary and secondary carbons</td></tr><tr>
- * <p/>
+ * 
  * <td>MDEC-13</td><td> molecular distance edge between all primary and tertiary carbons</td></tr><tr>
  * <td>MDEC-14</td><td> molecular distance edge between all primary and quaternary carbons </td></tr><tr>
  * <td>MDEC-22</td><td> molecular distance edge between all secondary carbons </td></tr><tr>
  * <td>MDEC-23</td><td> molecular distance edge between all secondary and tertiary carbons</td></tr><tr>
- * <p/>
+ * 
  * <td>MDEC-24</td><td> molecular distance edge between all secondary and quaternary carbons </td></tr><tr>
  * <td>MDEC-33</td><td> molecular distance edge between all tertiary carbons</td></tr><tr>
  * <td>MDEC-34</td><td> molecular distance edge between all tertiary and quaternary carbons </td></tr><tr>
  * <td>MDEC-44</td><td> molecular distance edge between all quaternary carbons </td></tr><tr>
- * <p/>
+ * 
  * <td>MDEO-11</td><td> molecular distance edge between all primary oxygens </td></tr><tr>
  * <td>MDEO-12</td><td> molecular distance edge between all primary and secondary oxygens </td></tr><tr>
  * <td>MDEO-22</td><td> molecular distance edge between all secondary oxygens </td></tr><tr>
  * <td>MDEN-11</td><td> molecular distance edge between all primary nitrogens</td></tr><tr>
- * <p/>
+ * 
  * <td>MDEN-12</td><td> molecular distance edge between all primary and secondary nitrogens </td></tr><tr>
  * <td>MDEN-13</td><td> molecular distance edge between all primary and tertiary niroqens </td></tr><tr>
  * <td>MDEN-22</td><td> molecular distance edge between all secondary nitroqens </td></tr><tr>
  * <td>MDEN-23</td><td> molecular distance edge between all secondary and tertiary nitrogens </td></tr><tr>
- * <p/>
+ * 
  * <td>MDEN-33</td><td> molecular distance edge between all tertiary nitrogens</td></tr>
  * </table>
  * </center>
- * <p/>
+ * 
  *
  * @author Rajarshi Guha
  * @cdk.created 2006-09-18
@@ -127,7 +127,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
-     * <p/>
+     * 
      * These fields are used in the map:
      * <ul>
      * <li>Specification-Reference: refers to an entry in a unique dictionary
@@ -199,7 +199,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

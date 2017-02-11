@@ -86,7 +86,7 @@ import java.util.Set;
  * sdg.generateCoordinates();
  * IAtomContainer layedOutMol = sdg.getMolecule();
  * </pre>
- * <p/>
+ * 
  * <p>The method will fail if the molecule is disconnected. The
  * partitionIntoMolecules(AtomContainer) can help here.
  *
@@ -1256,7 +1256,7 @@ public class StructureDiagramGenerator {
 
     /**
      * Alternative method name "Humpty Dumpty" (a la. R Sayle).
-     * <p/>
+     * 
      * (Re)bonding of ionic fragments for improved layout. This method takes a list
      * of two or more fragments and creates zero or more bonds (return value) that
      * should be temporarily used for layout generation. In general this problem is

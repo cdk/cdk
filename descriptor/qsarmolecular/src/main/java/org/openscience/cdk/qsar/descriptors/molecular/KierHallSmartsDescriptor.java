@@ -33,29 +33,31 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * A fragment count descriptor that uses e-state fragments.
- * <p/>
+ * 
  * Traditionally the e-state descriptors identify the relevant fragments and
  * then evaluate the actual e-state value. However it has been
  * <a href="http://www.mdpi.org/molecules/papers/91201004.pdf">shown</a> in {@cdk.cite BUTINA2004}
  * that simply using the <i>counts</i> of the e-state fragments can lead to QSAR models
  * that exhibit similar performance to those built using the actual e-state indices.
- * <p/>
+ * 
  * Atom typing and aromaticity perception should be performed prior to calling this
  * descriptor. The atom type definitions are taken from {@cdk.cite HALL1995}.
  * The SMARTS definitions were obtained from <a href="http://www.rdkit.org">RDKit</a>.
- * <p/>
+ * 
  * The descriptor returns an integer array result of 79 values with the
  * following names (see <a href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">
  * here</a> for the corresponding chemical groups).
- * <p/>
- * <p/>
+ * 
+ * 
  * <table border=1 cellpadding=5>
+ * <caption>SMARTS patterns used by the descriptor</caption>
  * <thead>
  * <tr>
  * <th>Serial</th>
  * <th>Name</th>
  * <th>Pattern</th>
  * </tr>
+ * </thead>
  * <tbody>
  * <tr>
  * <td>0</td><td>khs.sLi</td><td>[LiD1]-*</td>
@@ -316,7 +318,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     /**
      * Returns a <code>Map</code> which specifies which descriptor
      * is implemented by this class.
-     * <p/>
+     * 
      * These fields are used in the map:
      * <ul>
      * <li>Specification-Reference: refers to an entry in a unique dictionary
@@ -418,7 +420,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

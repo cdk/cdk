@@ -41,13 +41,13 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 /**
  * Compute the set of all rings in a molecule. This set includes <i>every</i>
  * cyclic path of atoms. As the set is exponential it can be very large and is
- * often impractical (e.g. fullerenes). <p/>
+ * often impractical (e.g. fullerenes). 
  *
  * To avoid combinatorial explosion there is a configurable threshold, at which
  * the computation aborts. The {@link Threshold} values have been precomputed on
  * PubChem-Compound and can be used with the {@link AllRingsFinder#usingThreshold(Threshold)}.
  * Alternatively, other ring sets which are a subset of this set offer a
- * tractable alternative. <p/>
+ * tractable alternative. 
  *
  * <blockquote><pre>
  * AllRingsFinder arf = new AllRingsFinder();
@@ -303,13 +303,14 @@ public final class AllRingsFinder {
      * and provides a more meaningful measure of what to expect based on
      * precomputed percentiles. It is important to consider that, higher is not
      * always better - generally the large values generate many more rings then
-     * can be reasonably be handled.<br/>
+     * can be reasonably be handled.<br>
      *
      * The latest results were calculated on PubChem Compound (Dec' 12) and
      * summarised below.
      *
-     * <table style="width: 100%;"> <tr><th>Maximum Degree</th><th>Percent
-     * (%)</th><th>Completed<br /> (ring systems)</th><th>Uncompleted<br />
+     * <table style="width: 100%;"><caption>Table 1. Num of structures processable in PubChem Compound (Dec 2012) as a result of
+     * setting the max degree</caption><tr><th>Maximum Degree</th><th>Percent
+     * (%)</th><th>Completed<br> (ring systems)</th><th>Uncompleted<br>
      * (ring systems)</th></tr> <tr><td>&nbsp;</td></tr>
      * <tr><td>72</td><td>99.95</td><td>17834013</td><td>8835</td></tr>
      * <tr><td>84</td><td>99.96</td><td>17835876</td><td>6972</td></tr>

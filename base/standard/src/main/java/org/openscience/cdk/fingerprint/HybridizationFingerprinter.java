@@ -50,14 +50,14 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * exclude candidates for a substructure search in a database. They are also a
  * means for determining the similarity of chemical structures.
  *
- * <p>A fingerprint is generated for an AtomContainer with this code:<pre>
+ * <p>A fingerprint is generated for an AtomContainer with this code:</p><pre>
  *   Molecule molecule = new Molecule();
  *   IFingerprinter fingerprinter =
  *     new HybridizationFingerprinter();
  *   BitSet fingerprint = fingerprinter.getFingerprint(molecule);
  *   fingerprint.size(); // returns 1024 by default
  *   fingerprint.length(); // returns the highest set bit
- * </pre></p>
+ * </pre>
  *
  * <p>The FingerPrinter assumes that hydrogens are explicitly given!
  * Furthermore, if pseudo atoms or atoms with malformed symbols are present,

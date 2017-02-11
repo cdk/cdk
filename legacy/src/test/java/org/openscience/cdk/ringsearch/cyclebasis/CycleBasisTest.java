@@ -35,7 +35,7 @@ import org.openscience.cdk.CDKTestCase;
  *
  * @cdk.module test-standard
  *
- * @author     Ulrich Bauer <baueru@cs.tum.edu>
+ * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
 
 public class CycleBasisTest extends CDKTestCase {

@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * <p>This mechanism extracts an atom because of the stabilization of a radical.
  * It returns the reaction mechanism which has been cloned the IAtomContainer.</p>
- * <p>This reaction could be represented as Y-B-[C*] => [Y*] + B=C</p>
+ * <p>This reaction could be represented as Y-B-[C*] =&gt; [Y*] + B=C</p>
  *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10

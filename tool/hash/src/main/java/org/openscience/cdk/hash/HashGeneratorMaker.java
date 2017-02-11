@@ -46,7 +46,8 @@ import java.util.List;
  * are added is the order they will be used. Therefore one can expect different
  * hash codes if there is a change in the order they are specified.
  *
- * <h4>Examples</h4>
+ * <br>
+ * <b>Examples</b>
  * <blockquote><pre>
  * // simple
  * MoleculeHashGenerator generator = new HashGeneratorMaker().depth(16)
@@ -367,7 +368,7 @@ public final class HashGeneratorMaker {
         }
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public StereoEncoder create(IAtomContainer container, int[][] graph) {

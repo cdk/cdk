@@ -48,11 +48,11 @@ import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
  * bonds. Different atom and bond orderings may produce distinct but valid
  * Kekulé forms. Only bond orders are adjusted and any aromatic flags will
  * remain untouched.
- * <p/>
+ * 
  *
  * The procedure requires that all atoms have defined implicit hydrogens counts
  * and formal charges. If this information is not present it should be assigned
- * first. <p/>
+ * first. 
  *
  * For some inputs it may not be possible to assign a Kekulé form. In general
  * theses cases are rare but usually occur for one of two reasons.
@@ -64,7 +64,7 @@ import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
  * on the aromatic nitrogen '[nH]1cccc1' (not: 'n1cccc1').
  * 2) The aromaticity perception algorithm has allowed atoms with abnormal
  * valence. This usually happens when a non-convalent bond has be <i>upgraded</i>
- * to a sigma bond during format conversion. <p/>
+ * to a sigma bond during format conversion. 
  *
  * @author John May
  * @cdk.keyword kekule

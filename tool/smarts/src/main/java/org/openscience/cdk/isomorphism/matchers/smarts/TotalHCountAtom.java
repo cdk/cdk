@@ -53,7 +53,7 @@ public final class TotalHCountAtom extends SMARTSAtom {
         return invariants(atom).totalHydrogenCount() == totalHCount;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public String toString() {
         return "H" + totalHCount;

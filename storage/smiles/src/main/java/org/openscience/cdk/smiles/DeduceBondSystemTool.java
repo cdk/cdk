@@ -695,7 +695,7 @@ public class DeduceBondSystemTool {
 
     /**
      * Remove rings.
-     * <p/>
+     * 
      * Removes rings which do not have all sp2/planar3 aromatic atoms and also gets rid of rings that have more than
      * 7 or less than 5 atoms in them.
      *

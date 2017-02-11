@@ -42,8 +42,9 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *
  *  <p>It counts the number of electron pairs in the Lewis dot diagram which
  *   are attached to an atom. Then uses the following table.
- * <pre>
+ * <br>
  * <table border="1">
+ *   <caption>Hybridisation states</caption>
  *   <tr>
  * 	  <td>pairs on an atom</td>
  *    <td>hybridization of the atom</td>
@@ -59,14 +60,13 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *   <tr><td>8</td><td>sp^3d^4</td><td>square antiprim</td><td>7</td></tr>
  *   <tr><td>9</td><td>sp^3d^5</td><td>tricapped trigonal prism</td><td>8</td></tr>
  * </table>
- * </pre>
  *
  *  <p>This table only works if the central atom is a p-block element
  *   (groups IIA through VIIIA), not a transition metal.
  *
  *
- * <p>This descriptor uses these parameters:
  * <table border="1">
+ *   <caption>Parameters for this descriptor</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

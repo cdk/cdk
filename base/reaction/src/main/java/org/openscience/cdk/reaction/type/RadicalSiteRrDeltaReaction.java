@@ -47,7 +47,7 @@ import java.util.List;
 
 /**
  * <p>
- * This reaction could be represented as [A*]-(C)_4-C5[R] => A([R])-(C_4)-[C5*]. Due to
+ * This reaction could be represented as [A*]-(C)_4-C5[R] =&gt; A([R])-(C_4)-[C5*]. Due to
  * the single electron of atom A the R is moved.</p>
  * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
  *

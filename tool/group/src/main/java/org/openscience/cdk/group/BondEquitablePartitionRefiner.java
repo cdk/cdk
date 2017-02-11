@@ -51,7 +51,7 @@ public class BondEquitablePartitionRefiner extends AbstractEquitablePartitionRef
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int neighboursInBlock(Set<Integer> block, int bondIndex) {
@@ -65,7 +65,7 @@ public class BondEquitablePartitionRefiner extends AbstractEquitablePartitionRef
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int getVertexCount() {

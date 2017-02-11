@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * For modelling purposes the value of the descriptor is calculated
  * both with and without H atoms. Furthermore the square and cube roots
  * of the descriptor are also generated as described by Wessel et al. {@cdk.cite WES98}.
- * <p/>
+ * 
  * The descriptor routine generates 9 descriptors:
  * <ul>
  * <li>GRAV-1 -  gravitational index of heavy atoms
@@ -57,9 +57,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <li>GRAV-5 -  grav2 for all pairs of atoms (not just bonded pairs)
  * <li>GRAV-6 -  grav3 for all pairs of atoms (not just bonded pairs)
  * </ul>
- * <p/>
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * 
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>
@@ -302,7 +301,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

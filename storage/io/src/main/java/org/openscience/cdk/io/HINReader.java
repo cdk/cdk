@@ -48,7 +48,7 @@ import java.util.StringTokenizer;
  * @cdk.module io
  * @cdk.githash
  *
- * @author  Rajarshi Guha <rajarshi.guha@gmail.com>
+ * @author Rajarshi Guha &lt;rajarshi.guha@gmail.com&gt;
  * @cdk.created 2004-01-27
  *
  * @cdk.keyword file format, HIN

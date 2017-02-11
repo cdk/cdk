@@ -102,7 +102,7 @@ final class SeedGenerator extends AbstractHashGenerator implements AtomHashGener
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public long[] generate(IAtomContainer container) {

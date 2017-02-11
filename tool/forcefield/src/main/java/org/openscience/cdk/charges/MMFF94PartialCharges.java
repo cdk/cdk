@@ -75,7 +75,6 @@ public class MMFF94PartialCharges implements IChargeCalculator {
      *
      * @param ac AtomContainer
      * @return AtomContainer with MMFF94 partial charges as atom properties
-     * @throws Exception Possible Exceptions
      */
     public IAtomContainer assignMMFF94PartialCharges(IAtomContainer ac) throws CDKException {
         if (!mmff.assignAtomTypes(ac))

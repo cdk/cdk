@@ -169,7 +169,7 @@ public interface IAtom extends IAtomType {
      *
      * @return ring status
      * @see #getFlag(int)
-     * @see @see org.openscience.cdk.graph.RingFinder
+     * @see org.openscience.cdk.ringsearch.RingSearch
      */
     boolean isInRing();
 
@@ -182,7 +182,7 @@ public interface IAtom extends IAtomType {
     void setIsInRing(boolean ring);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IAtom clone() throws CloneNotSupportedException;

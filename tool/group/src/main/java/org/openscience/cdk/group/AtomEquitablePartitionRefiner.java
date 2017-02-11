@@ -45,7 +45,7 @@ public class AtomEquitablePartitionRefiner extends AbstractEquitablePartitionRef
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int neighboursInBlock(Set<Integer> block, int atomIndex) {
@@ -59,7 +59,7 @@ public class AtomEquitablePartitionRefiner extends AbstractEquitablePartitionRef
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int getVertexCount() {

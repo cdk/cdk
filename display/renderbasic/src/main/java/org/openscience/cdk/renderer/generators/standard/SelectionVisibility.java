@@ -34,11 +34,11 @@ import java.util.List;
 
 /**
  * Extended existing symbol visibility options to account for selection of atoms in the standard
- * generator. <p/>
+ * generator. 
  *
  * The selection viability displays an atom symbol regardless as to whether it is normally 'shown'.
  * By default, the symbol is shown if the atom is selected an not next to any selected bonds
- * (disconnected). Alternatively, all select atoms can be displayed. <p/>
+ * (disconnected). Alternatively, all select atoms can be displayed. 
  *
  * An atom or bond is selected if the {@link StandardGenerator#HIGHLIGHT_COLOR} is non-null.
  *
@@ -82,7 +82,7 @@ public final class SelectionVisibility extends SymbolVisibility {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model) {

@@ -112,7 +112,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int getVertexCount() {
@@ -120,7 +120,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int getConnectivity(int i, int j) {

@@ -53,16 +53,16 @@ import Jama.Matrix;
  * </ol>
  * Currently weighting schemes 1,2,3,4 &amp; 5 are implemented. The weight values
  * are taken from {@cdk.cite TOD98} and as a result 19 elements are considered.
- * <p/>
+ * 
  * <p>For each weighting scheme we can obtain
  * <ul>
  * <li>11 directional WHIM descriptors (&lambda;<sub>1 .. 3</sub>, &nu;<sub>1 .. 2</sub>, &gamma;<sub>1 .. 3</sub>,  &eta;<sub>1 .. 3</sub>)
  * <li>6 non-directional WHIM descriptors (T, A, V, K, G, D)
  * </ul>
- * <p/>
+ * 
  * <p>Though {@cdk.cite TOD98} mentions that for planar molecules only 8 directional WHIM
  * descriptors are required the current code will return all 11.
- * <p/>
+ * 
  * The descriptor returns 17 values for a given weighting scheme, named as follows:
  * <ol>
  * <li>Wlambda1
@@ -92,10 +92,9 @@ import Jama.Matrix;
  * <li>eneg
  * <li>polar
  * </ul>
- * <p/>
- * <p/>
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * 
+ * 
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>
@@ -452,7 +451,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

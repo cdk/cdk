@@ -36,8 +36,7 @@ import java.util.List;
 /**
  * This class returns the number of not-Hs substituents of an atom, also defined as "atom degree".
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

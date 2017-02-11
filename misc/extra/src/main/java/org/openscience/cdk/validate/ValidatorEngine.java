@@ -49,7 +49,7 @@ import java.util.Map;
  * ValidationReport report = engine.validateMolecule(new Molecule());
  * </pre>
  *
- * @author   Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.githash
  * @cdk.created  2003-08-22
  */

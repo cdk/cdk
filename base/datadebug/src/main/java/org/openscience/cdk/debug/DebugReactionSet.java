@@ -216,7 +216,7 @@ public class DebugReactionSet extends ReactionSet implements IReactionSet {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

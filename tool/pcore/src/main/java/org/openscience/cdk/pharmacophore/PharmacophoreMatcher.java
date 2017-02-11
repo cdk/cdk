@@ -48,29 +48,29 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Identifies atoms whose 3D arrangement matches a specified pharmacophore query.
- * <p/>
+ * 
  * A pharmacophore is defined by a set of atoms and distances between them. More generically
  * we can restate this as a set of pharmacophore groups and the distances between them. Note
  * that a pharmacophore group may consist of one or more atoms and the distances can be
  * specified as a distance range rather than an exact distance.
- * <p/>
+ * 
  * The goal of a pharmacophore query is to identify atom in a molecule whose 3D arrangement
  * match a specified query.
- * <p/>
+ * 
  * To perform a query one must first create a set of pharmacophore groups and specify the
  * distances between them. Each pharmacophore group is represented by a {@link org.openscience.cdk.pharmacophore.PharmacophoreAtom}
  * and the distances between them are represented by a {@link org.openscience.cdk.pharmacophore.PharmacophoreBond}.
  * These are collected in a {@link org.openscience.cdk.isomorphism.matchers.QueryAtomContainer}.
- * <p/>
+ * 
  * Given the query pharmacophore one can use this class to check with it occurs in a specified molecule.
  * Note that for full generality pharmacophore searches are performed using conformations of molecules.
  * This can easily be accomplished using this class together with the {@link org.openscience.cdk.ConformerContainer}
  * class.  See the example below.
- * <p/>
+ * 
  * Currently this class will allow you to perform pharmacophore searches using triads, quads or any number
  * of pharmacophore groups. However, only distances and angles between pharmacophore groups are considered, so
  * alternative constraints such as torsions and so on cannot be considered at this point.
- * <p/>
+ * 
  * After a query has been performed one can retrieve the matching groups (as opposed to the matching atoms
  * of the target molecule). However since a pharmacophore group (which is an object of class {@link PharmacophoreAtom})
  * allows you to access the indices of the corresponding atoms in the target molecule, this is not very
@@ -78,30 +78,30 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Example usage:
  * <pre>
  * QueryAtomContainer query = new QueryAtomContainer();
- * <p/>
+ * 
  * PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
  * PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
  * PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("A", "[N]");
- * <p/>
+ * 
  * query.addAtom(o);
  * query.addAtom(n1);
  * query.addAtom(n2);
- * <p/>
+ * 
  * PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(o, n1, 4.0, 4.5);
  * PharmacophoreQueryBond b2 = new PharmacophoreQueryBond(o, n2, 4.0, 5.0);
  * PharmacophoreQueryBond b3 = new PharmacophoreQueryBond(n1, n2, 5.4, 5.8);
- * <p/>
+ * 
  * query.addBond(b1);
  * query.addBond(b2);
  * query.addBond(b3);
- * <p/>
+ * 
  * String filename = "/Users/rguha/pcore1.sdf";
  * IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
  *      new FileReader(new File(filename)), DefaultChemObjectBuilder.getInstance());
- * <p/>
+ * 
  * ConformerContainer conformers;
  * if (reader.hasNext()) conformers = (ConformerContainer) reader.next();
- * <p/>
+ * 
  * boolean firstTime = true;
  * for (IAtomContainer conf : conformers) {
  *   boolean status;
@@ -152,7 +152,7 @@ public class PharmacophoreMatcher {
 
     /**
      * An empty constructor.
-     * <p/>
+     * 
      * You should set the query before performing a match
      */
     public PharmacophoreMatcher() {}
@@ -170,7 +170,7 @@ public class PharmacophoreMatcher {
 
     /**
      * Performs the pharmacophore matching.
-     * <p/>
+     * 
      * This method will analyze the specified target molecule to identify pharmacophore
      * groups. If dealing with conformer data it is probably more efficient to use
      * the other form of this method which allows one to skip the pharmacophore group
@@ -239,7 +239,7 @@ public class PharmacophoreMatcher {
 
     /**
      * Get the matching pharmacophore constraints.
-     * <p/>
+     * 
      * The method should be called after performing the match, otherwise the return value is null.
      * The method returns a List of List's. Each List represents the pharmacophore constraints in the
      * target molecule that matched the query. Since constraints are conceptually modeled on bonds
@@ -264,7 +264,7 @@ public class PharmacophoreMatcher {
 
     /**
      * Return a list of HashMap's that allows one to get the query constraint for a given pharmacophore bond.
-     * <p/>
+     * 
      * If the matching is successful, the return value is a List of HashMaps, each
      * HashMap corresponding to a separate match. Each HashMap is keyed on the {@link org.openscience.cdk.pharmacophore.PharmacophoreBond}
      * in the target molecule that matched a constraint ({@link org.openscience.cdk.pharmacophore.PharmacophoreQueryBond} or
@@ -289,7 +289,7 @@ public class PharmacophoreMatcher {
 
     /**
      * Get the matching pharmacophore groups.
-     * <p/>
+     * 
      * The method should be called after performing the match, otherwise the return value is null.
      * The method returns a List of List's. Each List represents the pharmacophore groups in the
      * target molecule that matched the query. Each pharmacophore group contains the indices of the
@@ -305,12 +305,12 @@ public class PharmacophoreMatcher {
 
     /**
      * Get the uniue matching pharmacophore groups.
-     * <p/>
+     * 
      * The method should be called after performing the match, otherwise the return value is null.
      * The method returns a List of List's. Each List represents the pharmacophore groups in the
      * target molecule that matched the query. Each pharmacophore group contains the indices of the
      * atoms (in the target molecule) that correspond to the group.
-     * <p/>
+     * 
      * This is analogous to the USA form of return value from a SMARTS match.
      *
      * @return a List of a List of pharmacophore groups in the target molecule that match the query

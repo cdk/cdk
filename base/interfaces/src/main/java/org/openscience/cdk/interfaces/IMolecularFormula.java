@@ -29,7 +29,7 @@ import java.util.Map;
  * <ul>
  *   <li><code>[C5H5]-</code></li>
  *   <li><code>C6H6</code></li>
- *   <li><code><sup>12</sup>C5</sup><sup>13</sup>CH6</code></li>
+ *   <li><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></li>
  * </ul>
  *
  * @cdk.module  interfaces
@@ -191,7 +191,7 @@ public interface IMolecularFormula extends ICDKObject {
      * cast to the required type. This does however mean if the wrong type is
      * provided then a runtime ClassCastException will be thrown.
      *
-     * <p/>
+     * 
      * <pre>{@code
      *
      *     IAtom atom = new Atom("C");
@@ -224,7 +224,7 @@ public interface IMolecularFormula extends ICDKObject {
 
     /**
      * Access a property of the given description and cast the specified class.
-     * <p/>
+     * 
      * <pre>{@code
      *
      *     IAtom atom = new Atom("C");
@@ -249,7 +249,7 @@ public interface IMolecularFormula extends ICDKObject {
      * @param <T>         generic type (of provided class)
      * @return the value stored for the specified description.
      * @see #getProperty(Object)
-     * @see #addProperties(java.util.Map)
+     * @see #getProperties()
      */
     public <T> T getProperty(Object description, Class<T> c);
 

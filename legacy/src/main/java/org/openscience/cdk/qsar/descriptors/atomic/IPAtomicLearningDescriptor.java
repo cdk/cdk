@@ -39,8 +39,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  Cl,Br,I,N,P,O,S Atoms and they are not belong to
  *  conjugated system or not adjacent to an double bond.
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

@@ -33,8 +33,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * Lipinski's Rule Of 5.
  * See <a href="http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five">http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five</a>.
  *
-  * <p>This descriptor uses these parameters:
- * <table border="1">
+  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -201,7 +200,7 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

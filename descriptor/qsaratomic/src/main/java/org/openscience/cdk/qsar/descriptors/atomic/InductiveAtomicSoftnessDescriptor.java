@@ -40,47 +40,34 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  Inductive atomic softness of an atom in a polyatomic system can be defined
  *  as charge delocalizing ability. Only works with 3D coordinates, which must be calculated beforehand. <p>
  *
- *  This descriptor uses these parameters:
- *  <tableborder="1">
- *
+ *  <table border="1">
+ *    <caption>Table 1 - Parameters for this descriptor</caption>
  *    <tr>
- *
  *      <td>
  *        Name
  *      </td>
- *
  *      <td>
  *        Default
  *      </td>
- *
  *      <td>
  *        Description
  *      </td>
- *
  *    </tr>
- *
  *    <tr>
- *
  *      <td>
- *
  *      </td>
- *
  *      <td>
- *
  *      </td>
- *
  *      <td>
  *        no parameters
  *      </td>
- *
  *    </tr>
- *
  *  </table>
  *
  *
- *@author         mfe4
- *@cdk.created    2004-11-03
- *@cdk.module     qsaratomic
+ * @author         mfe4
+ * @cdk.created    2004-11-03
+ * @cdk.module     qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:atomicSoftness
  */

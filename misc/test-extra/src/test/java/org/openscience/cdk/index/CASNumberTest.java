@@ -27,7 +27,7 @@ import org.openscience.cdk.CDKTestCase;
  *
  * @cdk.module test-extra
  *
- * @author     Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  *
  * @cdk.created    2003-07-01

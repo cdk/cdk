@@ -188,11 +188,11 @@ public class CDKConstants {
      * Flag used for marking uncertainty of the bond order.
      * If used on an
      * <ul>
-     *  <li>{@link IAtomContainer} it means that one or several of the bonds have
+     *  <li>{@link org.openscience.cdk.interfaces.IAtomContainer} it means that one or several of the bonds have
      * 		this flag raised (which may indicate aromaticity).</li>
-     *  <li>{@link IBond} it means that it's unclear whether the bond is a single or
+     *  <li>{@link org.openscience.cdk.interfaces.IBond} it means that it's unclear whether the bond is a single or
      * 		double bond.</li>
-     *  <li>{@link IAtom} it is a way for the Smiles parser to indicate that this atom was
+     *  <li>{@link org.openscience.cdk.interfaces.IAtom} it is a way for the Smiles parser to indicate that this atom was
      * 		written with a lower case letter, e.g. 'c' rather than 'C'</li>
      * </ul>
      */

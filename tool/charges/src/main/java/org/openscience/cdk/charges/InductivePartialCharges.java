@@ -132,7 +132,6 @@ public class InductivePartialCharges implements IChargeCalculator {
      *@param  ac             AtomContainer
      *@param  modified       if true, some values are modified by following the reference
      *@return                The pauling electronegativities
-     *@exception  Exception  Description of the Exception
      */
     public double[] getPaulingElectronegativities(IAtomContainer ac, boolean modified) throws CDKException {
         double[] paulingElectronegativities = new double[ac.getAtomCount()];

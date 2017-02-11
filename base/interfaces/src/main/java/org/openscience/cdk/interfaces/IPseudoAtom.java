@@ -68,7 +68,7 @@ public interface IPseudoAtom extends IAtom {
     void setAttachPointNum(int ap);
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IPseudoAtom clone() throws CloneNotSupportedException;

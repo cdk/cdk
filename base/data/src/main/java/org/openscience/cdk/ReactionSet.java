@@ -40,11 +40,11 @@ import org.openscience.cdk.interfaces.IReactionSet;
  *
  * and
  *
- * <pre>
+ * <pre>{@code
  * for (int i=0; i < reactionSet.getReactionCount(); i++) {
  *    IReaction reaction = reactionSet.getReaction(i);
  * }
- * </pre>
+ * }</pre>
  *
  * @cdk.module data
  * @cdk.githash
@@ -249,7 +249,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public boolean isEmpty() {

@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
 /**
  * TestCase for the IChemObject class.
  *
- * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @cdk.module  test-data
  * @cdk.created 2001-08-09
  */

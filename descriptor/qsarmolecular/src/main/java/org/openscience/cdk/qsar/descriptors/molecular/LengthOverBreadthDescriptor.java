@@ -41,18 +41,18 @@ import javax.vecmath.Point3d;
 
 /**
  * Evaluates length over breadth descriptors.
- * <p/>
+ * 
  * The current implementation reproduces the results obtained from the LOVERB descriptor
  * routine in ADAPT. As a result ti does not perform any orientation and only considers the
- * X & Y extents for a series of rotations about the Z axis (in 10 degree increments).
- * <p/>
+ * X &amp; Y extents for a series of rotations about the Z axis (in 10 degree increments).
+ * 
  * The class gives two descriptors
  * <ul>
  * <li>LOBMAX - The maximum L/B ratio
  * <li>LOBMIN - The L/B ratio for the rotation that results in the minimum area
- * (defined by the product of the X & Y extents for that orientation)
+ * (defined by the product of the X &amp; Y extents for that orientation)
  * </ul>
- * <B>Note:</B> The descriptor assumes that the atoms have been configured.
+ * <b>Note:</b> The descriptor assumes that the atoms have been configured.
  *
  * @author      Rajarshi Guha
  * @cdk.created 2006-09-26
@@ -191,7 +191,7 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

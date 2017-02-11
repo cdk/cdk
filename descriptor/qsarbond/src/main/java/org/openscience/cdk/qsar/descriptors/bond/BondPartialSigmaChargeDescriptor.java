@@ -33,8 +33,7 @@ import java.util.Iterator;
  *  The calculation of bond-sigma Partial charge is calculated
  *  determining the difference the Partial Sigma Charge on atoms
  *  A and B of a bond. Based in Gasteiger Charge.
- *  <p>This descriptor uses these parameters:
- * <table border="1">
+ *  <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

@@ -37,7 +37,7 @@ import org.apache.log4j.Logger;
  * information is closely bound to one specific Class, not subclasses and not instances.
  *
  * <p>The logger has five logging levels:
- * <ul><dl>
+ * <dl>
  *  <dt>DEBUG
  *  <dd>Default mode. Used for information you might need to track down the cause of a
  *      bug in the source code, or to understand how an algorithm works.
@@ -54,7 +54,7 @@ import org.apache.log4j.Logger;
  *  <dt>ERROR
  *  <dd>This level is used for situations that should not have happened *and* thus
  *      indicate a bug.
- * </dl></ul>
+ * </dl>
  *
  * <p>Consider that the debugging will not always be turned on. Therefore, it is better
  * not to concatenate string in the logger.debug() call, but have the LoggingTool do

@@ -126,7 +126,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int getVertexCount() {
@@ -134,7 +134,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public int getConnectivity(int i, int j) {

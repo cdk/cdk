@@ -50,9 +50,9 @@ import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn.Righ
  * Recognise stereochemistry of Haworth, Chair, and Boat (not yet implemented)
  * projections. These projections are a common way of depicting closed-chain
  * (furanose and pyranose) carbohydrates and require special treatment to
- * interpret stereo conformation. <p/>
+ * interpret stereo conformation. 
  * 
- * The methods used are described by {@cdk.cite batchelor13}. <p/> 
+ * The methods used are described by {@cdk.cite batchelor13}.  
  * 
  * @author John May
  * @cdk.githash

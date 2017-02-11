@@ -32,8 +32,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  *  The calculation of bond-Polarizability is calculated determining the
  *  difference the Sigma electronegativity on atoms A and B of a bond.
- *  <p>This descriptor uses these parameters:
- * <table border="1">
+ *  <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

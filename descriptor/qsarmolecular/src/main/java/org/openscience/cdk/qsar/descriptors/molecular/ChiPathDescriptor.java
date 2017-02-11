@@ -45,17 +45,17 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Evaluates chi path descriptors.
- * <p/>
- * <p/>
+ * 
+ * 
  * It utilizes the graph isomorphism code of the CDK to find fragments matching
  * SMILES strings representing the fragments corresponding to each type of chain.
- * <p/>
+ * 
  * The order of the values returned is
  * <ol>
  * <li>SP-0, SP-1, ..., SP-7 - Simple path, orders 0 to 7
  * <li>VP-0, VP-1, ..., VP-7 - Valence path, orders 0 to 7
  * </ol>
- * <p/>
+ * 
  * <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
  * the various fragments. As a result calculations may be slow. In addition, recent
  * versions of Molconn-Z use simplified fragment definitions (i.e., rings without
@@ -203,7 +203,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

@@ -42,7 +42,7 @@ import java.util.Map;
 
 /**
  * Generate fragments exhaustively.
- * <p/>
+ * 
  * This fragmentation scheme simply breaks single non-ring bonds. By default
  * fragments smaller than 6 atoms in size are not considered, but this can be
  * changed by the user. Side chains are retained.

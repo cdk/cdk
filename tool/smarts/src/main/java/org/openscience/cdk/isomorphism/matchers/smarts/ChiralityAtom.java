@@ -84,7 +84,7 @@ public class ChiralityAtom extends SMARTSAtom {
         return true;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
         int qParity = permParity * (clockwise ? 1 : -1);

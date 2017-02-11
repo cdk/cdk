@@ -30,15 +30,15 @@ package org.openscience.cdk.tools;
  *
  * <p>To test whether a IChemFormat supports a certain feature, the
  * following code can be used:
- * <pre>
+ * <pre>{@code
  * int features = new XYZFormat().getSupportedDataFeatures();
  * boolean has3DCoords = (features & HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
- * </pre>
+ * }</pre>
  *
  * <p>This list of constants matches the latest <a href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml"
  * >Blue Obelisk Data Features Ontology</a>.
  *
- * @author     Egon Willighagen <ewilligh@uni-koeln.de>
+ * @author Egon Willighagen &lt;ewilligh@uni-koeln.de&gt;
  * @cdk.module annotation
  * @cdk.githash
  **/

@@ -33,8 +33,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  *  Class that returns the number of aromatic atoms in an atom container.
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -177,7 +176,7 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

@@ -67,16 +67,16 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  * diagram. These are generated together allowing the bonds to drawn cleanly without overlap. The
  * generate is heavily based on ideas documented in {@cdk.cite Brecher08} and {@cdk.cite Clark13}.
  *
- * <p/>
+ * 
  *
  * Atom symbols are provided as {@link GeneralPath} outlines. This allows the depiction to be
  * independent of the system used to view the diagram (primarily important for vector graphic
- * depictions). The font used to generate the diagram must be provided to the constructor. <p/>
+ * depictions). The font used to generate the diagram must be provided to the constructor. 
  *
  * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. The style of
  * highlight is set with the {@link Highlighting} parameter.
  *
- * <p/>
+ * 
  *
  * The <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki
  * page</a> provides extended details of using and configuring this generator.
@@ -175,7 +175,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public IRenderingElement generate(IAtomContainer container, RendererModel parameters) {
@@ -540,7 +540,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
@@ -822,7 +822,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public static final class AtomColor extends AbstractGeneratorParameter<IAtomColorer> {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public IAtomColorer getDefault() {
@@ -839,7 +839,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public static final class Visibility extends AbstractGeneratorParameter<SymbolVisibility> {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public SymbolVisibility getDefault() {
@@ -854,7 +854,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public static final class StrokeRatio extends AbstractGeneratorParameter<Double> {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Double getDefault() {
@@ -869,7 +869,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public static final class BondSeparation extends AbstractGeneratorParameter<Double> {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Double getDefault() {
@@ -884,7 +884,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public static final class SymbolMarginRatio extends AbstractGeneratorParameter<Double> {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Double getDefault() {
@@ -898,7 +898,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public static final class WedgeRatio extends AbstractGeneratorParameter<Double> {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Double getDefault() {
@@ -913,7 +913,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public static final class HashSpacing extends AbstractGeneratorParameter<Double> {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Double getDefault() {
@@ -927,7 +927,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public static final class WaveSpacing extends AbstractGeneratorParameter<Double> {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Double getDefault() {
@@ -941,7 +941,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public static final class DashSection extends AbstractGeneratorParameter<Integer> {
 
         /**
-         * @inheritDoc
+         *{@inheritDoc}
          */
         @Override
         public Integer getDefault() {
@@ -954,7 +954,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public static final class FancyBoldWedges extends AbstractGeneratorParameter<Boolean> {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Boolean getDefault() {
             return true;
@@ -966,7 +966,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public static final class FancyHashedWedges extends AbstractGeneratorParameter<Boolean> {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Boolean getDefault() {
             return true;
@@ -980,7 +980,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public static final class OuterGlowWidth extends AbstractGeneratorParameter<Double> {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Double getDefault() {
             return 2d;
@@ -993,7 +993,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public static final class Highlighting extends AbstractGeneratorParameter<HighlightStyle> {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public HighlightStyle getDefault() {
             return HighlightStyle.Colored;
@@ -1006,7 +1006,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public static final class AnnotationColor extends AbstractGeneratorParameter<Color> {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Color getDefault() {
             return Color.RED;
@@ -1019,7 +1019,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public static final class AnnotationDistance extends AbstractGeneratorParameter<Double> {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Double getDefault() {
             return 0.25;
@@ -1031,7 +1031,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public static final class AnnotationFontScale extends AbstractGeneratorParameter<Double> {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Double getDefault() {
             return 0.5;
@@ -1043,7 +1043,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public static final class SgroupBracketDepth extends AbstractGeneratorParameter<Double> {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Double getDefault() {
             return 0.18;
@@ -1055,7 +1055,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public static final class SgroupFontScale extends AbstractGeneratorParameter<Double> {
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Double getDefault() {
             return 0.6;

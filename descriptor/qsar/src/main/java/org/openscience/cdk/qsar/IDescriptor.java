@@ -29,7 +29,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * <code>IMolecularDescriptor</code>, <code>IAtomicDescriptor</code> and
  * <code>IBondDescriptor</code>.
  *
- * <p><b>Calculated results</b><br />
+ * <p><b>Calculated results</b><br>
  * The results calculated by the descriptor can have various types, which
  * extend the IDescriptorResult, and is embedded in a
  * <code>DescriptorValue</code>. Currently, there are five result types:
@@ -55,7 +55,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * on the used descriptor parameters. The length must not depend on the
  * IAtomContainer, but only on the parameters.
  *
- * <p><b>Parameters</b><br />
+ * <p><b>Parameters</b><br>
  * A descriptor may have parameters that specify how the descriptor
  * is calculated, or to what level of detail. For example, the atom
  * count descriptor may calculate counts for all elements, or just
@@ -157,19 +157,19 @@ public interface IDescriptor {
 
     /**
      * Returns an array of names for each descriptor value calculated.
-     * <p/>
+     * 
      * Many descriptors return multiple values. In general it is useful for the
      * descriptor to indicate the names for each value.
-     * <p/>
+     * 
      * In many cases, these names can be as simple as X1, X2, ..., XN where X is a prefix
      * and 1, 2, ..., N are the indices. On the other hand it is also possible to return
      * other arbitrary names, which should be documented in the Javadocs for the descriptor
      * (e.g., the CPSA descriptor).
-     * <p/>
+     * 
      * Note that by default if a descriptor returns a single value
      * (such as {@link org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor}
      * the return array will have a single element
-     * <p/>
+     * 
      *
      *
      * @return An array of descriptor names, equal

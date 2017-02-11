@@ -31,7 +31,7 @@ import java.util.List;
 
 /**
  * Helper methods for fragmentation algorithms.
- * <p/>
+ * 
  * Most of these methods are specific to the fragmentation algorithms
  * in this package and so are protected. In general, these methods will
  * not be used by the rest of the API or by other users of the library.

@@ -42,18 +42,18 @@ public class RingMembershipAtom extends SMARTSAtom {
     /**
      * Ring membership query atom. Check if the an atom belongs to <i>num</i> of
      * rings. To specify any ring membership, <i>num</i> should be specified as
-     * < 0. Generally in SMARTS it's better negate ring membership with {@code
+     * &lt; 0. Generally in SMARTS it's better negate ring membership with {@code
      * [!R]} however for legacy reasons {@code [R0]} was accepted and checks
      * this atoms belongs to 0 rings.
      *
-     * @param num number of rings which this atom belongs to, < 0 any ring.
+     * @param num number of rings which this atom belongs to, &lt; 0 any ring.
      */
     public RingMembershipAtom(int num, IChemObjectBuilder builder) {
         super(builder);
         this.ringNumber = num;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
         return ringNumber < 0 ? invariants(atom).ringConnectivity() > 0 : ringNumber == invariants(atom).ringNumber();

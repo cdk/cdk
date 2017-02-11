@@ -36,7 +36,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * A structure pattern which utilises the Vento-Foggia (VF) algorithm {@cdk.cite
  * Cordella04}.
  *
- * <p/>
+ * 
  *
  * Find and count the number molecules which contain the query substructure.
  *
@@ -49,14 +49,14 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *     if (pattern.matches(m))
  *         hits++;
  * </pre></blockquote>
- * <p/>
+ * 
  *
  * Finding the matching to molecules which contain the query substructure. It is
  * more efficient to obtain the {@link #match} and check it's size rather than
  * test if it {@link #matches}. These methods automatically verify
  * stereochemistry.
  *
- * <blockquote><pre>
+ * <blockquote><pre>{@code
  * IAtomContainer query   = ...;
  * Pattern        pattern = VentoFoggia.findSubstructure(query);
  *
@@ -66,7 +66,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *     if (match.length > 0)
  *         hits++;
  * }
- * </pre></blockquote>
+ * }</pre></blockquote>
  *
  * @author John May
  * @cdk.module isomorphism
@@ -112,13 +112,13 @@ public final class VentoFoggia extends Pattern {
         this.queryMatching = query instanceof IQueryAtomContainer;
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public int[] match(IAtomContainer target) {
         return matchAll(target).stereochemistry().first();
     }
 
-    /** @inheritDoc */
+    /**{@inheritDoc} */
     @Override
     public Mappings matchAll(final IAtomContainer target) {
         EdgeToBondMap bonds2 = EdgeToBondMap.withSpaceFor(target);
@@ -229,7 +229,7 @@ public final class VentoFoggia extends Pattern {
             this.subgraph = subgraph;
         }
 
-        /** @inheritDoc */
+        /**{@inheritDoc} */
         @Override
         public Iterator<int[]> iterator() {
             if (subgraph) {

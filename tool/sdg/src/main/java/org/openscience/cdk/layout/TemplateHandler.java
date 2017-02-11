@@ -327,7 +327,8 @@ public final class TemplateHandler {
      * Create a template from a substructure pattern. Using this template handler in the diagram
      * generator then allows us to align to common reference.
      *
-     * @param template the molecule
+     * @param ptrn the structure pattern to match
+     * @param mols list of molecules
      * @return new template handler
      */
     public static TemplateHandler createFromSubstructure(Pattern ptrn, Iterable<IAtomContainer> mols) {
@@ -342,7 +343,8 @@ public final class TemplateHandler {
      * Create a template from a substructure pattern. Using this template handler in the diagram
      * generator then allows us to align to common reference.
      *
-     * @param template the molecule
+     * @param ptrn the structure pattern to match
+     * @param mol molecule
      * @return new template handler
      */
     public static TemplateHandler createFromSubstructure(Pattern ptrn, IAtomContainer mol) {

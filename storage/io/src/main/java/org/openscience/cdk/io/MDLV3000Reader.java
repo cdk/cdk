@@ -66,7 +66,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.githash
  * @cdk.iooptions
  *
- * @author      Egon Willighagen <egonw@users.sf.net>
+ * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2006
  *
  * @cdk.keyword MDL molfile V3000

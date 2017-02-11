@@ -36,8 +36,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  *  This class returns the covalent radius of a given atom.
  *
- * <p>This descriptor uses these parameters:
- * <table border="1">
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

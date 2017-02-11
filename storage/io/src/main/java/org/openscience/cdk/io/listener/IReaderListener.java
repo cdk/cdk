@@ -26,7 +26,7 @@ import org.openscience.cdk.io.ReaderEvent;
  * @cdk.module io
  * @cdk.githash
  *
- * @author Bradley A. Smith <bradley@baysmith.com>
+ * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
  */
 public interface IReaderListener extends IChemObjectIOListener {
 

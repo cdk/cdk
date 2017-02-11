@@ -25,11 +25,11 @@ import java.util.Arrays;
 
 /**
  * A representation of a pharmacophore group.
- * <p/>
+ * 
  * In general this class is used internally for pharmacophore matchin and does not be instantiated
  * by the user. However after a successful match the user will get access to objects of this class
  * which match parts of a query.
- * <p/>
+ * 
  * The main features of a pharmacophore group are the SMARTS pattern defining what the group
  * is meant to identify and the atoms of a molecule that correspond to the SMARTS pattern.
  *
@@ -99,7 +99,7 @@ public class PharmacophoreAtom extends Atom {
 
     /**
      * Set the atoms of a target molecule that correspond to this group.
-     * <p/>
+     * 
      * This method is generally only useful in the context of pharmacophore matching
      *
      * @param atomIndices The indicies of the atoms in a molecule that match
@@ -115,7 +115,7 @@ public class PharmacophoreAtom extends Atom {
 
     /**
      * Get the atoms of a target molecule that correspond to this group.
-     * <p/>
+     * 
      * This method is generally only useful in the context of pharmacophore matching
      *
      * @return The indices of the atoms, in a molecule, that match the pattern for this group.

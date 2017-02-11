@@ -41,7 +41,7 @@ public abstract class Pattern {
      * exist an empty mapping is returned. Depending on the implementation
      * stereochemistry may be checked (recommended).
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * Pattern        pattern = ...; // create pattern
      * for (IAtomContainer m : ms) {
      *     int[] mapping = pattern.match(m);
@@ -49,7 +49,7 @@ public abstract class Pattern {
      *         // found mapping!
      *     }
      * }
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param target the container to search for the pattern in
      * @return the mapping from the pattern to the target or an empty array
@@ -144,7 +144,7 @@ public abstract class Pattern {
      *
      * The reaction is inlined into a molecule and vs mapped id's correspond
      * to the absolute atom index in the reaction when considered as reactants, agents,
-     * products {@see ReactionManipulator#toMolecule}.
+     * products {@link ReactionManipulator#toMolecule}.
      *
      * @param target the reaction to search for the pattern in
      * @return the mapping from the pattern to the target

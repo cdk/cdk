@@ -37,8 +37,8 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * The rules is based from Tobias Kind paper with the title "Seven Golden Rules for heuristic
  * filtering of molecular formula" {@cdk.cite kind2007}.
  *
- * <p>This rule uses these parameters:
  * <table border="1">
+ *   <caption>Table 1: Parameters set by this rule.</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *   </tr>
  *   <tr>
  *     <td>massRange</td>
- *     <td>< 500</td>
+ *     <td>&lt; 500</td>
  *     <td>Mass to take account</td>
  *   </tr>
  * </table>
@@ -97,9 +97,6 @@ public class MMElementRule implements IRule {
 
     /**
      *  Constructor for the MMElementRule object.
-     *
-     *  @throws IOException            If an error occurs when reading atom type information
-     *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public MMElementRule() {
         // initiate Hashmap default

@@ -188,7 +188,7 @@ import org.openscience.cdk.smsd.helper.BondEnergy;
  *
  * @cdk.githash
  * @cdk.module smsd
- * @author Syed Asad Rahman <asad@ebi.ac.uk>
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  */
 public class BondEnergies {
 

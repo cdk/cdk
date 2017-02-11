@@ -47,12 +47,12 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * method partially implements the rules described by {@cdk.cite Razinger93}.
  * Para centers are identified in isolated rings (more common) but are not
  * currently found in fused systems (e.g. decalin), spiro linked 'assemblages'
- * or acyclic interdependent centers. <p/>
+ * or acyclic interdependent centers. 
  *
- * <b>Accepted Stereo Atoms</b> <p/>
+ * <b>Accepted Stereo Atoms</b> 
  *
  * This atoms accepted as being potentially stereogenic are those defined
- * in the InChI Technical Manual {@cdk.cite InChITechManual}. These are: <p/>
+ * in the InChI Technical Manual {@cdk.cite InChITechManual}. These are: 
  *
  * <b>Tetrahedral Stereochemistry:</b>
  * <ul>
@@ -80,7 +80,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * or if they have 2 neighbors of the same element (O, S, Se, Te, N) which
  * have at least one hydrogen. Consider: {@code P(O)(=O)(OC)OCCC}. Phosphines and
  * arsines are always stereogenic regardless of H neighbors</i>
- * <p/>
+ * 
  *
  * <b>Double Bond Stereochemistry:</b>
  * The following atoms can appear at either end of a double bond.
@@ -90,9 +90,9 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *     <li>Germanium - 4 valent, 2 sigma and 1 pi bond</li>
  *     <li>Nitrogen - 3 valent, 1 sigma and 1 pi bond</li>
  *     <li>Nitrogen cation - 4 valent, 2 sigma and 1 pi bond</li>
- * </ul><p/>
+ * </ul>
  *
- * <p/> <b>Examples of Para Stereocenters</b> <ul> <li>inositol - has 9 stereo
+ *  <b>Examples of Para Stereocenters</b> <ul> <li>inositol - has 9 stereo
  * isomers, {@code O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O
  * myo-inositol}</li> <li>decalin - has 2 stereo isomers, {@code
  * C1CC[C@H]2CCCC[C@H]2C1} (not currently identified)</li> <li>spiro/double-bond
@@ -135,7 +135,7 @@ public final class Stereocenters {
      * Determine the stereocenter atoms in the provided container based on
      * connectivity.
      *
-     * <blockquote><pre>
+     * <blockquote><pre>{@code
      * IAtomContainer container = ...;
      * Stereocenters  centers   = Stereocenters.of(container);
      * for (int i = 0; i < container.getAtomCount(); i++) {
@@ -143,7 +143,7 @@ public final class Stereocenters {
      *
      *     }
      * }
-     * </pre></blockquote>
+     * }</pre></blockquote>
      *
      * @param container input container
      * @return the stereocenters

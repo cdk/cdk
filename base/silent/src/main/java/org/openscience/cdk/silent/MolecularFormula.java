@@ -305,7 +305,7 @@ public class MolecularFormula implements IMolecularFormula {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public <T> T getProperty(Object description) {
@@ -317,7 +317,7 @@ public class MolecularFormula implements IMolecularFormula {
     }
 
     /**
-     * @inheritDoc
+     *{@inheritDoc}
      */
     @Override
     public <T> T getProperty(Object description, Class<T> c) {
