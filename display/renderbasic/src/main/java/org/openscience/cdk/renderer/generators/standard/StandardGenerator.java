@@ -238,8 +238,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 continue;
 
             Color highlight = getHighlightColor(atom, parameters);
-            Color color = highlight != null && style == HighlightStyle.Colored ? highlight : coloring
-                    .getAtomColor(atom);
+            Color color = getColorOfAtom(symbolRemap, coloring, foreground, style, atom, highlight);
 
             if (symbols[i] == null) {
                 // we add a 'ball' around atoms with no symbols (e.g. carbons)
@@ -286,6 +285,18 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         group.add(frontLayer);
 
         return MarkedElement.markupMol(group, container);
+    }
+
+    private Color getColorOfAtom(Map<IAtom, String> symbolRemap, IAtomColorer coloring, Color foreground,
+                                 HighlightStyle style, IAtom atom, Color highlight) {
+        // atom is highlighted...?
+        if (highlight != null && style == HighlightStyle.Colored)
+            return highlight;
+        // abbreviations default to foreground color
+        if (symbolRemap.containsKey(atom))
+            return foreground;
+        // use the atom colorer
+        return coloring.getAtomColor(atom);
     }
 
     /**

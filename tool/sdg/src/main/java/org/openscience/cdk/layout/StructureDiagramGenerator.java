@@ -52,6 +52,7 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -1503,7 +1504,8 @@ public class StructureDiagramGenerator {
         int result = 0;
 
         // Check for an exact match (identity) on the entire ring system
-        if (!macro && lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
+        // XXX: should avoid if we have db stereo in macrocycle!
+        if (lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
             for (IAtomContainer container : rs.atomContainers())
                 container.setFlag(CDKConstants.ISPLACED, true);
             rs.setFlag(CDKConstants.ISPLACED, true);

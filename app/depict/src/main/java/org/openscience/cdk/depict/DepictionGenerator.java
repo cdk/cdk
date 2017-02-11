@@ -1135,7 +1135,7 @@ public final class DepictionGenerator {
 
         public LayoutBackup(IAtomContainer mol) {
             final int numAtoms = mol.getAtomCount();
-            final int numBonds = mol.getAtomCount();
+            final int numBonds = mol.getBondCount();
             this.coords = new Point2d[numAtoms];
             this.btypes = new IBond.Stereo[numBonds];
             this.mol = mol;
@@ -1153,7 +1153,7 @@ public final class DepictionGenerator {
 
         void reset() {
             final int numAtoms = mol.getAtomCount();
-            final int numBonds = mol.getAtomCount();
+            final int numBonds = mol.getBondCount();
             for (int i = 0; i < numAtoms; i++)
                 mol.getAtom(i).setPoint2d(coords[i]);
             for (int i = 0; i < numBonds; i++)
