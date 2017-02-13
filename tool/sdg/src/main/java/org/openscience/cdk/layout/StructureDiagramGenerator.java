@@ -1072,8 +1072,8 @@ public class StructureDiagramGenerator {
 
         // correct double-bond stereo, this changes the layout and in reality
         // should be done during the initial placement
-        if (molecule.stereoElements().iterator().hasNext())
-            CorrectGeometricConfiguration.correct(molecule);
+        if (mol.stereoElements().iterator().hasNext())
+            CorrectGeometricConfiguration.correct(mol);
 
         // finalize
         assignStereochem(mol);

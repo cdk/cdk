@@ -20,6 +20,7 @@ package org.openscience.cdk.silent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,9 +29,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -954,34 +957,49 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     }
 
     /**
-     *  Adds all atoms and electronContainers of a given atomcontainer to this
-     *  container.
+     *  Add a container (that) to this container, if "that" container has atoms,
+     *  bonds, or electron containers already in  "this" they are not added.
      *
-     *@param  atomContainer  The atomcontainer to be added
+     *  @param that the other atom container
      */
     @Override
-    public void add(IAtomContainer atomContainer) {
-        for (int f = 0; f < atomContainer.getAtomCount(); f++) {
-            if (!contains(atomContainer.getAtom(f))) {
-                addAtom(atomContainer.getAtom(f));
+    public void add(IAtomContainer that) {
+
+        atoms = Arrays.copyOf(atoms, atomCount + that.getAtomCount());
+        bonds = Arrays.copyOf(bonds, bondCount + that.getBondCount());
+
+        for (IAtom atom : that.atoms())
+            atom.setFlag(CDKConstants.VISITED, false);
+        for (IBond bond : that.bonds())
+            bond.setFlag(CDKConstants.VISITED, false);
+        for (IAtom atom : this.atoms())
+            atom.setFlag(CDKConstants.VISITED, true);
+        for (IBond bond : this.bonds())
+            bond.setFlag(CDKConstants.VISITED, true);
+
+        for (IAtom atom : that.atoms()) {
+            if (!atom.getFlag(CDKConstants.VISITED)) {
+                atom.setFlag(CDKConstants.VISITED, true);
+                atoms[atomCount++] = atom;
             }
         }
-        for (int f = 0; f < atomContainer.getBondCount(); f++) {
-            if (!contains(atomContainer.getBond(f))) {
-                addBond(atomContainer.getBond(f));
+        for (IBond bond : that.bonds()) {
+            if (!bond.getFlag(CDKConstants.VISITED)) {
+                bond.setFlag(CDKConstants.VISITED, true);
+                bonds[bondCount++] = bond;
             }
         }
-        for (int f = 0; f < atomContainer.getLonePairCount(); f++) {
-            if (!contains(atomContainer.getLonePair(f))) {
-                addLonePair(atomContainer.getLonePair(f));
+        for (ILonePair lp : that.lonePairs()) {
+            if (!contains(lp)) {
+                addLonePair(lp);
             }
         }
-        for (int f = 0; f < atomContainer.getSingleElectronCount(); f++) {
-            if (!contains(atomContainer.getSingleElectron(f))) {
-                addSingleElectron(atomContainer.getSingleElectron(f));
+        for (ISingleElectron se : that.singleElectrons()) {
+            if (!contains(se)) {
+                addSingleElectron(se);
             }
         }
-        for (IStereoElement se : atomContainer.stereoElements())
+        for (IStereoElement se : that.stereoElements())
             stereoElements.add(se);
     }
 

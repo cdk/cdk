@@ -37,6 +37,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -50,6 +52,7 @@ import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import javax.vecmath.Point2d;
@@ -85,7 +88,7 @@ import static org.junit.Assert.fail;
 public class StructureDiagramGeneratorTest extends CDKTestCase {
 
     private static final StructureDiagramGenerator SDG = new StructureDiagramGenerator();
-    
+
     static {
         SDG.setUseIdentityTemplates(true);
     }
@@ -1242,5 +1245,25 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         assertThat(mol.getAtom(1).getPoint2d().x - mol.getAtom(0).getPoint2d().x,
                    is(greaterThan(SDG.getBondLength())));
 
+    }
+
+    @Test public void fragmentDoubleBondConfiguration() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C(\\C)=C/C.C(\\C)=C\\C.C(\\C)=C/C.C(\\C)=C\\C");
+        layout(mol);
+        List<IStereoElement> elements = StereoElementFactory.using2DCoordinates(mol).createAll();
+        int numCis = 0;
+        int numTrans = 0;
+        for (IStereoElement se : elements) {
+            if (se instanceof IDoubleBondStereochemistry) {
+                IDoubleBondStereochemistry.Conformation config = ((IDoubleBondStereochemistry) se).getStereo();
+                if (config == IDoubleBondStereochemistry.Conformation.TOGETHER)
+                    numCis++;
+                else if (config == IDoubleBondStereochemistry.Conformation.OPPOSITE)
+                    numTrans++;
+            }
+        }
+        assertThat(numCis, is(2));
+        assertThat(numTrans, is(2));
     }
 }
