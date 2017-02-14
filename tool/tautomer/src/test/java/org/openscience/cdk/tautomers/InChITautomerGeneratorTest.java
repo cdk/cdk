@@ -71,6 +71,16 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
         return tautomers;
     }
 
+    private List<IAtomContainer> unitTestWithoutInchiProvided(String smiles, int flags, int tautCountExpected)
+            throws Exception {
+        IAtomContainer container = smilesParser.parseSmiles(smiles);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        InChITautomerGenerator tautegen = new InChITautomerGenerator(flags);
+        List<IAtomContainer> tautomers = tautegen.getTautomers(container);
+        Assert.assertEquals(tautCountExpected, tautomers.size());
+        return tautomers;
+    }
+
     @Test
     public void test1() throws Exception {
         unitTestWithInchiProvided("NC1=CC(N)=NC(O)=N1", "InChI=1S/C4H6N4O/c5-2-1-3(6)8-4(9)7-2/h1H,(H5,5,6,7,8,9)", 5);
@@ -106,6 +116,37 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
         unitTestWithInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2",
                 "InChI=1/C19H16O4/c1-12(20)11-15(13-7-3-2-4-8-13)17-18(21)14-9-5-6-10-16(14)23-19(17)22/"
                         + "h2-10,15H,1H3,(H2,11,20)(H,17,21,22)", 6);
+    }
+
+    @Test
+    public void test1_fast() throws Exception {
+        unitTestWithoutInchiProvided("NC1=CC(N)=NC(O)=N1", 0, 5);
+    }
+
+    @Test
+    public void test2_fast() throws Exception {
+        unitTestWithoutInchiProvided("CCCN1C2=C(NC=N2)C(=O)NC1=O", 0, 8);
+    }
+
+    @Test
+    public void test3_fast() throws Exception {
+        unitTestWithoutInchiProvided("CCNC(=N)NC", 0, 3);
+    }
+
+    @Test
+    public void test4_fast() throws Exception {
+        unitTestWithoutInchiProvided("O=C1NC=CC(=O)N1", 0, 6);
+    }
+
+    @Test
+    public void test5_fast() throws Exception {
+        unitTestWithoutInchiProvided("CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", 0, 2);
+    }
+
+    @Test
+    public void test6_fast() throws Exception {
+        //Warfarin: not you need to create the InChI with option KET to get the ketone/hydroxyl tautomerism
+        unitTestWithoutInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", InChITautomerGenerator.KETO_ENOL,  6);
     }
 
     @Test(expected = CDKException.class)

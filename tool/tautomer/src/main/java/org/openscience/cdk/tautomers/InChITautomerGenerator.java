@@ -31,7 +31,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.InChINumbersTools;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
-import org.openscience.cdk.inchi.InChIToStructure;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -56,11 +55,42 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module tautomer
  * @cdk.githash
  */
-public class InChITautomerGenerator {
+public final class InChITautomerGenerator {
 
     private final static ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(InChITautomerGenerator.class);
 
     private static final SmilesGenerator CANSMI = new SmilesGenerator(SmiFlavor.Canonical);
+
+    /** Generate InChI with -KET (keto-enol tautomers) option. */
+    public static final int KETO_ENOL      = 0x1;
+
+    /** Generate InChI with -15T (1,5-shift tautomers) option. */
+    public static final int ONE_FIVE_SHIFT = 0x2;
+
+    private final int flags;
+
+    /**
+     * Create a tautomer generator specifygin whether to enable, keto-enol (-KET) and 1,5-shifts (-15T).
+     *
+     * <pre>{@code
+     * // enabled -KET option
+     * InChITautomerGenerator tautgen = new InChITautomerGenerator(InChITautomerGenerator.KETO_ENOL);
+     * // enabled both -KET and -15T
+     * InChITautomerGenerator tautgen = new InChITautomerGenerator(InChITautomerGenerator.KETO_ENOL | InChITautomerGenerator.ONE_FIVE_SHIFT);
+     * }</pre>
+     *
+     * @param flags the options
+     */
+    public InChITautomerGenerator(int flags) {
+        this.flags = flags;
+    }
+
+    /**
+     * Create a tautomer generator, keto-enol (-KET) and 1,5-shifts (-15T) are disabled.
+     */
+    public InChITautomerGenerator() {
+        this(0);
+    }
 
     /**
      * Public method to get tautomers for an input molecule, based on the InChI which will be calculated by JNI-InChI.
@@ -71,7 +101,13 @@ public class InChITautomerGenerator {
      */
     public List<IAtomContainer> getTautomers(IAtomContainer mol) throws CDKException, CloneNotSupportedException {
 
-        InChIGenerator gen   = InChIGeneratorFactory.getInstance().getInChIGenerator(mol, "");
+        String opt = "";
+        if ((flags & KETO_ENOL) != 0)
+            opt += " -KET";
+        if ((flags & ONE_FIVE_SHIFT) != 0)
+            opt += " -15T";
+
+        InChIGenerator gen   = InChIGeneratorFactory.getInstance().getInChIGenerator(mol, opt);
         String         inchi = gen.getInchi();
         String         aux   = gen.getAuxInfo();
 
@@ -84,6 +120,18 @@ public class InChITautomerGenerator {
         return getTautomers(mol, inchi, amap);
     }
 
+    /**
+     * This method is slower than recalculating the InChI with {@link #getTautomers(IAtomContainer)} as the mapping
+     * between the two can be found more efficiently.
+     *
+     * @param mol
+     * @param inchi
+     * @return
+     * @throws CDKException
+     * @throws CloneNotSupportedException
+     * @deprecated use {@link #getTautomers(IAtomContainer)} directly
+     */
+    @Deprecated
     public List<IAtomContainer> getTautomers(IAtomContainer mol, String inchi) throws CDKException, CloneNotSupportedException {
         return getTautomers(mol, inchi, null);
     }
