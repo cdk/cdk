@@ -44,8 +44,9 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
  *
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
- *
+ * @deprecated internal implemenation detail from SSSRFinder, do not use
  */
+@Deprecated
 public class SimpleCycle extends UndirectedSubgraph {
 
     private static final long serialVersionUID = -3330742084804445688L;

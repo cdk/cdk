@@ -22,29 +22,26 @@
  */
 package org.openscience.cdk.tautomers;
 
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.invariant.InChINumbersTools;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.smsd.Isomorphism;
-import org.openscience.cdk.smsd.interfaces.Algorithm;
+import org.openscience.cdk.isomorphism.AtomMatcher;
+import org.openscience.cdk.isomorphism.BondMatcher;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Creates tautomers for a given input molecule, based on the mobile H atoms listed in the InChI.
@@ -58,59 +55,132 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module tautomer
  * @cdk.githash
  */
-public class InChITautomerGenerator {
+public final class InChITautomerGenerator {
 
     private final static ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(InChITautomerGenerator.class);
 
+    private static final SmilesGenerator CANSMI = new SmilesGenerator(SmiFlavor.Canonical);
+
+    /** Generate InChI with -KET (keto-enol tautomers) option. */
+    public static final int KETO_ENOL      = 0x1;
+
+    /** Generate InChI with -15T (1,5-shift tautomers) option. */
+    public static final int ONE_FIVE_SHIFT = 0x2;
+
+    private final int flags;
+
+    /**
+     * Create a tautomer generator specifygin whether to enable, keto-enol (-KET) and 1,5-shifts (-15T).
+     *
+     * <pre>{@code
+     * // enabled -KET option
+     * InChITautomerGenerator tautgen = new InChITautomerGenerator(InChITautomerGenerator.KETO_ENOL);
+     * // enabled both -KET and -15T
+     * InChITautomerGenerator tautgen = new InChITautomerGenerator(InChITautomerGenerator.KETO_ENOL | InChITautomerGenerator.ONE_FIVE_SHIFT);
+     * }</pre>
+     *
+     * @param flags the options
+     */
+    public InChITautomerGenerator(int flags) {
+        this.flags = flags;
+    }
+
+    /**
+     * Create a tautomer generator, keto-enol (-KET) and 1,5-shifts (-15T) are disabled.
+     */
+    public InChITautomerGenerator() {
+        this(0);
+    }
+
     /**
      * Public method to get tautomers for an input molecule, based on the InChI which will be calculated by JNI-InChI.
-     * @param molecule molecule for which to generate tautomers
+     * @param mol molecule for which to generate tautomers
      * @return a list of tautomers, if any
      * @throws CDKException
      * @throws CloneNotSupportedException
      */
-    public List<IAtomContainer> getTautomers(IAtomContainer molecule) throws CDKException, CloneNotSupportedException {
+    public List<IAtomContainer> getTautomers(IAtomContainer mol) throws CDKException, CloneNotSupportedException {
 
-        InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(molecule);
-        String inchi = gen.getInchi();
+        String opt = "";
+        if ((flags & KETO_ENOL) != 0)
+            opt += " -KET";
+        if ((flags & ONE_FIVE_SHIFT) != 0)
+            opt += " -15T";
+
+        InChIGenerator gen   = InChIGeneratorFactory.getInstance().getInChIGenerator(mol, opt);
+        String         inchi = gen.getInchi();
+        String         aux   = gen.getAuxInfo();
+
+        long[] amap = new long[mol.getAtomCount()];
+        InChINumbersTools.parseAuxInfo(aux, amap);
+
         if (inchi == null)
             throw new CDKException(InChIGenerator.class
                     + " failed to create an InChI for the provided molecule, InChI -> null.");
-        return getTautomers(molecule, inchi);
+        return getTautomers(mol, inchi, amap);
+    }
+
+    /**
+     * This method is slower than recalculating the InChI with {@link #getTautomers(IAtomContainer)} as the mapping
+     * between the two can be found more efficiently.
+     *
+     * @param mol
+     * @param inchi
+     * @return
+     * @throws CDKException
+     * @throws CloneNotSupportedException
+     * @deprecated use {@link #getTautomers(IAtomContainer)} directly
+     */
+    @Deprecated
+    public List<IAtomContainer> getTautomers(IAtomContainer mol, String inchi) throws CDKException, CloneNotSupportedException {
+        return getTautomers(mol, inchi, null);
     }
 
     /**
      * Overloaded {@link #getTautomers(IAtomContainer)} to get tautomers for an input molecule with the InChI already
      * provided as input argument.
-     * @param inputMolecule and input molecule for which to generate tautomers
+     *
+     * @param mol   and input molecule for which to generate tautomers
      * @param inchi InChI for the input molecule
+     * @param amap  ordering of the molecules atoms in the InChI
      * @return a list of tautomers
      * @throws CDKException
-     * @throws CloneNotSupportedException
+     * @throws CloneNotSupportedException no longer thrown
      */
-    public List<IAtomContainer> getTautomers(IAtomContainer inputMolecule, String inchi) throws CDKException,
-            CloneNotSupportedException {
+    private List<IAtomContainer> getTautomers(IAtomContainer mol, String inchi, long[] amap) throws CDKException, CloneNotSupportedException {
 
         //Initial checks
-        if (inputMolecule == null || inchi == null)
+        if (mol == null || inchi == null)
             throw new CDKException("Please provide a valid input molecule and its corresponding InChI value.");
 
+        // shallow copy since we will suppress hydrogens
+        mol = mol.getBuilder().newInstance(IAtomContainer.class, mol);
+
         List<IAtomContainer> tautomers = new ArrayList<IAtomContainer>();
-        if (inchi.indexOf("(H") == -1) { //No mobile H atoms according to InChI, so bail out.
-            tautomers.add(inputMolecule);
+        if (!inchi.contains("(H")) { //No mobile H atoms according to InChI, so bail out.
+            tautomers.add(mol);
             return tautomers;
         }
 
         //Preparation: translate the InChi
-        Map<Integer, IAtom> inchiAtomsByPosition = getElementsByPosition(inchi, inputMolecule);
-        IAtomContainer inchiMolGraph = connectAtoms(inchi, inputMolecule, inchiAtomsByPosition);
-        List<IAtomContainer> mappedContainers = mapInputMoleculeToInchiMolgraph(inchiMolGraph, inputMolecule);
-        inchiMolGraph = mappedContainers.get(0);
-        inputMolecule = mappedContainers.get(1);
+        Map<Integer, IAtom> inchiAtomsByPosition = getElementsByPosition(inchi, mol);
+        IAtomContainer inchiMolGraph = connectAtoms(inchi, mol, inchiAtomsByPosition);
+
+        if (amap != null && amap.length == mol.getAtomCount()) {
+            for (int i = 0; i < amap.length; i++) {
+                mol.getAtom(i)
+                   .setID(Long.toString(amap[i]));
+            }
+            mol = AtomContainerManipulator.suppressHydrogens(mol);
+        } else {
+            mol = AtomContainerManipulator.suppressHydrogens(mol);
+            mapInputMoleculeToInchiMolgraph(inchiMolGraph, mol);
+        }
+
         List<Integer> mobHydrAttachPositions = new ArrayList<Integer>();
         int totalMobHydrCount = parseMobileHydrogens(mobHydrAttachPositions, inchi);
 
-        tautomers = constructTautomers(inputMolecule, mobHydrAttachPositions, totalMobHydrCount);
+        tautomers = constructTautomers(mol, mobHydrAttachPositions, totalMobHydrCount);
         //Remove duplicates
         return removeDuplicates(tautomers);
     }
@@ -242,28 +312,29 @@ public class InChITautomerGenerator {
      * Atom-atom mapping of the input molecule to the bare container constructed from the InChI connection table.
      * This makes it possible to map the positions of the mobile hydrogens in the InChI back to the input molecule.
      * @param inchiMolGraph molecule (bare) as defined in InChI
-     * @param inputMolecule user input molecule
+     * @param mol user input molecule
      * @throws CDKException
      */
-    private List<IAtomContainer> mapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph,
-            IAtomContainer inputMolecule) throws CDKException {
-        List<IAtomContainer> mappedContainers = new ArrayList<IAtomContainer>();
-        Isomorphism isomorphism = new Isomorphism(Algorithm.TurboSubStructure, false);
-        isomorphism.init(inchiMolGraph, inputMolecule, true, false);
-        isomorphism.setChemFilters(true, true, true);
-        Map<IAtom, IAtom> mapping = isomorphism.getFirstAtomMapping();
-        inchiMolGraph = isomorphism.getReactantMolecule();
-        inputMolecule = isomorphism.getProductMolecule();
-        for (IAtom inchiAtom : inchiMolGraph.atoms()) {
-            String position = inchiAtom.getID();
-            IAtom molAtom = mapping.get(inchiAtom);
-            molAtom.setID(position);
-            LOGGER.debug("Mapped InChI ", inchiAtom.getSymbol(), " ", inchiAtom.getID(), " to ", molAtom.getSymbol(),
-                    " " + molAtom.getID());
+    private void mapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph, IAtomContainer mol) throws CDKException {
+        Iterator<Map<IAtom, IAtom>> iter = org.openscience.cdk.isomorphism.VentoFoggia.findIdentical(inchiMolGraph,
+                                                                                                     AtomMatcher.forElement(),
+                                                                                                     BondMatcher.forAny())
+                                                                                  .matchAll(mol)
+                                                                                  .limit(1)
+                                                                                  .toAtomMap()
+                                                                                  .iterator();
+        if (iter.hasNext()) {
+            for (Map.Entry<IAtom,IAtom> e : iter.next().entrySet()) {
+                IAtom src = e.getKey();
+                IAtom dst = e.getValue();
+                String position = src.getID();
+                dst.setID(position);
+                LOGGER.debug("Mapped InChI ", src.getSymbol(), " ", src.getID(), " to ", dst.getSymbol(),
+                             " " + dst.getID());
+            }
+        } else {
+            throw new IllegalArgumentException(CANSMI.create(inchiMolGraph) + " " + CANSMI.create(mol));
         }
-        mappedContainers.add(inchiMolGraph);
-        mappedContainers.add(inputMolecule);
-        return mappedContainers;
     }
 
     /**
@@ -496,38 +567,23 @@ public class InChITautomerGenerator {
     }
 
     /**
-     * Removes duplicates from a molecule set. Uses SMSD to detect identical molecules.
+     * Removes duplicates from a molecule set. Uses canonical SMILES to detect identical molecules.
      * An example of pruning can be a case where double bonds are placed in different positions in
      * an aromatic (Kekule) ring, which all amounts to one same aromatic ring.
      *
      * @param tautomers molecule set of tautomers with possible duplicates
      * @return tautomers same set with duplicates removed
-     * @throws CDKException
+     * @throws CDKException unable to calculate canonical SMILES
      */
     private List<IAtomContainer> removeDuplicates(List<IAtomContainer> tautomers) throws CDKException {
-        List<IAtomContainer> unique = new ArrayList<IAtomContainer>();
-        Isomorphism isomorphism = new Isomorphism(Algorithm.DEFAULT.TurboSubStructure, true);
-        BitSet removed = new BitSet(tautomers.size());
-        for (int idx1 = 0; idx1 < tautomers.size(); idx1++) {
-            if (removed.get(idx1)) {
-                continue;
-            }
-            IAtomContainer tautomer1 = tautomers.get(idx1);
-            for (int idx2 = idx1 + 1; idx2 < tautomers.size(); idx2++) {
-                if (removed.get(idx2)) {
-                    continue;
-                }
-                IAtomContainer tautomer2 = tautomers.get(idx2);
-                isomorphism.init(tautomer1, tautomer2, false, false);
-                isomorphism.setChemFilters(true, true, true);
-                if (isomorphism.isSubgraph()) {
-                    removed.set(idx2);
-                }
-            }
-            unique.add(tautomer1);
+        Set<String>          cansmis = new HashSet<>();
+        List<IAtomContainer> result  = new ArrayList<>();
+        for (IAtomContainer tautomer : tautomers) {
+            if (cansmis.add(CANSMI.create(tautomer)))
+                result.add(tautomer);
         }
         LOGGER.debug("# tautomers after clean up : ", tautomers.size());
-        return unique;
+        return result;
     }
 
     /**

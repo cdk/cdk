@@ -72,6 +72,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-atomtype</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cdk-valencycheck</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
@@ -118,6 +123,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-fragment</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-fingerprint</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

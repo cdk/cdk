@@ -56,9 +56,9 @@ import org._3pq.jgrapht.graph.Subgraph;
  *
  * @cdk.module standard
  * @cdk.githash
- *
+ * @deprecated internal implemenation detail from SSSRFinder, do not use
  */
-
+@Deprecated
 public class SimpleCycleBasis {
 
     private List              edgeList;

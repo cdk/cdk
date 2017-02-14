@@ -31,7 +31,9 @@ import java.util.Vector;
  *
  * @cdk.module standard
  * @cdk.githash
+ * @deprecated internal implemenation detail from SSSRFinder, do not use
  */
+@Deprecated
 public class Queue extends Vector {
 
     private static final long serialVersionUID = 1008167867733841614L;
