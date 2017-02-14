@@ -52,9 +52,9 @@ import org.openscience.cdk.graph.BiconnectivityInspector;
  *
  * @cdk.module standard
  * @cdk.githash
- *
+ * @deprecated internal implemenation detail from SSSRFinder, do not use
  */
-
+@Deprecated
 public class CycleBasis {
 
     //private List cycles = new Vector();

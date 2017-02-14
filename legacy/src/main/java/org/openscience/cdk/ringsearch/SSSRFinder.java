@@ -53,8 +53,10 @@ import java.util.List;
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
  * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings_Berger
- *
+ * @deprecated Use the {@link org.openscience.cdk.graph.Cycles} API
+ *             {@link org.openscience.cdk.graph.Cycles#sssr(IAtomContainer)}
  */
+@Deprecated
 public class SSSRFinder {
 
     private IAtomContainer atomContainer;
