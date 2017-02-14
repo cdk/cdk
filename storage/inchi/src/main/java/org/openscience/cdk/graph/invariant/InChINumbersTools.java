@@ -49,13 +49,23 @@ public class InChINumbersTools {
      */
     public static long[] getNumbers(IAtomContainer atomContainer) throws CDKException {
         String aux = auxInfo(atomContainer);
+        long[] numbers = new long[atomContainer.getAtomCount()];
+        parseAuxInfo(aux, numbers);
+        return numbers;
+    }
+
+    /**
+     * Parse the atom numbering from the auxinfo.
+     *
+     * @param aux InChI AuxInfo
+     * @param numbers the atom numbers
+     */
+    public static void parseAuxInfo(String aux, long[] numbers) {
         aux = aux.substring(aux.indexOf("/N:") + 3);
         String numberStringAux = aux.substring(0, aux.indexOf('/'));
         int i = 1;
-        long[] numbers = new long[atomContainer.getAtomCount()];
-        for (String numberString : numberStringAux.split("\\,"))
+        for (String numberString : numberStringAux.split("[,;]"))
             numbers[Integer.valueOf(numberString) - 1] = i++;
-        return numbers;
     }
 
     /**
