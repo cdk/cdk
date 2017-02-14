@@ -36,7 +36,10 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
+ *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
+@Deprecated
 public class TargetProperties implements java.io.Serializable {
 
     private Map<IAtom, Integer>     connectedTargetAtomCountMap = null;

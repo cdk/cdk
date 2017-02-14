@@ -63,7 +63,11 @@ import org.openscience.cdk.smsd.algorithm.matchers.AtomMatcher;
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt; 2009-2010
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
+ *             access to internal implementation details. SMSD has been deprecated from the CDK and a newer, more recent
+ *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
+@Deprecated
 public class RingFilter {
 
     private RingFinder          ringFinder;

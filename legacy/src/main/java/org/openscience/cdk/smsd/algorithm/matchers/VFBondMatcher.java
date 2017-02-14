@@ -31,8 +31,11 @@ import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
+ *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
+ *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
-
+@Deprecated
 public interface VFBondMatcher {
 
     boolean matches(TargetProperties container, IBond atom);

@@ -147,8 +147,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
+ * @deprecated A more recent version of SMSD is available at <a href="http://github.com/asad/smsd">
+ *             http://github.com/asad/smsd</a>
  */
+@Deprecated
 public final class Isomorphism extends AbstractMCS implements Serializable {
 
     static final long                   serialVersionUID       = 10278639972837495L;

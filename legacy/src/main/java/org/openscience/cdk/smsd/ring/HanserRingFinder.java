@@ -76,8 +76,10 @@ import org.openscience.cdk.interfaces.IRingSet;
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt; 2009-2010
- *
+ * @deprecated Use CDK AllRingsFinder. A more recent version of SMSD is available at
+ *             <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
+@Deprecated
 public class HanserRingFinder implements RingFinder {
 
     private List<List<IAtom>> rings;

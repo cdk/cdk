@@ -57,7 +57,11 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
+ *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
+ *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
+@Deprecated
 public class DefaultBondMatcher implements BondMatcher {
 
     static final long  serialVersionUID = -7861469841127328812L;
