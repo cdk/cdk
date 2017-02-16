@@ -513,7 +513,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     private static boolean parseAtomSymbol(IAtom atom, String str) {
-
         Elements elem = Elements.ofString(str);
         if (elem != Elements.Unknown) {
             atom.setAtomicNumber(elem.number());
@@ -522,6 +521,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
         } else if ("R".equals(str)) {
             atom.setAtomicNumber(0);
             atom.setSymbol("R");
+            return true;
+        } else if ("*".equals(str)) {
+            atom.setAtomicNumber(0);
+            atom.setSymbol("*");
             return true;
         } else if ("D".equals(str)) {
             atom.setAtomicNumber(1);
