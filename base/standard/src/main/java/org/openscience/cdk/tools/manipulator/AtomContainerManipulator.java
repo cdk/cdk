@@ -1344,7 +1344,7 @@ public class AtomContainerManipulator {
         IBond[] bonds = new IBond[src.getBondCount()];
 
         for (int i = 0; i < atoms.length; i++) {
-            atoms[i] = builder.newInstance(IAtom.class, src.getAtom(i).getSymbol());
+            atoms[i] = builder.newInstance(IAtom.class, src.getAtom(i).getAtomicNumber());
         }
         for (int i = 0; i < bonds.length; i++) {
             IBond bond = src.getBond(i);
