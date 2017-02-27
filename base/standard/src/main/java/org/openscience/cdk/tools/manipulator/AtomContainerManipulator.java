@@ -670,7 +670,8 @@ public class AtomContainerManipulator {
 
         // we need fast adjacency checks (to check for suppression and
         // update hydrogen counts)
-        final int[][] graph = GraphUtil.toAdjList(org);
+        GraphUtil.EdgeToBondMap bondmap = GraphUtil.EdgeToBondMap.withSpaceFor(org);
+        final int[][] graph = GraphUtil.toAdjList(org, bondmap);
 
         final int nOrgAtoms = org.getAtomCount();
         final int nOrgBonds = org.getBondCount();
@@ -685,7 +686,7 @@ public class AtomContainerManipulator {
         // be suppressed
         for (int v = 0; v < nOrgAtoms; v++) {
             final IAtom atom = org.getAtom(v);
-            if (suppressibleHydrogen(org, graph, v)) {
+            if (suppressibleHydrogen(org, graph, bondmap, v)) {
                 hydrogens.add(atom);
                 incrementImplHydrogenCount(org.getAtom(graph[v][0]));
             } else {
@@ -891,7 +892,7 @@ public class AtomContainerManipulator {
      * @param v         vertex (atom index)
      * @return the atom is a hydrogen and it can be suppressed (implicit)
      */
-    private static boolean suppressibleHydrogen(final IAtomContainer container, final int[][] graph, final int v) {
+    private static boolean suppressibleHydrogen(final IAtomContainer container, final int[][] graph, final GraphUtil.EdgeToBondMap bondmap, final int v) {
 
         IAtom atom = container.getAtom(v);
 
@@ -903,6 +904,8 @@ public class AtomContainerManipulator {
         if (atom.getMassNumber() != null && atom.getMassNumber() != 1) return false;
         // hydrogen is either not attached to 0 or 2 neighbors
         if (graph[v].length != 1) return false;
+        // non-single bond
+        if (bondmap.get(v, graph[v][0]).getOrder() != Order.SINGLE) return false;
 
         // okay the hydrogen has one neighbor, if that neighbor is a
         // hydrogen (i.e. molecular hydrogen) then we can not suppress it

@@ -128,10 +128,12 @@ public abstract class SymbolVisibility {
             if (mass != null && !isMajorIsotope(element.number(), mass)) return true;
 
             // no kink between bonds to imply the presence of a carbon and it must
-            // be displayed
-            if (hasParallelBonds(atom, bonds)) {
-                // TODO only when both bonds are single?
-                return true;
+            // be displayed if the bonds have the same bond order
+            if (bonds.size() == 2 &&
+                    bonds.get(0).getOrder() == bonds.get(1).getOrder()) {
+                IBond.Order bndord = bonds.get(0).getOrder();
+                if (bndord == IBond.Order.DOUBLE || hasParallelBonds(atom, bonds))
+                    return true;
             }
 
             // special case ethane
