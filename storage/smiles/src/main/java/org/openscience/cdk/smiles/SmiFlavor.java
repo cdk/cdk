@@ -55,7 +55,12 @@ public final class SmiFlavor {
     public static final int AtomAtomMap        = 0x004;
 
     /**
-     * Output atomic mass on atoms.
+     * Output atomic mass on atoms. For historical reasons the atomic mass is
+     * often set on all atoms in a CDK molecule. Therefore to avoid SMILES like
+     * {@code [12CH3][12CH2][16OH]} major isotopes are not generated. If you
+     * wish to generate SMILES with the major isotopes please use the flag
+     * {@link #AtomicMassStrict} this will output all mass numbers and only be
+     * omitted when the mass is unset (null).
      */
     public static final int AtomicMass         = 0x008;
 
@@ -87,6 +92,13 @@ public final class SmiFlavor {
      * @see #Stereo
      */
     public static final int StereoExTetrahedral = 0x400;
+
+    /**
+     * Generate SMILES with the major isotopes, only omit mass numbers when it
+     * is unset.
+     */
+    public static final int AtomicMassStrict   = 0x800;
+
 
     /**
      * Output supported stereochemistry types.

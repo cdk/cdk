@@ -49,6 +49,7 @@ import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.graph.Cycles;
@@ -1236,6 +1237,14 @@ public class SmilesGeneratorTest extends CDKTestCase {
             atom.setIsAromatic(false);
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
         smigen.create(mol);
+    }
+
+    @Test
+    public void strictIsotopes() throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[12CH3]C");
+        assertThat(new SmilesGenerator(SmiFlavor.AtomicMassStrict).create(mol), is("[12CH3]C"));
+        assertThat(new SmilesGenerator(SmiFlavor.AtomicMass).create(mol), is("CC"));
     }
 
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {

@@ -162,6 +162,33 @@ final class CDKToBeam {
         return gb.build();
     }
 
+    private static Integer getMajorMassNumber(Element e) {
+        try {
+            switch (e) {
+                case Hydrogen:   return 1;
+                case Boron:      return 11;
+                case Carbon:     return 12;
+                case Nitrogen:   return 14;
+                case Oxygen:     return 16;
+                case Fluorine:   return 19;
+                case Silicon:    return 28;
+                case Phosphorus: return 31;
+                case Sulfur:     return 32;
+                case Chlorine:   return 35;
+                case Iodine:     return 127;
+                default:
+                    IsotopeFactory isotopes = Isotopes.getInstance();
+                    IIsotope       isotope  = isotopes.getMajorIsotope(e.symbol());
+                    if (isotope != null)
+                        return isotope.getMassNumber();
+                    return null;
+            }
+
+        } catch (IOException ex) {
+            throw new InternalError("Isotope factory wouldn't load: " + ex.getMessage());
+        }
+    }
+
     /**
      * Convert an CDK {@link IAtom} to a Beam Atom. The symbol and implicit
      * hydrogen count are not optional. If the symbol is not supported by the
@@ -195,17 +222,12 @@ final class CDKToBeam {
         if (charge != null) ab.charge(charge);
 
         // use the mass number to specify isotope?
-        if (SmiFlavor.isSet(flavour, SmiFlavor.AtomicMass)) {
+        if (SmiFlavor.isSet(flavour, SmiFlavor.AtomicMass | SmiFlavor.AtomicMassStrict)) {
             Integer massNumber = a.getMassNumber();
             if (massNumber != null) {
-                // XXX: likely causing some overhead but okay for now
-                try {
-                    IsotopeFactory isotopes = Isotopes.getInstance();
-                    IIsotope isotope = isotopes.getMajorIsotope(a.getSymbol());
-                    if (isotope == null || !isotope.getMassNumber().equals(massNumber)) ab.isotope(massNumber);
-                } catch (IOException e) {
-                    throw new InternalError("Isotope factory wouldn't load: " + e.getMessage());
-                }
+                if (SmiFlavor.isSet(flavour, SmiFlavor.AtomicMassStrict) ||
+                        !massNumber.equals(getMajorMassNumber(element)))
+                    ab.isotope(massNumber);
             }
         }
 
