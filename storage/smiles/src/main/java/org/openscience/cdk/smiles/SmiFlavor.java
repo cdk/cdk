@@ -58,9 +58,9 @@ public final class SmiFlavor {
      * Output atomic mass on atoms. For historical reasons the atomic mass is
      * often set on all atoms in a CDK molecule. Therefore to avoid SMILES like
      * {@code [12CH3][12CH2][16OH]} major isotopes are not generated. If you
-     * which to generate SMILES with the major isotopes please use the flag
-     * {@link #AtomicMassStrict} which will only omit mass numbers when it
-     * is unset.
+     * wish to generate SMILES with the major isotopes please use the flag
+     * {@link #AtomicMassStrict} this will output all mass numbers and only be
+     * omitted when the mass is unset (null).
      */
     public static final int AtomicMass         = 0x008;
 
