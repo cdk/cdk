@@ -23,6 +23,7 @@
 package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
@@ -47,6 +48,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
@@ -690,6 +692,13 @@ public final class SmilesGenerator {
         // class each time
         String cname = "org.openscience.cdk.graph.invariant.InChINumbersTools";
         String mname = "getUSmilesNumbers";
+
+        List<IAtom> rgrps = getRgrps(container, Elements.Rutherfordium);
+        for (IAtom rgrp : rgrps) {
+            rgrp.setAtomicNumber(Elements.Rutherfordium.number());
+            rgrp.setSymbol(Elements.Rutherfordium.symbol());
+        }
+
         try {
             Class<?> c = Class.forName(cname);
             Method method = c.getDeclaredMethod("getUSmilesNumbers", IAtomContainer.class);
@@ -703,7 +712,24 @@ public final class SmilesGenerator {
             throw new CDKException("An InChI could not be generated and used to canonise SMILES: " + e.getMessage(), e);
         } catch (IllegalAccessException e) {
             throw new CDKException("Could not access method to obtain InChI numbers.");
+        } finally {
+            for (IAtom rgrp : rgrps) {
+                rgrp.setAtomicNumber(Elements.Unknown.number());
+                rgrp.setSymbol("*");
+            }
         }
+    }
+
+    private static List<IAtom> getRgrps(IAtomContainer container, Elements reversed) {
+        List<IAtom> res = new ArrayList<>();
+        for (IAtom atom : container.atoms()) {
+            if (atom.getAtomicNumber() == 0) {
+                res.add(atom);
+            } else if (atom.getAtomicNumber() == reversed.number()) {
+                return Collections.emptyList();
+            }
+        }
+        return res;
     }
 
     // utility safety check to guard against invalid state
