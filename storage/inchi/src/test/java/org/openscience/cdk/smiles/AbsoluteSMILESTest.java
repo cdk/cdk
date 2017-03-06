@@ -27,6 +27,7 @@ package org.openscience.cdk.smiles;
 import com.google.common.base.Joiner;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
@@ -110,6 +111,21 @@ public class AbsoluteSMILESTest {
         final SmilesGenerator cansmi = SmilesGenerator.absolute();
         Assert.assertEquals(cansmi.create(mol),
                             cansmi.create(smipar.parseSmiles(cansmi.create(mol))));
+    }
+
+    @Test
+    public void smilesWithUnknownElem() throws Exception {
+        test("*CC", "CC*");
+    }
+
+    @Test
+    public void rfElement() throws Exception {
+        test("[Rf]");
+    }
+
+    @Test(expected = CDKException.class)
+    public void problematic() throws Exception {
+        test("*[Rf]");
     }
 
     static void test(String... inputs) throws Exception {
