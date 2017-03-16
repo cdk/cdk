@@ -26,6 +26,7 @@ package org.openscience.cdk;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -33,18 +34,49 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.Map;
 
 public class BondRef implements IBond {
 
     private final IBond              bond;
     private final int                idx;
-    private final Map<IAtom,AtomRef> atomCache;
+    private final AtomRef beg, end;
 
-    BondRef(IBond bond, int idx, Map<IAtom, AtomRef> atomCache) {
+    BondRef(IBond bond, int idx, AtomRef beg, AtomRef end) {
         this.bond = bond;
         this.idx = idx;
-        this.atomCache = atomCache;
+        this.beg = beg;
+        this.end = end;
+    }
+
+    public static BondRef[] getBondRefs(IAtomContainer mol) {
+
+        final int numAtoms = mol.getAtomCount();
+        final int numBonds = mol.getBondCount();
+        BondRef[] bonds    = new BondRef[numBonds];
+
+        final Map<IAtom, AtomRef> atomCache = new IdentityHashMap<>(mol.getAtomCount());
+
+        for (int i = 0; i < numAtoms; i++) {
+            final IAtom atom = mol.getAtom(i);
+            final AtomRef atomrf = new AtomRef(i,
+                                               atom,
+                                               new ArrayList<BondRef>());
+            atomCache.put(atomrf.atom, atomrf);
+        }
+        for (int i = 0; i < numBonds; i++) {
+            final IBond   bond    = mol.getBond(i);
+            AtomRef       beg     = atomCache.get(bond.getAtom(0));
+            AtomRef       end     = atomCache.get(bond.getAtom(1));
+            final BondRef bondref = new BondRef(bond, i, beg, end);
+            beg.bonds.add(bondref);
+            end.bonds.add(bondref);
+            bonds[i] = bondref;
+        }
+
+        return bonds;
     }
 
     public int getIndex() {
@@ -116,7 +148,7 @@ public class BondRef implements IBond {
         return FluentIterable.from(bond.atoms()).transform(new Function<IAtom, IAtom>() {
             @Override
             public IAtom apply(IAtom input) {
-                return atomCache.get(input);
+                return input; //atomCache.get(input);
             }
         });
     }
@@ -133,13 +165,15 @@ public class BondRef implements IBond {
 
     @Override
     public AtomRef getAtom(int position) {
-        return atomCache.get(bond.getAtom(position));
+        switch (position) {
+            case 0: return beg;
+            case 1: return end;
+            default: return null;
+        }
     }
 
     @Override
-    public IAtom getConnectedAtom(IAtom atom) {
-        AtomRef beg = atomCache.get(bond.getAtom(0));
-        AtomRef end = atomCache.get(bond.getAtom(1));
+    public AtomRef getConnectedAtom(IAtom atom) {
         if (atom == beg || atom == beg.atom)
             return end;
         else if (atom == end || atom == end.atom)
@@ -159,13 +193,7 @@ public class BondRef implements IBond {
 
     @Override
     public boolean contains(IAtom atom) {
-        int numAtoms = bond.getAtomCount();
-        for (int i = 0; i < numAtoms; i++) {
-            if (bond.getAtom(i) == atom ||
-                atomCache.get(bond.getAtom(i)) == atom)
-                return true;
-        }
-        return false;
+        return atom == beg || atom == end || atom == beg.atom || atom == end.atom;
     }
 
     @Override

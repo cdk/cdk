@@ -35,6 +35,7 @@ import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,13 +48,13 @@ import java.util.Map;
  */
 public final class AtomRef implements IAtom {
 
-    final IAtom                 atom;
+    final         IAtom         atom;
     private final int           idx;
-    private final List<BondRef> bonds;
+    final         List<BondRef> bonds;
 
-    private AtomRef(int idx, IAtom atom, List<BondRef> bonds) {
-        this.idx   = idx;
-        this.atom  = atom;
+    AtomRef(int idx, IAtom atom, List<BondRef> bonds) {
+        this.idx = idx;
+        this.atom = atom;
         this.bonds = bonds;
     }
 
@@ -63,19 +64,23 @@ public final class AtomRef implements IAtom {
         final int numBonds = mol.getBondCount();
         AtomRef[] atoms    = new AtomRef[numAtoms];
 
-        final Map<IAtom,AtomRef> atomCache = new HashMap<>();
+        final Map<IAtom, AtomRef> atomCache = new IdentityHashMap<>(mol.getAtomCount());
 
         for (int i = 0; i < numAtoms; i++) {
-            atoms[i] = new AtomRef(i,
-                                   mol.getAtom(i),
-                                   new ArrayList<BondRef>());
-            atomCache.put(atoms[i].atom, atoms[i]);
+            final IAtom atom = mol.getAtom(i);
+            final AtomRef atomrf = new AtomRef(i,
+                                               atom,
+                                               new ArrayList<BondRef>());
+            atomCache.put(atomrf.atom, atomrf);
+            atoms[i] = atomrf;
         }
-        for (int i = 0; i < numBonds; i++){
-            IBond bond = mol.getBond(i);
-            for (IAtom batom : bond.atoms()) {
-                atomCache.get(batom).bonds.add(new BondRef(bond, i, atomCache));
-            }
+        for (int i = 0; i < numBonds; i++) {
+            final IBond   bond    = mol.getBond(i);
+            AtomRef       beg     = atomCache.get(bond.getAtom(0));
+            AtomRef       end     = atomCache.get(bond.getAtom(1));
+            final BondRef bondref = new BondRef(bond, i, beg, end);
+            beg.bonds.add(bondref);
+            end.bonds.add(bondref);
         }
 
         return atoms;
@@ -85,8 +90,8 @@ public final class AtomRef implements IAtom {
         return idx;
     }
 
-    public <T extends IBond> List<T> getBonds() {
-        return (List<T>) bonds;
+    public List<BondRef> getBonds() {
+        return bonds;
     }
 
     @Override
