@@ -2511,8 +2511,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         }
 
         // confirm correct valency
-        if (type.getValency() != CDKConstants.UNSET && container.getBondOrderSum(atom) > type.getValency())
-            return false;
+        if (type.getValency() != CDKConstants.UNSET) {
+            double valence = container.getBondOrderSum(atom);
+            if (atom.getImplicitHydrogenCount() != 0)
+                valence += atom.getImplicitHydrogenCount();
+            if (valence > type.getValency())
+                return false;
+        }
 
         // confirm correct formal charge
         if (atom.getFormalCharge() != CDKConstants.UNSET && !atom.getFormalCharge().equals(type.getFormalCharge()))
