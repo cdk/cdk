@@ -63,6 +63,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 
@@ -83,8 +85,9 @@ import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
  */
 public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
-    public static final SimpleDateFormat HEADER_DATE_FORMAT = new SimpleDateFormat("MMddyyHHmm");
-    public static final NumberFormat     DECIMAL_FORMAT     = new DecimalFormat(".####");
+    public static final  SimpleDateFormat HEADER_DATE_FORMAT = new SimpleDateFormat("MMddyyHHmm");
+    public static final  NumberFormat     DECIMAL_FORMAT     = new DecimalFormat(".####");
+    private static final Pattern          R_GRP_NUM          = Pattern.compile("R(\\d+)");
     private V30LineWriter writer;
 
     /**
@@ -241,7 +244,18 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 expVal += bond.getOrder().numeric();
             }
 
-            final String symbol = getSymbol(atom, elem);
+            String symbol = getSymbol(atom, elem);
+
+            int rnum = -1;
+            if (symbol.charAt(0) == 'R') {
+                Matcher matcher = R_GRP_NUM.matcher(symbol);
+                if (matcher.matches()) {
+                    symbol = "R#";
+                    rnum   = Integer.parseInt(matcher.group(1));
+                }
+            }
+
+
 
             writer.write(++atomIdx)
                   .write(' ')
@@ -268,6 +282,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 writer.write(" MASS=").write(mass);
             if (rad > 0 && rad < 4)
                 writer.write(" RAD=").write(rad);
+            if (rnum >= 0)
+                writer.write(" RGROUPS=(1 ").write(rnum).write(")");
 
 
             // determine if we need to write the valence
