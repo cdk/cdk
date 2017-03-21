@@ -928,7 +928,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(' ');
                         writer.write(formatMDLInt(id, 3));
                         writer.write(' ');
-                        writer.write((String) sgroup.getValue(key));
+                        writer.write(((String) sgroup.getValue(key)).toUpperCase(Locale.ROOT));
                         writer.newLine();
                         break;
                     case CtabSubType:

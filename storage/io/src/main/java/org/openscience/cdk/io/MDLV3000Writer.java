@@ -59,6 +59,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -535,7 +536,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                         writer.write(" SUBTYPE=").write(sgroup.getValue(key).toString());
                         break;
                     case CtabConnectivity:
-                        writer.write(" CONNECT=").write(sgroup.getValue(key).toString());
+                        writer.write(" CONNECT=").write(sgroup.getValue(key).toString().toUpperCase(Locale.ROOT));
                         break;
                     case CtabSubScript:
                         if (type == SgroupType.CtabMultipleGroup)
