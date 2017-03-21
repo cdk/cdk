@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
@@ -59,8 +60,11 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 
@@ -81,8 +85,9 @@ import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
  */
 public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
-    public static final SimpleDateFormat HEADER_DATE_FORMAT = new SimpleDateFormat("MMddyyHHmm");
-    public static final NumberFormat     DECIMAL_FORMAT     = new DecimalFormat(".####");
+    public static final  SimpleDateFormat HEADER_DATE_FORMAT = new SimpleDateFormat("MMddyyHHmm");
+    public static final  NumberFormat     DECIMAL_FORMAT     = new DecimalFormat(".####");
+    private static final Pattern          R_GRP_NUM          = Pattern.compile("R(\\d+)");
     private V30LineWriter writer;
 
     /**
@@ -239,7 +244,18 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 expVal += bond.getOrder().numeric();
             }
 
-            final String symbol = getSymbol(atom, elem);
+            String symbol = getSymbol(atom, elem);
+
+            int rnum = -1;
+            if (symbol.charAt(0) == 'R') {
+                Matcher matcher = R_GRP_NUM.matcher(symbol);
+                if (matcher.matches()) {
+                    symbol = "R#";
+                    rnum   = Integer.parseInt(matcher.group(1));
+                }
+            }
+
+
 
             writer.write(++atomIdx)
                   .write(' ')
@@ -266,6 +282,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 writer.write(" MASS=").write(mass);
             if (rad > 0 && rad < 4)
                 writer.write(" RAD=").write(rad);
+            if (rnum >= 0)
+                writer.write(" RGROUPS=(1 ").write(rnum).write(")");
 
 
             // determine if we need to write the valence
@@ -303,6 +321,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @return atom symbol
      */
     private String getSymbol(IAtom atom, int elem) {
+        if (atom instanceof IPseudoAtom)
+            return ((IPseudoAtom) atom).getLabel();
         String symbol = Elements.ofNumber(elem).symbol();
         if (symbol.isEmpty())
             symbol = atom.getSymbol();
@@ -535,7 +555,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                         writer.write(" SUBTYPE=").write(sgroup.getValue(key).toString());
                         break;
                     case CtabConnectivity:
-                        writer.write(" CONNECT=").write(sgroup.getValue(key).toString());
+                        writer.write(" CONNECT=").write(sgroup.getValue(key).toString().toUpperCase(Locale.ROOT));
                         break;
                     case CtabSubScript:
                         if (type == SgroupType.CtabMultipleGroup)
@@ -597,13 +617,18 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
         List<Sgroup> sgroups = getSgroups(mol);
 
+        int numSgroups = 0;
+        for (int i = 0; i < sgroups.size(); i++)
+            if (sgroups.get(i).getType() != SgroupType.ExtMulticenter)
+                numSgroups++;
+
         writer.write("BEGIN CTAB\n");
         writer.write("COUNTS ")
               .write(mol.getAtomCount())
               .write(' ')
               .write(mol.getBondCount())
               .write(' ')
-              .write(sgroups.size())
+              .write(numSgroups)
               .write(" 0 0\n");
 
         // fast lookup atom indexes, MDL indexing starts at 1
