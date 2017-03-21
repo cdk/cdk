@@ -598,13 +598,18 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
         List<Sgroup> sgroups = getSgroups(mol);
 
+        int numSgroups = 0;
+        for (int i = 0; i < sgroups.size(); i++)
+            if (sgroups.get(i).getType() != SgroupType.ExtMulticenter)
+                numSgroups++;
+
         writer.write("BEGIN CTAB\n");
         writer.write("COUNTS ")
               .write(mol.getAtomCount())
               .write(' ')
               .write(mol.getBondCount())
               .write(' ')
-              .write(sgroups.size())
+              .write(numSgroups)
               .write(" 0 0\n");
 
         // fast lookup atom indexes, MDL indexing starts at 1
