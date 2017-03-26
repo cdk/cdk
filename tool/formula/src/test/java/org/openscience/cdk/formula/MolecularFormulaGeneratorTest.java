@@ -142,9 +142,9 @@ public class MolecularFormulaGeneratorTest extends CDKTestCase {
 
     /**
      * Test the cancel() method called from another thread. This test must
-     * finish in 100 ms.
+     * finish in 1000 ms.
      */
-    @Test(timeout = 100)
+    @Test(timeout = 1000)
     public void testCancel() throws Exception {
 
         IsotopeFactory ifac = Isotopes.getInstance();
