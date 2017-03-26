@@ -209,8 +209,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 1, IBond.Order.DOUBLE);
         mol.addBond(0, 2, IBond.Order.SINGLE);
         mol.addBond(0, 3, IBond.Order.SINGLE);
-        mol.addBond(1, 4, IBond.Order.DOUBLE);
-        mol.addBond(1, 5, IBond.Order.DOUBLE);
+        mol.addBond(1, 4, IBond.Order.SINGLE);
+        mol.addBond(1, 5, IBond.Order.SINGLE);
         for (IAtom atom : mol.atoms())
             atom.setImplicitHydrogenCount(0);
         mol.setFlag(CDKConstants.ISAROMATIC, true);
@@ -326,8 +326,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 1, IBond.Order.DOUBLE);
         mol.addBond(0, 2, IBond.Order.SINGLE);
         mol.addBond(0, 3, IBond.Order.SINGLE);
-        mol.addBond(1, 4, IBond.Order.DOUBLE);
-        mol.addBond(1, 5, IBond.Order.DOUBLE);
+        mol.addBond(1, 4, IBond.Order.SINGLE);
+        mol.addBond(1, 5, IBond.Order.SINGLE);
 
         mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.getAtom(1).setImplicitHydrogenCount(0);
