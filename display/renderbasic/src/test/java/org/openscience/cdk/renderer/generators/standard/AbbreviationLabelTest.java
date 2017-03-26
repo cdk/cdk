@@ -134,6 +134,15 @@ public class AbbreviationLabelTest {
     }
 
     @Test
+    public void reversingFormatPOOHOEt() {
+        List<String> tokens = new ArrayList<>();
+        assertTrue(AbbreviationLabel.parse("PO(OH)OEt", tokens));
+        AbbreviationLabel.reverse(tokens);
+        AbbreviationLabel.format(tokens);
+        assertThat(Joiner.on("").join(tokens), is("EtO(HO)OP"));
+    }
+
+    @Test
     public void reversingBracketsWithNumbers() {
         List<String> tokens = new ArrayList<>();
         assertTrue(AbbreviationLabel.parse("B(OH)2", tokens));

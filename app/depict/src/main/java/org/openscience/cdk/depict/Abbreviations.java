@@ -542,7 +542,8 @@ public class Abbreviations implements Iterable<String> {
                 if (nbrSymbol.equals(prev)) {
                     count++;
                 } else {
-                    appendGroup(sb, prev, count, count == 0 || countUpper(prev) > 1);
+                    boolean useParen = count == 0 || countUpper(prev) > 1 || (prev != null && nbrSymbol.startsWith(prev));
+                    appendGroup(sb, prev, count, useParen);
                     prev = nbrSymbol;
                     count = 1;
                 }
