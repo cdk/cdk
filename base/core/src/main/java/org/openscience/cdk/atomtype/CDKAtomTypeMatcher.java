@@ -2513,7 +2513,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         // confirm correct valency
         if (type.getValency() != CDKConstants.UNSET) {
             double valence = container.getBondOrderSum(atom);
-            if (atom.getImplicitHydrogenCount() != 0)
+            if (atom.getImplicitHydrogenCount() != null &&
+            	atom.getImplicitHydrogenCount() != 0)
                 valence += atom.getImplicitHydrogenCount();
             if (valence > type.getValency())
                 return false;
