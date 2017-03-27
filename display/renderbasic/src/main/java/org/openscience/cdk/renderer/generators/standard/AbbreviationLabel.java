@@ -273,8 +273,11 @@ final class AbbreviationLabel {
             String token = tokens.get(i);
             if (token.equals("(")) {
                 tokens.set(i, ")");
-                tokens.add(i+1, numbers.pop());
-                i++;
+                String num = numbers.pop();
+                if (!num.isEmpty()) {
+                    tokens.add(i + 1, num);
+                    i++;
+                }
             }
             else if (token.equals(")")) {
                 tokens.set(i, "(");
@@ -358,7 +361,7 @@ final class AbbreviationLabel {
      * @return the token is a charge label (+2, -, +, -2)
      */
     private static boolean isChargeToken(String token) {
-        return norm(token.charAt(0)) == '-' || token.charAt(0) == '+';
+        return token.length() > 0 && (norm(token.charAt(0)) == '-' || token.charAt(0) == '+');
     }
 
     /**
