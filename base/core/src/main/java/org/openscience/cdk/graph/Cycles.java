@@ -417,10 +417,12 @@ public final class Cycles {
      * @param mol molecule
      * @see IBond#isInRing()
      * @see IAtom#isInRing()
+     * @return Number of rings found (circuit rank)
+     * @see <a href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</a>
      */
-    public static void markRingAtomsAndBonds(IAtomContainer mol) {
+    public static int markRingAtomsAndBonds(IAtomContainer mol) {
         EdgeToBondMap bonds = EdgeToBondMap.withSpaceFor(mol);
-        markRingAtomsAndBonds(mol, GraphUtil.toAdjList(mol, bonds), bonds);
+        return markRingAtomsAndBonds(mol, GraphUtil.toAdjList(mol, bonds), bonds);
     }
 
     /**
@@ -431,8 +433,10 @@ public final class Cycles {
      * @param mol molecule
      * @see IBond#isInRing()
      * @see IAtom#isInRing()
+     * @return Number of rings found (circuit rank)
+     * @see <a href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</a>
      */
-    public static void markRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap) {
+    public static int markRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap) {
         RingSearch ringSearch = new RingSearch(mol, adjList);
         for (int v = 0; v < mol.getAtomCount(); v++) {
             mol.getAtom(v).setIsInRing(false);
@@ -448,6 +452,7 @@ public final class Cycles {
                 }
             }
         }
+        return ringSearch.numRings();
     }
 
     /**

@@ -364,6 +364,7 @@ public class RingSearchTest {
         IAtomContainer mol = diSpiroPentane();
         RingSearch rs = new RingSearch(mol);
         IAtomContainer frag = rs.ringFragments();
+        assertThat(rs.numRings(), is(4));
         assertThat(mol.getBondCount(), is(frag.getBondCount() + 1));
     }
 
@@ -372,6 +373,7 @@ public class RingSearchTest {
         IAtomContainer mol = triSpiroPentane();
         RingSearch rs = new RingSearch(mol);
         IAtomContainer frag = rs.ringFragments();
+        assertThat(rs.numRings(), is(5));
         assertThat(mol.getBondCount(), is(frag.getBondCount()));
     }
 

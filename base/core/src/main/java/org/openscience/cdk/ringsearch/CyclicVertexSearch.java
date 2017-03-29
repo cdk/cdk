@@ -35,6 +35,13 @@ package org.openscience.cdk.ringsearch;
 public interface CyclicVertexSearch {
 
     /**
+     * Returns the number of cycles (circuit rank, frère jacques number, num SSSR).
+     *
+     * @return number of cycles
+     */
+    int numCycles();
+
+    /**
      * Returns true if the vertex <i>v</i> is in a cycle.
      *
      * @param v a vertex identifier by index
