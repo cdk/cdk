@@ -60,7 +60,7 @@ import java.util.Map;
  * @cdk.module fingerprint
  * @cdk.githash
  */
-public class EStateFingerprinter implements IFingerprinter {
+public class EStateFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     private static final String[] PATTERNS = EStateFragments.getSmarts();
 

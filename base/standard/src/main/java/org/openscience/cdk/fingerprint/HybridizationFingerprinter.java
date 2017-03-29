@@ -73,7 +73,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.module     standard
  * @cdk.githash
  */
-public class HybridizationFingerprinter implements IFingerprinter {
+public class HybridizationFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     /** The default length of created fingerprints. */
     public final static int                  DEFAULT_SIZE         = 1024;
