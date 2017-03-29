@@ -80,7 +80,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.githash
  *
  */
-public class ShortestPathFingerprinter extends RandomNumber implements IFingerprinter, Serializable {
+public class ShortestPathFingerprinter extends AbstractFingerprinter implements IFingerprinter, Serializable {
 
     /**
      * The default length of created fingerprints.
@@ -93,6 +93,8 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
     private int                 fingerprintLength;
     private static ILoggingTool logger           = LoggingToolFactory
                                                          .createLoggingTool(ShortestPathFingerprinter.class);
+
+    private final RandomNumber rand = new RandomNumber();
 
     /**
      * Creates a fingerprint generator of length
@@ -264,6 +266,6 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
      * Returns a random number for a given object
      */
     private int getRandomNumber(Integer hashValue) {
-        return generateMersenneTwisterRandomNumber(fingerprintLength, hashValue);
+        return rand.generateMersenneTwisterRandomNumber(fingerprintLength, hashValue);
     }
 }

@@ -46,7 +46,7 @@ import java.util.Map;
  *
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */
-public class ExtendedFingerprinter implements IFingerprinter {
+public class ExtendedFingerprinter extends Fingerprinter implements IFingerprinter {
 
     private final int     RESERVED_BITS = 25;
 
