@@ -145,7 +145,7 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
                         144, 145, 148, 149, 151, 153, 156, 158, 159, 161, 162, 163, 164)));
         assertThat(
                 subBits.asBitSet(),
-                is(asBitSet(56, 97, 104, 108, 112, 117, 127, 131, 136, 143, 144, 146, 151, 152, 156, 161, 162, 163, 164)));
+                is(asBitSet(56, 97, 104, 108, 112, 117, 131, 136, 143, 144, 146, 151, 152, 156, 161, 162, 163, 164)));
     }
 
 }

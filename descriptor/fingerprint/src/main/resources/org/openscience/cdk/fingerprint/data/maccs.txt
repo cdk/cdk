@@ -29,7 +29,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 1 [!0] 0 |ISOTOPE
-2 [#103,#104] 0 |ISOTOPE Not complete
+2 [#104,#105,#106,#107,#108,#109,#110,#111,#112] 0 |103 < ATOMIC_NUM < 256
 3 [Ge,As,as,Se,se,Sn,Sb,Te,Tl,Pb,Bi] 0 |Group IVa,Va,VIa Periods 4-6 (Ge...)  *NOTE* spec wrong
 4 [Ac,Th,Pa,U,Np,Pu,Am,Cm,Bk,Cf,Es,Fm,Md,No,Lr] 0 |actinide
 5 [Sc,Ti,Y,Zr,Hf] 0 |Group IIIB,IVB (Sc...)  *NOTE* spec wrong
@@ -117,8 +117,8 @@
 87 [F,Cl,Br,I]!@*@* 0 |X!A$A
 88 [#16] 0 |S
 89 [#8]~*~*~*~[#8] 0 |OAAAO
-90 [$([!#6;!#1;!H0]~*~*~[CH2]~*),$([!#6;!#1;!H0;R]1@[R]@[R]@[CH2;R]1),$([!#6;!#1;!H0]~[R]1@[R]@[CH2;R]1)] 0 |QHAACH2A
-91 [$([!#6;!#1;!H0]~*~*~*~[CH2]~*),$([!#6;!#1;!H0;R]1@[R]@[R]@[R]@[CH2;R]1),$([!#6;!#1;!H0]~[R]1@[R]@[R]@[CH2;R]1),$([!#6;!#1;!H0]~*~[R]1@[R]@[CH2;R]1)] 0 |QHAAACH2A
+90 [#6H2](~*~*~[!#6!#1!H0])~* 0 |QHAACH2A
+91 [#6H2](~*~*~*~[!#6!#1!H0])~* 0 |QHAAACH2A
 92 [#8]~[#6](~[#7])~[#6] 0 |OC(N)C
 93 [!#6;!#1]~[CH3] 0 |QCH3
 94 [!#6;!#1]~[#7] 0 |QN
@@ -128,9 +128,7 @@
 98 [R!#6!#1]1@*@*@*@*@*@1 0 |QAAAAA@1
 99 [#6]=[#6] 0 |C=C
 100 [#7]~[CH2]~* 0 |ACH2N
-# bit 101 requires finding a ring > 8 atoms/bonds, this is inefficient to match using SMARTS
-# 101 [$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1)] 0 |8M Ring or larger. This only handles up to ring sizes of 14
-101 [!*] 0 | 8 member ring
+101 [R]1@*@*@*@*@*@*@*@1 0 |8M Ring
 102 [!#6;!#1]~[#8] 0 |QO
 103 Cl 0 |CL
 104 [!#6;!#1;!H0]~*~[CH2]~* 0 |QHACH2A
@@ -145,9 +143,9 @@
 113 [#8]!:*:* 0 |Onot%A%A
 114 [CH3]~[CH2]~* 0 |CH3CH2A
 115 [CH3]~*~[CH2]~* 0 |CH3ACH2A
-116 [$([CH3]~*~*~[CH2]~*),$([CH3]~*1~*~[CH2]1)] 0 |CH3AACH2A
+116 [#6H3]~*~*~[#6H2]~* 0 |CH3AACH2A
 117 [#7]~*~[#8] 0 |NAO
-118 [$(*~[CH2]~[CH2]~*),$(*1~[CH2]~[CH2]1)] 1 |ACH2CH2A > 1
+118 [#6H2]([#6H2]*)* 1 |ACH2CH2A > 1
 119 [#7]=* 0 |N=A
 120 [!#6;R] 1 |Heterocyclic atom > 1 (&...) FIX: incomplete definition
 121 [#7;R] 0 |N Heterocycle
@@ -157,8 +155,8 @@
 125 [!*] 0 |OTHER
 126 [#8](!@*)!@* 0 |A!O!A
 127 [#8]!@[R]@* 1 |A$A!O > 1 (&...) FIX: incomplete definition
-128 [$(*~[CH2]~*~*~*~[CH2]~*),$([R]1@[CH2;R]@[R]@[R]@[R]@[CH2;R]1),$(*~[CH2]~[R]1@[R]@[R]@[CH2;R]1),$(*~[CH2]~*~[R]1@[R]@[CH2;R]1)] 0 |ACH2AAACH2A
-129 [$(*~[CH2]~*~*~[CH2]~*),$([R]1@[CH2]@[R]@[R]@[CH2;R]1),$(*~[CH2]~[R]1@[R]@[CH2;R]1)] 0 |ACH2AACH2A
+128 [#6H2](~*~*~*~[#6H2]~*)~* 0 |ACH2AAACH2A
+129 [#6H2](~*~*~[#6H2]~*)~* 0 |ACH2AACH2A
 130 [!#6;!#1]~[!#6;!#1] 1 |QQ > 1 (&...)  FIX: incomplete definition
 131 [!#6;!#1;!H0] 1 |QH > 1
 132 [#8]~*~[CH2]~* 0 |OACH2A
@@ -176,7 +174,7 @@
 144 a(!:*):a!:* 0 |Anot%A%Anot%A
 145 [R]1@*@*@*@*@*@1 1 |6M ring > 1
 146 [#8] 2 |O > 2
-147 [$(*~[CH2]~[CH2]~*),$([R]1@[CH2;R]@[CH2;R]1)] 0 |ACH2CH2A
+147 [#6H2](~[#6H2]~*)~* 0 |ACH2CH2A
 148 [!#6;!#1](~*)(~*)~* 0 |AQ(A)A
 149 [C;H3,H4] 1 |CH3 > 1
 150 [R](!@*)@[R]!@* 0 |A!A$A!A
