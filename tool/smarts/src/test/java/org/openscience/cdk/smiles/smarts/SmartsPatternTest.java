@@ -87,6 +87,32 @@ public class SmartsPatternTest {
     }
 
     @Test
+    public void isotopes() throws Exception {
+        // FIXME SMARTS Grammar needs fixing/replacing [12] is not considered valid
+
+        assertFalse(SmartsPattern.create("[12*]", bldr).matches(smi("C")));
+        assertFalse(SmartsPattern.create("[12*]", bldr).matches(smi("[CH4]")));
+        assertTrue(SmartsPattern.create("[12*]", bldr).matches(smi("[12CH4]")));
+        assertFalse(SmartsPattern.create("[12*]", bldr).matches(smi("[13CH4]")));
+
+        assertFalse(SmartsPattern.create("[13*]", bldr).matches(smi("C")));
+        assertFalse(SmartsPattern.create("[13*]", bldr).matches(smi("[CH4]")));
+        assertFalse(SmartsPattern.create("[13*]", bldr).matches(smi("[12CH4]")));
+        assertTrue(SmartsPattern.create("[13*]", bldr).matches(smi("[13CH4]")));
+
+        assertTrue(SmartsPattern.create("[0*]", bldr).matches(smi("C")));
+        assertTrue(SmartsPattern.create("[0*]", bldr).matches(smi("[CH4]")));
+        assertFalse(SmartsPattern.create("[0*]", bldr).matches(smi("[12CH4]")));
+        assertFalse(SmartsPattern.create("[0*]", bldr).matches(smi("[13CH4]")));
+
+//      Not possible with current grammar
+//        assertFalse(SmartsPattern.create("[!0*]", bldr).matches(smi("C")));
+//        assertFalse(SmartsPattern.create("[!0*]", bldr).matches(smi("[CH4]")));
+//        assertTrue(SmartsPattern.create("[!0*]", bldr).matches(smi("[12CH4]")));
+//        assertTrue(SmartsPattern.create("[!0*]", bldr).matches(smi("[13CH4]")));
+    }
+
+    @Test
     public void components() throws Exception {
         assertTrue(SmartsPattern.create("(O).(O)", bldr).matches(smi("O.O")));
         assertFalse(SmartsPattern.create("(O).(O)", bldr).matches(smi("OO")));

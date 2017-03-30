@@ -34,6 +34,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class MassAtom extends SMARTSAtom {
 
+    private final int mass;
+
     /**
      * Creates a new instance
      *
@@ -41,7 +43,8 @@ public class MassAtom extends SMARTSAtom {
      */
     public MassAtom(int mass, IChemObjectBuilder builder) {
         super(builder);
-        this.setMassNumber(mass);
+        setMassNumber(mass);
+        this.mass = mass;
     }
 
     /*
@@ -52,7 +55,10 @@ public class MassAtom extends SMARTSAtom {
      */
     @Override
     public boolean matches(IAtom atom) {
-        return atom.getMassNumber() == this.getMassNumber();
+        if (mass == 0)
+            return atom.getMassNumber() == null;
+        else
+            return atom.getMassNumber() != null && mass == atom.getMassNumber();
     }
 
     /*
@@ -61,7 +67,7 @@ public class MassAtom extends SMARTSAtom {
      */
     @Override
     public String toString() {
-        return ("(MassAtom(" + this.getMassNumber() + ")");
+        return ("(MassAtom(" + mass + ")");
     }
 
 }
