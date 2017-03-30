@@ -250,6 +250,6 @@ public class MACCSFingerprinter implements IFingerprinter {
      * @return the pattern to match
      */
     private Pattern createPattern(String smarts, IChemObjectBuilder builder) {
-        return Ullmann.findSubstructure(SMARTSParser.parse(smarts, builder));
+        return VentoFoggia.findSubstructure(SMARTSParser.parse(smarts, builder));
     }
 }
