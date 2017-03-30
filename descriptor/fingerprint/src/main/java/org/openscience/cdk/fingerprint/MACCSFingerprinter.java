@@ -22,16 +22,9 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.AllCycles;
 import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -40,13 +33,20 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.Pattern;
-import org.openscience.cdk.isomorphism.Ullmann;
 import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This fingerprinter generates 166 bit MACCS keys.
@@ -105,6 +105,8 @@ public class MACCSFingerprinter implements IFingerprinter {
         // init SMARTS invariants (connectivity, degree, etc)
         SmartsMatchers.prepare(container, false);
 
+        final int[][] adjlist = GraphUtil.toAdjList(container);
+
         for (int i = 0; i < keys.length; i++) {
             final MaccsKey key     = keys[i];
             final Pattern  pattern = key.pattern;
@@ -120,6 +122,17 @@ public class MACCSFingerprinter implements IFingerprinter {
                         }
                     }
                     break;
+
+                // ring bits
+                case "[R]1@*@*@1": // 3M RING bit22
+                case "[R]1@*@*@*@1": // 4M RING bit11
+                case "[R]1@*@*@*@*@1": // 5M RING bit96
+                case "[R]1@*@*@*@*@*@1": // 6M RING bit163, x2=bit145
+                case "[R]1@*@*@*@*@*@*@1": // 7M RING, bit19
+                case "[R]1@*@*@*@*@*@*@*@1": // 8M RING, bit101
+                    // handled separately
+                    break;
+
                 default:
                     if (key.count == 0) {
                         if (pattern.matches(container))
@@ -131,6 +144,43 @@ public class MACCSFingerprinter implements IFingerprinter {
                             fp.set(i);
                     }
                     break;
+            }
+        }
+
+        // Ring Bits
+
+        // threshold=126, see AllRingsFinder.Threshold.PubChem_97
+        int numAtoms = container.getAtomCount();
+        if (numAtoms > 2) {
+            AllCycles allcycles = new AllCycles(adjlist,
+                                                Math.min(8, numAtoms),
+                                                126);
+            for (int[] path : allcycles.paths()) {
+                // length is +1 as we repeat the closure vertex
+                switch (path.length) {
+                    case 4: // 3M bit22
+                        fp.set(21);
+                        break;
+                    case 5: // 4M bit11
+                        fp.set(10);
+                        break;
+                    case 6: // 5M bit96
+                        fp.set(95);
+                        break;
+                    case 7: // 6M bit163->bit145
+                        if (fp.get(162)) {
+                            fp.set(144); // >0
+                        } else {
+                            fp.set(162); // >1
+                        }
+                        break;
+                    case 8: // 7M bit19
+                        fp.set(18);
+                        break;
+                    case 9: // 8M bit101
+                        fp.set(100);
+                        break;
+                }
             }
         }
 
@@ -160,7 +210,7 @@ public class MACCSFingerprinter implements IFingerprinter {
 
         // bit 166 (*).(*) we can match this in SMARTS but it's faster to just
         // count the number of component
-        ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjList(container));
+        ConnectedComponents cc = new ConnectedComponents(adjlist);
         if (cc.nComponents() > 1) fp.set(165);
 
         return new BitSetFingerprint(fp);
