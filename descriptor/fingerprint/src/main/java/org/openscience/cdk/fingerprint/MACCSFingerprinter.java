@@ -22,14 +22,11 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllCycles;
-import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.Pattern;
@@ -105,6 +102,9 @@ public class MACCSFingerprinter implements IFingerprinter {
         // init SMARTS invariants (connectivity, degree, etc)
         SmartsMatchers.prepare(container, false);
 
+        final int numAtoms = container.getAtomCount();
+
+
         final GraphUtil.EdgeToBondMap bmap    = GraphUtil.EdgeToBondMap.withSpaceFor(container);
         final int[][]                 adjlist = GraphUtil.toAdjList(container, bmap);
 
@@ -134,6 +134,16 @@ public class MACCSFingerprinter implements IFingerprinter {
                     // handled separately
                     break;
 
+                case "(*).(*)":
+                    // bit 166 (*).(*) we can match this in SMARTS but it's faster to just
+                    // count the number of components or in this case try to traverse the
+                    // component, iff there are some atoms not visited we have more than
+                    // one component
+                    boolean[] visit = new boolean[numAtoms];
+                    if (visitPart(visit, adjlist, 0, -1) < numAtoms)
+                        fp.set(165);
+                    break;
+
                 default:
                     if (key.count == 0) {
                         if (pattern.matches(container))
@@ -151,7 +161,6 @@ public class MACCSFingerprinter implements IFingerprinter {
         // Ring Bits
 
         // threshold=126, see AllRingsFinder.Threshold.PubChem_97
-        int numAtoms = container.getAtomCount();
         if (numAtoms > 2) {
             AllCycles allcycles = new AllCycles(adjlist,
                                                 Math.min(8, numAtoms),
@@ -208,12 +217,17 @@ public class MACCSFingerprinter implements IFingerprinter {
             if (ring.getAtomCount() >= 8) fp.set(100);
         }
 
-        // bit 166 (*).(*) we can match this in SMARTS but it's faster to just
-        // count the number of component
-        ConnectedComponents cc = new ConnectedComponents(adjlist);
-        if (cc.nComponents() > 1) fp.set(165);
-
         return new BitSetFingerprint(fp);
+    }
+
+    private static int visitPart(boolean[] visit, int[][] g, int beg, int prev) {
+        visit[beg] = true;
+        int visited = 1;
+        for (int end : g[beg]) {
+            if (end != prev && !visit[end])
+                visited += visitPart(visit, g, end, beg);
+        }
+        return visited;
     }
 
     private static boolean isAromPath(int[] path, GraphUtil.EdgeToBondMap bmap) {
