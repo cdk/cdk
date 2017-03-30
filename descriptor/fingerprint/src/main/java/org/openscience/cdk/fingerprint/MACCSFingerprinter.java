@@ -204,19 +204,6 @@ public class MACCSFingerprinter implements IFingerprinter {
             }
         }
 
-        // at this point we have skipped the entries whose pattern is "?"
-        // (bits 1,44,125,166) so let try and do those features by hand
-
-        // bit 125 aromatic ring count > 1
-        // bit 101 a ring with more than 8 members
-        AllRingsFinder ringFinder = new AllRingsFinder();
-        IRingSet rings = ringFinder.findAllRings(container);
-        int ringCount = 0;
-        for (int i = 0; i < rings.getAtomContainerCount(); i++) {
-            IAtomContainer ring = rings.getAtomContainer(i);
-            if (ring.getAtomCount() >= 8) fp.set(100);
-        }
-
         return new BitSetFingerprint(fp);
     }
 
