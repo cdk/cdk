@@ -104,12 +104,24 @@ public class MACCSFingerprinter implements IFingerprinter {
         SmartsMatchers.prepare(container, false);
 
         for (int i = 0; i < keys.length; i++) {
-            Pattern pattern = keys[i].pattern;
-            if (pattern == null) continue;
+            final MaccsKey key     = keys[i];
+            final Pattern  pattern = key.pattern;
 
-            // check if there are at least 'count' unique hits, key.count = 0
-            // means find at least one match hence we add 1 to out limit
-            if (pattern.matchAll(container).uniqueAtoms().atLeast(keys[i].count + 1)) fp.set(i);
+            switch (key.smarts) {
+                case "[!*]":
+                    break;
+                default:
+                    if (key.count == 0) {
+                        if (pattern.matches(container))
+                            fp.set(i);
+                    } else {
+                        // check if there are at least 'count' unique hits, key.count = 0
+                        // means find at least one match hence we add 1 to out limit
+                        if (pattern.matchAll(container).uniqueAtoms().atLeast(key.count + 1))
+                            fp.set(i);
+                    }
+                    break;
+            }
         }
 
         // at this point we have skipped the entries whose pattern is "?"
@@ -238,7 +250,6 @@ public class MACCSFingerprinter implements IFingerprinter {
      * @return the pattern to match
      */
     private Pattern createPattern(String smarts, IChemObjectBuilder builder) {
-        if (smarts.equals("?")) return null;
         return Ullmann.findSubstructure(SMARTSParser.parse(smarts, builder));
     }
 }

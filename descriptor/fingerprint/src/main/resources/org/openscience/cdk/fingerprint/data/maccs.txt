@@ -28,7 +28,7 @@
 # THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-1 ? 0 |ISOTOPE
+1 [!*] 0 |ISOTOPE
 2 [#103,#104] 0 |ISOTOPE Not complete
 3 [Ge,As,Se,Sn,Sb,Te,Tl,Pb,Bi] 0 |Group IVa,Va,VIa Periods 4-6 (Ge...)  *NOTE* spec wrong
 4 [Ac,Th,Pa,U,Np,Pu,Am,Cm,Bk,Cf,Es,Fm,Md,No,Lr] 0 |actinide
@@ -130,7 +130,7 @@
 100 *~[CH2]~[#7] 0 |ACH2N
 # bit 101 requires finding a ring > 8 atoms/bonds, this is inefficient to match using SMARTS
 # 101 [$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1)] 0 |8M Ring or larger. This only handles up to ring sizes of 14
-101 ? 0 | 8 member ring
+101 [!*] 0 | 8 member ring
 102 [!#6;!#1]~[#8] 0 |QO
 103 Cl 0 |CL
 104 [!#6;!#1;!H0]~*~[CH2]~* 0 |QHACH2A
@@ -154,7 +154,7 @@
 122 *~[#7](~*)~* 0 |AN(A)A
 123 [#8]~[#6]~[#8] 0 |OCO
 124 [!#6;!#1]~[!#6;!#1] 0 |QQ
-125 ? 0 |Aromatic Ring > 1
+125 [!*] 0 |Aromatic Ring > 1
 126 *!@[#8]!@* 0 |A!O!A
 127 *@*!@[#8] 1 |A$A!O > 1 (&...) FIX: incomplete definition
 128 [$(*~[CH2]~*~*~*~[CH2]~*),$([R]1@[CH2;R]@[R]@[R]@[R]@[CH2;R]1),$(*~[CH2]~[R]1@[R]@[R]@[CH2;R]1),$(*~[CH2]~*~[R]1@[R]@[CH2;R]1)] 0 |ACH2AAACH2A
@@ -195,4 +195,4 @@
 163 *1~*~*~*~*~*~1 0 |6M Ring
 164 [#8] 0 |O
 165 [R] 0 |Ring
-166 ? 0 |Fragments  FIX: this can't be done in SMARTS
+166 [!*] 0 |Fragments  FIX: this can't be done in SMARTS
