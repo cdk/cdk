@@ -235,10 +235,7 @@ public class MACCSFingerprinter implements IFingerprinter {
     /** {@inheritDoc} */
     @Override
     public int getSize() {
-        if (keys != null)
-            return keys.length;
-        else
-            return 0; // throw exception when keys aren't loaded?
+        return 166;
     }
 
     private MaccsKey[] readKeyDef(final IChemObjectBuilder builder) throws IOException, CDKException {
