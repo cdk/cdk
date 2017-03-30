@@ -105,7 +105,8 @@ public class MACCSFingerprinter implements IFingerprinter {
         // init SMARTS invariants (connectivity, degree, etc)
         SmartsMatchers.prepare(container, false);
 
-        final int[][] adjlist = GraphUtil.toAdjList(container);
+        final GraphUtil.EdgeToBondMap bmap    = GraphUtil.EdgeToBondMap.withSpaceFor(container);
+        final int[][]                 adjlist = GraphUtil.toAdjList(container, bmap);
 
         for (int i = 0; i < keys.length; i++) {
             final MaccsKey key     = keys[i];
@@ -155,6 +156,7 @@ public class MACCSFingerprinter implements IFingerprinter {
             AllCycles allcycles = new AllCycles(adjlist,
                                                 Math.min(8, numAtoms),
                                                 126);
+            int numArom = 0;
             for (int[] path : allcycles.paths()) {
                 // length is +1 as we repeat the closure vertex
                 switch (path.length) {
@@ -167,7 +169,16 @@ public class MACCSFingerprinter implements IFingerprinter {
                     case 6: // 5M bit96
                         fp.set(95);
                         break;
-                    case 7: // 6M bit163->bit145
+                    case 7: // 6M bit163->bit145, bit124 numArom > 1
+
+                        if (numArom < 2) {
+                            if (isAromPath(path, bmap)) {
+                                numArom++;
+                                if (numArom == 2)
+                                    fp.set(124);
+                            }
+                        }
+
                         if (fp.get(162)) {
                             fp.set(144); // >0
                         } else {
@@ -194,17 +205,6 @@ public class MACCSFingerprinter implements IFingerprinter {
         int ringCount = 0;
         for (int i = 0; i < rings.getAtomContainerCount(); i++) {
             IAtomContainer ring = rings.getAtomContainer(i);
-            boolean allAromatic = true;
-            if (ringCount < 2) { // already found enough aromatic rings
-                for (IBond bond : ring.bonds()) {
-                    if (!bond.getFlag(CDKConstants.ISAROMATIC)) {
-                        allAromatic = false;
-                        break;
-                    }
-                }
-            }
-            if (allAromatic) ringCount++;
-            if (ringCount > 1) fp.set(124);
             if (ring.getAtomCount() >= 8) fp.set(100);
         }
 
@@ -214,6 +214,15 @@ public class MACCSFingerprinter implements IFingerprinter {
         if (cc.nComponents() > 1) fp.set(165);
 
         return new BitSetFingerprint(fp);
+    }
+
+    private static boolean isAromPath(int[] path, GraphUtil.EdgeToBondMap bmap) {
+        int end = path.length - 1;
+        for (int i = 0; i < end; i++) {
+            if (!bmap.get(path[i], path[i+1]).isAromatic())
+                return false;
+        }
+        return true;
     }
 
     /** {@inheritDoc} */
