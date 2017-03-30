@@ -34,12 +34,14 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.Ullmann;
+import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
@@ -109,6 +111,14 @@ public class MACCSFingerprinter implements IFingerprinter {
 
             switch (key.smarts) {
                 case "[!*]":
+                    break;
+                case "[!0]":
+                    for (IAtom atom : container.atoms()) {
+                        if (atom.getMassNumber() != null) {
+                            fp.set(i);
+                            break;
+                        }
+                    }
                     break;
                 default:
                     if (key.count == 0) {
@@ -250,6 +260,7 @@ public class MACCSFingerprinter implements IFingerprinter {
      * @return the pattern to match
      */
     private Pattern createPattern(String smarts, IChemObjectBuilder builder) {
+        if (smarts.equals("[!0]")) return null; // FIXME can't be parsed by our SMARTS Grammar ATM
         return VentoFoggia.findSubstructure(SMARTSParser.parse(smarts, builder));
     }
 }

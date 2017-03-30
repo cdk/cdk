@@ -28,9 +28,9 @@
 # THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-1 [!*] 0 |ISOTOPE
+1 [!0] 0 |ISOTOPE
 2 [#103,#104] 0 |ISOTOPE Not complete
-3 [Ge,As,Se,Sn,Sb,Te,Tl,Pb,Bi] 0 |Group IVa,Va,VIa Periods 4-6 (Ge...)  *NOTE* spec wrong
+3 [Ge,As,as,Se,se,Sn,Sb,Te,Tl,Pb,Bi] 0 |Group IVa,Va,VIa Periods 4-6 (Ge...)  *NOTE* spec wrong
 4 [Ac,Th,Pa,U,Np,Pu,Am,Cm,Bk,Cf,Es,Fm,Md,No,Lr] 0 |actinide
 5 [Sc,Ti,Y,Zr,Hf] 0 |Group IIIB,IVB (Sc...)  *NOTE* spec wrong
 6 [La,Ce,Pr,Nd,Pm,Sm,Eu,Gd,Tb,Dy,Ho,Er,Tm,Yb,Lu] 0 |Lanthanide
@@ -45,7 +45,7 @@
 15 [#8]~[#6](~[#8])~[#8] 0 |OC(O)O
 16 [R!#6!#1]1~*~*~1 0 |QAA@1
 17 [#6]#[#6] 0 |CTC
-18 [B,Al,Ga,In,Tl] 0 |Group IIIA (B...) *NOTE* spec wrong
+18 [#5,Al,Ga,In,Tl] 0 |Group IIIA (B...) *NOTE* spec wrong
 19 [R]1@*@*@*@*@*@*@1 0 |7M Ring
 20 [Si] 0 |Si
 21 [#6]=[#6](~[!#6;!#1])~[!#6;!#1] 0 |C=C(Q)Q
