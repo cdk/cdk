@@ -140,7 +140,7 @@ public class MACCSFingerprinter implements IFingerprinter {
                     // component, iff there are some atoms not visited we have more than
                     // one component
                     boolean[] visit = new boolean[numAtoms];
-                    if (visitPart(visit, adjlist, 0, -1) < numAtoms)
+                    if (numAtoms > 1 && visitPart(visit, adjlist, 0, -1) < numAtoms)
                         fp.set(165);
                     break;
 
