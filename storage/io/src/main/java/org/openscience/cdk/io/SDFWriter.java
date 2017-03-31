@@ -46,6 +46,8 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SDFFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -253,7 +255,13 @@ public class SDFWriter extends DefaultChemObjectWriter {
         try {
             // write the MDL molfile bits
             StringWriter stringWriter = new StringWriter();
-            MDLV2000Writer mdlWriter = new MDLV2000Writer(stringWriter);
+            IChemObjectWriter mdlWriter;
+
+            if (writeV3000(container))
+                mdlWriter = new MDLV3000Writer(stringWriter);
+            else
+                mdlWriter = new MDLV2000Writer(stringWriter);
+
             mdlWriter.addSettings(getSettings());
             mdlWriter.write(container);
             mdlWriter.close();
@@ -283,6 +291,21 @@ public class SDFWriter extends DefaultChemObjectWriter {
         } catch (IOException exception) {
             throw new CDKException("Error while writing a SD file entry: " + exception.getMessage(), exception);
         }
+    }
+
+    private boolean writeV3000(IAtomContainer container) {
+        if (container.getAtomCount() > 999)
+            return true;
+        if (container.getBondCount() > 999)
+            return true;
+        // check for positional variation, this can be output in base V3000 and not V2000
+        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            for (Sgroup sgroup : sgroups)
+                if (sgroup.getType() == SgroupType.ExtMulticenter)
+                    return true;
+        }
+        return false;
     }
 
     /**

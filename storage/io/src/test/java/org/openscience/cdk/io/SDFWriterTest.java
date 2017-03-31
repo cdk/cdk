@@ -47,6 +47,7 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
+import static org.junit.Assert.assertThat;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 import static org.junit.Assert.assertFalse;
@@ -211,6 +212,30 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
         sdfWriter.close();
         Assert.assertThat(writer.toString(), Matchers.containsString("> <http://not_valid_com>"));
+    }
+
+    @Test
+    public void chooseFormatToWrite() throws Exception {
+        StringWriter writer = new StringWriter();
+        SDFWriter sdfWriter = new SDFWriter(writer);
+
+        IAtomContainer molecule = new AtomContainer();
+        molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        molecule = new AtomContainer();
+        for (int i = 0; i < 1000; i++)
+            molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        molecule = new AtomContainer();
+        molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        sdfWriter.close();
+        String result = writer.toString();
+        assertThat(result, Matchers.containsString("V2000"));
+        assertThat(result, Matchers.containsString("V3000"));
     }
 
     /**
