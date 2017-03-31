@@ -94,8 +94,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.customizeJob();
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().indexOf("<foo>") != -1);
-        Assert.assertTrue(writer.toString().indexOf("bar") != -1);
+        String result = writer.toString();
+        Assert.assertFalse(result.contains("<foo>"));
     }
 
     /**
