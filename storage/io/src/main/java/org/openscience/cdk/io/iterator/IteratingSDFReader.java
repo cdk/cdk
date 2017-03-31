@@ -297,15 +297,16 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     private void readDataBlockInto(IAtomContainer m) throws IOException {
         String dataHeader = null;
         StringBuilder sb = new StringBuilder();
-        while ((currentLine = input.readLine()) != null) {
+        currentLine = input.readLine();
+        while (currentLine != null) {
             if (currentLine.startsWith(SDF_RECORD_SEPARATOR))
                 break;
             logger.debug("looking for data header: ", currentLine);
             String str = currentLine;
             if (str.startsWith(SDF_DATA_HEADER)) {
-                dataHeader = extractFieldName(dataHeader, str);
-                str = skipOtherFieldHeaderLines(str);
-                String data = extractFieldData(str, sb);
+                dataHeader = extractFieldName(str);
+                skipOtherFieldHeaderLines(str);
+                String data = extractFieldData(sb);
                 if (dataHeader != null) {
                     logger.info("fieldName, data: ", dataHeader, ", ", data);
                     m.setProperty(dataHeader, data);
@@ -324,17 +325,21 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         this.skip = skip;
     }
 
-    private String extractFieldData(String str, StringBuilder data) throws IOException {
+    private String extractFieldData(StringBuilder data) throws IOException {
         data.setLength(0);
-        while (str.length() > 0 && str.trim().length() > 0) {
+        while (currentLine != null && !currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
+            if (currentLine.startsWith(SDF_DATA_HEADER))
+                break;
             logger.debug("data line: ", currentLine);
-            if (data.length() > 0) {
-                str = System.getProperty("line.separator") + str;
-            }
-            data.append(str);
+            if (data.length() > 0)
+                data.append('\n');
+            data.append(currentLine);
             currentLine = input.readLine();
-            str = currentLine.trim();
         }
+        // trim trailing newline
+        int len = data.length();
+        if (len > 1 && data.charAt(len-1) == '\n')
+            data.setLength(len-1);
         return data.toString();
     }
 
@@ -347,15 +352,15 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         return str;
     }
 
-    private String extractFieldName(String fieldName, String str) {
+    private String extractFieldName(String str) {
         int index = str.indexOf('<');
         if (index != -1) {
             int index2 = str.indexOf('>', index);
             if (index2 != -1) {
-                fieldName = str.substring(index + 1, index2);
+                return str.substring(index + 1, index2);
             }
         }
-        return fieldName;
+        return null;
     }
 
     /**
