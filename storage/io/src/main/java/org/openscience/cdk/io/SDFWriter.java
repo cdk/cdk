@@ -66,9 +66,10 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SDFWriter.class);
 
-    private BufferedWriter            writer;
-    private BooleanIOSetting          writerProperties;
-    private Set<String>               propertiesToWrite;
+    private BufferedWriter   writer;
+    private BooleanIOSetting paramWriteData;
+    private BooleanIOSetting paramWriteV3000;
+    private Set<String>      propertiesToWrite;
 
     /**
      * Create an SDfile writer that will output directly to the provided buffered writer.
@@ -267,22 +268,24 @@ public class SDFWriter extends DefaultChemObjectWriter {
             mdlWriter.close();
             writer.write(stringWriter.toString());
 
-            // write the properties
-            Map<Object, Object> sdFields = container.getProperties();
-            boolean writeAllProperties = propertiesToWrite == null;
-            if (sdFields != null) {
-                for (Object propKey : sdFields.keySet()) {
-                    String headerKey = propKey.toString();
-                    if (!isCDKInternalProperty(headerKey)) {
-                        if (writeAllProperties || propertiesToWrite.contains(headerKey)) {
-                            String cleanHeaderKey = replaceInvalidHeaderChars(headerKey);
-                            if (!cleanHeaderKey.equals(headerKey))
-                                logger.info("Replaced characters in SDfile data header: ", headerKey, " written as: ", cleanHeaderKey);
-                            writer.write("> <" + cleanHeaderKey + ">");
-                            writer.newLine();
-                            writer.write("" + sdFields.get(propKey));
-                            writer.newLine();
-                            writer.newLine();
+            // write non-structural data (mol properties in our case)
+            if (paramWriteData.isSet()) {
+                Map<Object, Object> sdFields           = container.getProperties();
+                boolean             writeAllProperties = propertiesToWrite == null;
+                if (sdFields != null) {
+                    for (Object propKey : sdFields.keySet()) {
+                        String headerKey = propKey.toString();
+                        if (!isCDKInternalProperty(headerKey)) {
+                            if (writeAllProperties || propertiesToWrite.contains(headerKey)) {
+                                String cleanHeaderKey = replaceInvalidHeaderChars(headerKey);
+                                if (!cleanHeaderKey.equals(headerKey))
+                                    logger.info("Replaced characters in SDfile data header: ", headerKey, " written as: ", cleanHeaderKey);
+                                writer.write("> <" + cleanHeaderKey + ">");
+                                writer.newLine();
+                                writer.write("" + sdFields.get(propKey));
+                                writer.newLine();
+                                writer.newLine();
+                            }
                         }
                     }
                 }
@@ -294,6 +297,8 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     private boolean writeV3000(IAtomContainer container) {
+        if (paramWriteV3000.isSet())
+            return true;
         if (container.getAtomCount() > 999)
             return true;
         if (container.getBondCount() > 999)
@@ -329,9 +334,23 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        writerProperties = addSetting(new BooleanIOSetting("writeProperties", IOSetting.Importance.LOW,
-                "Should molecular properties be written?", "true"));
+        paramWriteData = addSetting(new BooleanIOSetting("writeProperties",
+                                                         IOSetting.Importance.LOW,
+                                                         "Should molecule properties be written as non-structural data", "true"));
+        paramWriteV3000 = addSetting(new BooleanIOSetting("writeV3000",
+                                                          IOSetting.Importance.LOW,
+                                                          "Write all records as V3000", "false"));
         addSettings(new MDLV2000Writer().getSettings());
+        addSettings(new MDLV3000Writer().getSettings());
+    }
+
+    public void setAlwaysV3000(boolean val) {
+        try {
+            paramWriteV3000.setSetting(Boolean.toString(val));
+        } catch (CDKException e) {
+            // ignored, no type unsafety
+            throw new InternalError(e.getMessage());
+        }
     }
 
     public void customizeJob() {

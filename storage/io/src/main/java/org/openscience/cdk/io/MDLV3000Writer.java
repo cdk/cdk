@@ -109,6 +109,12 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     }
 
     /**
+     * Default empty constructor.
+     */
+    public MDLV3000Writer() {
+    }
+
+    /**
      * Safely access nullable int fields by defaulting to zero.
      *
      * @param x value

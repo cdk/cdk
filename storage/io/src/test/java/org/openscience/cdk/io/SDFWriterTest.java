@@ -238,6 +238,31 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         assertThat(result, Matchers.containsString("V3000"));
     }
 
+    @Test
+    public void chooseFormatToWrite2() throws Exception {
+        StringWriter writer = new StringWriter();
+        SDFWriter sdfWriter = new SDFWriter(writer);
+        sdfWriter.setAlwaysV3000(true);
+
+        IAtomContainer molecule = new AtomContainer();
+        molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        molecule = new AtomContainer();
+        for (int i = 0; i < 1000; i++)
+            molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        molecule = new AtomContainer();
+        molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        sdfWriter.close();
+        String result = writer.toString();
+        assertThat(result, Matchers.not(Matchers.containsString("V2000")));
+        assertThat(result, Matchers.containsString("V3000"));
+    }
+
     /**
      * @cdk.bug 3392485
      */
