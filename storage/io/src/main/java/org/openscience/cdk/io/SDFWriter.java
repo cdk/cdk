@@ -285,6 +285,10 @@ public class SDFWriter extends DefaultChemObjectWriter {
     static {
         cdkInternalProperties.add(InvPair.CANONICAL_LABEL);
         cdkInternalProperties.add(InvPair.INVARIANCE_PAIR);
+        cdkInternalProperties.add(CDKConstants.CTAB_SGROUPS);
+        // TITLE/REMARK written in Molfile header
+        cdkInternalProperties.add(CDKConstants.REMARK);
+        cdkInternalProperties.add(CDKConstants.TITLE);
         // I think there are a few more, but cannot find them right now
     }
 
