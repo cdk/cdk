@@ -102,7 +102,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     private boolean                                         skip                 = false;
 
     // buffer to store pre-read Mol records in
-    private StringBuffer                                    buffer               = new StringBuffer(10000);
+    private StringBuilder                                   buffer               = new StringBuilder(10000);
 
     private static final String                             LINE_SEPARATOR       = System.getProperty("line.separator");
 
@@ -218,7 +218,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
         hasNext = false;
         nextMolecule = null;
-        buffer.delete(0, buffer.length());
+        buffer.setLength(0);
 
         // now try to parse the next Molecule
         try {
