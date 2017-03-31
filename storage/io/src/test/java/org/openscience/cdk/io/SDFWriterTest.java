@@ -27,6 +27,7 @@ import java.io.StringWriter;
 import java.util.Collections;
 import java.util.Properties;
 
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -196,6 +197,20 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         Assert.assertTrue(writer.toString().indexOf("toys") != -1);
         Assert.assertTrue(writer.toString().indexOf("r-us") != -1);
         Assert.assertTrue(writer.toString().indexOf("$$$$") != -1);
+    }
+
+    @Test
+    public void invalidSDfileHeaderTags() throws Exception {
+        StringWriter writer = new StringWriter();
+        SDFWriter sdfWriter = new SDFWriter(writer);
+
+        IAtomContainer molecule = new AtomContainer();
+        molecule.addAtom(new Atom("C"));
+        molecule.setProperty("http://not-valid.com", "URL");
+        sdfWriter.write(molecule);
+
+        sdfWriter.close();
+        Assert.assertThat(writer.toString(), Matchers.containsString("> <http://not_valid_com>"));
     }
 
     /**

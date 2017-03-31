@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -244,6 +245,10 @@ public class SDFWriter extends DefaultChemObjectWriter {
         }
     }
 
+    private static String replaceInvalidHeaderChars(String headerKey) {
+        return headerKey.replaceAll("[-<>.=% ]", "_");
+    }
+
     private void writeMolecule(IAtomContainer container) throws CDKException {
         try {
             // write the MDL molfile bits
@@ -259,9 +264,13 @@ public class SDFWriter extends DefaultChemObjectWriter {
             boolean writeAllProperties = propertiesToWrite == null;
             if (sdFields != null) {
                 for (Object propKey : sdFields.keySet()) {
-                    if (!isCDKInternalProperty(propKey)) {
-                        if (writeAllProperties || propertiesToWrite.contains(propKey)) {
-                            writer.write("> <" + propKey + ">");
+                    String headerKey = propKey.toString();
+                    if (!isCDKInternalProperty(headerKey)) {
+                        if (writeAllProperties || propertiesToWrite.contains(headerKey)) {
+                            String cleanHeaderKey = replaceInvalidHeaderChars(headerKey);
+                            if (!cleanHeaderKey.equals(headerKey))
+                                logger.info("Replaced characters in SDfile data header: ", headerKey, " written as: ", cleanHeaderKey);
+                            writer.write("> <" + cleanHeaderKey + ">");
                             writer.newLine();
                             writer.write("" + sdFields.get(propKey));
                             writer.newLine();
