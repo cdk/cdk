@@ -280,11 +280,17 @@ public class SDFWriter extends DefaultChemObjectWriter {
                                 String cleanHeaderKey = replaceInvalidHeaderChars(headerKey);
                                 if (!cleanHeaderKey.equals(headerKey))
                                     logger.info("Replaced characters in SDfile data header: ", headerKey, " written as: ", cleanHeaderKey);
-                                writer.write("> <" + cleanHeaderKey + ">");
-                                writer.newLine();
-                                writer.write("" + sdFields.get(propKey));
-                                writer.newLine();
-                                writer.newLine();
+
+                                Object val = sdFields.get(propKey);
+
+                                if (isPrimitiveDataValue(val)) {
+                                    writer.write("> <" + cleanHeaderKey + ">");
+                                    writer.newLine();
+                                    if (val != null)
+                                        writer.write(val.toString());
+                                    writer.newLine();
+                                    writer.newLine();
+                                }
                             }
                         }
                     }
@@ -294,6 +300,18 @@ public class SDFWriter extends DefaultChemObjectWriter {
         } catch (IOException exception) {
             throw new CDKException("Error while writing a SD file entry: " + exception.getMessage(), exception);
         }
+    }
+
+    private static boolean isPrimitiveDataValue(Object obj) {
+        return obj == null ||
+               obj.getClass() == String.class ||
+               obj.getClass() == Integer.class ||
+               obj.getClass() == Double.class ||
+               obj.getClass() == Boolean.class ||
+               obj.getClass() == Float.class ||
+               obj.getClass() == Byte.class ||
+               obj.getClass() == Short.class ||
+               obj.getClass() == Character.class;
     }
 
     private boolean writeV3000(IAtomContainer container) {
