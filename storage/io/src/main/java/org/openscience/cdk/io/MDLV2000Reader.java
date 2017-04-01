@@ -433,8 +433,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             else
                 outputContainer = new QueryAtomContainer(molecule.getBuilder());
 
-            outputContainer.setProperty(CDKConstants.TITLE, title);
-            outputContainer.setProperty(CDKConstants.REMARK, remark);
+            if (title != null)
+                outputContainer.setProperty(CDKConstants.TITLE, title);
+            if (remark != null)
+                outputContainer.setProperty(CDKConstants.REMARK, remark);
 
             // if the container is empty we can simply set the atoms/bonds
             // otherwise we add them to the end

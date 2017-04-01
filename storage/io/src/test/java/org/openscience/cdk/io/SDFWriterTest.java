@@ -27,6 +27,7 @@ import java.io.StringWriter;
 import java.util.Collections;
 import java.util.Properties;
 
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -46,6 +47,7 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
+import static org.junit.Assert.assertThat;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 import static org.junit.Assert.assertFalse;
@@ -92,8 +94,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.customizeJob();
         sdfWriter.write(molSet);
         sdfWriter.close();
-        Assert.assertTrue(writer.toString().indexOf("<foo>") != -1);
-        Assert.assertTrue(writer.toString().indexOf("bar") != -1);
+        String result = writer.toString();
+        Assert.assertFalse(result.contains("<foo>"));
     }
 
     /**
@@ -196,6 +198,69 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         Assert.assertTrue(writer.toString().indexOf("toys") != -1);
         Assert.assertTrue(writer.toString().indexOf("r-us") != -1);
         Assert.assertTrue(writer.toString().indexOf("$$$$") != -1);
+    }
+
+    @Test
+    public void invalidSDfileHeaderTags() throws Exception {
+        StringWriter writer = new StringWriter();
+        SDFWriter sdfWriter = new SDFWriter(writer);
+
+        IAtomContainer molecule = new AtomContainer();
+        molecule.addAtom(new Atom("C"));
+        molecule.setProperty("http://not-valid.com", "URL");
+        sdfWriter.write(molecule);
+
+        sdfWriter.close();
+        Assert.assertThat(writer.toString(), Matchers.containsString("> <http://not_valid_com>"));
+    }
+
+    @Test
+    public void chooseFormatToWrite() throws Exception {
+        StringWriter writer = new StringWriter();
+        SDFWriter sdfWriter = new SDFWriter(writer);
+
+        IAtomContainer molecule = new AtomContainer();
+        molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        molecule = new AtomContainer();
+        for (int i = 0; i < 1000; i++)
+            molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        molecule = new AtomContainer();
+        molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        sdfWriter.close();
+        String result = writer.toString();
+        assertThat(result, Matchers.containsString("V2000"));
+        assertThat(result, Matchers.containsString("V3000"));
+    }
+
+    @Test
+    public void chooseFormatToWrite2() throws Exception {
+        StringWriter writer = new StringWriter();
+        SDFWriter sdfWriter = new SDFWriter(writer);
+        sdfWriter.setAlwaysV3000(true);
+
+        IAtomContainer molecule = new AtomContainer();
+        molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        molecule = new AtomContainer();
+        for (int i = 0; i < 1000; i++)
+            molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        molecule = new AtomContainer();
+        molecule.addAtom(new Atom("CH4"));
+        sdfWriter.write(molecule);
+
+        sdfWriter.close();
+        String result = writer.toString();
+        assertThat(result, Matchers.not(Matchers.containsString("V2000")));
+        assertThat(result, Matchers.containsString("V3000"));
     }
 
     /**

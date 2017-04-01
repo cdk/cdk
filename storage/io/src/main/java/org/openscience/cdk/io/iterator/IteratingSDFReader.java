@@ -24,18 +24,17 @@
 package org.openscience.cdk.io.iterator;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -102,15 +101,15 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     private boolean                                         skip                 = false;
 
     // buffer to store pre-read Mol records in
-    private StringBuffer                                    buffer               = new StringBuffer(10000);
+    private StringBuilder                                   buffer               = new StringBuilder(10000);
 
     private static final String                             LINE_SEPARATOR       = System.getProperty("line.separator");
 
     // patterns to match
-    private static Pattern                                  MDL_VERSION          = Pattern.compile("[vV](2000|3000)");
-    private static Pattern                                  M_END                = Pattern.compile("M\\s\\sEND");
-    private static Pattern                                  SDF_RECORD_SEPARATOR = Pattern.compile("\\$\\$\\$\\$");
-    private static Pattern                                  SDF_FIELD_START      = Pattern.compile("\\A>\\s");
+    private static Pattern MDL_VERSION          = Pattern.compile("[vV](2000|3000)");
+    private static String  M_END                = "M  END";
+    private static String  SDF_RECORD_SEPARATOR = "$$$$";
+    private static String  SDF_DATA_HEADER      = "> ";
 
     // map of MDL formats to their readers
     private final Map<IChemFormat, ISimpleChemObjectReader> readerMap            = new HashMap<IChemFormat, ISimpleChemObjectReader>(
@@ -218,28 +217,29 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
         hasNext = false;
         nextMolecule = null;
-        buffer.delete(0, buffer.length());
 
         // now try to parse the next Molecule
         try {
             currentFormat = (IChemFormat) MDLFormat.getInstance();
 
+            int lineNum = 0;
+            buffer.setLength(0);
             while ((currentLine = input.readLine()) != null) {
 
                 // still in a molecule
                 buffer.append(currentLine).append(LINE_SEPARATOR);
+                lineNum++;
 
                 // do MDL molfile version checking
-                Matcher versionMatcher = MDL_VERSION.matcher(currentLine);
-                if (versionMatcher.find()) {
-                    currentFormat = "2000".equals(versionMatcher.group(1)) ? (IChemFormat) MDLV2000Format.getInstance()
-                            : (IChemFormat) MDLV3000Format.getInstance();
+                if (lineNum == 4) {
+                    Matcher versionMatcher = MDL_VERSION.matcher(currentLine);
+                    if (versionMatcher.find()) {
+                        currentFormat = "2000".equals(versionMatcher.group(1)) ? (IChemFormat) MDLV2000Format.getInstance()
+                                                                               : (IChemFormat) MDLV3000Format.getInstance();
+                    }
                 }
 
-                // un-trimmed line has already been stored in buffer
-                currentLine = currentLine.trim();
-
-                if (M_END.matcher(currentLine).matches()) {
+                if (currentLine.startsWith(M_END)) {
 
                     logger.debug("MDL file part read: ", buffer);
 
@@ -247,11 +247,9 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
                     try {
                         ISimpleChemObjectReader reader = getReader(currentFormat);
-                        InputStream byteStream = new ByteArrayInputStream(buffer.toString().getBytes("UTF-8"));
-                        reader.setReader(byteStream);
-                        molecule = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
-                        byteStream.close();
-                    } catch (CDKException | IllegalArgumentException | IOException exception) {
+                        reader.setReader(new StringReader(buffer.toString()));
+                        molecule = reader.read(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0));
+                    } catch (Exception exception) {
                         logger.error("Error while reading next molecule: " + exception.getMessage());
                         logger.debug(exception);
                     }
@@ -265,24 +263,26 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                     } else if (skip) {
                         // null molecule and skip = true, eat up the rest of the entry until '$$$$'
                         String line;
-                        while ((line = input.readLine()) != null && !SDF_RECORD_SEPARATOR.matcher(line).matches()) {
-                            buffer.delete(0, buffer.length());
+                        while ((line = input.readLine()) != null) {
+                            if (line.startsWith(SDF_RECORD_SEPARATOR)) {
+                                break;
+                            }
                         }
                     } else {
                         return false;
                     }
 
                     // empty the buffer
-                    buffer.delete(0, buffer.length());
-
+                    buffer.setLength(0);
+                    lineNum = 0;
                 }
 
                 // found SDF record separator ($$$$) without parsing a molecule (separator is detected
                 // in readDataBlockInto()) the buffer is cleared and the iterator continues reading
-                if (SDF_RECORD_SEPARATOR.matcher(currentLine).matches()) {
-                    buffer.delete(0, buffer.length());
+                if (currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
+                    buffer.setLength(0);
+                    lineNum = 0;
                 }
-
             }
         } catch (IOException exception) {
             logger.error("Error while reading next molecule: " + exception.getMessage());
@@ -295,17 +295,21 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     private void readDataBlockInto(IAtomContainer m) throws IOException {
-        String fieldName = null;
-        while ((currentLine = input.readLine()) != null && !SDF_RECORD_SEPARATOR.matcher(currentLine).matches()) {
+        String dataHeader = null;
+        StringBuilder sb = new StringBuilder();
+        currentLine = input.readLine();
+        while (currentLine != null) {
+            if (currentLine.startsWith(SDF_RECORD_SEPARATOR))
+                break;
             logger.debug("looking for data header: ", currentLine);
             String str = currentLine;
-            if (SDF_FIELD_START.matcher(str).find()) {
-                fieldName = extractFieldName(fieldName, str);
-                str = skipOtherFieldHeaderLines(str);
-                String data = extractFieldData(str);
-                if (fieldName != null) {
-                    logger.info("fieldName, data: ", fieldName, ", ", data);
-                    m.setProperty(fieldName, data);
+            if (str.startsWith(SDF_DATA_HEADER)) {
+                dataHeader = extractFieldName(str);
+                skipOtherFieldHeaderLines(str);
+                String data = extractFieldData(sb);
+                if (dataHeader != null) {
+                    logger.info("fieldName, data: ", dataHeader, ", ", data);
+                    m.setProperty(dataHeader, data);
                 }
             }
         }
@@ -321,22 +325,26 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         this.skip = skip;
     }
 
-    private String extractFieldData(String str) throws IOException {
-        StringBuilder data = new StringBuilder();
-        while (str.trim().length() > 0) {
+    private String extractFieldData(StringBuilder data) throws IOException {
+        data.setLength(0);
+        while (currentLine != null && !currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
+            if (currentLine.startsWith(SDF_DATA_HEADER))
+                break;
             logger.debug("data line: ", currentLine);
-            if (data.length() > 0) {
-                str = System.getProperty("line.separator") + str;
-            }
-            data.append(str);
+            if (data.length() > 0)
+                data.append('\n');
+            data.append(currentLine);
             currentLine = input.readLine();
-            str = currentLine.trim();
         }
+        // trim trailing newline
+        int len = data.length();
+        if (len > 1 && data.charAt(len-1) == '\n')
+            data.setLength(len-1);
         return data.toString();
     }
 
     private String skipOtherFieldHeaderLines(String str) throws IOException {
-        while (str.startsWith("> ")) {
+        while (str.startsWith(SDF_DATA_HEADER)) {
             logger.debug("data header line: ", currentLine);
             currentLine = input.readLine();
             str = currentLine;
@@ -344,15 +352,15 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         return str;
     }
 
-    private String extractFieldName(String fieldName, String str) {
+    private String extractFieldName(String str) {
         int index = str.indexOf('<');
         if (index != -1) {
-            int index2 = str.substring(index).indexOf('>');
+            int index2 = str.indexOf('>', index);
             if (index2 != -1) {
-                fieldName = str.substring(index + 1, index + index2);
+                return str.substring(index + 1, index2);
             }
         }
-        return fieldName;
+        return null;
     }
 
     /**
