@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
@@ -121,8 +122,19 @@ public final class VentoFoggia extends Pattern {
     /**{@inheritDoc} */
     @Override
     public Mappings matchAll(final IAtomContainer target) {
-        EdgeToBondMap bonds2 = EdgeToBondMap.withSpaceFor(target);
-        int[][] g2 = GraphUtil.toAdjList(target, bonds2);
+
+        final EdgeToBondMap bonds2;
+        final int[][]       g2;
+
+        AdjListCache cached = target.getProperty(AdjListCache.class.getName());
+        if (cached == null || !cached.validate(target)) {
+            cached = new AdjListCache(target);
+            target.setProperty(AdjListCache.class.getName(), cached);
+        }
+
+        bonds2 = cached.bmap;
+        g2 = cached.g;
+
         Iterable<int[]> iterable = new VFIterable(query, target, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher,
                 subgraph);
         return new Mappings(query, target, iterable);
@@ -238,6 +250,31 @@ public final class VentoFoggia extends Pattern {
             }
             return new StateStream(
                     new VFState(container1, container2, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher));
+        }
+    }
+
+    private static final class AdjListCache {
+
+        // 100 ms max age
+        private static final long MAX_AGE = TimeUnit.MILLISECONDS.toNanos(100);
+
+        private final int[][] g;
+        private final EdgeToBondMap bmap;
+        private final int numAtoms, numBonds;
+        private final long tInit;
+
+        private AdjListCache(IAtomContainer mol) {
+            this.bmap = EdgeToBondMap.withSpaceFor(mol);
+            this.g = GraphUtil.toAdjList(mol, bmap);
+            this.numAtoms = mol.getAtomCount();
+            this.numBonds = mol.getBondCount();
+            this.tInit = System.nanoTime();
+        }
+
+        private boolean validate(IAtomContainer mol) {
+            return mol.getAtomCount() == numAtoms &&
+                   mol.getBondCount() == numBonds &&
+                   (System.nanoTime() - tInit) < MAX_AGE;
         }
     }
 }
