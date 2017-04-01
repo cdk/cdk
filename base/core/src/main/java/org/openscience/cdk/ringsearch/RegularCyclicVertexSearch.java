@@ -56,6 +56,8 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     /** Vertex colors - which component does each vertex belong. */
     private volatile int[] colors;
 
+    private int numCycles = 0;
+
     /**
      * Create a new cyclic vertex search for the provided graph.
      *
@@ -113,6 +115,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
                 // we don't check out current state as this will always
                 // include w - they are adjacent
                 if (isBitSet(prev, w)) {
+                    numCycles++;
 
                     // xor the state when we last visited 'w' with our current
                     // state. this set is all the vertices we visited since then
@@ -124,6 +127,11 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
                 search(w, state[v], curr);
             }
         }
+    }
+
+    @Override
+    public int numCycles() {
+        return numCycles;
     }
 
     /**

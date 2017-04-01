@@ -180,6 +180,16 @@ public final class RingSearch {
     }
 
     /**
+     * Access the number of rings found (aka. circuit rank, SSSR size).
+     *
+     * @return number of rings
+     * @see <a href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</a>
+     */
+    public int numRings() {
+        return searcher.numCycles();
+    }
+
+    /**
      * Determine whether the edge between the vertices <i>u</i> and <i>v</i> is
      * cyclic.
      *

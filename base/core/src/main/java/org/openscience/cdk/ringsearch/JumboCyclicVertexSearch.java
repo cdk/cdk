@@ -56,6 +56,8 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     /** vertex colored by each component. */
     private int[]         colors;
 
+    private int numCycles = 0;
+
     /**
      * Create a new cyclic vertex search for the provided graph.
      *
@@ -116,6 +118,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
             // we don't check out current state as this will always
             // include w - they are adjacent
             if (prev.get(w)) {
+                numCycles++;
                 // we have a cycle, xor the state when we last visited 'w'
                 // with our current state. this set is all the vertices
                 // we visited since then
@@ -134,6 +137,11 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
 
     /** Synchronisation lock. */
     private final Object lock = new Object();
+
+    @Override
+    public int numCycles() {
+        return numCycles;
+    }
 
     /**
      * Lazily build an indexed lookup of vertex color. The vertex color
