@@ -751,7 +751,7 @@ public final class Cycles {
                 if (!ac.completed())
                     throw new Intractable("A large number of cycles were being generated and the"
                             + " computation was aborted. Please use AllCycles/AllRingsFinder with"
-                            + " and specify a larger threshold or use a CycleFinger with a fall-back"
+                            + " and specify a larger threshold or use a CycleFinder with a fall-back"
                             + " to a set unique cycles: e.g. Cycles.allOrVertexShort().");
                 return ac.paths();
             }
