@@ -311,6 +311,8 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                     logger.info("fieldName, data: ", dataHeader, ", ", data);
                     m.setProperty(dataHeader, data);
                 }
+            } else {
+                break;
             }
         }
     }
