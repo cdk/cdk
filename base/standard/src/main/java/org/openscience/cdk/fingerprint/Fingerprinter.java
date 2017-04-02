@@ -90,7 +90,7 @@ import java.util.Set;
  * @cdk.module     standard
  * @cdk.githash
  */
-public class Fingerprinter implements IFingerprinter {
+public class Fingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     /** Throw an exception if too many paths (per atom) are generated. */
     private final static int                 DEFAULT_PATH_LIMIT   = 1500;
@@ -163,7 +163,6 @@ public class Fingerprinter implements IFingerprinter {
      *                         perception
      * @return A {@link BitSet} representing the fingerprint
      */
-
     public IBitFingerprint getBitFingerprint(IAtomContainer container, AllRingsFinder ringFinder) throws CDKException {
         int position = -1;
         logger.debug("Entering Fingerprinter");

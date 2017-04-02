@@ -364,7 +364,7 @@ import java.util.Map;
  * @cdk.module   fingerprint
  * @cdk.githash
  */
-public class SubstructureFingerprinter implements IFingerprinter {
+public class SubstructureFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     private String[] smarts;
 

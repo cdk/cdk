@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.BitSet;
 import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
@@ -39,6 +40,17 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public interface IFingerprinter {
 
     /**
+     * Generate a binary fingerprint as a bit. This method will usually delegate to
+     * {@link #getBitFingerprint(IAtomContainer)} and invoke
+     * {@link IBitFingerprint#asBitSet()}, it is included for backwards compatibility.
+     *
+     * @param mol molecule
+     * @return BitSet
+     * @throws CDKException problem generating fingerprint
+     */
+    BitSet getFingerprint(IAtomContainer mol) throws CDKException;
+
+    /**
      * Returns the bit fingerprint for the given {@link IAtomContainer}.
      *
      * @param  container {@link IAtomContainer} for which the fingerprint should be calculated.
@@ -47,7 +59,7 @@ public interface IFingerprinter {
      * or (for key based fingerprints) if there is a SMARTS parsing error
      * @throws UnsupportedOperationException if the Fingerprinter can not produce bit fingerprints
      */
-    public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException;
+    IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException;
 
     /**
      * Returns the count fingerprint for the given {@link IAtomContainer}.
@@ -58,7 +70,7 @@ public interface IFingerprinter {
      * or (for key based fingerprints) if there is a SMARTS parsing error.
      * @throws UnsupportedOperationException if the Fingerprinter can not produce count fingerprints
      */
-    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException;
+    ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException;
 
     /**
      * Returns the raw representation of the fingerprint for the given IAtomContainer. The raw representation contains
@@ -68,13 +80,12 @@ public interface IFingerprinter {
      * @return the raw fingerprint
      * @throws CDKException
      */
-    public Map<String, Integer> getRawFingerprint(IAtomContainer container) throws CDKException;
+    Map<String, Integer> getRawFingerprint(IAtomContainer container) throws CDKException;
 
     /**
-     * Returns the size of the fingerprints calculated.
+     * Returns the size (or length) of the fingerprint.
      *
      * @return the size of the fingerprint
      */
-    public int getSize();
-
+    int getSize();
 }

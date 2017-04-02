@@ -49,7 +49,7 @@ import static org.openscience.cdk.graph.Cycles.relevant;
  * @cdk.keyword hologram
  * @cdk.githash
  */
-public class LingoFingerprinter implements IFingerprinter {
+public class LingoFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     private final int n;
     private final SmilesGenerator gen    = SmilesGenerator.unique().aromatic();

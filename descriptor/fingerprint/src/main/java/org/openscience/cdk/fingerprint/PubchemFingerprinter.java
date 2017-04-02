@@ -84,7 +84,7 @@ import java.util.Map;
  * @cdk.githash
  * @cdk.threadnonsafe
  */
-public class PubchemFingerprinter implements IFingerprinter {
+public class PubchemFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     /**
      * Number of bits in this fingerprint.

@@ -90,7 +90,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.module     standard
  * @cdk.githash
  */
-public class CircularFingerprinter implements IFingerprinter {
+public class CircularFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     // ------------ constants ------------
 
