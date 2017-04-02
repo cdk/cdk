@@ -203,9 +203,11 @@ final class MmffAtomTypeMatcher {
      * @param symbs     symbolic atom types
      */
     private void assignPreliminaryTypes(IAtomContainer container, String[] symbs) {
-        SmartsMatchers.prepare(container, true);
+        // shallow copy
+        IAtomContainer cpy = container.getBuilder().newInstance(IAtomContainer.class, container);
+        SmartsMatchers.prepare(cpy, true);
         for (AtomTypePattern matcher : patterns) {
-            for (final int idx : matcher.matches(container)) {
+            for (final int idx : matcher.matches(cpy)) {
                 if (symbs[idx] == null) {
                     symbs[idx] = matcher.symb;
                 }
