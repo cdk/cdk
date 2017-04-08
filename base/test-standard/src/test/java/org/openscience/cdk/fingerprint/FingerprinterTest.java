@@ -72,7 +72,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
     public void testRegression() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
         IAtomContainer mol2 = TestMoleculeFactory.makePyrrole();
-        Fingerprinter fingerprinter = new Fingerprinter();
+        Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
         IBitFingerprint bs1 = fingerprinter.getBitFingerprint(mol1);
         Assert.assertEquals(
                 "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 33,

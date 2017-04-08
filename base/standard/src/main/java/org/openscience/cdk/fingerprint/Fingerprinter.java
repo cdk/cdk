@@ -100,7 +100,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     /** The default length of created fingerprints. */
     public final static int                  DEFAULT_SIZE         = 1024;
     /** The default search depth used to create the fingerprints. */
-    public final static int                  DEFAULT_SEARCH_DEPTH = 8;
+    public final static int                  DEFAULT_SEARCH_DEPTH = 7;
 
     private int                              size;
     private int                              searchDepth;

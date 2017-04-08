@@ -59,7 +59,7 @@ public class TanimotoTest extends CDKTestCase {
     public void testTanimoto1() throws java.lang.Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
         IAtomContainer mol2 = TestMoleculeFactory.makePyrrole();
-        Fingerprinter fingerprinter = new Fingerprinter();
+        Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
         BitSet bs1 = fingerprinter.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = fingerprinter.getBitFingerprint(mol2).asBitSet();
         float tanimoto = Tanimoto.calculate(bs1, bs2);
@@ -83,7 +83,7 @@ public class TanimotoTest extends CDKTestCase {
     public void testCalculate_BitFingerprint() throws java.lang.Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
         IAtomContainer mol2 = TestMoleculeFactory.makePyrrole();
-        Fingerprinter fp = new Fingerprinter();
+        Fingerprinter fp = new Fingerprinter(1024, 8);
         double similarity = Tanimoto.calculate(fp.getBitFingerprint(mol1), fp.getBitFingerprint(mol2));
         Assert.assertEquals(0.3939, similarity, 0.01);
     }
@@ -176,7 +176,7 @@ public class TanimotoTest extends CDKTestCase {
     public void testCompareBitSetandBitFingerprintTanimoto() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.make123Triazole();
         IAtomContainer mol2 = TestMoleculeFactory.makeImidazole();
-        Fingerprinter fingerprinter = new Fingerprinter();
+        Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
         BitSet bs1 = fingerprinter.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = fingerprinter.getBitFingerprint(mol2).asBitSet();
         float tanimoto = Tanimoto.calculate(bs1, bs2);
