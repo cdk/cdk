@@ -389,4 +389,22 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         assertFalse(FingerprinterTool.isSubset(fp4, fp3));
         assertFalse(FingerprinterTool.isSubset(fp3, fp4));
     }
+
+    @Test public void pseudoAtomFingerprintArom() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        final String query  = "*1cccc1";
+        final String indole = "o1cccc1";
+        IAtomContainer queryMol  = smipar.parseSmiles(query);
+        IAtomContainer indoleMol = smipar.parseSmiles(indole);
+        Fingerprinter fpr = new Fingerprinter();
+        BitSet fp1 = fpr.getFingerprint(queryMol);
+        BitSet fp2 = fpr.getFingerprint(indoleMol);
+        assertTrue(FingerprinterTool.isSubset(fp2, fp1));
+        assertFalse(FingerprinterTool.isSubset(fp1, fp2));
+        fpr.setHashPseudoAtoms(true);
+        BitSet fp3 = fpr.getFingerprint(queryMol);
+        BitSet fp4 = fpr.getFingerprint(indoleMol);
+        assertFalse(FingerprinterTool.isSubset(fp4, fp3));
+        assertFalse(FingerprinterTool.isSubset(fp3, fp4));
+    }
 }

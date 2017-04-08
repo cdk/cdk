@@ -157,8 +157,10 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         logger.debug("Entering Fingerprinter");
         logger.debug("Starting Aromaticity Detection");
         long before = System.currentTimeMillis();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-        Aromaticity.cdkLegacy().apply(container);
+        if (!hasPseudoAtom(container.atoms())) {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+            Aromaticity.cdkLegacy().apply(container);
+        }
         long after = System.currentTimeMillis();
         logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
         logger.debug("Finished Aromaticity Detection");
@@ -386,7 +388,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return getElem(a) == 0;
     }
 
-    private static boolean hasPseudoAtom(List<IAtom> path) {
+    private static boolean hasPseudoAtom(Iterable<IAtom> path) {
         for (IAtom atom : path)
             if (isPseudo(atom))
                 return true;
