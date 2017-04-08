@@ -211,6 +211,19 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return buffer.toString();
     }
 
+    private String encodePath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer) {
+        buffer.setLength(0);
+        IAtom prev = apath.get(0);
+        buffer.append(getAtomSymbol(prev));
+        for (int i = 1; i < apath.size(); i++) {
+            final IAtom next  = apath.get(i);
+            final IBond bond  = bpath.get(i-1);
+            buffer.append(getBondSymbol(bond));
+            buffer.append(getAtomSymbol(next));
+        }
+        return buffer.toString();
+    }
+
     private static final class State {
         private int    numPaths = 0;
         private Random rand     = new Random();
@@ -272,7 +285,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
 
     private void traversePaths(State state, IAtom beg, IBond prev) throws CDKException {
         state.push(beg, prev);
-        state.addHash(encodeUniquePath(state.mol, state.cache, state.apath, state.buffer));
+        state.addHash(encodeUniquePath(state.apath, state.bpath, state.buffer));
         if (state.numPaths > pathLimit)
             throw new CDKException("To many paths!");
         if (state.apath.size() < state.maxDepth) {
@@ -281,7 +294,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
                     continue;
                 final IAtom nbr = bond.getConnectedAtom(beg);
                 if (state.visit(nbr)) {
-                    traversePaths(state, nbr, prev);
+                    traversePaths(state, nbr, bond);
                     state.unvisit(nbr); // traverse all paths
                 }
             }
@@ -340,6 +353,25 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         Collections.reverse(path);
         String reverse = encodePath(container, cache, path, buffer);
         Collections.reverse(path);
+
+        final int x;
+        if (reverse.compareTo(forward) < 0)
+            x = forward.hashCode();
+        else
+            x = reverse.hashCode();
+        return x;
+    }
+
+    private int encodeUniquePath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer) {
+        if (bpath.size() == 0)
+            return getAtomSymbol(apath.get(0)).hashCode();
+        String forward = encodePath(apath, bpath, buffer);
+        Collections.reverse(bpath);
+        Collections.reverse(apath);
+        String reverse = encodePath(apath, bpath, buffer);
+        // put the paths back to their original state
+        Collections.reverse(bpath);
+        Collections.reverse(apath);
 
         final int x;
         if (reverse.compareTo(forward) < 0)
