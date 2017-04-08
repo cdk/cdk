@@ -182,32 +182,38 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         throw new UnsupportedOperationException();
     }
 
-    private String encodePath(IAtomContainer mol, Map<IAtom, Map<IAtom, IBond>> cache, List<IAtom> path) {
-        StringBuffer sb = new StringBuffer();
-        IAtom x = path.get(0);
+    private IBond findBond(List<IBond> bonds, IAtom beg, IAtom end) {
+        for (IBond bond : bonds)
+            if (bond.contains(beg) && bond.contains(end))
+                return bond;
+        return null;
+    }
 
-        sb.append(getAtomSymbol(x));
+    private String encodePath(IAtomContainer mol, Map<IAtom, List<IBond>> cache, List<IAtom> path) {
+        StringBuilder sb = new StringBuilder();
+
+        IAtom prev = path.get(0);
+        sb.append(getAtomSymbol(prev));
         for (int i = 1; i < path.size(); i++) {
-            final IAtom[] y = {path.get(i)};
-            Map<IAtom, IBond> m = cache.get(x);
-            final IBond[] b = {m != null ? m.get(y[0]) : null};
-            if (b[0] == null) {
-                b[0] = mol.getBond(x, y[0]);
-                cache.put(x, new HashMap<IAtom, IBond>() {
+            final IAtom next = path.get(i);
+            List<IBond> bonds = cache.get(prev);
 
-                    {
-                        put(y[0], b[0]);
-                    }
-                });
+            if (bonds == null) {
+                bonds = mol.getConnectedBondsList(prev);
+                cache.put(prev, bonds);
             }
-            sb.append(getBondSymbol(b[0]));
-            sb.append(getAtomSymbol(y[0]));
-            x = y[0];
+
+            IBond       bond  = findBond(bonds, next, prev);
+            if (bond == null)
+                throw new IllegalStateException("FATAL - Atoms in patch were connected?");
+            sb.append(getBondSymbol(bond));
+            sb.append(getAtomSymbol(next));
+            prev = next;
         }
 
         // we store the lexicographically lower one of the
         // string and its reverse
-        StringBuffer revForm = new StringBuffer(sb);
+        StringBuilder revForm = new StringBuilder(sb);
         revForm.reverse();
         if (sb.toString().compareTo(revForm.toString()) <= 0)
             return revForm.toString();
@@ -231,7 +237,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
 
         Set<Integer> hashes = new HashSet<>();
 
-        Map<IAtom, Map<IAtom, IBond>> cache = new HashMap<IAtom, Map<IAtom, IBond>>();
+        Map<IAtom, List<IBond>> cache = new HashMap<>();
 
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
@@ -252,7 +258,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
 
         Random rand = new Random();
 
-        Map<IAtom, Map<IAtom, IBond>> cache = new HashMap<IAtom, Map<IAtom, IBond>>();
+        Map<IAtom, List<IBond>> cache = new HashMap<>();
 
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
