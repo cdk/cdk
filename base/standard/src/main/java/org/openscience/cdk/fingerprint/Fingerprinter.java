@@ -132,7 +132,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
      * depth.
      *
      * @param  size        The desired size of the fingerprint
-     * @param  searchDepth The desired depth of search
+     * @param  searchDepth The desired depth of search (number of bonds)
      */
     public Fingerprinter(int size, int searchDepth) {
         this.size = size;
@@ -319,7 +319,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         state.push(beg, prev);
         state.addHash(encodeUniquePath(state.apath, state.bpath, state.buffer));
         if (state.numPaths > pathLimit)
-            throw new CDKException("To many paths!");
+            throw new CDKException("Too many paths! Structure is likely a cage, reduce path length or increase path limit");
         if (state.apath.size() < state.maxDepth) {
             for (IBond bond : state.getBonds(beg)) {
                 if (bond == prev)
