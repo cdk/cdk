@@ -270,7 +270,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         if (atom instanceof IPseudoAtom ||
             atom.getAtomicNumber() == null ||
             atom.getAtomicNumber() == 0) {
-            return Integer.toString(PeriodicTable.getElementCount()+1);
+            return "*";
         } else {
             // XXX: backwards compatibility
             // This is completely random, I believe the intention is because
