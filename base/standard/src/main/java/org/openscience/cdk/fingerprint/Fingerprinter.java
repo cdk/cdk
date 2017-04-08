@@ -24,6 +24,7 @@ package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -112,22 +113,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     private static ILoggingTool              logger               = LoggingToolFactory
                                                                           .createLoggingTool(Fingerprinter.class);
 
-    private static final Map<String, String> QUERY_REPLACE        = new HashMap<String, String>() {
 
-                                                                      private static final long serialVersionUID = 1L;
-
-                                                                      {
-                                                                          put("Cl", "X");
-                                                                          put("Br", "Z");
-                                                                          put("Si", "Y");
-                                                                          put("As", "D");
-                                                                          put("Li", "L");
-                                                                          put("Se", "E");
-                                                                          put("Na", "G");
-                                                                          put("Ca", "J");
-                                                                          put("Al", "A");
-                                                                      }
-                                                                  };
 
     /**
      * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
@@ -200,20 +186,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         StringBuffer sb = new StringBuffer();
         IAtom x = path.get(0);
 
-        // TODO if we ever get more than 255 elements, this will
-        // fail maybe we should use 0 for pseudo atoms and
-        // malformed symbols? - nope a char 16 bit, up to 65,535
-        // is okay :)
-        if (x instanceof IPseudoAtom)
-            sb.append((char) PeriodicTable.getElementCount() + 1);
-        else {
-            Integer atnum = PeriodicTable.getAtomicNumber(x.getSymbol());
-            if (atnum != null)
-                sb.append(convertSymbol(x.getSymbol()));
-            else
-                sb.append((char) PeriodicTable.getElementCount() + 1);
-        }
-
+        sb.append(getAtomSymbol(x));
         for (int i = 1; i < path.size(); i++) {
             final IAtom[] y = {path.get(i)};
             Map<IAtom, IBond> m = cache.get(x);
@@ -228,7 +201,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
                 });
             }
             sb.append(getBondSymbol(b[0]));
-            sb.append(convertSymbol(y[0].getSymbol()));
+            sb.append(getAtomSymbol(y[0]));
             x = y[0];
         }
 
@@ -293,10 +266,42 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         }
     }
 
-    private String convertSymbol(String symbol) {
-
-        String returnSymbol = QUERY_REPLACE.get(symbol);
-        return returnSymbol == null ? symbol : returnSymbol;
+    private String getAtomSymbol(IAtom atom) {
+        if (atom instanceof IPseudoAtom ||
+            atom.getAtomicNumber() == null ||
+            atom.getAtomicNumber() == 0) {
+            return Integer.toString(PeriodicTable.getElementCount()+1);
+        } else {
+            // XXX: backwards compatibility
+            // This is completely random, I believe the intention is because
+            // paths were reversed with string manipulation to de-duplicate
+            // (only the lowest lexicographically is stored) however this
+            // doesn't work with multiple atom symbols:
+            // e.g. Fe-C => C-eF vs C-Fe => eF-C
+            // A dirty hack is to replace "common" symbols with single letter
+            // equivalents so the reversing is less wrong
+            switch (atom.getAtomicNumber()) {
+                case 17: // Cl
+                    return "X";
+                case 35: // Br
+                    return "Z";
+                case 14: // Si
+                    return "Y";
+                case 33: // As
+                    return "D";
+                case 3: // Li
+                    return "L";
+                case 34: // Se
+                    return "E";
+                case 11:  // Na
+                    return "G";
+                case 20:  // Ca
+                    return "J";
+                case 13:  // Al
+                    return "A";
+            }
+            return atom.getSymbol();
+        }
     }
 
     /**
