@@ -106,6 +106,8 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     private int                              searchDepth;
     private int                              pathLimit = DEFAULT_PATH_LIMIT;
 
+    private boolean                          hashPseudoAtoms = false;
+
     static int                               debugCounter         = 0;
 
 
@@ -316,6 +318,8 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     }
 
     private void traversePaths(State state, IAtom beg, IBond prev) throws CDKException {
+        if (!hashPseudoAtoms && isPseudo(beg))
+            return;
         state.push(beg, prev);
         state.addHash(encodeUniquePath(state.apath, state.bpath, state.buffer));
         if (state.numPaths > pathLimit)
@@ -355,7 +359,8 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
             for (List<IAtom> path : p) {
-                hashes.add(encodeUniquePath(container, cache, path, buffer));
+                if (hashPseudoAtoms || !hasPseudoAtom(path))
+                    hashes.add(encodeUniquePath(container, cache, path, buffer));
             }
         }
 
@@ -375,6 +380,17 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
             traversePaths(state, atom, null);
             state.unvisit(atom);
         }
+    }
+
+    private static boolean isPseudo(IAtom a) {
+        return getElem(a) == 0;
+    }
+
+    private static boolean hasPseudoAtom(List<IAtom> path) {
+        for (IAtom atom : path)
+            if (isPseudo(atom))
+                return true;
+        return false;
     }
 
     private int encodeUniquePath(IAtomContainer container, Map<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer) {
@@ -456,7 +472,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return x;
     }
 
-    private int getElem(IAtom atom) {
+    private static int getElem(IAtom atom) {
         Integer elem = atom.getAtomicNumber();
         if (elem == null)
             elem = 0;
@@ -526,6 +542,10 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
 
     public void setPathLimit(int limit) {
         this.pathLimit = limit;
+    }
+
+    public void setHashPseudoAtoms(boolean value) {
+        this.hashPseudoAtoms = value;
     }
 
     public int getSearchDepth() {
