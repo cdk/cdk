@@ -346,7 +346,6 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     }
 
     private int encodeUniquePath(IAtomContainer container, Map<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer) {
-        int hash = 0;
         if (path.size() == 1)
             return getAtomSymbol(path.get(0)).hashCode();
         String forward = encodePath(container, cache, path, buffer);
@@ -362,61 +361,118 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return x;
     }
 
+    /**
+     * Compares atom symbols lexicographical
+     * @param a atom a
+     * @param b atom b
+     * @return comparison &lt;0 a is less than b, &gt;0 a is more than b
+     */
+    private int compare(IAtom a, IAtom b) {
+        final int elemA = getElem(a);
+        final int elemB = getElem(b);
+        if (elemA == elemB)
+            return 0;
+        return getAtomSymbol(a).compareTo(getAtomSymbol(b));
+    }
+
+    /**
+     * Compares bonds symbols lexicographical
+     * @param a bond a
+     * @param b bond b
+     * @return comparison &lt;0 a is less than b, &gt;0 a is more than b
+     */
+    private int compare(IBond a, IBond b) {
+        return getBondSymbol(a).compareTo(getBondSymbol(b));
+    }
+
+    /**
+     * Compares a path of atoms with it's self to give the
+     * lexicographically lowest traversal (forwards or backwards).
+     * @param apath path of atoms
+     * @param bpath path of bonds
+     * @return &lt;0 forward is lower &gt;0 reverse is lower
+     */
+    private int compare(List<IAtom> apath, List<IBond> bpath) {
+        int i    = 0;
+        int len = apath.size();
+        int j    = len - 1;
+        int cmp = compare(apath.get(i), apath.get(j));
+        if (cmp != 0)
+            return cmp;
+        i++;
+        j--;
+        while (j != 0) {
+            cmp = compare(bpath.get(i-1), bpath.get(j));
+            if (cmp != 0) return cmp;
+            cmp = compare(apath.get(i), apath.get(j));
+            if (cmp != 0) return cmp;
+            i++;
+            j--;
+        }
+        return 0;
+    }
+
     private int encodeUniquePath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer) {
         if (bpath.size() == 0)
             return getAtomSymbol(apath.get(0)).hashCode();
-        String forward = encodePath(apath, bpath, buffer);
-        Collections.reverse(bpath);
-        Collections.reverse(apath);
-        String reverse = encodePath(apath, bpath, buffer);
-        // put the paths back to their original state
-        Collections.reverse(bpath);
-        Collections.reverse(apath);
-
         final int x;
-        if (reverse.compareTo(forward) < 0)
-            x = forward.hashCode();
-        else
-            x = reverse.hashCode();
+        if (compare(apath, bpath) >= 0) {
+            x = encodePath(apath, bpath, buffer).hashCode();
+        } else {
+            Collections.reverse(bpath);
+            Collections.reverse(apath);
+            x = encodePath(apath, bpath, buffer).hashCode();
+            Collections.reverse(bpath);
+            Collections.reverse(apath);
+        }
         return x;
     }
 
+    private int getElem(IAtom atom) {
+        Integer elem = atom.getAtomicNumber();
+        if (elem == null)
+            elem = 0;
+        return elem;
+    }
+
     private String getAtomSymbol(IAtom atom) {
-        if (atom.getAtomicNumber() == null ||
-            atom.getAtomicNumber() == 0 ||
-            atom instanceof IPseudoAtom){
-            return "*";
-        } else {
-            // XXX: backwards compatibility
-            // This is completely random, I believe the intention is because
-            // paths were reversed with string manipulation to de-duplicate
-            // (only the lowest lexicographically is stored) however this
-            // doesn't work with multiple atom symbols:
-            // e.g. Fe-C => C-eF vs C-Fe => eF-C
-            // A dirty hack is to replace "common" symbols with single letter
-            // equivalents so the reversing is less wrong
-            switch (atom.getAtomicNumber()) {
-                case 17: // Cl
-                    return "X";
-                case 35: // Br
-                    return "Z";
-                case 14: // Si
-                    return "Y";
-                case 33: // As
-                    return "D";
-                case 3: // Li
-                    return "L";
-                case 34: // Se
-                    return "E";
-                case 11:  // Na
-                    return "G";
-                case 20:  // Ca
-                    return "J";
-                case 13:  // Al
-                    return "A";
-            }
-            return atom.getSymbol();
+        // XXX: backwards compatibility
+        // This is completely random, I believe the intention is because
+        // paths were reversed with string manipulation to de-duplicate
+        // (only the lowest lexicographically is stored) however this
+        // doesn't work with multiple atom symbols:
+        // e.g. Fe-C => C-eF vs C-Fe => eF-C
+        // A dirty hack is to replace "common" symbols with single letter
+        // equivalents so the reversing is less wrong
+        switch (getElem(atom)) {
+            case 0:  // *
+                return "*";
+            case 6:  // C
+                return "C";
+            case 7:  // N
+                return "N";
+            case 8:  // O
+                return "O";
+            case 17: // Cl
+                return "X";
+            case 35: // Br
+                return "Z";
+            case 14: // Si
+                return "Y";
+            case 33: // As
+                return "D";
+            case 3: // Li
+                return "L";
+            case 34: // Se
+                return "E";
+            case 11:  // Na
+                return "G";
+            case 20:  // Ca
+                return "J";
+            case 13:  // Al
+                return "A";
         }
+        return atom.getSymbol();
     }
 
     /**
