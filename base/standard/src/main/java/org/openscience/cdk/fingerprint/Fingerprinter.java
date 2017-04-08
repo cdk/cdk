@@ -39,6 +39,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -211,14 +212,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
             prev = next;
         }
 
-        // we store the lexicographically lower one of the
-        // string and its reverse
-        StringBuilder revForm = new StringBuilder(sb);
-        revForm.reverse();
-        if (sb.toString().compareTo(revForm.toString()) <= 0)
-            return revForm.toString();
-        else
-            return sb.toString();
+        return sb.toString();
     }
 
     /**
@@ -263,7 +257,15 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
             for (List<IAtom> path : p) {
-                int x = encodePath(container, cache, path).hashCode();
+                String forward = encodePath(container, cache, path);
+                Collections.reverse(path);
+                String reverse = encodePath(container, cache, path);
+
+                final int x;
+                if (reverse.compareTo(forward) < 0)
+                    x = forward.hashCode();
+                else
+                    x = reverse.hashCode();
                 rand.setSeed(x);
                 // XXX: fp.set(x % size); would work just as well but would encode a
                 //      different bit
