@@ -24,7 +24,6 @@ package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,9 +34,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  *  Generates a fingerprint for a given AtomContainer. Fingerprints are
@@ -248,30 +244,35 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return result;
     }
 
-    protected void encodePaths(IAtomContainer container, int searchDepth, BitSet fp, int size) throws CDKException {
+    protected void encodePaths(IAtomContainer mol, int depth, BitSet fp, int size) throws CDKException {
 
         Random rand = new Random();
 
         Map<IAtom, List<IBond>> cache = new HashMap<>();
 
-        for (IAtom startAtom : container.atoms()) {
-            List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
+        for (IAtom startAtom : mol.atoms()) {
+            List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(mol, startAtom, depth, pathLimit);
             for (List<IAtom> path : p) {
-                String forward = encodePath(container, cache, path);
-                Collections.reverse(path);
-                String reverse = encodePath(container, cache, path);
-
-                final int x;
-                if (reverse.compareTo(forward) < 0)
-                    x = forward.hashCode();
-                else
-                    x = reverse.hashCode();
+                final int x = encodeUniquePath(mol, cache, path);
                 rand.setSeed(x);
                 // XXX: fp.set(x % size); would work just as well but would encode a
                 //      different bit
                 fp.set(rand.nextInt(size));
             }
         }
+    }
+
+    private int encodeUniquePath(IAtomContainer container, Map<IAtom, List<IBond>> cache, List<IAtom> path) {
+        String forward = encodePath(container, cache, path);
+        Collections.reverse(path);
+        String reverse = encodePath(container, cache, path);
+
+        final int x;
+        if (reverse.compareTo(forward) < 0)
+            x = forward.hashCode();
+        else
+            x = reverse.hashCode();
+        return x;
     }
 
     private String getAtomSymbol(IAtom atom) {
