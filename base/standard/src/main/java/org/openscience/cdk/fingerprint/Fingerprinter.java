@@ -43,6 +43,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *  Generates a fingerprint for a given AtomContainer. Fingerprints are
@@ -200,7 +201,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         throw new UnsupportedOperationException();
     }
 
-    private StringBuffer encodePath(IAtomContainer mol, Map<IAtom, Map<IAtom, IBond>> cache, List<IAtom> path) {
+    private String encodePath(IAtomContainer mol, Map<IAtom, Map<IAtom, IBond>> cache, List<IAtom> path) {
         StringBuffer sb = new StringBuffer();
         IAtom x = path.get(0);
 
@@ -241,9 +242,9 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         StringBuffer revForm = new StringBuffer(sb);
         revForm.reverse();
         if (sb.toString().compareTo(revForm.toString()) <= 0)
-            return sb;
+            return revForm.toString();
         else
-            return revForm;
+            return sb.toString();
     }
 
     /**
@@ -258,31 +259,21 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
      */
     protected int[] findPathes(IAtomContainer container, int searchDepth) throws CDKException {
 
-        List<StringBuffer> allPaths = new ArrayList<StringBuffer>();
+        Set<String> paths = new TreeSet<>();
 
         Map<IAtom, Map<IAtom, IBond>> cache = new HashMap<IAtom, Map<IAtom, IBond>>();
 
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
             for (List<IAtom> path : p) {
-                allPaths.add(encodePath(container, cache, path));
+                paths.add(encodePath(container, cache, path));
             }
-        }
-        // now lets clean stuff up
-        Set<String> cleanPath = new HashSet<String>();
-        for (StringBuffer s : allPaths) {
-            String s1 = s.toString().trim();
-            if (s1.equals("")) continue;
-            if (cleanPath.contains(s1)) continue;
-            String s2 = s.reverse().toString().trim();
-            if (cleanPath.contains(s2)) continue;
-            cleanPath.add(s2);
         }
 
         // convert paths to hashes
-        int[] hashes = new int[cleanPath.size()];
+        int[] hashes = new int[paths.size()];
         int i = 0;
-        for (String s : cleanPath)
+        for (String s : paths)
             hashes[i++] = s.hashCode();
 
         return hashes;
