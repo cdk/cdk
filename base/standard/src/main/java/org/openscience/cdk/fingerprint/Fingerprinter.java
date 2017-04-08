@@ -243,6 +243,19 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return hash;
     }
 
+    private int hashRevPath(List<IAtom> apath, List<IBond> bpath) {
+        int hash = 0;
+        int last = apath.size() - 1;
+        hash = appendHash(hash, getAtomSymbol(apath.get(last)));
+        for (int i = last-1; i >= 0; i--) {
+            final IAtom next  = apath.get(i);
+            final IBond bond  = bpath.get(i);
+            hash = appendHash(hash, getBondSymbol(bond));
+            hash = appendHash(hash, getAtomSymbol(next));
+        }
+        return hash;
+    }
+
     private static final class State {
         private int    numPaths = 0;
         private Random rand     = new Random();
@@ -438,11 +451,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         if (compare(apath, bpath) >= 0) {
             x = hashPath(apath, bpath);
         } else {
-            Collections.reverse(bpath);
-            Collections.reverse(apath);
-            x = hashPath(apath, bpath);
-            Collections.reverse(bpath);
-            Collections.reverse(apath);
+            x = hashRevPath(apath, bpath);
         }
         return x;
     }
