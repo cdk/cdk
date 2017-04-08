@@ -394,17 +394,18 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
      *@return       The bondSymbol value
      */
     protected String getBondSymbol(IBond bond) {
-        String bondSymbol = "";
-        if (bond.getFlag(CDKConstants.ISAROMATIC)) {
-            bondSymbol = ":";
-        } else if (bond.getOrder() == IBond.Order.SINGLE) {
-            bondSymbol = "-";
-        } else if (bond.getOrder() == IBond.Order.DOUBLE) {
-            bondSymbol = "=";
-        } else if (bond.getOrder() == IBond.Order.TRIPLE) {
-            bondSymbol = "#";
+        if (bond.isAromatic())
+            return ":";
+        switch (bond.getOrder()) {
+            case SINGLE:
+                return "-";
+            case DOUBLE:
+                return "=";
+            case TRIPLE:
+                return "#";
+            default:
+                return "";
         }
-        return bondSymbol;
     }
 
     public void setPathLimit(int limit) {
