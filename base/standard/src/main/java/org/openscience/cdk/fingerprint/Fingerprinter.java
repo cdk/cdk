@@ -200,6 +200,52 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         throw new UnsupportedOperationException();
     }
 
+    private StringBuffer encodePath(IAtomContainer mol, Map<IAtom, Map<IAtom, IBond>> cache, List<IAtom> path) {
+        StringBuffer sb = new StringBuffer();
+        IAtom x = path.get(0);
+
+        // TODO if we ever get more than 255 elements, this will
+        // fail maybe we should use 0 for pseudo atoms and
+        // malformed symbols? - nope a char 16 bit, up to 65,535
+        // is okay :)
+        if (x instanceof IPseudoAtom)
+            sb.append((char) PeriodicTable.getElementCount() + 1);
+        else {
+            Integer atnum = PeriodicTable.getAtomicNumber(x.getSymbol());
+            if (atnum != null)
+                sb.append(convertSymbol(x.getSymbol()));
+            else
+                sb.append((char) PeriodicTable.getElementCount() + 1);
+        }
+
+        for (int i = 1; i < path.size(); i++) {
+            final IAtom[] y = {path.get(i)};
+            Map<IAtom, IBond> m = cache.get(x);
+            final IBond[] b = {m != null ? m.get(y[0]) : null};
+            if (b[0] == null) {
+                b[0] = mol.getBond(x, y[0]);
+                cache.put(x, new HashMap<IAtom, IBond>() {
+
+                    {
+                        put(y[0], b[0]);
+                    }
+                });
+            }
+            sb.append(getBondSymbol(b[0]));
+            sb.append(convertSymbol(y[0].getSymbol()));
+            x = y[0];
+        }
+
+        // we store the lexicographically lower one of the
+        // string and its reverse
+        StringBuffer revForm = new StringBuffer(sb);
+        revForm.reverse();
+        if (sb.toString().compareTo(revForm.toString()) <= 0)
+            return sb;
+        else
+            return revForm;
+    }
+
     /**
      * Get all paths of lengths 0 to the specified length.
      *
@@ -219,49 +265,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
             for (List<IAtom> path : p) {
-                StringBuffer sb = new StringBuffer();
-                IAtom x = path.get(0);
-
-                // TODO if we ever get more than 255 elements, this will
-                // fail maybe we should use 0 for pseudo atoms and
-                // malformed symbols? - nope a char 16 bit, up to 65,535
-                // is okay :)
-                if (x instanceof IPseudoAtom)
-                    sb.append((char) PeriodicTable.getElementCount() + 1);
-                else {
-                    Integer atnum = PeriodicTable.getAtomicNumber(x.getSymbol());
-                    if (atnum != null)
-                        sb.append(convertSymbol(x.getSymbol()));
-                    else
-                        sb.append((char) PeriodicTable.getElementCount() + 1);
-                }
-
-                for (int i = 1; i < path.size(); i++) {
-                    final IAtom[] y = {path.get(i)};
-                    Map<IAtom, IBond> m = cache.get(x);
-                    final IBond[] b = {m != null ? m.get(y[0]) : null};
-                    if (b[0] == null) {
-                        b[0] = container.getBond(x, y[0]);
-                        cache.put(x, new HashMap<IAtom, IBond>() {
-
-                            {
-                                put(y[0], b[0]);
-                            }
-                        });
-                    }
-                    sb.append(getBondSymbol(b[0]));
-                    sb.append(convertSymbol(y[0].getSymbol()));
-                    x = y[0];
-                }
-
-                // we store the lexicographically lower one of the
-                // string and its reverse
-                StringBuffer revForm = new StringBuffer(sb);
-                revForm.reverse();
-                if (sb.toString().compareTo(revForm.toString()) <= 0)
-                    allPaths.add(sb);
-                else
-                    allPaths.add(revForm);
+                allPaths.add(encodePath(container, cache, path));
             }
         }
         // now lets clean stuff up
