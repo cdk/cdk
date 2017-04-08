@@ -35,10 +35,12 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -186,13 +188,12 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return null;
     }
 
-    private String encodePath(IAtomContainer mol, Map<IAtom, List<IBond>> cache, List<IAtom> path) {
-        StringBuilder sb = new StringBuilder();
-
+    private String encodePath(IAtomContainer mol, Map<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer) {
+        buffer.setLength(0);
         IAtom prev = path.get(0);
-        sb.append(getAtomSymbol(prev));
+        buffer.append(getAtomSymbol(prev));
         for (int i = 1; i < path.size(); i++) {
-            final IAtom next = path.get(i);
+            final IAtom next  = path.get(i);
             List<IBond> bonds = cache.get(prev);
 
             if (bonds == null) {
@@ -200,15 +201,92 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
                 cache.put(prev, bonds);
             }
 
-            IBond       bond  = findBond(bonds, next, prev);
+            IBond bond = findBond(bonds, next, prev);
             if (bond == null)
                 throw new IllegalStateException("FATAL - Atoms in patch were connected?");
-            sb.append(getBondSymbol(bond));
-            sb.append(getAtomSymbol(next));
+            buffer.append(getBondSymbol(bond));
+            buffer.append(getAtomSymbol(next));
             prev = next;
         }
+        return buffer.toString();
+    }
 
-        return sb.toString();
+    private static final class State {
+        private int    numPaths = 0;
+        private Random rand     = new Random();
+        private BitSet fp;
+        private IAtomContainer mol;
+        private Set<IAtom> visited = new HashSet<>();
+        private List<IAtom> apath = new ArrayList<>();
+        private List<IBond> bpath = new ArrayList<>();
+        private final int maxDepth;
+        private final int fpsize;
+        private Map<IAtom,List<IBond>> cache = new IdentityHashMap<>();
+        public StringBuilder buffer = new StringBuilder();
+
+        public State(IAtomContainer mol, BitSet fp, int fpsize, int maxDepth) {
+            this.mol = mol;
+            this.fp  = fp;
+            this.fpsize = fpsize;
+            this.maxDepth = maxDepth;
+        }
+
+        List<IBond> getBonds(IAtom atom) {
+            List<IBond> bonds = cache.get(atom);
+            if (bonds == null) {
+                bonds = mol.getConnectedBondsList(atom);
+                cache.put(atom, bonds);
+            }
+            return bonds;
+        }
+
+        boolean visit(IAtom a) {
+            return visited.add(a);
+        }
+
+        boolean unvisit(IAtom a) {
+            return visited.remove(a);
+        }
+
+        void push(IAtom atom, IBond bond) {
+            apath.add(atom);
+            if (bond != null)
+                bpath.add(bond);
+        }
+
+        void pop() {
+            if (!apath.isEmpty())
+                apath.remove(apath.size()-1);
+            if (!bpath.isEmpty())
+                bpath.remove(bpath.size()-1);
+        }
+
+        void addHash(int x) {
+            numPaths++;
+            rand.setSeed(x);
+            // XXX: fp.set(x % size); would work just as well but would encode a
+            //      different bit
+            fp.set(rand.nextInt(fpsize));
+        }
+    }
+
+    private void traversePaths(State state, IAtom beg, IBond prev) throws CDKException {
+        state.push(beg, prev);
+        state.addHash(encodeUniquePath(state.mol, state.cache, state.apath, state.buffer));
+        if (state.numPaths > pathLimit)
+            throw new CDKException("To many paths!");
+        if (state.apath.size() < state.maxDepth) {
+            for (IBond bond : state.getBonds(beg)) {
+                if (bond == prev)
+                    continue;
+                final IAtom nbr = bond.getConnectedAtom(beg);
+                if (state.visit(nbr)) {
+                    traversePaths(state, nbr, prev);
+                    state.unvisit(nbr); // traverse all paths
+                }
+            }
+        }
+        state.pop();
     }
 
     /**
@@ -228,11 +306,11 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         Set<Integer> hashes = new HashSet<>();
 
         Map<IAtom, List<IBond>> cache = new HashMap<>();
-
+        StringBuilder buffer = new StringBuilder();
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
             for (List<IAtom> path : p) {
-                hashes.add(encodePath(container, cache, path).hashCode());
+                hashes.add(encodeUniquePath(container, cache, path, buffer));
             }
         }
 
@@ -245,27 +323,23 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     }
 
     protected void encodePaths(IAtomContainer mol, int depth, BitSet fp, int size) throws CDKException {
-
-        Random rand = new Random();
-
-        Map<IAtom, List<IBond>> cache = new HashMap<>();
-
-        for (IAtom startAtom : mol.atoms()) {
-            List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(mol, startAtom, depth, pathLimit);
-            for (List<IAtom> path : p) {
-                final int x = encodeUniquePath(mol, cache, path);
-                rand.setSeed(x);
-                // XXX: fp.set(x % size); would work just as well but would encode a
-                //      different bit
-                fp.set(rand.nextInt(size));
-            }
+        State state = new State(mol, fp, size, depth+1);
+        for (IAtom atom : mol.atoms()) {
+            state.numPaths = 0;
+            state.visit(atom);
+            traversePaths(state, atom, null);
+            state.unvisit(atom);
         }
     }
 
-    private int encodeUniquePath(IAtomContainer container, Map<IAtom, List<IBond>> cache, List<IAtom> path) {
-        String forward = encodePath(container, cache, path);
+    private int encodeUniquePath(IAtomContainer container, Map<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer) {
+        int hash = 0;
+        if (path.size() == 1)
+            return getAtomSymbol(path.get(0)).hashCode();
+        String forward = encodePath(container, cache, path, buffer);
         Collections.reverse(path);
-        String reverse = encodePath(container, cache, path);
+        String reverse = encodePath(container, cache, path, buffer);
+        Collections.reverse(path);
 
         final int x;
         if (reverse.compareTo(forward) < 0)
@@ -276,9 +350,9 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     }
 
     private String getAtomSymbol(IAtom atom) {
-        if (atom instanceof IPseudoAtom ||
-            atom.getAtomicNumber() == null ||
-            atom.getAtomicNumber() == 0) {
+        if (atom.getAtomicNumber() == null ||
+            atom.getAtomicNumber() == 0 ||
+            atom instanceof IPseudoAtom){
             return "*";
         } else {
             // XXX: backwards compatibility
