@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -175,13 +176,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
         logger.debug("Finished Aromaticity Detection");
         BitSet bitSet = new BitSet(size);
-
-        int[] hashes = findPathes(container, searchDepth);
-        for (int hash : hashes) {
-            position = new java.util.Random(hash).nextInt(size);
-            bitSet.set(position);
-        }
-
+        encodePaths(container, searchDepth, bitSet, size);
         return new BitSetFingerprint(bitSet);
     }
 
@@ -256,7 +251,9 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
      * @param container The molecule to search
      * @param searchDepth The maximum path length desired
      * @return A Map of path strings, keyed on themselves
+     * @deprecated Use {@link #encodePaths(IAtomContainer, int, BitSet, int)}
      */
+    @Deprecated
     protected int[] findPathes(IAtomContainer container, int searchDepth) throws CDKException {
 
         Set<Integer> hashes = new HashSet<>();
@@ -276,6 +273,24 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
             result[pos++] = hash;
 
         return result;
+    }
+
+    protected void encodePaths(IAtomContainer container, int searchDepth, BitSet fp, int size) throws CDKException {
+
+        Random rand = new Random();
+
+        Map<IAtom, Map<IAtom, IBond>> cache = new HashMap<IAtom, Map<IAtom, IBond>>();
+
+        for (IAtom startAtom : container.atoms()) {
+            List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
+            for (List<IAtom> path : p) {
+                int x = encodePath(container, cache, path).hashCode();
+                rand.setSeed(x);
+                // XXX: fp.set(x % size); would work just as well but would encode a
+                //      different bit
+                fp.set(rand.nextInt(size));
+            }
+        }
     }
 
     private String convertSymbol(String symbol) {
