@@ -259,24 +259,23 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
      */
     protected int[] findPathes(IAtomContainer container, int searchDepth) throws CDKException {
 
-        Set<String> paths = new TreeSet<>();
+        Set<Integer> hashes = new HashSet<>();
 
         Map<IAtom, Map<IAtom, IBond>> cache = new HashMap<IAtom, Map<IAtom, IBond>>();
 
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
             for (List<IAtom> path : p) {
-                paths.add(encodePath(container, cache, path));
+                hashes.add(encodePath(container, cache, path).hashCode());
             }
         }
 
-        // convert paths to hashes
-        int[] hashes = new int[paths.size()];
-        int i = 0;
-        for (String s : paths)
-            hashes[i++] = s.hashCode();
+        int   pos = 0;
+        int[] result = new int[hashes.size()];
+        for (Integer hash : hashes)
+            result[pos++] = hash;
 
-        return hashes;
+        return result;
     }
 
     private String convertSymbol(String symbol) {
