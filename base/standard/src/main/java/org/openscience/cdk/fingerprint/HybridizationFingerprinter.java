@@ -73,34 +73,17 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.module     standard
  * @cdk.githash
  */
-public class HybridizationFingerprinter extends AbstractFingerprinter implements IFingerprinter {
+public class HybridizationFingerprinter extends Fingerprinter implements IFingerprinter {
 
     /** The default length of created fingerprints. */
     public final static int                  DEFAULT_SIZE         = 1024;
     /** The default search depth used to create the fingerprints. */
-    public final static int                  DEFAULT_SEARCH_DEPTH = 8;
+    public final static int                  DEFAULT_SEARCH_DEPTH = 7;
 
     private int                              size;
     private int                              searchDepth;
 
     static int                               debugCounter         = 0;
-
-    private static final Map<String, String> QUERY_REPLACE        = new HashMap<String, String>() {
-
-                                                                      private static final long serialVersionUID = 1L;
-
-                                                                      {
-                                                                          put("Cl", "X");
-                                                                          put("Br", "Z");
-                                                                          put("Si", "Y");
-                                                                          put("As", "D");
-                                                                          put("Li", "L");
-                                                                          put("Se", "E");
-                                                                          put("Na", "G");
-                                                                          put("Ca", "J");
-                                                                          put("Al", "A");
-                                                                      }
-                                                                  };
 
     /**
      * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
@@ -137,109 +120,15 @@ public class HybridizationFingerprinter extends AbstractFingerprinter implements
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
         BitSet bitSet = new BitSet(size);
-
         try {
+            // should avoid the clone
             IAtomContainer clonedContainer = (IAtomContainer) container.clone();
             AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(clonedContainer);
-            int[] hashes = findPathes(clonedContainer, searchDepth);
-            for (int hash : hashes) {
-                bitSet.set(new Random(hash).nextInt(size));
-            }
+            encodePaths(container, searchDepth, bitSet, size);
         } catch (CloneNotSupportedException exception) {
             throw new CDKException("Exception while cloning the input: " + exception.getMessage(), exception);
         }
-
         return new BitSetFingerprint(bitSet);
-    }
-
-    /**
-     * Get all paths of lengths 0 to the specified length.
-     * This method will find all paths up to length N starting from each
-     * atom in the molecule and return the unique set of such paths.
-     *
-     * @param  container    The molecule to search
-     * @param  searchDepth  The maximum path length desired
-     * @return              A Map of path strings, keyed on themselves
-     */
-    protected int[] findPathes(IAtomContainer container, int searchDepth) {
-
-        List<StringBuffer> allPaths = new ArrayList<StringBuffer>();
-
-        Map<IAtom, Map<IAtom, IBond>> cache = new HashMap<IAtom, Map<IAtom, IBond>>();
-
-        for (IAtom startAtom : container.atoms()) {
-            List<List<IAtom>> p = PathTools.getPathsOfLengthUpto(container, startAtom, searchDepth);
-            for (List<IAtom> path : p) {
-                StringBuffer sb = new StringBuffer();
-                IAtom x = path.get(0);
-
-                // TODO if we ever get more than 255 elements, this will
-                // fail maybe we should use 0 for pseudo atoms and
-                // malformed symbols?
-                if (x instanceof IPseudoAtom)
-                    sb.append('0');
-                else {
-                    Integer atnum = PeriodicTable.getAtomicNumber(x.getSymbol());
-                    if (atnum > 0)
-                        sb.append((char) atnum.intValue());
-                    else
-                        sb.append('0');
-                }
-
-                for (int i = 1; i < path.size(); i++) {
-                    final IAtom[] y = {path.get(i)};
-                    Map<IAtom, IBond> m = cache.get(x);
-                    final IBond[] b = {m != null ? m.get(y[0]) : null};
-                    if (b[0] == null) {
-                        b[0] = container.getBond(x, y[0]);
-                        cache.put(x, new HashMap<IAtom, IBond>() {
-
-                            static final long serialVersionUID = 1L;
-                            {
-                                put(y[0], b[0]);
-                            }
-                        });
-                    }
-                    sb.append(getBondSymbol(b[0]));
-                    sb.append(convertSymbol(y[0].getSymbol()));
-                    x = y[0];
-                }
-
-                // we store the lexicographically lower one of the
-                // string and its reverse
-                StringBuffer revForm = new StringBuffer(sb);
-                revForm.reverse();
-                if (sb.toString().compareTo(revForm.toString()) <= 0)
-                    allPaths.add(sb);
-                else
-                    allPaths.add(revForm);
-            }
-        }
-        // now lets clean stuff up
-        Set<String> cleanPath = new HashSet<String>();
-        for (StringBuffer s : allPaths) {
-            if (cleanPath.contains(s.toString())) continue;
-            String s2 = s.reverse().toString();
-            if (cleanPath.contains(s2)) continue;
-            cleanPath.add(s2);
-        }
-
-        // convert paths to hashes
-        int[] hashes = new int[cleanPath.size()];
-        int i = 0;
-        for (String s : cleanPath)
-            hashes[i++] = s.hashCode();
-
-        return hashes;
-    }
-
-    /**
-     * Maps two character element symbols unto unique single character
-     * equivalents.
-     */
-    private String convertSymbol(String symbol) {
-        String returnSymbol = QUERY_REPLACE.get(symbol);
-        return returnSymbol == null ? symbol : returnSymbol;
     }
 
     /**
