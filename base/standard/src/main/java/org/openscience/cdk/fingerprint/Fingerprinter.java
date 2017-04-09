@@ -34,14 +34,16 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -98,11 +100,13 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     /** The default length of created fingerprints. */
     public final static int                  DEFAULT_SIZE         = 1024;
     /** The default search depth used to create the fingerprints. */
-    public final static int                  DEFAULT_SEARCH_DEPTH = 8;
+    public final static int                  DEFAULT_SEARCH_DEPTH = 7;
 
     private int                              size;
     private int                              searchDepth;
     private int                              pathLimit = DEFAULT_PATH_LIMIT;
+
+    private boolean                          hashPseudoAtoms = false;
 
     static int                               debugCounter         = 0;
 
@@ -110,22 +114,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     private static ILoggingTool              logger               = LoggingToolFactory
                                                                           .createLoggingTool(Fingerprinter.class);
 
-    private static final Map<String, String> QUERY_REPLACE        = new HashMap<String, String>() {
 
-                                                                      private static final long serialVersionUID = 1L;
-
-                                                                      {
-                                                                          put("Cl", "X");
-                                                                          put("Br", "Z");
-                                                                          put("Si", "Y");
-                                                                          put("As", "D");
-                                                                          put("Li", "L");
-                                                                          put("Se", "E");
-                                                                          put("Na", "G");
-                                                                          put("Ca", "J");
-                                                                          put("Al", "A");
-                                                                      }
-                                                                  };
 
     /**
      * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
@@ -145,7 +134,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
      * depth.
      *
      * @param  size        The desired size of the fingerprint
-     * @param  searchDepth The desired depth of search
+     * @param  searchDepth The desired depth of search (number of bonds)
      */
     public Fingerprinter(int size, int searchDepth) {
         this.size = size;
@@ -168,19 +157,15 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         logger.debug("Entering Fingerprinter");
         logger.debug("Starting Aromaticity Detection");
         long before = System.currentTimeMillis();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-        Aromaticity.cdkLegacy().apply(container);
+        if (!hasPseudoAtom(container.atoms())) {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+            Aromaticity.cdkLegacy().apply(container);
+        }
         long after = System.currentTimeMillis();
         logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
         logger.debug("Finished Aromaticity Detection");
         BitSet bitSet = new BitSet(size);
-
-        int[] hashes = findPathes(container, searchDepth);
-        for (int hash : hashes) {
-            position = new java.util.Random(hash).nextInt(size);
-            bitSet.set(position);
-        }
-
+        encodePaths(container, searchDepth, bitSet, size);
         return new BitSetFingerprint(bitSet);
     }
 
@@ -200,6 +185,161 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         throw new UnsupportedOperationException();
     }
 
+    private IBond findBond(List<IBond> bonds, IAtom beg, IAtom end) {
+        for (IBond bond : bonds)
+            if (bond.contains(beg) && bond.contains(end))
+                return bond;
+        return null;
+    }
+
+    private String encodePath(IAtomContainer mol, Map<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer) {
+        buffer.setLength(0);
+        IAtom prev = path.get(0);
+        buffer.append(getAtomSymbol(prev));
+        for (int i = 1; i < path.size(); i++) {
+            final IAtom next  = path.get(i);
+            List<IBond> bonds = cache.get(prev);
+
+            if (bonds == null) {
+                bonds = mol.getConnectedBondsList(prev);
+                cache.put(prev, bonds);
+            }
+
+            IBond bond = findBond(bonds, next, prev);
+            if (bond == null)
+                throw new IllegalStateException("FATAL - Atoms in patch were connected?");
+            buffer.append(getBondSymbol(bond));
+            buffer.append(getAtomSymbol(next));
+            prev = next;
+        }
+        return buffer.toString();
+    }
+
+    private String encodePath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer) {
+        buffer.setLength(0);
+        IAtom prev = apath.get(0);
+        buffer.append(getAtomSymbol(prev));
+        for (int i = 1; i < apath.size(); i++) {
+            final IAtom next  = apath.get(i);
+            final IBond bond  = bpath.get(i-1);
+            buffer.append(getBondSymbol(bond));
+            buffer.append(getAtomSymbol(next));
+        }
+        return buffer.toString();
+    }
+
+    private int appendHash(int hash, String str) {
+        int len = str.length();
+        for (int i = 0; i < len; i++)
+            hash = 31 * hash + str.charAt(0);
+        return hash;
+    }
+
+    private int hashPath(List<IAtom> apath, List<IBond> bpath) {
+        int hash = 0;
+        hash = appendHash(hash, getAtomSymbol(apath.get(0)));
+        for (int i = 1; i < apath.size(); i++) {
+            final IAtom next  = apath.get(i);
+            final IBond bond  = bpath.get(i-1);
+            hash = appendHash(hash, getBondSymbol(bond));
+            hash = appendHash(hash, getAtomSymbol(next));
+        }
+        return hash;
+    }
+
+    private int hashRevPath(List<IAtom> apath, List<IBond> bpath) {
+        int hash = 0;
+        int last = apath.size() - 1;
+        hash = appendHash(hash, getAtomSymbol(apath.get(last)));
+        for (int i = last-1; i >= 0; i--) {
+            final IAtom next  = apath.get(i);
+            final IBond bond  = bpath.get(i);
+            hash = appendHash(hash, getBondSymbol(bond));
+            hash = appendHash(hash, getAtomSymbol(next));
+        }
+        return hash;
+    }
+
+    private static final class State {
+        private int    numPaths = 0;
+        private Random rand     = new Random();
+        private BitSet fp;
+        private IAtomContainer mol;
+        private Set<IAtom> visited = new HashSet<>();
+        private List<IAtom> apath = new ArrayList<>();
+        private List<IBond> bpath = new ArrayList<>();
+        private final int maxDepth;
+        private final int fpsize;
+        private Map<IAtom,List<IBond>> cache = new IdentityHashMap<>();
+        public StringBuilder buffer = new StringBuilder();
+
+        public State(IAtomContainer mol, BitSet fp, int fpsize, int maxDepth) {
+            this.mol = mol;
+            this.fp  = fp;
+            this.fpsize = fpsize;
+            this.maxDepth = maxDepth;
+        }
+
+        List<IBond> getBonds(IAtom atom) {
+            List<IBond> bonds = cache.get(atom);
+            if (bonds == null) {
+                bonds = mol.getConnectedBondsList(atom);
+                cache.put(atom, bonds);
+            }
+            return bonds;
+        }
+
+        boolean visit(IAtom a) {
+            return visited.add(a);
+        }
+
+        boolean unvisit(IAtom a) {
+            return visited.remove(a);
+        }
+
+        void push(IAtom atom, IBond bond) {
+            apath.add(atom);
+            if (bond != null)
+                bpath.add(bond);
+        }
+
+        void pop() {
+            if (!apath.isEmpty())
+                apath.remove(apath.size()-1);
+            if (!bpath.isEmpty())
+                bpath.remove(bpath.size()-1);
+        }
+
+        void addHash(int x) {
+            numPaths++;
+            rand.setSeed(x);
+            // XXX: fp.set(x % size); would work just as well but would encode a
+            //      different bit
+            fp.set(rand.nextInt(fpsize));
+        }
+    }
+
+    private void traversePaths(State state, IAtom beg, IBond prev) throws CDKException {
+        if (!hashPseudoAtoms && isPseudo(beg))
+            return;
+        state.push(beg, prev);
+        state.addHash(encodeUniquePath(state.apath, state.bpath, state.buffer));
+        if (state.numPaths > pathLimit)
+            throw new CDKException("Too many paths! Structure is likely a cage, reduce path length or increase path limit");
+        if (state.apath.size() < state.maxDepth) {
+            for (IBond bond : state.getBonds(beg)) {
+                if (bond == prev)
+                    continue;
+                final IAtom nbr = bond.getConnectedAtom(beg);
+                if (state.visit(nbr)) {
+                    traversePaths(state, nbr, bond);
+                    state.unvisit(nbr); // traverse all paths
+                }
+            }
+        }
+        state.pop();
+    }
+
     /**
      * Get all paths of lengths 0 to the specified length.
      *
@@ -209,85 +349,176 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
      * @param container The molecule to search
      * @param searchDepth The maximum path length desired
      * @return A Map of path strings, keyed on themselves
+     * @deprecated Use {@link #encodePaths(IAtomContainer, int, BitSet, int)}
      */
+    @Deprecated
     protected int[] findPathes(IAtomContainer container, int searchDepth) throws CDKException {
 
-        List<StringBuffer> allPaths = new ArrayList<StringBuffer>();
+        Set<Integer> hashes = new HashSet<>();
 
-        Map<IAtom, Map<IAtom, IBond>> cache = new HashMap<IAtom, Map<IAtom, IBond>>();
-
+        Map<IAtom, List<IBond>> cache = new HashMap<>();
+        StringBuilder buffer = new StringBuilder();
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
             for (List<IAtom> path : p) {
-                StringBuffer sb = new StringBuffer();
-                IAtom x = path.get(0);
-
-                // TODO if we ever get more than 255 elements, this will
-                // fail maybe we should use 0 for pseudo atoms and
-                // malformed symbols? - nope a char 16 bit, up to 65,535
-                // is okay :)
-                if (x instanceof IPseudoAtom)
-                    sb.append((char) PeriodicTable.getElementCount() + 1);
-                else {
-                    Integer atnum = PeriodicTable.getAtomicNumber(x.getSymbol());
-                    if (atnum != null)
-                        sb.append(convertSymbol(x.getSymbol()));
-                    else
-                        sb.append((char) PeriodicTable.getElementCount() + 1);
-                }
-
-                for (int i = 1; i < path.size(); i++) {
-                    final IAtom[] y = {path.get(i)};
-                    Map<IAtom, IBond> m = cache.get(x);
-                    final IBond[] b = {m != null ? m.get(y[0]) : null};
-                    if (b[0] == null) {
-                        b[0] = container.getBond(x, y[0]);
-                        cache.put(x, new HashMap<IAtom, IBond>() {
-
-                            {
-                                put(y[0], b[0]);
-                            }
-                        });
-                    }
-                    sb.append(getBondSymbol(b[0]));
-                    sb.append(convertSymbol(y[0].getSymbol()));
-                    x = y[0];
-                }
-
-                // we store the lexicographically lower one of the
-                // string and its reverse
-                StringBuffer revForm = new StringBuffer(sb);
-                revForm.reverse();
-                if (sb.toString().compareTo(revForm.toString()) <= 0)
-                    allPaths.add(sb);
-                else
-                    allPaths.add(revForm);
+                if (hashPseudoAtoms || !hasPseudoAtom(path))
+                    hashes.add(encodeUniquePath(container, cache, path, buffer));
             }
         }
-        // now lets clean stuff up
-        Set<String> cleanPath = new HashSet<String>();
-        for (StringBuffer s : allPaths) {
-            String s1 = s.toString().trim();
-            if (s1.equals("")) continue;
-            if (cleanPath.contains(s1)) continue;
-            String s2 = s.reverse().toString().trim();
-            if (cleanPath.contains(s2)) continue;
-            cleanPath.add(s2);
-        }
 
-        // convert paths to hashes
-        int[] hashes = new int[cleanPath.size()];
-        int i = 0;
-        for (String s : cleanPath)
-            hashes[i++] = s.hashCode();
+        int   pos = 0;
+        int[] result = new int[hashes.size()];
+        for (Integer hash : hashes)
+            result[pos++] = hash;
 
-        return hashes;
+        return result;
     }
 
-    private String convertSymbol(String symbol) {
+    protected void encodePaths(IAtomContainer mol, int depth, BitSet fp, int size) throws CDKException {
+        State state = new State(mol, fp, size, depth+1);
+        for (IAtom atom : mol.atoms()) {
+            state.numPaths = 0;
+            state.visit(atom);
+            traversePaths(state, atom, null);
+            state.unvisit(atom);
+        }
+    }
 
-        String returnSymbol = QUERY_REPLACE.get(symbol);
-        return returnSymbol == null ? symbol : returnSymbol;
+    private static boolean isPseudo(IAtom a) {
+        return getElem(a) == 0;
+    }
+
+    private static boolean hasPseudoAtom(Iterable<IAtom> path) {
+        for (IAtom atom : path)
+            if (isPseudo(atom))
+                return true;
+        return false;
+    }
+
+    private int encodeUniquePath(IAtomContainer container, Map<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer) {
+        if (path.size() == 1)
+            return getAtomSymbol(path.get(0)).hashCode();
+        String forward = encodePath(container, cache, path, buffer);
+        Collections.reverse(path);
+        String reverse = encodePath(container, cache, path, buffer);
+        Collections.reverse(path);
+
+        final int x;
+        if (reverse.compareTo(forward) < 0)
+            x = forward.hashCode();
+        else
+            x = reverse.hashCode();
+        return x;
+    }
+
+    /**
+     * Compares atom symbols lexicographical
+     * @param a atom a
+     * @param b atom b
+     * @return comparison &lt;0 a is less than b, &gt;0 a is more than b
+     */
+    private int compare(IAtom a, IAtom b) {
+        final int elemA = getElem(a);
+        final int elemB = getElem(b);
+        if (elemA == elemB)
+            return 0;
+        return getAtomSymbol(a).compareTo(getAtomSymbol(b));
+    }
+
+    /**
+     * Compares bonds symbols lexicographical
+     * @param a bond a
+     * @param b bond b
+     * @return comparison &lt;0 a is less than b, &gt;0 a is more than b
+     */
+    private int compare(IBond a, IBond b) {
+        return getBondSymbol(a).compareTo(getBondSymbol(b));
+    }
+
+    /**
+     * Compares a path of atoms with it's self to give the
+     * lexicographically lowest traversal (forwards or backwards).
+     * @param apath path of atoms
+     * @param bpath path of bonds
+     * @return &lt;0 forward is lower &gt;0 reverse is lower
+     */
+    private int compare(List<IAtom> apath, List<IBond> bpath) {
+        int i    = 0;
+        int len = apath.size();
+        int j    = len - 1;
+        int cmp = compare(apath.get(i), apath.get(j));
+        if (cmp != 0)
+            return cmp;
+        i++;
+        j--;
+        while (j != 0) {
+            cmp = compare(bpath.get(i-1), bpath.get(j));
+            if (cmp != 0) return cmp;
+            cmp = compare(apath.get(i), apath.get(j));
+            if (cmp != 0) return cmp;
+            i++;
+            j--;
+        }
+        return 0;
+    }
+
+    private int encodeUniquePath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer) {
+        if (bpath.size() == 0)
+            return getAtomSymbol(apath.get(0)).hashCode();
+        final int x;
+        if (compare(apath, bpath) >= 0) {
+            x = hashPath(apath, bpath);
+        } else {
+            x = hashRevPath(apath, bpath);
+        }
+        return x;
+    }
+
+    private static int getElem(IAtom atom) {
+        Integer elem = atom.getAtomicNumber();
+        if (elem == null)
+            elem = 0;
+        return elem;
+    }
+
+    private String getAtomSymbol(IAtom atom) {
+        // XXX: backwards compatibility
+        // This is completely random, I believe the intention is because
+        // paths were reversed with string manipulation to de-duplicate
+        // (only the lowest lexicographically is stored) however this
+        // doesn't work with multiple atom symbols:
+        // e.g. Fe-C => C-eF vs C-Fe => eF-C
+        // A dirty hack is to replace "common" symbols with single letter
+        // equivalents so the reversing is less wrong
+        switch (getElem(atom)) {
+            case 0:  // *
+                return "*";
+            case 6:  // C
+                return "C";
+            case 7:  // N
+                return "N";
+            case 8:  // O
+                return "O";
+            case 17: // Cl
+                return "X";
+            case 35: // Br
+                return "Z";
+            case 14: // Si
+                return "Y";
+            case 33: // As
+                return "D";
+            case 3: // Li
+                return "L";
+            case 34: // Se
+                return "E";
+            case 11:  // Na
+                return "G";
+            case 20:  // Ca
+                return "J";
+            case 13:  // Al
+                return "A";
+        }
+        return atom.getSymbol();
     }
 
     /**
@@ -297,21 +528,26 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
      *@return       The bondSymbol value
      */
     protected String getBondSymbol(IBond bond) {
-        String bondSymbol = "";
-        if (bond.getFlag(CDKConstants.ISAROMATIC)) {
-            bondSymbol = ":";
-        } else if (bond.getOrder() == IBond.Order.SINGLE) {
-            bondSymbol = "-";
-        } else if (bond.getOrder() == IBond.Order.DOUBLE) {
-            bondSymbol = "=";
-        } else if (bond.getOrder() == IBond.Order.TRIPLE) {
-            bondSymbol = "#";
+        if (bond.isAromatic())
+            return ":";
+        switch (bond.getOrder()) {
+            case SINGLE:
+                return "-";
+            case DOUBLE:
+                return "=";
+            case TRIPLE:
+                return "#";
+            default:
+                return "";
         }
-        return bondSymbol;
     }
 
     public void setPathLimit(int limit) {
         this.pathLimit = limit;
+    }
+
+    public void setHashPseudoAtoms(boolean value) {
+        this.hashPseudoAtoms = value;
     }
 
     public int getSearchDepth() {
