@@ -601,7 +601,7 @@ public class NonPlanarBondsTest {
      * {@code SMILES: O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4}
      */
     @Test
-    public void tesosterone() throws CDKException {
+    public void testosterone() throws CDKException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4");
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
