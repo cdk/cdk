@@ -338,17 +338,31 @@ final class NonplanarBonds {
         }
 
         // set the label for the highest priority and available bond
+        IBond.Stereo firstlabel = null;
         for (int v : priority(atomToIndex.get(focus), atoms, n)) {
             IBond bond = bonds[v];
-            if (bond.getStereo() == NONE && bond.getOrder() == SINGLE) {
+            if (bond.getStereo() != NONE || bond.getOrder() != SINGLE)
+                continue;
+            // first label
+            if (firstlabel == null) {
                 bond.setAtoms(new IAtom[]{focus, atoms[v]}); // avoids UP_INVERTED/DOWN_INVERTED
                 bond.setStereo(labels[v]);
-                return;
+                firstlabel = labels[v];
+                // don't assign a second label when there are only three ligands
+                if (labels.length == 3)
+                    break;
+            }
+            // second label
+            else if (labels[v] != firstlabel) {
+                bond.setAtoms(new IAtom[]{focus, atoms[v]}); // avoids UP_INVERTED/DOWN_INVERTED
+                bond.setStereo(labels[v]);
+                break;
             }
         }
 
         // it should be possible to always assign labels somewhere -> unchecked exception
-        throw new IllegalArgumentException("could not assign non-planar (up/down) labels");
+        if (firstlabel == null)
+            throw new IllegalArgumentException("could not assign non-planar (up/down) labels");
     }
 
     /**
@@ -465,15 +479,24 @@ final class NonplanarBonds {
         if (iAtom.getAtomicNumber() == 0 && jAtom.getAtomicNumber() > 0)
             return false;
 
-        // prioritise atoms with fewer neighbors
-        if (graph[i].length < graph[j].length) return true;
-        if (graph[i].length > graph[j].length) return false;
+        final int iDegree = graph[i].length;
+        int iElem   = iAtom.getAtomicNumber();
+        final int jDegree = graph[j].length;
+        int jElem   = jAtom.getAtomicNumber();
 
-        // prioritise by atomic number
-        if (iAtom.getAtomicNumber() < jAtom.getAtomicNumber())
+        // rank carbon's last
+        if (iElem == 6) iElem = 256;
+        if (jElem == 6) jElem = 256;
+
+        // prioritise by atomic number, H < N < O < ... < C
+        if (iElem < jElem)
             return true;
-        if (iAtom.getAtomicNumber() > jAtom.getAtomicNumber())
+        if (iElem > jElem)
             return false;
+
+        // prioritise atoms with fewer neighbors
+        if (iDegree < jDegree) return true;
+        if (iDegree > jDegree) return false;
 
         return false;
     }
