@@ -466,20 +466,23 @@ final class NonplanarBonds {
             return false;
 
         final int iDegree = graph[i].length;
-        final int iElem   = iAtom.getAtomicNumber();
+        int iElem   = iAtom.getAtomicNumber();
         final int jDegree = graph[j].length;
-        final int jElem   = jAtom.getAtomicNumber();
+        int jElem   = jAtom.getAtomicNumber();
 
+        // rank carbon's last
+        if (iElem == 6) iElem = 256;
+        if (jElem == 6) jElem = 256;
 
-        // prioritise atoms with fewer neighbors
-        if (iDegree < jDegree) return true;
-        if (iDegree > jDegree) return false;
-
-        // prioritise by atomic number
+        // prioritise by atomic number, H < N < O < ... < C
         if (iElem < jElem)
             return true;
         if (iElem > jElem)
             return false;
+
+        // prioritise atoms with fewer neighbors
+        if (iDegree < jDegree) return true;
+        if (iDegree > jDegree) return false;
 
         return false;
     }
