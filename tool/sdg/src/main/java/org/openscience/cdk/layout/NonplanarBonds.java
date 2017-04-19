@@ -338,17 +338,31 @@ final class NonplanarBonds {
         }
 
         // set the label for the highest priority and available bond
+        IBond.Stereo firstlabel = null;
         for (int v : priority(atomToIndex.get(focus), atoms, n)) {
             IBond bond = bonds[v];
-            if (bond.getStereo() == NONE && bond.getOrder() == SINGLE) {
+            if (bond.getStereo() != NONE || bond.getOrder() != SINGLE)
+                continue;
+            // first label
+            if (firstlabel == null) {
                 bond.setAtoms(new IAtom[]{focus, atoms[v]}); // avoids UP_INVERTED/DOWN_INVERTED
                 bond.setStereo(labels[v]);
-                return;
+                firstlabel = labels[v];
+                // don't assign a second label when there are only three ligands
+                if (labels.length == 3)
+                    break;
+            }
+            // second label
+            else if (labels[v] != firstlabel) {
+                bond.setAtoms(new IAtom[]{focus, atoms[v]}); // avoids UP_INVERTED/DOWN_INVERTED
+                bond.setStereo(labels[v]);
+                break;
             }
         }
 
         // it should be possible to always assign labels somewhere -> unchecked exception
-        throw new IllegalArgumentException("could not assign non-planar (up/down) labels");
+        if (firstlabel == null)
+            throw new IllegalArgumentException("could not assign non-planar (up/down) labels");
     }
 
     /**

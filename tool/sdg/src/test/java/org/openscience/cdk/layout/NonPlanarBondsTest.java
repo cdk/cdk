@@ -157,7 +157,7 @@ public class NonPlanarBondsTest {
         assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.UP));
-        assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.DOWN));
     }
 
     // [C@@](CCC)(C1)(C)C1 (favour acyclic)
@@ -183,7 +183,7 @@ public class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(1), m.getAtom(4), m.getAtom(5),
                 m.getAtom(6)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.UP));
         assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.DOWN));
         assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.NONE));
@@ -212,7 +212,7 @@ public class NonPlanarBondsTest {
         assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.DOWN));
-        assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.UP));
     }
 
     // [C@](CCC)(C1)(C)C1 (favour acyclic)
@@ -238,7 +238,7 @@ public class NonPlanarBondsTest {
         m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(1), m.getAtom(4), m.getAtom(5),
                 m.getAtom(6)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
+        assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.DOWN));
         assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.UP));
         assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.NONE));
