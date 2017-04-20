@@ -636,6 +636,60 @@ final class NonplanarBonds {
         doubleBond.setStereo(E_OR_Z);
     }
 
+
+    /**
+     * Checks if the atom can be involved in a double-bond.
+     * @param idx atom idx
+     * @return the atom at index (idx) is valid for a double bond
+     * @see <a href="http://www.inchi-trust.org/download/104/InChI_TechMan.pdf">Double bond stereochemistry, InChI Technical Manual</a>
+     */
+    private boolean isCisTransEndPoint(int idx){
+        IAtom atom  = container.getAtom(idx);
+        // error: uninit atom
+        if (atom.getAtomicNumber() == null ||
+            atom.getFormalCharge() == null ||
+            atom.getImplicitHydrogenCount() == null)
+            return false;
+        final int chg    = atom.getFormalCharge();
+        final int btypes = getBondTypes(idx);
+        switch (atom.getAtomicNumber()) {
+            case 6:  // C
+            case 14: // Si
+            case 32: // Ge
+                // double, single, single
+                return chg == 0 && btypes == 0x0102;
+            case 7:  // N
+                if (chg == 0) // double, single
+                    return btypes == 0x0101;
+                if (chg == +1) // double, single, single
+                    return btypes == 0x0102;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Generate a bond type code for a given atom. The bond code
+     * can be quickly tested to count the number of single, double,
+     * or 'other' bonds.
+     *
+     * @param idx the atom idx
+     * @return bond code
+     */
+    private int getBondTypes(int idx) {
+        int btypes = container.getAtom(idx).getImplicitHydrogenCount();
+        for (int end : graph[idx]) {
+            IBond bond = edgeToBond.get(idx, end);
+            if (bond.getOrder() == SINGLE)
+                btypes += 0x00_0001;
+            else if (bond.getOrder() == DOUBLE)
+                btypes += 0x00_0100;
+            else // other bond types
+                btypes += 0x01_0000;
+        }
+        return btypes;
+    }
+
     /**
      * Locates double bonds to mark as unspecified stereochemistry.
      * 
@@ -666,7 +720,10 @@ final class NonplanarBonds {
             // is actually a tetrahedral centre
             if (tetrahedralElements[beg] != null || tetrahedralElements[end] != null)
                 continue;
-            
+
+            if (!isCisTransEndPoint(beg) || !isCisTransEndPoint(end))
+                continue;
+
             if (!hasOnlyPlainBonds(beg, bond) || !hasOnlyPlainBonds(end, bond))
                 continue;
 

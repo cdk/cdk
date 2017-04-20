@@ -613,6 +613,21 @@ public class NonPlanarBondsTest {
         assertThat(wedgeCount, is(7));
     }
 
+    /**
+     * {@code SMILES: CN(C)(C)=CC}
+     */
+    @Test
+    public void noWavyBondForCisTransNv5() throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("CN(C)(C)=CC");
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        for (IBond bond : mol.bonds()) {
+            assertThat(bond.getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
+            assertThat(bond.getStereo(), is(not(IBond.Stereo.UP_OR_DOWN_INVERTED)));
+        }
+    }
+
     static IAtom atom(String symbol, int hCount, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(hCount);
