@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import uk.ac.ebi.beam.Bond;
 
 import javax.vecmath.Point2d;
 import java.util.ArrayList;
@@ -338,7 +337,8 @@ final class NonplanarBonds {
         }
 
         // set the label for the highest priority and available bond
-        IBond.Stereo firstlabel = null;
+        IBond.Stereo firstlabel      = null;
+        boolean      assignTwoLabels = assignTwoLabels(bonds, labels);
         for (int v : priority(atomToIndex.get(focus), atoms, n)) {
             IBond bond = bonds[v];
             if (bond.getStereo() != NONE || bond.getOrder() != SINGLE)
@@ -349,7 +349,7 @@ final class NonplanarBonds {
                 bond.setStereo(labels[v]);
                 firstlabel = labels[v];
                 // don't assign a second label when there are only three ligands
-                if (labels.length == 3)
+                if (!assignTwoLabels)
                     break;
             }
             // second label
@@ -363,6 +363,19 @@ final class NonplanarBonds {
         // it should be possible to always assign labels somewhere -> unchecked exception
         if (firstlabel == null)
             throw new IllegalArgumentException("could not assign non-planar (up/down) labels");
+    }
+
+    private boolean assignTwoLabels(IBond[] bonds, IBond.Stereo[] labels) {
+        return labels.length == 4 && countRingBonds(bonds) != 3;
+    }
+
+    private int countRingBonds(IBond[] bonds) {
+        int rbonds = 0;
+        for (IBond bond : bonds) {
+            if (bond != null && bond.isInRing())
+                rbonds++;
+        }
+        return rbonds;
     }
 
     /**

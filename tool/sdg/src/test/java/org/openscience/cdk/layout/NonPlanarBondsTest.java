@@ -33,6 +33,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
@@ -593,6 +595,22 @@ public class NonPlanarBondsTest {
             if (bond.getStereo() == IBond.Stereo.UP_OR_DOWN)
                 wavyCount++;
         assertThat(wavyCount, is(1));
+    }
+
+    /**
+     * {@code SMILES: O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4}
+     */
+    @Test
+    public void testosterone() throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4");
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int wedgeCount = 0;
+        for (IBond bond : mol.bonds())
+            if (bond.getStereo() == IBond.Stereo.UP || bond.getStereo() == IBond.Stereo.DOWN)
+                wedgeCount++;
+        assertThat(wedgeCount, is(7));
     }
 
     static IAtom atom(String symbol, int hCount, double x, double y) {
