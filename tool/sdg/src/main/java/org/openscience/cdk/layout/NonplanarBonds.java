@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import uk.ac.ebi.beam.Bond;
 
 import javax.vecmath.Point2d;
 import java.util.ArrayList;
@@ -367,10 +366,10 @@ final class NonplanarBonds {
     }
 
     private boolean assignTwoLabels(IBond[] bonds, IBond.Stereo[] labels) {
-        return labels.length == 4 && counrRingBonds(bonds) != 3;
+        return labels.length == 4 && countRingBonds(bonds) != 3;
     }
 
-    private int counrRingBonds(IBond[] bonds) {
+    private int countRingBonds(IBond[] bonds) {
         int rbonds = 0;
         for (IBond bond : bonds) {
             if (bond != null && bond.isInRing())
