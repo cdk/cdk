@@ -1,4 +1,4 @@
-/* Copyright (C) 2012  Gilleain Torrance <gilleain.torrance@gmail.com>
+/* Copyright (C) 2017  Gilleain Torrance <gilleain.torrance@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,48 +22,11 @@
  */
 package org.openscience.cdk.group;
 
-import java.util.Set;
-
 /**
- * Refiner for atom containers, which refines partitions of the atoms to
- * equitable partitions. Used by the {@link AtomDiscretePartitionRefiner}.
- *
+ * Marker interface for invariants.
+ * 
  * @author maclean
  * @cdk.module group
  *
  */
-public class AtomEquitablePartitionRefiner extends AbstractEquitablePartitionRefiner implements
-        IEquitablePartitionRefiner {
-
-    /**
-     * The object being refined.
-     */
-    private final Refinable refinable;
-
-    public AtomEquitablePartitionRefiner(Refinable refinable) {
-        this.refinable = refinable;
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public Invariant neighboursInBlock(Set<Integer> block, int atomIndex) {
-        int neighbours = 0;
-        for (int connected : refinable.getConnectedIndices(atomIndex)) {
-            if (block.contains(connected)) {
-                neighbours++;
-            }
-        }
-        return new IntegerInvariant(neighbours);
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public int getVertexCount() {
-        return refinable.getVertexCount();
-    }
-
-}
+public interface Invariant extends Comparable<Invariant> { }

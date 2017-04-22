@@ -65,8 +65,6 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         Assert.assertEquals(refiner.getConnectivity(0, 1), 1);
         Assert.assertEquals(refiner.getVertexCount(), 2);
 
-        refiner.reset();
-
         String acpString2 = "C0C1C2 0:1(1),0:2(1),1:2(1)";
         IAtomContainer ac2 = AtomContainerPrinter.fromString(acpString2, builder);
         refiner.refine(ac2);

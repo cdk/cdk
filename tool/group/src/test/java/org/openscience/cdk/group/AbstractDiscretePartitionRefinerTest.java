@@ -3,7 +3,6 @@ package org.openscience.cdk.group;
 import java.util.Set;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
@@ -58,7 +57,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         }
 
         @Override
-        public int neighboursInBlock(Set<Integer> block, int vertexIndex) {
+        public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
             //            System.out.println("calling NIB for " + block + " " + vertexIndex);
             int neighbours = 0;
             int n = getVertexCount();
@@ -68,7 +67,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
                 }
             }
             //            System.out.println(neighbours + " neighbours");
-            return neighbours;
+            return new IntegerInvariant(neighbours);
         }
 
     }

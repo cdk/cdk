@@ -83,11 +83,7 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefiner {
 
-    /**
-     * The connectivity between bonds; two bonds are connected
-     * if they share an atom.
-     */
-    private int[][] connectionTable;
+    private BondRefinable refinable;
 
     /**
      * Specialised option to allow generating automorphisms that ignore the bond order.
@@ -116,7 +112,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      */
     @Override
     public int getVertexCount() {
-        return connectionTable.length;
+        return refinable.getVertexCount();
     }
 
     /**
@@ -124,14 +120,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      */
     @Override
     public int getConnectivity(int i, int j) {
-        int indexInRow;
-        int maxRowIndex = connectionTable[i].length;
-        for (indexInRow = 0; indexInRow < maxRowIndex; indexInRow++) {
-            if (connectionTable[i][indexInRow] == j) {
-                return 1;
-            }
-        }
-        return 0;
+        return refinable.getConnectivity(i, j);
     }
 
     /**
@@ -142,7 +131,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @return an array of bond indices
      */
     public int[] getConnectedIndices(int bondIndex) {
-        return connectionTable[bondIndex];
+        return refinable.getConnectedIndices(bondIndex);
     }
 
     /**
@@ -200,12 +189,6 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         return bondPartition;
     }
 
-    /**
-     * Reset the connection table.
-     */
-    public void reset() {
-        connectionTable = null;
-    }
 
     /**
      * Refine an atom container, which has the side effect of calculating
@@ -299,74 +282,21 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         super.refine(getBondPartition(atomContainer));
         return super.getAutomorphismPartition();
     }
+    
+    private Refinable getRefinable(IAtomContainer atomContainer) {
+        refinable = new BondRefinable(atomContainer, ignoreBondOrders);
+        return refinable;
+    }
 
     private void setup(IAtomContainer atomContainer) {
-        // have to setup the connection table before making the group
-        // otherwise the size may be wrong
-        if (connectionTable == null) {
-            setupConnectionTable(atomContainer);
-        }
-
+        Refinable refinable = getRefinable(atomContainer);
         int size = getVertexCount();
         PermutationGroup group = new PermutationGroup(new Permutation(size));
-        super.setup(group, new BondEquitablePartitionRefiner(this));
+        super.setup(group, new BondEquitablePartitionRefiner(refinable));
     }
 
     private void setup(IAtomContainer atomContainer, PermutationGroup group) {
-        setupConnectionTable(atomContainer);
-        super.setup(group, new BondEquitablePartitionRefiner(this));
+        super.setup(group, new BondEquitablePartitionRefiner(getRefinable(atomContainer)));
     }
 
-    private void setupConnectionTable(IAtomContainer atomContainer) {
-        int bondCount = atomContainer.getBondCount();
-        // unfortunately, we have to sort the bonds
-        List<IBond> bonds = new ArrayList<IBond>();
-        Map<String, IBond> bondMap = new HashMap<String, IBond>();
-        for (int bondIndexI = 0; bondIndexI < bondCount; bondIndexI++) {
-            IBond bond = atomContainer.getBond(bondIndexI);
-            bonds.add(bond);
-            int a0 = atomContainer.indexOf(bond.getAtom(0));
-            int a1 = atomContainer.indexOf(bond.getAtom(1));
-            String boS;
-            if (ignoreBondOrders) {
-                // doesn't matter what it is, so long as it's constant
-                boS = "1";
-            } else {
-                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
-                int orderNumber = (isArom) ? 5 : bond.getOrder().numeric();
-                boS = String.valueOf(orderNumber);
-            }
-            String bondString;
-            if (a0 < a1) {
-                bondString = a0 + "," + boS + "," + a1;
-            } else {
-                bondString = a1 + "," + boS + "," + a0;
-            }
-            bondMap.put(bondString, bond);
-        }
-
-        List<String> keys = new ArrayList<String>(bondMap.keySet());
-        Collections.sort(keys);
-        for (String key : keys) {
-            bonds.add(bondMap.get(key));
-        }
-
-        connectionTable = new int[bondCount][];
-        for (int bondIndexI = 0; bondIndexI < bondCount; bondIndexI++) {
-            IBond bondI = bonds.get(bondIndexI);
-            List<Integer> connectedBondIndices = new ArrayList<Integer>();
-            for (int bondIndexJ = 0; bondIndexJ < bondCount; bondIndexJ++) {
-                if (bondIndexI == bondIndexJ) continue;
-                IBond bondJ = bonds.get(bondIndexJ);
-                if (bondI.isConnectedTo(bondJ)) {
-                    connectedBondIndices.add(bondIndexJ);
-                }
-            }
-            int connBondCount = connectedBondIndices.size();
-            connectionTable[bondIndexI] = new int[connBondCount];
-            for (int index = 0; index < connBondCount; index++) {
-                connectionTable[bondIndexI][index] = connectedBondIndices.get(index);
-            }
-        }
-    }
 }

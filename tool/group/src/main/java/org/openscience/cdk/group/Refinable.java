@@ -1,4 +1,4 @@
-/* Copyright (C) 2012  Gilleain Torrance <gilleain.torrance@gmail.com>
+/* Copyright (C) 2017  Gilleain Torrance <gilleain.torrance@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,48 +22,45 @@
  */
 package org.openscience.cdk.group;
 
-import java.util.Set;
-
 /**
- * Refiner for atom containers, which refines partitions of the atoms to
- * equitable partitions. Used by the {@link AtomDiscretePartitionRefiner}.
- *
+ * Implementors are graph-like objects that are refinable by the 
+ * equitable and discrete partition refiners.
+ * 
  * @author maclean
  * @cdk.module group
  *
  */
-public class AtomEquitablePartitionRefiner extends AbstractEquitablePartitionRefiner implements
-        IEquitablePartitionRefiner {
+public interface Refinable {
+    
+    /**
+     * Get the number of vertices in the graph to be refined.
+     *
+     * @return a count of the vertices in the underlying graph
+     */
+    public int getVertexCount();
+    
+    /**
+     * Get the connectivity between two vertices as an integer, to allow
+     * for multigraphs : so a single edge is 1, a double edge 2, etc. If
+     * there is no edge, then 0 should be returned.
+     *
+     * @param vertexI a vertex of the graph
+     * @param vertexJ a vertex of the graph
+     * @return the multiplicity of the edge (0, 1, 2, 3, ...)
+     */
+    public int getConnectivity(int vertexI, int vertexJ);
+    
+    /**
+     * Get the connected indices for the given vertex index.
+     * 
+     * @param vertexIndex
+     * @return
+     */
+    public int[] getConnectedIndices(int vertexIndex);
 
     /**
-     * The object being refined.
+     * @return the maximum connectivity of the refinable
      */
-    private final Refinable refinable;
-
-    public AtomEquitablePartitionRefiner(Refinable refinable) {
-        this.refinable = refinable;
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public Invariant neighboursInBlock(Set<Integer> block, int atomIndex) {
-        int neighbours = 0;
-        for (int connected : refinable.getConnectedIndices(atomIndex)) {
-            if (block.contains(connected)) {
-                neighbours++;
-            }
-        }
-        return new IntegerInvariant(neighbours);
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public int getVertexCount() {
-        return refinable.getVertexCount();
-    }
+    public int getMaxConnectivity();
 
 }

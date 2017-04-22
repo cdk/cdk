@@ -1,4 +1,4 @@
-/* Copyright (C) 2012  Gilleain Torrance <gilleain.torrance@gmail.com>
+/* Copyright (C) 2017  Gilleain Torrance <gilleain.torrance@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,48 +22,34 @@
  */
 package org.openscience.cdk.group;
 
-import java.util.Set;
-
 /**
- * Refiner for atom containers, which refines partitions of the atoms to
- * equitable partitions. Used by the {@link AtomDiscretePartitionRefiner}.
- *
  * @author maclean
  * @cdk.module group
- *
  */
-public class AtomEquitablePartitionRefiner extends AbstractEquitablePartitionRefiner implements
-        IEquitablePartitionRefiner {
-
-    /**
-     * The object being refined.
-     */
-    private final Refinable refinable;
-
-    public AtomEquitablePartitionRefiner(Refinable refinable) {
-        this.refinable = refinable;
+public class IntegerInvariant implements Invariant {
+    
+    private Integer value;
+    
+    public IntegerInvariant(Integer value) {
+        this.value = value;
     }
 
-    /**
-     *{@inheritDoc}
-     */
     @Override
-    public Invariant neighboursInBlock(Set<Integer> block, int atomIndex) {
-        int neighbours = 0;
-        for (int connected : refinable.getConnectedIndices(atomIndex)) {
-            if (block.contains(connected)) {
-                neighbours++;
-            }
-        }
-        return new IntegerInvariant(neighbours);
+    public int compareTo(Invariant o) {
+        return value.compareTo(((IntegerInvariant)o).value);
     }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public int getVertexCount() {
-        return refinable.getVertexCount();
+    
+    public int hashCode() {
+        return value;
     }
-
+    
+    public boolean equals(Object other) {
+        return other instanceof IntegerInvariant && 
+                value.equals(((IntegerInvariant)other).value);
+    }
+    
+    public String toString() {
+        return value.toString();
+    }
+    
 }

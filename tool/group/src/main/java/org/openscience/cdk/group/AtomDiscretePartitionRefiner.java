@@ -30,10 +30,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 
 /**
  * A tool for determining the automorphism group of the atoms in a molecule, or
@@ -84,15 +81,7 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefiner {
 
-    /**
-     * A convenience lookup table for atom-atom connections.
-     */
-    private int[][] connectionTable;
-
-    /**
-     * A convenience lookup table for bond orders.
-     */
-    private int[][] bondOrders;
+    private Refinable refinable;
 
     /**
      * Specialised option to allow generating automorphisms
@@ -130,34 +119,15 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      */
     @Override
     public int getVertexCount() {
-        return connectionTable.length;
+        return refinable.getVertexCount();
     }
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public int getConnectivity(int i, int j) {
-        int indexInRow;
-        int maxRowIndex = connectionTable[i].length;
-        for (indexInRow = 0; indexInRow < maxRowIndex; indexInRow++) {
-            if (connectionTable[i][indexInRow] == j) {
-                break;
-            }
-        }
-        if (ignoreBondOrders) {
-            if (indexInRow < maxRowIndex) {
-                return 1;
-            } else {
-                return 0;
-            }
-        } else {
-            if (indexInRow < maxRowIndex) {
-                return bondOrders[i][indexInRow];
-            } else {
-                return 0;
-            }
-        }
+    public int getConnectivity(int vertexI, int vertexJ) {
+       return refinable.getConnectivity(vertexI, vertexJ);
     }
 
     /**
@@ -168,7 +138,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @return an array of atom indices
      */
     public int[] getConnectedIndices(int atomIndex) {
-        return connectionTable[atomIndex];
+        return refinable.getConnectedIndices(atomIndex);
     }
 
     /**
@@ -186,10 +156,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         if (ignoreElements) {
             int n = atomContainer.getAtomCount();
             return Partition.unit(n);
-        }
-
-        if (connectionTable == null) {
-            setupConnectionTable(atomContainer);
         }
 
         Map<String, SortedSet<Integer>> cellMap = new HashMap<String, SortedSet<Integer>>();
@@ -216,13 +182,6 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         }
 
         return elementPartition;
-    }
-
-    /**
-     * Reset the connection table.
-     */
-    public void reset() {
-        connectionTable = null;
     }
 
     /**
@@ -318,54 +277,23 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         return super.getAutomorphismPartition();
     }
 
-    /**
-     * Makes a lookup table for the connection between atoms, to avoid looking
-     * through the bonds each time.
-     *
-     * @param atomContainer the atom
-     */
-    private void setupConnectionTable(IAtomContainer atomContainer) {
-        int atomCount = atomContainer.getAtomCount();
-        connectionTable = new int[atomCount][];
-        if (!ignoreBondOrders) {
-            bondOrders = new int[atomCount][];
-        }
-        for (int atomIndex = 0; atomIndex < atomCount; atomIndex++) {
-            IAtom atom = atomContainer.getAtom(atomIndex);
-            List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
-            int numConnAtoms = connectedAtoms.size();
-            connectionTable[atomIndex] = new int[numConnAtoms];
-            if (!ignoreBondOrders) {
-                bondOrders[atomIndex] = new int[numConnAtoms];
-            }
-            int i = 0;
-            for (IAtom connected : connectedAtoms) {
-                int index = atomContainer.indexOf(connected);
-                connectionTable[atomIndex][i] = index;
-                if (!ignoreBondOrders) {
-                    IBond bond = atomContainer.getBond(atom, connected);
-                    boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
-                    int orderNumber = (isArom) ? 5 : bond.getOrder().numeric();
-                    bondOrders[atomIndex][i] = orderNumber;
-                }
-                i++;
-            }
-        }
+    private Refinable getRefinable(IAtomContainer atomContainer) {
+        refinable = new AtomRefinable(atomContainer, ignoreBondOrders);
+        return refinable;
     }
+   
 
     private void setup(IAtomContainer atomContainer) {
         // have to setup the connection table before making the group
         // otherwise the size may be wrong, but only setup if it doesn't exist
-        if (connectionTable == null) {
-            setupConnectionTable(atomContainer);
-        }
+        Refinable refinable = getRefinable(atomContainer);
+        
         int size = getVertexCount();
         PermutationGroup group = new PermutationGroup(new Permutation(size));
-        super.setup(group, new AtomEquitablePartitionRefiner(this));
+        super.setup(group, new AtomEquitablePartitionRefiner(refinable));
     }
 
     private void setup(IAtomContainer atomContainer, PermutationGroup group) {
-        setupConnectionTable(atomContainer);
-        super.setup(group, new AtomEquitablePartitionRefiner(this));
+        super.setup(group, new AtomEquitablePartitionRefiner(getRefinable(atomContainer)));
     }
 }

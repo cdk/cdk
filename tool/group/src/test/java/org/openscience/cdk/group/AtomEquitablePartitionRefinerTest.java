@@ -14,20 +14,20 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class AtomEquitablePartitionRefinerTest extends CDKTestCase {
 
-    public MockAtomRefiner makeExampleTable() {
+    public MockRefinable makeExampleTable() {
         int[][] table = new int[4][];
         table[0] = new int[]{1, 2};
         table[1] = new int[]{0, 3};
         table[2] = new int[]{0, 3};
         table[3] = new int[]{1, 2};
-        return new MockAtomRefiner(table);
+        return new MockRefinable(table);
     }
 
-    public class MockAtomRefiner extends AtomDiscretePartitionRefiner {
+    public class MockRefinable implements Refinable {
 
         public int[][] connections;
 
-        public MockAtomRefiner(int[][] connections) {
+        public MockRefinable(int[][] connections) {
             this.connections = connections;
         }
 
@@ -39,6 +39,18 @@ public class AtomEquitablePartitionRefinerTest extends CDKTestCase {
         @Override
         public int[] getConnectedIndices(int vertexI) {
             return connections[vertexI];
+        }
+
+        @Override
+        public int getConnectivity(int vertexI, int vertexJ) {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public int getMaxConnectivity() {
+            // TODO Auto-generated method stub
+            return 0;
         }
 
     }
@@ -62,7 +74,7 @@ public class AtomEquitablePartitionRefinerTest extends CDKTestCase {
         block.add(1);
         block.add(2);
         block.add(3);
-        Assert.assertEquals(2, refiner.neighboursInBlock(block, 0));
+        Assert.assertEquals(new IntegerInvariant(2), refiner.neighboursInBlock(block, 0));
     }
 
     @Test

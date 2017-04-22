@@ -14,20 +14,20 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class BondEquitablePartitionRefinerTest extends CDKTestCase {
 
-    public MockBondRefiner makeExampleTable() {
+    public Refinable makeExampleTable() {
         int[][] table = new int[4][];
         table[0] = new int[]{1, 2};
         table[1] = new int[]{0, 3};
         table[2] = new int[]{0, 3};
         table[3] = new int[]{1, 2};
-        return new MockBondRefiner(table);
+        return new MockRefinable(table);
     }
 
-    public class MockBondRefiner extends BondDiscretePartitionRefiner {
+    public class MockRefinable implements Refinable {
 
         public int[][] connections;
 
-        public MockBondRefiner(int[][] connections) {
+        public MockRefinable(int[][] connections) {
             this.connections = connections;
         }
 
@@ -39,6 +39,17 @@ public class BondEquitablePartitionRefinerTest extends CDKTestCase {
         @Override
         public int[] getConnectedIndices(int vertexI) {
             return connections[vertexI];
+        }
+
+        @Override
+        public int getConnectivity(int vertexI, int vertexJ) {
+            return connections[vertexI][vertexJ];
+        }
+
+        @Override
+        public int getMaxConnectivity() {
+            // TODO Auto-generated method stub
+            return 0;
         }
 
     }
@@ -62,7 +73,7 @@ public class BondEquitablePartitionRefinerTest extends CDKTestCase {
         block.add(1);
         block.add(2);
         block.add(3);
-        Assert.assertEquals(2, refiner.neighboursInBlock(block, 0));
+        Assert.assertEquals(new IntegerInvariant(2), refiner.neighboursInBlock(block, 0));
     }
 
     @Test

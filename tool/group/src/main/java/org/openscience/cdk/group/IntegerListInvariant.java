@@ -1,4 +1,4 @@
-/* Copyright (C) 2012  Gilleain Torrance <gilleain.torrance@gmail.com>
+/* Copyright (C) 2017  Gilleain Torrance <gilleain.torrance@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,48 +22,46 @@
  */
 package org.openscience.cdk.group;
 
-import java.util.Set;
+import java.util.Arrays;
 
 /**
- * Refiner for atom containers, which refines partitions of the atoms to
- * equitable partitions. Used by the {@link AtomDiscretePartitionRefiner}.
- *
  * @author maclean
  * @cdk.module group
- *
  */
-public class AtomEquitablePartitionRefiner extends AbstractEquitablePartitionRefiner implements
-        IEquitablePartitionRefiner {
-
-    /**
-     * The object being refined.
-     */
-    private final Refinable refinable;
-
-    public AtomEquitablePartitionRefiner(Refinable refinable) {
-        this.refinable = refinable;
+public class IntegerListInvariant implements Invariant {
+    
+    private int[] values;
+    
+    public IntegerListInvariant(int[] values) {
+        this.values = values;
     }
 
-    /**
-     *{@inheritDoc}
-     */
     @Override
-    public Invariant neighboursInBlock(Set<Integer> block, int atomIndex) {
-        int neighbours = 0;
-        for (int connected : refinable.getConnectedIndices(atomIndex)) {
-            if (block.contains(connected)) {
-                neighbours++;
+    public int compareTo(Invariant o) {
+        int[] other = ((IntegerListInvariant)o).values;
+        for (int index = 0; index < values.length; index++) {
+            if (values[index] > other[index]) {
+                return -1;
+            } else if (values[index] < other[index]) {
+                return 1;
+            } else {
+                continue;
             }
         }
-        return new IntegerInvariant(neighbours);
+        return 0;
     }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public int getVertexCount() {
-        return refinable.getVertexCount();
+    
+    public int hashCode() {
+        return Arrays.hashCode(values);
     }
-
+    
+    public boolean equals(Object other) {
+        return other instanceof IntegerListInvariant
+                && Arrays.equals(values, ((IntegerListInvariant)other).values);
+    }
+    
+    public String toString() {
+        return Arrays.toString(values);
+    }
+    
 }

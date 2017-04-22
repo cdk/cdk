@@ -33,35 +33,35 @@ import java.util.Set;
  * @cdk.module group
  *
  */
-public class BondEquitablePartitionRefiner extends AbstractEquitablePartitionRefiner implements
-        IEquitablePartitionRefiner {
+public class BondEquitablePartitionRefiner 
+       extends AbstractEquitablePartitionRefiner implements IEquitablePartitionRefiner {
 
     /**
-     * A reference to the discrete refiner, which has the connectivity info.
+     * The object being refined.
      */
-    private BondDiscretePartitionRefiner discreteRefiner;
+    private Refinable refinable;
 
     /**
-     * Make an equitable partition refiner using the supplied connection table.
+     * Make an equitable partition refiner using the supplied refinable.
      *
      * @param discreteRefiner the connections between vertices
      */
-    public BondEquitablePartitionRefiner(BondDiscretePartitionRefiner discreteRefiner) {
-        this.discreteRefiner = discreteRefiner;
+    public BondEquitablePartitionRefiner(Refinable refinable) {
+        this.refinable = refinable;
     }
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public int neighboursInBlock(Set<Integer> block, int bondIndex) {
+    public Invariant neighboursInBlock(Set<Integer> block, int bondIndex) {
         int neighbours = 0;
-        for (int connected : discreteRefiner.getConnectedIndices(bondIndex)) {
+        for (int connected : refinable.getConnectedIndices(bondIndex)) {
             if (block.contains(connected)) {
                 neighbours++;
             }
         }
-        return neighbours;
+        return new IntegerInvariant(neighbours);
     }
 
     /**
@@ -69,7 +69,7 @@ public class BondEquitablePartitionRefiner extends AbstractEquitablePartitionRef
      */
     @Override
     public int getVertexCount() {
-        return discreteRefiner.getVertexCount();
+        return refinable.getVertexCount();
     }
 
 }
