@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -37,30 +38,31 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class CDK {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDK.class);
+    private static final String RESOURCE_LOCATION = "/build.props";
+    private static volatile String version;
 
     /**
      * Returns the version of this CDK library.
      *
-     * @return A {@link String} representation of the version number.
+     * @return The library version, or null if it could not be found
      */
     public static String getVersion() {
-        String propsFilename = "build.props";
-        Properties props = new Properties();
-        try {
-            InputStream stream = CDK.class.getClassLoader().getResourceAsStream(propsFilename);
+        if (version != null)
+            return version;
+        try (InputStream stream = CDK.class.getResourceAsStream(RESOURCE_LOCATION)) {
             if (stream == null) {
                 // load from JAR (as packaged with maven)
-                return CDK.class.getPackage().getImplementationVersion();
+                version = CDK.class.getPackage().getImplementationVersion();
             }
+            Properties props = new Properties();
             props.load(stream);
-            return props.getProperty("version");
-        } catch (Exception exception) {
+            version = props.getProperty("version");
+            return version;
+        } catch (IOException exception) {
             // there is no back up
-            logger.error("Error while loading the buid.props file: ", exception.getMessage());
+            logger.error("Error while loading the build.props file: ", exception.getMessage());
             logger.debug(exception);
-            exception.printStackTrace();
         }
-        return "ERROR";
+        return null;
     }
-
 }

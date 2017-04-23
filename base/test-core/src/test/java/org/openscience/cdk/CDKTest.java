@@ -18,8 +18,12 @@
  */
 package org.openscience.cdk;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
 
 /**
  * Tests the {@link CDK} helper class functionality.
@@ -30,11 +34,12 @@ public class CDKTest {
 
     @Test
     public void testGetVersion() {
-        Assert.assertNotNull(CDK.getVersion());
-        Assert.assertNotSame(0, CDK.getVersion().length());
-        Assert.assertNotSame("There was an error retrieving the CDK version.", "ERROR", CDK.getVersion());
-        Assert.assertFalse("The CDK version in build.props is not properly overwritten by Maven.", CDK.getVersion()
-                .contains("project.version")); // see for the expected behavior: http://stackoverflow.com/a/3697482/217943
+        String version = CDK.getVersion();
+        Assert.assertNotNull(version);
+        // see for the expected behavior: http://stackoverflow.com/a/3697482/217943
+        Assert.assertThat("The CDK version in build.props is not properly overwritten by Maven.",
+                          version,
+                          not(containsString("project.version")));
     }
 
 }
