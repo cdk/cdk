@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -265,7 +266,7 @@ public class CxSmilesGenerator {
                 sb.append(':');
                 sb.append(sgroup.subscript);
                 sb.append(':');
-                sb.append(sgroup.supscript);
+                sb.append(sgroup.supscript.toLowerCase(Locale.ROOT));
             }
         }
 

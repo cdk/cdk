@@ -865,6 +865,9 @@ public final class SmilesGenerator {
                     case CtabMultipleGroup:
                         // display shortcuts are not output
                         break;
+                    case CtabData:
+                        // can be generated but currently ignored
+                        break;
                     default:
                         throw new UnsupportedOperationException("Unsupported Sgroup Polymer");
 

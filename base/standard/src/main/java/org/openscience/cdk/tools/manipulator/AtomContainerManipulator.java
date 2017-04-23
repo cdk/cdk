@@ -30,6 +30,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -59,6 +60,8 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
@@ -173,6 +176,37 @@ public class AtomContainerManipulator {
         for (IStereoElement se : container.stereoElements())
             stereoremapped.add(se.map(atomremap, bondremap));
         container.setStereoElements(stereoremapped);
+
+        List<Sgroup> sgrougs = container.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgrougs != null) {
+            boolean updated = false;
+            List<Sgroup> replaced = new ArrayList<>();
+            for (Sgroup org : sgrougs) {
+                if (org.getAtoms().contains(oldAtom)) {
+                    updated = true;
+                    Sgroup cpy = new Sgroup();
+                    for (IAtom atom : org.getAtoms()) {
+                        if (atom != oldAtom)
+                            cpy.addAtom(atom);
+                        else
+                            cpy.addAtom(newAtom);
+                    }
+                    for (IBond bond : org.getBonds())
+                        cpy.addBond(bond);
+                    for (Sgroup parent : org.getParents())
+                        cpy.addParent(parent);
+                    for (SgroupKey key : org.getAttributeKeys())
+                        cpy.putValue(key, org.getValue(key));
+                    replaced.add(cpy);
+                } else {
+                    replaced.add(org);
+                }
+            }
+            if (updated) {
+                container.setProperty(CDKConstants.CTAB_SGROUPS,
+                                      Collections.unmodifiableList(replaced));
+            }
+        }
 
         return true;
     }

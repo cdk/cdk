@@ -492,10 +492,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // read potential SD file data between M  END and $$$$
             readNonStructuralData(input, outputContainer);
 
-            if (interpretHydrogenIsotopes.isSet()) {
-                fixHydrogenIsotopes(molecule, Isotopes.getInstance());
-            }
-
             // note: apply the valence model last so that all fixes (i.e. hydrogen
             // isotopes) are in place we need to use a offset as this atoms
             // could be added to a molecule which already had atoms present
@@ -1283,7 +1279,20 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @throws CDKException the symbol is not allowed
      */
     private IAtom createAtom(String symbol, IChemObjectBuilder builder, int lineNum) throws CDKException {
-        if (isPeriodicElement(symbol)) return builder.newInstance(IAtom.class, symbol);
+        if (isPeriodicElement(symbol))
+            return builder.newInstance(IAtom.class, symbol);
+        if (symbol.equals("D") && interpretHydrogenIsotopes.isSet()) {
+            if (mode == Mode.STRICT) throw new CDKException("invalid symbol: " + symbol);
+            IAtom atom = builder.newInstance(IAtom.class, "H");
+            atom.setMassNumber(2);
+            return atom;
+        }
+        if (symbol.equals("T") && interpretHydrogenIsotopes.isSet()) {
+            if (mode == Mode.STRICT) throw new CDKException("invalid symbol: " + symbol);
+            IAtom atom = builder.newInstance(IAtom.class, "H");
+            atom.setMassNumber(3);
+            return atom;
+        }
 
         if (!isPseudoElement(symbol)) {
             handleError("invalid symbol: " + symbol, lineNum, 31, 34);
