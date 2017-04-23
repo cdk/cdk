@@ -907,7 +907,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         IAtom deuterium = molecule.getAtom(molecule.getAtomCount() - 1);
         assertTrue(1 == deuterium.getAtomicNumber());
-        assertTrue(2.014101778 == deuterium.getExactMass());
+        assertTrue(2 == deuterium.getMassNumber());
     }
 
     @Test
@@ -935,7 +935,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         IAtom tritium = molecule.getAtom(molecule.getAtomCount() - 1);
         assertTrue(1 == tritium.getAtomicNumber());
-        assertTrue(3.016049278 == tritium.getExactMass());
+        assertTrue(3 == tritium.getMassNumber());
     }
 
     /**
