@@ -75,16 +75,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class HybridizationFingerprinter extends Fingerprinter implements IFingerprinter {
 
-    /** The default length of created fingerprints. */
-    public final static int                  DEFAULT_SIZE         = 1024;
-    /** The default search depth used to create the fingerprints. */
-    public final static int                  DEFAULT_SEARCH_DEPTH = 7;
-
-    private int                              size;
-    private int                              searchDepth;
-
-    static int                               debugCounter         = 0;
-
     /**
      * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
      * and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
@@ -106,29 +96,7 @@ public class HybridizationFingerprinter extends Fingerprinter implements IFinger
      * @param  searchDepth The desired depth of search
      */
     public HybridizationFingerprinter(int size, int searchDepth) {
-        this.size = size;
-        this.searchDepth = searchDepth;
-
-    }
-
-    /**
-     * Generates a fingerprint of the default size for the given AtomContainer.
-     *
-     * @param  container The {@link IAtomContainer} for which a fingerprint is
-     *                   generated.
-     */
-    @Override
-    public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
-        BitSet bitSet = new BitSet(size);
-        try {
-            // should avoid the clone
-            IAtomContainer clonedContainer = (IAtomContainer) container.clone();
-            AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(clonedContainer);
-            encodePaths(container, searchDepth, bitSet, size);
-        } catch (CloneNotSupportedException exception) {
-            throw new CDKException("Exception while cloning the input: " + exception.getMessage(), exception);
-        }
-        return new BitSetFingerprint(bitSet);
+        super(size, searchDepth);
     }
 
     /**
@@ -162,31 +130,7 @@ public class HybridizationFingerprinter extends Fingerprinter implements IFinger
      * Returns true if the bond binds two atoms, and both atoms are SP2.
      */
     private boolean isSP2Bond(IBond bond) {
-        if (bond.getAtomCount() == 2 && bond.getAtom(0).getHybridization() == Hybridization.SP2
-                && bond.getAtom(1).getHybridization() == Hybridization.SP2) return true;
-        return false;
+        return bond.getAtomCount() == 2 && bond.getAtom(0).getHybridization() == Hybridization.SP2
+               && bond.getAtom(1).getHybridization() == Hybridization.SP2;
     }
-
-    public int getSearchDepth() {
-        return searchDepth;
-    }
-
-    @Override
-    public int getSize() {
-        return size;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Map<String, Integer> getRawFingerprint(IAtomContainer container) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
-        throw new UnsupportedOperationException();
-    }
-
 }
