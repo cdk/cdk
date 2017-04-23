@@ -24,7 +24,12 @@
 package org.openscience.cdk.smiles;
 
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -80,6 +85,21 @@ public class CxSmilesGeneratorTest {
         state.atomRads.put(4, CxSmilesState.Radical.Divalent);
         assertThat(CxSmilesGenerator.generate(state, SmiFlavor.CxSmiles, new int[0], new int[]{7, 6, 5, 4, 3, 2, 1, 0}),
                    is(" |^1:1,5,^2:3|"));
+    }
+
+    /**
+     * Integration - test used to fail because the D (pseudo) was swapped out with a 2H after Sgroups were
+     * initialized.
+     */
+    @Test
+    public void chebi53695() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("CHEBI_53695.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles | SmiFlavor.AtomicMassStrict);
+            assertThat(smigen.create(mol),
+                       is("C(C(=O)OC)(C*)*C(C(C1=C(C(=C(C(=C1[2H])[2H])[2H])[2H])[2H])(*)[2H])([2H])[2H] |Sg:n:0,1,2,3,4,5:n:ht,Sg:n:8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24:m:ht|"));
+        }
     }
 
 }
