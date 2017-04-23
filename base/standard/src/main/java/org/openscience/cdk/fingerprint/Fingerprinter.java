@@ -95,7 +95,7 @@ import java.util.Set;
 public class Fingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     /** Throw an exception if too many paths (per atom) are generated. */
-    private final static int                 DEFAULT_PATH_LIMIT   = 1500;
+    private final static int                 DEFAULT_PATH_LIMIT   = 42000;
 
     /** The default length of created fingerprints. */
     public final static int                  DEFAULT_SIZE         = 1024;

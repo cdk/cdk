@@ -184,7 +184,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         Assert.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
-        Fingerprinter fingerprinter = new Fingerprinter();
+        Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
         Assert.assertNotNull(fingerprinter.getBitFingerprint(mol));
     }
 
