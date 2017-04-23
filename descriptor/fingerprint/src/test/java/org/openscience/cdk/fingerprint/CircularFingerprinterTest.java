@@ -42,7 +42,10 @@ import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.exception.CDKException;
@@ -334,6 +337,13 @@ public class CircularFingerprinterTest extends CDKTestCase {
         a.setPoint2d(new Point2d(x,y));
         a.setImplicitHydrogenCount(h);
         return a;
+    }
+
+    @Test public void testVersion() {
+        IFingerprinter fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
+        String expected = "CDK-CircularFingerprinter/" + CDK.getVersion() + " classType=ECFP4";
+        Assert.assertThat(fpr.getVersionDescription(),
+                          CoreMatchers.is(expected));
     }
 
 }

@@ -28,8 +28,11 @@
 
 package org.openscience.cdk.fingerprint;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,6 +189,24 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             throw new IllegalArgumentException("Invalid classType specified: " + classType);
         this.classType = classType;
         this.length = len;
+    }
+
+    @Override
+    protected List<Map.Entry<String, String>> getParameters() {
+        String type = null;
+        switch (classType) {
+            case CLASS_ECFP0: type = "ECFP0"; break;
+            case CLASS_ECFP2: type = "ECFP2"; break;
+            case CLASS_ECFP4: type = "ECFP4"; break;
+            case CLASS_ECFP6: type = "ECFP6"; break;
+            case CLASS_FCFP0: type = "FCFP0"; break;
+            case CLASS_FCFP2: type = "FCFP2"; break;
+            case CLASS_FCFP4: type = "FCFP4"; break;
+            case CLASS_FCFP6: type = "FCFP6"; break;
+        }
+        return Collections.<Map.Entry<String,String>>singletonList(
+            new AbstractMap.SimpleImmutableEntry<>("classType", type)
+        );
     }
 
     /**

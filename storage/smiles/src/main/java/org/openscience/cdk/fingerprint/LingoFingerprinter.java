@@ -30,7 +30,11 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -72,6 +76,13 @@ public class LingoFingerprinter extends AbstractFingerprinter implements IFinger
      */
     public LingoFingerprinter(int n) {
         this.n = n;
+    }
+
+    @Override
+    protected List<Map.Entry<String, String>> getParameters() {
+        return Collections.<Map.Entry<String,String>>singletonList(
+            new AbstractMap.SimpleImmutableEntry<>("ngramLength", Integer.toString(n))
+        );
     }
 
     @Override
