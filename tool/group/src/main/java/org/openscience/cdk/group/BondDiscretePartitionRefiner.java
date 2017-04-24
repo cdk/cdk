@@ -75,13 +75,12 @@ import org.openscience.cdk.interfaces.IBond;
  *     PermutationGroup autG = refiner.getAutomorphismGroup();
  * </pre>
  *
- * This way, the refinement is not carried out multiple times. Finally, remember
- * to call {@link #reset} if the refiner is re-used on multiple structures.
+ * This way, the refinement is not carried out multiple times.
  *
  * @author maclean
  * @cdk.module group
  */
-public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefiner {
+public class BondDiscretePartitionRefiner extends AtomContainerDiscretePartitionRefiner {
 
     private BondRefinable refinable;
 
@@ -124,24 +123,13 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     }
 
     /**
-     * Used by the equitable refiner to get the indices of bonds connected to
-     * the bond at <code>bondIndex</code>.
-     *
-     * @param bondIndex the index of the incident bond
-     * @return an array of bond indices
-     */
-    public int[] getConnectedIndices(int bondIndex) {
-        return refinable.getConnectedIndices(bondIndex);
-    }
-
-    /**
      * Get the bond partition, based on the element types of the atoms at either end
      * of the bond, and the bond order.
      *
      * @param atomContainer the container with the bonds to partition
      * @return a partition of the bonds based on the element types and bond order
      */
-    public Partition getBondPartition(IAtomContainer atomContainer) {
+    public Partition getInitialPartition(IAtomContainer atomContainer) {
         int bondCount = atomContainer.getBondCount();
         Map<String, SortedSet<Integer>> cellMap = new HashMap<String, SortedSet<Integer>>();
 
@@ -188,115 +176,9 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         bondPartition.order();
         return bondPartition;
     }
-
-
-    /**
-     * Refine an atom container, which has the side effect of calculating
-     * the automorphism group.
-     *
-     * If the group is needed afterwards, call {@link #getAutomorphismGroup()}
-     * instead of {@link #getAutomorphismGroup(IAtomContainer)} otherwise the
-     * refine method will be called twice.
-     *
-     * @param atomContainer the atomContainer to refine
-     */
-    public void refine(IAtomContainer atomContainer) {
-        refine(atomContainer, getBondPartition(atomContainer));
-    }
-
-    /**
-     * Refine a bond partition based on the connectivity in the atom container.
-     *
-     * @param partition the initial partition of the bonds
-     * @param atomContainer the atom container to use
-     */
-    public void refine(IAtomContainer atomContainer, Partition partition) {
-        setup(atomContainer);
-        super.refine(partition);
-    }
-
-    /**
-     * Checks if the atom container is canonical. Note that this calls
-     * {@link #refine} first.
-     *
-     * @param atomContainer the atom container to check
-     * @return true if the atom container is canonical
-     */
-    public boolean isCanonical(IAtomContainer atomContainer) {
-        setup(atomContainer);
-        super.refine(getBondPartition(atomContainer));
-        return isCanonical();
-    }
-
-    /**
-     * Gets the automorphism group of the atom container. By default it uses an
-     * initial partition based on the bond 'types' (so all the C-C bonds are in
-     * one cell, all the C=N in another, etc). If this behaviour is not
-     * desired, then use the {@link #ignoreBondOrders} flag in the constructor.
-     *
-     * @param atomContainer the atom container to use
-     * @return the automorphism group of the atom container
-     */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer) {
-        setup(atomContainer);
-        super.refine(getBondPartition(atomContainer));
-        return super.getAutomorphismGroup();
-    }
-
-    /**
-     * Speed up the search for the automorphism group using the automorphisms in
-     * the supplied group. Note that the behaviour of this method is unknown if
-     * the group does not contain automorphisms...
-     *
-     * @param atomContainer the atom container to use
-     * @param group the group of known automorphisms
-     * @return the full automorphism group
-     */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group) {
-        setup(atomContainer, group);
-        super.refine(getBondPartition(atomContainer));
-        return getAutomorphismGroup();
-    }
-
-    /**
-     * Get the automorphism group of the molecule given an initial partition.
-     *
-     * @param atomContainer the atom container to use
-     * @param initialPartition an initial partition of the bonds
-     * @return the automorphism group starting with this partition
-     */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition) {
-        setup(atomContainer);
-        super.refine(initialPartition);
-        return super.getAutomorphismGroup();
-    }
-
-    /**
-     * Get the automorphism partition (equivalence classes) of the bonds.
-     *
-     * @param atomContainer the molecule to calculate equivalence classes for
-     * @return a partition of the bonds into equivalence classes
-     */
-    public Partition getAutomorphismPartition(IAtomContainer atomContainer) {
-        setup(atomContainer);
-        super.refine(getBondPartition(atomContainer));
-        return super.getAutomorphismPartition();
-    }
     
-    private Refinable getRefinable(IAtomContainer atomContainer) {
+    protected Refinable getRefinable(IAtomContainer atomContainer) {
         refinable = new BondRefinable(atomContainer, ignoreBondOrders);
         return refinable;
     }
-
-    private void setup(IAtomContainer atomContainer) {
-        Refinable refinable = getRefinable(atomContainer);
-        int size = getVertexCount();
-        PermutationGroup group = new PermutationGroup(new Permutation(size));
-        super.setup(group, new BondEquitablePartitionRefiner(refinable));
-    }
-
-    private void setup(IAtomContainer atomContainer, PermutationGroup group) {
-        super.setup(group, new BondEquitablePartitionRefiner(getRefinable(atomContainer)));
-    }
-
 }

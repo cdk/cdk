@@ -44,7 +44,9 @@ import java.util.TreeSet;
  * @author maclean
  * @cdk.module group
  */
-public abstract class AbstractEquitablePartitionRefiner {
+public class EquitablePartitionRefiner {
+    
+    private final Refinable refinable;
 
     /**
      * A forward split order tends to favor partitions where the cells are
@@ -71,13 +73,19 @@ public abstract class AbstractEquitablePartitionRefiner {
      */
     private Queue<Set<Integer>> blocksToRefine;
 
+    public EquitablePartitionRefiner(Refinable refinable) {
+        this.refinable = refinable;
+    }
+    
     /**
      * Gets from the graph the number of vertices. Abstract to allow different
      * graph classes to be used (eg: Graph or IAtomContainer, etc).
      *
      * @return the number of vertices
      */
-    public abstract int getVertexCount();
+    public int getVertexCount() {
+        return refinable.getVertexCount();
+    }
 
     /**
      * Find |a &cap; b| - that is, the size of the intersection between a and b.
@@ -86,7 +94,16 @@ public abstract class AbstractEquitablePartitionRefiner {
      * @param vertexIndex the element to compare
      * @return the size of the intersection
      */
-    public abstract Invariant neighboursInBlock(Set<Integer> block, int vertexIndex);
+    public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
+        int neighbours = 0;
+        for (int connected : refinable.getConnectedIndices(vertexIndex)) {
+            if (block.contains(connected)) {
+                neighbours++;
+            }
+        }
+        return new IntegerInvariant(neighbours);
+    }
+    
 
     /**
      * Set the preference for splitting cells.

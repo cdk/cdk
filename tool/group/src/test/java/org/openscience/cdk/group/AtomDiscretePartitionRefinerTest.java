@@ -79,7 +79,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
         String acpString = "C0N1C2P3C4N5";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
-        Partition elPartition = refiner.getElementPartition(ac);
+        Partition elPartition = refiner.getInitialPartition(ac);
         Partition expected = Partition.fromString("0,2,4|1,5|3");
         Assert.assertEquals(expected, elPartition);
     }

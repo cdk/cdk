@@ -77,7 +77,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         String acpString = "C0C1C2C3O4 0:1(2),0:4(1),1:2(1),2:3(2),3:4(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-        Partition bondPartition = refiner.getBondPartition(ac);
+        Partition bondPartition = refiner.getInitialPartition(ac);
         Partition expected = Partition.fromString("0,3|1,4|2");
         Assert.assertEquals(expected, bondPartition);
     }
@@ -178,18 +178,6 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         refiner.refine(ac);
         Assert.assertEquals(1, refiner.getConnectivity(0, 1));
-    }
-
-    @Test
-    public void getConnectedIndicesTest() {
-        String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
-        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
-        BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-        refiner.refine(ac);
-        int[] expected = new int[]{0, 3};
-        int[] observed = refiner.getConnectedIndices(1);
-        Assert.assertTrue("Expected : " + Arrays.toString(expected) + " but was " + Arrays.toString(observed),
-                Arrays.equals(expected, observed));
     }
 
     @Test

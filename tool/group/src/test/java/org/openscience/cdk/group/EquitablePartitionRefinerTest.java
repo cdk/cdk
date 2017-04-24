@@ -12,7 +12,7 @@ import org.openscience.cdk.CDKTestCase;
  * @author maclean
  * @cdk.module test-group
  */
-public class AtomEquitablePartitionRefinerTest extends CDKTestCase {
+public class EquitablePartitionRefinerTest extends CDKTestCase {
 
     public MockRefinable makeExampleTable() {
         int[][] table = new int[4][];
@@ -43,33 +43,36 @@ public class AtomEquitablePartitionRefinerTest extends CDKTestCase {
 
         @Override
         public int getConnectivity(int vertexI, int vertexJ) {
-            // TODO Auto-generated method stub
+            for (int connected : connections[vertexI]) {
+                if (connected == vertexJ) {
+                    return 1;
+                }
+            }
             return 0;
         }
 
         @Override
         public int getMaxConnectivity() {
-            // TODO Auto-generated method stub
-            return 0;
+            return 1;
         }
 
     }
 
     @Test
     public void constructorTest() {
-        AtomEquitablePartitionRefiner refiner = new AtomEquitablePartitionRefiner(makeExampleTable());
+        EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
         Assert.assertNotNull(refiner);
     }
 
     @Test
     public void getVertexCountTest() {
-        AtomEquitablePartitionRefiner refiner = new AtomEquitablePartitionRefiner(makeExampleTable());
+        EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
         Assert.assertEquals(4, refiner.getVertexCount());
     }
 
     @Test
     public void neighboursInBlockTest() {
-        AtomEquitablePartitionRefiner refiner = new AtomEquitablePartitionRefiner(makeExampleTable());
+        EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
         Set<Integer> block = new HashSet<Integer>();
         block.add(1);
         block.add(2);
@@ -79,7 +82,7 @@ public class AtomEquitablePartitionRefinerTest extends CDKTestCase {
 
     @Test
     public void refineTest() {
-        AtomEquitablePartitionRefiner refiner = new AtomEquitablePartitionRefiner(makeExampleTable());
+        EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
         Partition coarser = Partition.fromString("[0|1,2,3]");
         Partition finer = refiner.refine(coarser);
         Partition expected = Partition.fromString("[0|1,2|3]");

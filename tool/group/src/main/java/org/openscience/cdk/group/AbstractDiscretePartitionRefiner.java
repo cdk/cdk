@@ -64,7 +64,7 @@ public abstract class AbstractDiscretePartitionRefiner {
     /**
      * An equitable refiner.
      */
-    private IEquitablePartitionRefiner equitableRefiner;
+    private EquitablePartitionRefiner equitableRefiner;
 
     /**
      * The automorphism group that is used to prune the search.
@@ -85,7 +85,7 @@ public abstract class AbstractDiscretePartitionRefiner {
      *
      * @return a count of the vertices in the underlying graph
      */
-    public abstract int getVertexCount();
+    protected abstract int getVertexCount();
 
     /**
      * Get the connectivity between two vertices as an integer, to allow
@@ -96,7 +96,7 @@ public abstract class AbstractDiscretePartitionRefiner {
      * @param vertexJ a vertex of the graph
      * @return the multiplicity of the edge (0, 1, 2, 3, ...)
      */
-    public abstract int getConnectivity(int vertexI, int vertexJ);
+    protected abstract int getConnectivity(int vertexI, int vertexJ);
 
     /**
      * Setup the group and refiner; it is important to call this method before
@@ -105,7 +105,7 @@ public abstract class AbstractDiscretePartitionRefiner {
      * @param group a group (possibly empty) of automorphisms
      * @param refiner the equitable refiner
      */
-    public void setup(PermutationGroup group, IEquitablePartitionRefiner refiner) {
+    public void setup(PermutationGroup group, EquitablePartitionRefiner refiner) {
         this.bestExist = false;
         this.best = null;
         this.group = group;

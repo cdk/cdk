@@ -1,5 +1,6 @@
 package org.openscience.cdk.group;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -43,11 +44,11 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
 
     }
 
-    public class MockEqRefiner extends AbstractEquitablePartitionRefiner implements IEquitablePartitionRefiner {
-
-        public Graph graph;
-
-        public MockEqRefiner(Graph graph) {
+    private class GraphRefinable implements Refinable {
+        
+        private final Graph graph;
+        
+        public GraphRefinable(Graph graph) {
             this.graph = graph;
         }
 
@@ -57,19 +58,32 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         }
 
         @Override
-        public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
-            //            System.out.println("calling NIB for " + block + " " + vertexIndex);
-            int neighbours = 0;
-            int n = getVertexCount();
-            for (int i = 0; i < n; i++) {
-                if (graph.connectionTable[vertexIndex][i] == 1 && block.contains(i)) {
-                    neighbours++;
-                }
-            }
-            //            System.out.println(neighbours + " neighbours");
-            return new IntegerInvariant(neighbours);
+        public int getConnectivity(int vertexI, int vertexJ) {
+            return graph.connectionTable[vertexI][vertexJ];
         }
 
+        @Override
+        public int[] getConnectedIndices(int vertexIndex) {
+            Set<Integer> connectedSet = new HashSet<Integer>();
+            for (int index = 0; index < graph.connectionTable.length; index++) {
+                if (graph.connectionTable[vertexIndex][index] == 1) {
+                    connectedSet.add(index);
+                }
+            }
+            int[] connections = new int[connectedSet.size()];
+            int index = 0;
+            for (int connected : connectedSet) {
+                connections[index] = connected;
+                index++;
+            }
+            return connections;
+        }
+
+        @Override
+        public int getMaxConnectivity() {
+            return 1;   // TODO?
+        }
+        
     }
 
     @Test
@@ -94,6 +108,10 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         MockRefiner refiner = new MockRefiner(g);
         Assert.assertEquals(1, refiner.getConnectivity(0, 1));
     }
+    
+    private void setup(MockRefiner refiner, PermutationGroup group, Graph g) {
+        refiner.setup(group, new EquitablePartitionRefiner(new GraphRefinable(g)));
+    }
 
     @Test
     public void setupTest() {
@@ -101,7 +119,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         PermutationGroup group = new PermutationGroup(n);
         Graph g = new Graph(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         Assert.assertEquals(group, refiner.getAutomorphismGroup());
     }
 
@@ -112,7 +130,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         g.connectionTable = new int[][]{{0, 1, 1}, {1, 0, 0}, {1, 0, 0}};
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
         Assert.assertTrue(refiner.firstIsIdentity());
     }
@@ -124,7 +142,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         g.connectionTable = new int[][]{{0, 1, 1}, {1, 0, 0}, {1, 0, 0}};
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
         Partition autPartition = refiner.getAutomorphismPartition();
         Partition expected = Partition.fromString("0|1,2");
@@ -149,7 +167,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
         String hms = refiner.getBestHalfMatrixString();
         String expected = "110";
@@ -163,7 +181,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         g.connectionTable = new int[][]{{0, 0, 1}, {0, 0, 1}, {1, 1, 0}};
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
         String hms = refiner.getFirstHalfMatrixString();
         String expected = "110";
@@ -177,7 +195,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         Assert.assertNotNull(refiner.getAutomorphismGroup());
     }
 
@@ -188,7 +206,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
         Permutation best = refiner.getBest();
         Permutation expected = new Permutation(1, 0, 2);
@@ -202,7 +220,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
         Permutation first = refiner.getFirst();
         Permutation expected = new Permutation(1, 0, 2);
@@ -216,7 +234,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         g.connectionTable = new int[][]{{0, 1, 1}, {1, 0, 0}, {1, 0, 0}};
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
         Assert.assertTrue(refiner.isCanonical());
     }
@@ -228,7 +246,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
         Assert.assertFalse(refiner.isCanonical());
     }
@@ -240,7 +258,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         g.connectionTable = new int[][]{{0, 1, 1}, {1, 0, 0}, {1, 0, 0}};
         PermutationGroup group = new PermutationGroup(n);
         MockRefiner refiner = new MockRefiner(g);
-        refiner.setup(group, new MockEqRefiner(g));
+        setup(refiner, group, g);
         refiner.refine(Partition.unit(n));
         Assert.assertNotNull(refiner);
     }
