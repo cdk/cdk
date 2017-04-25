@@ -54,7 +54,7 @@ public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAto
                 clonedBond.setAtoms(new IAtom[clonedBond.getAtomCount()]);
                 int i = 0;
                 for (IAtom atom : bond.atoms()) {
-                    int index = atomContainer.getAtomNumber(atom);
+                    int index = atomContainer.indexOf(atom);
                     IAtom permutedAtom = permutedContainer.getAtom(p[index]);
                     clonedBond.setAtom(permutedAtom, i++);
                 }

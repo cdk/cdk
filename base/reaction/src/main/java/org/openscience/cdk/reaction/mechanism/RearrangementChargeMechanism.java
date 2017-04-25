@@ -88,13 +88,13 @@ public class RearrangementChargeMechanism implements IReactionMechanism {
             throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);// Atom with the charge
-        IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
+        IAtom atom1C = reactantCloned.getAtom(molecule.indexOf(atom1));
         IAtom atom3 = atomList.get(2);// Atom which acquires the charge
-        IAtom atom3C = reactantCloned.getAtom(molecule.getAtomNumber(atom3));
+        IAtom atom3C = reactantCloned.getAtom(molecule.indexOf(atom3));
         IBond bond1 = bondList.get(0);// Bond with single bond
-        int posBond1 = molecule.getBondNumber(bond1);
+        int posBond1 = molecule.indexOf(bond1);
         IBond bond2 = bondList.get(1);// Bond with double bond
-        int posBond2 = molecule.getBondNumber(bond2);
+        int posBond2 = molecule.indexOf(bond2);
 
         BondManipulator.increaseBondOrder(reactantCloned.getBond(posBond1));
         if (bond2.getOrder() == IBond.Order.SINGLE)
@@ -146,7 +146,7 @@ public class RearrangementChargeMechanism implements IReactionMechanism {
         /* mapping */
         for (IAtom atom : molecule.atoms()) {
             IMapping mapping = bond2.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+                    reactantCloned.getAtom(molecule.indexOf(atom)));
             reaction.addMapping(mapping);
         }
         if (bond2.getOrder() != IBond.Order.SINGLE) {

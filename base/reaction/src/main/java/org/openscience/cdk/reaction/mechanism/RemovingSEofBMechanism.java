@@ -83,11 +83,11 @@ public class RemovingSEofBMechanism implements IReactionMechanism {
         }
 
         IAtom atom1 = atomList.get(0);
-        IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
+        IAtom atom1C = reactantCloned.getAtom(molecule.indexOf(atom1));
         IAtom atom2 = atomList.get(1);
-        IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
+        IAtom atom2C = reactantCloned.getAtom(molecule.indexOf(atom2));
         IBond bond1 = bondList.get(0);
-        int posBond1 = molecule.getBondNumber(bond1);
+        int posBond1 = molecule.indexOf(bond1);
 
         if (bond1.getOrder() == IBond.Order.SINGLE)
             reactantCloned.removeBond(reactantCloned.getBond(posBond1));
@@ -114,7 +114,7 @@ public class RemovingSEofBMechanism implements IReactionMechanism {
         /* mapping */
         for (IAtom atom : molecule.atoms()) {
             IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+                    reactantCloned.getAtom(molecule.indexOf(atom)));
             reaction.addMapping(mapping);
         }
         if (bond1.getOrder() != IBond.Order.SINGLE) {

@@ -71,10 +71,10 @@ public class AbstractReactionLabeller {
 
         for (IAtom key : atomAtom.keySet()) {
             IAtomContainer keyAC = ReactionManipulator.getRelevantAtomContainer(reaction, key);
-            int keyIndex = keyAC.getAtomNumber(key);
+            int keyIndex = keyAC.indexOf(key);
             IAtom value = atomAtom.get(key);
             IAtomContainer valueAC = ReactionManipulator.getRelevantAtomContainer(clone, value);
-            int valueIndex = valueAC.getAtomNumber(value);
+            int valueIndex = valueAC.indexOf(value);
             System.out.println("key " + keyIndex + key.getSymbol() + " mapped to " + valueIndex + value.getSymbol());
         }
 

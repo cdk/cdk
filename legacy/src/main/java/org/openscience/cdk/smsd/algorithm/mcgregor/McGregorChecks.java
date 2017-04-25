@@ -507,13 +507,13 @@ public class McGregorChecks {
             IAtomContainer atomContainer, List<String> cBondNeighbors) {
         for (int atomIndex = 0; atomIndex < neighborBondNum; atomIndex++) {
             IBond bond = atomContainer.getBond(atomIndex);
-            if ((atomContainer.getAtomNumber(bond.getAtom(0)) == correspondingAtom)
+            if ((atomContainer.indexOf(bond.getAtom(0)) == correspondingAtom)
                     && (cBondNeighbors.get(atomIndex * 4 + 2).compareToIgnoreCase("X") == 0)) {
                 cBondNeighbors.set(atomIndex * 4 + 2, cBondNeighbors.get(atomIndex * 4 + 0));
                 cBondNeighbors.set(atomIndex * 4 + 0, newSymbol);
             }
 
-            if ((atomContainer.getAtomNumber(bond.getAtom(1)) == correspondingAtom)
+            if ((atomContainer.indexOf(bond.getAtom(1)) == correspondingAtom)
                     && (cBondNeighbors.get(atomIndex * 4 + 3).compareToIgnoreCase("X") == 0)) {
                 cBondNeighbors.set(atomIndex * 4 + 3, cBondNeighbors.get(atomIndex * 4 + 1));
                 cBondNeighbors.set(atomIndex * 4 + 1, newSymbol);

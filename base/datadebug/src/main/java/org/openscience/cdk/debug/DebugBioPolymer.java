@@ -182,7 +182,7 @@ public class DebugBioPolymer extends BioPolymer implements IBioPolymer {
     @Override
     public int getAtomNumber(IAtom atom) {
         logger.debug("Getting atom number: ", atom);
-        return super.getAtomNumber(atom);
+        return super.indexOf(atom);
     }
 
     /** {@inheritDoc} */
@@ -196,7 +196,7 @@ public class DebugBioPolymer extends BioPolymer implements IBioPolymer {
     @Override
     public int getBondNumber(IBond bond) {
         logger.debug("Getting bond number: ", bond);
-        return super.getBondNumber(bond);
+        return super.indexOf(bond);
     }
 
     /** {@inheritDoc} */

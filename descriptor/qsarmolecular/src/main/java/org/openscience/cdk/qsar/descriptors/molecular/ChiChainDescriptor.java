@@ -227,7 +227,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
                 Iterator<IAtom> iter = ring.atoms().iterator();
                 while (iter.hasNext()) {
                     IAtom atom = iter.next();
-                    tmp.add(container.getAtomNumber(atom));
+                    tmp.add(container.indexOf(atom));
                 }
                 ret.add(tmp);
             }

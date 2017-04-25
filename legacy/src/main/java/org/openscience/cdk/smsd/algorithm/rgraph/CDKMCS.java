@@ -487,7 +487,7 @@ public class CDKMCS {
                 for (IAtom atom : sourceGraph.atoms()) {
                     if (qAtom.matches(atom)) {
                         List<CDKRMap> lmap = new ArrayList<CDKRMap>();
-                        lmap.add(new CDKRMap(sourceGraph.getAtomNumber(atom), 0));
+                        lmap.add(new CDKRMap(sourceGraph.indexOf(atom), 0));
                         matches.add(lmap);
                     }
                 }
@@ -495,7 +495,7 @@ public class CDKMCS {
                 for (IAtom atom : sourceGraph.atoms()) {
                     if (queryAtom.getSymbol().equals(atom.getSymbol())) {
                         List<CDKRMap> lmap = new ArrayList<CDKRMap>();
-                        lmap.add(new CDKRMap(sourceGraph.getAtomNumber(atom), 0));
+                        lmap.add(new CDKRMap(sourceGraph.indexOf(atom), 0));
                         matches.add(lmap);
                     }
                 }
@@ -732,29 +732,29 @@ public class CDKMCS {
                         IBond testBond = bondsConnectedToAtom1j.get(k);
                         for (int m = 0; m < list.size(); m++) {
                             IBond testBond2;
-                            if ((list.get(m)).getId1() == sourceGraph.getBondNumber(testBond)) {
+                            if ((list.get(m)).getId1() == sourceGraph.indexOf(testBond)) {
                                 testBond2 = targetGraph.getBond((list.get(m)).getId2());
                                 for (int n = 0; n < 2; n++) {
                                     List<IBond> bondsToTest = targetGraph.getConnectedBondsList(atom2[n]);
                                     if (bondsToTest.contains(testBond2)) {
                                         CDKRMap map;
                                         if (j == n) {
-                                            map = new CDKRMap(sourceGraph.getAtomNumber(atom1[0]),
-                                                    targetGraph.getAtomNumber(atom2[0]));
+                                            map = new CDKRMap(sourceGraph.indexOf(atom1[0]),
+                                                    targetGraph.indexOf(atom2[0]));
                                         } else {
-                                            map = new CDKRMap(sourceGraph.getAtomNumber(atom1[1]),
-                                                    targetGraph.getAtomNumber(atom2[0]));
+                                            map = new CDKRMap(sourceGraph.indexOf(atom1[1]),
+                                                    targetGraph.indexOf(atom2[0]));
                                         }
                                         if (!result.contains(map)) {
                                             result.add(map);
                                         }
                                         CDKRMap map2;
                                         if (j == n) {
-                                            map2 = new CDKRMap(sourceGraph.getAtomNumber(atom1[1]),
-                                                    targetGraph.getAtomNumber(atom2[1]));
+                                            map2 = new CDKRMap(sourceGraph.indexOf(atom1[1]),
+                                                    targetGraph.indexOf(atom2[1]));
                                         } else {
-                                            map2 = new CDKRMap(sourceGraph.getAtomNumber(atom1[0]),
-                                                    targetGraph.getAtomNumber(atom2[1]));
+                                            map2 = new CDKRMap(sourceGraph.indexOf(atom1[0]),
+                                                    targetGraph.indexOf(atom2[1]));
                                         }
                                         if (!result.contains(map2)) {
                                             result.add(map2);

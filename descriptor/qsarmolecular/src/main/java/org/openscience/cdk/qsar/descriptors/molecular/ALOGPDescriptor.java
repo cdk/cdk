@@ -1221,7 +1221,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             java.util.List ca2 = atomContainer.getConnectedAtomsList((IAtom) ca.get(j));
             for (int k = 0; k <= ca2.size() - 1; k++) {
                 IAtom ca2k = (IAtom) ca2.get(k);
-                if (atomContainer.getAtomNumber(ca2k) != i) {
+                if (atomContainer.indexOf(ca2k) != i) {
                     if (!ca2k.getSymbol().equals("C")) {
                         if (!ca2k.getFlag(CDKConstants.ISAROMATIC)
                                 && !((IAtom) ca.get(j)).getFlag(CDKConstants.ISAROMATIC)
@@ -1294,9 +1294,9 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             boolean ar = false;
 
             for (int j = 0; j <= ca.size() - 1; j++) {
-                if (fragment[atomContainer.getAtomNumber(((IAtom) ca.get(j)))].equals("SsOm")) {
+                if (fragment[atomContainer.indexOf(((IAtom) ca.get(j)))].equals("SsOm")) {
                     haveSsOm = true;
-                } else if (fragment[atomContainer.getAtomNumber(((IAtom) ca.get(j)))].equals("SdO")) {
+                } else if (fragment[atomContainer.indexOf(((IAtom) ca.get(j)))].equals("SdO")) {
                     haveSdO = true;
                 } else {
                     if (((IAtom) ca.get(j)).getFlag(CDKConstants.ISAROMATIC)) {
@@ -1871,8 +1871,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             boolean haveTwo = false;
 
             for (int j = 0; j <= r.getAtomCount() - 1; j++) {
-                if (atomContainer.getAtomNumber(r.getAtom(j)) == atomContainer.getAtomNumber(atom1)) haveOne = true;
-                if (atomContainer.getAtomNumber(r.getAtom(j)) == atomContainer.getAtomNumber(atom2)) haveTwo = true;
+                if (atomContainer.indexOf(r.getAtom(j)) == atomContainer.indexOf(atom1)) haveOne = true;
+                if (atomContainer.indexOf(r.getAtom(j)) == atomContainer.indexOf(atom2)) haveTwo = true;
             }
 
             if (haveOne && haveTwo) {

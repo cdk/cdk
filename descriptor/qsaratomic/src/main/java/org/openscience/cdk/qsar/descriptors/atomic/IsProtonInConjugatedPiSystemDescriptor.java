@@ -134,7 +134,7 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(
                     false), NAMES, e);
         }
-        IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
+        IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.indexOf(atom));
 
         boolean isProtonInPiSystem = false;
         IAtomContainer mol = clonedAtom.getBuilder().newInstance(IAtomContainer.class, clonedAtomContainer);

@@ -143,8 +143,8 @@ public class SpanningTree {
             vertex1 = Integer.parseInt((bond.getAtom(0)).getProperty(ATOM_NUMBER).toString());
             vertex2 = Integer.parseInt((bond.getAtom(1)).getProperty(ATOM_NUMBER).toString());
             //this below is a little bit  slower
-            //v1 = atomContainer.getAtomNumber(bond.getAtomAt(0))+1;
-            //v2 = atomContainer.getAtomNumber(bond.getAtomAt(1))+1;
+            //v1 = atomContainer.indexOf(bond.getAtomAt(0))+1;
+            //v2 = atomContainer.indexOf(bond.getAtomAt(1))+1;
             if (fastfind(vertex1, vertex2, true)) {
                 bondsInTree[b] = true;
                 sptSize++;
@@ -217,7 +217,7 @@ public class SpanningTree {
 
     private void getBondsInRing(IAtomContainer mol, IRing ring, int[] bonds) {
         for (int i = 0; i < ring.getBondCount(); i++) {
-            int m = mol.getBondNumber(ring.getBond(i));
+            int m = mol.indexOf(ring.getBond(i));
             bonds[m] = 1;
         }
     }
@@ -281,7 +281,7 @@ public class SpanningTree {
             if (!bondsInTree[i]) {
                 ring = getRing(spt, molecule.getBond(i));
                 for (int b = 0; b < ring.getBondCount(); b++) {
-                    int m = molecule.getBondNumber(ring.getBond(b));
+                    int m = molecule.indexOf(ring.getBond(b));
                     cb[nBasicRings][m] = 1;
                 }
                 nBasicRings++;

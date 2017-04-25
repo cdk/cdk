@@ -100,7 +100,7 @@ public class AtomSignature extends AbstractVertexSignature {
      * @param molecule the molecule to create the signature from
      */
     public AtomSignature(IAtom atom, IAtomContainer molecule) {
-        this(molecule.getAtomNumber(atom), molecule);
+        this(molecule.indexOf(atom), molecule);
     }
 
     /**
@@ -126,7 +126,7 @@ public class AtomSignature extends AbstractVertexSignature {
      * @param molecule the molecule to create the signature from
      */
     public AtomSignature(IAtom atom, int height, IAtomContainer molecule) {
-        this(molecule.getAtomNumber(atom), height, molecule);
+        this(molecule.indexOf(atom), height, molecule);
     }
 
     /**
@@ -154,7 +154,7 @@ public class AtomSignature extends AbstractVertexSignature {
      * @param molecule the molecule to create the signature from
      */
     public AtomSignature(IAtom atom, int height, InvariantType invariantType, IAtomContainer molecule) {
-        this(molecule.getAtomNumber(atom), height, invariantType, molecule);
+        this(molecule.indexOf(atom), height, invariantType, molecule);
     }
 
     @Override
@@ -172,7 +172,7 @@ public class AtomSignature extends AbstractVertexSignature {
         int[] connectedIndices = new int[connected.size()];
         int indexCounter = 0;
         for (IAtom otherAtom : connected) {
-            connectedIndices[indexCounter++] = this.molecule.getAtomNumber(otherAtom);
+            connectedIndices[indexCounter++] = this.molecule.indexOf(otherAtom);
         }
         return connectedIndices;
     }

@@ -88,7 +88,7 @@ public class PathGraph {
             }
 
             for (IAtom atom : edge.getAtoms()) {
-                System.out.print(mol.getAtomNumber(atom) + "-");
+                System.out.print(mol.indexOf(atom) + "-");
             }
 
             System.out.println();

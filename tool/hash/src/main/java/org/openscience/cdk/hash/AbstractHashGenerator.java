@@ -141,11 +141,11 @@ class AbstractHashGenerator {
 
         for (IBond bond : container.bonds()) {
 
-            int v = container.getAtomNumber(bond.getAtom(0));
-            int w = container.getAtomNumber(bond.getAtom(1));
+            int v = container.indexOf(bond.getAtom(0));
+            int w = container.indexOf(bond.getAtom(1));
 
             if (v < 0 || w < 0)
-                throw new IllegalArgumentException("bond at index " + container.getBondNumber(bond)
+                throw new IllegalArgumentException("bond at index " + container.indexOf(bond)
                         + " contained an atom not pressent in molecule");
 
             graph[v][degree[v]++] = w;

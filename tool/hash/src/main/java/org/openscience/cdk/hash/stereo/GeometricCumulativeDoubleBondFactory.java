@@ -179,8 +179,8 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
 
         GeometricParity geom = new Tetrahedral2DParity(ps, es);
 
-        int u = container.getAtomNumber(start);
-        int v = container.getAtomNumber(end);
+        int u = container.indexOf(start);
+        int v = container.indexOf(end);
 
         return new GeometryEncoder(new int[]{u, v}, perm, geom);
     }
@@ -206,8 +206,8 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
 
         GeometricParity geom = new Tetrahedral3DParity(coordinates);
 
-        int u = container.getAtomNumber(start);
-        int v = container.getAtomNumber(end);
+        int u = container.indexOf(start);
+        int v = container.indexOf(end);
 
         return new GeometryEncoder(new int[]{u, v}, perm, geom);
     }
@@ -239,7 +239,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
                 IAtom other = bond.getConnectedAtom(a);
                 coordinates[i + offset] = other.getPoint2d();
                 elevations[i + offset] = elevation(bond, a);
-                indices[i] = container.getAtomNumber(other);
+                indices[i] = container.indexOf(other);
                 i++;
             }
         }
@@ -275,7 +275,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
             if (!isDoubleBond(bond)) {
                 IAtom other = bond.getConnectedAtom(a);
                 coordinates[i + offset] = other.getPoint3d();
-                indices[i] = container.getAtomNumber(other);
+                indices[i] = container.indexOf(other);
                 i++;
             }
         }

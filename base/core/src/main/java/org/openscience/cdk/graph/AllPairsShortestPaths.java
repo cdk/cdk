@@ -147,8 +147,8 @@ public final class AllPairsShortestPaths {
      * @see ShortestPaths
      */
     public ShortestPaths from(IAtom start) {
-        // currently container.getAtomNumber() return -1 when null
-        return from(container.getAtomNumber(start));
+        // currently container.indexOf() return -1 when null
+        return from(container.indexOf(start));
     }
 
     /**

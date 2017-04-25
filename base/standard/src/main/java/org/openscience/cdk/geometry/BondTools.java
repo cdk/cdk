@@ -233,7 +233,7 @@ public class BondTools {
                 if ((one != null && two == null && atom.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(
                         parent, atom, one, true)) > Math.PI / 10)
                         || (!atom.getSymbol().equals("N") && one != null && two != null && !morgannumbers[container
-                                .getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]))) {
+                                .indexOf(one)].equals(morgannumbers[container.indexOf(two)]))) {
                     return (true);
                 } else {
                     return (false);
@@ -288,8 +288,8 @@ public class BondTools {
         if (one != null
                 && ((!a.getSymbol().equals("N")
                         && two != null
-                        && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container
-                                .getAtomNumber(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(
+                        && !morgannumbers[container.indexOf(one)].equals(morgannumbers[container
+                                .indexOf(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(
                         a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(
                         nextAtom, a, parent, true)) > Math.PI / 10))) {
             return (true);
@@ -445,10 +445,10 @@ public class BondTools {
             }
             for (IAtom atom : atoms) {
                 int elementNumber = differentSymbols.indexOf(atom.getSymbol());
-                if (symbolsMorganNumbers[elementNumber].contains(morgannumbers[container.getAtomNumber(atom)])) {
+                if (symbolsMorganNumbers[elementNumber].contains(morgannumbers[container.indexOf(atom)])) {
                     symbolsWithDifferentMorganNumbers[elementNumber] = false;
                 } else {
-                    symbolsMorganNumbers[elementNumber].add(morgannumbers[container.getAtomNumber(atom)]);
+                    symbolsMorganNumbers[elementNumber].add(morgannumbers[container.indexOf(atom)]);
                 }
             }
             int numberOfSymbolsWithDifferentMorganNumbers = 0;

@@ -80,11 +80,11 @@ public class SharingElectronMechanism implements IReactionMechanism {
             throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0); // Atom containing the lone pair to share
-        IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
+        IAtom atom1C = reactantCloned.getAtom(molecule.indexOf(atom1));
         IAtom atom2 = atomList.get(1); // Atom to neutralize the deficiency of charge
-        IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
+        IAtom atom2C = reactantCloned.getAtom(molecule.indexOf(atom2));
         IBond bond1 = bondList.get(0);
-        int posBond1 = molecule.getBondNumber(bond1);
+        int posBond1 = molecule.indexOf(bond1);
 
         BondManipulator.increaseBondOrder(reactantCloned.getBond(posBond1));
 
@@ -113,7 +113,7 @@ public class SharingElectronMechanism implements IReactionMechanism {
         /* mapping */
         for (IAtom atom : molecule.atoms()) {
             IMapping mapping = atom2C.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+                    reactantCloned.getAtom(molecule.indexOf(atom)));
             reaction.addMapping(mapping);
         }
         reaction.addProduct(reactantCloned);

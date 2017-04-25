@@ -527,7 +527,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         for (int n = 0; n < mol.getBondCount(); n++) {
             IBond bond = mol.getBond(n);
             if (bond.getAtomCount() != 2) continue;
-            int a1 = mol.getAtomNumber(bond.getAtom(0)), a2 = mol.getAtomNumber(bond.getAtom(1));
+            int a1 = mol.indexOf(bond.getAtom(0)), a2 = mol.indexOf(bond.getAtom(1));
             if (amask[a1] && amask[a2]) {
                 atomAdj[a1] = appendInteger(atomAdj[a1], a2);
                 bondAdj[a1] = appendInteger(bondAdj[a1], n);
@@ -762,8 +762,8 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         for (int n = 0; n < nb; n++)
             if (bondOrder[n] == 2) {
                 IBond bond = mol.getBond(n);
-                piAtom[mol.getAtomNumber(bond.getAtom(0))] = true;
-                piAtom[mol.getAtomNumber(bond.getAtom(1))] = true;
+                piAtom[mol.indexOf(bond.getAtom(0))] = true;
+                piAtom[mol.indexOf(bond.getAtom(1))] = true;
             }
 
         ArrayList<int[]> maybe = new ArrayList<int[]>(); // rings which may yet be aromatic
@@ -974,7 +974,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         for (int n = 0; n < nb; n++) {
             IBond bond = mol.getBond(n);
             if (bond.getAtomCount() != 2) continue;
-            int a1 = mol.getAtomNumber(bond.getAtom(0)), a2 = mol.getAtomNumber(bond.getAtom(1)), o = bondOrder[n];
+            int a1 = mol.indexOf(bond.getAtom(0)), a2 = mol.indexOf(bond.getAtom(1)), o = bondOrder[n];
             if (!amask[a1] || !amask[a2]) continue;
             bondSum[a1] += o;
             bondSum[a2] += o;
@@ -1227,7 +1227,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private int bondOrderBioType(int bidx) {
         IBond bond = mol.getBond(bidx);
         if (bond.getAtomCount() != 2) return 0;
-        final int a1 = mol.getAtomNumber(bond.getAtom(0)), a2 = mol.getAtomNumber(bond.getAtom(1));
+        final int a1 = mol.indexOf(bond.getAtom(0)), a2 = mol.indexOf(bond.getAtom(1));
         if (maskAro[a1] && maskAro[a2]) return -1;
         return bondOrder[bidx];
     }

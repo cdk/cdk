@@ -277,7 +277,7 @@ class ChiIndexUtils {
             for (Object anABondList : aBondList) {
                 int bondNumber = (Integer) anABondList;
                 for (IAtom atom : ac.getBond(bondNumber).atoms()) {
-                    Integer atomInt = ac.getAtomNumber(atom);
+                    Integer atomInt = ac.indexOf(atom);
                     if (!tmp.contains(atomInt)) tmp.add(atomInt);
                 }
             }

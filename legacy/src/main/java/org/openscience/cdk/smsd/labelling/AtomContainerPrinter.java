@@ -62,8 +62,8 @@ public class AtomContainerPrinter {
         for (IBond bond : atomContainer.bonds()) {
             IAtom a0 = bond.getAtom(0);
             IAtom a1 = bond.getAtom(1);
-            int a0N = atomContainer.getAtomNumber(a0);
-            int a1N = atomContainer.getAtomNumber(a1);
+            int a0N = atomContainer.indexOf(a0);
+            int a1N = atomContainer.indexOf(a1);
             String a0S = a0.getSymbol();
             String a1S = a1.getSymbol();
             int o = bond.getOrder().numeric();

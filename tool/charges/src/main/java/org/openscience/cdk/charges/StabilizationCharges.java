@@ -75,7 +75,7 @@ public class StabilizationCharges {
         if (resonanceS.getAtomContainerCount() < 2) // meaning it was not find any resonance structure
             return 0.0;
 
-        final int positionStart = atomContainer.getAtomNumber(atom);
+        final int positionStart = atomContainer.indexOf(atom);
 
         List<Double> result1 = new ArrayList<Double>();
         List<Integer> distance1 = new ArrayList<Integer>();
@@ -95,7 +95,7 @@ public class StabilizationCharges {
 
             for (Iterator<IAtom> itAtoms = resonance.atoms().iterator(); itAtoms.hasNext();) {
                 IAtom atomP = itAtoms.next();
-                IAtom atomR = atomContainer.getAtom(resonance.getAtomNumber(atomP));
+                IAtom atomR = atomContainer.getAtom(resonance.indexOf(atomP));
                 if (containerS.getAtomContainer(0).contains(atomR)) {
 
                     electronegativity.setMaxIterations(6);

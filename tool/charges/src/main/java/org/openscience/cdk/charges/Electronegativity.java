@@ -102,7 +102,7 @@ public class Electronegativity {
                 acOldS = ac;
             }
             int stepSize = peoe.getStepSize();
-            int atomPosition = ac.getAtomNumber(atom);
+            int atomPosition = ac.indexOf(atom);
             int start = (stepSize * (atomPosition) + atomPosition);
 
             electronegativity = ((marsiliFactors[start])

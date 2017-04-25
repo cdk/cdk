@@ -50,8 +50,8 @@ public class AtomContainerPrinter {
             edgeStrings = new ArrayList<String>();
         }
         for (IBond bond : atomContainer.bonds()) {
-            int a0 = atomContainer.getAtomNumber(bond.getAtom(0));
-            int a1 = atomContainer.getAtomNumber(bond.getAtom(1));
+            int a0 = atomContainer.indexOf(bond.getAtom(0));
+            int a1 = atomContainer.indexOf(bond.getAtom(1));
             int pA0 = permutation.get(a0);
             int pA1 = permutation.get(a1);
             char o = bondOrderToChar(bond.getOrder());

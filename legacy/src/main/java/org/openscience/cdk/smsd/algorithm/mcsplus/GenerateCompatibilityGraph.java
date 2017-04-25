@@ -190,8 +190,8 @@ public final class GenerateCompatibilityGraph {
             int molBNodes = 0;
             for (List<Integer> labelB : labelListMolB) {
                 if (labelA.equals(labelB)) {
-                    compGraphNodes.add(reactant.getAtomNumber(basicAtomVecA.get(molANodes)));
-                    compGraphNodes.add(product.getAtomNumber(basicAtomVecB.get(molBNodes)));
+                    compGraphNodes.add(reactant.indexOf(basicAtomVecA.get(molANodes)));
+                    compGraphNodes.add(product.indexOf(basicAtomVecB.get(molBNodes)));
                     compGraphNodes.add(countNodes++);
                 }
                 molBNodes++;

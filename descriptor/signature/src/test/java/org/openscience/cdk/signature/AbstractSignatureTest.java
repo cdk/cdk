@@ -48,8 +48,8 @@ public class AbstractSignatureTest {
             IAtom aa = bond.getAtom(0);
             IAtom ab = bond.getAtom(1);
             int o = bond.getOrder().numeric();
-            int x = mol.getAtomNumber(aa);
-            int y = mol.getAtomNumber(ab);
+            int x = mol.indexOf(aa);
+            int y = mol.indexOf(ab);
             if (x < y) {
                 System.out.print(x + "-" + y + "(" + o + "),");
             } else {

@@ -80,19 +80,19 @@ public class TautomerizationMechanism implements IReactionMechanism {
             throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);// Atom to be added the hydrogen
-        IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
+        IAtom atom1C = reactantCloned.getAtom(molecule.indexOf(atom1));
         IAtom atom2 = atomList.get(1);// Atom 2
-        IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
+        IAtom atom2C = reactantCloned.getAtom(molecule.indexOf(atom2));
         IAtom atom3 = atomList.get(2);// Atom 3
-        IAtom atom3C = reactantCloned.getAtom(molecule.getAtomNumber(atom3));
+        IAtom atom3C = reactantCloned.getAtom(molecule.indexOf(atom3));
         IAtom atom4 = atomList.get(3);// hydrogen Atom
-        IAtom atom4C = reactantCloned.getAtom(molecule.getAtomNumber(atom4));
+        IAtom atom4C = reactantCloned.getAtom(molecule.indexOf(atom4));
         IBond bond1 = bondList.get(0);// Bond with double bond
-        int posBond1 = molecule.getBondNumber(bond1);
+        int posBond1 = molecule.indexOf(bond1);
         IBond bond2 = bondList.get(1);// Bond with single bond
-        int posBond2 = molecule.getBondNumber(bond2);
+        int posBond2 = molecule.indexOf(bond2);
         IBond bond3 = bondList.get(2);// Bond to be removed
-        int posBond3 = molecule.getBondNumber(bond3);
+        int posBond3 = molecule.indexOf(bond3);
 
         BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
         BondManipulator.increaseBondOrder(reactantCloned.getBond(posBond2));
@@ -116,7 +116,7 @@ public class TautomerizationMechanism implements IReactionMechanism {
         /* mapping */
         for (IAtom atom : molecule.atoms()) {
             IMapping mapping = atom2C.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+                    reactantCloned.getAtom(molecule.indexOf(atom)));
             reaction.addMapping(mapping);
         }
 

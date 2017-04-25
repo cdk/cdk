@@ -174,7 +174,7 @@ public class Polarizability {
         polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
         for (int i = 0; i < acH.getAtomCount(); i++) {
             if (acH.getAtom(i) != atom) {
-                int atomIndex = atomContainer.getAtomNumber(atom);
+                int atomIndex = atomContainer.indexOf(atom);
                 bond = distanceMatrix[atomIndex][i];
                 if (bond == 1) {
                     polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));

@@ -474,11 +474,11 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      */
     private IAtomContainer setFlags(IAtomContainer container, IAtomContainer ac, boolean b) {
         for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
-            int positionA = ac.getAtomNumber(it.next());
+            int positionA = ac.indexOf(it.next());
             ac.getAtom(positionA).setFlag(CDKConstants.REACTIVE_CENTER, b);
         }
         for (Iterator<IBond> it = container.bonds().iterator(); it.hasNext();) {
-            int positionB = ac.getBondNumber(it.next());
+            int positionB = ac.indexOf(it.next());
             ac.getBond(positionB).setFlag(CDKConstants.REACTIVE_CENTER, b);
 
         }

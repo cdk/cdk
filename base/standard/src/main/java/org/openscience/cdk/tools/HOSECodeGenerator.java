@@ -747,7 +747,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         public String toString() {
             String s = "";
             try {
-                s += (atomContainer.getAtomNumber(atom) + 1);
+                s += (atomContainer.indexOf(atom) + 1);
                 s += " " + hSymbol;
                 s += "; s=" + score;
                 s += "; r=" + ranking;

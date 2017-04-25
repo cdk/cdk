@@ -2222,8 +2222,8 @@ public class SmilesParserTest extends CDKTestCase {
 
             @Override
             public int compare(IStereoElement o1, IStereoElement o2) {
-                return Ints.compare(mol.getAtomNumber(((ITetrahedralChirality) o1).getChiralAtom()),
-                        mol.getAtomNumber(((ITetrahedralChirality) o2).getChiralAtom()));
+                return Ints.compare(mol.indexOf(((ITetrahedralChirality) o1).getChiralAtom()),
+                        mol.indexOf(((ITetrahedralChirality) o2).getChiralAtom()));
             }
         });
 

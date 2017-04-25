@@ -220,7 +220,7 @@ public final class RingSearch {
      * @throws NoSuchElementException the atom was not found
      */
     public boolean cyclic(IAtom atom) {
-        int i = container.getAtomNumber(atom);
+        int i = container.indexOf(atom);
         if (i < 0) throw new NoSuchElementException("no such atom");
         return cyclic(i);
     }
@@ -234,8 +234,8 @@ public final class RingSearch {
      */
     public boolean cyclic(IBond bond) {
         // XXX: linear search - but okay for now
-        int u = container.getAtomNumber(bond.getAtom(0));
-        int v = container.getAtomNumber(bond.getAtom(1));
+        int u = container.indexOf(bond.getAtom(0));
+        int v = container.indexOf(bond.getAtom(1));
         if (u < 0 || v < 0) throw new NoSuchElementException("atoms of the bond are not found in the container");
         return searcher.cyclic(u, v);
     }
@@ -342,8 +342,8 @@ public final class RingSearch {
             IAtom either = bond.getAtom(0);
             IAtom other = bond.getAtom(1);
 
-            int u = container.getAtomNumber(either);
-            int v = container.getAtomNumber(other);
+            int u = container.indexOf(either);
+            int v = container.indexOf(other);
 
             // add the bond if the vertex colors match
             if (searcher.cyclic(u, v)) bonds.add(bond);

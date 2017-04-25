@@ -69,11 +69,11 @@ public class AtomMappingTools {
                 map = list.get(i);
                 atom1 = firstAtomContainer.getAtom(map.getId1());
                 atom2 = secondAtomContainer.getAtom(map.getId2());
-                if (checkAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.getAtomNumber(atom1),
-                        secondAtomContainer.getAtomNumber(atom2))) {
-                    mappedAtoms.put(Integer.valueOf(firstAtomContainer.getAtomNumber(atom1)),
-                            Integer.valueOf(secondAtomContainer.getAtomNumber(atom2)));
-                    //                    logger.debug("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.getAtomNumber(atom1)+" is mapped to Atom:"+secondAtomContainer.getAtomNumber(atom2));
+                if (checkAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.indexOf(atom1),
+                        secondAtomContainer.indexOf(atom2))) {
+                    mappedAtoms.put(Integer.valueOf(firstAtomContainer.indexOf(atom1)),
+                            Integer.valueOf(secondAtomContainer.indexOf(atom2)));
+                    //                    logger.debug("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.indexOf(atom1)+" is mapped to Atom:"+secondAtomContainer.indexOf(atom2));
                 } else {
                     logger.error("Error: Atoms are not similar !!");
                 }

@@ -355,7 +355,7 @@ public class BeamToCDKTest {
         ITetrahedralChirality tc2 = (ITetrahedralChirality) ses[1];
 
         // we want the second atom stereo as tc1
-        if (ac.getAtomNumber(tc1.getChiralAtom()) > ac.getAtomNumber(tc2.getChiralAtom())) {
+        if (ac.indexOf(tc1.getChiralAtom()) > ac.indexOf(tc2.getChiralAtom())) {
             ITetrahedralChirality swap = tc1;
             tc1 = tc2;
             tc2 = swap;

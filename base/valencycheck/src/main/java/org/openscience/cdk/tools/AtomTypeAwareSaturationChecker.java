@@ -224,7 +224,7 @@ public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceB
              * If one of the atoms is saturated and the other isn't, what do we
              * do then? Look at the bonds on each side and decide from that...
              */
-            int myIndex = atomContainer.getBondNumber(bond);
+            int myIndex = atomContainer.indexOf(bond);
             // If it's the first bond, then just move on.
             if (myIndex == 0) return false;
             /*

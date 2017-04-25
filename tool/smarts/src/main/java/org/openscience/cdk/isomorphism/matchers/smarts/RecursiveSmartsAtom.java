@@ -91,6 +91,6 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
 
         IAtomContainer target = invariants(atom).target();
 
-        return cache.getUnchecked(target).get(target.getAtomNumber(atom));
+        return cache.getUnchecked(target).get(target.indexOf(atom));
     }
 }

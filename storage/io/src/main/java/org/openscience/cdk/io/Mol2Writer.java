@@ -185,7 +185,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
             writer.newLine();
             for (int i = 0; i < mol.getAtomCount(); i++) {
                 IAtom atom = mol.getAtom(i);
-                writer.write((i + 1) + " " + atom.getSymbol() + (mol.getAtomNumber(atom) + 1) + " ");
+                writer.write((i + 1) + " " + atom.getSymbol() + (mol.indexOf(atom) + 1) + " ");
                 if (atom.getPoint3d() != null) {
                     writer.write(atom.getPoint3d().x + " ");
                     writer.write(atom.getPoint3d().y + " ");
@@ -247,8 +247,8 @@ public class Mol2Writer extends DefaultChemObjectWriter {
                     e.printStackTrace();
                 }
 
-                writer.write((counter + 1) + " " + (mol.getAtomNumber(bond.getAtom(0)) + 1) + " "
-                        + (mol.getAtomNumber(bond.getAtom(1)) + 1) + " " + sybylBondOrder);
+                writer.write((counter + 1) + " " + (mol.indexOf(bond.getAtom(0)) + 1) + " "
+                        + (mol.indexOf(bond.getAtom(1)) + 1) + " " + sybylBondOrder);
                 writer.newLine();
                 counter++;
             }

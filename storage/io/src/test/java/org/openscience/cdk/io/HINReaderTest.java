@@ -194,7 +194,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         // make sure that only the phenyl C's were marked as aromatic
         for (IAtom atom : mol.atoms()) {
             if (atom.getSymbol().equals("C"))
-                Assert.assertTrue(atom.getSymbol() + " (index " + mol.getAtomNumber(atom)
+                Assert.assertTrue(atom.getSymbol() + " (index " + mol.indexOf(atom)
                         + ") was wrongly marked as aromatic", atom.getFlag(CDKConstants.ISAROMATIC));
         }
 

@@ -110,8 +110,8 @@ public class PiElectronegativity {
 
                 acOldP = ac;
             }
-            IAtom atomi = molPi.getAtom(ac.getAtomNumber(atom));
-            int atomPosition = molPi.getAtomNumber(atomi);
+            IAtom atomi = molPi.getAtom(ac.indexOf(atom));
+            int atomPosition = molPi.indexOf(atomi);
             int stepSize = pepe.getStepSize();
             int start = (stepSize * (atomPosition) + atomPosition);
             double q = atomi.getCharge();

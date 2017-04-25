@@ -211,7 +211,7 @@ public class RingPlacer {
                 try {
                     for (int f = 0; f < unplacedPartners.getAtomCount(); f++) {
                         logger.debug("placeRingSubstituents->unplacedPartners: "
-                                + (molecule.getAtomNumber(unplacedPartners.getAtom(f)) + 1));
+                                + (molecule.indexOf(unplacedPartners.getAtom(f)) + 1));
                     }
                 } catch (Exception exc) {
                 }
@@ -501,7 +501,7 @@ public class RingPlacer {
 
         logger.debug("placeFusedRing->startAngle: " + Math.toDegrees(startAngle));
         logger.debug("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));
-        logger.debug("placeFusedRing->startAtom is: " + (molecule.getAtomNumber(startAtom) + 1));
+        logger.debug("placeFusedRing->startAtom is: " + (molecule.indexOf(startAtom) + 1));
         logger.debug("AtomsToDraw: " + AtomPlacer.listNumbers(molecule, atomsToDraw));
 
         atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);

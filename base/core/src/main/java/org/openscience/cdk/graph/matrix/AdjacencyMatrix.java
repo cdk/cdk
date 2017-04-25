@@ -51,8 +51,8 @@ public class AdjacencyMatrix implements IGraphMatrix {
         int[][] conMat = new int[container.getAtomCount()][container.getAtomCount()];
         for (int f = 0; f < container.getBondCount(); f++) {
             bond = container.getBond(f);
-            indexAtom1 = container.getAtomNumber(bond.getAtom(0));
-            indexAtom2 = container.getAtomNumber(bond.getAtom(1));
+            indexAtom1 = container.indexOf(bond.getAtom(0));
+            indexAtom2 = container.indexOf(bond.getAtom(1));
             conMat[indexAtom1][indexAtom2] = 1;
             conMat[indexAtom2][indexAtom1] = 1;
         }

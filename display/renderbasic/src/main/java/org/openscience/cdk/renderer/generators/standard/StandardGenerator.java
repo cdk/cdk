@@ -103,7 +103,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * must be a string.
      *
      * <pre>{@code
-     * String number = Integer.toString(1 + container.getAtomNumber(atom));
+     * String number = Integer.toString(1 + container.indexOf(atom));
      * atom.setProperty(CDKConstants.ANNOTATION_LABEL, number);
      * }</pre>
      */

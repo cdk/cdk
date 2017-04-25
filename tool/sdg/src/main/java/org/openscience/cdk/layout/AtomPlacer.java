@@ -244,8 +244,8 @@ public class AtomPlacer {
                 distanceMeasure.y - atom.getPoint2d().y);
         if (debug) {
             try {
-                logger.debug("distributePartners->sortedAtoms[0]: ", (molecule.getAtomNumber(sortedAtoms[0]) + 1));
-                logger.debug("distributePartners->sortedAtoms[1]: ", (molecule.getAtomNumber(sortedAtoms[1]) + 1));
+                logger.debug("distributePartners->sortedAtoms[0]: ", (molecule.indexOf(sortedAtoms[0]) + 1));
+                logger.debug("distributePartners->sortedAtoms[1]: ", (molecule.indexOf(sortedAtoms[1]) + 1));
                 logger.debug("distributePartners->angle1: ", Math.toDegrees(angle1));
                 logger.debug("distributePartners->angle2: ", Math.toDegrees(angle2));
             } catch (Exception exc) {
@@ -274,7 +274,7 @@ public class AtomPlacer {
         addAngle = remainingAngle / (unplacedNeighbours.getAtomCount() + 1);
         if (debug) {
             try {
-                logger.debug("distributePartners->startAtom: " + (molecule.getAtomNumber(startAtom) + 1));
+                logger.debug("distributePartners->startAtom: " + (molecule.indexOf(startAtom) + 1));
                 logger.debug("distributePartners->remainingAngle: " + Math.toDegrees(remainingAngle));
                 logger.debug("distributePartners->addAngle: " + Math.toDegrees(addAngle));
                 logger.debug("distributePartners-> partners.getAtomCount(): " + unplacedNeighbours.getAtomCount());
@@ -654,7 +654,7 @@ public class AtomPlacer {
         for (int f = 0; f < sphere.size(); f++) {
             atom = sphere.get(f);
             if (!atom.getFlag(CDKConstants.ISINRING)) {
-                atomNr = ac.getAtomNumber(atom);
+                atomNr = ac.indexOf(atom);
                 logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
 
                 List bonds = ac.getConnectedBondsList(atom);
@@ -662,7 +662,7 @@ public class AtomPlacer {
                     IBond curBond = (IBond) bonds.get(g);
                     nextAtom = curBond.getConnectedAtom(atom);
                     if (!nextAtom.getFlag(CDKConstants.VISITED) && !nextAtom.getFlag(CDKConstants.ISPLACED)) {
-                        nextAtomNr = ac.getAtomNumber(nextAtom);
+                        nextAtomNr = ac.indexOf(nextAtom);
                         logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
                         pathes[nextAtomNr] = ac.getBuilder().newInstance(IAtomContainer.class, pathes[atomNr]);
                         logger.debug("Making copy of path " + (atomNr + 1) + " to form new path " + (nextAtomNr + 1));
@@ -720,7 +720,7 @@ public class AtomPlacer {
     static public String listNumbers(IAtomContainer mol, IAtomContainer ac) throws CDKException {
         String s = "Numbers: ";
         for (int f = 0; f < ac.getAtomCount(); f++) {
-            s += (mol.getAtomNumber(ac.getAtom(f)) + 1) + " ";
+            s += (mol.indexOf(ac.getAtom(f)) + 1) + " ";
         }
         return s;
     }
@@ -739,7 +739,7 @@ public class AtomPlacer {
     static public String listNumbers(IAtomContainer mol, List<IAtom> ac) {
         String s = "Numbers: ";
         for (int f = 0; f < ac.size(); f++) {
-            s += (mol.getAtomNumber((IAtom) ac.get(f)) + 1) + " ";
+            s += (mol.indexOf((IAtom) ac.get(f)) + 1) + " ";
         }
         return s;
     }

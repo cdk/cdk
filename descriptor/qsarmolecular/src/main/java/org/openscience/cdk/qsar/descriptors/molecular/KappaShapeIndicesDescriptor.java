@@ -153,14 +153,14 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
             bond1 = 0;
             firstAtomNeighboors = atomContainer.getConnectedAtomsList(atomContainer.getAtom(a1));
             for (int a2 = 0; a2 < firstAtomNeighboors.size(); a2++) {
-                bond1 = atomContainer.getBondNumber(atomContainer.getAtom(a1), (IAtom) firstAtomNeighboors.get(a2));
+                bond1 = atomContainer.indexOf(atomContainer.getAtom(a1), (IAtom) firstAtomNeighboors.get(a2));
                 if (!singlePaths.contains(new Double(bond1))) {
                     singlePaths.add(bond1);
                     java.util.Collections.sort(singlePaths);
                 }
                 secondAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) firstAtomNeighboors.get(a2));
                 for (int a3 = 0; a3 < secondAtomNeighboors.size(); a3++) {
-                    bond2 = atomContainer.getBondNumber((IAtom) firstAtomNeighboors.get(a2),
+                    bond2 = atomContainer.indexOf((IAtom) firstAtomNeighboors.get(a2),
                             (IAtom) secondAtomNeighboors.get(a3));
                     if (!singlePaths.contains(new Double(bond2))) {
                         singlePaths.add(bond2);
@@ -176,7 +176,7 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
                     }
                     thirdAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) secondAtomNeighboors.get(a3));
                     for (int a4 = 0; a4 < thirdAtomNeighboors.size(); a4++) {
-                        bond3 = atomContainer.getBondNumber((IAtom) secondAtomNeighboors.get(a3),
+                        bond3 = atomContainer.indexOf((IAtom) secondAtomNeighboors.get(a3),
                                 (IAtom) thirdAtomNeighboors.get(a4));
                         if (!singlePaths.contains(new Double(bond3))) {
                             singlePaths.add(bond3);
