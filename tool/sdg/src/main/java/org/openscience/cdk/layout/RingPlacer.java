@@ -150,7 +150,7 @@ public class RingPlacer {
         double radius = this.getNativeRingRadius(ring, bondLength);
         double addAngle = 2 * Math.PI / ring.getRingSize();
 
-        IAtom startAtom = ring.getFirstAtom();
+        IAtom startAtom = ring.getAtom(0);
         Point2d p = new Point2d(ringCenter.x + radius, ringCenter.y);
         startAtom.setPoint2d(p);
         double startAngle = Math.PI * 0.5;

@@ -167,14 +167,18 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      * Returns the atom at position 0 in the container.
      *
      * @return The atom at position 0 .
+     * @deprecated use {@link #getAtom(int)}
      */
+    @Deprecated
     IAtom getFirstAtom();
 
     /**
      * Returns the atom at the last position in the container.
      *
      * @return The atom at the last position
+     * @deprecated use {@link #getAtom(int)}
      */
+    @Deprecated
     IAtom getLastAtom();
 
     /**
