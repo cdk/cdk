@@ -498,8 +498,8 @@ final class NonplanarBonds {
         int jElem   = jAtom.getAtomicNumber();
 
         // rank carbon's last
-        if (iElem == 6) iElem = 256;
-        if (jElem == 6) jElem = 256;
+        if (iElem == 6 && iDegree >= jDegree) iElem = 256;
+        if (jElem == 6 && jDegree >= iDegree) jElem = 256;
 
         // prioritise by atomic number, H < N < O < ... < C
         if (iElem < jElem)
