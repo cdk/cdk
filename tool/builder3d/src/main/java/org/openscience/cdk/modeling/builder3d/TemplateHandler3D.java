@@ -81,9 +81,13 @@ public class TemplateHandler3D {
 
     private UniversalIsomorphismTester      universalIsomorphismTester = new UniversalIsomorphismTester();
 
+    private HybridizationFingerprinter fpr;
+
     private TemplateHandler3D() {
         templates = builder.newInstance(IAtomContainerSet.class);
         fingerprintData = new ArrayList<BitSet>();
+        fpr = new HybridizationFingerprinter();
+        fpr.setHashPseudoAtoms(true);
     }
 
     public static TemplateHandler3D getInstance() throws CDKException {
@@ -215,8 +219,8 @@ public class TemplateHandler3D {
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+numberOfRingAtoms);
         IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.anonymise(ringSystems);
-        BitSet ringSystemFingerprint = new HybridizationFingerprinter().getBitFingerprint(ringSystemAnyBondAnyAtom)
-                .asBitSet();
+        BitSet ringSystemFingerprint = fpr.getBitFingerprint(ringSystemAnyBondAnyAtom)
+                                                                       .asBitSet();
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest = false;
         for (int i = 0; i < fingerprintData.size(); i++) {
