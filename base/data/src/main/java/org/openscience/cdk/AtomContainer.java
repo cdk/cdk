@@ -1260,7 +1260,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void removeLonePair(ILonePair lonePair) {
-        int pos = getLonePairNumber(lonePair);
+        int pos = indexOf(lonePair);
         if (pos != -1) removeLonePair(pos);
     }
 
@@ -1289,7 +1289,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void removeSingleElectron(ISingleElectron singleElectron) {
-        int pos = getSingleElectronNumber(singleElectron);
+        int pos = indexOf(singleElectron);
         if (pos != -1) removeSingleElectron(pos);
     }
 

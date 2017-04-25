@@ -2465,7 +2465,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         mol.addLonePair(1);
         ILonePair lp = mol.getBuilder().newInstance(ILonePair.class, c);
         mol.addLonePair(lp);
-        Assert.assertEquals(1, mol.getLonePairNumber(lp));
+        Assert.assertEquals(1, mol.indexOf(lp));
     }
 
     @Test
@@ -2478,7 +2478,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         mol.addSingleElectron(1);
         ISingleElectron se = mol.getBuilder().newInstance(ISingleElectron.class, c);
         mol.addSingleElectron(se);
-        Assert.assertEquals(1, mol.getSingleElectronNumber(se));
+        Assert.assertEquals(1, mol.indexOf(se));
     }
 
     @Test

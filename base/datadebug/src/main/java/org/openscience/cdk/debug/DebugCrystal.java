@@ -210,14 +210,14 @@ public class DebugCrystal extends Crystal implements ICrystal {
     @Override
     public int getLonePairNumber(ILonePair bond) {
         logger.debug("Getting lone pair number: ", bond);
-        return super.getLonePairNumber(bond);
+        return super.indexOf(bond);
     }
 
     /** {@inheritDoc} */
     @Override
     public int getSingleElectronNumber(ISingleElectron bond) {
         logger.debug("Getting single electron number: ", bond);
-        return super.getSingleElectronNumber(bond);
+        return super.indexOf(bond);
     }
 
     /** {@inheritDoc} */
