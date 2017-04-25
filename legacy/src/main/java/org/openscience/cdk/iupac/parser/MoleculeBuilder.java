@@ -186,7 +186,7 @@ public class MoleculeBuilder {
         else if ("chloro".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                addAtom("Cl", currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
+                addAtom("Cl", currentMolecule.isEmpty() ? null : currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
             } else {
                 addAtom("Cl", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
@@ -195,7 +195,7 @@ public class MoleculeBuilder {
         else if ("fluoro".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                addAtom("F", currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
+                addAtom("F", currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
             } else {
                 addAtom("F", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
@@ -204,7 +204,7 @@ public class MoleculeBuilder {
         else if ("bromo".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                addAtom("Br", currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
+                addAtom("Br", currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
             } else {
                 addAtom("Br", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
@@ -213,7 +213,7 @@ public class MoleculeBuilder {
         else if ("iodo".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                addAtom("I", currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
+                addAtom("I", currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
             } else {
                 addAtom("I", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
@@ -222,7 +222,7 @@ public class MoleculeBuilder {
         else if ("nitro".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                addAtom("N", currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
+                addAtom("N", currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
             } else {
                 addAtom("N", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
@@ -238,14 +238,14 @@ public class MoleculeBuilder {
         else if ("oxo".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                addAtom("O", currentMolecule.getAtom(0), IBond.Order.DOUBLE, 0);
+                addAtom("O", currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.DOUBLE, 0);
             } else {
                 addAtom("O", currentMolecule.getAtom(addPos), IBond.Order.DOUBLE, 0);
             }
         }
         //Nitrile
         else if ("nitrile".equals(funGroupToken)) {
-            addAtom("N", currentMolecule.getAtom(0), IBond.Order.TRIPLE, 0);
+            addAtom("N", currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.TRIPLE, 0);
         }
         //Benzene
         else if ("phenyl".equals(funGroupToken)) {
@@ -262,7 +262,7 @@ public class MoleculeBuilder {
             IBond joiningBond;
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                joiningBond = currentMolecule.getBuilder().newInstance(IBond.class, currentMolecule.getAtom(0),
+                joiningBond = currentMolecule.getBuilder().newInstance(IBond.class, currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0),
                         benzene.getAtom(0));
             } else {
                 joiningBond = currentMolecule.getBuilder().newInstance(IBond.class, currentMolecule.getAtom(addPos),
@@ -272,7 +272,7 @@ public class MoleculeBuilder {
         } else if ("amino".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                addAtom("N", currentMolecule.getAtom(0), IBond.Order.SINGLE, 2);
+                addAtom("N", currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.SINGLE, 2);
             } else {
                 addAtom("N", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 2);
             }
@@ -281,14 +281,14 @@ public class MoleculeBuilder {
         else if ("alumino".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                addAtom("Al", currentMolecule.getAtom(0), IBond.Order.SINGLE, 2);
+                addAtom("Al", currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.SINGLE, 2);
             } else {
                 addAtom("Al", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 2);
             }
         } else if ("litho".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                addAtom("Li", currentMolecule.getAtom(0), IBond.Order.SINGLE, 2);
+                addAtom("Li", currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.SINGLE, 2);
             } else {
                 addAtom("Li", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 2);
             }
@@ -440,7 +440,7 @@ public class MoleculeBuilder {
 
         //Set the last atom here if a main chain has been built,
         //if not rely on the functional group setting one of it's atoms as last
-        if (mainChain != 0) endOfChain = currentMolecule.getAtom(currentMolecule.getAtomCount());
+        if (mainChain != 0) endOfChain = currentMolecule.getAtom(currentMolecule.getAtomCount()-1);
 
         //Add functional groups
         buildFunGroups(attachedGroups);
