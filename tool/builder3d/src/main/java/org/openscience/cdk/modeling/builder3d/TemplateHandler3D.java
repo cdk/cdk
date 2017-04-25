@@ -74,20 +74,14 @@ public class TemplateHandler3D {
     IAtomContainer                          molecule;
     IRingSet                                sssr;
     IAtomContainerSet                       templates                  = null;
-    List<BitSet>                            fingerprintData            = null;
     private boolean                         templatesLoaded            = false;
 
     private static TemplateHandler3D        self                       = null;
 
     private UniversalIsomorphismTester      universalIsomorphismTester = new UniversalIsomorphismTester();
 
-    private HybridizationFingerprinter fpr;
-
     private TemplateHandler3D() {
         templates = builder.newInstance(IAtomContainerSet.class);
-        fingerprintData = new ArrayList<BitSet>();
-        fpr = new HybridizationFingerprinter();
-        fpr.setHashPseudoAtoms(true);
     }
 
     public static TemplateHandler3D getInstance() throws CDKException {
@@ -127,34 +121,6 @@ public class TemplateHandler3D {
         } catch (Exception exc2) {
             System.out.println("Could not close Reader due to: " + exc2.getMessage());
         }
-        //logger.debug("TEMPLATE Finger");
-        try {
-
-            ins = this.getClass().getClassLoader()
-                    .getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt.gz");
-            fin = new BufferedReader(new InputStreamReader(new GZIPInputStream(ins)));
-        } catch (Exception exc3) {
-            throw new CDKException("Could not read Fingerprints from FingerprintFile due to: " + exc3.getMessage(),
-                    exc3);
-        }
-        String s = null;
-        while (true) {
-            try {
-                s = fin.readLine();
-            } catch (Exception exc4) {
-                throw new CDKException("Error while reading the fingerprints: " + exc4.getMessage(), exc4);
-            }
-
-            if (s == null) {
-                break;
-            }
-            try {
-                fingerprintData.add((BitSet) getBitSetFromFile(new StringTokenizer(s, "\t ;{, }")));
-            } catch (Exception exception) {
-                throw new CDKException("Error while reading the fingerprints: " + exception.getMessage(), exception);
-            }
-        }
-        //logger.debug("Fingerprints are read in:"+fingerprintData.size());
         templatesLoaded = true;
     }
 
@@ -219,56 +185,54 @@ public class TemplateHandler3D {
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+numberOfRingAtoms);
         IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.anonymise(ringSystems);
-        BitSet ringSystemFingerprint = fpr.getBitFingerprint(ringSystemAnyBondAnyAtom)
-                                                                       .asBitSet();
+
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest = false;
-        for (int i = 0; i < fingerprintData.size(); i++) {
+        for (int i = 0; i < templates.getAtomContainerCount(); i++) {
             IAtomContainer template = templates.getAtomContainer(i);
             //if the atom count is different, it can't be right anyway
             if (template.getAtomCount() != ringSystems.getAtomCount()) {
                 continue;
             }
             //we compare the fingerprint with any atom and any bond
-            if (FingerprinterTool.isSubset(fingerprintData.get(i), ringSystemFingerprint)) {
-                IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.anonymise(template);
-                //we do the exact match with any atom and any bond
-                if (universalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
-                    //if this is the case, we keep it as a guess, but look if we can do better
-                    List<RMap> list = universalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom,
-                            templateAnyBondAnyAtom);
-                    boolean flagwritefromsecondbest = false;
-                    if ((numberOfRingAtoms == list.size())
-                            && templateAnyBondAnyAtom.getBondCount() == ringSystems.getBondCount()) {
-                        //so atom and bond count match, could be it's even an exact match,
-                        //we check this with the original ring system
-                        if (universalIsomorphismTester.isSubgraph(ringSystems, template)) {
-                            flagMaxSubstructure = true;
-                            list = universalIsomorphismTester.getSubgraphAtomsMap(ringSystems, template);
-                        } else {
-                            //if it isn't we still now it's better than just the isomorphism
-                            flagSecondbest = true;
-                            flagwritefromsecondbest = true;
+            IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.anonymise(template);
+            //we do the exact match with any atom and any bond
+            if (universalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
+                //if this is the case, we keep it as a guess, but look if we can do better
+                List<RMap> list = universalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom,
+                        templateAnyBondAnyAtom);
+                boolean flagwritefromsecondbest = false;
+                if ((numberOfRingAtoms == list.size())
+                        && templateAnyBondAnyAtom.getBondCount() == ringSystems.getBondCount()) {
+                    //so atom and bond count match, could be it's even an exact match,
+                    //we check this with the original ring system
+                    if (universalIsomorphismTester.isSubgraph(ringSystems, template)) {
+                        flagMaxSubstructure = true;
+                        list = universalIsomorphismTester.getSubgraphAtomsMap(ringSystems, template);
+                    } else {
+                        //if it isn't we still now it's better than just the isomorphism
+                        flagSecondbest = true;
+                        flagwritefromsecondbest = true;
+                    }
+                }
+
+                if (!flagSecondbest || flagMaxSubstructure || flagwritefromsecondbest) {
+                    for (int j = 0; j < list.size(); j++) {
+                        RMap map = (RMap) list.get(j);
+                        IAtom atom1 = ringSystems.getAtom(map.getId1());
+                        IAtom atom2 = template.getAtom(map.getId2());
+                        if (atom1.getFlag(CDKConstants.ISINRING)) {
+                            atom1.setPoint3d(new Point3d(atom2.getPoint3d()));
                         }
-                    }
+                    }//for j
+                }
 
-                    if (!flagSecondbest || flagMaxSubstructure || flagwritefromsecondbest) {
-                        for (int j = 0; j < list.size(); j++) {
-                            RMap map = (RMap) list.get(j);
-                            IAtom atom1 = ringSystems.getAtom(map.getId1());
-                            IAtom atom2 = template.getAtom(map.getId2());
-                            if (atom1.getFlag(CDKConstants.ISINRING)) {
-                                atom1.setPoint3d(new Point3d(atom2.getPoint3d()));
-                            }
-                        }//for j
-                    }
+                if (flagMaxSubstructure) {
+                    break;
+                }
 
-                    if (flagMaxSubstructure) {
-                        break;
-                    }
+            }//if subgraph
 
-                }//if subgraph
-            }//if fingerprint
         }//for i
         if (!flagMaxSubstructure) {
             System.out.println("WARNING: Maybe RingTemplateError!");
