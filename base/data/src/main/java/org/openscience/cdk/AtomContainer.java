@@ -1215,7 +1215,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public IBond removeBond(IAtom atom1, IAtom atom2) {
-        int pos = getBondNumber(atom1, atom2);
+        int pos = indexOf(getBond(atom1, atom2));
         IBond bond = null;
         if (pos != -1) {
             bond = bonds[pos];

@@ -194,9 +194,9 @@ public class BondTools {
      */
     private static boolean isEndOfDoubleBond(IAtomContainer container, IAtom atom, IAtom parent,
             boolean[] doubleBondConfiguration) {
-        if (container.getBondNumber(atom, parent) == -1
-                || doubleBondConfiguration.length <= container.getBondNumber(atom, parent)
-                || !doubleBondConfiguration[container.getBondNumber(atom, parent)]) {
+        if (container.indexOf(container.getBond(atom, parent)) == -1
+                || doubleBondConfiguration.length <= container.indexOf(container.getBond(atom, parent))
+                || !doubleBondConfiguration[container.indexOf(container.getBond(atom, parent))]) {
             return false;
         }
 
@@ -289,8 +289,8 @@ public class BondTools {
                 && ((!a.getSymbol().equals("N")
                         && two != null
                         && !morgannumbers[container.indexOf(one)].equals(morgannumbers[container
-                                .indexOf(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(
-                        a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(
+                                .indexOf(two)]) && doubleBond && doubleBondConfiguration[container.indexOf(container.getBond(
+                        a, nextAtom))]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(
                         nextAtom, a, parent, true)) > Math.PI / 10))) {
             return (true);
         } else {
