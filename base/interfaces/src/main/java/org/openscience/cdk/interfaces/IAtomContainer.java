@@ -183,7 +183,9 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      *
      * @param atom The atom to be sought
      * @return The Position of the atom in the atoms array in [0,..].
+     * @deprecated use {@link #indexOf(IAtom)}
      */
+    @Deprecated
     int getAtomNumber(IAtom atom);
 
     /**
@@ -194,7 +196,9 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      * @param atom2 The second atom
      * @return The Position of the bond between a1 and a2 in the
      * electronContainers array.
+     * @deprecated use {@link #indexOf(IBond)}
      */
+    @Deprecated
     int getBondNumber(IAtom atom1, IAtom atom2);
 
     /**
@@ -203,7 +207,9 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      *
      * @param bond The bond to be sought
      * @return The Position of the bond in the electronContainers array in [0,..].
+     * @deprecated use {@link #indexOf(IBond)}
      */
+    @Deprecated
     int getBondNumber(IBond bond);
 
     /**
@@ -212,7 +218,9 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      *
      * @param lonePair The lone pair to be sought
      * @return The Position of the lone pair in the array..
+     * @deprecated use {@link #indexOf(ILonePair)}
      */
+    @Deprecated
     int getLonePairNumber(ILonePair lonePair);
 
     /**
@@ -221,8 +229,41 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      *
      * @param singleElectron The single electron to be sought
      * @return The Position of the single electron in the array.
+     * @deprecated use {@link #indexOf(ISingleElectron)}
      */
     int getSingleElectronNumber(ISingleElectron singleElectron);
+
+    /**
+     * Access the storage index of an atom.
+     *
+     * @param atom atom instance to find
+     * @return the index, -1 if not found
+     */
+    int indexOf(IAtom atom);
+
+    /**
+     * Access the storage index of a bond.
+     *
+     * @param bond bond instance to find
+     * @return the index, -1 if not found
+     */
+    int indexOf(IBond bond);
+
+    /**
+     * Access the storage index of a single electron (radical).
+     *
+     * @param electron the electron
+     * @return the index, -1 if not found
+     */
+    int indexOf(ISingleElectron electron);
+
+    /**
+     * Access the storage index of a long pair.
+     *
+     * @param pair the long pair
+     * @return the index, -1 if not found
+     */
+    int indexOf(ILonePair pair);
 
     /**
      * Returns the ElectronContainer at position <code>number</code> in the

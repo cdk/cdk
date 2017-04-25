@@ -285,6 +285,26 @@ public final class AllPairsShortestPaths {
                                                                  }
 
                                                                  @Override
+                                                                 public int indexOf(IAtom atom) {
+                                                                   return 0;
+                                                                 }
+
+                                                                 @Override
+                                                                 public int indexOf(IBond bond) {
+                                                                    return 0;
+                                                                 }
+
+                                                                 @Override
+                                                                 public int indexOf(ISingleElectron electron) {
+                                                                    return 0;
+                                                                 }
+
+                                                                 @Override
+                                                                 public int indexOf(ILonePair pair) {
+                                                                    return 0;
+                                                                 }
+
+                                                                 @Override
                                                                  public int getAtomCount() {
                                                                      return 0;
                                                                  }

@@ -195,39 +195,40 @@ public class DebugAtomContainer extends AtomContainer implements IAtomContainer 
         return super.getLastAtom();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getAtomNumber(IAtom atom) {
-        logger.debug("Getting atom number: ", atom);
-        return super.getAtomNumber(atom);
+    public int indexOf(IAtom atom) {
+        logger.debug("Getting index of atom: ", atom);
+        return super.indexOf(atom);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getBondNumber(IAtom atom1, IAtom atom2) {
-        logger.debug("Getting bond number: atom1=" + atom1, " atom2=" + atom2);
-        return super.getBondNumber(atom1, atom2);
+    public int indexOf(IBond bond) {
+        logger.debug("Getting index of bond: ", bond);
+        return super.indexOf(bond);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getBondNumber(IBond bond) {
-        logger.debug("Getting bond number: ", bond);
-        return super.getBondNumber(bond);
+    public int indexOf(ISingleElectron electron) {
+        logger.debug("Getting index of single electron: ", electron);
+        return super.indexOf(electron);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getLonePairNumber(ILonePair lp) {
-        logger.debug("Getting lone pair number: ", lp);
-        return super.getLonePairNumber(lp);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int getSingleElectronNumber(ISingleElectron se) {
-        logger.debug("Getting single electron number: ", se);
-        return super.getSingleElectronNumber(se);
+    public int indexOf(ILonePair pair) {
+        logger.debug("Getting index of single electron: ", pair);
+        return super.indexOf(pair);
     }
 
     /** {@inheritDoc} */
