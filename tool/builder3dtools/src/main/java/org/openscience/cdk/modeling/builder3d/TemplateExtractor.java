@@ -365,8 +365,9 @@ public class TemplateExtractor {
     public List<IBitFingerprint> makeFingerprintsFromSdf(boolean anyAtom, boolean anyAtomAnyBond,
             Map<String, Integer> timings, BufferedReader fin, int limit) throws Exception {
 
-        IFingerprinter fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DEFAULT_SIZE,
+        HybridizationFingerprinter fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DEFAULT_SIZE,
                 HybridizationFingerprinter.DEFAULT_SEARCH_DEPTH);
+        fingerPrinter.setHashPseudoAtoms(true);
         IAtomContainer m = null;
         IteratingSDFReader imdl = null;
         //QueryAtomContainer query=null;
