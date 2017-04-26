@@ -501,6 +501,12 @@ final class NonplanarBonds {
         if (iElem == 6) iElem = 256;
         if (jElem == 6) jElem = 256;
 
+        // terminal atoms are always best
+        if (iDegree == 1 && jDegree > 1)
+            return true;
+        if (jDegree == 1 && iDegree > 1)
+            return false;
+
         // prioritise by atomic number, H < N < O < ... < C
         if (iElem < jElem)
             return true;
