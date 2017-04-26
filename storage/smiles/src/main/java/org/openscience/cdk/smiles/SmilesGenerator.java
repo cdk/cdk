@@ -836,10 +836,11 @@ public final class SmilesGenerator {
                     case CtabGeneric:
                     case CtabComponent:
                     case CtabGraft:
+                        String supscript = sgroup.getValue(SgroupKey.CtabConnectivity);
                         state.sgroups.add(new CxSmilesState.PolymerSgroup(getSgroupPolymerKey(sgroup),
                                                                           toAtomIdxs(sgroup.getAtoms(), atomidx),
                                                                           sgroup.getSubscript(),
-                                                                          (String) sgroup.getValue(SgroupKey.CtabConnectivity)));
+                                                                          supscript));
                         break;
 
                     case ExtMulticenter:

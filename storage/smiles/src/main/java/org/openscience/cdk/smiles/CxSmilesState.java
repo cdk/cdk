@@ -117,7 +117,7 @@ final class CxSmilesState {
         final String        supscript;
 
         PolymerSgroup(String type, List<Integer> atomset, String subscript, String supscript) {
-            assert type != null && atomset != null && subscript != null && supscript != null;
+            assert type != null && atomset != null;
             this.type = type;
             this.atomset = new ArrayList<>(atomset);
             this.subscript = subscript;

@@ -264,9 +264,11 @@ public class CxSmilesGenerator {
                 sb.append(':');
                 appendIntegers(ordering, ',', sb, sgroup.atomset);
                 sb.append(':');
-                sb.append(sgroup.subscript);
+                if (sgroup.subscript != null)
+                    sb.append(sgroup.subscript);
                 sb.append(':');
-                sb.append(sgroup.supscript.toLowerCase(Locale.ROOT));
+                if (sgroup.supscript != null)
+                    sb.append(sgroup.supscript.toLowerCase(Locale.ROOT));
             }
         }
 
