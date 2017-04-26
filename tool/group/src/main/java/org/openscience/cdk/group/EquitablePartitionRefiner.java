@@ -83,9 +83,9 @@ public class EquitablePartitionRefiner {
      *
      * @return the number of vertices
      */
-    public int getVertexCount() {
-        return refinable.getVertexCount();
-    }
+//    public int getVertexCount() {
+//        return refinable.getVertexCount();
+//    }
 
     /**
      * Find |a &cap; b| - that is, the size of the intersection between a and b.
@@ -129,7 +129,7 @@ public class EquitablePartitionRefiner {
             blocksToRefine.add(finer.copyBlock(i));
         }
 
-        int numberOfVertices = getVertexCount();
+        int numberOfVertices = refinable.getVertexCount();
         while (!blocksToRefine.isEmpty()) {
             Set<Integer> t = blocksToRefine.remove();
             currentBlockIndex = 0;

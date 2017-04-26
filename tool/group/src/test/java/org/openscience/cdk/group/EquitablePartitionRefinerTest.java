@@ -56,18 +56,17 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
             return 1;
         }
 
+        @Override
+        public Partition getInitialPartition() {
+            return Partition.unit(getVertexCount());
+        }
+
     }
 
     @Test
     public void constructorTest() {
         EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
         Assert.assertNotNull(refiner);
-    }
-
-    @Test
-    public void getVertexCountTest() {
-        EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
-        Assert.assertEquals(4, refiner.getVertexCount());
     }
 
     @Test

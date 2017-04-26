@@ -75,16 +75,6 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getElementPartitionTest() {
-        String acpString = "C0N1C2P3C4N5";
-        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
-        AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
-        Partition elPartition = refiner.getInitialPartition(ac);
-        Partition expected = Partition.fromString("0,2,4|1,5|3");
-        Assert.assertEquals(expected, elPartition);
-    }
-
-    @Test
     public void refine_StartingPartitionTest() {
         Partition partition = Partition.fromString("0,1|2,3");
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";

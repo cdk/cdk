@@ -5,12 +5,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
+ * Wraps an atom container to provide information on the bond connectivity.
+ * 
  * @author maclean
  * @cdk.module group
  *
@@ -65,6 +69,60 @@ public class BondRefinable implements Refinable {
     @Override
     public int getMaxConnectivity() {
         return 0;   // TODO
+    }
+    
+    /**
+     * Get the bond partition, based on the element types of the atoms at either end
+     * of the bond, and the bond order.
+     *
+     * @return a partition of the bonds based on the element types and bond order
+     */
+    public Partition getInitialPartition() {
+        int bondCount = atomContainer.getBondCount();
+        Map<String, SortedSet<Integer>> cellMap = new HashMap<String, SortedSet<Integer>>();
+
+        // make mini-'descriptors' for bonds like "C=O" or "C#N" etc
+        for (int bondIndex = 0; bondIndex < bondCount; bondIndex++) {
+            IBond bond = atomContainer.getBond(bondIndex);
+            String el0 = bond.getAtom(0).getSymbol();
+            String el1 = bond.getAtom(1).getSymbol();
+            String boS;
+            if (ignoreBondOrders) {
+                // doesn't matter what it is, so long as it's constant
+                boS = "1";
+            } else {
+                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
+                int orderNumber = (isArom) ? 5 : bond.getOrder().numeric();
+                boS = String.valueOf(orderNumber);
+            }
+            String bondString;
+            if (el0.compareTo(el1) < 0) {
+                bondString = el0 + boS + el1;
+            } else {
+                bondString = el1 + boS + el0;
+            }
+            SortedSet<Integer> cell;
+            if (cellMap.containsKey(bondString)) {
+                cell = cellMap.get(bondString);
+            } else {
+                cell = new TreeSet<Integer>();
+                cellMap.put(bondString, cell);
+            }
+            cell.add(bondIndex);
+        }
+
+        // sorting is necessary to get cells in order
+        List<String> bondStrings = new ArrayList<String>(cellMap.keySet());
+        Collections.sort(bondStrings);
+
+        // the partition of the bonds by these 'descriptors'
+        Partition bondPartition = new Partition();
+        for (String key : bondStrings) {
+            SortedSet<Integer> cell = cellMap.get(key);
+            bondPartition.addCell(cell);
+        }
+        bondPartition.order();
+        return bondPartition;
     }
     
     private void setupConnectionTable(IAtomContainer atomContainer) {

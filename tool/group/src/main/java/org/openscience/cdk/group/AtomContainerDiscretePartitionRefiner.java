@@ -1,10 +1,40 @@
+/* Copyright (C) 2017  Gilleain Torrance <gilleain.torrance@gmail.com>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.group;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+/**
+ * Base class for discrete partition refiners of IAtomContainers.
+ * 
+ * @author maclean
+ * @cdk.module group
+ *
+ */
 public abstract class AtomContainerDiscretePartitionRefiner extends AbstractDiscretePartitionRefiner {
     
-
+    private Refinable refinable;
+    
     /**
      * Refine an atom container, which has the side effect of calculating
      * the automorphism group.
@@ -16,7 +46,7 @@ public abstract class AtomContainerDiscretePartitionRefiner extends AbstractDisc
      * @param atomContainer the atomContainer to refine
      */
     public void refine(IAtomContainer atomContainer) {
-        refine(atomContainer, getInitialPartition(atomContainer));
+        refine(atomContainer, getRefinable(atomContainer).getInitialPartition());
     }
 
     /**
@@ -39,7 +69,7 @@ public abstract class AtomContainerDiscretePartitionRefiner extends AbstractDisc
      */
     public boolean isCanonical(IAtomContainer atomContainer) {
         setup(atomContainer);
-        super.refine(getInitialPartition(atomContainer));
+        super.refine(refinable.getInitialPartition());
         return isCanonical();
     }
     
@@ -54,7 +84,7 @@ public abstract class AtomContainerDiscretePartitionRefiner extends AbstractDisc
      */
     public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer) {
         setup(atomContainer);
-        super.refine(getInitialPartition(atomContainer));
+        super.refine(refinable.getInitialPartition());
         return super.getAutomorphismGroup();
     }
     
@@ -69,7 +99,7 @@ public abstract class AtomContainerDiscretePartitionRefiner extends AbstractDisc
      */
     public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group) {
         setup(atomContainer, group);
-        super.refine(getInitialPartition(atomContainer));
+        super.refine(refinable.getInitialPartition());
         return super.getAutomorphismGroup();
     }
     
@@ -94,13 +124,32 @@ public abstract class AtomContainerDiscretePartitionRefiner extends AbstractDisc
      */
     public Partition getAutomorphismPartition(IAtomContainer atomContainer) {
         setup(atomContainer);
-        super.refine(getInitialPartition(atomContainer));
+        super.refine(refinable.getInitialPartition());
         return super.getAutomorphismPartition();
     }
     
-    protected abstract Refinable getRefinable(IAtomContainer atomContainer);
+    protected abstract Refinable createRefinable(IAtomContainer atomContainer);
     
-    public abstract Partition getInitialPartition(IAtomContainer atomContainer);
+    private Refinable getRefinable(IAtomContainer atomContainer) {
+        refinable = createRefinable(atomContainer);
+        return refinable;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    @Override
+    protected int getVertexCount() {
+        return refinable.getVertexCount();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    protected int getConnectivity(int vertexI, int vertexJ) {
+       return refinable.getConnectivity(vertexI, vertexJ);
+    }
     
     private void setup(IAtomContainer atomContainer) {
         // have to setup the connection table before making the group

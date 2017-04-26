@@ -62,5 +62,13 @@ public interface Refinable {
      * @return the maximum connectivity of the refinable
      */
     public int getMaxConnectivity();
+    
+    /**
+     * Get an initial partition of the vertices of the refinable - 
+     * for example, by color.
+     *  
+     * @return a partition of the vertices
+     */
+    public Partition getInitialPartition();
 
 }

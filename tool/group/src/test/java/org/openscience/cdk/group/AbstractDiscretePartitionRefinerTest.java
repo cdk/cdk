@@ -83,6 +83,11 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         public int getMaxConnectivity() {
             return 1;   // TODO?
         }
+
+        @Override
+        public Partition getInitialPartition() {
+            return Partition.unit(getVertexCount());
+        }
         
     }
 

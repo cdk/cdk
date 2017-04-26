@@ -22,17 +22,7 @@
  */
 package org.openscience.cdk.group;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 
 /**
  * A tool for determining the automorphism group of the atoms in a molecule, or
@@ -82,8 +72,6 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class BondDiscretePartitionRefiner extends AtomContainerDiscretePartitionRefiner {
 
-    private BondRefinable refinable;
-
     /**
      * Specialised option to allow generating automorphisms that ignore the bond order.
      */
@@ -110,75 +98,7 @@ public class BondDiscretePartitionRefiner extends AtomContainerDiscretePartition
      *{@inheritDoc}
      */
     @Override
-    public int getVertexCount() {
-        return refinable.getVertexCount();
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public int getConnectivity(int i, int j) {
-        return refinable.getConnectivity(i, j);
-    }
-
-    /**
-     * Get the bond partition, based on the element types of the atoms at either end
-     * of the bond, and the bond order.
-     *
-     * @param atomContainer the container with the bonds to partition
-     * @return a partition of the bonds based on the element types and bond order
-     */
-    public Partition getInitialPartition(IAtomContainer atomContainer) {
-        int bondCount = atomContainer.getBondCount();
-        Map<String, SortedSet<Integer>> cellMap = new HashMap<String, SortedSet<Integer>>();
-
-        // make mini-'descriptors' for bonds like "C=O" or "C#N" etc
-        for (int bondIndex = 0; bondIndex < bondCount; bondIndex++) {
-            IBond bond = atomContainer.getBond(bondIndex);
-            String el0 = bond.getAtom(0).getSymbol();
-            String el1 = bond.getAtom(1).getSymbol();
-            String boS;
-            if (ignoreBondOrders) {
-                // doesn't matter what it is, so long as it's constant
-                boS = "1";
-            } else {
-                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
-                int orderNumber = (isArom) ? 5 : bond.getOrder().numeric();
-                boS = String.valueOf(orderNumber);
-            }
-            String bondString;
-            if (el0.compareTo(el1) < 0) {
-                bondString = el0 + boS + el1;
-            } else {
-                bondString = el1 + boS + el0;
-            }
-            SortedSet<Integer> cell;
-            if (cellMap.containsKey(bondString)) {
-                cell = cellMap.get(bondString);
-            } else {
-                cell = new TreeSet<Integer>();
-                cellMap.put(bondString, cell);
-            }
-            cell.add(bondIndex);
-        }
-
-        // sorting is necessary to get cells in order
-        List<String> bondStrings = new ArrayList<String>(cellMap.keySet());
-        Collections.sort(bondStrings);
-
-        // the partition of the bonds by these 'descriptors'
-        Partition bondPartition = new Partition();
-        for (String key : bondStrings) {
-            SortedSet<Integer> cell = cellMap.get(key);
-            bondPartition.addCell(cell);
-        }
-        bondPartition.order();
-        return bondPartition;
-    }
-    
-    protected Refinable getRefinable(IAtomContainer atomContainer) {
-        refinable = new BondRefinable(atomContainer, ignoreBondOrders);
-        return refinable;
+    protected Refinable createRefinable(IAtomContainer atomContainer) {
+        return new BondRefinable(atomContainer, ignoreBondOrders);
     }
 }

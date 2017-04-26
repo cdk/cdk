@@ -22,14 +22,6 @@
  */
 package org.openscience.cdk.group;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
@@ -79,21 +71,18 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.module group
  */
 public class AtomDiscretePartitionRefiner extends AtomContainerDiscretePartitionRefiner {
-
-    private Refinable refinable;
-
+    
     /**
-     * Specialised option to allow generating automorphisms
-     * that ignore the element symbols.
+     * Ignore the elements when creating the initial partition.
      */
     private boolean ignoreElements;
-
+    
     /**
      * Specialised option to allow generating automorphisms
      * that ignore the bond order.
      */
     private boolean ignoreBondOrders;
-
+    
     /**
      * Default constructor - does not ignore elements or bond orders
      * or bond orders.
@@ -113,68 +102,8 @@ public class AtomDiscretePartitionRefiner extends AtomContainerDiscretePartition
         this.ignoreBondOrders = ignoreBondOrders;
     }
 
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    protected int getVertexCount() {
-        return refinable.getVertexCount();
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    protected int getConnectivity(int vertexI, int vertexJ) {
-       return refinable.getConnectivity(vertexI, vertexJ);
-    }
-
-    /**
-     * Get the element partition from an atom container, which is simply a list
-     * of sets of atom indices where all atoms in one set have the same element
-     * symbol.
-     *
-     * So for atoms [C0, N1, C2, P3, C4, N5] the partition would be
-     * [{0, 2, 4}, {1, 5}, {3}] with cells for elements C, N, and P.
-     *
-     * @param atomContainer the atom container to get element symbols from
-     * @return a partition of the atom indices based on the element symbols
-     */
-    public Partition getInitialPartition(IAtomContainer atomContainer) {
-        if (ignoreElements) {
-            int n = atomContainer.getAtomCount();
-            return Partition.unit(n);
-        }
-
-        Map<String, SortedSet<Integer>> cellMap = new HashMap<String, SortedSet<Integer>>();
-        int numberOfAtoms = atomContainer.getAtomCount();
-        for (int atomIndex = 0; atomIndex < numberOfAtoms; atomIndex++) {
-            String symbol = atomContainer.getAtom(atomIndex).getSymbol();
-            SortedSet<Integer> cell;
-            if (cellMap.containsKey(symbol)) {
-                cell = cellMap.get(symbol);
-            } else {
-                cell = new TreeSet<Integer>();
-                cellMap.put(symbol, cell);
-            }
-            cell.add(atomIndex);
-        }
-
-        List<String> atomSymbols = new ArrayList<String>(cellMap.keySet());
-        Collections.sort(atomSymbols);
-
-        Partition elementPartition = new Partition();
-        for (String key : atomSymbols) {
-            SortedSet<Integer> cell = cellMap.get(key);
-            elementPartition.addCell(cell);
-        }
-
-        return elementPartition;
-    }
-
-    protected Refinable getRefinable(IAtomContainer atomContainer) {
-        refinable = new AtomRefinable(atomContainer, ignoreBondOrders);
-        return refinable;
+    protected Refinable createRefinable(IAtomContainer atomContainer) {
+        return new AtomRefinable(atomContainer, ignoreElements, ignoreBondOrders);
     }
 
 }
