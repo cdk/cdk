@@ -279,6 +279,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void setAtom(int number, IAtom atom) {
+        if (atoms[number] != null)
+            atoms[number].removeListener(this);
         atom.addListener(this);
         atoms[number] = atom;
         notifyChanged();
