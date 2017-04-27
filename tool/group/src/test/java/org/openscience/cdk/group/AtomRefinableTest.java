@@ -22,8 +22,11 @@
  */
 package org.openscience.cdk.group;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -60,11 +63,44 @@ public class AtomRefinableTest {
     }
     
     @Test
-    public void getConnectedIndices() {
-        String acpString = "C0C1C2C3 0:1(1),0:2(1),0:3(1)";
+    public void neighboursInBlockForSingleBonds() {
+        String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomRefinable refinable = new AtomRefinable(ac);
-        assertArrayEquals(new int[] {1, 2, 3}, refinable.getConnectedIndices(0));
+        
+        Invariant invariant = refinable.neighboursInBlock(set(0, 2), 1);
+        assertTrue(invariant instanceof IntegerInvariant);
+        assertEquals(new IntegerInvariant(2), invariant);
+    }
+    
+    @Test
+    public void neighboursInBlockForMultipleBonds() {
+        String acpString = "C0C1C2C3C4 0:1(1),0:2(2),0:3(1),1:4(1),2:4(1),3:4(2)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        AtomRefinable refinable = new AtomRefinable(ac);
+        
+        Invariant invariant = refinable.neighboursInBlock(set(1, 2), 0);
+        assertTrue(invariant instanceof IntegerListInvariant);
+        assertEquals(new IntegerListInvariant(new int[] {1, 1}), invariant);
+    }
+    
+    @Test
+    public void neighboursInBlockForMultipleBondsIgnoringBondOrders() {
+        String acpString = "C0C1C2C3C4 0:1(1),0:2(2),0:3(1),1:4(1),2:4(1),3:4(2)";
+        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
+        AtomRefinable refinable = new AtomRefinable(ac, false, true);
+        
+        Invariant invariant = refinable.neighboursInBlock(set(1, 2), 0);
+        assertTrue(invariant instanceof IntegerInvariant);
+        assertEquals(new IntegerInvariant(2), invariant);
+    }
+    
+    private Set<Integer> set(int... elements) {
+        Set<Integer> block = new HashSet<Integer>();
+        for (int element : elements) {
+            block.add(element);
+        }
+        return block;
     }
     
     @Test

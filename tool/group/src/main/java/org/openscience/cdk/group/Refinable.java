@@ -22,6 +22,8 @@
  */
 package org.openscience.cdk.group;
 
+import java.util.Set;
+
 /**
  * Implementors are graph-like objects that are refinable by the 
  * equitable and discrete partition refiners.
@@ -31,6 +33,17 @@ package org.openscience.cdk.group;
  *
  */
 public interface Refinable {
+    
+    /**
+     * Given a block (or cell) of a partition, determine the invariant that 
+     * represents the intersection between the block and the neighbours of
+     * vertexIndex supplied.
+     *
+     * @param block a cell of the partition under refinement
+     * @param vertexIndex the element to compare
+     * @return the size of the intersection between the neighbours and the block
+     */
+    public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex);
     
     /**
      * Get the number of vertices in the graph to be refined.
@@ -49,19 +62,6 @@ public interface Refinable {
      * @return the multiplicity of the edge (0, 1, 2, 3, ...)
      */
     public int getConnectivity(int vertexI, int vertexJ);
-    
-    /**
-     * Get the connected indices for the given vertex index.
-     * 
-     * @param vertexIndex
-     * @return
-     */
-    public int[] getConnectedIndices(int vertexIndex);
-
-    /**
-     * @return the maximum connectivity of the refinable
-     */
-    public int getMaxConnectivity();
     
     /**
      * Get an initial partition of the vertices of the refinable - 

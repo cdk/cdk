@@ -62,8 +62,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
             return graph.connectionTable[vertexI][vertexJ];
         }
 
-        @Override
-        public int[] getConnectedIndices(int vertexIndex) {
+        private int[] getConnectedIndices(int vertexIndex) {
             Set<Integer> connectedSet = new HashSet<Integer>();
             for (int index = 0; index < graph.connectionTable.length; index++) {
                 if (graph.connectionTable[vertexIndex][index] == 1) {
@@ -80,13 +79,19 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         }
 
         @Override
-        public int getMaxConnectivity() {
-            return 1;   // TODO?
+        public Partition getInitialPartition() {
+            return Partition.unit(getVertexCount());
         }
 
         @Override
-        public Partition getInitialPartition() {
-            return Partition.unit(getVertexCount());
+        public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
+            int neighbours = 0;
+            for (int connected : getConnectedIndices(vertexIndex)) {
+                if (block.contains(connected)) {
+                    neighbours++;
+                }
+            }
+            return new IntegerInvariant(neighbours);
         }
         
     }

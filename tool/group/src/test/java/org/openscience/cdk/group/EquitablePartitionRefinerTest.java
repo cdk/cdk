@@ -1,10 +1,8 @@
 package org.openscience.cdk.group;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
@@ -36,7 +34,6 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
             return connections.length;
         }
 
-        @Override
         public int[] getConnectedIndices(int vertexI) {
             return connections[vertexI];
         }
@@ -52,13 +49,19 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
         }
 
         @Override
-        public int getMaxConnectivity() {
-            return 1;
+        public Partition getInitialPartition() {
+            return Partition.unit(getVertexCount());
         }
 
         @Override
-        public Partition getInitialPartition() {
-            return Partition.unit(getVertexCount());
+        public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
+            int neighbours = 0;
+            for (int connected : getConnectedIndices(vertexIndex)) {
+                if (block.contains(connected)) {
+                    neighbours++;
+                }
+            }
+            return new IntegerInvariant(neighbours);
         }
 
     }
@@ -67,16 +70,6 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
     public void constructorTest() {
         EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
         Assert.assertNotNull(refiner);
-    }
-
-    @Test
-    public void neighboursInBlockTest() {
-        EquitablePartitionRefiner refiner = new EquitablePartitionRefiner(makeExampleTable());
-        Set<Integer> block = new HashSet<Integer>();
-        block.add(1);
-        block.add(2);
-        block.add(3);
-        Assert.assertEquals(new IntegerInvariant(2), refiner.neighboursInBlock(block, 0));
     }
 
     @Test

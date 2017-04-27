@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -91,6 +92,43 @@ public class AtomRefinable implements Refinable {
         this.ignoreBondOrders = ignoreBondOrders;
         setupConnectionTable(atomContainer);
     }
+    
+    @Override
+    public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
+        // choose the invariant to use 
+        if (ignoreBondOrders || maxBondOrder == 1) {
+            return getSimpleInvariant(block, vertexIndex);
+        } else {
+            return getMultipleInvariant(block, vertexIndex);
+        }
+    }
+    
+    /**
+     * @return a simple count of the neighbours of vertexIndex that are in block
+     */
+    private Invariant getSimpleInvariant(Set<Integer> block, int vertexIndex) {
+        int neighbours = 0;
+        for (int connected : getConnectedIndices(vertexIndex)) {
+            if (block.contains(connected)) {
+                neighbours++;
+            }
+        }
+        return new IntegerInvariant(neighbours);
+    }
+    
+    /**
+     * @return a list of bond orders of connections to neighbours of vertexIndex that are in block
+     */
+    private Invariant getMultipleInvariant(Set<Integer> block, int vertexIndex) {
+        int[] bondOrderCounts = new int[maxBondOrder];
+        for (int connected : getConnectedIndices(vertexIndex)) {
+            if (block.contains(connected)) {
+                int bondOrder = getConnectivity(vertexIndex, connected);
+                bondOrderCounts[bondOrder - 1]++;
+            }
+        }
+        return new IntegerListInvariant(bondOrderCounts);
+    }
 
     @Override
     public int getVertexCount() {
@@ -121,14 +159,8 @@ public class AtomRefinable implements Refinable {
         }
     }
 
-    @Override
-    public int[] getConnectedIndices(int vertexIndex) {
+    private int[] getConnectedIndices(int vertexIndex) {
         return connectionTable[vertexIndex];
-    }
-
-    @Override
-    public int getMaxConnectivity() {
-        return maxBondOrder;
     }
     
     /**

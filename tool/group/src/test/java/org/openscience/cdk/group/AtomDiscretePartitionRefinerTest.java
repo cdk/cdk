@@ -109,7 +109,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
 
     @Test
     public void isCanonical_TrueTest() {
-        String acpString = "C0C1C2O3 0:1(2),0:2(1),1:3(1),2:3(1)";
+        String acpString = "C0C1C2O3 0:2(2),0:3(1),1:2(1),1:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
         Assert.assertTrue(refiner.isCanonical(ac));

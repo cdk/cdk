@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -60,15 +61,20 @@ public class BondRefinable implements Refinable {
         }
         return 0;
     }
-
+    
     @Override
-    public int[] getConnectedIndices(int vertexIndex) {
-        return connectionTable[vertexIndex];
+    public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
+        int neighbours = 0;
+        for (int connected : getConnectedIndices(vertexIndex)) {
+            if (block.contains(connected)) {
+                neighbours++;
+            }
+        }
+        return new IntegerInvariant(neighbours);
     }
 
-    @Override
-    public int getMaxConnectivity() {
-        return 0;   // TODO
+    private int[] getConnectedIndices(int vertexIndex) {
+        return connectionTable[vertexIndex];
     }
     
     /**

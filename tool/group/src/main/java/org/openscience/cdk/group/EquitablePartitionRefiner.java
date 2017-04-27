@@ -78,34 +78,6 @@ public class EquitablePartitionRefiner {
     }
     
     /**
-     * Gets from the graph the number of vertices. Abstract to allow different
-     * graph classes to be used (eg: Graph or IAtomContainer, etc).
-     *
-     * @return the number of vertices
-     */
-//    public int getVertexCount() {
-//        return refinable.getVertexCount();
-//    }
-
-    /**
-     * Find |a &cap; b| - that is, the size of the intersection between a and b.
-     *
-     * @param block a set of numbers
-     * @param vertexIndex the element to compare
-     * @return the size of the intersection
-     */
-    public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
-        int neighbours = 0;
-        for (int connected : refinable.getConnectedIndices(vertexIndex)) {
-            if (block.contains(connected)) {
-                neighbours++;
-            }
-        }
-        return new IntegerInvariant(neighbours);
-    }
-    
-
-    /**
      * Set the preference for splitting cells.
      *
      * @param splitOrder either FORWARD or REVERSE
@@ -166,7 +138,7 @@ public class EquitablePartitionRefiner {
     private Map<Invariant, SortedSet<Integer>> getInvariants(Partition partition, Set<Integer> targetBlock) {
         Map<Invariant, SortedSet<Integer>> setList = new HashMap<Invariant, SortedSet<Integer>>();
         for (int u : partition.getCell(currentBlockIndex)) {
-            Invariant h = neighboursInBlock(targetBlock, u);
+            Invariant h = refinable.neighboursInBlock(targetBlock, u);
             if (setList.containsKey(h)) {
                 setList.get(h).add(u);
             } else {
