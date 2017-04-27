@@ -634,7 +634,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             case UNSET:
                                 if (bond.isAromatic()) {
                                     if (!writeAromaticBondTypes.isSet())
-                                        throw new CDKException("Bond at idx " + container.getBondNumber(bond) + " was an unspecific aromatic bond which should only be used for querie in Molfiles. These can be written if desired by enabling the option 'WriteAromaticBondTypes'.");
+                                        throw new CDKException("Bond at idx " + container.indexOf(bond) + " was an unspecific aromatic bond which should only be used for querie in Molfiles. These can be written if desired by enabling the option 'WriteAromaticBondTypes'.");
                                     bondType = 4;
                                 }
                                 break;
@@ -643,7 +643,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 }
 
                 if (bondType == 0)
-                    throw new CDKException("Bond at idx=" + container.getBondNumber(bond) + " is not supported by Molfile, bond=" + bond.getOrder());
+                    throw new CDKException("Bond at idx=" + container.indexOf(bond) + " is not supported by Molfile, bond=" + bond.getOrder());
 
                 line += formatMDLInt(bondType, 3);
                 line += "  ";
@@ -861,7 +861,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.write(formatMDLInt(bonds.size(), 3));
                 for (IBond bond : bonds) {
                     writer.write(' ');
-                    writer.write(formatMDLInt(1+container.getBondNumber(bond), 3));
+                    writer.write(formatMDLInt(1+container.indexOf(bond), 3));
                 }
                 writer.newLine();
             }

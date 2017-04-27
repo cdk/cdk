@@ -89,7 +89,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             if (atom instanceof IPseudoAtom) {
                 text = ((IPseudoAtom) atom).getLabel();
             } else if (invisibleCarbon(atom, container, model) && drawNumbers) {
-                text = String.valueOf(container.getAtomNumber(atom) + 1);
+                text = String.valueOf(container.indexOf(atom) + 1);
             } else {
                 text = atom.getSymbol();
             }
@@ -108,7 +108,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             boolean drawNumbers = model.getParameter(WillDrawAtomNumbers.class).getValue();
             if (!invisibleCarbon(atom, container, model) && drawNumbers) {
                 Position position = getNextPosition(unused);
-                String number = String.valueOf(container.getAtomNumber(atom) + 1);
+                String number = String.valueOf(container.indexOf(atom) + 1);
                 textGroup.addChild(number, position);
             }
         }

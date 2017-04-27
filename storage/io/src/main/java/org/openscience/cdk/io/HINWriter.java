@@ -189,7 +189,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                             String bondType = "";
 
                             // get the serial no for this atom
-                            serial = mol.getAtomNumber(connectedAtom);
+                            serial = mol.indexOf(connectedAtom);
 
                             if (bondOrder == IBond.Order.SINGLE)
                                 bondType = "s";

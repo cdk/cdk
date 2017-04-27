@@ -179,7 +179,7 @@ public class InChINumbersTools {
                     List<IAtom> neighbors = container.getConnectedAtomsList(atom);
                     if (neighbors.size() == 1) {
                         IAtom correctedStart = findPiBondedOxygen(container, neighbors.get(0));
-                        if (correctedStart != null) exch(numbers, v, container.getAtomNumber(correctedStart));
+                        if (correctedStart != null) exch(numbers, v, container.indexOf(correctedStart));
                     }
                 }
             }

@@ -135,7 +135,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
                     (int) Double.NaN), NAMES, e);
         }
-        IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
+        IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.indexOf(atom));
 
         int isProtonInAromaticSystem = 0;
         IAtomContainer mol = atom.getBuilder().newInstance(IAtomContainer.class, clonedAtomContainer);

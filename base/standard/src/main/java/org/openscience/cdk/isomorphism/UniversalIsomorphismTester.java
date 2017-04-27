@@ -434,7 +434,7 @@ public class UniversalIsomorphismTester {
                 for (IAtom atom : g1.atoms()) {
                     if (qAtom.matches(atom)) {
                         List<RMap> lmap = new ArrayList<RMap>();
-                        lmap.add(new RMap(g1.getAtomNumber(atom), 0));
+                        lmap.add(new RMap(g1.indexOf(atom), 0));
                         matches.add(lmap);
                     }
                 }
@@ -442,7 +442,7 @@ public class UniversalIsomorphismTester {
                 for (IAtom atom : g1.atoms()) {
                     if (queryAtom.getSymbol().equals(atom.getSymbol())) {
                         List<RMap> lmap = new ArrayList<RMap>();
-                        lmap.add(new RMap(g1.getAtomNumber(atom), 0));
+                        lmap.add(new RMap(g1.indexOf(atom), 0));
                         matches.add(lmap);
                     }
                 }
@@ -690,25 +690,25 @@ public class UniversalIsomorphismTester {
                         IBond testBond = (IBond) bondsConnectedToAtom1j.get(k);
                         for (int m = 0; m < l.size(); m++) {
                             IBond testBond2;
-                            if (((RMap) l.get(m)).getId1() == g1.getBondNumber(testBond)) {
+                            if (((RMap) l.get(m)).getId1() == g1.indexOf(testBond)) {
                                 testBond2 = g2.getBond(((RMap) l.get(m)).getId2());
                                 for (int n = 0; n < 2; n++) {
                                     List<IBond> bondsToTest = g2.getConnectedBondsList(atom2[n]);
                                     if (bondsToTest.contains(testBond2)) {
                                         RMap map;
                                         if (j == n) {
-                                            map = new RMap(g1.getAtomNumber(atom1[0]), g2.getAtomNumber(atom2[0]));
+                                            map = new RMap(g1.indexOf(atom1[0]), g2.indexOf(atom2[0]));
                                         } else {
-                                            map = new RMap(g1.getAtomNumber(atom1[1]), g2.getAtomNumber(atom2[0]));
+                                            map = new RMap(g1.indexOf(atom1[1]), g2.indexOf(atom2[0]));
                                         }
                                         if (!result.contains(map)) {
                                             result.add(map);
                                         }
                                         RMap map2;
                                         if (j == n) {
-                                            map2 = new RMap(g1.getAtomNumber(atom1[1]), g2.getAtomNumber(atom2[1]));
+                                            map2 = new RMap(g1.indexOf(atom1[1]), g2.indexOf(atom2[1]));
                                         } else {
-                                            map2 = new RMap(g1.getAtomNumber(atom1[0]), g2.getAtomNumber(atom2[1]));
+                                            map2 = new RMap(g1.indexOf(atom1[0]), g2.indexOf(atom2[1]));
                                         }
                                         if (!result.contains(map2)) {
                                             result.add(map2);

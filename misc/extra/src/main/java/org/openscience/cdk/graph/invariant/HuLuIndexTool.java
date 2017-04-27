@@ -157,8 +157,8 @@ public class HuLuIndexTool {
                 headAtom = bond.getAtom(0);
                 endAtom = bond.getAtom(1);
 
-                headAtomPosition = atomContainer.getAtomNumber(headAtom);
-                endAtomPosition = atomContainer.getAtomNumber(endAtom);
+                headAtomPosition = atomContainer.indexOf(headAtom);
+                endAtomPosition = atomContainer.indexOf(endAtom);
 
                 if (Math.abs(apspMatrix[i][headAtomPosition] - apspMatrix[i][endAtomPosition]) == 1) {
                     int min = Math.min(apspMatrix[i][headAtomPosition], apspMatrix[i][endAtomPosition]);

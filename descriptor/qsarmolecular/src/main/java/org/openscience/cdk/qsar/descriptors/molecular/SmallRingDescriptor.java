@@ -210,7 +210,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
         for (int n = 0; n < mol.getBondCount(); n++) {
             IBond bond = mol.getBond(n);
             if (bond.getAtomCount() != 2) continue; // biconnected bonds only
-            int a1 = mol.getAtomNumber(bond.getAtom(0)), a2 = mol.getAtomNumber(bond.getAtom(1));
+            int a1 = mol.indexOf(bond.getAtom(0)), a2 = mol.indexOf(bond.getAtom(1));
 
             atomAdj[a1] = appendInteger(atomAdj[a1], a2);
             bondAdj[a1] = appendInteger(bondAdj[a1], n);
@@ -428,8 +428,8 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
         for (int n = 0; n < nb; n++)
             if (bondOrder[n] == 2) {
                 IBond bond = mol.getBond(n);
-                piAtom[mol.getAtomNumber(bond.getAtom(0))] = true;
-                piAtom[mol.getAtomNumber(bond.getAtom(1))] = true;
+                piAtom[mol.indexOf(bond.getAtom(0))] = true;
+                piAtom[mol.indexOf(bond.getAtom(1))] = true;
             }
 
         ArrayList<int[]> maybe = new ArrayList<int[]>(); // rings which may yet be aromatic
@@ -504,8 +504,8 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
         for (int n = 0; n < nb; n++)
             if (bondOrder[n] > 0) {
                 IBond bond = mol.getBond(n);
-                electrons[mol.getAtomNumber(bond.getAtom(0))] -= bondOrder[n];
-                electrons[mol.getAtomNumber(bond.getAtom(1))] -= bondOrder[n];
+                electrons[mol.indexOf(bond.getAtom(0))] -= bondOrder[n];
+                electrons[mol.indexOf(bond.getAtom(1))] -= bondOrder[n];
             }
 
         // pull out all of the small rings that could be upgraded to aromatic

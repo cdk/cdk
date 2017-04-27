@@ -221,7 +221,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         List<List<Integer>> fragments = new ArrayList<List<Integer>>();
         for (IAtom atom : atomContainer.atoms()) {
             List<Integer> tmp = new ArrayList<Integer>();
-            tmp.add(atomContainer.getAtomNumber(atom));
+            tmp.add(atomContainer.indexOf(atom));
             fragments.add(tmp);
         }
         return fragments;
@@ -232,8 +232,8 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         for (IBond bond : atomContainer.bonds()) {
             if (bond.getAtomCount() != 2) throw new CDKException("We only consider 2 center bonds");
             List<Integer> tmp = new ArrayList<Integer>();
-            tmp.add(atomContainer.getAtomNumber(bond.getAtom(0)));
-            tmp.add(atomContainer.getAtomNumber(bond.getAtom(1)));
+            tmp.add(atomContainer.indexOf(bond.getAtom(0)));
+            tmp.add(atomContainer.indexOf(bond.getAtom(1)));
             fragments.add(tmp);
         }
         return fragments;

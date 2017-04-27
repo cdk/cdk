@@ -86,7 +86,7 @@ public class AtomPlacer3D {
         for (int i = 0; i < chain.getAtomCount(); i++) {
             if (isHeavyAtom(chain.getAtom(i))) {
                 if (heavy[0] < 0) {
-                    heavy[0] = molecule.getAtomNumber(chain.getAtom(i));
+                    heavy[0] = molecule.indexOf(chain.getAtom(i));
                 }
                 hc++;
             }
@@ -137,7 +137,7 @@ public class AtomPlacer3D {
             if (isHeavyAtom(chain.getAtom(i))) {
                 if (!chain.getAtom(i).getFlag(CDKConstants.VISITED)) {
                     //logger.debug("Counter:" + counter);
-                    nextAtomNr = molecule.getAtomNumber(chain.getAtom(i));
+                    nextAtomNr = molecule.indexOf(chain.getAtom(i));
                     id2 = molecule.getAtom(firstAtoms[counter - 1]).getAtomTypeName();
                     id1 = molecule.getAtom(nextAtomNr).getAtomTypeName();
 

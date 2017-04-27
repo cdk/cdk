@@ -83,9 +83,9 @@ public class AdductionLPMechanism implements IReactionMechanism {
             throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);// Atom 1: excess in charge
-        IAtom atom1C = reactantCloned.getAtom(molecule1.getAtomNumber(atom1));
+        IAtom atom1C = reactantCloned.getAtom(molecule1.indexOf(atom1));
         IAtom atom2 = atomList.get(1);// Atom 2: deficient in charge
-        IAtom atom2C = reactantCloned.getAtom(molecule1.getAtomCount() + molecule2.getAtomNumber(atom2));
+        IAtom atom2C = reactantCloned.getAtom(molecule1.getAtomCount() + molecule2.indexOf(atom2));
 
         IBond newBond = molecule1.getBuilder().newInstance(IBond.class, atom1C, atom2C, IBond.Order.SINGLE);
         reactantCloned.addBond(newBond);
@@ -112,12 +112,12 @@ public class AdductionLPMechanism implements IReactionMechanism {
         /* mapping */
         for (IAtom atom : molecule1.atoms()) {
             IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule1.getAtomNumber(atom)));
+                    reactantCloned.getAtom(molecule1.indexOf(atom)));
             reaction.addMapping(mapping);
         }
         for (IAtom atom : molecule2.atoms()) {
             IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule2.getAtomNumber(atom)));
+                    reactantCloned.getAtom(molecule2.indexOf(atom)));
             reaction.addMapping(mapping);
         }
         reaction.addProduct(reactantCloned);

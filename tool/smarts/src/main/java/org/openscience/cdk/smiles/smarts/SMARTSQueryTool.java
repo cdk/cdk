@@ -468,8 +468,8 @@ public class SMARTSQueryTool {
                 atom1 = bond.getAtom(0);
                 atom2 = bond.getAtom(1);
 
-                Integer idx1 = atomContainer.getAtomNumber(atom1);
-                Integer idx2 = atomContainer.getAtomNumber(atom2);
+                Integer idx1 = atomContainer.indexOf(atom1);
+                Integer idx2 = atomContainer.indexOf(atom2);
 
                 if (!tmp.contains(idx1)) tmp.add(idx1);
                 if (!tmp.contains(idx2)) tmp.add(idx2);

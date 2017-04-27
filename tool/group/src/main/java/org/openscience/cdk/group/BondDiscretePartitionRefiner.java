@@ -325,8 +325,8 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         for (int bondIndexI = 0; bondIndexI < bondCount; bondIndexI++) {
             IBond bond = atomContainer.getBond(bondIndexI);
             bonds.add(bond);
-            int a0 = atomContainer.getAtomNumber(bond.getAtom(0));
-            int a1 = atomContainer.getAtomNumber(bond.getAtom(1));
+            int a0 = atomContainer.indexOf(bond.getAtom(0));
+            int a1 = atomContainer.indexOf(bond.getAtom(1));
             String boS;
             if (ignoreBondOrders) {
                 // doesn't matter what it is, so long as it's constant

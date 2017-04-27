@@ -70,12 +70,12 @@ public class GeometricDoubleBondEncoderFactoryTest {
         IAtom e = mock(IAtom.class); // 4
         IAtom f = mock(IAtom.class); // 5
 
-        when(mol.getAtomNumber(a)).thenReturn(0);
-        when(mol.getAtomNumber(b)).thenReturn(1);
-        when(mol.getAtomNumber(c)).thenReturn(2);
-        when(mol.getAtomNumber(d)).thenReturn(3);
-        when(mol.getAtomNumber(e)).thenReturn(4);
-        when(mol.getAtomNumber(f)).thenReturn(5);
+        when(mol.indexOf(a)).thenReturn(0);
+        when(mol.indexOf(b)).thenReturn(1);
+        when(mol.indexOf(c)).thenReturn(2);
+        when(mol.indexOf(d)).thenReturn(3);
+        when(mol.indexOf(e)).thenReturn(4);
+        when(mol.indexOf(f)).thenReturn(5);
 
         when(mol.getAtom(0)).thenReturn(a);
         when(mol.getAtom(1)).thenReturn(b);
@@ -145,12 +145,12 @@ public class GeometricDoubleBondEncoderFactoryTest {
         IAtom e = mock(IAtom.class); // 4
         IAtom f = mock(IAtom.class); // 5
 
-        when(mol.getAtomNumber(a)).thenReturn(0);
-        when(mol.getAtomNumber(b)).thenReturn(1);
-        when(mol.getAtomNumber(c)).thenReturn(2);
-        when(mol.getAtomNumber(d)).thenReturn(3);
-        when(mol.getAtomNumber(e)).thenReturn(4);
-        when(mol.getAtomNumber(f)).thenReturn(5);
+        when(mol.indexOf(a)).thenReturn(0);
+        when(mol.indexOf(b)).thenReturn(1);
+        when(mol.indexOf(c)).thenReturn(2);
+        when(mol.indexOf(d)).thenReturn(3);
+        when(mol.indexOf(e)).thenReturn(4);
+        when(mol.indexOf(f)).thenReturn(5);
 
         when(mol.getAtom(0)).thenReturn(a);
         when(mol.getAtom(1)).thenReturn(b);

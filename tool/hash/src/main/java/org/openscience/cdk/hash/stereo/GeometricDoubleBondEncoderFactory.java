@@ -114,11 +114,11 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
         // check the left and right bonds are acceptable
         if (accept(left, leftBonds) && accept(right, rightBonds)) {
 
-            int leftIndex = container.getAtomNumber(left);
-            int rightIndex = container.getAtomNumber(right);
+            int leftIndex = container.indexOf(left);
+            int rightIndex = container.indexOf(right);
 
-            int leftParentIndex = container.getAtomNumber(leftParent);
-            int rightParentIndex = container.getAtomNumber(rightParent);
+            int leftParentIndex = container.indexOf(leftParent);
+            int rightParentIndex = container.indexOf(rightParent);
 
             // neighbors of u/v with the bonded atoms (left,right) moved
             // to the back of each array. this is important as we can

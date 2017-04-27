@@ -611,8 +611,8 @@ final class StandardBondGenerator {
         final IAtomContainer refContainer = cyclic ? ringMap.get(bond) : container;
 
         final int length = refContainer.getAtomCount();
-        final int index1 = refContainer.getAtomNumber(bond.getAtom(0));
-        final int index2 = refContainer.getAtomNumber(bond.getAtom(1));
+        final int index1 = refContainer.indexOf(bond.getAtom(0));
+        final int index2 = refContainer.indexOf(bond.getAtom(1));
 
         // if the bond is in a cycle we are using ring bonds to determine offset, since rings
         // have been normalised and ordered to wind anti-clockwise we want to get the atoms

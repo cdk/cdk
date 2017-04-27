@@ -80,7 +80,7 @@ public class RemovingSEofNBMechanism implements IReactionMechanism {
         }
 
         // remove one lone pair electron and substitute with one single electron and charge 1.
-        int posAtom = molecule.getAtomNumber(atomList.get(0));
+        int posAtom = molecule.indexOf(atomList.get(0));
         List<ILonePair> lps = reactantCloned.getConnectedLonePairsList(reactantCloned.getAtom(posAtom));
         reactantCloned.removeLonePair(lps.get(lps.size() - 1));
 
@@ -101,7 +101,7 @@ public class RemovingSEofNBMechanism implements IReactionMechanism {
         /* mapping */
         for (IAtom atom : molecule.atoms()) {
             IMapping mapping = molecule.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+                    reactantCloned.getAtom(molecule.indexOf(atom)));
             reaction.addMapping(mapping);
         }
         reaction.addProduct(reactantCloned);

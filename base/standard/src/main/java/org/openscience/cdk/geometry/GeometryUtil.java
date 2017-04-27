@@ -1275,8 +1275,8 @@ public final class GeometryUtil {
                     //check atom properties
                     if (checkAtomMapping(firstAtomContainer, secondAtomContainer, i, j)) {
                         minimumDistance = distanceMatrix[i][j];
-                        mappedAtoms.put(firstAtomContainer.getAtomNumber(firstAtomContainer.getAtom(i)),
-                                secondAtomContainer.getAtomNumber(secondAtomContainer.getAtom(j)));
+                        mappedAtoms.put(firstAtomContainer.indexOf(firstAtomContainer.getAtom(i)),
+                                secondAtomContainer.indexOf(secondAtomContainer.getAtom(j)));
                     }
                 }
             }
@@ -1343,7 +1343,7 @@ public final class GeometryUtil {
             centerAtomFirstMolecule = firstAtomContainer.getAtom(firstAtoms.next());
             centerAtomFirstMolecule.setFlag(CDKConstants.VISITED, true);
             centerAtomSecondMolecule = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
-                    .getAtomNumber(centerAtomFirstMolecule)));
+                    .indexOf(centerAtomFirstMolecule)));
             connectedAtoms = firstAtomContainer.getConnectedAtomsList(centerAtomFirstMolecule);
             for (int i = 0; i < connectedAtoms.size(); i++) {
                 IAtom conAtom = connectedAtoms.get(i);
@@ -1352,7 +1352,7 @@ public final class GeometryUtil {
                     if (Coords3d) {
                         distance1 = centerAtomFirstMolecule.getPoint3d().distance(conAtom.getPoint3d());
                         distance2 = centerAtomSecondMolecule.getPoint3d().distance(
-                                secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.getAtomNumber(conAtom)))
+                                secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.indexOf(conAtom)))
                                         .getPoint3d());
                         sum = sum + Math.pow((distance1 - distance2), 2);
                         n++;
@@ -1360,7 +1360,7 @@ public final class GeometryUtil {
                         distance1 = centerAtomFirstMolecule.getPoint2d().distance(conAtom.getPoint2d());
                         distance2 = centerAtomSecondMolecule.getPoint2d().distance(
                                 secondAtomContainer.getAtom(
-                                        (mappedAtoms.get(firstAtomContainer.getAtomNumber(conAtom)))).getPoint2d());
+                                        (mappedAtoms.get(firstAtomContainer.indexOf(conAtom)))).getPoint2d());
                         sum = sum + Math.pow((distance1 - distance2), 2);
                         n++;
                     }
@@ -1405,11 +1405,11 @@ public final class GeometryUtil {
                     for (int j = i + 1; j < connectedAtoms.size(); j++) {
                         angleFirstMolecule = getAngle(centerAtomfirstAC, firstAtomfirstAC, connectedAtoms.get(j));
                         centerAtomsecondAC = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
-                                .getAtomNumber(centerAtomfirstAC)));
+                                .indexOf(centerAtomfirstAC)));
                         firstAtomsecondAC = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
-                                .getAtomNumber(firstAtomfirstAC)));
+                                .indexOf(firstAtomfirstAC)));
                         secondAtomsecondAC = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
-                                .getAtomNumber(connectedAtoms.get(j))));
+                                .indexOf(connectedAtoms.get(j))));
                         angleSecondMolecule = getAngle(centerAtomsecondAC, firstAtomsecondAC, secondAtomsecondAC);
                         sum = sum + Math.pow(angleFirstMolecule - angleSecondMolecule, 2);
                         n++;

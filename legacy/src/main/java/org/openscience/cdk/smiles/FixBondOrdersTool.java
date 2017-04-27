@@ -274,7 +274,7 @@ public class FixBondOrdersTool {
             IRing ring = (IRing) ringSet.getAtomContainer(r);
             Integer[] bondNumbers = new Integer[ring.getBondCount()];
             for (int i = 0; i < ring.getBondCount(); ++i) {
-                bondNumbers[i] = mol.getBondNumber(ring.getBond(i));
+                bondNumbers[i] = mol.indexOf(ring.getBond(i));
             }
             bondsArray.add(bondNumbers);
         }
@@ -379,11 +379,11 @@ public class FixBondOrdersTool {
         for (Integer i : ringGroup) {
             for (IAtom atom : ringSet.getAtomContainer(i).atoms()) {
                 if (atc.size() > 0) {
-                    if (!atc.contains(molecule.getAtomNumber(atom))) {
-                        atc.add(molecule.getAtomNumber(atom));
+                    if (!atc.contains(molecule.indexOf(atom))) {
+                        atc.add(molecule.indexOf(atom));
                     }
                 } else {
-                    atc.add(molecule.getAtomNumber(atom));
+                    atc.add(molecule.indexOf(atom));
                 }
             }
         }
@@ -403,11 +403,11 @@ public class FixBondOrdersTool {
         for (Integer i : ringGroup) {
             for (IBond bond : ringSet.getAtomContainer(i).bonds()) {
                 if (btc.size() > 0) {
-                    if (!btc.contains(molecule.getBondNumber(bond))) {
-                        btc.add(molecule.getBondNumber(bond));
+                    if (!btc.contains(molecule.indexOf(bond))) {
+                        btc.add(molecule.indexOf(bond));
                     }
                 } else {
-                    btc.add(molecule.getBondNumber(bond));
+                    btc.add(molecule.indexOf(bond));
                 }
             }
         }
@@ -425,8 +425,8 @@ public class FixBondOrdersTool {
         List<Integer[]> aptc = new ArrayList<Integer[]>();
         for (Integer i : bondsToCheck) {
             Integer[] aps = new Integer[2];
-            aps[0] = molecule.getAtomNumber(molecule.getBond(i).getAtom(0));
-            aps[1] = molecule.getAtomNumber(molecule.getBond(i).getAtom(1));
+            aps[0] = molecule.indexOf(molecule.getBond(i).getAtom(0));
+            aps[1] = molecule.indexOf(molecule.getBond(i).getAtom(1));
             aptc.add(aps);
         }
         return aptc;

@@ -411,7 +411,7 @@ public class StructureResonanceGenerator {
 
         for (int i = 0; i < acClone.getAtomCount(); i++)
             //			if(acClone.getAtom(i).getID() == null)
-            acClone.getAtom(i).setID("" + acClone.getAtomNumber(acClone.getAtom(i)));
+            acClone.getAtom(i).setID("" + acClone.indexOf(acClone.getAtom(i)));
 
         if (lookingSymmetry) {
             try {
@@ -431,7 +431,7 @@ public class StructureResonanceGenerator {
             IAtomContainer ss = set.getAtomContainer(i);
             for (int j = 0; j < ss.getAtomCount(); j++)
                 //				if(ss.getAtom(j).getID() == null)
-                ss.getAtom(j).setID("" + ss.getAtomNumber(ss.getAtom(j)));
+                ss.getAtom(j).setID("" + ss.indexOf(ss.getAtom(j)));
 
             try {
 

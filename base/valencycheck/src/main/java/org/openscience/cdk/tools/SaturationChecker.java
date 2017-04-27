@@ -89,7 +89,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         if (atomTypes.length == 0) return true;
         logger.debug("*** Checking for perfect configuration ***");
         try {
-            logger.debug("Checking configuration of atom " + ac.getAtomNumber(atom));
+            logger.debug("Checking configuration of atom " + ac.indexOf(atom));
             logger.debug("Atom has bondOrderSum = " + bondOrderSum);
             logger.debug("Atom has max = " + bondOrderSum);
         } catch (Exception exc) {
@@ -97,14 +97,14 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         for (int f = 0; f < atomTypes.length; f++) {
             if (bondOrderSum == atomTypes[f].getBondOrderSum() && maxBondOrder == atomTypes[f].getMaxBondOrder()) {
                 try {
-                    logger.debug("Atom " + ac.getAtomNumber(atom) + " has perfect configuration");
+                    logger.debug("Atom " + ac.indexOf(atom) + " has perfect configuration");
                 } catch (Exception exc) {
                 }
                 return true;
             }
         }
         try {
-            logger.debug("*** Atom " + ac.getAtomNumber(atom) + " has imperfect configuration ***");
+            logger.debug("*** Atom " + ac.indexOf(atom) + " has imperfect configuration ***");
         } catch (Exception exc) {
         }
         return false;
@@ -167,7 +167,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
         Integer charge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
         try {
-            logger.debug("*** Checking saturation of atom ", atom.getSymbol(), "" + ac.getAtomNumber(atom) + " ***");
+            logger.debug("*** Checking saturation of atom ", atom.getSymbol(), "" + ac.indexOf(atom) + " ***");
             logger.debug("bondOrderSum: " + bondOrderSum);
             logger.debug("maxBondOrder: " + maxBondOrder);
             logger.debug("hcount: " + hcount);
@@ -200,7 +200,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
         Integer charge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
         try {
-            logger.debug("*** Checking saturation of atom " + ac.getAtomNumber(atom) + " ***");
+            logger.debug("*** Checking saturation of atom " + ac.indexOf(atom) + " ***");
             logger.debug("bondOrderSum: " + bondOrderSum);
             logger.debug("maxBondOrder: " + maxBondOrder);
             logger.debug("hcount: " + hcount);

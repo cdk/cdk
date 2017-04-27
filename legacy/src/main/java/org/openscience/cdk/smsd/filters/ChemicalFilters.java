@@ -364,7 +364,7 @@ public class ChemicalFilters {
 
         for (IAtom atoms : ac1.atoms()) {
 
-            int ac1AtomNumber = ac1.getAtomNumber(atoms);
+            int ac1AtomNumber = ac1.indexOf(atoms);
 
             if (mappings.containsKey(ac1AtomNumber)) {
 
@@ -373,7 +373,7 @@ public class ChemicalFilters {
                 List<IAtom> connectedAtoms = ac1.getConnectedAtomsList(atoms);
 
                 for (IAtom cAtoms : connectedAtoms) {
-                    int ac1ConnectedAtomNumber = ac1.getAtomNumber(cAtoms);
+                    int ac1ConnectedAtomNumber = ac1.indexOf(cAtoms);
 
                     if (mappings.containsKey(ac1ConnectedAtomNumber)) {
                         {
@@ -525,7 +525,7 @@ public class ChemicalFilters {
         IAtomContainer subgraphContainer = molecule.getBuilder().newInstance(IAtomContainer.class, molecule);
         List<IAtom> list = new ArrayList<IAtom>(atomsMCS.size());
         for (IAtom atom : atomsMCS) {
-            int post = molecule.getAtomNumber(atom);
+            int post = molecule.indexOf(atom);
             //            System.out.println("Atom to be removed " + post);
             list.add(subgraphContainer.getAtom(post));
         }

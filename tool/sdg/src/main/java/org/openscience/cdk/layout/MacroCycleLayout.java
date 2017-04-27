@@ -220,7 +220,7 @@ final class MacroCycleLayout {
         IAtom atom = shared.getAtom(0);
         while (atom != null) {
             visit.add(atom);
-            ringAttach.add(macrocycle.getAtomNumber(atom));
+            ringAttach.add(macrocycle.indexOf(atom));
             List<IAtom> connected = shared.getConnectedAtomsList(atom);
             atom = null;
             for (IAtom neighbor : connected) {

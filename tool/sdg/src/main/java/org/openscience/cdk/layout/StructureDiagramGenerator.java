@@ -1662,7 +1662,7 @@ public class StructureDiagramGenerator {
 
                 logger.debug("---start of longest unplaced chain---");
                 try {
-                    logger.debug("Start at atom no. " + (molecule.getAtomNumber(atom) + 1));
+                    logger.debug("Start at atom no. " + (molecule.indexOf(atom) + 1));
                     logger.debug(AtomPlacer.listNumbers(molecule, longestUnplacedChain));
                 } catch (Exception exc) {
                     logger.debug(exc);
@@ -1673,13 +1673,13 @@ public class StructureDiagramGenerator {
 
                     if (placedAtoms.getAtomCount() > 1) {
                         logger.debug("More than one atoms placed already");
-                        logger.debug("trying to place neighbors of atom " + (molecule.getAtomNumber(atom) + 1));
+                        logger.debug("trying to place neighbors of atom " + (molecule.indexOf(atom) + 1));
                         atomPlacer.distributePartners(atom, placedAtoms, GeometryUtil.get2DCenter(placedAtoms),
                                                       unplacedAtoms, bondLength);
                         direction = new Vector2d(longestUnplacedChain.getAtom(1).getPoint2d());
                         startVector = new Vector2d(atom.getPoint2d());
                         direction.sub(startVector);
-                        logger.debug("Done placing neighbors of atom " + (molecule.getAtomNumber(atom) + 1));
+                        logger.debug("Done placing neighbors of atom " + (molecule.indexOf(atom) + 1));
                     } else {
                         logger.debug("Less than or equal one atoms placed already");
                         logger.debug("Trying to get next bond vector.");
@@ -1916,12 +1916,12 @@ public class StructureDiagramGenerator {
             IAtom atom;
             Point2d point = new Point2d(0, 0);
             atom = bond.getAtom(0);
-            logger.debug("Atom 1 of first Bond: " + (molecule.getAtomNumber(atom) + 1));
+            logger.debug("Atom 1 of first Bond: " + (molecule.indexOf(atom) + 1));
             atom.setPoint2d(point);
             atom.setFlag(CDKConstants.ISPLACED, true);
             point = new Point2d(0, 0);
             atom = bond.getAtom(1);
-            logger.debug("Atom 2 of first Bond: " + (molecule.getAtomNumber(atom) + 1));
+            logger.debug("Atom 2 of first Bond: " + (molecule.indexOf(atom) + 1));
             point.add(bondVector);
             atom.setPoint2d(point);
             atom.setFlag(CDKConstants.ISPLACED, true);

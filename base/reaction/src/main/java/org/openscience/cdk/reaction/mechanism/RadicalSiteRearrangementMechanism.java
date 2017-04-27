@@ -82,13 +82,13 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism {
             throw new CDKException("Could not clone IAtomContainer!", e);
         }
         IAtom atom1 = atomList.get(0);// Atom to be moved
-        IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
+        IAtom atom1C = reactantCloned.getAtom(molecule.indexOf(atom1));
         IAtom atom2 = atomList.get(1);// Atom to receive the new bonding with a ISingleElectron
-        IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
+        IAtom atom2C = reactantCloned.getAtom(molecule.indexOf(atom2));
         IAtom atom3 = atomList.get(2);// Atom which loss the atom
-        IAtom atom3C = reactantCloned.getAtom(molecule.getAtomNumber(atom3));
+        IAtom atom3C = reactantCloned.getAtom(molecule.indexOf(atom3));
         IBond bond1 = bondList.get(0);// Bond to move
-        int posBond1 = molecule.getBondNumber(bond1);
+        int posBond1 = molecule.indexOf(bond1);
 
         reactantCloned.removeBond(reactantCloned.getBond(posBond1));
         IBond newBond = atom1.getBuilder().newInstance(IBond.class, atom1C, atom2C, IBond.Order.SINGLE);
@@ -113,7 +113,7 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism {
         /* mapping */
         for (IAtom atom : molecule.atoms()) {
             IMapping mapping = atom2C.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+                    reactantCloned.getAtom(molecule.indexOf(atom)));
             reaction.addMapping(mapping);
         }
 

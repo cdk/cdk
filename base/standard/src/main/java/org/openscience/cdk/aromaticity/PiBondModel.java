@@ -51,8 +51,8 @@ final class PiBondModel extends ElectronDonation {
 
         // count number of cyclic pi bonds
         for (IBond bond : container.bonds()) {
-            int u = container.getAtomNumber(bond.getAtom(0));
-            int v = container.getAtomNumber(bond.getAtom(1));
+            int u = container.indexOf(bond.getAtom(0));
+            int v = container.indexOf(bond.getAtom(1));
 
             if (bond.getOrder() == DOUBLE && ringSearch.cyclic(u, v)) {
                 piBonds[u]++;

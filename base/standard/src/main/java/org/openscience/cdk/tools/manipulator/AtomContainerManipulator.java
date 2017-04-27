@@ -1352,8 +1352,8 @@ public class AtomContainerManipulator {
         }
         for (int i = 0; i < bonds.length; i++) {
             IBond bond = src.getBond(i);
-            int u = src.getAtomNumber(bond.getAtom(0));
-            int v = src.getAtomNumber(bond.getAtom(1));
+            int u = src.indexOf(bond.getAtom(0));
+            int v = src.indexOf(bond.getAtom(1));
             bonds[i] = builder.newInstance(IBond.class, atoms[u], atoms[v]);
         }
 
@@ -1385,8 +1385,8 @@ public class AtomContainerManipulator {
         }
         for (int i = 0; i < bonds.length; i++) {
             IBond bond = src.getBond(i);
-            int u = src.getAtomNumber(bond.getAtom(0));
-            int v = src.getAtomNumber(bond.getAtom(1));
+            int u = src.indexOf(bond.getAtom(0));
+            int v = src.indexOf(bond.getAtom(1));
             bonds[i] = builder.newInstance(IBond.class, atoms[u], atoms[v]);
         }
 

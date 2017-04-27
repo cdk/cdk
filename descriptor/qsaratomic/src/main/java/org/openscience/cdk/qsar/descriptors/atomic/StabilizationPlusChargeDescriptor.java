@@ -124,7 +124,7 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
         IAtom localAtom;
         try {
             clone = (IAtomContainer) container.clone();
-            localAtom = clone.getAtom(container.getAtomNumber(atom));
+            localAtom = clone.getAtom(container.indexOf(atom));
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
         } catch (CDKException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(

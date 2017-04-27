@@ -137,7 +137,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
                 for (Map.Entry<IAtom, IAtom> map : solution.entrySet()) {
                     IAtom sourceAtom = map.getKey();
                     IAtom targetAtom = map.getValue();
-                    atomMappings.put(source.getAtomNumber(sourceAtom), target.getAtomNumber(targetAtom));
+                    atomMappings.put(source.indexOf(sourceAtom), target.indexOf(targetAtom));
                 }
                 allMCS.add(counter++, atomMappings);
             }

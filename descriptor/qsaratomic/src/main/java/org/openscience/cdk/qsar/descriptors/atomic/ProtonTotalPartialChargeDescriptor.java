@@ -134,7 +134,7 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
             return getDummyDescriptorValue(exception);
         }
 
-        IAtom localAtom = clone.getAtom(ac.getAtomNumber(atom));
+        IAtom localAtom = clone.getAtom(ac.indexOf(atom));
         neighboors = clone.getConnectedAtomsList(localAtom);
 
         // we assume that an atom has a mxa number of protons = MAX_PROTON_COUNT

@@ -376,9 +376,9 @@ public class ReactionManipulator {
             Integer      grpIdx = atom.getProperty(CDKConstants.REACTION_GROUP);
 
             if (role == null || role == ReactionRole.None)
-                throw new IllegalArgumentException("Atom " + mol.getAtomNumber(atom) + " had undefined role");
+                throw new IllegalArgumentException("Atom " + mol.indexOf(atom) + " had undefined role");
             if (grpIdx == null)
-                throw new IllegalArgumentException("Atom " + mol.getAtomNumber(atom) + " had no reaction group id");
+                throw new IllegalArgumentException("Atom " + mol.indexOf(atom) + " had no reaction group id");
 
             IAtomContainer comp = components.get(grpIdx);
 
@@ -408,9 +408,9 @@ public class ReactionManipulator {
             Integer begIdx = beg.getProperty(CDKConstants.REACTION_GROUP);
             Integer endIdx = end.getProperty(CDKConstants.REACTION_GROUP);
             if (begIdx == null || endIdx == null)
-                throw new IllegalArgumentException("Bond " + mol.getBondNumber(bond) + " had atoms with no reaction group id");
+                throw new IllegalArgumentException("Bond " + mol.indexOf(bond) + " had atoms with no reaction group id");
             if (!begIdx.equals(endIdx))
-                throw new IllegalArgumentException("Bond " + mol.getBondNumber(bond) + " had atoms with different reaction group id");
+                throw new IllegalArgumentException("Bond " + mol.indexOf(bond) + " had atoms with different reaction group id");
             components.get(begIdx).addBond(bond);
         }
 

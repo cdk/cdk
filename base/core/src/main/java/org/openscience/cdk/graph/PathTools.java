@@ -440,15 +440,15 @@ public class PathTools {
     @Deprecated
     public static List<IAtom> getShortestPath(IAtomContainer atomContainer, IAtom start, IAtom end) {
         int natom = atomContainer.getAtomCount();
-        int endNumber = atomContainer.getAtomNumber(end);
-        int startNumber = atomContainer.getAtomNumber(start);
+        int endNumber = atomContainer.indexOf(end);
+        int startNumber = atomContainer.indexOf(start);
         int[] dist = new int[natom];
         int[] previous = new int[natom];
         for (int i = 0; i < natom; i++) {
             dist[i] = 99999999;
             previous[i] = -1;
         }
-        dist[atomContainer.getAtomNumber(start)] = 0;
+        dist[atomContainer.indexOf(start)] = 0;
 
         List<IAtom> sList = new ArrayList<IAtom>();
         List<Integer> qList = new ArrayList<Integer>();
@@ -474,7 +474,7 @@ public class PathTools {
             // relaxation
             List<IAtom> connected = atomContainer.getConnectedAtomsList(atomContainer.getAtom(index));
             for (IAtom aConnected : connected) {
-                int anum = atomContainer.getAtomNumber(aConnected);
+                int anum = atomContainer.indexOf(aConnected);
                 if (dist[anum] > dist[index] + 1) { // all edges have equals weights
                     dist[anum] = dist[index] + 1;
                     previous[anum] = index;

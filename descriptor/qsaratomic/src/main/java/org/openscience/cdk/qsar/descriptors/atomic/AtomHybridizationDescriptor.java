@@ -115,7 +115,7 @@ public class AtomHybridizationDescriptor extends AbstractAtomicDescriptor implem
             return getDummyDescriptorValue(e);
         }
         if (matched == null) {
-            int atnum = container.getAtomNumber(atom);
+            int atnum = container.indexOf(atom);
             return getDummyDescriptorValue(new CDKException("The matched atom type was null (atom number " + atnum
                     + ") " + atom.getSymbol()));
         }

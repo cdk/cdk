@@ -133,13 +133,13 @@ public class RingSearchTest {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
 
-        when(container.getAtomNumber(any(IAtom.class))).thenReturn(42);
+        when(container.indexOf(any(IAtom.class))).thenReturn(42);
 
         RingSearch ringSearch = new RingSearch(container, cyclicSearch);
         ringSearch.cyclic(atom);
 
         // verify the number returned from getAtomNumber is passed on
-        verify(container, times(1)).getAtomNumber(atom);
+        verify(container, times(1)).indexOf(atom);
         verify(cyclicSearch, times(1)).cyclic(42);
     }
 
@@ -152,8 +152,8 @@ public class RingSearchTest {
         IAtom a2 = mock(IAtom.class);
         IBond bond = mock(IBond.class);
 
-        when(container.getAtomNumber(a1)).thenReturn(42);
-        when(container.getAtomNumber(a2)).thenReturn(43);
+        when(container.indexOf(a1)).thenReturn(42);
+        when(container.indexOf(a2)).thenReturn(43);
         when(bond.getAtom(0)).thenReturn(a1);
         when(bond.getAtom(1)).thenReturn(a2);
 
@@ -161,8 +161,8 @@ public class RingSearchTest {
         ringSearch.cyclic(bond);
 
         // verify the number returned from getAtomNumber is passed on
-        verify(container, times(1)).getAtomNumber(a1);
-        verify(container, times(1)).getAtomNumber(a2);
+        verify(container, times(1)).indexOf(a1);
+        verify(container, times(1)).indexOf(a2);
         verify(cyclicSearch, times(1)).cyclic(42, 43);
     }
 
@@ -173,7 +173,7 @@ public class RingSearchTest {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
 
-        when(container.getAtomNumber(any(IAtom.class))).thenReturn(-1);
+        when(container.indexOf(any(IAtom.class))).thenReturn(-1);
 
         RingSearch ringSearch = new RingSearch(container, cyclicSearch);
 

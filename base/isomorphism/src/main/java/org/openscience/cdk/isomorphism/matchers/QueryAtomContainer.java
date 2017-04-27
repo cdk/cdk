@@ -540,10 +540,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public int getAtomNumber(IAtom atom) {
-        for (int f = 0; f < atomCount; f++) {
-            if (atoms[f] == atom) return f;
-        }
-        return -1;
+        return indexOf(atom);
     }
 
     /**
@@ -557,7 +554,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public int getBondNumber(IAtom atom1, IAtom atom2) {
-        return (getBondNumber(getBond(atom1, atom2)));
+        return indexOf(getBond(atom1, atom2));
     }
 
     /**
@@ -569,10 +566,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public int getBondNumber(IBond bond) {
-        for (int f = 0; f < bondCount; f++) {
-            if (bonds[f] == bond) return f;
-        }
-        return -1;
+        return indexOf(bond);
     }
 
     /**
@@ -584,10 +578,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public int getLonePairNumber(ILonePair lonePair) {
-        for (int f = 0; f < lonePairCount; f++) {
-            if (lonePairs[f] == lonePair) return f;
-        }
-        return -1;
+        return indexOf(lonePair);
     }
 
     /**
@@ -599,8 +590,37 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public int getSingleElectronNumber(ISingleElectron singleElectron) {
-        for (int f = 0; f < singleElectronCount; f++) {
-            if (singleElectrons[f] == singleElectron) return f;
+        return indexOf(singleElectron);
+    }
+
+    @Override
+    public int indexOf(IAtom atom) {
+        for (int i = 0; i < atomCount; i++) {
+            if (atoms[i] == atom) return i;
+        }
+        return -1;
+    }
+
+    @Override
+    public int indexOf(IBond bond) {
+        for (int i = 0; i < bondCount; i++) {
+            if (bonds[i] == bond) return i;
+        }
+        return -1;
+    }
+
+    @Override
+    public int indexOf(ISingleElectron electron) {
+        for (int i = 0; i < singleElectronCount; i++) {
+            if (singleElectrons[i] == electron) return i;
+        }
+        return -1;
+    }
+
+    @Override
+    public int indexOf(ILonePair pair) {
+        for (int i = 0; i < lonePairCount; i++) {
+            if (lonePairs[i] == pair) return i;
         }
         return -1;
     }
@@ -1091,7 +1111,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public IBond removeBond(IAtom atom1, IAtom atom2) {
-        int pos = getBondNumber(atom1, atom2);
+        int pos = indexOf(getBond(atom1, atom2));
         IBond bond = null;
         if (pos != -1) {
             bond = bonds[pos];
@@ -1136,7 +1156,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public void removeLonePair(ILonePair lonePair) {
-        int pos = getLonePairNumber(lonePair);
+        int pos = indexOf(lonePair);
         if (pos != -1) removeLonePair(pos);
     }
 
@@ -1165,7 +1185,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public void removeSingleElectron(ISingleElectron singleElectron) {
-        int pos = getSingleElectronNumber(singleElectron);
+        int pos = indexOf(singleElectron);
         if (pos != -1) removeSingleElectron(pos);
     }
 

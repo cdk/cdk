@@ -242,7 +242,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                         StringBuffer connectBuffer = new StringBuffer("CONECT");
                         connectBuffer.append(String.format("%5d", atomNumber));
                         for (IAtom neighbour : neighbours) {
-                            int neighbourNumber = molecule.getAtomNumber(neighbour) + 1;
+                            int neighbourNumber = molecule.indexOf(neighbour) + 1;
                             connectBuffer.append(String.format("%5d", neighbourNumber));
                         }
                         connectRecords[atomNumber - 1] = connectBuffer.toString();

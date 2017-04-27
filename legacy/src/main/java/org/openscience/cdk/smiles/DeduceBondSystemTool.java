@@ -272,7 +272,7 @@ public class DeduceBondSystemTool {
         int[] num = new int[5]; // stores atom numbers based on atom numbers in AtomContainer instead of ring
 
         for (int j = 0; j <= 4; j++) {
-            num[j] = m.getAtomNumber(r.getAtom(j));
+            num[j] = m.indexOf(r.getAtom(j));
             //logger.debug(num[j]);
         }
 
@@ -341,7 +341,7 @@ public class DeduceBondSystemTool {
         int[] num = new int[6];
 
         for (int j = 0; j <= 5; j++) {
-            num[j] = m.getAtomNumber(r.getAtom(j));
+            num[j] = m.indexOf(r.getAtom(j));
         }
 
         List<String> al1 = new ArrayList<String>();
@@ -445,7 +445,7 @@ public class DeduceBondSystemTool {
         int[] num = new int[7];
 
         for (int j = 0; j <= 6; j++) {
-            num[j] = m.getAtomNumber(r.getAtom(j));
+            num[j] = m.indexOf(r.getAtom(j));
         }
 
         List<String> al1 = new ArrayList<String>();
@@ -813,7 +813,7 @@ public class DeduceBondSystemTool {
             IRing ring = (IRing) ringSet.getAtomContainer(r);
             Integer[] bondNumbers = new Integer[ring.getBondCount()];
             for (int i = 0; i < ring.getBondCount(); ++i)
-                bondNumbers[i] = mol.getBondNumber(ring.getBond(i));
+                bondNumbers[i] = mol.indexOf(ring.getBond(i));
             listOfRings.add(bondNumbers);
         }
     }

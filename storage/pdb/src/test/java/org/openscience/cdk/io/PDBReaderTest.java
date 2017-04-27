@@ -153,7 +153,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(oMol);
         Assert.assertEquals(oMol.getAtomCount(), 14);
 
-        IAtom nAtom = oMol.getFirstAtom();
+        IAtom nAtom = oMol.getAtom(0);
         Assert.assertNotNull(nAtom);
         Assert.assertTrue(nAtom instanceof PDBAtom);
         PDBAtom oAtom = (PDBAtom) nAtom;
@@ -177,7 +177,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(1.0, oAtom.getOccupancy(), 0);
         Assert.assertEquals(0.0, oAtom.getTempFactor(), 0);
 
-        nAtom = oMol.getLastAtom();
+        nAtom = oMol.getAtom(oMol.getAtomCount()-1);
         Assert.assertNotNull(nAtom);
         Assert.assertTrue(nAtom instanceof PDBAtom);
         oAtom = (PDBAtom) nAtom;

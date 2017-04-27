@@ -251,7 +251,7 @@ public class IonizationPotentialTool {
         // effectiveAtomicPolarizability
         results[4] = pol.calculateGHEffectiveAtomPolarizability(container, atom, 100, true);
 
-        int position = container.getAtomNumber(atom);
+        int position = container.indexOf(atom);
         if (product != null)
             results[5] = stabil.calculatePositive(product, product.getAtom(position));
         else
@@ -330,7 +330,7 @@ public class IonizationPotentialTool {
             // effectiveAtomicPolarizability
             results[4] += pol.calculateGHEffectiveAtomPolarizability(container, atom, 100, true);
 
-            int position = container.getAtomNumber(atom);
+            int position = container.indexOf(atom);
             if (product != null)
                 results[5] += stabil.calculatePositive(product, product.getAtom(position));
             else

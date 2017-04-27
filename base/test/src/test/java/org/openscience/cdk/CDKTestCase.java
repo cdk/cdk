@@ -200,10 +200,10 @@ public class CDKTestCase {
 
         for (IAtom atom : container.atoms()) {
             if (atom.getSymbol().equals("H"))
-                Assert.assertFalse(atom.getSymbol() + container.getAtomNumber(atom) + " was aromatic",
+                Assert.assertFalse(atom.getSymbol() + container.indexOf(atom) + " was aromatic",
                         atom.getFlag(CDKConstants.ISAROMATIC));
             else
-                Assert.assertTrue(atom.getSymbol() + container.getAtomNumber(atom) + " was not aromatic",
+                Assert.assertTrue(atom.getSymbol() + container.indexOf(atom) + " was not aromatic",
                         atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }

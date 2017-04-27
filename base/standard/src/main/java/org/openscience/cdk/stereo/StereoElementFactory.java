@@ -350,13 +350,13 @@ public abstract class StereoElementFactory {
         /**{@inheritDoc} */
         @Override
         ITetrahedralChirality createTetrahedral(IAtom atom, Stereocenters stereocenters) {
-            return createTetrahedral(container.getAtomNumber(atom), stereocenters);
+            return createTetrahedral(container.indexOf(atom), stereocenters);
         }
 
         /**{@inheritDoc} */
         @Override
         IDoubleBondStereochemistry createGeometric(IBond bond, Stereocenters stereocenters) {
-            return createGeometric(container.getAtomNumber(bond.getAtom(0)), container.getAtomNumber(bond.getAtom(1)),
+            return createGeometric(container.indexOf(bond.getAtom(0)), container.indexOf(bond.getAtom(1)),
                     stereocenters);
         }
 
@@ -482,8 +482,8 @@ public abstract class StereoElementFactory {
 
             IAtom[] terminals = ExtendedTetrahedral.findTerminalAtoms(container, focus);
 
-            int t0 = container.getAtomNumber(terminals[0]);
-            int t1 = container.getAtomNumber(terminals[1]);
+            int t0 = container.indexOf(terminals[0]);
+            int t1 = container.indexOf(terminals[1]);
 
             // check the focus is cumulated
             if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE
@@ -694,13 +694,13 @@ public abstract class StereoElementFactory {
         /**{@inheritDoc} */
         @Override
         ITetrahedralChirality createTetrahedral(IAtom atom, Stereocenters stereocenters) {
-            return createTetrahedral(container.getAtomNumber(atom), stereocenters);
+            return createTetrahedral(container.indexOf(atom), stereocenters);
         }
 
         /**{@inheritDoc} */
         @Override
         IDoubleBondStereochemistry createGeometric(IBond bond, Stereocenters stereocenters) {
-            return createGeometric(container.getAtomNumber(bond.getAtom(0)), container.getAtomNumber(bond.getAtom(1)),
+            return createGeometric(container.indexOf(bond.getAtom(0)), container.indexOf(bond.getAtom(1)),
                     stereocenters);
         }
 
@@ -778,8 +778,8 @@ public abstract class StereoElementFactory {
             IAtom[] terminals = ExtendedTetrahedral.findTerminalAtoms(container, focus);
             IAtom[] neighbors = new IAtom[4];
 
-            int t0 = container.getAtomNumber(terminals[0]);
-            int t1 = container.getAtomNumber(terminals[1]);
+            int t0 = container.indexOf(terminals[0]);
+            int t1 = container.indexOf(terminals[1]);
 
             // check the focus is cumulated
             if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE

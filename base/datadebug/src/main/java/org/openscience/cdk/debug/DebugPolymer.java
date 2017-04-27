@@ -181,35 +181,35 @@ public class DebugPolymer extends Polymer implements IPolymer {
     @Override
     public int getAtomNumber(IAtom atom) {
         logger.debug("Getting atom number: ", atom);
-        return super.getAtomNumber(atom);
+        return super.indexOf(atom);
     }
 
     /** {@inheritDoc} */
     @Override
     public int getBondNumber(IAtom atom1, IAtom atom2) {
         logger.debug("Getting bond number: atom1=" + atom1, " atom2=" + atom2);
-        return super.getBondNumber(atom1, atom2);
+        return super.indexOf(super.getBond(atom1, atom2));
     }
 
     /** {@inheritDoc} */
     @Override
     public int getBondNumber(IBond bond) {
         logger.debug("Getting bond number: ", bond);
-        return super.getBondNumber(bond);
+        return super.indexOf(bond);
     }
 
     /** {@inheritDoc} */
     @Override
     public int getLonePairNumber(ILonePair bond) {
         logger.debug("Getting lone pair number: ", bond);
-        return super.getLonePairNumber(bond);
+        return super.indexOf(bond);
     }
 
     /** {@inheritDoc} */
     @Override
     public int getSingleElectronNumber(ISingleElectron bond) {
         logger.debug("Getting single electron number: ", bond);
-        return super.getSingleElectronNumber(bond);
+        return super.indexOf(bond);
     }
 
     /** {@inheritDoc} */

@@ -322,7 +322,7 @@ public class ModelBuilder3D {
      */
     private void layoutRingSystem(Point3d originalCoord, IAtom placedRingAtom, IRingSet ringSet,
             Point3d centerPlacedMolecule, IAtom atomB, AtomPlacer3D ap3d) {
-        //logger.debug("****** Layout ring System ******");System.out.println(">around atom:"+molecule.getAtomNumber(placedRingAtom));
+        //logger.debug("****** Layout ring System ******");System.out.println(">around atom:"+molecule.indexOf(placedRingAtom));
         IAtomContainer ac = RingSetManipulator.getAllInOneContainer(ringSet);
         Point3d newCoord = placedRingAtom.getPoint3d();
         Vector3d axis = new Vector3d(atomB.getPoint3d().x - newCoord.x, atomB.getPoint3d().y - newCoord.y,
@@ -398,7 +398,7 @@ public class ModelBuilder3D {
      */
     private void setBranchAtom(IAtomContainer molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours,
             AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws CDKException {
-        //logger.debug("****** SET Branch Atom ****** >"+molecule.getAtomNumber(unplacedAtom));
+        //logger.debug("****** SET Branch Atom ****** >"+molecule.indexOf(unplacedAtom));
         IAtomContainer noCoords = molecule.getBuilder().newInstance(IAtomContainer.class);
         noCoords.addAtom(unplacedAtom);
         Point3d centerPlacedMolecule = ap3d.geometricCenterAllPlacedAtoms(molecule);
@@ -468,11 +468,11 @@ public class ModelBuilder3D {
                 IAtom atom = (IAtom) atoms.get(j);
                 if (!(atom.getSymbol()).equals("H") & !(atom.getFlag(CDKConstants.ISPLACED))
                         & !(atom.getFlag(CDKConstants.ISINRING))) {
-                    //logger.debug("SEARCH PLACE AND FOUND Branch Atom "+molecule.getAtomNumber(chain.getAtomAt(i))+
-                    //		" New Atom:"+molecule.getAtomNumber(atoms[j])+" -> STORE");
+                    //logger.debug("SEARCH PLACE AND FOUND Branch Atom "+molecule.indexOf(chain.getAtomAt(i))+
+                    //		" New Atom:"+molecule.indexOf(atoms[j])+" -> STORE");
                     connectedAtoms.add(ap3d.getPlacedHeavyAtoms(molecule, chain.getAtom(i)));
-                    //logger.debug("Connected atom1:"+molecule.getAtomNumber(connectedAtoms.getAtomAt(0))+" atom2:"+
-                    //molecule.getAtomNumber(connectedAtoms.getAtomAt(1))+ " Length:"+connectedAtoms.getAtomCount());
+                    //logger.debug("Connected atom1:"+molecule.indexOf(connectedAtoms.getAtomAt(0))+" atom2:"+
+                    //molecule.indexOf(connectedAtoms.getAtomAt(1))+ " Length:"+connectedAtoms.getAtomCount());
                     try {
                         setBranchAtom(molecule, atom, chain.getAtom(i), connectedAtoms, ap3d, atlp3d);
                     } catch (CDKException ex2) {
@@ -507,7 +507,7 @@ public class ModelBuilder3D {
         } else {
             for (int i = 0; i < startAtoms.getAtomCount(); i++) {
                 //logger.debug("FOUND BRANCHED ALKAN");
-                //logger.debug("Atom NOT NULL:" + molecule.getAtomNumber(startAtoms.getAtomAt(i)));
+                //logger.debug("Atom NOT NULL:" + molecule.indexOf(startAtoms.getAtomAt(i)));
                 thirdPlacedAtom = ap3d.getPlacedHeavyAtom(molecule, startAtoms.getAtom(i));
                 dihPlacedAtom = ap3d.getPlacedHeavyAtom(molecule, thirdPlacedAtom, startAtoms.getAtom(i));
                 longestUnplacedChain.addAtom(dihPlacedAtom);

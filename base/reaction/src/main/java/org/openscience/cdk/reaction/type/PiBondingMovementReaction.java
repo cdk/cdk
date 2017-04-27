@@ -172,7 +172,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
                     Iterator<IBond> bondis = ring.bonds().iterator();
                     while (bondis.hasNext()) {
                         IBond bondi = bondis.next();
-                        int bondiP = reactant.getBondNumber(bondi);
+                        int bondiP = reactant.indexOf(bondi);
                         if (bondi.getOrder() == IBond.Order.SINGLE)
                             BondManipulator.increaseBondOrder(reactantCloned.getBond(bondiP));
                         else

@@ -1324,9 +1324,9 @@ public class GeometryTools {
                     //check atom properties
                     if (checkAtomMapping(firstAtomContainer, secondAtomContainer, i, j)) {
                         minimumDistance = distanceMatrix[i][j];
-                        mappedAtoms.put(firstAtomContainer.getAtomNumber(firstAtomContainer.getAtom(i)),
-                                secondAtomContainer.getAtomNumber(secondAtomContainer.getAtom(j)));
-                        //firstAtomContainer.getAtomAt(i).setProperty("MappedAtom",new Integer(secondAtomContainer.getAtomNumber(secondAtomContainer.getAtomAt(j))));
+                        mappedAtoms.put(firstAtomContainer.indexOf(firstAtomContainer.getAtom(i)),
+                                secondAtomContainer.indexOf(secondAtomContainer.getAtom(j)));
+                        //firstAtomContainer.getAtomAt(i).setProperty("MappedAtom",new Integer(secondAtomContainer.indexOf(secondAtomContainer.getAtomAt(j))));
                         //logger.debug("#:"+countMappedAtoms+" Atom:"+i+" is mapped to Atom"+j);
                         //logger.debug(firstAtomContainer.getConnectedAtoms(firstAtomContainer.getAtomAt(i)).length);
                     }
@@ -1399,7 +1399,7 @@ public class GeometryTools {
             centerAtomFirstMolecule = firstAtomContainer.getAtom(firstAtoms.next());
             centerAtomFirstMolecule.setFlag(CDKConstants.VISITED, true);
             centerAtomSecondMolecule = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
-                    .getAtomNumber(centerAtomFirstMolecule)));
+                    .indexOf(centerAtomFirstMolecule)));
             connectedAtoms = firstAtomContainer.getConnectedAtomsList(centerAtomFirstMolecule);
             for (int i = 0; i < connectedAtoms.size(); i++) {
                 IAtom conAtom = (IAtom) connectedAtoms.get(i);
@@ -1408,13 +1408,13 @@ public class GeometryTools {
                     if (Coords3d) {
                         distance1 = ((Point3d) centerAtomFirstMolecule.getPoint3d()).distance(conAtom.getPoint3d());
                         distance2 = ((Point3d) centerAtomSecondMolecule.getPoint3d()).distance(secondAtomContainer
-                                .getAtom(mappedAtoms.get(firstAtomContainer.getAtomNumber(conAtom))).getPoint3d());
+                                .getAtom(mappedAtoms.get(firstAtomContainer.indexOf(conAtom))).getPoint3d());
                         sum = sum + Math.pow((distance1 - distance2), 2);
                         n++;
                     } else {
                         distance1 = ((Point2d) centerAtomFirstMolecule.getPoint2d()).distance(conAtom.getPoint2d());
                         distance2 = ((Point2d) centerAtomSecondMolecule.getPoint2d()).distance(secondAtomContainer
-                                .getAtom((mappedAtoms.get(firstAtomContainer.getAtomNumber(conAtom)))).getPoint2d());
+                                .getAtom((mappedAtoms.get(firstAtomContainer.indexOf(conAtom)))).getPoint2d());
                         sum = sum + Math.pow((distance1 - distance2), 2);
                         n++;
                     }
@@ -1461,11 +1461,11 @@ public class GeometryTools {
                         angleFirstMolecule = getAngle(centerAtomfirstAC, firstAtomfirstAC,
                                 (IAtom) connectedAtoms.get(j));
                         centerAtomsecondAC = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
-                                .getAtomNumber(centerAtomfirstAC)));
+                                .indexOf(centerAtomfirstAC)));
                         firstAtomsecondAC = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
-                                .getAtomNumber(firstAtomfirstAC)));
+                                .indexOf(firstAtomfirstAC)));
                         secondAtomsecondAC = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
-                                .getAtomNumber((IAtom) connectedAtoms.get(j))));
+                                .indexOf((IAtom) connectedAtoms.get(j))));
                         angleSecondMolecule = getAngle(centerAtomsecondAC, firstAtomsecondAC, secondAtomsecondAC);
                         sum = sum + Math.pow(angleFirstMolecule - angleSecondMolecule, 2);
                         n++;

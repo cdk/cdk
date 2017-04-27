@@ -241,7 +241,7 @@ public class SSSRFinderTest extends CDKTestCase {
     private String toString(IRing ring, IAtomContainer molecule) throws Exception {
         String str = "";
         for (int f = 0; f < ring.getAtomCount(); f++) {
-            str += molecule.getAtomNumber(ring.getAtom(f)) + " - ";
+            str += molecule.indexOf(ring.getAtom(f)) + " - ";
         }
         return str;
     }

@@ -120,7 +120,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
         double value = 0;
 
         try {
-            int i = container.getAtomNumber(atom);
+            int i = container.indexOf(atom);
             if (i < 0) throw new CDKException("atom was not a memeber of the provided container");
 
             // don't modify the original

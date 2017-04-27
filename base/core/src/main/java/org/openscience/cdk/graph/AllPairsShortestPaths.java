@@ -147,8 +147,8 @@ public final class AllPairsShortestPaths {
      * @see ShortestPaths
      */
     public ShortestPaths from(IAtom start) {
-        // currently container.getAtomNumber() return -1 when null
-        return from(container.getAtomNumber(start));
+        // currently container.indexOf() return -1 when null
+        return from(container.indexOf(start));
     }
 
     /**
@@ -282,6 +282,26 @@ public final class AllPairsShortestPaths {
                                                                  public IBond getBond(IAtom atom1, IAtom atom2) {
                                                                      throw new UnsupportedOperationException(
                                                                              "not supported");
+                                                                 }
+
+                                                                 @Override
+                                                                 public int indexOf(IAtom atom) {
+                                                                   return 0;
+                                                                 }
+
+                                                                 @Override
+                                                                 public int indexOf(IBond bond) {
+                                                                    return 0;
+                                                                 }
+
+                                                                 @Override
+                                                                 public int indexOf(ISingleElectron electron) {
+                                                                    return 0;
+                                                                 }
+
+                                                                 @Override
+                                                                 public int indexOf(ILonePair pair) {
+                                                                    return 0;
                                                                  }
 
                                                                  @Override

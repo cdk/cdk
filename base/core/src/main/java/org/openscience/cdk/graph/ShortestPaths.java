@@ -105,7 +105,7 @@ public final class ShortestPaths {
      * @see AllPairsShortestPaths
      */
     public ShortestPaths(IAtomContainer container, IAtom start) {
-        this(GraphUtil.toAdjList(container), container, container.getAtomNumber(start));
+        this(GraphUtil.toAdjList(container), container, container.indexOf(start));
     }
 
     /**
@@ -328,7 +328,7 @@ public final class ShortestPaths {
      * @see #pathTo(int)
      */
     public int[] pathTo(IAtom end) {
-        return pathTo(container.getAtomNumber(end));
+        return pathTo(container.indexOf(end));
     }
 
     /**
@@ -414,7 +414,7 @@ public final class ShortestPaths {
      * @return all shortest paths from the start to the end vertex
      */
     public int[][] pathsTo(IAtom end) {
-        return pathsTo(container.getAtomNumber(end));
+        return pathsTo(container.indexOf(end));
     }
 
     /**
@@ -489,7 +489,7 @@ public final class ShortestPaths {
      * @see #pathTo(org.openscience.cdk.interfaces.IAtom)
      */
     public IAtom[] atomsTo(IAtom end) {
-        return atomsTo(container.getAtomNumber(end));
+        return atomsTo(container.indexOf(end));
     }
 
     /**
@@ -535,7 +535,7 @@ public final class ShortestPaths {
      * @return the number of paths to the end vertex
      */
     public int nPathsTo(IAtom end) {
-        return nPathsTo(container.getAtomNumber(end));
+        return nPathsTo(container.indexOf(end));
     }
 
     /**
@@ -614,7 +614,7 @@ public final class ShortestPaths {
      * @see #distanceTo(int)
      */
     public int distanceTo(IAtom end) {
-        return distanceTo(container.getAtomNumber(end));
+        return distanceTo(container.indexOf(end));
     }
 
     /** Helper class for building a route to the shortest path */
