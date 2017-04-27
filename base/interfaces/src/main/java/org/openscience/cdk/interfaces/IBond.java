@@ -133,6 +133,20 @@ public interface IBond extends IElectronContainer {
     public void setAtoms(IAtom[] atoms);
 
     /**
+     * Access the begin (or first) atom of the bond.
+     *
+     * @return the begin atom
+     */
+    IAtom getBeg();
+
+    /**
+     * Access the end (or second) atom of the bond.
+     *
+     * @return the end atom
+     */
+    IAtom getEnd();
+
+    /**
      * Returns the number of Atoms in this Bond.
      *
      * @return    The number of Atoms in this Bond

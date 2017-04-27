@@ -234,6 +234,20 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public IAtom getBeg() {
+        return atoms[0];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IAtom getEnd() {
+        return atoms[1];
+    }
+
+    /**
      * Returns the atom connected to the given atom.
      * 
      * This method is only strictly relevant for 2-center bonds

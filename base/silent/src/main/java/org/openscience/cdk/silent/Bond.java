@@ -77,7 +77,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     /**
      * A list of atoms participating in this bond.
      */
-    protected IAtom[]         atoms            = null;
+    protected IAtom[]         atoms            = new IAtom[2];
 
     /**
      * A descriptor the stereochemical orientation of this bond.
@@ -141,15 +141,14 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * Constructs a bond with a given order and stereo orientation from an array
      * of atoms.
      *
-     * @param atom1  the first Atom in the bond
-     * @param atom2  the second Atom in the bond
+     * @param beg  the first Atom in the bond
+     * @param end  the second Atom in the bond
      * @param order  the bond order
      * @param stereo a descriptor the stereochemical orientation of this bond
      */
-    public Bond(IAtom atom1, IAtom atom2, Order order, IBond.Stereo stereo) {
-        atoms = new IAtom[2];
-        atoms[0] = atom1;
-        atoms[1] = atom2;
+    public Bond(IAtom beg, IAtom end, Order order, IBond.Stereo stereo) {
+        atoms[0] = beg;
+        atoms[1] = end;
         setOrder(order);
         this.stereo = stereo;
         this.atomCount = 2;
@@ -231,6 +230,20 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             return null;
         else
             return atoms[position];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IAtom getBeg() {
+        return atoms[0];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IAtom getEnd() {
+        return atoms[1];
     }
 
     /**

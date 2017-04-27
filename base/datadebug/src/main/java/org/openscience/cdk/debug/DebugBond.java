@@ -242,6 +242,22 @@ public class DebugBond extends Bond implements IBond {
         return super.getAtom(position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public IAtom getBeg() {
+        logger.debug("Getting begin atom");
+        return super.getBeg();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IAtom getEnd() {
+        logger.debug("Getting end atom");
+        return super.getEnd();
+    }
+
     /** {@inheritDoc} */
     @Override
     public IAtom getConnectedAtom(IAtom atom) {

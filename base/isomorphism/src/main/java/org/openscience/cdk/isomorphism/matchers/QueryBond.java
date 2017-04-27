@@ -214,6 +214,20 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public IAtom getBeg() {
+        return atoms[0];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IAtom getEnd() {
+        return atoms[1];
+    }
+
+    /**
      * Returns the atom connected to the given atom.
      * 
      * This method is only strictly relevant for 2-center query bonds
