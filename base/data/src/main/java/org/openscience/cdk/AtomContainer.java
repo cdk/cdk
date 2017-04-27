@@ -222,9 +222,9 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     @Override
     public void setAtoms(IAtom[] atoms) {
         // unregister this as listener with the old atoms
-        for (IAtom atom : this.atoms)
-            if (atom != null) atom.removeListener(this);
-
+        for (int i = 0; i < atomCount; i++) {
+            this.atoms[i].removeListener(this);
+        }
         this.atoms = atoms;
         for (IAtom atom : atoms) {
             atom.addListener(this);
@@ -242,6 +242,9 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void setBonds(IBond[] bonds) {
+        for (int i = 0; i < bondCount; i++) {
+            this.bonds[i].removeListener(this);
+        }
         this.bonds = bonds;
         for (IBond bond : bonds) {
             bond.addListener(this);
