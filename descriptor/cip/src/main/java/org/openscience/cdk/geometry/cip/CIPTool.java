@@ -166,8 +166,8 @@ public class CIPTool {
         //                        \
         //                         y
         //
-        IAtom u = stereoBond.getAtom(0);
-        IAtom v = stereoBond.getAtom(1);
+        IAtom u = stereoBond.getBeg();
+        IAtom v = stereoBond.getEnd();
         IAtom x = leftBond.getConnectedAtom(u);
         IAtom y = rightBond.getConnectedAtom(v);
 

@@ -420,7 +420,7 @@ public class ReactionManipulator {
             if (se instanceof ITetrahedralChirality) {
                 focus = ((ITetrahedralChirality) se).getChiralAtom();
             } else if (se instanceof IDoubleBondStereochemistry) {
-                focus = ((IDoubleBondStereochemistry) se).getStereoBond().getAtom(0);
+                focus = ((IDoubleBondStereochemistry) se).getStereoBond().getBeg();
             } else if (se instanceof ExtendedTetrahedral) {
                 focus = ((ExtendedTetrahedral) se).focus();
             }

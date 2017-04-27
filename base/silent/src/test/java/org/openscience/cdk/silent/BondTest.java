@@ -67,8 +67,8 @@ public class BondTest extends AbstractBondTest {
 
         IBond bond1 = new Bond(new IAtom[]{atom1, atom2, atom3, atom4, atom5});
         Assert.assertEquals(5, bond1.getAtomCount());
-        Assert.assertEquals(atom1, bond1.getAtom(0));
-        Assert.assertEquals(atom2, bond1.getAtom(1));
+        Assert.assertEquals(atom1, bond1.getBeg());
+        Assert.assertEquals(atom2, bond1.getEnd());
     }
 
     @Test
@@ -82,8 +82,8 @@ public class BondTest extends AbstractBondTest {
 
         IBond bond1 = new Bond(new IAtom[]{atom1, atom2, atom3, atom4, atom5}, IBond.Order.SINGLE);
         Assert.assertEquals(5, bond1.getAtomCount());
-        Assert.assertEquals(atom1, bond1.getAtom(0));
-        Assert.assertEquals(atom2, bond1.getAtom(1));
+        Assert.assertEquals(atom1, bond1.getBeg());
+        Assert.assertEquals(atom2, bond1.getEnd());
         Assert.assertEquals(IBond.Order.SINGLE, bond1.getOrder());
     }
 

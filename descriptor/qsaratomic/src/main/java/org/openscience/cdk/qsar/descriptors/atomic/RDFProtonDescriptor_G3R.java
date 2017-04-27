@@ -436,8 +436,8 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
                     partial = 0;
                     position = aBondsInCycloex;
                     theInCycloexBond = mol.getBond(position);
-                    cycloexBondAtom0 = theInCycloexBond.getAtom(0);
-                    cycloexBondAtom1 = theInCycloexBond.getAtom(1);
+                    cycloexBondAtom0 = theInCycloexBond.getBeg();
+                    cycloexBondAtom1 = theInCycloexBond.getEnd();
 
                     connAtoms = mol.getConnectedAtomsList(cycloexBondAtom0);
                     for (IAtom connAtom : connAtoms) {

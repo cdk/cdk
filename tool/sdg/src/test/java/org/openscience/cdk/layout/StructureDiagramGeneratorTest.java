@@ -1147,10 +1147,10 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     boolean isCrossing(IBond a, IBond b) {
-        Point2d p1 = a.getAtom(0).getPoint2d();
-        Point2d p2 = a.getAtom(1).getPoint2d();
-        Point2d p3 = b.getAtom(0).getPoint2d();
-        Point2d p4 = b.getAtom(1).getPoint2d();
+        Point2d p1 = a.getBeg().getPoint2d();
+        Point2d p2 = a.getEnd().getPoint2d();
+        Point2d p3 = b.getBeg().getPoint2d();
+        Point2d p4 = b.getEnd().getPoint2d();
         return Line2D.linesIntersect(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
     }
 

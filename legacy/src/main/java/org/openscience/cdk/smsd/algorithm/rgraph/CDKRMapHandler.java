@@ -429,9 +429,9 @@ public class CDKRMapHandler {
                 if ((qbond.getBeg().getSymbol().equals(tbond.getBeg().getSymbol()))
                         && (qbond.getEnd().getSymbol().equals(tbond.getEnd().getSymbol()))) {
                     map00 = new CDKRMap(sourceGraph.indexOf(qbond.getBeg()), targetGraph.indexOf(tbond
-                            .getAtom(0)));
+                            .getBeg()));
                     map11 = new CDKRMap(sourceGraph.indexOf(qbond.getEnd()), targetGraph.indexOf(tbond
-                            .getAtom(1)));
+                            .getEnd()));
                     if (!result1.contains(map00)) {
                         result1.add(map00);
                     }
@@ -442,9 +442,9 @@ public class CDKRMapHandler {
                 if ((qbond.getBeg().getSymbol().equals(tbond.getEnd().getSymbol()))
                         && (qbond.getEnd().getSymbol().equals(tbond.getBeg().getSymbol()))) {
                     map01 = new CDKRMap(sourceGraph.indexOf(qbond.getBeg()), targetGraph.indexOf(tbond
-                            .getAtom(1)));
+                            .getEnd()));
                     map10 = new CDKRMap(sourceGraph.indexOf(qbond.getEnd()), targetGraph.indexOf(tbond
-                            .getAtom(0)));
+                            .getBeg()));
                     if (!result2.contains(map01)) {
                         result2.add(map01);
                     }

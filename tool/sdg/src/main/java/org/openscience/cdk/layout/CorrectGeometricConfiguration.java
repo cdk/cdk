@@ -129,8 +129,8 @@ final class CorrectGeometricConfiguration {
         IBond db = dbs.getStereoBond();
         IBond[] bonds = dbs.getBonds();
 
-        IAtom left = db.getAtom(0);
-        IAtom right = db.getAtom(1);
+        IAtom left = db.getBeg();
+        IAtom right = db.getEnd();
 
         int p = parity(dbs);
         int q = parity(getAtoms(left, bonds[0].getConnectedAtom(left), right))

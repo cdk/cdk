@@ -89,8 +89,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtoms(atomsToAdd);
 
         Assert.assertEquals(2, b.getAtomCount());
-        Assert.assertEquals(atomsToAdd[0], b.getAtom(0));
-        Assert.assertEquals(atomsToAdd[1], b.getAtom(1));
+        Assert.assertEquals(atomsToAdd[0], b.getBeg());
+        Assert.assertEquals(atomsToAdd[1], b.getEnd());
     }
 
     @Test
@@ -155,8 +155,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtom(o, 1);
         b.setOrder(Order.SINGLE);
 
-        Assert.assertEquals(c, b.getAtom(0));
-        Assert.assertEquals(o, b.getAtom(1));
+        Assert.assertEquals(c, b.getBeg());
+        Assert.assertEquals(o, b.getEnd());
     }
 
     @Test
@@ -168,8 +168,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtom(c, 0);
         b.setAtom(o, 1);
 
-        Assert.assertEquals(c, b.getAtom(0));
-        Assert.assertEquals(o, b.getAtom(1));
+        Assert.assertEquals(c, b.getBeg());
+        Assert.assertEquals(o, b.getEnd());
     }
 
     @Test

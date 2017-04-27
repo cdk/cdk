@@ -593,10 +593,10 @@ public class AtomContainerManipulator {
             } else if (stereoElement instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) stereoElement;
                 IBond stereoBond = dbs.getStereoBond();
-                for (IAtom neighbor : org.getConnectedAtomsList(stereoBond.getAtom(0))) {
+                for (IAtom neighbor : org.getConnectedAtomsList(stereoBond.getBeg())) {
                     if (remove.remove(neighbor)) addClone(neighbor, cpy, map);
                 }
-                for (IAtom neighbor : org.getConnectedAtomsList(stereoBond.getAtom(1))) {
+                for (IAtom neighbor : org.getConnectedAtomsList(stereoBond.getEnd())) {
                     if (remove.remove(neighbor)) addClone(neighbor, cpy, map);
                 }
             }
@@ -788,8 +788,8 @@ public class AtomContainerManipulator {
                 //  \     /
                 //   u = v
 
-                IAtom u = orgStereo.getAtom(0);
-                IAtom v = orgStereo.getAtom(1);
+                IAtom u = orgStereo.getBeg();
+                IAtom v = orgStereo.getEnd();
                 IAtom x = orgLeft.getConnectedAtom(u);
                 IAtom y = orgRight.getConnectedAtom(v);
 
@@ -1322,12 +1322,12 @@ public class AtomContainerManipulator {
             query.getBond(i).setOrder(IBond.Order.SINGLE);
             query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
             query.getBond(i).setFlag(CDKConstants.SINGLE_OR_DOUBLE, false);
-            query.getBond(i).getAtom(0).setSymbol("C");
-            query.getBond(i).getAtom(0).setHybridization(null);
-            query.getBond(i).getAtom(1).setSymbol("C");
-            query.getBond(i).getAtom(1).setHybridization(null);
-            query.getBond(i).getAtom(0).setFlag(CDKConstants.ISAROMATIC, false);
-            query.getBond(i).getAtom(1).setFlag(CDKConstants.ISAROMATIC, false);
+            query.getBond(i).getBeg().setSymbol("C");
+            query.getBond(i).getBeg().setHybridization(null);
+            query.getBond(i).getEnd().setSymbol("C");
+            query.getBond(i).getEnd().setHybridization(null);
+            query.getBond(i).getBeg().setFlag(CDKConstants.ISAROMATIC, false);
+            query.getBond(i).getEnd().setFlag(CDKConstants.ISAROMATIC, false);
         }
         return query;
     }

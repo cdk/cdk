@@ -83,8 +83,8 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
             int[][] graph) {
 
         IBond db = dbs.getStereoBond();
-        int u = atomToIndex.get(db.getAtom(0));
-        int v = atomToIndex.get(db.getAtom(1));
+        int u = atomToIndex.get(db.getBeg());
+        int v = atomToIndex.get(db.getEnd());
 
         // we now need to expand our view of the environment - the vertex arrays
         // 'us' and 'vs' hold the neighbors of each end point of the double bond
@@ -97,10 +97,10 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
         int[] us = new int[2];
         int[] vs = new int[2];
 
-        us[0] = atomToIndex.get(bs[0].getConnectedAtom(db.getAtom(0)));
+        us[0] = atomToIndex.get(bs[0].getConnectedAtom(db.getBeg()));
         us[1] = graph[u].length == 2 ? u : findOther(graph[u], v, us[0]);
 
-        vs[0] = atomToIndex.get(bs[1].getConnectedAtom(db.getAtom(1)));
+        vs[0] = atomToIndex.get(bs[1].getConnectedAtom(db.getEnd()));
         vs[1] = graph[v].length == 2 ? v : findOther(graph[v], u, vs[0]);
 
         int parity = dbs.getStereo() == OPPOSITE ? +1 : -1;

@@ -597,10 +597,10 @@ public class ChemicalFilters {
     private double getBondFormalChargeMatches(IBond rBond, IBond pBond) {
         double score = 0.0;
         if (rBond != null && pBond != null) {
-            IAtom ratom1 = rBond.getAtom(0);
-            IAtom ratom2 = rBond.getAtom(1);
-            IAtom patom1 = pBond.getAtom(0);
-            IAtom patom2 = pBond.getAtom(1);
+            IAtom ratom1 = rBond.getBeg();
+            IAtom ratom2 = rBond.getEnd();
+            IAtom patom1 = pBond.getBeg();
+            IAtom patom2 = pBond.getEnd();
 
             if (ratom1.getSymbol().equals(patom1.getSymbol()) && ratom1.getSymbol().equals(patom1.getSymbol())) {
                 if ((ratom1.getFormalCharge() != patom1.getFormalCharge())
@@ -643,12 +643,12 @@ public class ChemicalFilters {
 
         if (targetBond instanceof IQueryBond && queryBond instanceof IBond) {
             IQueryBond bond = (IQueryBond) targetBond;
-            IQueryAtom atom1 = (IQueryAtom) (targetBond.getAtom(0));
-            IQueryAtom atom2 = (IQueryAtom) (targetBond.getAtom(1));
+            IQueryAtom atom1 = (IQueryAtom) (targetBond.getBeg());
+            IQueryAtom atom2 = (IQueryAtom) (targetBond.getEnd());
             if (bond.matches(queryBond)) {
                 // ok, bonds match
-                if (atom1.matches(queryBond.getAtom(0)) && atom2.matches(queryBond.getAtom(1))
-                        || atom1.matches(queryBond.getAtom(1)) && atom2.matches(queryBond.getAtom(0))) {
+                if (atom1.matches(queryBond.getBeg()) && atom2.matches(queryBond.getEnd())
+                        || atom1.matches(queryBond.getEnd()) && atom2.matches(queryBond.getBeg())) {
                     // ok, atoms match in either order
                     score += 4;
                 }
@@ -657,12 +657,12 @@ public class ChemicalFilters {
             }
         } else if (queryBond instanceof IQueryBond && targetBond instanceof IBond) {
             IQueryBond bond = (IQueryBond) queryBond;
-            IQueryAtom atom1 = (IQueryAtom) (queryBond.getAtom(0));
-            IQueryAtom atom2 = (IQueryAtom) (queryBond.getAtom(1));
+            IQueryAtom atom1 = (IQueryAtom) (queryBond.getBeg());
+            IQueryAtom atom2 = (IQueryAtom) (queryBond.getEnd());
             if (bond.matches(targetBond)) {
                 // ok, bonds match
-                if (atom1.matches(targetBond.getAtom(0)) && atom2.matches(targetBond.getAtom(1))
-                        || atom1.matches(targetBond.getAtom(1)) && atom2.matches(targetBond.getAtom(0))) {
+                if (atom1.matches(targetBond.getBeg()) && atom2.matches(targetBond.getEnd())
+                        || atom1.matches(targetBond.getEnd()) && atom2.matches(targetBond.getBeg())) {
                     // ok, atoms match in either order
                     score += 4;
                 }

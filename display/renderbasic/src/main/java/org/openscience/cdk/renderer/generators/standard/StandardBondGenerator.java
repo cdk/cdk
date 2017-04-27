@@ -619,8 +619,8 @@ final class StandardBondGenerator {
         // in the order they are in the ring.
         final boolean outOfOrder = cyclic && index1 == (index2 + 1) % length;
 
-        final IAtom atom1 = bond.getAtom(outOfOrder ? 1 : 0);
-        final IAtom atom2 = bond.getAtom(outOfOrder ? 0 : 1);
+        final IAtom atom1 = outOfOrder ? bond.getEnd() : bond.getBeg();
+        final IAtom atom2 = outOfOrder ? bond.getBeg() : bond.getEnd();
 
         if (IBond.Stereo.E_OR_Z.equals(bond.getStereo())) return generateCrossedDoubleBond(atom1, atom2);
 
@@ -1223,8 +1223,8 @@ final class StandardBondGenerator {
      * @throws java.lang.IllegalArgumentException bonds share no atoms
      */
     static int winding(IBond bond1, IBond bond2) {
-        final IAtom atom1 = bond1.getAtom(0);
-        final IAtom atom2 = bond1.getAtom(1);
+        final IAtom atom1 = bond1.getBeg();
+        final IAtom atom2 = bond1.getEnd();
         if (bond2.contains(atom1)) {
             return winding(atom2.getPoint2d(), atom1.getPoint2d(), bond2.getConnectedAtom(atom1).getPoint2d());
         } else if (bond2.contains(atom2)) {

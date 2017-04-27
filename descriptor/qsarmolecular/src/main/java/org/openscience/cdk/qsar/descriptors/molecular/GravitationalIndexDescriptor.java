@@ -220,13 +220,13 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
                 return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
             }
 
-            if (b.getAtom(0).getSymbol().equals("H") || b.getAtom(1).getSymbol().equals("H")) continue;
+            if (b.getBeg().getSymbol().equals("H") || b.getEnd().getSymbol().equals("H")) continue;
 
-            mass1 = factory.getMajorIsotope(b.getAtom(0).getSymbol()).getMassNumber();
-            mass2 = factory.getMajorIsotope(b.getAtom(1).getSymbol()).getMassNumber();
+            mass1 = factory.getMajorIsotope(b.getBeg().getSymbol()).getMassNumber();
+            mass2 = factory.getMajorIsotope(b.getEnd().getSymbol()).getMassNumber();
 
-            Point3d point0 = b.getAtom(0).getPoint3d();
-            Point3d point1 = b.getAtom(1).getPoint3d();
+            Point3d point0 = b.getBeg().getPoint3d();
+            Point3d point1 = b.getEnd().getPoint3d();
 
             double x1 = point0.x;
             double y1 = point0.y;

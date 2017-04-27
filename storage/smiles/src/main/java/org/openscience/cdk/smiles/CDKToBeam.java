@@ -113,8 +113,8 @@ final class CDKToBeam {
 
         checkArgument(b.getAtomCount() == 2, "Invalid number of atoms on bond");
 
-        int u = indices.get(b.getAtom(0));
-        int v = indices.get(b.getAtom(1));
+        int u = indices.get(b.getBeg());
+        int v = indices.get(b.getEnd());
 
         return toBeamEdgeLabel(b, this.flavour).edge(u, v);
     }
@@ -253,8 +253,8 @@ final class CDKToBeam {
 
         checkArgument(b.getAtomCount() == 2, "Invalid number of atoms on bond");
 
-        int u = indices.get(b.getAtom(0));
-        int v = indices.get(b.getAtom(1));
+        int u = indices.get(b.getBeg());
+        int v = indices.get(b.getEnd());
 
         return toBeamEdgeLabel(b, flavour).edge(u, v);
     }
@@ -271,7 +271,7 @@ final class CDKToBeam {
     private static Bond toBeamEdgeLabel(IBond b, int flavour) throws CDKException {
 
         if (SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && b.isAromatic()) {
-            if (!b.getAtom(0).isAromatic() || !b.getAtom(1).isAromatic())
+            if (!b.getBeg().isAromatic() || !b.getEnd().isAromatic())
                 throw new IllegalStateException("Aromatic bond connects non-aromatic atomic atoms");
             return Bond.AROMATIC;
         }
@@ -311,12 +311,12 @@ final class CDKToBeam {
         // don't try to set a configuration on aromatic bonds
         if (SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && db.getFlag(CDKConstants.ISAROMATIC)) return;
 
-        int u = indices.get(db.getAtom(0));
-        int v = indices.get(db.getAtom(1));
+        int u = indices.get(db.getBeg());
+        int v = indices.get(db.getEnd());
 
         // is bs[0] always connected to db.atom(0)?
-        int x = indices.get(bs[0].getConnectedAtom(db.getAtom(0)));
-        int y = indices.get(bs[1].getConnectedAtom(db.getAtom(1)));
+        int x = indices.get(bs[0].getConnectedAtom(db.getBeg()));
+        int y = indices.get(bs[1].getConnectedAtom(db.getEnd()));
 
         if (dbs.getStereo() == TOGETHER) {
             gb.geometric(u, v).together(x, y);

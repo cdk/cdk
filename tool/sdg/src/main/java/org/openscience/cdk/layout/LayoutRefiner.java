@@ -525,7 +525,7 @@ final class LayoutRefiner {
         else
             stackBackup.push(pair.snd);
 
-        reflect(stackBackup, pair.bndAt[0].getAtom(0), pair.bndAt[0].getAtom(1));
+        reflect(stackBackup, pair.bndAt[0].getBeg(), pair.bndAt[0].getEnd());
         congestion.update(stackBackup.xs, stackBackup.len);
         return true;
     }
@@ -1039,8 +1039,8 @@ final class LayoutRefiner {
      * @return common atom or null if non exists
      */
     private static IAtom getCommon(IBond bndA, IBond bndB) {
-        IAtom beg = bndA.getAtom(0);
-        IAtom end = bndA.getAtom(1);
+        IAtom beg = bndA.getBeg();
+        IAtom end = bndA.getEnd();
         if (bndB.contains(beg))
             return beg;
         else if (bndB.contains(end))

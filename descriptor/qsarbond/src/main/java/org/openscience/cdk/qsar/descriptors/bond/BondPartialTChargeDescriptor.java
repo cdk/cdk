@@ -193,7 +193,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
                 List<Double> peoeBond = new ArrayList<Double>();
                 for (Iterator<IBond> it = ac.bonds().iterator(); it.hasNext();) {
                     IBond bondi = it.next();
-                    double result = Math.abs(bondi.getAtom(0).getCharge() - bondi.getAtom(1).getCharge());
+                    double result = Math.abs(bondi.getBeg().getCharge() - bondi.getEnd().getCharge());
                     peoeBond.add(result);
                 }
 
@@ -203,7 +203,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
                 pepe.assignGasteigerPiPartialCharges(ac, true);
                 for (int i = 0; i < ac.getBondCount(); i++) {
                     IBond bondi = ac.getBond(i);
-                    double result = Math.abs(bondi.getAtom(0).getCharge() - bondi.getAtom(1).getCharge());
+                    double result = Math.abs(bondi.getBeg().getCharge() - bondi.getEnd().getCharge());
                     cacheDescriptorValue(bondi, ac, new DoubleResult(peoeBond.get(i) + result));
                 }
             } catch (Exception e) {

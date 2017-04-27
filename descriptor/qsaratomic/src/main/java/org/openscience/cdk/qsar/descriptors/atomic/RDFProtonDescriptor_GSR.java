@@ -415,8 +415,8 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
                     position = thisSingleBond;
                     theSingleBond = mol.getBond(position);
                     middlePoint = theSingleBond.get3DCenter();
-                    singleBondAtom0 = theSingleBond.getAtom(0);
-                    singleBondAtom1 = theSingleBond.getAtom(1);
+                    singleBondAtom0 = theSingleBond.getBeg();
+                    singleBondAtom1 = theSingleBond.getEnd();
                     dist0 = calculateDistanceBetweenTwoAtoms(singleBondAtom0, atom);
                     dist1 = calculateDistanceBetweenTwoAtoms(singleBondAtom1, atom);
 

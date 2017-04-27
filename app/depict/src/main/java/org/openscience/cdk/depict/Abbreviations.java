@@ -213,8 +213,8 @@ public class Abbreviations implements Iterable<String> {
     private static List<IAtomContainer> makeCut(IBond cut, IAtomContainer mol, Map<IAtom, Integer> idx,
                                                 int[][] adjlist) {
 
-        IAtom beg = cut.getAtom(0);
-        IAtom end = cut.getAtom(1);
+        IAtom beg = cut.getBeg();
+        IAtom end = cut.getEnd();
 
         Set<IAtom> bvisit = new LinkedHashSet<>();
         Set<IAtom> evisit = new LinkedHashSet<>();
@@ -452,10 +452,10 @@ public class Abbreviations implements Iterable<String> {
                     IAtom atom = frag.getAtom(i);
                     usedAtoms.add(atom);
                     sgroup.addAtom(atom);
-                    if (attachBond.getAtom(0) == atom)
-                        attachAtom = attachBond.getAtom(1);
-                    else if (attachBond.getAtom(1) == atom)
-                        attachAtom = attachBond.getAtom(0);
+                    if (attachBond.getBeg() == atom)
+                        attachAtom = attachBond.getEnd();
+                    else if (attachBond.getEnd() == atom)
+                        attachAtom = attachBond.getBeg();
                 }
 
                 if (attachAtom != null)

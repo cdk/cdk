@@ -136,26 +136,26 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
 
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
                     && ((bondi.getOrder() == IBond.Order.DOUBLE) || (bondi.getOrder() == IBond.Order.TRIPLE))
-                    && bondi.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER)
-                    && bondi.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER)) {
-                int chargeAtom0 = bondi.getAtom(0).getFormalCharge() == null ? 0 : bondi.getAtom(0).getFormalCharge();
-                int chargeAtom1 = bondi.getAtom(1).getFormalCharge() == null ? 0 : bondi.getAtom(1).getFormalCharge();
+                    && bondi.getBeg().getFlag(CDKConstants.REACTIVE_CENTER)
+                    && bondi.getEnd().getFlag(CDKConstants.REACTIVE_CENTER)) {
+                int chargeAtom0 = bondi.getBeg().getFormalCharge() == null ? 0 : bondi.getBeg().getFormalCharge();
+                int chargeAtom1 = bondi.getEnd().getFormalCharge() == null ? 0 : bondi.getEnd().getFormalCharge();
                 if (chargeAtom0 >= 0 && chargeAtom1 >= 0
-                        && reactant.getConnectedSingleElectronsCount(bondi.getAtom(0)) == 0
-                        && reactant.getConnectedSingleElectronsCount(bondi.getAtom(1)) == 0
-                        && reactant.getConnectedLonePairsCount(bondi.getAtom(0)) == 0
-                        && reactant.getConnectedLonePairsCount(bondi.getAtom(1)) == 0) {
+                        && reactant.getConnectedSingleElectronsCount(bondi.getBeg()) == 0
+                        && reactant.getConnectedSingleElectronsCount(bondi.getEnd()) == 0
+                        && reactant.getConnectedLonePairsCount(bondi.getBeg()) == 0
+                        && reactant.getConnectedLonePairsCount(bondi.getEnd()) == 0) {
 
                     /**/
                     for (int j = 0; j < 2; j++) {
 
                         ArrayList<IAtom> atomList = new ArrayList<IAtom>();
                         if (j == 0) {
-                            atomList.add(bondi.getAtom(0));
-                            atomList.add(bondi.getAtom(1));
+                            atomList.add(bondi.getBeg());
+                            atomList.add(bondi.getEnd());
                         } else {
-                            atomList.add(bondi.getAtom(1));
-                            atomList.add(bondi.getAtom(0));
+                            atomList.add(bondi.getEnd());
+                            atomList.add(bondi.getBeg());
                         }
                         IAtom atomH = reactant.getBuilder().newInstance(IAtom.class, "H");
                         atomH.setFormalCharge(1);
@@ -201,16 +201,16 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
             IBond bondi = bondis.next();
 
             if (((bondi.getOrder() == IBond.Order.DOUBLE) || (bondi.getOrder() == IBond.Order.TRIPLE))) {
-                int chargeAtom0 = bondi.getAtom(0).getFormalCharge() == null ? 0 : bondi.getAtom(0).getFormalCharge();
-                int chargeAtom1 = bondi.getAtom(1).getFormalCharge() == null ? 0 : bondi.getAtom(1).getFormalCharge();
+                int chargeAtom0 = bondi.getBeg().getFormalCharge() == null ? 0 : bondi.getBeg().getFormalCharge();
+                int chargeAtom1 = bondi.getEnd().getFormalCharge() == null ? 0 : bondi.getEnd().getFormalCharge();
                 if (chargeAtom0 >= 0 && chargeAtom1 >= 0
-                        && reactant.getConnectedSingleElectronsCount(bondi.getAtom(0)) == 0
-                        && reactant.getConnectedSingleElectronsCount(bondi.getAtom(1)) == 0
-                        && reactant.getConnectedLonePairsCount(bondi.getAtom(0)) == 0
-                        && reactant.getConnectedLonePairsCount(bondi.getAtom(1)) == 0) {
+                        && reactant.getConnectedSingleElectronsCount(bondi.getBeg()) == 0
+                        && reactant.getConnectedSingleElectronsCount(bondi.getEnd()) == 0
+                        && reactant.getConnectedLonePairsCount(bondi.getBeg()) == 0
+                        && reactant.getConnectedLonePairsCount(bondi.getEnd()) == 0) {
                     bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                    bondi.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
-                    bondi.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
+                    bondi.getBeg().setFlag(CDKConstants.REACTIVE_CENTER, true);
+                    bondi.getEnd().setFlag(CDKConstants.REACTIVE_CENTER, true);
                 }
             }
         }

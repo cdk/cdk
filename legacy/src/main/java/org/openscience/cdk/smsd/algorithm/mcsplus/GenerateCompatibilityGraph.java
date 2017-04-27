@@ -348,9 +348,9 @@ public final class GenerateCompatibilityGraph {
         //Bond Matcher
         BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
         //Atom Matcher
-        AtomMatcher atomMatcher1 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
+        AtomMatcher atomMatcher1 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getBeg(), shouldMatchBonds);
         //Atom Matcher
-        AtomMatcher atomMatcher2 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
+        AtomMatcher atomMatcher2 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getEnd(), shouldMatchBonds);
 
         if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
                 && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {

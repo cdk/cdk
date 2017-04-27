@@ -332,8 +332,8 @@ final class StereoMatch implements Predicate<int[]> {
                 indices[nElements++] = idx;
             } else if (element instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) element;
-                int idx1 = map.get(dbs.getStereoBond().getAtom(0));
-                int idx2 = map.get(dbs.getStereoBond().getAtom(1));
+                int idx1 = map.get(dbs.getStereoBond().getBeg());
+                int idx2 = map.get(dbs.getStereoBond().getEnd());
                 elements[idx2] = elements[idx1] = element;
                 types[idx1] = types[idx2] = Type.Geometric;
                 indices[nElements++] = idx1; // only visit the first atom

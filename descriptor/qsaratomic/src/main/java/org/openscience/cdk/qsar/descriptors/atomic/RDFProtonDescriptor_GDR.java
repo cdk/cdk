@@ -419,8 +419,8 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
                     theDoubleBond = mol.getBond(position);
                     goodPosition = getNearestBondtoAGivenAtom(mol, atom, theDoubleBond);
                     goodBond = mol.getBond(goodPosition);
-                    goodAtom0 = goodBond.getAtom(0);
-                    goodAtom1 = goodBond.getAtom(1);
+                    goodAtom0 = goodBond.getBeg();
+                    goodAtom1 = goodBond.getEnd();
 
                     //System.out.println("GOOD POS IS "+mol.indexOf(goodAtoms[0])+" "+mol.indexOf(goodAtoms[1]));
 
