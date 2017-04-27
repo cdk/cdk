@@ -439,7 +439,7 @@ public class SMSDNormalizer extends AtomContainerManipulator {
                     e.printStackTrace();
                 }
                 assert clone != null;
-                clone.setAtoms(new IAtom[]{map.get(bond.getAtom(0)), map.get(bond.getAtom(1))});
+                clone.setAtoms(new IAtom[]{map.get(bond.getBeg()), map.get(bond.getEnd())});
                 clone.setOrder(atomContainer.getBond(i).getOrder());
                 clone.setStereo(atomContainer.getBond(i).getStereo());
                 mol.addBond(clone);

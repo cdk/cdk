@@ -498,8 +498,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         IBond bond = ac.getBond(number);
         if (!container.contains(bond)) {
             bond.setFlag(CDKConstants.REACTIVE_CENTER, b);
-            bond.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, b);
-            bond.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, b);
+            bond.getBeg().setFlag(CDKConstants.REACTIVE_CENTER, b);
+            bond.getEnd().setFlag(CDKConstants.REACTIVE_CENTER, b);
         } else
             return null;
         return ac;
@@ -637,7 +637,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             fQ = 0.5;
             for (int i = 0; i < atomContainer.getBondCount(); i++) {
                 IBond bond = atomContainer.getBond(i);
-                if (bond.getAtom(0).getFormalCharge() != 0.0 && bond.getAtom(1).getFormalCharge() != 0.0) {
+                if (bond.getBeg().getFormalCharge() != 0.0 && bond.getEnd().getFormalCharge() != 0.0) {
                     fQ = 0.25;
                     break;
                 }

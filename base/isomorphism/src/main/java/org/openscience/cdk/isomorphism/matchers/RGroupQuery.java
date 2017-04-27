@@ -295,7 +295,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                                 IBond bond = rAttachmentPoints.get(apo + 1);
                                 //Check how R# is attached to bond
                                 int whichAtomInBond = 0;
-                                if (bond.getAtom(1).equals(rAtom)) whichAtomInBond = 1;
+                                if (bond.getEnd().equals(rAtom)) whichAtomInBond = 1;
                                 IAtom subsAt = null;
                                 if (apo == 0)
                                     subsAt = substitute.getFirstAttachmentPoint();

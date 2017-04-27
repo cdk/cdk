@@ -50,8 +50,8 @@ public class DebugBondTest extends AbstractBondTest {
     public void testDebugBond() {
         IBond bond = new DebugBond();
         Assert.assertEquals(0, bond.getAtomCount());
-        Assert.assertNull(bond.getAtom(0));
-        Assert.assertNull(bond.getAtom(1));
+        Assert.assertNull(bond.getBeg());
+        Assert.assertNull(bond.getEnd());
         Assert.assertNull(bond.getOrder());
         Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
     }
@@ -95,8 +95,8 @@ public class DebugBondTest extends AbstractBondTest {
         IBond bond = new DebugBond(c, o);
 
         Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(c, bond.getAtom(0));
-        Assert.assertEquals(o, bond.getAtom(1));
+        Assert.assertEquals(c, bond.getBeg());
+        Assert.assertEquals(o, bond.getEnd());
         Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
         Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
     }
@@ -109,8 +109,8 @@ public class DebugBondTest extends AbstractBondTest {
         IBond bond = new DebugBond(c, o, IBond.Order.DOUBLE);
 
         Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(c, bond.getAtom(0));
-        Assert.assertEquals(o, bond.getAtom(1));
+        Assert.assertEquals(c, bond.getBeg());
+        Assert.assertEquals(o, bond.getEnd());
         Assert.assertTrue(bond.getOrder() == IBond.Order.DOUBLE);
         Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
     }
@@ -123,8 +123,8 @@ public class DebugBondTest extends AbstractBondTest {
         IBond bond = new DebugBond(c, o, IBond.Order.SINGLE, IBond.Stereo.UP);
 
         Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(c, bond.getAtom(0));
-        Assert.assertEquals(o, bond.getAtom(1));
+        Assert.assertEquals(c, bond.getBeg());
+        Assert.assertEquals(o, bond.getEnd());
         Assert.assertTrue(bond.getOrder() == IBond.Order.SINGLE);
         Assert.assertEquals(IBond.Stereo.UP, bond.getStereo());
     }

@@ -367,8 +367,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         writer.write("BEGIN BOND\n");
         int bondIdx = 0;
         for (IBond bond : mol.bonds()) {
-            IAtom beg = bond.getAtom(0);
-            IAtom end = bond.getAtom(1);
+            IAtom beg = bond.getBeg();
+            IAtom end = bond.getEnd();
             if (beg == null || end == null)
                 throw new IllegalStateException("Bond " + bondIdx + " had one or more atoms.");
             int begIdx = findIdx(idxs, beg);
@@ -424,8 +424,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
             Sgroup sgroup = multicenterSgroups.get(bond);
             if (sgroup != null) {
                 List<IAtom> atoms = new ArrayList<>(sgroup.getAtoms());
-                atoms.remove(bond.getAtom(0));
-                atoms.remove(bond.getAtom(1));
+                atoms.remove(bond.getBeg());
+                atoms.remove(bond.getEnd());
                 writer.write(" ATTACH=ANY ENDPTS=(").write(atoms, idxs).write(')');
             }
 

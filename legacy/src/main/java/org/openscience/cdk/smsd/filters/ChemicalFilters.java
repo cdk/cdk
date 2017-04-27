@@ -734,10 +734,10 @@ public class ChemicalFilters {
 
     private double getBondEnergy(IBond bond, BondEnergies bondEnergy) {
         double energy = 0.0;
-        if ((bond.getAtom(0).getFlag(CDKConstants.ISPLACED) == true && bond.getAtom(1).getFlag(CDKConstants.ISPLACED) == false)
-                || (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) == false && bond.getAtom(1).getFlag(
+        if ((bond.getBeg().getFlag(CDKConstants.ISPLACED) == true && bond.getEnd().getFlag(CDKConstants.ISPLACED) == false)
+                || (bond.getBeg().getFlag(CDKConstants.ISPLACED) == false && bond.getEnd().getFlag(
                         CDKConstants.ISPLACED) == true)) {
-            Integer val = bondEnergy.getEnergies(bond.getAtom(0), bond.getAtom(1), bond.getOrder());
+            Integer val = bondEnergy.getEnergies(bond.getBeg(), bond.getEnd(), bond.getOrder());
             if (val != null) {
                 energy = val;
             }

@@ -129,8 +129,8 @@ final class IdentityTemplateLibrary {
         int[] bondedValence = new int[mol.getAtomCount()];
         for (int i = 0; i < mol.getBondCount(); i++) {
             IBond bond = mol.getBond(i);
-            bondedValence[idxs.get(bond.getAtom(0))] += bond.getOrder().numeric();
-            bondedValence[idxs.get(bond.getAtom(1))] += bond.getOrder().numeric();
+            bondedValence[idxs.get(bond.getBeg())] += bond.getOrder().numeric();
+            bondedValence[idxs.get(bond.getEnd())] += bond.getOrder().numeric();
         }
 
         // http://www.opensmiles.org/opensmiles.html#orgsbst

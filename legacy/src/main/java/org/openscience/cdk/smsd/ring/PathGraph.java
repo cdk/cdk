@@ -154,7 +154,7 @@ public class PathGraph {
     private void loadEdges(IAtomContainer molecule) {
         for (int i = 0; i < molecule.getBondCount(); i++) {
             IBond bond = molecule.getBond(i);
-            edges.add(new PathEdge(Arrays.asList(bond.getAtom(0), bond.getAtom(1))));
+            edges.add(new PathEdge(Arrays.asList(bond.getBeg(), bond.getEnd())));
         }
     }
 

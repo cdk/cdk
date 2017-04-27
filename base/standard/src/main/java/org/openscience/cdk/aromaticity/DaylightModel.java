@@ -106,8 +106,8 @@ final class DaylightModel extends ElectronDonation {
         // if there is an exocyclic pi bond we store the adjacent atom for
         // lookup later.
         for (IBond bond : container.bonds()) {
-            int u = atomIndex.get(bond.getAtom(0));
-            int v = atomIndex.get(bond.getAtom(1));
+            int u = atomIndex.get(bond.getBeg());
+            int v = atomIndex.get(bond.getEnd());
             degree[u]++;
             degree[v]++;
 

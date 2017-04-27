@@ -335,8 +335,8 @@ public class StructureResonanceGenerator {
             for (int j = 0; j < bondList.size(); j++) {
                 if (flagBelonging[j] != i + 1) continue;
                 IBond bond = bondList.get(j);
-                IAtom atomA1 = bond.getAtom(0);
-                IAtom atomA2 = bond.getAtom(1);
+                IAtom atomA1 = bond.getBeg();
+                IAtom atomA2 = bond.getEnd();
                 if (!container.contains(atomA1)) container.addAtom(atomA1);
                 if (!container.contains(atomA2)) container.addAtom(atomA2);
                 container.addBond(bond);

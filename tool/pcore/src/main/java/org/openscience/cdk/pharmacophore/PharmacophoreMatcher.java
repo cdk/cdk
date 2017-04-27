@@ -426,8 +426,8 @@ public class PharmacophoreMatcher {
             for (IBond bond : pharmacophoreQuery.bonds()) {
                 if (!(bond instanceof PharmacophoreQueryAngleBond)) continue;
 
-                IAtom startQAtom = bond.getAtom(0);
-                IAtom middleQAtom = bond.getAtom(1);
+                IAtom startQAtom = bond.getBeg();
+                IAtom middleQAtom = bond.getEnd();
                 IAtom endQAtom = bond.getAtom(2);
 
                 // make a list of the patoms in the target that match

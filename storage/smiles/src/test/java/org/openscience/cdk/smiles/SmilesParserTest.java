@@ -1260,8 +1260,8 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(17, mol.getBondCount());
         for (int i = 0; i < 17; i++) {
             IBond bond = mol.getBond(i);
-            if (bond.getAtom(0).getSymbol().equals("H") || bond.getAtom(0).getSymbol().equals("Br")
-                    || bond.getAtom(1).getSymbol().equals("H") || bond.getAtom(1).getSymbol().equals("Br")) {
+            if (bond.getBeg().getSymbol().equals("H") || bond.getBeg().getSymbol().equals("Br")
+                    || bond.getEnd().getSymbol().equals("H") || bond.getEnd().getSymbol().equals("Br")) {
                 assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
             } else {
                 assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
@@ -1311,7 +1311,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(7, mol.getBondCount());
         for (int i = 0; i < 7; i++) {
             IBond bond = mol.getBond(i);
-            if (bond.getAtom(0).getSymbol().equals("O") || bond.getAtom(1).getSymbol().equals("O")) {
+            if (bond.getBeg().getSymbol().equals("O") || bond.getEnd().getSymbol().equals("O")) {
                 assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
             } else {
                 assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));

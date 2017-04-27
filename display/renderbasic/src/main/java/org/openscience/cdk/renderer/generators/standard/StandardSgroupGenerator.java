@@ -128,8 +128,8 @@ final class StandardSgroupGenerator {
                 Set<IAtom> atoms = sgroup.getAtoms();
                 // should only be one bond
                 for (IBond bond : sgroup.getBonds()) {
-                    IAtom beg = bond.getAtom(0);
-                    IAtom end = bond.getAtom(1);
+                    IAtom beg = bond.getBeg();
+                    IAtom end = bond.getEnd();
                     if (atoms.contains(beg)) {
                         StandardGenerator.hideFully(beg);
                     } else {
@@ -173,8 +173,8 @@ final class StandardSgroupGenerator {
             }
         }
         for (IBond bond : container.bonds()) {
-            IAtom beg = bond.getAtom(0);
-            IAtom end = bond.getAtom(1);
+            IAtom beg = bond.getBeg();
+            IAtom end = bond.getEnd();
             if (sgroupAtoms.contains(beg) && sgroupAtoms.contains(end)) {
                 numSgroupBonds++;
                 if ((color = bond.getProperty(StandardGenerator.HIGHLIGHT_COLOR)) != null) {
@@ -208,9 +208,9 @@ final class StandardSgroupGenerator {
         final Set<IAtom> parentAtoms = sgroup.getValue(SgroupKey.CtabParentAtomList);
 
         for (IBond bond : container.bonds()) {
-            if (parentAtoms.contains(bond.getAtom(0)) && parentAtoms.contains(bond.getAtom(1)))
+            if (parentAtoms.contains(bond.getBeg()) && parentAtoms.contains(bond.getEnd()))
                 continue;
-            if (atoms.contains(bond.getAtom(0)) || atoms.contains(bond.getAtom(1)))
+            if (atoms.contains(bond.getBeg()) || atoms.contains(bond.getEnd()))
                 StandardGenerator.hide(bond);
         }
         for (IAtom atom : atoms) {
@@ -240,8 +240,8 @@ final class StandardSgroupGenerator {
         if (crossing.size() > 1) {
             IAtom internal = null;
             for (IBond bond : crossing) {
-                IAtom beg = bond.getAtom(0);
-                IAtom end = bond.getAtom(1);
+                IAtom beg = bond.getBeg();
+                IAtom end = bond.getEnd();
                 if (atoms.contains(beg)) {
                     if (internal != null && internal != beg) return; // can't do it
                     internal = beg;
@@ -256,14 +256,14 @@ final class StandardSgroupGenerator {
             StandardGenerator.hide(atom);
         }
         for (IBond bond : container.bonds()) {
-            if (atoms.contains(bond.getAtom(0)) ||
-                atoms.contains(bond.getAtom(1)))
+            if (atoms.contains(bond.getBeg()) ||
+                atoms.contains(bond.getEnd()))
                 StandardGenerator.hide(bond);
         }
         for (IBond bond : crossing) {
             StandardGenerator.unhide(bond);
-            IAtom a1 = bond.getAtom(0);
-            IAtom a2 = bond.getAtom(1);
+            IAtom a1 = bond.getBeg();
+            IAtom a2 = bond.getEnd();
             StandardGenerator.unhide(a1);
             if (atoms.contains(a1))
                 symbolRemap.put(a1, sgroup.getSubscript());
@@ -619,7 +619,7 @@ final class StandardSgroupGenerator {
 
                 final SgroupBracket bracket = e.getKey();
                 final IBond bond = e.getValue();
-                final IAtom inGroupAtom = atoms.contains(bond.getAtom(0)) ? bond.getAtom(0) : bond.getAtom(1);
+                final IAtom inGroupAtom = atoms.contains(bond.getBeg()) ? bond.getBeg() : bond.getEnd();
 
                 final Point2d p1 = bracket.getFirstPoint();
                 final Point2d p2 = bracket.getSecondPoint();
@@ -826,8 +826,8 @@ final class StandardSgroupGenerator {
         for (SgroupBracket bracket : brackets) {
             IBond crossingBond = null;
             for (IBond bond : bonds) {
-                IAtom a1 = bond.getAtom(0);
-                IAtom a2 = bond.getAtom(1);
+                IAtom a1 = bond.getBeg();
+                IAtom a2 = bond.getEnd();
                 if (Line2D.linesIntersect(bracket.getFirstPoint().x, bracket.getFirstPoint().y,
                                           bracket.getSecondPoint().x, bracket.getSecondPoint().y,
                                           a1.getPoint2d().x, a1.getPoint2d().y,

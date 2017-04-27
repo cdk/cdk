@@ -298,7 +298,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      */
     private static boolean has2DCoordinates(List<IBond> bonds) {
         for (IBond bond : bonds) {
-            if (bond.getAtom(0).getPoint2d() == null || bond.getAtom(1).getPoint2d() == null) return false;
+            if (bond.getBeg().getPoint2d() == null || bond.getEnd().getPoint2d() == null) return false;
         }
         return true;
     }
@@ -312,7 +312,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      */
     private static boolean has3DCoordinates(List<IBond> bonds) {
         for (IBond bond : bonds) {
-            if (bond.getAtom(0).getPoint3d() == null || bond.getAtom(1).getPoint3d() == null) return false;
+            if (bond.getBeg().getPoint3d() == null || bond.getEnd().getPoint3d() == null) return false;
         }
         return true;
     }
@@ -328,7 +328,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      * @return elevation of bond
      */
     static int elevation(IBond bond, IAtom a) {
-        return bond.getAtom(0).equals(a) ? elevation(bond) : elevation(bond) * -1;
+        return bond.getBeg().equals(a) ? elevation(bond) : elevation(bond) * -1;
     }
 
     /**
@@ -418,8 +418,8 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
          * @param bond the bond to add
          */
         public void add(IBond bond) {
-            add(bond.getAtom(0), bond);
-            add(bond.getAtom(1), bond);
+            add(bond.getBeg(), bond);
+            add(bond.getEnd(), bond);
         }
 
         /**

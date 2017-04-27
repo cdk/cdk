@@ -520,7 +520,7 @@ public class UniversalIsomorphismTester {
                 bond = g.getBond(rMap.getId2());
             }
 
-            a = bond.getAtom(0);
+            a = bond.getBeg();
             a1 = (IAtom) table.get(a);
 
             if (a1 == null) {
@@ -533,7 +533,7 @@ public class UniversalIsomorphismTester {
                 table.put(a, a1);
             }
 
-            a = bond.getAtom(1);
+            a = bond.getEnd();
             a2 = table.get(a);
 
             if (a2 == null) {
@@ -751,8 +751,8 @@ public class UniversalIsomorphismTester {
                     IBond bond = ac1.getBond(i);
                     if (queryBond.matches(bond)) {
                         // ok, bonds match
-                        if (atom1.matches(bond.getAtom(0)) && atom2.matches(bond.getAtom(1))
-                                || atom1.matches(bond.getAtom(1)) && atom2.matches(bond.getAtom(0))) {
+                        if (atom1.matches(bond.getBeg()) && atom2.matches(bond.getEnd())
+                                || atom1.matches(bond.getEnd()) && atom2.matches(bond.getBeg())) {
                             // ok, atoms match in either order
                             gr.addNode(new RNode(i, j));
                         }

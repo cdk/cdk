@@ -255,8 +255,8 @@ final class CorrectGeometricConfiguration {
      * @return the reflected point
      */
     private Point2d reflect(Point2d p, IBond bond) {
-        IAtom a = bond.getAtom(0);
-        IAtom b = bond.getAtom(1);
+        IAtom a = bond.getBeg();
+        IAtom b = bond.getEnd();
         return reflect(p, a.getPoint2d().x, a.getPoint2d().y, b.getPoint2d().x, b.getPoint2d().y);
     }
 

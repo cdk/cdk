@@ -625,7 +625,7 @@ public class AtomContainerManipulator {
                     e.printStackTrace();
                 }
                 assert clone != null;
-                clone.setAtoms(new IAtom[]{map.get(bond.getAtom(0)), map.get(bond.getAtom(1))});
+                clone.setAtoms(new IAtom[]{map.get(bond.getBeg()), map.get(bond.getEnd())});
                 cpy.addBond(clone);
             }
         }
@@ -739,7 +739,7 @@ public class AtomContainerManipulator {
         int remaining = hydrogens.size();
 
         for (final IBond bond : org.bonds()) {
-            if (remaining > 0 && (hydrogens.contains(bond.getAtom(0)) || hydrogens.contains(bond.getAtom(1)))) {
+            if (remaining > 0 && (hydrogens.contains(bond.getBeg()) || hydrogens.contains(bond.getEnd()))) {
                 remaining--;
                 continue;
             }
@@ -1025,8 +1025,8 @@ public class AtomContainerManipulator {
         for (int i = 0; i < count; i++) {
             // Check bond.
             final IBond bond = ac.getBond(i);
-            IAtom atom0 = bond.getAtom(0);
-            IAtom atom1 = bond.getAtom(1);
+            IAtom atom0 = bond.getBeg();
+            IAtom atom1 = bond.getEnd();
             boolean remove_bond = false;
             for (IAtom atom : bond.atoms()) {
                 if (remove.contains(atom)) {
@@ -1352,8 +1352,8 @@ public class AtomContainerManipulator {
         }
         for (int i = 0; i < bonds.length; i++) {
             IBond bond = src.getBond(i);
-            int u = src.indexOf(bond.getAtom(0));
-            int v = src.indexOf(bond.getAtom(1));
+            int u = src.indexOf(bond.getBeg());
+            int v = src.indexOf(bond.getEnd());
             bonds[i] = builder.newInstance(IBond.class, atoms[u], atoms[v]);
         }
 
@@ -1385,8 +1385,8 @@ public class AtomContainerManipulator {
         }
         for (int i = 0; i < bonds.length; i++) {
             IBond bond = src.getBond(i);
-            int u = src.indexOf(bond.getAtom(0));
-            int v = src.indexOf(bond.getAtom(1));
+            int u = src.indexOf(bond.getBeg());
+            int v = src.indexOf(bond.getEnd());
             bonds[i] = builder.newInstance(IBond.class, atoms[u], atoms[v]);
         }
 
@@ -1443,8 +1443,8 @@ public class AtomContainerManipulator {
         for (IBond bond : rs.ringFragments().bonds()) {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 bond.setFlag(SINGLE_OR_DOUBLE, true);
-                bond.getAtom(0).setFlag(SINGLE_OR_DOUBLE, true);
-                bond.getAtom(1).setFlag(SINGLE_OR_DOUBLE, true);
+                bond.getBeg().setFlag(SINGLE_OR_DOUBLE, true);
+                bond.getEnd().setFlag(SINGLE_OR_DOUBLE, true);
                 singleOrDouble = singleOrDouble | true;
             }
         }

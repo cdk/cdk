@@ -426,11 +426,11 @@ public class CDKRMapHandler {
                 CDKRMap map10 = null;
                 CDKRMap map11 = null;
 
-                if ((qbond.getAtom(0).getSymbol().equals(tbond.getAtom(0).getSymbol()))
-                        && (qbond.getAtom(1).getSymbol().equals(tbond.getAtom(1).getSymbol()))) {
-                    map00 = new CDKRMap(sourceGraph.indexOf(qbond.getAtom(0)), targetGraph.indexOf(tbond
+                if ((qbond.getBeg().getSymbol().equals(tbond.getBeg().getSymbol()))
+                        && (qbond.getEnd().getSymbol().equals(tbond.getEnd().getSymbol()))) {
+                    map00 = new CDKRMap(sourceGraph.indexOf(qbond.getBeg()), targetGraph.indexOf(tbond
                             .getAtom(0)));
-                    map11 = new CDKRMap(sourceGraph.indexOf(qbond.getAtom(1)), targetGraph.indexOf(tbond
+                    map11 = new CDKRMap(sourceGraph.indexOf(qbond.getEnd()), targetGraph.indexOf(tbond
                             .getAtom(1)));
                     if (!result1.contains(map00)) {
                         result1.add(map00);
@@ -439,11 +439,11 @@ public class CDKRMapHandler {
                         result1.add(map11);
                     }
                 }
-                if ((qbond.getAtom(0).getSymbol().equals(tbond.getAtom(1).getSymbol()))
-                        && (qbond.getAtom(1).getSymbol().equals(tbond.getAtom(0).getSymbol()))) {
-                    map01 = new CDKRMap(sourceGraph.indexOf(qbond.getAtom(0)), targetGraph.indexOf(tbond
+                if ((qbond.getBeg().getSymbol().equals(tbond.getEnd().getSymbol()))
+                        && (qbond.getEnd().getSymbol().equals(tbond.getBeg().getSymbol()))) {
+                    map01 = new CDKRMap(sourceGraph.indexOf(qbond.getBeg()), targetGraph.indexOf(tbond
                             .getAtom(1)));
-                    map10 = new CDKRMap(sourceGraph.indexOf(qbond.getAtom(1)), targetGraph.indexOf(tbond
+                    map10 = new CDKRMap(sourceGraph.indexOf(qbond.getEnd()), targetGraph.indexOf(tbond
                             .getAtom(0)));
                     if (!result2.contains(map01)) {
                         result2.add(map01);

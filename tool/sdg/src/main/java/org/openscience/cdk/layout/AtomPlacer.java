@@ -807,8 +807,8 @@ public class AtomPlacer {
      */
     static void copyPlaced(IRing dest, IAtomContainer src) {
         for (IBond bond : src.bonds()) {
-            IAtom beg = bond.getAtom(0);
-            IAtom end = bond.getAtom(1);
+            IAtom beg = bond.getBeg();
+            IAtom end = bond.getEnd();
             if (beg.getFlag(CDKConstants.ISPLACED)) {
                 dest.addAtom(beg);
                 if (end.getFlag(CDKConstants.ISPLACED)) {

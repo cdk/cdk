@@ -374,14 +374,14 @@ public class AtomPlacer3D {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) && !(bond.getAtom(1).getFlag(CDKConstants.ISPLACED))) {
-                if (isAliphaticHeavyAtom(bond.getAtom(1))) {
-                    return bond.getAtom(1);
+            if (bond.getBeg().getFlag(CDKConstants.ISPLACED) && !(bond.getEnd().getFlag(CDKConstants.ISPLACED))) {
+                if (isAliphaticHeavyAtom(bond.getEnd())) {
+                    return bond.getEnd();
                 }
             }
-            if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) && !(bond.getAtom(0).getFlag(CDKConstants.ISPLACED))) {
-                if (isAliphaticHeavyAtom(bond.getAtom(0))) {
-                    return bond.getAtom(0);
+            if (bond.getEnd().getFlag(CDKConstants.ISPLACED) && !(bond.getBeg().getFlag(CDKConstants.ISPLACED))) {
+                if (isAliphaticHeavyAtom(bond.getBeg())) {
+                    return bond.getBeg();
                 }
             }
         }
@@ -413,8 +413,8 @@ public class AtomPlacer3D {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            IAtom atom0 = bond.getAtom(0);
-            IAtom atom1 = bond.getAtom(1);
+            IAtom atom0 = bond.getBeg();
+            IAtom atom1 = bond.getEnd();
             if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
                 if (isAliphaticHeavyAtom(atom1) && isHeavyAtom(atom0)) {
                     return atom0;
@@ -439,8 +439,8 @@ public class AtomPlacer3D {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            IAtom atom0 = bond.getAtom(0);
-            IAtom atom1 = bond.getAtom(1);
+            IAtom atom0 = bond.getBeg();
+            IAtom atom1 = bond.getEnd();
             if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
                 if (isRingHeavyAtom(atom1) && isHeavyAtom(atom0)) {
                     return atom0;

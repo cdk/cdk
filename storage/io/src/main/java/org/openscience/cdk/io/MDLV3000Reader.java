@@ -506,7 +506,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 if ("ANY".equals(attach)) {
                     Sgroup sgroup = new Sgroup();
                     sgroup.setType(SgroupType.ExtMulticenter);
-                    sgroup.addAtom(bond.getAtom(0)); // could be other end?
+                    sgroup.addAtom(bond.getBeg()); // could be other end?
                     sgroup.addBond(bond);
                     for (IAtom endpt : endpts)
                         sgroup.addAtom(endpt);

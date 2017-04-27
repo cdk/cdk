@@ -708,8 +708,8 @@ final class NonplanarBonds {
             if (bond.getOrder() != DOUBLE)
                 continue;
 
-            final IAtom aBeg = bond.getAtom(0);
-            final IAtom aEnd = bond.getAtom(1);
+            final IAtom aBeg = bond.getBeg();
+            final IAtom aEnd = bond.getEnd();
 
             final int beg = atomToIndex.get(aBeg);
             final int end = atomToIndex.get(aEnd);

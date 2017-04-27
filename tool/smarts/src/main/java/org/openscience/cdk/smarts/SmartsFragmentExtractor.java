@@ -134,8 +134,8 @@ public final class SmartsFragmentExtractor {
         // reference and traversal
         for (int bondIdx = 0; bondIdx < numBonds; bondIdx++) {
             IBond bond = mol.getBond(bondIdx);
-            IAtom beg = bond.getAtom(0);
-            IAtom end = bond.getAtom(1);
+            IAtom beg = bond.getBeg();
+            IAtom end = bond.getEnd();
             int begIdx = mol.indexOf(beg);
             int endIdx = mol.indexOf(end);
             this.bexpr[bondIdx] = encodeBondExpr(bondIdx, begIdx, endIdx);

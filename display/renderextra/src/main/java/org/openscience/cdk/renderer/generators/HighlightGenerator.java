@@ -164,7 +164,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
             // punch out the area occupied by atoms highlighted with a
             // different color
 
-            IAtom a1 = bond.getAtom(0), a2 = bond.getAtom(1);
+            IAtom a1 = bond.getBeg(), a2 = bond.getEnd();
             Integer a1Id = highlight.get(a1), a2Id = highlight.get(a2);
 
             if (a1Id != null && !a1Id.equals(id)) area.subtract(shapes.get(a1Id));
@@ -203,10 +203,10 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
      */
     private static Shape createBondHighlight(IBond bond, double radius) {
 
-        double x1 = bond.getAtom(0).getPoint2d().x;
-        double x2 = bond.getAtom(1).getPoint2d().x;
-        double y1 = bond.getAtom(0).getPoint2d().y;
-        double y2 = bond.getAtom(1).getPoint2d().y;
+        double x1 = bond.getBeg().getPoint2d().x;
+        double x2 = bond.getEnd().getPoint2d().x;
+        double y1 = bond.getBeg().getPoint2d().y;
+        double y2 = bond.getEnd().getPoint2d().y;
 
         double dx = x2 - x1;
         double dy = y2 - y1;

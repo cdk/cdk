@@ -884,8 +884,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
             IAtom bondAtom1 = null;
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();
-                bondAtom0 = bond.getAtom(0);
-                bondAtom1 = bond.getAtom(1);
+                bondAtom0 = bond.getBeg();
+                bondAtom1 = bond.getEnd();
                 if ((bondAtom0.getSymbol().equals("C") && bondAtom1.getSymbol().equals("N"))
                         || (bondAtom0.getSymbol().equals("N") && bondAtom1.getSymbol().equals("C"))
                         && bond.getOrder() == IBond.Order.SINGLE) {

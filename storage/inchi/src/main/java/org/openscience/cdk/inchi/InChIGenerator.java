@@ -291,8 +291,8 @@ public class InChIGenerator {
             IBond bond = bonds.next();
 
             // Assumes 2 centre bond
-            JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getAtom(0));
-            JniInchiAtom at1 = (JniInchiAtom) atomMap.get(bond.getAtom(1));
+            JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getBeg());
+            JniInchiAtom at1 = (JniInchiAtom) atomMap.get(bond.getEnd());
 
             // Get bond order
             INCHI_BOND_TYPE order;

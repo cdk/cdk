@@ -348,8 +348,8 @@ final class LayoutRefiner {
                 if (bond.getOrder() != IBond.Order.SINGLE || bond.isInRing())
                     continue;
 
-                final IAtom beg = bond.getAtom(0);
-                final IAtom end = bond.getAtom(1);
+                final IAtom beg = bond.getBeg();
+                final IAtom end = bond.getEnd();
                 final int begIdx = idxs.get(beg);
                 final int endIdx = idxs.get(end);
 
@@ -428,7 +428,7 @@ final class LayoutRefiner {
             amoved.add(mol.getAtom(xs[i]));
         }
         for (IBond bond : bfix) {
-            if (amoved.contains(bond.getAtom(0)) && amoved.contains(bond.getAtom(1)))
+            if (amoved.contains(bond.getBeg()) && amoved.contains(bond.getEnd()))
                 cnt++;
         }
         return cnt;
@@ -616,8 +616,8 @@ final class LayoutRefiner {
                 if (first != pair)
                     continue;
 
-                final IAtom beg = bond.getAtom(0);
-                final IAtom end = bond.getAtom(1);
+                final IAtom beg = bond.getBeg();
+                final IAtom end = bond.getEnd();
                 final int begPriority = beg.getProperty(AtomPlacer.PRIORITY);
                 final int endPriority = end.getProperty(AtomPlacer.PRIORITY);
 
@@ -700,8 +700,8 @@ final class LayoutRefiner {
             if (first != pair)
                 continue;
 
-            final IAtom beg = bond.getAtom(0);
-            final IAtom end = bond.getAtom(1);
+            final IAtom beg = bond.getBeg();
+            final IAtom end = bond.getEnd();
             final int begIdx = idxs.get(beg);
             final int endIdx = idxs.get(end);
             int begPriority = beg.getProperty(AtomPlacer.PRIORITY);

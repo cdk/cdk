@@ -71,8 +71,8 @@ public class GraphUtil {
 
         for (IBond bond : container.bonds()) {
 
-            int v = container.indexOf(bond.getAtom(0));
-            int w = container.indexOf(bond.getAtom(1));
+            int v = container.indexOf(bond.getBeg());
+            int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)
                 throw new IllegalArgumentException("bond at index " + container.indexOf(bond)
@@ -117,8 +117,8 @@ public class GraphUtil {
             if (!include.contains(bond))
                 continue;
 
-            int v = container.indexOf(bond.getAtom(0));
-            int w = container.indexOf(bond.getAtom(1));
+            int v = container.indexOf(bond.getBeg());
+            int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)
                 throw new IllegalArgumentException("bond at index " + container.indexOf(bond)
@@ -161,8 +161,8 @@ public class GraphUtil {
 
         for (IBond bond : container.bonds()) {
 
-            int v = container.indexOf(bond.getAtom(0));
-            int w = container.indexOf(bond.getAtom(1));
+            int v = container.indexOf(bond.getBeg());
+            int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)
                 throw new IllegalArgumentException("bond at index " + container.indexOf(bond)

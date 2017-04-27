@@ -547,7 +547,7 @@ public class CDKMCS {
                 bond = graph.getBond(rMap.getId2());
             }
 
-            atom = bond.getAtom(0);
+            atom = bond.getBeg();
             atom1 = table.get(atom);
 
             if (atom1 == null) {
@@ -560,7 +560,7 @@ public class CDKMCS {
                 table.put(atom, atom1);
             }
 
-            atom = bond.getAtom(1);
+            atom = bond.getEnd();
             atom2 = table.get(atom);
 
             if (atom2 == null) {

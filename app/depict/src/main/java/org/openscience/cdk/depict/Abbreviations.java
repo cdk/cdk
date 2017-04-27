@@ -277,8 +277,8 @@ public class Abbreviations implements Iterable<String> {
         }
 
         for (IBond bond : mol.bonds()) {
-            IAtom a1 = bond.getAtom(0);
-            IAtom a2 = bond.getAtom(1);
+            IAtom a1 = bond.getBeg();
+            IAtom a2 = bond.getEnd();
             if (bvisit.contains(a1) && bvisit.contains(a2))
                 bfrag.addBond(bond);
             else if (evisit.contains(a1) && evisit.contains(a2))
@@ -722,8 +722,8 @@ public class Abbreviations implements Iterable<String> {
         }
 
         for (IBond bond : mol.bonds()) {
-            final IAtom beg = atmmap.get(bond.getAtom(0));
-            final IAtom end = atmmap.get(bond.getAtom(1));
+            final IAtom beg = atmmap.get(bond.getBeg());
+            final IAtom end = atmmap.get(bond.getEnd());
 
             // attach bond skipped
             if (beg == null || end == null)

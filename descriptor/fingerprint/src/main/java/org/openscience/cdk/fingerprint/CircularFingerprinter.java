@@ -548,7 +548,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         for (int n = 0; n < mol.getBondCount(); n++) {
             IBond bond = mol.getBond(n);
             if (bond.getAtomCount() != 2) continue;
-            int a1 = mol.indexOf(bond.getAtom(0)), a2 = mol.indexOf(bond.getAtom(1));
+            int a1 = mol.indexOf(bond.getBeg()), a2 = mol.indexOf(bond.getEnd());
             if (amask[a1] && amask[a2]) {
                 atomAdj[a1] = appendInteger(atomAdj[a1], a2);
                 bondAdj[a1] = appendInteger(bondAdj[a1], n);
@@ -783,8 +783,8 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         for (int n = 0; n < nb; n++)
             if (bondOrder[n] == 2) {
                 IBond bond = mol.getBond(n);
-                piAtom[mol.indexOf(bond.getAtom(0))] = true;
-                piAtom[mol.indexOf(bond.getAtom(1))] = true;
+                piAtom[mol.indexOf(bond.getBeg())] = true;
+                piAtom[mol.indexOf(bond.getEnd())] = true;
             }
 
         ArrayList<int[]> maybe = new ArrayList<int[]>(); // rings which may yet be aromatic
@@ -901,7 +901,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                 IBond.Stereo stereo = bond.getStereo();
                 xp[n] = (float) (o2d.x - x0);
                 yp[n] = (float) (o2d.y - y0);
-                zp[n] = other == bond.getAtom(0) ? 0 : stereo == IBond.Stereo.UP ? 1 : stereo == IBond.Stereo.DOWN ? -1
+                zp[n] = other == bond.getBeg() ? 0 : stereo == IBond.Stereo.UP ? 1 : stereo == IBond.Stereo.DOWN ? -1
                         : 0;
             } else {
                 return null; // no 2D coordinates on some atom
@@ -995,7 +995,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         for (int n = 0; n < nb; n++) {
             IBond bond = mol.getBond(n);
             if (bond.getAtomCount() != 2) continue;
-            int a1 = mol.indexOf(bond.getAtom(0)), a2 = mol.indexOf(bond.getAtom(1)), o = bondOrder[n];
+            int a1 = mol.indexOf(bond.getBeg()), a2 = mol.indexOf(bond.getEnd()), o = bondOrder[n];
             if (!amask[a1] || !amask[a2]) continue;
             bondSum[a1] += o;
             bondSum[a2] += o;
@@ -1248,7 +1248,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private int bondOrderBioType(int bidx) {
         IBond bond = mol.getBond(bidx);
         if (bond.getAtomCount() != 2) return 0;
-        final int a1 = mol.indexOf(bond.getAtom(0)), a2 = mol.indexOf(bond.getAtom(1));
+        final int a1 = mol.indexOf(bond.getBeg()), a2 = mol.indexOf(bond.getEnd());
         if (maskAro[a1] && maskAro[a2]) return -1;
         return bondOrder[bidx];
     }

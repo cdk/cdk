@@ -59,10 +59,10 @@ public class FragmentUtils {
             // later on we'll want to make sure that the fragment doesn't contain
             // the bond joining the current atom and the atom that is on the other side
             IAtom excludedAtom;
-            if (atom.equals(bond.getAtom(0)))
-                excludedAtom = bond.getAtom(1);
+            if (atom.equals(bond.getBeg()))
+                excludedAtom = bond.getEnd();
             else
-                excludedAtom = bond.getAtom(0);
+                excludedAtom = bond.getBeg();
 
             List<IBond> part = new ArrayList<IBond>();
             part.add(bond);

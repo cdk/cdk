@@ -251,11 +251,11 @@ public class StructureDiagramGenerator {
 
                 if (!afix.isEmpty()) {
                     for (IBond bond : mol.bonds()) {
-                        if (afix.containsKey(bond.getAtom(0)) && afix.containsKey(bond.getAtom(1))) {
+                        if (afix.containsKey(bond.getBeg()) && afix.containsKey(bond.getEnd())) {
                             // only fix acyclic bonds if the source atoms were also acyclic
                             if (!bond.isInRing()) {
-                                IAtom srcBeg = afix.get(bond.getAtom(0));
-                                IAtom srcEnd = afix.get(bond.getAtom(1));
+                                IAtom srcBeg = afix.get(bond.getBeg());
+                                IAtom srcEnd = afix.get(bond.getEnd());
                                 for (IAtomContainer product : reaction.getProducts().atomContainers()) {
                                     IBond srcBond = product.getBond(srcBeg, srcEnd);
                                     if (srcBond != null) {
@@ -894,8 +894,8 @@ public class StructureDiagramGenerator {
         final double diff = Math.toRadians(1);
         int count = 0;
         for (IBond bond : mol.bonds()) {
-            Point2d beg = bond.getAtom(0).getPoint2d();
-            Point2d end = bond.getAtom(1).getPoint2d();
+            Point2d beg = bond.getBeg().getPoint2d();
+            Point2d end = bond.getEnd().getPoint2d();
             if (beg.x > end.x) {
                 Point2d tmp = beg;
                 beg = end;
@@ -1097,14 +1097,14 @@ public class StructureDiagramGenerator {
             if (!ionicBonds.contains(bond)) {
                 newfrag.addBond(bond);
             } else {
-                Integer numBegIonic = bond.getAtom(0).getProperty("ionicDegree");
-                Integer numEndIonic = bond.getAtom(1).getProperty("ionicDegree");
+                Integer numBegIonic = bond.getBeg().getProperty("ionicDegree");
+                Integer numEndIonic = bond.getEnd().getProperty("ionicDegree");
                 if (numBegIonic == null) numBegIonic = 0;
                 if (numEndIonic == null) numEndIonic = 0;
                 numBegIonic++;
                 numEndIonic++;
-                bond.getAtom(0).setProperty("ionicDegree", numBegIonic);
-                bond.getAtom(1).setProperty("ionicDegree", numEndIonic);
+                bond.getBeg().setProperty("ionicDegree", numBegIonic);
+                bond.getEnd().setProperty("ionicDegree", numEndIonic);
             }
         }
 
@@ -1120,12 +1120,12 @@ public class StructureDiagramGenerator {
                 atomToFrag.put(atom, subfragment);
 
         for (IBond bond : ionicBonds) {
-            IAtom beg = bond.getAtom(0);
-            IAtom end = bond.getAtom(1);
+            IAtom beg = bond.getBeg();
+            IAtom end = bond.getEnd();
 
             // select which bond to stretch from
-            Integer numBegIonic = bond.getAtom(0).getProperty("ionicDegree");
-            Integer numEndIonic = bond.getAtom(1).getProperty("ionicDegree");
+            Integer numBegIonic = bond.getBeg().getProperty("ionicDegree");
+            Integer numEndIonic = bond.getEnd().getProperty("ionicDegree");
             if (numBegIonic == null || numEndIonic == null)
                 continue;
             if (numBegIonic > numEndIonic) {
@@ -1341,8 +1341,8 @@ public class StructureDiagramGenerator {
 
             boolean unique = true;
             for (IBond bond : ionicBonds)
-                if (bond.getAtom(0).equals(beg) && bond.getAtom(1).equals(end) ||
-                    bond.getAtom(1).equals(beg) && bond.getAtom(0).equals(end))
+                if (bond.getBeg().equals(beg) && bond.getEnd().equals(end) ||
+                    bond.getEnd().equals(beg) && bond.getBeg().equals(end))
                     unique = false;
 
             if (unique)
@@ -1416,8 +1416,8 @@ public class StructureDiagramGenerator {
         final IAtomContainer ringWithStubs = bldr.newInstance(IAtomContainer.class);
         ringWithStubs.add(ringSystem);
         for (IBond bond : molecule.bonds()) {
-            IAtom atom1 = bond.getAtom(0);
-            IAtom atom2 = bond.getAtom(1);
+            IAtom atom1 = bond.getBeg();
+            IAtom atom2 = bond.getEnd();
             if (isHydrogen(atom1) || isHydrogen(atom2)) continue;
             if (ringAtoms.contains(atom1) ^ ringAtoms.contains(atom2)) {
                 ringWithStubs.addBond(bond);
@@ -1865,12 +1865,12 @@ public class StructureDiagramGenerator {
         for (int f = 0; f < molecule.getBondCount(); f++) {
             bond = molecule.getBond(f);
 
-            if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) && !bond.getAtom(0).getFlag(CDKConstants.ISPLACED)) {
-                return bond.getAtom(1);
+            if (bond.getEnd().getFlag(CDKConstants.ISPLACED) && !bond.getBeg().getFlag(CDKConstants.ISPLACED)) {
+                return bond.getEnd();
             }
 
-            if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) && !bond.getAtom(1).getFlag(CDKConstants.ISPLACED)) {
-                return bond.getAtom(0);
+            if (bond.getBeg().getFlag(CDKConstants.ISPLACED) && !bond.getEnd().getFlag(CDKConstants.ISPLACED)) {
+                return bond.getBeg();
             }
         }
         return null;
@@ -1883,8 +1883,8 @@ public class StructureDiagramGenerator {
      */
     private IBond getNextBondWithUnplacedRingAtom() {
         for (IBond bond : molecule.bonds()) {
-            IAtom beg = bond.getAtom(0);
-            IAtom end = bond.getAtom(1);
+            IAtom beg = bond.getBeg();
+            IAtom end = bond.getEnd();
             if (beg.getPoint2d() != null && end.getPoint2d() != null) {
                 if (end.getFlag(CDKConstants.ISPLACED) && !beg.getFlag(CDKConstants.ISPLACED) && beg.isInRing()) {
                     return bond;
@@ -1915,12 +1915,12 @@ public class StructureDiagramGenerator {
             logger.debug("placeFirstBondOfFirstRing->bondVector.length() after scaling:" + bondVector.length());
             IAtom atom;
             Point2d point = new Point2d(0, 0);
-            atom = bond.getAtom(0);
+            atom = bond.getBeg();
             logger.debug("Atom 1 of first Bond: " + (molecule.indexOf(atom) + 1));
             atom.setPoint2d(point);
             atom.setFlag(CDKConstants.ISPLACED, true);
             point = new Point2d(0, 0);
-            atom = bond.getAtom(1);
+            atom = bond.getEnd();
             logger.debug("Atom 2 of first Bond: " + (molecule.indexOf(atom) + 1));
             point.add(bondVector);
             atom.setPoint2d(point);
@@ -1934,8 +1934,8 @@ public class StructureDiagramGenerator {
              */
             sharedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
             sharedAtoms.addBond(bond);
-            sharedAtoms.addAtom(bond.getAtom(0));
-            sharedAtoms.addAtom(bond.getAtom(1));
+            sharedAtoms.addAtom(bond.getBeg());
+            sharedAtoms.addAtom(bond.getEnd());
         } catch (Exception exc) {
             logger.debug(exc);
         }
@@ -1965,11 +1965,11 @@ public class StructureDiagramGenerator {
      * @return the unplaced ring atom in this bond
      */
     private IAtom getRingAtom(IBond bond) {
-        if (bond.getAtom(0).getFlag(CDKConstants.ISINRING) && !bond.getAtom(0).getFlag(CDKConstants.ISPLACED)) {
-            return bond.getAtom(0);
+        if (bond.getBeg().getFlag(CDKConstants.ISINRING) && !bond.getBeg().getFlag(CDKConstants.ISPLACED)) {
+            return bond.getBeg();
         }
-        if (bond.getAtom(1).getFlag(CDKConstants.ISINRING) && !bond.getAtom(1).getFlag(CDKConstants.ISPLACED)) {
-            return bond.getAtom(1);
+        if (bond.getEnd().getFlag(CDKConstants.ISINRING) && !bond.getEnd().getFlag(CDKConstants.ISPLACED)) {
+            return bond.getEnd();
         }
         return null;
     }
@@ -2044,10 +2044,10 @@ public class StructureDiagramGenerator {
      */
     public IAtom getOtherBondAtom(IAtom atom, IBond bond) {
         if (!bond.contains(atom)) return null;
-        if (bond.getAtom(0).equals(atom))
-            return bond.getAtom(1);
+        if (bond.getBeg().equals(atom))
+            return bond.getEnd();
         else
-            return bond.getAtom(0);
+            return bond.getBeg();
     }
 
     /**
@@ -2090,8 +2090,8 @@ public class StructureDiagramGenerator {
                 visit.add(atom);
             }
             for (IBond bond : mol.bonds()) {
-                IAtom beg = bond.getAtom(0);
-                IAtom end = bond.getAtom(1);
+                IAtom beg = bond.getBeg();
+                IAtom end = bond.getEnd();
                 if (visit.contains(beg) && visit.contains(end))
                     substructure.addBond(bond);
             }
@@ -2134,8 +2134,8 @@ public class StructureDiagramGenerator {
             List<Map.Entry<IBond,Vector2d>>   xBondVec = new ArrayList<>();
             if (numCrossing == 2) {
                 for (IBond bond : mol.bonds()) {
-                    IAtom beg = bond.getAtom(0);
-                    IAtom end = bond.getAtom(1);
+                    IAtom beg = bond.getBeg();
+                    IAtom end = bond.getEnd();
                     if (patoms.contains(beg) == patoms.contains(end))
                         continue;
                     if (patoms.contains(beg)) {
@@ -2149,8 +2149,8 @@ public class StructureDiagramGenerator {
                     }
                 }
                 for (IBond bond : sgroup.getBonds()) {
-                    IAtom beg = bond.getAtom(0);
-                    IAtom end = bond.getAtom(1);
+                    IAtom beg = bond.getBeg();
+                    IAtom end = bond.getEnd();
                     if (sgroupAtoms.contains(beg)) {
                         xBondVec.add(new SimpleImmutableEntry<>(bond,
                                                                 new Vector2d(end.getPoint2d().x - beg.getPoint2d().x,
@@ -2183,7 +2183,7 @@ public class StructureDiagramGenerator {
                 if (bond.isInRing())
                     continue;
 
-                IAtom beg  = sgroupAtoms.contains(bond.getAtom(0)) ? bond.getAtom(0) : bond.getAtom(1);
+                IAtom beg  = sgroupAtoms.contains(bond.getBeg()) ? bond.getBeg() : bond.getEnd();
                 Map.Entry<Point2d,Vector2d> best = null;
                 for (Map.Entry<Point2d,Vector2d> candidate : outgoing) {
                     if (best == null || candidate.getKey().distance(beg.getPoint2d()) < best.getKey().distance(beg.getPoint2d()))
@@ -2251,7 +2251,7 @@ public class StructureDiagramGenerator {
             Point2d center = GeometryUtil.get2DCenter(shared);
 
             for (IBond bond : mol.bonds()) {
-                if (e.getKey().contains(bond.getAtom(0)) && e.getKey().contains(bond.getAtom(1))) {
+                if (e.getKey().contains(bond.getBeg()) && e.getKey().contains(bond.getEnd())) {
                     bonds.add(bond);
                 }
             }
@@ -2266,11 +2266,11 @@ public class StructureDiagramGenerator {
                     final IBond bond = bndIter.next();
                     final IAtom atom = begIter.next();
 
-                    if (numRingBonds(mol, bond.getAtom(0)) > 2 && numRingBonds(mol, bond.getAtom(1)) > 2)
+                    if (numRingBonds(mol, bond.getBeg()) > 2 && numRingBonds(mol, bond.getEnd()) > 2)
                         continue;
 
-                    final Point2d newBegP = new Point2d(bond.getAtom(0).getPoint2d());
-                    final Point2d newEndP = new Point2d(bond.getAtom(1).getPoint2d());
+                    final Point2d newBegP = new Point2d(bond.getBeg().getPoint2d());
+                    final Point2d newEndP = new Point2d(bond.getEnd().getPoint2d());
 
                     final Vector2d bndVec  = new Vector2d(newEndP.x-newBegP.x, newEndP.y-newBegP.y);
                     final Vector2d bndXVec = new Vector2d(-bndVec.y, bndVec.x);
@@ -2487,8 +2487,8 @@ public class StructureDiagramGenerator {
     }
 
     private static double angle(IBond bond) {
-        Point2d end = bond.getAtom(0).getPoint2d();
-        Point2d beg = bond.getAtom(1).getPoint2d();
+        Point2d end = bond.getBeg().getPoint2d();
+        Point2d beg = bond.getEnd().getPoint2d();
         return Math.atan2(end.y - beg.y, end.x - beg.x);
     }
 
@@ -2502,8 +2502,8 @@ public class StructureDiagramGenerator {
      * @return the new bracket
      */
     private SgroupBracket newCrossingBracket(IBond bond, Multimap<IBond,Sgroup> bonds, Map<IBond,Integer> counter, boolean vert) {
-        final IAtom beg = bond.getAtom(0);
-        final IAtom end = bond.getAtom(1);
+        final IAtom beg = bond.getBeg();
+        final IAtom end = bond.getEnd();
         final Point2d begXy = beg.getPoint2d();
         final Point2d endXy = end.getPoint2d();
         final Vector2d lenOffset = new Vector2d(endXy.x-begXy.x, endXy.y-begXy.y);

@@ -203,8 +203,8 @@ final class StandardBondGenerator {
      * @return rendering element
      */
     IRenderingElement generate(IBond bond) {
-        final IAtom atom1 = bond.getAtom(0);
-        final IAtom atom2 = bond.getAtom(1);
+        final IAtom atom1 = bond.getBeg();
+        final IAtom atom2 = bond.getEnd();
 
         IBond.Order order = bond.getOrder();
 
@@ -611,8 +611,8 @@ final class StandardBondGenerator {
         final IAtomContainer refContainer = cyclic ? ringMap.get(bond) : container;
 
         final int length = refContainer.getAtomCount();
-        final int index1 = refContainer.indexOf(bond.getAtom(0));
-        final int index2 = refContainer.indexOf(bond.getAtom(1));
+        final int index1 = refContainer.indexOf(bond.getBeg());
+        final int index2 = refContainer.indexOf(bond.getEnd());
 
         // if the bond is in a cycle we are using ring bonds to determine offset, since rings
         // have been normalised and ordered to wind anti-clockwise we want to get the atoms
@@ -712,13 +712,13 @@ final class StandardBondGenerator {
         if (bond.getStereo() == null) return false;
         switch (bond.getStereo()) {
             case UP:
-                return bond.getAtom(1) == atom;
+                return bond.getEnd() == atom;
             case UP_INVERTED:
-                return bond.getAtom(0) == atom;
+                return bond.getBeg() == atom;
             case DOWN:
-                return bond.getAtom(1) == atom;
+                return bond.getEnd() == atom;
             case DOWN_INVERTED:
-                return bond.getAtom(0) == atom;
+                return bond.getBeg() == atom;
             default:
                 return false;
         }

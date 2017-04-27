@@ -165,8 +165,8 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();
 
-                atom1 = ac.indexOf(bond.getAtom(0));
-                atom2 = ac.indexOf(bond.getAtom(1));
+                atom1 = ac.indexOf(bond.getBeg());
+                atom2 = ac.indexOf(bond.getEnd());
 
                 if (gasteigerFactors[STEP_SIZE * atom1 + atom1 + 4] >= gasteigerFactors[STEP_SIZE * atom2 + atom2 + 4]) {
                     if (ac.getAtom(atom2).getSymbol().equals("H")) {

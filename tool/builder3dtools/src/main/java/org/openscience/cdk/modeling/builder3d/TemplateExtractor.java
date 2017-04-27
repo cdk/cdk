@@ -477,7 +477,7 @@ public class TemplateExtractor {
     public IAtomContainer removeLoopBonds(IAtomContainer molecule, int position) {
         for (int i = 0; i < molecule.getBondCount(); i++) {
             IBond bond = molecule.getBond(i);
-            if (bond.getAtom(0) == bond.getAtom(1)) {
+            if (bond.getBeg() == bond.getEnd()) {
                 System.out.println("Loop found! Molecule:" + position);
                 molecule.removeBond(bond);
             }

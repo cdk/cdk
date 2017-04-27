@@ -532,8 +532,8 @@ public final class DepictionGenerator {
             }
             if (colorIdx > prevPalletIdx) {
                 for (IBond bond : mol.bonds()) {
-                    IAtom a1 = bond.getAtom(0);
-                    IAtom a2 = bond.getAtom(1);
+                    IAtom a1 = bond.getBeg();
+                    IAtom a2 = bond.getEnd();
                     Color c1 = colorMap.get(a1);
                     Color c2 = colorMap.get(a2);
                     if (c1 != null && c1 == c2)
@@ -550,8 +550,8 @@ public final class DepictionGenerator {
                 }
             }
             for (IBond bond : mol.bonds()) {
-                IAtom a1 = bond.getAtom(0);
-                IAtom a2 = bond.getAtom(1);
+                IAtom a1 = bond.getBeg();
+                IAtom a2 = bond.getEnd();
                 Color c1 = colorMap.get(a1);
                 Color c2 = colorMap.get(a2);
                 if (c1 != null && c1 == c2)
@@ -1106,8 +1106,8 @@ public final class DepictionGenerator {
         int nBonds = 0;
         double[] lengths = new double[bonds.size()];
         for (IBond bond : bonds) {
-            Point2d p1 = bond.getAtom(0).getPoint2d();
-            Point2d p2 = bond.getAtom(1).getPoint2d();
+            Point2d p1 = bond.getBeg().getPoint2d();
+            Point2d p2 = bond.getEnd().getPoint2d();
             // watch out for overlaid atoms (occur in multiple group Sgroups)
             if (!p1.equals(p2))
                 lengths[nBonds++] = p1.distance(p2);

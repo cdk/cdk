@@ -746,12 +746,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         for (IBond bond : mol.bonds()) {
             IPseudoAtom rGroup = null;
             IAtom partner = null;
-            if (bond.getAtom(0) instanceof IPseudoAtom) {
-                rGroup = (IPseudoAtom) bond.getAtom(0);
-                partner = bond.getAtom(1);
+            if (bond.getBeg() instanceof IPseudoAtom) {
+                rGroup = (IPseudoAtom) bond.getBeg();
+                partner = bond.getEnd();
             } else {
-                partner = bond.getAtom(0);
-                rGroup = (IPseudoAtom) bond.getAtom(1);
+                partner = bond.getBeg();
+                rGroup = (IPseudoAtom) bond.getEnd();
             }
             if (partner.getSymbol().equals("N")) {
                 Assert.assertEquals(rGroup.getLabel(), "R4");
@@ -781,10 +781,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         for (IBond bond : mol.bonds()) {
             IPseudoAtom rGroup;
-            if (bond.getAtom(0) instanceof IPseudoAtom)
-                rGroup = (IPseudoAtom) bond.getAtom(0);
+            if (bond.getBeg() instanceof IPseudoAtom)
+                rGroup = (IPseudoAtom) bond.getBeg();
             else
-                rGroup = (IPseudoAtom) bond.getAtom(1);
+                rGroup = (IPseudoAtom) bond.getEnd();
 
             if (bond.getOrder() == IBond.Order.DOUBLE) {
                 Assert.assertEquals(rGroup.getLabel(), "R32");
