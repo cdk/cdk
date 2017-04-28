@@ -210,7 +210,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
                     int apoIdx = 1;
                     boolean implicitlyOrdered = true;
                     while (rApo.get(apoIdx) != null && implicitlyOrdered) {
-                        IAtom partner = rApo.get(apoIdx).getConnectedAtom(rgroupAtom);
+                        IAtom partner = rApo.get(apoIdx).getOther(rgroupAtom);
                         for (int atIdx = 0; atIdx < rootAtc.getAtomCount(); atIdx++) {
                             if (rootAtc.getAtom(atIdx).equals(partner)) {
                                 if (atIdx < prevPos) implicitlyOrdered = false;
@@ -229,7 +229,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 
                                 apoIdx = 1;
                                 while (rApo.get(apoIdx) != null) {
-                                    IAtom partner = rApo.get(apoIdx).getConnectedAtom(rgroupAtom);
+                                    IAtom partner = rApo.get(apoIdx).getOther(rgroupAtom);
 
                                     for (int a = 0; a < rootAtc.getAtomCount(); a++) {
                                         if (rootAtc.getAtom(a).equals(partner)) {

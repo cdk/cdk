@@ -260,9 +260,9 @@ public class DebugBond extends Bond implements IBond {
 
     /** {@inheritDoc} */
     @Override
-    public IAtom getConnectedAtom(IAtom atom) {
+    public IAtom getOther(IAtom atom) {
         logger.debug("Getting connected atom to atom: ", atom);
-        return super.getConnectedAtom(atom);
+        return super.getOther(atom);
     }
 
     /** {@inheritDoc} */

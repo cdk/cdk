@@ -477,10 +477,10 @@ final class LayoutRefiner {
                 if (bfix.contains(bond))
                     continue;
                 Arrays.fill(visited, false);
-                stackBackup.len = visit(visited, stackBackup.xs, v, idxs.get(bond.getConnectedAtom(atom)), 0);
+                stackBackup.len = visit(visited, stackBackup.xs, v, idxs.get(bond.getOther(atom)), 0);
 
                 Point2d a = atom.getPoint2d();
-                Point2d b = bond.getConnectedAtom(atom).getPoint2d();
+                Point2d b = bond.getOther(atom).getPoint2d();
 
                 Vector2d perp = new Vector2d(b.x - a.x, b.y - a.y);
                 perp.normalize();
@@ -568,8 +568,8 @@ final class LayoutRefiner {
                 return Integer.MAX_VALUE;
 
             Arrays.fill(visited, false);
-            int split = visit(visited, stack.xs, idxs.get(pivotA), idxs.get(bndA.getConnectedAtom(pivotA)), 0);
-            stack.len = visit(visited, stack.xs, idxs.get(pivotB), idxs.get(bndB.getConnectedAtom(pivotB)), split);
+            int split = visit(visited, stack.xs, idxs.get(pivotA), idxs.get(bndA.getOther(pivotA)), 0);
+            stack.len = visit(visited, stack.xs, idxs.get(pivotB), idxs.get(bndB.getOther(pivotB)), split);
 
             // perform bend one way
             backupCoords(backup, stack);

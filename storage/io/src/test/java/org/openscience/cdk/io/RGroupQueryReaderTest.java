@@ -203,8 +203,8 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                         Map<IAtom, Map<Integer, IBond>> rootApo = rGroupQuery.getRootAttachmentPoints();
                         Map<Integer, IBond> apoBonds = rootApo.get(at);
                         Assert.assertEquals(apoBonds.size(), 2);
-                        Assert.assertEquals(apoBonds.get(1).getConnectedAtom(at).getSymbol(), "N");
-                        Assert.assertTrue(apoBonds.get(2).getConnectedAtom(at).getSymbol().equals("C"));
+                        Assert.assertEquals(apoBonds.get(1).getOther(at).getSymbol(), "N");
+                        Assert.assertTrue(apoBonds.get(2).getOther(at).getSymbol().equals("C"));
                         //Test: Oxygens are the 2nd APO's for R1
                         RGroupList rList = rGroupQuery.getRGroupDefinitions().get(1);
                         Assert.assertEquals(rList.getRGroups().size(), 2);
@@ -284,10 +284,10 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                 Map<Integer, IBond> apoBonds = rGroupQuery.getRootAttachmentPoints().get(at);
                 Assert.assertEquals(apoBonds.size(), 2);
 
-                IAtom boundAtom1 = apoBonds.get(1).getConnectedAtom(at);
+                IAtom boundAtom1 = apoBonds.get(1).getOther(at);
                 Assert.assertTrue(boundAtom1.getSymbol().equals("Te") || boundAtom1.getSymbol().equals("S"));
 
-                IAtom boundAtom2 = apoBonds.get(2).getConnectedAtom(at);
+                IAtom boundAtom2 = apoBonds.get(2).getOther(at);
                 Assert.assertTrue(boundAtom2.getSymbol().equals("Po") || boundAtom2.getSymbol().equals("O"));
             }
         }

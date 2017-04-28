@@ -24,13 +24,11 @@
 package org.openscience.cdk.depict;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
@@ -55,7 +53,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import uk.ac.ebi.beam.Element;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -66,8 +63,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
@@ -498,7 +493,7 @@ public class Abbreviations implements Iterable<String> {
             int numSGrpNbrs = nbrSymbols.size();
             for (IBond bond : mol.getConnectedBondsList(attach)) {
                 if (!xbonds.contains(bond)) {
-                    IAtom nbr = bond.getConnectedAtom(attach);
+                    IAtom nbr = bond.getOther(attach);
                     // contract terminal bonds
                     if (mol.getConnectedBondsCount(nbr) == 1) {
                         if (nbr.getMassNumber() != null ||
@@ -689,7 +684,7 @@ public class Abbreviations implements Iterable<String> {
         for (IBond bond : mol.getConnectedBondsList(atom)) {
             val += bond.getOrder().numeric();
             con++;
-            if (bond.getConnectedAtom(atom).getAtomicNumber() == 1)
+            if (bond.getOther(atom).getAtomicNumber() == 1)
                 hcnt++;
         }
 

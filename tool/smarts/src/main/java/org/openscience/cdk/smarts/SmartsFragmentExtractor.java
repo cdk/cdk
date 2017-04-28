@@ -390,7 +390,7 @@ public final class SmartsFragmentExtractor {
             int atmDeg = this.deg[atmIdx];
             for (int i = 0; i < atmDeg; i++) {
                 IBond bond = mol.getBond(bondAdj[atmIdx][i]);
-                IAtom nbr = bond.getConnectedAtom(atom);
+                IAtom nbr = bond.getOther(atom);
                 if (nbr.getAtomicNumber() != null && nbr.getAtomicNumber() == 1)
                     hcount++;
                 int bord = bond.getOrder() != null ? bond.getOrder().numeric() : 0;

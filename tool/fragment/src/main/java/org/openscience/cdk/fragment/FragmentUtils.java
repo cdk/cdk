@@ -114,7 +114,7 @@ public class FragmentUtils {
         for (IBond aBond : connectedBonds) {
             if (bondList.contains(aBond)) continue;
             bondList.add(aBond);
-            IAtom nextAtom = aBond.getConnectedAtom(atom);
+            IAtom nextAtom = aBond.getOther(atom);
             if (atomContainer.getConnectedAtomsCount(nextAtom) == 1) continue;
             traverse(atomContainer, nextAtom, bondList);
         }

@@ -52,13 +52,11 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-import uk.ac.ebi.beam.Element;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -778,7 +776,7 @@ public class StructureDiagramGenerator {
             else {
                 final List<IBond> attachBonds = molecule.getConnectedBondsList(begAttach);
                 if (attachBonds.size() == 1) {
-                    IAtom end = attachBonds.get(0).getConnectedAtom(begAttach);
+                    IAtom end = attachBonds.get(0).getOther(begAttach);
                     Point2d xyBeg = begAttach.getPoint2d();
                     Point2d xyEnd = end.getPoint2d();
 
@@ -939,7 +937,7 @@ public class StructureDiagramGenerator {
                     break;
             }
         } else if (bonds.size() == 1) {
-            IAtom  other  = bonds.get(0).getConnectedAtom(atom);
+            IAtom  other  = bonds.get(0).getOther(atom);
             double deltaX = atom.getPoint2d().x - other.getPoint2d().x;
             if (Math.abs(deltaX) > 0.05)
                 pos = (int) Math.signum(deltaX);
@@ -1224,7 +1222,7 @@ public class StructureDiagramGenerator {
 
                 // skip in first pass if charge separated
                 for (IBond bond : frag.getConnectedBondsList(atom)) {
-                    if (Integer.signum(nullAsZero(bond.getConnectedAtom(atom).getFormalCharge())) + sign == 0)
+                    if (Integer.signum(nullAsZero(bond.getOther(atom).getFormalCharge())) + sign == 0)
                         continue FIRST_PASS;
                 }
 
@@ -1826,7 +1824,7 @@ public class StructureDiagramGenerator {
         List bonds = molecule.getConnectedBondsList(atom);
         IAtom connectedAtom;
         for (int f = 0; f < bonds.size(); f++) {
-            connectedAtom = ((IBond) bonds.get(f)).getConnectedAtom(atom);
+            connectedAtom = ((IBond) bonds.get(f)).getOther(atom);
             if (!connectedAtom.getFlag(CDKConstants.ISPLACED)) {
                 unplacedAtoms.addAtom(connectedAtom);
             }
@@ -1847,7 +1845,7 @@ public class StructureDiagramGenerator {
         List bonds = molecule.getConnectedBondsList(atom);
         IAtom connectedAtom;
         for (int f = 0; f < bonds.size(); f++) {
-            connectedAtom = ((IBond) bonds.get(f)).getConnectedAtom(atom);
+            connectedAtom = ((IBond) bonds.get(f)).getOther(atom);
             if (connectedAtom.getFlag(CDKConstants.ISPLACED)) {
                 placedAtoms.addAtom(connectedAtom);
             }
@@ -2195,7 +2193,7 @@ public class StructureDiagramGenerator {
                 // visit rest of connected molecule
                 Set<Integer> iVisit = new HashSet<>();
                 iVisit.add(idxs.get(beg));
-                visit(iVisit, adjlist, idxs.get(bond.getConnectedAtom(beg)));
+                visit(iVisit, adjlist, idxs.get(bond.getOther(beg)));
                 iVisit.remove(idxs.get(beg));
                 IAtomContainer frag = mol.getBuilder().newInstance(IAtomContainer.class);
                 for (Integer idx : iVisit)
@@ -2204,7 +2202,7 @@ public class StructureDiagramGenerator {
                 Vector2d orgVec = e.getValue();
                 Vector2d newVec = best.getValue();
 
-                Point2d endP    = bond.getConnectedAtom(beg).getPoint2d();
+                Point2d endP    = bond.getOther(beg).getPoint2d();
                 Point2d newEndP = new Point2d(beg.getPoint2d());
                 newEndP.add(newVec);
 
@@ -2214,7 +2212,7 @@ public class StructureDiagramGenerator {
 
                 // position
                 GeometryUtil.translate2D(frag, newEndP.x - endP.x, newEndP.y - endP.y);
-                GeometryUtil.rotate(frag, new Point2d(bond.getConnectedAtom(beg).getPoint2d()), theta);
+                GeometryUtil.rotate(frag, new Point2d(bond.getOther(beg).getPoint2d()), theta);
             }
         }
 
@@ -2336,7 +2334,7 @@ public class StructureDiagramGenerator {
 
                     final IBond attachBond = bondMap.get(atomIdx, adjlist[atomIdx][0]);
                     final Point2d begP = atom.getPoint2d();
-                    final Point2d endP = attachBond.getConnectedAtom(atom).getPoint2d();
+                    final Point2d endP = attachBond.getOther(atom).getPoint2d();
 
                     Vector2d orgVec = new Vector2d(endP.x-begP.x, endP.y-begP.y);
                     Vector2d newVec = new Vector2d(newEndP.x-newBegP.x, newEndP.y-newBegP.y);

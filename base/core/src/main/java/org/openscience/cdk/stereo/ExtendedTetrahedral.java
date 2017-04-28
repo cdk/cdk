@@ -147,8 +147,8 @@ public final class ExtendedTetrahedral implements IStereoElement {
 
         if (focusBonds.size() != 2) throw new IllegalArgumentException("focus must have exactly 2 neighbors");
 
-        IAtom left = focusBonds.get(0).getConnectedAtom(focus);
-        IAtom right = focusBonds.get(1).getConnectedAtom(focus);
+        IAtom left = focusBonds.get(0).getOther(focus);
+        IAtom right = focusBonds.get(1).getOther(focus);
 
         return new IAtom[]{left, right};
     }
@@ -167,8 +167,8 @@ public final class ExtendedTetrahedral implements IStereoElement {
 
         if (focusBonds.size() != 2) throw new IllegalArgumentException("focus must have exactly 2 neighbors");
 
-        final IAtom left = focusBonds.get(0).getConnectedAtom(focus);
-        final IAtom right = focusBonds.get(1).getConnectedAtom(focus);
+        final IAtom left = focusBonds.get(0).getOther(focus);
+        final IAtom right = focusBonds.get(1).getOther(focus);
 
         List<IAtom> leftAtoms = container.getConnectedAtomsList(left);
 

@@ -934,10 +934,10 @@ public class UniversalIsomorphismTester {
         }
 
         if (centralAtom != null && centralQueryAtom != null && ((IQueryAtom) centralQueryAtom).matches(centralAtom)) {
-            IQueryAtom queryAtom1 = (IQueryAtom) queryBond1.getConnectedAtom(centralQueryAtom);
-            IQueryAtom queryAtom2 = (IQueryAtom) queryBond2.getConnectedAtom(centralQueryAtom);
-            IAtom atom1 = bond1.getConnectedAtom(centralAtom);
-            IAtom atom2 = bond2.getConnectedAtom(centralAtom);
+            IQueryAtom queryAtom1 = (IQueryAtom) queryBond1.getOther(centralQueryAtom);
+            IQueryAtom queryAtom2 = (IQueryAtom) queryBond2.getOther(centralQueryAtom);
+            IAtom atom1 = bond1.getOther(centralAtom);
+            IAtom atom2 = bond2.getOther(centralAtom);
             if (queryAtom1.matches(atom1) && queryAtom2.matches(atom2) || queryAtom1.matches(atom2)
                     && queryAtom2.matches(atom1)) {
                 return true;

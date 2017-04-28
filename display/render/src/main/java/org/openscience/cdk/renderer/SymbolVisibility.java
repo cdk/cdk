@@ -139,7 +139,7 @@ public abstract class SymbolVisibility {
             // special case ethane
             if (bonds.size() == 1) {
                 Integer begHcnt = atom.getImplicitHydrogenCount();
-                IAtom end = bonds.get(0).getConnectedAtom(atom);
+                IAtom end = bonds.get(0).getOther(atom);
                 Integer endHcnt = end.getImplicitHydrogenCount();
                 if (begHcnt != null && endHcnt != null && begHcnt == 3 && endHcnt == 3)
                     return true;
@@ -207,8 +207,8 @@ public abstract class SymbolVisibility {
          */
         private static double getAngle(IAtom atom, IBond bond1, IBond bond2) {
             final Point2d pA = atom.getPoint2d();
-            final Point2d pB = bond1.getConnectedAtom(atom).getPoint2d();
-            final Point2d pC = bond2.getConnectedAtom(atom).getPoint2d();
+            final Point2d pB = bond1.getOther(atom).getPoint2d();
+            final Point2d pC = bond2.getOther(atom).getPoint2d();
             final Vector2d u = new Vector2d(pB.x - pA.x, pB.y - pA.y);
             final Vector2d v = new Vector2d(pC.x - pA.x, pC.y - pA.y);
             return u.angle(v);

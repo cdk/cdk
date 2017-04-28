@@ -450,21 +450,21 @@ public class InChIGenerator {
                 // first if there are two explicit atoms we need to replace one
                 // with the terminal atom - the configuration does not change
                 if (t0Bonds.size() == 2) {
-                    IAtom replace = t0Bonds.remove(0).getConnectedAtom(terminals[0]);
+                    IAtom replace = t0Bonds.remove(0).getOther(terminals[0]);
                     for (int i = 0; i < peripherals.length; i++)
                         if (replace == peripherals[i]) peripherals[i] = terminals[0];
                 }
 
                 if (t1Bonds.size() == 2) {
-                    IAtom replace = t1Bonds.remove(0).getConnectedAtom(terminals[1]);
+                    IAtom replace = t1Bonds.remove(0).getOther(terminals[1]);
                     for (int i = 0; i < peripherals.length; i++)
                         if (replace == peripherals[i]) peripherals[i] = terminals[1];
                 }
 
                 // the neighbor attached to each terminal atom that we will
                 // define the configuration of
-                IAtom t0Neighbor = t0Bonds.get(0).getConnectedAtom(terminals[0]);
-                IAtom t1Neighbor = t1Bonds.get(0).getConnectedAtom(terminals[1]);
+                IAtom t0Neighbor = t0Bonds.get(0).getOther(terminals[0]);
+                IAtom t1Neighbor = t1Bonds.get(0).getOther(terminals[1]);
 
                 // we now need to move all the atoms into the correct positions
                 // everytime we exchange atoms the configuration inverts

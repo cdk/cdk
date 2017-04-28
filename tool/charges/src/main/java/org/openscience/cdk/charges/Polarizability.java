@@ -295,7 +295,7 @@ public class Polarizability {
         IAtom connectedAtom;
         int hCounter = 0;
         for (IBond bond : bonds) {
-            connectedAtom = bond.getConnectedAtom(atom);
+            connectedAtom = bond.getOther(atom);
             if (connectedAtom.getSymbol().equals("H")) {
                 hCounter += 1;
             }

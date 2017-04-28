@@ -221,11 +221,11 @@ final class StereoMatch implements Predicate<int[]> {
         int p = parity(queryElement.getStereo());
         int q = parity(targetElement.getStereo());
 
-        int uLeft = queryMap.get(queryBonds[0].getConnectedAtom(query.getAtom(u1)));
-        int uRight = queryMap.get(queryBonds[1].getConnectedAtom(query.getAtom(u2)));
+        int uLeft = queryMap.get(queryBonds[0].getOther(query.getAtom(u1)));
+        int uRight = queryMap.get(queryBonds[1].getOther(query.getAtom(u2)));
 
-        int vLeft = targetMap.get(targetBonds[0].getConnectedAtom(target.getAtom(v1)));
-        int vRight = targetMap.get(targetBonds[1].getConnectedAtom(target.getAtom(v2)));
+        int vLeft = targetMap.get(targetBonds[0].getOther(target.getAtom(v1)));
+        int vRight = targetMap.get(targetBonds[1].getOther(target.getAtom(v2)));
 
         if (swap) {
             int tmp = vLeft;
@@ -292,7 +292,7 @@ final class StereoMatch implements Predicate<int[]> {
      */
     private int otherIndex(int i) {
         IDoubleBondStereochemistry element = (IDoubleBondStereochemistry) queryElements[i];
-        return queryMap.get(element.getStereoBond().getConnectedAtom(query.getAtom(i)));
+        return queryMap.get(element.getStereoBond().getOther(query.getAtom(i)));
     }
 
     /**

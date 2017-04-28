@@ -136,7 +136,7 @@ public class RadicalChargeSiteInitiationReaction extends ReactionEngine implemen
 
                     if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
 
-                        IAtom atomj = bondi.getConnectedAtom(atomi);
+                        IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 0) {
 
                             Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
@@ -148,7 +148,7 @@ public class RadicalChargeSiteInitiationReaction extends ReactionEngine implemen
                                 if (bondj.getFlag(CDKConstants.REACTIVE_CENTER)
                                         && bondj.getOrder() == IBond.Order.SINGLE) {
 
-                                    IAtom atomk = bondj.getConnectedAtom(atomj);
+                                    IAtom atomk = bondj.getOther(atomj);
                                     if (atomk.getFlag(CDKConstants.REACTIVE_CENTER) && atomk.getSymbol().equals("C")
                                             && atomk.getFormalCharge() == 0) {
 
@@ -209,7 +209,7 @@ public class RadicalChargeSiteInitiationReaction extends ReactionEngine implemen
 
                     if (bondi.getOrder() == IBond.Order.SINGLE) {
 
-                        IAtom atomj = bondi.getConnectedAtom(atomi);
+                        IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFormalCharge() == 0) {
 
                             Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
@@ -220,7 +220,7 @@ public class RadicalChargeSiteInitiationReaction extends ReactionEngine implemen
 
                                 if (bondj.getOrder() == IBond.Order.SINGLE) {
 
-                                    IAtom atomk = bondj.getConnectedAtom(atomj);
+                                    IAtom atomk = bondj.getOther(atomj);
                                     if (atomk.getSymbol().equals("C") && atomk.getFormalCharge() == 0) {
                                         atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                         atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);

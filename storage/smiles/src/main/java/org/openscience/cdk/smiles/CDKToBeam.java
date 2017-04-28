@@ -315,8 +315,8 @@ final class CDKToBeam {
         int v = indices.get(db.getEnd());
 
         // is bs[0] always connected to db.atom(0)?
-        int x = indices.get(bs[0].getConnectedAtom(db.getBeg()));
-        int y = indices.get(bs[1].getConnectedAtom(db.getEnd()));
+        int x = indices.get(bs[0].getOther(db.getBeg()));
+        int y = indices.get(bs[1].getOther(db.getEnd()));
 
         if (dbs.getStereo() == TOGETHER) {
             gb.geometric(u, v).together(x, y);

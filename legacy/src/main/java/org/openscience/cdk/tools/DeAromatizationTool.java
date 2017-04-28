@@ -552,7 +552,7 @@ public class DeAromatizationTool {
                 curBond.setOrder(IBond.Order.DOUBLE);
                 nextIsSingle = true;
             }
-            curAtom = curBond.getConnectedAtom(curAtom);
+            curAtom = curBond.getOther(curAtom);
             List<IBond> bonds = ring.getConnectedBondsList(curAtom);
             for (IBond bond : bonds)
             {

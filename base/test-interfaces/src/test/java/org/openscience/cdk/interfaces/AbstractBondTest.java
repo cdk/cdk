@@ -181,11 +181,11 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtom(o, 1);
         b.setOrder(Order.SINGLE);
 
-        Assert.assertEquals(c, b.getConnectedAtom(o));
-        Assert.assertEquals(o, b.getConnectedAtom(c));
+        Assert.assertEquals(c, b.getOther(o));
+        Assert.assertEquals(o, b.getOther(c));
 
         // test default return value
-        Assert.assertNull(b.getConnectedAtom(b.getBuilder().newInstance(IAtom.class)));
+        Assert.assertNull(b.getOther(b.getBuilder().newInstance(IAtom.class)));
     }
 
     @Test
@@ -488,8 +488,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom4 = object.getBuilder().newInstance(IAtom.class, "C");
 
         IBond bond1 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3, atom4});
-        Assert.assertEquals(atom2, bond1.getConnectedAtom(atom1));
-        Assert.assertNull(bond1.getConnectedAtom(object.getBuilder().newInstance(IAtom.class)));
+        Assert.assertEquals(atom2, bond1.getOther(atom1));
+        Assert.assertNull(bond1.getOther(object.getBuilder().newInstance(IAtom.class)));
 
         IAtom[] conAtoms = bond1.getConnectedAtoms(atom1);
         boolean correct = true;

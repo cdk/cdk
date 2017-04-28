@@ -91,7 +91,7 @@ final class VecmathUtil {
      * @return unit vector
      */
     static Vector2d newUnitVector(final IAtom atom, final IBond bond) {
-        return newUnitVector(atom.getPoint2d(), bond.getConnectedAtom(atom).getPoint2d());
+        return newUnitVector(atom.getPoint2d(), bond.getOther(atom).getPoint2d());
     }
 
     /**
@@ -279,7 +279,7 @@ final class VecmathUtil {
 
         final List<IAtom> toAtoms = new ArrayList<IAtom>();
         for (IBond bond : bonds) {
-            toAtoms.add(bond.getConnectedAtom(fromAtom));
+            toAtoms.add(bond.getOther(fromAtom));
         }
 
         return getNearestVector(reference, newUnitVectors(fromAtom, toAtoms));

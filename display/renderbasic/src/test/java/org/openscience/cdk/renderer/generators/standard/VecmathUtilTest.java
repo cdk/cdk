@@ -74,8 +74,8 @@ public class VecmathUtilTest {
         when(a1.getPoint2d()).thenReturn(new Point2d(0, 1));
         when(a2.getPoint2d()).thenReturn(new Point2d(1, 0));
         IBond bond = mock(IBond.class);
-        when(bond.getConnectedAtom(a1)).thenReturn(a2);
-        when(bond.getConnectedAtom(a2)).thenReturn(a1);
+        when(bond.getOther(a1)).thenReturn(a2);
+        when(bond.getOther(a2)).thenReturn(a1);
         Vector2d unit = VecmathUtil.newUnitVector(a1, bond);
         assertThat(unit.x, closeTo(0.707d, 0.01));
         assertThat(unit.y, closeTo(-0.707d, 0.01));
@@ -177,9 +177,9 @@ public class VecmathUtilTest {
         IBond b1 = mock(IBond.class);
         IBond b2 = mock(IBond.class);
         IBond b3 = mock(IBond.class);
-        when(b1.getConnectedAtom(a1)).thenReturn(a2);
-        when(b2.getConnectedAtom(a1)).thenReturn(a3);
-        when(b3.getConnectedAtom(a1)).thenReturn(a4);
+        when(b1.getOther(a1)).thenReturn(a2);
+        when(b2.getOther(a1)).thenReturn(a3);
+        when(b3.getOther(a1)).thenReturn(a4);
         when(a1.getPoint2d()).thenReturn(new Point2d(0, 0));
         when(a2.getPoint2d()).thenReturn(new Point2d(0, 1));
         when(a3.getPoint2d()).thenReturn(new Point2d(1, 0));

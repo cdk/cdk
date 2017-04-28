@@ -372,7 +372,7 @@ public class InChIToStructure {
     private static IAtom findOtherSinglyBonded(IAtomContainer container, IAtom atom, IAtom exclude) {
         for (final IBond bond : container.getConnectedBondsList(atom)) {
             if (!IBond.Order.SINGLE.equals(bond.getOrder()) || bond.contains(exclude)) continue;
-            return bond.getConnectedAtom(atom);
+            return bond.getOther(atom);
         }
         return atom;
     }

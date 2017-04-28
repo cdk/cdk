@@ -156,7 +156,7 @@ public class PathTools {
         IAtom nextAtom;
         root.setFlag(CDKConstants.VISITED, true);
         for (IBond bond : bonds) {
-            nextAtom = bond.getConnectedAtom(root);
+            nextAtom = bond.getOther(root);
             if (!nextAtom.getFlag(CDKConstants.VISITED)) {
                 path.addAtom(nextAtom);
                 path.addBond(bond);
@@ -267,7 +267,7 @@ public class PathTools {
                     molecule.addBond(bond);
                     bond.setFlag(CDKConstants.VISITED, true);
                 }
-                nextAtom = bond.getConnectedAtom(atom);
+                nextAtom = bond.getOther(atom);
                 if (!nextAtom.getFlag(CDKConstants.VISITED)) {
                     //					logger.debug("wie oft???");
                     newSphere.add(nextAtom);
@@ -313,7 +313,7 @@ public class PathTools {
                 if (!bond.getFlag(CDKConstants.VISITED)) {
                     bond.setFlag(CDKConstants.VISITED, true);
                 }
-                nextAtom = bond.getConnectedAtom(atom);
+                nextAtom = bond.getOther(atom);
                 if (!nextAtom.getFlag(CDKConstants.VISITED)) {
                     if (nextAtom == target) {
                         return pathLength;

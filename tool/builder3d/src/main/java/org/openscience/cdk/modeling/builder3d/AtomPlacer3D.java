@@ -487,7 +487,7 @@ public class AtomPlacer3D {
         List<IBond> bonds = molecule.getConnectedBondsList(atom);
         IAtom connectedAtom = null;
         for (IBond bond : bonds) {
-            connectedAtom = bond.getConnectedAtom(atom);
+            connectedAtom = bond.getOther(atom);
             if (isUnplacedHeavyAtom(connectedAtom) && connectedAtom.getFlag(CDKConstants.ISINRING)) {
                 return connectedAtom;
             }
@@ -517,7 +517,7 @@ public class AtomPlacer3D {
     public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atom) {
         List<IBond> bonds = molecule.getConnectedBondsList(atom);
         for (IBond bond : bonds) {
-            IAtom connectedAtom = bond.getConnectedAtom(atom);
+            IAtom connectedAtom = bond.getOther(atom);
             if (isPlacedHeavyAtom(connectedAtom)) {
                 return connectedAtom;
             }
@@ -536,7 +536,7 @@ public class AtomPlacer3D {
     public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atomA, IAtom atomB) {
         List<IBond> bonds = molecule.getConnectedBondsList(atomA);
         for (IBond bond : bonds) {
-            IAtom connectedAtom = bond.getConnectedAtom(atomA);
+            IAtom connectedAtom = bond.getOther(atomA);
             if (isPlacedHeavyAtom(connectedAtom) && connectedAtom != atomB) {
                 return connectedAtom;
             }
@@ -557,7 +557,7 @@ public class AtomPlacer3D {
         IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
         IAtom connectedAtom = null;
         for (IBond bond : bonds) {
-            connectedAtom = bond.getConnectedAtom(atom);
+            connectedAtom = bond.getOther(atom);
             if (isPlacedHeavyAtom(connectedAtom)) {
                 connectedAtoms.addAtom(connectedAtom);
             }

@@ -133,7 +133,7 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
                     IBond bondi = bondis.next();
 
                     if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.TRIPLE) {
-                        IAtom atomj = bondi.getConnectedAtom(atomi);
+                        IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)) {
                             Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
                             while (bondjs.hasNext()) {
@@ -144,7 +144,7 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
                                 if (bondj.getFlag(CDKConstants.REACTIVE_CENTER)
                                         && bondj.getOrder() == IBond.Order.SINGLE) {
 
-                                    IAtom atomk = bondj.getConnectedAtom(atomj);
+                                    IAtom atomk = bondj.getOther(atomj);
                                     if (atomk.getFlag(CDKConstants.REACTIVE_CENTER) && atomk.getFormalCharge() == 0) {
 
                                         ArrayList<IAtom> atomList = new ArrayList<IAtom>();
@@ -199,7 +199,7 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
                     IBond bondi = bondis.next();
 
                     if (bondi.getOrder() == IBond.Order.TRIPLE) {
-                        IAtom atomj = bondi.getConnectedAtom(atomi);
+                        IAtom atomj = bondi.getOther(atomi);
                         Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
                         while (bondjs.hasNext()) {
                             IBond bondj = bondjs.next();
@@ -208,7 +208,7 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
 
                             if (bondj.getOrder() == IBond.Order.SINGLE) {
 
-                                IAtom atomk = bondj.getConnectedAtom(atomj);
+                                IAtom atomk = bondj.getOther(atomj);
                                 if (atomk.getFormalCharge() == 0) {
                                     atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                     bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);

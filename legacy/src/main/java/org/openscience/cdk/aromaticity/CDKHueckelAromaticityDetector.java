@@ -216,7 +216,7 @@ public class CDKHueckelAromaticityDetector {
                         && neighborBond.getOrder() == Order.DOUBLE
                         || neighborBond.getOrder() == Order.TRIPLE) {
                     if (!("N.sp2.3".equals(atom.getAtomTypeName()) && "O.sp2".equals(neighborBond
-                            .getConnectedAtom(atom).getAtomTypeName()))) return true;
+                                                                                         .getOther(atom).getAtomTypeName()))) return true;
                 }
             }
         }

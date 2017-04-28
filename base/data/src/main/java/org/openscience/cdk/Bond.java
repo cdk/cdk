@@ -248,28 +248,26 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
     /**
-     * Returns the atom connected to the given atom.
-     * 
-     * This method is only strictly relevant for 2-center bonds
-     * since in multi-center bonds, a given atom will be connected
-     * to multiple atoms.
-     * 
-     * If called for a multi-center bond, then the next atom in the
-     * atom list is returned. This is probably not what is expected and
-     * hence the user should instead call
-     * {@link #getConnectedAtoms(org.openscience.cdk.interfaces.IAtom)}
-     *
-     * @param atom The atom the bond partner is searched of
-     * @return the connected atom or null  if the atom is not part of the bond
-     * @see #getConnectedAtoms(org.openscience.cdk.interfaces.IAtom)
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtom getOther(IAtom atom) {
+        if (atoms[0] == atom)
+            return atoms[1];
+        else if (atoms[1] == atom)
+            return atoms[0];
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public IAtom getConnectedAtom(IAtom atom) {
-        if (atoms[0] == atom) {
+        if (atoms[0] == atom)
             return atoms[1];
-        } else if (atoms[1] == atom) {
+        else if (atoms[1] == atom)
             return atoms[0];
-        }
         return null;
     }
 
@@ -282,7 +280,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      *
      * @param atom The atom whose partners are to be searched for
      * @return An array of the connected atoms, null if the atom is not part of the bond
-     * @see #getConnectedAtom(org.openscience.cdk.interfaces.IAtom)
+     * @see #getOther(org.openscience.cdk.interfaces.IAtom)
      */
     @Override
     public IAtom[] getConnectedAtoms(IAtom atom) {

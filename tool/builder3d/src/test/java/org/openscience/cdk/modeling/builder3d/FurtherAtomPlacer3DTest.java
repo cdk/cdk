@@ -163,9 +163,9 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         Assert.assertEquals(atom0.getFlag(CDKConstants.ISPLACED), true);
 
         for (IBond bond : molecule.bonds()) {
-            if (bond.getConnectedAtom(molecule.getAtom(4)) != null
-                    && !bond.getConnectedAtom(molecule.getAtom(4)).getFlag(CDKConstants.ISPLACED)) {
-                natompair = bond.getConnectedAtom(molecule.getAtom(4));
+            if (bond.getOther(molecule.getAtom(4)) != null
+                    && !bond.getOther(molecule.getAtom(4)).getFlag(CDKConstants.ISPLACED)) {
+                natompair = bond.getOther(molecule.getAtom(4));
             }
         }
         Assert.assertEquals(natompair, molecule.getAtom(3));

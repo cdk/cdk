@@ -163,12 +163,40 @@ public interface IBond extends IElectronContainer {
     IAtom getAtom(int position);
 
     /**
-     * Returns the atom connected to the given atom.
+     * Returns the other atom in the bond, the atom is connected to the given atom. This
+     * method is only correct for two-centre bonds, for n-centre bonds the behaviour is undefined
+     * and the more correct {@link #getConnectedAtoms(IAtom)} should be used.
+     *
+     * <pre>{@code
+     * IAtom beg = bond.getBeg();
+     * IAtom end = bond.getEnd();
+     * // bond.getConnectedAtom(beg) == end
+     * // bond.getConnectedAtom(end) == beg
+     * }</pre>
+     *
+     * @param  atom  The atom the bond partner is searched of
+     * @return       the connected atom or null if the given atom is not part of the bond
+     * @deprecated use the method {@link #getOther(IAtom)}
+     */
+    @Deprecated
+    IAtom getConnectedAtom(IAtom atom);
+
+    /**
+     * Returns the other atom in the bond, the atom is connected to the given atom.This
+     * method is only correct for two-centre bonds, for n-centre bonds the behaviour is undefined
+     * and the more correct {@link #getConnectedAtoms(IAtom)} should be used.
+     *
+     * <pre>{@code
+     * IAtom beg = bond.getBeg();
+     * IAtom end = bond.getEnd();
+     * // bond.getOther(beg) == end
+     * // bond.getOther(end) == beg
+     * }</pre>
      *
      * @param  atom  The atom the bond partner is searched of
      * @return       the connected atom or null if the given atom is not part of the bond
      */
-    IAtom getConnectedAtom(IAtom atom);
+    IAtom getOther(IAtom atom);
 
     /**
      * Returns all the atoms in the bond connected to the given atom.

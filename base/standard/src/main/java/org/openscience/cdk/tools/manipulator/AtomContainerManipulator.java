@@ -63,7 +63,6 @@ import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
-import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
@@ -562,7 +561,7 @@ public class AtomContainerManipulator {
                         for (IBond bond : org.getConnectedBondsList(neighbour)) {
                             IBond.Stereo bondStereo = bond.getStereo();
                             if (bondStereo != null && bondStereo != IBond.Stereo.NONE) addToRemove = false;
-                            IAtom neighboursNeighbour = bond.getConnectedAtom(neighbour);
+                            IAtom neighboursNeighbour = bond.getOther(neighbour);
                             // remove in any case if the hetero atom is connected to more than one hydrogen
                             if (neighboursNeighbour.getSymbol().equals("H") && neighboursNeighbour != atom) {
                                 addToRemove = true;
@@ -790,8 +789,8 @@ public class AtomContainerManipulator {
 
                 IAtom u = orgStereo.getBeg();
                 IAtom v = orgStereo.getEnd();
-                IAtom x = orgLeft.getConnectedAtom(u);
-                IAtom y = orgRight.getConnectedAtom(v);
+                IAtom x = orgLeft.getOther(u);
+                IAtom y = orgRight.getOther(v);
 
                 // if xNew == x and yNew == y we don't need to find the
                 // connecting bonds

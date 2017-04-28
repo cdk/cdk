@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.RingSearch;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import java.util.Arrays;
@@ -133,8 +132,8 @@ final class CorrectGeometricConfiguration {
         IAtom right = db.getEnd();
 
         int p = parity(dbs);
-        int q = parity(getAtoms(left, bonds[0].getConnectedAtom(left), right))
-                * parity(getAtoms(right, bonds[1].getConnectedAtom(right), left));
+        int q = parity(getAtoms(left, bonds[0].getOther(left), right))
+                * parity(getAtoms(right, bonds[1].getOther(right), left));
 
         // configuration is unspecified? then we add an unspecified bond.
         // note: IDoubleBondStereochemistry doesn't indicate this yet

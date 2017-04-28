@@ -65,11 +65,9 @@ import java.util.List;
 import java.util.Map;
 
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
-import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
 import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 import static org.openscience.cdk.renderer.generators.BasicSceneGenerator.BondLength;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.BondSeparation;
-import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.HIDDEN;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.HashSpacing;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.WaveSpacing;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
@@ -345,7 +343,7 @@ final class StandardBondGenerator {
             if (toBonds.size() == 1) {
 
                 final IBond toBondNeighbor = toBonds.get(0);
-                final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
+                final IAtom toNeighbor = toBondNeighbor.getOther(to);
 
                 Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
                 boolean wideToWide = false;
@@ -432,7 +430,7 @@ final class StandardBondGenerator {
         // fancy hashed wedges with slanted hatch sections aligned with neighboring bonds
         if (canDrawFancyHashedWedge(to, toBonds, adjacent)) {
             final IBond toBondNeighbor = toBonds.get(0);
-            final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
+            final IAtom toNeighbor = toBondNeighbor.getOther(to);
 
             Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
 
@@ -768,7 +766,7 @@ final class StandardBondGenerator {
         final Vector2d unit = newUnitVector(atom1Point, atom2Point);
         Vector2d perpendicular = newPerpendicularVector(unit);
 
-        final Vector2d reference = newUnitVector(atom1.getPoint2d(), atom1Bond.getConnectedAtom(atom1).getPoint2d());
+        final Vector2d reference = newUnitVector(atom1.getPoint2d(), atom1Bond.getOther(atom1).getPoint2d());
 
         // there are two perpendicular vectors, this check ensures we have one on the same side as
         // the reference
@@ -979,7 +977,7 @@ final class StandardBondGenerator {
         final Vector2d bndVec  = VecmathUtil.newUnitVector(atom, bond);
         final Vector2d bndXVec = VecmathUtil.newPerpendicularVector(bndVec);
 
-        final double length = atom.getPoint2d().distance(bond.getConnectedAtom(atom).getPoint2d());
+        final double length = atom.getPoint2d().distance(bond.getOther(atom).getPoint2d());
         bndXVec.scale(length /2);
         final Tuple2d beg = VecmathUtil.sum(atom.getPoint2d(), bndXVec);
         bndXVec.scale(-1);
@@ -1226,9 +1224,9 @@ final class StandardBondGenerator {
         final IAtom atom1 = bond1.getBeg();
         final IAtom atom2 = bond1.getEnd();
         if (bond2.contains(atom1)) {
-            return winding(atom2.getPoint2d(), atom1.getPoint2d(), bond2.getConnectedAtom(atom1).getPoint2d());
+            return winding(atom2.getPoint2d(), atom1.getPoint2d(), bond2.getOther(atom1).getPoint2d());
         } else if (bond2.contains(atom2)) {
-            return winding(atom1.getPoint2d(), atom2.getPoint2d(), bond2.getConnectedAtom(atom2).getPoint2d());
+            return winding(atom1.getPoint2d(), atom2.getPoint2d(), bond2.getOther(atom2).getPoint2d());
         } else {
             throw new IllegalArgumentException("Bonds do not share any atoms");
         }

@@ -97,10 +97,10 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
         int[] us = new int[2];
         int[] vs = new int[2];
 
-        us[0] = atomToIndex.get(bs[0].getConnectedAtom(db.getBeg()));
+        us[0] = atomToIndex.get(bs[0].getOther(db.getBeg()));
         us[1] = graph[u].length == 2 ? u : findOther(graph[u], v, us[0]);
 
-        vs[0] = atomToIndex.get(bs[1].getConnectedAtom(db.getEnd()));
+        vs[0] = atomToIndex.get(bs[1].getOther(db.getEnd()));
         vs[1] = graph[v].length == 2 ? v : findOther(graph[v], u, vs[0]);
 
         int parity = dbs.getStereo() == OPPOSITE ? +1 : -1;
