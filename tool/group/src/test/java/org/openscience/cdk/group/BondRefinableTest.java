@@ -22,8 +22,10 @@
  */
 package org.openscience.cdk.group;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -55,16 +57,16 @@ public class BondRefinableTest {
         assertEquals(1, bondRefinable.getConnectivity(2, 3));
     }
     
-    // TODO - neighbours in block test
-//    @Test
-//    public void getConnectedIndices() {
-//        String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
-//        BondRefinable bondRefinable = refinable(acpString);
-//        assertArrayEquals(new int[] {1, 2}, bondRefinable.getConnectedIndices(0));
-//        assertArrayEquals(new int[] {0, 3}, bondRefinable.getConnectedIndices(1));
-//        assertArrayEquals(new int[] {0, 3}, bondRefinable.getConnectedIndices(2));
-//        assertArrayEquals(new int[] {1, 2}, bondRefinable.getConnectedIndices(3));
-//    }
+    @Test
+    public void neighboursInBlock() {
+        String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
+        BondRefinable bondRefinable = refinable(acpString);
+        Set<Integer> block = new HashSet<Integer>();
+        block.add(1);
+        block.add(3);
+        assertEquals(new IntegerInvariant(1), bondRefinable.neighboursInBlock(block, 0));
+        assertEquals(new IntegerInvariant(1), bondRefinable.neighboursInBlock(block, 2));
+    }
     
     @Test
     public void getBondPartitionTest() {

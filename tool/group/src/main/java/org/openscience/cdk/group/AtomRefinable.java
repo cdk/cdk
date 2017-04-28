@@ -228,7 +228,7 @@ public class AtomRefinable implements Refinable {
             }
             int i = 0;
             for (IAtom connected : connectedAtoms) {
-                int index = atomContainer.getAtomNumber(connected);
+                int index = atomContainer.indexOf(connected);
                 connectionTable[atomIndex][i] = index;
                 if (!ignoreBondOrders) {
                     IBond bond = atomContainer.getBond(atom, connected);
