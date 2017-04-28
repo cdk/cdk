@@ -984,10 +984,10 @@ public class CDKMCS {
             centralAtom = bond2.getEnd();
         }
 
-        if (queryBond1.contains(queryBond2.getAtom(0))) {
-            centralQueryAtom = queryBond2.getAtom(0);
-        } else if (queryBond1.contains(queryBond2.getAtom(1))) {
-            centralQueryAtom = queryBond2.getAtom(1);
+        if (queryBond1.contains(queryBond2.getBeg())) {
+            centralQueryAtom = queryBond2.getBeg();
+        } else if (queryBond1.contains(queryBond2.getEnd())) {
+            centralQueryAtom = queryBond2.getEnd();
         }
 
         if (centralAtom != null && centralQueryAtom != null && ((IQueryAtom) centralQueryAtom).matches(centralAtom)) {

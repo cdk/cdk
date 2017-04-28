@@ -25,9 +25,7 @@ import org.openscience.cdk.interfaces.IBond;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Implements the concept of a covalent bond between two or more atoms. A bond is

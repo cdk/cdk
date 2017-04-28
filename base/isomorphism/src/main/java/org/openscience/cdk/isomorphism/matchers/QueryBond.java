@@ -18,9 +18,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;

@@ -368,8 +368,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IBond clone = (IBond) bond.clone();
 
         // test cloning of atoms
-        Assert.assertNotSame(atom1, clone.getAtom(0));
-        Assert.assertNotSame(atom2, clone.getAtom(1));
+        Assert.assertNotSame(atom1, clone.getBeg());
+        Assert.assertNotSame(atom2, clone.getEnd());
     }
 
     @Test
