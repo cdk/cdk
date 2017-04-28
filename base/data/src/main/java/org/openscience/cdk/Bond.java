@@ -20,6 +20,7 @@
 package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 import javax.vecmath.Point2d;
@@ -168,6 +169,22 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
                 return new AtomsIterator();
             }
         };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getIndex() {
+        return -1;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtomContainer getContainer() {
+        return null;
     }
 
     /**

@@ -25,6 +25,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -69,6 +70,32 @@ public class DebugAtom extends Atom implements IAtom {
     public DebugAtom(IElement element) {
         super(element);
         logger.debug("Instantiated a DebugAtom: element= ", element);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtomContainer getContainer() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getIndex() {
+        logger.debug("Getting index on base Atom class");
+        return -1;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Iterable<IBond> bonds() {
+        logger.debug("Getting connected bonds on base Atom class");
+        throw new UnsupportedOperationException();
     }
 
     /** {@inheritDoc} */

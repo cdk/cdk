@@ -24,6 +24,8 @@ package org.openscience.cdk;
 
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
@@ -234,6 +236,38 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             this.charge = ((IAtom) element).getCharge();
             this.stereoParity = ((IAtom) element).getStereoParity();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtomContainer getContainer() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getIndex() {
+        return -1;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Iterable<IBond> bonds() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getBondCount() {
+        throw new UnsupportedOperationException();
     }
 
     /**
