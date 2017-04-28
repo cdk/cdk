@@ -39,7 +39,7 @@ public interface IAtom extends IAtomType {
      * @param  charge  The partial charge
      * @see    #getCharge
      */
-    public void setCharge(Double charge);
+    void setCharge(Double charge);
 
     /**
      * Returns the partial charge of this atom.
@@ -47,7 +47,7 @@ public interface IAtom extends IAtomType {
      * @return the charge of this atom
      * @see    #setCharge
      */
-    public Double getCharge();
+    Double getCharge();
 
     /**
      * Sets the implicit hydrogen count of this atom.
@@ -55,7 +55,7 @@ public interface IAtom extends IAtomType {
      * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom.
      * @see    #getImplicitHydrogenCount
      */
-    public void setImplicitHydrogenCount(Integer hydrogenCount);
+    void setImplicitHydrogenCount(Integer hydrogenCount);
 
     /**
      * Returns the implicit hydrogen count of this atom.
@@ -63,7 +63,7 @@ public interface IAtom extends IAtomType {
      * @return    The hydrogen count of this atom.
      * @see       #setImplicitHydrogenCount
      */
-    public Integer getImplicitHydrogenCount();
+    Integer getImplicitHydrogenCount();
 
     /**
      * Sets a point specifying the location of this
@@ -72,7 +72,7 @@ public interface IAtom extends IAtomType {
      * @param  point2d  A point in a 2D plane
      * @see    #getPoint2d
      */
-    public void setPoint2d(Point2d point2d);
+    void setPoint2d(Point2d point2d);
 
     /**
      * Sets a point specifying the location of this
@@ -81,7 +81,7 @@ public interface IAtom extends IAtomType {
      * @param  point3d  A point in a 3-dimensional space
      * @see    #getPoint3d
      */
-    public void setPoint3d(Point3d point3d);
+    void setPoint3d(Point3d point3d);
 
     /**
      * Sets a point specifying the location of this
@@ -91,7 +91,7 @@ public interface IAtom extends IAtomType {
      * @see    #getFractionalPoint3d
      * @see    org.openscience.cdk.Crystal
      */
-    public void setFractionalPoint3d(Point3d point3d);
+    void setFractionalPoint3d(Point3d point3d);
 
     /**
      * Sets the stereo parity for this atom.
@@ -102,7 +102,7 @@ public interface IAtom extends IAtomType {
      * @deprecated use {@link IStereoElement}s for storing stereochemistry
      */
     @Deprecated
-    public void setStereoParity(Integer stereoParity);
+    void setStereoParity(Integer stereoParity);
 
     /**
      * Returns a point specifying the location of this
@@ -111,7 +111,7 @@ public interface IAtom extends IAtomType {
      * @return    A point in a 2D plane. Null if unset.
      * @see       #setPoint2d
      */
-    public Point2d getPoint2d();
+    Point2d getPoint2d();
 
     /**
      * Returns a point specifying the location of this
@@ -120,7 +120,7 @@ public interface IAtom extends IAtomType {
      * @return    A point in 3-dimensional space. Null if unset.
      * @see       #setPoint3d
      */
-    public Point3d getPoint3d();
+    Point3d getPoint3d();
 
     /**
      * Returns a point specifying the location of this
@@ -130,7 +130,7 @@ public interface IAtom extends IAtomType {
      * @see       #setFractionalPoint3d
      * @see       org.openscience.cdk.CDKConstants for predefined values.
      */
-    public Point3d getFractionalPoint3d();
+    Point3d getFractionalPoint3d();
 
     /**
      * Returns the stereo parity of this atom. It uses the predefined values
@@ -142,7 +142,7 @@ public interface IAtom extends IAtomType {
      * @deprecated use {@link IStereoElement}s for storing stereochemistry
      */
     @Deprecated
-    public Integer getStereoParity();
+    Integer getStereoParity();
 
     /**
      * Access whether this atom has been marked as aromatic. The default
@@ -185,6 +185,6 @@ public interface IAtom extends IAtomType {
      *{@inheritDoc}
      */
     @Override
-    public IAtom clone() throws CloneNotSupportedException;
+    IAtom clone() throws CloneNotSupportedException;
 
 }
