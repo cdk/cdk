@@ -206,4 +206,27 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
         return factory.ofClass(clazz, params);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtom newAtom() {
+        return new Atom();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IBond newBond() {
+        return new Bond();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtomContainer newAtomContainer() {
+        return new AtomContainer();
+    }
 }
