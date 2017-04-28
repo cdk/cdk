@@ -272,32 +272,21 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
     /**
-     * Returns all the atoms in the bond connected to the specified atom.
-     * 
-     * Though this can be used for traditional 2-center bonds, it is oriented
-     * towards multi-center bonds, where a single atom is connected to multiple
-     * atoms.
-     *
-     * @param atom The atom whose partners are to be searched for
-     * @return An array of the connected atoms, null if the atom is not part of the bond
-     * @see #getOther(org.openscience.cdk.interfaces.IAtom)
+     * {@inheritDoc}
      */
     @Override
     public IAtom[] getConnectedAtoms(IAtom atom) {
-        boolean atomIsInBond = false;
-        for (IAtom localAtom : atoms) {
-            if (localAtom == atom) {
-                atomIsInBond = true;
-                break;
+        if (atomCount < 1) return null;
+        IAtom[] connected = new IAtom[atomCount-1];
+        int j = 0;
+        for (int i = 0; i < atomCount; i++) {
+            if (this.atoms[i] != atom) {
+                if (j >= connected.length)
+                    return null;
+                connected[j++] = this.atoms[i];
             }
         }
-        if (!atomIsInBond) return null;
-
-        List<IAtom> conAtoms = new ArrayList<IAtom>();
-        for (IAtom localAtom : atoms) {
-            if (localAtom != atom) conAtoms.add(localAtom);
-        }
-        return conAtoms.toArray(new IAtom[]{});
+        return connected;
     }
 
     /**
