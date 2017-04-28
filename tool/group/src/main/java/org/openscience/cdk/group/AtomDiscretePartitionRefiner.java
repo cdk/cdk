@@ -102,6 +102,9 @@ public class AtomDiscretePartitionRefiner extends AtomContainerDiscretePartition
         this.ignoreBondOrders = ignoreBondOrders;
     }
 
+    /**
+     *{@inheritDoc}
+     */
     protected Refinable createRefinable(IAtomContainer atomContainer) {
         return new AtomRefinable(atomContainer, ignoreElements, ignoreBondOrders);
     }
