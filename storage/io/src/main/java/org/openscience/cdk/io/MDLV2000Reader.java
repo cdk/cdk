@@ -763,7 +763,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 throw new CDKException("invalid line length: " + length + " " + line);
         }
 
-        IBond bond = builder.newInstance(IBond.class, atoms[u], atoms[v]);
+        IBond bond = builder.newBond();
+        bond.setAtoms(new IAtom[]{atoms[u], atoms[v]});
 
         switch (type) {
             case 1: // single
@@ -1279,8 +1280,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @throws CDKException the symbol is not allowed
      */
     private IAtom createAtom(String symbol, IChemObjectBuilder builder, int lineNum) throws CDKException {
-        if (isPeriodicElement(symbol))
-            return builder.newInstance(IAtom.class, symbol);
+        if (isPeriodicElement(symbol)) {
+            IAtom atom = builder.newAtom();
+            atom.setSymbol(symbol);
+            return atom;
+        }
         if (symbol.equals("D") && interpretHydrogenIsotopes.isSet()) {
             if (mode == Mode.STRICT) throw new CDKException("invalid symbol: " + symbol);
             IAtom atom = builder.newInstance(IAtom.class, "H");

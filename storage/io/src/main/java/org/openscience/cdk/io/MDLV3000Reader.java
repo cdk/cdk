@@ -156,7 +156,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
 
         logger.info("Reading CTAB block");
-        IAtomContainer readData = builder.newInstance(IAtomContainer.class);
+        IAtomContainer readData = builder.newAtomContainer();
         boolean foundEND = false;
         String lastLine = readHeader(readData);
         while (isReady() && !foundEND) {
@@ -256,7 +256,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 foundEND = true;
             } else {
                 logger.debug("Parsing atom from: " + command);
-                IAtom atom = readData.getBuilder().newInstance(IAtom.class);
+                IAtom atom = readData.getBuilder().newAtom();
                 StringTokenizer tokenizer = new StringTokenizer(command);
                 // parse the index
                 try {
@@ -270,7 +270,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // parse the element
                 String element = tokenizer.nextToken();
                 if (isotopeFactory.isElement(element)) {
-                    atom = isotopeFactory.configure(readData.getBuilder().newInstance(IAtom.class, element));
+                    atom.setSymbol(element);
+                    isotopeFactory.configure(atom); // ?
                 } else if ("A".equals(element)) {
                     atom = readData.getBuilder().newInstance(IPseudoAtom.class, element);
                 } else if ("Q".equals(element)) {
@@ -401,7 +402,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             } else {
                 logger.debug("Parsing bond from: " + command);
                 StringTokenizer tokenizer = new StringTokenizer(command);
-                IBond bond = readData.getBuilder().newInstance(IBond.class);
+                IBond bond = readData.getBuilder().newBond();
                 // parse the index
                 try {
                     String indexString = tokenizer.nextToken();

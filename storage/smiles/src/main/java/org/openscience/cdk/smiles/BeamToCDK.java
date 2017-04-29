@@ -490,11 +490,7 @@ final class BeamToCDK {
      * @return a new atom container instance
      */
     private IAtomContainer emptyContainer() {
-        try {
-            return (IAtomContainer) emptyContainer.clone();
-        } catch (CloneNotSupportedException e) {
-            return builder.newInstance(IAtomContainer.class, 0, 0, 0, 0);
-        }
+        return builder.newAtomContainer();
     }
 
     /**
@@ -506,15 +502,10 @@ final class BeamToCDK {
      * @return new atom with configured symbol and atomic number
      */
     private IAtom createAtom(Element element) {
-        try {
-            IAtom atom = (IAtom) templateAtom.clone();
-            atom.setSymbol(element.symbol());
-            atom.setAtomicNumber(element.atomicNumber());
-            return atom;
-        } catch (CloneNotSupportedException e) {
-            // clone is always supported if overridden but just in case :-)
-            return builder.newInstance(IAtom.class, element.symbol());
-        }
+        IAtom atom = builder.newAtom();
+        atom.setSymbol(element.symbol());
+        atom.setAtomicNumber(element.atomicNumber());
+        return atom;
     }
 
     /**
@@ -529,14 +520,9 @@ final class BeamToCDK {
      * @return new bond instance
      */
     private IBond createBond(IAtom either, IAtom other, IBond.Order order) {
-        try {
-            IBond bond = (IBond) templateBond.clone();
-            bond.setAtoms(new IAtom[]{either, other});
-            bond.setOrder(order);
-            return bond;
-        } catch (CloneNotSupportedException e) {
-            // clone is always supported if overridden but just in case  :-)
-            return builder.newInstance(IBond.class, either, other, order);
-        }
+        IBond bond = builder.newBond();
+        bond.setAtoms(new IAtom[]{either, other});
+        bond.setOrder(order);
+        return bond;
     }
 }

@@ -204,4 +204,27 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
         return factory.ofClass(clazz, params);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtom newAtom() {
+        return new DebugAtom();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IBond newBond() {
+        return new DebugBond();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtomContainer newAtomContainer() {
+        return new DebugAtomContainer();
+    }
 }

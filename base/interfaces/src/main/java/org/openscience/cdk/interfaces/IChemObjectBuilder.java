@@ -41,6 +41,32 @@ public interface IChemObjectBuilder {
      * @throws IllegalArgumentException Exception thrown when the {@link IChemObjectBuilder}
      *               builder cannot instantiate the <code>clazz</code> with the given parameters.
      */
-    public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) throws IllegalArgumentException;
+    <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) throws IllegalArgumentException;
 
+    /**
+     * Create a new atom using the default constructor. This method is considerably faster
+     * than the dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for
+     * high throughput applications (e.g. IO).
+     *
+     * @return new atom
+     */
+    IAtom newAtom();
+
+    /**
+     * Create a new bond using the default constructor. This method is considerably faster
+     * than the dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for
+     * high throughput applications (e.g. IO).
+     *
+     * @return new bond
+     */
+    IBond newBond();
+
+    /**
+     * Create a new atom container using the default constructor. This method is considerably faster
+     * than the dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for
+     * high throughput applications (e.g. IO).
+     *
+     * @return the new atom container
+     */
+    IAtomContainer newAtomContainer();
 }
