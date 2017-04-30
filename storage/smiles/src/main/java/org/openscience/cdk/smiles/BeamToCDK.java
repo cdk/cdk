@@ -41,6 +41,7 @@ import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.Element;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
@@ -117,38 +118,108 @@ final class BeamToCDK {
      */
     IAtomContainer toAtomContainer(Graph g, boolean kekule) {
 
-        IAtomContainer ac = emptyContainer();
-        IAtom[] atoms = new IAtom[g.order()];
-        IBond[] bonds = new IBond[g.size()];
+        IAtomContainer ac    = emptyContainer();
+        int            numAtoms = g.order();
+        IAtom[]        atoms = new IAtom[numAtoms];
+        IBond[]        bonds = new IBond[g.size()];
 
         int j = 0; // bond index
 
-        for (int i = 0; i < g.order(); i++)
+        boolean checkAtomStereo = false;
+        boolean checkBondStereo = false;
+
+        for (int i = 0; i < g.order(); i++) {
+            checkAtomStereo = checkAtomStereo || g.configurationOf(i).type() != Configuration.Type.None;
             atoms[i] = toCDKAtom(g.atom(i), g.implHCount(i));
-        for (Edge e : g.edges())
-            bonds[j++] = toCDKBond(e, atoms, kekule);
+        }
+        ac.setAtoms(atoms);
+        for (Edge edge : g.edges()) {
 
-        // atom-centric stereo-specification (only tetrahedral ATM)
-        for (int u = 0; u < g.order(); u++) {
+            final int u = edge.either();
+            final int v = edge.other(u);
+            IBond bond = builder.newBond();
+            bond.setAtoms(new IAtom[]{atoms[u], atoms[v]});
+            bonds[j++] = bond;
 
-            Configuration c = g.configurationOf(u);
-            if (c.type() == Tetrahedral) {
-
-                IStereoElement se = newTetrahedral(u, g.neighbors(u), atoms, c);
-
-                if (se != null) ac.addStereoElement(se);
-            } else if (c.type() == ExtendedTetrahedral) {
-                IStereoElement se = newExtendedTetrahedral(u, g, atoms);
-
-                if (se != null) ac.addStereoElement(se);
+            switch (edge.bond()) {
+                case SINGLE:
+                    bond.setOrder(IBond.Order.SINGLE);
+                    break;
+                case UP:
+                case DOWN:
+                    checkBondStereo = true;
+                    bond.setOrder(IBond.Order.SINGLE);
+                    break;
+                case IMPLICIT:
+                    bond.setOrder(IBond.Order.SINGLE);
+                    if (!kekule && atoms[u].isAromatic() && atoms[v].isAromatic()) {
+                        bond.setIsAromatic(true);
+                        bond.setOrder(IBond.Order.UNSET);
+                        atoms[u].setIsAromatic(true);
+                        atoms[v].setIsAromatic(true);
+                    }
+                    break;
+                case IMPLICIT_AROMATIC:
+                case AROMATIC:
+                    bond.setOrder(IBond.Order.SINGLE);
+                    bond.setIsAromatic(true);
+                    atoms[u].setIsAromatic(true);
+                    atoms[v].setIsAromatic(true);
+                    break;
+                case DOUBLE:
+                    bond.setOrder(IBond.Order.DOUBLE);
+                    break;
+                case DOUBLE_AROMATIC:
+                    bond.setOrder(IBond.Order.DOUBLE);
+                    bond.setIsAromatic(true);
+                    atoms[u].setIsAromatic(true);
+                    atoms[v].setIsAromatic(true);
+                    break;
+                case TRIPLE:
+                    bond.setOrder(IBond.Order.TRIPLE);
+                    break;
+                case QUADRUPLE:
+                    bond.setOrder(IBond.Order.QUADRUPLE);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Edge label " + edge.bond()
+                                                       + "cannot be converted to a CDK bond order");
             }
         }
 
-        ac.setAtoms(atoms);
+        // atom-centric stereo-specification (only tetrahedral ATM)
+        if (checkAtomStereo) {
+            for (int u = 0; u < g.order(); u++) {
+
+                Configuration c = g.configurationOf(u);
+                switch (c.type()) {
+                    case Tetrahedral: {
+
+                        IStereoElement se = newTetrahedral(u, g.neighbors(u), atoms, c);
+
+                        if (se != null) ac.addStereoElement(se);
+                        break;
+                    }
+                    case ExtendedTetrahedral: {
+                        IStereoElement se = newExtendedTetrahedral(u, g, atoms);
+
+                        if (se != null) ac.addStereoElement(se);
+                        break;
+                    }
+                    case DoubleBond: {
+                        checkBondStereo = true;
+                        break;
+                    }
+                }
+            }
+        }
+
         ac.setBonds(bonds);
 
         // use directional bonds to assign bond-based stereo-specification
-        addDoubleBondStereochemistry(g, ac);
+        if (checkBondStereo) {
+            addDoubleBondStereochemistry(g, ac);
+        }
 
         // title suffix
         ac.setProperty(CDKConstants.TITLE, g.getTitle());
@@ -173,12 +244,12 @@ final class BeamToCDK {
             int v = e.other(u);
 
             // find a directional bond for either end
-            Edge first = findDirectionalEdge(g, u);
-            Edge second = findDirectionalEdge(g, v);
+            Edge first = null;
+            Edge second = null;
 
             // if either atom is not incident to a directional label there
             // is no configuration
-            if (first != null && second != null) {
+            if ((first = findDirectionalEdge(g, u)) != null && (second = findDirectionalEdge(g, v)) != null) {
 
                 // if the directions (relative to the double bond) are the
                 // same then they are on the same side - otherwise they
@@ -201,7 +272,6 @@ final class BeamToCDK {
                 Configuration vConf = g.configurationOf(v);
                 if (uConf.type() == Configuration.Type.DoubleBond &&
                     vConf.type() == Configuration.Type.DoubleBond) {
-
 
                     int[] nbrs = new int[6];
                     int[] uNbrs = g.neighbors(u);
@@ -288,7 +358,10 @@ final class BeamToCDK {
      * @return first directional edge (or null if none)
      */
     private Edge findDirectionalEdge(Graph g, int u) {
-        for (Edge e : g.edges(u)) {
+        List<Edge> edges = g.edges(u);
+        if (edges.size() == 1)
+            return null;
+        for (Edge e : edges) {
             Bond b = e.bond();
             if (b == Bond.UP || b == Bond.DOWN) return e;
         }
@@ -415,75 +488,6 @@ final class BeamToCDK {
         return createAtom(element);
     }
 
-    /**
-     * Convert an edge from the Beam Graph to a CDK bond. Note -
-     * currently aromatic bonds are set to SINGLE and then.
-     *
-     * @param edge  the Beam edge to convert
-     * @param atoms the already converted atoms
-     * @return new bond instance
-     */
-    IBond toCDKBond(Edge edge, IAtom[] atoms, boolean kekule) {
-
-        int u = edge.either();
-        int v = edge.other(u);
-
-        IBond bond = createBond(atoms[u], atoms[v], toCDKBondOrder(edge));
-
-        // switch on the edge label to set aromatic flags
-        switch (edge.bond()) {
-            case AROMATIC:
-            case IMPLICIT_AROMATIC:
-            case DOUBLE_AROMATIC:
-                bond.setIsAromatic(true);
-                atoms[u].setIsAromatic(true);
-                atoms[v].setIsAromatic(true);
-                break;
-            case IMPLICIT:
-                if (!kekule && atoms[u].isAromatic() && atoms[v].isAromatic()) {
-                    bond.setIsAromatic(true);
-                    bond.setOrder(IBond.Order.UNSET);
-                    atoms[u].setIsAromatic(true);
-                    atoms[v].setIsAromatic(true);
-                }
-                break;
-        }
-
-        return bond;
-    }
-
-    /**
-     * Convert bond label on the edge to a CDK bond order - there is no aromatic
-     * bond order and as such this is currently set 'SINGLE' with the aromatic
-     * flag to be set.
-     *
-     * @param edge beam edge
-     * @return CDK bond order for the edge type
-     * @throws IllegalArgumentException the bond was a 'DOT' - should not be
-     *                                  loaded but the exception is there
-     *                                  in-case
-     */
-    private IBond.Order toCDKBondOrder(Edge edge) {
-        switch (edge.bond()) {
-            case SINGLE:
-            case UP:
-            case DOWN:
-            case IMPLICIT: // single/aromatic - aromatic ~ single atm.
-            case IMPLICIT_AROMATIC:
-            case AROMATIC: // we will also set the flag
-                return IBond.Order.SINGLE;
-            case DOUBLE:
-            case DOUBLE_AROMATIC:
-                return IBond.Order.DOUBLE;
-            case TRIPLE:
-                return IBond.Order.TRIPLE;
-            case QUADRUPLE:
-                return IBond.Order.QUADRUPLE;
-            default:
-                throw new IllegalArgumentException("Edge label " + edge.bond()
-                        + "cannot be converted to a CDK bond order");
-        }
-    }
 
     /**
      * Create a new empty atom container instance.
@@ -506,23 +510,5 @@ final class BeamToCDK {
         atom.setSymbol(element.symbol());
         atom.setAtomicNumber(element.atomicNumber());
         return atom;
-    }
-
-    /**
-     * Create a new bond for the provided symbol. The bond is created by cloning
-     * an existing 'template'. Unfortunately IChemObjectBuilders really show a
-     * slow down when SMILES processing.
-     *
-     * @param either an atom of the bond
-     * @param other another atom of the bond
-     * @param order the order of the bond
-     *
-     * @return new bond instance
-     */
-    private IBond createBond(IAtom either, IAtom other, IBond.Order order) {
-        IBond bond = builder.newBond();
-        bond.setAtoms(new IAtom[]{either, other});
-        bond.setOrder(order);
-        return bond;
     }
 }

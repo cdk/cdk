@@ -26,6 +26,7 @@ package org.openscience.cdk.io;
 
 import com.google.common.collect.ImmutableSet;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
@@ -1280,9 +1281,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @throws CDKException the symbol is not allowed
      */
     private IAtom createAtom(String symbol, IChemObjectBuilder builder, int lineNum) throws CDKException {
-        if (isPeriodicElement(symbol)) {
+        final Elements elem = Elements.ofString(symbol);
+        if (elem != Elements.Unknown) {
             IAtom atom = builder.newAtom();
-            atom.setSymbol(symbol);
+            atom.setSymbol(elem.symbol());
+            atom.setAtomicNumber(elem.number());
             return atom;
         }
         if (symbol.equals("D") && interpretHydrogenIsotopes.isSet()) {
@@ -1315,17 +1318,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         return atom;
     }
 
-    /**
-     * Is the symbol a periodic element.
-     *
-     * @param symbol a symbol from the input
-     * @return the symbol is a pseudo atom
-     */
-    private static boolean isPeriodicElement(final String symbol) {
-        // XXX: PeriodicTable is slow - switch without file IO would be optimal
-        Integer elem = PeriodicTable.getAtomicNumber(symbol);
-        return elem != null && elem > 0;
-    }
 
     /**
      * Is the atom symbol a non-periodic element (i.e. pseudo). Valid pseudo
