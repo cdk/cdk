@@ -28,7 +28,7 @@ import java.util.Arrays;
  * @author maclean
  * @cdk.module group
  */
-public class IntegerListInvariant implements Invariant {
+class IntegerListInvariant implements Invariant {
     
     private int[] values;
     

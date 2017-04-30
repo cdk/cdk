@@ -26,7 +26,7 @@ package org.openscience.cdk.group;
  * @author maclean
  * @cdk.module group
  */
-public class IntegerInvariant implements Invariant {
+class IntegerInvariant implements Invariant {
     
     private Integer value;
     

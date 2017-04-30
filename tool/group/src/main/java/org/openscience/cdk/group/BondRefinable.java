@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.module group
  *
  */
-public class BondRefinable implements Refinable {
+class BondRefinable implements Refinable {
     
     private final IAtomContainer atomContainer;
 

@@ -25,52 +25,18 @@ package org.openscience.cdk.group;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * A tool for determining the automorphism group of the atoms in a molecule, or
- * for checking for a canonical form of a molecule.
+ * An {@link AtomContainerDiscretePartitionRefiner} for bonds.
  *
  * If two bonds are equivalent under an automorphism in the group, then
  * roughly speaking they are in symmetric positions in the molecule. For
  * example, the C-C bonds attaching two methyl groups to a benzene ring
  * are 'equivalent' in this sense.
  *
- * <p>There are a couple of ways to use it - firstly, get the automorphisms.</p>
- *
- * <pre>
- *     IAtomContainer ac = ... // get an atom container somehow
- *     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
- *     PermutationGroup autG = refiner.getAutomorphismGroup(ac);
- *     for (Permutation automorphism : autG.all()) {
- *         ... // do something with the permutation
- *     }
- * </pre>
- *
- * <p>Another is to check an atom container to see if it is canonical:</p>
- *
- * <pre>
- *     IAtomContainer ac = ... // get an atom container somehow
- *     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
- *     if (refiner.isCanonical(ac)) {
- *         ... // do something with the atom container
- *     }
- * </pre>
- *
- * Note that it is not necessary to call {@link #refine(IAtomContainer)} before
- * either of these methods. However if both the group and the canonical check
- * are required, then the code should be:
- *
- * <pre>
- *     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
- *     refiner.refine(ac);
- *     boolean isCanon = refiner.isCanonical();
- *     PermutationGroup autG = refiner.getAutomorphismGroup();
- * </pre>
- *
- * This way, the refinement is not carried out multiple times.
  *
  * @author maclean
  * @cdk.module group
  */
-public class BondDiscretePartitionRefiner extends AtomContainerDiscretePartitionRefiner {
+class BondDiscretePartitionRefiner extends AtomContainerDiscretePartitionRefinerImpl {
 
     /**
      * Specialised option to allow generating automorphisms that ignore the bond order.

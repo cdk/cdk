@@ -25,52 +25,17 @@ package org.openscience.cdk.group;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * A tool for determining the automorphism group of the atoms in a molecule, or
- * for checking for a canonical form of a molecule.
+ * Base class for discrete partition refiners of IAtomContainers.
+ * 
+ * @author maclean
+ * @cdk.module group
  *
- * If two atoms are equivalent under an automorphism in the group, then
- * roughly speaking they are in symmetric positions in the molecule. For
- * example, the C atoms in two methyl groups attached to a benzene ring
- * are 'equivalent' in this sense.
- *
- * <p>There are a couple of ways to use it - firstly, get the automorphisms.</p>
- *
- * <pre>
- *     IAtomContainer ac = ... // get an atom container somehow
- *     AtomContainerDiscretePartitionRefiner refiner = 
- *          PartitionRefinement.forAtoms().create()
- *     PermutationGroup autG = refiner.getAutomorphismGroup(ac);
- *     for (Permutation automorphism : autG.all()) {
- *         ... // do something with the permutation
- *     }
- * </pre>
- *
- * <p>Another is to check an atom container to see if it is canonical:</p>
- *
- * <pre>
- *     IAtomContainer ac = ... // get an atom container somehow
- *     AtomContainerDiscretePartitionRefiner refiner = 
- *          PartitionRefinement.forAtoms().create()
- *     if (refiner.isCanonical(ac)) {
- *         ... // do something with the atom container
- *     }
- * </pre>
- *
- * Note that it is not necessary to call {@link #refine(IAtomContainer)} before
- * either of these methods. However if both the group and the canonical check
- * are required, then the code should be:
- *
- * <pre>
- *     AtomContainerDiscretePartitionRefiner refiner = 
- *          PartitionRefinement.forAtoms().create()
- *     refiner.refine(ac);
- *     boolean isCanon = refiner.isCanonical();
- *     PermutationGroup autG = refiner.getAutomorphismGroup();
- * </pre>
- *
- * This way, the refinement is not carried out multiple times.
  */
-public interface AtomContainerDiscretePartitionRefiner extends DiscretePartitionRefiner {
+abstract class AtomContainerDiscretePartitionRefinerImpl 
+       extends AbstractDiscretePartitionRefiner 
+       implements AtomContainerDiscretePartitionRefiner {
+    
+    private Refinable refinable;
     
     /**
      * Refine an atom container, which has the side effect of calculating
@@ -82,7 +47,9 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      *
      * @param atomContainer the atomContainer to refine
      */
-    public void refine(IAtomContainer atomContainer);
+    public void refine(IAtomContainer atomContainer) {
+        refine(atomContainer, getRefinable(atomContainer).getInitialPartition());
+    }
 
     /**
      * Refine an atom partition based on the connectivity in the atom container.
@@ -90,7 +57,10 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param atomContainer the atom container to use
      * @param partition the initial partition of the atoms
      */
-    public void refine(IAtomContainer atomContainer, Partition partition);
+    public void refine(IAtomContainer atomContainer, Partition partition) {
+        setup(atomContainer);
+        super.refine(partition);
+    }
     
     /**
      * Checks if the atom container is canonical. Note that this calls
@@ -99,7 +69,11 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param atomContainer the atom container to check
      * @return true if the atom container is canonical
      */
-    public boolean isCanonical(IAtomContainer atomContainer);
+    public boolean isCanonical(IAtomContainer atomContainer) {
+        setup(atomContainer);
+        super.refine(refinable.getInitialPartition());
+        return isCanonical();
+    }
     
     /**
      * Gets the automorphism group of the atom container. By default it uses an
@@ -110,7 +84,11 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param atomContainer the atom container to use
      * @return the automorphism group of the atom container
      */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer);
+    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer) {
+        setup(atomContainer);
+        super.refine(refinable.getInitialPartition());
+        return super.getAutomorphismGroup();
+    }
     
     /**
      * Speed up the search for the automorphism group using the automorphisms in
@@ -121,7 +99,11 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param group the group of known automorphisms
      * @return the full automorphism group
      */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group);
+    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group) {
+        setup(atomContainer, group);
+        super.refine(refinable.getInitialPartition());
+        return super.getAutomorphismGroup();
+    }
     
     /**
      * Get the automorphism group of the molecule given an initial partition.
@@ -130,7 +112,11 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param initialPartition an initial partition of the atoms
      * @return the automorphism group starting with this partition
      */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition);
+    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition) {
+        setup(atomContainer);
+        super.refine(initialPartition);
+        return super.getAutomorphismGroup();
+    }
     
     /**
      * Get the automorphism partition (equivalence classes) of the atoms.
@@ -138,5 +124,47 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param atomContainer the molecule to calculate equivalence classes for
      * @return a partition of the atoms into equivalence classes
      */
-    public Partition getAutomorphismPartition(IAtomContainer atomContainer);
+    public Partition getAutomorphismPartition(IAtomContainer atomContainer) {
+        setup(atomContainer);
+        super.refine(refinable.getInitialPartition());
+        return super.getAutomorphismPartition();
+    }
+    
+    protected abstract Refinable createRefinable(IAtomContainer atomContainer);
+    
+    private Refinable getRefinable(IAtomContainer atomContainer) {
+        refinable = createRefinable(atomContainer);
+        return refinable;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    @Override
+    protected int getVertexCount() {
+        return refinable.getVertexCount();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    protected int getConnectivity(int vertexI, int vertexJ) {
+       return refinable.getConnectivity(vertexI, vertexJ);
+    }
+    
+    private void setup(IAtomContainer atomContainer) {
+        // have to setup the connection table before making the group
+        // otherwise the size may be wrong, but only setup if it doesn't exist
+        Refinable refinable = getRefinable(atomContainer);
+        
+        int size = getVertexCount();
+        PermutationGroup group = new PermutationGroup(new Permutation(size));
+        super.setup(group, new EquitablePartitionRefiner(refinable));
+    }
+
+    private void setup(IAtomContainer atomContainer, PermutationGroup group) {
+        super.setup(group, new EquitablePartitionRefiner(getRefinable(atomContainer)));
+    }
+
 }

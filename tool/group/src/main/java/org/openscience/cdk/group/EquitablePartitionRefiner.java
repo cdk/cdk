@@ -44,7 +44,7 @@ import java.util.TreeSet;
  * @author maclean
  * @cdk.module group
  */
-public class EquitablePartitionRefiner {
+class EquitablePartitionRefiner {
     
     private final Refinable refinable;
 

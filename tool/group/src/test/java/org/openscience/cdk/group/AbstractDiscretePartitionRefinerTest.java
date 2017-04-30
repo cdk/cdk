@@ -171,20 +171,6 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     @Test
-    public void getBestHalfMatrixStringTest() {
-        int n = 3;
-        Graph g = new Graph(n);
-        g.connectionTable = new int[][]{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}};
-        PermutationGroup group = new PermutationGroup(n);
-        MockRefiner refiner = new MockRefiner(g);
-        setup(refiner, group, g);
-        refiner.refine(Partition.unit(n));
-        String hms = refiner.getBestHalfMatrixString();
-        String expected = "110";
-        Assert.assertEquals(expected, hms);
-    }
-
-    @Test
     public void getFirstHalfMatrixStringTest() {
         int n = 3;
         Graph g = new Graph(n);

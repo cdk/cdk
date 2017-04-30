@@ -33,14 +33,14 @@ import java.util.Set;
  * @author maclean
  * @cdk.module group
  */
-public abstract class AbstractDiscretePartitionRefiner {
+abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefiner {
 
     /**
      * The result of a comparison between the current partition
      * and the best permutation found so far.
      *
      */
-    public enum Result {
+    enum Result {
         WORSE, EQUAL, BETTER
     };
 
@@ -180,7 +180,7 @@ public abstract class AbstractDiscretePartitionRefiner {
      * @param permutation a permutation of the adjacency matrix
      * @return a string containing the permuted values of half the matrix
      */
-    public String getHalfMatrixString(Permutation permutation) {
+    private String getHalfMatrixString(Permutation permutation) {
         StringBuilder builder = new StringBuilder(permutation.size());
         int size = permutation.size();
         for (int indexI = 0; indexI < size - 1; indexI++) {
@@ -189,15 +189,6 @@ public abstract class AbstractDiscretePartitionRefiner {
             }
         }
         return builder.toString();
-    }
-
-    /**
-     * Get the half-matrix string under the best permutation.
-     *
-     * @return the upper-half adjacency matrix string permuted by the best
-     */
-    public String getBestHalfMatrixString() {
-        return getHalfMatrixString(best);
     }
 
     /**
