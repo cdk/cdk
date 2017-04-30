@@ -133,9 +133,58 @@ final class BeamToCDK {
             atoms[i] = toCDKAtom(g.atom(i), g.implHCount(i));
         }
         ac.setAtoms(atoms);
-        for (Edge e : g.edges()) {
-            checkBondStereo = checkBondStereo || e.bond() == Bond.UP || e.bond() == Bond.DOWN;
-            bonds[j++] = toCDKBond(e, atoms, kekule);
+        for (Edge edge : g.edges()) {
+
+            final int u = edge.either();
+            final int v = edge.other(u);
+            IBond bond = builder.newBond();
+            bond.setAtoms(new IAtom[]{atoms[u], atoms[v]});
+            bonds[j++] = bond;
+
+            switch (edge.bond()) {
+                case SINGLE:
+                    bond.setOrder(IBond.Order.SINGLE);
+                    break;
+                case UP:
+                case DOWN:
+                    checkBondStereo = true;
+                    bond.setOrder(IBond.Order.SINGLE);
+                    break;
+                case IMPLICIT:
+                    bond.setOrder(IBond.Order.SINGLE);
+                    if (!kekule && atoms[u].isAromatic() && atoms[v].isAromatic()) {
+                        bond.setIsAromatic(true);
+                        bond.setOrder(IBond.Order.UNSET);
+                        atoms[u].setIsAromatic(true);
+                        atoms[v].setIsAromatic(true);
+                    }
+                    break;
+                case IMPLICIT_AROMATIC:
+                case AROMATIC:
+                    bond.setOrder(IBond.Order.SINGLE);
+                    bond.setIsAromatic(true);
+                    atoms[u].setIsAromatic(true);
+                    atoms[v].setIsAromatic(true);
+                    break;
+                case DOUBLE:
+                    bond.setOrder(IBond.Order.DOUBLE);
+                    break;
+                case DOUBLE_AROMATIC:
+                    bond.setOrder(IBond.Order.DOUBLE);
+                    bond.setIsAromatic(true);
+                    atoms[u].setIsAromatic(true);
+                    atoms[v].setIsAromatic(true);
+                    break;
+                case TRIPLE:
+                    bond.setOrder(IBond.Order.TRIPLE);
+                    break;
+                case QUADRUPLE:
+                    bond.setOrder(IBond.Order.QUADRUPLE);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Edge label " + edge.bond()
+                                                       + "cannot be converted to a CDK bond order");
+            }
         }
 
         // atom-centric stereo-specification (only tetrahedral ATM)
@@ -439,75 +488,6 @@ final class BeamToCDK {
         return createAtom(element);
     }
 
-    /**
-     * Convert an edge from the Beam Graph to a CDK bond. Note -
-     * currently aromatic bonds are set to SINGLE and then.
-     *
-     * @param edge  the Beam edge to convert
-     * @param atoms the already converted atoms
-     * @return new bond instance
-     */
-    IBond toCDKBond(Edge edge, IAtom[] atoms, boolean kekule) {
-
-        int u = edge.either();
-        int v = edge.other(u);
-
-        IBond bond = createBond(atoms[u], atoms[v], toCDKBondOrder(edge));
-
-        // switch on the edge label to set aromatic flags
-        switch (edge.bond()) {
-            case AROMATIC:
-            case IMPLICIT_AROMATIC:
-            case DOUBLE_AROMATIC:
-                bond.setIsAromatic(true);
-                atoms[u].setIsAromatic(true);
-                atoms[v].setIsAromatic(true);
-                break;
-            case IMPLICIT:
-                if (!kekule && atoms[u].isAromatic() && atoms[v].isAromatic()) {
-                    bond.setIsAromatic(true);
-                    bond.setOrder(IBond.Order.UNSET);
-                    atoms[u].setIsAromatic(true);
-                    atoms[v].setIsAromatic(true);
-                }
-                break;
-        }
-
-        return bond;
-    }
-
-    /**
-     * Convert bond label on the edge to a CDK bond order - there is no aromatic
-     * bond order and as such this is currently set 'SINGLE' with the aromatic
-     * flag to be set.
-     *
-     * @param edge beam edge
-     * @return CDK bond order for the edge type
-     * @throws IllegalArgumentException the bond was a 'DOT' - should not be
-     *                                  loaded but the exception is there
-     *                                  in-case
-     */
-    private IBond.Order toCDKBondOrder(Edge edge) {
-        switch (edge.bond()) {
-            case SINGLE:
-            case UP:
-            case DOWN:
-            case IMPLICIT: // single/aromatic - aromatic ~ single atm.
-            case IMPLICIT_AROMATIC:
-            case AROMATIC: // we will also set the flag
-                return IBond.Order.SINGLE;
-            case DOUBLE:
-            case DOUBLE_AROMATIC:
-                return IBond.Order.DOUBLE;
-            case TRIPLE:
-                return IBond.Order.TRIPLE;
-            case QUADRUPLE:
-                return IBond.Order.QUADRUPLE;
-            default:
-                throw new IllegalArgumentException("Edge label " + edge.bond()
-                        + "cannot be converted to a CDK bond order");
-        }
-    }
 
     /**
      * Create a new empty atom container instance.
@@ -530,23 +510,5 @@ final class BeamToCDK {
         atom.setSymbol(element.symbol());
         atom.setAtomicNumber(element.atomicNumber());
         return atom;
-    }
-
-    /**
-     * Create a new bond for the provided symbol. The bond is created by cloning
-     * an existing 'template'. Unfortunately IChemObjectBuilders really show a
-     * slow down when SMILES processing.
-     *
-     * @param either an atom of the bond
-     * @param other another atom of the bond
-     * @param order the order of the bond
-     *
-     * @return new bond instance
-     */
-    private IBond createBond(IAtom either, IAtom other, IBond.Order order) {
-        IBond bond = builder.newBond();
-        bond.setAtoms(new IAtom[]{either, other});
-        bond.setOrder(order);
-        return bond;
     }
 }

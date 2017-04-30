@@ -153,39 +153,6 @@ public class BeamToCDKTest {
     }
 
     @Test
-    public void singleBondEdge() {
-        IAtom[] atoms = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class),
-                mock(IAtom.class), mock(IAtom.class)};
-        IBond b = g2c.toCDKBond(Bond.SINGLE.edge(0, 5), atoms, true);
-        assertThat(b.getOrder(), is(IBond.Order.SINGLE));
-        assertFalse(b.getFlag(CDKConstants.ISAROMATIC));
-        assertThat(b.getAtom(0), is(atoms[0]));
-        assertThat(b.getAtom(1), is(atoms[5]));
-    }
-
-    @Test
-    public void aromaticBondEdge() {
-        IAtom[] atoms = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class),
-                mock(IAtom.class), mock(IAtom.class)};
-        IBond b = g2c.toCDKBond(Bond.AROMATIC.edge(0, 5), atoms, true);
-        assertThat(b.getOrder(), is(IBond.Order.SINGLE));
-        assertTrue(b.getFlag(CDKConstants.ISAROMATIC));
-        assertThat(b.getAtom(0), is(atoms[0]));
-        assertThat(b.getAtom(1), is(atoms[5]));
-    }
-
-    @Test
-    public void doubleBondEdge() {
-        IAtom[] atoms = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class),
-                mock(IAtom.class), mock(IAtom.class)};
-        IBond b = g2c.toCDKBond(Bond.DOUBLE.edge(0, 5), atoms, true);
-        assertThat(b.getOrder(), is(IBond.Order.DOUBLE));
-        assertFalse(b.getFlag(CDKConstants.ISAROMATIC));
-        assertThat(b.getAtom(0), is(atoms[0]));
-        assertThat(b.getAtom(1), is(atoms[5]));
-    }
-
-    @Test
     public void benzene() throws IOException {
         IAtomContainer ac = convert("c1ccccc1");
         assertThat(ac.getAtomCount(), is(6));
