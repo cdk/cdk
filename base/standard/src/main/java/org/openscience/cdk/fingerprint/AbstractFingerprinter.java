@@ -23,12 +23,39 @@
 
 package org.openscience.cdk.fingerprint;
 
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.BitSet;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractFingerprinter implements IFingerprinter {
+
+    /**
+     * Base classes should override this method to report the parameters they
+     * are configured with.
+     *
+     * @return The key=value pairs of configured parameters
+     */
+    protected List<Map.Entry<String,String>> getParameters() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public final String getVersionDescription() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("CDK-")
+          .append(getClass().getSimpleName())
+          .append("/")
+          .append(CDK.getVersion()); // could version fingerprints separetely
+        for (Map.Entry<String,String> param : getParameters()) {
+            sb.append(' ').append(param.getKey()).append('=').append(param.getValue());
+        }
+        return sb.toString();
+    }
 
     /** {@inheritDoc} */
     @Override

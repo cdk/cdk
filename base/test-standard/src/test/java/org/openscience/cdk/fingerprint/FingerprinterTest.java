@@ -26,16 +26,17 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.BitSet;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -53,6 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -184,7 +186,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         Assert.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
-        Fingerprinter fingerprinter = new Fingerprinter();
+        Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
         Assert.assertNotNull(fingerprinter.getBitFingerprint(mol));
     }
 
@@ -406,5 +408,14 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         BitSet fp4 = fpr.getFingerprint(indoleMol);
         assertFalse(FingerprinterTool.isSubset(fp4, fp3));
         assertFalse(FingerprinterTool.isSubset(fp3, fp4));
+    }
+
+    @Test public void testVersion() {
+        Fingerprinter fpr = new Fingerprinter(1024, 7);
+        fpr.setPathLimit(2000);
+        fpr.setHashPseudoAtoms(true);
+        String expected = "CDK-Fingerprinter/" + CDK.getVersion() + " searchDepth=7 pathLimit=2000 hashPseudoAtoms=true";
+        assertThat(fpr.getVersionDescription(),
+                   CoreMatchers.is(expected));
     }
 }

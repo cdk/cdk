@@ -35,7 +35,10 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
@@ -95,7 +98,7 @@ import java.util.Set;
 public class Fingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     /** Throw an exception if too many paths (per atom) are generated. */
-    private final static int                 DEFAULT_PATH_LIMIT   = 1500;
+    private final static int                 DEFAULT_PATH_LIMIT   = 42000;
 
     /** The default length of created fingerprints. */
     public final static int                  DEFAULT_SIZE         = 1024;
@@ -140,6 +143,15 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         this.size = size;
         this.searchDepth = searchDepth;
 
+    }
+
+    @Override
+    protected List<Map.Entry<String, String>> getParameters() {
+        return Arrays.<Map.Entry<String,String>>asList(
+            new SimpleImmutableEntry<>("searchDepth", Integer.toString(searchDepth)),
+            new SimpleImmutableEntry<>("pathLimit", Integer.toString(pathLimit)),
+            new SimpleImmutableEntry<>("hashPseudoAtoms", Boolean.toString(hashPseudoAtoms))
+        );
     }
 
     /**

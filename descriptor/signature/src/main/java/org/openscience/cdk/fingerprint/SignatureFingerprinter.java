@@ -22,7 +22,11 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
@@ -55,6 +59,14 @@ public class SignatureFingerprinter extends AbstractFingerprinter implements IFi
      */
     public SignatureFingerprinter(int depth) {
         this.signatureDepth = depth;
+    }
+
+
+    @Override
+    protected List<Map.Entry<String, String>> getParameters() {
+        return Collections.<Map.Entry<String,String>>singletonList(
+            new AbstractMap.SimpleImmutableEntry<>("signatureDepth", Integer.toString(signatureDepth))
+        );
     }
 
     @Override

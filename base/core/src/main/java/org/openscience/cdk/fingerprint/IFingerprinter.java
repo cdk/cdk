@@ -40,6 +40,24 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public interface IFingerprinter {
 
     /**
+     * Generate a fingerprint type version description in chemfp's FPS format. We
+     * report the library version rather than an individual version per fingerprint,
+     * although this is awkward as many fingerprint's don't/won't change between releases
+     * and we can not keep comptability we guarantee we document how the fingerprint was
+     * encoded.
+     *
+     * <br>
+     * Examples:
+     * <pre>
+     * #type=CDK-Fingerprinter/2.0 searchDepth=7 pathLimit=2000 hashPseudoAtoms=true
+     * #type=CDK-CircularFingerprint/2.0 classType=ECFP4
+     * </pre>
+     *
+     * @return version description.
+     */
+    String getVersionDescription();
+
+    /**
      * Generate a binary fingerprint as a bit. This method will usually delegate to
      * {@link #getBitFingerprint(IAtomContainer)} and invoke
      * {@link IBitFingerprint#asBitSet()}, it is included for backwards compatibility.
