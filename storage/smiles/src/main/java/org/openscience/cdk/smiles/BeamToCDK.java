@@ -41,6 +41,7 @@ import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.Element;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
@@ -117,38 +118,59 @@ final class BeamToCDK {
      */
     IAtomContainer toAtomContainer(Graph g, boolean kekule) {
 
-        IAtomContainer ac = emptyContainer();
-        IAtom[] atoms = new IAtom[g.order()];
-        IBond[] bonds = new IBond[g.size()];
+        IAtomContainer ac    = emptyContainer();
+        int            numAtoms = g.order();
+        IAtom[]        atoms = new IAtom[numAtoms];
+        IBond[]        bonds = new IBond[g.size()];
 
         int j = 0; // bond index
 
-        for (int i = 0; i < g.order(); i++)
+        boolean checkAtomStereo = false;
+        boolean checkBondStereo = false;
+
+        for (int i = 0; i < g.order(); i++) {
+            checkAtomStereo = checkAtomStereo || g.configurationOf(i).type() != Configuration.Type.None;
             atoms[i] = toCDKAtom(g.atom(i), g.implHCount(i));
-        for (Edge e : g.edges())
+        }
+        ac.setAtoms(atoms);
+        for (Edge e : g.edges()) {
+            checkBondStereo = checkBondStereo || e.bond() == Bond.UP || e.bond() == Bond.DOWN;
             bonds[j++] = toCDKBond(e, atoms, kekule);
+        }
 
         // atom-centric stereo-specification (only tetrahedral ATM)
-        for (int u = 0; u < g.order(); u++) {
+        if (checkAtomStereo) {
+            for (int u = 0; u < g.order(); u++) {
 
-            Configuration c = g.configurationOf(u);
-            if (c.type() == Tetrahedral) {
+                Configuration c = g.configurationOf(u);
+                switch (c.type()) {
+                    case Tetrahedral: {
 
-                IStereoElement se = newTetrahedral(u, g.neighbors(u), atoms, c);
+                        IStereoElement se = newTetrahedral(u, g.neighbors(u), atoms, c);
 
-                if (se != null) ac.addStereoElement(se);
-            } else if (c.type() == ExtendedTetrahedral) {
-                IStereoElement se = newExtendedTetrahedral(u, g, atoms);
+                        if (se != null) ac.addStereoElement(se);
+                        break;
+                    }
+                    case ExtendedTetrahedral: {
+                        IStereoElement se = newExtendedTetrahedral(u, g, atoms);
 
-                if (se != null) ac.addStereoElement(se);
+                        if (se != null) ac.addStereoElement(se);
+                        break;
+                    }
+                    case DoubleBond: {
+                        checkBondStereo = true;
+                        break;
+                    }
+                }
             }
         }
 
-        ac.setAtoms(atoms);
         ac.setBonds(bonds);
 
         // use directional bonds to assign bond-based stereo-specification
-        addDoubleBondStereochemistry(g, ac);
+        if (checkBondStereo) {
+            addDoubleBondStereochemistry(g, ac);
+        }
 
         // title suffix
         ac.setProperty(CDKConstants.TITLE, g.getTitle());
@@ -173,12 +195,12 @@ final class BeamToCDK {
             int v = e.other(u);
 
             // find a directional bond for either end
-            Edge first = findDirectionalEdge(g, u);
-            Edge second = findDirectionalEdge(g, v);
+            Edge first = null;
+            Edge second = null;
 
             // if either atom is not incident to a directional label there
             // is no configuration
-            if (first != null && second != null) {
+            if ((first = findDirectionalEdge(g, u)) != null && (second = findDirectionalEdge(g, v)) != null) {
 
                 // if the directions (relative to the double bond) are the
                 // same then they are on the same side - otherwise they
@@ -201,7 +223,6 @@ final class BeamToCDK {
                 Configuration vConf = g.configurationOf(v);
                 if (uConf.type() == Configuration.Type.DoubleBond &&
                     vConf.type() == Configuration.Type.DoubleBond) {
-
 
                     int[] nbrs = new int[6];
                     int[] uNbrs = g.neighbors(u);
@@ -288,7 +309,10 @@ final class BeamToCDK {
      * @return first directional edge (or null if none)
      */
     private Edge findDirectionalEdge(Graph g, int u) {
-        for (Edge e : g.edges(u)) {
+        List<Edge> edges = g.edges(u);
+        if (edges.size() == 1)
+            return null;
+        for (Edge e : edges) {
             Bond b = e.bond();
             if (b == Bond.UP || b == Bond.DOWN) return e;
         }
