@@ -67,23 +67,11 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
         Assert.assertEquals(refiner.getConnectivity(0, 1), 1);
         Assert.assertEquals(refiner.getVertexCount(), 2);
 
-        refiner.reset();
-
         String acpString2 = "C0C1C2 0:1(2),1:2(1)";
         IAtomContainer ac2 = AtomContainerPrinter.fromString(acpString2, builder);
         refiner.refine(ac2);
         Assert.assertEquals(refiner.getConnectivity(0, 1), 2);
         Assert.assertEquals(refiner.getVertexCount(), 3);
-    }
-
-    @Test
-    public void getElementPartitionTest() {
-        String acpString = "C0N1C2P3C4N5";
-        IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
-        AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
-        Partition elPartition = refiner.getElementPartition(ac);
-        Partition expected = Partition.fromString("0,2,4|1,5|3");
-        Assert.assertEquals(expected, elPartition);
     }
 
     @Test
@@ -121,7 +109,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
 
     @Test
     public void isCanonical_TrueTest() {
-        String acpString = "C0C1C2O3 0:1(2),0:2(1),1:3(1),2:3(1)";
+        String acpString = "C0C1C2O3 0:2(2),0:3(1),1:2(1),1:3(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
         Assert.assertTrue(refiner.isCanonical(ac));

@@ -27,14 +27,12 @@ public class AtomPermutationTests extends CDKTestCase {
         refiner.refine(atomContainer);
         Permutation best = refiner.getBest().invert();
         String cert = AtomContainerPrinter.toString(atomContainer, best, true);
-        refiner.reset();
         while (permutor.hasNext()) {
             IAtomContainer permutedContainer = permutor.next();
             refiner.refine(permutedContainer);
             best = refiner.getBest().invert();
             String permCert = AtomContainerPrinter.toString(permutedContainer, best, true);
             Assert.assertEquals(cert, permCert);
-            refiner.reset();
         }
     }
 

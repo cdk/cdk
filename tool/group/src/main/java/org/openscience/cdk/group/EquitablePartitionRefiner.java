@@ -44,7 +44,9 @@ import java.util.TreeSet;
  * @author maclean
  * @cdk.module group
  */
-public abstract class AbstractEquitablePartitionRefiner {
+class EquitablePartitionRefiner {
+    
+    private final Refinable refinable;
 
     /**
      * A forward split order tends to favor partitions where the cells are
@@ -71,23 +73,10 @@ public abstract class AbstractEquitablePartitionRefiner {
      */
     private Queue<Set<Integer>> blocksToRefine;
 
-    /**
-     * Gets from the graph the number of vertices. Abstract to allow different
-     * graph classes to be used (eg: Graph or IAtomContainer, etc).
-     *
-     * @return the number of vertices
-     */
-    public abstract int getVertexCount();
-
-    /**
-     * Find |a &cap; b| - that is, the size of the intersection between a and b.
-     *
-     * @param block a set of numbers
-     * @param vertexIndex the element to compare
-     * @return the size of the intersection
-     */
-    public abstract int neighboursInBlock(Set<Integer> block, int vertexIndex);
-
+    public EquitablePartitionRefiner(Refinable refinable) {
+        this.refinable = refinable;
+    }
+    
     /**
      * Set the preference for splitting cells.
      *
@@ -112,7 +101,7 @@ public abstract class AbstractEquitablePartitionRefiner {
             blocksToRefine.add(finer.copyBlock(i));
         }
 
-        int numberOfVertices = getVertexCount();
+        int numberOfVertices = refinable.getVertexCount();
         while (!blocksToRefine.isEmpty()) {
             Set<Integer> t = blocksToRefine.remove();
             currentBlockIndex = 0;
@@ -120,7 +109,7 @@ public abstract class AbstractEquitablePartitionRefiner {
                 if (!finer.isDiscreteCell(currentBlockIndex)) {
 
                     // get the neighbor invariants for this block
-                    Map<Integer, SortedSet<Integer>> invariants = getInvariants(finer, t);
+                    Map<Invariant, SortedSet<Integer>> invariants = getInvariants(finer, t);
 
                     // split the block on the basis of these invariants
                     split(invariants, finer);
@@ -144,12 +133,12 @@ public abstract class AbstractEquitablePartitionRefiner {
      *
      * @param partition the current partition
      * @param targetBlock the current target block of the partition
-     * @return a map of set intersection sizes to elements
+     * @return a map of set intersection invariants to elements
      */
-    private Map<Integer, SortedSet<Integer>> getInvariants(Partition partition, Set<Integer> targetBlock) {
-        Map<Integer, SortedSet<Integer>> setList = new HashMap<Integer, SortedSet<Integer>>();
+    private Map<Invariant, SortedSet<Integer>> getInvariants(Partition partition, Set<Integer> targetBlock) {
+        Map<Invariant, SortedSet<Integer>> setList = new HashMap<Invariant, SortedSet<Integer>>();
         for (int u : partition.getCell(currentBlockIndex)) {
-            int h = neighboursInBlock(targetBlock, u);
+            Invariant h = refinable.neighboursInBlock(targetBlock, u);
             if (setList.containsKey(h)) {
                 setList.get(h).add(u);
             } else {
@@ -167,11 +156,11 @@ public abstract class AbstractEquitablePartitionRefiner {
      * @param invariants a map of neighbor counts to elements
      * @param partition the partition that is being refined
      */
-    private void split(Map<Integer, SortedSet<Integer>> invariants, Partition partition) {
+    private void split(Map<Invariant, SortedSet<Integer>> invariants, Partition partition) {
         int nonEmptyInvariants = invariants.keySet().size();
         if (nonEmptyInvariants > 1) {
-            List<Integer> invariantKeys = new ArrayList<Integer>();
-            invariantKeys.addAll(invariants.keySet());
+            List<Invariant> invariantKeys = 
+                    new ArrayList<Invariant>(invariants.keySet());
             partition.removeCell(currentBlockIndex);
             int k = currentBlockIndex;
             if (splitOrder == SplitOrder.REVERSE) {
@@ -179,7 +168,7 @@ public abstract class AbstractEquitablePartitionRefiner {
             } else {
                 Collections.sort(invariantKeys, Collections.reverseOrder());
             }
-            for (int h : invariantKeys) {
+            for (Invariant h : invariantKeys) {
                 SortedSet<Integer> setH = invariants.get(h);
                 partition.insertCell(k, setH);
                 blocksToRefine.add(setH);
