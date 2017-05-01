@@ -189,7 +189,6 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
 
         IAtomContainer mol = TestMoleculeFactory.makeAzulene();
         Assert.assertNotNull("Created molecule was null", mol);
-        AtomContainerPrinter.print(mol);
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
