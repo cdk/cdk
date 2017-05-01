@@ -30,16 +30,14 @@ import java.io.Reader;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomContainerSet;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -180,7 +178,7 @@ public class INChIReader extends DefaultChemObjectReader {
     @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            return (T) readChemFile();
+            return (T) readChemFile(object.getBuilder());
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -193,7 +191,7 @@ public class INChIReader extends DefaultChemObjectReader {
      *
      * @return ChemFile with the content read from the input
      */
-    private IChemFile readChemFile() {
+    private IChemFile readChemFile(IChemObjectBuilder bldr) {
         IChemFile cf = null;
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
@@ -201,7 +199,7 @@ public class INChIReader extends DefaultChemObjectReader {
         } catch (SAXException e) {
             logger.warn("Cannot deactivate validation.");
         }
-        INChIHandler handler = new INChIHandler();
+        INChIHandler handler = new INChIHandler(bldr);
         parser.setContentHandler(handler);
         try {
             parser.parse(new InputSource(input));
@@ -226,11 +224,12 @@ public class INChIReader extends DefaultChemObjectReader {
         private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
         private INChIContentProcessorTool inchiTool;
 
-        private ChemFile          chemFile;
-        private ChemSequence      chemSequence;
-        private ChemModel         chemModel;
+        private IChemFile         chemFile;
+        private IChemSequence     chemSequence;
+        private IChemModel        chemModel;
         private IAtomContainerSet setOfMolecules;
         private IAtomContainer    tautomer;
+        private IChemObjectBuilder builder;
 
         /** Used to store all chars between two tags */
         private String                    currentChars;
@@ -238,8 +237,9 @@ public class INChIReader extends DefaultChemObjectReader {
         /**
          * Constructor for the IChIHandler.
          **/
-        public INChIHandler() {
-            inchiTool = new INChIContentProcessorTool();
+        public INChIHandler(IChemObjectBuilder bldr) {
+            this.builder = bldr;
+            this.inchiTool = new INChIContentProcessorTool();
         }
 
         public void doctypeDecl(String name, String publicId, String systemId) throws Exception {
@@ -250,10 +250,10 @@ public class INChIReader extends DefaultChemObjectReader {
 
         @Override
         public void startDocument() {
-            chemFile = new ChemFile();
-            chemSequence = new ChemSequence();
-            chemModel = new ChemModel();
-            setOfMolecules = new AtomContainerSet();
+            chemFile = builder.newInstance(IChemFile.class);
+            chemSequence = builder.newInstance(IChemSequence.class);
+            chemModel = builder.newInstance(IChemModel.class);;
+            setOfMolecules = builder.newInstance(IAtomContainerSet.class);;
         }
 
         @Override
@@ -274,8 +274,7 @@ public class INChIReader extends DefaultChemObjectReader {
             } else if ("formula".equals(local)) {
                 if (tautomer != null) {
                     logger.info("Parsing <formula> chars: ", currentChars);
-                    tautomer = new AtomContainer(inchiTool.processFormula(
-                        setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars));
+                    tautomer = inchiTool.processFormula(setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars);
                 } else {
                     logger.warn("Cannot set atom info for empty tautomer");
                 }
@@ -313,7 +312,7 @@ public class INChIReader extends DefaultChemObjectReader {
                     if (atts.getQName(i).equals("version")) logger.info("INChI version: ", atts.getValue(i));
                 }
             } else if ("structure".equals(local)) {
-                tautomer = new AtomContainer();
+                tautomer = builder.newAtomContainer();
             } else {
                 // skip all other elements
             }
@@ -331,7 +330,7 @@ public class INChIReader extends DefaultChemObjectReader {
             currentChars += new String(ch, start, length);
         }
 
-        public ChemFile getChemFile() {
+        public IChemFile getChemFile() {
             return chemFile;
         }
 
