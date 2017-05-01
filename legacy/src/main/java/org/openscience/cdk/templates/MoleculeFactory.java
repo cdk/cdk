@@ -18,11 +18,6 @@
  */
 package org.openscience.cdk.templates;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-
-import javax.vecmath.Point2d;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
@@ -38,6 +33,10 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import javax.vecmath.Point2d;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * This class contains methods for generating simple organic molecules.
