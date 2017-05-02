@@ -245,8 +245,8 @@ public final class Aromaticity {
         // set the new flags
         for (final IBond bond : bonds) {
             bond.setIsAromatic(true);
-            bond.getAtom(0).setIsAromatic(true);
-            bond.getAtom(1).setIsAromatic(true);
+            bond.getBegin().setIsAromatic(true);
+            bond.getEnd().setIsAromatic(true);
         }
 
         molecule.setFlag(ISAROMATIC, !bonds.isEmpty());

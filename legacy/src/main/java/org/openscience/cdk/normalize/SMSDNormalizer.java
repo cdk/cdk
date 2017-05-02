@@ -357,14 +357,14 @@ public class SMSDNormalizer extends AtomContainerManipulator {
             bonds[index] = new Bond();
             int indexI = 999;
             for (int i = 0; i < container.getAtomCount(); i++) {
-                if (container.getBond(index).getAtom(0) == container.getAtom(i)) {
+                if (container.getBond(index).getBegin() == container.getAtom(i)) {
                     indexI = i;
                     break;
                 }
             }
             int indexJ = 999;
             for (int j = 0; j < container.getAtomCount(); j++) {
-                if (container.getBond(index).getAtom(1) == container.getAtom(j)) {
+                if (container.getBond(index).getEnd() == container.getAtom(j)) {
                     indexJ = j;
                     break;
                 }
@@ -439,7 +439,7 @@ public class SMSDNormalizer extends AtomContainerManipulator {
                     e.printStackTrace();
                 }
                 assert clone != null;
-                clone.setAtoms(new IAtom[]{map.get(bond.getAtom(0)), map.get(bond.getAtom(1))});
+                clone.setAtoms(new IAtom[]{map.get(bond.getBegin()), map.get(bond.getEnd())});
                 clone.setOrder(atomContainer.getBond(i).getOrder());
                 clone.setStereo(atomContainer.getBond(i).getStereo());
                 mol.addBond(clone);

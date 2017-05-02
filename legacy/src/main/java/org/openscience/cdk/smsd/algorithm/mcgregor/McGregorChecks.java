@@ -113,11 +113,11 @@ public class McGregorChecks {
 
         if (ac1 instanceof IQueryAtomContainer) {
             if (((IQueryBond) bondA1).matches(bondA2)) {
-                IQueryAtom atom1 = (IQueryAtom) (bondA1.getAtom(0));
-                IQueryAtom atom2 = (IQueryAtom) (bondA1.getAtom(1));
+                IQueryAtom atom1 = (IQueryAtom) (bondA1.getBegin());
+                IQueryAtom atom2 = (IQueryAtom) (bondA1.getEnd());
                 // ok, bonds match
-                if (atom1.matches(bondA2.getAtom(0)) && atom2.matches(bondA2.getAtom(1))
-                        || atom1.matches(bondA2.getAtom(1)) && atom2.matches(bondA2.getAtom(0))) {
+                if (atom1.matches(bondA2.getBegin()) && atom2.matches(bondA2.getEnd())
+                        || atom1.matches(bondA2.getEnd()) && atom2.matches(bondA2.getBegin())) {
                     // ok, atoms match in either order
                     return true;
                 }
@@ -129,9 +129,9 @@ public class McGregorChecks {
             //Bond Matcher
             BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
             //Atom Matcher
-            AtomMatcher atomMatcher1 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
+            AtomMatcher atomMatcher1 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getBegin(), shouldMatchBonds);
             //Atom Matcher
-            AtomMatcher atomMatcher2 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
+            AtomMatcher atomMatcher2 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getEnd(), shouldMatchBonds);
 
             if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
                     && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {
@@ -309,8 +309,8 @@ public class McGregorChecks {
     protected static List<String> generateCTabCopy(IAtomContainer atomContainer) throws IOException {
         List<String> cTabCopy = new ArrayList<String>();
         for (int a = 0; a < atomContainer.getBondCount(); a++) {
-            String atomI = atomContainer.getBond(a).getAtom(0).getSymbol();
-            String atomJ = atomContainer.getBond(a).getAtom(1).getSymbol();
+            String atomI = atomContainer.getBond(a).getBegin().getSymbol();
+            String atomJ = atomContainer.getBond(a).getEnd().getSymbol();
             cTabCopy.add(atomI);
             cTabCopy.add(atomJ);
             cTabCopy.add("X");
@@ -507,13 +507,13 @@ public class McGregorChecks {
             IAtomContainer atomContainer, List<String> cBondNeighbors) {
         for (int atomIndex = 0; atomIndex < neighborBondNum; atomIndex++) {
             IBond bond = atomContainer.getBond(atomIndex);
-            if ((atomContainer.indexOf(bond.getAtom(0)) == correspondingAtom)
+            if ((atomContainer.indexOf(bond.getBegin()) == correspondingAtom)
                     && (cBondNeighbors.get(atomIndex * 4 + 2).compareToIgnoreCase("X") == 0)) {
                 cBondNeighbors.set(atomIndex * 4 + 2, cBondNeighbors.get(atomIndex * 4 + 0));
                 cBondNeighbors.set(atomIndex * 4 + 0, newSymbol);
             }
 
-            if ((atomContainer.indexOf(bond.getAtom(1)) == correspondingAtom)
+            if ((atomContainer.indexOf(bond.getEnd()) == correspondingAtom)
                     && (cBondNeighbors.get(atomIndex * 4 + 3).compareToIgnoreCase("X") == 0)) {
                 cBondNeighbors.set(atomIndex * 4 + 3, cBondNeighbors.get(atomIndex * 4 + 1));
                 cBondNeighbors.set(atomIndex * 4 + 1, newSymbol);

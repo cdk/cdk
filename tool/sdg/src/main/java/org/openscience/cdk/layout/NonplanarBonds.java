@@ -154,8 +154,8 @@ final class NonplanarBonds {
             }
             else if (element instanceof IDoubleBondStereochemistry) {
                 IBond doubleBond = ((IDoubleBondStereochemistry) element).getStereoBond();
-                doubleBondElements[atomToIndex.get(doubleBond.getAtom(0))] =
-                        doubleBondElements[atomToIndex.get(doubleBond.getAtom(1))] = (IDoubleBondStereochemistry) element;
+                doubleBondElements[atomToIndex.get(doubleBond.getBegin())] =
+                        doubleBondElements[atomToIndex.get(doubleBond.getEnd())] = (IDoubleBondStereochemistry) element;
             }
         }
 
@@ -588,8 +588,8 @@ final class NonplanarBonds {
      */
     private void labelUnspecified(IBond doubleBond) {
 
-        final IAtom aBeg = doubleBond.getAtom(0);
-        final IAtom aEnd = doubleBond.getAtom(1);
+        final IAtom aBeg = doubleBond.getBegin();
+        final IAtom aEnd = doubleBond.getEnd();
 
         final int beg = atomToIndex.get(aBeg);
         final int end = atomToIndex.get(aEnd);
@@ -708,8 +708,8 @@ final class NonplanarBonds {
             if (bond.getOrder() != DOUBLE)
                 continue;
 
-            final IAtom aBeg = bond.getAtom(0);
-            final IAtom aEnd = bond.getAtom(1);
+            final IAtom aBeg = bond.getBegin();
+            final IAtom aEnd = bond.getEnd();
 
             final int beg = atomToIndex.get(aBeg);
             final int end = atomToIndex.get(aEnd);

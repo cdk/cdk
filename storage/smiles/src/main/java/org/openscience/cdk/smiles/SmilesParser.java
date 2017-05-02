@@ -578,7 +578,7 @@ public final class SmilesParser {
 
                 for (IAtom atom : atomset) {
                     for (IBond bond : mol.getConnectedBondsList(atom)) {
-                        if (!atomset.contains(bond.getConnectedAtom(atom)))
+                        if (!atomset.contains(bond.getOther(atom)))
                             sgroup.addBond(bond);
                     }
                     sgroup.addAtom(atom);

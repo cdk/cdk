@@ -100,16 +100,16 @@ public class GeometricDoubleBondEncoderFactoryTest {
         IBond cd = mock(IBond.class);
         IBond cf = mock(IBond.class);
 
-        when(ba.getAtom(0)).thenReturn(b);
-        when(ba.getAtom(1)).thenReturn(a);
-        when(be.getAtom(0)).thenReturn(b);
-        when(be.getAtom(1)).thenReturn(e);
-        when(bc.getAtom(0)).thenReturn(b);
-        when(bc.getAtom(1)).thenReturn(c);
-        when(cd.getAtom(0)).thenReturn(c);
-        when(cd.getAtom(1)).thenReturn(d);
-        when(cf.getAtom(0)).thenReturn(c);
-        when(cf.getAtom(1)).thenReturn(f);
+        when(ba.getBegin()).thenReturn(b);
+        when(ba.getEnd()).thenReturn(a);
+        when(be.getBegin()).thenReturn(b);
+        when(be.getEnd()).thenReturn(e);
+        when(bc.getBegin()).thenReturn(b);
+        when(bc.getEnd()).thenReturn(c);
+        when(cd.getBegin()).thenReturn(c);
+        when(cd.getEnd()).thenReturn(d);
+        when(cf.getBegin()).thenReturn(c);
+        when(cf.getEnd()).thenReturn(f);
 
         when(bc.getOrder()).thenReturn(IBond.Order.DOUBLE);
         when(mol.bonds()).thenReturn(Arrays.asList(ba, be, bc, cd, cf));
@@ -168,16 +168,16 @@ public class GeometricDoubleBondEncoderFactoryTest {
         IBond cd = mock(IBond.class);
         IBond cf = mock(IBond.class);
 
-        when(ba.getAtom(0)).thenReturn(b);
-        when(ba.getAtom(1)).thenReturn(a);
-        when(be.getAtom(0)).thenReturn(b);
-        when(be.getAtom(1)).thenReturn(e);
-        when(bc.getAtom(0)).thenReturn(b);
-        when(bc.getAtom(1)).thenReturn(c);
-        when(cd.getAtom(0)).thenReturn(c);
-        when(cd.getAtom(1)).thenReturn(d);
-        when(cf.getAtom(0)).thenReturn(c);
-        when(cf.getAtom(1)).thenReturn(f);
+        when(ba.getBegin()).thenReturn(b);
+        when(ba.getEnd()).thenReturn(a);
+        when(be.getBegin()).thenReturn(b);
+        when(be.getEnd()).thenReturn(e);
+        when(bc.getBegin()).thenReturn(b);
+        when(bc.getEnd()).thenReturn(c);
+        when(cd.getBegin()).thenReturn(c);
+        when(cd.getEnd()).thenReturn(d);
+        when(cf.getBegin()).thenReturn(c);
+        when(cf.getEnd()).thenReturn(f);
 
         when(bc.getOrder()).thenReturn(IBond.Order.DOUBLE);
         when(mol.bonds()).thenReturn(Arrays.asList(ba, be, bc, cd, cf));

@@ -230,7 +230,7 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
                 cpy.addAtom(atom);
         }
         for (IBond bond : mol.bonds()) {
-            if (include.contains(bond.getAtom(0)) && include.contains(bond.getAtom(1)))
+            if (include.contains(bond.getBegin()) && include.contains(bond.getEnd()))
                 cpy.addBond(bond);
         }
         return cpy;

@@ -106,10 +106,10 @@ public class DeAromatizationTool {
                 int count = 0;
                 while (done != 2) {
                     bond = getNextBond(atom, bond, ring);
-                    if (bond.getAtom(0) == atom)
-                        atom = bond.getAtom(1);
+                    if (bond.getBegin() == atom)
+                        atom = bond.getEnd();
                     else
-                        atom = bond.getAtom(0);
+                        atom = bond.getBegin();
                     count++;
                     if (count % 2 == 0) {
                         bond.setOrder(IBond.Order.DOUBLE);
@@ -526,7 +526,7 @@ public class DeAromatizationTool {
             if (bond.getOrder()!=IBond.Order.QUADRUPLE)
             {
                 curBond = bond;
-                curAtom = bond.getAtom(0);
+                curAtom = bond.getBegin();
                 if (bond.getOrder()==IBond.Order.SINGLE)
                 {
                     nextIsSingle = true;
@@ -552,7 +552,7 @@ public class DeAromatizationTool {
                 curBond.setOrder(IBond.Order.DOUBLE);
                 nextIsSingle = true;
             }
-            curAtom = curBond.getConnectedAtom(curAtom);
+            curAtom = curBond.getOther(curAtom);
             List<IBond> bonds = ring.getConnectedBondsList(curAtom);
             for (IBond bond : bonds)
             {

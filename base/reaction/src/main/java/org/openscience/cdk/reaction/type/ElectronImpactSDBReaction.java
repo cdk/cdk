@@ -125,8 +125,8 @@ public class ElectronImpactSDBReaction extends ReactionEngine implements IReacti
         Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bondi = bonds.next();
-            IAtom atom1 = bondi.getAtom(0);
-            IAtom atom2 = bondi.getAtom(1);
+            IAtom atom1 = bondi.getBegin();
+            IAtom atom2 = bondi.getEnd();
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE
                     && atom1.getFlag(CDKConstants.REACTIVE_CENTER) && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
                     && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
@@ -173,8 +173,8 @@ public class ElectronImpactSDBReaction extends ReactionEngine implements IReacti
         Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bondi = bonds.next();
-            IAtom atom1 = bondi.getAtom(0);
-            IAtom atom2 = bondi.getAtom(1);
+            IAtom atom1 = bondi.getBegin();
+            IAtom atom2 = bondi.getEnd();
             if (bondi.getOrder() == IBond.Order.SINGLE
                     && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
                     && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0

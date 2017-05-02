@@ -884,8 +884,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
             IAtom bondAtom1 = null;
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();
-                bondAtom0 = bond.getAtom(0);
-                bondAtom1 = bond.getAtom(1);
+                bondAtom0 = bond.getBegin();
+                bondAtom1 = bond.getEnd();
                 if ((bondAtom0.getSymbol().equals("C") && bondAtom1.getSymbol().equals("N"))
                         || (bondAtom0.getSymbol().equals("N") && bondAtom1.getSymbol().equals("C"))
                         && bond.getOrder() == IBond.Order.SINGLE) {
@@ -1287,14 +1287,14 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
             bonds = ac.getConnectedBondsList(neighbour);
             for (int j = 0; j < bonds.size(); j++) {
                 IBond bond = (IBond) bonds.get(j);
-                if (bond.getOrder() != IBond.Order.SINGLE && bond.getConnectedAtom(neighbour) != atom
+                if (bond.getOrder() != IBond.Order.SINGLE && bond.getOther(neighbour) != atom
                         && !neighbour.getSymbol().equals("P") && !neighbour.getSymbol().equals("S")) {
                     picounter += 1;
                 }/*
-                  * else if (bonds[j].getConnectedAtom(neighbours[i])!=atom &&
+                  * else if (bonds[j].getOther(neighbours[i])!=atom &&
                   * !neighbours[i].getSymbol().equals("P") &&
                   * !neighbours[i].getSymbol().equals("S") &&
-                  * bonds[j].getConnectedAtom
+                  * bonds[j].getOther
                   * (neighbours[i]).getFlag(CDKConstants.ISAROMATIC)){ picounter
                   * += 1; }
                   */

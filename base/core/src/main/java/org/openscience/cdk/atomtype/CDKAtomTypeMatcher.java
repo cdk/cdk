@@ -658,7 +658,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private boolean isCarboxylate(IAtomContainer container, IAtom atom, List<IBond> connectedBonds) {
         // assumes that the oxygen only has one neighbor (C=O, or C-[O-])
         if (connectedBonds.size() != 1) return false;
-        IAtom carbon = connectedBonds.get(0).getConnectedAtom(atom);
+        IAtom carbon = connectedBonds.get(0).getOther(atom);
         if (!"C".equals(carbon.getSymbol())) return false;
 
         List<IBond> carbonBonds = container.getConnectedBondsList(carbon);
@@ -667,7 +667,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         int singleBondedNegativeOxygenCount = 0;
         int doubleBondedOxygenCount = 0;
         for (IBond cBond : carbonBonds) {
-            IAtom neighbor = cBond.getConnectedAtom(carbon);
+            IAtom neighbor = cBond.getOther(carbon);
             if ("O".equals(neighbor.getSymbol())) {
                 oxygenCount++;
                 IBond.Order order = cBond.getOrder();
@@ -688,7 +688,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		if (bond.getOrder() == Order.DOUBLE || bond.isAromatic()) {
     			count++;
     		} else {
-    			IAtom nextAtom = bond.getConnectedAtom(atom);
+    			IAtom nextAtom = bond.getOther(atom);
     			if (nextAtom.getHybridization() != CDKConstants.UNSET &&
     					nextAtom.getHybridization() == Hybridization.SP2) {
     				// OK, it's SP2
@@ -1024,7 +1024,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private boolean isAmide(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds) {
     	if (connectedBonds.size() < 1) return false;
         for (IBond bond : connectedBonds) {
-        	IAtom neighbor = bond.getConnectedAtom(atom);
+        	IAtom neighbor = bond.getOther(atom);
             if (neighbor.getSymbol().equals("C")) {
                 if (countAttachedDoubleBonds(atomContainer.getConnectedBondsList(neighbor), neighbor, "O") == 1) return true;
             }
@@ -1035,7 +1035,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private boolean isThioAmide(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds) {
     	if (connectedBonds.size() < 1) return false;
         for (IBond bond : connectedBonds) {
-        	IAtom neighbor = bond.getConnectedAtom(atom);
+        	IAtom neighbor = bond.getOther(atom);
             if (neighbor.getSymbol().equals("C")) {
                 if (countAttachedDoubleBonds(atomContainer.getConnectedBondsList(neighbor), neighbor, "S") == 1) return true;
             }
@@ -1046,7 +1046,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private int countExplicitHydrogens(IAtom atom, List<IBond> connectedBonds) {
         int count = 0;
         for (IBond bond : connectedBonds) {
-        	IAtom aAtom = bond.getConnectedAtom(atom);
+        	IAtom aAtom = bond.getOther(atom);
             if (aAtom.getSymbol().equals("H")) {
                 count++;
             }
@@ -1063,7 +1063,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private List<IBond> heavyBonds(final List<IBond> bonds) {
         final List<IBond> heavy = new ArrayList<IBond>(bonds.size());
         for (final IBond bond : bonds) {
-            if (!(bond.getAtom(0).getSymbol().equals("H") && bond.getAtom(1).getSymbol().equals("H"))) {
+            if (!(bond.getBegin().getSymbol().equals("H") && bond.getEnd().getSymbol().equals("H"))) {
                 heavy.add(bond);
             }
         }
@@ -2458,7 +2458,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 if (bond.getAtomCount() == 2) {
                     if (symbol != null) {
                         // if other atom is of the given element (by its symbol)
-                        if (bond.getConnectedAtom(atom).getSymbol().equals(symbol)) {
+                        if (bond.getOther(atom).getSymbol().equals(symbol)) {
                             doubleBondedAtoms++;
                         }
                     } else {

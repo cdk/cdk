@@ -356,8 +356,8 @@ public abstract class StereoElementFactory {
         /**{@inheritDoc} */
         @Override
         IDoubleBondStereochemistry createGeometric(IBond bond, Stereocenters stereocenters) {
-            return createGeometric(container.indexOf(bond.getAtom(0)), container.indexOf(bond.getAtom(1)),
-                    stereocenters);
+            return createGeometric(container.indexOf(bond.getBegin()), container.indexOf(bond.getEnd()),
+                                   stereocenters);
         }
 
         /**{@inheritDoc} */
@@ -665,13 +665,13 @@ public abstract class StereoElementFactory {
         private int elevationOf(IAtom focus, IBond bond) {
             switch (bond.getStereo()) {
                 case UP:
-                    return bond.getAtom(0) == focus ? +1 : 0;
+                    return bond.getBegin() == focus ? +1 : 0;
                 case UP_INVERTED:
-                    return bond.getAtom(1) == focus ? +1 : 0;
+                    return bond.getEnd() == focus ? +1 : 0;
                 case DOWN:
-                    return bond.getAtom(0) == focus ? -1 : 0;
+                    return bond.getBegin() == focus ? -1 : 0;
                 case DOWN_INVERTED:
-                    return bond.getAtom(1) == focus ? -1 : 0;
+                    return bond.getEnd() == focus ? -1 : 0;
             }
             return 0;
         }
@@ -700,8 +700,8 @@ public abstract class StereoElementFactory {
         /**{@inheritDoc} */
         @Override
         IDoubleBondStereochemistry createGeometric(IBond bond, Stereocenters stereocenters) {
-            return createGeometric(container.indexOf(bond.getAtom(0)), container.indexOf(bond.getAtom(1)),
-                    stereocenters);
+            return createGeometric(container.indexOf(bond.getBegin()), container.indexOf(bond.getEnd()),
+                                   stereocenters);
         }
 
         /**{@inheritDoc} */

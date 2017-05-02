@@ -116,7 +116,7 @@ public class HybridizationFingerprinter extends Fingerprinter implements IFinger
      * Returns true if the bond binds two atoms, and both atoms are SP2.
      */
     private boolean isSP2Bond(IBond bond) {
-        return bond.getAtomCount() == 2 && bond.getAtom(0).getHybridization() == Hybridization.SP2
-               && bond.getAtom(1).getHybridization() == Hybridization.SP2;
+        return bond.getAtomCount() == 2 && bond.getBegin().getHybridization() == Hybridization.SP2
+               && bond.getEnd().getHybridization() == Hybridization.SP2;
     }
 }

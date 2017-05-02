@@ -89,8 +89,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtoms(atomsToAdd);
 
         Assert.assertEquals(2, b.getAtomCount());
-        Assert.assertEquals(atomsToAdd[0], b.getAtom(0));
-        Assert.assertEquals(atomsToAdd[1], b.getAtom(1));
+        Assert.assertEquals(atomsToAdd[0], b.getBegin());
+        Assert.assertEquals(atomsToAdd[1], b.getEnd());
     }
 
     @Test
@@ -155,8 +155,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtom(o, 1);
         b.setOrder(Order.SINGLE);
 
-        Assert.assertEquals(c, b.getAtom(0));
-        Assert.assertEquals(o, b.getAtom(1));
+        Assert.assertEquals(c, b.getBegin());
+        Assert.assertEquals(o, b.getEnd());
     }
 
     @Test
@@ -168,8 +168,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtom(c, 0);
         b.setAtom(o, 1);
 
-        Assert.assertEquals(c, b.getAtom(0));
-        Assert.assertEquals(o, b.getAtom(1));
+        Assert.assertEquals(c, b.getBegin());
+        Assert.assertEquals(o, b.getEnd());
     }
 
     @Test
@@ -181,11 +181,11 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtom(o, 1);
         b.setOrder(Order.SINGLE);
 
-        Assert.assertEquals(c, b.getConnectedAtom(o));
-        Assert.assertEquals(o, b.getConnectedAtom(c));
+        Assert.assertEquals(c, b.getOther(o));
+        Assert.assertEquals(o, b.getOther(c));
 
         // test default return value
-        Assert.assertNull(b.getConnectedAtom(b.getBuilder().newInstance(IAtom.class)));
+        Assert.assertNull(b.getOther(b.getBuilder().newInstance(IAtom.class)));
     }
 
     @Test
@@ -368,8 +368,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IBond clone = (IBond) bond.clone();
 
         // test cloning of atoms
-        Assert.assertNotSame(atom1, clone.getAtom(0));
-        Assert.assertNotSame(atom2, clone.getAtom(1));
+        Assert.assertNotSame(atom1, clone.getBegin());
+        Assert.assertNotSame(atom2, clone.getEnd());
     }
 
     @Test
@@ -421,8 +421,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
         IBond bond = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3});
         Assert.assertEquals(3, bond.getAtomCount());
-        Assert.assertEquals(atom1, bond.getAtom(0));
-        Assert.assertEquals(atom2, bond.getAtom(1));
+        Assert.assertEquals(atom1, bond.getBegin());
+        Assert.assertEquals(atom2, bond.getEnd());
         Assert.assertEquals(atom3, bond.getAtom(2));
 
         Assert.assertEquals(bond.getOrder(), CDKConstants.UNSET);
@@ -488,8 +488,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom4 = object.getBuilder().newInstance(IAtom.class, "C");
 
         IBond bond1 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3, atom4});
-        Assert.assertEquals(atom2, bond1.getConnectedAtom(atom1));
-        Assert.assertNull(bond1.getConnectedAtom(object.getBuilder().newInstance(IAtom.class)));
+        Assert.assertEquals(atom2, bond1.getOther(atom1));
+        Assert.assertNull(bond1.getOther(object.getBuilder().newInstance(IAtom.class)));
 
         IAtom[] conAtoms = bond1.getConnectedAtoms(atom1);
         boolean correct = true;

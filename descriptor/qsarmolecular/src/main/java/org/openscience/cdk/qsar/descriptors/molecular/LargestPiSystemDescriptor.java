@@ -242,7 +242,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
             //logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
             List bonds = container.getConnectedBondsList(atom);
             for (Object bond : bonds) {
-                nextAtom = ((IBond) bond).getConnectedAtom(atom);
+                nextAtom = ((IBond) bond).getOther(atom);
                 if ((container.getMaximumBondOrder(nextAtom) != IBond.Order.SINGLE
                         || Math.abs(nextAtom.getFormalCharge()) >= 1 || nextAtom.getFlag(CDKConstants.ISAROMATIC)
                         || nextAtom.getSymbol().equals("N") || nextAtom.getSymbol().equals("O"))

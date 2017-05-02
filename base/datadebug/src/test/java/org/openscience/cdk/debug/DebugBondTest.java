@@ -50,8 +50,8 @@ public class DebugBondTest extends AbstractBondTest {
     public void testDebugBond() {
         IBond bond = new DebugBond();
         Assert.assertEquals(0, bond.getAtomCount());
-        Assert.assertNull(bond.getAtom(0));
-        Assert.assertNull(bond.getAtom(1));
+        Assert.assertNull(bond.getBegin());
+        Assert.assertNull(bond.getEnd());
         Assert.assertNull(bond.getOrder());
         Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
     }
@@ -67,8 +67,8 @@ public class DebugBondTest extends AbstractBondTest {
 
         IBond bond1 = new DebugBond(new IAtom[]{atom1, atom2, atom3, atom4, atom5});
         Assert.assertEquals(5, bond1.getAtomCount());
-        Assert.assertEquals(atom1, bond1.getAtom(0));
-        Assert.assertEquals(atom2, bond1.getAtom(1));
+        Assert.assertEquals(atom1, bond1.getBegin());
+        Assert.assertEquals(atom2, bond1.getEnd());
     }
 
     @Test
@@ -82,8 +82,8 @@ public class DebugBondTest extends AbstractBondTest {
 
         IBond bond1 = new DebugBond(new IAtom[]{atom1, atom2, atom3, atom4, atom5}, IBond.Order.SINGLE);
         Assert.assertEquals(5, bond1.getAtomCount());
-        Assert.assertEquals(atom1, bond1.getAtom(0));
-        Assert.assertEquals(atom2, bond1.getAtom(1));
+        Assert.assertEquals(atom1, bond1.getBegin());
+        Assert.assertEquals(atom2, bond1.getEnd());
         Assert.assertEquals(IBond.Order.SINGLE, bond1.getOrder());
     }
 
@@ -95,8 +95,8 @@ public class DebugBondTest extends AbstractBondTest {
         IBond bond = new DebugBond(c, o);
 
         Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(c, bond.getAtom(0));
-        Assert.assertEquals(o, bond.getAtom(1));
+        Assert.assertEquals(c, bond.getBegin());
+        Assert.assertEquals(o, bond.getEnd());
         Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
         Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
     }
@@ -109,8 +109,8 @@ public class DebugBondTest extends AbstractBondTest {
         IBond bond = new DebugBond(c, o, IBond.Order.DOUBLE);
 
         Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(c, bond.getAtom(0));
-        Assert.assertEquals(o, bond.getAtom(1));
+        Assert.assertEquals(c, bond.getBegin());
+        Assert.assertEquals(o, bond.getEnd());
         Assert.assertTrue(bond.getOrder() == IBond.Order.DOUBLE);
         Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
     }
@@ -123,8 +123,8 @@ public class DebugBondTest extends AbstractBondTest {
         IBond bond = new DebugBond(c, o, IBond.Order.SINGLE, IBond.Stereo.UP);
 
         Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(c, bond.getAtom(0));
-        Assert.assertEquals(o, bond.getAtom(1));
+        Assert.assertEquals(c, bond.getBegin());
+        Assert.assertEquals(o, bond.getEnd());
         Assert.assertTrue(bond.getOrder() == IBond.Order.SINGLE);
         Assert.assertEquals(IBond.Stereo.UP, bond.getStereo());
     }

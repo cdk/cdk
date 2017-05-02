@@ -425,8 +425,8 @@ public class FixBondOrdersTool {
         List<Integer[]> aptc = new ArrayList<Integer[]>();
         for (Integer i : bondsToCheck) {
             Integer[] aps = new Integer[2];
-            aps[0] = molecule.indexOf(molecule.getBond(i).getAtom(0));
-            aps[1] = molecule.indexOf(molecule.getBond(i).getAtom(1));
+            aps[0] = molecule.indexOf(molecule.getBond(i).getBegin());
+            aps[1] = molecule.indexOf(molecule.getBond(i).getEnd());
             aptc.add(aps);
         }
         return aptc;

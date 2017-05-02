@@ -204,9 +204,9 @@ final class FischerRecognition {
 
         // the neighbors of our tetrahedral centre, the EAST or WEST may
         // be missing so we initialise these with the implicit (focus)
-        IAtom[] neighbors = new IAtom[]{cardinalBonds[NORTH].getConnectedAtom(focus),
+        IAtom[] neighbors = new IAtom[]{cardinalBonds[NORTH].getOther(focus),
                                         focus,
-                                        cardinalBonds[SOUTH].getConnectedAtom(focus),
+                                        cardinalBonds[SOUTH].getOther(focus),
                                         focus};
 
 
@@ -214,14 +214,14 @@ final class FischerRecognition {
         // connected atom. else if bond is defined (but not single or planar) or we
         // have 4 neighbours something is wrong and we skip this atom                
         if (isPlanarSigmaBond(cardinalBonds[EAST])) {
-            neighbors[EAST] = cardinalBonds[EAST].getConnectedAtom(focus);
+            neighbors[EAST] = cardinalBonds[EAST].getOther(focus);
         }
         else if (cardinalBonds[EAST] != null || bonds.length == 4) {
             return null;
         }
 
         if (isPlanarSigmaBond(cardinalBonds[WEST])) {
-            neighbors[WEST] = cardinalBonds[WEST].getConnectedAtom(focus);
+            neighbors[WEST] = cardinalBonds[WEST].getOther(focus);
         }
         else if (cardinalBonds[WEST] != null || bonds.length == 4) {
             return null;
@@ -247,7 +247,7 @@ final class FischerRecognition {
 
         for (final IBond bond : bonds) {
 
-            IAtom   other   = bond.getConnectedAtom(focus);
+            IAtom   other   = bond.getOther(focus);
             Point2d otherXy = other.getPoint2d();
 
             double deltaX = otherXy.x - centerXy.x;

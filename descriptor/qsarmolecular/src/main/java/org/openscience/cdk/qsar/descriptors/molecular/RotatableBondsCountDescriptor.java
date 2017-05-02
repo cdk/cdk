@@ -156,8 +156,8 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
             }
         }
         for (IBond bond : ac.bonds()) {
-            IAtom atom0 = bond.getAtom(0);
-            IAtom atom1 = bond.getAtom(1);
+            IAtom atom0 = bond.getBegin();
+            IAtom atom1 = bond.getEnd();
             if (atom0.getSymbol().equals("H") || atom1.getSymbol().equals("H")) continue;
             if (bond.getOrder() == Order.SINGLE) {
                 if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE))

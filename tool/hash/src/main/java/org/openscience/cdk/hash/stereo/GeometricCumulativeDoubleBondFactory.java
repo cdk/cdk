@@ -74,8 +74,8 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
             if (bonds.size() == 2) {
 
                 // (s)tart/(e)nd of cumulated system: -s=a=e-
-                IAtom s = bonds.get(0).getConnectedAtom(a);
-                IAtom e = bonds.get(1).getConnectedAtom(a);
+                IAtom s = bonds.get(0).getOther(a);
+                IAtom e = bonds.get(1).getOther(a);
                 // need the parents to re-use the double bond encoder
                 IAtom sParent = a;
                 IAtom eParent = a;
@@ -88,8 +88,8 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
 
                 // expand out from 'l'
                 while (s != null && map.cumulated(s)) {
-                    IAtom p = map.bonds(s).get(0).getConnectedAtom(s);
-                    IAtom q = map.bonds(s).get(1).getConnectedAtom(s);
+                    IAtom p = map.bonds(s).get(0).getOther(s);
+                    IAtom q = map.bonds(s).get(1).getOther(s);
                     sParent = s;
                     s = visited.add(p) ? p : visited.add(q) ? q : null;
                     size++;
@@ -97,8 +97,8 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
 
                 // expand from 'r'
                 while (e != null && map.cumulated(e)) {
-                    IAtom p = map.bonds(e).get(0).getConnectedAtom(e);
-                    IAtom q = map.bonds(e).get(1).getConnectedAtom(e);
+                    IAtom p = map.bonds(e).get(0).getOther(e);
+                    IAtom q = map.bonds(e).get(1).getOther(e);
                     eParent = e;
                     e = visited.add(p) ? p : visited.add(q) ? q : null;
                     size++;
@@ -236,7 +236,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
 
         for (IBond bond : connected) {
             if (!isDoubleBond(bond)) {
-                IAtom other = bond.getConnectedAtom(a);
+                IAtom other = bond.getOther(a);
                 coordinates[i + offset] = other.getPoint2d();
                 elevations[i + offset] = elevation(bond, a);
                 indices[i] = container.indexOf(other);
@@ -273,7 +273,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
 
         for (IBond bond : connected) {
             if (!isDoubleBond(bond)) {
-                IAtom other = bond.getConnectedAtom(a);
+                IAtom other = bond.getOther(a);
                 coordinates[i + offset] = other.getPoint3d();
                 indices[i] = container.indexOf(other);
                 i++;
@@ -298,7 +298,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      */
     private static boolean has2DCoordinates(List<IBond> bonds) {
         for (IBond bond : bonds) {
-            if (bond.getAtom(0).getPoint2d() == null || bond.getAtom(1).getPoint2d() == null) return false;
+            if (bond.getBegin().getPoint2d() == null || bond.getEnd().getPoint2d() == null) return false;
         }
         return true;
     }
@@ -312,7 +312,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      */
     private static boolean has3DCoordinates(List<IBond> bonds) {
         for (IBond bond : bonds) {
-            if (bond.getAtom(0).getPoint3d() == null || bond.getAtom(1).getPoint3d() == null) return false;
+            if (bond.getBegin().getPoint3d() == null || bond.getEnd().getPoint3d() == null) return false;
         }
         return true;
     }
@@ -328,7 +328,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      * @return elevation of bond
      */
     static int elevation(IBond bond, IAtom a) {
-        return bond.getAtom(0).equals(a) ? elevation(bond) : elevation(bond) * -1;
+        return bond.getBegin().equals(a) ? elevation(bond) : elevation(bond) * -1;
     }
 
     /**
@@ -418,8 +418,8 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
          * @param bond the bond to add
          */
         public void add(IBond bond) {
-            add(bond.getAtom(0), bond);
-            add(bond.getAtom(1), bond);
+            add(bond.getBegin(), bond);
+            add(bond.getEnd(), bond);
         }
 
         /**

@@ -53,9 +53,9 @@ public class StereoBond extends SMARTSBond {
     }
 
     public Direction direction(IAtom atom) {
-        if (atom == getAtom(0))
+        if (atom == getBegin())
             return direction;
-        else if (atom == getAtom(1)) return inv(direction);
+        else if (atom == getEnd()) return inv(direction);
         throw new IllegalArgumentException("atom is not a memeber of this bond");
     }
 

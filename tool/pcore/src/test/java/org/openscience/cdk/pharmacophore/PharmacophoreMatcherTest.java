@@ -176,8 +176,8 @@ public class PharmacophoreMatcherTest {
         Assert.assertEquals(3, bMatches.get(0).size());
 
         PharmacophoreBond pbond = (PharmacophoreBond) bMatches.get(0).get(0);
-        PharmacophoreAtom patom1 = (PharmacophoreAtom) pbond.getAtom(0);
-        PharmacophoreAtom patom2 = (PharmacophoreAtom) pbond.getAtom(1);
+        PharmacophoreAtom patom1 = (PharmacophoreAtom) pbond.getBegin();
+        PharmacophoreAtom patom2 = (PharmacophoreAtom) pbond.getEnd();
         Assert.assertEquals("D", patom1.getSymbol());
         Assert.assertEquals("A", patom2.getSymbol());
 

@@ -452,7 +452,7 @@ public final class InChITautomerGenerator {
                 bondRemoved = false;
                 for (IAtom removedAtom : removedAtoms) {
                     if (bond.contains(removedAtom)) {
-                        IAtom other = bond.getConnectedAtom(removedAtom);
+                        IAtom other = bond.getOther(removedAtom);
                         int decValence = 0;
                         switch (bond.getOrder()) {
                             case SINGLE:
@@ -538,7 +538,7 @@ public final class InChITautomerGenerator {
                             for (int bondIdx = 0; bondIdx < tautomerSkeleton.getBondCount(); bondIdx++) {
                                 IBond skBond = tautomerSkeleton.getBond(bondIdx);
                                 if (skBond.contains(skAtom1)) {
-                                    IAtom skAtom2 = skBond.getConnectedAtom(skAtom1);
+                                    IAtom skAtom2 = skBond.getOther(skAtom1);
                                     for (IAtom atom2 : tautomer.atoms()) {
                                         if (atom2.getID().equals(skAtom2.getID())) {
                                             IBond tautBond = tautomer.getBond(atom1, atom2);
@@ -654,7 +654,7 @@ public final class InChITautomerGenerator {
 
         while (offSet < container.getBondCount() && dblBondPositions == null) {
             IBond bond = container.getBond(offSet);
-            if (atomsInNeedOfFix.contains(bond.getAtom(0)) && atomsInNeedOfFix.contains(bond.getAtom(1))) {
+            if (atomsInNeedOfFix.contains(bond.getBegin()) && atomsInNeedOfFix.contains(bond.getEnd())) {
                 bond.setOrder(IBond.Order.DOUBLE);
                 dblBondsAdded = dblBondsAdded + 1;
                 if (dblBondsAdded == doubleBondMax) {

@@ -291,8 +291,8 @@ public class InChIGenerator {
             IBond bond = bonds.next();
 
             // Assumes 2 centre bond
-            JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getAtom(0));
-            JniInchiAtom at1 = (JniInchiAtom) atomMap.get(bond.getAtom(1));
+            JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getBegin());
+            JniInchiAtom at1 = (JniInchiAtom) atomMap.get(bond.getEnd());
 
             // Get bond order
             INCHI_BOND_TYPE order;
@@ -391,23 +391,23 @@ public class InChIGenerator {
                 JniInchiAtom at3 = null;
                 // TODO: I should check for two atom bonds... or maybe that should happen when you
                 //    create a double bond stereochemistry
-                if (stereoBond.contains(surroundingBonds[0].getAtom(0))) {
+                if (stereoBond.contains(surroundingBonds[0].getBegin())) {
                     // first atom is A
-                    at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(0));
-                    at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(1));
+                    at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getBegin());
+                    at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getEnd());
                 } else {
                     // first atom is X
-                    at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(0));
-                    at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(1));
+                    at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getBegin());
+                    at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getEnd());
                 }
-                if (stereoBond.contains(surroundingBonds[1].getAtom(0))) {
+                if (stereoBond.contains(surroundingBonds[1].getBegin())) {
                     // first atom is B
-                    at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(0));
-                    at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(1));
+                    at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getBegin());
+                    at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getEnd());
                 } else {
                     // first atom is Y
-                    at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(1));
-                    at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(0));
+                    at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getEnd());
+                    at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getBegin());
                 }
                 INCHI_PARITY p = INCHI_PARITY.UNKNOWN;
                 if (stereoType == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER) {
@@ -450,21 +450,21 @@ public class InChIGenerator {
                 // first if there are two explicit atoms we need to replace one
                 // with the terminal atom - the configuration does not change
                 if (t0Bonds.size() == 2) {
-                    IAtom replace = t0Bonds.remove(0).getConnectedAtom(terminals[0]);
+                    IAtom replace = t0Bonds.remove(0).getOther(terminals[0]);
                     for (int i = 0; i < peripherals.length; i++)
                         if (replace == peripherals[i]) peripherals[i] = terminals[0];
                 }
 
                 if (t1Bonds.size() == 2) {
-                    IAtom replace = t1Bonds.remove(0).getConnectedAtom(terminals[1]);
+                    IAtom replace = t1Bonds.remove(0).getOther(terminals[1]);
                     for (int i = 0; i < peripherals.length; i++)
                         if (replace == peripherals[i]) peripherals[i] = terminals[1];
                 }
 
                 // the neighbor attached to each terminal atom that we will
                 // define the configuration of
-                IAtom t0Neighbor = t0Bonds.get(0).getConnectedAtom(terminals[0]);
-                IAtom t1Neighbor = t1Bonds.get(0).getConnectedAtom(terminals[1]);
+                IAtom t0Neighbor = t0Bonds.get(0).getOther(terminals[0]);
+                IAtom t1Neighbor = t1Bonds.get(0).getOther(terminals[1]);
 
                 // we now need to move all the atoms into the correct positions
                 // everytime we exchange atoms the configuration inverts

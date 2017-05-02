@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.RingSearch;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import java.util.Arrays;
@@ -129,12 +128,12 @@ final class CorrectGeometricConfiguration {
         IBond db = dbs.getStereoBond();
         IBond[] bonds = dbs.getBonds();
 
-        IAtom left = db.getAtom(0);
-        IAtom right = db.getAtom(1);
+        IAtom left = db.getBegin();
+        IAtom right = db.getEnd();
 
         int p = parity(dbs);
-        int q = parity(getAtoms(left, bonds[0].getConnectedAtom(left), right))
-                * parity(getAtoms(right, bonds[1].getConnectedAtom(right), left));
+        int q = parity(getAtoms(left, bonds[0].getOther(left), right))
+                * parity(getAtoms(right, bonds[1].getOther(right), left));
 
         // configuration is unspecified? then we add an unspecified bond.
         // note: IDoubleBondStereochemistry doesn't indicate this yet
@@ -255,8 +254,8 @@ final class CorrectGeometricConfiguration {
      * @return the reflected point
      */
     private Point2d reflect(Point2d p, IBond bond) {
-        IAtom a = bond.getAtom(0);
-        IAtom b = bond.getAtom(1);
+        IAtom a = bond.getBegin();
+        IAtom b = bond.getEnd();
         return reflect(p, a.getPoint2d().x, a.getPoint2d().y, b.getPoint2d().x, b.getPoint2d().y);
     }
 

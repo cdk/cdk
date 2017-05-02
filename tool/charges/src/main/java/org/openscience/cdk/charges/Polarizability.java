@@ -198,8 +198,8 @@ public class Polarizability {
         IAtomContainer acH = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
         addExplicitHydrogens(acH);
         if (bond.getAtomCount() == 2) {
-            polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getAtom(0));
-            polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getAtom(1));
+            polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getBegin());
+            polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getEnd());
         }
         return (polarizabilitiy / 2);
     }
@@ -295,7 +295,7 @@ public class Polarizability {
         IAtom connectedAtom;
         int hCounter = 0;
         for (IBond bond : bonds) {
-            connectedAtom = bond.getConnectedAtom(atom);
+            connectedAtom = bond.getOther(atom);
             if (connectedAtom.getSymbol().equals("H")) {
                 hCounter += 1;
             }

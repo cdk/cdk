@@ -73,8 +73,8 @@ public class MorganNumbersTools {
         // build the graph and initialise the current connectivity
         // value to the number of connected non-hydrogens
         for (IBond bond : molecule.bonds()) {
-            int u = molecule.indexOf(bond.getAtom(0));
-            int v = molecule.indexOf(bond.getAtom(1));
+            int u = molecule.indexOf(bond.getBegin());
+            int v = molecule.indexOf(bond.getEnd());
             graph[u] = Ints.ensureCapacity(graph[u], degree[u] + 1, INITIAL_DEGREE);
             graph[v] = Ints.ensureCapacity(graph[v], degree[v] + 1, INITIAL_DEGREE);
             graph[u][degree[u]++] = v;

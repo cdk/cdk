@@ -403,8 +403,8 @@ public class ReactionManipulator {
 
         // split bonds
         for (IBond bond : mol.bonds()) {
-            IAtom beg = bond.getAtom(0);
-            IAtom end = bond.getAtom(1);
+            IAtom beg = bond.getBegin();
+            IAtom end = bond.getEnd();
             Integer begIdx = beg.getProperty(CDKConstants.REACTION_GROUP);
             Integer endIdx = end.getProperty(CDKConstants.REACTION_GROUP);
             if (begIdx == null || endIdx == null)
@@ -420,7 +420,7 @@ public class ReactionManipulator {
             if (se instanceof ITetrahedralChirality) {
                 focus = ((ITetrahedralChirality) se).getChiralAtom();
             } else if (se instanceof IDoubleBondStereochemistry) {
-                focus = ((IDoubleBondStereochemistry) se).getStereoBond().getAtom(0);
+                focus = ((IDoubleBondStereochemistry) se).getStereoBond().getBegin();
             } else if (se instanceof ExtendedTetrahedral) {
                 focus = ((ExtendedTetrahedral) se).focus();
             }
@@ -474,8 +474,8 @@ public class ReactionManipulator {
         Set<IntTuple> mappedProductBonds  = new HashSet<>();
         for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
             for (IBond bond : reactant.bonds()) {
-                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer begidx = bond.getBegin().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endidx = bond.getEnd().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                 if (begidx != null && endidx != null)
                     mappedReactantBonds.add(new IntTuple(begidx, endidx));
             }
@@ -486,8 +486,8 @@ public class ReactionManipulator {
 
         for (IAtomContainer product : reaction.getProducts().atomContainers()) {
             for (IBond bond : product.bonds()) {
-                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer begidx = bond.getBegin().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endidx = bond.getEnd().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                 if (begidx != null && endidx != null)
                     mappedProductBonds.add(new IntTuple(begidx, endidx));
             }
@@ -499,16 +499,16 @@ public class ReactionManipulator {
         // repeat above but now store any that are different or unmapped as being mapped
         for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
             for (IBond bond : reactant.bonds()) {
-                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer begidx = bond.getBegin().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endidx = bond.getEnd().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                 if (begidx != null && endidx != null && mappedProductBonds.contains(new IntTuple(begidx, endidx)))
                     mapped.add(bond);
             }
         }
         for (IAtomContainer product : reaction.getProducts().atomContainers()) {
             for (IBond bond : product.bonds()) {
-                Integer begidx = bond.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                Integer endidx = bond.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer begidx = bond.getBegin().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                Integer endidx = bond.getEnd().getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                 if (begidx != null && endidx != null && mappedReactantBonds.contains(new IntTuple(begidx, endidx)))
                     mapped.add(bond);
             }

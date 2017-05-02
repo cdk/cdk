@@ -136,7 +136,7 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
                 while (bondis.hasNext()) {
                     IBond bondi = bondis.next();
                     if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.DOUBLE) {
-                        IAtom atomj = bondi.getConnectedAtom(atomi); // Atom pos 2
+                        IAtom atomj = bondi.getOther(atomi); // Atom pos 2
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)
                                 && (atomj.getFormalCharge() == CDKConstants.UNSET ? 0 : atomj.getFormalCharge()) == 0
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
@@ -146,7 +146,7 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
                                 if (bondj.equals(bondi)) continue;
                                 if (bondj.getFlag(CDKConstants.REACTIVE_CENTER)
                                         && bondj.getOrder() == IBond.Order.SINGLE) {
-                                    IAtom atomk = bondj.getConnectedAtom(atomj); // Atom pos 3
+                                    IAtom atomk = bondj.getOther(atomj); // Atom pos 3
                                     if (atomk.getFlag(CDKConstants.REACTIVE_CENTER)
                                             && (atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk
                                                     .getFormalCharge()) == 0
@@ -157,7 +157,7 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
                                             if (bondk.equals(bondj)) continue;
                                             if (bondk.getFlag(CDKConstants.REACTIVE_CENTER)
                                                     && bondk.getOrder() == IBond.Order.SINGLE) {
-                                                IAtom atoml = bondk.getConnectedAtom(atomk); // Atom pos 4
+                                                IAtom atoml = bondk.getOther(atomk); // Atom pos 4
                                                 if (atoml.getFlag(CDKConstants.REACTIVE_CENTER)
                                                         && atoml.getSymbol().equals("H")) {
 
@@ -226,7 +226,7 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
                 while (bondis.hasNext()) {
                     IBond bondi = bondis.next();
                     if (bondi.getOrder() == IBond.Order.DOUBLE) {
-                        IAtom atomj = bondi.getConnectedAtom(atomi); // Atom pos 2
+                        IAtom atomj = bondi.getOther(atomi); // Atom pos 2
                         if ((atomj.getFormalCharge() == CDKConstants.UNSET ? 0 : atomj.getFormalCharge()) == 0
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
                             Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
@@ -234,7 +234,7 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
                                 IBond bondj = bondjs.next();
                                 if (bondj.equals(bondi)) continue;
                                 if (bondj.getOrder() == IBond.Order.SINGLE) {
-                                    IAtom atomk = bondj.getConnectedAtom(atomj); // Atom pos 3
+                                    IAtom atomk = bondj.getOther(atomj); // Atom pos 3
                                     if ((atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk.getFormalCharge()) == 0
                                             && reactant.getConnectedSingleElectronsCount(atomk) == 0) {
                                         Iterator<IBond> bondks = reactant.getConnectedBondsList(atomk).iterator();
@@ -242,7 +242,7 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
                                             IBond bondk = bondks.next();
                                             if (bondk.equals(bondj)) continue;
                                             if (bondk.getOrder() == IBond.Order.SINGLE) {
-                                                IAtom atoml = bondk.getConnectedAtom(atomk); // Atom pos 4
+                                                IAtom atoml = bondk.getOther(atomk); // Atom pos 4
                                                 if (atoml.getSymbol().equals("H")) {
                                                     atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                                     atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);

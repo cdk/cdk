@@ -290,7 +290,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
         for (IAtom atom : sphere) {
             List<IBond> bonds = container.getConnectedBondsList(atom);
             for (IBond bond : bonds) {
-                nextAtom = bond.getConnectedAtom(atom);
+                nextAtom = bond.getOther(atom);
                 if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC) && !nextAtom.getFlag(CDKConstants.ISINRING)
                         & nextAtom.getSymbol().equals("C"))
                         & !nextAtom.getFlag(CDKConstants.VISITED)) {

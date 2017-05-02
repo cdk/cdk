@@ -65,11 +65,9 @@ import java.util.List;
 import java.util.Map;
 
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
-import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
 import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 import static org.openscience.cdk.renderer.generators.BasicSceneGenerator.BondLength;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.BondSeparation;
-import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.HIDDEN;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.HashSpacing;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.WaveSpacing;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
@@ -203,8 +201,8 @@ final class StandardBondGenerator {
      * @return rendering element
      */
     IRenderingElement generate(IBond bond) {
-        final IAtom atom1 = bond.getAtom(0);
-        final IAtom atom2 = bond.getAtom(1);
+        final IAtom atom1 = bond.getBegin();
+        final IAtom atom2 = bond.getEnd();
 
         IBond.Order order = bond.getOrder();
 
@@ -345,7 +343,7 @@ final class StandardBondGenerator {
             if (toBonds.size() == 1) {
 
                 final IBond toBondNeighbor = toBonds.get(0);
-                final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
+                final IAtom toNeighbor = toBondNeighbor.getOther(to);
 
                 Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
                 boolean wideToWide = false;
@@ -432,7 +430,7 @@ final class StandardBondGenerator {
         // fancy hashed wedges with slanted hatch sections aligned with neighboring bonds
         if (canDrawFancyHashedWedge(to, toBonds, adjacent)) {
             final IBond toBondNeighbor = toBonds.get(0);
-            final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
+            final IAtom toNeighbor = toBondNeighbor.getOther(to);
 
             Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
 
@@ -611,16 +609,16 @@ final class StandardBondGenerator {
         final IAtomContainer refContainer = cyclic ? ringMap.get(bond) : container;
 
         final int length = refContainer.getAtomCount();
-        final int index1 = refContainer.indexOf(bond.getAtom(0));
-        final int index2 = refContainer.indexOf(bond.getAtom(1));
+        final int index1 = refContainer.indexOf(bond.getBegin());
+        final int index2 = refContainer.indexOf(bond.getEnd());
 
         // if the bond is in a cycle we are using ring bonds to determine offset, since rings
         // have been normalised and ordered to wind anti-clockwise we want to get the atoms
         // in the order they are in the ring.
         final boolean outOfOrder = cyclic && index1 == (index2 + 1) % length;
 
-        final IAtom atom1 = bond.getAtom(outOfOrder ? 1 : 0);
-        final IAtom atom2 = bond.getAtom(outOfOrder ? 0 : 1);
+        final IAtom atom1 = outOfOrder ? bond.getEnd() : bond.getBegin();
+        final IAtom atom2 = outOfOrder ? bond.getBegin() : bond.getEnd();
 
         if (IBond.Stereo.E_OR_Z.equals(bond.getStereo())) return generateCrossedDoubleBond(atom1, atom2);
 
@@ -712,13 +710,13 @@ final class StandardBondGenerator {
         if (bond.getStereo() == null) return false;
         switch (bond.getStereo()) {
             case UP:
-                return bond.getAtom(1) == atom;
+                return bond.getEnd() == atom;
             case UP_INVERTED:
-                return bond.getAtom(0) == atom;
+                return bond.getBegin() == atom;
             case DOWN:
-                return bond.getAtom(1) == atom;
+                return bond.getEnd() == atom;
             case DOWN_INVERTED:
-                return bond.getAtom(0) == atom;
+                return bond.getBegin() == atom;
             default:
                 return false;
         }
@@ -768,7 +766,7 @@ final class StandardBondGenerator {
         final Vector2d unit = newUnitVector(atom1Point, atom2Point);
         Vector2d perpendicular = newPerpendicularVector(unit);
 
-        final Vector2d reference = newUnitVector(atom1.getPoint2d(), atom1Bond.getConnectedAtom(atom1).getPoint2d());
+        final Vector2d reference = newUnitVector(atom1.getPoint2d(), atom1Bond.getOther(atom1).getPoint2d());
 
         // there are two perpendicular vectors, this check ensures we have one on the same side as
         // the reference
@@ -979,7 +977,7 @@ final class StandardBondGenerator {
         final Vector2d bndVec  = VecmathUtil.newUnitVector(atom, bond);
         final Vector2d bndXVec = VecmathUtil.newPerpendicularVector(bndVec);
 
-        final double length = atom.getPoint2d().distance(bond.getConnectedAtom(atom).getPoint2d());
+        final double length = atom.getPoint2d().distance(bond.getOther(atom).getPoint2d());
         bndXVec.scale(length /2);
         final Tuple2d beg = VecmathUtil.sum(atom.getPoint2d(), bndXVec);
         bndXVec.scale(-1);
@@ -1223,12 +1221,12 @@ final class StandardBondGenerator {
      * @throws java.lang.IllegalArgumentException bonds share no atoms
      */
     static int winding(IBond bond1, IBond bond2) {
-        final IAtom atom1 = bond1.getAtom(0);
-        final IAtom atom2 = bond1.getAtom(1);
+        final IAtom atom1 = bond1.getBegin();
+        final IAtom atom2 = bond1.getEnd();
         if (bond2.contains(atom1)) {
-            return winding(atom2.getPoint2d(), atom1.getPoint2d(), bond2.getConnectedAtom(atom1).getPoint2d());
+            return winding(atom2.getPoint2d(), atom1.getPoint2d(), bond2.getOther(atom1).getPoint2d());
         } else if (bond2.contains(atom2)) {
-            return winding(atom1.getPoint2d(), atom2.getPoint2d(), bond2.getConnectedAtom(atom2).getPoint2d());
+            return winding(atom1.getPoint2d(), atom2.getPoint2d(), bond2.getOther(atom2).getPoint2d());
         } else {
             throw new IllegalArgumentException("Bonds do not share any atoms");
         }

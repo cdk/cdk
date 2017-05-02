@@ -311,8 +311,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         if (bond.getAtomCount() > 2) return null;
 
         // is object right? if not replace with a good one
-        Point2d point1 = bond.getAtom(0).getPoint2d();
-        Point2d point2 = bond.getAtom(1).getPoint2d();
+        Point2d point1 = bond.getBegin().getPoint2d();
+        Point2d point2 = bond.getEnd().getPoint2d();
         Color color = this.getColorForBond(bond, model);
         double bondWidth = this.getWidthForBond(bond, model);
         double bondDistance = (Double) model.get(BondDistance.class) / model.getParameter(Scale.class).getValue();
@@ -398,8 +398,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public LineElement generateInnerElement(IBond bond, IRing ring, RendererModel model) {
         Point2d center = GeometryUtil.get2DCenter(ring);
-        Point2d a = bond.getAtom(0).getPoint2d();
-        Point2d b = bond.getAtom(1).getPoint2d();
+        Point2d a = bond.getBegin().getPoint2d();
+        Point2d b = bond.getEnd().getPoint2d();
 
         // the proportion to move in towards the ring center
         double distanceFactor = model.getParameter(TowardsRingCenterProportion.class).getValue();

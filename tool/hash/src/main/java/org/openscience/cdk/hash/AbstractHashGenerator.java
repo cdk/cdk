@@ -141,8 +141,8 @@ class AbstractHashGenerator {
 
         for (IBond bond : container.bonds()) {
 
-            int v = container.indexOf(bond.getAtom(0));
-            int w = container.indexOf(bond.getAtom(1));
+            int v = container.indexOf(bond.getBegin());
+            int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)
                 throw new IllegalArgumentException("bond at index " + container.indexOf(bond)

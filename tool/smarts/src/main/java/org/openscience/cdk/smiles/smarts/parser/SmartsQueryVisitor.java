@@ -17,8 +17,6 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IAtom;
@@ -323,8 +321,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
         // for each double bond, find the stereo bonds. currently doesn't
         // handle logical bonds i.e. C/C-,=C/C
         for (IBond bond : doubleBonds) {
-            IAtom left = bond.getAtom(0);
-            IAtom right = bond.getAtom(1);
+            IAtom left = bond.getBegin();
+            IAtom right = bond.getEnd();
             StereoBond leftBond = findStereoBond(left);
             StereoBond rightBond = findStereoBond(right);
             if (leftBond == null || rightBond == null) continue;

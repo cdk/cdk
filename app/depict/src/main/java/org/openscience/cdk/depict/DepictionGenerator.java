@@ -21,7 +21,6 @@ package org.openscience.cdk.depict;
 import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,21 +43,17 @@ import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.standard.SelectionVisibility;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -532,8 +527,8 @@ public final class DepictionGenerator {
             }
             if (colorIdx > prevPalletIdx) {
                 for (IBond bond : mol.bonds()) {
-                    IAtom a1 = bond.getAtom(0);
-                    IAtom a2 = bond.getAtom(1);
+                    IAtom a1 = bond.getBegin();
+                    IAtom a2 = bond.getEnd();
                     Color c1 = colorMap.get(a1);
                     Color c2 = colorMap.get(a2);
                     if (c1 != null && c1 == c2)
@@ -550,8 +545,8 @@ public final class DepictionGenerator {
                 }
             }
             for (IBond bond : mol.bonds()) {
-                IAtom a1 = bond.getAtom(0);
-                IAtom a2 = bond.getAtom(1);
+                IAtom a1 = bond.getBegin();
+                IAtom a2 = bond.getEnd();
                 Color c1 = colorMap.get(a1);
                 Color c2 = colorMap.get(a2);
                 if (c1 != null && c1 == c2)
@@ -1106,8 +1101,8 @@ public final class DepictionGenerator {
         int nBonds = 0;
         double[] lengths = new double[bonds.size()];
         for (IBond bond : bonds) {
-            Point2d p1 = bond.getAtom(0).getPoint2d();
-            Point2d p2 = bond.getAtom(1).getPoint2d();
+            Point2d p1 = bond.getBegin().getPoint2d();
+            Point2d p2 = bond.getEnd().getPoint2d();
             // watch out for overlaid atoms (occur in multiple group Sgroups)
             if (!p1.equals(p2))
                 lengths[nBonds++] = p1.distance(p2);

@@ -583,11 +583,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 if (bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED
                     || bond.getStereo() == IBond.Stereo.UP_OR_DOWN_INVERTED) {
                     // turn around atom coding to correct for inv stereo
-                    line = formatMDLInt(atomindex.get(bond.getAtom(1)) + 1, 3);
-                    line += formatMDLInt(atomindex.get(bond.getAtom(0)) + 1, 3);
+                    line = formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3);
+                    line += formatMDLInt(atomindex.get(bond.getBegin()) + 1, 3);
                 } else {
-                    line = formatMDLInt(atomindex.get(bond.getAtom(0)) + 1, 3);
-                    line += formatMDLInt(atomindex.get(bond.getAtom(1)) + 1, 3);
+                    line = formatMDLInt(atomindex.get(bond.getBegin()) + 1, 3);
+                    line += formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3);
                 }
 
                 int bondType = 0;

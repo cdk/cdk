@@ -154,8 +154,8 @@ public class HuLuIndexTool {
             while (bonds.hasNext()) {
                 IBond bond = bonds.next();
 
-                headAtom = bond.getAtom(0);
-                endAtom = bond.getAtom(1);
+                headAtom = bond.getBegin();
+                endAtom = bond.getEnd();
 
                 headAtomPosition = atomContainer.indexOf(headAtom);
                 endAtomPosition = atomContainer.indexOf(endAtom);

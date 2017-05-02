@@ -25,7 +25,6 @@ package org.openscience.cdk.layout;
 
 import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -384,7 +383,7 @@ public class AtomPlacer {
                 int charge = atom.getFormalCharge();
 
                 // double length of the last bond to determing next placement
-                Point2d p = new Point2d(prevBond.getConnectedAtom(atom).getPoint2d());
+                Point2d p = new Point2d(prevBond.getOther(atom).getPoint2d());
                 p.interpolate(atom.getPoint2d(), 2);
                 nextAtom.setPoint2d(p);
             }
@@ -660,7 +659,7 @@ public class AtomPlacer {
                 List bonds = ac.getConnectedBondsList(atom);
                 for (int g = 0; g < bonds.size(); g++) {
                     IBond curBond = (IBond) bonds.get(g);
-                    nextAtom = curBond.getConnectedAtom(atom);
+                    nextAtom = curBond.getOther(atom);
                     if (!nextAtom.getFlag(CDKConstants.VISITED) && !nextAtom.getFlag(CDKConstants.ISPLACED)) {
                         nextAtomNr = ac.indexOf(nextAtom);
                         logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
@@ -807,8 +806,8 @@ public class AtomPlacer {
      */
     static void copyPlaced(IRing dest, IAtomContainer src) {
         for (IBond bond : src.bonds()) {
-            IAtom beg = bond.getAtom(0);
-            IAtom end = bond.getAtom(1);
+            IAtom beg = bond.getBegin();
+            IAtom end = bond.getEnd();
             if (beg.getFlag(CDKConstants.ISPLACED)) {
                 dest.addAtom(beg);
                 if (end.getFlag(CDKConstants.ISPLACED)) {

@@ -152,39 +152,39 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
 
         Assert.assertTrue(mol.getAtom(1).getHybridization() == IAtomType.Hybridization.SP2);
 
-        Assert.assertTrue(mol.getBond(0).getAtom(1).getSymbol().equals("C"));
-        Assert.assertTrue(mol.getBond(0).getAtom(0).getSymbol().equals("O"));
+        Assert.assertTrue(mol.getBond(0).getEnd().getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(0).getBegin().getSymbol().equals("O"));
         Assert.assertEquals(mol.getBond(0).getOrder(), IBond.Order.DOUBLE);
 
-        Assert.assertTrue(mol.getBond(1).getAtom(0).getSymbol().equals("C"));
-        Assert.assertTrue(mol.getBond(1).getAtom(1).getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(1).getBegin().getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(1).getEnd().getSymbol().equals("C"));
         Assert.assertEquals(mol.getBond(1).getOrder(), IBond.Order.SINGLE);
 
-        Assert.assertTrue(mol.getBond(2).getAtom(0).getSymbol().equals("C"));
-        Assert.assertTrue(mol.getBond(2).getAtom(1).getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(2).getBegin().getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(2).getEnd().getSymbol().equals("C"));
         Assert.assertEquals(mol.getBond(2).getOrder(), IBond.Order.DOUBLE);
 
-        Assert.assertTrue(mol.getBond(3).getAtom(0).getSymbol().equals("C"));
-        Assert.assertTrue(mol.getBond(3).getAtom(1).getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(3).getBegin().getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(3).getEnd().getSymbol().equals("C"));
         Assert.assertEquals(mol.getBond(3).getOrder(), IBond.Order.SINGLE);
 
-        Assert.assertTrue(mol.getBond(4).getAtom(1).getSymbol().equals("O"));
-        Assert.assertTrue(mol.getBond(4).getAtom(0).getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(4).getEnd().getSymbol().equals("O"));
+        Assert.assertTrue(mol.getBond(4).getBegin().getSymbol().equals("C"));
         Assert.assertEquals(mol.getBond(4).getOrder(), IBond.Order.DOUBLE);
 
-        Assert.assertTrue(mol.getBond(5).getAtom(0).getSymbol().equals("C"));
-        Assert.assertTrue(mol.getBond(5).getAtom(1).getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(5).getBegin().getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(5).getEnd().getSymbol().equals("C"));
         Assert.assertTrue(mol.getBond(5).getOrder() == IBond.Order.SINGLE);
 
-        Assert.assertTrue(mol.getBond(6).getAtom(0).getSymbol().equals("C"));
-        Assert.assertTrue(mol.getBond(6).getAtom(1).getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(6).getBegin().getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(6).getEnd().getSymbol().equals("C"));
         Assert.assertEquals(mol.getBond(6).getOrder(), IBond.Order.DOUBLE);
 
-        Assert.assertTrue(mol.getBond(7).getAtom(0).getSymbol().equals("C"));
-        Assert.assertTrue(mol.getBond(7).getAtom(1).getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(7).getBegin().getSymbol().equals("C"));
+        Assert.assertTrue(mol.getBond(7).getEnd().getSymbol().equals("C"));
         Assert.assertEquals(mol.getBond(7).getOrder(), IBond.Order.SINGLE);
 
-        Assert.assertEquals(mol.getBond(0).getAtom(1), mol.getBond(7).getAtom(0));
+        Assert.assertEquals(mol.getBond(0).getEnd(), mol.getBond(7).getBegin());
     }
 
     /**

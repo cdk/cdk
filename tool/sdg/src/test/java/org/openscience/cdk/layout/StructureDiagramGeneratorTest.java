@@ -30,7 +30,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,7 +43,6 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
@@ -1147,10 +1145,10 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     }
 
     boolean isCrossing(IBond a, IBond b) {
-        Point2d p1 = a.getAtom(0).getPoint2d();
-        Point2d p2 = a.getAtom(1).getPoint2d();
-        Point2d p3 = b.getAtom(0).getPoint2d();
-        Point2d p4 = b.getAtom(1).getPoint2d();
+        Point2d p1 = a.getBegin().getPoint2d();
+        Point2d p2 = a.getEnd().getPoint2d();
+        Point2d p3 = b.getBegin().getPoint2d();
+        Point2d p4 = b.getEnd().getPoint2d();
         return Line2D.linesIntersect(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
     }
 

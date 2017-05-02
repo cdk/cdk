@@ -80,10 +80,10 @@ public class SingleElectronDiffTest extends CDKTestCase {
         when(bond1.getAtomCount()).thenReturn(2);
         when(bond2.getAtomCount()).thenReturn(2);
 
-        when(bond1.getAtom(0)).thenReturn(carbon);
-        when(bond1.getAtom(1)).thenReturn(carbon);
-        when(bond2.getAtom(0)).thenReturn(carbon);
-        when(bond2.getAtom(1)).thenReturn(oxygen);
+        when(bond1.getBegin()).thenReturn(carbon);
+        when(bond1.getEnd()).thenReturn(carbon);
+        when(bond2.getBegin()).thenReturn(carbon);
+        when(bond2.getEnd()).thenReturn(oxygen);
 
         bond1.setOrder(IBond.Order.SINGLE);
         bond2.setOrder(IBond.Order.DOUBLE);

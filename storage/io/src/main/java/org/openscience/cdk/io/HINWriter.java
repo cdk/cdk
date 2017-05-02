@@ -183,7 +183,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                         IBond bond = bonds.next();
                         if (bond.contains(atom)) {
                             // current atom is in the bond so lets get the connected atom
-                            IAtom connectedAtom = bond.getConnectedAtom(atom);
+                            IAtom connectedAtom = bond.getOther(atom);
                             IBond.Order bondOrder = bond.getOrder();
                             int serial;
                             String bondType = "";

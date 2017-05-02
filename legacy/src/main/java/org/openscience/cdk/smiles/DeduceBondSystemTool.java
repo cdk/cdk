@@ -831,8 +831,8 @@ public class DeduceBondSystemTool {
             for (int bondNumber : bondNumbers) {
                 IBond bond = mol.getBond(bondNumber);
                 ring.addBond(bond);
-                if (!ring.contains(bond.getAtom(0))) ring.addAtom(bond.getAtom(0));
-                if (!ring.contains(bond.getAtom(1))) ring.addAtom(bond.getAtom(1));
+                if (!ring.contains(bond.getBegin())) ring.addAtom(bond.getBegin());
+                if (!ring.contains(bond.getEnd())) ring.addAtom(bond.getEnd());
             }
             ringSet.addAtomContainer(ring);
         }

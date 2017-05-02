@@ -20,9 +20,7 @@
 package org.openscience.cdk.silent;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -77,7 +75,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     /**
      * A list of atoms participating in this bond.
      */
-    protected IAtom[]         atoms            = null;
+    protected IAtom[]         atoms            = new IAtom[2];
 
     /**
      * A descriptor the stereochemical orientation of this bond.
@@ -141,15 +139,14 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * Constructs a bond with a given order and stereo orientation from an array
      * of atoms.
      *
-     * @param atom1  the first Atom in the bond
-     * @param atom2  the second Atom in the bond
+     * @param beg  the first Atom in the bond
+     * @param end  the second Atom in the bond
      * @param order  the bond order
      * @param stereo a descriptor the stereochemical orientation of this bond
      */
-    public Bond(IAtom atom1, IAtom atom2, Order order, IBond.Stereo stereo) {
-        atoms = new IAtom[2];
-        atoms[0] = atom1;
-        atoms[1] = atom2;
+    public Bond(IAtom beg, IAtom end, Order order, IBond.Stereo stereo) {
+        atoms[0] = beg;
+        atoms[1] = end;
         setOrder(order);
         this.stereo = stereo;
         this.atomCount = 2;
@@ -234,58 +231,59 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
     /**
-     * Returns the atom connected to the given atom.
-     * 
-     * This method is only strictly relevant for 2-center bonds
-     * since in multi-center bonds, a given atom will be connected
-     * to multiple atoms.
-     * 
-     * If called for a multi-center bond, then the next atom in the
-     * atom list is returned. This is probably not what is expected and
-     * hence the user should instead call
-     * {@link #getConnectedAtoms(org.openscience.cdk.interfaces.IAtom)}
-     *
-     * @param atom The atom the bond partner is searched of
-     * @return the connected atom or null  if the atom is not part of the bond
-     * @see #getConnectedAtoms(org.openscience.cdk.interfaces.IAtom)
+     * {@inheritDoc}
+     */
+    public IAtom getBegin() {
+        return atoms[0];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IAtom getEnd() {
+        return atoms[1];
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public IAtom getConnectedAtom(IAtom atom) {
-        if (atoms[0] == atom) {
+    public IAtom getOther(IAtom atom) {
+        if (atoms[0] == atom)
             return atoms[1];
-        } else if (atoms[1] == atom) {
+        else if (atoms[1] == atom)
             return atoms[0];
-        }
         return null;
     }
 
     /**
-     * Returns all the atoms in the bond connected to the specified atom.
-     * 
-     * Though this can be used for traditional 2-center bonds, it is oriented
-     * towards multi-center bonds, where a single atom is connected to multiple
-     * atoms.
-     *
-     * @param atom The atom whose partners are to be searched for
-     * @return An array of the connected atoms, null if the atom is not part of the bond
-     * @see #getConnectedAtom(org.openscience.cdk.interfaces.IAtom)
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtom getConnectedAtom(IAtom atom) {
+        if (atoms[0] == atom)
+            return atoms[1];
+        else if (atoms[1] == atom)
+            return atoms[0];
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public IAtom[] getConnectedAtoms(IAtom atom) {
-        boolean atomIsInBond = false;
-        for (IAtom localAtom : atoms) {
-            if (localAtom == atom) {
-                atomIsInBond = true;
-                break;
+        if (atomCount < 1) return null;
+        IAtom[] connected = new IAtom[atomCount-1];
+        int j = 0;
+        for (int i = 0; i < atomCount; i++) {
+            if (this.atoms[i] != atom) {
+                if (j >= connected.length)
+                    return null;
+                connected[j++] = this.atoms[i];
             }
         }
-        if (!atomIsInBond) return null;
-
-        List<IAtom> conAtoms = new ArrayList<IAtom>();
-        for (IAtom localAtom : atoms) {
-            if (localAtom != atom) conAtoms.add(localAtom);
-        }
-        return conAtoms.toArray(new IAtom[]{});
+        return connected;
     }
 
     /**

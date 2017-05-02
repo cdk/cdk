@@ -140,7 +140,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 
                     if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
 
-                        IAtom atomj = bondi.getConnectedAtom(atomi);
+                        IAtom atomj = bondi.getOther(atomi);
                         if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)
                                 && (atomj.getFormalCharge() == CDKConstants.UNSET ? 0 : atomj.getFormalCharge()) == 0
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
@@ -154,7 +154,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
                                 if (bondj.getFlag(CDKConstants.REACTIVE_CENTER)
                                         && bondj.getOrder() == IBond.Order.DOUBLE) {
 
-                                    IAtom atomk = bondj.getConnectedAtom(atomj);
+                                    IAtom atomk = bondj.getOther(atomj);
                                     if (atomk.getFlag(CDKConstants.REACTIVE_CENTER)
                                             && (atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk
                                                     .getFormalCharge()) == 0
@@ -226,7 +226,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 
                     if (bondi.getOrder() == IBond.Order.SINGLE) {
 
-                        IAtom atomj = bondi.getConnectedAtom(atomi);
+                        IAtom atomj = bondi.getOther(atomi);
                         if ((atomj.getFormalCharge() == CDKConstants.UNSET ? 0 : atomj.getFormalCharge()) == 0
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 
@@ -238,7 +238,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 
                                 if (bondj.getOrder() == IBond.Order.DOUBLE) {
 
-                                    IAtom atomk = bondj.getConnectedAtom(atomj);
+                                    IAtom atomk = bondj.getOther(atomj);
                                     if ((atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk.getFormalCharge()) == 0
                                             && reactant.getConnectedSingleElectronsCount(atomk) == 0) {
 

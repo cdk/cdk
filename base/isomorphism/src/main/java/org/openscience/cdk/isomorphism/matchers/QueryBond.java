@@ -18,9 +18,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -214,58 +212,59 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
-     * Returns the atom connected to the given atom.
-     * 
-     * This method is only strictly relevant for 2-center query bonds
-     * since in multi-center query bonds, a given atom will be connected
-     * to multiple atoms.
-     * 
-     * If called for a multi-center query bond, then the next atom in the
-     * atom list is returned. This is probably not what is expected and
-     * hence the user should instead call
-     * {@link #getConnectedAtoms(org.openscience.cdk.interfaces.IAtom)}
-     *
-     * @param atom The atom the query bond partner is searched of
-     * @return the connected atom or null  if the atom is not part of the query bond
-     * @see #getConnectedAtoms(org.openscience.cdk.interfaces.IAtom)
+     * {@inheritDoc}
+     */
+    public IAtom getBegin() {
+        return atoms[0];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IAtom getEnd() {
+        return atoms[1];
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public IAtom getConnectedAtom(IAtom atom) {
-        if (atoms[0] == atom) {
+    public IAtom getOther(IAtom atom) {
+        if (atoms[0] == atom)
             return atoms[1];
-        } else if (atoms[1] == atom) {
+        else if (atoms[1] == atom)
             return atoms[0];
-        }
         return null;
     }
 
     /**
-     * Returns all the atoms in the query bond connected to the specified atom.
-     * 
-     * Though this can be used for traditional 2-center query bonds, it is oriented
-     * towards multi-center query bonds, where a single atom is connected to multiple
-     * atoms.
-     *
-     * @param atom The atom whose partners are to be searched for
-     * @return An array of the connected atoms, null if the atom is not part of the query bond
-     * @see #getConnectedAtom(org.openscience.cdk.interfaces.IAtom)
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtom getConnectedAtom(IAtom atom) {
+        if (atoms[0] == atom)
+            return atoms[1];
+        else if (atoms[1] == atom)
+            return atoms[0];
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public IAtom[] getConnectedAtoms(IAtom atom) {
-        boolean atomIsInBond = false;
-        for (IAtom localAtom : atoms) {
-            if (localAtom == atom) {
-                atomIsInBond = true;
-                break;
+        if (atomCount < 1) return null;
+        IAtom[] connected = new IAtom[atomCount-1];
+        int j = 0;
+        for (int i = 0; i < atomCount; i++) {
+            if (this.atoms[i] != atom) {
+                if (j >= connected.length)
+                    return null;
+                connected[j++] = this.atoms[i];
             }
         }
-        if (!atomIsInBond) return null;
-
-        List<IAtom> conAtoms = new ArrayList<IAtom>();
-        for (IAtom localAtom : atoms) {
-            if (localAtom != atom) conAtoms.add(localAtom);
-        }
-        return conAtoms.toArray(new IAtom[]{});
+        return connected;
     }
 
     /**

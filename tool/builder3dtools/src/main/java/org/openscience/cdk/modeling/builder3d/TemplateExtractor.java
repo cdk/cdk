@@ -36,7 +36,6 @@ import java.util.Map;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
-import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.BitSetFingerprint;
 import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.graph.Cycles;
@@ -477,7 +476,7 @@ public class TemplateExtractor {
     public IAtomContainer removeLoopBonds(IAtomContainer molecule, int position) {
         for (int i = 0; i < molecule.getBondCount(); i++) {
             IBond bond = molecule.getBond(i);
-            if (bond.getAtom(0) == bond.getAtom(1)) {
+            if (bond.getBegin() == bond.getEnd()) {
                 System.out.println("Loop found! Molecule:" + position);
                 molecule.removeBond(bond);
             }

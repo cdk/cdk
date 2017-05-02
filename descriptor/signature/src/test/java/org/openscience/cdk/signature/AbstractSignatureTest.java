@@ -45,8 +45,8 @@ public class AbstractSignatureTest {
         }
         System.out.println();
         for (IBond bond : mol.bonds()) {
-            IAtom aa = bond.getAtom(0);
-            IAtom ab = bond.getAtom(1);
+            IAtom aa = bond.getBegin();
+            IAtom ab = bond.getEnd();
             int o = bond.getOrder().numeric();
             int x = mol.indexOf(aa);
             int y = mol.indexOf(ab);

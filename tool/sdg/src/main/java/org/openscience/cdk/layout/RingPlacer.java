@@ -40,7 +40,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -172,7 +171,7 @@ public class RingPlacer {
         IBond currentBond = (IBond) bonds.get(0);
         for (int i = 0; i < ring.getBondCount(); i++) {
             currentBond = ring.getNextBond(currentBond, currentAtom);
-            currentAtom = currentBond.getConnectedAtom(currentAtom);
+            currentAtom = currentBond.getOther(currentAtom);
             atomsToDraw.addElement(currentAtom);
         }
         atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
@@ -319,7 +318,7 @@ public class RingPlacer {
         List<IAtom> atoms = new ArrayList<>();
         for (int i = 0; i < ring.getBondCount(); i++) {
             currentBond = ring.getNextBond(currentBond, currentAtom);
-            currentAtom = currentBond.getConnectedAtom(currentAtom);
+            currentAtom = currentBond.getOther(currentAtom);
             if (!sharedAtoms.contains(currentAtom)) {
                 atoms.add(currentAtom);
             }
@@ -378,7 +377,7 @@ public class RingPlacer {
          */
         for (int i = 0; i < ring.getBondCount(); i++) {
             currentBond = ring.getNextBond(currentBond, currentAtom);
-            currentAtom = currentBond.getConnectedAtom(currentAtom);
+            currentAtom = currentBond.getOther(currentAtom);
             atomsToDraw.addElement(currentAtom);
         }
         logger.debug("currentAtom  " + currentAtom);
@@ -494,7 +493,7 @@ public class RingPlacer {
         Vector atomsToDraw = new Vector();
         for (int i = 0; i < ring.getBondCount() - 2; i++) {
             currentBond = ring.getNextBond(currentBond, currentAtom);
-            currentAtom = currentBond.getConnectedAtom(currentAtom);
+            currentAtom = currentBond.getOther(currentAtom);
             atomsToDraw.addElement(currentAtom);
         }
         addAngle = addAngle * direction;

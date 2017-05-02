@@ -22,14 +22,12 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -342,7 +340,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
             for (IBond bond : state.getBonds(beg)) {
                 if (bond == prev)
                     continue;
-                final IAtom nbr = bond.getConnectedAtom(beg);
+                final IAtom nbr = bond.getOther(beg);
                 if (state.visit(nbr)) {
                     traversePaths(state, nbr, bond);
                     state.unvisit(nbr); // traverse all paths

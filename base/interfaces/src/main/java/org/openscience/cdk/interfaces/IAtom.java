@@ -24,9 +24,8 @@ import javax.vecmath.Point3d;
 /**
  * Represents the idea of an chemical atom.
  *
- * @cdk.module  interfaces
- *
- * @author      egonw
+ * @author egonw
+ * @cdk.module interfaces
  * @cdk.created 2005-08-24
  * @cdk.keyword atom
  * @cdk.githash
@@ -36,113 +35,113 @@ public interface IAtom extends IAtomType {
     /**
      * Sets the partial charge of this atom.
      *
-     * @param  charge  The partial charge
-     * @see    #getCharge
+     * @param charge The partial charge
+     * @see #getCharge
      */
-    public void setCharge(Double charge);
+    void setCharge(Double charge);
 
     /**
      * Returns the partial charge of this atom.
      *
      * @return the charge of this atom
-     * @see    #setCharge
+     * @see #setCharge
      */
-    public Double getCharge();
+    Double getCharge();
 
     /**
      * Sets the implicit hydrogen count of this atom.
      *
-     * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom.
-     * @see    #getImplicitHydrogenCount
+     * @param hydrogenCount The number of hydrogen atoms bonded to this atom.
+     * @see #getImplicitHydrogenCount
      */
-    public void setImplicitHydrogenCount(Integer hydrogenCount);
+    void setImplicitHydrogenCount(Integer hydrogenCount);
 
     /**
      * Returns the implicit hydrogen count of this atom.
      *
-     * @return    The hydrogen count of this atom.
-     * @see       #setImplicitHydrogenCount
+     * @return The hydrogen count of this atom.
+     * @see #setImplicitHydrogenCount
      */
-    public Integer getImplicitHydrogenCount();
+    Integer getImplicitHydrogenCount();
 
     /**
      * Sets a point specifying the location of this
      * atom in a 2D space.
      *
-     * @param  point2d  A point in a 2D plane
-     * @see    #getPoint2d
+     * @param point2d A point in a 2D plane
+     * @see #getPoint2d
      */
-    public void setPoint2d(Point2d point2d);
+    void setPoint2d(Point2d point2d);
 
     /**
      * Sets a point specifying the location of this
      * atom in 3D space.
      *
-     * @param  point3d  A point in a 3-dimensional space
-     * @see    #getPoint3d
+     * @param point3d A point in a 3-dimensional space
+     * @see #getPoint3d
      */
-    public void setPoint3d(Point3d point3d);
+    void setPoint3d(Point3d point3d);
 
     /**
      * Sets a point specifying the location of this
      * atom in a Crystal unit cell.
      *
-     * @param  point3d  A point in a 3d fractional unit cell space
-     * @see    #getFractionalPoint3d
-     * @see    org.openscience.cdk.Crystal
+     * @param point3d A point in a 3d fractional unit cell space
+     * @see #getFractionalPoint3d
+     * @see org.openscience.cdk.Crystal
      */
-    public void setFractionalPoint3d(Point3d point3d);
+    void setFractionalPoint3d(Point3d point3d);
 
     /**
      * Sets the stereo parity for this atom.
      *
-     * @param  stereoParity  The stereo parity for this atom
-     * @see    org.openscience.cdk.CDKConstants for predefined values.
-     * @see    #getStereoParity
+     * @param stereoParity The stereo parity for this atom
+     * @see org.openscience.cdk.CDKConstants for predefined values.
+     * @see #getStereoParity
      * @deprecated use {@link IStereoElement}s for storing stereochemistry
      */
     @Deprecated
-    public void setStereoParity(Integer stereoParity);
+    void setStereoParity(Integer stereoParity);
 
     /**
      * Returns a point specifying the location of this
      * atom in a 2D space.
      *
-     * @return    A point in a 2D plane. Null if unset.
-     * @see       #setPoint2d
+     * @return A point in a 2D plane. Null if unset.
+     * @see #setPoint2d
      */
-    public Point2d getPoint2d();
+    Point2d getPoint2d();
 
     /**
      * Returns a point specifying the location of this
      * atom in a 3D space.
      *
-     * @return    A point in 3-dimensional space. Null if unset.
-     * @see       #setPoint3d
+     * @return A point in 3-dimensional space. Null if unset.
+     * @see #setPoint3d
      */
-    public Point3d getPoint3d();
+    Point3d getPoint3d();
 
     /**
      * Returns a point specifying the location of this
      * atom in a Crystal unit cell.
      *
-     * @return    A point in 3d fractional unit cell space. Null if unset.
-     * @see       #setFractionalPoint3d
-     * @see       org.openscience.cdk.CDKConstants for predefined values.
+     * @return A point in 3d fractional unit cell space. Null if unset.
+     * @see #setFractionalPoint3d
+     * @see org.openscience.cdk.CDKConstants for predefined values.
      */
-    public Point3d getFractionalPoint3d();
+    Point3d getFractionalPoint3d();
 
     /**
      * Returns the stereo parity of this atom. It uses the predefined values
      * found in CDKConstants.
      *
-     * @return    The stereo parity for this atom
-     * @see       org.openscience.cdk.CDKConstants
-     * @see       #setStereoParity
+     * @return The stereo parity for this atom
+     * @see org.openscience.cdk.CDKConstants
+     * @see #setStereoParity
      * @deprecated use {@link IStereoElement}s for storing stereochemistry
      */
     @Deprecated
-    public Integer getStereoParity();
+    Integer getStereoParity();
 
     /**
      * Access whether this atom has been marked as aromatic. The default
@@ -182,9 +181,9 @@ public interface IAtom extends IAtomType {
     void setIsInRing(boolean ring);
 
     /**
-     *{@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
-    public IAtom clone() throws CloneNotSupportedException;
+    IAtom clone() throws CloneNotSupportedException;
 
 }

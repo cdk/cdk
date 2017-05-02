@@ -72,10 +72,10 @@ public class DoubleBondElementEncoderFactoryTest {
         IBond left = mock(IBond.class);
         IBond right = mock(IBond.class);
 
-        when(stereoBond.getAtom(0)).thenReturn(c1);
-        when(stereoBond.getAtom(1)).thenReturn(c2);
-        when(left.getConnectedAtom(c1)).thenReturn(cl3);
-        when(right.getConnectedAtom(c2)).thenReturn(cl4);
+        when(stereoBond.getBegin()).thenReturn(c1);
+        when(stereoBond.getEnd()).thenReturn(c2);
+        when(left.getOther(c1)).thenReturn(cl3);
+        when(right.getOther(c2)).thenReturn(cl4);
 
         IDoubleBondStereochemistry dbs = mock(IDoubleBondStereochemistry.class);
         when(dbs.getStereoBond()).thenReturn(stereoBond);
@@ -111,10 +111,10 @@ public class DoubleBondElementEncoderFactoryTest {
         IBond left = mock(IBond.class);
         IBond right = mock(IBond.class);
 
-        when(stereoBond.getAtom(0)).thenReturn(c1);
-        when(stereoBond.getAtom(1)).thenReturn(c2);
-        when(left.getConnectedAtom(c1)).thenReturn(cl3);
-        when(right.getConnectedAtom(c2)).thenReturn(cl4);
+        when(stereoBond.getBegin()).thenReturn(c1);
+        when(stereoBond.getEnd()).thenReturn(c2);
+        when(left.getOther(c1)).thenReturn(cl3);
+        when(right.getOther(c2)).thenReturn(cl4);
 
         IDoubleBondStereochemistry dbs = mock(IDoubleBondStereochemistry.class);
         when(dbs.getStereoBond()).thenReturn(stereoBond);

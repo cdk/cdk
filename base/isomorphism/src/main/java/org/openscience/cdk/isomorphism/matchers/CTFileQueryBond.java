@@ -86,7 +86,7 @@ public class CTFileQueryBond extends QueryBond implements IQueryBond {
     public static CTFileQueryBond ofType(IBond bond, int type) {
         CTFileQueryBond queryBond = new CTFileQueryBond(bond.getBuilder());
         queryBond.setOrder(Order.UNSET);
-        queryBond.setAtoms(new IAtom[]{bond.getAtom(0), bond.getAtom(1)});
+        queryBond.setAtoms(new IAtom[]{bond.getBegin(), bond.getEnd()});
         switch (type) {
             case 1:
                 queryBond.setType(Type.SINGLE);

@@ -179,7 +179,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
                 List<IBond> bonds = ac.getConnectedBondsList(atom);
                 int nPiBonds = 0;
                 for (IBond bond : bonds) {
-                    if (bond.getConnectedAtom(atom).getSymbol().equals("O")) continue atomloop;
+                    if (bond.getOther(atom).getSymbol().equals("O")) continue atomloop;
                     if (IBond.Order.DOUBLE.equals(bond.getOrder())) nPiBonds++;
                 }
 

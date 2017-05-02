@@ -134,7 +134,7 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
                 while (bondis.hasNext()) {
                     IBond bondi = bondis.next();
                     if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
-                        IAtom atomj = bondi.getConnectedAtom(atomi);
+                        IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 1
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 
@@ -184,7 +184,7 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
                 while (bondis.hasNext()) {
                     IBond bondi = bondis.next();
                     if (bondi.getOrder() == IBond.Order.SINGLE) {
-                        IAtom atomj = bondi.getConnectedAtom(atomi);
+                        IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFormalCharge() == 1 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
                             atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
                             atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);

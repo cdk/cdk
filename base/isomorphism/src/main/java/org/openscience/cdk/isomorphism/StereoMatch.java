@@ -208,7 +208,7 @@ final class StereoMatch implements Predicate<int[]> {
         // bond is undirected so we need to ensure v1 is the first atom in the bond
         // we also need to to swap the substituents later
         boolean swap = false;
-        if (targetElement.getStereoBond().getAtom(0) != target.getAtom(v1)) {
+        if (targetElement.getStereoBond().getBegin() != target.getAtom(v1)) {
             int tmp = v1;
             v1 = v2;
             v2 = tmp;
@@ -221,11 +221,11 @@ final class StereoMatch implements Predicate<int[]> {
         int p = parity(queryElement.getStereo());
         int q = parity(targetElement.getStereo());
 
-        int uLeft = queryMap.get(queryBonds[0].getConnectedAtom(query.getAtom(u1)));
-        int uRight = queryMap.get(queryBonds[1].getConnectedAtom(query.getAtom(u2)));
+        int uLeft = queryMap.get(queryBonds[0].getOther(query.getAtom(u1)));
+        int uRight = queryMap.get(queryBonds[1].getOther(query.getAtom(u2)));
 
-        int vLeft = targetMap.get(targetBonds[0].getConnectedAtom(target.getAtom(v1)));
-        int vRight = targetMap.get(targetBonds[1].getConnectedAtom(target.getAtom(v2)));
+        int vLeft = targetMap.get(targetBonds[0].getOther(target.getAtom(v1)));
+        int vRight = targetMap.get(targetBonds[1].getOther(target.getAtom(v2)));
 
         if (swap) {
             int tmp = vLeft;
@@ -292,7 +292,7 @@ final class StereoMatch implements Predicate<int[]> {
      */
     private int otherIndex(int i) {
         IDoubleBondStereochemistry element = (IDoubleBondStereochemistry) queryElements[i];
-        return queryMap.get(element.getStereoBond().getConnectedAtom(query.getAtom(i)));
+        return queryMap.get(element.getStereoBond().getOther(query.getAtom(i)));
     }
 
     /**
@@ -332,8 +332,8 @@ final class StereoMatch implements Predicate<int[]> {
                 indices[nElements++] = idx;
             } else if (element instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) element;
-                int idx1 = map.get(dbs.getStereoBond().getAtom(0));
-                int idx2 = map.get(dbs.getStereoBond().getAtom(1));
+                int idx1 = map.get(dbs.getStereoBond().getBegin());
+                int idx2 = map.get(dbs.getStereoBond().getEnd());
                 elements[idx2] = elements[idx1] = element;
                 types[idx1] = types[idx2] = Type.Geometric;
                 indices[nElements++] = idx1; // only visit the first atom

@@ -33,7 +33,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -722,7 +721,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     @Override
     public IBond getBond(IAtom atom1, IAtom atom2) {
         for (int i = 0; i < getBondCount(); i++) {
-            if (bonds[i].contains(atom1) && bonds[i].getConnectedAtom(atom1) == atom2) {
+            if (bonds[i].contains(atom1) && bonds[i].getOther(atom1) == atom2) {
                 return bonds[i];
             }
         }
@@ -789,7 +788,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     public List<IAtom> getConnectedAtomsList(IAtom atom) {
         List<IAtom> atomsList = new ArrayList<IAtom>();
         for (int i = 0; i < bondCount; i++) {
-            if (bonds[i].contains(atom)) atomsList.add(bonds[i].getConnectedAtom(atom));
+            if (bonds[i].contains(atom)) atomsList.add(bonds[i].getOther(atom));
         }
         return atomsList;
     }

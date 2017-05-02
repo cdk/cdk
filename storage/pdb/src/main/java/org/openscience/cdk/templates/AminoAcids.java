@@ -79,8 +79,8 @@ public class AminoAcids {
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();
                 info[counter][0] = counter;
-                info[counter][1] = acid.indexOf(bond.getAtom(0));
-                info[counter][2] = acid.indexOf(bond.getAtom(1));
+                info[counter][1] = acid.indexOf(bond.getBegin());
+                info[counter][2] = acid.indexOf(bond.getEnd());
                 info[counter][3] = bond.getOrder().numeric();
                 counter++;
             }

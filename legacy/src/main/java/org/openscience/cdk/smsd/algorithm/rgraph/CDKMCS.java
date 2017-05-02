@@ -547,7 +547,7 @@ public class CDKMCS {
                 bond = graph.getBond(rMap.getId2());
             }
 
-            atom = bond.getAtom(0);
+            atom = bond.getBegin();
             atom1 = table.get(atom);
 
             if (atom1 == null) {
@@ -560,7 +560,7 @@ public class CDKMCS {
                 table.put(atom, atom1);
             }
 
-            atom = bond.getAtom(1);
+            atom = bond.getEnd();
             atom2 = table.get(atom);
 
             if (atom2 == null) {
@@ -795,12 +795,12 @@ public class CDKMCS {
                 IBond bondA2 = ac2.getBond(j);
                 if (bondA2 instanceof IQueryBond) {
                     IQueryBond queryBond = (IQueryBond) bondA2;
-                    IQueryAtom atom1 = (IQueryAtom) (bondA2.getAtom(0));
-                    IQueryAtom atom2 = (IQueryAtom) (bondA2.getAtom(1));
+                    IQueryAtom atom1 = (IQueryAtom) (bondA2.getBegin());
+                    IQueryAtom atom2 = (IQueryAtom) (bondA2.getEnd());
                     if (queryBond.matches(bondA1)) {
                         // ok, bonds match
-                        if (atom1.matches(bondA1.getAtom(0)) && atom2.matches(bondA1.getAtom(1))
-                                || atom1.matches(bondA1.getAtom(1)) && atom2.matches(bondA1.getAtom(0))) {
+                        if (atom1.matches(bondA1.getBegin()) && atom2.matches(bondA1.getEnd())
+                                || atom1.matches(bondA1.getEnd()) && atom2.matches(bondA1.getBegin())) {
                             // ok, atoms match in either order
                             graph.addNode(new CDKRNode(i, j));
                         }
@@ -823,9 +823,9 @@ public class CDKMCS {
         //Bond Matcher
         BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
         //Atom Matcher
-        AtomMatcher atomMatcher1 = new DefaultRGraphAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
+        AtomMatcher atomMatcher1 = new DefaultRGraphAtomMatcher(ac1, bondA1.getBegin(), shouldMatchBonds);
         //Atom Matcher
-        AtomMatcher atomMatcher2 = new DefaultRGraphAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
+        AtomMatcher atomMatcher2 = new DefaultRGraphAtomMatcher(ac1, bondA1.getEnd(), shouldMatchBonds);
 
         if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
                 && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {
@@ -906,7 +906,7 @@ public class CDKMCS {
      *            the 2 bonds have no common atom
      */
     private static boolean hasCommonAtom(IBond bondA, IBond bondB) {
-        return bondA.contains(bondB.getAtom(0)) || bondA.contains(bondB.getAtom(1));
+        return bondA.contains(bondB.getBegin()) || bondA.contains(bondB.getEnd());
     }
 
     /**
@@ -920,10 +920,10 @@ public class CDKMCS {
     private static String getCommonSymbol(IBond bondA, IBond bondB) {
         String symbol = "";
 
-        if (bondA.contains(bondB.getAtom(0))) {
-            symbol = bondB.getAtom(0).getSymbol();
-        } else if (bondA.contains(bondB.getAtom(1))) {
-            symbol = bondB.getAtom(1).getSymbol();
+        if (bondA.contains(bondB.getBegin())) {
+            symbol = bondB.getBegin().getSymbol();
+        } else if (bondA.contains(bondB.getEnd())) {
+            symbol = bondB.getEnd().getSymbol();
         }
 
         return symbol;
@@ -942,16 +942,16 @@ public class CDKMCS {
         IAtom atom1 = null;
         IAtom atom2 = null;
 
-        if (bondA1.contains(bondB1.getAtom(0))) {
-            atom1 = bondB1.getAtom(0);
-        } else if (bondA1.contains(bondB1.getAtom(1))) {
-            atom1 = bondB1.getAtom(1);
+        if (bondA1.contains(bondB1.getBegin())) {
+            atom1 = bondB1.getBegin();
+        } else if (bondA1.contains(bondB1.getEnd())) {
+            atom1 = bondB1.getEnd();
         }
 
-        if (bondA2.contains(bondB2.getAtom(0))) {
-            atom2 = bondB2.getAtom(0);
-        } else if (bondA2.contains(bondB2.getAtom(1))) {
-            atom2 = bondB2.getAtom(1);
+        if (bondA2.contains(bondB2.getBegin())) {
+            atom2 = bondB2.getBegin();
+        } else if (bondA2.contains(bondB2.getEnd())) {
+            atom2 = bondB2.getEnd();
         }
 
         if (atom1 != null && atom2 != null) {
@@ -978,23 +978,23 @@ public class CDKMCS {
         IAtom centralAtom = null;
         IAtom centralQueryAtom = null;
 
-        if (bond1.contains(bond2.getAtom(0))) {
-            centralAtom = bond2.getAtom(0);
-        } else if (bond1.contains(bond2.getAtom(1))) {
-            centralAtom = bond2.getAtom(1);
+        if (bond1.contains(bond2.getBegin())) {
+            centralAtom = bond2.getBegin();
+        } else if (bond1.contains(bond2.getEnd())) {
+            centralAtom = bond2.getEnd();
         }
 
-        if (queryBond1.contains(queryBond2.getAtom(0))) {
-            centralQueryAtom = queryBond2.getAtom(0);
-        } else if (queryBond1.contains(queryBond2.getAtom(1))) {
-            centralQueryAtom = queryBond2.getAtom(1);
+        if (queryBond1.contains(queryBond2.getBegin())) {
+            centralQueryAtom = queryBond2.getBegin();
+        } else if (queryBond1.contains(queryBond2.getEnd())) {
+            centralQueryAtom = queryBond2.getEnd();
         }
 
         if (centralAtom != null && centralQueryAtom != null && ((IQueryAtom) centralQueryAtom).matches(centralAtom)) {
-            IQueryAtom queryAtom1 = (IQueryAtom) queryBond1.getConnectedAtom(centralQueryAtom);
-            IQueryAtom queryAtom2 = (IQueryAtom) queryBond2.getConnectedAtom(centralQueryAtom);
-            IAtom atom1 = bond1.getConnectedAtom(centralAtom);
-            IAtom atom2 = bond2.getConnectedAtom(centralAtom);
+            IQueryAtom queryAtom1 = (IQueryAtom) queryBond1.getOther(centralQueryAtom);
+            IQueryAtom queryAtom2 = (IQueryAtom) queryBond2.getOther(centralQueryAtom);
+            IAtom atom1 = bond1.getOther(centralAtom);
+            IAtom atom2 = bond2.getOther(centralAtom);
             if (queryAtom1.matches(atom1) && queryAtom2.matches(atom2) || queryAtom1.matches(atom2)
                     && queryAtom2.matches(atom1)) {
                 return true;

@@ -415,8 +415,8 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
                     position = thisSingleBond;
                     theSingleBond = mol.getBond(position);
                     middlePoint = theSingleBond.get3DCenter();
-                    singleBondAtom0 = theSingleBond.getAtom(0);
-                    singleBondAtom1 = theSingleBond.getAtom(1);
+                    singleBondAtom0 = theSingleBond.getBegin();
+                    singleBondAtom1 = theSingleBond.getEnd();
                     dist0 = calculateDistanceBetweenTwoAtoms(singleBondAtom0, atom);
                     dist1 = calculateDistanceBetweenTwoAtoms(singleBondAtom1, atom);
 
@@ -454,8 +454,8 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
     private boolean getIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected) {
         boolean isBondNotRotatable = false;
         int counter = 0;
-        IAtom atom0 = bond.getAtom(0);
-        IAtom atom1 = bond.getAtom(1);
+        IAtom atom0 = bond.getBegin();
+        IAtom atom1 = bond.getEnd();
         if (detected != null) {
             if (detected.contains(bond)) counter += 1;
         }
@@ -542,7 +542,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         int nearestBond = 0;
         double[] values;
         double distance = 0;
-        IAtom atom0 = bond.getAtom(0);
+        IAtom atom0 = bond.getBegin();
         List<IBond> bondsAtLeft = mol.getConnectedBondsList(atom0);
         int partial;
         for (int i = 0; i < bondsAtLeft.size(); i++) {

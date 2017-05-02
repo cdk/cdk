@@ -159,20 +159,20 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
     @Override
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
         // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
-        Double originalCharge1 = bond.getAtom(0).getCharge();
-        String originalAtomtypeName1 = bond.getAtom(0).getAtomTypeName();
-        Integer originalNeighborCount1 = bond.getAtom(0).getFormalNeighbourCount();
-        IAtomType.Hybridization originalHybridization1 = bond.getAtom(0).getHybridization();
-        Integer originalValency1 = bond.getAtom(0).getValency();
-        Double originalCharge2 = bond.getAtom(1).getCharge();
-        String originalAtomtypeName2 = bond.getAtom(1).getAtomTypeName();
-        Integer originalNeighborCount2 = bond.getAtom(1).getFormalNeighbourCount();
-        IAtomType.Hybridization originalHybridization2 = bond.getAtom(1).getHybridization();
-        Integer originalValency2 = bond.getAtom(1).getValency();
-        Double originalBondOrderSum1 = bond.getAtom(0).getBondOrderSum();
-        Order originalMaxBondOrder1 = bond.getAtom(0).getMaxBondOrder();
-        Double originalBondOrderSum2 = bond.getAtom(1).getBondOrderSum();
-        Order originalMaxBondOrder2 = bond.getAtom(1).getMaxBondOrder();
+        Double originalCharge1 = bond.getBegin().getCharge();
+        String originalAtomtypeName1 = bond.getBegin().getAtomTypeName();
+        Integer originalNeighborCount1 = bond.getBegin().getFormalNeighbourCount();
+        IAtomType.Hybridization originalHybridization1 = bond.getBegin().getHybridization();
+        Integer originalValency1 = bond.getBegin().getValency();
+        Double originalCharge2 = bond.getEnd().getCharge();
+        String originalAtomtypeName2 = bond.getEnd().getAtomTypeName();
+        Integer originalNeighborCount2 = bond.getEnd().getFormalNeighbourCount();
+        IAtomType.Hybridization originalHybridization2 = bond.getEnd().getHybridization();
+        Integer originalValency2 = bond.getEnd().getValency();
+        Double originalBondOrderSum1 = bond.getBegin().getBondOrderSum();
+        Order originalMaxBondOrder1 = bond.getBegin().getMaxBondOrder();
+        Double originalBondOrderSum2 = bond.getEnd().getBondOrderSum();
+        Order originalMaxBondOrder2 = bond.getEnd().getMaxBondOrder();
         if (!isCachedAtomContainer(ac)) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
@@ -193,7 +193,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
                 List<Double> peoeBond = new ArrayList<Double>();
                 for (Iterator<IBond> it = ac.bonds().iterator(); it.hasNext();) {
                     IBond bondi = it.next();
-                    double result = Math.abs(bondi.getAtom(0).getCharge() - bondi.getAtom(1).getCharge());
+                    double result = Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());
                     peoeBond.add(result);
                 }
 
@@ -203,27 +203,27 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
                 pepe.assignGasteigerPiPartialCharges(ac, true);
                 for (int i = 0; i < ac.getBondCount(); i++) {
                     IBond bondi = ac.getBond(i);
-                    double result = Math.abs(bondi.getAtom(0).getCharge() - bondi.getAtom(1).getCharge());
+                    double result = Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());
                     cacheDescriptorValue(bondi, ac, new DoubleResult(peoeBond.get(i) + result));
                 }
             } catch (Exception e) {
                 return getDummyDescriptorValue(e);
             }
         }
-        bond.getAtom(0).setCharge(originalCharge1);
-        bond.getAtom(0).setAtomTypeName(originalAtomtypeName1);
-        bond.getAtom(0).setHybridization(originalHybridization1);
-        bond.getAtom(0).setValency(originalValency1);
-        bond.getAtom(0).setFormalNeighbourCount(originalNeighborCount1);
-        bond.getAtom(1).setCharge(originalCharge2);
-        bond.getAtom(1).setAtomTypeName(originalAtomtypeName2);
-        bond.getAtom(1).setHybridization(originalHybridization2);
-        bond.getAtom(1).setValency(originalValency2);
-        bond.getAtom(1).setFormalNeighbourCount(originalNeighborCount2);
-        bond.getAtom(0).setMaxBondOrder(originalMaxBondOrder1);
-        bond.getAtom(0).setBondOrderSum(originalBondOrderSum1);
-        bond.getAtom(1).setMaxBondOrder(originalMaxBondOrder2);
-        bond.getAtom(1).setBondOrderSum(originalBondOrderSum2);
+        bond.getBegin().setCharge(originalCharge1);
+        bond.getBegin().setAtomTypeName(originalAtomtypeName1);
+        bond.getBegin().setHybridization(originalHybridization1);
+        bond.getBegin().setValency(originalValency1);
+        bond.getBegin().setFormalNeighbourCount(originalNeighborCount1);
+        bond.getEnd().setCharge(originalCharge2);
+        bond.getEnd().setAtomTypeName(originalAtomtypeName2);
+        bond.getEnd().setHybridization(originalHybridization2);
+        bond.getEnd().setValency(originalValency2);
+        bond.getEnd().setFormalNeighbourCount(originalNeighborCount2);
+        bond.getBegin().setMaxBondOrder(originalMaxBondOrder1);
+        bond.getBegin().setBondOrderSum(originalBondOrderSum1);
+        bond.getEnd().setMaxBondOrder(originalMaxBondOrder2);
+        bond.getEnd().setBondOrderSum(originalBondOrderSum2);
 
         return getCachedDescriptorValue(bond) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
                 getParameters(), getCachedDescriptorValue(bond), NAMES) : null;

@@ -818,7 +818,7 @@ public class AtomTetrahedralLigandPlacer3D {
         IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
         IAtom connectedAtom = null;
         for (int i = 0; i < bonds.size(); i++) {
-            connectedAtom = ((IBond) bonds.get(i)).getConnectedAtom(atom);
+            connectedAtom = ((IBond) bonds.get(i)).getOther(atom);
             if (connectedAtom.getFlag(CDKConstants.ISPLACED)) {
                 connectedAtoms.addAtom(connectedAtom);
             }

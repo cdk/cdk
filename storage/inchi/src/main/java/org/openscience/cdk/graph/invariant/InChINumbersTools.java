@@ -215,7 +215,7 @@ public class InChINumbersTools {
     private static IAtom findPiBondedOxygen(IAtomContainer container, IAtom atom) {
         for (IBond bond : container.getConnectedBondsList(atom)) {
             if (bond.getOrder() == IBond.Order.DOUBLE) {
-                IAtom neighbor = bond.getConnectedAtom(atom);
+                IAtom neighbor = bond.getOther(atom);
                 int charge = neighbor.getFormalCharge() == null ? 0 : neighbor.getFormalCharge();
                 if (neighbor.getAtomicNumber() == 8 && charge == 0) return neighbor;
             }

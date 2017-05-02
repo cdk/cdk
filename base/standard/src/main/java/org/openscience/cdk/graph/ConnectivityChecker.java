@@ -105,8 +105,8 @@ public class ConnectivityChecker {
         }
 
         for (IBond bond : container.bonds()) {
-            IAtomContainer begComp = componentsMap.get(bond.getAtom(0));
-            IAtomContainer endComp = componentsMap.get(bond.getAtom(1));
+            IAtomContainer begComp = componentsMap.get(bond.getBegin());
+            IAtomContainer endComp = componentsMap.get(bond.getEnd());
             if (begComp == endComp)
                 begComp.addBond(bond);
         }
@@ -123,8 +123,8 @@ public class ConnectivityChecker {
                 if (componentsMap.containsKey(a)) componentsMap.get(a).addStereoElement(stereo);
             } else if (stereo instanceof IDoubleBondStereochemistry) {
                 IBond bond = ((IDoubleBondStereochemistry) stereo).getStereoBond();
-                if (componentsMap.containsKey(bond.getAtom(0)) && componentsMap.containsKey(bond.getAtom(1)))
-                    componentsMap.get(bond.getAtom(0)).addStereoElement(stereo);
+                if (componentsMap.containsKey(bond.getBegin()) && componentsMap.containsKey(bond.getEnd()))
+                    componentsMap.get(bond.getBegin()).addStereoElement(stereo);
             } else if (stereo instanceof ExtendedTetrahedral) {
                 IAtom atom = ((ExtendedTetrahedral) stereo).focus();
                 if (componentsMap.containsKey(atom)) componentsMap.get(atom).addStereoElement(stereo);

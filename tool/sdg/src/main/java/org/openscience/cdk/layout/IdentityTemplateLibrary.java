@@ -27,7 +27,6 @@ package org.openscience.cdk.layout;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.rebond.Point;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -50,7 +49,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -129,8 +127,8 @@ final class IdentityTemplateLibrary {
         int[] bondedValence = new int[mol.getAtomCount()];
         for (int i = 0; i < mol.getBondCount(); i++) {
             IBond bond = mol.getBond(i);
-            bondedValence[idxs.get(bond.getAtom(0))] += bond.getOrder().numeric();
-            bondedValence[idxs.get(bond.getAtom(1))] += bond.getOrder().numeric();
+            bondedValence[idxs.get(bond.getBegin())] += bond.getOrder().numeric();
+            bondedValence[idxs.get(bond.getEnd())] += bond.getOrder().numeric();
         }
 
         // http://www.opensmiles.org/opensmiles.html#orgsbst

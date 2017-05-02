@@ -374,14 +374,14 @@ public class AtomPlacer3D {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) && !(bond.getAtom(1).getFlag(CDKConstants.ISPLACED))) {
-                if (isAliphaticHeavyAtom(bond.getAtom(1))) {
-                    return bond.getAtom(1);
+            if (bond.getBegin().getFlag(CDKConstants.ISPLACED) && !(bond.getEnd().getFlag(CDKConstants.ISPLACED))) {
+                if (isAliphaticHeavyAtom(bond.getEnd())) {
+                    return bond.getEnd();
                 }
             }
-            if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) && !(bond.getAtom(0).getFlag(CDKConstants.ISPLACED))) {
-                if (isAliphaticHeavyAtom(bond.getAtom(0))) {
-                    return bond.getAtom(0);
+            if (bond.getEnd().getFlag(CDKConstants.ISPLACED) && !(bond.getBegin().getFlag(CDKConstants.ISPLACED))) {
+                if (isAliphaticHeavyAtom(bond.getBegin())) {
+                    return bond.getBegin();
                 }
             }
         }
@@ -413,8 +413,8 @@ public class AtomPlacer3D {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            IAtom atom0 = bond.getAtom(0);
-            IAtom atom1 = bond.getAtom(1);
+            IAtom atom0 = bond.getBegin();
+            IAtom atom1 = bond.getEnd();
             if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
                 if (isAliphaticHeavyAtom(atom1) && isHeavyAtom(atom0)) {
                     return atom0;
@@ -439,8 +439,8 @@ public class AtomPlacer3D {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            IAtom atom0 = bond.getAtom(0);
-            IAtom atom1 = bond.getAtom(1);
+            IAtom atom0 = bond.getBegin();
+            IAtom atom1 = bond.getEnd();
             if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
                 if (isRingHeavyAtom(atom1) && isHeavyAtom(atom0)) {
                     return atom0;
@@ -487,7 +487,7 @@ public class AtomPlacer3D {
         List<IBond> bonds = molecule.getConnectedBondsList(atom);
         IAtom connectedAtom = null;
         for (IBond bond : bonds) {
-            connectedAtom = bond.getConnectedAtom(atom);
+            connectedAtom = bond.getOther(atom);
             if (isUnplacedHeavyAtom(connectedAtom) && connectedAtom.getFlag(CDKConstants.ISINRING)) {
                 return connectedAtom;
             }
@@ -517,7 +517,7 @@ public class AtomPlacer3D {
     public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atom) {
         List<IBond> bonds = molecule.getConnectedBondsList(atom);
         for (IBond bond : bonds) {
-            IAtom connectedAtom = bond.getConnectedAtom(atom);
+            IAtom connectedAtom = bond.getOther(atom);
             if (isPlacedHeavyAtom(connectedAtom)) {
                 return connectedAtom;
             }
@@ -536,7 +536,7 @@ public class AtomPlacer3D {
     public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atomA, IAtom atomB) {
         List<IBond> bonds = molecule.getConnectedBondsList(atomA);
         for (IBond bond : bonds) {
-            IAtom connectedAtom = bond.getConnectedAtom(atomA);
+            IAtom connectedAtom = bond.getOther(atomA);
             if (isPlacedHeavyAtom(connectedAtom) && connectedAtom != atomB) {
                 return connectedAtom;
             }
@@ -557,7 +557,7 @@ public class AtomPlacer3D {
         IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
         IAtom connectedAtom = null;
         for (IBond bond : bonds) {
-            connectedAtom = bond.getConnectedAtom(atom);
+            connectedAtom = bond.getOther(atom);
             if (isPlacedHeavyAtom(connectedAtom)) {
                 connectedAtoms.addAtom(connectedAtom);
             }

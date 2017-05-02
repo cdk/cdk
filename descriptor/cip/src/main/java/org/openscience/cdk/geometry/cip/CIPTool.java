@@ -166,10 +166,10 @@ public class CIPTool {
         //                        \
         //                         y
         //
-        IAtom u = stereoBond.getAtom(0);
-        IAtom v = stereoBond.getAtom(1);
-        IAtom x = leftBond.getConnectedAtom(u);
-        IAtom y = rightBond.getConnectedAtom(v);
+        IAtom u = stereoBond.getBegin();
+        IAtom v = stereoBond.getEnd();
+        IAtom x = leftBond.getOther(u);
+        IAtom y = rightBond.getOther(v);
 
         Conformation conformation = stereoCenter.getStereo();
 
@@ -355,7 +355,7 @@ public class CIPTool {
                 }
             } else {
                 int duplication = getDuplication(bond.getOrder());
-                IAtom connectedAtom = bond.getConnectedAtom(ligandAtom);
+                IAtom connectedAtom = bond.getOther(ligandAtom);
                 if (visitedAtoms.isVisited(connectedAtom)) {
                     ligands.add(new TerminalLigand(container, visitedAtoms, ligandAtom, connectedAtom));
                 } else {
