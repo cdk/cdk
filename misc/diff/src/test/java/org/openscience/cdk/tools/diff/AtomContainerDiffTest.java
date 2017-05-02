@@ -64,9 +64,9 @@ public class AtomContainerDiffTest extends CDKTestCase {
         when(b1.getAtomCount()).thenReturn(2);
         when(b2.getAtomCount()).thenReturn(2);
 
-        when(b1.getBeg()).thenReturn(carbon);
+        when(b1.getBegin()).thenReturn(carbon);
         when(b1.getEnd()).thenReturn(carbon);
-        when(b2.getBeg()).thenReturn(carbon);
+        when(b2.getBegin()).thenReturn(carbon);
         when(b2.getEnd()).thenReturn(oxygen);
 
         IAtomContainer container1 = mock(IAtomContainer.class);
@@ -103,9 +103,9 @@ public class AtomContainerDiffTest extends CDKTestCase {
         when(b1.getAtomCount()).thenReturn(2);
         when(b2.getAtomCount()).thenReturn(2);
 
-        when(b1.getBeg()).thenReturn(carbon);
+        when(b1.getBegin()).thenReturn(carbon);
         when(b1.getEnd()).thenReturn(carbon);
-        when(b2.getBeg()).thenReturn(carbon);
+        when(b2.getBegin()).thenReturn(carbon);
         when(b2.getEnd()).thenReturn(oxygen);
 
         IAtomContainer container1 = mock(IAtomContainer.class);

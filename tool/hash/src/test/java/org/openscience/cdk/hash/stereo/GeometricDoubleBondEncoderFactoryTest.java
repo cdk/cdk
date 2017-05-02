@@ -100,15 +100,15 @@ public class GeometricDoubleBondEncoderFactoryTest {
         IBond cd = mock(IBond.class);
         IBond cf = mock(IBond.class);
 
-        when(ba.getBeg()).thenReturn(b);
+        when(ba.getBegin()).thenReturn(b);
         when(ba.getEnd()).thenReturn(a);
-        when(be.getBeg()).thenReturn(b);
+        when(be.getBegin()).thenReturn(b);
         when(be.getEnd()).thenReturn(e);
-        when(bc.getBeg()).thenReturn(b);
+        when(bc.getBegin()).thenReturn(b);
         when(bc.getEnd()).thenReturn(c);
-        when(cd.getBeg()).thenReturn(c);
+        when(cd.getBegin()).thenReturn(c);
         when(cd.getEnd()).thenReturn(d);
-        when(cf.getBeg()).thenReturn(c);
+        when(cf.getBegin()).thenReturn(c);
         when(cf.getEnd()).thenReturn(f);
 
         when(bc.getOrder()).thenReturn(IBond.Order.DOUBLE);
@@ -168,15 +168,15 @@ public class GeometricDoubleBondEncoderFactoryTest {
         IBond cd = mock(IBond.class);
         IBond cf = mock(IBond.class);
 
-        when(ba.getBeg()).thenReturn(b);
+        when(ba.getBegin()).thenReturn(b);
         when(ba.getEnd()).thenReturn(a);
-        when(be.getBeg()).thenReturn(b);
+        when(be.getBegin()).thenReturn(b);
         when(be.getEnd()).thenReturn(e);
-        when(bc.getBeg()).thenReturn(b);
+        when(bc.getBegin()).thenReturn(b);
         when(bc.getEnd()).thenReturn(c);
-        when(cd.getBeg()).thenReturn(c);
+        when(cd.getBegin()).thenReturn(c);
         when(cd.getEnd()).thenReturn(d);
-        when(cf.getBeg()).thenReturn(c);
+        when(cf.getBegin()).thenReturn(c);
         when(cf.getEnd()).thenReturn(f);
 
         when(bc.getOrder()).thenReturn(IBond.Order.DOUBLE);

@@ -83,7 +83,7 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
             int[][] graph) {
 
         IBond db = dbs.getStereoBond();
-        int u = atomToIndex.get(db.getBeg());
+        int u = atomToIndex.get(db.getBegin());
         int v = atomToIndex.get(db.getEnd());
 
         // we now need to expand our view of the environment - the vertex arrays
@@ -97,7 +97,7 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
         int[] us = new int[2];
         int[] vs = new int[2];
 
-        us[0] = atomToIndex.get(bs[0].getOther(db.getBeg()));
+        us[0] = atomToIndex.get(bs[0].getOther(db.getBegin()));
         us[1] = graph[u].length == 2 ? u : findOther(graph[u], v, us[0]);
 
         vs[0] = atomToIndex.get(bs[1].getOther(db.getEnd()));

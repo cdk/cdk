@@ -142,7 +142,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
             String symbol0;
             String symbol1;
             for (IBond bond : container.bonds()) {
-                IAtom atom0 = bond.getBeg();
+                IAtom atom0 = bond.getBegin();
                 IAtom atom1 = bond.getEnd();
 
                 symbol0 = atom0.getSymbol();

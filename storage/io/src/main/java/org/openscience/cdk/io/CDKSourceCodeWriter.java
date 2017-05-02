@@ -220,8 +220,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     }
 
     private void writeBond(IBond bond) throws Exception {
-        writer.write("  IBond " + bond.getID() + " = builder.newInstance(IBond.class," + bond.getBeg().getID() + ", "
-                + bond.getEnd().getID() + ", IBond.Order." + bond.getOrder() + ");");
+        writer.write("  IBond " + bond.getID() + " = builder.newInstance(IBond.class," + bond.getBegin().getID() + ", "
+                     + bond.getEnd().getID() + ", IBond.Order." + bond.getOrder() + ");");
         writer.newLine();
     }
 

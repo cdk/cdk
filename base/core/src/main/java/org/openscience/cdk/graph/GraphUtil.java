@@ -24,11 +24,9 @@
 package org.openscience.cdk.graph;
 
 import com.google.common.collect.Maps;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -71,7 +69,7 @@ public class GraphUtil {
 
         for (IBond bond : container.bonds()) {
 
-            int v = container.indexOf(bond.getBeg());
+            int v = container.indexOf(bond.getBegin());
             int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)
@@ -117,7 +115,7 @@ public class GraphUtil {
             if (!include.contains(bond))
                 continue;
 
-            int v = container.indexOf(bond.getBeg());
+            int v = container.indexOf(bond.getBegin());
             int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)
@@ -161,7 +159,7 @@ public class GraphUtil {
 
         for (IBond bond : container.bonds()) {
 
-            int v = container.indexOf(bond.getBeg());
+            int v = container.indexOf(bond.getBegin());
             int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)

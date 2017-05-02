@@ -1063,7 +1063,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private List<IBond> heavyBonds(final List<IBond> bonds) {
         final List<IBond> heavy = new ArrayList<IBond>(bonds.size());
         for (final IBond bond : bonds) {
-            if (!(bond.getBeg().getSymbol().equals("H") && bond.getEnd().getSymbol().equals("H"))) {
+            if (!(bond.getBegin().getSymbol().equals("H") && bond.getEnd().getSymbol().equals("H"))) {
                 heavy.add(bond);
             }
         }

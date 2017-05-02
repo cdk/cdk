@@ -36,12 +36,10 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -1260,8 +1258,8 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(17, mol.getBondCount());
         for (int i = 0; i < 17; i++) {
             IBond bond = mol.getBond(i);
-            if (bond.getBeg().getSymbol().equals("H") || bond.getBeg().getSymbol().equals("Br")
-                    || bond.getEnd().getSymbol().equals("H") || bond.getEnd().getSymbol().equals("Br")) {
+            if (bond.getBegin().getSymbol().equals("H") || bond.getBegin().getSymbol().equals("Br")
+                || bond.getEnd().getSymbol().equals("H") || bond.getEnd().getSymbol().equals("Br")) {
                 assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
             } else {
                 assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
@@ -1311,7 +1309,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(7, mol.getBondCount());
         for (int i = 0; i < 7; i++) {
             IBond bond = mol.getBond(i);
-            if (bond.getBeg().getSymbol().equals("O") || bond.getEnd().getSymbol().equals("O")) {
+            if (bond.getBegin().getSymbol().equals("O") || bond.getEnd().getSymbol().equals("O")) {
                 assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
             } else {
                 assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));

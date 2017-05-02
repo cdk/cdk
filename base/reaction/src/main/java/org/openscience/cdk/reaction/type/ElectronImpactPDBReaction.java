@@ -127,7 +127,7 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
         Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bondi = bonds.next();
-            IAtom atom1 = bondi.getBeg();
+            IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
                     && (bondi.getOrder() == IBond.Order.DOUBLE || bondi.getOrder() == IBond.Order.TRIPLE)
@@ -176,7 +176,7 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
         Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bondi = bonds.next();
-            IAtom atom1 = bondi.getBeg();
+            IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if ((bondi.getOrder() == IBond.Order.DOUBLE || bondi.getOrder() == IBond.Order.TRIPLE)
                     && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0

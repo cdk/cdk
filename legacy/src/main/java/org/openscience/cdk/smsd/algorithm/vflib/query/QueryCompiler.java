@@ -133,7 +133,7 @@ public class QueryCompiler implements IQueryCompiler {
         }
         for (int i = 0; i < queryMolecule.getBondCount(); i++) {
             IBond bond = queryMolecule.getBond(i);
-            IAtom atomI = bond.getBeg();
+            IAtom atomI = bond.getBegin();
             IAtom atomJ = bond.getEnd();
             result.connect(result.getNode(atomI), result.getNode(atomJ), createBondMatcher(queryMolecule, bond));
         }
@@ -151,7 +151,7 @@ public class QueryCompiler implements IQueryCompiler {
         }
         for (int i = 0; i < queryMolecule.getBondCount(); i++) {
             IBond bond = queryMolecule.getBond(i);
-            IQueryAtom atomI = (IQueryAtom) bond.getBeg();
+            IQueryAtom atomI = (IQueryAtom) bond.getBegin();
             IQueryAtom atomJ = (IQueryAtom) bond.getEnd();
             result.connect(result.getNode(atomI), result.getNode(atomJ), createBondMatcher((IQueryBond) bond));
         }

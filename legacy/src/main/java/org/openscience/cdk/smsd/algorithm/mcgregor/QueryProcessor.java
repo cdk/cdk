@@ -98,7 +98,7 @@ public class QueryProcessor {
 
         for (int atomIndex = 0; atomIndex < query.getBondCount(); atomIndex++) {
 
-            Integer indexI = query.indexOf(query.getBond(atomIndex).getBeg());
+            Integer indexI = query.indexOf(query.getBond(atomIndex).getBegin());
             Integer indexJ = query.indexOf(query.getBond(atomIndex).getEnd());
             Integer order = query.getBond(atomIndex).getOrder().numeric();
 
@@ -143,7 +143,7 @@ public class QueryProcessor {
         //        System.out.println("\n" + cTab1Copy + "\n");
 
         for (int atomIndex = 0; atomIndex < query.getBondCount(); atomIndex++) {
-            Integer indexI = query.indexOf(query.getBond(atomIndex).getBeg());
+            Integer indexI = query.indexOf(query.getBond(atomIndex).getBegin());
             Integer indexJ = query.indexOf(query.getBond(atomIndex).getEnd());
             Integer order = 0;
             if (query.getBond(atomIndex).getOrder() != null) {

@@ -201,7 +201,7 @@ final class StandardBondGenerator {
      * @return rendering element
      */
     IRenderingElement generate(IBond bond) {
-        final IAtom atom1 = bond.getBeg();
+        final IAtom atom1 = bond.getBegin();
         final IAtom atom2 = bond.getEnd();
 
         IBond.Order order = bond.getOrder();
@@ -609,7 +609,7 @@ final class StandardBondGenerator {
         final IAtomContainer refContainer = cyclic ? ringMap.get(bond) : container;
 
         final int length = refContainer.getAtomCount();
-        final int index1 = refContainer.indexOf(bond.getBeg());
+        final int index1 = refContainer.indexOf(bond.getBegin());
         final int index2 = refContainer.indexOf(bond.getEnd());
 
         // if the bond is in a cycle we are using ring bonds to determine offset, since rings
@@ -617,8 +617,8 @@ final class StandardBondGenerator {
         // in the order they are in the ring.
         final boolean outOfOrder = cyclic && index1 == (index2 + 1) % length;
 
-        final IAtom atom1 = outOfOrder ? bond.getEnd() : bond.getBeg();
-        final IAtom atom2 = outOfOrder ? bond.getBeg() : bond.getEnd();
+        final IAtom atom1 = outOfOrder ? bond.getEnd() : bond.getBegin();
+        final IAtom atom2 = outOfOrder ? bond.getBegin() : bond.getEnd();
 
         if (IBond.Stereo.E_OR_Z.equals(bond.getStereo())) return generateCrossedDoubleBond(atom1, atom2);
 
@@ -712,11 +712,11 @@ final class StandardBondGenerator {
             case UP:
                 return bond.getEnd() == atom;
             case UP_INVERTED:
-                return bond.getBeg() == atom;
+                return bond.getBegin() == atom;
             case DOWN:
                 return bond.getEnd() == atom;
             case DOWN_INVERTED:
-                return bond.getBeg() == atom;
+                return bond.getBegin() == atom;
             default:
                 return false;
         }
@@ -1221,7 +1221,7 @@ final class StandardBondGenerator {
      * @throws java.lang.IllegalArgumentException bonds share no atoms
      */
     static int winding(IBond bond1, IBond bond2) {
-        final IAtom atom1 = bond1.getBeg();
+        final IAtom atom1 = bond1.getBegin();
         final IAtom atom2 = bond1.getEnd();
         if (bond2.contains(atom1)) {
             return winding(atom2.getPoint2d(), atom1.getPoint2d(), bond2.getOther(atom1).getPoint2d());

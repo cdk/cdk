@@ -273,10 +273,10 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
 
             // change elevation depending on which end of the wedge/hatch
             // the atom is on
-            if (bond.getBeg().equals(atom)) {
+            if (bond.getBegin().equals(atom)) {
                 map.put(bond.getEnd(), elevation);
             } else {
-                map.put(bond.getBeg(), -1 * elevation);
+                map.put(bond.getBegin(), -1 * elevation);
             }
         }
     }

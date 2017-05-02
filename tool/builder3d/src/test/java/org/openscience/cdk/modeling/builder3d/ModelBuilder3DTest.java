@@ -228,7 +228,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     public static void checkAverageBondLength(IAtomContainer ac) {
         double avlength = GeometryUtil.getBondLengthAverage3D(ac);
         for (int i = 0; i < ac.getBondCount(); i++) {
-            double distance = ac.getBond(i).getBeg().getPoint3d().distance(ac.getBond(i).getEnd().getPoint3d());
+            double distance = ac.getBond(i).getBegin().getPoint3d().distance(ac.getBond(i).getEnd().getPoint3d());
             Assert.assertTrue("Unreasonable bond length (" + distance + ") for bond " + i, distance >= avlength / 2
                     && distance <= avlength * 2);
         }

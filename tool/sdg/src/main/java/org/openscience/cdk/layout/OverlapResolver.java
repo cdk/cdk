@@ -247,14 +247,14 @@ public class OverlapResolver {
         double y1 = 0, y2 = 0, y3 = 0, y4 = 0;
         //Point2D.Double p1 = null, p2 = null, p3 = null, p4 = null;
 
-        x1 = bond1.getBeg().getPoint2d().x;
+        x1 = bond1.getBegin().getPoint2d().x;
         x2 = bond1.getEnd().getPoint2d().x;
-        x3 = bond2.getBeg().getPoint2d().x;
+        x3 = bond2.getBegin().getPoint2d().x;
         x4 = bond2.getEnd().getPoint2d().x;
 
-        y1 = bond1.getBeg().getPoint2d().y;
+        y1 = bond1.getBegin().getPoint2d().y;
         y2 = bond1.getEnd().getPoint2d().y;
-        y3 = bond2.getBeg().getPoint2d().y;
+        y3 = bond2.getBegin().getPoint2d().y;
         y4 = bond2.getEnd().getPoint2d().y;
 
         Line2D.Double line1 = new Line2D.Double(new Point2D.Double(x1, y1), new Point2D.Double(x2, y2));

@@ -208,7 +208,7 @@ public class Abbreviations implements Iterable<String> {
     private static List<IAtomContainer> makeCut(IBond cut, IAtomContainer mol, Map<IAtom, Integer> idx,
                                                 int[][] adjlist) {
 
-        IAtom beg = cut.getBeg();
+        IAtom beg = cut.getBegin();
         IAtom end = cut.getEnd();
 
         Set<IAtom> bvisit = new LinkedHashSet<>();
@@ -272,7 +272,7 @@ public class Abbreviations implements Iterable<String> {
         }
 
         for (IBond bond : mol.bonds()) {
-            IAtom a1 = bond.getBeg();
+            IAtom a1 = bond.getBegin();
             IAtom a2 = bond.getEnd();
             if (bvisit.contains(a1) && bvisit.contains(a2))
                 bfrag.addBond(bond);
@@ -447,10 +447,10 @@ public class Abbreviations implements Iterable<String> {
                     IAtom atom = frag.getAtom(i);
                     usedAtoms.add(atom);
                     sgroup.addAtom(atom);
-                    if (attachBond.getBeg() == atom)
+                    if (attachBond.getBegin() == atom)
                         attachAtom = attachBond.getEnd();
                     else if (attachBond.getEnd() == atom)
-                        attachAtom = attachBond.getBeg();
+                        attachAtom = attachBond.getBegin();
                 }
 
                 if (attachAtom != null)
@@ -717,7 +717,7 @@ public class Abbreviations implements Iterable<String> {
         }
 
         for (IBond bond : mol.bonds()) {
-            final IAtom beg = atmmap.get(bond.getBeg());
+            final IAtom beg = atmmap.get(bond.getBegin());
             final IAtom end = atmmap.get(bond.getEnd());
 
             // attach bond skipped

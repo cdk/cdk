@@ -465,7 +465,7 @@ public class SMARTSQueryTool {
 
                 // get the atoms in this bond
                 IBond bond = atomContainer.getBond(bondID);
-                atom1 = bond.getBeg();
+                atom1 = bond.getBegin();
                 atom2 = bond.getEnd();
 
                 Integer idx1 = atomContainer.indexOf(atom1);

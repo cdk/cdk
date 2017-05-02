@@ -95,16 +95,16 @@ public class GeometricTetrahedralEncoderFactoryTest {
         when(c1.getHybridization()).thenReturn(IAtomType.Hybridization.SP3);
         // with a hatch bond from c1 to n3
         when(c1n3.getStereo()).thenReturn(DOWN);
-        when(c1n3.getBeg()).thenReturn(c1);
+        when(c1n3.getBegin()).thenReturn(c1);
         when(c1n3.getEnd()).thenReturn(n3);
         when(c1o2.getStereo()).thenReturn(NONE);
-        when(c1o2.getBeg()).thenReturn(c1);
+        when(c1o2.getBegin()).thenReturn(c1);
         when(c1o2.getEnd()).thenReturn(o2);
         when(c1c4.getStereo()).thenReturn(NONE);
-        when(c1c4.getBeg()).thenReturn(c1);
+        when(c1c4.getBegin()).thenReturn(c1);
         when(c1c4.getEnd()).thenReturn(c4);
         when(c1h5.getStereo()).thenReturn(NONE);
-        when(c1h5.getBeg()).thenReturn(c1);
+        when(c1h5.getBegin()).thenReturn(c1);
         when(c1h5.getEnd()).thenReturn(h5);
 
         StereoEncoder encoder = new GeometricTetrahedralEncoderFactory().create(container, graph);
@@ -158,13 +158,13 @@ public class GeometricTetrahedralEncoderFactoryTest {
         when(c1.getHybridization()).thenReturn(IAtomType.Hybridization.SP3);
         // with a hatch bond from c1 to n3
         when(c1n3.getStereo()).thenReturn(DOWN);
-        when(c1n3.getBeg()).thenReturn(c1);
+        when(c1n3.getBegin()).thenReturn(c1);
         when(c1n3.getEnd()).thenReturn(n3);
         when(c1o2.getStereo()).thenReturn(NONE);
-        when(c1o2.getBeg()).thenReturn(c1);
+        when(c1o2.getBegin()).thenReturn(c1);
         when(c1o2.getEnd()).thenReturn(o2);
         when(c1c4.getStereo()).thenReturn(NONE);
-        when(c1c4.getBeg()).thenReturn(c1);
+        when(c1c4.getBegin()).thenReturn(c1);
         when(c1c4.getEnd()).thenReturn(c4);
 
         StereoEncoder encoder = new GeometricTetrahedralEncoderFactory().create(container, graph);
@@ -223,16 +223,16 @@ public class GeometricTetrahedralEncoderFactoryTest {
         when(c1.getHybridization()).thenReturn(IAtomType.Hybridization.SP3);
         // with a hatch bond from c1 to n3
         when(c1n3.getStereo()).thenReturn(NONE);
-        when(c1n3.getBeg()).thenReturn(c1);
+        when(c1n3.getBegin()).thenReturn(c1);
         when(c1n3.getEnd()).thenReturn(n3);
         when(c1o2.getStereo()).thenReturn(NONE);
-        when(c1o2.getBeg()).thenReturn(c1);
+        when(c1o2.getBegin()).thenReturn(c1);
         when(c1o2.getEnd()).thenReturn(o2);
         when(c1c4.getStereo()).thenReturn(NONE);
-        when(c1c4.getBeg()).thenReturn(c1);
+        when(c1c4.getBegin()).thenReturn(c1);
         when(c1c4.getEnd()).thenReturn(c4);
         when(c1h5.getStereo()).thenReturn(NONE);
-        when(c1h5.getBeg()).thenReturn(c1);
+        when(c1h5.getBegin()).thenReturn(c1);
         when(c1h5.getEnd()).thenReturn(h5);
 
         StereoEncoder encoder = new GeometricTetrahedralEncoderFactory().create(container, graph);
@@ -285,13 +285,13 @@ public class GeometricTetrahedralEncoderFactoryTest {
         when(c1.getHybridization()).thenReturn(IAtomType.Hybridization.SP3);
         // with a hatch bond from c1 to n3
         when(c1n3.getStereo()).thenReturn(NONE);
-        when(c1n3.getBeg()).thenReturn(c1);
+        when(c1n3.getBegin()).thenReturn(c1);
         when(c1n3.getEnd()).thenReturn(n3);
         when(c1o2.getStereo()).thenReturn(NONE);
-        when(c1o2.getBeg()).thenReturn(c1);
+        when(c1o2.getBegin()).thenReturn(c1);
         when(c1o2.getEnd()).thenReturn(o2);
         when(c1c4.getStereo()).thenReturn(NONE);
-        when(c1c4.getBeg()).thenReturn(c1);
+        when(c1c4.getBegin()).thenReturn(c1);
         when(c1c4.getEnd()).thenReturn(c4);
 
         StereoEncoder encoder = new GeometricTetrahedralEncoderFactory().create(container, graph);
@@ -344,16 +344,16 @@ public class GeometricTetrahedralEncoderFactoryTest {
         // when(c1.getHybridization()).thenReturn(IAtomType.Hybridization.SP3);
         // with a hatch bond from c1 to n3
         when(c1n3.getStereo()).thenReturn(DOWN);
-        when(c1n3.getBeg()).thenReturn(c1);
+        when(c1n3.getBegin()).thenReturn(c1);
         when(c1n3.getEnd()).thenReturn(n3);
         when(c1o2.getStereo()).thenReturn(NONE);
-        when(c1o2.getBeg()).thenReturn(c1);
+        when(c1o2.getBegin()).thenReturn(c1);
         when(c1o2.getEnd()).thenReturn(o2);
         when(c1c4.getStereo()).thenReturn(NONE);
-        when(c1c4.getBeg()).thenReturn(c1);
+        when(c1c4.getBegin()).thenReturn(c1);
         when(c1c4.getEnd()).thenReturn(c4);
         when(c1h5.getStereo()).thenReturn(NONE);
-        when(c1h5.getBeg()).thenReturn(c1);
+        when(c1h5.getBegin()).thenReturn(c1);
         when(c1h5.getEnd()).thenReturn(h5);
 
         StereoEncoder encoder = new GeometricTetrahedralEncoderFactory().create(container, graph);
@@ -400,16 +400,16 @@ public class GeometricTetrahedralEncoderFactoryTest {
         // with a hatch bond from c1 to n3
         //when(c1n3.getStereo()).thenReturn(DOWN);
         when(c1n3.getStereo()).thenReturn(NONE);
-        when(c1n3.getBeg()).thenReturn(c1);
+        when(c1n3.getBegin()).thenReturn(c1);
         when(c1n3.getEnd()).thenReturn(n3);
         when(c1o2.getStereo()).thenReturn(NONE);
-        when(c1o2.getBeg()).thenReturn(c1);
+        when(c1o2.getBegin()).thenReturn(c1);
         when(c1o2.getEnd()).thenReturn(o2);
         when(c1c4.getStereo()).thenReturn(NONE);
-        when(c1c4.getBeg()).thenReturn(c1);
+        when(c1c4.getBegin()).thenReturn(c1);
         when(c1c4.getEnd()).thenReturn(c4);
         when(c1h5.getStereo()).thenReturn(NONE);
-        when(c1h5.getBeg()).thenReturn(c1);
+        when(c1h5.getBegin()).thenReturn(c1);
         when(c1h5.getEnd()).thenReturn(h5);
 
         StereoEncoder encoder = new GeometricTetrahedralEncoderFactory().create(container, graph);
@@ -456,16 +456,16 @@ public class GeometricTetrahedralEncoderFactoryTest {
         when(c1.getHybridization()).thenReturn(IAtomType.Hybridization.SP3);
         // with a hatch bond from c1 to n3
         when(c1n3.getStereo()).thenReturn(DOWN);
-        when(c1n3.getBeg()).thenReturn(c1);
+        when(c1n3.getBegin()).thenReturn(c1);
         when(c1n3.getEnd()).thenReturn(n3);
         when(c1o2.getStereo()).thenReturn(NONE);
-        when(c1o2.getBeg()).thenReturn(c1);
+        when(c1o2.getBegin()).thenReturn(c1);
         when(c1o2.getEnd()).thenReturn(o2);
         when(c1c4.getStereo()).thenReturn(NONE);
-        when(c1c4.getBeg()).thenReturn(c1);
+        when(c1c4.getBegin()).thenReturn(c1);
         when(c1c4.getEnd()).thenReturn(c4);
         when(c1h5.getStereo()).thenReturn(NONE);
-        when(c1h5.getBeg()).thenReturn(c1);
+        when(c1h5.getBegin()).thenReturn(c1);
         when(c1h5.getEnd()).thenReturn(h5);
 
         StereoEncoder encoder = new GeometricTetrahedralEncoderFactory().create(container, graph);

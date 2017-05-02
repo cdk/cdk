@@ -348,7 +348,7 @@ final class LayoutRefiner {
                 if (bond.getOrder() != IBond.Order.SINGLE || bond.isInRing())
                     continue;
 
-                final IAtom beg = bond.getBeg();
+                final IAtom beg = bond.getBegin();
                 final IAtom end = bond.getEnd();
                 final int begIdx = idxs.get(beg);
                 final int endIdx = idxs.get(end);
@@ -428,7 +428,7 @@ final class LayoutRefiner {
             amoved.add(mol.getAtom(xs[i]));
         }
         for (IBond bond : bfix) {
-            if (amoved.contains(bond.getBeg()) && amoved.contains(bond.getEnd()))
+            if (amoved.contains(bond.getBegin()) && amoved.contains(bond.getEnd()))
                 cnt++;
         }
         return cnt;
@@ -525,7 +525,7 @@ final class LayoutRefiner {
         else
             stackBackup.push(pair.snd);
 
-        reflect(stackBackup, pair.bndAt[0].getBeg(), pair.bndAt[0].getEnd());
+        reflect(stackBackup, pair.bndAt[0].getBegin(), pair.bndAt[0].getEnd());
         congestion.update(stackBackup.xs, stackBackup.len);
         return true;
     }
@@ -616,7 +616,7 @@ final class LayoutRefiner {
                 if (first != pair)
                     continue;
 
-                final IAtom beg = bond.getBeg();
+                final IAtom beg = bond.getBegin();
                 final IAtom end = bond.getEnd();
                 final int begPriority = beg.getProperty(AtomPlacer.PRIORITY);
                 final int endPriority = end.getProperty(AtomPlacer.PRIORITY);
@@ -700,7 +700,7 @@ final class LayoutRefiner {
             if (first != pair)
                 continue;
 
-            final IAtom beg = bond.getBeg();
+            final IAtom beg = bond.getBegin();
             final IAtom end = bond.getEnd();
             final int begIdx = idxs.get(beg);
             final int endIdx = idxs.get(end);
@@ -1039,7 +1039,7 @@ final class LayoutRefiner {
      * @return common atom or null if non exists
      */
     private static IAtom getCommon(IBond bndA, IBond bndB) {
-        IAtom beg = bndA.getBeg();
+        IAtom beg = bndA.getBegin();
         IAtom end = bndA.getEnd();
         if (bndB.contains(beg))
             return beg;

@@ -113,7 +113,7 @@ public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMo
 
         int n = 0; // count all heavy atom - heavy atom bonds
         for (IBond bond : atomContainer.bonds()) {
-            if (bond.getBeg().getAtomicNumber() != 1 && bond.getEnd().getAtomicNumber() != 1) {
+            if (bond.getBegin().getAtomicNumber() != 1 && bond.getEnd().getAtomicNumber() != 1) {
                 n++;
             }
         }

@@ -654,7 +654,7 @@ public final class InChITautomerGenerator {
 
         while (offSet < container.getBondCount() && dblBondPositions == null) {
             IBond bond = container.getBond(offSet);
-            if (atomsInNeedOfFix.contains(bond.getBeg()) && atomsInNeedOfFix.contains(bond.getEnd())) {
+            if (atomsInNeedOfFix.contains(bond.getBegin()) && atomsInNeedOfFix.contains(bond.getEnd())) {
                 bond.setOrder(IBond.Order.DOUBLE);
                 dblBondsAdded = dblBondsAdded + 1;
                 if (dblBondsAdded == doubleBondMax) {

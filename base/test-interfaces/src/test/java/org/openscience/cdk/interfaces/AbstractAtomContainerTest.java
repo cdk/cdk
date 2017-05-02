@@ -219,7 +219,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         // test cloning of atoms in bonds
         IAtomContainer clonedMol = (IAtomContainer) molecule.clone();
         Assert.assertNotNull(clonedMol);
-        Assert.assertNotSame(atom1, clonedMol.getBond(0).getBeg());
+        Assert.assertNotSame(atom1, clonedMol.getBond(0).getBegin());
         Assert.assertNotSame(atom2, clonedMol.getBond(0).getEnd());
     }
 
@@ -235,7 +235,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         // test that cloned bonds contain atoms from cloned atomcontainer
         IAtomContainer clonedMol = (IAtomContainer) molecule.clone();
         Assert.assertNotNull(clonedMol);
-        Assert.assertTrue(clonedMol.contains(clonedMol.getBond(0).getBeg()));
+        Assert.assertTrue(clonedMol.contains(clonedMol.getBond(0).getBegin()));
         Assert.assertTrue(clonedMol.contains(clonedMol.getBond(0).getEnd()));
     }
 
@@ -1707,13 +1707,13 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         while (bonds.hasNext())
             Assert.assertNotNull(bonds.next());
 
-        Assert.assertEquals(c1, acetone.getBond(0).getBeg());
+        Assert.assertEquals(c1, acetone.getBond(0).getBegin());
         Assert.assertEquals(c2, acetone.getBond(0).getEnd());
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getBond(0).getOrder());
-        Assert.assertEquals(c2, acetone.getBond(1).getBeg());
+        Assert.assertEquals(c2, acetone.getBond(1).getBegin());
         Assert.assertEquals(o, acetone.getBond(1).getEnd());
         Assert.assertEquals(IBond.Order.DOUBLE, acetone.getBond(1).getOrder());
-        Assert.assertEquals(c2, acetone.getBond(2).getBeg());
+        Assert.assertEquals(c2, acetone.getBond(2).getBegin());
         Assert.assertEquals(c3, acetone.getBond(2).getEnd());
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getBond(2).getOrder());
     }
@@ -1739,15 +1739,15 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         while (bonds.hasNext())
             Assert.assertNotNull(bonds.next());
 
-        Assert.assertEquals(c1, acetone.getBond(0).getBeg());
+        Assert.assertEquals(c1, acetone.getBond(0).getBegin());
         Assert.assertEquals(c2, acetone.getBond(0).getEnd());
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getBond(0).getOrder());
         Assert.assertEquals(IBond.Stereo.UP, acetone.getBond(0).getStereo());
-        Assert.assertEquals(c2, acetone.getBond(1).getBeg());
+        Assert.assertEquals(c2, acetone.getBond(1).getBegin());
         Assert.assertEquals(o, acetone.getBond(1).getEnd());
         Assert.assertEquals(IBond.Order.DOUBLE, acetone.getBond(1).getOrder());
         Assert.assertEquals(IBond.Stereo.DOWN, acetone.getBond(1).getStereo());
-        Assert.assertEquals(c2, acetone.getBond(2).getBeg());
+        Assert.assertEquals(c2, acetone.getBond(2).getBegin());
         Assert.assertEquals(c3, acetone.getBond(2).getEnd());
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getBond(2).getOrder());
         Assert.assertEquals(IBond.Stereo.NONE, acetone.getBond(2).getStereo());

@@ -95,7 +95,7 @@ public class AllRingsFinderTest extends CDKTestCase {
             for (int j = 0; j < ring.getBondCount(); j++) {
                 IBond ec = ring.getBond(j);
 
-                IAtom atom1 = ec.getBeg();
+                IAtom atom1 = ec.getBegin();
                 IAtom atom2 = ec.getEnd();
                 Assert.assertTrue(ring.contains(atom1));
                 Assert.assertTrue(ring.contains(atom2));

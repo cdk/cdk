@@ -498,7 +498,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         IBond bond = ac.getBond(number);
         if (!container.contains(bond)) {
             bond.setFlag(CDKConstants.REACTIVE_CENTER, b);
-            bond.getBeg().setFlag(CDKConstants.REACTIVE_CENTER, b);
+            bond.getBegin().setFlag(CDKConstants.REACTIVE_CENTER, b);
             bond.getEnd().setFlag(CDKConstants.REACTIVE_CENTER, b);
         } else
             return null;
@@ -529,18 +529,18 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                     IAtomContainer ati = iSet.getAtomContainer(j);
                     if (!ati.equals(ac))
                         for (int k = 0; k < ati.getBondCount(); k++) {
-                            IAtom a0 = ati.getBond(k).getBeg();
+                            IAtom a0 = ati.getBond(k).getBegin();
                             IAtom a1 = ati.getBond(k).getEnd();
                             if (!a0.getSymbol().equals("H") || !a1.getSymbol().equals("H"))
-                                if ((a0.getID().equals(ac.getBond(i).getBeg().getID()) && a1.getID().equals(
+                                if ((a0.getID().equals(ac.getBond(i).getBegin().getID()) && a1.getID().equals(
                                         ac.getBond(i).getEnd().getID()))
-                                        || (a1.getID().equals(ac.getBond(i).getBeg().getID()) && a0.getID().equals(
+                                        || (a1.getID().equals(ac.getBond(i).getBegin().getID()) && a0.getID().equals(
                                                 ac.getBond(i).getEnd().getID()))) {
                                     if (a0.getFormalCharge() != 0 || a1.getFormalCharge() != 0) continue out;
                                 }
                         }
                 }
-                ac.getBond(i).getBeg().setFlag(CDKConstants.REACTIVE_CENTER, true);
+                ac.getBond(i).getBegin().setFlag(CDKConstants.REACTIVE_CENTER, true);
                 ac.getBond(i).getEnd().setFlag(CDKConstants.REACTIVE_CENTER, true);
                 ac.getBond(i).setFlag(CDKConstants.REACTIVE_CENTER, true);
                 found = true;
@@ -562,7 +562,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             IAtomContainer mol = setOfReactions.getReaction(i).getProducts().getAtomContainer(0);
             for (int k = 0; k < mol.getBondCount(); k++) {
                 mol.getBond(k).setFlag(CDKConstants.REACTIVE_CENTER, false);
-                mol.getBond(k).getBeg().setFlag(CDKConstants.REACTIVE_CENTER, false);
+                mol.getBond(k).getBegin().setFlag(CDKConstants.REACTIVE_CENTER, false);
                 mol.getBond(k).getEnd().setFlag(CDKConstants.REACTIVE_CENTER, false);
             }
             setOfM2.addAtomContainer(mol);
@@ -637,7 +637,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             fQ = 0.5;
             for (int i = 0; i < atomContainer.getBondCount(); i++) {
                 IBond bond = atomContainer.getBond(i);
-                if (bond.getBeg().getFormalCharge() != 0.0 && bond.getEnd().getFormalCharge() != 0.0) {
+                if (bond.getBegin().getFormalCharge() != 0.0 && bond.getEnd().getFormalCharge() != 0.0) {
                     fQ = 0.25;
                     break;
                 }

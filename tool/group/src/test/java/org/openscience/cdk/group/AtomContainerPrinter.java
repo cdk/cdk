@@ -50,7 +50,7 @@ public class AtomContainerPrinter {
             edgeStrings = new ArrayList<String>();
         }
         for (IBond bond : atomContainer.bonds()) {
-            int a0 = atomContainer.indexOf(bond.getBeg());
+            int a0 = atomContainer.indexOf(bond.getBegin());
             int a1 = atomContainer.indexOf(bond.getEnd());
             int pA0 = permutation.get(a0);
             int pA1 = permutation.get(a1);

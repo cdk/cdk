@@ -205,11 +205,11 @@ public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceB
     public boolean bondOrderCanBeIncreased(IBond bond, IAtomContainer atomContainer) throws CDKException {
         boolean atom0isUnsaturated = false, atom1isUnsaturated = false;
         double sum;
-        if (bond.getBeg().getBondOrderSum() == null) {
+        if (bond.getBegin().getBondOrderSum() == null) {
             sum = getAtomBondordersum(bond.getEnd(), atomContainer);
         } else
-            sum = bond.getBeg().getBondOrderSum();
-        if (bondsUsed(bond.getBeg(), atomContainer) < sum) atom0isUnsaturated = true;
+            sum = bond.getBegin().getBondOrderSum();
+        if (bondsUsed(bond.getBegin(), atomContainer) < sum) atom0isUnsaturated = true;
 
         if (bond.getEnd().getBondOrderSum() == null) {
             sum = getAtomBondordersum(bond.getEnd(), atomContainer);

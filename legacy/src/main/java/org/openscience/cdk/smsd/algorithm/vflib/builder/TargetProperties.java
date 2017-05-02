@@ -110,8 +110,8 @@ public class TargetProperties implements java.io.Serializable {
         }
 
         for (IBond bond : container.bonds()) {
-            map[atoms.get(bond.getBeg())][atoms.get(bond.getEnd())] = bond;
-            map[atoms.get(bond.getEnd())][atoms.get(bond.getBeg())] = bond;
+            map[atoms.get(bond.getBegin())][atoms.get(bond.getEnd())] = bond;
+            map[atoms.get(bond.getEnd())][atoms.get(bond.getBegin())] = bond;
         }
     }
 

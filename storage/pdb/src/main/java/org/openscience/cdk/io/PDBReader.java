@@ -40,9 +40,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -508,7 +506,7 @@ public class PDBReader extends DefaultChemObjectReader {
         IBond bond = firstAtom.getBuilder().newInstance(IBond.class, firstAtom, secondAtom, IBond.Order.SINGLE);
         for (int i = 0; i < bondsFromConnectRecords.size(); i++) {
             IBond existingBond = (IBond) bondsFromConnectRecords.get(i);
-            IAtom a = existingBond.getBeg();
+            IAtom a = existingBond.getBegin();
             IAtom b = existingBond.getEnd();
             if ((a == firstAtom && b == secondAtom) || (b == firstAtom && a == secondAtom)) {
                 // already stored

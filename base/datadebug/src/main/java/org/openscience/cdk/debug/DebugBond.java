@@ -245,9 +245,9 @@ public class DebugBond extends Bond implements IBond {
     /**
      * {@inheritDoc}
      */
-    public IAtom getBeg() {
+    public IAtom getBegin() {
         logger.debug("Getting begin atom");
-        return super.getBeg();
+        return super.getBegin();
     }
 
     /**

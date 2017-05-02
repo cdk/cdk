@@ -343,7 +343,7 @@ final class MacroCycleLayout {
             IBond bond = anon.removeBond(anon.getBondCount() - 1);
             IAtom dummy = bldr.newInstance(IAtom.class, "C");
             anon.addAtom(dummy);
-            anon.addBond(bldr.newInstance(IBond.class, bond.getBeg(), dummy, IBond.Order.SINGLE));
+            anon.addBond(bldr.newInstance(IBond.class, bond.getBegin(), dummy, IBond.Order.SINGLE));
             anon.addBond(bldr.newInstance(IBond.class, dummy, bond.getEnd(), IBond.Order.SINGLE));
         }
         return anon;

@@ -233,7 +233,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     /**
      * {@inheritDoc}
      */
-    public IAtom getBeg() {
+    public IAtom getBegin() {
         return atoms[0];
     }
 

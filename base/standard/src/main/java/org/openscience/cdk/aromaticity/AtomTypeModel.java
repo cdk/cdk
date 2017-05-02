@@ -122,7 +122,7 @@ final class AtomTypeModel extends ElectronDonation {
         for (IBond bond : container.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE || bond.getOrder() == IBond.Order.TRIPLE) {
 
-                IAtom a1 = bond.getBeg();
+                IAtom a1 = bond.getBegin();
                 IAtom a2 = bond.getEnd();
 
                 String a1Type = a1.getAtomTypeName();

@@ -59,7 +59,7 @@ public class BondTools {
      */
     public static boolean isValidDoubleBondConfiguration(IAtomContainer container, IBond bond) {
         //org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
-        List<IAtom> connectedAtoms = container.getConnectedAtomsList(bond.getBeg());
+        List<IAtom> connectedAtoms = container.getConnectedAtomsList(bond.getBegin());
         IAtom from = null;
         for (IAtom connectedAtom : connectedAtoms) {
             if (connectedAtom != bond.getEnd()) {
@@ -70,8 +70,8 @@ public class BondTools {
         for (int i = 0; i < array.length; i++) {
             array[i] = true;
         }
-        if (isStartOfDoubleBond(container, bond.getBeg(), from, array)
-                && isEndOfDoubleBond(container, bond.getEnd(), bond.getBeg(), array)
+        if (isStartOfDoubleBond(container, bond.getBegin(), from, array)
+                && isEndOfDoubleBond(container, bond.getEnd(), bond.getBegin(), array)
                 && !bond.getFlag(CDKConstants.ISAROMATIC)) {
             return (true);
         } else {

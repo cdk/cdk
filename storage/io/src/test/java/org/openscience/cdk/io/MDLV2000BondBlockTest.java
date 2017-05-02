@@ -55,7 +55,7 @@ public class MDLV2000BondBlockTest {
     public void atomNumbers() throws Exception {
         String input = "  1  3  1  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getBeg(), is(atoms[0]));
+        assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
     }
 
@@ -219,7 +219,7 @@ public class MDLV2000BondBlockTest {
     public void longLine() throws Exception {
         String input = "  1  3  1  0  0  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getBeg(), is(atoms[0]));
+        assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
@@ -231,7 +231,7 @@ public class MDLV2000BondBlockTest {
     public void longLineWithPadding() throws Exception {
         String input = "  1  3  1  0  0  0  0    ";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getBeg(), is(atoms[0]));
+        assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
@@ -243,7 +243,7 @@ public class MDLV2000BondBlockTest {
     public void shortLine() throws Exception {
         String input = "  1  3  1  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getBeg(), is(atoms[0]));
+        assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
@@ -255,7 +255,7 @@ public class MDLV2000BondBlockTest {
     public void shortLineWithPadding() throws Exception {
         String input = "  1  3  1  0       ";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getBeg(), is(atoms[0]));
+        assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
@@ -267,7 +267,7 @@ public class MDLV2000BondBlockTest {
     public void shortLineNoStereo() throws Exception {
         String input = "  1  3  1";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getBeg(), is(atoms[0]));
+        assertThat(bond.getBegin(), is(atoms[0]));
         assertThat(bond.getEnd(), is(atoms[2]));
         assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));

@@ -423,12 +423,12 @@ public class MurckoFragmenter implements IFragmenter {
     }
 
     private boolean islinker(IBond bond) {
-        return islinker(bond.getBeg()) || islinker(bond.getEnd());
+        return islinker(bond.getBegin()) || islinker(bond.getEnd());
     }
 
     private boolean isZeroAtomLinker(IBond bond) {
         boolean isRingBond = bond.getFlag(CDKConstants.ISINRING);
-        return isring(bond.getBeg()) && isring(bond.getEnd()) && !isRingBond;
+        return isring(bond.getBegin()) && isring(bond.getEnd()) && !isRingBond;
     }
 
     private boolean hasframework(IAtomContainer atomContainer) {

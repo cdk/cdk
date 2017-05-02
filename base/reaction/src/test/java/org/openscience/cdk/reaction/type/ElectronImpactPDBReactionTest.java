@@ -100,7 +100,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
-            IAtom atom1 = bond.getBeg();
+            IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (bond.getOrder() == IBond.Order.DOUBLE && atom1.getSymbol().equals("C") && atom2.getSymbol().equals("C")) {
                 bond.setFlag(CDKConstants.REACTIVE_CENTER, true);

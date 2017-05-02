@@ -382,7 +382,7 @@ public class FiguerasSSSRFinder {
         while (bonds.hasNext()) {
             bond = (IBond) bonds.next();
             molecule.removeElectronContainer(bond);
-            r1 = getRing(bond.getBeg(), molecule);
+            r1 = getRing(bond.getBegin(), molecule);
             r2 = getRing(bond.getEnd(), molecule);
             logger.debug("checkEdges: " + bond);
             if (r1.getAtomCount() > r2.getAtomCount()) {

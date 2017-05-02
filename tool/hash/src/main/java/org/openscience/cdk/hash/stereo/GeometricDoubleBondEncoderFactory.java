@@ -73,7 +73,7 @@ public final class GeometricDoubleBondEncoderFactory implements StereoEncoderFac
             // if double bond and not E or Z query bond
             if (DOUBLE.equals(bond.getOrder()) && !E_OR_Z.equals(bond.getStereo())) {
 
-                IAtom left = bond.getBeg();
+                IAtom left = bond.getBegin();
                 IAtom right = bond.getEnd();
 
                 // skip -N=N- double bonds which exhibit inversion

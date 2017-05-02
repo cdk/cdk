@@ -162,7 +162,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         Assert.assertEquals(2, bond.getAtomCount());
-        IAtom atom1 = bond.getBeg();
+        IAtom atom1 = bond.getBegin();
         IAtom atom2 = bond.getEnd();
         Assert.assertEquals("a1", atom1.getID());
         Assert.assertEquals("a2", atom2.getID());
@@ -179,7 +179,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         Assert.assertEquals(2, bond.getAtomCount());
-        IAtom atom1 = bond.getBeg();
+        IAtom atom1 = bond.getBegin();
         IAtom atom2 = bond.getEnd();
         Assert.assertEquals("a1", atom1.getID());
         Assert.assertEquals("a2", atom2.getID());
@@ -196,7 +196,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         Assert.assertEquals(2, bond.getAtomCount());
-        IAtom atom1 = bond.getBeg();
+        IAtom atom1 = bond.getBegin();
         IAtom atom2 = bond.getEnd();
         Assert.assertEquals("a1", atom1.getID());
         Assert.assertEquals("a2", atom2.getID());
@@ -213,7 +213,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals(2, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         Assert.assertEquals(2, bond.getAtomCount());
-        IAtom atom1 = bond.getBeg();
+        IAtom atom1 = bond.getBegin();
         IAtom atom2 = bond.getEnd();
         Assert.assertEquals("a1", atom1.getID());
         Assert.assertEquals("a2", atom2.getID());

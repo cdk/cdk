@@ -194,10 +194,10 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
                 return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
             }
 
-            mass1 = factory.getMajorIsotope(bond.getBeg().getSymbol()).getMassNumber();
+            mass1 = factory.getMajorIsotope(bond.getBegin().getSymbol()).getMassNumber();
             mass2 = factory.getMajorIsotope(bond.getEnd().getSymbol()).getMassNumber();
 
-            Point3d p1 = bond.getBeg().getPoint3d();
+            Point3d p1 = bond.getBegin().getPoint3d();
             Point3d p2 = bond.getEnd().getPoint3d();
 
             double x1 = p1.x;
@@ -220,12 +220,12 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
                 return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
             }
 
-            if (b.getBeg().getSymbol().equals("H") || b.getEnd().getSymbol().equals("H")) continue;
+            if (b.getBegin().getSymbol().equals("H") || b.getEnd().getSymbol().equals("H")) continue;
 
-            mass1 = factory.getMajorIsotope(b.getBeg().getSymbol()).getMassNumber();
+            mass1 = factory.getMajorIsotope(b.getBegin().getSymbol()).getMassNumber();
             mass2 = factory.getMajorIsotope(b.getEnd().getSymbol()).getMassNumber();
 
-            Point3d point0 = b.getBeg().getPoint3d();
+            Point3d point0 = b.getBegin().getPoint3d();
             Point3d point1 = b.getEnd().getPoint3d();
 
             double x1 = point0.x;

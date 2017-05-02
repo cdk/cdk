@@ -208,7 +208,7 @@ final class StereoMatch implements Predicate<int[]> {
         // bond is undirected so we need to ensure v1 is the first atom in the bond
         // we also need to to swap the substituents later
         boolean swap = false;
-        if (targetElement.getStereoBond().getBeg() != target.getAtom(v1)) {
+        if (targetElement.getStereoBond().getBegin() != target.getAtom(v1)) {
             int tmp = v1;
             v1 = v2;
             v2 = tmp;
@@ -332,7 +332,7 @@ final class StereoMatch implements Predicate<int[]> {
                 indices[nElements++] = idx;
             } else if (element instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) element;
-                int idx1 = map.get(dbs.getStereoBond().getBeg());
+                int idx1 = map.get(dbs.getStereoBond().getBegin());
                 int idx2 = map.get(dbs.getStereoBond().getEnd());
                 elements[idx2] = elements[idx1] = element;
                 types[idx1] = types[idx2] = Type.Geometric;

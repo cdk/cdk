@@ -69,7 +69,7 @@ final class MDLValence {
 
         // compute the bond order sums
         for (IBond bond : container.bonds()) {
-            int u = atomToIndex.get(bond.getBeg());
+            int u = atomToIndex.get(bond.getBegin());
             int v = atomToIndex.get(bond.getEnd());
 
             int bondOrder = bond.getOrder().numeric();

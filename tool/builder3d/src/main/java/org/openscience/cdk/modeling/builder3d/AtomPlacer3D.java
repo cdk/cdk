@@ -374,14 +374,14 @@ public class AtomPlacer3D {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            if (bond.getBeg().getFlag(CDKConstants.ISPLACED) && !(bond.getEnd().getFlag(CDKConstants.ISPLACED))) {
+            if (bond.getBegin().getFlag(CDKConstants.ISPLACED) && !(bond.getEnd().getFlag(CDKConstants.ISPLACED))) {
                 if (isAliphaticHeavyAtom(bond.getEnd())) {
                     return bond.getEnd();
                 }
             }
-            if (bond.getEnd().getFlag(CDKConstants.ISPLACED) && !(bond.getBeg().getFlag(CDKConstants.ISPLACED))) {
-                if (isAliphaticHeavyAtom(bond.getBeg())) {
-                    return bond.getBeg();
+            if (bond.getEnd().getFlag(CDKConstants.ISPLACED) && !(bond.getBegin().getFlag(CDKConstants.ISPLACED))) {
+                if (isAliphaticHeavyAtom(bond.getBegin())) {
+                    return bond.getBegin();
                 }
             }
         }
@@ -413,7 +413,7 @@ public class AtomPlacer3D {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            IAtom atom0 = bond.getBeg();
+            IAtom atom0 = bond.getBegin();
             IAtom atom1 = bond.getEnd();
             if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
                 if (isAliphaticHeavyAtom(atom1) && isHeavyAtom(atom0)) {
@@ -439,7 +439,7 @@ public class AtomPlacer3D {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            IAtom atom0 = bond.getBeg();
+            IAtom atom0 = bond.getBegin();
             IAtom atom1 = bond.getEnd();
             if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
                 if (isRingHeavyAtom(atom1) && isHeavyAtom(atom0)) {

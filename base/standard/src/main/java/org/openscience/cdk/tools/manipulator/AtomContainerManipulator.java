@@ -592,7 +592,7 @@ public class AtomContainerManipulator {
             } else if (stereoElement instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) stereoElement;
                 IBond stereoBond = dbs.getStereoBond();
-                for (IAtom neighbor : org.getConnectedAtomsList(stereoBond.getBeg())) {
+                for (IAtom neighbor : org.getConnectedAtomsList(stereoBond.getBegin())) {
                     if (remove.remove(neighbor)) addClone(neighbor, cpy, map);
                 }
                 for (IAtom neighbor : org.getConnectedAtomsList(stereoBond.getEnd())) {
@@ -624,7 +624,7 @@ public class AtomContainerManipulator {
                     e.printStackTrace();
                 }
                 assert clone != null;
-                clone.setAtoms(new IAtom[]{map.get(bond.getBeg()), map.get(bond.getEnd())});
+                clone.setAtoms(new IAtom[]{map.get(bond.getBegin()), map.get(bond.getEnd())});
                 cpy.addBond(clone);
             }
         }
@@ -738,7 +738,7 @@ public class AtomContainerManipulator {
         int remaining = hydrogens.size();
 
         for (final IBond bond : org.bonds()) {
-            if (remaining > 0 && (hydrogens.contains(bond.getBeg()) || hydrogens.contains(bond.getEnd()))) {
+            if (remaining > 0 && (hydrogens.contains(bond.getBegin()) || hydrogens.contains(bond.getEnd()))) {
                 remaining--;
                 continue;
             }
@@ -787,7 +787,7 @@ public class AtomContainerManipulator {
                 //  \     /
                 //   u = v
 
-                IAtom u = orgStereo.getBeg();
+                IAtom u = orgStereo.getBegin();
                 IAtom v = orgStereo.getEnd();
                 IAtom x = orgLeft.getOther(u);
                 IAtom y = orgRight.getOther(v);
@@ -1024,7 +1024,7 @@ public class AtomContainerManipulator {
         for (int i = 0; i < count; i++) {
             // Check bond.
             final IBond bond = ac.getBond(i);
-            IAtom atom0 = bond.getBeg();
+            IAtom atom0 = bond.getBegin();
             IAtom atom1 = bond.getEnd();
             boolean remove_bond = false;
             for (IAtom atom : bond.atoms()) {
@@ -1321,11 +1321,11 @@ public class AtomContainerManipulator {
             query.getBond(i).setOrder(IBond.Order.SINGLE);
             query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
             query.getBond(i).setFlag(CDKConstants.SINGLE_OR_DOUBLE, false);
-            query.getBond(i).getBeg().setSymbol("C");
-            query.getBond(i).getBeg().setHybridization(null);
+            query.getBond(i).getBegin().setSymbol("C");
+            query.getBond(i).getBegin().setHybridization(null);
             query.getBond(i).getEnd().setSymbol("C");
             query.getBond(i).getEnd().setHybridization(null);
-            query.getBond(i).getBeg().setFlag(CDKConstants.ISAROMATIC, false);
+            query.getBond(i).getBegin().setFlag(CDKConstants.ISAROMATIC, false);
             query.getBond(i).getEnd().setFlag(CDKConstants.ISAROMATIC, false);
         }
         return query;
@@ -1351,7 +1351,7 @@ public class AtomContainerManipulator {
         }
         for (int i = 0; i < bonds.length; i++) {
             IBond bond = src.getBond(i);
-            int u = src.indexOf(bond.getBeg());
+            int u = src.indexOf(bond.getBegin());
             int v = src.indexOf(bond.getEnd());
             bonds[i] = builder.newInstance(IBond.class, atoms[u], atoms[v]);
         }
@@ -1384,7 +1384,7 @@ public class AtomContainerManipulator {
         }
         for (int i = 0; i < bonds.length; i++) {
             IBond bond = src.getBond(i);
-            int u = src.indexOf(bond.getBeg());
+            int u = src.indexOf(bond.getBegin());
             int v = src.indexOf(bond.getEnd());
             bonds[i] = builder.newInstance(IBond.class, atoms[u], atoms[v]);
         }
@@ -1442,7 +1442,7 @@ public class AtomContainerManipulator {
         for (IBond bond : rs.ringFragments().bonds()) {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 bond.setFlag(SINGLE_OR_DOUBLE, true);
-                bond.getBeg().setFlag(SINGLE_OR_DOUBLE, true);
+                bond.getBegin().setFlag(SINGLE_OR_DOUBLE, true);
                 bond.getEnd().setFlag(SINGLE_OR_DOUBLE, true);
                 singleOrDouble = singleOrDouble | true;
             }

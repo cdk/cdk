@@ -152,7 +152,7 @@ public interface IBond extends IElectronContainer {
      *
      * @return the begin atom
      */
-    IAtom getBeg();
+    IAtom getBegin();
 
     /**
      * Access the end (or second) atom of the bond.
@@ -183,7 +183,7 @@ public interface IBond extends IElectronContainer {
      * and the more correct {@link #getConnectedAtoms(IAtom)} should be used.
      * <p>
      * <pre>{@code
-     * IAtom beg = bond.getBeg();
+     * IAtom beg = bond.getBegin();
      * IAtom end = bond.getEnd();
      * // bond.getConnectedAtom(beg) == end
      * // bond.getConnectedAtom(end) == beg
@@ -202,7 +202,7 @@ public interface IBond extends IElectronContainer {
      * and the more correct {@link #getConnectedAtoms(IAtom)} should be used.
      * <p>
      * <pre>{@code
-     * IAtom beg = bond.getBeg();
+     * IAtom beg = bond.getBegin();
      * IAtom end = bond.getEnd();
      * // bond.getOther(beg) == end
      * // bond.getOther(end) == beg

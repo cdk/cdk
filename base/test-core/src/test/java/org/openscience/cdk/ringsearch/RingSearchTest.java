@@ -154,7 +154,7 @@ public class RingSearchTest {
 
         when(container.indexOf(a1)).thenReturn(42);
         when(container.indexOf(a2)).thenReturn(43);
-        when(bond.getBeg()).thenReturn(a1);
+        when(bond.getBegin()).thenReturn(a1);
         when(bond.getEnd()).thenReturn(a2);
 
         RingSearch ringSearch = new RingSearch(container, cyclicSearch);

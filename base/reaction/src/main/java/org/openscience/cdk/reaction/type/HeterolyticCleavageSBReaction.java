@@ -134,7 +134,7 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
         Iterator<IBond> bondis = reactant.bonds().iterator();
         while (bondis.hasNext()) {
             IBond bondi = bondis.next();
-            IAtom atom1 = bondi.getBeg();
+            IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE
                     && atom1.getFlag(CDKConstants.REACTIVE_CENTER) && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
@@ -187,7 +187,7 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
         Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            IAtom atom1 = bond.getBeg();
+            IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (bond.getOrder() == IBond.Order.SINGLE
                     && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0

@@ -60,7 +60,7 @@ public class AtomContainerPrinter {
         sb.append(' ');
         List<Edge> edges = new ArrayList<Edge>();
         for (IBond bond : atomContainer.bonds()) {
-            IAtom a0 = bond.getBeg();
+            IAtom a0 = bond.getBegin();
             IAtom a1 = bond.getEnd();
             int a0N = atomContainer.indexOf(a0);
             int a1N = atomContainer.indexOf(a1);

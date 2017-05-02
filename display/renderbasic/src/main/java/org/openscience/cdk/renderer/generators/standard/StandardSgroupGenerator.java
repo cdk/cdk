@@ -128,7 +128,7 @@ final class StandardSgroupGenerator {
                 Set<IAtom> atoms = sgroup.getAtoms();
                 // should only be one bond
                 for (IBond bond : sgroup.getBonds()) {
-                    IAtom beg = bond.getBeg();
+                    IAtom beg = bond.getBegin();
                     IAtom end = bond.getEnd();
                     if (atoms.contains(beg)) {
                         StandardGenerator.hideFully(beg);
@@ -173,7 +173,7 @@ final class StandardSgroupGenerator {
             }
         }
         for (IBond bond : container.bonds()) {
-            IAtom beg = bond.getBeg();
+            IAtom beg = bond.getBegin();
             IAtom end = bond.getEnd();
             if (sgroupAtoms.contains(beg) && sgroupAtoms.contains(end)) {
                 numSgroupBonds++;
@@ -208,9 +208,9 @@ final class StandardSgroupGenerator {
         final Set<IAtom> parentAtoms = sgroup.getValue(SgroupKey.CtabParentAtomList);
 
         for (IBond bond : container.bonds()) {
-            if (parentAtoms.contains(bond.getBeg()) && parentAtoms.contains(bond.getEnd()))
+            if (parentAtoms.contains(bond.getBegin()) && parentAtoms.contains(bond.getEnd()))
                 continue;
-            if (atoms.contains(bond.getBeg()) || atoms.contains(bond.getEnd()))
+            if (atoms.contains(bond.getBegin()) || atoms.contains(bond.getEnd()))
                 StandardGenerator.hide(bond);
         }
         for (IAtom atom : atoms) {
@@ -240,7 +240,7 @@ final class StandardSgroupGenerator {
         if (crossing.size() > 1) {
             IAtom internal = null;
             for (IBond bond : crossing) {
-                IAtom beg = bond.getBeg();
+                IAtom beg = bond.getBegin();
                 IAtom end = bond.getEnd();
                 if (atoms.contains(beg)) {
                     if (internal != null && internal != beg) return; // can't do it
@@ -256,13 +256,13 @@ final class StandardSgroupGenerator {
             StandardGenerator.hide(atom);
         }
         for (IBond bond : container.bonds()) {
-            if (atoms.contains(bond.getBeg()) ||
+            if (atoms.contains(bond.getBegin()) ||
                 atoms.contains(bond.getEnd()))
                 StandardGenerator.hide(bond);
         }
         for (IBond bond : crossing) {
             StandardGenerator.unhide(bond);
-            IAtom a1 = bond.getBeg();
+            IAtom a1 = bond.getBegin();
             IAtom a2 = bond.getEnd();
             StandardGenerator.unhide(a1);
             if (atoms.contains(a1))
@@ -619,7 +619,7 @@ final class StandardSgroupGenerator {
 
                 final SgroupBracket bracket = e.getKey();
                 final IBond bond = e.getValue();
-                final IAtom inGroupAtom = atoms.contains(bond.getBeg()) ? bond.getBeg() : bond.getEnd();
+                final IAtom inGroupAtom = atoms.contains(bond.getBegin()) ? bond.getBegin() : bond.getEnd();
 
                 final Point2d p1 = bracket.getFirstPoint();
                 final Point2d p2 = bracket.getSecondPoint();
@@ -826,7 +826,7 @@ final class StandardSgroupGenerator {
         for (SgroupBracket bracket : brackets) {
             IBond crossingBond = null;
             for (IBond bond : bonds) {
-                IAtom a1 = bond.getBeg();
+                IAtom a1 = bond.getBegin();
                 IAtom a2 = bond.getEnd();
                 if (Line2D.linesIntersect(bracket.getFirstPoint().x, bracket.getFirstPoint().y,
                                           bracket.getSecondPoint().x, bracket.getSecondPoint().y,

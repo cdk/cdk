@@ -89,7 +89,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtoms(atomsToAdd);
 
         Assert.assertEquals(2, b.getAtomCount());
-        Assert.assertEquals(atomsToAdd[0], b.getBeg());
+        Assert.assertEquals(atomsToAdd[0], b.getBegin());
         Assert.assertEquals(atomsToAdd[1], b.getEnd());
     }
 
@@ -155,7 +155,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtom(o, 1);
         b.setOrder(Order.SINGLE);
 
-        Assert.assertEquals(c, b.getBeg());
+        Assert.assertEquals(c, b.getBegin());
         Assert.assertEquals(o, b.getEnd());
     }
 
@@ -168,7 +168,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         b.setAtom(c, 0);
         b.setAtom(o, 1);
 
-        Assert.assertEquals(c, b.getBeg());
+        Assert.assertEquals(c, b.getBegin());
         Assert.assertEquals(o, b.getEnd());
     }
 
@@ -368,7 +368,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IBond clone = (IBond) bond.clone();
 
         // test cloning of atoms
-        Assert.assertNotSame(atom1, clone.getBeg());
+        Assert.assertNotSame(atom1, clone.getBegin());
         Assert.assertNotSame(atom2, clone.getEnd());
     }
 
@@ -421,7 +421,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
         IBond bond = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3});
         Assert.assertEquals(3, bond.getAtomCount());
-        Assert.assertEquals(atom1, bond.getBeg());
+        Assert.assertEquals(atom1, bond.getBegin());
         Assert.assertEquals(atom2, bond.getEnd());
         Assert.assertEquals(atom3, bond.getAtom(2));
 

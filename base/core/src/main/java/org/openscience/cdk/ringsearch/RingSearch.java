@@ -234,7 +234,7 @@ public final class RingSearch {
      */
     public boolean cyclic(IBond bond) {
         // XXX: linear search - but okay for now
-        int u = container.indexOf(bond.getBeg());
+        int u = container.indexOf(bond.getBegin());
         int v = container.indexOf(bond.getEnd());
         if (u < 0 || v < 0) throw new NoSuchElementException("atoms of the bond are not found in the container");
         return searcher.cyclic(u, v);
@@ -339,7 +339,7 @@ public final class RingSearch {
 
         for (IBond bond : container.bonds()) {
 
-            IAtom either = bond.getBeg();
+            IAtom either = bond.getBegin();
             IAtom other = bond.getEnd();
 
             int u = container.indexOf(either);
@@ -438,7 +438,7 @@ public final class RingSearch {
 
         // include bonds that have both atoms in the atoms set
         for (IBond bond : container.bonds()) {
-            IAtom either = bond.getBeg();
+            IAtom either = bond.getBegin();
             IAtom other = bond.getEnd();
             if (atoms.contains(either) && atoms.contains(other)) {
                 bonds.add(bond);

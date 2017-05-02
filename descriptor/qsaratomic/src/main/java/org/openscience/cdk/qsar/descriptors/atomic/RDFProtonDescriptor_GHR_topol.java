@@ -437,7 +437,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
     private boolean getIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected) {
         boolean isBondNotRotatable = false;
         int counter = 0;
-        IAtom atom0 = bond.getBeg();
+        IAtom atom0 = bond.getBegin();
         IAtom atom1 = bond.getEnd();
         if (detected != null) {
             if (detected.contains(bond)) counter += 1;
@@ -525,7 +525,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         int nearestBond = 0;
         double[] values;
         double distance = 0;
-        IAtom atom0 = bond.getBeg();
+        IAtom atom0 = bond.getBegin();
         List<IBond> bondsAtLeft = mol.getConnectedBondsList(atom0);
         int partial;
         for (int i = 0; i < bondsAtLeft.size(); i++) {

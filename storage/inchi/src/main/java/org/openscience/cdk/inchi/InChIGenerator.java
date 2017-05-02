@@ -291,7 +291,7 @@ public class InChIGenerator {
             IBond bond = bonds.next();
 
             // Assumes 2 centre bond
-            JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getBeg());
+            JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getBegin());
             JniInchiAtom at1 = (JniInchiAtom) atomMap.get(bond.getEnd());
 
             // Get bond order
@@ -391,23 +391,23 @@ public class InChIGenerator {
                 JniInchiAtom at3 = null;
                 // TODO: I should check for two atom bonds... or maybe that should happen when you
                 //    create a double bond stereochemistry
-                if (stereoBond.contains(surroundingBonds[0].getBeg())) {
+                if (stereoBond.contains(surroundingBonds[0].getBegin())) {
                     // first atom is A
-                    at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getBeg());
+                    at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getBegin());
                     at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getEnd());
                 } else {
                     // first atom is X
-                    at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getBeg());
+                    at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getBegin());
                     at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getEnd());
                 }
-                if (stereoBond.contains(surroundingBonds[1].getBeg())) {
+                if (stereoBond.contains(surroundingBonds[1].getBegin())) {
                     // first atom is B
-                    at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getBeg());
+                    at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getBegin());
                     at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getEnd());
                 } else {
                     // first atom is Y
                     at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getEnd());
-                    at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getBeg());
+                    at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getBegin());
                 }
                 INCHI_PARITY p = INCHI_PARITY.UNKNOWN;
                 if (stereoType == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER) {

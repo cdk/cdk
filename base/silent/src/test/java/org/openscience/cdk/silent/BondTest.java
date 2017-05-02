@@ -50,7 +50,7 @@ public class BondTest extends AbstractBondTest {
     public void testBond() {
         IBond bond = new Bond();
         Assert.assertEquals(0, bond.getAtomCount());
-        Assert.assertNull(bond.getBeg());
+        Assert.assertNull(bond.getBegin());
         Assert.assertNull(bond.getEnd());
         Assert.assertNull(bond.getOrder());
         Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
@@ -67,7 +67,7 @@ public class BondTest extends AbstractBondTest {
 
         IBond bond1 = new Bond(new IAtom[]{atom1, atom2, atom3, atom4, atom5});
         Assert.assertEquals(5, bond1.getAtomCount());
-        Assert.assertEquals(atom1, bond1.getBeg());
+        Assert.assertEquals(atom1, bond1.getBegin());
         Assert.assertEquals(atom2, bond1.getEnd());
     }
 
@@ -82,7 +82,7 @@ public class BondTest extends AbstractBondTest {
 
         IBond bond1 = new Bond(new IAtom[]{atom1, atom2, atom3, atom4, atom5}, IBond.Order.SINGLE);
         Assert.assertEquals(5, bond1.getAtomCount());
-        Assert.assertEquals(atom1, bond1.getBeg());
+        Assert.assertEquals(atom1, bond1.getBegin());
         Assert.assertEquals(atom2, bond1.getEnd());
         Assert.assertEquals(IBond.Order.SINGLE, bond1.getOrder());
     }
@@ -95,7 +95,7 @@ public class BondTest extends AbstractBondTest {
         IBond bond = new Bond(c, o);
 
         Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(c, bond.getBeg());
+        Assert.assertEquals(c, bond.getBegin());
         Assert.assertEquals(o, bond.getEnd());
         Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
         Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
@@ -109,7 +109,7 @@ public class BondTest extends AbstractBondTest {
         IBond bond = new Bond(c, o, IBond.Order.DOUBLE);
 
         Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(c, bond.getBeg());
+        Assert.assertEquals(c, bond.getBegin());
         Assert.assertEquals(o, bond.getEnd());
         Assert.assertTrue(bond.getOrder() == IBond.Order.DOUBLE);
         Assert.assertEquals(IBond.Stereo.NONE, bond.getStereo());
@@ -123,7 +123,7 @@ public class BondTest extends AbstractBondTest {
         IBond bond = new Bond(c, o, IBond.Order.SINGLE, IBond.Stereo.UP);
 
         Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertEquals(c, bond.getBeg());
+        Assert.assertEquals(c, bond.getBegin());
         Assert.assertEquals(o, bond.getEnd());
         Assert.assertTrue(bond.getOrder() == IBond.Order.SINGLE);
         Assert.assertEquals(IBond.Stereo.UP, bond.getStereo());

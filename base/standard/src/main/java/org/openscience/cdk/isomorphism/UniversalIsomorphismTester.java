@@ -520,7 +520,7 @@ public class UniversalIsomorphismTester {
                 bond = g.getBond(rMap.getId2());
             }
 
-            a = bond.getBeg();
+            a = bond.getBegin();
             a1 = (IAtom) table.get(a);
 
             if (a1 == null) {
@@ -746,13 +746,13 @@ public class UniversalIsomorphismTester {
                 IBond bondA2 = ac2.getBond(j);
                 if (bondA2 instanceof IQueryBond) {
                     IQueryBond queryBond = (IQueryBond) bondA2;
-                    IQueryAtom atom1 = (IQueryAtom) (bondA2.getBeg());
+                    IQueryAtom atom1 = (IQueryAtom) (bondA2.getBegin());
                     IQueryAtom atom2 = (IQueryAtom) (bondA2.getEnd());
                     IBond bond = ac1.getBond(i);
                     if (queryBond.matches(bond)) {
                         // ok, bonds match
-                        if (atom1.matches(bond.getBeg()) && atom2.matches(bond.getEnd())
-                                || atom1.matches(bond.getEnd()) && atom2.matches(bond.getBeg())) {
+                        if (atom1.matches(bond.getBegin()) && atom2.matches(bond.getEnd())
+                                || atom1.matches(bond.getEnd()) && atom2.matches(bond.getBegin())) {
                             // ok, atoms match in either order
                             gr.addNode(new RNode(i, j));
                         }
@@ -768,10 +768,10 @@ public class UniversalIsomorphismTester {
                                     CDKConstants.ISAROMATIC)))
                             && ( // atom type conditions
                             ( // a1 = a2 && b1 = b2
-                            ac1.getBond(i).getBeg().getSymbol().equals(ac2.getBond(j).getBeg().getSymbol()) && ac1
+                              ac1.getBond(i).getBegin().getSymbol().equals(ac2.getBond(j).getBegin().getSymbol()) && ac1
                                     .getBond(i).getEnd().getSymbol().equals(ac2.getBond(j).getEnd().getSymbol())) || ( // a1 = b2 && b1 = a2
-                            ac1.getBond(i).getBeg().getSymbol().equals(ac2.getBond(j).getEnd().getSymbol()) && ac1
-                                    .getBond(i).getEnd().getSymbol().equals(ac2.getBond(j).getBeg().getSymbol())))) {
+                                                                                                                       ac1.getBond(i).getBegin().getSymbol().equals(ac2.getBond(j).getEnd().getSymbol()) && ac1
+                                    .getBond(i).getEnd().getSymbol().equals(ac2.getBond(j).getBegin().getSymbol())))) {
                         gr.addNode(new RNode(i, j));
                     }
                 }
@@ -850,7 +850,7 @@ public class UniversalIsomorphismTester {
      *            the 2 bonds have no common atom
      */
     private static boolean hasCommonAtom(IBond a, IBond b) {
-        return a.contains(b.getBeg()) || a.contains(b.getEnd());
+        return a.contains(b.getBegin()) || a.contains(b.getEnd());
     }
 
     /**
@@ -864,8 +864,8 @@ public class UniversalIsomorphismTester {
     private static String getCommonSymbol(IBond a, IBond b) {
         String symbol = "";
 
-        if (a.contains(b.getBeg())) {
-            symbol = b.getBeg().getSymbol();
+        if (a.contains(b.getBegin())) {
+            symbol = b.getBegin().getSymbol();
         } else if (a.contains(b.getEnd())) {
             symbol = b.getEnd().getSymbol();
         }
@@ -886,14 +886,14 @@ public class UniversalIsomorphismTester {
         IAtom atom1 = null;
         IAtom atom2 = null;
 
-        if (a1.contains(b1.getBeg())) {
-            atom1 = b1.getBeg();
+        if (a1.contains(b1.getBegin())) {
+            atom1 = b1.getBegin();
         } else if (a1.contains(b1.getEnd())) {
             atom1 = b1.getEnd();
         }
 
-        if (a2.contains(b2.getBeg())) {
-            atom2 = b2.getBeg();
+        if (a2.contains(b2.getBegin())) {
+            atom2 = b2.getBegin();
         } else if (a2.contains(b2.getEnd())) {
             atom2 = b2.getEnd();
         }
@@ -921,14 +921,14 @@ public class UniversalIsomorphismTester {
         IAtom centralAtom = null;
         IAtom centralQueryAtom = null;
 
-        if (bond1.contains(bond2.getBeg())) {
-            centralAtom = bond2.getBeg();
+        if (bond1.contains(bond2.getBegin())) {
+            centralAtom = bond2.getBegin();
         } else if (bond1.contains(bond2.getEnd())) {
             centralAtom = bond2.getEnd();
         }
 
-        if (queryBond1.contains(queryBond2.getBeg())) {
-            centralQueryAtom = queryBond2.getBeg();
+        if (queryBond1.contains(queryBond2.getBegin())) {
+            centralQueryAtom = queryBond2.getBegin();
         } else if (queryBond1.contains(queryBond2.getEnd())) {
             centralQueryAtom = queryBond2.getEnd();
         }

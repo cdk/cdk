@@ -58,9 +58,9 @@ public class BondDiffTest extends CDKTestCase {
         when(bond1.getAtomCount()).thenReturn(2);
         when(bond2.getAtomCount()).thenReturn(2);
 
-        when(bond1.getBeg()).thenReturn(carbon);
+        when(bond1.getBegin()).thenReturn(carbon);
         when(bond1.getEnd()).thenReturn(carbon);
-        when(bond2.getBeg()).thenReturn(carbon);
+        when(bond2.getBegin()).thenReturn(carbon);
         when(bond2.getEnd()).thenReturn(oxygen);
 
         bond1.setOrder(IBond.Order.SINGLE);
@@ -92,9 +92,9 @@ public class BondDiffTest extends CDKTestCase {
         when(bond1.getAtomCount()).thenReturn(2);
         when(bond2.getAtomCount()).thenReturn(2);
 
-        when(bond1.getBeg()).thenReturn(carbon);
+        when(bond1.getBegin()).thenReturn(carbon);
         when(bond1.getEnd()).thenReturn(carbon);
-        when(bond2.getBeg()).thenReturn(carbon);
+        when(bond2.getBegin()).thenReturn(carbon);
         when(bond2.getEnd()).thenReturn(oxygen);
 
         bond1.setOrder(IBond.Order.SINGLE);

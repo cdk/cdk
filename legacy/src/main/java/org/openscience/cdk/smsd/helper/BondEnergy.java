@@ -97,7 +97,7 @@ public class BondEnergy {
     }
 
     public boolean matches(IBond bond) {
-        IAtom atom1 = bond.getBeg();
+        IAtom atom1 = bond.getBegin();
         IAtom atom2 = bond.getEnd();
 
         if ((atom1.getSymbol().equalsIgnoreCase(symbol1) && atom2.getSymbol().equalsIgnoreCase(symbol2))

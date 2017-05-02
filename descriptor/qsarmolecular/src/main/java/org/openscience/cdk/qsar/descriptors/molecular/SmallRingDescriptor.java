@@ -210,7 +210,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
         for (int n = 0; n < mol.getBondCount(); n++) {
             IBond bond = mol.getBond(n);
             if (bond.getAtomCount() != 2) continue; // biconnected bonds only
-            int a1 = mol.indexOf(bond.getBeg()), a2 = mol.indexOf(bond.getEnd());
+            int a1 = mol.indexOf(bond.getBegin()), a2 = mol.indexOf(bond.getEnd());
 
             atomAdj[a1] = appendInteger(atomAdj[a1], a2);
             bondAdj[a1] = appendInteger(bondAdj[a1], n);
@@ -428,7 +428,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
         for (int n = 0; n < nb; n++)
             if (bondOrder[n] == 2) {
                 IBond bond = mol.getBond(n);
-                piAtom[mol.indexOf(bond.getBeg())] = true;
+                piAtom[mol.indexOf(bond.getBegin())] = true;
                 piAtom[mol.indexOf(bond.getEnd())] = true;
             }
 
@@ -504,7 +504,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
         for (int n = 0; n < nb; n++)
             if (bondOrder[n] > 0) {
                 IBond bond = mol.getBond(n);
-                electrons[mol.indexOf(bond.getBeg())] -= bondOrder[n];
+                electrons[mol.indexOf(bond.getBegin())] -= bondOrder[n];
                 electrons[mol.indexOf(bond.getEnd())] -= bondOrder[n];
             }
 

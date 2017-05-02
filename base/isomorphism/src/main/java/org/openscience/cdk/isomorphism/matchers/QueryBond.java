@@ -214,7 +214,7 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
     /**
      * {@inheritDoc}
      */
-    public IAtom getBeg() {
+    public IAtom getBegin() {
         return atoms[0];
     }
 

@@ -78,7 +78,7 @@ public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
         // check bond stuff
         Assert.assertEquals(30, molecule.getBondCount());
         Assert.assertNotNull(molecule.getBond(3));
-        Assert.assertEquals(molecule.getAtom(2), molecule.getBond(3).getBeg());
+        Assert.assertEquals(molecule.getAtom(2), molecule.getBond(3).getBegin());
         Assert.assertEquals(molecule.getAtom(11), molecule.getBond(3).getEnd());
 
         // some extracted props

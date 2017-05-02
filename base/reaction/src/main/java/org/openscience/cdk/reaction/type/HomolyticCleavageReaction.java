@@ -126,7 +126,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
         Iterator<IBond> bondis = reactant.bonds().iterator();
         while (bondis.hasNext()) {
             IBond bondi = bondis.next();
-            IAtom atom1 = bondi.getBeg();
+            IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && atom1.getFlag(CDKConstants.REACTIVE_CENTER)
                     && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
@@ -172,7 +172,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
         Iterator<IBond> bondis = reactant.bonds().iterator();
         while (bondis.hasNext()) {
             IBond bond = bondis.next();
-            IAtom atom1 = bond.getBeg();
+            IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if ((atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
                     && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0

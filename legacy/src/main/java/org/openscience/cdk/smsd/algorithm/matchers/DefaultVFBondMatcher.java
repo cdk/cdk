@@ -147,7 +147,7 @@ public class DefaultVFBondMatcher implements VFBondMatcher {
     }
 
     private int getUnsaturation(TargetProperties container, IBond bond) {
-        return getUnsaturation(container, bond.getBeg()) + getUnsaturation(container, bond.getEnd());
+        return getUnsaturation(container, bond.getBegin()) + getUnsaturation(container, bond.getEnd());
     }
 
     private int getUnsaturation(TargetProperties container, IAtom atom) {
@@ -159,7 +159,7 @@ public class DefaultVFBondMatcher implements VFBondMatcher {
     }
 
     private int getUnsaturation(IAtomContainer container, IBond bond) {
-        return getUnsaturation(container, bond.getBeg()) + getUnsaturation(container, bond.getEnd());
+        return getUnsaturation(container, bond.getBegin()) + getUnsaturation(container, bond.getEnd());
     }
 
     private int getUnsaturation(IAtomContainer container, IAtom atom) {

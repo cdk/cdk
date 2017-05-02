@@ -146,7 +146,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
 
         if (maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
 
-        double electroAtom1 = electronegativity.calculateSigmaElectronegativity(ac, bond.getBeg());
+        double electroAtom1 = electronegativity.calculateSigmaElectronegativity(ac, bond.getBegin());
         double electroAtom2 = electronegativity.calculateSigmaElectronegativity(ac, bond.getEnd());
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(

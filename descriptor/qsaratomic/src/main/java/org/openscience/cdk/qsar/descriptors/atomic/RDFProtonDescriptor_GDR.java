@@ -419,7 +419,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
                     theDoubleBond = mol.getBond(position);
                     goodPosition = getNearestBondtoAGivenAtom(mol, atom, theDoubleBond);
                     goodBond = mol.getBond(goodPosition);
-                    goodAtom0 = goodBond.getBeg();
+                    goodAtom0 = goodBond.getBegin();
                     goodAtom1 = goodBond.getEnd();
 
                     //System.out.println("GOOD POS IS "+mol.indexOf(goodAtoms[0])+" "+mol.indexOf(goodAtoms[1]));
@@ -457,7 +457,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
     private boolean getIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected) {
         boolean isBondNotRotatable = false;
         int counter = 0;
-        IAtom atom0 = bond.getBeg();
+        IAtom atom0 = bond.getBegin();
         IAtom atom1 = bond.getEnd();
         if (detected != null) {
             if (detected.contains(bond)) counter += 1;
@@ -544,7 +544,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
         int nearestBond = 0;
         double[] values;
         double distance = 0;
-        IAtom atom0 = bond.getBeg();
+        IAtom atom0 = bond.getBegin();
         List<IBond> bondsAtLeft = mol.getConnectedBondsList(atom0);
         int partial;
         for (int i = 0; i < bondsAtLeft.size(); i++) {

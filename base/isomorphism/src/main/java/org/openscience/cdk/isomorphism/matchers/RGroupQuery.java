@@ -350,8 +350,8 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
             while (confHasRGroupBonds) {
                 for (IBond cloneBond : rootClone.bonds()) {
                     boolean removeBond = false;
-                    if (cloneBond.getBeg() instanceof IPseudoAtom
-                            && isValidRgroupQueryLabel(((IPseudoAtom) cloneBond.getBeg()).getLabel()))
+                    if (cloneBond.getBegin() instanceof IPseudoAtom
+                            && isValidRgroupQueryLabel(((IPseudoAtom) cloneBond.getBegin()).getLabel()))
                         removeBond = true;
                     else if (cloneBond.getEnd() instanceof IPseudoAtom
                             && isValidRgroupQueryLabel(((IPseudoAtom) cloneBond.getEnd()).getLabel()))

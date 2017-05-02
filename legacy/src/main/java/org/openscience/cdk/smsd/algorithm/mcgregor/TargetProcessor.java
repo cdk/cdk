@@ -90,7 +90,7 @@ public class TargetProcessor {
 
         for (int atomIndex = 0; atomIndex < target.getBondCount(); atomIndex++) {
 
-            Integer indexI = target.indexOf(target.getBond(atomIndex).getBeg());
+            Integer indexI = target.indexOf(target.getBond(atomIndex).getBegin());
             Integer indexJ = target.indexOf(target.getBond(atomIndex).getEnd());
             Integer order = target.getBond(atomIndex).getOrder().numeric();
 

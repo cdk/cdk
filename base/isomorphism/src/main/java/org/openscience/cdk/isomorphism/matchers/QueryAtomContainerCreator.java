@@ -50,7 +50,7 @@ public class QueryAtomContainerCreator {
         Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBeg());
+            int index1 = container.indexOf(bond.getBegin());
             int index2 = container.indexOf(bond.getEnd());
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
@@ -78,7 +78,7 @@ public class QueryAtomContainerCreator {
         Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
-            int index1 = container.indexOf(bond.getBeg());
+            int index1 = container.indexOf(bond.getBegin());
             int index2 = container.indexOf(bond.getEnd());
             queryContainer.addBond(new OrderQueryBondOrderOnly((IQueryAtom) queryContainer.getAtom(index1),
                     (IQueryAtom) queryContainer.getAtom(index2), bond.getOrder(), container.getBuilder()));
@@ -101,7 +101,7 @@ public class QueryAtomContainerCreator {
         Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBeg());
+            int index1 = container.indexOf(bond.getBegin());
             int index2 = container.indexOf(bond.getEnd());
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
@@ -122,7 +122,7 @@ public class QueryAtomContainerCreator {
         Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBeg());
+            int index1 = container.indexOf(bond.getBegin());
             int index2 = container.indexOf(bond.getEnd());
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
@@ -157,7 +157,7 @@ public class QueryAtomContainerCreator {
         Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBeg());
+            int index1 = container.indexOf(bond.getBegin());
             int index2 = container.indexOf(bond.getEnd());
             if (aromaticity && bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
@@ -194,7 +194,7 @@ public class QueryAtomContainerCreator {
         Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBeg());
+            int index1 = container.indexOf(bond.getBegin());
             int index2 = container.indexOf(bond.getEnd());
             queryContainer.addBond(new AnyOrderBond(queryContainer.getAtom(index1), queryContainer.getAtom(index2),
                     container.getBuilder()));
@@ -223,7 +223,7 @@ public class QueryAtomContainerCreator {
         Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBeg());
+            int index1 = container.indexOf(bond.getBegin());
             int index2 = container.indexOf(bond.getEnd());
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),

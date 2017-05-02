@@ -140,7 +140,7 @@ public class SpanningTree {
         for (int b = 0; b < totalEdgeCount; b++) {
             bondsInTree[b] = false;
             bond = atomContainer.getBond(b);
-            vertex1 = Integer.parseInt((bond.getBeg()).getProperty(ATOM_NUMBER).toString());
+            vertex1 = Integer.parseInt((bond.getBegin()).getProperty(ATOM_NUMBER).toString());
             vertex2 = Integer.parseInt((bond.getEnd()).getProperty(ATOM_NUMBER).toString());
             //this below is a little bit  slower
             //v1 = atomContainer.indexOf(bond.getAtomAt(0))+1;
@@ -209,8 +209,8 @@ public class SpanningTree {
     private IRing getRing(IAtomContainer spt, IBond bond) {
         IRing ring = spt.getBuilder().newInstance(IRing.class);
         PathTools.resetFlags(spt);
-        ring.addAtom(bond.getBeg());
-        PathTools.depthFirstTargetSearch(spt, bond.getBeg(), bond.getEnd(), ring);
+        ring.addAtom(bond.getBegin());
+        PathTools.depthFirstTargetSearch(spt, bond.getBegin(), bond.getEnd(), ring);
         ring.addBond(bond);
         return ring;
     }

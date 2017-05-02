@@ -367,7 +367,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(1, roundTrippedMol.getBondCount());
         IBond roundTrippedBond = roundTrippedMol.getBond(0);
         Assert.assertEquals(2, roundTrippedBond.getAtomCount());
-        Assert.assertEquals("C", roundTrippedBond.getBeg().getSymbol()); // preserved direction?
+        Assert.assertEquals("C", roundTrippedBond.getBegin().getSymbol()); // preserved direction?
         Assert.assertEquals("O", roundTrippedBond.getEnd().getSymbol());
         Assert.assertEquals(bond.getOrder(), roundTrippedBond.getOrder());
     }

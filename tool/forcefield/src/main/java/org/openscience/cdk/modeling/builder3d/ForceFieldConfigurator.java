@@ -301,19 +301,19 @@ public class ForceFieldConfigurator {
             //logger.debug("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
             bondType = "0";
             if (bond.getOrder() == IBond.Order.SINGLE) {
-                if ((bond.getBeg().getAtomTypeName().equals("Csp2"))
+                if ((bond.getBegin().getAtomTypeName().equals("Csp2"))
                         & ((bond.getEnd().getAtomTypeName().equals("Csp2")) | (bond.getEnd().getAtomTypeName()
                                 .equals("C=")))) {
                     bondType = "1";
                 }
 
-                if ((bond.getBeg().getAtomTypeName().equals("C="))
+                if ((bond.getBegin().getAtomTypeName().equals("C="))
                         & ((bond.getEnd().getAtomTypeName().equals("Csp2")) | (bond.getEnd().getAtomTypeName()
                                 .equals("C=")))) {
                     bondType = "1";
                 }
 
-                if ((bond.getBeg().getAtomTypeName().equals("Csp"))
+                if ((bond.getBegin().getAtomTypeName().equals("Csp"))
                         & (bond.getEnd().getAtomTypeName().equals("Csp"))) {
                     bondType = "1";
                 }

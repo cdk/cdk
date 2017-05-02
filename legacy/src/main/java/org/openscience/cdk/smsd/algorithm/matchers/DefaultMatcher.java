@@ -77,12 +77,12 @@ public class DefaultMatcher {
             IBond bondA2, boolean shouldMatchBonds) {
 
         // ok, atoms match
-        if (atomMatcher1.matches(ac2, bondA2.getBeg()) && atomMatcher2.matches(ac2, bondA2.getEnd())) {
+        if (atomMatcher1.matches(ac2, bondA2.getBegin()) && atomMatcher2.matches(ac2, bondA2.getEnd())) {
             //            System.out.println("Atom Matched");
             return true;
         }
         // ok, atoms match
-        if (atomMatcher1.matches(ac2, bondA2.getEnd()) && atomMatcher2.matches(ac2, bondA2.getBeg())) {
+        if (atomMatcher1.matches(ac2, bondA2.getEnd()) && atomMatcher2.matches(ac2, bondA2.getBegin())) {
             //            System.out.println("Atom Matched");
             return true;
         }

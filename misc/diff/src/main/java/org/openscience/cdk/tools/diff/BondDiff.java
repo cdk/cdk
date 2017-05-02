@@ -74,7 +74,7 @@ public class BondDiff {
         totalDiff.addChild(BondOrderDifference.construct("order", firstB.getOrder(), secondB.getOrder()));
         totalDiff.addChild(IntegerDifference.construct("atomCount", firstB.getAtomCount(), secondB.getAtomCount()));
         if (firstB.getAtomCount() == secondB.getAtomCount()) {
-            totalDiff.addChild(AtomDiff.difference(firstB.getBeg(), secondB.getBeg()));
+            totalDiff.addChild(AtomDiff.difference(firstB.getBegin(), secondB.getBegin()));
             totalDiff.addChild(AtomDiff.difference(firstB.getEnd(), secondB.getEnd()));
             for (int i = 2; i < firstB.getAtomCount(); i++) {
                 totalDiff.addChild(AtomDiff.difference(firstB.getAtom(i), secondB.getAtom(i)));

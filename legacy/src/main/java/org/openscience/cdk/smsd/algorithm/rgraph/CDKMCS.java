@@ -547,7 +547,7 @@ public class CDKMCS {
                 bond = graph.getBond(rMap.getId2());
             }
 
-            atom = bond.getBeg();
+            atom = bond.getBegin();
             atom1 = table.get(atom);
 
             if (atom1 == null) {
@@ -795,12 +795,12 @@ public class CDKMCS {
                 IBond bondA2 = ac2.getBond(j);
                 if (bondA2 instanceof IQueryBond) {
                     IQueryBond queryBond = (IQueryBond) bondA2;
-                    IQueryAtom atom1 = (IQueryAtom) (bondA2.getBeg());
+                    IQueryAtom atom1 = (IQueryAtom) (bondA2.getBegin());
                     IQueryAtom atom2 = (IQueryAtom) (bondA2.getEnd());
                     if (queryBond.matches(bondA1)) {
                         // ok, bonds match
-                        if (atom1.matches(bondA1.getBeg()) && atom2.matches(bondA1.getEnd())
-                                || atom1.matches(bondA1.getEnd()) && atom2.matches(bondA1.getBeg())) {
+                        if (atom1.matches(bondA1.getBegin()) && atom2.matches(bondA1.getEnd())
+                                || atom1.matches(bondA1.getEnd()) && atom2.matches(bondA1.getBegin())) {
                             // ok, atoms match in either order
                             graph.addNode(new CDKRNode(i, j));
                         }
@@ -823,7 +823,7 @@ public class CDKMCS {
         //Bond Matcher
         BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
         //Atom Matcher
-        AtomMatcher atomMatcher1 = new DefaultRGraphAtomMatcher(ac1, bondA1.getBeg(), shouldMatchBonds);
+        AtomMatcher atomMatcher1 = new DefaultRGraphAtomMatcher(ac1, bondA1.getBegin(), shouldMatchBonds);
         //Atom Matcher
         AtomMatcher atomMatcher2 = new DefaultRGraphAtomMatcher(ac1, bondA1.getEnd(), shouldMatchBonds);
 
@@ -906,7 +906,7 @@ public class CDKMCS {
      *            the 2 bonds have no common atom
      */
     private static boolean hasCommonAtom(IBond bondA, IBond bondB) {
-        return bondA.contains(bondB.getBeg()) || bondA.contains(bondB.getEnd());
+        return bondA.contains(bondB.getBegin()) || bondA.contains(bondB.getEnd());
     }
 
     /**
@@ -920,8 +920,8 @@ public class CDKMCS {
     private static String getCommonSymbol(IBond bondA, IBond bondB) {
         String symbol = "";
 
-        if (bondA.contains(bondB.getBeg())) {
-            symbol = bondB.getBeg().getSymbol();
+        if (bondA.contains(bondB.getBegin())) {
+            symbol = bondB.getBegin().getSymbol();
         } else if (bondA.contains(bondB.getEnd())) {
             symbol = bondB.getEnd().getSymbol();
         }
@@ -942,14 +942,14 @@ public class CDKMCS {
         IAtom atom1 = null;
         IAtom atom2 = null;
 
-        if (bondA1.contains(bondB1.getBeg())) {
-            atom1 = bondB1.getBeg();
+        if (bondA1.contains(bondB1.getBegin())) {
+            atom1 = bondB1.getBegin();
         } else if (bondA1.contains(bondB1.getEnd())) {
             atom1 = bondB1.getEnd();
         }
 
-        if (bondA2.contains(bondB2.getBeg())) {
-            atom2 = bondB2.getBeg();
+        if (bondA2.contains(bondB2.getBegin())) {
+            atom2 = bondB2.getBegin();
         } else if (bondA2.contains(bondB2.getEnd())) {
             atom2 = bondB2.getEnd();
         }
@@ -978,14 +978,14 @@ public class CDKMCS {
         IAtom centralAtom = null;
         IAtom centralQueryAtom = null;
 
-        if (bond1.contains(bond2.getBeg())) {
-            centralAtom = bond2.getBeg();
+        if (bond1.contains(bond2.getBegin())) {
+            centralAtom = bond2.getBegin();
         } else if (bond1.contains(bond2.getEnd())) {
             centralAtom = bond2.getEnd();
         }
 
-        if (queryBond1.contains(queryBond2.getBeg())) {
-            centralQueryAtom = queryBond2.getBeg();
+        if (queryBond1.contains(queryBond2.getBegin())) {
+            centralQueryAtom = queryBond2.getBegin();
         } else if (queryBond1.contains(queryBond2.getEnd())) {
             centralQueryAtom = queryBond2.getEnd();
         }

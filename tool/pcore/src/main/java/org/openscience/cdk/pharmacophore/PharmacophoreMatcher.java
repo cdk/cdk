@@ -426,7 +426,7 @@ public class PharmacophoreMatcher {
             for (IBond bond : pharmacophoreQuery.bonds()) {
                 if (!(bond instanceof PharmacophoreQueryAngleBond)) continue;
 
-                IAtom startQAtom = bond.getBeg();
+                IAtom startQAtom = bond.getBegin();
                 IAtom middleQAtom = bond.getEnd();
                 IAtom endQAtom = bond.getAtom(2);
 

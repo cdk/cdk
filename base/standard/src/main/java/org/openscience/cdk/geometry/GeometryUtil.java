@@ -660,13 +660,13 @@ public final class GeometryUtil {
      * @return The array with the coordinates
      */
     public static int[] getBondCoordinates(IBond bond) {
-        if (bond.getBeg().getPoint2d() == null || bond.getEnd().getPoint2d() == null) {
+        if (bond.getBegin().getPoint2d() == null || bond.getEnd().getPoint2d() == null) {
             logger.error("getBondCoordinates() called on Bond without 2D coordinates!");
             return new int[0];
         }
-        int beginX = (int) bond.getBeg().getPoint2d().x;
+        int beginX = (int) bond.getBegin().getPoint2d().x;
         int endX = (int) bond.getEnd().getPoint2d().x;
-        int beginY = (int) bond.getBeg().getPoint2d().y;
+        int beginY = (int) bond.getBegin().getPoint2d().y;
         int endY = (int) bond.getEnd().getPoint2d().y;
         return new int[]{beginX, beginY, endX, endY};
     }
@@ -906,7 +906,7 @@ public final class GeometryUtil {
         int bondCounter = 0;
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            IAtom atom1 = bond.getBeg();
+            IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (atom1.getPoint2d() != null && atom2.getPoint2d() != null) {
                 bondCounter++;
@@ -924,10 +924,10 @@ public final class GeometryUtil {
      * @return The geometric length of this bond
      */
     public static double getLength2D(IBond bond) {
-        if (bond.getBeg() == null || bond.getEnd() == null) {
+        if (bond.getBegin() == null || bond.getEnd() == null) {
             return 0.0;
         }
-        Point2d point1 = bond.getBeg().getPoint2d();
+        Point2d point1 = bond.getBegin().getPoint2d();
         Point2d point2 = bond.getEnd().getPoint2d();
         if (point1 == null || point2 == null) {
             return 0.0;
@@ -1143,7 +1143,7 @@ public final class GeometryUtil {
             // only consider two atom bonds into account
             if (bond.getAtomCount() == 2) {
                 counter++;
-                IAtom atom1 = bond.getBeg();
+                IAtom atom1 = bond.getBegin();
                 IAtom atom2 = bond.getEnd();
                 bondlength += Math.sqrt(Math.pow(atom1.getPoint2d().x - atom2.getPoint2d().x, 2)
                         + Math.pow(atom1.getPoint2d().y - atom2.getPoint2d().y, 2));
@@ -1565,7 +1565,7 @@ public final class GeometryUtil {
         double bondLengthSum = 0;
         int bondCounter = 0;
         for (IBond bond : container.bonds()) {
-            IAtom atom1 = bond.getBeg();
+            IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (atom1.getPoint3d() != null && atom2.getPoint3d() != null) {
                 bondCounter++;
@@ -1644,7 +1644,7 @@ public final class GeometryUtil {
         double[] lengths = new double[container.getBondCount()];
         for (int i = 0; i < container.getBondCount(); i++) {
             final IBond bond = container.getBond(i);
-            final IAtom atom1 = bond.getBeg();
+            final IAtom atom1 = bond.getBegin();
             final IAtom atom2 = bond.getEnd();
             Point2d p1 = atom1.getPoint2d();
             Point2d p2 = atom2.getPoint2d();

@@ -141,7 +141,7 @@ class AbstractHashGenerator {
 
         for (IBond bond : container.bonds()) {
 
-            int v = container.indexOf(bond.getBeg());
+            int v = container.indexOf(bond.getBegin());
             int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)

@@ -597,9 +597,9 @@ public class ChemicalFilters {
     private double getBondFormalChargeMatches(IBond rBond, IBond pBond) {
         double score = 0.0;
         if (rBond != null && pBond != null) {
-            IAtom ratom1 = rBond.getBeg();
+            IAtom ratom1 = rBond.getBegin();
             IAtom ratom2 = rBond.getEnd();
-            IAtom patom1 = pBond.getBeg();
+            IAtom patom1 = pBond.getBegin();
             IAtom patom2 = pBond.getEnd();
 
             if (ratom1.getSymbol().equals(patom1.getSymbol()) && ratom1.getSymbol().equals(patom1.getSymbol())) {
@@ -643,12 +643,12 @@ public class ChemicalFilters {
 
         if (targetBond instanceof IQueryBond && queryBond instanceof IBond) {
             IQueryBond bond = (IQueryBond) targetBond;
-            IQueryAtom atom1 = (IQueryAtom) (targetBond.getBeg());
+            IQueryAtom atom1 = (IQueryAtom) (targetBond.getBegin());
             IQueryAtom atom2 = (IQueryAtom) (targetBond.getEnd());
             if (bond.matches(queryBond)) {
                 // ok, bonds match
-                if (atom1.matches(queryBond.getBeg()) && atom2.matches(queryBond.getEnd())
-                        || atom1.matches(queryBond.getEnd()) && atom2.matches(queryBond.getBeg())) {
+                if (atom1.matches(queryBond.getBegin()) && atom2.matches(queryBond.getEnd())
+                        || atom1.matches(queryBond.getEnd()) && atom2.matches(queryBond.getBegin())) {
                     // ok, atoms match in either order
                     score += 4;
                 }
@@ -657,12 +657,12 @@ public class ChemicalFilters {
             }
         } else if (queryBond instanceof IQueryBond && targetBond instanceof IBond) {
             IQueryBond bond = (IQueryBond) queryBond;
-            IQueryAtom atom1 = (IQueryAtom) (queryBond.getBeg());
+            IQueryAtom atom1 = (IQueryAtom) (queryBond.getBegin());
             IQueryAtom atom2 = (IQueryAtom) (queryBond.getEnd());
             if (bond.matches(targetBond)) {
                 // ok, bonds match
-                if (atom1.matches(targetBond.getBeg()) && atom2.matches(targetBond.getEnd())
-                        || atom1.matches(targetBond.getEnd()) && atom2.matches(targetBond.getBeg())) {
+                if (atom1.matches(targetBond.getBegin()) && atom2.matches(targetBond.getEnd())
+                        || atom1.matches(targetBond.getEnd()) && atom2.matches(targetBond.getBegin())) {
                     // ok, atoms match in either order
                     score += 4;
                 }
@@ -734,10 +734,10 @@ public class ChemicalFilters {
 
     private double getBondEnergy(IBond bond, BondEnergies bondEnergy) {
         double energy = 0.0;
-        if ((bond.getBeg().getFlag(CDKConstants.ISPLACED) == true && bond.getEnd().getFlag(CDKConstants.ISPLACED) == false)
-                || (bond.getBeg().getFlag(CDKConstants.ISPLACED) == false && bond.getEnd().getFlag(
+        if ((bond.getBegin().getFlag(CDKConstants.ISPLACED) == true && bond.getEnd().getFlag(CDKConstants.ISPLACED) == false)
+                || (bond.getBegin().getFlag(CDKConstants.ISPLACED) == false && bond.getEnd().getFlag(
                         CDKConstants.ISPLACED) == true)) {
-            Integer val = bondEnergy.getEnergies(bond.getBeg(), bond.getEnd(), bond.getOrder());
+            Integer val = bondEnergy.getEnergies(bond.getBegin(), bond.getEnd(), bond.getOrder());
             if (val != null) {
                 energy = val;
             }
