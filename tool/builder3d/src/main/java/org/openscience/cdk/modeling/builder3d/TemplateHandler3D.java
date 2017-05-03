@@ -28,26 +28,31 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
+import org.openscience.cdk.isomorphism.Mappings;
+import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -66,8 +71,9 @@ public class TemplateHandler3D {
     private static final IChemObjectBuilder builder       = SilentChemObjectBuilder.getInstance();
     public static final  String             TEMPLATE_PATH = "data/ringTemplateStructures.sdf.gz";
 
-    private final List<IAtomContainer> templates     = new ArrayList<>();
-    private final List<IAtomContainer> anonTemplates = new ArrayList<>();
+    private final List<IAtomContainer>      templates = new ArrayList<>();
+    private final List<IQueryAtomContainer> queries   = new ArrayList<>();
+    private final List<Pattern>             patterns  = new ArrayList<>();
 
     private static TemplateHandler3D self = null;
 
@@ -84,9 +90,13 @@ public class TemplateHandler3D {
     }
 
     private void addTemplateMol(IAtomContainer mol) {
-        final IAtomContainer anon = AtomContainerManipulator.anonymise(mol);
         templates.add(mol);
-        anonTemplates.add(anon);
+        QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(mol, false);
+        queries.add(query);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            query.getAtom(i).setPoint3d(new Point3d(mol.getAtom(i).getPoint3d()));
+        }
+        patterns.add(Pattern.findSubstructure(query));
     }
 
     /**
@@ -156,71 +166,78 @@ public class TemplateHandler3D {
         mapTemplates(ringSystems, (int) numberOfRingAtoms);
     }
 
+    private boolean isExactMatch(IAtomContainer query,
+                                 Map<IChemObject, IChemObject> mapping) {
+        for (IAtom src : query.atoms()) {
+            IAtom dst = (IAtom) mapping.get(src);
+            if (!Objects.equals(src.getSymbol(), dst.getSymbol()))
+                return false;
+        }
+        for (IBond src : query.bonds()) {
+            IBond dst = (IBond) mapping.get(src);
+            if (!Objects.equals(src.getOrder(), dst.getOrder()))
+                return false;
+        }
+        return true;
+    }
+
     /**
      * Checks if one of the loaded templates is a substructure in the given
      * Molecule. If so, it assigns the coordinates from the template to the
      * respective atoms in the Molecule.
      *
-     * @param mol       AtomContainer from the ring systems.
+     * @param mol               AtomContainer from the ring systems.
      * @param numberOfRingAtoms Number of atoms in the specified ring
      * @throws CloneNotSupportedException The atomcontainer cannot be cloned.
      */
     public void mapTemplates(IAtomContainer mol, int numberOfRingAtoms)
         throws CDKException, CloneNotSupportedException {
-        if (templates.isEmpty()) {
+        if (templates.isEmpty())
             loadTemplates();
-        }
 
-        //logger.debug("Map Template...START---Number of Ring Atoms:"+numberOfRingAtoms);
-        final IAtomContainer anon = AtomContainerManipulator.anonymise(mol);
+        IAtomContainer                best          = null;
+        Map<IChemObject, IChemObject> bestMap       = null;
+        IAtomContainer                secondBest    = null;
+        Map<IChemObject, IChemObject> secondBestMap = null;
 
-        boolean flagMaxSubstructure = false;
-        boolean flagSecondbest      = false;
         for (int i = 0; i < templates.size(); i++) {
 
-            IAtomContainer template     = templates.get(i);
-            IAtomContainer anonTemplate = anonTemplates.get(i);
+            IAtomContainer query = queries.get(i);
 
             //if the atom count is different, it can't be right anyway
-            if (template.getAtomCount() != mol.getAtomCount()) {
+            if (query.getAtomCount() != mol.getAtomCount()) {
                 continue;
             }
-            //we do the exact match with any atom and any bond
-            if (universalIsomorphismTester.isSubgraph(anon, anonTemplate)) {
-                //if this is the case, we keep it as a guess, but look if we can do better
-                List<RMap> list = universalIsomorphismTester.getSubgraphAtomsMap(anon, anonTemplate);
-                boolean flagwritefromsecondbest = false;
-                if ((numberOfRingAtoms == list.size())
-                    && anonTemplate.getBondCount() == mol.getBondCount()) {
-                    //so atom and bond count match, could be it's even an exact match,
-                    //we check this with the original ring system
-                    if (universalIsomorphismTester.isSubgraph(mol, template)) {
-                        flagMaxSubstructure = true;
-                        list = universalIsomorphismTester.getSubgraphAtomsMap(mol, template);
-                    } else {
-                        //if it isn't we still now it's better than just the isomorphism
-                        flagSecondbest = true;
-                        flagwritefromsecondbest = true;
-                    }
-                }
 
-                if (!flagSecondbest || flagMaxSubstructure || flagwritefromsecondbest) {
-                    for (RMap aList : list) {
-                        RMap  map   = aList;
-                        IAtom atom1 = mol.getAtom(map.getId1());
-                        IAtom atom2 = template.getAtom(map.getId2());
-                        if (atom1.getFlag(CDKConstants.ISINRING)) {
-                            atom1.setPoint3d(new Point3d(atom2.getPoint3d()));
-                        }
-                    }
-                }
-                if (flagMaxSubstructure) {
-                    break;
+            Mappings mappings = patterns.get(i).matchAll(mol);
+            for (Map<IChemObject, IChemObject> map : mappings.toAtomBondMap()) {
+                if (isExactMatch(query, map)) {
+                    assignCoords(query, map);
+                    return;
+                } else if (query.getBondCount() == mol.getBondCount()) {
+                    best = query;
+                    bestMap = new HashMap<>(map);
+                } else {
+                    secondBest = query;
+                    secondBestMap = new HashMap<>(map);
                 }
             }
         }
-        if (!flagMaxSubstructure) {
-            System.out.println("WARNING: Maybe RingTemplateError!");
+
+        if (best != null) {
+            assignCoords(best, bestMap);
+        } else if (secondBest != null) {
+            assignCoords(secondBest, secondBestMap);
+        }
+
+        System.err.println("WARNING: Maybe RingTemplateError!");
+    }
+
+    private void assignCoords(IAtomContainer template,
+                              Map<IChemObject, IChemObject> map) {
+        for (IAtom src : template.atoms()) {
+            IAtom dst = (IAtom) map.get(src);
+            dst.setPoint3d(new Point3d(src.getPoint3d()));
         }
     }
 
