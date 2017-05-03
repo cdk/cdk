@@ -200,7 +200,7 @@ public class RadicalSiteRrAlphaReaction extends ReactionEngine implements IReact
      * The active center will be those which correspond with [A*]-(C)_2-C3[R]
      * <pre>
      * C: Atom with single electron
-     * C5: Atom with the R to move
+     * C3: Atom with the R to move
      *  </pre>
      *
      * @param reactant The molecule to set the activity

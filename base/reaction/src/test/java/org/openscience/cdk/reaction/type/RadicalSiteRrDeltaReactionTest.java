@@ -53,7 +53,7 @@ import java.util.List;
  */
 public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
 
-    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+	private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
      *  The JUnit setup method
@@ -89,7 +89,7 @@ public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
 
         molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(5).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(6).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -130,9 +130,9 @@ public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addBond(3, 4, IBond.Order.SINGLE);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
-        molecule.getAtom(5).setFormalCharge(1);
         molecule.addBond(4, 5, IBond.Order.SINGLE);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
+        molecule.getAtom(6).setFormalCharge(1);
         molecule.addBond(5, 6, IBond.Order.SINGLE);
 
         try {
@@ -141,8 +141,8 @@ public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
             e.printStackTrace();
         }
 
-        molecule.getAtom(5).setFormalCharge(0);
-        molecule.addSingleElectron(new SingleElectron(molecule.getAtom(5)));
+        molecule.getAtom(6).setFormalCharge(0);
+        molecule.addSingleElectron(new SingleElectron(molecule.getAtom(6)));
 
         try {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
@@ -176,7 +176,7 @@ public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addBond(4, 5, IBond.Order.SINGLE);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
-        molecule.addBond(4, 6, IBond.Order.SINGLE);
+        molecule.addBond(5, 6, IBond.Order.SINGLE);
 
         try {
             addExplicitHydrogens(molecule);
@@ -213,7 +213,7 @@ public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
         /* manually put the reactive center */
         molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(5).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(6).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -232,8 +232,8 @@ public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
         Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
         Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
         Assert.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(molecule.getAtom(5).getFlag(CDKConstants.REACTIVE_CENTER));
-        Assert.assertTrue(reactant.getAtom(5).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assert.assertTrue(molecule.getAtom(6).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assert.assertTrue(reactant.getAtom(6).getFlag(CDKConstants.REACTIVE_CENTER));
         Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
         Assert.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
     }
@@ -253,7 +253,7 @@ public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
         /* automatic search of the center active */
         molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
-        molecule.getAtom(5).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(6).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -275,8 +275,8 @@ public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
                 molecule.getAtom(1));
         Assert.assertEquals(mappedProductA2, product.getAtom(1));
         IAtom mappedProductA3 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(5));
-        Assert.assertEquals(mappedProductA3, product.getAtom(5));
+                molecule.getAtom(6));
+        Assert.assertEquals(mappedProductA3, product.getAtom(6));
     }
 
     /**

@@ -180,7 +180,7 @@ public class RadicalSiteInitiationHReaction extends ReactionEngine implements IR
 
     /**
      * set the active center for this molecule.
-     * The active center will be those which correspond with H-B-[c*] .
+     * The active center will be those which correspond with H-B-[C*] .
      * <pre>
      * H: Hydrogen Atom
      * -: bond
