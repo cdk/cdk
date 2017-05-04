@@ -139,43 +139,14 @@ public class AtomContainerManipulator {
      * @return whether replacement was made
      */
     public static boolean replaceAtomByAtom(final IAtomContainer container, final IAtom oldAtom, final IAtom newAtom) {
-
-        Map<IAtom,IAtom> atomremap = new HashMap<>();
-
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            IAtom atom = container.getAtom(i);
-            if (atom == oldAtom) {
-                container.setAtom(i, newAtom);
-                atomremap.put(oldAtom, newAtom);
-            } else {
-                if (atom == newAtom)
-                    throw new IllegalArgumentException("Cannot replace atom with one from the same molecule.");
-                atomremap.put(atom, atom);
-            }
-        }
-
-        if (!atomremap.containsKey(oldAtom))
+        if (oldAtom == null)
+            throw new NullPointerException("Atom to be replaced was null!");
+        if (newAtom == null)
+            throw new NullPointerException("Replacement atom was null!");
+        final int idx = container.indexOf(oldAtom);
+        if (idx < 0)
             return false;
-
-        Map<IBond,IBond> bondremap = new HashMap<>();
-        for (IBond bond : container.bonds()) {
-            bondremap.put(bond, bond);
-            for (int i = 0; i < bond.getAtomCount(); i++)
-                if (bond.getAtom(i) == oldAtom)
-                    bond.setAtom(newAtom, i);
-        }
-        for (ISingleElectron ec : container.singleElectrons())
-            if (ec.getAtom() == oldAtom)
-                ec.setAtom(newAtom);
-        for (ILonePair lp : container.lonePairs())
-            if (lp.getAtom() == oldAtom)
-                lp.setAtom(newAtom);
-
-        List<IStereoElement> stereoremapped = new ArrayList<>();
-        for (IStereoElement se : container.stereoElements())
-            stereoremapped.add(se.map(atomremap, bondremap));
-        container.setStereoElements(stereoremapped);
-
+        container.setAtom(idx, newAtom);
         List<Sgroup> sgrougs = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgrougs != null) {
             boolean updated = false;
@@ -185,7 +156,7 @@ public class AtomContainerManipulator {
                     updated = true;
                     Sgroup cpy = new Sgroup();
                     for (IAtom atom : org.getAtoms()) {
-                        if (atom != oldAtom)
+                        if (oldAtom.equals(atom))
                             cpy.addAtom(atom);
                         else
                             cpy.addAtom(newAtom);
