@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.openscience.cdk.CDKConstants;
@@ -237,8 +238,12 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
-    public void setAtom(int number, IAtom atom) {
-        atoms[number] = atom;
+    public void setAtom(int idx, IAtom atom) {
+        if (idx < atomCount) {
+            atoms[idx] = atom;
+        } else {
+            throw new IndexOutOfBoundsException("No atom at index: " + idx);
+        }
     }
 
     /**

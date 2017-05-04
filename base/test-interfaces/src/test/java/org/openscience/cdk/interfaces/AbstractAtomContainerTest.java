@@ -21,6 +21,7 @@ package org.openscience.cdk.interfaces;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.vecmath.Point2d;
 
@@ -960,14 +961,21 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(o, acetone.getAtom(2));
     }
 
-    @Test
-    public void testSetAtom_int_IAtom() {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSetAtomOutOfRange() {
         IAtomContainer container = (IAtomContainer) newChemObject();
         IAtom c = container.getBuilder().newInstance(IAtom.class, "C");
         container.setAtom(0, c);
+    }
 
-        Assert.assertNotNull(container.getAtom(0));
-        Assert.assertEquals("C", container.getAtom(0).getSymbol());
+    @Test
+    public void testSetAtom() {
+        IAtomContainer container = (IAtomContainer) newChemObject();
+        IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = container.getBuilder().newInstance(IAtom.class, "C");
+        container.addAtom(c1);
+        container.setAtom(0, c2);
+        Assert.assertEquals(c2, container.getAtom(0));
     }
 
     @Test

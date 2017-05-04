@@ -87,13 +87,15 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     void setBonds(IBond[] bonds);
 
     /**
-     * Set the atom at position <code>number</code> in [0,..].
+     * Set the atom at <code>idx</code>, the index must have an existing atom
+     * and therefore be in the range 0 &le; idx &lt; mol.getAtomCount().
      *
-     * @param number The position of the atom to be set.
-     * @param atom   The atom to be stored at position <code>number</code>
+     * @param idx  The index of the atom to be set.
+     * @param atom The atom to be stored at position <code>idx</code>
+     * @throws IndexOutOfBoundsException index is out of bounds
      * @see #getAtom
      */
-    void setAtom(int number, IAtom atom);
+    void setAtom(int idx, IAtom atom);
 
     /**
      * Get the atom at position <code>number</code> in [0,..].
