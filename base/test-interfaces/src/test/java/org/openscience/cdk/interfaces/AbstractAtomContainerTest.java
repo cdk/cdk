@@ -1049,7 +1049,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     }
 
     @Test
-    public void testSetAtomUpdatesStereo() {
+    public void testSetAtomUpdatesAtomStereo() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder bldr   = container.getBuilder();
         IAtom              a1        = bldr.newAtom();
@@ -1086,6 +1086,52 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         assertTrue(siter.hasNext());
         IStereoElement se = siter.next();
         assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
+        ITetrahedralChirality tc = (ITetrahedralChirality) se;
+        assertThat(tc.getChiralAtom(), is(a1));
+        assertThat(tc.getLigands(), is(new IAtom[]{a2, aNew, a4, a5}));
+        assertFalse(siter.hasNext());
+    }
+
+    @Test
+    public void testSetAtomUpdatesBondStereo() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder bldr   = container.getBuilder();
+        IAtom              a1        = bldr.newAtom();
+        IAtom              a2        = bldr.newAtom();
+        IAtom              a3        = bldr.newAtom();
+        IAtom              a4        = bldr.newAtom();
+        a1.setSymbol("C");
+        a2.setSymbol("C");
+        a3.setSymbol("C");
+        a4.setSymbol("C");
+        container.addAtom(a1);
+        container.addAtom(a2);
+        container.addAtom(a3);
+        container.addAtom(a4);
+        container.addBond(0, 1, IBond.Order.SINGLE);
+        container.addBond(1, 2, IBond.Order.DOUBLE);
+        container.addBond(2, 3, IBond.Order.SINGLE);
+        IBond b1 = container.getBond(0);
+        IBond b2 = container.getBond(1);
+        IBond b3 = container.getBond(2);
+
+        container.addStereoElement(new DoubleBondStereochemistry(b2,
+                                                                 new IBond[]{b1, b3},
+                                                                 IDoubleBondStereochemistry.Conformation.TOGETHER));
+
+        IAtom aNew = bldr.newAtom();
+        container.setAtom(2, aNew);
+
+        assertThat(b2.getEnd(), is(aNew));
+        assertThat(b3.getBegin(), is(aNew));
+
+        Iterator<IStereoElement> siter = container.stereoElements().iterator();
+        assertTrue(siter.hasNext());
+        IStereoElement se = siter.next();
+        assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
+        IDoubleBondStereochemistry tc = (IDoubleBondStereochemistry) se;
+        assertThat(tc.getStereoBond(), is(b2));
+        assertThat(tc.getBonds(), is(new IBond[]{b1, b3}));
         assertFalse(siter.hasNext());
     }
 

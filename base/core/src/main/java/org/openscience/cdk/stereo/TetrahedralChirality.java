@@ -133,7 +133,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
         if (atoms == null) throw new IllegalArgumentException("null atom mapping provided");
 
         // convert the chiral atom and it's ligands to their equivalent
-        IAtom chiral = chiralAtom != null ? atoms.get(chiralAtom) : chiralAtom;
+        IAtom chiral = atoms.containsKey(chiralAtom) ? atoms.get(chiralAtom) : chiralAtom;
         IAtom[] ligands = new IAtom[ligandAtoms.length];
 
         for (int i = 0; i < ligands.length; i++) {
@@ -141,6 +141,8 @@ public class TetrahedralChirality implements ITetrahedralChirality {
                 IAtom atom = atoms.get(ligandAtoms[i]);
                 if (atom != null)
                     ligands[i] = atom;
+                else
+                    ligands[i] = this.ligandAtoms[i];
             }
         }
 

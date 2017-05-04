@@ -106,7 +106,7 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
         if (bonds == null) throw new IllegalArgumentException("null bond mapping provided");
 
         // map the double bond and the connected ligand bonds
-        IBond doubleBond = stereoBond != null ? bonds.get(stereoBond) : stereoBond;
+        IBond doubleBond = bonds.containsKey(stereoBond) ? bonds.get(stereoBond) : stereoBond;
         IBond[] connected = new IBond[ligandBonds.length];
 
         for (int i = 0; i < connected.length; i++) {
@@ -114,6 +114,8 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
                 IBond bond = bonds.get(ligandBonds[i]);
                 if (bond != null)
                     connected[i] = bond;
+                else
+                    connected[i] = ligandBonds[i];
             }
         }
 
