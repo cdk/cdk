@@ -226,11 +226,8 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         // map the existing element a new element - should through an IllegalArgumentException
         ITetrahedralChirality mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
 
-        Assert.assertNull(mapped.getChiralAtom());
-        Assert.assertNull(mapped.getLigands()[0]);
-        Assert.assertNull(mapped.getLigands()[1]);
-        Assert.assertNull(mapped.getLigands()[2]);
-        Assert.assertNull(mapped.getLigands()[3]);
+        Assert.assertThat(mapped.getChiralAtom(), is(original.getChiralAtom()));
+        Assert.assertThat(mapped.getLigands(), is(original.getLigands()));
         Assert.assertNotNull(mapped.getStereo());
 
     }
