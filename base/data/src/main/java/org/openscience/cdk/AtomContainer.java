@@ -59,6 +59,8 @@ import org.openscience.cdk.interfaces.IBond.Order;
  */
 public class AtomContainer extends ChemObject implements IAtomContainer, IChemObjectListener, Serializable, Cloneable {
 
+    private static final int DEFAULT_CAPACITY = 20;
+
     /**
      * Determines if a de-serialized object is compatible with this class.
      * <p>
@@ -124,7 +126,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * Constructs an empty AtomContainer.
      */
     public AtomContainer() {
-        this(10, 10, 0, 0);
+        this(0, 0, 0, 0);
     }
 
     /**
@@ -745,13 +747,9 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         if (contains(atom)) {
             return;
         }
-
-        if (atomCount + 1 >= atoms.length) {
-            growAtomArray();
-        }
+        ensureAtomCapacity(atomCount+1);
         atom.addListener(this);
-        atoms[atomCount] = atom;
-        atomCount++;
+        atoms[atomCount++] = atom;
         notifyChanged();
     }
 
@@ -760,9 +758,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void addBond(IBond bond) {
-        if (bondCount >= bonds.length) growBondArray();
-        bonds[bondCount] = bond;
-        ++bondCount;
+        ensureBondCapacity(bondCount+1);
+        bonds[bondCount++] = bond;
         notifyChanged();
     }
 
@@ -771,9 +768,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void addLonePair(ILonePair lonePair) {
-        if (lonePairCount >= lonePairs.length) growLonePairArray();
-        lonePairs[lonePairCount] = lonePair;
-        ++lonePairCount;
+        ensureLonePairCapacity(lonePairCount+1);
+        lonePairs[lonePairCount++] = lonePair;
         notifyChanged();
     }
 
@@ -782,10 +778,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void addSingleElectron(ISingleElectron singleElectron) {
-        if (singleElectronCount >= singleElectrons.length)
-            growSingleElectronArray();
-        singleElectrons[singleElectronCount] = singleElectron;
-        ++singleElectronCount;
+        ensureElectronCapacity(singleElectronCount+1);
+        singleElectrons[singleElectronCount++] = singleElectron;
         notifyChanged();
     }
 
@@ -1284,51 +1278,67 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     }
 
     /**
-     * Grows the atom array by a given size.
+     * Generic grow function, expand an array by a varried amount to have
+     * enough (required) space.
      *
-     * @see #growArraySize
+     * @param array    the array to expand
+     * @param required the minimum required space
+     * @param <T>      array type
+     * @return the expanded array
      */
-    private void growAtomArray() {
-        growArraySize = (atoms.length < growArraySize) ? growArraySize : atoms.length;
-        IAtom[] newatoms = new IAtom[atoms.length + growArraySize];
-        System.arraycopy(atoms, 0, newatoms, 0, atoms.length);
-        atoms = newatoms;
+    private static <T> T[] grow(T[] array, int required) {
+        int oldCapacity = array.length;
+        // x1.5: 20, 30, 45, 67, 100, 150, 225, 337, 505, etc
+        int newCapacity = oldCapacity == 0 ? DEFAULT_CAPACITY
+                                           : oldCapacity + (oldCapacity >> 1);
+        if (newCapacity < required)
+            newCapacity = required;
+        return Arrays.copyOf(array, newCapacity);
+    }
+
+
+    /**
+     * Ensure there is enough space to accommodate the specified number of
+     * atoms.
+     *
+     * @param required total number of atoms (inc. already used)
+     */
+    private void ensureAtomCapacity(int required) {
+        if (required > atoms.length)
+            atoms = grow(atoms, required);
     }
 
     /**
-     * Grows the bond array by a given size.
+     * Ensure there is enough space to accommodate the specified number of
+     * bonds.
      *
-     * @see #growArraySize
+     * @param required total number of bonds (inc. already used)
      */
-    private void growBondArray() {
-        growArraySize = (bonds.length < growArraySize) ? growArraySize : bonds.length;
-        IBond[] newBonds = new IBond[bonds.length + growArraySize];
-        System.arraycopy(bonds, 0, newBonds, 0, bonds.length);
-        bonds = newBonds;
+    private void ensureBondCapacity(int required) {
+        if (required > bonds.length)
+            bonds = grow(bonds, required);
     }
 
     /**
-     * Grows the lone pair array by a given size.
+     * Ensure there is enough space to accommodate the specified number of
+     * electrons.
      *
-     * @see #growArraySize
+     * @param required total number of electrons (inc. already used)
      */
-    private void growLonePairArray() {
-        growArraySize = (lonePairs.length < growArraySize) ? growArraySize : lonePairs.length;
-        ILonePair[] newLonePairs = new ILonePair[lonePairs.length + growArraySize];
-        System.arraycopy(lonePairs, 0, newLonePairs, 0, lonePairs.length);
-        lonePairs = newLonePairs;
+    private void ensureElectronCapacity(int required) {
+        if (required > singleElectrons.length)
+            singleElectrons = grow(singleElectrons, required);
     }
 
     /**
-     * Grows the single electron array by a given size.
+     * Ensure there is enough space to accommodate the specified number of
+     * lone pairs.
      *
-     * @see #growArraySize
+     * @param required total number of lone pairs (inc. already used)
      */
-    private void growSingleElectronArray() {
-        growArraySize = (singleElectrons.length < growArraySize) ? growArraySize : singleElectrons.length;
-        ISingleElectron[] newSingleElectrons = new ISingleElectron[singleElectrons.length + growArraySize];
-        System.arraycopy(singleElectrons, 0, newSingleElectrons, 0, singleElectrons.length);
-        singleElectrons = newSingleElectrons;
+    private void ensureLonePairCapacity(int required) {
+        if (required > lonePairs.length)
+            lonePairs = grow(lonePairs, required);
     }
 
     /**

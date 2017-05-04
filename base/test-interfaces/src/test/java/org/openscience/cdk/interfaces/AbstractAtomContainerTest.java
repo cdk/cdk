@@ -1166,7 +1166,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(4, counter);
 
         // test force growing of default arrays
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 500; i++) {
             acetone.addAtom(acetone.getBuilder().newInstance(IAtom.class));
             acetone.addBond(acetone.getBuilder().newInstance(IBond.class));
         }
