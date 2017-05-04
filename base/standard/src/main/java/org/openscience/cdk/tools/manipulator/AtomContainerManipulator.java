@@ -107,7 +107,7 @@ public class AtomContainerManipulator {
         for (int index = 0; index < numberOfAtoms; index++) {
             if (Arrays.binarySearch(atomIndices, index) < 0) {
                 IAtom atom = atoms[index];
-                substructure.removeAtomAndConnectedElectronContainers(atom);
+                substructure.removeAtom(atom);
             }
         }
 

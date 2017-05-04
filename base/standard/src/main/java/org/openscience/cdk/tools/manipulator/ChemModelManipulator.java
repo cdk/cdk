@@ -40,11 +40,11 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * Class with convenience methods that provide methods from
  * methods from ChemObjects within the ChemModel. For example:
  * <pre>
- * ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, atom);
+ * ChemModelManipulator.removeAtom(chemModel, atom);
  * </pre>
  * will find the Atom in the model by traversing the ChemModel's
  * MoleculeSet, Crystal and ReactionSet fields and remove
- * it with the removeAtomAndConnectedElectronContainers(Atom) method.
+ * it with the removeAtom(Atom) method.
  *
  * @cdk.module standard
  * @cdk.githash
@@ -111,7 +111,7 @@ public class ChemModelManipulator {
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             if (crystal.contains(atom)) {
-                crystal.removeAtomAndConnectedElectronContainers(atom);
+                crystal.removeAtom(atom);
             }
             return;
         }

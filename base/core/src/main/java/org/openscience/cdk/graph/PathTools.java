@@ -165,7 +165,7 @@ public class PathTools {
                 } else {
                     if (!depthFirstTargetSearch(molecule, nextAtom, target, path)) {
                         // we did not find the target
-                        path.removeAtom(nextAtom);
+                        path.removeAtomOnly(nextAtom);
                         path.removeBond(bond);
                     } else {
                         return true;

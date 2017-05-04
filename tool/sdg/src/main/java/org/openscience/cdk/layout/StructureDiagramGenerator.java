@@ -478,7 +478,7 @@ public class StructureDiagramGenerator {
         for (IAtom curAtom : shallowCopy.atoms()) {
             if (curAtom.getSymbol().equals("H")) {
                 if (shallowCopy.getConnectedBondsCount(curAtom) < 2) {
-                    shallowCopy.removeAtomAndConnectedElectronContainers(curAtom);
+                    shallowCopy.removeAtom(curAtom);
                     curAtom.setPoint2d(null);
                 }
             }
@@ -2348,7 +2348,7 @@ public class StructureDiagramGenerator {
                     GeometryUtil.rotate(frag, new Point2d(atom.getPoint2d()), theta);
 
                     // stretch bond
-                    frag.removeAtom(atom);
+                    frag.removeAtomOnly(atom);
                     GeometryUtil.translate2D(frag, newEndP.x - endP.x, newEndP.y - endP.y);
                 }
             } else {

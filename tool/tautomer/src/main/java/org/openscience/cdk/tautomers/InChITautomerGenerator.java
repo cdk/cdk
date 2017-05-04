@@ -427,14 +427,14 @@ public final class InChITautomerGenerator {
                 int position = Integer.valueOf(atom.getID());
                 if (!mobHydrAttachPositions.contains(position)
                         && atom.getHybridization().equals(IAtomType.Hybridization.SP3)) {
-                    skeleton.removeAtom(atom);
+                    skeleton.removeAtomOnly(atom);
                     removedAtoms.add(atom);
                     atomRemoved = true;
                     break ATOMS;
                 } else {
                     for (IBond bond : skeleton.bonds()) {
                         if (bond.contains(atom) && bond.getOrder().equals(IBond.Order.TRIPLE)) {
-                            skeleton.removeAtom(atom);
+                            skeleton.removeAtomOnly(atom);
                             removedAtoms.add(atom);
                             atomRemoved = true;
                             break ATOMS;

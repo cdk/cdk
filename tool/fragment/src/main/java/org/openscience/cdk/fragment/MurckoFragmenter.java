@@ -197,7 +197,7 @@ public class MurckoFragmenter implements IFragmenter {
             if (islinker(atom)) atomsToDelete.add(atom);
         }
         for (IAtom atom : atomsToDelete)
-            clone.removeAtomAndConnectedElectronContainers(atom);
+            clone.removeAtom(atom);
 
         List<IBond> bondsToDelete = new ArrayList<IBond>();
         for (IBond bond : clone.bonds()) {
@@ -261,7 +261,7 @@ public class MurckoFragmenter implements IFragmenter {
             if (issidechain(atom)) atomsToDelete.add(atom);
         }
         for (IAtom anAtomsToDelete : atomsToDelete)
-            clone.removeAtomAndConnectedElectronContainers(anAtomsToDelete);
+            clone.removeAtom(anAtomsToDelete);
         return (clone);
     }
 

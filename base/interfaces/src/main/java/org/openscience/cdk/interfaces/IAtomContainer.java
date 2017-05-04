@@ -490,7 +490,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      *
      * @param position The position of the atom to be removed.
      */
-    void removeAtom(int position);
+    void removeAtomOnly(int position);
 
     /**
      * Removes the given atom from the AtomContainer. Note that the
@@ -499,7 +499,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      *
      * @param atom The atom to be removed
      */
-    void removeAtom(IAtom atom);
+    void removeAtomOnly(IAtom atom);
 
     /**
      * Removes the bond at the given position from the AtomContainer.
@@ -579,6 +579,9 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      *
      * @param atom the atom to be removed
      */
+    void removeAtom(IAtom atom);
+
+    @Deprecated
     void removeAtomAndConnectedElectronContainers(IAtom atom);
 
     /**

@@ -370,7 +370,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
 
         @Override
         public void remove() {
-            removeAtom(--pointer);
+            removeAtomOnly(--pointer);
         }
 
     }
@@ -1077,7 +1077,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public void remove(IAtomContainer atomContainer) {
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
-            removeAtom(atomContainer.getAtom(f));
+            removeAtomOnly(atomContainer.getAtom(f));
         }
         for (int f = 0; f < atomContainer.getBondCount(); f++) {
             removeBond(atomContainer.getBond(f));
@@ -1098,7 +1098,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *@param  position  The position of the atom to be removed.
      */
     @Override
-    public void removeAtom(int position) {
+    public void removeAtomOnly(int position) {
         atoms[position].removeListener(this);
         for (int i = position; i < atomCount - 1; i++) {
             atoms[i] = atoms[i + 1];
@@ -1116,10 +1116,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *@param  atom  The atom to be removed
      */
     @Override
-    public void removeAtom(IAtom atom) {
+    public void removeAtomOnly(IAtom atom) {
         int position = getAtomNumber(atom);
         if (position != -1) {
-            removeAtom(position);
+            removeAtomOnly(position);
         }
     }
 
@@ -1260,13 +1260,22 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Deprecated
+    public void removeAtomAndConnectedElectronContainers(IAtom atom) {
+        removeAtom(atom);
+    }
+
+    /**
      *  Removes the given atom and all connected electronContainers from the
      *  AtomContainer.
      *
      *@param  atom  The atom to be removed
      */
     @Override
-    public void removeAtomAndConnectedElectronContainers(IAtom atom) {
+    public void removeAtom(IAtom atom) {
         int position = getAtomNumber(atom);
         if (position != -1) {
             for (int i = 0; i < bondCount; i++) {
@@ -1287,7 +1296,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
                     --i;
                 }
             }
-            removeAtom(position);
+            removeAtomOnly(position);
         }
         notifyChanged();
     }

@@ -361,7 +361,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         mset.addAtomContainer(mol);
         chemModel.setMoleculeSet(mset);
         Assert.assertFalse("chem model with a molecule set should not be empty", chemModel.isEmpty());
-        mol.removeAtom(atom);
+        mol.removeAtomOnly(atom);
         Assert.assertFalse("chem model with a (empty) molecule set should not be empty", chemModel.isEmpty());
         chemModel.setMoleculeSet(null);
         Assert.assertTrue("chemo model with no molecule set should be empty", chemModel.isEmpty());

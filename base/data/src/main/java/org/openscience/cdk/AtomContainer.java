@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -848,7 +847,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     @Override
     public void remove(IAtomContainer atomContainer) {
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
-            removeAtom(atomContainer.getAtom(f));
+            removeAtomOnly(atomContainer.getAtom(f));
         }
         for (int f = 0; f < atomContainer.getBondCount(); f++) {
             removeBond(atomContainer.getBond(f));
@@ -865,7 +864,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
-    public void removeAtom(int position) {
+    public void removeAtomOnly(int position) {
         atoms[position].removeListener(this);
         for (int i = position; i < atomCount - 1; i++) {
             atoms[i] = atoms[i + 1];
@@ -879,10 +878,10 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
-    public void removeAtom(IAtom atom) {
+    public void removeAtomOnly(IAtom atom) {
         int position = getAtomNumber(atom);
         if (position != -1) {
-            removeAtom(position);
+            removeAtomOnly(position);
         }
     }
 
@@ -1006,7 +1005,16 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public void removeAtomAndConnectedElectronContainers(IAtom atom) {
+        removeAtom(atom);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeAtom(IAtom atom) {
         int position = getAtomNumber(atom);
         if (position != -1) {
             for (int i = 0; i < bondCount; i++) {
@@ -1032,7 +1040,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
                 if (element.contains(atom)) atomElements.add(element);
             }
             stereoElements.removeAll(atomElements);
-            removeAtom(position);
+            removeAtomOnly(position);
         }
         notifyChanged();
     }
@@ -1422,7 +1430,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
 
         @Override
         public void remove() {
-            removeAtom(--pointer);
+            removeAtomOnly(--pointer);
         }
 
     }

@@ -21,7 +21,6 @@ package org.openscience.cdk.interfaces;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.vecmath.Point2d;
 
@@ -704,7 +703,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addLonePair(lp2);
 
         // remove the oxygen
-        acetone.removeAtomAndConnectedElectronContainers(o);
+        acetone.removeAtom(o);
         Assert.assertEquals(3, acetone.getAtomCount());
         Assert.assertEquals(2, acetone.getBondCount());
         Assert.assertEquals(0, acetone.getLonePairCount());
@@ -735,7 +734,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
                 ITetrahedralChirality.Stereo.CLOCKWISE));
 
         // remove the oxygen
-        acetone.removeAtomAndConnectedElectronContainers(o);
+        acetone.removeAtom(o);
         Assert.assertEquals(3, acetone.getAtomCount());
         Assert.assertEquals(2, acetone.getBondCount());
         Assert.assertEquals(0, acetone.getLonePairCount());
@@ -937,7 +936,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addAtom(o);
 
         Assert.assertEquals(4, acetone.getAtomCount());
-        acetone.removeAtom(1);
+        acetone.removeAtomOnly(1);
         Assert.assertEquals(3, acetone.getAtomCount());
         Assert.assertEquals(c1, acetone.getAtom(0));
         Assert.assertEquals(c3, acetone.getAtom(1));
@@ -957,7 +956,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addAtom(o);
 
         Assert.assertEquals(4, acetone.getAtomCount());
-        acetone.removeAtom(c3);
+        acetone.removeAtomOnly(c3);
         Assert.assertEquals(3, acetone.getAtomCount());
         Assert.assertEquals(c1, acetone.getAtom(0));
         Assert.assertEquals(c2, acetone.getAtom(1));
@@ -2791,8 +2790,8 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         assertFalse("atom container contains 2 atoms and 1 bond but was empty", container.isEmpty());
 
-        container.removeAtom(c1);
-        container.removeAtom(c2);
+        container.removeAtomOnly(c1);
+        container.removeAtomOnly(c2);
 
         Assert.assertThat("atom contains contains no bonds", container.getBondCount(), CoreMatchers.is(1));
 

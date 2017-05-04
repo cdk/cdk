@@ -412,8 +412,8 @@ public class ChemicalFilters {
             for (Map.Entry<IAtom, IAtom> map : mcsAtomSolution.entrySet()) {
                 IAtom atomE = map.getKey();
                 IAtom atomP = map.getValue();
-                educt.removeAtomAndConnectedElectronContainers(atomE);
-                product.removeAtomAndConnectedElectronContainers(atomP);
+                educt.removeAtom(atomE);
+                product.removeAtom(atomP);
             }
         }
         return getfragmentCount(educt) + getfragmentCount(product);
@@ -538,7 +538,7 @@ public class ChemicalFilters {
         }
 
         for (IAtom atoms : rlist) {
-            subgraphContainer.removeAtomAndConnectedElectronContainers(atoms);
+            subgraphContainer.removeAtom(atoms);
         }
         List<Object> l = new ArrayList<Object>();
         l.add(list);

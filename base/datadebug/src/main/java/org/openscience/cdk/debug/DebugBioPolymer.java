@@ -428,16 +428,16 @@ public class DebugBioPolymer extends BioPolymer implements IBioPolymer {
 
     /** {@inheritDoc} */
     @Override
-    public void removeAtom(int position) {
+    public void removeAtomOnly(int position) {
         logger.debug("Removing atom: ", position);
-        super.removeAtom(position);
+        super.removeAtomOnly(position);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void removeAtom(IAtom atom) {
+    public void removeAtomOnly(IAtom atom) {
         logger.debug("Removing atom: ", atom);
-        super.removeAtom(atom);
+        super.removeAtomOnly(atom);
     }
 
     /** {@inheritDoc} */
@@ -491,9 +491,9 @@ public class DebugBioPolymer extends BioPolymer implements IBioPolymer {
 
     /** {@inheritDoc} */
     @Override
-    public void removeAtomAndConnectedElectronContainers(IAtom atom) {
+    public void removeAtom(IAtom atom) {
         logger.debug("Removing atom and connected electron containers: ", atom);
-        super.removeAtomAndConnectedElectronContainers(atom);
+        super.removeAtom(atom);
     }
 
     /** {@inheritDoc} */

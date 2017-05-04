@@ -271,7 +271,7 @@ public class CDKUtilities {
                     for (int j = 0; j < connectedAtoms.size(); j++) {
                         IAtom conAtom = (IAtom) connectedAtoms.get(j);
                         if (conAtom.getSymbol().equals("H")) {
-                            m.removeAtomAndConnectedElectronContainers(conAtom);
+                            m.removeAtom(conAtom);
                         }
                     }
                 }
