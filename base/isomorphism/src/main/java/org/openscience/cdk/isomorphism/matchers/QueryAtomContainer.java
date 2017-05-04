@@ -19,8 +19,10 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -235,16 +237,53 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Sets the atom at position <code>number</code> in [0,..].
-     *
-     *@param  number  The position of the atom to be set.
-     *@param  atom    The atom to be stored at position <code>number</code>
-     *@see            #getAtom(int)
+     * {@inheritDoc}
      */
     @Override
-    public void setAtom(int number, IAtom atom) {
+    public void setAtom(int idx, IAtom atom) {
+        if (idx >= atomCount)
+            throw new IndexOutOfBoundsException("No atom at index: " + idx);
+        int aidx = indexOf(atom);
+        if (aidx >= 0)
+            throw new IllegalArgumentException("Atom already in container at index: " + idx);
+        final IAtom oldAtom = atoms[idx];
+        atoms[idx] = atom;
         atom.addListener(this);
-        atoms[number] = atom;
+        oldAtom.removeListener(this);
+
+        // replace in electron containers
+        for (IBond bond : bonds()) {
+            for (int i = 0; i < bond.getAtomCount(); i++) {
+                if (oldAtom.equals(bond.getAtom(i))) {
+                    bond.setAtom(atom, i);
+                }
+            }
+        }
+        for (ISingleElectron ec : singleElectrons()) {
+            if (oldAtom.equals(ec.getAtom()))
+                ec.setAtom(atom);
+        }
+        for (ILonePair lp : lonePairs()) {
+            if (oldAtom.equals(lp.getAtom()))
+                lp.setAtom(atom);
+        }
+
+        // update stereo
+        IStereoElement oldStereo = null;
+        IStereoElement newStereo = null;
+        for (IStereoElement se : stereoElements()) {
+            if (se.contains(oldAtom)) {
+                oldStereo = se;
+                Map<IAtom, IAtom> amap = Collections.singletonMap(oldAtom, atom);
+                Map<IBond, IBond> bmap = Collections.emptyMap();
+                newStereo = se.map(amap, bmap);
+            }
+        }
+        if (oldStereo != null) {
+            stereoElements.remove(oldStereo);
+            stereoElements.add(newStereo);
+        }
+
         notifyChanged();
     }
 
