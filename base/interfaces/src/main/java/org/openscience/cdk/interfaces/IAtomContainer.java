@@ -93,6 +93,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      * @param idx  The index of the atom to be set.
      * @param atom The atom to be stored at position <code>idx</code>
      * @throws IndexOutOfBoundsException index is out of bounds
+     * @throws IllegalArgumentException the atom counld not be set
      * @see #getAtom
      */
     void setAtom(int idx, IAtom atom);

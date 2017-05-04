@@ -239,11 +239,12 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void setAtom(int idx, IAtom atom) {
-        if (idx < atomCount) {
-            atoms[idx] = atom;
-        } else {
+        if (idx >= atomCount)
             throw new IndexOutOfBoundsException("No atom at index: " + idx);
-        }
+        int aidx = indexOf(atom);
+        if (aidx >= 0)
+            throw new IllegalArgumentException("Atom already in container at index: " + idx);
+        atoms[idx] = atom;
     }
 
     /**

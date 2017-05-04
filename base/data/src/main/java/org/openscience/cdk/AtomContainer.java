@@ -256,14 +256,15 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void setAtom(int idx, IAtom atom) {
-        if (idx < atomCount) {
-            atoms[idx].removeListener(this);
-            atoms[idx] = atom;
-            atom.addListener(this);
-            notifyChanged();
-        } else {
+        if (idx >= atomCount)
             throw new IndexOutOfBoundsException("No atom at index: " + idx);
-        }
+        int aidx = indexOf(atom);
+        if (aidx >= 0)
+            throw new IllegalArgumentException("Atom already in container at index: " + idx);
+        atoms[idx].removeListener(this);
+        atoms[idx] = atom;
+        atom.addListener(this);
+        notifyChanged();
     }
 
     /**
@@ -751,7 +752,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         if (contains(atom)) {
             return;
         }
-        ensureAtomCapacity(atomCount+1);
+        ensureAtomCapacity(atomCount + 1);
         atom.addListener(this);
         atoms[atomCount++] = atom;
         notifyChanged();
@@ -762,7 +763,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void addBond(IBond bond) {
-        ensureBondCapacity(bondCount+1);
+        ensureBondCapacity(bondCount + 1);
         bonds[bondCount++] = bond;
         notifyChanged();
     }
@@ -772,7 +773,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void addLonePair(ILonePair lonePair) {
-        ensureLonePairCapacity(lonePairCount+1);
+        ensureLonePairCapacity(lonePairCount + 1);
         lonePairs[lonePairCount++] = lonePair;
         notifyChanged();
     }
@@ -782,7 +783,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void addSingleElectron(ISingleElectron singleElectron) {
-        ensureElectronCapacity(singleElectronCount+1);
+        ensureElectronCapacity(singleElectronCount + 1);
         singleElectrons[singleElectronCount++] = singleElectron;
         notifyChanged();
     }

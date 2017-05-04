@@ -978,6 +978,16 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(c2, container.getAtom(0));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetAtomSameMolecule() {
+        IAtomContainer container = (IAtomContainer) newChemObject();
+        IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = container.getBuilder().newInstance(IAtom.class, "C");
+        container.addAtom(c1);
+        container.addAtom(c2);
+        container.setAtom(0, c2);
+    }
+
     @Test
     public void testGetAtom_int() {
         IAtomContainer acetone = (IAtomContainer) newChemObject();
