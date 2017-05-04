@@ -220,18 +220,24 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
-    public void setAtoms(IAtom[] atoms) {
-        this.atoms = atoms;
-        this.atomCount = atoms.length;
+    public void setAtoms(IAtom[] newAtoms) {
+        ensureAtomCapacity(newAtoms.length);
+        System.arraycopy(newAtoms, 0, this.atoms, 0, newAtoms.length);
+        if (newAtoms.length < this.atoms.length)
+            Arrays.fill(atoms, newAtoms.length, this.atoms.length, null);
+        this.atomCount = newAtoms.length;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setBonds(IBond[] bonds) {
-        this.bonds = bonds;
-        this.bondCount = bonds.length;
+    public void setBonds(IBond[] newBonds) {
+        ensureBondCapacity(newBonds.length);
+        System.arraycopy(newBonds, 0, this.bonds, 0, newBonds.length);
+        if (newBonds.length < this.bonds.length)
+            Arrays.fill(bonds, newBonds.length, this.bonds.length, null);
+        this.bondCount = newBonds.length;
     }
 
     /**

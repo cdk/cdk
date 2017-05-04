@@ -223,16 +223,19 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
-    public void setAtoms(IAtom[] atoms) {
+    public void setAtoms(IAtom[] newAtoms) {
         // unregister this as listener with the old atoms
         for (int i = 0; i < atomCount; i++) {
             this.atoms[i].removeListener(this);
         }
-        this.atoms = atoms;
-        for (IAtom atom : atoms) {
+        for (IAtom atom : newAtoms) {
             atom.addListener(this);
         }
-        this.atomCount = atoms.length;
+        ensureAtomCapacity(newAtoms.length);
+        System.arraycopy(newAtoms, 0, this.atoms, 0, newAtoms.length);
+        if (newAtoms.length < this.atoms.length)
+            Arrays.fill(atoms, newAtoms.length, this.atoms.length, null);
+        this.atomCount = newAtoms.length;
         notifyChanged();
     }
 
@@ -240,15 +243,18 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
-    public void setBonds(IBond[] bonds) {
+    public void setBonds(IBond[] newBonds) {
         for (int i = 0; i < bondCount; i++) {
             this.bonds[i].removeListener(this);
         }
-        this.bonds = bonds;
-        for (IBond bond : bonds) {
+        for (IBond bond : newBonds) {
             bond.addListener(this);
         }
-        this.bondCount = bonds.length;
+        ensureBondCapacity(newBonds.length);
+        System.arraycopy(newBonds, 0, this.bonds, 0, newBonds.length);
+        if (newBonds.length < this.bonds.length)
+            Arrays.fill(bonds, newBonds.length, this.bonds.length, null);
+        this.bondCount = newBonds.length;
     }
 
     /**
