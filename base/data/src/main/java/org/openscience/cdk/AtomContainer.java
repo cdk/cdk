@@ -261,9 +261,44 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         int aidx = indexOf(atom);
         if (aidx >= 0)
             throw new IllegalArgumentException("Atom already in container at index: " + idx);
-        atoms[idx].removeListener(this);
+        final IAtom oldAtom = atoms[idx];
         atoms[idx] = atom;
         atom.addListener(this);
+        oldAtom.removeListener(this);
+
+        // replace in electron containers
+        for (IBond bond : bonds()) {
+            for (int i = 0; i < bond.getAtomCount(); i++) {
+                if (oldAtom.equals(bond.getAtom(i))) {
+                    bond.setAtom(atom, i);
+                }
+            }
+        }
+        for (ISingleElectron ec : singleElectrons()) {
+            if (oldAtom.equals(ec.getAtom()))
+                ec.setAtom(atom);
+        }
+        for (ILonePair lp : lonePairs()) {
+            if (oldAtom.equals(lp.getAtom()))
+                lp.setAtom(atom);
+        }
+
+        // update stereo
+        IStereoElement oldStereo = null;
+        IStereoElement newStereo = null;
+        for (IStereoElement se : stereoElements()) {
+            if (se.contains(oldAtom)) {
+                oldStereo = se;
+                Map<IAtom, IAtom> amap = Collections.singletonMap(oldAtom, atom);
+                Map<IBond, IBond> bmap = Collections.emptyMap();
+                newStereo = se.map(amap, bmap);
+            }
+        }
+        if (oldStereo != null) {
+            stereoElements.remove(oldStereo);
+            stereoElements.add(newStereo);
+        }
+
         notifyChanged();
     }
 
