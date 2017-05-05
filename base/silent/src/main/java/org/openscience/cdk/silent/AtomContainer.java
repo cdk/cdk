@@ -373,8 +373,6 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public Iterable<ISingleElectron> singleElectrons() {
-        if (singleElectronCount == 0)
-            return Collections.<ISingleElectron>emptyList();
         return new Iterable<ISingleElectron>() {
 
             @Override
