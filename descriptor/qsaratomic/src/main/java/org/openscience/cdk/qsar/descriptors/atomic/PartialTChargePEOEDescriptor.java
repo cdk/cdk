@@ -177,7 +177,6 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
                 }
             }
 
-            if (maxIterations != -1) peoe.setMaxGasteigerIters(maxIterations);
             if (maxIterations != -1) pepe.setMaxGasteigerIters(maxIterations);
             if (maxResonStruc != -1) pepe.setMaxResoStruc(maxResonStruc);
 
