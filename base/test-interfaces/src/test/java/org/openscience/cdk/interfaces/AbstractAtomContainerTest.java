@@ -1134,6 +1134,50 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         assertFalse(siter.hasNext());
     }
 
+    /**
+     * This test we ensure there is backing array and then access the index,
+     * we should get an exception rather than null
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetAtomOutOfBackedArray() {
+        IAtomContainer     mol     = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder = mol.getBuilder();
+        for (int i = 0; i < 10; i++)
+            mol.addAtom(builder.newAtom());
+        for (int i = 9; i >=0; i--)
+            mol.removeAtomOnly(i);
+        mol.getAtom(0); // fail rather than return null
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetAtomOutOfRange() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        mol.getAtom(99999);
+    }
+
+    /**
+     * This test we ensure there is backing array and then access the index,
+     * we should get an exception rather than null
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetBondOutOfRangeBackedArray() {
+        IAtomContainer     mol     = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder = mol.getBuilder();
+        for (int i = 0; i < 10; i++)
+            mol.addAtom(builder.newAtom());
+        for (int i = 0; i < 9; i++)
+            mol.addBond(i, i+1, IBond.Order.SINGLE);
+        for (int i = 8; i >=0; i--)
+            mol.removeBond(i);
+        mol.getBond(0); // fail rather than return null
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetBondOutOfRange() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        mol.getAtom(99999);
+    }
+
     @Test
     public void testGetAtom_int() {
         IAtomContainer acetone = (IAtomContainer) newChemObject();
