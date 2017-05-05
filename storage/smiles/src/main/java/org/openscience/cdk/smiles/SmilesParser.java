@@ -631,6 +631,7 @@ public final class SmilesParser {
                     case "ran":
                         sgroup.setType(SgroupType.CtabCopolymer);
                         sgroup.putValue(SgroupKey.CtabSubType, "RAN");
+                        break;
                     case "blk":
                         sgroup.setType(SgroupType.CtabCopolymer);
                         sgroup.putValue(SgroupKey.CtabSubType, "BLO");
