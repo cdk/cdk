@@ -488,7 +488,7 @@ public class MolecularFormulaManipulator {
     private static IMolecularFormula getMolecularFormula(String stringMF, IMolecularFormula formula,
             boolean assumeMajorIsotope) {
 
-        if (stringMF.contains(".") || stringMF.contains("(") || stringMF.charAt(0) >= '0' && stringMF.charAt(0) <= '9')
+        if (stringMF.contains(".") || stringMF.contains("(") || stringMF.length() > 0 && stringMF.charAt(0) >= '0' && stringMF.charAt(0) <= '9')
             stringMF = simplifyMolecularFormula(stringMF);
 
         // Extract charge from String when contains []X- format
