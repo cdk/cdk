@@ -327,7 +327,9 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     int getElectronContainerCount();
 
     /**
-     * Returns an ArrayList of all atoms connected to the given atom.
+     * Returns an ArrayList of all atoms connected to the given atom. If
+     * bonds are added to the container after the list is retrieved the
+     * connected atoms will not update to reflect this.
      *
      * @param atom The atom the bond partners are searched of.
      * @return The ArrayList with the connected atoms
@@ -335,7 +337,9 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     List<IAtom> getConnectedAtomsList(IAtom atom);
 
     /**
-     * Returns an ArrayList of all Bonds connected to the given atom.
+     * Returns an ArrayList of all Bonds connected to the given atom. If
+     * bonds are added to the container after the list is retrieved the
+     * connected atoms will not update to reflect this.
      *
      * @param atom The atom the connected bonds are searched of
      * @return The ArrayList with connected atoms
@@ -343,7 +347,9 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     List<IBond> getConnectedBondsList(IAtom atom);
 
     /**
-     * Returns the array of lone pairs connected to an atom.
+     * Returns the array of lone pairs connected to an atom. If
+     * lone pairs are added to the container after the list is
+     * retrieved the connected atoms will not update to reflect this.
      *
      * @param atom The atom for which to get lone pairs
      * @return The array of LonePairs of this AtomContainer
@@ -352,6 +358,8 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 
     /**
      * Returns an array of all SingleElectron connected to the given atom.
+     * If single electrons are added to the container after the list is
+     * retrieved the connected atoms will not update to reflect this.
      *
      * @param atom The atom on which the single electron is located
      * @return The array of SingleElectron of this AtomContainer
