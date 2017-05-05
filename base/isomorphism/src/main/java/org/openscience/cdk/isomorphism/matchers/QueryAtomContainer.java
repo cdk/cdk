@@ -288,49 +288,42 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Get the atom at position <code>number</code> in [0,..].
-     *
-     *@param  idx  The position of the atom to be retrieved.
-     *@return         The atomAt value
-     * @see #setAtom(int, org.openscience.cdk.interfaces.IAtom)
-     * @see #setAtoms(org.openscience.cdk.interfaces.IAtom[])
-     *
+     * {@inheritDoc}
      */
     @Override
     public IAtom getAtom(int idx) {
+        if (idx < 0 || idx >= atomCount)
+            throw new IndexOutOfBoundsException("Atom index out of bounds: 0 <= " + idx + " < " + atomCount);
         return atoms[idx];
     }
 
     /**
-     *  Get the bond at position <code>number</code> in [0,..].
-     *
-     *@param  idx  The position of the bond to be retrieved.
-     *@return         The bondAt value
+     * {@inheritDoc}
      */
     @Override
     public IBond getBond(int idx) {
+        if (idx < 0 || idx >= bondCount)
+            throw new IndexOutOfBoundsException("Bond index out of bounds: 0 <= " + idx + " < " + bondCount);
         return bonds[idx];
     }
 
     /**
-     *  Get the lone pair at position <code>number</code> in [0,..].
-     *
-     *@param  idx  The position of the LonePair to be retrieved.
-     *@return         The lone pair number
+     * {@inheritDoc}
      */
     @Override
     public ILonePair getLonePair(int idx) {
+        if (idx < 0 || idx >= lonePairCount)
+            throw new IndexOutOfBoundsException("Lone Pair index out of bounds: 0 <= " + idx + " < " + lonePairCount);
         return lonePairs[idx];
     }
 
     /**
-     *  Get the single electron at position <code>number</code> in [0,..].
-     *
-     *@param  idx  The position of the SingleElectron to be retrieved.
-     *@return         The single electron number
+     * {@inheritDoc}
      */
     @Override
     public ISingleElectron getSingleElectron(int idx) {
+        if (idx < 0 || idx >= singleElectronCount)
+            throw new IndexOutOfBoundsException("Single Electrong index out of bounds: 0 <= " + idx + " < " + singleElectronCount);
         return singleElectrons[idx];
     }
 

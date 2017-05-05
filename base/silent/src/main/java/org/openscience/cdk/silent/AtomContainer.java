@@ -291,6 +291,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public IAtom getAtom(int idx) {
+        if (idx < 0 || idx >= atomCount)
+            throw new IndexOutOfBoundsException("Atom index out of bounds: 0 <= " + idx + " < " + atomCount);
         return atoms[idx];
     }
 
@@ -299,6 +301,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public IBond getBond(int idx) {
+        if (idx < 0 || idx >= bondCount)
+            throw new IndexOutOfBoundsException("Bond index out of bounds: 0 <= " + idx + " < " + bondCount);
         return bonds[idx];
     }
 
@@ -307,6 +311,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public ILonePair getLonePair(int idx) {
+        if (idx < 0 || idx >= lonePairCount)
+            throw new IndexOutOfBoundsException("Lone Pair index out of bounds: 0 <= " + idx + " < " + lonePairCount);
         return lonePairs[idx];
     }
 
@@ -315,6 +321,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public ISingleElectron getSingleElectron(int idx) {
+        if (idx < 0 || idx >= singleElectronCount)
+            throw new IndexOutOfBoundsException("Single Electrong index out of bounds: 0 <= " + idx + " < " + singleElectronCount);
         return singleElectrons[idx];
     }
 
