@@ -302,19 +302,19 @@ public class ForceFieldConfigurator {
             bondType = "0";
             if (bond.getOrder() == IBond.Order.SINGLE) {
                 if ((bond.getBegin().getAtomTypeName().equals("Csp2"))
-                        & ((bond.getEnd().getAtomTypeName().equals("Csp2")) | (bond.getEnd().getAtomTypeName()
+                        && ((bond.getEnd().getAtomTypeName().equals("Csp2")) || (bond.getEnd().getAtomTypeName()
                                 .equals("C=")))) {
                     bondType = "1";
                 }
 
                 if ((bond.getBegin().getAtomTypeName().equals("C="))
-                        & ((bond.getEnd().getAtomTypeName().equals("Csp2")) | (bond.getEnd().getAtomTypeName()
+                        && ((bond.getEnd().getAtomTypeName().equals("Csp2")) || (bond.getEnd().getAtomTypeName()
                                 .equals("C=")))) {
                     bondType = "1";
                 }
 
                 if ((bond.getBegin().getAtomTypeName().equals("Csp"))
-                        & (bond.getEnd().getAtomTypeName().equals("Csp"))) {
+                        && (bond.getEnd().getAtomTypeName().equals("Csp"))) {
                     bondType = "1";
                 }
             }
@@ -436,7 +436,7 @@ public class ForceFieldConfigurator {
                         if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(3))) {
                             ID = ids[21];
                         } else if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(6))
-                                & atom.getFlag(CDKConstants.ISAROMATIC)) {
+                                && atom.getFlag(CDKConstants.ISAROMATIC)) {
                             ID = ids[1];
                         } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
                             ID = ids[1];
@@ -446,7 +446,7 @@ public class ForceFieldConfigurator {
                     //csp2
                     if (atom.getFlag(CDKConstants.ISINRING)) {
                         if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(6))
-                                & atom.getFlag(CDKConstants.ISAROMATIC)) {
+                                && atom.getFlag(CDKConstants.ISAROMATIC)) {
                         } else if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(3))) {
                             ID = ids[37];
                         } else {
@@ -456,7 +456,7 @@ public class ForceFieldConfigurator {
                     p = (Pattern) atomTypePattern.get(2);
                     //COOH
                     mat = p.matcher(hoseCode);
-                    if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
+                    if (mat.matches() && !atom.getFlag(CDKConstants.ISINRING)) {
                         ID = ids[2];
                     }
 
@@ -467,7 +467,7 @@ public class ForceFieldConfigurator {
                             ID = ids[48];
                             //EPOXY
                         } else if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))
-                                & atom.getFlag(CDKConstants.ISAROMATIC)) {
+                                && atom.getFlag(CDKConstants.ISAROMATIC)) {
                             ID = ids[40];
                         } else {
                             ID = ids[5];
@@ -475,7 +475,7 @@ public class ForceFieldConfigurator {
                     }
                 } else if (j == 7) {
                     //n sp3
-                    if (atom.getFlag(CDKConstants.ISINRING) & atom.getFlag(CDKConstants.ISAROMATIC)) {
+                    if (atom.getFlag(CDKConstants.ISINRING) && atom.getFlag(CDKConstants.ISAROMATIC)) {
                         if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))) {
                             ID = ids[39];
                         }
@@ -483,7 +483,7 @@ public class ForceFieldConfigurator {
                     //Amid
                     p = (Pattern) atomTypePattern.get(77);
                     mat = p.matcher(hoseCode);
-                    if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
+                    if (mat.matches() && !atom.getFlag(CDKConstants.ISINRING)) {
                         ID = ids[8];
                     }
                 } else if (j == 8) {
@@ -496,7 +496,7 @@ public class ForceFieldConfigurator {
                     p = (Pattern) atomTypePattern.get(36);
                     //AZO
                     mat = p.matcher(hoseCode);
-                    if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
+                    if (mat.matches() && !atom.getFlag(CDKConstants.ISINRING)) {
                         ID = ids[36];
                     }
 
@@ -511,13 +511,13 @@ public class ForceFieldConfigurator {
                     p = (Pattern) atomTypePattern.get(76);
                     //Enol
                     mat = p.matcher(hoseCode);
-                    if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
+                    if (mat.matches() && !atom.getFlag(CDKConstants.ISINRING)) {
                         ID = ids[27];
                     }
                     p = (Pattern) atomTypePattern.get(23);
                     //COOH
                     mat = p.matcher(hoseCode);
-                    if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
+                    if (mat.matches() && !atom.getFlag(CDKConstants.ISINRING)) {
                         ID = ids[23];
                     }
                 } else if (j == 22) {
@@ -605,10 +605,10 @@ public class ForceFieldConfigurator {
                                 && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))) {
                             ID = ids[12];
                         } else if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(3))
-                                & !atom.getFlag(CDKConstants.ISAROMATIC)) {
+                                && !atom.getFlag(CDKConstants.ISAROMATIC)) {
                             ID = ids[9];//sp3 3mem rings
                         } else if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(4))
-                                & !atom.getFlag(CDKConstants.ISAROMATIC)) {
+                                && !atom.getFlag(CDKConstants.ISAROMATIC)) {
                             ID = ids[8];//sp3 4mem rings
                         } else if (atom.getFlag(CDKConstants.ISAROMATIC) && isInHetRing
                                 && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))) {
@@ -626,7 +626,7 @@ public class ForceFieldConfigurator {
                 } else if (j == 1) {//csp2
                     if (atom.getFlag(CDKConstants.ISINRING)) {
                         if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(4))
-                                & !atom.getFlag(CDKConstants.ISAROMATIC) && !isInHetRing) {
+                                && !atom.getFlag(CDKConstants.ISAROMATIC) && !isInHetRing) {
                             ID = ids[29];//C= in 4 ring
                         }
                     }
@@ -640,7 +640,7 @@ public class ForceFieldConfigurator {
                     //Amid
                     p = (Pattern) atomTypePattern.get(48);
                     mat = p.matcher(hoseCode);
-                    if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
+                    if (mat.matches() && !atom.getFlag(CDKConstants.ISINRING)) {
                         ID = ids[48];
                     }
 
