@@ -335,7 +335,7 @@ public class AtomContainerManipulator {
     public static int getTotalNegativeFormalCharge(IAtomContainer atomContainer) {
         int charge = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            double chargeI = atomContainer.getAtom(i).getFormalCharge();
+            int chargeI = atomContainer.getAtom(i).getFormalCharge();
             if (chargeI < 0) charge += chargeI;
         }
         return charge;
@@ -350,7 +350,7 @@ public class AtomContainerManipulator {
     public static int getTotalPositiveFormalCharge(IAtomContainer atomContainer) {
         int charge = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            double chargeI = atomContainer.getAtom(i).getFormalCharge();
+            int chargeI = atomContainer.getAtom(i).getFormalCharge();
             if (chargeI > 0) charge += chargeI;
         }
         return charge;
