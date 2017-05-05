@@ -335,90 +335,102 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     int getElectronContainerCount();
 
     /**
-     * Returns an ArrayList of all atoms connected to the given atom. If
-     * bonds are added to the container after the list is retrieved the
-     * connected atoms will not update to reflect this.
+     * Returns the atoms connected connected to the specified atom by
+     * a bond.
      *
-     * @param atom The atom the bond partners are searched of.
-     * @return The ArrayList with the connected atoms
+     * @param atom the atom
+     * @return connected atoms
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     List<IAtom> getConnectedAtomsList(IAtom atom);
 
     /**
-     * Returns an ArrayList of all Bonds connected to the given atom. If
-     * bonds are added to the container after the list is retrieved the
-     * connected atoms will not update to reflect this.
+     * Returns the bonds connected connected to the specified atom.
      *
-     * @param atom The atom the connected bonds are searched of
-     * @return The ArrayList with connected atoms
+     * @param atom the atom
+     * @return connected bonds
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     List<IBond> getConnectedBondsList(IAtom atom);
 
     /**
-     * Returns the array of lone pairs connected to an atom. If
-     * lone pairs are added to the container after the list is
-     * retrieved the connected atoms will not update to reflect this.
+     * Returns the lone pairs connected connected to the specified atom.
      *
-     * @param atom The atom for which to get lone pairs
-     * @return The array of LonePairs of this AtomContainer
+     * @param atom the atom
+     * @return connected lone pairs
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     List<ILonePair> getConnectedLonePairsList(IAtom atom);
 
     /**
-     * Returns an array of all SingleElectron connected to the given atom.
-     * If single electrons are added to the container after the list is
-     * retrieved the connected atoms will not update to reflect this.
+     * Returns the single electrons connected connected to the specified atom.
      *
-     * @param atom The atom on which the single electron is located
-     * @return The array of SingleElectron of this AtomContainer
+     * @param atom the atom
+     * @return connected lone pairs
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom);
 
     /**
-     * Returns an ArrayList of all electronContainers connected to the given atom.
+     * Returns the electron containers (bonds, radicals, and lone pairs )
+     * connected connected to the specified atom.
      *
-     * @param atom The atom the connected electronContainers are searched of
-     * @return The ArrayList with the  connected atoms
+     * @param atom the atom
+     * @return connected lone pairs
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     List<IElectronContainer> getConnectedElectronContainersList(IAtom atom);
 
     /**
-     * Returns the number of atoms connected to the given atom.
+     * Returns the number of connected atoms (explicit degree) to the
+     * specified atom. This does not include bonds to implicit
+     * hydrogens.
      *
-     * @param atom The atom the number of bond partners are searched of.
-     * @return The the size of connected atoms
+     * @param atom the atom
+     * @return number of connected bonds
+     * @throws java.util.NoSuchElementException the atom is not present
+     * @deprecated use {@link #getConnectedBondsCount(IAtom)}
      */
+    @Deprecated
     int getConnectedAtomsCount(IAtom atom);
 
     /**
-     * Returns the number of Bonds for a given Atom.
+     * Returns the number of connected bonds (explicit degree) to the
+     * specified atom. This does not include bonds to implicit
+     * hydrogens.
      *
-     * @param atom The atom
-     * @return The number of Bonds for this atom
+     * @param atom the atom
+     * @return number of connected bonds
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     int getConnectedBondsCount(IAtom atom);
 
     /**
-     * Returns the number of connected atoms (degree) to the given atom.
+     * Returns the number of connected bonds (explicit degree) to atom
+     * at the specified index. This does not include bonds to implicit
+     * hydrogens.
      *
-     * @param atomnumber The atomnumber the degree is searched for
-     * @return The number of connected atoms (degree)
+     * @param idx the atom idx
+     * @return number of connected bonds
+     * @throws IndexOutOfBoundsException the index is not in range
      */
-    int getConnectedBondsCount(int atomnumber);
+    int getConnectedBondsCount(int idx);
 
     /**
-     * Returns the number of LonePairs for a given Atom.
+     * Returns the number of lone pairs connected to the specified atom.
      *
-     * @param atom The atom
-     * @return The number of LonePairs for this atom
+     * @param atom the atom
+     * @return number of connected bonds
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     int getConnectedLonePairsCount(IAtom atom);
 
     /**
-     * Returns the sum of the SingleElectron for a given Atom.
+     * Returns the number of single electrons connected to the specified atom.
      *
-     * @param atom The atom on which the single electron is located
-     * @return The array of SingleElectron of this AtomContainer
+     * @param atom the atom
+     * @return number of connected bonds
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     int getConnectedSingleElectronsCount(IAtom atom);
 

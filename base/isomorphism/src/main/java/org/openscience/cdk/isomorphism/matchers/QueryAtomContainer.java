@@ -854,12 +854,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      *  Returns the number of connected atoms (degree) to the given atom.
      *
-     *@param  atomNumber  The atomnumber the degree is searched for
+     *@param  idx  The atomnumber the degree is searched for
      *@return             The number of connected atoms (degree)
      */
     @Override
-    public int getConnectedBondsCount(int atomNumber) {
-        return getConnectedAtomsCount(atoms[atomNumber]);
+    public int getConnectedBondsCount(int idx) {
+        return getConnectedAtomsCount(atoms[idx]);
     }
 
     /**

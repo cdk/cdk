@@ -2931,4 +2931,74 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedBondsMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedBondsList(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedAtomsMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedAtomsList(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedAtomCountMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedAtomsCount(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedBondCountMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedBondsCount(atom);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetConnectedBondCountMissingIdx() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        container.getConnectedBondsCount(0);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedLongPairsMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedLonePairsList(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedSingleElecsMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedSingleElectronsList(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedLongPairCountMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedLonePairsCount(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedSingleElecCountMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedSingleElectronsCount(atom);
+    }
+
 }

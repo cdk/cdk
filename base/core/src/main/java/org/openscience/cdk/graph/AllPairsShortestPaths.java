@@ -375,7 +375,7 @@ public final class AllPairsShortestPaths {
                                                                  }
 
                                                                  @Override
-                                                                 public int getConnectedBondsCount(int atomnumber) {
+                                                                 public int getConnectedBondsCount(int idx) {
                                                                      return 0;
                                                                  }
 

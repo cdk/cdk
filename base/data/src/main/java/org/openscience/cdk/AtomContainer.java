@@ -589,10 +589,13 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public List<IAtom> getConnectedAtomsList(IAtom atom) {
-        List<IAtom> atomsList = new ArrayList<IAtom>();
+        List<IAtom> atomsList = new ArrayList<>(4);
         for (int i = 0; i < bondCount; i++) {
-            if (bonds[i].contains(atom)) atomsList.add(bonds[i].getOther(atom));
+            if (bonds[i].contains(atom))
+                atomsList.add(bonds[i].getOther(atom));
         }
+        if (atomsList.isEmpty() && !contains(atom))
+            throw new NoSuchElementException("Atom does not belong to the container!");
         return atomsList;
     }
 
@@ -601,10 +604,13 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public List<IBond> getConnectedBondsList(IAtom atom) {
-        List<IBond> bondsList = new ArrayList<IBond>();
+        List<IBond> bondsList = new ArrayList<>(4);
         for (int i = 0; i < bondCount; i++) {
-            if (bonds[i].contains(atom)) bondsList.add(bonds[i]);
+            if (bonds[i].contains(atom))
+                bondsList.add(bonds[i]);
         }
+        if (bondsList.isEmpty() && !contains(atom))
+            throw new NoSuchElementException("Atom does not belong to the container!");
         return bondsList;
     }
 
@@ -613,10 +619,13 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
-        List<ILonePair> lps = new ArrayList<ILonePair>();
+        List<ILonePair> lps = new ArrayList<>(2);
         for (int i = 0; i < lonePairCount; i++) {
-            if (lonePairs[i].contains(atom)) lps.add(lonePairs[i]);
+            if (lonePairs[i].contains(atom))
+                lps.add(lonePairs[i]);
         }
+        if (lps.isEmpty() && !contains(atom))
+            throw new NoSuchElementException("Atom does not belong to the container!");
         return lps;
     }
 
@@ -625,30 +634,48 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
-        List<ISingleElectron> lps = new ArrayList<ISingleElectron>();
+        List<ISingleElectron> ses = new ArrayList<>(2);
         for (int i = 0; i < singleElectronCount; i++) {
-            if (singleElectrons[i].contains(atom)) lps.add(singleElectrons[i]);
+            if (singleElectrons[i].contains(atom))
+                ses.add(singleElectrons[i]);
         }
-        return lps;
+        if (ses.isEmpty() && !contains(atom))
+            throw new NoSuchElementException("Atom does not belong to the container!");
+        return ses;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<IElectronContainer> getConnectedElectronContainersList(
-        IAtom atom) {
-        List<IElectronContainer> lps = new ArrayList<IElectronContainer>();
+    public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
+        List<IElectronContainer> ecs = new ArrayList<>(4);
         for (int i = 0; i < bondCount; i++) {
-            if (bonds[i].contains(atom)) lps.add(bonds[i]);
+            if (bonds[i].contains(atom)) ecs.add(bonds[i]);
         }
         for (int i = 0; i < lonePairCount; i++) {
-            if (lonePairs[i].contains(atom)) lps.add(lonePairs[i]);
+            if (lonePairs[i].contains(atom)) ecs.add(lonePairs[i]);
         }
         for (int i = 0; i < singleElectronCount; i++) {
-            if (singleElectrons[i].contains(atom)) lps.add(singleElectrons[i]);
+            if (singleElectrons[i].contains(atom)) ecs.add(singleElectrons[i]);
         }
-        return lps;
+        if (ecs.isEmpty() && !contains(atom))
+            throw new NoSuchElementException("Atom does not belong to the container!");
+        return ecs;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getConnectedBondsCount(IAtom atom) {
+        int count = 0;
+        for (int i = 0; i < bondCount; i++) {
+            if (bonds[i].contains(atom)) ++count;
+        }
+        if (count == 0 && !contains(atom))
+            throw new NoSuchElementException("Atom does not belong to the container!");
+        return count;
     }
 
     /**
@@ -656,6 +683,15 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public int getConnectedAtomsCount(IAtom atom) {
+        return getConnectedBondsCount(atom);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getConnectedBondsCount(int idx) {
+        final IAtom atom = getAtom(idx);
         int count = 0;
         for (int i = 0; i < bondCount; i++) {
             if (bonds[i].contains(atom)) ++count;
@@ -667,27 +703,14 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
-    public int getConnectedBondsCount(IAtom atom) {
-        return getConnectedAtomsCount(atom);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getConnectedBondsCount(int atomNumber) {
-        return getConnectedAtomsCount(atoms[atomNumber]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int getConnectedLonePairsCount(IAtom atom) {
         int count = 0;
         for (int i = 0; i < lonePairCount; i++) {
-            if (lonePairs[i].contains(atom)) ++count;
+            if (lonePairs[i].contains(atom))
+                ++count;
         }
+        if (count == 0 && !contains(atom))
+            throw new NoSuchElementException("Atom does not belong to the container!");
         return count;
     }
 
@@ -700,6 +723,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         for (int i = 0; i < singleElectronCount; i++) {
             if (singleElectrons[i].contains(atom)) ++count;
         }
+        if (count == 0 && !contains(atom))
+            throw new NoSuchElementException("Atom does not belong to the container!");
         return count;
     }
 
