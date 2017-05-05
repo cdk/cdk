@@ -86,7 +86,7 @@ public class GreedyBasisTest {
         Cycle c2 = mock(Cycle.class);
         Cycle c3 = mock(Cycle.class);
         when(c1.edgeVector()).thenReturn(toBitSet("111000000000"));
-        when(c2.edgeVector()).thenReturn(toBitSet("0001110000000"));
+        when(c2.edgeVector()).thenReturn(toBitSet("000111000000"));
         when(c3.edgeVector()).thenReturn(toBitSet("011110000000"));
         when(c1.length()).thenReturn(3);
         when(c2.length()).thenReturn(3);
