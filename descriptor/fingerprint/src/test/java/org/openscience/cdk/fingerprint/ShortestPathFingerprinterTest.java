@@ -282,7 +282,6 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         BitSet b1 = fp.getBitFingerprint(butane).asBitSet();
         BitSet b2 = fp.getBitFingerprint(propylAmine).asBitSet();
 
-        Assert.assertFalse(FingerprinterTool.isSubset(b2, b1));
         Assert.assertFalse("butane should not be a substructure of propylamine", FingerprinterTool.isSubset(b2, b1));
     }
 
