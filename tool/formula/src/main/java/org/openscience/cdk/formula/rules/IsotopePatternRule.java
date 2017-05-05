@@ -19,6 +19,7 @@
 package org.openscience.cdk.formula.rules;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
@@ -111,7 +112,15 @@ public class IsotopePatternRule implements IRule {
     public Object[] getParameters() {
         // return the parameters as used for the rule validation
         Object[] params = new Object[2];
-        params[0] = pattern;
+        if (pattern == null)
+            params[0] = null;
+        else {
+            List<double[]> params0 = new ArrayList<double[]>();
+            for (IsotopeContainer isotope : pattern.getIsotopes()) {
+                params0.add(new double[] { isotope.getMass(), isotope.getIntensity() });
+            }
+            params[0] = params0;
+        }
         params[1] = toleranceMass;
         return params;
     }
