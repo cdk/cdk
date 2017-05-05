@@ -92,7 +92,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
 
     @Override
     public void setReader(Reader reader) throws CDKException {
-        this.input = new BufferedReader(input);
+        this.input = new BufferedReader(reader);
     }
 
     @Override
