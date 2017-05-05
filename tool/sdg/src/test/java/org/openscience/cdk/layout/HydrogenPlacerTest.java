@@ -60,7 +60,10 @@ public class HydrogenPlacerTest extends CDKTestCase {
     @Test
     public void testNoConnections() {
         HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-        hydrogenPlacer.placeHydrogens2D(new AtomContainer(), new Atom("C", new Point2d(0, 0)), 1.5);
+        AtomContainer  container      = new AtomContainer();
+        Atom           atom         = new Atom("C", new Point2d(0, 0));
+        container.addAtom(atom);
+        hydrogenPlacer.placeHydrogens2D(container, atom, 1.5);
     }
 
     /** @cdk.bug 1269 */
