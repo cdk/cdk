@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -738,11 +739,22 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public Order getMinimumBondOrder(IAtom atom) {
-        IBond.Order min = IBond.Order.QUADRUPLE;
-        for (int i = 0; i < bondCount; i++) {
-            if (bonds[i].contains(atom) && bonds[i].getOrder().numeric() < min.numeric()) {
-                min = bonds[i].getOrder();
+        IBond.Order min = null;
+        for (IBond bond : bonds()) {
+            if (!bond.contains(atom))
+                continue;
+            if (min == null || bond.getOrder().numeric() < min.numeric()) {
+                min = bond.getOrder();
             }
+        }
+        if (min == null) {
+            if (!contains(atom))
+                throw new NoSuchElementException("Atom does not belong to this container!");
+            if (atom.getImplicitHydrogenCount() != null &&
+                atom.getImplicitHydrogenCount() > 0)
+                min = Order.SINGLE;
+            else
+                min = Order.UNSET;
         }
         return min;
     }

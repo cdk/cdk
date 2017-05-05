@@ -440,11 +440,15 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     Order getMaximumBondOrder(IAtom atom);
 
     /**
-     * Returns the minimum bond order that this atom currently has in the context
-     * of this AtomContainer.
+     * Returns the minimum bond order that this atom currently has
+     * in the context of this AtomContainer. If the atom has no bonds
+     * but does have implicit hydrogens the minimum bond order is
+     * {@link IBond.Order#SINGLE}, otherwise the bond is unset
+     * {@link IBond.Order#UNSET}.
      *
      * @param atom The atom
-     * @return The minimim bond order that this atom currently has
+     * @return The minimum bond order that this atom currently has
+     * @throws java.util.NoSuchElementException atom does not belong to this container
      */
     Order getMinimumBondOrder(IAtom atom);
 

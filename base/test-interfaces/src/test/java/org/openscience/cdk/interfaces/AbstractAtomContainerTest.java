@@ -21,12 +21,14 @@ package org.openscience.cdk.interfaces;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.vecmath.Point2d;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
@@ -1680,6 +1682,49 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getMinimumBondOrder(c1));
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getMinimumBondOrder(c2));
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getMinimumBondOrder(c3));
+    }
+
+    @Test
+    public void testGetMinBondOrderHighBondOrder() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        container.addAtom(builder.newAtom());
+        container.addAtom(builder.newAtom());
+        container.addBond(0, 1, IBond.Order.SEXTUPLE);
+        assertThat(container.getMinimumBondOrder(container.getAtom(0)),
+                   is(IBond.Order.SEXTUPLE));
+    }
+
+    @Test
+    public void testGetMinBondOrderNoBonds() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.addAtom(atom);
+        assertThat(container.getMinimumBondOrder(atom),
+                   is(IBond.Order.UNSET));
+    }
+
+    @Test
+    public void testGetMinBondOrderImplH() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              a      = builder.newAtom();
+        a.setImplicitHydrogenCount(1);
+        container.addAtom(a);
+        assertThat(container.getMinimumBondOrder(a),
+                   is(IBond.Order.SINGLE));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetMinBondOrderNoSuchAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              a1      = builder.newAtom();
+        IAtom              a2      = builder.newAtom();
+        container.addAtom(a1);
+        assertThat(container.getMinimumBondOrder(a2),
+                   is(IBond.Order.UNSET));
     }
 
     @Test
