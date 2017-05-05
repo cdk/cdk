@@ -484,6 +484,8 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     void remove(IAtomContainer atomContainer);
 
     /**
+     * Unsafely remove atom at index.
+     * <br>
      * Removes the atom at the given position from the AtomContainer. Note that
      * the electronContainers are unaffected: you also have to take care of
      * removing all electronContainers to this atom from the container manually.
@@ -493,6 +495,8 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     void removeAtomOnly(int position);
 
     /**
+     * Unsafely remove atom.
+     * <br>
      * Removes the given atom from the AtomContainer. Note that the
      * electronContainers are unaffected: you also have to take care of removeing
      * all electronContainers to this atom from the container.
@@ -571,9 +575,15 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     void removeElectronContainer(IElectronContainer electronContainer);
 
     /**
-     * Removes the given atom and all connected electronContainers from the
-     * AtomContainer. The method will also remove any {@link IStereoElement}
-     * that the atom is contained in. If you are removing hydrogens one of the
+     * Safely remove an atom from the container.
+     * <br>
+     * Removes a single atom from the container updating all internal
+     * state to be consistent. All bonds connected to the atom will be
+     * deleted as well as all stereo elements. If multiple atoms/bonds are
+     * being deleted they should be gathered into a single transaction
+     * and removed with {@link #remove(IAtomContainer)}.
+     * <br>
+     * If you are removing hydrogens one of the
      * utility methods (e.g. AtomContainerManipulator.removeHydrogens(IAtomContainer))
      * is preferable.
      *
@@ -581,6 +591,11 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      */
     void removeAtom(IAtom atom);
 
+    /**
+     * Safely remove an atom from the container.
+     * @see #removeAtom(IAtom)
+     * @deprecated Method has be renamed {@link #removeAtom(IAtom)}.
+     */
     @Deprecated
     void removeAtomAndConnectedElectronContainers(IAtom atom);
 
