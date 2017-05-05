@@ -872,7 +872,6 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     @Override
     public IBond removeBond(int position) {
         IBond bond = bonds[position];
-        bond.removeListener(this);
         for (int i = position; i < bondCount - 1; i++) {
             bonds[i] = bonds[i + 1];
         }
