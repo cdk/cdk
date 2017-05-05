@@ -331,7 +331,7 @@ public final class GenerateCompatibilityGraph {
     }
 
     private void addCZeroEdges(IBond reactantBond, IBond productBond, int indexI, int indexJ) {
-        if (isMatchFeasible(source, productBond, target, productBond, shouldMatchBonds)) {
+        if (isMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds)) {
             //bondMatch(reactantBond, productBond)
             cEdges.add((indexI / 4) + 1);
             cEdges.add((indexJ / 4) + 1);
