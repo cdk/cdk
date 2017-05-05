@@ -133,7 +133,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         Assert.assertEquals(-1, product.getAtom(2).getFormalCharge().intValue());
-        Assert.assertEquals(0, product.getConnectedLonePairsCount(molecule.getAtom(1)));
+        Assert.assertEquals(0, product.getConnectedLonePairsCount(product.getAtom(1)));
 
         /* C=C-[C-]-C */
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
