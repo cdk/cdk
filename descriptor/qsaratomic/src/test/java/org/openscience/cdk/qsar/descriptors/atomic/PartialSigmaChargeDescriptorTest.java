@@ -779,35 +779,11 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     public void testPartialSigmaChargeDescriptor7() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        double[] testResult = {0.0835, 0.0265, -0.2622, 0.0265, 0.0835, -0.0444, 0.064, -0.0596, 0.0626, -0.0444, 0.064}; /*
-                                                                                                                           * from
-                                                                                                                           * Petra
-                                                                                                                           * online
-                                                                                                                           * :
-                                                                                                                           * http
-                                                                                                                           * :
-                                                                                                                           * /
-                                                                                                                           * /
-                                                                                                                           * www2
-                                                                                                                           * .
-                                                                                                                           * chemie
-                                                                                                                           * .
-                                                                                                                           * uni
-                                                                                                                           * -
-                                                                                                                           * erlangen
-                                                                                                                           * .
-                                                                                                                           * de
-                                                                                                                           * /
-                                                                                                                           * services
-                                                                                                                           * /
-                                                                                                                           * petra
-                                                                                                                           * /
-                                                                                                                           * smiles
-                                                                                                                           * .
-                                                                                                                           * phtml
-                                                                                                                           */
+        /*
+         * from Petra online: http://www2.chemi.uni.erlange.de/services/petra/smiles.pthml
+         */
+        double[] testResult = {0.0835, 0.0265, -0.2622, 0.0265, 0.0835, -0.0444, 0.064, -0.0596, 0.0626, -0.0444, 0.064};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        sp.kekulise(false);
         IAtomContainer mol = sp.parseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);

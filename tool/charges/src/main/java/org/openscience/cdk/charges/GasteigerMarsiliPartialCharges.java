@@ -251,15 +251,15 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
                     factors[2] = -0.56;
                     break;
                 case "C":
-                    if ((maxBondOrder == IBond.Order.SINGLE) && (charge != -1)) {
-                        factors[0] = 7.98;
-                        factors[1] = 9.18;
-                        factors[2] = 1.88;
-                    } else if (maxBondOrder == IBond.Order.DOUBLE
-                               || ((maxBondOrder == IBond.Order.SINGLE) && charge == -1)) {
+                    if (maxBondOrder == IBond.Order.DOUBLE ||
+                        (maxBondOrder == IBond.Order.SINGLE && (charge == -1 || charge == +1))) {
                         factors[0] = 8.79;/* 8.79 *//* 8.81 */
                         factors[1] = 9.32;/* 9.32 *//* 9.34 */
                         factors[2] = 1.51;/* 1.51 *//* 1.52 */
+                    } else if (maxBondOrder == IBond.Order.SINGLE && charge == 0) {
+                        factors[0] = 7.98;
+                        factors[1] = 9.18;
+                        factors[2] = 1.88;
                     } else if (maxBondOrder == IBond.Order.TRIPLE
                                || maxBondOrder == IBond.Order.QUADRUPLE) {
                         factors[0] = 10.39;/* 10.39 */
@@ -274,7 +274,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
                         factors[1] = 10.82;
                         factors[2] = 1.36;
                     } else if ((maxBondOrder == IBond.Order.DOUBLE)
-                               || ((maxBondOrder == IBond.Order.SINGLE) && charge == -1)) {
+                               || ((maxBondOrder == IBond.Order.SINGLE))) {
                         factors[0] = 12.87;
                         factors[1] = 11.15;
                         factors[2] = 0.85;
@@ -292,7 +292,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
                         factors[1] = 12.92;
                         factors[2] = 1.39;
                     } else if ((maxBondOrder == IBond.Order.DOUBLE)
-                               || ((maxBondOrder == IBond.Order.SINGLE) && charge == -1)) {
+                               || ((maxBondOrder == IBond.Order.SINGLE))) {
                         factors[0] = 17.07;/*
                                             * paramaters aren'T correct
                                             * parametrized.
