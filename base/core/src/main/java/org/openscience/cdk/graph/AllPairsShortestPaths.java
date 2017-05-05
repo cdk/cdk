@@ -180,25 +180,25 @@ public final class AllPairsShortestPaths {
                                                                  public void setAtom(int number, IAtom atom) {}
 
                                                                  @Override
-                                                                 public IAtom getAtom(int number) {
+                                                                 public IAtom getAtom(int idx) {
                                                                      throw new UnsupportedOperationException(
                                                                              "not supported");
                                                                  }
 
                                                                  @Override
-                                                                 public IBond getBond(int number) {
+                                                                 public IBond getBond(int idx) {
                                                                      throw new UnsupportedOperationException(
                                                                              "not supported");
                                                                  }
 
                                                                  @Override
-                                                                 public ILonePair getLonePair(int number) {
+                                                                 public ILonePair getLonePair(int idx) {
                                                                      throw new UnsupportedOperationException(
                                                                              "not supported");
                                                                  }
 
                                                                  @Override
-                                                                 public ISingleElectron getSingleElectron(int number) {
+                                                                 public ISingleElectron getSingleElectron(int idx) {
                                                                      throw new UnsupportedOperationException(
                                                                              "not supported");
                                                                  }

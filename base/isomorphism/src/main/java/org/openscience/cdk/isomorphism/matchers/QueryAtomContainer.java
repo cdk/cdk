@@ -290,48 +290,48 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      *  Get the atom at position <code>number</code> in [0,..].
      *
-     *@param  number  The position of the atom to be retrieved.
+     *@param  idx  The position of the atom to be retrieved.
      *@return         The atomAt value
      * @see #setAtom(int, org.openscience.cdk.interfaces.IAtom)
      * @see #setAtoms(org.openscience.cdk.interfaces.IAtom[])
      *
      */
     @Override
-    public IAtom getAtom(int number) {
-        return atoms[number];
+    public IAtom getAtom(int idx) {
+        return atoms[idx];
     }
 
     /**
      *  Get the bond at position <code>number</code> in [0,..].
      *
-     *@param  number  The position of the bond to be retrieved.
+     *@param  idx  The position of the bond to be retrieved.
      *@return         The bondAt value
      */
     @Override
-    public IBond getBond(int number) {
-        return bonds[number];
+    public IBond getBond(int idx) {
+        return bonds[idx];
     }
 
     /**
      *  Get the lone pair at position <code>number</code> in [0,..].
      *
-     *@param  number  The position of the LonePair to be retrieved.
+     *@param  idx  The position of the LonePair to be retrieved.
      *@return         The lone pair number
      */
     @Override
-    public ILonePair getLonePair(int number) {
-        return lonePairs[number];
+    public ILonePair getLonePair(int idx) {
+        return lonePairs[idx];
     }
 
     /**
      *  Get the single electron at position <code>number</code> in [0,..].
      *
-     *@param  number  The position of the SingleElectron to be retrieved.
+     *@param  idx  The position of the SingleElectron to be retrieved.
      *@return         The single electron number
      */
     @Override
-    public ISingleElectron getSingleElectron(int number) {
-        return singleElectrons[number];
+    public ISingleElectron getSingleElectron(int idx) {
+        return singleElectrons[idx];
     }
 
     /**

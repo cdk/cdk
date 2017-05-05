@@ -85,30 +85,30 @@ public class DebugAminoAcid extends AminoAcid implements IAminoAcid {
 
     /** {@inheritDoc} */
     @Override
-    public IAtom getAtom(int number) {
-        logger.debug("Getting atom at: ", number);
-        return super.getAtom(number);
+    public IAtom getAtom(int idx) {
+        logger.debug("Getting atom at: ", idx);
+        return super.getAtom(idx);
     }
 
     /** {@inheritDoc} */
     @Override
-    public IBond getBond(int number) {
-        logger.debug("Getting bond at: ", number);
-        return super.getBond(number);
+    public IBond getBond(int idx) {
+        logger.debug("Getting bond at: ", idx);
+        return super.getBond(idx);
     }
 
     /** {@inheritDoc} */
     @Override
-    public ILonePair getLonePair(int number) {
-        logger.debug("Getting lone pair at: ", number);
-        return super.getLonePair(number);
+    public ILonePair getLonePair(int idx) {
+        logger.debug("Getting lone pair at: ", idx);
+        return super.getLonePair(idx);
     }
 
     /** {@inheritDoc} */
     @Override
-    public ISingleElectron getSingleElectron(int number) {
-        logger.debug("Getting single electron at: ", number);
-        return super.getSingleElectron(number);
+    public ISingleElectron getSingleElectron(int idx) {
+        logger.debug("Getting single electron at: ", idx);
+        return super.getSingleElectron(idx);
     }
 
     //	public void setElectronContainer(int number, IElectronContainer electronContainer) {

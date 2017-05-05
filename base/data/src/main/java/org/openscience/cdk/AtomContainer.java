@@ -311,32 +311,32 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
-    public IAtom getAtom(int number) {
-        return atoms[number];
+    public IAtom getAtom(int idx) {
+        return atoms[idx];
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public IBond getBond(int number) {
-        return bonds[number];
+    public IBond getBond(int idx) {
+        return bonds[idx];
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ILonePair getLonePair(int number) {
-        return lonePairs[number];
+    public ILonePair getLonePair(int idx) {
+        return lonePairs[idx];
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ISingleElectron getSingleElectron(int number) {
-        return singleElectrons[number];
+    public ISingleElectron getSingleElectron(int idx) {
+        return singleElectrons[idx];
     }
 
     /**

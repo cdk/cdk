@@ -99,37 +99,45 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     void setAtom(int idx, IAtom atom);
 
     /**
-     * Get the atom at position <code>number</code> in [0,..].
+     * Get the atom at the specified <b>idx</b>, the index should be in the
+     * range 0 &le; <i>idx</i> &lt; {@link #getAtomCount()}.
      *
-     * @param number The position of the atom to be retrieved.
-     * @return The atom number
+     * @param idx atom index
+     * @return the atom stored at the index
      * @see #setAtom
+     * @throws IndexOutOfBoundsException the index is out of range
      */
-    IAtom getAtom(int number);
+    IAtom getAtom(int idx);
 
     /**
-     * Get the bond at position <code>number</code> in [0,..].
+     * Get the bond at the specified <b>idx</b>, the index should be in the
+     * range 0 &le; <i>idx</i> &lt; {@link #getBondCount()}.
      *
-     * @param number The position of the bond to be retrieved.
-     * @return The bond number
+     * @param idx bond index
+     * @return the bond stored at the index
+     * @throws IndexOutOfBoundsException the index is out of range
      */
-    IBond getBond(int number);
+    IBond getBond(int idx);
 
     /**
-     * Get the lone pair at position <code>number</code> in [0,..].
+     * Get the lone pair at the specified <b>idx</b>, the index should be in the
+     * range 0 &le; <i>idx</i> &lt; {@link #getLonePairCount()}.
      *
-     * @param number The position of the LonePair to be retrieved.
-     * @return The lone pair number
+     * @param idx lone pair index
+     * @return the lone pair stored at the index
+     * @throws IndexOutOfBoundsException the index is out of range
      */
-    ILonePair getLonePair(int number);
+    ILonePair getLonePair(int idx);
 
     /**
-     * Get the single electron at position <code>number</code> in [0,..].
+     * Get the single electron at the specified <b>idx</b>, the index should
+     * be in the range 0 &le; <i>idx</i> &lt; {@link #getSingleElectronCount()}.
      *
-     * @param number The position of the SingleElectron to be retrieved.
-     * @return The single electron number
+     * @param idx single electron index
+     * @return the single electron stored at the index
+     * @throws IndexOutOfBoundsException the index is out of range
      */
-    ISingleElectron getSingleElectron(int number);
+    ISingleElectron getSingleElectron(int idx);
 
     /**
      * Returns an Iterable for looping over all atoms in this container.
