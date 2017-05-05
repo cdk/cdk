@@ -70,7 +70,7 @@ import java.util.Map;
  *  An example:<pre>
  *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
  *  IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
- *  IAtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
+ *  IAtomContainer SMILESquery = sp.parseSmiles("CC"); // ethane
  *  IQueryAtomContainer query = IQueryAtomContainerCreator.createBasicQueryContainer(SMILESquery);
  *  boolean isSubstructure = UniversalIsomorphismTester.isSubgraph(atomContainer, query);
  *  </pre>
