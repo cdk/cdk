@@ -235,109 +235,125 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
     public double[] assignGasteigerSigmaMarsiliFactors(IAtomContainer ac) throws CDKException {
         //a,b,c,denom,chi,q
         double[] gasteigerFactors = new double[(ac.getAtomCount() * (STEP_SIZE + 1))];
-        String AtomSymbol = "";
         double[] factors = new double[]{0.0, 0.0, 0.0};
         for (int i = 0; i < ac.getAtomCount(); i++) {
             factors[0] = 0.0;
             factors[1] = 0.0;
             factors[2] = 0.0;
-            AtomSymbol = ac.getAtom(i).getSymbol();
-            if (AtomSymbol.equals("H")) {
-                factors[0] = 7.17;
-                factors[1] = 6.24;
-                factors[2] = -0.56;
-            } else if (AtomSymbol.equals("C")) {
-                if ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE)
-                        && (ac.getAtom(i).getFormalCharge() != -1)) {
-                    factors[0] = 7.98;
-                    factors[1] = 9.18;
-                    factors[2] = 1.88;
-                } else if (ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.DOUBLE
-                        || ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE) && ac.getAtom(i)
-                                .getFormalCharge() == -1)) {
-                    factors[0] = 8.79;/* 8.79 *//* 8.81 */
-                    factors[1] = 9.32;/* 9.32 *//* 9.34 */
-                    factors[2] = 1.51;/* 1.51 *//* 1.52 */
-                } else if (ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.TRIPLE
-                        || ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.QUADRUPLE) {
-                    factors[0] = 10.39;/* 10.39 */
-                    factors[1] = 9.45;/* 9.45 */
-                    factors[2] = 0.73;
-                }
-            } else if (AtomSymbol.equals("N")) {
-                if ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE)
-                        && (ac.getAtom(i).getFormalCharge() != -1)) {
-                    factors[0] = 11.54;
-                    factors[1] = 10.82;
-                    factors[2] = 1.36;
-                } else if ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.DOUBLE)
-                        || ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE) && ac.getAtom(i)
-                                .getFormalCharge() == -1)) {
-                    factors[0] = 12.87;
-                    factors[1] = 11.15;
-                    factors[2] = 0.85;
-                } else if (ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.TRIPLE
-                        || ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.QUADRUPLE) {
-                    factors[0] = 17.68;/* 15.68 */
-                    factors[1] = 12.70;/* 11.70 */
-                    factors[2] = -0.27;/*-0.27*/
-                }
-            } else if (AtomSymbol.equals("O")) {
-                if ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE)
-                        && (ac.getAtom(i).getFormalCharge() != -1)) {
-                    factors[0] = 14.18;
-                    factors[1] = 12.92;
-                    factors[2] = 1.39;
-                } else if ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.DOUBLE)
-                        || ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE) && ac.getAtom(i)
-                                .getFormalCharge() == -1)) {
-                    factors[0] = 17.07;/*
-                                        * paramaters aren'T correct
-                                        * parametrized.
-                                        */
-                    factors[1] = 13.79;
-                    factors[2] = 0.47;/* 0.47 */
-                }
-            } else if (AtomSymbol.equals("Si")) {// <--not correct
-                factors[0] = 8.10;// <--not correct
-                factors[1] = 7.92;// <--not correct
-                factors[2] = 1.78;// <--not correct
-            } else if (AtomSymbol.equals("P")) {
-                factors[0] = 8.90;
-                factors[1] = 8.32;
-                factors[2] = 1.58;
-            } else if (AtomSymbol.equals("S") /*
-                                               * &&
-                                               * ac.getMaximumBondOrder(ac.getAtomAt
-                                               * (i)) == 1
-                                               */) {
-                factors[0] = 10.14;/* 10.14 */
-                factors[1] = 9.13;/* 9.13 */
-                factors[2] = 1.38;/* 1.38 */
-            } else if (AtomSymbol.equals("F")) {
-                factors[0] = 14.66;
-                factors[1] = 13.85;
-                factors[2] = 2.31;
-            } else if (AtomSymbol.equals("Cl")) {
-                factors[0] = 12.31;/* 11.0 *//* 12.31 */
-                factors[1] = 10.84;/* 9.69 *//* 10.84 */
-                factors[2] = 1.512;/* 1.35 *//* 1.512 */
-            } else if (AtomSymbol.equals("Br")) {
-                factors[0] = 11.44;/* 10.08 *//* 11.2 */
-                factors[1] = 9.63;/* 8.47 *//* 9.4 */
-                factors[2] = 1.31;/* 1.16 *//* 1.29 */
-            } else if (AtomSymbol.equals("I")) {
-                factors[0] = 9.88;/* 9.90 */
-                factors[1] = 7.95;/* 7.96 */
-                factors[2] = 0.945;/* 0.96 */
-            } else {
-                throw new CDKException("Partial charge not-supported for element: '" + AtomSymbol + "'.");
+            final IAtom       atom         = ac.getAtom(i);
+            final String      symbol       = atom.getSymbol();
+            final IBond.Order maxBondOrder = ac.getMaximumBondOrder(atom);
+            final Integer     charge       = atom.getFormalCharge();
+            switch (symbol) {
+                case "H":
+                    factors[0] = 7.17;
+                    factors[1] = 6.24;
+                    factors[2] = -0.56;
+                    break;
+                case "C":
+                    if ((maxBondOrder == IBond.Order.SINGLE) && (charge != -1)) {
+                        factors[0] = 7.98;
+                        factors[1] = 9.18;
+                        factors[2] = 1.88;
+                    } else if (maxBondOrder == IBond.Order.DOUBLE
+                               || ((maxBondOrder == IBond.Order.SINGLE) && charge == -1)) {
+                        factors[0] = 8.79;/* 8.79 *//* 8.81 */
+                        factors[1] = 9.32;/* 9.32 *//* 9.34 */
+                        factors[2] = 1.51;/* 1.51 *//* 1.52 */
+                    } else if (maxBondOrder == IBond.Order.TRIPLE
+                               || maxBondOrder == IBond.Order.QUADRUPLE) {
+                        factors[0] = 10.39;/* 10.39 */
+                        factors[1] = 9.45;/* 9.45 */
+                        factors[2] = 0.73;
+                    }
+                    break;
+                case "N":
+                    if ((maxBondOrder == IBond.Order.SINGLE)
+                        && (charge != -1)) {
+                        factors[0] = 11.54;
+                        factors[1] = 10.82;
+                        factors[2] = 1.36;
+                    } else if ((maxBondOrder == IBond.Order.DOUBLE)
+                               || ((maxBondOrder == IBond.Order.SINGLE) && charge == -1)) {
+                        factors[0] = 12.87;
+                        factors[1] = 11.15;
+                        factors[2] = 0.85;
+                    } else if (maxBondOrder == IBond.Order.TRIPLE
+                               || maxBondOrder == IBond.Order.QUADRUPLE) {
+                        factors[0] = 17.68;/* 15.68 */
+                        factors[1] = 12.70;/* 11.70 */
+                        factors[2] = -0.27;/*-0.27*/
+                    }
+                    break;
+                case "O":
+                    if ((maxBondOrder == IBond.Order.SINGLE)
+                        && (charge != -1)) {
+                        factors[0] = 14.18;
+                        factors[1] = 12.92;
+                        factors[2] = 1.39;
+                    } else if ((maxBondOrder == IBond.Order.DOUBLE)
+                               || ((maxBondOrder == IBond.Order.SINGLE) && charge == -1)) {
+                        factors[0] = 17.07;/*
+                                            * paramaters aren'T correct
+                                            * parametrized.
+                                            */
+                        factors[1] = 13.79;
+                        factors[2] = 0.47;/* 0.47 */
+                    }
+                    break;
+                case "Si": // <--not correct
+                    factors[0] = 8.10;// <--not correct
+
+                    factors[1] = 7.92;// <--not correct
+
+                    factors[2] = 1.78;// <--not correct
+
+                    break;
+                case "P":
+                    factors[0] = 8.90;
+                    factors[1] = 8.32;
+                    factors[2] = 1.58;
+                    break;
+                case "S":
+/*
+                                                   * &&
+                                                   * ac.getMaximumBondOrder(ac.getAtomAt
+                                                   * (i)) == 1
+                                                   */
+
+                    factors[0] = 10.14;/* 10.14 */
+                    factors[1] = 9.13;/* 9.13 */
+                    factors[2] = 1.38;/* 1.38 */
+                    break;
+                case "F":
+                    factors[0] = 14.66;
+                    factors[1] = 13.85;
+                    factors[2] = 2.31;
+                    break;
+                case "Cl":
+                    factors[0] = 12.31;/* 11.0 *//* 12.31 */
+                    factors[1] = 10.84;/* 9.69 *//* 10.84 */
+                    factors[2] = 1.512;/* 1.35 *//* 1.512 */
+                    break;
+                case "Br":
+                    factors[0] = 11.44;/* 10.08 *//* 11.2 */
+                    factors[1] = 9.63;/* 8.47 *//* 9.4 */
+                    factors[2] = 1.31;/* 1.16 *//* 1.29 */
+                    break;
+                case "I":
+                    factors[0] = 9.88;/* 9.90 */
+                    factors[1] = 7.95;/* 7.96 */
+                    factors[2] = 0.945;/* 0.96 */
+                    break;
+                default:
+                    throw new CDKException("Partial charge not-supported for element: '" + symbol + "'.");
             }
+
 
             gasteigerFactors[STEP_SIZE * i + i] = factors[0];
             gasteigerFactors[STEP_SIZE * i + i + 1] = factors[1];
             gasteigerFactors[STEP_SIZE * i + i + 2] = factors[2];
-            gasteigerFactors[STEP_SIZE * i + i + 5] = ac.getAtom(i).getCharge();
+            gasteigerFactors[STEP_SIZE * i + i + 5] = atom.getCharge();
             if (factors[0] == 0 && factors[1] == 0 && factors[2] == 0) {
                 gasteigerFactors[STEP_SIZE * i + i + 3] = 1;
             } else {
