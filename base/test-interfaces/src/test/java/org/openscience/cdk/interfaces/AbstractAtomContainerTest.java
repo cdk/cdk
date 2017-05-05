@@ -1728,6 +1728,49 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     }
 
     @Test
+    public void testGetMaxBondOrderHighBondOrder() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        container.addAtom(builder.newAtom());
+        container.addAtom(builder.newAtom());
+        container.addBond(0, 1, IBond.Order.SEXTUPLE);
+        assertThat(container.getMaximumBondOrder(container.getAtom(0)),
+                   is(IBond.Order.SEXTUPLE));
+    }
+
+    @Test
+    public void testGetMaxBondOrderNoBonds() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.addAtom(atom);
+        assertThat(container.getMaximumBondOrder(atom),
+                   is(IBond.Order.UNSET));
+    }
+
+    @Test
+    public void testGetMaxBondOrderImplH() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              a      = builder.newAtom();
+        a.setImplicitHydrogenCount(1);
+        container.addAtom(a);
+        assertThat(container.getMaximumBondOrder(a),
+                   is(IBond.Order.SINGLE));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetMaxBondOrderNoSuchAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              a1      = builder.newAtom();
+        IAtom              a2      = builder.newAtom();
+        container.addAtom(a1);
+        assertThat(container.getMaximumBondOrder(a2),
+                   is(IBond.Order.UNSET));
+    }
+
+    @Test
     public void testRemoveElectronContainer_int() {
         // acetone molecule
         IAtomContainer acetone = (IAtomContainer) newChemObject();

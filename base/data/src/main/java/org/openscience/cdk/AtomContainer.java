@@ -725,11 +725,22 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public Order getMaximumBondOrder(IAtom atom) {
-        IBond.Order max = IBond.Order.SINGLE;
-        for (int i = 0; i < bondCount; i++) {
-            if (bonds[i].contains(atom) && bonds[i].getOrder().numeric() > max.numeric()) {
-                max = bonds[i].getOrder();
+        IBond.Order max = null;
+        for (IBond bond : bonds()) {
+            if (!bond.contains(atom))
+                continue;
+            if (max == null || bond.getOrder().numeric() > max.numeric()) {
+                max = bond.getOrder();
             }
+        }
+        if (max == null) {
+            if (!contains(atom))
+                throw new NoSuchElementException("Atom does not belong to this container!");
+            if (atom.getImplicitHydrogenCount() != null &&
+                atom.getImplicitHydrogenCount() > 0)
+                max = Order.SINGLE;
+            else
+                max = Order.UNSET;
         }
         return max;
     }
