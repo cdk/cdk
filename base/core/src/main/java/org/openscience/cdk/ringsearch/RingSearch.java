@@ -27,6 +27,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.exception.NoSuchAtomException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -217,11 +218,11 @@ public final class RingSearch {
      *
      * @param atom an atom
      * @return whether the atom is in a ring
-     * @throws NoSuchElementException the atom was not found
+     * @throws NoSuchAtomException the atom was not found
      */
-    public boolean cyclic(IAtom atom) {
+    public boolean cyclic(IAtom atom) throws NoSuchAtomException {
         int i = container.indexOf(atom);
-        if (i < 0) throw new NoSuchElementException("no such atom");
+        if (i < 0) throw new NoSuchAtomException("no such atom");
         return cyclic(i);
     }
 
