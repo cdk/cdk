@@ -194,7 +194,7 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
      * The active center will be those which correspond with [A*]-(C)_2-C3[H]
      * <pre>
      * C: Atom with single electron
-     * C5: Atom with Hydrogen
+     * C3: Atom with Hydrogen
      *  </pre>
      *
      * @param reactant The molecule to set the activity

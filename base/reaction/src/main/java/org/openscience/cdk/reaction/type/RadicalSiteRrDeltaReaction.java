@@ -47,7 +47,7 @@ import java.util.List;
 
 /**
  * <p>
- * This reaction could be represented as [A*]-(C)_4-C5[R] =&gt; A([R])-(C_4)-[C5*]. Due to
+ * This reaction could be represented as [A*]-(C)_5-C6[R] =&gt; A([R])-(C_5)-[C6*]. Due to
  * the single electron of atom A the R is moved.</p>
  * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
  *
@@ -148,11 +148,11 @@ public class RadicalSiteRrDeltaReaction extends ReactionEngine implements IReact
             IAtom atomi = atomis.next();
             if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-                hcg.getSpheres(reactant, atomi, 3, true);
-                List<IAtom> atom1s = hcg.getNodesInSphere(3);
-
                 hcg.getSpheres(reactant, atomi, 4, true);
-                Iterator<IAtom> atomls = hcg.getNodesInSphere(4).iterator();
+                List<IAtom> atom1s = hcg.getNodesInSphere(4);
+
+                hcg.getSpheres(reactant, atomi, 5, true);
+                Iterator<IAtom> atomls = hcg.getNodesInSphere(5).iterator();
                 while (atomls.hasNext()) {
                     IAtom atoml = atomls.next();
                     if (atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER)
@@ -197,7 +197,7 @@ public class RadicalSiteRrDeltaReaction extends ReactionEngine implements IReact
 
     /**
      * set the active center for this molecule.
-     * The active center will be those which correspond with [A*]-(C)_2-C3[R]
+     * The active center will be those which correspond with [A*]-(C)_5-C6[R]
      * <pre>
      * C: Atom with single electron
      * C5: Atom with the R to move
@@ -213,11 +213,11 @@ public class RadicalSiteRrDeltaReaction extends ReactionEngine implements IReact
             IAtom atomi = atomis.next();
             if (reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-                hcg.getSpheres(reactant, atomi, 3, true);
-                List<IAtom> atom1s = hcg.getNodesInSphere(3);
-
                 hcg.getSpheres(reactant, atomi, 4, true);
-                Iterator<IAtom> atomls = hcg.getNodesInSphere(4).iterator();
+                List<IAtom> atom1s = hcg.getNodesInSphere(4);
+
+                hcg.getSpheres(reactant, atomi, 5, true);
+                Iterator<IAtom> atomls = hcg.getNodesInSphere(5).iterator();
                 while (atomls.hasNext()) {
                     IAtom atoml = atomls.next();
                     if (atoml != null && !atoml.getFlag(CDKConstants.ISINRING)

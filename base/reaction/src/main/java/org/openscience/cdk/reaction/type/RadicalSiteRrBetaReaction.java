@@ -197,10 +197,10 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
 
     /**
      * set the active center for this molecule.
-     * The active center will be those which correspond with [A*]-(C)_2-C3[R]
+     * The active center will be those which correspond with [A*]-(C)_3-C4[R]
      * <pre>
      * C: Atom with single electron
-     * C5: Atom with the R to move
+     * C4: Atom with the R to move
      *  </pre>
      *
      * @param reactant The molecule to set the activity
