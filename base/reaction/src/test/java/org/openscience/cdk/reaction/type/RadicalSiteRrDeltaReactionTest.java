@@ -30,11 +30,13 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.Reaction;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -191,6 +193,11 @@ public class RadicalSiteRrDeltaReactionTest extends ReactionProcessTest {
 
         setOfProducts.addAtomContainer(molecule);
         return setOfProducts;
+    }
+
+    @Test
+    public void testExampleSmiles() throws Exception {
+        assertReaction("[CH2]CCCCCC>>[CH2]CCCCCC |^1:0,7|");
     }
 
     /**

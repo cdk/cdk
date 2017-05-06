@@ -105,6 +105,11 @@ public class RadicalSiteRrGammaReactionTest extends ReactionProcessTest {
         assertEquals(molecule2, product);
     }
 
+    @Test
+    public void testExampleSmiles() throws Exception {
+        assertReaction("[CH](C)CCCCC>>[CH2]CCCC(C)C |^1:0,7|");
+    }
+
     /**
      * create the compound.
      *
