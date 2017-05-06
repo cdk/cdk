@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -307,6 +308,19 @@ public class ReactionManipulatorTest extends CDKTestCase {
                    is("CCO.CC(=O)O.[H+].CCOC(=O)C.O"));
         assertThat(smigen.createReactionSMILES(ReactionManipulator.toReaction(mol)),
                    is("CCO.CC(=O)O>[H+]>CCOC(=O)C.O"));
+    }
+
+    @Test public void inliningReactionsWithRadicals() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IReaction reaction = smipar.parseReactionSmiles("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0| ethyl esterification");
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
+        // convert to molecule
+        IAtomContainer mol = ReactionManipulator.toMolecule(reaction);
+        assertThat(smigen.create(mol),
+                   is("[CH2]CO.CC(=O)O.[H+].CCOC(=O)C.O |^1:0|"));
+        assertThat(smigen.createReactionSMILES(ReactionManipulator.toReaction(mol)),
+                   is("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0|"));
     }
 
 }
