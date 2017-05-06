@@ -25,20 +25,27 @@ import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Tests for IReactionProcess implementations.
@@ -51,6 +58,18 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     private Dictionary         dictionary;
     private String             entryString = "";
     private IChemObjectBuilder builder     = SilentChemObjectBuilder.getInstance();
+
+    private static final SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical |  SmiFlavor.CxRadical);
+
+    protected static void assertEquals(IAtomContainer expected, IAtomContainer act)
+        throws CDKException {
+        assertThat(cansmi(act), is(cansmi(expected)));
+    }
+
+    private static String cansmi(IAtomContainer mol) throws CDKException {
+        AtomContainerManipulator.suppressHydrogens(mol);
+        return smigen.create(AtomContainerManipulator.copyAndSuppressedHydrogens(mol));
+    }
 
     /**
      * Set the IReactionProcess to analyzed
