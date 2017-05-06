@@ -979,4 +979,18 @@ public class InChIGeneratorTest extends CDKTestCase {
         assertThat(inchigen.getInchi(),
                    is("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)"));
     }
+    
+    /**
+     * Ensures default timeout option is passed with proper switch character.
+     */
+    @Test
+    public void testFiveSecondTimeoutFlag() throws Exception {
+    	IAtomContainer ac = new AtomContainer();
+        ac.addAtom(new Atom("C"));
+    	InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
+    	InChIGenerator generator = factory.getInChIGenerator(ac);
+    	
+        String flagChar = System.getProperty("os.name", "").toLowerCase().startsWith("windows") ? "/" : "-";
+    	assertThat(generator.input.getOptions(), containsString(flagChar + "W5"));
+    }
 }

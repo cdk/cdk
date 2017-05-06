@@ -32,8 +32,6 @@ import java.util.StringTokenizer;
 
 public class JniInChIInputAdapter extends JniInchiInput {
 
-    public static final String FIVE_SECOND_TIMEOUT = "-W5";
-
     /**
      * Flag indicating windows or linux.
      */
@@ -43,6 +41,8 @@ public class JniInChIInputAdapter extends JniInchiInput {
      * Switch character for passing options. / in windows, - on other systems.
      */
     private static final String FLAG_CHAR = IS_WINDOWS ? "/" : "-";
+
+    public static final String FIVE_SECOND_TIMEOUT = FLAG_CHAR + "W5";
 
     public JniInChIInputAdapter(String options) throws JniInchiException {
         this.options = options == null ? "" : checkOptions(options);
