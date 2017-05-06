@@ -91,7 +91,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
         final String expected = cansmi(reaction);
         assertThat(reactions.getReactionCount(), is(not(0)));
         for (IReaction actual : reactions.reactions()) {
-            assertThat(expected, is(cansmi(actual)));
+            assertThat(cansmi(actual), is(expected));
         }
     }
 
