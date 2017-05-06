@@ -164,7 +164,7 @@ public class RegularPathGraphTest {
         assertTrue(e.disjoint(f));
         assertTrue(f.disjoint(e));
         assertFalse(e.disjoint(e));
-        assertFalse(e.disjoint(e));
+        assertFalse(f.disjoint(f));
     }
 
     @Test

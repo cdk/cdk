@@ -492,7 +492,7 @@ public class BayesianTest {
     }
 
     private boolean dblEqual(double v1, double v2) {
-        return v1 == v2 || Math.abs(v1 - v2) <= 1E-14 * Math.max(v1, v2);
+        return v1 == v2 || Math.abs(v1 - v2) <= 1E-14 * Math.max(Math.abs(v1), Math.abs(v2));
     }
 
     private String arrayStr(int[] A) {

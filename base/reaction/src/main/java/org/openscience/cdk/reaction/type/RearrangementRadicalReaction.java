@@ -141,7 +141,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
                     if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
 
                         IAtom atomj = bondi.getOther(atomi);
-                        if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)
+                        if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)
                                 && (atomj.getFormalCharge() == CDKConstants.UNSET ? 0 : atomj.getFormalCharge()) == 0
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 

@@ -434,7 +434,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
                         aA.set(goodAtom1.getPoint3d().x, goodAtom1.getPoint3d().y, goodAtom1.getPoint3d().z);
                         aB.set(goodAtom0.getPoint3d().x, goodAtom0.getPoint3d().y, goodAtom0.getPoint3d().z);
                     }
-                    bB.set(middlePoint.x, middlePoint.y, middlePoint.z);
+                    bA.set(middlePoint.x, middlePoint.y, middlePoint.z);
                     bB.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
                     angle = calculateAngleBetweenTwoLines(aA, aB, bA, bB);
                     partial = ((1 / (Math.pow(values[0], 2))) * Math.exp(smooth * (Math.pow((ghd - angle), 2))));
