@@ -174,6 +174,6 @@ public class DefaultRGraphAtomMatcher implements AtomMatcher {
     }
 
     private int countNeighbors(IAtomContainer container, IAtom atom) {
-        return container.getConnectedAtomsCount(atom);
+        return container.getConnectedBondsCount(atom);
     }
 }

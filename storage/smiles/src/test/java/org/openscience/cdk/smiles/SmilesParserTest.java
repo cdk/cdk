@@ -832,7 +832,7 @@ public class SmilesParserTest extends CDKTestCase {
 
         // I can also check whether all carbons have exact two neighbors
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            Assert.assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(i)));
+            Assert.assertEquals(2, mol.getConnectedBondsCount(mol.getAtom(i)));
         }
         // and the number of implicit hydrogens
         int hCount = 0;
@@ -932,7 +932,7 @@ public class SmilesParserTest extends CDKTestCase {
         while (atoms.hasNext()) {
             IAtom atomi = atoms.next();
             Assert.assertEquals(1, atomi.getImplicitHydrogenCount().intValue());
-            Assert.assertEquals(2, mol.getConnectedAtomsCount(atomi));
+            Assert.assertEquals(2, mol.getConnectedBondsCount(atomi));
         }
         // and the first atom should have a negative charge
         Assert.assertEquals(-1, mol.getAtom(0).getFormalCharge().intValue());
@@ -2181,9 +2181,9 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals("C", mol.getAtom(0).getSymbol());
         Assert.assertEquals("O", mol.getAtom(1).getSymbol());
         Assert.assertEquals("C", mol.getAtom(2).getSymbol());
-        Assert.assertEquals(4, mol.getConnectedAtomsCount(mol.getAtom(0)));
-        Assert.assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(1)));
-        Assert.assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(2)));
+        Assert.assertEquals(4, mol.getConnectedBondsCount(mol.getAtom(0)));
+        Assert.assertEquals(2, mol.getConnectedBondsCount(mol.getAtom(1)));
+        Assert.assertEquals(2, mol.getConnectedBondsCount(mol.getAtom(2)));
     }
 
     @Test
@@ -2486,10 +2486,10 @@ public class SmilesParserTest extends CDKTestCase {
 
         IAtomContainer mol = loadExact(smiles);
         Assert.assertEquals(8, mol.getAtomCount());
-        Assert.assertEquals(4, mol.getConnectedAtomsCount(mol.getAtom(1)));
-        Assert.assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(3)));
-        Assert.assertEquals(4, mol.getConnectedAtomsCount(mol.getAtom(4)));
-        Assert.assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(5)));
+        Assert.assertEquals(4, mol.getConnectedBondsCount(mol.getAtom(1)));
+        Assert.assertEquals(2, mol.getConnectedBondsCount(mol.getAtom(3)));
+        Assert.assertEquals(4, mol.getConnectedBondsCount(mol.getAtom(4)));
+        Assert.assertEquals(2, mol.getConnectedBondsCount(mol.getAtom(5)));
     }
 
     /**

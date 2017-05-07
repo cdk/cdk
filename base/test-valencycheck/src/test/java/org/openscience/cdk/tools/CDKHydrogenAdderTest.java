@@ -738,13 +738,13 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         Assert.assertEquals("S", sulfur.getSymbol());
         Assert.assertNotNull(sulfur.getImplicitHydrogenCount());
         Assert.assertEquals(0, sulfur.getImplicitHydrogenCount().intValue());
-        Assert.assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
+        Assert.assertEquals(3, atomContainer_0.getConnectedBondsCount(sulfur));
 
         Assert.assertEquals(10, atomContainer_0.getAtomCount());
 
         Assert.assertNotNull(sulfur.getImplicitHydrogenCount());
         Assert.assertEquals(0, sulfur.getImplicitHydrogenCount().intValue());
-        Assert.assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
+        Assert.assertEquals(3, atomContainer_0.getConnectedBondsCount(sulfur));
     }
 
     /**

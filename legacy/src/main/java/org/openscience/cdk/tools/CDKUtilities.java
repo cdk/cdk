@@ -85,7 +85,7 @@ public class CDKUtilities {
                             for (int j = 0; j <= 2; j++) {
                                 IAtom caj = (IAtom) ca.get(j);
                                 if (caj.getSymbol().equals("O")) {
-                                    if (m.getConnectedAtomsCount(caj) == 1) {// account for possibility of ONO2
+                                    if (m.getConnectedBondsCount(caj) == 1) {// account for possibility of ONO2
                                         cao[count] = caj;
                                         count++;
                                     }
@@ -146,7 +146,7 @@ public class CDKUtilities {
                             for (int j = 0; j <= 2; j++) {
                                 IAtom caj = (IAtom) ca.get(j);
                                 if (caj.getSymbol().equals("O")) {
-                                    if (m.getConnectedAtomsCount(caj) == 1) {// account for possibility of ONO2
+                                    if (m.getConnectedBondsCount(caj) == 1) {// account for possibility of ONO2
                                         cao[count] = caj;
                                         count++;
                                     }

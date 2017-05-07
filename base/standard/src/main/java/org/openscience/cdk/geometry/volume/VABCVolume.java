@@ -97,7 +97,7 @@ public class VABCVolume {
             if (type == null) throw new CDKException("Unknown atom type for atom: " + atom.getSymbol());
             if (type.getFormalNeighbourCount() == null)
                 throw new CDKException("Formal neighbor count not given for : " + type.getAtomTypeName());
-            int hCount = type.getFormalNeighbourCount() - molecule.getConnectedAtomsCount(atom);
+            int hCount = type.getFormalNeighbourCount() - molecule.getConnectedBondsCount(atom);
             sum += (hCount * bondiiVolumes.get("H"));
             totalHCount += hCount;
         }
