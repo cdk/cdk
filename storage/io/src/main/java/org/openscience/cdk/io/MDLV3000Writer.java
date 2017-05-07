@@ -661,6 +661,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
         writer.write("END CTAB\n");
         writer.writeDirect("M  END\n");
+        writer.writer.flush();
     }
 
 
