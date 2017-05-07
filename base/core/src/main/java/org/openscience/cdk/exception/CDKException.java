@@ -28,7 +28,7 @@ package org.openscience.cdk.exception;
  * @cdk.module core
  * @cdk.githash
  */
-public class CDKException extends Exception {
+public class CDKException extends RuntimeException {
 
     private static final long serialVersionUID = 8371328769230823678L;
 
