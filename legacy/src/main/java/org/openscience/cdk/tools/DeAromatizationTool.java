@@ -125,7 +125,7 @@ public class DeAromatizationTool {
     private static IBond getNextBond(IAtom atom, IBond bond, IRing ring) {
         List<IBond> bonds = ring.getConnectedBondsList(atom);
         for (int i = 0; i < bonds.size(); i++)
-            if (bonds.get(i) != bond) return (IBond) bonds.get(i);
+            if (!bonds.get(i).equals(bond)) return (IBond) bonds.get(i);
         return null;
     }
 
@@ -556,7 +556,7 @@ public class DeAromatizationTool {
             List<IBond> bonds = ring.getConnectedBondsList(curAtom);
             for (IBond bond : bonds)
             {
-                if (bond!=curBond)
+                if (!bond.equals(curBond))
                 {
                     curBond = bond;
                     break;

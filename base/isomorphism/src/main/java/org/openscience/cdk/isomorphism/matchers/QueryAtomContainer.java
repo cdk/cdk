@@ -636,7 +636,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public int indexOf(IBond bond) {
         for (int i = 0; i < bondCount; i++) {
-            if (bonds[i] == bond) return i;
+            if (bonds[i].equals(bond)) return i;
         }
         return -1;
     }
@@ -1439,7 +1439,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public boolean contains(IBond bond) {
         for (int i = 0; i < getBondCount(); i++) {
-            if (bond == bonds[i]) return true;
+            if (bonds[i].equals(bond)) return true;
         }
         return false;
     }

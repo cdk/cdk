@@ -350,7 +350,7 @@ public class CDKRMapHandler {
                 for (int j = 0; j < 2; j++) {
                     List<IBond> bondsConnectedToAtom1j = graph1.getConnectedBondsList(qAtoms[j]);
                     for (int k = 0; k < bondsConnectedToAtom1j.size(); k++) {
-                        if (bondsConnectedToAtom1j.get(k) != qBond) {
+                        if (!bondsConnectedToAtom1j.get(k).equals(qBond)) {
                             IBond testBond = bondsConnectedToAtom1j.get(k);
                             for (int m = 0; m < rMapList.size(); m++) {
                                 IBond testBond2;

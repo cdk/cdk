@@ -470,7 +470,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     @Override
     public int indexOf(IBond bond) {
         for (int i = 0; i < bondCount; i++) {
-            if (bonds[i] == bond) return i;
+            if (bonds[i].equals(bond)) return i;
         }
         return -1;
     }
@@ -1152,7 +1152,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     @Override
     public boolean contains(IBond bond) {
         for (int i = 0; i < getBondCount(); i++) {
-            if (bond == bonds[i]) return true;
+            if (bonds[i].equals(bond)) return true;
         }
         return false;
     }
