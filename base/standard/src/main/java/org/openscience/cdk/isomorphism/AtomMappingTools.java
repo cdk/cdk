@@ -24,6 +24,7 @@ package org.openscience.cdk.isomorphism;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -88,10 +89,11 @@ public class AtomMappingTools {
             int posSecondAtom) {
         IAtom firstAtom = firstAC.getAtom(posFirstAtom);
         IAtom secondAtom = secondAC.getAtom(posSecondAtom);
+        // XXX: floating point comparision!
         if (firstAtom.getSymbol().equals(secondAtom.getSymbol())
-                && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size()
-                && firstAtom.getBondOrderSum() == secondAtom.getBondOrderSum()
-                && firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()) {
+            && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size()
+            && Objects.equals(firstAtom.getBondOrderSum(), secondAtom.getBondOrderSum())
+            && firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()) {
             return true;
         } else {
             return false;

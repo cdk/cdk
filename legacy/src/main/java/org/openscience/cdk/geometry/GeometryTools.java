@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -1356,9 +1357,9 @@ public class GeometryTools {
         IAtom firstAtom = firstAC.getAtom(posFirstAtom);
         IAtom secondAtom = secondAC.getAtom(posSecondAtom);
         if (firstAtom.getSymbol().equals(secondAtom.getSymbol())
-                && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size()
-                && firstAtom.getBondOrderSum() == secondAtom.getBondOrderSum()
-                && firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()) {
+            && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size()
+            && Objects.equals(firstAtom.getBondOrderSum(), secondAtom.getBondOrderSum())
+            && firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()) {
             return true;
         } else {
             return false;

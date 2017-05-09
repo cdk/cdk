@@ -30,6 +30,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -133,7 +134,7 @@ public class SingleMapping {
                             Order order = bond.getOrder();
                             totalOrder += order.numeric() + be.getEnergies(bond);
                         }
-                        if (targetAtom.getFormalCharge() != sourceAtom.getFormalCharge()) {
+                        if (!Objects.equals(targetAtom.getFormalCharge(), sourceAtom.getFormalCharge())) {
                             totalOrder += 0.5;
                         }
                         connectedBondOrder.put(counter, totalOrder);
@@ -162,7 +163,7 @@ public class SingleMapping {
                             Order order = bond.getOrder();
                             totalOrder += order.numeric() + be.getEnergies(bond);
                         }
-                        if (targetAtom.getFormalCharge() != sourceAtom.getFormalCharge()) {
+                        if (!Objects.equals(targetAtom.getFormalCharge(), sourceAtom.getFormalCharge())) {
                             totalOrder += 0.5;
                         }
                         connectedBondOrder.put(counter, totalOrder);
@@ -192,7 +193,7 @@ public class SingleMapping {
                             Order order = bond.getOrder();
                             totalOrder += order.numeric() + be.getEnergies(bond);
                         }
-                        if (sourceAtoms.getFormalCharge() != targetAtom.getFormalCharge()) {
+                        if (!Objects.equals(sourceAtoms.getFormalCharge(), targetAtom.getFormalCharge())) {
                             totalOrder += 0.5;
                         }
                         connectedBondOrder.put(counter, totalOrder);

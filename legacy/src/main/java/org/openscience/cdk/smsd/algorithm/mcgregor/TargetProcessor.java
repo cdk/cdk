@@ -24,6 +24,8 @@
 package org.openscience.cdk.smsd.algorithm.mcgregor;
 
 import java.util.List;
+import java.util.Objects;
+
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
@@ -99,7 +101,7 @@ public class TargetProcessor {
                     normalBond = unMappedAtomsEqualsIndexI(target, mappingSize, atomIndex, counter, mappedAtoms,
                             indexI, indexJ, order);
                     bondConsidered = true;
-                } else if (unmappedAtomsMolB.get(b) == indexJ) {
+                } else if (Objects.equals(unmappedAtomsMolB.get(b), indexJ)) {
                     normalBond = unMappedAtomsEqualsIndexJ(target, mappingSize, atomIndex, counter, mappedAtoms,
                             indexI, indexJ, order);
                     bondConsidered = true;

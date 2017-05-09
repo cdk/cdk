@@ -34,6 +34,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -603,33 +604,33 @@ public class ChemicalFilters {
             IAtom patom2 = pBond.getEnd();
 
             if (ratom1.getSymbol().equals(patom1.getSymbol()) && ratom1.getSymbol().equals(patom1.getSymbol())) {
-                if ((ratom1.getFormalCharge() != patom1.getFormalCharge())
-                        || ratom2.getFormalCharge() != patom2.getFormalCharge()) {
+                if ((!Objects.equals(ratom1.getFormalCharge(), patom1.getFormalCharge()))
+                    || !Objects.equals(ratom2.getFormalCharge(), patom2.getFormalCharge())) {
                     if (convertBondOrder(rBond) != convertBondOrder(pBond)) {
                         score += 5 * Math.abs(convertBondOrder(rBond) + convertBondOrder(pBond));
                     }
                 }
-                if (ratom1.getFormalCharge() == patom1.getFormalCharge()
-                        && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
+                if (Objects.equals(ratom1.getFormalCharge(), patom1.getFormalCharge())
+                    && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
                     score += 100;
                 }
-                if (ratom2.getFormalCharge() == patom2.getFormalCharge()
-                        && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
+                if (Objects.equals(ratom2.getFormalCharge(), patom2.getFormalCharge())
+                    && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
                     score += 100;
                 }
             } else if (ratom1.getSymbol().equals(patom2.getSymbol()) && ratom2.getSymbol().equals(patom1.getSymbol())) {
-                if ((ratom1.getFormalCharge() != patom2.getFormalCharge())
-                        || ratom2.getFormalCharge() != patom1.getFormalCharge()) {
+                if ((!Objects.equals(ratom1.getFormalCharge(), patom2.getFormalCharge()))
+                    || !Objects.equals(ratom2.getFormalCharge(), patom1.getFormalCharge())) {
                     if (convertBondOrder(rBond) != convertBondOrder(pBond)) {
                         score += 5 * Math.abs(convertBondOrder(rBond) + convertBondOrder(pBond));
                     }
                 }
-                if (ratom1.getFormalCharge() == patom2.getFormalCharge()
-                        && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
+                if (Objects.equals(ratom1.getFormalCharge(), patom2.getFormalCharge())
+                    && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
                     score += 100;
                 }
-                if (ratom2.getFormalCharge() == patom1.getFormalCharge()
-                        && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
+                if (Objects.equals(ratom2.getFormalCharge(), patom1.getFormalCharge())
+                    && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
                     score += 100;
                 }
             }

@@ -1303,6 +1303,7 @@ public final class GeometryUtil {
             int posSecondAtom) {
         IAtom firstAtom = firstAC.getAtom(posFirstAtom);
         IAtom secondAtom = secondAC.getAtom(posSecondAtom);
+        // XXX: floating point comparision!
         return firstAtom.getSymbol().equals(secondAtom.getSymbol())
                 && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size()
                 && firstAtom.getBondOrderSum().equals(secondAtom.getBondOrderSum())
