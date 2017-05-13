@@ -833,7 +833,7 @@ public class AtomContainerManipulator {
         if (org.getSingleElectronCount() > 0) {
             Set<ISingleElectron> remove = new HashSet<ISingleElectron>();
             for (ISingleElectron se : org.singleElectrons()) {
-                if (!hydrogens.contains(se.getAtom())) remove.add(se);
+                if (hydrogens.contains(se.getAtom())) remove.add(se);
             }
             for (ISingleElectron se : remove) {
                 org.removeSingleElectron(se);
@@ -843,7 +843,7 @@ public class AtomContainerManipulator {
         if (org.getLonePairCount() > 0) {
             Set<ILonePair> remove = new HashSet<ILonePair>();
             for (ILonePair lp : org.lonePairs()) {
-                if (!hydrogens.contains(lp.getAtom())) remove.add(lp);
+                if (hydrogens.contains(lp.getAtom())) remove.add(lp);
             }
             for (ILonePair lp : remove) {
                 org.removeLonePair(lp);

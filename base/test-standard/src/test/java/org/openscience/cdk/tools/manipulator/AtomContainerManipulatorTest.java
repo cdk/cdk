@@ -234,6 +234,28 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(2, ac.getAtomCount());
     }
 
+    @Test
+    public void suppressHydrogensKeepsRadicals() throws Exception {
+        IAtomContainer mol = new AtomContainer(); // *[H]
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.getAtom(0).setImplicitHydrogenCount(0);
+        mol.getAtom(1).setImplicitHydrogenCount(1);
+        mol.getAtom(2).setImplicitHydrogenCount(1);
+        mol.getAtom(3).setImplicitHydrogenCount(1);
+        mol.addBond(0, 1, Order.SINGLE);
+        mol.addBond(0, 2, Order.SINGLE);
+        mol.addBond(0, 3, Order.SINGLE);
+        mol.addSingleElectron(0);
+        Assert.assertEquals(4, mol.getAtomCount());
+        Assert.assertEquals(1, mol.getSingleElectronCount());
+        IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
+        Assert.assertEquals(1, ac.getAtomCount());
+        Assert.assertEquals(1, ac.getSingleElectronCount());
+    }
+
     private IAtomContainer getChiralMolTemplate() {
         IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(new Atom("Cl"));

@@ -27,6 +27,7 @@ import org.openscience.cdk.smiles.CxSmilesState.PolymerSgroup;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -287,8 +288,8 @@ public class CxSmilesGenerator {
                 sb.append('^');
                 sb.append(e.getKey().ordinal() + 1);
                 sb.append(':');
-                Collections.sort(e.getValue(), invComp);
-                appendIntegers(invorder, ',', sb, e.getValue());
+                Collections.sort(e.getValue(), comp);
+                appendIntegers(ordering, ',', sb, e.getValue());
             }
         }
 

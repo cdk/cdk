@@ -29,14 +29,11 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 import java.util.ArrayList;
@@ -97,16 +94,13 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
 
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
+        assertEquals(molecule1, product1);
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(1);
 
-        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
-
+        assertEquals(molecule2, product2);
     }
 
     /**
@@ -223,6 +217,12 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
         atom.setFormalCharge(1);
         molecule.addSingleElectron(new SingleElectron(atom));
 
+        try {
+            addExplicitHydrogens(molecule);
+        } catch (Exception e) {
+            // ignored
+        }
+
         setOfReactants.addAtomContainer(molecule);
         return setOfReactants;
     }
@@ -257,6 +257,13 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
         molecule2.addBond(0, 3, IBond.Order.SINGLE);
         molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
         setOfProducts.addAtomContainer(molecule2);
+
+        try {
+            addExplicitHydrogens(molecule1);
+            addExplicitHydrogens(molecule2);
+        } catch (Exception e) {
+            // ignored
+        }
 
         return setOfProducts;
     }
