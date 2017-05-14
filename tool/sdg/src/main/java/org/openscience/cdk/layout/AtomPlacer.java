@@ -181,7 +181,7 @@ public class AtomPlacer {
 
             int numTerminal = 0;
             for (IAtom unplaced : unplacedNeighbours.atoms())
-                if (molecule.getConnectedAtomsCount(unplaced) == 1)
+                if (molecule.getConnectedBondsCount(unplaced) == 1)
                     numTerminal++;
 
             if (numTerminal == unplacedNeighbours.getAtomCount()) {

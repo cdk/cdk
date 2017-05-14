@@ -131,7 +131,7 @@ public class DefaultVFAtomMatcher implements VFAtomMatcher {
     public DefaultVFAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions,
             boolean shouldMatchBonds) {
         this(queryContainer, template, shouldMatchBonds);
-        this.maximumNeighbors = countImplicitHydrogens(template) + queryContainer.getConnectedAtomsCount(template)
+        this.maximumNeighbors = countImplicitHydrogens(template) + queryContainer.getConnectedBondsCount(template)
                 - blockedPositions;
     }
 

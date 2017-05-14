@@ -19,8 +19,10 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -235,64 +237,94 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Sets the atom at position <code>number</code> in [0,..].
-     *
-     *@param  number  The position of the atom to be set.
-     *@param  atom    The atom to be stored at position <code>number</code>
-     *@see            #getAtom(int)
+     * {@inheritDoc}
      */
     @Override
-    public void setAtom(int number, IAtom atom) {
+    public void setAtom(int idx, IAtom atom) {
+        if (idx >= atomCount)
+            throw new IndexOutOfBoundsException("No atom at index: " + idx);
+        int aidx = indexOf(atom);
+        if (aidx >= 0)
+            throw new IllegalArgumentException("Atom already in container at index: " + idx);
+        final IAtom oldAtom = atoms[idx];
+        atoms[idx] = atom;
         atom.addListener(this);
-        atoms[number] = atom;
+        oldAtom.removeListener(this);
+
+        // replace in electron containers
+        for (IBond bond : bonds()) {
+            for (int i = 0; i < bond.getAtomCount(); i++) {
+                if (oldAtom.equals(bond.getAtom(i))) {
+                    bond.setAtom(atom, i);
+                }
+            }
+        }
+        for (ISingleElectron ec : singleElectrons()) {
+            if (oldAtom.equals(ec.getAtom()))
+                ec.setAtom(atom);
+        }
+        for (ILonePair lp : lonePairs()) {
+            if (oldAtom.equals(lp.getAtom()))
+                lp.setAtom(atom);
+        }
+
+        // update stereo
+        IStereoElement oldStereo = null;
+        IStereoElement newStereo = null;
+        for (IStereoElement se : stereoElements()) {
+            if (se.contains(oldAtom)) {
+                oldStereo = se;
+                Map<IAtom, IAtom> amap = Collections.singletonMap(oldAtom, atom);
+                Map<IBond, IBond> bmap = Collections.emptyMap();
+                newStereo = se.map(amap, bmap);
+            }
+        }
+        if (oldStereo != null) {
+            stereoElements.remove(oldStereo);
+            stereoElements.add(newStereo);
+        }
+
         notifyChanged();
     }
 
     /**
-     *  Get the atom at position <code>number</code> in [0,..].
-     *
-     *@param  number  The position of the atom to be retrieved.
-     *@return         The atomAt value
-     * @see #setAtom(int, org.openscience.cdk.interfaces.IAtom)
-     * @see #setAtoms(org.openscience.cdk.interfaces.IAtom[])
-     *
+     * {@inheritDoc}
      */
     @Override
-    public IAtom getAtom(int number) {
-        return atoms[number];
+    public IAtom getAtom(int idx) {
+        if (idx < 0 || idx >= atomCount)
+            throw new IndexOutOfBoundsException("Atom index out of bounds: 0 <= " + idx + " < " + atomCount);
+        return atoms[idx];
     }
 
     /**
-     *  Get the bond at position <code>number</code> in [0,..].
-     *
-     *@param  number  The position of the bond to be retrieved.
-     *@return         The bondAt value
+     * {@inheritDoc}
      */
     @Override
-    public IBond getBond(int number) {
-        return bonds[number];
+    public IBond getBond(int idx) {
+        if (idx < 0 || idx >= bondCount)
+            throw new IndexOutOfBoundsException("Bond index out of bounds: 0 <= " + idx + " < " + bondCount);
+        return bonds[idx];
     }
 
     /**
-     *  Get the lone pair at position <code>number</code> in [0,..].
-     *
-     *@param  number  The position of the LonePair to be retrieved.
-     *@return         The lone pair number
+     * {@inheritDoc}
      */
     @Override
-    public ILonePair getLonePair(int number) {
-        return lonePairs[number];
+    public ILonePair getLonePair(int idx) {
+        if (idx < 0 || idx >= lonePairCount)
+            throw new IndexOutOfBoundsException("Lone Pair index out of bounds: 0 <= " + idx + " < " + lonePairCount);
+        return lonePairs[idx];
     }
 
     /**
-     *  Get the single electron at position <code>number</code> in [0,..].
-     *
-     *@param  number  The position of the SingleElectron to be retrieved.
-     *@return         The single electron number
+     * {@inheritDoc}
      */
     @Override
-    public ISingleElectron getSingleElectron(int number) {
-        return singleElectrons[number];
+    public ISingleElectron getSingleElectron(int idx) {
+        if (idx < 0 || idx >= singleElectronCount)
+            throw new IndexOutOfBoundsException("Single Electrong index out of bounds: 0 <= " + idx + " < " + singleElectronCount);
+        return singleElectrons[idx];
     }
 
     /**
@@ -331,7 +363,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
 
         @Override
         public void remove() {
-            removeAtom(--pointer);
+            removeAtomOnly(--pointer);
         }
 
     }
@@ -822,12 +854,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      *  Returns the number of connected atoms (degree) to the given atom.
      *
-     *@param  atomNumber  The atomnumber the degree is searched for
+     *@param  idx  The atomnumber the degree is searched for
      *@return             The number of connected atoms (degree)
      */
     @Override
-    public int getConnectedBondsCount(int atomNumber) {
-        return getConnectedAtomsCount(atoms[atomNumber]);
+    public int getConnectedBondsCount(int idx) {
+        return getConnectedAtomsCount(atoms[idx]);
     }
 
     /**
@@ -1038,7 +1070,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public void remove(IAtomContainer atomContainer) {
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
-            removeAtom(atomContainer.getAtom(f));
+            removeAtomOnly(atomContainer.getAtom(f));
         }
         for (int f = 0; f < atomContainer.getBondCount(); f++) {
             removeBond(atomContainer.getBond(f));
@@ -1059,7 +1091,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *@param  position  The position of the atom to be removed.
      */
     @Override
-    public void removeAtom(int position) {
+    public void removeAtomOnly(int position) {
         atoms[position].removeListener(this);
         for (int i = position; i < atomCount - 1; i++) {
             atoms[i] = atoms[i + 1];
@@ -1077,10 +1109,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *@param  atom  The atom to be removed
      */
     @Override
-    public void removeAtom(IAtom atom) {
+    public void removeAtomOnly(IAtom atom) {
         int position = getAtomNumber(atom);
         if (position != -1) {
-            removeAtom(position);
+            removeAtomOnly(position);
         }
     }
 
@@ -1221,13 +1253,22 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Deprecated
+    public void removeAtomAndConnectedElectronContainers(IAtom atom) {
+        removeAtom(atom);
+    }
+
+    /**
      *  Removes the given atom and all connected electronContainers from the
      *  AtomContainer.
      *
      *@param  atom  The atom to be removed
      */
     @Override
-    public void removeAtomAndConnectedElectronContainers(IAtom atom) {
+    public void removeAtom(IAtom atom) {
         int position = getAtomNumber(atom);
         if (position != -1) {
             for (int i = 0; i < bondCount; i++) {
@@ -1248,7 +1289,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
                     --i;
                 }
             }
-            removeAtom(position);
+            removeAtomOnly(position);
         }
         notifyChanged();
     }

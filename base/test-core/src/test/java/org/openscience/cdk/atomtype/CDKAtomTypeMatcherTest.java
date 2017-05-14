@@ -2078,6 +2078,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
+        mol.addBond(1,0,Order.SINGLE);
+        mol.addBond(1,2,Order.SINGLE);
+        mol.addBond(1,3,Order.SINGLE);
 
         String[] expectedTypes = new String[]{"O.sp3", "Ga", "O.sp3", "O.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);

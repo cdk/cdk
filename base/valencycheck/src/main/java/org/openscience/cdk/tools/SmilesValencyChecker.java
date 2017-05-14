@@ -357,7 +357,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
 
     public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container) throws CDKException {
         return this.calculateNumberOfImplicitHydrogens(atom, container.getBondOrderSum(atom),
-                container.getMaximumBondOrder(atom), container.getConnectedAtomsCount(atom));
+                container.getMaximumBondOrder(atom), container.getConnectedBondsCount(atom));
     }
 
     protected AtomTypeFactory getAtomTypeFactory(IChemObjectBuilder builder) throws CDKException {

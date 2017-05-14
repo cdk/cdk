@@ -129,6 +129,6 @@ public class CDKHydrogenAdder {
                             + atom.getAtomTypeName());
 
         // very simply counting: each missing explicit neighbor is a missing hydrogen
-        atom.setImplicitHydrogenCount(type.getFormalNeighbourCount() - container.getConnectedAtomsCount(atom));
+        atom.setImplicitHydrogenCount(type.getFormalNeighbourCount() - container.getConnectedBondsCount(atom));
     }
 }

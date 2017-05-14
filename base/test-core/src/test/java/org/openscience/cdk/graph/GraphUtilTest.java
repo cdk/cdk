@@ -187,7 +187,7 @@ public class GraphUtilTest {
 
         IAtomContainer container = simple();
 
-        container.removeAtom(4); // remove 'e'
+        container.removeAtomOnly(4); // remove 'e'
 
         GraphUtil.toAdjList(container);
 

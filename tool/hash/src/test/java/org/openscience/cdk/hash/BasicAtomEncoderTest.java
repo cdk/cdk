@@ -126,9 +126,9 @@ public class BasicAtomEncoderTest {
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.N_CONNECTED_ATOMS;
 
-        when(container.getConnectedAtomsCount(atom)).thenReturn(2);
+        when(container.getConnectedBondsCount(atom)).thenReturn(2);
         assertThat(encoder.encode(atom, container), is(2));
-        verify(container, times(1)).getConnectedAtomsCount(atom);
+        verify(container, times(1)).getConnectedBondsCount(atom);
         verifyNoMoreInteractions(atom, container);
     }
 

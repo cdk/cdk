@@ -156,7 +156,7 @@ public class DefaultBondMatcher implements BondMatcher {
     }
 
     private int countNeighbors(IAtomContainer container, IAtom atom) {
-        return container.getConnectedAtomsCount(atom);
+        return container.getConnectedBondsCount(atom);
     }
 
     private int countImplicitHydrogens(IAtom atom) {

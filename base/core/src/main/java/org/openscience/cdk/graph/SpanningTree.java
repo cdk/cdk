@@ -202,7 +202,7 @@ public class SpanningTree {
         PathTools.resetFlags(spt);
         path.addAtom(atom1);
         PathTools.depthFirstTargetSearch(spt, atom1, atom2, path);
-        if (path.getAtomCount() == 1) path.removeAtom(atom1); // no path found: remove initial atom
+        if (path.getAtomCount() == 1) path.removeAtomOnly(atom1); // no path found: remove initial atom
         return path;
     }
 

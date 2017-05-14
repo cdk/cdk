@@ -160,7 +160,7 @@ public class BremserPredictorTest extends CDKTestCase {
         do {
             atom = ac.getAtom(f);
             if (atom.getSymbol().equals("H")) {
-                ac.removeAtomAndConnectedElectronContainers(atom);
+                ac.removeAtom(atom);
             }
             f--;
         } while (f >= 0);

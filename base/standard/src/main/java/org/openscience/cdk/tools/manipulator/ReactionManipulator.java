@@ -95,21 +95,21 @@ public class ReactionManipulator {
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             IAtomContainer mol = reactants.getAtomContainer(i);
             if (mol.contains(atom)) {
-                mol.removeAtomAndConnectedElectronContainers(atom);
+                mol.removeAtom(atom);
             }
         }
         IAtomContainerSet agents = reaction.getReactants();
         for (int i = 0; i < agents.getAtomContainerCount(); i++) {
             IAtomContainer mol = agents.getAtomContainer(i);
             if (mol.contains(atom)) {
-                mol.removeAtomAndConnectedElectronContainers(atom);
+                mol.removeAtom(atom);
             }
         }
         IAtomContainerSet products = reaction.getProducts();
         for (int i = 0; i < products.getAtomContainerCount(); i++) {
             IAtomContainer mol = products.getAtomContainer(i);
             if (mol.contains(atom)) {
-                mol.removeAtomAndConnectedElectronContainers(atom);
+                mol.removeAtom(atom);
             }
         }
     }

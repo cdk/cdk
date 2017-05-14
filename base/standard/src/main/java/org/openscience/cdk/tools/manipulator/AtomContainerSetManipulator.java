@@ -61,7 +61,7 @@ public class AtomContainerSetManipulator {
     public static void removeAtomAndConnectedElectronContainers(IAtomContainerSet set, IAtom atom) {
         for (IAtomContainer atomContainer : set.atomContainers()) {
             if (atomContainer.contains(atom)) {
-                atomContainer.removeAtomAndConnectedElectronContainers(atom);
+                atomContainer.removeAtom(atom);
                 IAtomContainerSet molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
                 if (molecules.getAtomContainerCount() > 1) {
                     set.removeAtomContainer(atomContainer);

@@ -180,25 +180,25 @@ public final class AllPairsShortestPaths {
                                                                  public void setAtom(int number, IAtom atom) {}
 
                                                                  @Override
-                                                                 public IAtom getAtom(int number) {
+                                                                 public IAtom getAtom(int idx) {
                                                                      throw new UnsupportedOperationException(
                                                                              "not supported");
                                                                  }
 
                                                                  @Override
-                                                                 public IBond getBond(int number) {
+                                                                 public IBond getBond(int idx) {
                                                                      throw new UnsupportedOperationException(
                                                                              "not supported");
                                                                  }
 
                                                                  @Override
-                                                                 public ILonePair getLonePair(int number) {
+                                                                 public ILonePair getLonePair(int idx) {
                                                                      throw new UnsupportedOperationException(
                                                                              "not supported");
                                                                  }
 
                                                                  @Override
-                                                                 public ISingleElectron getSingleElectron(int number) {
+                                                                 public ISingleElectron getSingleElectron(int idx) {
                                                                      throw new UnsupportedOperationException(
                                                                              "not supported");
                                                                  }
@@ -375,7 +375,7 @@ public final class AllPairsShortestPaths {
                                                                  }
 
                                                                  @Override
-                                                                 public int getConnectedBondsCount(int atomnumber) {
+                                                                 public int getConnectedBondsCount(int idx) {
                                                                      return 0;
                                                                  }
 
@@ -444,12 +444,12 @@ public final class AllPairsShortestPaths {
                                                                  }
 
                                                                  @Override
-                                                                 public void removeAtom(int position) {
+                                                                 public void removeAtomOnly(int position) {
 
                                                                  }
 
                                                                  @Override
-                                                                 public void removeAtom(IAtom atom) {
+                                                                 public void removeAtomOnly(IAtom atom) {
 
                                                                  }
 
@@ -508,9 +508,15 @@ public final class AllPairsShortestPaths {
                                                                  }
 
                                                                  @Override
-                                                                 public void removeAtomAndConnectedElectronContainers(
+                                                                 public void removeAtom(
                                                                          IAtom atom) {
 
+                                                                 }
+
+                                                                 @Override
+                                                                 @Deprecated
+                                                                 public void removeAtomAndConnectedElectronContainers(IAtom atom) {
+                                                                    
                                                                  }
 
                                                                  @Override

@@ -70,7 +70,7 @@ public class DoubleBondAcceptingAromaticityDetector {
         }
         // disregard all atoms we know that cannot be aromatic anyway
         for (IAtom atom : ringSystems.atoms())
-            if (!atomIsPotentiallyAromatic(atom)) ringSystems.removeAtomAndConnectedElectronContainers(atom);
+            if (!atomIsPotentiallyAromatic(atom)) ringSystems.removeAtom(atom);
 
         // FIXME: should not really mark them here
         Iterator<IAtom> atoms = ringSystems.atoms().iterator();
