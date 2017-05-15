@@ -37,8 +37,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 public class HybridizationNumberAtom extends SMARTSAtom {
 
-    Hybridization hybridization;
-
     /**
      * Creates a new instance
      *
@@ -48,28 +46,28 @@ public class HybridizationNumberAtom extends SMARTSAtom {
         super(builder);
         switch (hybridizationNumber) {
             case 1:
-                hybridization = IAtomType.Hybridization.SP1;
+                setHybridization(IAtomType.Hybridization.SP1);
                 break;
             case 2:
-                hybridization = IAtomType.Hybridization.SP2;
+                setHybridization(IAtomType.Hybridization.SP2);
                 break;
             case 3:
-                hybridization = IAtomType.Hybridization.SP3;
+                setHybridization(IAtomType.Hybridization.SP3);
                 break;
             case 4:
-                hybridization = IAtomType.Hybridization.SP3D1;
+                setHybridization(IAtomType.Hybridization.SP3D1);
                 break;
             case 5:
-                hybridization = IAtomType.Hybridization.SP3D2;
+                setHybridization(IAtomType.Hybridization.SP3D2);
                 break;
             case 6:
-                hybridization = IAtomType.Hybridization.SP3D3;
+                setHybridization(IAtomType.Hybridization.SP3D3);
                 break;
             case 7:
-                hybridization = IAtomType.Hybridization.SP3D4;
+                setHybridization(IAtomType.Hybridization.SP3D4);
                 break;
             case 8:
-                hybridization = IAtomType.Hybridization.SP3D5;
+                setHybridization(IAtomType.Hybridization.SP3D5);
                 break;
         }
     }
@@ -82,7 +80,7 @@ public class HybridizationNumberAtom extends SMARTSAtom {
      */
     @Override
     public boolean matches(IAtom atom) {
-        return hybridization == atom.getHybridization();
+        return getHybridization() == atom.getHybridization();
     }
 
     /*
@@ -91,7 +89,7 @@ public class HybridizationNumberAtom extends SMARTSAtom {
      */
     @Override
     public String toString() {
-        return ("HybridizationNumberAtom(" + hybridization.toString() + ")");
+        return ("HybridizationNumberAtom(" + getHybridization() + ")");
     }
 
 }
