@@ -201,7 +201,14 @@ public class ShelXWriter extends DefaultChemObjectWriter {
                 write(" ");
             }
             write("     ");
-            String elemID = Integer.valueOf(asortedElements.indexOf(symbol) + 1).toString();
+            String elemID = null;
+            for (int elemidx = 0; elemidx < asortedElements.size(); elemidx++) {
+                IElement elem = asortedElements.get(elemidx);
+                if (elem.getSymbol().equals(symbol)) {
+                    elemID = Integer.toString(elemidx + 1);
+                    break;
+                }
+            }
             write(elemID);
             write("    ".substring(elemID.length()));
             write(format.reset("%7.5f").format(fracCoord.x) + "   ");
