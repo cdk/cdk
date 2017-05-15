@@ -158,7 +158,7 @@ public class RadicalSiteRrAlphaReaction extends ReactionEngine implements IReact
                     if (atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER)
                             && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
-                            && !atoml.equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
+                            && !atoml.getSymbol().equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         Iterator<IAtom> atomRs = reactant.getConnectedAtomsList(atoml).iterator();
                         while (atomRs.hasNext()) {
@@ -222,7 +222,7 @@ public class RadicalSiteRrAlphaReaction extends ReactionEngine implements IReact
                     IAtom atoml = atomls.next();
                     if (atoml != null && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
-                            && !atoml.equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
+                            && !atoml.getSymbol().equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         Iterator<IAtom> atomRs = reactant.getConnectedAtomsList(atoml).iterator();
                         while (atomRs.hasNext()) {
