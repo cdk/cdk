@@ -249,9 +249,9 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public IAtom getOther(IAtom atom) {
-        if (atoms[0] == atom)
+        if (atoms[0].equals(atom))
             return atoms[1];
-        else if (atoms[1] == atom)
+        else if (atoms[1].equals(atom))
             return atoms[0];
         return null;
     }
@@ -261,11 +261,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public IAtom getConnectedAtom(IAtom atom) {
-        if (atoms[0] == atom)
-            return atoms[1];
-        else if (atoms[1] == atom)
-            return atoms[0];
-        return null;
+        return getOther(atom);
     }
 
     /**
@@ -277,7 +273,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         IAtom[] connected = new IAtom[atomCount-1];
         int j = 0;
         for (int i = 0; i < atomCount; i++) {
-            if (this.atoms[i] != atom) {
+            if (!this.atoms[i].equals(atom)) {
                 if (j >= connected.length)
                     return null;
                 connected[j++] = this.atoms[i];
@@ -296,7 +292,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     public boolean contains(IAtom atom) {
         if (atoms == null) return false;
         for (IAtom localAtom : atoms) {
-            if (localAtom == atom) return true;
+            if (localAtom.equals(atom)) return true;
         }
         return false;
     }

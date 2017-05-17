@@ -243,10 +243,10 @@ final class StandardSgroupGenerator {
                 IAtom beg = bond.getBegin();
                 IAtom end = bond.getEnd();
                 if (atoms.contains(beg)) {
-                    if (internal != null && internal != beg) return; // can't do it
+                    if (internal != null && !internal.equals(beg)) return; // can't do it
                     internal = beg;
                 } else if (atoms.contains(end)) {
-                    if (internal != null && internal != end) return; // can't do it
+                    if (internal != null && !internal.equals(end)) return; // can't do it
                     internal = end;
                 }
             }

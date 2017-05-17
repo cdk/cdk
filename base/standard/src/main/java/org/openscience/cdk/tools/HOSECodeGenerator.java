@@ -394,7 +394,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
                 } else {
                     for (int j = 0; j < conAtoms.size(); j++) {
                         toNode = conAtoms.get(j);
-                        if (toNode != treeNode.source.atom) {
+                        if (!toNode.equals(treeNode.source.atom)) {
                             bond = atomContainer.getBond(node, toNode);
                             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                                 nextSphereNodes.add(new TreeNode(toNode.getSymbol(), treeNode, toNode, 4, atomContainer
@@ -504,12 +504,12 @@ public class HOSECodeGenerator implements java.io.Serializable {
         for (int i = 0; i < sphereNodes.size(); i++) {
             treeNode = sphereNodes.get(i);
             tempCode = new StringBuffer();
-            if (!treeNode.source.stopper && treeNode.source.atom != branch) {
+            if (!treeNode.source.stopper && !treeNode.source.atom.equals(branch)) {
                 branch = treeNode.source.atom;
                 code.append(',');
             }
 
-            if (!treeNode.source.stopper && treeNode.source.atom == branch) {
+            if (!treeNode.source.stopper && treeNode.source.atom.equals(branch)) {
                 if (treeNode.bondType <= 4) {
                     tempCode.append(bondSymbols[(int) treeNode.bondType]);
                 } else {
@@ -729,7 +729,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         @Override
         public boolean equals(Object o) {
             try {
-                if (this.atom == ((TreeNode) o).atom) {
+                if (this.atom.equals(((TreeNode) o).atom)) {
                     return true;
                 }
             } catch (Exception exc) {

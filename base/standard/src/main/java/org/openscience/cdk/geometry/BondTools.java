@@ -62,7 +62,7 @@ public class BondTools {
         List<IAtom> connectedAtoms = container.getConnectedAtomsList(bond.getBegin());
         IAtom from = null;
         for (IAtom connectedAtom : connectedAtoms) {
-            if (connectedAtom != bond.getEnd()) {
+            if (!connectedAtom.equals(bond.getEnd())) {
                 from = connectedAtom;
             }
         }
@@ -132,7 +132,7 @@ public class BondTools {
      */
     public static boolean closeEnoughToBond(IAtom atom1, IAtom atom2, double distanceFudgeFactor) {
 
-        if (atom1 != atom2) {
+        if (!atom1.equals(atom2)) {
             double distanceBetweenAtoms = atom1.getPoint3d().distance(atom2.getPoint3d());
             double bondingDistance = atom1.getCovalentRadius() + atom2.getCovalentRadius();
             if (distanceBetweenAtoms <= (distanceFudgeFactor * bondingDistance)) {
@@ -223,9 +223,9 @@ public class BondTools {
                 IAtom one = null;
                 IAtom two = null;
                 for (IAtom conAtom : atoms) {
-                    if (conAtom != parent && one == null) {
+                    if (!conAtom.equals(parent) && one == null) {
                         one = conAtom;
-                    } else if (conAtom != parent && one != null) {
+                    } else if (!conAtom.equals(parent) && one != null) {
                         two = conAtom;
                     }
                 }
@@ -273,14 +273,14 @@ public class BondTools {
         boolean doubleBond = false;
         IAtom nextAtom = null;
         for (IAtom atom : atoms) {
-            if (atom != parent && container.getBond(atom, a).getOrder() == Order.DOUBLE
+            if (!atom.equals(parent) && container.getBond(atom, a).getOrder() == Order.DOUBLE
                     && isEndOfDoubleBond(container, atom, a, doubleBondConfiguration)) {
                 doubleBond = true;
                 nextAtom = atom;
             }
-            if (atom != nextAtom && one == null) {
+            if (!atom.equals(nextAtom) && one == null) {
                 one = atom;
-            } else if (atom != nextAtom && one != null) {
+            } else if (!atom.equals(nextAtom) && one != null) {
                 two = atom;
             }
         }

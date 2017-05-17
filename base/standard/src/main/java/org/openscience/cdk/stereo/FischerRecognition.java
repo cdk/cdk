@@ -162,9 +162,9 @@ final class FischerRecognition {
             IAtom east = element.getLigands()[EAST];
             IAtom west = element.getLigands()[WEST];
             
-            if (east != focus && !isTerminal(east, atomToIndex))
+            if (!east.equals(focus) && !isTerminal(east, atomToIndex))
                 continue;
-            if (west != focus && !isTerminal(west, atomToIndex))
+            if (!west.equals(focus) && !isTerminal(west, atomToIndex))
                 continue;
             
             elements.add(element);

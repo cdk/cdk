@@ -508,7 +508,7 @@ public class PDBReader extends DefaultChemObjectReader {
             IBond existingBond = (IBond) bondsFromConnectRecords.get(i);
             IAtom a = existingBond.getBegin();
             IAtom b = existingBond.getEnd();
-            if ((a == firstAtom && b == secondAtom) || (b == firstAtom && a == secondAtom)) {
+            if ((a.equals(firstAtom) && b.equals(secondAtom)) || (b.equals(firstAtom) && a.equals(secondAtom))) {
                 // already stored
                 return;
             }

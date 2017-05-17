@@ -1523,7 +1523,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         final IAtom atom = container.getAtom(index);
         final IPseudoAtom pseudoAtom = atom instanceof IPseudoAtom ? (IPseudoAtom) atom : container.getBuilder()
                 .newInstance(IPseudoAtom.class);
-        if (atom == pseudoAtom) {
+        if (atom.equals(pseudoAtom)) {
             pseudoAtom.setLabel(label);
         } else {
             pseudoAtom.setSymbol(label);

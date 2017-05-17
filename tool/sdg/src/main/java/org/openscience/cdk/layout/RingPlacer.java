@@ -250,7 +250,7 @@ public class RingPlacer {
         IAtom bondAtom2 = bridgeAtoms[1];
         List<IAtom> otherAtoms = new ArrayList<>();
         for (IAtom atom : sharedAtoms.atoms())
-            if (atom != bondAtom1 && atom != bondAtom2)
+            if (!atom.equals(bondAtom1) && !atom.equals(bondAtom2))
                 otherAtoms.add(atom);
 
         final boolean snap = ring.getProperty(SNAP_HINT) != null && ring.getProperty(SNAP_HINT, Boolean.class);

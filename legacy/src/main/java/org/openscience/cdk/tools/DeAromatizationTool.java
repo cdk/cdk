@@ -106,7 +106,7 @@ public class DeAromatizationTool {
                 int count = 0;
                 while (done != 2) {
                     bond = getNextBond(atom, bond, ring);
-                    if (bond.getBegin() == atom)
+                    if (bond.getBegin().equals(atom))
                         atom = bond.getEnd();
                     else
                         atom = bond.getBegin();

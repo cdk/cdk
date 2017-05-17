@@ -142,7 +142,7 @@ public class PathGraph {
                     result.add(edge);
                 }
             } else {
-                if ((edge.getSource() == atom) || (edge.getTarget() == atom)) {
+                if ((edge.getSource().equals(atom)) || (edge.getTarget().equals(atom))) {
                     result.add(edge);
                 }
             }

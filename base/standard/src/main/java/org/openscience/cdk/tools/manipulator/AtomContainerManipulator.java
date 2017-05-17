@@ -156,7 +156,7 @@ public class AtomContainerManipulator {
                     updated = true;
                     Sgroup cpy = new Sgroup();
                     for (IAtom atom : org.getAtoms()) {
-                        if (oldAtom.equals(atom))
+                        if (!oldAtom.equals(atom))
                             cpy.addAtom(atom);
                         else
                             cpy.addAtom(newAtom);
@@ -534,7 +534,7 @@ public class AtomContainerManipulator {
                             if (bondStereo != null && bondStereo != IBond.Stereo.NONE) addToRemove = false;
                             IAtom neighboursNeighbour = bond.getOther(neighbour);
                             // remove in any case if the hetero atom is connected to more than one hydrogen
-                            if (neighboursNeighbour.getSymbol().equals("H") && neighboursNeighbour != atom) {
+                            if (neighboursNeighbour.getSymbol().equals("H") && !neighboursNeighbour.equals(atom)) {
                                 addToRemove = true;
                                 break;
                             }

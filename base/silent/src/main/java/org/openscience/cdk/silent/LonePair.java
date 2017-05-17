@@ -111,7 +111,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      */
     @Override
     public boolean contains(IAtom atom) {
-        return (this.atom == atom);
+        return this.atom.equals(atom);
     }
 
     /**

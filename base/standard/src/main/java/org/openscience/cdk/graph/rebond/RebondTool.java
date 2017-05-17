@@ -99,7 +99,7 @@ public class RebondTool {
         Point tupleAtom = new Point(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
         for (Bspt.EnumerateSphere e = bspt.enumHemiSphere(tupleAtom, searchRadius); e.hasMoreElements();) {
             IAtom atomNear = ((TupleAtom) e.nextElement()).getAtom();
-            if (atomNear != atom && container.getBond(atom, atomNear) == null) {
+            if (!atomNear.equals(atom) && container.getBond(atom, atomNear) == null) {
                 boolean bonded = isBonded(myCovalentRadius, atomNear.getCovalentRadius(), e.foundDistance2());
                 if (bonded) {
                     IBond bond = atom.getBuilder().newInstance(IBond.class, atom, atomNear, IBond.Order.SINGLE);

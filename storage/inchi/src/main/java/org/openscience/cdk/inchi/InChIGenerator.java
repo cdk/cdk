@@ -469,16 +469,16 @@ public class InChIGenerator {
                 // we now need to move all the atoms into the correct positions
                 // everytime we exchange atoms the configuration inverts
                 for (int i = 0; i < peripherals.length; i++) {
-                    if (i != 0 && t0Neighbor == peripherals[i]) {
+                    if (i != 0 && t0Neighbor.equals(peripherals[i])) {
                         swap(peripherals, i, 0);
                         winding = winding.invert();
-                    } else if (i != 1 && terminals[0] == peripherals[i]) {
+                    } else if (i != 1 && terminals[0].equals(peripherals[i])) {
                         swap(peripherals, i, 1);
                         winding = winding.invert();
-                    } else if (i != 2 && terminals[1] == peripherals[i]) {
+                    } else if (i != 2 && terminals[1].equals(peripherals[i])) {
                         swap(peripherals, i, 2);
                         winding = winding.invert();
-                    } else if (i != 3 && t1Neighbor == peripherals[i]) {
+                    } else if (i != 3 && t1Neighbor.equals(peripherals[i])) {
                         swap(peripherals, i, 3);
                         winding = winding.invert();
                     }

@@ -160,7 +160,7 @@ public class PathTools {
             if (!nextAtom.getFlag(CDKConstants.VISITED)) {
                 path.addAtom(nextAtom);
                 path.addBond(bond);
-                if (nextAtom == target) {
+                if (nextAtom.equals(target)) {
                     return true;
                 } else {
                     if (!depthFirstTargetSearch(molecule, nextAtom, target, path)) {
@@ -214,7 +214,7 @@ public class PathTools {
         IAtom[] returnValue = new IAtom[mol.getAtomCount() - 1];
         int k = 0;
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            if (mol.getAtom(i) != atom) {
+            if (!mol.getAtom(i).equals(atom)) {
                 returnValue[k] = mol.getAtom(i);
                 k++;
             }
@@ -315,7 +315,7 @@ public class PathTools {
                 }
                 nextAtom = bond.getOther(atom);
                 if (!nextAtom.getFlag(CDKConstants.VISITED)) {
-                    if (nextAtom == target) {
+                    if (nextAtom.equals(target)) {
                         return pathLength;
                     }
                     newSphere.add(nextAtom);
@@ -515,7 +515,7 @@ public class PathTools {
 
     private static void findPathBetween(List<List<IAtom>> allPaths, IAtomContainer atomContainer, IAtom start,
             IAtom end, List<IAtom> path) {
-        if (start == end) {
+        if (start.equals(end)) {
             path.add(start);
             allPaths.add(new ArrayList<IAtom>(path));
             path.remove(path.size() - 1);

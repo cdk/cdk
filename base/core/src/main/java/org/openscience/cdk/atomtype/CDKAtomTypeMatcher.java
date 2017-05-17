@@ -1003,7 +1003,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             // check the second sphere
             for (IAtom atom2 : container.getConnectedAtomsList(atom1)) {
 
-                if (atom2 != atom && container.getBond(atom1, atom2).isAromatic()
+                if (!atom2.equals(atom) && container.getBond(atom1, atom2).isAromatic()
                         && !"C".equals(atom2.getSymbol())) {
                     return false;
                 }
