@@ -31,6 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -1016,7 +1017,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     }
 
-    private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer, RingSearch searcher) {
+    private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer, RingSearch searcher) throws NoSuchAtomException {
         if (searcher == null) searcher = new RingSearch(atomContainer);
         return searcher.cyclic(atom);
     }
