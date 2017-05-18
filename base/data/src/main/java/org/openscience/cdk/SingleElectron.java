@@ -118,7 +118,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      */
     @Override
     public boolean contains(IAtom atom) {
-        return (this.atom == atom) ? true : false;
+        return this.atom.equals(atom);
     }
 
     /**

@@ -628,7 +628,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public int indexOf(IAtom atom) {
         for (int i = 0; i < atomCount; i++) {
-            if (atoms[i] == atom) return i;
+            if (atoms[i].equals(atom)) return i;
         }
         return -1;
     }
@@ -636,7 +636,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public int indexOf(IBond bond) {
         for (int i = 0; i < bondCount; i++) {
-            if (bonds[i] == bond) return i;
+            if (bonds[i].equals(bond)) return i;
         }
         return -1;
     }
@@ -684,7 +684,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public IBond getBond(IAtom atom1, IAtom atom2) {
         for (int i = 0; i < getBondCount(); i++) {
-            if (bonds[i].contains(atom1) && bonds[i].getOther(atom1) == atom2) {
+            if (bonds[i].contains(atom1) && bonds[i].getOther(atom1).equals(atom2)) {
                 return bonds[i];
             }
         }
@@ -1425,7 +1425,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public boolean contains(IAtom atom) {
         for (int i = 0; i < getAtomCount(); i++) {
-            if (atom == atoms[i]) return true;
+            if (atoms[i].equals(atom)) return true;
         }
         return false;
     }
@@ -1439,7 +1439,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public boolean contains(IBond bond) {
         for (int i = 0; i < getBondCount(); i++) {
-            if (bond == bonds[i]) return true;
+            if (bonds[i].equals(bond)) return true;
         }
         return false;
     }

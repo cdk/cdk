@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import org.openscience.cdk.CDKConstants;
@@ -944,7 +945,7 @@ public class MolecularFormulaManipulator {
      */
     public static boolean compare(IMolecularFormula formula1, IMolecularFormula formula2) {
 
-        if (formula1.getCharge() != formula2.getCharge()) return false;
+        if (!Objects.equals(formula1.getCharge(), formula2.getCharge())) return false;
 
         if (formula1.getIsotopeCount() != formula2.getIsotopeCount()) return false;
 

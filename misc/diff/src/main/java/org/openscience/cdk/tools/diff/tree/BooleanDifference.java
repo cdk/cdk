@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
+import java.util.Objects;
+
 /**
  * {@link IDifference} between two {@link Boolean}s.
  *
@@ -46,7 +48,7 @@ public class BooleanDifference implements IDifference {
      * @return       an {@link IDifference} reflecting the differences between the first and second object
      */
     public static IDifference construct(String name, Boolean first, Boolean second) {
-        if (first == second) {
+        if (Objects.equals(first, second)) {
             return null;
         }
         return new BooleanDifference(name, first, second);
@@ -59,7 +61,7 @@ public class BooleanDifference implements IDifference {
      */
     @Override
     public String toString() {
-        return name + ":" + (first == null ? "NA" : (first == true ? "T" : "F")) + "/"
-                + (second == null ? "NA" : (second == true ? "T" : "F"));
+        return name + ":" + (first == null ? "NA" : (first ? "T" : "F")) + "/"
+               + (second == null ? "NA" : (second ? "T" : "F"));
     }
 }

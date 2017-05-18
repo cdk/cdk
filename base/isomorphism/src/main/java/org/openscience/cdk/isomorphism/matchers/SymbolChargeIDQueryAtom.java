@@ -21,6 +21,8 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
+import java.util.Objects;
+
 /**
  * @cdk.module  isomorphism
  * @cdk.githash
@@ -43,8 +45,8 @@ public class SymbolChargeIDQueryAtom extends QueryAtom implements IQueryAtom {
 
     @Override
     public boolean matches(IAtom atom) {
-        return this.getSymbol().equals(atom.getSymbol()) && this.getFormalCharge() == atom.getFormalCharge()
-                && this.getID().equals(atom.getID());
+        return this.getSymbol().equals(atom.getSymbol()) && Objects.equals(this.getFormalCharge(), atom.getFormalCharge())
+               && this.getID().equals(atom.getID());
     };
 
     @Override

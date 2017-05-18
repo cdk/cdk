@@ -665,13 +665,13 @@ public abstract class StereoElementFactory {
         private int elevationOf(IAtom focus, IBond bond) {
             switch (bond.getStereo()) {
                 case UP:
-                    return bond.getBegin() == focus ? +1 : 0;
+                    return bond.getBegin().equals(focus) ? +1 : 0;
                 case UP_INVERTED:
-                    return bond.getEnd() == focus ? +1 : 0;
+                    return bond.getEnd().equals(focus) ? +1 : 0;
                 case DOWN:
-                    return bond.getBegin() == focus ? -1 : 0;
+                    return bond.getBegin().equals(focus) ? -1 : 0;
                 case DOWN_INVERTED:
-                    return bond.getEnd() == focus ? -1 : 0;
+                    return bond.getEnd().equals(focus) ? -1 : 0;
             }
             return 0;
         }

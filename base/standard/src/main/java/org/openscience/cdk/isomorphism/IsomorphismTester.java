@@ -25,6 +25,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * A too simplistic implementation of an isomorphism test for chemical graphs.
@@ -105,7 +106,7 @@ public class IsomorphismTester implements java.io.Serializable {
                     atom1 = base.getAtom(f);
                     atom2 = compare.getAtom(g);
                     if (!(atom1.getSymbol().equals(atom2.getSymbol()))
-                            && atom1.getImplicitHydrogenCount() == atom2.getImplicitHydrogenCount()) {
+                        && Objects.equals(atom1.getImplicitHydrogenCount(), atom2.getImplicitHydrogenCount())) {
                         return false;
                     }
                     found = true;

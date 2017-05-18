@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -707,7 +708,7 @@ public class GeometryTools {
         Point2d atomPosition = atom.getPoint2d();
         for (int i = 0; i < atomCon.getAtomCount(); i++) {
             IAtom currentAtom = atomCon.getAtom(i);
-            if (currentAtom != atom) {
+            if (!currentAtom.equals(atom)) {
                 double d = atomPosition.distance(currentAtom.getPoint2d());
                 if (d < min) {
                     min = d;
@@ -740,7 +741,7 @@ public class GeometryTools {
         double atomY;
         for (int i = 0; i < atomCon.getAtomCount(); i++) {
             currentAtom = atomCon.getAtom(i);
-            if (currentAtom != toignore) {
+            if (!currentAtom.equals(toignore)) {
                 atomX = currentAtom.getPoint2d().x;
                 atomY = currentAtom.getPoint2d().y;
                 mouseSquaredDistance = Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2);
@@ -1250,7 +1251,7 @@ public class GeometryTools {
         }
         Map<Double, IAtom> atomsByDistance = new TreeMap<Double, IAtom>();
         for (IAtom atom : container.atoms()) {
-            if (atom != startAtom) {
+            if (!atom.equals(startAtom)) {
                 if (atom.getPoint3d() == null) {
                     throw new CDKException("No point3d, but findClosestInSpace is working on point3ds");
                 }
@@ -1356,9 +1357,9 @@ public class GeometryTools {
         IAtom firstAtom = firstAC.getAtom(posFirstAtom);
         IAtom secondAtom = secondAC.getAtom(posSecondAtom);
         if (firstAtom.getSymbol().equals(secondAtom.getSymbol())
-                && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size()
-                && firstAtom.getBondOrderSum() == secondAtom.getBondOrderSum()
-                && firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()) {
+            && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size()
+            && Objects.equals(firstAtom.getBondOrderSum(), secondAtom.getBondOrderSum())
+            && firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()) {
             return true;
         } else {
             return false;

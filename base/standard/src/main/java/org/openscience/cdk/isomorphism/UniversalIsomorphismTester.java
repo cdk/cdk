@@ -686,7 +686,7 @@ public class UniversalIsomorphismTester {
             for (int j = 0; j < 2; j++) {
                 List<IBond> bondsConnectedToAtom1j = g1.getConnectedBondsList(atom1[j]);
                 for (int k = 0; k < bondsConnectedToAtom1j.size(); k++) {
-                    if (bondsConnectedToAtom1j.get(k) != bond1) {
+                    if (!bondsConnectedToAtom1j.get(k).equals(bond1)) {
                         IBond testBond = (IBond) bondsConnectedToAtom1j.get(k);
                         for (int m = 0; m < l.size(); m++) {
                             IBond testBond2;

@@ -898,7 +898,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                 IBond.Stereo stereo = bond.getStereo();
                 xp[n] = (float) (o2d.x - x0);
                 yp[n] = (float) (o2d.y - y0);
-                zp[n] = other == bond.getBegin() ? 0 : stereo == IBond.Stereo.UP ? 1 : stereo == IBond.Stereo.DOWN ? -1
+                zp[n] = other.equals(bond.getBegin()) ? 0 : stereo == IBond.Stereo.UP ? 1 : stereo == IBond.Stereo.DOWN ? -1
                                                                                                                    : 0;
             } else {
                 return null; // no 2D coordinates on some atom

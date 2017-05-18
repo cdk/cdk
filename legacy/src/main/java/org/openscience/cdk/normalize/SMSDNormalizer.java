@@ -357,14 +357,14 @@ public class SMSDNormalizer extends AtomContainerManipulator {
             bonds[index] = new Bond();
             int indexI = 999;
             for (int i = 0; i < container.getAtomCount(); i++) {
-                if (container.getBond(index).getBegin() == container.getAtom(i)) {
+                if (container.getBond(index).getBegin().equals(container.getAtom(i))) {
                     indexI = i;
                     break;
                 }
             }
             int indexJ = 999;
             for (int j = 0; j < container.getAtomCount(); j++) {
-                if (container.getBond(index).getEnd() == container.getAtom(j)) {
+                if (container.getBond(index).getEnd().equals(container.getAtom(j))) {
                     indexJ = j;
                     break;
                 }

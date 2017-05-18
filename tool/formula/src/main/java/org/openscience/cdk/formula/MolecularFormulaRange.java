@@ -21,6 +21,7 @@ package org.openscience.cdk.formula;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 import org.openscience.cdk.interfaces.IIsotope;
 
@@ -215,8 +216,9 @@ public class MolecularFormulaRange implements Cloneable {
     private boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
 
         if (!isotopeOne.getSymbol().equals(isotopeTwo.getSymbol())) return false;
-        if (isotopeOne.getNaturalAbundance() != isotopeTwo.getNaturalAbundance()) return false;
-        if (isotopeOne.getExactMass() != isotopeTwo.getExactMass()) return false;
+        // XXX: floating point comparision!
+        if (!Objects.equals(isotopeOne.getNaturalAbundance(), isotopeTwo.getNaturalAbundance())) return false;
+        if (!Objects.equals(isotopeOne.getExactMass(), isotopeTwo.getExactMass())) return false;
 
         return true;
     }

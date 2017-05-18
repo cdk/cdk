@@ -182,7 +182,7 @@ final class CorrectGeometricConfiguration {
         IAtom otherSubstituent = focus;
         for (int w : graph[atomToIndex.get(focus)]) {
             IAtom atom = container.getAtom(w);
-            if (atom != substituent && atom != otherFocus) otherSubstituent = atom;
+            if (!atom.equals(substituent) && !atom.equals(otherFocus)) otherSubstituent = atom;
         }
         return new IAtom[]{substituent, otherSubstituent, otherFocus};
     }

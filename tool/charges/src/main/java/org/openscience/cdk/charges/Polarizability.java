@@ -131,7 +131,7 @@ public class Polarizability {
 
         polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
         for (int i = 0; i < acH.getAtomCount(); i++) {
-            if (acH.getAtom(i) != atom) {
+            if (!acH.getAtom(i).equals(atom)) {
                 bond = PathTools.breadthFirstTargetSearch(acH, startAtom, acH.getAtom(i), 0, influenceSphereCutOff);
                 if (bond == 1) {
                     polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
@@ -173,7 +173,7 @@ public class Polarizability {
 
         polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
         for (int i = 0; i < acH.getAtomCount(); i++) {
-            if (acH.getAtom(i) != atom) {
+            if (!acH.getAtom(i).equals(atom)) {
                 int atomIndex = atomContainer.indexOf(atom);
                 bond = distanceMatrix[atomIndex][i];
                 if (bond == 1) {

@@ -53,7 +53,7 @@ public class AtomMassGenerator extends BasicAtomGenerator {
         if (massNumber != null) {
             try {
                 Integer expectedMassNumber = Isotopes.getInstance().getMajorIsotope(atom.getSymbol()).getMassNumber();
-                if (massNumber != expectedMassNumber) return true;
+                if (!massNumber.equals(expectedMassNumber)) return true;
             } catch (IOException e) {
                 logger.warn(e);
             }

@@ -179,8 +179,8 @@ public class CIPTool {
         if (leftLigands.length > 2 || rightLigands.length > 2) return CIP_CHIRALITY.NONE;
 
         // invert if x/y aren't in the first position
-        if (leftLigands[0].getLigandAtom() != x) conformation = conformation.invert();
-        if (rightLigands[0].getLigandAtom() != y) conformation = conformation.invert();
+        if (!leftLigands[0].getLigandAtom().equals(x)) conformation = conformation.invert();
+        if (!rightLigands[0].getLigandAtom().equals(y)) conformation = conformation.invert();
 
         int p = permParity(leftLigands) * permParity(rightLigands);
 
@@ -211,7 +211,7 @@ public class CIPTool {
 
         int i = 0;
         for (IAtom neighbor : neighbors) {
-            if (neighbor != exclude) ligands[i++] = new Ligand(container, new VisitedAtoms(), atom, neighbor);
+            if (!neighbor.equals(exclude)) ligands[i++] = new Ligand(container, new VisitedAtoms(), atom, neighbor);
         }
 
         return ligands;

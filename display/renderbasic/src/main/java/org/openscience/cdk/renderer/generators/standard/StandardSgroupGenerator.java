@@ -113,7 +113,7 @@ final class StandardSgroupGenerator {
             if (sgroup.getType() == SgroupType.CtabAbbreviation) {
                 Boolean expansion = sgroup.getValue(SgroupKey.CtabExpansion);
                 // abbreviation is displayed as expanded
-                if (expansion != null && expansion == Boolean.TRUE)
+                if (expansion != null && expansion)
                     continue;
                 // no or empty label, skip it
                 if (sgroup.getSubscript() == null || sgroup.getSubscript().isEmpty())
@@ -243,10 +243,10 @@ final class StandardSgroupGenerator {
                 IAtom beg = bond.getBegin();
                 IAtom end = bond.getEnd();
                 if (atoms.contains(beg)) {
-                    if (internal != null && internal != beg) return; // can't do it
+                    if (internal != null && !internal.equals(beg)) return; // can't do it
                     internal = beg;
                 } else if (atoms.contains(end)) {
-                    if (internal != null && internal != end) return; // can't do it
+                    if (internal != null && !internal.equals(end)) return; // can't do it
                     internal = end;
                 }
             }

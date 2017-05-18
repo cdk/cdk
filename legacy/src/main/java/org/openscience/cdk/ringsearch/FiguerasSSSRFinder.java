@@ -218,7 +218,7 @@ public class FiguerasSSSRFinder {
             mAtoms = molecule.getConnectedAtomsList(node);
             for (int f = 0; f < mAtoms.size(); f++) {
                 mAtom = (IAtom) mAtoms.get(f);
-                if (mAtom != ((List) node.getProperty(PATH)).get(((List<IAtom>) node.getProperty(PATH)).size() - 2)) {
+                if (!mAtom.equals(((List) node.getProperty(PATH)).get(((List<IAtom>) node.getProperty(PATH)).size() - 2))) {
                     if (((List) mAtom.getProperty(PATH)).size() > 0) {
                         intersection = getIntersection((List) node.getProperty(PATH), (List) mAtom.getProperty(PATH));
                         if (intersection.size() == 1) {

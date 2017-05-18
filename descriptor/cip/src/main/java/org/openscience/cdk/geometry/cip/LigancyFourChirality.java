@@ -28,6 +28,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
+import java.util.Objects;
+
 /**
  * Stereochemistry specification for quadrivalent atoms to be used for the CIP algorithm only.
  *
@@ -76,7 +78,7 @@ class LigancyFourChirality {
         VisitedAtoms visitedAtoms = new VisitedAtoms();
         for (int i = 0; i < ligandAtoms.length; i++) {
             // ITetrahedralChirality stores a impl hydrogen as the central atom
-            if (ligandAtoms[i] == chiralAtom) {
+            if (ligandAtoms[i].equals(chiralAtom)) {
                 this.ligands[i] = new ImplicitHydrogenLigand(container, visitedAtoms, chiralAtom);
             } else {
                 this.ligands[i] = new Ligand(container, visitedAtoms, chiralAtom, ligandAtoms[i]);
@@ -126,11 +128,11 @@ class LigancyFourChirality {
 
         // now move atoms around to match the newOrder
         for (int i = 0; i < 3; i++) {
-            if (newAtoms[i].getLigandAtom() != newOrder[i].getLigandAtom()) {
+            if (!newAtoms[i].getLigandAtom().equals(newOrder[i].getLigandAtom())) {
                 // OK, not in the right position
                 // find the incorrect, old position
                 for (int j = i; j < 4; j++) {
-                    if (newAtoms[j].getLigandAtom() == newOrder[i].getLigandAtom()) {
+                    if (newAtoms[j].getLigandAtom().equals(newOrder[i].getLigandAtom())) {
                         // found the incorrect position
                         swap(newAtoms, i, j);
                         // and swap the stereochemistry

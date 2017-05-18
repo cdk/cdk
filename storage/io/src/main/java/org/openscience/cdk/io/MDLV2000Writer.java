@@ -457,7 +457,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 int hidx = -1;
                 for (int i = 0; i < 4; i++) {
                     // hydrogen position
-                    if (carriers[i] == focus || carriers[i].getAtomicNumber() == 1) {
+                    if (carriers[i].equals(focus) || carriers[i].getAtomicNumber() == 1) {
                         if (hidx >= 0) parity = 0;
                         hidx = i;
                     }
