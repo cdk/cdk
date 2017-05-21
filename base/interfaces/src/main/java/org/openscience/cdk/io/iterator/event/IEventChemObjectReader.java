@@ -33,7 +33,7 @@ import org.openscience.cdk.io.IChemObjectIO;
  * @cdk.module io
  * @cdk.githash
  *
- * @see org.openscience.cdk.io.IChemObjectIO
+ * @see IChemObjectIO
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2005-01-25
