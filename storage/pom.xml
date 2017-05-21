@@ -11,6 +11,7 @@
     </parent>
     <name>cdk-storage</name>
     <modules>
+        <module>ctab</module>
         <module>io</module>
         <module>ioformats</module>
         <module>iordf</module>

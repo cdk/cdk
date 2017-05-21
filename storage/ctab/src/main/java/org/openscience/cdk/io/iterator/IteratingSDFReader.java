@@ -1,25 +1,24 @@
-/* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- *                    2014  Mark B Vine (orcid:0000-0002-7794-0426)
+/*
+ * Copyright (c) 2017 John Mayfield <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or (at
+ * your option) any later version. All we ask is that proper credit is given
+ * for our work, which includes - but is not limited to - adding the above
+ * copyright notice to the beginning of your source code files, and to any
+ * copyright notice that you may distribute with programs based on this work.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 package org.openscience.cdk.io.iterator;
 
@@ -38,7 +37,9 @@ import java.util.regex.Pattern;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV3000Reader;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
@@ -88,7 +89,6 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                                                                                          .createLoggingTool(IteratingSDFReader.class);
     private String                                          currentLine;
     private IChemFormat                                     currentFormat;
-    private final ReaderFactory                             factory              = new ReaderFactory();
 
     private boolean                                         nextAvailableIsKnown;
     private boolean                                         hasNext;
@@ -190,7 +190,15 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         // create a new reader if not mapped
         if (!readerMap.containsKey(format)) {
 
-            ISimpleChemObjectReader reader = factory.createReader(format);
+            ISimpleChemObjectReader reader;
+            if (format instanceof MDLV2000Format)
+                reader = new MDLV2000Reader();
+            else if (format instanceof MDLV3000Format)
+                reader = new MDLV3000Reader();
+            else if (format instanceof MDLFormat)
+                reader = new MDLReader();
+            else
+                throw new IllegalArgumentException("Unexpected format: " + format);
             reader.setErrorHandler(this.errorHandler);
             reader.setReaderMode(this.mode);
             if (currentFormat instanceof MDLV2000Format) {

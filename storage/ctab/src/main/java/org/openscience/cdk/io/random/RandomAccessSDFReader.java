@@ -39,6 +39,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.listener.IReaderListener;
+import org.openscience.cdk.io.random.RandomAccessReader;
 
 /**
  * Random access of SDF file. Doesn't load molecules in memory, uses prebuilt
