@@ -23,7 +23,6 @@ package org.openscience.cdk.graph.invariant;
 
 import java.util.Iterator;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;

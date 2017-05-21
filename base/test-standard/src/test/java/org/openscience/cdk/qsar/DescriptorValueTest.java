@@ -99,7 +99,7 @@ public class DescriptorValueTest extends CDKTestCase {
         DoubleResult doubleVal = new DoubleResult(0.7);
         DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"},
                 new CDKException("A test exception"));
-        Assert.assertEquals("org.openscience.cdk.exception.CDKException: A test exception", value.getException()
+        Assert.assertEquals("CDKException: A test exception", value.getException()
                 .toString());
     }
 }
