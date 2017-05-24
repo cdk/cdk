@@ -216,6 +216,14 @@ public class SmartsPatternTest {
     }
 
     @Test
+    public void matchProductStereo() throws Exception {
+        assertThat(SmartsPattern.create(">>C[C@H](CC)[C@H](CC)O")
+                                .matchAll(rsmi(">>C[C@H](CC)[C@H](CC)O"))
+                                .countUnique(),
+                   is(1));
+    }
+
+    @Test
     public void stereo_ring_closures() throws Exception {
         Pattern ptrn = SmartsPattern.create("[C@@]1(O[C@@]([C@@]([C@]([C@]1(C)O)(C)O)(O)C)(O)C)(O)C");
         assertTrue(ptrn.matches(smi("[C@@]1(O[C@@]([C@@]([C@]([C@]1(C)O)(C)O)(O)C)(O)C)(O)C")));
