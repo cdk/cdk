@@ -18,19 +18,13 @@
  */
 package org.openscience.cdk.charges;
 
-import org.openscience.cdk.CDK;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.forcefield.mmff.Mmff;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
 import org.openscience.cdk.modeling.builder3d.MMFF94BasedParameterSetReader;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * The calculation of the MMFF94 partial charges. Charges are stored as atom

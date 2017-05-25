@@ -18,11 +18,15 @@
  */
 package org.openscience.cdk.qsar;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * @cdk.module test-standard
@@ -99,7 +103,6 @@ public class DescriptorValueTest extends CDKTestCase {
         DoubleResult doubleVal = new DoubleResult(0.7);
         DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"},
                 new CDKException("A test exception"));
-        Assert.assertEquals("org.openscience.cdk.exception.CDKException: A test exception", value.getException()
-                .toString());
+        Assert.assertThat(value.getException(), is(instanceOf(CDKException.class)));
     }
 }
