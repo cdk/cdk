@@ -290,19 +290,23 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         }
 
         // update stereo
-        IStereoElement oldStereo = null;
-        IStereoElement newStereo = null;
+        List<IStereoElement> oldStereo = null;
+        List<IStereoElement> newStereo = null;
         for (IStereoElement se : stereoElements()) {
             if (se.contains(oldAtom)) {
-                oldStereo = se;
+                if (oldStereo == null) {
+                    oldStereo = new ArrayList<>();
+                    newStereo = new ArrayList<>();
+                }
+                oldStereo.add(se);
                 Map<IAtom, IAtom> amap = Collections.singletonMap(oldAtom, atom);
                 Map<IBond, IBond> bmap = Collections.emptyMap();
-                newStereo = se.map(amap, bmap);
+                newStereo.add(se.map(amap, bmap));
             }
         }
         if (oldStereo != null) {
-            stereoElements.remove(oldStereo);
-            stereoElements.add(newStereo);
+            stereoElements.removeAll(oldStereo);
+            stereoElements.addAll(newStereo);
         }
 
         notifyChanged();
