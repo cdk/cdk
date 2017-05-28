@@ -208,7 +208,7 @@ final class StereoMatch implements Predicate<int[]> {
         // bond is undirected so we need to ensure v1 is the first atom in the bond
         // we also need to to swap the substituents later
         boolean swap = false;
-        if (targetElement.getStereoBond().getBegin() != target.getAtom(v1)) {
+        if (!targetElement.getStereoBond().getBegin().equals(target.getAtom(v1))) {
             int tmp = v1;
             v1 = v2;
             v2 = tmp;

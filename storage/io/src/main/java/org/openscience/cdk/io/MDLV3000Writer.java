@@ -187,7 +187,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         assert neighbours.length == 4;
         for (int i = 0; i < 4; i++) {
             // impl H is last
-            if (neighbours[i] == stereo.getChiralAtom()) {
+            if (stereo.getChiralAtom().equals(neighbours[i])) {
                 neighbourIdx[i] = Integer.MAX_VALUE;
             } else {
                 neighbourIdx[i] = idxs.get(neighbours[i]);
@@ -661,6 +661,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
         writer.write("END CTAB\n");
         writer.writeDirect("M  END\n");
+        writer.writer.flush();
     }
 
 

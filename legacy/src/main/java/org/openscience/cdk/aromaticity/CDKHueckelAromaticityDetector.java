@@ -94,7 +94,7 @@ public class CDKHueckelAromaticityDetector {
             if (!atomIsPotentiallyAromatic(atom)) disregard.add(atom);
 
         for (IAtom atom : disregard)
-            ringSystems.removeAtomAndConnectedElectronContainers(atom);
+            ringSystems.removeAtom(atom);
 
         boolean foundSomeAromaticity = false;
         Iterator<IAtomContainer> isolatedRingSystems = ConnectivityChecker.partitionIntoMolecules(ringSystems)

@@ -32,8 +32,10 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
@@ -93,21 +95,21 @@ public class ReactionManipulator {
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             IAtomContainer mol = reactants.getAtomContainer(i);
             if (mol.contains(atom)) {
-                mol.removeAtomAndConnectedElectronContainers(atom);
+                mol.removeAtom(atom);
             }
         }
         IAtomContainerSet agents = reaction.getReactants();
         for (int i = 0; i < agents.getAtomContainerCount(); i++) {
             IAtomContainer mol = agents.getAtomContainer(i);
             if (mol.contains(atom)) {
-                mol.removeAtomAndConnectedElectronContainers(atom);
+                mol.removeAtom(atom);
             }
         }
         IAtomContainerSet products = reaction.getProducts();
         for (int i = 0; i < products.getAtomContainerCount(); i++) {
             IAtomContainer mol = products.getAtomContainer(i);
             if (mol.contains(atom)) {
-                mol.removeAtomAndConnectedElectronContainers(atom);
+                mol.removeAtom(atom);
             }
         }
     }
@@ -428,6 +430,16 @@ public class ReactionManipulator {
                 throw new IllegalArgumentException("Stereochemistry had no focus");
             Integer grpIdx = focus.getProperty(CDKConstants.REACTION_GROUP);
             components.get(grpIdx).addStereoElement(se);
+        }
+
+        for (ISingleElectron se : mol.singleElectrons()) {
+            Integer grpIdx = se.getAtom().getProperty(CDKConstants.REACTION_GROUP);
+            components.get(grpIdx).addSingleElectron(se);
+        }
+
+        for (ILonePair lp : mol.lonePairs()) {
+            Integer grpIdx = lp.getAtom().getProperty(CDKConstants.REACTION_GROUP);
+            components.get(grpIdx).addLonePair(lp);
         }
 
         return rxn;

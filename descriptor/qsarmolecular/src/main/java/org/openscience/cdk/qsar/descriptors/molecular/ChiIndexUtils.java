@@ -110,7 +110,7 @@ class ChiIndexUtils {
             double prod = 1.0;
             for (Integer atomSerial : fragList) {
                 IAtom atom = atomContainer.getAtom(atomSerial);
-                int nconnected = atomContainer.getConnectedAtomsCount(atom);
+                int nconnected = atomContainer.getConnectedBondsCount(atom);
                 prod = prod * nconnected;
             }
             if (prod != 0) sum += 1.0 / Math.sqrt(prod);

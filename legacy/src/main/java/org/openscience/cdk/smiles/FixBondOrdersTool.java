@@ -26,6 +26,7 @@ package org.openscience.cdk.smiles;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -195,10 +196,10 @@ public class FixBondOrdersTool {
             Matrix M = new Matrix(atomNos.size(), bondNos.size());
             for (int x = 0; x < M.getRows(); x++) {
                 for (int y = 0; y < M.getCols(); y++) {
-                    if (atomNos.get(x) == atomNoPairs.get(y)[0]) {
+                    if (Objects.equals(atomNos.get(x), atomNoPairs.get(y)[0])) {
                         M.set(x, y, 1);
                     } else {
-                        if (atomNos.get(x) == atomNoPairs.get(y)[1]) {
+                        if (Objects.equals(atomNos.get(x), atomNoPairs.get(y)[1])) {
                             M.set(x, y, 1);
                         } else {
                             M.set(x, y, 0);
@@ -298,7 +299,7 @@ public class FixBondOrdersTool {
                     for (int l = 0; l < rBondsArray.get(k).length; l++) { //for each ring in each ring
 
                         //Is there a bond in common? Then add both rings
-                        if (rBondsArray.get(i)[j] == rBondsArray.get(k)[l]) {
+                        if (Objects.equals(rBondsArray.get(i)[j], rBondsArray.get(k)[l])) {
                             if (i != k) {
                                 ringGroups.add(new ArrayList<Integer>());
                                 ringGroups.get(ringGroups.size() - 1).add(i);

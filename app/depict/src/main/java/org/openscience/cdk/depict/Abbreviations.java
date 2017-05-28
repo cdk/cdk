@@ -447,9 +447,9 @@ public class Abbreviations implements Iterable<String> {
                     IAtom atom = frag.getAtom(i);
                     usedAtoms.add(atom);
                     sgroup.addAtom(atom);
-                    if (attachBond.getBegin() == atom)
+                    if (attachBond.getBegin().equals(atom))
                         attachAtom = attachBond.getEnd();
-                    else if (attachBond.getEnd() == atom)
+                    else if (attachBond.getEnd().equals(atom))
                         attachAtom = attachBond.getBegin();
                 }
 

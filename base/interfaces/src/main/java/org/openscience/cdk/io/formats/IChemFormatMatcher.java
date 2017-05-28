@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import com.google.common.primitives.Ints;
 import java.util.List;
 
 /**
@@ -99,7 +98,7 @@ public interface IChemFormatMatcher extends IChemFormat {
          */
         @Override
         public int compareTo(MatchResult that) {
-            return Ints.compare(this.position, that.position);
+            return Integer.compare(this.position, that.position);
         }
     }
 }

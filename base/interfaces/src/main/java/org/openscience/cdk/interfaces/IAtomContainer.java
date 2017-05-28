@@ -87,46 +87,57 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     void setBonds(IBond[] bonds);
 
     /**
-     * Set the atom at position <code>number</code> in [0,..].
+     * Set the atom at <code>idx</code>, the index must have an existing atom
+     * and therefore be in the range 0 &le; idx &lt; mol.getAtomCount().
      *
-     * @param number The position of the atom to be set.
-     * @param atom   The atom to be stored at position <code>number</code>
+     * @param idx  The index of the atom to be set.
+     * @param atom The atom to be stored at position <code>idx</code>
+     * @throws IndexOutOfBoundsException index is out of bounds
+     * @throws IllegalArgumentException the atom counld not be set
      * @see #getAtom
      */
-    void setAtom(int number, IAtom atom);
+    void setAtom(int idx, IAtom atom);
 
     /**
-     * Get the atom at position <code>number</code> in [0,..].
+     * Get the atom at the specified <b>idx</b>, the index should be in the
+     * range 0 &le; <i>idx</i> &lt; {@link #getAtomCount()}.
      *
-     * @param number The position of the atom to be retrieved.
-     * @return The atom number
+     * @param idx atom index
+     * @return the atom stored at the index
      * @see #setAtom
+     * @throws IndexOutOfBoundsException the index is out of range
      */
-    IAtom getAtom(int number);
+    IAtom getAtom(int idx);
 
     /**
-     * Get the bond at position <code>number</code> in [0,..].
+     * Get the bond at the specified <b>idx</b>, the index should be in the
+     * range 0 &le; <i>idx</i> &lt; {@link #getBondCount()}.
      *
-     * @param number The position of the bond to be retrieved.
-     * @return The bond number
+     * @param idx bond index
+     * @return the bond stored at the index
+     * @throws IndexOutOfBoundsException the index is out of range
      */
-    IBond getBond(int number);
+    IBond getBond(int idx);
 
     /**
-     * Get the lone pair at position <code>number</code> in [0,..].
+     * Get the lone pair at the specified <b>idx</b>, the index should be in the
+     * range 0 &le; <i>idx</i> &lt; {@link #getLonePairCount()}.
      *
-     * @param number The position of the LonePair to be retrieved.
-     * @return The lone pair number
+     * @param idx lone pair index
+     * @return the lone pair stored at the index
+     * @throws IndexOutOfBoundsException the index is out of range
      */
-    ILonePair getLonePair(int number);
+    ILonePair getLonePair(int idx);
 
     /**
-     * Get the single electron at position <code>number</code> in [0,..].
+     * Get the single electron at the specified <b>idx</b>, the index should
+     * be in the range 0 &le; <i>idx</i> &lt; {@link #getSingleElectronCount()}.
      *
-     * @param number The position of the SingleElectron to be retrieved.
-     * @return The single electron number
+     * @param idx single electron index
+     * @return the single electron stored at the index
+     * @throws IndexOutOfBoundsException the index is out of range
      */
-    ISingleElectron getSingleElectron(int number);
+    ISingleElectron getSingleElectron(int idx);
 
     /**
      * Returns an Iterable for looping over all atoms in this container.
@@ -324,82 +335,102 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     int getElectronContainerCount();
 
     /**
-     * Returns an ArrayList of all atoms connected to the given atom.
+     * Returns the atoms connected connected to the specified atom by
+     * a bond.
      *
-     * @param atom The atom the bond partners are searched of.
-     * @return The ArrayList with the connected atoms
+     * @param atom the atom
+     * @return connected atoms
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     List<IAtom> getConnectedAtomsList(IAtom atom);
 
     /**
-     * Returns an ArrayList of all Bonds connected to the given atom.
+     * Returns the bonds connected connected to the specified atom.
      *
-     * @param atom The atom the connected bonds are searched of
-     * @return The ArrayList with connected atoms
+     * @param atom the atom
+     * @return connected bonds
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     List<IBond> getConnectedBondsList(IAtom atom);
 
     /**
-     * Returns the array of lone pairs connected to an atom.
+     * Returns the lone pairs connected connected to the specified atom.
      *
-     * @param atom The atom for which to get lone pairs
-     * @return The array of LonePairs of this AtomContainer
+     * @param atom the atom
+     * @return connected lone pairs
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     List<ILonePair> getConnectedLonePairsList(IAtom atom);
 
     /**
-     * Returns an array of all SingleElectron connected to the given atom.
+     * Returns the single electrons connected connected to the specified atom.
      *
-     * @param atom The atom on which the single electron is located
-     * @return The array of SingleElectron of this AtomContainer
+     * @param atom the atom
+     * @return connected lone pairs
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom);
 
     /**
-     * Returns an ArrayList of all electronContainers connected to the given atom.
+     * Returns the electron containers (bonds, radicals, and lone pairs )
+     * connected connected to the specified atom.
      *
-     * @param atom The atom the connected electronContainers are searched of
-     * @return The ArrayList with the  connected atoms
+     * @param atom the atom
+     * @return connected lone pairs
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     List<IElectronContainer> getConnectedElectronContainersList(IAtom atom);
 
     /**
-     * Returns the number of atoms connected to the given atom.
+     * Returns the number of connected atoms (explicit degree) to the
+     * specified atom. This does not include bonds to implicit
+     * hydrogens.
      *
-     * @param atom The atom the number of bond partners are searched of.
-     * @return The the size of connected atoms
+     * @param atom the atom
+     * @return number of connected bonds
+     * @throws java.util.NoSuchElementException the atom is not present
+     * @deprecated use {@link #getConnectedBondsCount(IAtom)}
      */
+    @Deprecated
     int getConnectedAtomsCount(IAtom atom);
 
     /**
-     * Returns the number of Bonds for a given Atom.
+     * Returns the number of connected bonds (explicit degree) to the
+     * specified atom. This does not include bonds to implicit
+     * hydrogens.
      *
-     * @param atom The atom
-     * @return The number of Bonds for this atom
+     * @param atom the atom
+     * @return number of connected bonds
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     int getConnectedBondsCount(IAtom atom);
 
     /**
-     * Returns the number of connected atoms (degree) to the given atom.
+     * Returns the number of connected bonds (explicit degree) to atom
+     * at the specified index. This does not include bonds to implicit
+     * hydrogens.
      *
-     * @param atomnumber The atomnumber the degree is searched for
-     * @return The number of connected atoms (degree)
+     * @param idx the atom idx
+     * @return number of connected bonds
+     * @throws IndexOutOfBoundsException the index is not in range
      */
-    int getConnectedBondsCount(int atomnumber);
+    int getConnectedBondsCount(int idx);
 
     /**
-     * Returns the number of LonePairs for a given Atom.
+     * Returns the number of lone pairs connected to the specified atom.
      *
-     * @param atom The atom
-     * @return The number of LonePairs for this atom
+     * @param atom the atom
+     * @return number of connected bonds
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     int getConnectedLonePairsCount(IAtom atom);
 
     /**
-     * Returns the sum of the SingleElectron for a given Atom.
+     * Returns the number of single electrons connected to the specified atom.
      *
-     * @param atom The atom on which the single electron is located
-     * @return The array of SingleElectron of this AtomContainer
+     * @param atom the atom
+     * @return number of connected bonds
+     * @throws java.util.NoSuchElementException the atom is not present
      */
     int getConnectedSingleElectronsCount(IAtom atom);
 
@@ -413,19 +444,27 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 
     /**
      * Returns the maximum bond order that this atom currently has in the context
-     * of this AtomContainer.
+     * of this AtomContainer.  If the atom has no bonds
+     * but does have implicit hydrogens the minimum bond order is
+     * {@link IBond.Order#SINGLE}, otherwise the bond is unset
+     * {@link IBond.Order#UNSET}.
      *
      * @param atom The atom
      * @return The maximum bond order that this atom currently has
+     * @throws java.util.NoSuchElementException atom does not belong to this container
      */
     Order getMaximumBondOrder(IAtom atom);
 
     /**
-     * Returns the minimum bond order that this atom currently has in the context
-     * of this AtomContainer.
+     * Returns the minimum bond order that this atom currently has
+     * in the context of this AtomContainer. If the atom has no bonds
+     * but does have implicit hydrogens the minimum bond order is
+     * {@link IBond.Order#SINGLE}, otherwise the bond is unset
+     * {@link IBond.Order#UNSET}.
      *
      * @param atom The atom
-     * @return The minimim bond order that this atom currently has
+     * @return The minimum bond order that this atom currently has
+     * @throws java.util.NoSuchElementException atom does not belong to this container
      */
     Order getMinimumBondOrder(IAtom atom);
 
@@ -481,22 +520,26 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     void remove(IAtomContainer atomContainer);
 
     /**
+     * Unsafely remove atom at index.
+     * <br>
      * Removes the atom at the given position from the AtomContainer. Note that
      * the electronContainers are unaffected: you also have to take care of
      * removing all electronContainers to this atom from the container manually.
      *
      * @param position The position of the atom to be removed.
      */
-    void removeAtom(int position);
+    void removeAtomOnly(int position);
 
     /**
+     * Unsafely remove atom.
+     * <br>
      * Removes the given atom from the AtomContainer. Note that the
      * electronContainers are unaffected: you also have to take care of removeing
      * all electronContainers to this atom from the container.
      *
      * @param atom The atom to be removed
      */
-    void removeAtom(IAtom atom);
+    void removeAtomOnly(IAtom atom);
 
     /**
      * Removes the bond at the given position from the AtomContainer.
@@ -568,14 +611,28 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     void removeElectronContainer(IElectronContainer electronContainer);
 
     /**
-     * Removes the given atom and all connected electronContainers from the
-     * AtomContainer. The method will also remove any {@link IStereoElement}
-     * that the atom is contained in. If you are removing hydrogens one of the
+     * Safely remove an atom from the container.
+     * <br>
+     * Removes a single atom from the container updating all internal
+     * state to be consistent. All bonds connected to the atom will be
+     * deleted as well as all stereo elements. If multiple atoms/bonds are
+     * being deleted they should be gathered into a single transaction
+     * and removed with {@link #remove(IAtomContainer)}.
+     * <br>
+     * If you are removing hydrogens one of the
      * utility methods (e.g. AtomContainerManipulator.removeHydrogens(IAtomContainer))
      * is preferable.
      *
      * @param atom the atom to be removed
      */
+    void removeAtom(IAtom atom);
+
+    /**
+     * Safely remove an atom from the container.
+     * @see #removeAtom(IAtom)
+     * @deprecated Method has be renamed {@link #removeAtom(IAtom)}.
+     */
+    @Deprecated
     void removeAtomAndConnectedElectronContainers(IAtom atom);
 
     /**

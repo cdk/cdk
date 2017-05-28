@@ -31,17 +31,23 @@ import java.io.Reader;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.inchi.INChIHandler;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) document. See
@@ -61,8 +67,6 @@ import org.xml.sax.XMLReader;
  * @cdk.keyword file format, INChI
  * @cdk.keyword chemical identifier
  * @cdk.require java1.4+
- *
- * @see     org.openscience.cdk.io.inchi.INChIHandler
  */
 public class INChIReader extends DefaultChemObjectReader {
 
@@ -174,7 +178,7 @@ public class INChIReader extends DefaultChemObjectReader {
     @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            return (T) readChemFile();
+            return (T) readChemFile(object.getBuilder());
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -187,7 +191,7 @@ public class INChIReader extends DefaultChemObjectReader {
      *
      * @return ChemFile with the content read from the input
      */
-    private IChemFile readChemFile() {
+    private IChemFile readChemFile(IChemObjectBuilder bldr) {
         IChemFile cf = null;
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
@@ -195,7 +199,7 @@ public class INChIReader extends DefaultChemObjectReader {
         } catch (SAXException e) {
             logger.warn("Cannot deactivate validation.");
         }
-        INChIHandler handler = new INChIHandler();
+        INChIHandler handler = new INChIHandler(bldr);
         parser.setContentHandler(handler);
         try {
             parser.parse(new InputSource(input));
@@ -213,5 +217,122 @@ public class INChIReader extends DefaultChemObjectReader {
     @Override
     public void close() throws IOException {
         input.close();
+    }
+
+    private static final class INChIHandler extends DefaultHandler {
+
+        private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
+        private INChIContentProcessorTool inchiTool;
+
+        private IChemFile         chemFile;
+        private IChemSequence     chemSequence;
+        private IChemModel        chemModel;
+        private IAtomContainerSet setOfMolecules;
+        private IAtomContainer    tautomer;
+        private IChemObjectBuilder builder;
+
+        /** Used to store all chars between two tags */
+        private String                    currentChars;
+
+        /**
+         * Constructor for the IChIHandler.
+         **/
+        public INChIHandler(IChemObjectBuilder bldr) {
+            this.builder = bldr;
+            this.inchiTool = new INChIContentProcessorTool();
+        }
+
+        public void doctypeDecl(String name, String publicId, String systemId) throws Exception {
+            logger.info("DocType root element: " + name);
+            logger.info("DocType root PUBLIC: " + publicId);
+            logger.info("DocType root SYSTEM: " + systemId);
+        }
+
+        @Override
+        public void startDocument() {
+            chemFile = builder.newInstance(IChemFile.class);
+            chemSequence = builder.newInstance(IChemSequence.class);
+            chemModel = builder.newInstance(IChemModel.class);;
+            setOfMolecules = builder.newInstance(IAtomContainerSet.class);;
+        }
+
+        @Override
+        public void endDocument() {
+            chemFile.addChemSequence(chemSequence);
+        }
+
+        @Override
+        public void endElement(String uri, String local, String raw) {
+            logger.debug("end element: ", raw);
+            if ("identifier".equals(local)) {
+                if (tautomer != null) {
+                    // ok, add tautomer
+                    setOfMolecules.addAtomContainer(tautomer);
+                    chemModel.setMoleculeSet(setOfMolecules);
+                    chemSequence.addChemModel(chemModel);
+                }
+            } else if ("formula".equals(local)) {
+                if (tautomer != null) {
+                    logger.info("Parsing <formula> chars: ", currentChars);
+                    tautomer = inchiTool.processFormula(setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars);
+                } else {
+                    logger.warn("Cannot set atom info for empty tautomer");
+                }
+            } else if ("connections".equals(local)) {
+                if (tautomer != null) {
+                    logger.info("Parsing <connections> chars: ", currentChars);
+                    inchiTool.processConnections(currentChars, tautomer, -1);
+                } else {
+                    logger.warn("Cannot set dbond info for empty tautomer");
+                }
+            } else {
+                // skip all other elements
+            }
+        }
+
+        /**
+         * Implementation of the startElement() procedure overwriting the
+         * DefaultHandler interface.
+         *
+         * @param uri       the Universal Resource Identifier
+         * @param local     the local name (without namespace part)
+         * @param raw       the complete element name (with namespace part)
+         * @param atts      the attributes of this element
+         */
+        @Override
+        public void startElement(String uri, String local, String raw, Attributes atts) {
+            currentChars = "";
+            logger.debug("startElement: ", raw);
+            logger.debug("uri: ", uri);
+            logger.debug("local: ", local);
+            logger.debug("raw: ", raw);
+            if ("INChI".equals(local)) {
+                // check version
+                for (int i = 0; i < atts.getLength(); i++) {
+                    if (atts.getQName(i).equals("version")) logger.info("INChI version: ", atts.getValue(i));
+                }
+            } else if ("structure".equals(local)) {
+                tautomer = builder.newAtomContainer();
+            } else {
+                // skip all other elements
+            }
+        }
+
+        /**
+         * Implementation of the characters() procedure overwriting the
+         * DefaultHandler interface.
+         *
+         * @param ch        characters to handle
+         */
+        @Override
+        public void characters(char ch[], int start, int length) {
+            logger.debug("character data");
+            currentChars += new String(ch, start, length);
+        }
+
+        public IChemFile getChemFile() {
+            return chemFile;
+        }
+
     }
 }

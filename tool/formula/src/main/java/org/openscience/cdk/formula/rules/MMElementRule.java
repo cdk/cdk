@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.formula.rules;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 

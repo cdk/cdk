@@ -20,6 +20,7 @@
 package org.openscience.cdk.validate;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Isotopes;
@@ -266,7 +267,7 @@ public class BasicValidator extends AbstractValidator {
             if (isotope.getMassNumber() != 0) {
                 boolean foundKnownIsotope = false;
                 for (int i = 0; i < isotopes.length; i++) {
-                    if (isotopes[i].getMassNumber() == isotope.getMassNumber()) {
+                    if (Objects.equals(isotopes[i].getMassNumber(), isotope.getMassNumber())) {
                         foundKnownIsotope = true;
                     }
                 }
@@ -304,7 +305,7 @@ public class BasicValidator extends AbstractValidator {
                 boolean foundMatchingAtomType = false;
                 for (int j = 0; j < atomTypes.length; j++) {
                     IAtomType type = atomTypes[j];
-                    if (atom.getFormalCharge() == type.getFormalCharge()) {
+                    if (Objects.equals(atom.getFormalCharge(), type.getFormalCharge())) {
                         foundMatchingAtomType = true;
                         if (bos == type.getBondOrderSum()) {
                             // skip this atom type

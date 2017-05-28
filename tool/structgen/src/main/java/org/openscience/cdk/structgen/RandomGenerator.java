@@ -73,10 +73,9 @@ public class RandomGenerator {
         logger.debug("RandomGenerator->proposeStructure() Start");
         do {
             try {
-                trial = (IAtomContainer) molecule.clone();
+                trial = molecule.clone();
             } catch (CloneNotSupportedException e) {
-                logger.error("Could not clone IAtomContainer!" + e.getMessage());
-                trial = null;
+                throw new IllegalStateException("Could not clone IAtomContainer!" + e.getMessage());
             }
             mutate(trial);
             if (logger.isDebugEnabled()) {

@@ -107,7 +107,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
          */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
-            return container.getConnectedAtomsCount(atom);
+            return container.getConnectedBondsCount(atom);
         }
     },
     /**

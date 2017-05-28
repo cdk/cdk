@@ -25,6 +25,7 @@ package org.openscience.cdk.modeling.builder3d;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.vecmath.AxisAngle4d;
 import javax.vecmath.Matrix3d;
@@ -871,7 +872,7 @@ public class AtomTetrahedralLigandPlacer3D {
         IAtom atom = null;
         for (int i = 0; i < atoms.size(); i++) {
             IAtom curAtom = (IAtom) atoms.get(i);
-            if (curAtom.getFlag(CDKConstants.ISPLACED) && !curAtom.getSymbol().equals("H") && curAtom != atomB) {
+            if (curAtom.getFlag(CDKConstants.ISPLACED) && !curAtom.getSymbol().equals("H") && !Objects.equals(curAtom, atomB)) {
                 return curAtom;
             }
         }

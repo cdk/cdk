@@ -478,7 +478,7 @@ public class StructureDiagramGenerator {
         for (IAtom curAtom : shallowCopy.atoms()) {
             if (curAtom.getSymbol().equals("H")) {
                 if (shallowCopy.getConnectedBondsCount(curAtom) < 2) {
-                    shallowCopy.removeAtomAndConnectedElectronContainers(curAtom);
+                    shallowCopy.removeAtom(curAtom);
                     curAtom.setPoint2d(null);
                 }
             }
@@ -543,11 +543,15 @@ public class StructureDiagramGenerator {
         if (!isConnected) {
             final IAtomContainerSet frags = ConnectivityChecker.partitionIntoMolecules(molecule);
             if (frags.getAtomContainerCount() > 1) {
+                IAtomContainer rollback = molecule;
                 generateFragmentCoordinates(molecule, toList(frags));
                 // don't call set molecule as it wipes x,y coordinates!
                 // this looks like a self assignment but actually the fragment
                 // method changes this.molecule
-                this.molecule = molecule;
+                this.molecule = rollback;
+                atomPlacer.setMolecule(this.molecule);
+                ringPlacer.setMolecule(this.molecule);
+                macroPlacer = new MacroCycleLayout(this.molecule);
                 return;
             }
         }
@@ -606,14 +610,10 @@ public class StructureDiagramGenerator {
 
         final int numAtoms = this.molecule.getAtomCount();
         final int numBonds = this.molecule.getBondCount();
-        // Compute the circuit rank (https://en.wikipedia.org/wiki/Circuit_rank).
-        // Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939)
-        final int circuitrank = numBonds - numAtoms + 1;
         if (hasFixedPart(molecule)) {
 
             // no seeding needed as the molecule has atoms with coordinates, just calc rings if needed
-            if (circuitrank > 0) {
-                prepareRingSystems();
+            if (prepareRingSystems() > 0) {
                 for (IRingSet rset : ringSystems) {
                     if (rset.getFlag(CDKConstants.ISPLACED)) {
                         ringPlacer.placeRingSubstituents(rset, bondLength);
@@ -663,7 +663,7 @@ public class StructureDiagramGenerator {
                     }
                 }
             }
-        } else if (circuitrank > 0) {
+        } else if (prepareRingSystems() > 0) {
             logger.debug("*** Start of handling rings. ***");
             prepareRingSystems();
 
@@ -718,25 +718,29 @@ public class StructureDiagramGenerator {
         }
     }
 
-    private void prepareRingSystems() {
-        Cycles.markRingAtomsAndBonds(molecule);
-
+    private int prepareRingSystems() {
+        final int numRings = Cycles.markRingAtomsAndBonds(molecule);
         // compute SSSR/MCB
-        sssr = Cycles.sssr(molecule).toRingSet();
+        if (numRings > 0) {
+            sssr = Cycles.sssr(molecule).toRingSet();
 
-        if (sssr.getAtomContainerCount() < 1)
-            throw new IllegalStateException("Molecule expected to have rings, but had none?");
+            if (sssr.getAtomContainerCount() < 1)
+                throw new IllegalStateException("Molecule expected to have rings, but had none?");
 
-        // Give a handle of our molecule to the ringPlacer
-        ringPlacer.setMolecule(molecule);
-        ringPlacer.checkAndMarkPlaced(sssr);
+            // Give a handle of our molecule to the ringPlacer
+            ringPlacer.checkAndMarkPlaced(sssr);
 
-        // Partition the smallest set of smallest rings into disconnected
-        // ring system. The RingPartioner returns a Vector containing
-        // RingSets. Each of the RingSets contains rings that are connected
-        // to each other either as bridged ringsystems, fused rings or via
-        // spiro connections.
-        ringSystems = RingPartitioner.partitionRings(sssr);
+            // Partition the smallest set of smallest rings into disconnected
+            // ring system. The RingPartioner returns a Vector containing
+            // RingSets. Each of the RingSets contains rings that are connected
+            // to each other either as bridged ringsystems, fused rings or via
+            // spiro connections.
+            ringSystems = RingPartitioner.partitionRings(sssr);
+        } else {
+            sssr = molecule.getBuilder().newInstance(IRingSet.class);
+            ringSystems = new ArrayList<>();
+        }
+        return numRings;
     }
 
     private void assignStereochem(IAtomContainer molecule) {
@@ -2317,7 +2321,7 @@ public class StructureDiagramGenerator {
                                     if (!visited.contains(other) && newvisit.add(other)) {
                                         visit(newvisit, adjlist, other);
                                     }
-                                } else if (e2.getValue() == visitedAtom) {
+                                } else if (e2.getValue().equals(visitedAtom)) {
                                     int other = idxs.get(e2.getKey().iterator().next());
                                     if (!visited.contains(other) && newvisit.add(other)) {
                                         visit(newvisit, adjlist, other);
@@ -2348,7 +2352,7 @@ public class StructureDiagramGenerator {
                     GeometryUtil.rotate(frag, new Point2d(atom.getPoint2d()), theta);
 
                     // stretch bond
-                    frag.removeAtom(atom);
+                    frag.removeAtomOnly(atom);
                     GeometryUtil.translate2D(frag, newEndP.x - endP.x, newEndP.y - endP.y);
                 }
             } else {

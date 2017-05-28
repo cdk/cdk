@@ -175,7 +175,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
             // lets see if it is a terminal bond
             for (IAtom atom : bond.atoms()) {
-                if (atomContainer.getConnectedAtomsCount(atom) == 1) {
+                if (atomContainer.getConnectedBondsCount(atom) == 1) {
                     isTerminal = true;
                     break;
                 }

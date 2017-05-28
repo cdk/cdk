@@ -130,7 +130,7 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
     public DefaultMCSPlusAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions,
             boolean shouldMatchBonds) {
         this(queryContainer, template, shouldMatchBonds);
-        this.maximumNeighbors = countImplicitHydrogens(template) + queryContainer.getConnectedAtomsCount(template)
+        this.maximumNeighbors = countImplicitHydrogens(template) + queryContainer.getConnectedBondsCount(template)
                 - blockedPositions;
     }
 
@@ -161,7 +161,7 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
             return true;
         }
 
-        int maximumTargetNeighbors = targetContainer.getConnectedAtomsCount(targetAtom);
+        int maximumTargetNeighbors = targetContainer.getConnectedBondsCount(targetAtom);
         return maximumTargetNeighbors >= maximumNeighbors;
     }
 

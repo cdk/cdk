@@ -123,28 +123,28 @@ public class CrossoverMachine {
                 blueAtomsInRedChild0.add(redChild[0].getAtom((Integer) blueAtoms.get(j)));
             }
             for (int j = 0; j < blueAtomsInRedChild0.size(); j++) {
-                redChild[0].removeAtomAndConnectedElectronContainers(blueAtomsInRedChild0.get(j));
+                redChild[0].removeAtom(blueAtomsInRedChild0.get(j));
             }
             List<IAtom> blueAtomsInRedChild1 = new ArrayList<IAtom>();
             for (int j = 0; j < blueAtoms.size(); j++) {
                 blueAtomsInRedChild1.add(redChild[1].getAtom((Integer) blueAtoms.get(j)));
             }
             for (int j = 0; j < blueAtomsInRedChild1.size(); j++) {
-                redChild[1].removeAtomAndConnectedElectronContainers(blueAtomsInRedChild1.get(j));
+                redChild[1].removeAtom(blueAtomsInRedChild1.get(j));
             }
             List<IAtom> redAtomsInBlueChild0 = new ArrayList<IAtom>();
             for (int j = 0; j < redAtoms.size(); j++) {
                 redAtomsInBlueChild0.add(blueChild[0].getAtom((Integer) redAtoms.get(j)));
             }
             for (int j = 0; j < redAtomsInBlueChild0.size(); j++) {
-                blueChild[0].removeAtomAndConnectedElectronContainers(redAtomsInBlueChild0.get(j));
+                blueChild[0].removeAtom(redAtomsInBlueChild0.get(j));
             }
             List<IAtom> redAtomsInBlueChild1 = new ArrayList<IAtom>();
             for (int j = 0; j < redAtoms.size(); j++) {
                 redAtomsInBlueChild1.add(blueChild[1].getAtom((Integer) redAtoms.get(j)));
             }
             for (int j = 0; j < redAtomsInBlueChild1.size(); j++) {
-                blueChild[1].removeAtomAndConnectedElectronContainers(redAtomsInBlueChild1.get(j));
+                blueChild[1].removeAtom(redAtomsInBlueChild1.get(j));
             }
             //if the two fragments of one and only one parent have an uneven number
             //of attachment points, we need to rearrange them
@@ -173,7 +173,7 @@ public class CrossoverMachine {
                     if (satCheck.getCurrentMaxBondOrder(atom, firstToBalance) % 2 == 1
                             && firstToBalance.getBondOrderSum(atom) % 2 == 0) {
                         //we remove this from it's current container and add it to the other one
-                        firstToBalance.removeAtomAndConnectedElectronContainers(atom);
+                        firstToBalance.removeAtom(atom);
                         secondToBalance.addAtom(atom);
                         isok = true;
                         break;

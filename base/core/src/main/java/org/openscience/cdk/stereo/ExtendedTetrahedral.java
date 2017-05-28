@@ -194,8 +194,15 @@ public final class ExtendedTetrahedral implements IStereoElement {
      */
     @Override
     public IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
-        return new ExtendedTetrahedral(atoms.get(focus), new IAtom[]{atoms.get(peripherals[0]),
-                atoms.get(peripherals[1]), atoms.get(peripherals[2]), atoms.get(peripherals[3])}, winding);
+        IAtom focus = atoms.containsKey(this.focus) ? atoms.get(this.focus) : this.focus;
+        IAtom[] carriers = new IAtom[4];
+        for (int i = 0; i < 4; i++) {
+            IAtom newAtom = atoms.get(peripherals[i]);
+            carriers[i] = newAtom != null ? newAtom : peripherals[i];
+        }
+        return new ExtendedTetrahedral(focus,
+                                       carriers,
+                                       winding);
     }
 
     /**

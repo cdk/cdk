@@ -21,6 +21,7 @@ package org.openscience.cdk.interfaces;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.vecmath.Point2d;
 
@@ -30,10 +31,13 @@ import org.junit.Test;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -73,19 +77,19 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         // if an atom changes, the atomcontainer will throw a change event too
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         ac.addListener(listener);
-        Assert.assertFalse(listener.changed);
+        assertFalse(listener.changed);
 
         // ok, change the atom, and make sure we do get an event
         atoms[0].setAtomTypeName("C.sp2");
-        Assert.assertTrue(listener.changed);
+        assertTrue(listener.changed);
 
         // reset the listener, overwrite the atoms, and change an old atom.
         // if all is well, we should not get a change event this time
         ac.setAtoms(new IAtom[0]);
         listener.reset(); // reset here, because the setAtoms() triggers a change even too
-        Assert.assertFalse(listener.changed); // make sure the reset worked
+        assertFalse(listener.changed); // make sure the reset worked
         atoms[1].setAtomTypeName("C.sp2"); // make a change to an old atom
-        Assert.assertFalse(listener.changed); // but no change event should happen
+        assertFalse(listener.changed); // but no change event should happen
     }
 
     /**
@@ -96,7 +100,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     public void testClone() throws Exception {
         IAtomContainer molecule = (IAtomContainer) newChemObject();
         Object clone = molecule.clone();
-        Assert.assertTrue(clone instanceof IAtomContainer);
+        assertTrue(clone instanceof IAtomContainer);
     }
 
     @Test
@@ -235,8 +239,8 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         // test that cloned bonds contain atoms from cloned atomcontainer
         IAtomContainer clonedMol = (IAtomContainer) molecule.clone();
         Assert.assertNotNull(clonedMol);
-        Assert.assertTrue(clonedMol.contains(clonedMol.getBond(0).getBegin()));
-        Assert.assertTrue(clonedMol.contains(clonedMol.getBond(0).getEnd()));
+        assertTrue(clonedMol.contains(clonedMol.getBond(0).getBegin()));
+        assertTrue(clonedMol.contains(clonedMol.getBond(0).getEnd()));
     }
 
     @Test
@@ -700,7 +704,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addLonePair(lp2);
 
         // remove the oxygen
-        acetone.removeAtomAndConnectedElectronContainers(o);
+        acetone.removeAtom(o);
         Assert.assertEquals(3, acetone.getAtomCount());
         Assert.assertEquals(2, acetone.getBondCount());
         Assert.assertEquals(0, acetone.getLonePairCount());
@@ -731,11 +735,11 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
                 ITetrahedralChirality.Stereo.CLOCKWISE));
 
         // remove the oxygen
-        acetone.removeAtomAndConnectedElectronContainers(o);
+        acetone.removeAtom(o);
         Assert.assertEquals(3, acetone.getAtomCount());
         Assert.assertEquals(2, acetone.getBondCount());
         Assert.assertEquals(0, acetone.getLonePairCount());
-        Assert.assertFalse(acetone.stereoElements().iterator().hasNext());
+        assertFalse(acetone.stereoElements().iterator().hasNext());
     }
 
     @Test
@@ -933,7 +937,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addAtom(o);
 
         Assert.assertEquals(4, acetone.getAtomCount());
-        acetone.removeAtom(1);
+        acetone.removeAtomOnly(1);
         Assert.assertEquals(3, acetone.getAtomCount());
         Assert.assertEquals(c1, acetone.getAtom(0));
         Assert.assertEquals(c3, acetone.getAtom(1));
@@ -953,21 +957,226 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addAtom(o);
 
         Assert.assertEquals(4, acetone.getAtomCount());
-        acetone.removeAtom(c3);
+        acetone.removeAtomOnly(c3);
         Assert.assertEquals(3, acetone.getAtomCount());
         Assert.assertEquals(c1, acetone.getAtom(0));
         Assert.assertEquals(c2, acetone.getAtom(1));
         Assert.assertEquals(o, acetone.getAtom(2));
     }
 
-    @Test
-    public void testSetAtom_int_IAtom() {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSetAtomOutOfRange() {
         IAtomContainer container = (IAtomContainer) newChemObject();
         IAtom c = container.getBuilder().newInstance(IAtom.class, "C");
         container.setAtom(0, c);
+    }
 
-        Assert.assertNotNull(container.getAtom(0));
-        Assert.assertEquals("C", container.getAtom(0).getSymbol());
+    @Test
+    public void testSetAtom() {
+        IAtomContainer container = (IAtomContainer) newChemObject();
+        IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = container.getBuilder().newInstance(IAtom.class, "C");
+        container.addAtom(c1);
+        container.setAtom(0, c2);
+        Assert.assertEquals(c2, container.getAtom(0));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetAtomSameMolecule() {
+        IAtomContainer container = (IAtomContainer) newChemObject();
+        IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = container.getBuilder().newInstance(IAtom.class, "C");
+        container.addAtom(c1);
+        container.addAtom(c2);
+        container.setAtom(0, c2);
+    }
+
+    @Test
+    public void testSetAtomUpdatesBonds() {
+        IAtomContainer container = (IAtomContainer) newChemObject();
+        IAtom a1 = container.getBuilder().newAtom();
+        IAtom a2 = container.getBuilder().newAtom();
+        IAtom a3 = container.getBuilder().newAtom();
+        IBond b1 = container.getBuilder().newBond();
+        IBond b2 = container.getBuilder().newBond();
+        a1.setSymbol("C");
+        a2.setSymbol("C");
+        a2.setSymbol("O");
+        b1.setOrder(IBond.Order.SINGLE);
+        b1.setAtoms(new IAtom[]{a1, a2});
+        b2.setOrder(IBond.Order.SINGLE);
+        b2.setAtoms(new IAtom[]{a2, a3});
+        container.addAtom(a1);
+        container.addAtom(a2);
+        container.addAtom(a3);
+        container.addBond(b1);
+        container.addBond(b2);
+
+        IAtom a4 = container.getBuilder().newAtom();
+        container.setAtom(2, a4);
+        assertThat(b2.getEnd(), is(a4));
+    }
+
+    @Test
+    public void testSetAtomUpdatesSingleElectron() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder bldr   = container.getBuilder();
+        IAtom              a1        = bldr.newAtom();
+        IAtom              a2        = bldr.newAtom();
+        IAtom              a3        = bldr.newAtom();
+        IBond              b1        = bldr.newBond();
+        IBond              b2        = bldr.newBond();
+        a1.setSymbol("C");
+        a2.setSymbol("C");
+        a2.setSymbol("O");
+        b1.setOrder(IBond.Order.SINGLE);
+        b1.setAtoms(new IAtom[]{a1, a2});
+        b2.setOrder(IBond.Order.SINGLE);
+        b2.setAtoms(new IAtom[]{a2, a3});
+        container.addAtom(a1);
+        container.addAtom(a2);
+        container.addAtom(a3);
+        container.addBond(b1);
+        container.addBond(b2);
+        ISingleElectron se = bldr.newInstance(ISingleElectron.class);
+        se.setAtom(a3);
+        container.addSingleElectron(se);
+
+        IAtom a4 = bldr.newAtom();
+        container.setAtom(2, a4);
+
+        assertThat(se.getAtom(), is(a4));
+    }
+
+    @Test
+    public void testSetAtomUpdatesAtomStereo() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder bldr   = container.getBuilder();
+        IAtom              a1        = bldr.newAtom();
+        IAtom              a2        = bldr.newAtom();
+        IAtom              a3        = bldr.newAtom();
+        IAtom              a4        = bldr.newAtom();
+        IAtom              a5        = bldr.newAtom();
+        a1.setSymbol("C");
+        a2.setSymbol("O");
+        a3.setSymbol("Cl");
+        a4.setSymbol("F");
+        a5.setSymbol("C");
+        container.addAtom(a1);
+        container.addAtom(a2);
+        container.addAtom(a3);
+        container.addAtom(a4);
+        container.addAtom(a5);
+        container.addBond(0, 1, IBond.Order.SINGLE);
+        container.addBond(0, 2, IBond.Order.SINGLE);
+        container.addBond(0, 3, IBond.Order.SINGLE);
+        container.addBond(0, 4, IBond.Order.SINGLE);
+        container.addStereoElement(new TetrahedralChirality(container.getAtom(0),
+                                                            new IAtom[]{
+                                                                container.getAtom(1),
+                                                                container.getAtom(2),
+                                                                container.getAtom(3),
+                                                                container.getAtom(4)},
+                                                            ITetrahedralChirality.Stereo.CLOCKWISE));
+
+        IAtom aNew = bldr.newAtom();
+        container.setAtom(2, aNew);
+
+        Iterator<IStereoElement> siter = container.stereoElements().iterator();
+        assertTrue(siter.hasNext());
+        IStereoElement se = siter.next();
+        assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
+        ITetrahedralChirality tc = (ITetrahedralChirality) se;
+        assertThat(tc.getChiralAtom(), is(a1));
+        assertThat(tc.getLigands(), is(new IAtom[]{a2, aNew, a4, a5}));
+        assertFalse(siter.hasNext());
+    }
+
+    @Test
+    public void testSetAtomUpdatesBondStereo() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder bldr   = container.getBuilder();
+        IAtom              a1        = bldr.newAtom();
+        IAtom              a2        = bldr.newAtom();
+        IAtom              a3        = bldr.newAtom();
+        IAtom              a4        = bldr.newAtom();
+        a1.setSymbol("C");
+        a2.setSymbol("C");
+        a3.setSymbol("C");
+        a4.setSymbol("C");
+        container.addAtom(a1);
+        container.addAtom(a2);
+        container.addAtom(a3);
+        container.addAtom(a4);
+        container.addBond(0, 1, IBond.Order.SINGLE);
+        container.addBond(1, 2, IBond.Order.DOUBLE);
+        container.addBond(2, 3, IBond.Order.SINGLE);
+        IBond b1 = container.getBond(0);
+        IBond b2 = container.getBond(1);
+        IBond b3 = container.getBond(2);
+
+        container.addStereoElement(new DoubleBondStereochemistry(b2,
+                                                                 new IBond[]{b1, b3},
+                                                                 IDoubleBondStereochemistry.Conformation.TOGETHER));
+
+        IAtom aNew = bldr.newAtom();
+        container.setAtom(2, aNew);
+
+        assertThat(b2.getEnd(), is(aNew));
+        assertThat(b3.getBegin(), is(aNew));
+
+        Iterator<IStereoElement> siter = container.stereoElements().iterator();
+        assertTrue(siter.hasNext());
+        IStereoElement se = siter.next();
+        assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
+        IDoubleBondStereochemistry tc = (IDoubleBondStereochemistry) se;
+        assertThat(tc.getStereoBond(), is(b2));
+        assertThat(tc.getBonds(), is(new IBond[]{b1, b3}));
+        assertFalse(siter.hasNext());
+    }
+
+    /**
+     * This test we ensure there is backing array and then access the index,
+     * we should get an exception rather than null
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetAtomOutOfBackedArray() {
+        IAtomContainer     mol     = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder = mol.getBuilder();
+        for (int i = 0; i < 10; i++)
+            mol.addAtom(builder.newAtom());
+        for (int i = 9; i >=0; i--)
+            mol.removeAtomOnly(i);
+        mol.getAtom(0); // fail rather than return null
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetAtomOutOfRange() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        mol.getAtom(99999);
+    }
+
+    /**
+     * This test we ensure there is backing array and then access the index,
+     * we should get an exception rather than null
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetBondOutOfRangeBackedArray() {
+        IAtomContainer     mol     = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder = mol.getBuilder();
+        for (int i = 0; i < 10; i++)
+            mol.addAtom(builder.newAtom());
+        for (int i = 0; i < 9; i++)
+            mol.addBond(i, i+1, IBond.Order.SINGLE);
+        for (int i = 8; i >=0; i--)
+            mol.removeBond(i);
+        mol.getBond(0); // fail rather than return null
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetBondOutOfRange() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        mol.getAtom(99999);
     }
 
     @Test
@@ -1166,7 +1375,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(4, counter);
 
         // test force growing of default arrays
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 500; i++) {
             acetone.addAtom(acetone.getBuilder().newInstance(IAtom.class));
             acetone.addBond(acetone.getBuilder().newInstance(IBond.class));
         }
@@ -1187,24 +1396,24 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         Iterator<IAtom> atomIter = acetone.atoms().iterator();
         Assert.assertNotNull(atomIter);
-        Assert.assertTrue(atomIter.hasNext());
+        assertTrue(atomIter.hasNext());
         IAtom next = (IAtom) atomIter.next();
-        Assert.assertTrue(next instanceof IAtom);
+        assertTrue(next instanceof IAtom);
         Assert.assertEquals(c1, next);
-        Assert.assertTrue(atomIter.hasNext());
+        assertTrue(atomIter.hasNext());
         next = (IAtom) atomIter.next();
-        Assert.assertTrue(next instanceof IAtom);
+        assertTrue(next instanceof IAtom);
         Assert.assertEquals(c2, next);
-        Assert.assertTrue(atomIter.hasNext());
+        assertTrue(atomIter.hasNext());
         next = (IAtom) atomIter.next();
-        Assert.assertTrue(next instanceof IAtom);
+        assertTrue(next instanceof IAtom);
         Assert.assertEquals(c3, next);
-        Assert.assertTrue(atomIter.hasNext());
+        assertTrue(atomIter.hasNext());
         next = (IAtom) atomIter.next();
-        Assert.assertTrue(next instanceof IAtom);
+        assertTrue(next instanceof IAtom);
         Assert.assertEquals(o, next);
 
-        Assert.assertFalse(atomIter.hasNext());
+        assertFalse(atomIter.hasNext());
     }
 
     @Test
@@ -1229,21 +1438,21 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         Iterator<IBond> bonds = acetone.bonds().iterator();
         Assert.assertNotNull(bonds);
-        Assert.assertTrue(bonds.hasNext());
+        assertTrue(bonds.hasNext());
 
         IBond next = (IBond) bonds.next();
-        Assert.assertTrue(next instanceof IBond);
+        assertTrue(next instanceof IBond);
         Assert.assertEquals(bond1, next);
 
         next = (IBond) bonds.next();
-        Assert.assertTrue(next instanceof IBond);
+        assertTrue(next instanceof IBond);
         Assert.assertEquals(bond2, next);
 
         next = (IBond) bonds.next();
-        Assert.assertTrue(next instanceof IBond);
+        assertTrue(next instanceof IBond);
         Assert.assertEquals(bond3, next);
 
-        Assert.assertFalse(bonds.hasNext());
+        assertFalse(bonds.hasNext());
     }
 
     @Test
@@ -1272,17 +1481,17 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         Iterator<ILonePair> lonePairs = acetone.lonePairs().iterator();
         Assert.assertNotNull(lonePairs);
-        Assert.assertTrue(lonePairs.hasNext());
+        assertTrue(lonePairs.hasNext());
 
         ILonePair next = (ILonePair) lonePairs.next();
-        Assert.assertTrue(next instanceof ILonePair);
+        assertTrue(next instanceof ILonePair);
         Assert.assertEquals(lp1, next);
 
         next = (ILonePair) lonePairs.next();
-        Assert.assertTrue(next instanceof ILonePair);
+        assertTrue(next instanceof ILonePair);
         Assert.assertEquals(lp2, next);
 
-        Assert.assertFalse(lonePairs.hasNext());
+        assertFalse(lonePairs.hasNext());
     }
 
     @Test
@@ -1311,17 +1520,17 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         Iterator<ISingleElectron> singleElectrons = acetone.singleElectrons().iterator();
         Assert.assertNotNull(singleElectrons);
-        Assert.assertTrue(singleElectrons.hasNext());
+        assertTrue(singleElectrons.hasNext());
 
         ISingleElectron next = (ISingleElectron) singleElectrons.next();
-        Assert.assertTrue(next instanceof ISingleElectron);
+        assertTrue(next instanceof ISingleElectron);
         Assert.assertEquals(se1, next);
 
         next = (ISingleElectron) singleElectrons.next();
-        Assert.assertTrue(next instanceof ISingleElectron);
+        assertTrue(next instanceof ISingleElectron);
         Assert.assertEquals(se2, next);
 
-        Assert.assertFalse(singleElectrons.hasNext());
+        assertFalse(singleElectrons.hasNext());
     }
 
     @Test
@@ -1354,26 +1563,26 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         Iterator<IElectronContainer> electronContainers = acetone.electronContainers().iterator();
         Assert.assertNotNull(electronContainers);
-        Assert.assertTrue(electronContainers.hasNext());
+        assertTrue(electronContainers.hasNext());
         electronContainers.next();
         electronContainers.next();
         IElectronContainer ec = (IElectronContainer) electronContainers.next();
-        Assert.assertTrue(ec instanceof IBond);
+        assertTrue(ec instanceof IBond);
         Assert.assertEquals(bond3, ec);
         electronContainers.next();
         ILonePair lp = (ILonePair) electronContainers.next();
-        Assert.assertTrue(lp instanceof ILonePair);
+        assertTrue(lp instanceof ILonePair);
         Assert.assertEquals(lp2, lp);
         electronContainers.remove();
         ISingleElectron se = (ISingleElectron) electronContainers.next();
-        Assert.assertTrue(se instanceof ISingleElectron);
+        assertTrue(se instanceof ISingleElectron);
         Assert.assertEquals(se1, se);
-        Assert.assertTrue(electronContainers.hasNext());
+        assertTrue(electronContainers.hasNext());
         se = (ISingleElectron) electronContainers.next();
-        Assert.assertTrue(se instanceof ISingleElectron);
+        assertTrue(se instanceof ISingleElectron);
         Assert.assertEquals(se2, se);
 
-        Assert.assertFalse(electronContainers.hasNext());
+        assertFalse(electronContainers.hasNext());
     }
 
     @Test
@@ -1389,10 +1598,10 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addAtom(c3);
         acetone.addAtom(o);
 
-        Assert.assertTrue(acetone.contains(c1));
-        Assert.assertTrue(acetone.contains(c2));
-        Assert.assertTrue(acetone.contains(o));
-        Assert.assertTrue(acetone.contains(c3));
+        assertTrue(acetone.contains(c1));
+        assertTrue(acetone.contains(c2));
+        assertTrue(acetone.contains(o));
+        assertTrue(acetone.contains(c3));
     }
 
     @Test
@@ -1472,6 +1681,92 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getMinimumBondOrder(c1));
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getMinimumBondOrder(c2));
         Assert.assertEquals(IBond.Order.SINGLE, acetone.getMinimumBondOrder(c3));
+    }
+
+    @Test
+    public void testGetMinBondOrderHighBondOrder() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        container.addAtom(builder.newAtom());
+        container.addAtom(builder.newAtom());
+        container.addBond(0, 1, IBond.Order.SEXTUPLE);
+        assertThat(container.getMinimumBondOrder(container.getAtom(0)),
+                   is(IBond.Order.SEXTUPLE));
+    }
+
+    @Test
+    public void testGetMinBondOrderNoBonds() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.addAtom(atom);
+        assertThat(container.getMinimumBondOrder(atom),
+                   is(IBond.Order.UNSET));
+    }
+
+    @Test
+    public void testGetMinBondOrderImplH() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              a      = builder.newAtom();
+        a.setImplicitHydrogenCount(1);
+        container.addAtom(a);
+        assertThat(container.getMinimumBondOrder(a),
+                   is(IBond.Order.SINGLE));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetMinBondOrderNoSuchAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              a1      = builder.newAtom();
+        IAtom              a2      = builder.newAtom();
+        container.addAtom(a1);
+        assertThat(container.getMinimumBondOrder(a2),
+                   is(IBond.Order.UNSET));
+    }
+
+    @Test
+    public void testGetMaxBondOrderHighBondOrder() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        container.addAtom(builder.newAtom());
+        container.addAtom(builder.newAtom());
+        container.addBond(0, 1, IBond.Order.SEXTUPLE);
+        assertThat(container.getMaximumBondOrder(container.getAtom(0)),
+                   is(IBond.Order.SEXTUPLE));
+    }
+
+    @Test
+    public void testGetMaxBondOrderNoBonds() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.addAtom(atom);
+        assertThat(container.getMaximumBondOrder(atom),
+                   is(IBond.Order.UNSET));
+    }
+
+    @Test
+    public void testGetMaxBondOrderImplH() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              a      = builder.newAtom();
+        a.setImplicitHydrogenCount(1);
+        container.addAtom(a);
+        assertThat(container.getMaximumBondOrder(a),
+                   is(IBond.Order.SINGLE));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetMaxBondOrderNoSuchAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              a1      = builder.newAtom();
+        IAtom              a2      = builder.newAtom();
+        container.addAtom(a1);
+        assertThat(container.getMaximumBondOrder(a2),
+                   is(IBond.Order.UNSET));
     }
 
     @Test
@@ -1776,11 +2071,11 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addLonePair(lp1);
         acetone.addLonePair(lp2);
 
-        Assert.assertTrue(acetone.contains(b1));
-        Assert.assertTrue(acetone.contains(b2));
-        Assert.assertTrue(acetone.contains(b3));
-        Assert.assertTrue(acetone.contains(lp1));
-        Assert.assertTrue(acetone.contains(lp2));
+        assertTrue(acetone.contains(b1));
+        assertTrue(acetone.contains(b2));
+        assertTrue(acetone.contains(b3));
+        assertTrue(acetone.contains(lp1));
+        assertTrue(acetone.contains(lp2));
     }
 
     @Test
@@ -2143,12 +2438,12 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.addStereoElement(stereoElement);
 
         Iterator<IStereoElement> stereoElements = container.stereoElements().iterator();
-        Assert.assertTrue(stereoElements.hasNext());
+        assertTrue(stereoElements.hasNext());
         IStereoElement element = stereoElements.next();
         Assert.assertNotNull(element);
-        Assert.assertTrue(element instanceof ITetrahedralChirality);
+        assertTrue(element instanceof ITetrahedralChirality);
         Assert.assertEquals(carbon, ((ITetrahedralChirality) element).getChiralAtom());
-        Assert.assertFalse(stereoElements.hasNext());
+        assertFalse(stereoElements.hasNext());
     }
 
     /** Test for RFC #9 */
@@ -2157,8 +2452,8 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         IAtomContainer container = (IAtomContainer) newChemObject();
         String description = container.toString();
         for (int i = 0; i < description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
         }
     }
 
@@ -2170,13 +2465,13 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         chemObject.addListener(listener);
 
         chemObject.addAtom(chemObject.getBuilder().newInstance(IAtom.class));
-        Assert.assertTrue(listener.changed);
+        assertTrue(listener.changed);
 
         listener.reset();
-        Assert.assertFalse(listener.changed);
+        assertFalse(listener.changed);
         chemObject.addBond(chemObject.getBuilder().newInstance(IBond.class,
                 chemObject.getBuilder().newInstance(IAtom.class), chemObject.getBuilder().newInstance(IAtom.class)));
-        Assert.assertTrue(listener.changed);
+        assertTrue(listener.changed);
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
@@ -2304,8 +2599,8 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         IBond b1 = acetone.getBuilder().newInstance(IBond.class, c, o, IBond.Order.DOUBLE);
         acetone.addBond(b1);
         IBond falseBond = acetone.getBuilder().newInstance(IBond.class);
-        Assert.assertTrue(acetone.contains(b1));
-        Assert.assertFalse(acetone.contains(falseBond));
+        assertTrue(acetone.contains(b1));
+        assertFalse(acetone.contains(falseBond));
     }
 
     @Test
@@ -2323,11 +2618,11 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         ISingleElectron singleElectron = singles.next();
         Assert.assertNotNull(singleElectron);
         Assert.assertEquals(c1, singleElectron.getAtom());
-        Assert.assertTrue(singleElectron.contains(c1));
+        assertTrue(singleElectron.contains(c1));
         singleElectron = singles.next();
         Assert.assertNotNull(singleElectron);
         Assert.assertEquals(c1, singleElectron.getAtom());
-        Assert.assertTrue(singleElectron.contains(c1));
+        assertTrue(singleElectron.contains(c1));
     }
 
     @Test
@@ -2500,8 +2795,8 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         acetone.addBond(b2);
         acetone.addLonePair(1);
         acetone.addLonePair(1);
-        Assert.assertTrue(acetone.getElectronContainer(2) instanceof IBond);
-        Assert.assertTrue(acetone.getElectronContainer(4) instanceof ILonePair);
+        assertTrue(acetone.getElectronContainer(2) instanceof IBond);
+        assertTrue(acetone.getElectronContainer(4) instanceof ILonePair);
     }
 
     @Test
@@ -2589,8 +2884,8 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         ILonePair lp = mol.getBuilder().newInstance(ILonePair.class, c1);
         mol.addLonePair(lp);
         ILonePair lp1 = mol.getBuilder().newInstance(ILonePair.class, c);
-        Assert.assertTrue(mol.contains(lp));
-        Assert.assertFalse(mol.contains(lp1));
+        assertTrue(mol.contains(lp));
+        assertFalse(mol.contains(lp1));
     }
 
     @Test
@@ -2603,8 +2898,8 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         ISingleElectron se = mol.getBuilder().newInstance(ISingleElectron.class, c1);
         mol.addSingleElectron(se);
         ISingleElectron se1 = mol.getBuilder().newInstance(ISingleElectron.class, c1);
-        Assert.assertTrue(mol.contains(se));
-        Assert.assertFalse(mol.contains(se1));
+        assertTrue(mol.contains(se));
+        assertFalse(mol.contains(se1));
     }
 
     @Test
@@ -2612,7 +2907,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
         IAtomContainer container = (IAtomContainer) newChemObject();
 
-        Assert.assertTrue("new atom container was not empty", container.isEmpty());
+        assertTrue("new atom container was not empty", container.isEmpty());
 
         IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
         IAtom c2 = container.getBuilder().newInstance(IAtom.class, "C");
@@ -2620,19 +2915,89 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.addAtom(c1);
         container.addAtom(c2);
 
-        Assert.assertFalse("atom container contains 2 atoms but was empty", container.isEmpty());
+        assertFalse("atom container contains 2 atoms but was empty", container.isEmpty());
 
         container.addBond(container.getBuilder().newInstance(IBond.class, c1, c2));
 
-        Assert.assertFalse("atom container contains 2 atoms and 1 bond but was empty", container.isEmpty());
+        assertFalse("atom container contains 2 atoms and 1 bond but was empty", container.isEmpty());
 
-        container.removeAtom(c1);
-        container.removeAtom(c2);
+        container.removeAtomOnly(c1);
+        container.removeAtomOnly(c2);
 
         Assert.assertThat("atom contains contains no bonds", container.getBondCount(), CoreMatchers.is(1));
 
-        Assert.assertTrue("atom contains contains no atoms but was not empty", container.isEmpty());
+        assertTrue("atom contains contains no atoms but was not empty", container.isEmpty());
 
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedBondsMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedBondsList(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedAtomsMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedAtomsList(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedAtomCountMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedAtomsCount(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedBondCountMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedBondsCount(atom);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetConnectedBondCountMissingIdx() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        container.getConnectedBondsCount(0);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedLongPairsMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedLonePairsList(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedSingleElecsMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedSingleElectronsList(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedLongPairCountMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedLonePairsCount(atom);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testGetConnectedSingleElecCountMissingAtom() {
+        IAtomContainer     container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder   = container.getBuilder();
+        IAtom              atom      = builder.newAtom();
+        container.getConnectedSingleElectronsCount(atom);
     }
 
 }

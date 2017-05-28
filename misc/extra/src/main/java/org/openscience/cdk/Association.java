@@ -96,6 +96,7 @@ public class Association extends ElectronContainer implements java.io.Serializab
      */
     public void setAtoms(IAtom[] atoms) {
         this.atoms = atoms;
+        this.atomCount = atoms.length;
         notifyChanged();
     }
 
@@ -137,8 +138,8 @@ public class Association extends ElectronContainer implements java.io.Serializab
      * @return     true if the atom participates in this Association
      */
     public boolean contains(IAtom atom) {
-        for (IAtom atom1 : atoms) {
-            if (atom1 == atom) {
+        for (int i = 0; i < atomCount; i++) {
+            if (atoms[i].equals(atom)) {
                 return true;
             }
         }

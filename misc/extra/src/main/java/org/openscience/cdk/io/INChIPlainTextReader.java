@@ -40,7 +40,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
 
 /**
  * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) plain text

@@ -107,7 +107,7 @@ public class AtomContainerManipulator {
         for (int index = 0; index < numberOfAtoms; index++) {
             if (Arrays.binarySearch(atomIndices, index) < 0) {
                 IAtom atom = atoms[index];
-                substructure.removeAtomAndConnectedElectronContainers(atom);
+                substructure.removeAtom(atom);
             }
         }
 
@@ -139,43 +139,14 @@ public class AtomContainerManipulator {
      * @return whether replacement was made
      */
     public static boolean replaceAtomByAtom(final IAtomContainer container, final IAtom oldAtom, final IAtom newAtom) {
-
-        Map<IAtom,IAtom> atomremap = new HashMap<>();
-
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            IAtom atom = container.getAtom(i);
-            if (atom == oldAtom) {
-                container.setAtom(i, newAtom);
-                atomremap.put(oldAtom, newAtom);
-            } else {
-                if (atom == newAtom)
-                    throw new IllegalArgumentException("Cannot replace atom with one from the same molecule.");
-                atomremap.put(atom, atom);
-            }
-        }
-
-        if (!atomremap.containsKey(oldAtom))
+        if (oldAtom == null)
+            throw new NullPointerException("Atom to be replaced was null!");
+        if (newAtom == null)
+            throw new NullPointerException("Replacement atom was null!");
+        final int idx = container.indexOf(oldAtom);
+        if (idx < 0)
             return false;
-
-        Map<IBond,IBond> bondremap = new HashMap<>();
-        for (IBond bond : container.bonds()) {
-            bondremap.put(bond, bond);
-            for (int i = 0; i < bond.getAtomCount(); i++)
-                if (bond.getAtom(i) == oldAtom)
-                    bond.setAtom(newAtom, i);
-        }
-        for (ISingleElectron ec : container.singleElectrons())
-            if (ec.getAtom() == oldAtom)
-                ec.setAtom(newAtom);
-        for (ILonePair lp : container.lonePairs())
-            if (lp.getAtom() == oldAtom)
-                lp.setAtom(newAtom);
-
-        List<IStereoElement> stereoremapped = new ArrayList<>();
-        for (IStereoElement se : container.stereoElements())
-            stereoremapped.add(se.map(atomremap, bondremap));
-        container.setStereoElements(stereoremapped);
-
+        container.setAtom(idx, newAtom);
         List<Sgroup> sgrougs = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgrougs != null) {
             boolean updated = false;
@@ -185,7 +156,7 @@ public class AtomContainerManipulator {
                     updated = true;
                     Sgroup cpy = new Sgroup();
                     for (IAtom atom : org.getAtoms()) {
-                        if (atom != oldAtom)
+                        if (!oldAtom.equals(atom))
                             cpy.addAtom(atom);
                         else
                             cpy.addAtom(newAtom);
@@ -563,7 +534,7 @@ public class AtomContainerManipulator {
                             if (bondStereo != null && bondStereo != IBond.Stereo.NONE) addToRemove = false;
                             IAtom neighboursNeighbour = bond.getOther(neighbour);
                             // remove in any case if the hetero atom is connected to more than one hydrogen
-                            if (neighboursNeighbour.getSymbol().equals("H") && neighboursNeighbour != atom) {
+                            if (neighboursNeighbour.getSymbol().equals("H") && !neighboursNeighbour.equals(atom)) {
                                 addToRemove = true;
                                 break;
                             }
@@ -833,7 +804,7 @@ public class AtomContainerManipulator {
         if (org.getSingleElectronCount() > 0) {
             Set<ISingleElectron> remove = new HashSet<ISingleElectron>();
             for (ISingleElectron se : org.singleElectrons()) {
-                if (!hydrogens.contains(se.getAtom())) remove.add(se);
+                if (hydrogens.contains(se.getAtom())) remove.add(se);
             }
             for (ISingleElectron se : remove) {
                 org.removeSingleElectron(se);
@@ -843,7 +814,7 @@ public class AtomContainerManipulator {
         if (org.getLonePairCount() > 0) {
             Set<ILonePair> remove = new HashSet<ILonePair>();
             for (ILonePair lp : org.lonePairs()) {
-                if (!hydrogens.contains(lp.getAtom())) remove.add(lp);
+                if (hydrogens.contains(lp.getAtom())) remove.add(lp);
             }
             for (ILonePair lp : remove) {
                 org.removeLonePair(lp);

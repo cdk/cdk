@@ -48,6 +48,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @cdk.require java1.4+
  */
+@Deprecated
 public class INChIHandler extends DefaultHandler {
 
     private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);

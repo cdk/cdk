@@ -21,7 +21,6 @@ package org.openscience.cdk.exception;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.CDKTestCase;
 
 /**

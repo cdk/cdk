@@ -158,7 +158,7 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
                     if (atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER)
                             && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
-                            && !atoml.equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
+                            && !atoml.getSymbol().equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         Iterator<IAtom> atomRs = reactant.getConnectedAtomsList(atoml).iterator();
                         while (atomRs.hasNext()) {
@@ -197,10 +197,10 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
 
     /**
      * set the active center for this molecule.
-     * The active center will be those which correspond with [A*]-(C)_2-C3[R]
+     * The active center will be those which correspond with [A*]-(C)_3-C4[R]
      * <pre>
      * C: Atom with single electron
-     * C5: Atom with the R to move
+     * C4: Atom with the R to move
      *  </pre>
      *
      * @param reactant The molecule to set the activity
@@ -222,7 +222,7 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
                     IAtom atoml = atomls.next();
                     if (atoml != null && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
-                            && !atoml.equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
+                            && !atoml.getSymbol().equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         Iterator<IAtom> atomRs = reactant.getConnectedAtomsList(atoml).iterator();
                         while (atomRs.hasNext()) {

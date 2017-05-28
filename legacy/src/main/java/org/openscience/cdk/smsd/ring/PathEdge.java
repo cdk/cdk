@@ -92,11 +92,11 @@ public class PathEdge {
         IAtom intersection = getIntersection(other.atoms);
         List<IAtom> newAtoms = new ArrayList<IAtom>(atoms);
 
-        if (atoms.get(0) == intersection) {
+        if (atoms.get(0).equals(intersection)) {
             Collections.reverse(newAtoms);
         }
 
-        if (other.atoms.get(0) == intersection) {
+        if (other.atoms.get(0).equals(intersection)) {
             for (int i = 1; i < other.atoms.size(); i++) {
                 newAtoms.add(other.atoms.get(i));
             }

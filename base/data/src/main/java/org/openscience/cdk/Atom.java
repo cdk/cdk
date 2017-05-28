@@ -30,6 +30,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Represents the idea of an chemical atom.
@@ -415,10 +416,11 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             return false;
         }
         Atom atom = (Atom) object;
+        // XXX: floating point comparision!
         if (((point2d == atom.point2d) || ((point2d != null) && (point2d.equals(atom.point2d))))
-                && ((point3d == atom.point3d) || ((point3d != null) && (point3d.equals(atom.point3d))))
-                && (hydrogenCount == atom.hydrogenCount) && (stereoParity == atom.stereoParity)
-                && (charge == atom.charge)) {
+            && ((point3d == atom.point3d) || ((point3d != null) && (point3d.equals(atom.point3d))))
+            && (Objects.equals(hydrogenCount, atom.hydrogenCount)) && (Objects.equals(stereoParity, atom.stereoParity))
+            && (Objects.equals(charge, atom.charge))) {
             return true;
         }
         return false;

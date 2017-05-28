@@ -463,7 +463,7 @@ public class PharmacophoreMatcher {
                     for (int j = 0; j < unique.size(); j++) {
                         if (i == j) continue;
                         IAtom[] seq2 = unique.get(j);
-                        if (seq1[1] == seq2[1] && seq1[0] == seq2[2] && seq1[2] == seq2[0]) {
+                        if (seq1[1].equals(seq2[1]) && seq1[0].equals(seq2[2]) && seq1[2].equals(seq2[0])) {
                             isRepeat = true;
                         }
                     }

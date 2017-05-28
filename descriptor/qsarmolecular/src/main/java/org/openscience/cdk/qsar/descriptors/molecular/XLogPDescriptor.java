@@ -1287,7 +1287,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
             bonds = ac.getConnectedBondsList(neighbour);
             for (int j = 0; j < bonds.size(); j++) {
                 IBond bond = (IBond) bonds.get(j);
-                if (bond.getOrder() != IBond.Order.SINGLE && bond.getOther(neighbour) != atom
+                if (bond.getOrder() != IBond.Order.SINGLE && !bond.getOther(neighbour).equals(atom)
                         && !neighbour.getSymbol().equals("P") && !neighbour.getSymbol().equals("S")) {
                     picounter += 1;
                 }/*

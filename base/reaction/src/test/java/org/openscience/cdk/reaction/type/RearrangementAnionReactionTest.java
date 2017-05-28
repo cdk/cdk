@@ -31,9 +31,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
@@ -133,14 +130,12 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         Assert.assertEquals(-1, product.getAtom(2).getFormalCharge().intValue());
-        Assert.assertEquals(0, product.getConnectedLonePairsCount(molecule.getAtom(1)));
+        Assert.assertEquals(0, product.getConnectedLonePairsCount(product.getAtom(1)));
 
         /* C=C-[C-]-C */
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
-
+        assertEquals(molecule2, product);
     }
 
     /**
@@ -183,9 +178,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         /* C=C-[C-]-C */
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
-
+        assertEquals(molecule2, product);
     }
 
     /**
@@ -343,8 +336,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
         lpcheck.saturate(molecule2);
         makeSureAtomTypesAreRecognized(molecule2);
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
+        assertEquals(molecule2, product1);
 
         //////////////////////////////////////////////////
 
@@ -371,8 +363,7 @@ public class RearrangementAnionReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule3);
         lpcheck.saturate(molecule3);
         makeSureAtomTypesAreRecognized(molecule3);
-        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule3, queryAtom));
+        assertEquals(molecule3, product2);
 
         Assert.assertEquals(12, setOfReactions.getReaction(0).getMappingCount());
     }

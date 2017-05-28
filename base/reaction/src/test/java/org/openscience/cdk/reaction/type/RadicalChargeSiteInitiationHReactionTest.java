@@ -32,9 +32,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
@@ -100,17 +97,14 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         /* [O+]=CC */
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1, queryAtom));
+        assertEquals(molecule1, product1);
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 
         /* [H*] */
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(1);
 
-        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
-
+        assertEquals(molecule2, product2);
     }
 
     /**
@@ -147,15 +141,12 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1, queryAtom));
+        assertEquals(molecule1, product1);
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(1);
 
-        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
-
+        assertEquals(molecule2, product2);
     }
 
     /**
@@ -273,6 +264,12 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         molecule.addSingleElectron(new SingleElectron(atom));
 
         try {
+            addExplicitHydrogens(molecule);
+        } catch (Exception e) {
+            // ignored
+        }
+
+        try {
             makeSureAtomTypesAreRecognized(molecule);
         } catch (CDKException e) {
             e.printStackTrace();
@@ -315,6 +312,13 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
         molecule2.addAtom(new Atom("H"));
         molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
         setOfProducts.addAtomContainer(molecule2);
+
+        try {
+            addExplicitHydrogens(molecule);
+            addExplicitHydrogens(molecule2);
+        } catch (Exception e) {
+            // ignored
+        }
 
         return setOfProducts;
     }

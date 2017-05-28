@@ -79,7 +79,7 @@ public class PartialFilledStructureMerger {
                 for (IAtomContainer ac : atomContainers.atomContainers()) {
                     for (IAtom atom : AtomContainerManipulator.getAtomArray(ac)) {
                         if (!satCheck.isSaturated(atom, ac)) {
-                            IAtom partner = getAnotherUnsaturatedNode(atom, atomContainers);
+                            IAtom partner = getAnotherUnsaturatedNode(atom, ac, atomContainers);
                             if (partner != null) {
                                 IAtomContainer toadd = AtomContainerSetManipulator.getRelevantAtomContainer(
                                         atomContainers, partner);
@@ -120,31 +120,32 @@ public class PartialFilledStructureMerger {
      *
      * @return  The unsaturated atom.
      */
-    private IAtom getAnotherUnsaturatedNode(IAtom exclusionAtom, IAtomContainerSet atomContainers) throws CDKException {
+    private IAtom getAnotherUnsaturatedNode(IAtom exclusionAtom,
+                                            IAtomContainer exclusionAtomContainer,
+                                            IAtomContainerSet atomContainers) throws CDKException {
         IAtom atom;
 
         for (IAtomContainer ac : atomContainers.atomContainers()) {
-            if (!ac.contains(exclusionAtom)) {
+            if (ac != exclusionAtomContainer) {
                 int next = 0;//(int) (Math.random() * ac.getAtomCount());
                 for (int f = next; f < ac.getAtomCount(); f++) {
                     atom = ac.getAtom(f);
-                    if (!satCheck.isSaturated(atom, ac) && exclusionAtom != atom
-                            && !ac.getConnectedAtomsList(exclusionAtom).contains(atom)) {
+                    if (!satCheck.isSaturated(atom, ac) && exclusionAtom != atom) {
                         return atom;
                     }
                 }
             }
         }
-        for (IAtomContainer ac : atomContainers.atomContainers()) {
-            int next = ac.getAtomCount();//(int) (Math.random() * ac.getAtomCount());
-            for (int f = 0; f < next; f++) {
-                atom = ac.getAtom(f);
-                if (!satCheck.isSaturated(atom, ac) && exclusionAtom != atom
-                        && !ac.getConnectedAtomsList(exclusionAtom).contains(atom)) {
-                    return atom;
-                }
+
+        int next = exclusionAtomContainer.getAtomCount();//(int) (Math.random() * ac.getAtomCount());
+        for (int f = 0; f < next; f++) {
+            atom = exclusionAtomContainer.getAtom(f);
+            if (!satCheck.isSaturated(atom, exclusionAtomContainer) && exclusionAtom != atom
+                && !exclusionAtomContainer.getConnectedAtomsList(exclusionAtom).contains(atom)) {
+                return atom;
             }
         }
+
         return null;
     }
 

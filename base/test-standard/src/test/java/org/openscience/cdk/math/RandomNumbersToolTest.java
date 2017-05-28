@@ -19,6 +19,7 @@
 package org.openscience.cdk.math;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.SlowTest;
@@ -127,8 +128,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
         Assert.assertTrue(random == 0 || random == 1 || random == 2 || random == 3 || random == 4 || random == 5);
     }
 
-    @Category(SlowTest.class)
-    @Test
+    @Ignore("Test based on random probability - random failures")
     public void testFlipCoin() {
         int ntry = 1000000;
         double p = 0.5;
@@ -144,7 +144,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
         Assert.assertEquals(0.5, (double) nfalse / ntry, 0.001);
     }
 
-    @Test
+    @Ignore("Test based on random probability - random failures")
     public void testGaussianFloat() {
         float dev = (float) 1.0;
         float epsilon = 0.01f;
@@ -168,7 +168,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
                 && sd <= (dev + epsilon));
     }
 
-    @Test
+    @Ignore("Test based on random probability - random failures")
     public void testGaussianDouble() {
         double dev = 2.0;
         double epsilon = 0.01;
@@ -191,7 +191,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
                 && sd <= (dev + epsilon));
     }
 
-    @Test
+    @Ignore("Test based on random probability - random failures")
     public void testExponentialDouble() {
         double mean = 1.0f;
         double epsilon = 0.01f;

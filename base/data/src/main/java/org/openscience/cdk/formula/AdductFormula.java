@@ -21,6 +21,7 @@ package org.openscience.cdk.formula;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAdductFormula;
@@ -342,10 +343,10 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      * @return             True, if both isotope are the same
      */
     private boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
-
-        if (isotopeOne.getSymbol() != isotopeTwo.getSymbol()) return false;
-        if (isotopeOne.getNaturalAbundance() != isotopeTwo.getNaturalAbundance()) return false;
-        if (isotopeOne.getExactMass() != isotopeTwo.getExactMass()) return false;
+        // XXX: floating point comparision!
+        if (!Objects.equals(isotopeOne.getSymbol(), isotopeTwo.getSymbol())) return false;
+        if (!Objects.equals(isotopeOne.getNaturalAbundance(), isotopeTwo.getNaturalAbundance())) return false;
+        if (!Objects.equals(isotopeOne.getExactMass(), isotopeTwo.getExactMass())) return false;
 
         return true;
     }

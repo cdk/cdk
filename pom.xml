@@ -8,7 +8,7 @@
     <artifactId>cdk</artifactId>
     <name>cdk</name>
     <description>Modular library for Cheminformatics</description>
-    <version>2.0-SNAPSHOT</version>
+    <version>2.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://sourceforge.net/projects/cdk/</url>
 
@@ -323,6 +323,9 @@
             <name>Paul Turner</name>
         </contributor>
         <contributor>
+            <name>Kazuya Ujihara</name>
+        </contributor>
+        <contributor>
             <name>Mark B Vine</name>
         </contributor>
         <contributor>
@@ -438,7 +441,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.16</version>
+                <version>2.20</version>
                 <configuration>
                     <excludes>
                         <!-- not a test class -->

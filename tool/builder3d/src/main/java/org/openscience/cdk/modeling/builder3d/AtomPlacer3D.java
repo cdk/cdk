@@ -537,7 +537,7 @@ public class AtomPlacer3D {
         List<IBond> bonds = molecule.getConnectedBondsList(atomA);
         for (IBond bond : bonds) {
             IAtom connectedAtom = bond.getOther(atomA);
-            if (isPlacedHeavyAtom(connectedAtom) && connectedAtom != atomB) {
+            if (isPlacedHeavyAtom(connectedAtom) && !connectedAtom.equals(atomB)) {
                 return connectedAtom;
             }
         }

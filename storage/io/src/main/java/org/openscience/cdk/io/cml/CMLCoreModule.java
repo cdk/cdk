@@ -1611,7 +1611,7 @@ public class CMLCoreModule implements ICMLModule {
 
                 if (aroms.hasNext()) {
                     Object nextArom = aroms.next();
-                    if (nextArom != null && nextArom == Boolean.TRUE) {
+                    if (nextArom != null && ((boolean) nextArom)) {
                         currentBond.setFlag(CDKConstants.ISAROMATIC, true);
                     }
                 }

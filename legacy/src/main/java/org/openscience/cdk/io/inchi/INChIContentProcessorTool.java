@@ -18,14 +18,14 @@
  */
 package org.openscience.cdk.io.inchi;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Tool to help process INChI 1.12beta content.
@@ -33,6 +33,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module extra
  * @cdk.githash
  */
+@Deprecated
 public class INChIContentProcessorTool {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class); ;

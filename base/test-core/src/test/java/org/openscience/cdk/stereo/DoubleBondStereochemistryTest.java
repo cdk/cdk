@@ -265,9 +265,8 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         // map the existing element a new element - should through an IllegalArgumentException
         IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
 
-        Assert.assertNull(mapped.getStereoBond());
-        Assert.assertNull(mapped.getBonds()[0]);
-        Assert.assertNull(mapped.getBonds()[1]);
+        Assert.assertThat(mapped.getStereoBond(), is(original.getStereoBond()));
+        Assert.assertThat(mapped.getBonds(), is(original.getBonds()));
         Assert.assertNotNull(mapped.getStereo());
 
     }

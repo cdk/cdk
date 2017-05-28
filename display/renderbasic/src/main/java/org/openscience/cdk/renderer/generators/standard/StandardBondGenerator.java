@@ -710,13 +710,13 @@ final class StandardBondGenerator {
         if (bond.getStereo() == null) return false;
         switch (bond.getStereo()) {
             case UP:
-                return bond.getEnd() == atom;
+                return bond.getEnd().equals(atom);
             case UP_INVERTED:
-                return bond.getBegin() == atom;
+                return bond.getBegin().equals(atom);
             case DOWN:
-                return bond.getEnd() == atom;
+                return bond.getEnd().equals(atom);
             case DOWN_INVERTED:
-                return bond.getBegin() == atom;
+                return bond.getBegin().equals(atom);
             default:
                 return false;
         }

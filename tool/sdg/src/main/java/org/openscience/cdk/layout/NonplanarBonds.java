@@ -290,7 +290,7 @@ final class NonplanarBonds {
         if (p == 0) return;
 
         for (int i = 0; i < 4; i++) {
-            if (atoms[i] == focus) {
+            if (atoms[i].equals(focus)) {
                 p *= parity(i); // implicit H, adjust parity
             } else {
                 bonds[n] = container.getBond(focus, atoms[i]);
@@ -719,8 +719,8 @@ final class NonplanarBonds {
                 continue;
 
             // stereo bond, ignore it depiction is correct
-            if ((doubleBondElements[beg] != null && doubleBondElements[beg].getStereoBond() == bond) ||
-                    (doubleBondElements[end] != null && doubleBondElements[end].getStereoBond() == bond))
+            if ((doubleBondElements[beg] != null && doubleBondElements[beg].getStereoBond().equals(bond)) ||
+                    (doubleBondElements[end] != null && doubleBondElements[end].getStereoBond().equals(bond)))
                 continue;
 
             // is actually a tetrahedral centre
@@ -839,7 +839,7 @@ final class NonplanarBonds {
             IBond adjBond = edgeToBond.get(v, neighbor);
             // non single bonds
             if (adjBond.getOrder().numeric() > 1) {
-                if (allowedDoubleBond != adjBond) {
+                if (!allowedDoubleBond.equals(adjBond)) {
                     return false;
                 }
             }

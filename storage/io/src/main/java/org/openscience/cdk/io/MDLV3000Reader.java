@@ -581,7 +581,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                                                                 original);
                             }
                             ((IPseudoAtom) replacement).setLabel(label);
-                            if (replacement != original)
+                            if (!replacement.equals(original))
                                 AtomContainerManipulator.replaceAtomByAtom(readData, original, replacement);
                         }
                     }

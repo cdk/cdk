@@ -182,7 +182,7 @@ public class RingSetManipulator {
                     if (ring1 != ring2) {
                         for (int l = 0; l < ring2.getAtomCount(); l++) {
                             atom2 = ring2.getAtom(l);
-                            if (atom1 == atom2) {
+                            if (atom1.equals(atom2)) {
                                 neighbors[i]++;
                                 neighbors[k]++;
                                 break;
@@ -249,7 +249,7 @@ public class RingSetManipulator {
             if (ring.getBondCount() == newRing.getBondCount()) {
                 for (IBond newBond : newRing.bonds()) {
                     for (IBond bond : ring.bonds()) {
-                        if (newBond == bond) {
+                        if (newBond.equals(bond)) {
                             equals = true;
                             equalCount++;
                             break;

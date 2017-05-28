@@ -154,7 +154,7 @@ public class RadicalSiteHrDeltaReaction extends ReactionEngine implements IReact
                     if (atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER)
                             && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
-                            && !atoml.equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
+                            && !atoml.getSymbol().equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         Iterator<IAtom> atomhs = reactant.getConnectedAtomsList(atoml).iterator();
                         while (atomhs.hasNext()) {
@@ -191,10 +191,10 @@ public class RadicalSiteHrDeltaReaction extends ReactionEngine implements IReact
 
     /**
      * set the active center for this molecule.
-     * The active center will be those which correspond with [A*]-(C)_4-C5[H]
+     * The active center will be those which correspond with [A*]-(C)_5-C6[H]
      * <pre>
      * C: Atom with single electron
-     * C5: Atom with Hydrogen
+     * C6: Atom with Hydrogen
      *  </pre>
      *
      * @param reactant The molecule to set the activity
@@ -213,7 +213,7 @@ public class RadicalSiteHrDeltaReaction extends ReactionEngine implements IReact
                     IAtom atoml = atomls.next();
                     if (atoml != null && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
-                            && !atoml.equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
+                            && !atoml.getSymbol().equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         Iterator<IAtom> atomhs = reactant.getConnectedAtomsList(atoml).iterator();
                         while (atomhs.hasNext()) {

@@ -370,7 +370,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 for (IAtom cloneAt : rootClone.atoms()) {
                     if (cloneAt instanceof IPseudoAtom)
                         if (isValidRgroupQueryLabel(((IPseudoAtom) cloneAt).getLabel())) {
-                            rootClone.removeAtom(cloneAt);
+                            rootClone.removeAtomOnly(cloneAt);
                             confHasRGroupAtoms = true;
                             break;
                         }

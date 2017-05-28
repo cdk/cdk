@@ -149,14 +149,14 @@ public class SingleStructureRandomGenerator {
 
         for (int f = next; f < atomContainer.getAtomCount(); f++) {
             atom = atomContainer.getAtom(f);
-            if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom
+            if (!satCheck.isSaturated(atom, atomContainer) && !exclusionAtom.equals(atom)
                     && !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom)) {
                 return atom;
             }
         }
         for (int f = 0; f < next; f++) {
             atom = atomContainer.getAtom(f);
-            if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom
+            if (!satCheck.isSaturated(atom, atomContainer) && !exclusionAtom.equals(atom)
                     && !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom)) {
                 return atom;
             }

@@ -303,13 +303,13 @@ public class InChIToStructure {
                     // test these first - but handle the other indices just in
                     // case
                     for (IAtom terminal : terminals) {
-                        if (peripherals[1] == terminal) {
+                        if (peripherals[1].equals(terminal)) {
                             peripherals[1] = findOtherSinglyBonded(molecule, terminal, peripherals[0]);
-                        } else if (peripherals[2] == terminal) {
+                        } else if (peripherals[2].equals(terminal)) {
                             peripherals[2] = findOtherSinglyBonded(molecule, terminal, peripherals[3]);
-                        } else if (peripherals[0] == terminal) {
+                        } else if (peripherals[0].equals(terminal)) {
                             peripherals[0] = findOtherSinglyBonded(molecule, terminal, peripherals[1]);
-                        } else if (peripherals[3] == terminal) {
+                        } else if (peripherals[3].equals(terminal)) {
                             peripherals[3] = findOtherSinglyBonded(molecule, terminal, peripherals[2]);
                         }
                     }

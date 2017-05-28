@@ -33,7 +33,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -338,7 +337,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
             throw new CDKException("Too many paths! Structure is likely a cage, reduce path length or increase path limit");
         if (state.apath.size() < state.maxDepth) {
             for (IBond bond : state.getBonds(beg)) {
-                if (bond == prev)
+                if (bond.equals(prev))
                     continue;
                 final IAtom nbr = bond.getOther(beg);
                 if (state.visit(nbr)) {

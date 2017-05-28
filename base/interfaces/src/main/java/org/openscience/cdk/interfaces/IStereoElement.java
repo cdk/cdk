@@ -50,12 +50,12 @@ public interface IStereoElement extends ICDKObject {
      * provided atom/bond mapping. This allows the stereo element to be transferred
      * between a cloned or aligned (i.e. isomorphic) chemical graph.
      * 
-     * If no mapping is found for a given atom or bond it is replaced with a null
-     * reference. However the provided atom and bonds maps must not be null.
+     * If no mapping is found for a given atom or bond it is left intact.
+     * However the provided atom and bonds maps must not be null.
      *
-     * @param atoms non-null atom mapping, used to convert the original atoms to their mapped
+     * @param atoms nullable atom mapping, used to convert the original atoms to their mapped
      *              counterparts
-     * @param bonds non-null bond mapping, used to convert the original bonds to their mapped
+     * @param bonds nullable bond mapping, used to convert the original bonds to their mapped
      *              counterparts
      * @return a new stereo element in the same configuration but with atoms/bonds
      *         replaced with their mapped equivalence.

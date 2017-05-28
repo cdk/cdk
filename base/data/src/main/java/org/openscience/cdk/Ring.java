@@ -116,7 +116,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
         IBond tempBond;
         for (int f = 0; f < getBondCount(); f++) {
             tempBond = getBond(f);
-            if (tempBond.contains(atom) && bond != tempBond) return tempBond;
+            if (tempBond.contains(atom) && !tempBond.equals(bond)) return tempBond;
         }
         return null;
     }
