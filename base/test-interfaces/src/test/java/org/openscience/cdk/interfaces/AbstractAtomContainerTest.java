@@ -580,12 +580,20 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     public void testSetStereoElements_List() {
 
         IAtomContainer container = (IAtomContainer) newChemObject();
+        IAtom atom = container.getBuilder().newAtom();
+        IBond bond = container.getBuilder().newBond();
+        IAtom a1 = container.getBuilder().newAtom();
+        IAtom a2 = container.getBuilder().newAtom();
+        IAtom a3 = container.getBuilder().newAtom();
+        IAtom a4 = container.getBuilder().newAtom();
+        IBond b1 = container.getBuilder().newBond();
+        IBond b2 = container.getBuilder().newBond();
 
         Assert.assertThat("empty container had stereo elements", container.stereoElements().iterator().hasNext(),
                 is(false));
 
         List<IStereoElement> dbElements = new ArrayList<IStereoElement>();
-        dbElements.add(new DoubleBondStereochemistry(null, new IBond[2],
+        dbElements.add(new DoubleBondStereochemistry(bond, new IBond[]{b1, b2},
                 IDoubleBondStereochemistry.Conformation.TOGETHER));
         container.setStereoElements(dbElements);
         Iterator<IStereoElement> first = container.stereoElements().iterator();
@@ -594,7 +602,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertThat("container had more then one stereo element", first.hasNext(), is(false));
 
         List<IStereoElement> tetrahedralElements = new ArrayList<IStereoElement>();
-        tetrahedralElements.add(new TetrahedralChirality(null, new IAtom[4], ITetrahedralChirality.Stereo.CLOCKWISE));
+        tetrahedralElements.add(new TetrahedralChirality(atom, new IAtom[]{a1, a2, a3, a4}, ITetrahedralChirality.Stereo.CLOCKWISE));
         container.setStereoElements(tetrahedralElements);
         Iterator<IStereoElement> second = container.stereoElements().iterator();
         Assert.assertThat("container did not have stereo elements", second.hasNext(), is(true));
@@ -901,8 +909,15 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
     public void testRemoveAllElements_StereoElements() {
 
         IAtomContainer container = (IAtomContainer) newChemObject();
-        container.addStereoElement(new TetrahedralChirality(container.getBuilder().newInstance(IAtom.class),
-                new IAtom[4], ITetrahedralChirality.Stereo.CLOCKWISE));
+        IChemObjectBuilder builder = container.getBuilder();
+        IAtom focus = builder.newAtom();
+        IAtom a1 = builder.newAtom();
+        IAtom a2 = builder.newAtom();
+        IAtom a3 = builder.newAtom();
+        IAtom a4 = builder.newAtom();
+        container.addStereoElement(new TetrahedralChirality(focus,
+                                                            new IAtom[]{a1,a2,a3,a4},
+                                                            ITetrahedralChirality.Stereo.CLOCKWISE));
 
         int count = 0;
         for (IStereoElement element : container.stereoElements()) {
