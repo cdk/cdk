@@ -37,7 +37,7 @@ import java.util.Map;
  * @cdk.module interfaces
  * @cdk.githash
  */
-public interface IDoubleBondStereochemistry extends IStereoElement {
+public interface IDoubleBondStereochemistry extends IStereoElement<IBond,IBond> {
 
     /**
      * Enumeration that defines the two possible values for this stereochemistry type.
@@ -45,6 +45,28 @@ public interface IDoubleBondStereochemistry extends IStereoElement {
     public enum Conformation {
         TOGETHER, //  as in Z-but-2-ene
         OPPOSITE; //  as in E-but-2-ene
+
+        public static Conformation toConformation(int config) {
+            switch (config) {
+                case IStereoElement.TOGETHER:
+                    return TOGETHER;
+                case IStereoElement.OPPOSITE:
+                    return OPPOSITE;
+                default:
+                    throw new IllegalArgumentException("Cannot map config to enum: " + config);
+            }
+        }
+
+        public static int toConfig(Conformation conformation) {
+            switch (conformation) {
+                case TOGETHER:
+                    return IStereoElement.TOGETHER;
+                case OPPOSITE:
+                    return IStereoElement.OPPOSITE;
+                default:
+                    throw new IllegalArgumentException("Cannot map enum to config: " + conformation);
+            }
+        }
 
         /**
          * Invert this conformation, inv(together) = opposite, inv(opposite)
