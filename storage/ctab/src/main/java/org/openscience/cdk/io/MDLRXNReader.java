@@ -60,11 +60,13 @@ import java.util.StringTokenizer;
  * @cdk.created    2003-07-24
  *
  * @cdk.keyword    file format, MDL RXN
+ * @deprecated Use V2000 or V3000
  */
+@Deprecated
 public class MDLRXNReader extends DefaultChemObjectReader {
 
     BufferedReader              input  = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLReader.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReader.class);
 
     /**
      * Constructs a new MDLReader that can read Molecule from a given Reader.
