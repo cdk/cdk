@@ -31,6 +31,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -578,7 +579,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
                 atomsList.add(bonds[i].getOther(atom));
         }
         if (atomsList.isEmpty() && !contains(atom))
-            throw new NoSuchElementException("Atom does not belong to the container!");
+            throw new NoSuchAtomException("Atom does not belong to the container!");
         return atomsList;
     }
 
@@ -593,7 +594,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
                 bondsList.add(bonds[i]);
         }
         if (bondsList.isEmpty() && !contains(atom))
-            throw new NoSuchElementException("Atom does not belong to the container!");
+            throw new NoSuchAtomException("Atom does not belong to the container!");
         return bondsList;
     }
 
@@ -608,7 +609,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
                 lps.add(lonePairs[i]);
         }
         if (lps.isEmpty() && !contains(atom))
-            throw new NoSuchElementException("Atom does not belong to the container!");
+            throw new NoSuchAtomException("Atom does not belong to the container!");
         return lps;
     }
 
@@ -623,7 +624,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
                 ses.add(singleElectrons[i]);
         }
         if (ses.isEmpty() && !contains(atom))
-            throw new NoSuchElementException("Atom does not belong to the container!");
+            throw new NoSuchAtomException("Atom does not belong to the container!");
         return ses;
     }
 
@@ -657,7 +658,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
             if (bonds[i].contains(atom)) ++count;
         }
         if (count == 0 && !contains(atom))
-            throw new NoSuchElementException("Atom does not belong to the container!");
+            throw new NoSuchAtomException("Atom does not belong to the container!");
         return count;
     }
 
@@ -694,7 +695,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
                 ++count;
         }
         if (count == 0 && !contains(atom))
-            throw new NoSuchElementException("Atom does not belong to the container!");
+            throw new NoSuchAtomException("Atom does not belong to the container!");
         return count;
     }
 
@@ -708,7 +709,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
             if (singleElectrons[i].contains(atom)) ++count;
         }
         if (count == 0 && !contains(atom))
-            throw new NoSuchElementException("Atom does not belong to the container!");
+            throw new NoSuchAtomException("Atom does not belong to the container!");
         return count;
     }
 
@@ -744,7 +745,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         }
         if (max == null) {
             if (!contains(atom))
-                throw new NoSuchElementException("Atom does not belong to this container!");
+                throw new NoSuchAtomException("Atom does not belong to this container!");
             if (atom.getImplicitHydrogenCount() != null &&
                 atom.getImplicitHydrogenCount() > 0)
                 max = Order.SINGLE;
@@ -769,7 +770,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         }
         if (min == null) {
             if (!contains(atom))
-                throw new NoSuchElementException("Atom does not belong to this container!");
+                throw new NoSuchAtomException("Atom does not belong to this container!");
             if (atom.getImplicitHydrogenCount() != null &&
                 atom.getImplicitHydrogenCount() > 0)
                 min = Order.SINGLE;
