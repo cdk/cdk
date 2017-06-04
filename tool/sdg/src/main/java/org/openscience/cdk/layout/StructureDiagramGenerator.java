@@ -527,7 +527,8 @@ public class StructureDiagramGenerator {
         logger.debug("We have a molecules with " + numAtoms + " atoms.");
         if (numAtoms == 0) {
             return;
-        } if (numAtoms == 1) {
+        } 
+        if (numAtoms == 1) {
             molecule.getAtom(0).setPoint2d(new Point2d(0, 0));
             return;
         } else if (molecule.getBondCount() == 1 && molecule.getAtomCount() == 2) {
