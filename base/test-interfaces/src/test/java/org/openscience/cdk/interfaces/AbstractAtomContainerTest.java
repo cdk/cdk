@@ -28,6 +28,7 @@ import javax.vecmath.Point2d;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
@@ -1715,7 +1716,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
                    is(IBond.Order.SINGLE));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testGetMinBondOrderNoSuchAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
@@ -1758,7 +1759,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
                    is(IBond.Order.SINGLE));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testGetMaxBondOrderNoSuchAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
@@ -2930,7 +2931,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
 
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testGetConnectedBondsMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
@@ -2938,7 +2939,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.getConnectedBondsList(atom);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testGetConnectedAtomsMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
@@ -2946,7 +2947,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.getConnectedAtomsList(atom);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testGetConnectedAtomCountMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
@@ -2954,7 +2955,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.getConnectedAtomsCount(atom);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testGetConnectedBondCountMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
@@ -2968,7 +2969,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.getConnectedBondsCount(0);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testGetConnectedLongPairsMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
@@ -2976,7 +2977,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.getConnectedLonePairsList(atom);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testGetConnectedSingleElecsMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
@@ -2984,7 +2985,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.getConnectedSingleElectronsList(atom);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testGetConnectedLongPairCountMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();
@@ -2992,7 +2993,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.getConnectedLonePairsCount(atom);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testGetConnectedSingleElecCountMissingAtom() {
         IAtomContainer     container = (IAtomContainer) newChemObject();
         IChemObjectBuilder builder   = container.getBuilder();

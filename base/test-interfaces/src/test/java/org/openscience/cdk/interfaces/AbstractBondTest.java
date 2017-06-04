@@ -421,8 +421,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
         IBond bond = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3});
         Assert.assertEquals(3, bond.getAtomCount());
-        Assert.assertEquals(atom1, bond.getBegin());
-        Assert.assertEquals(atom2, bond.getEnd());
+        Assert.assertEquals(atom1, bond.getAtom(0));
+        Assert.assertEquals(atom2, bond.getAtom(1));
         Assert.assertEquals(atom3, bond.getAtom(2));
 
         Assert.assertEquals(bond.getOrder(), CDKConstants.UNSET);

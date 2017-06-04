@@ -162,7 +162,6 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
      * @return A {@link BitSet} representing the fingerprint
      */
     public IBitFingerprint getBitFingerprint(IAtomContainer container, AllRingsFinder ringFinder) throws CDKException {
-        int position = -1;
         logger.debug("Entering Fingerprinter");
         logger.debug("Starting Aromaticity Detection");
         long before = System.currentTimeMillis();
