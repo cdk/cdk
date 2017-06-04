@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Compute the connected components of an adjacency list.
  *
  * <blockquote><pre>{@code
- *     int[][]             g          = GraphUtil.toAdjList(container(l
+ *     int[][]             g          = GraphUtil.toAdjList(container);
  *     ConnectedComponents cc         = new ConnectedComponents(g);
  *     int[]               components = cc.components();
  *     for (int v = 0; v < g.length; v++)

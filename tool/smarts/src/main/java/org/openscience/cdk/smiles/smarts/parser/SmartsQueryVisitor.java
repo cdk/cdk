@@ -318,7 +318,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             }
         }
 
-        // for each double bond, find the stereo bonds. currently doesn't
+        // for each double bond, find the stereo bonds. Currently doesn't
         // handle logical bonds i.e. C/C-,=C/C
         for (IBond bond : doubleBonds) {
             IAtom left = bond.getBegin();
