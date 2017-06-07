@@ -58,7 +58,7 @@ public abstract class IsotopeFactory {
         int count = 0;
         for (List<IIsotope> isotope : isotopes)
             if (isotope != null)
-                count++;
+                count += isotope.size();
         return count;
     }
 
