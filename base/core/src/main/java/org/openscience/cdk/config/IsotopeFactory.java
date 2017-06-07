@@ -199,9 +199,10 @@ public abstract class IsotopeFactory {
         List<IIsotope> isotopes = this.isotopes[elem];
         if (isotopes != null) {
             for (IIsotope isotope : isotopes) {
-                if (major == null) {
-                    major = isotope;
-                } else if (isotope.getNaturalAbundance() > major.getNaturalAbundance()) {
+                if (isotope.getNaturalAbundance() <= 0)
+                    continue;
+                if (major == null ||
+                    isotope.getNaturalAbundance() > major.getNaturalAbundance()) {
                     major = isotope;
                 }
             }

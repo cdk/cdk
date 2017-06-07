@@ -29,6 +29,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 
+import static org.junit.Assert.assertNull;
+
 /**
  * Checks the functionality of the IsotopeFactory
  *
@@ -160,10 +162,19 @@ public class IsotopesTest extends CDKTestCase {
         Assert.assertEquals(13.00335484, isofac.getIsotope("C", 13).getExactMass(), 0.0000001);
     }
 
+    /**
+     * Elements without a major isotope should return null.
+     */
+    @Test
+    public void testMajorUnstableIsotope() throws Exception {
+        Isotopes isotopes = Isotopes.getInstance();
+        assertNull(isotopes.getMajorIsotope("Es"));
+    }
+
     @Test
     public void testGetIsotope_NonElement() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
-        Assert.assertNull(isofac.getIsotope("R", 13));
+        assertNull(isofac.getIsotope("R", 13));
     }
 
     @Test
@@ -179,14 +190,14 @@ public class IsotopesTest extends CDKTestCase {
     public void testGetIsotopeFromExactMass_NonElement() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         IIsotope match = isofac.getIsotope("R", 13.00001, 0.0001);
-        Assert.assertNull(match);
+        assertNull(match);
     }
 
     @Test
     public void testYeahSure() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         IIsotope match = isofac.getIsotope("H", 13.00001, 0.0001);
-        Assert.assertNull(match);
+        assertNull(match);
     }
 
     @Test
@@ -220,14 +231,14 @@ public class IsotopesTest extends CDKTestCase {
     public void testGetElement_Nonelement() throws Exception {
         IsotopeFactory isofac = Isotopes.getInstance();
         IElement element = isofac.getElement("E");
-        Assert.assertNull(element);
+        assertNull(element);
     }
 
     @Test
     public void testGetMajorIsotope_Nonelement() throws Exception {
         IsotopeFactory isofac = Isotopes.getInstance();
         IIsotope isotope = isofac.getMajorIsotope("E");
-        Assert.assertNull(isotope);
+        assertNull(isotope);
     }
 
 }
