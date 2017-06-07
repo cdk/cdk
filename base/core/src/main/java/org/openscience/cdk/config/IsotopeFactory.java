@@ -20,6 +20,7 @@
 package org.openscience.cdk.config;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +45,8 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public abstract class IsotopeFactory {
 
-    protected Map<String, List<IIsotope>> isotopes      = null;
-    protected Map<String, IIsotope>       majorIsotopes = null;
+    private Map<String, List<IIsotope>> isotopes      = new HashMap<>();
+    private Map<String, IIsotope>       majorIsotopes = new HashMap<>();
     protected static ILoggingTool         logger        = LoggingToolFactory.createLoggingTool(IsotopeFactory.class);
 
     /**
@@ -148,7 +149,10 @@ public abstract class IsotopeFactory {
      */
     public IIsotope getIsotope(String symbol, int massNumber) {
         IIsotope ret = null;
-        for (IIsotope isotope : isotopes.get(symbol)) {
+        List<IIsotope> isotopes = this.isotopes.get(symbol);
+        if (isotopes == null)
+            return null;
+        for (IIsotope isotope : isotopes) {
             if (isotope.getSymbol().equals(symbol) && isotope.getMassNumber() == massNumber) {
                 try {
                     ret = (IIsotope) isotope.clone();
@@ -173,7 +177,10 @@ public abstract class IsotopeFactory {
     public IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
         IIsotope ret = null;
         double minDiff = Double.MAX_VALUE;
-        for (IIsotope isotope : isotopes.get(symbol)) {
+        List<IIsotope> isotopes = this.isotopes.get(symbol);
+        if (isotopes == null)
+            return null;
+        for (IIsotope isotope : isotopes) {
             double diff = Math.abs(isotope.getExactMass() - exactMass);
             if (isotope.getSymbol().equals(symbol) && diff <= tolerance && diff < minDiff) {
                 try {
