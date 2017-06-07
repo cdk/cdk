@@ -20,7 +20,11 @@
  */
 package org.openscience.cdk.inchi;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -28,11 +32,13 @@ import java.util.List;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -166,6 +172,16 @@ public class InChIGeneratorFactoryTest {
 
         Assert.assertEquals("Incorrect InCHI generated for topological centre", expected, actual);
 
+    }
+
+    @Test
+    public void dontIgnoreMajorIsotopes() throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        InChIGeneratorFactory inchifact = InChIGeneratorFactory.getInstance();
+        assertThat(inchifact.getInChIGenerator(smipar.parseSmiles("[12CH4]")).getInchi(),
+                   containsString("/i"));
+        assertThat(inchifact.getInChIGenerator(smipar.parseSmiles("C")).getInchi(),
+                   not(containsString("/i")));
     }
 
     /**

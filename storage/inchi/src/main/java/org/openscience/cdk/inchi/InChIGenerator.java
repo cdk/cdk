@@ -204,14 +204,6 @@ public class InChIGenerator {
             }
         }
 
-        // Process atoms
-        IsotopeFactory ifact = null;
-        try {
-            ifact = Isotopes.getInstance();
-        } catch (Exception e) {
-            // Do nothing
-        }
-
         Map<IAtom, JniInchiAtom> atomMap = new HashMap<IAtom, JniInchiAtom>();
         atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
@@ -251,14 +243,7 @@ public class InChIGenerator {
 
             // Check whether isotopic
             Integer isotopeNumber = atom.getMassNumber();
-            if (isotopeNumber != CDKConstants.UNSET && ifact != null) {
-                IAtom isotope = atomContainer.getBuilder().newInstance(IAtom.class, el);
-                ifact.configure(isotope);
-                if (isotope.getMassNumber().intValue() == isotopeNumber.intValue()) {
-                    isotopeNumber = 0;
-                }
-            }
-            if (isotopeNumber != CDKConstants.UNSET) {
+            if (isotopeNumber != null) {
                 iatom.setIsotopicMass(isotopeNumber);
             }
 
