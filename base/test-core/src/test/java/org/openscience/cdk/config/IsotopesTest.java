@@ -29,7 +29,11 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 /**
  * Checks the functionality of the IsotopeFactory
@@ -207,6 +211,18 @@ public class IsotopesTest extends CDKTestCase {
         IIsotope match = isofac.getIsotope(carbon13.getSymbol(), carbon13.getExactMass(), 2.0);
         Assert.assertNotNull(match);
         Assert.assertEquals(13, match.getMassNumber().intValue());
+    }
+
+    @Test
+    public void configureDoesNotSetMajorIsotope() throws Exception {
+        IAtom    atom     = new Atom("CH4");
+        Isotopes isotopes = Isotopes.getInstance();
+        IIsotope major    = isotopes.getMajorIsotope(atom.getSymbol());
+        assertThat(major, is(notNullValue()));
+        assertThat(major.getMassNumber(),
+                   is(12));
+        isotopes.configure(atom);
+        assertThat(atom.getMassNumber(), is(nullValue()));
     }
 
     /**

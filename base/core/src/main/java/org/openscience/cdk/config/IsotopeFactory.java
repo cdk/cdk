@@ -285,13 +285,12 @@ public abstract class IsotopeFactory {
      */
     public IAtom configure(IAtom atom) {
         IIsotope isotope;
-
         if (atom.getMassNumber() == null)
-            isotope = getMajorIsotope(atom.getSymbol());
+            return atom;
         else
             isotope = getIsotope(atom.getSymbol(), atom.getMassNumber());
-
-        if (isotope == null) throw new IllegalArgumentException("Cannot configure an unrecognized element: " + atom);
+        if (isotope == null)
+            throw new IllegalArgumentException("Cannot configure an unrecognized element/mass: " + atom.getMassNumber() + " " + atom);
         return configure(atom, isotope);
     }
 
