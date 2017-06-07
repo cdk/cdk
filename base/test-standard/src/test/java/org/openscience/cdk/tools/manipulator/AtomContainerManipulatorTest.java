@@ -21,6 +21,7 @@ package org.openscience.cdk.tools.manipulator;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -28,7 +29,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1079,6 +1082,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     /**
+     * https://sourceforge.net/p/cdk/mailman/message/20639023/
      * @cdk.bug  1969156
      */
     @Test
@@ -1090,18 +1094,24 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = cList.get(0);
 
+        Map<IAtom,Double> exactMass = new HashMap<>();
+
         Isotopes.getInstance().configureAtoms(ac);
 
         for (IAtom atom : ac.atoms()) {
-            Assert.assertNotNull(atom.getExactMass());
-            Assert.assertTrue(atom.getExactMass() > 0);
+            exactMass.put(atom, atom.getExactMass());
         }
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
 
         for (IAtom atom : ac.atoms()) {
-            Assert.assertNotNull("exact mass should not be null, after typing", atom.getExactMass());
-            Assert.assertTrue(atom.getExactMass() > 0);
+            Double expected = exactMass.get(atom);
+            Double actual   = atom.getExactMass();
+            if (expected == null)
+                assertNull(actual);
+            else
+                Assert.assertThat(actual,
+                                  is(closeTo(expected, 0.001)));
         }
     }
 
