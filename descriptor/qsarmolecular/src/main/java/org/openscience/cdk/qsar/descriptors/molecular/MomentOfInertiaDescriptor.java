@@ -200,7 +200,9 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         for (int i = 0; i < clone.getAtomCount(); i++) {
             IAtom currentAtom = clone.getAtom(i);
 
-            double mass = factory.getMajorIsotope(currentAtom.getSymbol()).getExactMass();
+            Double mass = factory.getMajorIsotope(currentAtom.getSymbol()).getExactMass();
+            if (mass == null)
+                mass = factory.getNaturalMass(currentAtom);
 
             xdif = currentAtom.getPoint3d().x - centerOfMass.x;
             ydif = currentAtom.getPoint3d().y - centerOfMass.y;
