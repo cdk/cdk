@@ -1259,6 +1259,26 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertRemoveH("[HH]", "[HH]"); // note: illegal SMILES but works okay
     }
 
+    @Test
+    public void molecularWeight() throws InvalidSmilesException, IOException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[13CH4]CO");
+        double molecularWeight = AtomContainerManipulator.getMolecularWeight(mol);
+        double naturalExactMass = AtomContainerManipulator.getNaturalExactMass(mol);
+        Isotopes isotopes = Isotopes.getInstance();
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getMassNumber() == null)
+                atom.setExactMass(isotopes.getMajorIsotope(atom.getAtomicNumber())
+                                          .getExactMass());
+            else
+                isotopes.configure(atom);
+        }
+        double exactMass = AtomContainerManipulator.getTotalExactMass(mol);
+        assertThat(molecularWeight, closeTo(48.069, 0.001));
+        assertThat(naturalExactMass, closeTo(47.076, 0.001));
+        assertThat(exactMass, closeTo(48.053, 0.001));
+    }
+
     // util for testing hydrogen removal using SMILES
     static void assertRemoveH(String smiIn, String smiExp) throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
