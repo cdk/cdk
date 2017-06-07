@@ -140,7 +140,7 @@ also be downloaded and included.
 <dependency>
   <groupId>org.openscience.cdk</groupId>
   <artifactId>cdk-fingerprint</artifactId>
-  <version>1.5.10</version>
+  <version>2.0</version>
 </dependency>
 ```
 
