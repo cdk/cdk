@@ -131,7 +131,9 @@ public final class Stereocenters {
     /** basic cycle information (i.e. is atom/bond cyclic) and cycle systems. */
     private final RingSearch      ringSearch;
 
-    private final int numStereoElements;
+    private int numStereoElements;
+
+    private boolean checkSymmetry = false;
 
     /**
      * Determine the stereocenter atoms in the provided container based on
@@ -177,7 +179,9 @@ public final class Stereocenters {
     }
 
     void checkSymmetry() {
-        if (numStereoElements > 0) {
+        if (!checkSymmetry) {
+            checkSymmetry = true;
+            numStereoElements = createElements();
             int[] symmetry = toIntArray(Canon.symmetry(container, g));
             labelTrueCenters(symmetry);
             labelIsolatedPara(symmetry);
@@ -497,7 +501,8 @@ public final class Stereocenters {
         int q = charge(atom);
 
         // more than one hydrogen
-        if (h > 1) return Type.None;
+        if (checkSymmetry && h > 1)
+            return Type.None;
 
         switch (atomicNumber(atom)) {
             case 0: // stop the nulls on pseudo atoms messing up anything else
@@ -577,6 +582,9 @@ public final class Stereocenters {
      *         hydrogen count of > 0
      */
     private boolean verifyTerminalHCount(int v) {
+
+        if (!checkSymmetry)
+            return true;
 
         int[] counts = new int[6];
         int[][] atoms = new int[6][g[v].length];

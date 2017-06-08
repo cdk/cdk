@@ -36,6 +36,9 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -841,6 +844,128 @@ public class StereoElementFactoryTest {
                                         .interpretProjections(Projection.Chair)
                                         .createAll()
                                         .isEmpty());
+    }
+
+    /**
+     * Pass through non-stereo configurations if check symmetry is disabled
+     */
+    @Test
+    public void keepNonStereoConfiguration() throws CDKException {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 0, 0.07, 1.19));
+        m.addAtom(atom("H", 0, 0.56, 2.02));
+        m.addAtom(atom("C", 3, -0.29, 2.04));
+        m.addAtom(atom("C", 3, -0.66, 0.82));
+        m.addAtom(atom("C", 2, 0.76, 0.74));
+        m.addAtom(atom("C", 3, 1.50, 1.12));
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 3, IBond.Order.SINGLE);
+        m.addBond(0, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        List<IStereoElement> elements = StereoElementFactory.using2DCoordinates(m).createAll();
+        assertThat(elements.size(), is(1));
+        m.setStereoElements(elements);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+        assertThat(smigen.create(m), is("[C@]([H])(C)(C)CC"));
+    }
+
+    @Test
+    public void keepNonStereoConfigurationPhosphorusTautomer() throws CDKException {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("P", 0, 0.07, 1.19));
+        m.addAtom(atom("O", 0, 0.56, 2.02));
+        m.addAtom(atom("O", 1, -0.29, 2.04));
+        m.addAtom(atom("C", 3, -0.66, 0.82));
+        m.addAtom(atom("C", 2, 0.76, 0.74));
+        m.addAtom(atom("C", 3, 1.50, 1.12));
+        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 3, IBond.Order.SINGLE);
+        m.addBond(0, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(0, 1, IBond.Order.DOUBLE);
+        List<IStereoElement> elements = StereoElementFactory.using2DCoordinates(m).createAll();
+        assertThat(elements.size(), is(1));
+        m.setStereoElements(elements);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+        assertThat(smigen.create(m), is("[P@@](O)(C)(CC)=O"));
+    }
+
+    @Test
+    public void doNotkeepNonStereoConfigurationPhosphorusTautomer() throws CDKException {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("P", 0, 0.07, 1.19));
+        m.addAtom(atom("O", 0, 0.56, 2.02));
+        m.addAtom(atom("O", 1, -0.29, 2.04));
+        m.addAtom(atom("C", 3, -0.66, 0.82));
+        m.addAtom(atom("C", 2, 0.76, 0.74));
+        m.addAtom(atom("C", 3, 1.50, 1.12));
+        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 3, IBond.Order.SINGLE);
+        m.addBond(0, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(0, 1, IBond.Order.DOUBLE);
+        List<IStereoElement> elements = StereoElementFactory.using2DCoordinates(m)
+                                                            .checkSymmetry(true)
+                                                            .createAll();
+        assertThat(elements.size(), is(0));
+        m.setStereoElements(elements);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+        assertThat(smigen.create(m), is("P(O)(C)(CC)=O"));
+    }
+
+    /**
+     * Do not pass through non-stereo configurations if check symmetry is enabled
+     */
+    @Test
+    public void doNotKeepNonStereoConfiguration() throws CDKException {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 0, 0.07, 1.19));
+        m.addAtom(atom("H", 0, 0.56, 2.02));
+        m.addAtom(atom("C", 3, -0.29, 2.04));
+        m.addAtom(atom("C", 3, -0.66, 0.82));
+        m.addAtom(atom("C", 2, 0.76, 0.74));
+        m.addAtom(atom("C", 3, 1.50, 1.12));
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 3, IBond.Order.SINGLE);
+        m.addBond(0, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        List<IStereoElement> elements = StereoElementFactory.using2DCoordinates(m)
+                                                            .checkSymmetry(true)
+                                                            .createAll();
+        assertThat(elements.size(), is(0));
+        m.setStereoElements(elements);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+        assertThat(smigen.create(m), is("C([H])(C)(C)CC"));
+    }
+
+    /**
+     * Pass through non-stereo configurations if check symmetry is disabled
+     */
+    @Test
+    public void keepNonStereoConfigurationH2() throws CDKException {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 0, 0.07, 1.19));
+        m.addAtom(atom("H", 0, 0.56, 2.02));
+        m.addAtom(atom("H", 0, -0.29, 2.04));
+        m.addAtom(atom("C", 3, -0.66, 0.82));
+        m.addAtom(atom("C", 2, 0.76, 0.74));
+        m.addAtom(atom("C", 3, 1.50, 1.12));
+        m.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(0, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(0, 3, IBond.Order.SINGLE);
+        m.addBond(0, 4, IBond.Order.SINGLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        List<IStereoElement> elements = StereoElementFactory.using2DCoordinates(m).createAll();
+        assertThat(elements.size(), is(1));
+        m.setStereoElements(elements);
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+        assertThat(smigen.create(m), is("[C@]([H])([H])(C)CC"));
+        AtomContainerManipulator.suppressHydrogens(m);
+        assertThat(smigen.create(m), is("[C@H2](C)CC"));
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(m);
+        assertThat(smigen.create(m), is("[C@@](C([H])([H])[H])(C(C([H])([H])[H])([H])[H])([H])[H]"));
     }
 
     static IAtom atom(String symbol, int h, double x, double y) {

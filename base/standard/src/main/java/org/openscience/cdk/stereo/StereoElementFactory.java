@@ -121,8 +121,10 @@ public abstract class StereoElementFactory {
     public List<IStereoElement> createAll() {
 
         Stereocenters centers = new Stereocenters(container, graph, bondMap);
-        if (check)
+        if (check) {
             centers.checkSymmetry();
+        }
+
         List<IStereoElement> elements = new ArrayList<IStereoElement>();
 
         // projection recognition (note no action in constructors)
@@ -145,9 +147,18 @@ public abstract class StereoElementFactory {
                         }
                     }
                     break;
+                case Tetracoordinate:
+                    IStereoElement element = createTetrahedral(v, centers);
+                    if (element != null) elements.add(element);
+                    break;
+            }
+        }
+
+        // always need to verify for db...
+        centers.checkSymmetry();
+        for (int v = 0; v < graph.length; v++) {
+            switch (centers.elementType(v)) {
                 case Tricoordinate:
-                    // always need to verify for now...
-                    centers.checkSymmetry();
                     if (!centers.isStereocenter(v))
                         continue;
                     for (int w : graph[v]) {
@@ -159,10 +170,6 @@ public abstract class StereoElementFactory {
                             break;
                         }
                     }
-                    break;
-                case Tetracoordinate:
-                    IStereoElement element = createTetrahedral(v, centers);
-                    if (element != null) elements.add(element);
                     break;
             }
         }
