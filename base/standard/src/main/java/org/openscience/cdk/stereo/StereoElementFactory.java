@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.stereo;
 
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -120,6 +121,7 @@ public abstract class StereoElementFactory {
      */
     public List<IStereoElement> createAll() {
 
+        Cycles.markRingAtomsAndBonds(container);
         Stereocenters centers = new Stereocenters(container, graph, bondMap);
         if (check) {
             centers.checkSymmetry();
@@ -136,6 +138,7 @@ public abstract class StereoElementFactory {
 
         for (int v = 0; v < graph.length; v++) {
             switch (centers.elementType(v)) {
+                // elongated tetrahedrals
                 case Bicoordinate:
                     int t0 = graph[v][0];
                     int t1 = graph[v][1];
@@ -150,9 +153,23 @@ public abstract class StereoElementFactory {
                         }
                     }
                     break;
+                // tetrahedrals
                 case Tetracoordinate:
                     IStereoElement element = createTetrahedral(v, centers);
                     if (element != null) elements.add(element);
+                    break;
+                // aryl-aryl atropisomers
+                case Tricoordinate:
+                    for (int w : graph[v]) {
+                        IBond bond = bondMap.get(v, w);
+                        if (w > v &&
+                            centers.elementType(w) == Stereocenters.Type.Tricoordinate &&
+                            bond.getOrder() == IBond.Order.SINGLE &&
+                            !bond.isInRing()) {
+                            System.err.println("Atropisomer!");
+                            break;
+                        }
+                    }
                     break;
             }
         }
@@ -161,12 +178,14 @@ public abstract class StereoElementFactory {
         centers.checkSymmetry();
         for (int v = 0; v < graph.length; v++) {
             switch (centers.elementType(v)) {
+                // Cis/Trans double bonds
                 case Tricoordinate:
                     if (!centers.isStereocenter(v))
                         continue;
                     for (int w : graph[v]) {
-                        if (w > v && bondMap.get(v, w).getOrder() == IBond.Order.DOUBLE) {
-                            if (centers.isStereocenter(w)) {
+                        IBond bond = bondMap.get(v, w);
+                        if (w > v && bond.getOrder() == IBond.Order.DOUBLE) {
+                            if (centers.isStereocenter(w) && !bond.isInRing()) {
                                 IStereoElement element = createGeometric(v, w, centers);
                                 if (element != null) elements.add(element);
                             }
@@ -205,6 +224,16 @@ public abstract class StereoElementFactory {
      * @return a new stereo element
      */
     abstract ITetrahedralChirality createTetrahedral(int v, Stereocenters stereocenters);
+
+    /**
+     * Create axial atropisomers.
+     *
+     * @param v first atom of single bond
+     * @param w other atom of single bond
+     * @param stereocenters stereo centres
+     * @return new stereo element
+     */
+    abstract IStereoElement createAtropisomer(int v, int w, Stereocenters stereocenters);
 
     /**
      * Create a tetrahedral element for the atom. If a tetrahedral element could
@@ -455,6 +484,12 @@ public abstract class StereoElementFactory {
             Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE : Stereo.CLOCKWISE;
 
             return new TetrahedralChirality(focus, neighbors, winding);
+        }
+
+        @Override
+        IStereoElement createAtropisomer(int v, int w,
+                                         Stereocenters stereocenters) {
+            throw new UnsupportedOperationException();
         }
 
         /**{@inheritDoc} */
@@ -760,6 +795,12 @@ public abstract class StereoElementFactory {
             Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE : Stereo.CLOCKWISE;
 
             return new TetrahedralChirality(focus, neighbors, winding);
+        }
+
+        @Override
+        IStereoElement createAtropisomer(int v, int w,
+                                         Stereocenters stereocenters) {
+            throw new UnsupportedOperationException();
         }
 
         /**{@inheritDoc} */

@@ -313,10 +313,6 @@ public final class Stereocenters {
                         continue;
                     }
 
-                    // TODO: we reject all cyclic double bonds but could
-                    // TODO: allow flexible rings (> 7 atoms)
-                    if (ringSearch.cyclic(w, u)) continue;
-
                     stereocenters[w] = Stereocenter.Potential;
                     stereocenters[u] = Stereocenter.Potential;
                     elements[u] = new Tricoordinate(u, w, g[u]);
