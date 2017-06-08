@@ -93,6 +93,11 @@ public abstract class StereoElementFactory {
     protected final Set<Projection> projections = EnumSet.noneOf(Projection.class);
 
     /**
+     * Verify if created stereochemistry are actually stereo-centres.
+     */
+    private boolean check = false;
+
+    /**
      * Internal constructor.
      *
      * @param container an atom container
@@ -116,6 +121,8 @@ public abstract class StereoElementFactory {
     public List<IStereoElement> createAll() {
 
         Stereocenters centers = new Stereocenters(container, graph, bondMap);
+        if (check)
+            centers.checkSymmetry();
         List<IStereoElement> elements = new ArrayList<IStereoElement>();
 
         // projection recognition (note no action in constructors)
@@ -139,7 +146,10 @@ public abstract class StereoElementFactory {
                     }
                     break;
                 case Tricoordinate:
-                    if (!centers.isStereocenter(v)) continue;
+                    // always need to verify for now...
+                    centers.checkSymmetry();
+                    if (!centers.isStereocenter(v))
+                        continue;
                     for (int w : graph[v]) {
                         if (w > v && bondMap.get(v, w).getOrder() == IBond.Order.DOUBLE) {
                             if (centers.isStereocenter(w)) {
@@ -294,6 +304,12 @@ public abstract class StereoElementFactory {
      */
     public StereoElementFactory interpretProjections(Projection ... projections) {
         Collections.addAll(this.projections, projections);
+        this.check = true;
+        return this;
+    }
+
+    public StereoElementFactory checkSymmetry(boolean check) {
+        this.check = check;
         return this;
     }
 
@@ -320,7 +336,7 @@ public abstract class StereoElementFactory {
     public static StereoElementFactory using3DCoordinates(IAtomContainer container) {
         EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(container);
         int[][] graph = GraphUtil.toAdjList(container, bondMap);
-        return new StereoElementFactory3D(container, graph, bondMap);
+        return new StereoElementFactory3D(container, graph, bondMap).checkSymmetry(true);
     }
 
     private static boolean hasUnspecifiedParity(IAtom atom) {
