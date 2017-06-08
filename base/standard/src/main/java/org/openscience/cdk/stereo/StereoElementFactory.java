@@ -141,7 +141,10 @@ public abstract class StereoElementFactory {
                     int t1 = graph[v][1];
                     if (centers.elementType(t0) == Stereocenters.Type.Tricoordinate
                             && centers.elementType(t1) == Stereocenters.Type.Tricoordinate) {
-                        if (centers.isStereocenter(t0) && centers.isStereocenter(t1)) {
+                        if (check && centers.isStereocenter(t0) && centers.isStereocenter(t1)) {
+                            IStereoElement element = createExtendedTetrahedral(v, centers);
+                            if (element != null) elements.add(element);
+                        } else {
                             IStereoElement element = createExtendedTetrahedral(v, centers);
                             if (element != null) elements.add(element);
                         }

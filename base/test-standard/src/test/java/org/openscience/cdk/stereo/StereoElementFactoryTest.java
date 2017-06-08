@@ -608,7 +608,7 @@ public class StereoElementFactoryTest {
         m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
-        m.setStereoElements(StereoElementFactory.using2DCoordinates(m).createAll());
+        m.setStereoElements(StereoElementFactory.using2DCoordinates(m).checkSymmetry(true).createAll());
         assertFalse(m.stereoElements().iterator().hasNext());
     }
 
