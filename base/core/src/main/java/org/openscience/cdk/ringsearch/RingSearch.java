@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -217,11 +218,11 @@ public final class RingSearch {
      *
      * @param atom an atom
      * @return whether the atom is in a ring
-     * @throws NoSuchElementException the atom was not found
+     * @throws NoSuchAtomException the atom was not found
      */
     public boolean cyclic(IAtom atom) {
         int i = container.indexOf(atom);
-        if (i < 0) throw new NoSuchElementException("no such atom");
+        if (i < 0) throw new NoSuchAtomException("no such atom");
         return cyclic(i);
     }
 

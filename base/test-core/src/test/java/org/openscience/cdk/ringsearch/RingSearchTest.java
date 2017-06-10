@@ -24,13 +24,13 @@ package org.openscience.cdk.ringsearch;
 
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
@@ -166,7 +166,7 @@ public class RingSearchTest {
         verify(cyclicSearch, times(1)).cyclic(42, 43);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = NoSuchAtomException.class)
     public void testCyclic_Atom_NotFound() throws Exception {
 
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);

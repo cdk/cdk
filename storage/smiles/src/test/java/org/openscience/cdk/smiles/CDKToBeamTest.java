@@ -154,11 +154,11 @@ public class CDKToBeamTest {
     }
 
     @Test
-    public void defaultIsotope() throws Exception {
+    public void noDefaultIsotope() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
         a.setMassNumber(12);
-        assertThat(new CDKToBeam().toBeamAtom(a).isotope(), is(-1));
+        assertThat(new CDKToBeam().toBeamAtom(a).isotope(), is(12));
     }
 
     // special check that a CDK pseudo atom will default to 0 hydrogens if

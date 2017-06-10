@@ -225,9 +225,7 @@ final class CDKToBeam {
         if (SmiFlavor.isSet(flavour, SmiFlavor.AtomicMass | SmiFlavor.AtomicMassStrict)) {
             Integer massNumber = a.getMassNumber();
             if (massNumber != null) {
-                if (SmiFlavor.isSet(flavour, SmiFlavor.AtomicMassStrict) ||
-                        !massNumber.equals(getMajorMassNumber(element)))
-                    ab.isotope(massNumber);
+                ab.isotope(massNumber);
             }
         }
 
