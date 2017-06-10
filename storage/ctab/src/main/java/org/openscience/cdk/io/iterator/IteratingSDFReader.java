@@ -38,7 +38,9 @@ import java.util.regex.Pattern;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV3000Reader;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
@@ -88,7 +90,6 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                                                                                          .createLoggingTool(IteratingSDFReader.class);
     private String                                          currentLine;
     private IChemFormat                                     currentFormat;
-    private final ReaderFactory                             factory              = new ReaderFactory();
 
     private boolean                                         nextAvailableIsKnown;
     private boolean                                         hasNext;
@@ -190,7 +191,15 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         // create a new reader if not mapped
         if (!readerMap.containsKey(format)) {
 
-            ISimpleChemObjectReader reader = factory.createReader(format);
+            ISimpleChemObjectReader reader;
+            if (format instanceof MDLV2000Format)
+                reader = new MDLV2000Reader();
+            else if (format instanceof MDLV3000Format)
+                reader = new MDLV3000Reader();
+            else if (format instanceof MDLFormat)
+                reader = new MDLReader();
+            else
+                throw new IllegalArgumentException("Unexpected format: " + format);
             reader.setErrorHandler(this.errorHandler);
             reader.setReaderMode(this.mode);
             if (currentFormat instanceof MDLV2000Format) {

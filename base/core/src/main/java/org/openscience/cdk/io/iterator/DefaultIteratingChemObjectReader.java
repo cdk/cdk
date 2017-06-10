@@ -15,16 +15,14 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.io.iterator;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.ChemObjectIO;
-import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChemObjectReaderErrorHandler;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
 
 /**
  * Abstract class that IteratingChemObjectReader's can implement to have it
@@ -36,7 +34,7 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> extends ChemObjectIO implements
         IIteratingChemObjectReader<T> {
 
-    protected IChemObjectReader.Mode        mode         = IChemObjectReader.Mode.RELAXED;
+    protected Mode        mode         = Mode.RELAXED;
     protected IChemObjectReaderErrorHandler errorHandler = null;
 
     @Override
@@ -55,7 +53,7 @@ public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> ex
     }
 
     @Override
-    public void setReaderMode(ISimpleChemObjectReader.Mode mode) {
+    public void setReaderMode(Mode mode) {
         this.mode = mode;
     }
 

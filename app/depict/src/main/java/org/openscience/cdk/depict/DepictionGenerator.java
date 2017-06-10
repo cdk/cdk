@@ -775,10 +775,12 @@ public final class DepictionGenerator {
     }
 
     /**
-     * Display atom numbers on the molecule or reaction. The numbers are based on the
-     * ordering of atoms in the molecule data structure and not a systematic system
-     * such as IUPAC numbering.
+     * Display atom values on the molecule or reaction. The values need to be assigned by 
      * 
+     * <pre>{@code
+     * atom.setProperty(CDKConstants.COMMENT, myValueToBeDisplayedNextToAtom);
+     * }</pre>
+     *
      * Note: A depiction can not have both atom numbers and atom maps visible
      * (but this can be achieved by manually setting the annotation).
      *
