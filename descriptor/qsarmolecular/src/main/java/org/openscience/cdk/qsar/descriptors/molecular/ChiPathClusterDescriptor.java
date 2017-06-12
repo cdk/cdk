@@ -219,13 +219,14 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
     }
 
     private List order6(IAtomContainer atomContainer) {
-        QueryAtomContainer[] queries = new QueryAtomContainer[5];
+        QueryAtomContainer[] queries = new QueryAtomContainer[6];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)(C)CCC"), false);
             queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)CC"), false);
             queries[2] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)CC(C)C"), false);
             queries[3] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)CCCC"), false);
             queries[4] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC(C)CCC"), false);
+            queries[5] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)(CC)CC"), false);
         } catch (InvalidSmilesException e) {
             e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
