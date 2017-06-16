@@ -1252,6 +1252,49 @@ public class StereoElementFactoryTest {
         assertThat(stereo.size(), is(0));
     }
 
+    /**
+     * @cdk.smiles CC1=CC=CC(Cl)=C1C1=C(C)C=CC=C1
+     */
+    @Test
+    public void atropisomer3D() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 1, -4.95, 1.27));
+        m.addAtom(atom("C", 1, -4.26, 1.73));
+        m.addAtom(atom("C", 0, -2.85, 1.74));
+        m.addAtom(atom("C", 0, -2.12, 1.25));
+        m.addAtom(atom("C", 0, -2.83, 0.80));
+        m.addAtom(atom("C", 1, -4.23, 0.82));
+        m.addAtom(atom("C", 3, -2.16, 2.26));
+        m.addAtom(atom("Cl", 0, -2.04, 0.24));
+        m.addAtom(atom("C", 0, -0.70, 1.20));
+        m.addAtom(atom("C", 1, 0.00, 2.39));
+        m.addAtom(atom("C", 1, 1.41, 2.39));
+        m.addAtom(atom("C", 1, 2.12, 1.22));
+        m.addAtom(atom("C", 1, 1.44, 0.04));
+        m.addAtom(atom("C", 0, 0.02, 0.01));
+        m.addAtom(atom("C", 3, -0.62, -1.29));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(3, 2, IBond.Order.SINGLE);
+        m.addBond(3, 4, IBond.Order.DOUBLE);
+        m.addBond(4, 5, IBond.Order.SINGLE);
+        m.addBond(0, 5, IBond.Order.DOUBLE);
+        m.addBond(2, 6, IBond.Order.SINGLE);
+        m.addBond(4, 7, IBond.Order.SINGLE);
+        m.addBond(3, 8, IBond.Order.SINGLE);
+        m.addBond(9, 10, IBond.Order.DOUBLE);
+        m.addBond(10, 11, IBond.Order.SINGLE);
+        m.addBond(11, 12, IBond.Order.DOUBLE);
+        m.addBond(12, 13, IBond.Order.SINGLE);
+        m.addBond(8, 9, IBond.Order.SINGLE);
+        m.addBond(8, 13, IBond.Order.DOUBLE);
+        m.addBond(13, 14, IBond.Order.SINGLE);
+        List<IStereoElement> stereo =
+            StereoElementFactory.using3DCoordinates(m)
+                                .createAll();
+        assertThat(stereo.size(), is(1));
+    }
+
     static IAtom atom(String symbol, int h, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(h);

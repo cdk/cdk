@@ -489,11 +489,6 @@ public abstract class StereoElementFactory {
             return new TetrahedralChirality(focus, neighbors, winding);
         }
 
-        private static boolean isHydrogen(IAtom atom) {
-            Integer elem = atom.getAtomicNumber();
-            return elem != null && elem == 1;
-        }
-
         private static boolean isWedged(IBond bond) {
             switch (bond.getStereo()) {
                 case UP:
@@ -582,7 +577,10 @@ public abstract class StereoElementFactory {
                 n++;
             }
 
-            // recheck now we have account for explicit hydrogens
+            if (n != 4)
+                return null;
+
+            // recheck now we have accounted for explicit hydrogens
             if (sum1 > 9 || sum1 < 8)
                 return null;
             if (sum2 > 9 || sum2 < 8)
@@ -913,8 +911,84 @@ public abstract class StereoElementFactory {
         @Override
         IStereoElement createAtropisomer(int u, int v,
                                          Stereocenters stereocenters) {
-            // ToDo
-            return null;
+
+            IAtom end1 = container.getAtom(u);
+            IAtom end2 = container.getAtom(v);
+
+            if (hasUnspecifiedParity(end1) || hasUnspecifiedParity(end2))
+                return null;
+
+            if (graph[u].length != 3 || graph[v].length != 3)
+                return null;
+
+            // check degrees of connected atoms, we only create the
+            // atropisomer if the rings are 3x ortho substituted
+            // CC1=CC=CC(C)=C1-C1=C(C)C=CC=C1C yes (sum1=9,sum2=9)
+            // CC1=CC=CC=C1-C1=C(C)C=CC=C1C yes    (sum1=8,sum2=9)
+            // CC1=CC=CC(C)=C1-C1=CC=CC=C1 no      (sum1=7,sum2=9)
+            // CC1=CC=CC=C1-C1=C(C)C=CC=C1 no      (sum1=8,sum2=8)
+            int sum1 = graph[graph[u][0]].length +
+                       graph[graph[u][1]].length +
+                       graph[graph[u][2]].length;
+            int sum2 = graph[graph[v][0]].length +
+                       graph[graph[v][1]].length +
+                       graph[graph[v][2]].length;
+
+            if (sum1 > 9 || sum1 < 8)
+                return null;
+            if (sum2 > 9 || sum2 < 8)
+                return null;
+            if (sum1 + sum2 < 17)
+                return null;
+
+
+            IAtom[] carriers = new IAtom[4];
+
+            int n = 0;
+            for (int w : graph[u]) {
+                if (w == v) continue;
+
+                carriers[n] = container.getAtom(w);
+
+                for (int w2 : graph[w]) {
+                    if (isHydrogen(container.getAtom(w2)))
+                        sum1--;
+                }
+
+                n++;
+            }
+            n = 2;
+            for (int w : graph[v]) {
+                if (w == u) continue;
+
+                carriers[n] = container.getAtom(w);
+
+                for (int w2 : graph[w]) {
+                    if (isHydrogen(container.getAtom(w2)))
+                        sum2--;
+                }
+
+                n++;
+            }
+
+            if (n != 4)
+                return null;
+
+            // recheck now we have account for explicit hydrogens
+            if (sum1 > 9 || sum1 < 8)
+                return null;
+            if (sum2 > 9 || sum2 < 8)
+                return null;
+            if (sum1 + sum2 < 17)
+                return null;
+
+            IAtom tmp = end1.getBuilder().newAtom();
+            tmp.setPoint2d(new Point2d((end1.getPoint2d().x + end2.getPoint2d().x)/2,
+                                       (end2.getPoint2d().y + end2.getPoint2d().y)/2));
+            int parity = parity(carriers);
+            int cfg    = parity > 0 ? IStereoElement.LEFT : IStereoElement.RIGHT;
+
+            return new Atropisomeric(container.getBond(end1, end2), carriers, cfg);
         }
 
         /**{@inheritDoc} */
@@ -1097,5 +1171,10 @@ public abstract class StereoElementFactory {
             return new double[]{(u[1] * v[2]) - (v[1] * u[2]), (u[2] * v[0]) - (v[2] * u[0]),
                     (u[0] * v[1]) - (v[0] * u[1])};
         }
+    }
+
+    private static boolean isHydrogen(IAtom atom) {
+        Integer elem = atom.getAtomicNumber();
+        return elem != null && elem == 1;
     }
 }
