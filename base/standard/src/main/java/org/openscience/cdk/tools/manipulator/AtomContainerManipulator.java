@@ -63,7 +63,9 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.stereo.Atropisomeric;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
@@ -832,6 +834,9 @@ public class AtomContainerManipulator {
                 IBond cpyRight = yNew != y ? org.getBond(v, yNew) : orgRight;
 
                 elements.add(new DoubleBondStereochemistry(orgStereo, new IBond[]{cpyLeft, cpyRight}, conformation));
+            } else if (se instanceof Atropisomeric) {
+                // can not have any H's
+                elements.add(se);
             }
         }
 
