@@ -26,6 +26,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -118,19 +119,15 @@ public class ConnectivityChecker {
             componentsMap.get(lonePair.getAtom()).addLonePair(lonePair);
 
         for (IStereoElement stereo : container.stereoElements()) {
-            if (stereo instanceof ITetrahedralChirality) {
-                IAtom a = ((ITetrahedralChirality) stereo).getChiralAtom();
-                if (componentsMap.containsKey(a)) componentsMap.get(a).addStereoElement(stereo);
-            } else if (stereo instanceof IDoubleBondStereochemistry) {
-                IBond bond = ((IDoubleBondStereochemistry) stereo).getStereoBond();
-                if (componentsMap.containsKey(bond.getBegin()) && componentsMap.containsKey(bond.getEnd()))
-                    componentsMap.get(bond.getBegin()).addStereoElement(stereo);
-            } else if (stereo instanceof ExtendedTetrahedral) {
-                IAtom atom = ((ExtendedTetrahedral) stereo).focus();
-                if (componentsMap.containsKey(atom)) componentsMap.get(atom).addStereoElement(stereo);
+            IChemObject focus = stereo.getFocus();
+            if (focus instanceof IAtom) {
+                if (componentsMap.containsKey(focus))
+                    componentsMap.get(focus).addStereoElement(stereo);
+            } else if (focus instanceof IBond) {
+                if (componentsMap.containsKey(((IBond) focus).getBegin()))
+                    componentsMap.get(((IBond) focus).getBegin()).addStereoElement(stereo);
             } else {
-                System.err.println("New stereochemistry element is not currently partitioned with ConnectivityChecker:"
-                        + stereo.getClass());
+                throw new IllegalStateException("New stereo element not using an atom/bond for focus?");
             }
         }
 
