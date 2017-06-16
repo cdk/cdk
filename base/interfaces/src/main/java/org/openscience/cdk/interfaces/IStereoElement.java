@@ -126,7 +126,40 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
     public static final int HBPY8 = 0x81_00;
 
     /** Heptagonal Bipyramidal (HBPY-9) */
-    public static final int HBPY9 = 0x82_00;
+    public static final int HBPY9 = 0x91_00;
+
+    /** Geomeric CisTrans (e.g. but-2-ene) */
+    public static final int CisTrans              = CT;
+
+    /** Tetrahedral (T-4) (e.g. butan-2-ol)*/
+    public static final int Tetrahedral           = TH;
+
+    /** ExtendedTetrahedral (e.g. 2,3-pentadiene) */
+    public static final int Allenal               = AL;
+
+    /** Atropisomeric (e.g. BiNAP) */
+    public static final int Atropisomeric         = AT;
+
+    /** Square Planar (SP-4) (e.g. cisplatin) */
+    public static final int SquarePlanar          = SP;
+
+    /** Square Pyramidal (SPY-5) */
+    public static final int SquarePyramidal       = SPY;
+
+    /** Trigonal Bipyramidal (TBPY-5) */
+    public static final int TrigonalBipyramidal   = TBPY;
+
+    /** Octahedral (OC-6) */
+    public static final int Octahedral            = OC;
+
+    /** Pentagonal Bipyramidal (PBPY-7) */
+    public static final int PentagonalBipyramidal = PBPY;
+
+    /** Hexagonal Bipyramidal (HBPY-8) */
+    public static final int HexagonalBipyramidal  = HBPY8;
+
+    /** Heptagonal Bipyramidal (HBPY-9) */
+    public static final int HeptagonalBipyramidal = HBPY9;
 
     /**
      * The focus atom or bond at the 'centre' of the stereo-configuration.
