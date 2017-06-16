@@ -36,7 +36,9 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
+import javax.vecmath.Vector3d;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -188,7 +190,8 @@ public abstract class StereoElementFactory {
                     for (int w : graph[v]) {
                         IBond bond = bondMap.get(v, w);
                         if (w > v && bond.getOrder() == IBond.Order.DOUBLE) {
-                            if (centers.isStereocenter(w) && !bond.isInRing()) {
+                            if (centers.elementType(w) == Stereocenters.Type.Tricoordinate
+                                && centers.isStereocenter(w) && !bond.isInRing()) {
                                 IStereoElement element = createGeometric(v, w, centers);
                                 if (element != null) elements.add(element);
                             }
@@ -607,7 +610,8 @@ public abstract class StereoElementFactory {
         @Override
         IDoubleBondStereochemistry createGeometric(int u, int v, Stereocenters stereocenters) {
 
-            if (hasUnspecifiedParity(container.getAtom(u)) || hasUnspecifiedParity(container.getAtom(v))) return null;
+            if (hasUnspecifiedParity(container.getAtom(u)) ||
+                hasUnspecifiedParity(container.getAtom(v))) return null;
 
             int[] us = graph[u];
             int[] vs = graph[v];
@@ -618,10 +622,12 @@ public abstract class StereoElementFactory {
             moveToBack(us, v);
             moveToBack(vs, u);
 
-            IAtom[] vAtoms = new IAtom[]{container.getAtom(us[0]), container.getAtom(us.length > 2 ? us[1] : u),
-                    container.getAtom(v)};
-            IAtom[] wAtoms = new IAtom[]{container.getAtom(vs[0]), container.getAtom(vs.length > 2 ? vs[1] : v),
-                    container.getAtom(u)};
+            IAtom[] vAtoms = new IAtom[]{container.getAtom(us[0]),
+                                         container.getAtom(us.length > 2 ? us[1] : u),
+                                         container.getAtom(v)};
+            IAtom[] wAtoms = new IAtom[]{container.getAtom(vs[0]),
+                                         container.getAtom(vs.length > 2 ? vs[1] : v),
+                                         container.getAtom(u)};
 
             // are any substituents a wavy unspecified bond
             if (isUnspecified(bondMap.get(u, us[0])) || isUnspecified(bondMap.get(u, us[1]))
@@ -1040,6 +1046,10 @@ public abstract class StereoElementFactory {
             if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE
                     || bondMap.get(v, t1).getOrder() != IBond.Order.DOUBLE) return null;
 
+            // check for kinked cumulated bond
+            if (!isColinear(focus, terminals))
+                return null;
+
             neighbors[1] = terminals[0];
             neighbors[3] = terminals[1];
 
@@ -1059,6 +1069,18 @@ public abstract class StereoElementFactory {
             Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE : Stereo.CLOCKWISE;
 
             return new ExtendedTetrahedral(focus, neighbors, winding);
+        }
+
+        private boolean isColinear(IAtom focus, IAtom[] terminals) {
+            Vector3d vec0 = new Vector3d(terminals[0].getPoint3d().x - focus.getPoint3d().x,
+                                         terminals[0].getPoint3d().y - focus.getPoint3d().y,
+                                         terminals[0].getPoint3d().z - focus.getPoint3d().z);
+            Vector3d vec1 = new Vector3d(terminals[1].getPoint3d().x - focus.getPoint3d().x,
+                                         terminals[1].getPoint3d().y - focus.getPoint3d().y,
+                                         terminals[1].getPoint3d().z - focus.getPoint3d().z);
+            vec0.normalize();
+            vec1.normalize();
+            return Math.abs(vec0.dot(vec1) + 1) < 0.05;
         }
 
         /** 3x3 determinant helper for a constant third column */

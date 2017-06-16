@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.smiles.SmiFlavor;
@@ -547,8 +548,10 @@ public class StereoElementFactoryTest {
         m.addBond(1, 6, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
 
-        ExtendedTetrahedral et = StereoElementFactory.using3DCoordinates(m).createExtendedTetrahedral(2,
-                Stereocenters.of(m));
+        List<IStereoElement> stereos = StereoElementFactory.using3DCoordinates(m).createAll();
+        assertThat(stereos.size(), is(1));
+        assertThat(stereos.get(0), instanceOf(ExtendedTetrahedral.class));
+        ExtendedTetrahedral et = (ExtendedTetrahedral) stereos.get(0);
         assertThat(et.winding(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
         assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6), m.getAtom(4), m.getAtom(5)}));
         assertThat(et.focus(), is(m.getAtom(2)));
@@ -557,13 +560,13 @@ public class StereoElementFactoryTest {
     @Test
     public void createExtendedTetrahedralFrom3DCoordinates_ccw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
-        m.addAtom(atom("C", 3, 1.3810, -0.7495, -1.4012));
+        m.addAtom(atom("C", 3, -1.4096, -2.1383, 0.6392));
         m.addAtom(atom("C", 0, -0.4383, -2.0366, 0.8166));
         m.addAtom(atom("C", 0, 0.2349, -1.2464, 0.0943));
         m.addAtom(atom("C", 0, 0.9377, -0.4327, -0.5715));
         m.addAtom(atom("C", 3, 1.0851, 0.9388, -0.1444));
+        m.addAtom(atom("H", 0, 1.3810, -0.7495, -1.4012));
         m.addAtom(atom("H", 0, 0.1925, -2.7911, 1.8739));
-        m.addAtom(atom("H", 0, -1.4096, -2.1383, 0.6392));
         m.addBond(1, 0, IBond.Order.SINGLE);
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.DOUBLE);
@@ -571,8 +574,10 @@ public class StereoElementFactoryTest {
         m.addBond(1, 6, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
 
-        ExtendedTetrahedral et = StereoElementFactory.using3DCoordinates(m).createExtendedTetrahedral(2,
-                Stereocenters.of(m));
+        List<IStereoElement> stereos = StereoElementFactory.using3DCoordinates(m).createAll();
+        assertThat(stereos.size(), is(1));
+        assertThat(stereos.get(0), instanceOf(ExtendedTetrahedral.class));
+        ExtendedTetrahedral et = (ExtendedTetrahedral) stereos.get(0);
         assertThat(et.winding(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6), m.getAtom(4), m.getAtom(5)}));
         assertThat(et.focus(), is(m.getAtom(2)));
@@ -666,6 +671,29 @@ public class StereoElementFactoryTest {
 
         List<IStereoElement> elements = StereoElementFactory.using2DCoordinates(m).createAll();
         assertThat(elements.size(), is(3));
+    }
+
+
+    /**
+     * Watch out for cumulated bonds with a kink in 3d. The generation program
+     * has not understood the chemistry completely.
+     *
+     * @cdk.smiles CC=[C@]=CC
+     */
+    @Test
+    public void badlyOptimizedAllene() {
+        IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("C", 1, -4.02, 3.96, -1.09));
+        m.addAtom(atom("C", 0, -4.96, 3.82, 0.13));
+        m.addAtom(atom("C", 3, -3.70, 5.35, -1.67));
+        m.addAtom(atom("C", 1, -5.27, 2.44, 0.71));
+        m.addAtom(atom("C", 3, -6.21, 2.30, 1.92));
+        m.addBond(0, 1, IBond.Order.DOUBLE);
+        m.addBond(0, 2, IBond.Order.SINGLE);
+        m.addBond(1, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        List<IStereoElement> elements = StereoElementFactory.using3DCoordinates(m).createAll();
+        assertThat(elements.size(), is(0));
     }
 
     @Test
