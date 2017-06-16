@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
+import org.openscience.cdk.stereo.Atropisomeric;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -56,13 +57,13 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.UP_OR_DOWN;
 import static org.openscience.cdk.interfaces.IBond.Stereo.UP_OR_DOWN_INVERTED;
 
 /**
- * Assigns non-planar labels (wedge/hatch) to the tetrahedral and extended tetrahedral 
+ * Assigns non-planar labels (wedge/hatch) to the tetrahedral and extended tetrahedral
  * stereocentres in a 2D depiction. Labels are assigned to atoms using the following priority. <ol> <li>bond to non-stereo atoms</li> <li>acyclic
  * bonds</li> <li>bonds to atoms with lower degree (i.e. terminal)</li> <li>lower atomic number</li>
  * </ol>
- * 
+ *
  * Unspecified bonds are also marked.
- * 
+ *
  * @author John May
  * @cdk.module sdg
  */
@@ -177,6 +178,8 @@ final class NonplanarBonds {
         for (IStereoElement se : container.stereoElements()) {
             if (se instanceof ExtendedTetrahedral) {
                 label((ExtendedTetrahedral) se);
+            } else if (se instanceof Atropisomeric) {
+                label((Atropisomeric) se);
             }
         }
 
@@ -271,6 +274,96 @@ final class NonplanarBonds {
     }
 
     /**
+     * Assign non-planar labels (wedge/hatch) to the bonds to
+     * atropisomers
+     *
+     * @param element a extended tetrahedral element
+     */
+    private void label(final Atropisomeric element) {
+
+        final IBond   focus = element.getFocus();
+        final IAtom   beg   = focus.getBegin();
+        final IAtom   end   = focus.getEnd();
+        final IAtom[] atoms = element.getCarriers().toArray(new IAtom[0]);
+        final IBond[] bonds = new IBond[4];
+
+        int p = 0;
+        switch (element.getConfig()) {
+            case IStereoElement.LEFT:
+                p = +1;
+                break;
+            case IStereoElement.RIGHT:
+                p = -1;
+                break;
+        }
+
+        // some bonds may be null if, this happens when an implicit atom
+        // is present and one or more 'atoms' is a terminal atom
+        bonds[0] = container.getBond(beg, atoms[0]);
+        bonds[1] = container.getBond(beg, atoms[1]);
+        bonds[2] = container.getBond(end, atoms[2]);
+        bonds[3] = container.getBond(end, atoms[3]);
+
+        // may be back to front?
+        if (bonds[0] == null || bonds[1] == null ||
+            bonds[2] == null || bonds[3] == null)
+            throw new IllegalStateException("Unexpected configuration ordering, beg/end bonds should be in that order.");
+
+        // find the clockwise ordering (in the plane of the page) by sorting by
+        // polar corodinates
+        int[] rank = new int[4];
+        for (int i = 0; i < 4; i++)
+            rank[i] = i;
+
+        IAtom phantom = beg.getBuilder().newAtom();
+        phantom.setPoint2d(new Point2d((beg.getPoint2d().x + end.getPoint2d().x) / 2,
+                                   (beg.getPoint2d().y + end.getPoint2d().y) / 2));
+        p *= sortClockwise(rank, phantom, atoms, 4);
+
+        // assign all up/down labels to an auxiliary array
+        IBond.Stereo[] labels = new IBond.Stereo[4];
+        for (int i = 0; i < 4; i++) {
+            int v = rank[i];
+            p *= -1;
+            labels[v] = p > 0 ? UP : DOWN;
+        }
+
+        int[] priority = new int[]{5, 5, 5, 5};
+
+        // set the label for the highest priority and available bonds on one side
+        // of the cumulated system, setting both sides doesn't make sense
+        int i = 0;
+        for (int v : new int[]{0,1,2,3}) {
+            IBond bond = bonds[v];
+            if (bond == null) continue;
+            if (bond.getStereo() == NONE && bond.getOrder() == SINGLE) priority[v] = i++;
+        }
+
+        // we now check which side was more favourable and assign two labels
+        // to that side only
+        if (priority[0] + priority[1] < priority[2] + priority[3]) {
+            if (priority[0] < 5) {
+                bonds[0].setAtoms(new IAtom[]{beg, atoms[0]});
+                bonds[0].setStereo(labels[0]);
+            }
+            if (priority[1] < 5) {
+                bonds[1].setAtoms(new IAtom[]{beg, atoms[1]});
+                bonds[1].setStereo(labels[1]);
+            }
+        } else {
+            if (priority[2] < 5) {
+                bonds[2].setAtoms(new IAtom[]{end, atoms[2]});
+                bonds[2].setStereo(labels[2]);
+            }
+            if (priority[3] < 5) {
+                bonds[3].setAtoms(new IAtom[]{end, atoms[3]});
+                bonds[3].setStereo(labels[3]);
+            }
+        }
+
+    }
+
+    /**
      * Assign labels to the bonds of tetrahedral element to correctly represent
      * its stereo configuration.
      *
@@ -291,7 +384,7 @@ final class NonplanarBonds {
 
         for (int i = 0; i < 4; i++) {
             if (atoms[i].equals(focus)) {
-                p *= parity(i); // implicit H, adjust parity
+                p *= indexParity(i); // implicit H, adjust parity
             } else {
                 bonds[n] = container.getBond(focus, atoms[i]);
                 atoms[n] = atoms[i];
@@ -385,7 +478,7 @@ final class NonplanarBonds {
      * @param x a value
      * @return the parity
      */
-    private int parity(int x) {
+    private int indexParity(int x) {
         return (x & 0x1) == 1 ? -1 : +1;
     }
 
@@ -541,7 +634,7 @@ final class NonplanarBonds {
             }
             indices[i + 1] = v;
         }
-        return parity(x);
+        return indexParity(x);
     }
 
     /**
@@ -583,7 +676,7 @@ final class NonplanarBonds {
      * Labels a double bond as unspecified either by marking an adjacent bond as
      * wavy (up/down) or if that's not possible (e.g. it's conjugated with other double bonds
      * that have a conformation), setting the bond to a crossed double bond.
-     * 
+     *
      * @param doubleBond the bond to mark as unspecified
      */
     private void labelUnspecified(IBond doubleBond) {
@@ -698,7 +791,7 @@ final class NonplanarBonds {
 
     /**
      * Locates double bonds to mark as unspecified stereochemistry.
-     * 
+     *
      * @return set of double bonds
      */
     private List<IBond> findUnspecifiedDoubleBonds(int[][] adjList) {
@@ -827,8 +920,8 @@ final class NonplanarBonds {
     /**
      * Check that an atom (v:index) is only adjacent to plain single bonds (may be a bold or
      * hashed wedged - e.g. at fat end) with the single exception being the allowed double bond
-     * passed as an argument. 
-     * 
+     * passed as an argument.
+     *
      * @param v atom index
      * @param allowedDoubleBond a double bond that is allowed
      * @return the atom is adjacent to one or more plain single bonds
@@ -844,12 +937,12 @@ final class NonplanarBonds {
                 }
             }
             // single bonds
-            else { 
+            else {
                 if (adjBond.getStereo() == UP_OR_DOWN || adjBond.getStereo() == UP_OR_DOWN_INVERTED) {
                     return false;
                 }
                 count++;
-            }            
+            }
         }
         return count > 0;
     }
