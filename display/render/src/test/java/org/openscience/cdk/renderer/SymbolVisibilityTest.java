@@ -78,7 +78,7 @@ public class SymbolVisibilityTest {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         a1.setImplicitHydrogenCount(null);
-        a1.setImplicitHydrogenCount(null);
+        a2.setImplicitHydrogenCount(null);
         IBond bond = new Bond(a1, a2);
         a1.setPoint2d(new Point2d(0, 0));
         a2.setPoint2d(new Point2d(0, 0));
