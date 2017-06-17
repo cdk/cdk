@@ -602,7 +602,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         interpretHydrogenIsotopes = addSetting(new BooleanIOSetting("InterpretHydrogenIsotopes",
                 IOSetting.Importance.LOW, "Should D and T be interpreted as hydrogen isotopes?", "true"));
         addStereoElements = addSetting(new BooleanIOSetting("AddStereoElements", IOSetting.Importance.LOW,
-                "Assign stereo configurations to stereocenters utilising 2D/3D coordinates.", "true"));
+                "Detect and create IStereoElements for the input.", "true"));
     }
 
     public void customizeJob() {
