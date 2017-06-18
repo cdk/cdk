@@ -1243,7 +1243,13 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[12CH3]C");
         assertThat(new SmilesGenerator(SmiFlavor.AtomicMassStrict).create(mol), is("[12CH3]C"));
-        assertThat(new SmilesGenerator(SmiFlavor.AtomicMass).create(mol), is("CC"));
+    }
+
+    @Test
+    public void isotopes() throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[12CH3]C");
+        assertThat(new SmilesGenerator(SmiFlavor.AtomicMass).create(mol), is("[12CH3]C"));
     }
 
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {

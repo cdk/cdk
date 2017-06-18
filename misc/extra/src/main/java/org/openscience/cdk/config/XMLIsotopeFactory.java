@@ -87,7 +87,6 @@ public class XMLIsotopeFactory extends IsotopeFactory {
         }
         IsotopeReader reader = new IsotopeReader(ins, builder);
         //in = new ObjIn(ins, new Config().aliasID(false));
-        this.isotopes = new HashMap<String, List<IIsotope>>();
         List<IIsotope> isotopes = reader.readIsotopes();
         for (IIsotope isotope : isotopes)
             add(isotope);
@@ -96,8 +95,6 @@ public class XMLIsotopeFactory extends IsotopeFactory {
          * for (int f = 0; f < isotopes.size(); f++) { Isotope isotope =
          * (Isotope)isotopes.elementAt(f); } What's this loop for??
          */
-
-        majorIsotopes = new HashMap<String, IIsotope>();
     }
 
     /**

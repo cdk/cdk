@@ -29,6 +29,12 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+
 /**
  * Checks the functionality of the IsotopeFactory
  *
@@ -160,10 +166,19 @@ public class IsotopesTest extends CDKTestCase {
         Assert.assertEquals(13.00335484, isofac.getIsotope("C", 13).getExactMass(), 0.0000001);
     }
 
+    /**
+     * Elements without a major isotope should return null.
+     */
+    @Test
+    public void testMajorUnstableIsotope() throws Exception {
+        Isotopes isotopes = Isotopes.getInstance();
+        assertNull(isotopes.getMajorIsotope("Es"));
+    }
+
     @Test
     public void testGetIsotope_NonElement() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
-        Assert.assertNull(isofac.getIsotope("R", 13));
+        assertNull(isofac.getIsotope("R", 13));
     }
 
     @Test
@@ -179,14 +194,14 @@ public class IsotopesTest extends CDKTestCase {
     public void testGetIsotopeFromExactMass_NonElement() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         IIsotope match = isofac.getIsotope("R", 13.00001, 0.0001);
-        Assert.assertNull(match);
+        assertNull(match);
     }
 
     @Test
     public void testYeahSure() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         IIsotope match = isofac.getIsotope("H", 13.00001, 0.0001);
-        Assert.assertNull(match);
+        assertNull(match);
     }
 
     @Test
@@ -196,6 +211,18 @@ public class IsotopesTest extends CDKTestCase {
         IIsotope match = isofac.getIsotope(carbon13.getSymbol(), carbon13.getExactMass(), 2.0);
         Assert.assertNotNull(match);
         Assert.assertEquals(13, match.getMassNumber().intValue());
+    }
+
+    @Test
+    public void configureDoesNotSetMajorIsotope() throws Exception {
+        IAtom    atom     = new Atom("CH4");
+        Isotopes isotopes = Isotopes.getInstance();
+        IIsotope major    = isotopes.getMajorIsotope(atom.getSymbol());
+        assertThat(major, is(notNullValue()));
+        assertThat(major.getMassNumber(),
+                   is(12));
+        isotopes.configure(atom);
+        assertThat(atom.getMassNumber(), is(nullValue()));
     }
 
     /**
@@ -220,14 +247,14 @@ public class IsotopesTest extends CDKTestCase {
     public void testGetElement_Nonelement() throws Exception {
         IsotopeFactory isofac = Isotopes.getInstance();
         IElement element = isofac.getElement("E");
-        Assert.assertNull(element);
+        assertNull(element);
     }
 
     @Test
     public void testGetMajorIsotope_Nonelement() throws Exception {
         IsotopeFactory isofac = Isotopes.getInstance();
         IIsotope isotope = isofac.getMajorIsotope("E");
-        Assert.assertNull(isotope);
+        assertNull(isotope);
     }
 
 }

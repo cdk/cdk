@@ -96,7 +96,10 @@ public final class SmiFlavor {
     /**
      * Generate SMILES with the major isotopes, only omit mass numbers when it
      * is unset.
+     * @deprecated no longer needed, default CDK behaviour is now to pass
+     *             through mass numbers if non-null
      */
+    @Deprecated
     public static final int AtomicMassStrict   = 0x800;
 
 

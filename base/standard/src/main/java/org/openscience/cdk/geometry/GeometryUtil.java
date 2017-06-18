@@ -24,6 +24,7 @@
 package org.openscience.cdk.geometry;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,6 +44,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -541,12 +543,19 @@ public final class GeometryUtil {
         double zsum = 0.0;
 
         double totalmass = 0.0;
+        Isotopes isotopes;
+        try {
+            isotopes = Isotopes.getInstance();
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize Isotopes");
+        }
 
         for (IAtom a : ac.atoms()) {
             Double mass = a.getExactMass();
             // some sanity checking
             if (a.getPoint3d() == null) return null;
-            if (mass == null) return null;
+            if (mass == null)
+                mass = isotopes.getNaturalMass(a);
 
             totalmass += mass;
             xsum += mass * a.getPoint3d().x;

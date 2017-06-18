@@ -53,6 +53,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -207,6 +208,7 @@ public class AtomContainerManipulator {
      *
      * @param  atomContainer The IAtomContainer to manipulate
      * @return The summed exact mass of all atoms in this AtomContainer.
+     * @see #getMolecularWeight(IAtomContainer)
      */
     public static double getTotalExactMass(IAtomContainer atomContainer) {
         try {
@@ -232,6 +234,7 @@ public class AtomContainerManipulator {
      *
      * @param atomContainer
      * @cdk.keyword mass, molecular
+     * @see #getMolecularWeight(IAtomContainer)
      */
     public static double getNaturalExactMass(IAtomContainer atomContainer) {
         try {
@@ -250,6 +253,43 @@ public class AtomContainerManipulator {
                 mass += hydgrogenMass * atom.getImplicitHydrogenCount();
             }
             return mass;
+
+        } catch (IOException e) {
+            throw new RuntimeException("Isotopes definitions could not be loaded", e);
+        }
+    }
+
+    /**
+     * Calculate the molecular weight of a molecule.
+     *
+     * @param mol the molecule
+     * @return the molecular weight
+     */
+    public static double getMolecularWeight(IAtomContainer mol) {
+        try {
+            Isotopes isotopes = Isotopes.getInstance();
+            double hmass = isotopes.getNaturalMass(Elements.HYDROGEN);
+            double mw    = 0.0;
+            for (final IAtom atom : mol.atoms()) {
+                if (atom.getAtomicNumber() == null || atom.getAtomicNumber() == 0)
+                    throw new IllegalArgumentException("An atom had with unknown (null) atomic number");
+                if (atom.getImplicitHydrogenCount() == null)
+                    throw new IllegalArgumentException("An atom had with unknown (null) implicit hydrogens");
+                mw += hmass * atom.getImplicitHydrogenCount();
+                if (atom.getMassNumber() == null)
+                    mw += isotopes.getNaturalMass(atom);
+                else if (atom.getExactMass() != null)
+                    mw += atom.getExactMass();
+                else {
+                    IIsotope isotope = isotopes.getIsotope(atom.getSymbol(), atom.getMassNumber());
+                    if (isotope == null)
+                        mw += isotopes.getNaturalMass(atom);
+                    else
+                        mw += isotope.getExactMass();
+                }
+
+            }
+            return mw;
 
         } catch (IOException e) {
             throw new RuntimeException("Isotopes definitions could not be loaded", e);

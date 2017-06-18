@@ -234,12 +234,9 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
     }
 
     private List order6(IAtomContainer atomContainer) {
-        QueryAtomContainer[] queries = new QueryAtomContainer[2];
+        QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1(C)C(C)C1(C)"),
-                    false);
-            queries[1] = QueryAtomContainerCreator
-                    .createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)(C)C"), false);
+            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)(C)C"), false);
         } catch (InvalidSmilesException e) {
             e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }

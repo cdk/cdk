@@ -177,10 +177,10 @@ public class ChiPathClusterDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(1.6076, ret.get(0), 0.0001);
         Assert.assertEquals(3.6550, ret.get(1), 0.0001);
 
-        Assert.assertEquals(3.2503, ret.get(2), 0.0001); // 3.3337 ?
+        Assert.assertEquals(3.3337, ret.get(2), 0.0001);
         Assert.assertEquals(1.1410, ret.get(3), 0.0001);
         Assert.assertEquals(2.1147, ret.get(4), 0.0001);
-        Assert.assertEquals(1.6522, ret.get(5), 0.0001); // 1.7148 ?
+        Assert.assertEquals(1.7148, ret.get(5), 0.0001);
     }
 
     /**
