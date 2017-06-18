@@ -1423,9 +1423,9 @@ public class StructureDiagramGenerator {
             IAtom atom2 = bond.getEnd();
             if (isHydrogen(atom1) || isHydrogen(atom2)) continue;
             if (ringAtoms.contains(atom1) ^ ringAtoms.contains(atom2)) {
-                ringWithStubs.addBond(bond);
                 ringWithStubs.addAtom(atom1);
                 ringWithStubs.addAtom(atom2);
+                ringWithStubs.addBond(bond);
             }
         }
 
