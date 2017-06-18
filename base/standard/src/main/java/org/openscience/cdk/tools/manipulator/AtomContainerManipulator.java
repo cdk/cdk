@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import com.google.common.collect.Maps;
@@ -822,14 +823,14 @@ public class AtomContainerManipulator {
                 if (x == null || y == null) continue;
 
                 // no changes
-                if (x == xNew && y == yNew) {
+                if (x.equals(xNew) && y.equals(yNew)) {
                     elements.add(db);
                     continue;
                 }
 
                 // XXX: may perform slow operations but works for now
-                IBond cpyLeft = xNew != x ? org.getBond(u, xNew) : orgLeft;
-                IBond cpyRight = yNew != y ? org.getBond(v, yNew) : orgRight;
+                IBond cpyLeft = !Objects.equals(xNew, x) ? org.getBond(u, xNew) : orgLeft;
+                IBond cpyRight = !Objects.equals(yNew, y) ? org.getBond(v, yNew) : orgRight;
 
                 elements.add(new DoubleBondStereochemistry(orgStereo, new IBond[]{cpyLeft, cpyRight}, conformation));
             }
@@ -973,7 +974,7 @@ public class AtomContainerManipulator {
      */
     private static IAtom findOther(IAtomContainer container, IAtom atom, IAtom exclude1, IAtom exclude2) {
         for (IAtom neighbor : container.getConnectedAtomsList(atom)) {
-            if (neighbor != exclude1 && neighbor != exclude2) return neighbor;
+            if (!neighbor.equals(exclude1) && !neighbor.equals(exclude2)) return neighbor;
         }
         return null;
     }

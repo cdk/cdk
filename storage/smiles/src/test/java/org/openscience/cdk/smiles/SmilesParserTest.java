@@ -2355,7 +2355,7 @@ public class SmilesParserTest extends CDKTestCase {
             assertTrue(stereoElement instanceof ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality) stereoElement;
             Assert.assertEquals("C", l4Chiral.getChiralAtom().getSymbol());
-            if (l4Chiral.getChiralAtom() == mol.getAtom(0)) {
+            if (l4Chiral.getChiralAtom().equals(mol.getAtom(0))) {
                 IAtom[] ligands = l4Chiral.getLigands();
                 for (IAtom atom : ligands)
                     Assert.assertNotNull(atom);
