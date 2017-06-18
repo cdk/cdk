@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
-import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
@@ -139,7 +138,7 @@ public class InChIToStructureTest extends CDKTestCase {
         IAtomContainer container = parser.getAtomContainer();
         // test if the created IAtomContainer is done with the Silent module...
         // OK, this is not typical use, but maybe the above generate method should be private
-        assertTrue(container instanceof AtomContainer);
+        Assert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
     }
 
     @Test
@@ -147,7 +146,7 @@ public class InChIToStructureTest extends CDKTestCase {
         InChIToStructure parser = new InChIToStructure("InChI=1S/O", DefaultChemObjectBuilder.getInstance());
         parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
-        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
+        Assert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
         Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
         Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(0));
     }
@@ -157,8 +156,8 @@ public class InChIToStructureTest extends CDKTestCase {
         InChIToStructure parser = new InChIToStructure("InChI=1S/H2O/h1H2/i1+2", DefaultChemObjectBuilder.getInstance());
         parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
-        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
         Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
+        Assert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));        Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
         Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(2));
         Assert.assertThat(container.getAtom(0).getMassNumber(), is(18));
     }
@@ -169,8 +168,8 @@ public class InChIToStructureTest extends CDKTestCase {
                 DefaultChemObjectBuilder.getInstance());
         parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
-        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
+        Assert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
@@ -183,8 +182,8 @@ public class InChIToStructureTest extends CDKTestCase {
                 DefaultChemObjectBuilder.getInstance());
         parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
-        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
+        Assert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
@@ -200,8 +199,8 @@ public class InChIToStructureTest extends CDKTestCase {
                 SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
 
-        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
+        Assert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(ExtendedTetrahedral.class)));
@@ -221,8 +220,8 @@ public class InChIToStructureTest extends CDKTestCase {
                 SilentChemObjectBuilder.getInstance());
         IAtomContainer container = parser.getAtomContainer();
 
-        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
         Iterator<IStereoElement> ses = container.stereoElements().iterator();
+        Assert.assertThat(container, is(instanceOf(SilentChemObjectBuilder.getInstance().newAtomContainer().getClass())));
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(ExtendedTetrahedral.class)));
