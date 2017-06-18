@@ -451,38 +451,40 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
 
             // create 0D stereochemistry
-            Parities:
-            for (Map.Entry<IAtom,Integer> e : parities.entrySet()) {
-                int parity = e.getValue();
-                if (parity != 1 && parity != 2)
-                    continue; // 3=unspec
-                int idx = 0;
-                IAtom   focus    = e.getKey();
-                IAtom[] carriers = new IAtom[4];
-                int hidx = -1;
-                for (IAtom nbr : molecule.getConnectedAtomsList(focus)) {
-                    if (idx == 4)
-                        continue Parities; // too many neighbors
-                    if (nbr.getAtomicNumber() == 1) {
-                        if (hidx >= 0)
-                            continue Parities;
-                        hidx = idx;
+            if (addStereoElements.isSet()) {
+                Parities:
+                for (Map.Entry<IAtom, Integer> e : parities.entrySet()) {
+                    int parity = e.getValue();
+                    if (parity != 1 && parity != 2)
+                        continue; // 3=unspec
+                    int idx = 0;
+                    IAtom focus = e.getKey();
+                    IAtom[] carriers = new IAtom[4];
+                    int hidx = -1;
+                    for (IAtom nbr : molecule.getConnectedAtomsList(focus)) {
+                        if (idx == 4)
+                            continue Parities; // too many neighbors
+                        if (nbr.getAtomicNumber() == 1) {
+                            if (hidx >= 0)
+                                continue Parities;
+                            hidx = idx;
+                        }
+                        carriers[idx++] = nbr;
                     }
-                    carriers[idx++] = nbr;
-                }
-                // to few neighbors, or already have a hydrogen defined
-                if (idx < 3 || idx < 4 && hidx >= 0)
-                    continue;
-                if (idx == 3)
-                    carriers[idx++] = focus;
+                    // to few neighbors, or already have a hydrogen defined
+                    if (idx < 3 || idx < 4 && hidx >= 0)
+                        continue;
+                    if (idx == 3)
+                        carriers[idx++] = focus;
 
-                if (idx == 4) {
-                    Stereo winding = parity == 1 ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE;
-                    // H is always at back, even if explicit! At least this seems to be the case.
-                    // we adjust the winding as needed
-                    if (hidx == 0 || hidx == 2)
-                        winding = winding.invert();
-                    molecule.addStereoElement(new TetrahedralChirality(focus, carriers, winding));
+                    if (idx == 4) {
+                        Stereo winding = parity == 1 ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE;
+                        // H is always at back, even if explicit! At least this seems to be the case.
+                        // we adjust the winding as needed
+                        if (hidx == 0 || hidx == 2)
+                            winding = winding.invert();
+                        molecule.addStereoElement(new TetrahedralChirality(focus, carriers, winding));
+                    }
                 }
             }
 
@@ -600,7 +602,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         interpretHydrogenIsotopes = addSetting(new BooleanIOSetting("InterpretHydrogenIsotopes",
                 IOSetting.Importance.LOW, "Should D and T be interpreted as hydrogen isotopes?", "true"));
         addStereoElements = addSetting(new BooleanIOSetting("AddStereoElements", IOSetting.Importance.LOW,
-                "Assign stereo configurations to stereocenters utilising 2D/3D coordinates.", "true"));
+                "Detect and create IStereoElements for the input.", "true"));
     }
 
     public void customizeJob() {
