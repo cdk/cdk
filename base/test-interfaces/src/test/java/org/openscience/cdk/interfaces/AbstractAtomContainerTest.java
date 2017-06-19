@@ -2465,13 +2465,15 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         IAtomContainer chemObject = (IAtomContainer) newChemObject();
         chemObject.addListener(listener);
 
-        chemObject.addAtom(chemObject.getBuilder().newInstance(IAtom.class));
+        IChemObjectBuilder builder = chemObject.getBuilder();
+        chemObject.addAtom(builder.newInstance(IAtom.class));
         assertTrue(listener.changed);
 
         listener.reset();
         assertFalse(listener.changed);
-        chemObject.addBond(chemObject.getBuilder().newInstance(IBond.class,
-                chemObject.getBuilder().newInstance(IAtom.class), chemObject.getBuilder().newInstance(IAtom.class)));
+        chemObject.addAtom(builder.newAtom());
+        chemObject.addAtom(builder.newAtom());
+        chemObject.addBond(builder.newInstance(IBond.class, chemObject.getAtom(0), chemObject.getAtom(1)));
         assertTrue(listener.changed);
     }
 
