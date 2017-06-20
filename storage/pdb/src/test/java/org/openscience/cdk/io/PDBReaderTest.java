@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
@@ -155,8 +156,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
         IAtom nAtom = oMol.getAtom(0);
         Assert.assertNotNull(nAtom);
-        Assert.assertTrue(nAtom instanceof PDBAtom);
-        PDBAtom oAtom = (PDBAtom) nAtom;
+        Assert.assertTrue(nAtom instanceof IPDBAtom);
+        IPDBAtom oAtom = (IPDBAtom) nAtom;
         Assert.assertEquals(new String("C"), oAtom.getSymbol());
         Assert.assertEquals(1, oAtom.getSerial().intValue());
         Assert.assertEquals("C1", oAtom.getName());
@@ -167,8 +168,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
         nAtom = oMol.getAtom(3);
         Assert.assertNotNull(nAtom);
-        Assert.assertTrue(nAtom instanceof PDBAtom);
-        oAtom = (PDBAtom) nAtom;
+        Assert.assertTrue(nAtom instanceof IPDBAtom);
+        oAtom = (IPDBAtom) nAtom;
         Assert.assertEquals("O", oAtom.getSymbol());
         Assert.assertEquals(4, oAtom.getSerial().intValue());
         Assert.assertEquals("O4", oAtom.getName());
@@ -179,8 +180,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
         nAtom = oMol.getAtom(oMol.getAtomCount()-1);
         Assert.assertNotNull(nAtom);
-        Assert.assertTrue(nAtom instanceof PDBAtom);
-        oAtom = (PDBAtom) nAtom;
+        Assert.assertTrue(nAtom instanceof IPDBAtom);
+        oAtom = (IPDBAtom) nAtom;
         Assert.assertEquals("N", oAtom.getSymbol());
         Assert.assertEquals(14, oAtom.getSerial().intValue());
         Assert.assertEquals("N14", oAtom.getName());

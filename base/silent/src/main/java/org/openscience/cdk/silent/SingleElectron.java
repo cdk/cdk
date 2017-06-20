@@ -94,7 +94,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      */
     @Override
     public IAtom getAtom() {
-        return (Atom) this.atom;
+        return this.atom;
     }
 
     /**
