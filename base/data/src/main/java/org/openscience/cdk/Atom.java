@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -650,5 +649,23 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
         atom.setFormalCharge(chg);
 
         return pos == len && len > 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AtomRef)
+            return super.equals(((AtomRef) obj).deref());
+        return super.equals(obj);
     }
 }

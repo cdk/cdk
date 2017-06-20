@@ -533,6 +533,24 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof BondRef)
+            return super.equals(((BondRef) obj).deref());
+        return super.equals(obj);
+    }
+
+    /**
      * Returns a one line string representation of this Container. This method is
      * conform RFC #9.
      *
