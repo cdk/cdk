@@ -137,7 +137,6 @@ public class InChINumbersTools {
             if ((index = aux.indexOf("/F:")) >= 0) {
                 String[] fixedHNumbers = aux.substring(index + 3, aux.indexOf('/', index + 3)).split(";");
                 for (int i = 0; i < fixedHNumbers.length; i++) {
-
                     String component = fixedHNumbers[i];
 
                     // m, 2m, 3m ... need to lookup number in the base numbering
@@ -152,9 +151,8 @@ public class InChINumbersTools {
                         }
                     } else {
                         String[] numbering = component.split(",");
-                        first[i] = Integer.parseInt(numbering[0]) - 1;
                         for (String number : numbering)
-                            numbers[Integer.parseInt(number) - 1] = label++;
+                            numbers[Integer.parseInt(number)-1] = label++;
                     }
                 }
             } else {
