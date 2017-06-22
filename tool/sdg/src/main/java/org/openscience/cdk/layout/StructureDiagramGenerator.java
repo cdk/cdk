@@ -1911,37 +1911,34 @@ public class StructureDiagramGenerator {
      */
     private IAtomContainer placeFirstBond(IBond bond, Vector2d bondVector) {
         IAtomContainer sharedAtoms = null;
-        try {
-            bondVector.normalize();
-            logger.debug("placeFirstBondOfFirstRing->bondVector.length():" + bondVector.length());
-            bondVector.scale(bondLength);
-            logger.debug("placeFirstBondOfFirstRing->bondVector.length() after scaling:" + bondVector.length());
-            IAtom atom;
-            Point2d point = new Point2d(0, 0);
-            atom = bond.getBegin();
-            logger.debug("Atom 1 of first Bond: " + (molecule.indexOf(atom) + 1));
-            atom.setPoint2d(point);
-            atom.setFlag(CDKConstants.ISPLACED, true);
-            point = new Point2d(0, 0);
-            atom = bond.getEnd();
-            logger.debug("Atom 2 of first Bond: " + (molecule.indexOf(atom) + 1));
-            point.add(bondVector);
-            atom.setPoint2d(point);
-            atom.setFlag(CDKConstants.ISPLACED, true);
-            /*
-             * The new ring is layed out relativ to some shared atoms that have
-             * already been placed. Usually this is another ring, that has
-             * already been draw and to which the new ring is somehow connected,
-             * or some other system of atoms in an aliphatic chain. In this
-             * case, it's the first bond that we layout by hand.
-             */
-            sharedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
-            sharedAtoms.addBond(bond);
-            sharedAtoms.addAtom(bond.getBegin());
-            sharedAtoms.addAtom(bond.getEnd());
-        } catch (Exception exc) {
-            logger.debug(exc);
-        }
+
+        bondVector.normalize();
+        logger.debug("placeFirstBondOfFirstRing->bondVector.length():" + bondVector.length());
+        bondVector.scale(bondLength);
+        logger.debug("placeFirstBondOfFirstRing->bondVector.length() after scaling:" + bondVector.length());
+        IAtom atom;
+        Point2d point = new Point2d(0, 0);
+        atom = bond.getBegin();
+        logger.debug("Atom 1 of first Bond: " + (molecule.indexOf(atom) + 1));
+        atom.setPoint2d(point);
+        atom.setFlag(CDKConstants.ISPLACED, true);
+        point = new Point2d(0, 0);
+        atom = bond.getEnd();
+        logger.debug("Atom 2 of first Bond: " + (molecule.indexOf(atom) + 1));
+        point.add(bondVector);
+        atom.setPoint2d(point);
+        atom.setFlag(CDKConstants.ISPLACED, true);
+        /*
+         * The new ring is layed out relativ to some shared atoms that have
+         * already been placed. Usually this is another ring, that has
+         * already been draw and to which the new ring is somehow connected,
+         * or some other system of atoms in an aliphatic chain. In this
+         * case, it's the first bond that we layout by hand.
+         */
+        sharedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
+        sharedAtoms.addAtom(bond.getBegin());
+        sharedAtoms.addAtom(bond.getEnd());
+        sharedAtoms.addBond(bond);
         return sharedAtoms;
     }
 
