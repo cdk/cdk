@@ -29,6 +29,8 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -602,4 +604,23 @@ class ImmutableHydrogen implements IAtom {
     public void setIsInRing(boolean ring) {
     }
 
+    @Override
+    public IAtomContainer getContainer() {
+        return null;
+    }
+
+    @Override
+    public int getIndex() {
+        return 0;
+    }
+
+    @Override
+    public Iterable<IBond> bonds() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getBondCount() {
+        return 0;
+    }
 }

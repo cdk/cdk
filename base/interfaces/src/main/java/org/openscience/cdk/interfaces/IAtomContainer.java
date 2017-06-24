@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.interfaces;
 
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IBond.Order;
 
 import java.util.List;
@@ -487,6 +488,8 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      * Adds a Bond to this AtomContainer.
      *
      * @param bond The bond to added to this container
+     * @throws NoSuchAtomException optionally thrown if the atoms of the bond
+     *         have not yet been added
      */
     void addBond(IBond bond);
 

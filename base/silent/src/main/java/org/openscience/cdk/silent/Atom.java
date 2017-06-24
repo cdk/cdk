@@ -28,11 +28,13 @@ import java.util.Objects;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * Represents the idea of an chemical atom.
@@ -235,6 +237,38 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             this.charge = ((IAtom) element).getCharge();
             this.stereoParity = ((IAtom) element).getStereoParity();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtomContainer getContainer() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getIndex() {
+        return -1;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getBondCount() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Iterable<IBond> bonds() {
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -616,5 +650,23 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
         atom.setFormalCharge(chg);
 
         return pos == len && len > 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AtomRef)
+            return super.equals(((AtomRef) obj).deref());
+        return super.equals(obj);
     }
 }

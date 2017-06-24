@@ -48,6 +48,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.libio.cml.Convertor;
@@ -177,8 +178,8 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         Assert.assertNotNull(roundTrippedAtom);
-        Assert.assertTrue(roundTrippedAtom instanceof PseudoAtom);
-        Assert.assertEquals("Glu55", ((PseudoAtom) roundTrippedAtom).getLabel());
+        Assert.assertTrue(roundTrippedAtom instanceof IPseudoAtom);
+        Assert.assertEquals("Glu55", ((IPseudoAtom) roundTrippedAtom).getLabel());
     }
 
     /**

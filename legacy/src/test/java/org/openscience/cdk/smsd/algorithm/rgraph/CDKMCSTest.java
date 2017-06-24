@@ -250,11 +250,11 @@ public class CDKMCSTest extends CDKTestCase {
 
         List<IAtomContainer> list = CDKMCS.getOverlaps(mol1, mol2, true);
         Assert.assertEquals(1, list.size());
-        Assert.assertEquals(11, ((AtomContainer) list.get(0)).getAtomCount());
+        Assert.assertEquals(11, (list.get(0)).getAtomCount());
 
         list = CDKMCS.getOverlaps(mol2, mol1, true);
         Assert.assertEquals(1, list.size());
-        Assert.assertEquals(11, ((AtomContainer) list.get(0)).getAtomCount());
+        Assert.assertEquals(11, (list.get(0)).getAtomCount());
     }
 
     /**
@@ -289,8 +289,8 @@ public class CDKMCSTest extends CDKTestCase {
         List<IAtomContainer> list2 = CDKMCS.getOverlaps(mol2, mol1, true);
         Assert.assertEquals(1, list1.size());
         Assert.assertEquals(1, list2.size());
-        Assert.assertEquals(((AtomContainer) list1.get(0)).getAtomCount(),
-                ((AtomContainer) list2.get(0)).getAtomCount());
+        Assert.assertEquals((list1.get(0)).getAtomCount(),
+                (list2.get(0)).getAtomCount());
     }
 
     @Test

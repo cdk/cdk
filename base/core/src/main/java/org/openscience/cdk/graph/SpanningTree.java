@@ -256,7 +256,6 @@ public class SpanningTree {
                 for (int b = 0; b < ring.getBondCount(); b++) {
                     IBond ringBond = ring.getBond(b);
                     if (!fragContainer.contains(ringBond)) {
-                        fragContainer.addBond(ringBond);
                         for (int atomCount = 0; atomCount < ringBond.getAtomCount(); atomCount++) {
                             IAtom atom = ringBond.getAtom(atomCount);
                             if (!fragContainer.contains(atom)) {
@@ -264,6 +263,7 @@ public class SpanningTree {
                                 fragContainer.addAtom(atom);
                             }
                         }
+                        fragContainer.addBond(ringBond);
                     }
                 }
             }

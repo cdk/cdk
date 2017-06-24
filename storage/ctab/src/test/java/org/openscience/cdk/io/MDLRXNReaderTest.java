@@ -274,13 +274,13 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
     private String getAtomNumber(IReactionSet reactionSet, IChemObject chemObject) throws CDKException {
         for (int i = 0; i < reactionSet.getReaction(0).getReactantCount(); i++) {
             for (int k = 0; k < reactionSet.getReaction(0).getReactants().getAtomContainer(i).getAtomCount(); k++) {
-                if (reactionSet.getReaction(0).getReactants().getAtomContainer(i).getAtom(k) == chemObject)
+                if (reactionSet.getReaction(0).getReactants().getAtomContainer(i).getAtom(k).equals(chemObject))
                     return "reactant:" + i + "_" + k;
             }
         }
         for (int i = 0; i < reactionSet.getReaction(0).getProductCount(); i++) {
             for (int k = 0; k < reactionSet.getReaction(0).getProducts().getAtomContainer(i).getAtomCount(); k++) {
-                if (reactionSet.getReaction(0).getProducts().getAtomContainer(i).getAtom(k) == chemObject)
+                if (reactionSet.getReaction(0).getProducts().getAtomContainer(i).getAtom(k).equals(chemObject))
                     return "product:" + i + "_" + k;
             }
         }

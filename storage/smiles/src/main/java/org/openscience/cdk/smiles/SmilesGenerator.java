@@ -755,7 +755,7 @@ public final class SmilesGenerator {
 
         // set the atom labels, values, and coordinates,
         // and build the atom->idx map required by other parts
-        Map<IAtom, Integer> atomidx = new IdentityHashMap<>();
+        Map<IAtom, Integer> atomidx = new HashMap<>();
         for (int idx = 0; idx < mol.getAtomCount(); idx++) {
             IAtom atom = mol.getAtom(idx);
             if (atom instanceof IPseudoAtom) {

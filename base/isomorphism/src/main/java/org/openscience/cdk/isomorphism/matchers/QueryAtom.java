@@ -24,6 +24,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -138,6 +139,37 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
 
     public QueryAtom(IChemObjectBuilder builder) {
         super(builder);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getIndex() {
+        return -1;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IAtomContainer getContainer() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Iterable<IBond> bonds() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getBondCount() {
+        throw new UnsupportedOperationException();
     }
 
     /**

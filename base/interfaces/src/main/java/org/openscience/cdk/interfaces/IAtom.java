@@ -144,6 +144,69 @@ public interface IAtom extends IAtomType {
     Integer getStereoParity();
 
     /**
+     * Access the {@link IAtomContainer} of which this atom is a member of. Because atoms
+     * can be in multiple molecules this method will only work if the atom has been accessed
+     * in the context of an {@link IAtomContainer}, for example:
+     *
+     * <pre>{@code
+     * IAtomContainer mol  = new AtomContainer();
+     * IAtom          atom = new Atom(6);
+     *
+     * atom.getContainer(); // null
+     * mol.add(atom);
+     * atom.getContainer(); // still null
+     * mol.getAtom(0).getContainer(); // not-null, returns 'mol'
+     * }</pre>
+     *
+     * @return the atom container or null if not accessed in the context of a
+     *         container
+     */
+    IAtomContainer getContainer();
+
+    /**
+     * Acces the index of an atom in the context of an {@link IAtomContainer}. If the
+     * index is not known, < 0 is returned.
+     *
+     * @return atom index or < 0 if the index is not known
+     */
+    int getIndex();
+
+    /**
+     * Returns the bonds connected to this atom. If the bonds are not
+     * known an exception is thrown. This method will only throw an exception
+     * if {@link #getIndex()} returns < 0 or {@link #getContainer()} returns null.
+     *
+     * <pre>{@code
+     *
+     * IAtom atom = ...;
+     *
+     * if (atom.getIndex() >= 0) {
+     *   for (IBond bond : atom.bonds()) {
+     *
+     *   }
+     * }
+     *
+     * if (atom.getContainer() != null) {
+     *   for (IBond bond : atom.bonds()) {
+     *
+     *   }
+     * }
+     *
+     * IAtomContainer mol = ...;
+     * // guaranteed not throw an exception
+     * for (IBond bond : mol.getAtom(i).bonds()) {
+     *
+     * }
+     * }</pre>
+     *
+     * @return iterable of bonds
+     * @throws UnsupportedOperationException thrown if the bonds are not known
+     */
+    Iterable<IBond> bonds();
+
+    int getBondCount();
+
+    /**
      * Access whether this atom has been marked as aromatic. The default
      * value is false and you must explicitly perceive aromaticity with
      * one of the available models.
