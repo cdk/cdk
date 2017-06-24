@@ -26,7 +26,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IStereoElement;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,87 +40,53 @@ import java.util.Map;
  *
  * @see org.openscience.cdk.interfaces.IDoubleBondStereochemistry
  */
-public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
-
-    private Conformation       stereo;
-    private IBond[]            ligandBonds;
-    private IBond              stereoBond;
-    private IChemObjectBuilder builder;
+public class DoubleBondStereochemistry
+    extends AbstractStereo<IBond,IBond>
+    implements IDoubleBondStereochemistry {
 
     /**
      * Creates a new double bond stereo chemistry. The path of length three is defined by
      * <code>ligandBonds[0]</code>, <code>stereoBonds</code>, and <code>ligandBonds[1]</code>.
      */
     public DoubleBondStereochemistry(IBond stereoBond, IBond[] ligandBonds, Conformation stereo) {
-        if (ligandBonds.length > 2) throw new IllegalArgumentException("expected two ligand bonds");
-        this.stereoBond = stereoBond;
-        this.ligandBonds = ligandBonds;
-        this.stereo = stereo;
+        this(stereoBond, ligandBonds, Conformation.toConfig(stereo));
     }
 
-    /**
-     * Sets a new {@link IChemObjectBuilder}.
-     *
-     * @param builder the new {@link IChemObjectBuilder} to be returned
-     * @see #getBuilder()
-     */
+    public DoubleBondStereochemistry(IBond stereoBond, IBond[] ligandBonds, int config) {
+        super(stereoBond, ligandBonds, CT | (CFG_MASK & config));
+    }
+
     public void setBuilder(IChemObjectBuilder builder) {
-        this.builder = builder;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public IChemObjectBuilder getBuilder() {
-        return this.builder;
+        super.setBuilder(builder);
     }
 
     /** {@inheritDoc} */
     @Override
     public IBond[] getBonds() {
-        IBond[] arrayCopy = new IBond[2];
-        System.arraycopy(ligandBonds, 0, arrayCopy, 0, 2);
-        return arrayCopy;
+        return getCarriers().toArray(new IBond[0]);
     }
 
     /** {@inheritDoc} */
     @Override
     public IBond getStereoBond() {
-        return this.stereoBond;
+        return getFocus();
     }
 
     /** {@inheritDoc} */
     @Override
     public Conformation getStereo() {
-        return this.stereo;
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public boolean contains(IAtom atom) {
-        return stereoBond.contains(atom) || ligandBonds[0].contains(atom) || ligandBonds[1].contains(atom);
+        return Conformation.toConformation(getConfig());
     }
 
     @Override
-    public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
+    public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms,
+                                            Map<IBond, IBond> bonds) {
+        return (IDoubleBondStereochemistry) super.map(atoms, bonds);
+    }
 
-        if (bonds == null) throw new IllegalArgumentException("null bond mapping provided");
-
-        // map the double bond and the connected ligand bonds
-        IBond doubleBond = bonds.containsKey(stereoBond) ? bonds.get(stereoBond) : stereoBond;
-        IBond[] connected = new IBond[ligandBonds.length];
-
-        for (int i = 0; i < connected.length; i++) {
-            if (ligandBonds[i] != null) {
-                IBond bond = bonds.get(ligandBonds[i]);
-                if (bond != null)
-                    connected[i] = bond;
-                else
-                    connected[i] = ligandBonds[i];
-            }
-        }
-
-        return new DoubleBondStereochemistry(doubleBond, connected, stereo);
+    @Override
+    protected IStereoElement<IBond, IBond> create(IBond focus, List<IBond> carriers,
+                                                  int cfg) {
+        return new DoubleBondStereochemistry(focus, carriers.toArray(new IBond[2]), cfg);
     }
 }

@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.stereo;
 
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,7 +36,9 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
+import javax.vecmath.Vector3d;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -93,6 +96,11 @@ public abstract class StereoElementFactory {
     protected final Set<Projection> projections = EnumSet.noneOf(Projection.class);
 
     /**
+     * Verify if created stereochemistry are actually stereo-centres.
+     */
+    private boolean check = false;
+
+    /**
      * Internal constructor.
      *
      * @param container an atom container
@@ -115,7 +123,12 @@ public abstract class StereoElementFactory {
      */
     public List<IStereoElement> createAll() {
 
+        Cycles.markRingAtomsAndBonds(container);
         Stereocenters centers = new Stereocenters(container, graph, bondMap);
+        if (check) {
+            centers.checkSymmetry();
+        }
+
         List<IStereoElement> elements = new ArrayList<IStereoElement>();
 
         // projection recognition (note no action in constructors)
@@ -127,32 +140,64 @@ public abstract class StereoElementFactory {
 
         for (int v = 0; v < graph.length; v++) {
             switch (centers.elementType(v)) {
+                // elongated tetrahedrals
                 case Bicoordinate:
                     int t0 = graph[v][0];
                     int t1 = graph[v][1];
                     if (centers.elementType(t0) == Stereocenters.Type.Tricoordinate
                             && centers.elementType(t1) == Stereocenters.Type.Tricoordinate) {
-                        if (centers.isStereocenter(t0) && centers.isStereocenter(t1)) {
+                        if (check && centers.isStereocenter(t0) && centers.isStereocenter(t1)) {
+                            IStereoElement element = createExtendedTetrahedral(v, centers);
+                            if (element != null) elements.add(element);
+                        } else {
                             IStereoElement element = createExtendedTetrahedral(v, centers);
                             if (element != null) elements.add(element);
                         }
                     }
                     break;
+                // tetrahedrals
+                case Tetracoordinate:
+                    IStereoElement element = createTetrahedral(v, centers);
+                    if (element != null) elements.add(element);
+                    break;
+                // aryl-aryl atropisomers
                 case Tricoordinate:
-                    if (!centers.isStereocenter(v)) continue;
                     for (int w : graph[v]) {
-                        if (w > v && bondMap.get(v, w).getOrder() == IBond.Order.DOUBLE) {
-                            if (centers.isStereocenter(w)) {
+                        IBond bond = bondMap.get(v, w);
+                        if (w > v &&
+                            centers.elementType(w) == Stereocenters.Type.Tricoordinate &&
+                            bond.getOrder() == IBond.Order.SINGLE &&
+                            !bond.isInRing() &&
+                            bond.getBegin().isInRing() && bond.getEnd().isInRing()) {
+                            element = createAtropisomer(v, w, centers);
+                            if (element != null)
+                                elements.add(element);
+                            break;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        // always need to verify for db...
+        centers.checkSymmetry();
+        for (int v = 0; v < graph.length; v++) {
+            switch (centers.elementType(v)) {
+                // Cis/Trans double bonds
+                case Tricoordinate:
+                    if (!centers.isStereocenter(v))
+                        continue;
+                    for (int w : graph[v]) {
+                        IBond bond = bondMap.get(v, w);
+                        if (w > v && bond.getOrder() == IBond.Order.DOUBLE) {
+                            if (centers.elementType(w) == Stereocenters.Type.Tricoordinate
+                                && centers.isStereocenter(w) && !bond.isInRing()) {
                                 IStereoElement element = createGeometric(v, w, centers);
                                 if (element != null) elements.add(element);
                             }
                             break;
                         }
                     }
-                    break;
-                case Tetracoordinate:
-                    IStereoElement element = createTetrahedral(v, centers);
-                    if (element != null) elements.add(element);
                     break;
             }
         }
@@ -185,6 +230,16 @@ public abstract class StereoElementFactory {
      * @return a new stereo element
      */
     abstract ITetrahedralChirality createTetrahedral(int v, Stereocenters stereocenters);
+
+    /**
+     * Create axial atropisomers.
+     *
+     * @param v first atom of single bond
+     * @param w other atom of single bond
+     * @param stereocenters stereo centres
+     * @return new stereo element
+     */
+    abstract IStereoElement createAtropisomer(int v, int w, Stereocenters stereocenters);
 
     /**
      * Create a tetrahedral element for the atom. If a tetrahedral element could
@@ -294,6 +349,12 @@ public abstract class StereoElementFactory {
      */
     public StereoElementFactory interpretProjections(Projection ... projections) {
         Collections.addAll(this.projections, projections);
+        this.check = true;
+        return this;
+    }
+
+    public StereoElementFactory checkSymmetry(boolean check) {
+        this.check = check;
         return this;
     }
 
@@ -320,7 +381,7 @@ public abstract class StereoElementFactory {
     public static StereoElementFactory using3DCoordinates(IAtomContainer container) {
         EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(container);
         int[][] graph = GraphUtil.toAdjList(container, bondMap);
-        return new StereoElementFactory3D(container, graph, bondMap);
+        return new StereoElementFactory3D(container, graph, bondMap).checkSymmetry(true);
     }
 
     private static boolean hasUnspecifiedParity(IAtom atom) {
@@ -431,11 +492,126 @@ public abstract class StereoElementFactory {
             return new TetrahedralChirality(focus, neighbors, winding);
         }
 
+        private static boolean isWedged(IBond bond) {
+            switch (bond.getStereo()) {
+                case UP:
+                case DOWN:
+                case UP_INVERTED:
+                case DOWN_INVERTED:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        IStereoElement createAtropisomer(int u, int v,
+                                         Stereocenters stereocenters) {
+            IAtom end1 = container.getAtom(u);
+            IAtom end2 = container.getAtom(v);
+
+            if (hasUnspecifiedParity(end1) || hasUnspecifiedParity(end2))
+                return null;
+
+            if (graph[u].length != 3 || graph[v].length != 3)
+                return null;
+
+            // check degrees of connected atoms, we only create the
+            // atropisomer if the rings are 3x ortho substituted
+            // CC1=CC=CC(C)=C1-C1=C(C)C=CC=C1C yes (sum1=9,sum2=9)
+            // CC1=CC=CC=C1-C1=C(C)C=CC=C1C yes    (sum1=8,sum2=9)
+            // CC1=CC=CC(C)=C1-C1=CC=CC=C1 no      (sum1=7,sum2=9)
+            // CC1=CC=CC=C1-C1=C(C)C=CC=C1 no      (sum1=8,sum2=8)
+            int sum1 = graph[graph[u][0]].length +
+                    graph[graph[u][1]].length +
+                    graph[graph[u][2]].length;
+            int sum2 = graph[graph[v][0]].length +
+                       graph[graph[v][1]].length +
+                       graph[graph[v][2]].length;
+            if (sum1 > 9 || sum1 < 8)
+                return null;
+            if (sum2 > 9 || sum2 < 8)
+                return null;
+            if (sum1 + sum2 < 17)
+                return null;
+
+            IAtom[] carriers = new IAtom[4];
+            int[]   elevation = new int[4];
+
+            int n = 0;
+            for (int w : graph[u]) {
+                IBond bond = bondMap.get(u, w);
+                if (w == v) continue;
+                if (isUnspecified(bond)) return null;
+
+                carriers[n] = container.getAtom(w);
+                elevation[n] = elevationOf(end1, bond);
+
+                for (int w2 : graph[w]) {
+                    if (isHydrogen(container.getAtom(w2)))
+                        sum1--;
+                    else if (elevation[n] == 0 &&
+                             isWedged(bondMap.get(w, w2))) {
+                        elevation[n] = elevationOf(container.getAtom(w), bondMap.get(w, w2));
+                    }
+                }
+
+
+                n++;
+            }
+            n = 2;
+            for (int w : graph[v]) {
+                IBond bond = bondMap.get(v, w);
+                if (w == u) continue;
+                if (isUnspecified(bond)) return null;
+
+                carriers[n] = container.getAtom(w);
+                elevation[n] = elevationOf(end2, bond);
+
+                for (int w2 : graph[w]) {
+                    if (isHydrogen(container.getAtom(w2)))
+                        sum2--;
+                    else if (elevation[n] == 0 &&
+                             isWedged(bondMap.get(w, w2))) {
+                        elevation[n] = elevationOf(container.getAtom(w), bondMap.get(w, w2));
+                    }
+                }
+
+                n++;
+            }
+
+            if (n != 4)
+                return null;
+
+            // recheck now we have accounted for explicit hydrogens
+            if (sum1 > 9 || sum1 < 8)
+                return null;
+            if (sum2 > 9 || sum2 < 8)
+                return null;
+            if (sum1 + sum2 < 17)
+                return null;
+
+            if (elevation[0] != 0 || elevation[1] != 0) {
+                if (elevation[2] != 0 || elevation[3] != 0) return null;
+            } else {
+                if (elevation[2] == 0 && elevation[3] == 0) return null; // undefined configuration
+            }
+
+            IAtom tmp = end1.getBuilder().newAtom();
+            tmp.setPoint2d(new Point2d((end1.getPoint2d().x + end2.getPoint2d().x)/2,
+                                       (end2.getPoint2d().y + end2.getPoint2d().y)/2));
+            int parity = parity(tmp, carriers, elevation);
+            int cfg    = parity > 0 ? IStereoElement.LEFT : IStereoElement.RIGHT;
+
+            return new Atropisomeric(container.getBond(end1, end2), carriers, cfg);
+        }
+
         /**{@inheritDoc} */
         @Override
         IDoubleBondStereochemistry createGeometric(int u, int v, Stereocenters stereocenters) {
 
-            if (hasUnspecifiedParity(container.getAtom(u)) || hasUnspecifiedParity(container.getAtom(v))) return null;
+            if (hasUnspecifiedParity(container.getAtom(u)) ||
+                hasUnspecifiedParity(container.getAtom(v))) return null;
 
             int[] us = graph[u];
             int[] vs = graph[v];
@@ -446,10 +622,12 @@ public abstract class StereoElementFactory {
             moveToBack(us, v);
             moveToBack(vs, u);
 
-            IAtom[] vAtoms = new IAtom[]{container.getAtom(us[0]), container.getAtom(us.length > 2 ? us[1] : u),
-                    container.getAtom(v)};
-            IAtom[] wAtoms = new IAtom[]{container.getAtom(vs[0]), container.getAtom(vs.length > 2 ? vs[1] : v),
-                    container.getAtom(u)};
+            IAtom[] vAtoms = new IAtom[]{container.getAtom(us[0]),
+                                         container.getAtom(us.length > 2 ? us[1] : u),
+                                         container.getAtom(v)};
+            IAtom[] wAtoms = new IAtom[]{container.getAtom(vs[0]),
+                                         container.getAtom(vs.length > 2 ? vs[1] : v),
+                                         container.getAtom(u)};
 
             // are any substituents a wavy unspecified bond
             if (isUnspecified(bondMap.get(u, us[0])) || isUnspecified(bondMap.get(u, us[1]))
@@ -736,6 +914,89 @@ public abstract class StereoElementFactory {
             return new TetrahedralChirality(focus, neighbors, winding);
         }
 
+        @Override
+        IStereoElement createAtropisomer(int u, int v,
+                                         Stereocenters stereocenters) {
+
+            IAtom end1 = container.getAtom(u);
+            IAtom end2 = container.getAtom(v);
+
+            if (hasUnspecifiedParity(end1) || hasUnspecifiedParity(end2))
+                return null;
+
+            if (graph[u].length != 3 || graph[v].length != 3)
+                return null;
+
+            // check degrees of connected atoms, we only create the
+            // atropisomer if the rings are 3x ortho substituted
+            // CC1=CC=CC(C)=C1-C1=C(C)C=CC=C1C yes (sum1=9,sum2=9)
+            // CC1=CC=CC=C1-C1=C(C)C=CC=C1C yes    (sum1=8,sum2=9)
+            // CC1=CC=CC(C)=C1-C1=CC=CC=C1 no      (sum1=7,sum2=9)
+            // CC1=CC=CC=C1-C1=C(C)C=CC=C1 no      (sum1=8,sum2=8)
+            int sum1 = graph[graph[u][0]].length +
+                       graph[graph[u][1]].length +
+                       graph[graph[u][2]].length;
+            int sum2 = graph[graph[v][0]].length +
+                       graph[graph[v][1]].length +
+                       graph[graph[v][2]].length;
+
+            if (sum1 > 9 || sum1 < 8)
+                return null;
+            if (sum2 > 9 || sum2 < 8)
+                return null;
+            if (sum1 + sum2 < 17)
+                return null;
+
+
+            IAtom[] carriers = new IAtom[4];
+
+            int n = 0;
+            for (int w : graph[u]) {
+                if (w == v) continue;
+
+                carriers[n] = container.getAtom(w);
+
+                for (int w2 : graph[w]) {
+                    if (isHydrogen(container.getAtom(w2)))
+                        sum1--;
+                }
+
+                n++;
+            }
+            n = 2;
+            for (int w : graph[v]) {
+                if (w == u) continue;
+
+                carriers[n] = container.getAtom(w);
+
+                for (int w2 : graph[w]) {
+                    if (isHydrogen(container.getAtom(w2)))
+                        sum2--;
+                }
+
+                n++;
+            }
+
+            if (n != 4)
+                return null;
+
+            // recheck now we have account for explicit hydrogens
+            if (sum1 > 9 || sum1 < 8)
+                return null;
+            if (sum2 > 9 || sum2 < 8)
+                return null;
+            if (sum1 + sum2 < 17)
+                return null;
+
+            IAtom tmp = end1.getBuilder().newAtom();
+            tmp.setPoint2d(new Point2d((end1.getPoint2d().x + end2.getPoint2d().x)/2,
+                                       (end2.getPoint2d().y + end2.getPoint2d().y)/2));
+            int parity = parity(carriers);
+            int cfg    = parity > 0 ? IStereoElement.LEFT : IStereoElement.RIGHT;
+
+            return new Atropisomeric(container.getBond(end1, end2), carriers, cfg);
+        }
+
         /**{@inheritDoc} */
         @Override
         IDoubleBondStereochemistry createGeometric(int u, int v, Stereocenters stereocenters) {
@@ -785,6 +1046,10 @@ public abstract class StereoElementFactory {
             if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE
                     || bondMap.get(v, t1).getOrder() != IBond.Order.DOUBLE) return null;
 
+            // check for kinked cumulated bond
+            if (!isColinear(focus, terminals))
+                return null;
+
             neighbors[1] = terminals[0];
             neighbors[3] = terminals[1];
 
@@ -804,6 +1069,18 @@ public abstract class StereoElementFactory {
             Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE : Stereo.CLOCKWISE;
 
             return new ExtendedTetrahedral(focus, neighbors, winding);
+        }
+
+        private boolean isColinear(IAtom focus, IAtom[] terminals) {
+            Vector3d vec0 = new Vector3d(terminals[0].getPoint3d().x - focus.getPoint3d().x,
+                                         terminals[0].getPoint3d().y - focus.getPoint3d().y,
+                                         terminals[0].getPoint3d().z - focus.getPoint3d().z);
+            Vector3d vec1 = new Vector3d(terminals[1].getPoint3d().x - focus.getPoint3d().x,
+                                         terminals[1].getPoint3d().y - focus.getPoint3d().y,
+                                         terminals[1].getPoint3d().z - focus.getPoint3d().z);
+            vec0.normalize();
+            vec1.normalize();
+            return Math.abs(vec0.dot(vec1) + 1) < 0.05;
         }
 
         /** 3x3 determinant helper for a constant third column */
@@ -916,5 +1193,10 @@ public abstract class StereoElementFactory {
             return new double[]{(u[1] * v[2]) - (v[1] * u[2]), (u[2] * v[0]) - (v[2] * u[0]),
                     (u[0] * v[1]) - (v[0] * u[1])};
         }
+    }
+
+    private static boolean isHydrogen(IAtom atom) {
+        Integer elem = atom.getAtomicNumber();
+        return elem != null && elem == 1;
     }
 }

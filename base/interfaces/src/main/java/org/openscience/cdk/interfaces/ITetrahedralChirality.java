@@ -38,13 +38,35 @@ import java.util.Map;
  * @cdk.module interfaces
  * @cdk.githash
  */
-public interface ITetrahedralChirality extends IStereoElement {
+public interface ITetrahedralChirality extends IStereoElement<IAtom, IAtom> {
 
     /**
      * Enumeration that defines the two possible chiralities for this stereochemistry type.
      */
     enum Stereo {
         CLOCKWISE, ANTI_CLOCKWISE;
+
+        public static int toConfig(Stereo stereo) {
+            switch (stereo) {
+                case ANTI_CLOCKWISE:
+                    return LEFT;
+                case CLOCKWISE:
+                    return RIGHT;
+                default:
+                    throw new IllegalArgumentException("Unknown enum value: " + stereo);
+            }
+        }
+
+        public static Stereo toStereo(int cfg) {
+            switch (cfg) {
+                case LEFT:
+                    return ANTI_CLOCKWISE;
+                case RIGHT:
+                    return CLOCKWISE;
+                default:
+                    throw new IllegalArgumentException("Cannot map to enum value: " + cfg);
+            }
+        }
 
         /**
          * Invert this conformation, inv(clockwise) = anti_clockwise,

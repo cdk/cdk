@@ -83,11 +83,8 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * @cdk.keyword allene
  * @cdk.keyword axial chirality
  */
-public final class ExtendedTetrahedral implements IStereoElement {
-
-    private final IAtom   focus;
-    private final IAtom[] peripherals;
-    private final Stereo  winding;
+public final class ExtendedTetrahedral
+    extends AbstractStereo<IAtom,IAtom>  {
 
     /**
      * Create an extended tetrahedral stereo element for the provided 'focus'
@@ -99,11 +96,11 @@ public final class ExtendedTetrahedral implements IStereoElement {
      * @param winding     the configuration
      */
     public ExtendedTetrahedral(IAtom focus, IAtom[] peripherals, Stereo winding) {
-        assert focus != null && peripherals != null && winding != null;
-        assert peripherals.length == 4;
-        this.focus = focus;
-        this.peripherals = Arrays.copyOf(peripherals, 4);
-        this.winding = winding;
+        this(focus, peripherals, Stereo.toConfig(winding));
+    }
+
+    public ExtendedTetrahedral(IAtom focus, IAtom[] peripherals, int config) {
+        super(focus, peripherals, AL | (CFG_MASK & config));
     }
 
     /**
@@ -112,7 +109,7 @@ public final class ExtendedTetrahedral implements IStereoElement {
      * @return the focus
      */
     public IAtom focus() {
-        return focus;
+        return getFocus();
     }
 
     /**
@@ -122,7 +119,7 @@ public final class ExtendedTetrahedral implements IStereoElement {
      * @return the peripheral atoms
      */
     public IAtom[] peripherals() {
-        return Arrays.copyOf(peripherals, 4);
+        return getCarriers().toArray(new IAtom[4]);
     }
 
     /**
@@ -131,7 +128,7 @@ public final class ExtendedTetrahedral implements IStereoElement {
      * @return winding configuration
      */
     public Stereo winding() {
-        return winding;
+        return Stereo.toStereo(getConfig());
     }
 
     /**
@@ -163,53 +160,26 @@ public final class ExtendedTetrahedral implements IStereoElement {
      * @return the terminal atoms (ordered)
      */
     public IAtom[] findTerminalAtoms(IAtomContainer container) {
-        List<IBond> focusBonds = container.getConnectedBondsList(focus);
+        List<IBond> focusBonds = container.getConnectedBondsList(getFocus());
 
         if (focusBonds.size() != 2) throw new IllegalArgumentException("focus must have exactly 2 neighbors");
 
-        final IAtom left = focusBonds.get(0).getOther(focus);
-        final IAtom right = focusBonds.get(1).getOther(focus);
+        final IAtom left = focusBonds.get(0).getOther(getFocus());
+        final IAtom right = focusBonds.get(1).getOther(getFocus());
 
         List<IAtom> leftAtoms = container.getConnectedAtomsList(left);
+        List<IAtom> carriers  = getCarriers();
 
-        if (leftAtoms.contains(peripherals[2]) || leftAtoms.contains(peripherals[3])) {
+        if (leftAtoms.contains(carriers.get(2)) || leftAtoms.contains(carriers.get(3))) {
             return new IAtom[]{right, left};
         } else {
             return new IAtom[]{left, right};
         }
     }
 
-    /**
-     *{@inheritDoc}
-     */
     @Override
-    public boolean contains(IAtom atom) {
-        // no way to test terminals
-        return focus.equals(atom) || peripherals[0].equals(atom) || peripherals[1].equals(atom)
-                || peripherals[2].equals(atom) || peripherals[3].equals(atom);
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
-        IAtom focus = atoms.containsKey(this.focus) ? atoms.get(this.focus) : this.focus;
-        IAtom[] carriers = new IAtom[4];
-        for (int i = 0; i < 4; i++) {
-            IAtom newAtom = atoms.get(peripherals[i]);
-            carriers[i] = newAtom != null ? newAtom : peripherals[i];
-        }
-        return new ExtendedTetrahedral(focus,
-                                       carriers,
-                                       winding);
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public IChemObjectBuilder getBuilder() {
-        throw new UnsupportedOperationException("non-domain object");
+    protected IStereoElement<IAtom, IAtom> create(IAtom focus, List<IAtom> carriers,
+                                                  int cfg) {
+        return new ExtendedTetrahedral(focus, carriers.toArray(new IAtom[4]), cfg);
     }
 }

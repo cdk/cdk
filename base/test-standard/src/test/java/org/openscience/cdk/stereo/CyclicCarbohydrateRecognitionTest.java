@@ -152,9 +152,11 @@ public class CyclicCarbohydrateRecognitionTest {
         
         EdgeToBondMap                 bondMap = EdgeToBondMap.withSpaceFor(m);
         int[][]                       graph   = GraphUtil.toAdjList(m, bondMap);
-        CyclicCarbohydrateRecognition recon   = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                  new Stereocenters(m, graph, bondMap));
-        
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
+        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
+                                                                                stereocenters);
+
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
         assertTetrahedralCenter(elements.get(0),
                                 m.getAtom(1),
@@ -211,8 +213,11 @@ public class CyclicCarbohydrateRecognitionTest {
 
         EdgeToBondMap                 bondMap = EdgeToBondMap.withSpaceFor(m);
         int[][]                       graph   = GraphUtil.toAdjList(m, bondMap);
-        CyclicCarbohydrateRecognition recon   = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                  new Stereocenters(m, graph, bondMap));
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
+        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
+                                                                                stereocenters);
+
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Chair));
         assertTetrahedralCenter(elements.get(0),
@@ -280,8 +285,11 @@ public class CyclicCarbohydrateRecognitionTest {
         EdgeToBondMap      bondMap    = EdgeToBondMap.withSpaceFor(m);
         int[][]            graph      = GraphUtil.toAdjList(m, bondMap);
 
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
         CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                 new Stereocenters(m, graph, bondMap));
+                                                                                stereocenters);
+
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
         assertTetrahedralCenter(elements.get(0),
                                 m.getAtom(1),
@@ -351,8 +359,11 @@ public class CyclicCarbohydrateRecognitionTest {
         EdgeToBondMap      bondMap    = EdgeToBondMap.withSpaceFor(m);
         int[][]            graph      = GraphUtil.toAdjList(m, bondMap);
 
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
         CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                new Stereocenters(m, graph, bondMap));
+                                                                                stereocenters);
+
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
         assertTetrahedralCenter(elements.get(0),
                                 m.getAtom(2),
@@ -449,8 +460,11 @@ public class CyclicCarbohydrateRecognitionTest {
         EdgeToBondMap      bondMap    = EdgeToBondMap.withSpaceFor(m);
         int[][]            graph      = GraphUtil.toAdjList(m, bondMap);
 
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
         CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                       new Stereocenters(m, graph, bondMap));
+                                                                                stereocenters);
+
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
         assertTetrahedralCenter(elements.get(0),
                                 m.getAtom(1),
@@ -503,8 +517,11 @@ public class CyclicCarbohydrateRecognitionTest {
         EdgeToBondMap      bondMap    = EdgeToBondMap.withSpaceFor(m);
         int[][]            graph      = GraphUtil.toAdjList(m, bondMap);
 
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
         CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                new Stereocenters(m, graph, bondMap));
+                                                                                stereocenters);
+
         assertTrue(recon.recognise(Collections.singleton(Projection.Haworth)).isEmpty());
     }
 
@@ -550,8 +567,11 @@ public class CyclicCarbohydrateRecognitionTest {
             
             EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(m);
             int[][] graph = GraphUtil.toAdjList(m, bondMap);
+            Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+            stereocenters.checkSymmetry();
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                    new Stereocenters(m, graph, bondMap));
+                                                                                    stereocenters);
+
 
             List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Chair));
             m.setStereoElements(elements);
@@ -608,8 +628,11 @@ public class CyclicCarbohydrateRecognitionTest {
 
         EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(m);
         int[][] graph = GraphUtil.toAdjList(m, bondMap);
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
         CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                new Stereocenters(m, graph, bondMap));
+                                                                                stereocenters);
+
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
         assertTrue(elements.isEmpty());
@@ -639,8 +662,10 @@ public class CyclicCarbohydrateRecognitionTest {
         m.addBond(6, 7, IBond.Order.SINGLE);
         EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(m);
         int[][] graph = GraphUtil.toAdjList(m, bondMap);
+        Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+        stereocenters.checkSymmetry();
         CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                new Stereocenters(m, graph, bondMap));
+                                                                                stereocenters);
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
         assertTrue(elements.isEmpty());

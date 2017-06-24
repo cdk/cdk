@@ -77,7 +77,7 @@ public class FischerRecognitionTest {
         FischerRecognition recogniser = new FischerRecognition(m,
                                                                graph,
                                                                bondMap,
-                                                               new Stereocenters(m, graph, bondMap));
+                                                               Stereocenters.of(m));
         List<IStereoElement> elements = recogniser.recognise(Collections.singleton(Projection.Fischer));
         Assert.assertThat(elements.size(), is(1));
         assertTetrahedralCenter(elements.get(0),
@@ -112,7 +112,7 @@ public class FischerRecognitionTest {
         FischerRecognition recogniser = new FischerRecognition(m,
                                                                graph,
                                                                bondMap,
-                                                               new Stereocenters(m, graph, bondMap));
+                                                               Stereocenters.of(m));
         List<IStereoElement> elements = recogniser.recognise(Collections.singleton(Projection.Fischer));
         Assert.assertThat(elements.size(), is(1));
         assertTetrahedralCenter(elements.get(0),
@@ -145,7 +145,7 @@ public class FischerRecognitionTest {
         FischerRecognition recogniser = new FischerRecognition(m,
                                                                graph,
                                                                bondMap,
-                                                               new Stereocenters(m, graph, bondMap));
+                                                               Stereocenters.of(m));
         List<IStereoElement> elements = recogniser.recognise(Collections.singleton(Projection.Fischer));
         Assert.assertThat(elements.size(), is(1));
         assertTetrahedralCenter(elements.get(0),
@@ -188,7 +188,7 @@ public class FischerRecognitionTest {
         FischerRecognition recogniser = new FischerRecognition(m,
                                                                graph,
                                                                bondMap,
-                                                               new Stereocenters(m, graph, bondMap));
+                                                               Stereocenters.of(m));
         List<IStereoElement> elements = recogniser.recognise(Collections.singleton(Projection.Fischer));
 
         Assert.assertThat(elements.size(), is(4));
@@ -562,7 +562,7 @@ public class FischerRecognitionTest {
         FischerRecognition recogniser = new FischerRecognition(m,
                                                                graph,
                                                                bondMap,
-                                                               new Stereocenters(m, graph, bondMap));
+                                                               Stereocenters.of(m));
         Assert.assertTrue(recogniser.recognise(Collections.singleton(Projection.Fischer)).isEmpty());
     }
 
@@ -602,7 +602,7 @@ public class FischerRecognitionTest {
         FischerRecognition recogniser = new FischerRecognition(m,
                                                                graph,
                                                                bondMap,
-                                                               new Stereocenters(m, graph, bondMap));
+                                                               Stereocenters.of(m));
         Assert.assertTrue(recogniser.recognise(Collections.singleton(Projection.Fischer)).isEmpty());
     }
 

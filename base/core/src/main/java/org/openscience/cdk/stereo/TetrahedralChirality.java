@@ -24,131 +24,77 @@ package org.openscience.cdk.stereo;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
-import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
- * Stereochemistry specification for quadrivalent atoms. See {@link ITetrahedralChirality} for
+ * Stereochemistry specification for tetravalent atoms. See {@link ITetrahedralChirality} for
  * further details.
  *
  * @cdk.module core
  * @cdk.githash
- *
  * @see org.openscience.cdk.interfaces.ITetrahedralChirality
  */
-public class TetrahedralChirality implements ITetrahedralChirality {
+public class TetrahedralChirality
+    extends AbstractStereo<IAtom, IAtom>
+    implements ITetrahedralChirality {
 
-    private IAtom              chiralAtom;
-    private IAtom[]            ligandAtoms;
-    private Stereo             stereo;
-    private IChemObjectBuilder builder;
-
-    /**
-     * Constructor to create a new {@link ITetrahedralChirality} implementation instance.
-     *
-     * @param chiralAtom  The chiral {@link IAtom}.
-     * @param ligandAtoms The ligand atoms around the chiral atom.
-     * @param chirality   The {@link Stereo} chirality.
-     */
-    public TetrahedralChirality(IAtom chiralAtom, IAtom[] ligandAtoms, Stereo chirality) {
-        this.chiralAtom = chiralAtom;
-        this.ligandAtoms = ligandAtoms;
-        this.stereo = chirality;
+    public TetrahedralChirality(IAtom chiralAtom,
+                                IAtom[] ligands,
+                                Stereo stereo) {
+        this(chiralAtom, ligands, Stereo.toConfig(stereo));
     }
 
-    /**
-     * Returns an array of ligand atoms around the chiral atom.
-     *
-     * @return an array of four {@link IAtom}s.
-     */
+    public TetrahedralChirality(IAtom chiralAtom,
+                                IAtom[] ligands,
+                                int config) {
+        super(chiralAtom, ligands, TH | (CFG_MASK & config));
+    }
+
     @Override
     public IAtom[] getLigands() {
-        IAtom[] arrayCopy = new IAtom[4];
-        System.arraycopy(ligandAtoms, 0, arrayCopy, 0, 4);
-        return arrayCopy;
+        return getCarriers().toArray(new IAtom[4]);
     }
 
-    /**
-     * Atom that is the chirality center.
-     *
-     * @return the chiral {@link IAtom}.
-     */
     @Override
     public IAtom getChiralAtom() {
-        return chiralAtom;
+        return getFocus();
     }
 
-    /**
-     * Defines the stereochemistry around the chiral atom. The value depends on the order of ligand atoms.
-     *
-     * @return the {@link Stereo} for this stereo element.
-     */
     @Override
     public Stereo getStereo() {
-        return stereo;
+        return Stereo.toStereo(getConfig());
     }
 
-    /** {@inheritDoc} */
-    @Override public void setStereo(Stereo stereo) {
-        this.stereo = stereo;
+    @Override
+    public void setStereo(Stereo stereo) {
+        setConfig(Stereo.toConfig(stereo));
     }
 
-    /**
-     * Sets a new {@link IChemObjectBuilder}.
-     *
-     * @param builder the new {@link IChemObjectBuilder} to be returned
-     * @see #getBuilder()
-     */
+    @Override
+    protected IStereoElement<IAtom, IAtom> create(IAtom focus, List<IAtom> carriers, int config) {
+        return new TetrahedralChirality(focus, carriers.toArray(new IAtom[4]), config);
+    }
+
+    @Override
+    public ITetrahedralChirality map(Map<IAtom, IAtom> atoms,
+                                     Map<IBond, IBond> bonds) {
+        return (ITetrahedralChirality) super.map(atoms, bonds);
+    }
+
+    @Override
+    public ITetrahedralChirality map(Map<IChemObject, IChemObject> chemobjs) {
+        return (ITetrahedralChirality) super.map(chemobjs);
+    }
+
+    @Override
     public void setBuilder(IChemObjectBuilder builder) {
-        this.builder = builder;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public IChemObjectBuilder getBuilder() {
-        return builder;
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public boolean contains(IAtom atom) {
-        if (chiralAtom.equals(atom)) return true;
-        for (IAtom ligand : ligandAtoms)
-            if (ligand.equals(atom)) return true;
-        return false;
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
-
-        // don't check bond map as we don't use it
-        if (atoms == null) throw new IllegalArgumentException("null atom mapping provided");
-
-        // convert the chiral atom and it's ligands to their equivalent
-        IAtom chiral = atoms.containsKey(chiralAtom) ? atoms.get(chiralAtom) : chiralAtom;
-        IAtom[] ligands = new IAtom[ligandAtoms.length];
-
-        for (int i = 0; i < ligands.length; i++) {
-            if (ligandAtoms[i] != null) {
-                IAtom atom = atoms.get(ligandAtoms[i]);
-                if (atom != null)
-                    ligands[i] = atom;
-                else
-                    ligands[i] = this.ligandAtoms[i];
-            }
-        }
-
-        // create a new tetrahedral instance with the mapped chiral atom and ligands
-        return new TetrahedralChirality(chiral, ligands, stereo);
-
+        super.setBuilder(builder);
     }
 
     /**
