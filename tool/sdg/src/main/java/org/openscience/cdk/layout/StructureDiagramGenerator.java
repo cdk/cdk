@@ -745,7 +745,7 @@ public class StructureDiagramGenerator {
                 if (se.getConfigClass() == IStereoElement.CisTrans) {
                     IBond stereoBond    = (IBond) se.getFocus();
                     IBond firstCarrier  = (IBond) se.getCarriers().get(0);
-                    IBond secondCarrier = (IBond) se.getCarriers().get(0);
+                    IBond secondCarrier = (IBond) se.getCarriers().get(1);
                     for (IRingSet ringSet : ringSystems) {
                         for (IAtomContainer ring : ringSet.atomContainers()) {
                             if (ring.contains(stereoBond)) {
@@ -756,8 +756,8 @@ public class StructureDiagramGenerator {
                                 // something odd wrong, just skip it
                                 if (begBonds.size() != 1 || endBonds.size() != 1)
                                     continue;
-                                boolean flipped = begBonds.contains(firstCarrier) ^ endBonds.contains(secondCarrier);
-                                int cfg = flipped ? se.getConfig() : se.getConfig() ^ (IStereoElement.TOGETHER | IStereoElement.OPPOSITE);
+                                boolean flipped = begBonds.contains(firstCarrier) != endBonds.contains(secondCarrier);
+                                int cfg = flipped ? se.getConfig() ^ 0x3 : se.getConfig();
                                 ring.addStereoElement(new DoubleBondStereochemistry(stereoBond,
                                                                                     new IBond[]{begBonds.get(0), endBonds.get(0)},
                                                                                     cfg));
@@ -1533,24 +1533,26 @@ public class StructureDiagramGenerator {
         RingSetManipulator.sort(rs);
         final IRing first = RingSetManipulator.getMostComplexRing(rs);
 
-        final boolean macro = isMacroCycle(first, rs);
+        final boolean macro         = isMacroCycle(first, rs);
+        final boolean macroDbStereo = macro && first.stereoElements().iterator().hasNext();
         int result = 0;
 
         // Check for an exact match (identity) on the entire ring system
-        // XXX: should avoid if we have db stereo in macrocycle!
-        if (lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
-            for (IAtomContainer container : rs.atomContainers())
-                container.setFlag(CDKConstants.ISPLACED, true);
-            rs.setFlag(CDKConstants.ISPLACED, true);
-            return macro ? 2 : 1;
-        } else {
-            // attempt ring peeling and retemplate
-            final IRingSet core = getRingSetCore(rs);
-            if (core.getAtomContainerCount() > 0 &&
-                core.getAtomContainerCount() < rs.getAtomContainerCount() &&
-                lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
-                for (IAtomContainer container : core.atomContainers())
+        if (!macroDbStereo) {
+            if (lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
+                for (IAtomContainer container : rs.atomContainers())
                     container.setFlag(CDKConstants.ISPLACED, true);
+                rs.setFlag(CDKConstants.ISPLACED, true);
+                return macro ? 2 : 1;
+            } else {
+                // attempt ring peeling and retemplate
+                final IRingSet core = getRingSetCore(rs);
+                if (core.getAtomContainerCount() > 0 &&
+                    core.getAtomContainerCount() < rs.getAtomContainerCount() &&
+                    lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
+                    for (IAtomContainer container : core.atomContainers())
+                        container.setFlag(CDKConstants.ISPLACED, true);
+                }
             }
         }
 
