@@ -994,7 +994,7 @@ public class StereoElementFactoryTest {
         AtomContainerManipulator.suppressHydrogens(m);
         assertThat(smigen.create(m), is("[C@H2](C)CC"));
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(m);
-        assertThat(smigen.create(m), is("[C@@](C([H])([H])[H])(C(C([H])([H])[H])([H])[H])([H])[H]"));
+        assertThat(smigen.create(m), is("[C@](C([H])([H])[H])(C(C([H])([H])[H])([H])[H])([H])[H]"));
     }
 
     /**
