@@ -988,9 +988,6 @@ public abstract class StereoElementFactory {
             if (sum1 + sum2 < 17)
                 return null;
 
-            IAtom tmp = end1.getBuilder().newAtom();
-            tmp.setPoint2d(new Point2d((end1.getPoint2d().x + end2.getPoint2d().x)/2,
-                                       (end2.getPoint2d().y + end2.getPoint2d().y)/2));
             int parity = parity(carriers);
             int cfg    = parity > 0 ? IStereoElement.LEFT : IStereoElement.RIGHT;
 
