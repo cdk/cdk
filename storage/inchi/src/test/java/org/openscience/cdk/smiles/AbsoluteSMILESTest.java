@@ -26,6 +26,7 @@ package org.openscience.cdk.smiles;
 
 import com.google.common.base.Joiner;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -103,7 +104,7 @@ public class AbsoluteSMILESTest {
                 "N12[C@H](C)N3N([C@@H]3C)[C@H](C)N1[C@H]2C", "N12N([C@@H](C)N3N([C@H]3C)[C@H]1C)[C@H]2C");
     }
 
-    @Test
+    @Ignore("Random failure: to be resolved https://github.com/cdk/cdk/issues/336")
     public void dbStereoCanonGeneration() throws Exception {
         String in = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
