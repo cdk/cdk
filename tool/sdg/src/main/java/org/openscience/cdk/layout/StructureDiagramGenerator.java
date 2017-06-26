@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.isomorphism.AtomMatcher;
 import org.openscience.cdk.isomorphism.BondMatcher;
 import org.openscience.cdk.isomorphism.Pattern;
@@ -52,6 +53,7 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -737,6 +739,34 @@ public class StructureDiagramGenerator {
             // to each other either as bridged ringsystems, fused rings or via
             // spiro connections.
             ringSystems = RingPartitioner.partitionRings(sssr);
+
+            // set the in-ring db stereo
+            for (IStereoElement se : molecule.stereoElements()) {
+                if (se.getConfigClass() == IStereoElement.CisTrans) {
+                    IBond stereoBond    = (IBond) se.getFocus();
+                    IBond firstCarrier  = (IBond) se.getCarriers().get(0);
+                    IBond secondCarrier = (IBond) se.getCarriers().get(1);
+                    for (IRingSet ringSet : ringSystems) {
+                        for (IAtomContainer ring : ringSet.atomContainers()) {
+                            if (ring.contains(stereoBond)) {
+                                List<IBond> begBonds = ring.getConnectedBondsList(stereoBond.getBegin());
+                                List<IBond> endBonds = ring.getConnectedBondsList(stereoBond.getEnd());
+                                begBonds.remove(stereoBond);
+                                endBonds.remove(stereoBond);
+                                // something odd wrong, just skip it
+                                if (begBonds.size() != 1 || endBonds.size() != 1)
+                                    continue;
+                                boolean flipped = begBonds.contains(firstCarrier) != endBonds.contains(secondCarrier);
+                                int cfg = flipped ? se.getConfig() ^ 0x3 : se.getConfig();
+                                ring.addStereoElement(new DoubleBondStereochemistry(stereoBond,
+                                                                                    new IBond[]{begBonds.get(0), endBonds.get(0)},
+                                                                                    cfg));
+                            }
+                        }
+                    }
+
+                }
+            }
         } else {
             sssr = molecule.getBuilder().newInstance(IRingSet.class);
             ringSystems = new ArrayList<>();
@@ -1503,24 +1533,26 @@ public class StructureDiagramGenerator {
         RingSetManipulator.sort(rs);
         final IRing first = RingSetManipulator.getMostComplexRing(rs);
 
-        final boolean macro = isMacroCycle(first, rs);
+        final boolean macro         = isMacroCycle(first, rs);
+        final boolean macroDbStereo = macro && first.stereoElements().iterator().hasNext();
         int result = 0;
 
         // Check for an exact match (identity) on the entire ring system
-        // XXX: should avoid if we have db stereo in macrocycle!
-        if (lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
-            for (IAtomContainer container : rs.atomContainers())
-                container.setFlag(CDKConstants.ISPLACED, true);
-            rs.setFlag(CDKConstants.ISPLACED, true);
-            return macro ? 2 : 1;
-        } else {
-            // attempt ring peeling and retemplate
-            final IRingSet core = getRingSetCore(rs);
-            if (core.getAtomContainerCount() > 0 &&
-                core.getAtomContainerCount() < rs.getAtomContainerCount() &&
-                lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
-                for (IAtomContainer container : core.atomContainers())
+        if (!macroDbStereo) {
+            if (lookupRingSystem(rs, molecule, rs.getAtomContainerCount() > 1)) {
+                for (IAtomContainer container : rs.atomContainers())
                     container.setFlag(CDKConstants.ISPLACED, true);
+                rs.setFlag(CDKConstants.ISPLACED, true);
+                return macro ? 2 : 1;
+            } else {
+                // attempt ring peeling and retemplate
+                final IRingSet core = getRingSetCore(rs);
+                if (core.getAtomContainerCount() > 0 &&
+                    core.getAtomContainerCount() < rs.getAtomContainerCount() &&
+                    lookupRingSystem(core, molecule, !macro || rs.getAtomContainerCount() > 1)) {
+                    for (IAtomContainer container : core.atomContainers())
+                        container.setFlag(CDKConstants.ISPLACED, true);
+                }
             }
         }
 
@@ -1616,7 +1648,7 @@ public class StructureDiagramGenerator {
      * @return ring is a macro cycle
      */
     private boolean isMacroCycle(IRing ring, IRingSet rs) {
-        if (ring.getAtomCount() < 10)
+        if (ring.getAtomCount() < 8)
             return false;
         for (IBond bond : ring.bonds()) {
             boolean found = false;

@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
@@ -196,8 +197,30 @@ final class MacroCycleLayout {
                     nConcaveHetero++;
             }
 
+            int nCorrectStereo   = 0;
+            int nIncorrectStereo = 0;
+            for (IStereoElement se : macrocycle.stereoElements()) {
+                if (se.getConfigClass() == IStereoElement.CisTrans) {
+                    IBond bond = (IBond) se.getFocus();
+                    IAtom beg  = bond.getBegin();
+                    IAtom end  = bond.getEnd();
+                    int cfg;
+                    if (winding[(macrocycle.indexOf(beg) + i) % numAtoms] ==
+                        winding[(macrocycle.indexOf(end) + i) % numAtoms]) {
+                        cfg = IStereoElement.TOGETHER;
+                    } else {
+                        cfg = IStereoElement.OPPOSITE;
+                    }
+                    if (cfg == se.getConfig()) {
+                        nCorrectStereo++;
+                    } else {
+                        nIncorrectStereo++;
+                    }
+                }
+            }
             MacroScore score = new MacroScore(i,
                                               nConcaveHetero,
+                                              nCorrectStereo,
                                               nRingClick);
             if (score.compareTo(best) < 0) {
                 best = score;
@@ -311,11 +334,13 @@ final class MacroCycleLayout {
         final int offset;
         final int nConcaveHetero;
         final int nRingClick;
+        final int nCorrectStereo;
 
-        public MacroScore(int offset, int nConcaveHetero, int nRingClick) {
+        public MacroScore(int offset, int nConcaveHetero, int nCorrectStereo, int nRingClick) {
             this.offset = offset;
             this.nConcaveHetero = nConcaveHetero;
             this.nRingClick = nRingClick;
+            this.nCorrectStereo = nCorrectStereo;
         }
 
         @Override
@@ -324,6 +349,9 @@ final class MacroCycleLayout {
                 return -1;
             int cmp = 0;
             cmp = -Integer.compare(this.nRingClick, o.nRingClick);
+            if (cmp != 0)
+                return cmp;
+            cmp = -Integer.compare(this.nCorrectStereo, o.nCorrectStereo);
             if (cmp != 0)
                 return cmp;
             cmp = -Integer.compare(this.nConcaveHetero, o.nConcaveHetero);

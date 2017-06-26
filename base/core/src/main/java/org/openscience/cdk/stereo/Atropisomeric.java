@@ -54,6 +54,13 @@ import java.util.List;
  */
 public class Atropisomeric extends AbstractStereo<IBond,IAtom> {
 
+    /**
+     * Define a new atropisomer using the focus bond and the carrier atoms.
+     *
+     * @param focus the focus bond
+     * @param carriers the carriers
+     * @param value the configuration {@link #LEFT} or {@link #RIGHT}
+     */
     public Atropisomeric(IBond focus, IAtom[] carriers, int value) {
         super(focus, carriers, IStereoElement.AT | value);
     }
