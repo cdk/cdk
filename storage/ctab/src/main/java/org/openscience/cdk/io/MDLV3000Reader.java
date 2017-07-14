@@ -144,7 +144,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         if (object instanceof IAtomContainer) {
             return (T) readMolecule(object.getBuilder());
         }
-        return null;
+        throw new CDKException("Only supports AtomContainer objects.");
     }
 
     public IAtomContainer readMolecule(IChemObjectBuilder builder) throws CDKException {
