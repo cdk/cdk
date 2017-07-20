@@ -493,6 +493,8 @@ final class StandardSgroupGenerator {
 
     private static boolean isUnsignedInt(String str) {
         int pos = 0;
+        if (str == null)
+            return false;
         int len = str.length();
         while (pos < len)
             if (!isDigit(str.charAt(pos++)))

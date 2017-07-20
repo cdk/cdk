@@ -1343,21 +1343,28 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @return the specified value
      * @throws CDKException the coordinates specification was not valid
      */
-    static double readMDLCoordinate(final String line, int offset) throws CDKException {
+    double readMDLCoordinate(final String line, int offset) throws CDKException {
         // to be valid the decimal should be at the fifth index (4 sig fig)
-        if (line.charAt(offset + 5) != '.') throw new CDKException("invalid coordinate specification");
-
-        int start = offset;
-        while (line.charAt(start) == ' ')
-            start++;
-
-        int sign = sign(line.charAt(start));
-        if (sign < 0) start++;
-
-        int integral = readUInt(line, start, (offset + 5) - start);
-        int fraction = readUInt(line, offset + 6, 4);
-
-        return sign * (integral * 10000l + fraction) / 10000d;
+        if (line.charAt(offset + 5) != '.') {
+            handleError("Bad coordinate format specified, expected 4 decimal places: " + line.substring(offset));
+            int start = offset;
+            int end   = offset;
+            while (line.charAt(start) == ' ')
+                start++;
+            end = start;
+            while (line.charAt(end) != ' ')
+                end++;
+            return Double.parseDouble(line.substring(start, end));
+        } else {
+            int start = offset;
+            while (line.charAt(start) == ' ')
+                start++;
+            int sign = sign(line.charAt(start));
+            if (sign < 0) start++;
+            int integral = readUInt(line, start, (offset + 5) - start);
+            int fraction = readUInt(line, offset + 6, 4);
+            return sign * (integral * 10000L + fraction) / 10000d;
+        }
     }
 
     /**

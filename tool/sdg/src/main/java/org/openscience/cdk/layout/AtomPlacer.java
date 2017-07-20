@@ -126,6 +126,10 @@ public class AtomPlacer {
         Vector2d newDirection = new Vector2d(atom.getPoint2d());
         Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
         occupiedDirection.sub(newDirection);
+        // if the placing on the centre atom we get NaNs just give a arbitary direciton the
+        // rest works it's self out
+        if (Math.abs(occupiedDirection.length()) < 0.001)
+            occupiedDirection = new Vector2d(0, 1);
         logger.debug("distributePartners->occupiedDirection.lenght(): " + occupiedDirection.length());
         List<IAtom> atomsToDraw = new ArrayList<IAtom>();
 
