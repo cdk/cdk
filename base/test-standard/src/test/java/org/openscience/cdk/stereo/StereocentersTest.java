@@ -25,6 +25,7 @@
 package org.openscience.cdk.stereo;
 
 import org.junit.Test;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -757,12 +758,20 @@ public class StereocentersTest {
         none("[Ge](#CC)C");
     }
 
+    /**
+     * This one is a bit of an odd bull and changes depending on hydrogen
+     * representation. In most cast it's probably tautomeric. Note that
+     * InChI does allow it: InChI=1S/H2N2/c1-2/h1-2H/b2-1+
+     */
     @Test
     public void nitrogen_neutral_geometric() throws Exception {
-        geometric("N(=NC)C");
-        none("N(=NC)");
-        none("N(=N)C");
-        none("N(=N)");
+        test("N(=NC)C", Stereocenters.Type.Tricoordinate,true);
+        test("N(=NC)", Stereocenters.Type.None, false);
+        test("N(=N)C", Stereocenters.Type.None,false);
+        test("N(=N)", Stereocenters.Type.None, false);
+        test("N(=NC)[H]", Stereocenters.Type.Tricoordinate, false);
+        test("N(=N[H])[H]", Stereocenters.Type.Tricoordinate,false);
+        test("N(=N[H])[H]", Stereocenters.Type.Tricoordinate, false);
     }
 
     @Test
@@ -775,31 +784,38 @@ public class StereocentersTest {
     // assert the first atom of the SMILES is accepted as a tetrahedral center
     void tetrahedral(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        test(sp.parseSmiles(smi), Stereocenters.Type.Tetracoordinate, smi + " was not accepted");
+        test(sp.parseSmiles(smi), Stereocenters.Type.Tetracoordinate, smi + " was not accepted", true);
     }
 
     // assert the first atom of the SMILES is accepted as a geometric center
     void geometric(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        test(sp.parseSmiles(smi), Stereocenters.Type.Tricoordinate, smi + " was not accepted");
+        test(sp.parseSmiles(smi), Stereocenters.Type.Tricoordinate, smi + " was not accepted", true);
     }
 
     // assert the first atom of the SMILES is accepted as a bicoordinate center
     void bicoordinate(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        test(sp.parseSmiles(smi), Stereocenters.Type.Bicoordinate, smi + " was not accepted");
+        test(sp.parseSmiles(smi), Stereocenters.Type.Bicoordinate, smi + " was not accepted", true);
     }
 
     // assert the first atom of the SMILES is non stereogenic
     void none(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        test(sp.parseSmiles(smi), Stereocenters.Type.None, smi + " was not rejected");
+        test(sp.parseSmiles(smi), Stereocenters.Type.None, smi + " was not rejected", true);
     }
 
     // check if the first atom of the container is accepted
-    void test(IAtomContainer container, Stereocenters.Type type, String mesg) {
+    void test(IAtomContainer container, Stereocenters.Type type, String mesg, boolean hnorm) {
         assertThat(mesg, Stereocenters.of(container).elementType(0), is(type));
-        AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
-        assertThat(mesg + " (unsupressed hydrogens)", Stereocenters.of(container).elementType(0), is(type));
+        if (hnorm) {
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+            assertThat(mesg + " (unsupressed hydrogens)", Stereocenters.of(container).elementType(0), is(type));
+        }
+    }
+
+    void test(String smi, Stereocenters.Type type, boolean hnorm) throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        test(sp.parseSmiles(smi), type, smi + " was not accepted", hnorm);
     }
 }
