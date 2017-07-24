@@ -231,4 +231,13 @@ public class InChIToStructureTest extends CDKTestCase {
         assertThat(element.focus(), is(container.getAtom(4)));
         assertThat(element.winding(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
+
+    @Test
+    public void diazene() throws Exception {
+        InChIToStructure parse = new InChIToStructure("InChI=1S/H2N2/c1-2/h1-2H/b2-1+",
+                                                      SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parse.getAtomContainer();
+        assertThat(mol.getAtomCount(), is(4));
+        assertThat(mol.stereoElements().iterator().hasNext(), is(true));
+    }
 }
