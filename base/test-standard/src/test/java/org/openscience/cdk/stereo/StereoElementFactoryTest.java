@@ -63,6 +63,87 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  */
 public class StereoElementFactoryTest {
 
+    // don't create double bond configs in benzene
+    @Test
+    public void benzene() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(atom("C", 1, 1.30, -0.75));
+        mol.addAtom(atom("C", 1, -0.00, -1.50));
+        mol.addAtom(atom("C", 1, -1.30, -0.75));
+        mol.addAtom(atom("C", 1, -1.30, 0.75));
+        mol.addAtom(atom("C", 1, 0.00, 1.50));
+        mol.addAtom(atom("C", 1, 1.30, 0.75));
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        mol.addBond(2, 3, IBond.Order.DOUBLE);
+        mol.addBond(3, 4, IBond.Order.SINGLE);
+        mol.addBond(4, 5, IBond.Order.DOUBLE);
+        mol.addBond(0, 5, IBond.Order.SINGLE);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(mol);
+        assertThat(factory.createAll().size(), is(0));
+    }
+
+    // >=8 is okay for db stereo (ala inchi)
+    @Test
+    public void cyclooctatetraene() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(atom("C", 1, -10.46, 6.36));
+        mol.addAtom(atom("C", 1, -11.34, 5.15));
+        mol.addAtom(atom("C", 1, -10.46, 3.93));
+        mol.addAtom(atom("C", 1, -9.03, 4.40));
+        mol.addAtom(atom("C", 1, -7.60, 3.93));
+        mol.addAtom(atom("C", 1, -6.72, 5.15));
+        mol.addAtom(atom("C", 1, -7.60, 6.36));
+        mol.addAtom(atom("C", 1, -9.03, 5.90));
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        mol.addBond(2, 3, IBond.Order.DOUBLE);
+        mol.addBond(3, 4, IBond.Order.SINGLE);
+        mol.addBond(4, 5, IBond.Order.DOUBLE);
+        mol.addBond(5, 6, IBond.Order.SINGLE);
+        mol.addBond(6, 7, IBond.Order.DOUBLE);
+        mol.addBond(0, 7, IBond.Order.SINGLE);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(mol);
+        assertThat(factory.createAll().size(), is(4));
+    }
+
+    // not okay... but technically the trans form exists
+    @Test
+    public void doubleBondInSevenMemberedRing() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(atom("C", 1, -10.46, 6.36));
+        mol.addAtom(atom("C", 1, -11.34, 5.15));
+        mol.addAtom(atom("C", 1, -10.46, 3.93));
+        mol.addAtom(atom("C", 1, -9.03, 4.40));
+        mol.addAtom(atom("C", 1, -7.60, 3.93));
+        mol.addAtom(atom("C", 1, -6.72, 5.15));
+        mol.addAtom(atom("C", 1, -7.60, 6.36));
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        mol.addBond(2, 3, IBond.Order.SINGLE);
+        mol.addBond(3, 4, IBond.Order.SINGLE);
+        mol.addBond(4, 5, IBond.Order.SINGLE);
+        mol.addBond(5, 6, IBond.Order.SINGLE);
+        mol.addBond(6, 0, IBond.Order.SINGLE);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(mol);
+        assertThat(factory.createAll().size(), is(0));
+    }
+
+    @Test
+    public void hydrogenIsotope() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(atom("C", 3, 0.00, 0.00));
+        mol.addAtom(atom("C", 1, 1.30, -0.75));
+        mol.addAtom(atom("C", 1, 2.60, -0.00));
+        mol.addAtom(atom("H", 0, 3.90, -0.75));
+        mol.getAtom(3).setMassNumber(2);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.DOUBLE);
+        mol.addBond(2, 3, IBond.Order.SINGLE);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(mol);
+        assertThat(factory.createAll().size(), is(1));
+    }
+
     @Test
     public void e_but2ene() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);

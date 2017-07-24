@@ -113,6 +113,38 @@ public abstract class StereoElementFactory {
         this.bondMap = bondMap;
     }
 
+    private boolean visitSmallRing(boolean[] mark, int aidx, int prev,
+                                   int first, int depth) {
+        if (depth > 7)
+            return false;
+        mark[aidx] = true;
+        for (int nbr : graph[aidx]) {
+            if (nbr == prev)
+                continue;
+            if (nbr == first)
+                return true;
+            else if (!mark[nbr] && visitSmallRing(mark, nbr, aidx, first, depth + 1))
+                return true;
+        }
+        mark[aidx] = false;
+        return false;
+    }
+
+    private boolean isInSmallRing(IBond bond) {
+        if (!bond.isInRing())
+            return false;
+        IAtom     beg  = bond.getBegin();
+        IAtom     end  = bond.getEnd();
+        boolean[] mark = new boolean[container.getAtomCount()];
+        int       bidx = container.indexOf(beg);
+        int       eidx = container.indexOf(end);
+        return visitSmallRing(mark,
+                              bidx,
+                              eidx,
+                              bidx,
+                              1);
+    }
+
     /**
      * Creates all stereo elements found by {@link Stereocenters} using the or
      * 2D/3D coordinates to specify the configuration (clockwise/anticlockwise).
@@ -191,7 +223,7 @@ public abstract class StereoElementFactory {
                         IBond bond = bondMap.get(v, w);
                         if (w > v && bond.getOrder() == IBond.Order.DOUBLE) {
                             if (centers.elementType(w) == Stereocenters.Type.Tricoordinate
-                                && centers.isStereocenter(w) && !bond.isInRing()) {
+                                && centers.isStereocenter(w) && !isInSmallRing(bond)) {
                                 IStereoElement element = createGeometric(v, w, centers);
                                 if (element != null) elements.add(element);
                             }

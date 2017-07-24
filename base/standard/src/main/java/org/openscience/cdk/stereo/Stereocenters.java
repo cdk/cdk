@@ -260,13 +260,16 @@ public final class Stereocenters {
             // determine hydrogen count, connectivity and valence
             int h = container.getAtom(i).getImplicitHydrogenCount();
             int x = g[i].length + h;
+            int d = g[i].length;
             int v = h;
 
             if (x < 2 || x > 4 || h > 1) continue;
 
             int piNeighbor = 0;
             for (int w : g[i]) {
-                if (atomicNumber(container.getAtom(w)) == 1) h++;
+                if (atomicNumber(container.getAtom(w)) == 1 &&
+                    container.getAtom(w).getMassNumber() == null)
+                    h++;
                 switch (bondMap.get(i, w).getOrder()) {
                     case SINGLE:
                         v++;
@@ -282,7 +285,7 @@ public final class Stereocenters {
             }
 
             // check the type of stereo chemistry supported
-            switch (supportedType(i, v, h, x)) {
+            switch (supportedType(i, v, d, h, x)) {
                 case Bicoordinate:
                     stereocenters[i] = Stereocenter.Potential;
                     elements[i] = new Bicoordinate(i, g[i]);
@@ -479,7 +482,7 @@ public final class Stereocenters {
      * @param x connectivity
      * @return type of stereo chemistry
      */
-    private Type supportedType(int i, int v, int h, int x) {
+    private Type supportedType(int i, int v, int d, int h, int x) {
 
         IAtom atom = container.getAtom(i);
 
@@ -513,7 +516,8 @@ public final class Stereocenters {
                 if (x == 4) return Type.Tetracoordinate;
                 return Type.None;
             case 7: // nitrogen
-                if (x == 2 && v == 3 && h == 0 && q == 0) return Type.Tricoordinate;
+                if (x == 2 && v == 3 && d == 2 && q == 0)
+                    return Type.Tricoordinate;
                 if (x == 3 && v == 4 && q == 1) return Type.Tricoordinate;
                 if (x == 4 && h == 0 && (q == 0 && v == 5 || q == 1 && v == 4))
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
@@ -598,14 +602,17 @@ public final class Stereocenters {
         for (int i = 1; i < counts.length; i++) {
             if (counts[i] < 2) continue;
 
-            int terminalCount = 0;
+            int terminalCount  = 0;
             int terminalHCount = 0;
 
             for (int j = 0; j < counts[i]; j++) {
-                int hCount = 0;
-                int[] ws = g[atoms[i][j]];
+                int   hCount = 0;
+                int[] ws     = g[atoms[i][j]];
                 for (int w : g[atoms[i][j]]) {
-                    if (atomicNumber(container.getAtom(w)) == 1) hCount++;
+                    IAtom atom = container.getAtom(w);
+                    if (atomicNumber(atom) == 1 && atom.getMassNumber() == null) {
+                        hCount++;
+                    }
                 }
 
                 // is terminal?
