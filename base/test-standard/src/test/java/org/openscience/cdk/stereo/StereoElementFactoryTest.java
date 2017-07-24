@@ -145,6 +145,28 @@ public class StereoElementFactoryTest {
     }
 
     @Test
+    public void bridgeHeadNitrogen() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(atom("C", 2, 1.23, 0.75));
+        mol.addAtom(atom("C", 2, 1.23, -0.75));
+        mol.addAtom(atom("N", 0, -0.07, -1.50));
+        mol.addAtom(atom("C", 2, -1.36, -0.75));
+        mol.addAtom(atom("C", 2, -1.36, 0.75));
+        mol.addAtom(atom("N", 0, -0.07, 1.50));
+        mol.addAtom(atom("C", 2, 0.39, -0.00));
+        mol.addBond(0, 1, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        mol.addBond(2, 1, IBond.Order.SINGLE, IBond.Stereo.UP);
+        mol.addBond(2, 3, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        mol.addBond(3, 4, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        mol.addBond(4, 5, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        mol.addBond(5, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
+        mol.addBond(5, 6, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        mol.addBond(2, 6, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(mol);
+        assertThat(factory.createAll().size(), is(2));
+    }
+
+    @Test
     public void e_but2ene() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -2.19d, 1.64d));

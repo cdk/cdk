@@ -521,7 +521,8 @@ public final class Stereocenters {
                 if (x == 3 && v == 4 && q == 1) return Type.Tricoordinate;
                 if (x == 4 && h == 0 && (q == 0 && v == 5 || q == 1 && v == 4))
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
-                return x == 3 && h == 0 && inThreeMemberRing(i) ? Type.Tetracoordinate : Type.None;
+                // note: bridgehead not allowed by InChI but makes sense
+                return x == 3 && h == 0 && (isBridgeHeadNitrogen(i) || inThreeMemberRing(i)) ? Type.Tetracoordinate : Type.None;
 
             case 14: // silicon
                 if (v != 4 || q != 0) return Type.None;
@@ -670,6 +671,14 @@ public final class Stereocenters {
             for (int u : g[w])
                 if (adj.get(u)) return true;
         return false;
+    }
+
+    private boolean isBridgeHeadNitrogen(int v) {
+        if (g[v].length != 3)
+            return false;
+        return ringSearch.cyclic(v, g[v][0]) &&
+               ringSearch.cyclic(v, g[v][1]) &&
+               ringSearch.cyclic(v, g[v][2]);
     }
 
     /**
