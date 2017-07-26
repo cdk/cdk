@@ -123,6 +123,10 @@ public abstract class SymbolVisibility {
             // abnormal valence, could be due to charge or unpaired electrons
             if (!isFourValent(atom, bonds)) return true;
 
+            // charge, normally caught by previous rule but can have bad input: C=[CH-]C
+            if (atom.getFormalCharge() != null &&
+                atom.getFormalCharge() != 0) return true;
+
             // carbon isotopes are displayed
             Integer mass = atom.getMassNumber();
             if (mass != null && !isMajorIsotope(element.number(), mass)) return true;
