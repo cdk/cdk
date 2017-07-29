@@ -75,7 +75,7 @@ import java.util.Map;
  * 
  *
  * <b>Warning - this class is not thread-safe and uses stores intermediate steps
- * internally. Please use a seperate instance of the class for each thread.</b>
+ * internally. Please use a separate instance of the class for each thread.</b>
  *
  * @author Rajarshi Guha
  * @cdk.keyword fingerprint

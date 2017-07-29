@@ -94,7 +94,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      * @param idx  The index of the atom to be set.
      * @param atom The atom to be stored at position <code>idx</code>
      * @throws IndexOutOfBoundsException index is out of bounds
-     * @throws IllegalArgumentException the atom counld not be set
+     * @throws IllegalArgumentException the atom could not be set
      * @see #getAtom
      */
     void setAtom(int idx, IAtom atom);
@@ -292,11 +292,11 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     IElectronContainer getElectronContainer(int number);
 
     /**
-     * Returns the bond that connectes the two given atoms.
+     * Returns the bond that connects the two given atoms.
      *
      * @param atom1 The first atom
      * @param atom2 The second atom
-     * @return The bond that connectes the two atoms
+     * @return The bond that connects the two atoms
      */
     IBond getBond(IAtom atom1, IAtom atom2);
 
@@ -557,7 +557,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      *
      * @param atom1 The first atom
      * @param atom2 The second atom
-     * @return The bond that connectes the two atoms
+     * @return The bond that connects the two atoms
      */
     IBond removeBond(IAtom atom1, IAtom atom2);
 
