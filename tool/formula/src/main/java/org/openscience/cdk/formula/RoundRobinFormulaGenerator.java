@@ -550,7 +550,7 @@ class RangeMassDecomposer {
             m = new int[k];
             lbound = new int[k];
             r = new int[k];
-            flagWhile = false; // flag wether we are in the while-loop or not
+            flagWhile = false; // flag whether we are in the while-loop or not
             a = weights.get(0).getIntegerMass();
             // Init
             for (int i = 1; i < k; ++i) {
