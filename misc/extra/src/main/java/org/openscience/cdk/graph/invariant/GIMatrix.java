@@ -267,7 +267,7 @@ public class GIMatrix {
     /**
      * Sets the column of the matrix at the specified index to a new value.
      * @param j the column number
-     * @param column the colums to be placed at the specified index
+     * @param column the column to be placed at the specified index
      * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
      * @exception BadMatrixFormatException in case the given Matrix is unproper to replace a column of this Matrix
      */
