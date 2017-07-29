@@ -389,7 +389,10 @@ public final class Canon {
         // we specifically don't check for null atomic number, this must be set.
         // if not, something major is wrong
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            hydrogens[i] = ac.getAtom(i).getAtomicNumber() == 1 && g[i].length == 1;
+            IAtom atom = ac.getAtom(i);
+            hydrogens[i] = atom.getAtomicNumber() == 1 &&
+                           atom.getMassNumber() == null &&
+                           g[i].length == 1;
         }
 
         return hydrogens;

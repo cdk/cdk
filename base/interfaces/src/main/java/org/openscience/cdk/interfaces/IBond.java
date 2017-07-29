@@ -161,6 +161,10 @@ public interface IBond extends IElectronContainer {
      */
     IAtom getEnd();
 
+    int getIndex();
+
+    IAtomContainer getContainer();
+
     /**
      * Returns the number of Atoms in this Bond.
      *

@@ -1037,7 +1037,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         nf.setMinimumFractionDigits(4);
         nf.setMaximumFractionDigits(4);
         nf.setGroupingUsed(false);
-        s = nf.format(fl);
+        if (Double.isNaN(fl) || Double.isInfinite(fl))
+            s = "0.0000";
+        else
+            s = nf.format(fl);
         l = 10 - s.length();
         for (int f = 0; f < l; f++)
             fs += " ";

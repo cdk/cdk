@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -81,10 +82,11 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_TooManyBonds() {
-
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-
-        new DoubleBondStereochemistry(builder.newInstance(IBond.class), new IBond[3], Conformation.OPPOSITE);
+        IBond b1 = builder.newBond();
+        IBond b2 = builder.newBond();
+        IBond b3 = builder.newBond();
+        new DoubleBondStereochemistry(builder.newInstance(IBond.class), new IBond[]{b1,b2,b3}, Conformation.OPPOSITE);
     }
 
     @Test
@@ -98,7 +100,6 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
     public void testBuilder() {
         DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
                 Conformation.OPPOSITE);
-        Assert.assertNull(stereo.getBuilder());
         stereo.setBuilder(DefaultChemObjectBuilder.getInstance());
         Assert.assertEquals(DefaultChemObjectBuilder.getInstance(), stereo.getBuilder());
     }
@@ -223,25 +224,6 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
 
         // map the existing element a new element - should through an IllegalArgumentException
         IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, null);
-
-    }
-
-    @Test
-    public void testMap_Map_Map_NullElement() throws CloneNotSupportedException {
-
-        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-
-        // new stereo element
-        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(null, new IBond[2], null);
-
-        // map the existing element a new element
-        IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
-
-        Assert.assertNull(mapped.getStereoBond());
-        Assert.assertNull(mapped.getBonds()[0]);
-        Assert.assertNull(mapped.getBonds()[1]);
-        Assert.assertNull(mapped.getStereo());
-
     }
 
     @Test
@@ -265,10 +247,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         // map the existing element a new element - should through an IllegalArgumentException
         IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
 
-        Assert.assertThat(mapped.getStereoBond(), is(original.getStereoBond()));
-        Assert.assertThat(mapped.getBonds(), is(original.getBonds()));
-        Assert.assertNotNull(mapped.getStereo());
-
+        Assert.assertThat(mapped, is(sameInstance(original)));
     }
 
     @Test

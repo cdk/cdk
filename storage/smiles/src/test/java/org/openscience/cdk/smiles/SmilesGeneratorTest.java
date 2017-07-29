@@ -738,7 +738,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol1 = reader.read(new AtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
         String moleculeSmile = sg.create(mol1);
-        Assert.assertEquals("C1=CCCCCCC1", moleculeSmile);
+        Assert.assertEquals("C\\1=C\\CCCCCC1", moleculeSmile);
     }
 
     /**
@@ -752,7 +752,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol1 = reader.read(new AtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
         String moleculeSmile = sg.create(mol1);
-        Assert.assertEquals("C1C=CCCCCC1", moleculeSmile);
+        Assert.assertEquals("C1/C=C\\CCCCC1", moleculeSmile);
     }
 
     /**
@@ -766,7 +766,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         SmilesGenerator sg = new SmilesGenerator();
         String moleculeSmile = sg.create(mol1);
-        Assert.assertEquals("C=1CCC=CCCC1", moleculeSmile);
+        Assert.assertEquals("C=1\\CC/C=C\\CC/C1", moleculeSmile);
     }
 
     /**
@@ -786,6 +786,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
     /**
      * @cdk.bug 1089770
+     * @see <a href="https://sourceforge.net/p/cdk/bugs/242/">CDK Bug 1089770</a>
      */
     @Test
     public void testSFBug1089770_2() throws Exception {
@@ -796,7 +797,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesGenerator sg = new SmilesGenerator();
         String moleculeSmile = sg.create(mol1);
         //logger.debug(filename + " -> " + moleculeSmile);
-        Assert.assertEquals("C=1CCC=CCCC1", moleculeSmile);
+        Assert.assertEquals("C=1\\CC/C=C\\CC/C1", moleculeSmile);
     }
 
     /**

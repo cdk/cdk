@@ -155,12 +155,17 @@ public class PathTools {
         List<IBond> bonds = molecule.getConnectedBondsList(root);
         IAtom nextAtom;
         root.setFlag(CDKConstants.VISITED, true);
+        boolean first = path.isEmpty();
+        if (first)
+            path.addAtom(root);
         for (IBond bond : bonds) {
             nextAtom = bond.getOther(root);
             if (!nextAtom.getFlag(CDKConstants.VISITED)) {
                 path.addAtom(nextAtom);
                 path.addBond(bond);
                 if (nextAtom.equals(target)) {
+                    if (first)
+                        path.removeAtomOnly(root);
                     return true;
                 } else {
                     if (!depthFirstTargetSearch(molecule, nextAtom, target, path)) {
@@ -168,11 +173,15 @@ public class PathTools {
                         path.removeAtomOnly(nextAtom);
                         path.removeBond(bond);
                     } else {
+                        if (first)
+                            path.removeAtomOnly(root);
                         return true;
                     }
                 }
             }
         }
+        if (first)
+            path.removeAtomOnly(root);
         return false;
     }
 

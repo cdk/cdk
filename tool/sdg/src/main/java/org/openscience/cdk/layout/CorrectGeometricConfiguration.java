@@ -152,12 +152,8 @@ final class CorrectGeometricConfiguration {
         Arrays.fill(visited, false);
         visited[atomToIndex.get(left)] = true;
 
-        // XXX: bad but correct layout
         if (ringSearch.cyclic(atomToIndex.get(left), atomToIndex.get(right))) {
-            Arrays.fill(visited, true);
-            for (int w : graph[atomToIndex.get(right)]) {
-                reflect(w, db);
-            }
+            db.setStereo(IBond.Stereo.E_OR_Z);
             return;
         }
 

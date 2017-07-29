@@ -26,6 +26,7 @@ package org.openscience.cdk.io;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -267,17 +268,31 @@ public class MDLV2000AtomBlockTest {
 
     @Test
     public void readMDLCoordinate() throws Exception {
-        assertThat(MDLV2000Reader.readMDLCoordinate("    7.8089", 0), is(closeTo(7.8089, 0.1)));
+        assertThat(new MDLV2000Reader().readMDLCoordinate("    7.8089", 0), is(closeTo(7.8089, 0.1)));
     }
 
     @Test
     public void readMDLCoordinate_negative() throws Exception {
-        assertThat(MDLV2000Reader.readMDLCoordinate("   -2.0012", 0), is(closeTo(-2.0012, 0.1)));
+        assertThat(new MDLV2000Reader().readMDLCoordinate("   -2.0012", 0), is(closeTo(-2.0012, 0.1)));
     }
 
     @Test
     public void readMDLCoordinate_offset() throws Exception {
-        assertThat(MDLV2000Reader.readMDLCoordinate("   -2.0012    7.8089", 10), is(closeTo(7.8089, 0.1)));
+        assertThat(new MDLV2000Reader().readMDLCoordinate("   -2.0012    7.8089", 10), is(closeTo(7.8089, 0.1)));
+    }
+
+    @Test
+    public void readOldJmolCoords() throws Exception {
+        MDLV2000Reader reader = new MDLV2000Reader();
+        reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
+        assertThat(reader.readMDLCoordinate("  -2.00120    7.8089", 0), is(closeTo(-2.00120, 0.1)));
+    }
+
+    @Test(expected = CDKException.class)
+    public void readOldJmolCoordsFailOnStrictRead() throws Exception {
+        MDLV2000Reader reader = new MDLV2000Reader();
+        reader.setReaderMode(IChemObjectReader.Mode.STRICT);
+        reader.readMDLCoordinate("  -2.00120    7.8089", 0);
     }
 
 }

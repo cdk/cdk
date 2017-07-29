@@ -317,7 +317,7 @@ public class DynamicFactory {
             throw new IllegalArgumentException("attempt to register a non-interface interface: " + intf.getSimpleName());
 
         boolean registered = Boolean.FALSE;
-        for (Constructor<?> untyped : impl.getConstructors()) {
+        for (Constructor<?> untyped : impl.getDeclaredConstructors()) {
             @SuppressWarnings("unchecked")
             Constructor<T> typed = (Constructor<T>) untyped;
             registered = register(intf, typed, modifier) || registered;
@@ -378,8 +378,12 @@ public class DynamicFactory {
     public <S extends ICDKObject, T extends S> boolean register(Class<S> intf, Constructor<T> constructor,
             CreationModifier<T> modifier) {
 
-        // do not register private/protected constructors
-        if (!Modifier.isPublic(constructor.getModifiers())) return Boolean.FALSE;
+        // do not register private constructors
+        if (Modifier.isPrivate(constructor.getModifiers()) ||
+            Modifier.isProtected(constructor.getModifiers())) return Boolean.FALSE;
+
+        // maybe package-private, make sure we can call it
+        constructor.setAccessible(true);
 
         return register(key(intf, constructor), constructor, modifier) != null;
 

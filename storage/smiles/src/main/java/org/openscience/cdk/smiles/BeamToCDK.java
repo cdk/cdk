@@ -33,23 +33,19 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
-import uk.ac.ebi.beam.Graph;
 import uk.ac.ebi.beam.Atom;
 import uk.ac.ebi.beam.Bond;
 import uk.ac.ebi.beam.Configuration;
 import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.Element;
+import uk.ac.ebi.beam.Graph;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
-import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
-import static uk.ac.ebi.beam.Configuration.Type.DoubleBond;
-import static uk.ac.ebi.beam.Configuration.Type.ExtendedTetrahedral;
-import static uk.ac.ebi.beam.Configuration.Type.Tetrahedral;
 
 /**
  * Convert the Beam toolkit object model to the CDK. Currently the aromatic

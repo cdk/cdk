@@ -31,6 +31,7 @@ import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -260,7 +261,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         // check that there are some pseudo-atoms
         boolean hasPseudo = false;
         for (IAtom atom : mol.atoms()) {
-            if (atom instanceof PseudoAtom) hasPseudo = true;
+            if (atom instanceof IPseudoAtom) hasPseudo = true;
         }
         Assert.assertTrue("The molecule should have one or more pseudo atoms", hasPseudo);
 

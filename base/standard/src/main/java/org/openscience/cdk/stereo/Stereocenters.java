@@ -123,13 +123,17 @@ public final class Stereocenters {
     private final EdgeToBondMap   bondMap;
 
     /** the type of stereo center - indexed by atom. */
-    private final Stereocenter[]  stereocenters;
+    private Stereocenter[]  stereocenters;
 
     /** the stereo elements - indexed by atom. */
-    private final StereoElement[] elements;
+    private StereoElement[] elements;
 
     /** basic cycle information (i.e. is atom/bond cyclic) and cycle systems. */
     private final RingSearch      ringSearch;
+
+    private int numStereoElements;
+
+    private boolean checkSymmetry = false;
 
     /**
      * Determine the stereocenter atoms in the provided container based on
@@ -151,7 +155,9 @@ public final class Stereocenters {
     public static Stereocenters of(IAtomContainer container) {
         EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(container);
         int[][] g = GraphUtil.toAdjList(container, bondMap);
-        return new Stereocenters(container, g, bondMap);
+        Stereocenters stereocenters = new Stereocenters(container, g, bondMap);
+        stereocenters.checkSymmetry();
+        return stereocenters;
     }
 
     /**
@@ -163,21 +169,23 @@ public final class Stereocenters {
      * @param bondMap   fast lookup bonds by atom index
      */
     Stereocenters(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap) {
-
         this.container = container;
         this.bondMap = bondMap;
         this.g = graph;
         this.ringSearch = new RingSearch(container, graph);
+        this.elements = new StereoElement[g.length];
+        this.stereocenters = new Stereocenter[g.length];
+        this.numStereoElements = createElements();
+    }
 
-        this.stereocenters = new Stereocenter[graph.length];
-        this.elements = new StereoElement[graph.length];
-
-        if (createElements() == 0) return;
-
-        int[] symmetry = toIntArray(Canon.symmetry(container, graph));
-
-        labelTrueCenters(symmetry);
-        labelIsolatedPara(symmetry);
+    void checkSymmetry() {
+        if (!checkSymmetry) {
+            checkSymmetry = true;
+            numStereoElements = createElements();
+            int[] symmetry = toIntArray(Canon.symmetry(container, g));
+            labelTrueCenters(symmetry);
+            labelIsolatedPara(symmetry);
+        }
     }
 
     /**
@@ -195,8 +203,10 @@ public final class Stereocenters {
      * @return the type of element
      */
     public Type elementType(final int v) {
-        if (stereocenters[v] == Stereocenter.Non || elements[v] == null) return Type.None;
-        return elements[v].type;
+        if (stereocenters[v] == Stereocenter.Non || elements[v] == null)
+            return Type.None;
+        else
+            return elements[v].type;
     }
 
     /**
@@ -250,13 +260,16 @@ public final class Stereocenters {
             // determine hydrogen count, connectivity and valence
             int h = container.getAtom(i).getImplicitHydrogenCount();
             int x = g[i].length + h;
+            int d = g[i].length;
             int v = h;
 
             if (x < 2 || x > 4 || h > 1) continue;
 
             int piNeighbor = 0;
             for (int w : g[i]) {
-                if (atomicNumber(container.getAtom(w)) == 1) h++;
+                if (atomicNumber(container.getAtom(w)) == 1 &&
+                    container.getAtom(w).getMassNumber() == null)
+                    h++;
                 switch (bondMap.get(i, w).getOrder()) {
                     case SINGLE:
                         v++;
@@ -272,7 +285,7 @@ public final class Stereocenters {
             }
 
             // check the type of stereo chemistry supported
-            switch (supportedType(i, v, h, x)) {
+            switch (supportedType(i, v, d, h, x)) {
                 case Bicoordinate:
                     stereocenters[i] = Stereocenter.Potential;
                     elements[i] = new Bicoordinate(i, g[i]);
@@ -302,10 +315,6 @@ public final class Stereocenters {
                         }
                         continue;
                     }
-
-                    // TODO: we reject all cyclic double bonds but could
-                    // TODO: allow flexible rings (> 7 atoms)
-                    if (ringSearch.cyclic(w, u)) continue;
 
                     stereocenters[w] = Stereocenter.Potential;
                     stereocenters[u] = Stereocenter.Potential;
@@ -473,7 +482,7 @@ public final class Stereocenters {
      * @param x connectivity
      * @return type of stereo chemistry
      */
-    private Type supportedType(int i, int v, int h, int x) {
+    private Type supportedType(int i, int v, int d, int h, int x) {
 
         IAtom atom = container.getAtom(i);
 
@@ -491,7 +500,8 @@ public final class Stereocenters {
         int q = charge(atom);
 
         // more than one hydrogen
-        if (h > 1) return Type.None;
+        if (checkSymmetry && h > 1)
+            return Type.None;
 
         switch (atomicNumber(atom)) {
             case 0: // stop the nulls on pseudo atoms messing up anything else
@@ -506,11 +516,13 @@ public final class Stereocenters {
                 if (x == 4) return Type.Tetracoordinate;
                 return Type.None;
             case 7: // nitrogen
-                if (x == 2 && v == 3 && h == 0 && q == 0) return Type.Tricoordinate;
+                if (x == 2 && v == 3 && d == 2 && q == 0)
+                    return Type.Tricoordinate;
                 if (x == 3 && v == 4 && q == 1) return Type.Tricoordinate;
                 if (x == 4 && h == 0 && (q == 0 && v == 5 || q == 1 && v == 4))
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
-                return x == 3 && h == 0 && inThreeMemberRing(i) ? Type.Tetracoordinate : Type.None;
+                // note: bridgehead not allowed by InChI but makes sense
+                return x == 3 && h == 0 && (isBridgeHeadNitrogen(i) || inThreeMemberRing(i)) ? Type.Tetracoordinate : Type.None;
 
             case 14: // silicon
                 if (v != 4 || q != 0) return Type.None;
@@ -572,6 +584,9 @@ public final class Stereocenters {
      */
     private boolean verifyTerminalHCount(int v) {
 
+        if (!checkSymmetry)
+            return true;
+
         int[] counts = new int[6];
         int[][] atoms = new int[6][g[v].length];
 
@@ -588,14 +603,17 @@ public final class Stereocenters {
         for (int i = 1; i < counts.length; i++) {
             if (counts[i] < 2) continue;
 
-            int terminalCount = 0;
+            int terminalCount  = 0;
             int terminalHCount = 0;
 
             for (int j = 0; j < counts[i]; j++) {
-                int hCount = 0;
-                int[] ws = g[atoms[i][j]];
+                int   hCount = 0;
+                int[] ws     = g[atoms[i][j]];
                 for (int w : g[atoms[i][j]]) {
-                    if (atomicNumber(container.getAtom(w)) == 1) hCount++;
+                    IAtom atom = container.getAtom(w);
+                    if (atomicNumber(atom) == 1 && atom.getMassNumber() == null) {
+                        hCount++;
+                    }
                 }
 
                 // is terminal?
@@ -653,6 +671,14 @@ public final class Stereocenters {
             for (int u : g[w])
                 if (adj.get(u)) return true;
         return false;
+    }
+
+    private boolean isBridgeHeadNitrogen(int v) {
+        if (g[v].length != 3)
+            return false;
+        return ringSearch.cyclic(v, g[v][0]) &&
+               ringSearch.cyclic(v, g[v][1]) &&
+               ringSearch.cyclic(v, g[v][2]);
     }
 
     /**

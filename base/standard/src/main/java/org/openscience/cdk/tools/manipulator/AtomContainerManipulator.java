@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import com.google.common.collect.Maps;
@@ -63,7 +64,9 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.stereo.Atropisomeric;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
@@ -442,6 +445,13 @@ public class AtomContainerManipulator {
         return hCount;
     }
 
+    private static final void replaceAtom(IAtom[] atoms, IAtom org, IAtom rep) {
+        for (int i = 0; i < atoms.length; i++) {
+            if (atoms[i].equals(org))
+                atoms[i] = rep;
+        }
+    }
+
     /**
      * Adds explicit hydrogens (without coordinates) to the IAtomContainer,
      * equaling the number of set implicit hydrogens.
@@ -481,28 +491,38 @@ public class AtomContainerManipulator {
         for (IBond bond : newBonds)
             atomContainer.addBond(bond);
 
-        // update tetrahedral elements with an implicit part
+        // update stereo elements with an implicit part
         List<IStereoElement> stereos = new ArrayList<>();
         for (IStereoElement stereo : atomContainer.stereoElements()) {
             if (stereo instanceof ITetrahedralChirality) {
                 ITetrahedralChirality tc = (ITetrahedralChirality) stereo;
 
-                IAtom focus = tc.getChiralAtom();
-                IAtom[] neighbors = tc.getLigands();
-                IAtom hydrogen = hNeighbor.get(focus);
+                IAtom   focus    = tc.getFocus();
+                IAtom[] carriers = tc.getCarriers().toArray(new IAtom[4]);
+                IAtom   hydrogen = hNeighbor.get(focus);
 
                 // in sulfoxide - the implicit part of the tetrahedral centre
                 // is a lone pair
 
                 if (hydrogen != null) {
-                    for (int i = 0; i < 4; i++) {
-                        if (neighbors[i] == focus) {
-                            neighbors[i] = hydrogen;
-                            break;
-                        }
-                    }
-                    // neighbors is a copy so need to create a new stereocenter
-                    stereos.add(new TetrahedralChirality(focus, neighbors, tc.getStereo()));
+                    replaceAtom(carriers, focus, hydrogen);
+                    stereos.add(new TetrahedralChirality(focus, carriers, tc.getStereo()));
+                } else {
+                    stereos.add(stereo);
+                }
+            } else if (stereo instanceof ExtendedTetrahedral) {
+                ExtendedTetrahedral tc = (ExtendedTetrahedral) stereo;
+
+                IAtom   focus    = tc.getFocus();
+                IAtom[] carriers = tc.getCarriers().toArray(new IAtom[4]);
+                IAtom   hydrogen = hNeighbor.get(focus);
+
+                // in sulfoxide - the implicit part of the tetrahedral centre
+                // is a lone pair
+
+                if (hydrogen != null) {
+                    replaceAtom(carriers, focus, hydrogen);
+                    stereos.add(new TetrahedralChirality(focus, carriers, tc.getConfig()));
                 } else {
                     stereos.add(stereo);
                 }
@@ -822,16 +842,19 @@ public class AtomContainerManipulator {
                 if (x == null || y == null) continue;
 
                 // no changes
-                if (x == xNew && y == yNew) {
+                if (x.equals(xNew) && y.equals(yNew)) {
                     elements.add(db);
                     continue;
                 }
 
                 // XXX: may perform slow operations but works for now
-                IBond cpyLeft = xNew != x ? org.getBond(u, xNew) : orgLeft;
-                IBond cpyRight = yNew != y ? org.getBond(v, yNew) : orgRight;
+                IBond cpyLeft = !Objects.equals(xNew, x) ? org.getBond(u, xNew) : orgLeft;
+                IBond cpyRight = !Objects.equals(yNew, y) ? org.getBond(v, yNew) : orgRight;
 
                 elements.add(new DoubleBondStereochemistry(orgStereo, new IBond[]{cpyLeft, cpyRight}, conformation));
+            } else if (se instanceof Atropisomeric) {
+                // can not have any H's
+                elements.add(se);
             }
         }
 
@@ -973,7 +996,7 @@ public class AtomContainerManipulator {
      */
     private static IAtom findOther(IAtomContainer container, IAtom atom, IAtom exclude1, IAtom exclude2) {
         for (IAtom neighbor : container.getConnectedAtomsList(atom)) {
-            if (neighbor != exclude1 && neighbor != exclude2) return neighbor;
+            if (!neighbor.equals(exclude1) && !neighbor.equals(exclude2)) return neighbor;
         }
         return null;
     }

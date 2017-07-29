@@ -20,6 +20,7 @@
 package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 import javax.vecmath.Point2d;
@@ -171,6 +172,22 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getIndex() {
+        return -1;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtomContainer getContainer() {
+        return null;
+    }
+
+    /**
      * The inner Iterator class.
      */
     private class AtomsIterator implements Iterator<IAtom> {
@@ -235,14 +252,14 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * {@inheritDoc}
      */
     public IAtom getBegin() {
-        return atoms[0];
+        return atomCount < 1 ? null : atoms[0];
     }
 
     /**
      * {@inheritDoc}
      */
     public IAtom getEnd() {
-        return atoms[1];
+        return atomCount < 2 ? null : atoms[1];
     }
 
     /**
@@ -513,6 +530,24 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             }
         }
         return clone;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof BondRef)
+            return super.equals(((BondRef) obj).deref());
+        return super.equals(obj);
     }
 
     /**

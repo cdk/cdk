@@ -25,6 +25,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -148,6 +149,22 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
                 return new AtomsIterator();
             }
         };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getIndex() {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IAtomContainer getContainer() {
+        return null;
     }
 
     /**

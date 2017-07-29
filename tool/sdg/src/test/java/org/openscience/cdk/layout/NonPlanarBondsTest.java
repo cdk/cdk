@@ -30,20 +30,30 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.stereo.Atropisomeric;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 import javax.vecmath.Point2d;
 
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
 
 /**
@@ -626,6 +636,36 @@ public class NonPlanarBondsTest {
             assertThat(bond.getStereo(), is(not(IBond.Stereo.UP_OR_DOWN)));
             assertThat(bond.getStereo(), is(not(IBond.Stereo.UP_OR_DOWN_INVERTED)));
         }
+    }
+
+    @Test
+    public void atropisomerWedgeBonds() throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("OC1=CC=C2C=CC=CC2=C1C1=C(O)C=CC2=C1C=CC=C2");
+
+        IBond       focus    = mol.getBond(mol.getAtom(10),
+                                           mol.getAtom(11));
+        List<IAtom> carriers = new ArrayList<>();
+        carriers.addAll(mol.getConnectedAtomsList(focus.getBegin()));
+        carriers.addAll(mol.getConnectedAtomsList(focus.getEnd()));
+        carriers.remove(focus.getBegin());
+        carriers.remove(focus.getEnd());
+
+        mol.addStereoElement(new Atropisomeric(focus,
+                                               carriers.toArray(new IAtom[0]), IStereoElement.LEFT));
+
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+
+        IBond bond1 = mol.getBond(focus.getBegin(), carriers.get(1));
+        IBond bond2 = mol.getBond(focus.getEnd(), carriers.get(3));
+        assertThat(bond1.getOrder(), is(IBond.Order.SINGLE));
+        assertThat(bond2.getOrder(), is(IBond.Order.SINGLE));
+
+        assertTrue("One of the single bonds should have been wedged",
+                   bond1.getStereo() == IBond.Stereo.DOWN ||
+                   bond2.getStereo() == IBond.Stereo.DOWN);
+
     }
 
     static IAtom atom(String symbol, int hCount, double x, double y) {

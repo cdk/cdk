@@ -78,7 +78,6 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     @Test
     public void testBuilder() {
         TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
-        Assert.assertNull(chirality.getBuilder());
         chirality.setBuilder(DefaultChemObjectBuilder.getInstance());
         Assert.assertEquals(DefaultChemObjectBuilder.getInstance(), chirality.getBuilder());
     }
@@ -184,32 +183,6 @@ public class TetrahedralChiralityTest extends CDKTestCase {
     }
 
     @Test
-    public void testMap_Map_Map_NullElement() throws CloneNotSupportedException {
-
-        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-
-        IAtom c1 = builder.newInstance(IAtom.class, "C");
-        IAtom o2 = builder.newInstance(IAtom.class, "O");
-        IAtom n3 = builder.newInstance(IAtom.class, "N");
-        IAtom c4 = builder.newInstance(IAtom.class, "C");
-        IAtom h5 = builder.newInstance(IAtom.class, "H");
-
-        // new stereo element
-        ITetrahedralChirality original = new TetrahedralChirality(null, new IAtom[4], null);
-
-        // map the existing element a new element
-        ITetrahedralChirality mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
-
-        Assert.assertNull(mapped.getChiralAtom());
-        Assert.assertNull(mapped.getLigands()[0]);
-        Assert.assertNull(mapped.getLigands()[1]);
-        Assert.assertNull(mapped.getLigands()[2]);
-        Assert.assertNull(mapped.getLigands()[3]);
-        Assert.assertNull(mapped.getStereo());
-
-    }
-
-    @Test
     public void testMap_Map_Map_EmptyMapping() throws CloneNotSupportedException {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -226,10 +199,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         // map the existing element a new element - should through an IllegalArgumentException
         ITetrahedralChirality mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
 
-        Assert.assertThat(mapped.getChiralAtom(), is(original.getChiralAtom()));
-        Assert.assertThat(mapped.getLigands(), is(original.getLigands()));
-        Assert.assertNotNull(mapped.getStereo());
-
+        Assert.assertThat(mapped, is(sameInstance(original)));
     }
 
     @Test
