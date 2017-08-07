@@ -78,7 +78,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
     /**
      * Reads the file and builds an index file, if the index file doesn't already exist.
      *
-     * @param file the file object containg the molecules to be indexed
+     * @param file the file object containing the molecules to be indexed
      * @param builder a chem object builder
      * @throws IOException if there is an error during reading
      */
@@ -234,7 +234,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         int indexLength = Integer.parseInt(line);
         if (indexLength <= 0) {
             in.close();
-            throw new Exception("Index of zero lenght! " + file.getAbsolutePath());
+            throw new Exception("Index of zero length! " + file.getAbsolutePath());
         }
         index = new long[indexLength][3];
         records = 0;
