@@ -93,8 +93,12 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
 
     @Override
     public void close() {
-    	input.close();
-    }
+	  try {
+	    if (input != null) input.close();
+	  } catch (IOException e) {
+	    // ignored
+	  }
+	}
 
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
