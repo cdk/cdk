@@ -136,7 +136,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
                 nextMolecule.setProperty(CDKConstants.TITLE, suffix);
 
             } catch (Exception exception) {
-                logger.error("Unexpeced problem: ", exception.getMessage());
+                logger.error("Unexpected problem: ", exception.getMessage());
                 logger.debug(exception);
                 hasNext = false;
             }
