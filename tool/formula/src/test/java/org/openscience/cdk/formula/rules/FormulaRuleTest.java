@@ -90,7 +90,7 @@ public abstract class FormulaRuleTest extends CDKTestCase {
         IMolecularFormula mf = new MolecularFormula();
         mf.addIsotope(new Isotope("C", 13));
         mf.addIsotope(new Isotope("H", 2), 4);
-        rule.validate(new MolecularFormula());
+        rule.validate(mf);
 
         // can it handle an empty MF?
         rule.validate(new MolecularFormula());
