@@ -1299,6 +1299,14 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeAtom(int pos) {
+        removeAtom(getAtom(pos));
+    }
+
+    /**
      * Removes all atoms and bond from this container.
      */
     @Override

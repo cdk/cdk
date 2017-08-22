@@ -1075,6 +1075,14 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
+    public void removeAtom(int pos) {
+        removeAtom(getAtom(pos));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void removeAllElements() {
         removeAllElectronContainers();
         atoms = new IAtom[growArraySize];
