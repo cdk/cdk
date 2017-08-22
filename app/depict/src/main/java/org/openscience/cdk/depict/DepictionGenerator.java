@@ -681,9 +681,11 @@ public final class DepictionGenerator {
      * @throws CDKException coordinates could not be generated
      */
     private void ensure2dLayout(IReaction rxn) throws CDKException {
-        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-        sdg.setAlignMappedReaction(alignMappedReactions);
-        sdg.generateCoordinates(rxn);
+        if (!GeometryUtil.has2DCoordinates(rxn)) {
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            sdg.setAlignMappedReaction(alignMappedReactions);
+            sdg.generateCoordinates(rxn);
+        }
     }
 
     /**
