@@ -249,24 +249,50 @@ public class StructureDiagramGenerator {
                     }
                 }
 
+                boolean aggresive = false;
+
                 if (!afix.isEmpty()) {
-                    for (IBond bond : mol.bonds()) {
-                        if (afix.containsKey(bond.getBegin()) && afix.containsKey(bond.getEnd())) {
-                            // only fix acyclic bonds if the source atoms were also acyclic
-                            if (!bond.isInRing()) {
+                    if (aggresive) {
+                        for (IBond bond : mol.bonds()) {
+                            if (afix.containsKey(bond.getBegin()) && afix.containsKey(bond.getEnd())) {
+                                // only fix acyclic bonds if the source atoms were also acyclic
+                                if (!bond.isInRing()) {
+                                    IAtom srcBeg = afix.get(bond.getBegin());
+                                    IAtom srcEnd = afix.get(bond.getEnd());
+                                    for (IAtomContainer product : reaction.getProducts().atomContainers()) {
+                                        IBond srcBond = product.getBond(srcBeg, srcEnd);
+                                        if (srcBond != null) {
+                                            if (!srcBond.isInRing())
+                                                bfix.add(bond); // safe to add
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    bfix.add(bond);
+                                }
+                            }
+                        }
+                    } else {
+                        for (IBond bond : mol.bonds()) {
+                            if (afix.containsKey(bond.getBegin()) && afix.containsKey(bond.getEnd())) {
+                                // only fix bonds that match their ring membership status
                                 IAtom srcBeg = afix.get(bond.getBegin());
                                 IAtom srcEnd = afix.get(bond.getEnd());
                                 for (IAtomContainer product : reaction.getProducts().atomContainers()) {
                                     IBond srcBond = product.getBond(srcBeg, srcEnd);
                                     if (srcBond != null) {
-                                        if (!srcBond.isInRing())
-                                            bfix.add(bond); // safe to add
+                                        if (srcBond.isInRing() == bond.isInRing())
+                                            bfix.add(bond);
                                         break;
                                     }
                                 }
-                            } else {
-                                bfix.add(bond);
                             }
+                        }
+                        // XXX: can do better
+                        afix.clear();
+                        for (IBond bond : bfix) {
+                            afix.put(bond.getBegin(), null);
+                            afix.put(bond.getEnd(), null);
                         }
                     }
                 }
@@ -621,7 +647,6 @@ public class StructureDiagramGenerator {
                     if (rset.getFlag(CDKConstants.ISPLACED)) {
                         ringPlacer.placeRingSubstituents(rset, bondLength);
                     } else {
-
                         List<IRing> placed = new ArrayList<>();
                         List<IRing> unplaced = new ArrayList<>();
 
