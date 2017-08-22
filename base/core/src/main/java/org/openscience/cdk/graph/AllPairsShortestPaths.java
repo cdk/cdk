@@ -710,7 +710,17 @@ public final class AllPairsShortestPaths {
                                                                  public void stateChanged(IChemObjectChangeEvent event) {
 
                                                                  }
-                                                             };
+
+                                                                 @Override
+                                                                 public String getTitle() {
+                                                                    return null;
+                                                                 }
+
+                                                                 @Override
+                                                                 public void setTitle(String title) {
+
+                                                                 }
+    };
 
     /**
      * pseudo shortest-paths - when an invalid atom is given. this will always

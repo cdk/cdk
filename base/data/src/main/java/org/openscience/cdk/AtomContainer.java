@@ -1471,6 +1471,23 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         return atomCount == 0;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTitle() {
+        return getProperty(CDKConstants.TITLE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setTitle(String title) {
+        setProperty(CDKConstants.TITLE, title);
+    }
+
     /**
      * The inner AtomIterator class.
      */
