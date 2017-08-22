@@ -703,9 +703,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             parities.put(atom, parity);
 
         // if there was a mass difference, set the mass number
-        if (massDiff != 0 && atom.getAtomicNumber() > 0)
-            atom.setMassNumber(Isotopes.getInstance().getMajorIsotope(atom.getAtomicNumber()).getMassNumber()
-                    + massDiff);
+        if (massDiff != 0 && atom.getAtomicNumber() > 0) {
+            IIsotope majorIsotope = Isotopes.getInstance().getMajorIsotope(atom.getAtomicNumber());
+            if (majorIsotope == null)
+                atom.setMassNumber(-1); // checked after M ISO is processed
+            else
+                atom.setMassNumber(majorIsotope.getMassNumber() + massDiff);
+        }
 
         if (valence > 0 && valence < 16) atom.setValency(valence == 15 ? 0 : valence);
 
@@ -1186,6 +1190,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 case M_END:
                     break LINES;
             }
+        }
+
+        // check of ill specified atomic mass
+        for (IAtom atom : container.atoms()) {
+            if (atom.getMassNumber() != null && atom.getMassNumber() < 0)
+                throw new CDKException("Unstable use of mass delta on " + atom.getSymbol() + " please use M  ISO");
         }
 
 

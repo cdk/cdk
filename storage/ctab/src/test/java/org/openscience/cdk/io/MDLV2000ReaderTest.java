@@ -1414,20 +1414,20 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(0));
         assertThat(container.getAtom(1).getImplicitHydrogenCount(), is(0));
     }
-    
+
     /**
      * The non-standard ACDLabs atom label property should throw a CDKException in STRICT mode.
      * @throws Exception
      */
     @Test(expected=CDKException.class)
     public void testAcdChemSketchLabel_Strict() throws Exception {
-        
+
         String filename = "data/mdl/chemsketch-all-labelled.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         reader.read(new AtomContainer());
     }
-    
+
     /**
      * Test a simple ChemSketch label containing an integer.
      * @throws Exception
@@ -1439,10 +1439,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        
+
         assertThat((String) mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is("6"));
     }
-    
+
     /**
      * Test ChemSketch labels containing all non-whitespace printable ASCII characters.
      * @throws Exception
@@ -1454,18 +1454,18 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        
+
         // Printable ASCII characters, excluding whitespace. Note each string contains an atom number
-        String[] expected = 
-        {   
-            "!\"#$%&'()*+,-./0123456789:;<=>?@[\\]^_`{|}~", 
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ1abcdefghijklmnopqrstuvwxyz",    
+        String[] expected =
+        {
+            "!\"#$%&'()*+,-./0123456789:;<=>?@[\\]^_`{|}~",
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ1abcdefghijklmnopqrstuvwxyz",
             "012345678901234567890123456789012345678901234567890"
         };
         assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[0]));
         assertThat((String) mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[1]));
         assertThat((String) mol.getAtom(2).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[2]));
-    }    
+    }
 
     /**
      * Check that multiple atom labels are all read.
@@ -1478,13 +1478,13 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        
+
         Iterable<IAtom> atoms = mol.atoms();
         for (IAtom atom : atoms){
             Assert.assertNotNull(atom.getProperty(CDKConstants.ACDLABS_LABEL));
         }
     }
-    
+
     /**
      * Check that leading and trailing whitespace in atom labels is preserved on reading.
      * @throws Exception
@@ -1496,12 +1496,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        
+
         // Leading and trailing whitespace in both prefix and suffix
         String expected = " a 1 b ";
         assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
     }
-    
+
     /**
      * Check that embedded whitespace in atom labels is preserved on reading.
      * @throws Exception
@@ -1513,12 +1513,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        
+
         // Embedded whitespace in both prefix and suffix
         String expected = "a b1c d";
         assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
     }
-    
+
     /**
      * Check reading of largest permissible label (50 char prefix + 3 digits + 50 char suffix).
      * @throws Exception
@@ -1530,13 +1530,13 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        
+
         // Longest allowed atom label is 103 characters
         String prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx";
         String digits = "999";
         String suffix = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx";
         String expected = prefix + digits + suffix;
-        
+
         assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
     }
 
@@ -1690,6 +1690,28 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             assertThat(((ITetrahedralChirality) se).getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
             assertThat(((ITetrahedralChirality) se).getLigands(), is(new IAtom[]{container.getAtom(0), container.getAtom(2), container.getAtom(3), container.getAtom(4)}));
             assertFalse(siter.hasNext());
+        }
+    }
+
+    /**
+     * When atomic mass is defined as a delta some atoms don't have a reasonable
+     * default. Most tools will output an 'M  ISO' property, so can be specified
+     * @throws Exception expected format error
+     */
+    @Test(expected = CDKException.class)
+    public void seaborgiumMassDelta() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("seaborgium.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IAtomContainer mol = mdlr.read(new AtomContainer());
+        }
+    }
+
+    @Test
+    public void seaborgiumAbsMass() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("seaborgium_abs.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IAtomContainer mol = mdlr.read(new AtomContainer());
+            assertThat(mol.getAtom(0).getMassNumber(), is(261));
         }
     }
 }
