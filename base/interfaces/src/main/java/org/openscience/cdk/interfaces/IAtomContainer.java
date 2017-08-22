@@ -632,6 +632,23 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 
     /**
      * Safely remove an atom from the container.
+     * <br>
+     * Removes a single atom from the container updating all internal
+     * state to be consistent. All bonds connected to the atom will be
+     * deleted as well as all stereo elements. If multiple atoms/bonds are
+     * being deleted they should be gathered into a single transaction
+     * and removed with {@link #remove(IAtomContainer)}.
+     * <br>
+     * If you are removing hydrogens one of the
+     * utility methods (e.g. AtomContainerManipulator.removeHydrogens(IAtomContainer))
+     * is preferable.
+     *
+     * @param pos the position of the atom to be removed
+     */
+    void removeAtom(int pos);
+
+    /**
+     * Safely remove an atom from the container.
      * @see #removeAtom(IAtom)
      * @deprecated Method has be renamed {@link #removeAtom(IAtom)}.
      */

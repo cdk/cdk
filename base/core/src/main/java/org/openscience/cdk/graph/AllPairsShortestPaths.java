@@ -514,6 +514,11 @@ public final class AllPairsShortestPaths {
                                                                  }
 
                                                                  @Override
+                                                                 public void removeAtom(int pos) {
+
+                                                                 }
+
+                                                                 @Override
                                                                  @Deprecated
                                                                  public void removeAtomAndConnectedElectronContainers(IAtom atom) {
                                                                     
