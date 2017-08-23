@@ -112,8 +112,8 @@ public class DescriptorValue implements Serializable {
      * a <code>DescriptorValue</code> object, it should supply an array of names equal
      * in length to the number of descriptor calculated.
      * 
-     * In many cases, these names can be as simple as X1, X2, ..., XN where X is a prefix
-     * and 1, 2, ..., N are the indices. On the other hand it is also possible to return
+     * In many cases, these names can be as simple as X0, X1, ..., XN where X is a prefix
+     * and 0, 1, ..., N are the indices. On the other hand it is also possible to return
      * other arbitrary names, which should be documented in the JavaDocs for the descriptor
      * (e.g., the CPSA descriptor).
      * 
@@ -140,7 +140,7 @@ public class DescriptorValue implements Serializable {
                     ndesc = value.length();
                 }
                 descriptorNames = new String[ndesc];
-                for (int i = 1; i < ndesc + 1; i++)
+                for (int i = 0; i < ndesc; i++)
                     descriptorNames[i] = title + i;
             }
         }
