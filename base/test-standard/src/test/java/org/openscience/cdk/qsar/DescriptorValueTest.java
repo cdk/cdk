@@ -23,6 +23,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -92,8 +93,18 @@ public class DescriptorValueTest extends CDKTestCase {
         DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
-        DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
+        DoubleArrayResult doubleVals = new DoubleArrayResult();
+        doubleVals.add(Double.valueOf(0.1));
+        doubleVals.add(Double.valueOf(0.2));
+        DescriptorValue value;
+        value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
         Assert.assertEquals(1, value.getNames().length);
+        value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{ });
+        Assert.assertEquals(1, value.getNames().length);
+        value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, null);
+        Assert.assertEquals(1, value.getNames().length);
+        value = new DescriptorValue(spec, new String[0], new Object[0], doubleVals, null);
+        Assert.assertEquals(2, value.getNames().length);
     }
 
     @Test
