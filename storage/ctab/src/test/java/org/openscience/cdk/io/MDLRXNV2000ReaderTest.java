@@ -38,6 +38,9 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 /**
  * TestCase for the reading MDL RXN files using one test file.
  *
@@ -130,5 +133,14 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
         Iterator<IMapping> maps = reaction2.mappings().iterator();
         maps.next();
         Assert.assertTrue(maps.hasNext());
+    }
+
+    @Test
+    public void testAgentParts() throws Exception {
+        try (InputStream in = this.getClass().getResourceAsStream("ethylesterification.mol");
+             MDLRXNV2000Reader rdr = new MDLRXNV2000Reader(in);) {
+            IReaction reaction = rdr.read(new Reaction());
+            assertThat(reaction.getAgents().getAtomContainerCount(), is(1));
+        }
     }
 }

@@ -753,6 +753,20 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     boolean isEmpty();
 
     /**
+     * Access the title of the record.
+     *
+     * @return the title
+     */
+    String getTitle();
+
+    /**
+     * Modify the title of the record.
+     *
+     * @param title the title
+     */
+    void setTitle(String title);
+
+    /**
      * {@inheritDoc}
      */
     @Override

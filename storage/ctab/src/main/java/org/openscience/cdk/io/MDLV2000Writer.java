@@ -360,21 +360,24 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write(comment);
         writer.newLine();
 
-        // write Counts line
-        line += formatMDLInt(container.getAtomCount(), 3);
-        line += formatMDLInt(container.getBondCount(), 3);
-        line += "  0  0  0  0  0  0  0  0999 V2000";
-        writer.write(line);
-        writer.newLine();
-
         // index stereo elements for setting atom parity values
         Map<IAtom,ITetrahedralChirality> atomstereo = new HashMap<>();
         Map<IAtom,Integer> atomindex = new HashMap<>();
         for (IStereoElement element : container.stereoElements())
-                if (element instanceof ITetrahedralChirality)
-                    atomstereo.put(((ITetrahedralChirality) element).getChiralAtom(), (ITetrahedralChirality) element);
+            if (element instanceof ITetrahedralChirality)
+                atomstereo.put(((ITetrahedralChirality) element).getChiralAtom(), (ITetrahedralChirality) element);
         for (IAtom atom : container.atoms())
             atomindex.put(atom, atomindex.size());
+
+        // write Counts line
+        line += formatMDLInt(container.getAtomCount(), 3);
+        line += formatMDLInt(container.getBondCount(), 3);
+        line += "  0  0";
+        // we mark all stereochemistry to absolute for now
+        line += atomstereo.isEmpty() ? "  0" : "  1";
+        line += "  0  0  0  0  0999 V2000";
+        writer.write(line);
+        writer.newLine();
 
         // write Atom block
         for (int f = 0; f < container.getAtomCount(); f++) {

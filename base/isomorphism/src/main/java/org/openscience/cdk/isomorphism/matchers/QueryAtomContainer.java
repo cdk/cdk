@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -1613,6 +1614,22 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     @Override
     public boolean isEmpty() {
         return atomCount == 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTitle() {
+        return getProperty(CDKConstants.TITLE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setTitle(String title) {
+        setProperty(CDKConstants.TITLE, title);
     }
 
     @Override
