@@ -387,6 +387,11 @@ final class NonplanarBonds {
                 p *= indexParity(i); // implicit H, adjust parity
             } else {
                 bonds[n] = container.getBond(focus, atoms[i]);
+                if (bonds[n] == null)
+                    throw new IllegalArgumentException("Inconsistent stereo,"
+                                                       + " tetrahedral centre"
+                                                       + " contained atom not"
+                                                       + " stored in molecule");
                 atoms[n] = atoms[i];
                 n++;
             }
