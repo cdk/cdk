@@ -522,7 +522,8 @@ public class RingPlacer {
                 atom.setFlag(CDKConstants.ISPLACED, true);
         AtomPlacer.copyPlaced(partiallyPlacedRing, ring);
 
-        if (partiallyPlacedRing.getAtomCount() > 0 && partiallyPlacedRing.getAtomCount() < ring.getAtomCount()) {
+        if (partiallyPlacedRing.getAtomCount() > 1 &&
+            partiallyPlacedRing.getAtomCount() < ring.getAtomCount()) {
             placeConnectedRings(rset, partiallyPlacedRing, RingPlacer.FUSED, bondLength);
             placeConnectedRings(rset, partiallyPlacedRing, RingPlacer.BRIDGED, bondLength);
             placeConnectedRings(rset, partiallyPlacedRing, RingPlacer.SPIRO, bondLength);
