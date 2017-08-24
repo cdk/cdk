@@ -72,7 +72,7 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
      *
      * @param in      The input stream
      * @param builder The builder
-     * @throws XMLStreamException if there is an error isn setting up the XML parser
+     * @throws XMLStreamException if there is an error in setting up the XML parser
      */
     public IteratingPCCompoundXMLReader(Reader in, IChemObjectBuilder builder) throws IOException,
                                                                                       XMLStreamException {

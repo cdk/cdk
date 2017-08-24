@@ -43,7 +43,7 @@ public interface IChemObjectWriter extends IChemObjectIO {
     /**
      * Writes the content of "object" to output.
      *
-     * @param  object    the object of which the content is outputed
+     * @param  object    the object of which the content is outputted
      *
      * @exception CDKException is thrown if the output
      *            does not support the data in the object

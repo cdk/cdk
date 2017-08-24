@@ -668,6 +668,17 @@ public class NonPlanarBondsTest {
 
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void inconsistentStereoState() throws CDKException {
+        final String smi = "O[C@]([H])(C)CCC";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        mol.removeBond(1);
+        mol.removeAtomOnly(2); // unsafe-removes
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+    }
+
     static IAtom atom(String symbol, int hCount, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(hCount);

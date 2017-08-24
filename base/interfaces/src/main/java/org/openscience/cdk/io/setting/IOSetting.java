@@ -48,7 +48,7 @@ public abstract class IOSetting implements ISetting {
      *
      * @param name           Name of the setting
      * @param level          Level at which question is asked
-     * @param question       Question that is poped to the user when the
+     * @param question       Question that is popped to the user when the
      *                       ReaderSetting needs setting
      * @param defaultSetting The default setting, used if not overwritten
      *                       by a user

@@ -249,24 +249,50 @@ public class StructureDiagramGenerator {
                     }
                 }
 
+                boolean aggresive = false;
+
                 if (!afix.isEmpty()) {
-                    for (IBond bond : mol.bonds()) {
-                        if (afix.containsKey(bond.getBegin()) && afix.containsKey(bond.getEnd())) {
-                            // only fix acyclic bonds if the source atoms were also acyclic
-                            if (!bond.isInRing()) {
+                    if (aggresive) {
+                        for (IBond bond : mol.bonds()) {
+                            if (afix.containsKey(bond.getBegin()) && afix.containsKey(bond.getEnd())) {
+                                // only fix acyclic bonds if the source atoms were also acyclic
+                                if (!bond.isInRing()) {
+                                    IAtom srcBeg = afix.get(bond.getBegin());
+                                    IAtom srcEnd = afix.get(bond.getEnd());
+                                    for (IAtomContainer product : reaction.getProducts().atomContainers()) {
+                                        IBond srcBond = product.getBond(srcBeg, srcEnd);
+                                        if (srcBond != null) {
+                                            if (!srcBond.isInRing())
+                                                bfix.add(bond); // safe to add
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    bfix.add(bond);
+                                }
+                            }
+                        }
+                    } else {
+                        for (IBond bond : mol.bonds()) {
+                            if (afix.containsKey(bond.getBegin()) && afix.containsKey(bond.getEnd())) {
+                                // only fix bonds that match their ring membership status
                                 IAtom srcBeg = afix.get(bond.getBegin());
                                 IAtom srcEnd = afix.get(bond.getEnd());
                                 for (IAtomContainer product : reaction.getProducts().atomContainers()) {
                                     IBond srcBond = product.getBond(srcBeg, srcEnd);
                                     if (srcBond != null) {
-                                        if (!srcBond.isInRing())
-                                            bfix.add(bond); // safe to add
+                                        if (srcBond.isInRing() == bond.isInRing())
+                                            bfix.add(bond);
                                         break;
                                     }
                                 }
-                            } else {
-                                bfix.add(bond);
                             }
+                        }
+                        // XXX: can do better
+                        afix.clear();
+                        for (IBond bond : bfix) {
+                            afix.put(bond.getBegin(), null);
+                            afix.put(bond.getEnd(), null);
                         }
                     }
                 }
@@ -621,7 +647,6 @@ public class StructureDiagramGenerator {
                     if (rset.getFlag(CDKConstants.ISPLACED)) {
                         ringPlacer.placeRingSubstituents(rset, bondLength);
                     } else {
-
                         List<IRing> placed = new ArrayList<>();
                         List<IRing> unplaced = new ArrayList<>();
 
@@ -2256,7 +2281,18 @@ public class StructureDiagramGenerator {
         return x == null ? 0 : x;
     }
 
-    private void placePositionalVariation(IAtomContainer mol) {
+    private int getPositionalRingBondPref(IBond bond, IAtomContainer mol) {
+        int begRingBonds = numRingBonds(mol, bond.getBegin());
+        int endRingBonds = numRingBonds(mol, bond.getEnd());
+        if (begRingBonds == 2 && endRingBonds == 2)
+            return 0;
+        if ((begRingBonds > 2 && endRingBonds == 2) ||
+            (begRingBonds == 2 && endRingBonds > 2))
+            return 1;
+        return 2;
+    }
+
+    private void placePositionalVariation(final IAtomContainer mol) {
 
         final List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null)
@@ -2275,7 +2311,7 @@ public class StructureDiagramGenerator {
             idxs.put(atom, idxs.size());
 
         for (Map.Entry<Set<IAtom>,Collection<IAtom>> e : mapping.asMap().entrySet()) {
-            Set<IBond> bonds = new LinkedHashSet<>();
+            List<IBond> bonds = new ArrayList<>();
 
             IAtomContainer shared = mol.getBuilder().newInstance(IAtomContainer.class);
             for (IAtom atom : e.getKey())
@@ -2283,10 +2319,27 @@ public class StructureDiagramGenerator {
             Point2d center = GeometryUtil.get2DCenter(shared);
 
             for (IBond bond : mol.bonds()) {
-                if (e.getKey().contains(bond.getBegin()) && e.getKey().contains(bond.getEnd())) {
+                if (e.getKey().contains(bond.getBegin()) &&
+                    e.getKey().contains(bond.getEnd())) {
                     bonds.add(bond);
                 }
             }
+
+            Collections.sort(bonds, new Comparator<IBond>() {
+                @Override
+                public int compare(IBond a, IBond b) {
+                    int atype = getPositionalRingBondPref(a, mol);
+                    int btype = getPositionalRingBondPref(b, mol);
+                    if (atype != btype)
+                        return Integer.compare(atype, btype);
+                    int aord  = a.getOrder().numeric();
+                    int bord  = b.getOrder().numeric();
+                    if (aord > 0 && bord > 0) {
+                        return Integer.compare(aord, bord);
+                    }
+                    return 0;
+                }
+            });
 
             if (bonds.size() >= e.getValue().size()) {
 
@@ -2297,9 +2350,6 @@ public class StructureDiagramGenerator {
 
                     final IBond bond = bndIter.next();
                     final IAtom atom = begIter.next();
-
-                    if (numRingBonds(mol, bond.getBegin()) > 2 && numRingBonds(mol, bond.getEnd()) > 2)
-                        continue;
 
                     final Point2d newBegP = new Point2d(bond.getBegin().getPoint2d());
                     final Point2d newEndP = new Point2d(bond.getEnd().getPoint2d());
@@ -2326,7 +2376,7 @@ public class StructureDiagramGenerator {
                     newBegP.sub(bndXVec);
                     newEndP.sub(bndVec);
                     bndXVec.normalize();
-                    bndXVec.scale(3*bndStep);
+                    bndXVec.scale(4*bndStep);
                     newEndP.add(bndXVec);
 
                     int atomIdx = idxs.get(atom);

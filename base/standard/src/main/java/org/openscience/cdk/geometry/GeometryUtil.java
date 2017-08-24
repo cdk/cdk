@@ -968,6 +968,25 @@ public final class GeometryUtil {
     }
 
     /**
+     * Determine if all parts of a reaction have coodinates
+     *
+     * @param reaction a reaction
+     * @return the reaction has coordinates
+     */
+    public static boolean has2DCoordinates(IReaction reaction) {
+        for (IAtomContainer mol : reaction.getReactants().atomContainers())
+            if (!has2DCoordinates(mol))
+                return false;
+        for (IAtomContainer mol : reaction.getProducts().atomContainers())
+            if (!has2DCoordinates(mol))
+                return false;
+        for (IAtomContainer mol : reaction.getAgents().atomContainers())
+            if (!has2DCoordinates(mol))
+                return false;
+        return true;
+    }
+
+    /**
      * Determines the coverage of this {@link org.openscience.cdk.interfaces.IAtomContainer}'s 2D
      * coordinates. If all atoms are non-null and have 2D coordinates this method will return {@link
      * CoordinateCoverage#FULL}. If one or more atoms does have 2D coordinates and any others atoms

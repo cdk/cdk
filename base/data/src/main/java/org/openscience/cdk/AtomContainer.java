@@ -1109,6 +1109,14 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
+    public void removeAtom(int pos) {
+        removeAtom(getAtom(pos));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void removeAllElements() {
         removeAllElectronContainers();
         for (int f = 0; f < getAtomCount(); f++) {
@@ -1469,6 +1477,23 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
     @Override
     public boolean isEmpty() {
         return atomCount == 0;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTitle() {
+        return getProperty(CDKConstants.TITLE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setTitle(String title) {
+        setProperty(CDKConstants.TITLE, title);
     }
 
     /**

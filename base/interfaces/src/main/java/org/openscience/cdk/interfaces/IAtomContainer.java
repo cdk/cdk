@@ -94,7 +94,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      * @param idx  The index of the atom to be set.
      * @param atom The atom to be stored at position <code>idx</code>
      * @throws IndexOutOfBoundsException index is out of bounds
-     * @throws IllegalArgumentException the atom counld not be set
+     * @throws IllegalArgumentException the atom could not be set
      * @see #getAtom
      */
     void setAtom(int idx, IAtom atom);
@@ -292,11 +292,11 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
     IElectronContainer getElectronContainer(int number);
 
     /**
-     * Returns the bond that connectes the two given atoms.
+     * Returns the bond that connects the two given atoms.
      *
      * @param atom1 The first atom
      * @param atom2 The second atom
-     * @return The bond that connectes the two atoms
+     * @return The bond that connects the two atoms
      */
     IBond getBond(IAtom atom1, IAtom atom2);
 
@@ -557,7 +557,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      *
      * @param atom1 The first atom
      * @param atom2 The second atom
-     * @return The bond that connectes the two atoms
+     * @return The bond that connects the two atoms
      */
     IBond removeBond(IAtom atom1, IAtom atom2);
 
@@ -629,6 +629,23 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      * @param atom the atom to be removed
      */
     void removeAtom(IAtom atom);
+
+    /**
+     * Safely remove an atom from the container.
+     * <br>
+     * Removes a single atom from the container updating all internal
+     * state to be consistent. All bonds connected to the atom will be
+     * deleted as well as all stereo elements. If multiple atoms/bonds are
+     * being deleted they should be gathered into a single transaction
+     * and removed with {@link #remove(IAtomContainer)}.
+     * <br>
+     * If you are removing hydrogens one of the
+     * utility methods (e.g. AtomContainerManipulator.removeHydrogens(IAtomContainer))
+     * is preferable.
+     *
+     * @param pos the position of the atom to be removed
+     */
+    void removeAtom(int pos);
 
     /**
      * Safely remove an atom from the container.
@@ -734,6 +751,20 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      * @return whether the container is empty
      */
     boolean isEmpty();
+
+    /**
+     * Access the title of the record.
+     *
+     * @return the title
+     */
+    String getTitle();
+
+    /**
+     * Modify the title of the record.
+     *
+     * @param title the title
+     */
+    void setTitle(String title);
 
     /**
      * {@inheritDoc}
