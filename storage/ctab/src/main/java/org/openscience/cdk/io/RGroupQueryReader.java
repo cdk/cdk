@@ -178,7 +178,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
         IChemObjectBuilder defaultChemObjectBuilder = rGroupQuery.getBuilder();
         String line = "";
         int lineCount = 0;
-        String eol = System.getProperty("line.separator");
+        String eol = "\n";
         StringTokenizer strTk = null;
         /* Variable to capture the LOG line(s) */
         Map<Integer, RGroupLogic> logicDefinitions = new HashMap<Integer, RGroupLogic>();

@@ -591,7 +591,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         writer.write(molecule);
         writer.close();
 
-        String[] lines = sw.toString().split(System.getProperty("line.separator"));
+        String[] lines = sw.toString().split("\n");
 
         assertThat("incorrect file length", lines.length, is(9));
         assertThat("incorrect radical output", lines[7], is("M  RAD  1   2   1"));
@@ -611,7 +611,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         writer.write(molecule);
         writer.close();
 
-        String[] lines = sw.toString().split(System.getProperty("line.separator"));
+        String[] lines = sw.toString().split("\n");
 
         assertThat("incorrect file length", lines.length, is(9));
         assertThat("incorrect radical output", lines[7], is("M  RAD  1   2   2"));
@@ -634,7 +634,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         writer.write(molecule);
         writer.close();
 
-        String[] lines = sw.toString().split(System.getProperty("line.separator"));
+        String[] lines = sw.toString().split("\n");
 
         assertThat("incorrect file length", lines.length, is(9));
         assertThat("incorrect radical output", lines[7], is("M  RAD  1   2   1"));
@@ -654,7 +654,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         writer.write(molecule);
         writer.close();
 
-        String[] lines = sw.toString().split(System.getProperty("line.separator"));
+        String[] lines = sw.toString().split("\n");
 
         assertThat("incorrect file length", lines.length, is(24));
         assertThat("incorrect radical output on line 22", lines[21],

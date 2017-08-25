@@ -66,7 +66,7 @@ import org.openscience.cdk.isomorphism.matchers.RGroupList;
 public class RGroupQueryWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
-    private static String  LSEP = System.getProperty("line.separator");
+    private static final String  LSEP = "\n";
 
     /**
      * Constructs a new writer that can write an {@link IRGroupQuery}

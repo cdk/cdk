@@ -65,7 +65,7 @@ public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
         sourceWriter.write(molecule);
         sourceWriter.close();
         String output = writer.toString();
-        String newline = System.lineSeparator();
+        String newline = "\n";
         assertThat(output, is("{" + newline +
                                       "  IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();" + newline +
                                       "  IAtomContainer mol = builder.newInstance(IAtomContainer.class);" + newline +

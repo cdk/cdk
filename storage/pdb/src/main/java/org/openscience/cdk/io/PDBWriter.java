@@ -252,27 +252,27 @@ public class PDBWriter extends DefaultChemObjectWriter {
                 }
 
                 writer.write(buffer.toString(), 0, buffer.length());
-                writer.newLine();
+                writer.write('\n');
                 ++atomNumber;
             }
 
             if (writeTERRecord.isSet()) {
                 writer.write(terRecordName, 0, terRecordName.length());
-                writer.newLine();
+                writer.write('\n');
             }
 
             if (connectRecords != null && writeCONECTRecords.isSet()) {
                 for (String connectRecord : connectRecords) {
                     if (connectRecord != null) {
                         writer.write(connectRecord);
-                        writer.newLine();
+                        writer.write('\n');
                     }
                 }
             }
 
             if (writeENDRecord.isSet()) {
                 writer.write("END   ");
-                writer.newLine();
+                writer.write('\n');
             }
 
         } catch (IOException exception) {
@@ -282,7 +282,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
 
     private void writeHeader() throws IOException {
         writer.write("HEADER created with the CDK (http://cdk.sf.net/)");
-        writer.newLine();
+        writer.write('\n');
     }
 
     public void writeCrystal(ICrystal crystal) throws CDKException {
@@ -307,7 +307,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
             writer.write(fsb.toString());
             fsb.reset(ANGLE_FORMAT).format(ucParams[4]);
             writer.write(fsb.toString());
-            writer.newLine();
+            writer.write('\n');
 
             // before saving the atoms, we need to create cartesian coordinates
             Iterator<IAtom> atoms = crystal.atoms().iterator();
