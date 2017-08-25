@@ -207,31 +207,31 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             // we do not write such a sign at the end of the first reaction, thus we have to write on BEFORE the second reaction
             if (reactionNumber == 2) {
                 writer.write("$$$$");
-                writer.newLine();
+                writer.write('\n');
             }
 
             writer.write("$RXN");
-            writer.newLine();
+            writer.write('\n');
             // reaction name
             String line = (String) reaction.getProperty(CDKConstants.TITLE);
             if (line == null) line = "";
             if (line.length() > 80) line = line.substring(0, 80);
             writer.write(line);
-            writer.newLine();
+            writer.write('\n');
             // user/program/date&time/reaction registry no. line
-            writer.newLine();
+            writer.write('\n');
             // comment line
             line = (String) reaction.getProperty(CDKConstants.REMARK);
             if (line == null) line = "";
             if (line.length() > 80) line = line.substring(0, 80);
             writer.write(line);
-            writer.newLine();
+            writer.write('\n');
 
             line = "";
             line += formatMDLInt(reactantCount, 3);
             line += formatMDLInt(productCount, 3);
             writer.write(line);
-            writer.newLine();
+            writer.write('\n');
 
             int i = 0;
             for (IMapping mapping : reaction.mappings()) {
@@ -250,17 +250,17 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
                 while (iterator.hasNext()) {
                     Object element = iterator.next();
                     writer.write("> <" + (String) element + ">");
-                    writer.newLine();
+                    writer.write('\n');
                     writer.write(rdFields.get(element).toString());
-                    writer.newLine();
-                    writer.newLine();
+                    writer.write('\n');
+                    writer.write('\n');
                 }
             }
             // taking care of the $$$$ signs:
             // we write such a sign at the end of all except the first molecule
             if (reactionNumber != 1) {
                 writer.write("$$$$");
-                writer.newLine();
+                writer.write('\n');
             }
             reactionNumber++;
 
@@ -283,7 +283,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             for (int j = 0; j < som.getMultiplier(i); j++) {
                 StringWriter sw = new StringWriter();
                 writer.write("$MOL");
-                writer.newLine();
+                writer.write('\n');
                 MDLV2000Writer mdlwriter = null;
                 try {
                     mdlwriter = new MDLV2000Writer(sw);

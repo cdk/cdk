@@ -174,7 +174,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
     }
 
     private String[] getAsStringArray(IAtomContainer mol) throws CDKException, IOException {
-        return getAsString(mol).split(System.getProperty("line.separator"));
+        return getAsString(mol).split("\n");
     }
 
     @Test

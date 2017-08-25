@@ -261,7 +261,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                             data += line;
                             // preserve newlines, unless the line is exactly 80 chars; in that case it
                             // is assumed to continue on the next line. See MDL documentation.
-                            if (line.length() < 80) data += System.getProperty("line.separator");
+                            if (line.length() < 80) data += "\n";
                         }
                         if (fieldName != null) {
                             logger.info("fieldName, data: ", fieldName, ", ", data);
@@ -336,7 +336,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
-                    molFile.append(System.getProperty("line.separator"));
+                    molFile.append('\n');
                 } while (!molFileLine.equals("M  END"));
 
                 // read MDL molfile content
@@ -364,7 +364,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
-                    molFile.append(System.getProperty("line.separator"));
+                    molFile.append('\n');
                 } while (!molFileLine.equals("M  END"));
 
                 // read MDL molfile content

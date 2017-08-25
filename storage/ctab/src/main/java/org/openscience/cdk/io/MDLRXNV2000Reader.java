@@ -232,7 +232,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
-                    molFile.append(System.getProperty("line.separator"));
+                    molFile.append('\n');
                 } while (!molFileLine.equals("M  END"));
 
                 // read MDL molfile content
@@ -261,7 +261,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
-                    molFile.append(System.getProperty("line.separator"));
+                    molFile.append('\n');
                 } while (!molFileLine.equals("M  END"));
 
                 // read MDL molfile content
@@ -289,7 +289,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
-                    molFile.append(System.getProperty("line.separator"));
+                    molFile.append('\n');
                 } while (!molFileLine.equals("M  END"));
 
                 // read MDL molfile content

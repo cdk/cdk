@@ -142,10 +142,10 @@ public class Mol2Writer extends DefaultChemObjectWriter {
             logger.debug("Writing header...");
             if (mol.getProperty(CDKConstants.TITLE) != null) {
                 writer.write("#        Name: " + mol.getProperty(CDKConstants.TITLE));
-                writer.newLine();
+                writer.write('\n');
             }
             // FIXME: add other types of meta data
-            writer.newLine();
+            writer.write('\n');
 
             /*
              * @<TRIPOS>MOLECULE benzene 12 12 1 0 0 SMALL NO_CHARGES
@@ -153,19 +153,19 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 
             logger.debug("Writing molecule block...");
             writer.write("@<TRIPOS>MOLECULE");
-            writer.newLine();
+            writer.write('\n');
             if (mol.getID() == null) {
                 writer.write("CDKMolecule");
             } else {
                 writer.write(mol.getID());
             }
-            writer.newLine();
+            writer.write('\n');
             writer.write(mol.getAtomCount() + " " + mol.getBondCount()); // that's the minimum amount of info required the format
-            writer.newLine();
+            writer.write('\n');
             writer.write("SMALL"); // no biopolymer
-            writer.newLine();
+            writer.write('\n');
             writer.write("NO CHARGES"); // other options include Gasteiger charges
-            writer.newLine();
+            writer.write('\n');
 
             /*
              * @<TRIPOS>ATOM 1 C1 1.207 2.091 0.000 C.ar 1 BENZENE 0.000 2 C2
@@ -182,7 +182,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
             // write atom block
             logger.debug("Writing atom block...");
             writer.write("@<TRIPOS>ATOM");
-            writer.newLine();
+            writer.write('\n');
             for (int i = 0; i < mol.getAtomCount(); i++) {
                 IAtom atom = mol.getAtom(i);
                 writer.write((i + 1) + " " + atom.getSymbol() + (mol.indexOf(atom) + 1) + " ");
@@ -208,7 +208,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
                 } else {
                     writer.write(atom.getSymbol());
                 }
-                writer.newLine();
+                writer.write('\n');
             }
 
             /*
@@ -219,7 +219,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
             // write bond block
             logger.debug("Writing bond block...");
             writer.write("@<TRIPOS>BOND");
-            writer.newLine();
+            writer.write('\n');
 
             int counter = 0;
             for (IBond bond : mol.bonds()) {
@@ -249,7 +249,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 
                 writer.write((counter + 1) + " " + (mol.indexOf(bond.getBegin()) + 1) + " "
                              + (mol.indexOf(bond.getEnd()) + 1) + " " + sybylBondOrder);
-                writer.newLine();
+                writer.write('\n');
                 counter++;
             }
 

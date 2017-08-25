@@ -158,7 +158,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                 String molname = "mol " + (molnum + 1) + " " + mol.getProperty(CDKConstants.TITLE);
 
                 writer.write(molname, 0, molname.length());
-                writer.newLine();
+                writer.write('\n');
 
                 // Loop through the atoms and write them out:
                 Iterator<IAtom> atoms = mol.atoms().iterator();
@@ -204,12 +204,12 @@ public class HINWriter extends DefaultChemObjectWriter {
                     }
                     line = line + " " + Integer.toString(ncon) + " " + buf;
                     writer.write(line, 0, line.length());
-                    writer.newLine();
+                    writer.write('\n');
                     i++;
                 }
                 String buf = "endmol " + (molnum + 1);
                 writer.write(buf, 0, buf.length());
-                writer.newLine();
+                writer.write('\n');
             } catch (IOException e) {
                 throw e;
             }

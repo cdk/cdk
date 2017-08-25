@@ -104,7 +104,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     // buffer to store pre-read Mol records in
     private StringBuilder                                   buffer               = new StringBuilder(10000);
 
-    private static final String                             LINE_SEPARATOR       = System.getProperty("line.separator");
+    private static final String                             LINE_SEPARATOR       = "\n";
 
     // patterns to match
     private static Pattern MDL_VERSION          = Pattern.compile("[vV](2000|3000)");

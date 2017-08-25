@@ -285,11 +285,11 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
                                 if (isPrimitiveDataValue(val)) {
                                     writer.write("> <" + cleanHeaderKey + ">");
-                                    writer.newLine();
+                                    writer.write('\n');
                                     if (val != null)
                                         writer.write(val.toString());
-                                    writer.newLine();
-                                    writer.newLine();
+                                    writer.write('\n');
+                                    writer.write('\n');
                                 }
                             }
                         }

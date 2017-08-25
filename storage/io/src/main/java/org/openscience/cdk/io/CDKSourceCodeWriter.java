@@ -162,7 +162,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
             IAtom atom = (IAtom) atoms.next();
             writeAtom(atom);
             writer.write("  mol.addAtom(" + atom.getID() + ");");
-            writer.newLine();
+            writer.write('\n');
         }
     }
 
@@ -172,57 +172,57 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
             IBond bond = (IBond) bonds.next();
             writeBond(bond);
             writer.write("  mol.addBond(" + bond.getID() + ");");
-            writer.newLine();
+            writer.write('\n');
         }
     }
 
     private void writeAtomContainer(IAtomContainer molecule) throws Exception {
         writer.write("{");
-        writer.newLine();
+        writer.write('\n');
         writer.write("  IChemObjectBuilder builder = ");
         writer.write(builder.getSetting());
         writer.write(".getInstance();");
-        writer.newLine();
+        writer.write('\n');
         writer.write("  IAtomContainer mol = builder.newInstance(IAtomContainer.class);");
-        writer.newLine();
+        writer.write('\n');
         IDCreator.createIDs(molecule);
         writeAtoms(molecule);
         writeBonds(molecule);
         writer.write("}");
-        writer.newLine();
+        writer.write('\n');
     }
 
     private void writeAtom(IAtom atom) throws Exception {
         if (atom instanceof IPseudoAtom) {
             writer.write("  IPseudoAtom " + atom.getID() + " = builder.newInstance(IPseudoAtom.class);");
-            writer.newLine();
+            writer.write('\n');
             writer.write("  atom.setLabel(\"" + ((IPseudoAtom) atom).getLabel() + "\");");
-            writer.newLine();
+            writer.write('\n');
         } else {
             writer.write("  IAtom " + atom.getID() + " = builder.newInstance(IAtom.class,\"" + atom.getSymbol()
                     + "\");");
-            writer.newLine();
+            writer.write('\n');
         }
         if (atom.getFormalCharge() != null) {
             writer.write("  " + atom.getID() + ".setFormalCharge(" + atom.getFormalCharge() + ");");
-            writer.newLine();
+            writer.write('\n');
         }
         if (write2DCoordinates.isSet() && atom.getPoint2d() != null) {
             Point2d p2d = atom.getPoint2d();
             writer.write("  " + atom.getID() + ".setPoint2d(new Point2d(" + p2d.x + ", " + p2d.y + "));");
-            writer.newLine();
+            writer.write('\n');
         }
         if (write3DCoordinates.isSet() && atom.getPoint3d() != null) {
             Point3d p3d = atom.getPoint3d();
             writer.write("  " + atom.getID() + ".setPoint3d(new Point3d(" + p3d.x + ", " + p3d.y + ", " + p3d.z + "));");
-            writer.newLine();
+            writer.write('\n');
         }
     }
 
     private void writeBond(IBond bond) throws Exception {
         writer.write("  IBond " + bond.getID() + " = builder.newInstance(IBond.class," + bond.getBegin().getID() + ", "
                      + bond.getEnd().getID() + ", IBond.Order." + bond.getOrder() + ");");
-        writer.newLine();
+        writer.write('\n');
     }
 
     public int getSupportedDataFeatures() {
