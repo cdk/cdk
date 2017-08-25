@@ -146,13 +146,13 @@ public class XYZWriter extends DefaultChemObjectWriter {
 
             String s1 = "" + mol.getAtomCount();
             writer.write(s1, 0, s1.length());
-            writer.newLine();
+            writer.write('\n');
 
             String s2 = null; // FIXME: add some interesting comment
             if (s2 != null) {
                 writer.write(s2, 0, s2.length());
             }
-            writer.newLine();
+            writer.write('\n');
 
             // Loop through the atoms and write them out:
             Iterator<IAtom> atoms = mol.atoms().iterator();
@@ -174,7 +174,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
                 }
 
                 writer.write(st, 0, st.length());
-                writer.newLine();
+                writer.write('\n');
 
             }
         } catch (IOException e) {

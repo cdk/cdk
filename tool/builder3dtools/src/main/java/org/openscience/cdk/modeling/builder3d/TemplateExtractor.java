@@ -349,7 +349,7 @@ public class TemplateExtractor {
             try {
 
                 fout.write(((String) data.get(i)));
-                fout.newLine();
+                fout.write('\n');
             } catch (Exception exc4) {
             }
         }
@@ -461,7 +461,7 @@ public class TemplateExtractor {
         for (int i = 0; i < data.size(); i++) {
             try {
                 fout.write(data.get(i).toString());
-                fout.newLine();
+                fout.write('\n');
             } catch (Exception exc4) {
             }
         }

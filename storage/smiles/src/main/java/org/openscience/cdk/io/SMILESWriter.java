@@ -179,7 +179,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
             smiles = sg.create(molecule);
             logger.debug("Generated SMILES: " + smiles);
             writer.write(smiles);
-            writer.newLine();
+            writer.write('\n');
             writer.flush();
             logger.debug("file flushed...");
         } catch (CDKException | IOException exc) {

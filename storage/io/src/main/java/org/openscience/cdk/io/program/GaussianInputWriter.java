@@ -143,11 +143,11 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         // write extra statements
         if (proccount.getSettingValue() > 1) {
             writer.write("%nprocl=" + proccount.getSettingValue());
-            writer.newLine();
+            writer.write('\n');
         }
         if (!memory.getSetting().equals("unset")) {
             writer.write("%Mem=" + memory.getSetting());
-            writer.newLine();
+            writer.write('\n');
         }
         if (usecheckpoint.isSet()) {
             if (mol.getID() != null && mol.getID().length() > 0) {
@@ -156,7 +156,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
                 // force different file names
                 writer.write("%chk=" + System.currentTimeMillis() + ".chk");
             }
-            writer.newLine();
+            writer.write('\n');
         }
 
         // write the command line
@@ -174,17 +174,17 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             // assume that user knows what he's doing
             writer.write(commandString);
         }
-        writer.newLine();
+        writer.write('\n');
 
         // next line is empty
-        writer.newLine();
+        writer.write('\n');
 
         // next line is comment
         writer.write(comment.getSetting());
-        writer.newLine();
+        writer.write('\n');
 
         // next line is empty
-        writer.newLine();
+        writer.write('\n');
 
         /*
          * next line contains two digits the first is the total charge the
@@ -196,7 +196,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         } else {
             writer.write("1");
         }
-        writer.newLine();
+        writer.write('\n');
 
         // then come all the atoms.
         // Loop through the atoms and write them out:
@@ -216,11 +216,11 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             }
 
             writer.write(st, 0, st.length());
-            writer.newLine();
+            writer.write('\n');
         }
 
         // G98 expects an empty line at the end
-        writer.newLine();
+        writer.write('\n');
     }
 
     private void initIOSettings() {

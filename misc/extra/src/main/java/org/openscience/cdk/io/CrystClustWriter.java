@@ -216,7 +216,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     private void writeln(String s) {
         try {
             writer.write(s);
-            writer.newLine();
+            writer.write('\n');
         } catch (IOException e) {
             System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
         }

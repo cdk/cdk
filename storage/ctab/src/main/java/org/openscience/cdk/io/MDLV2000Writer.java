@@ -339,7 +339,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         if (title == null) title = "";
         if (title.length() > 80) title = title.substring(0, 80);
         writer.write(title);
-        writer.newLine();
+        writer.write('\n');
 
         /*
          * From CTX spec This line has the format:
@@ -352,13 +352,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
          */
         writer.write("  CDK     ");
         writer.write(new SimpleDateFormat("MMddyyHHmm").format(System.currentTimeMillis()));
-        writer.newLine();
+        writer.write('\n');
 
         String comment = (String) container.getProperty(CDKConstants.REMARK);
         if (comment == null) comment = "";
         if (comment.length() > 80) comment = comment.substring(0, 80);
         writer.write(comment);
-        writer.newLine();
+        writer.write('\n');
 
         // index stereo elements for setting atom parity values
         Map<IAtom,ITetrahedralChirality> atomstereo = new HashMap<>();
@@ -377,7 +377,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         line += atomstereo.isEmpty() ? "  0" : "  1";
         line += "  0  0  0  0  0999 V2000";
         writer.write(line);
-        writer.newLine();
+        writer.write('\n');
 
         // write Atom block
         for (int f = 0; f < container.getAtomCount(); f++) {
@@ -575,7 +575,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             }
             line += "  0  0";
             writer.write(line);
-            writer.newLine();
+            writer.write('\n');
         }
 
         // write Bond block
@@ -677,7 +677,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 }
                 line += "  0  0  0 ";
                 writer.write(line);
-                writer.newLine();
+                writer.write('\n');
             }
         }
 
@@ -691,7 +691,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.write(formatMDLInt(i + 1, 3));
                 writer.write(" ");
                 writer.write((String) atom.getProperty(CDKConstants.COMMENT));
-                writer.newLine();
+                writer.write('\n');
             }
         }
 
@@ -704,7 +704,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.write(formatMDLInt(i + 1, 3));
                 writer.write(" ");
                 writer.write(formatMDLInt(charge, 3));
-                writer.newLine();
+                writer.write('\n');
             }
         }
 
@@ -737,7 +737,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     writer.write("M  RAD" + formatMDLInt(NN8, WIDTH));
                     writeRadicalPattern(iterator, i);
                 }
-                writer.newLine();
+                writer.write('\n');
             }
         }
 
@@ -753,7 +753,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(formatMDLInt(i + 1, 3));
                         writer.write(" ");
                         writer.write(formatMDLInt(atomicMass, 3));
-                        writer.newLine();
+                        writer.write('\n');
                     }
                 }
             }
@@ -773,7 +773,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 if (cnt == 8) {
                     rgpLine.insert(0, "M  RGP" + formatMDLInt(cnt, 3));
                     writer.write(rgpLine.toString());
-                    writer.newLine();
+                    writer.write('\n');
                     rgpLine = new StringBuilder();
                     cnt = 0;
                 }
@@ -781,7 +781,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             if (cnt != 0) {
                 rgpLine.insert(0, "M  RGP" + formatMDLInt(cnt, 3));
                 writer.write(rgpLine.toString());
-                writer.newLine();
+                writer.write('\n');
             }
 
         }
@@ -792,7 +792,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             for (Map.Entry<Integer, String> e : aliases.entrySet()) {
 
                 writer.write("A" + formatMDLInt(e.getKey(), 5));
-                writer.newLine();
+                writer.write('\n');
 
                 String label = e.getValue();
 
@@ -800,7 +800,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 if (label.length() > 70) label = label.substring(0, 70);
 
                 writer.write(label);
-                writer.newLine();
+                writer.write('\n');
 
             }
         }
@@ -809,7 +809,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
         // close molecule
         writer.write("M  END");
-        writer.newLine();
+        writer.write('\n');
         writer.flush();
     }
 
@@ -838,7 +838,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.write(' ');
                 writer.write(sgroup.getType().getKey());
             }
-            writer.newLine();
+            writer.write('\n');
         }
 
         // Sgroup output is non-compact for now - but valid
@@ -854,7 +854,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     writer.write(' ');
                     writer.write(formatMDLInt(1+atomidxs.get(atom), 3));
                 }
-                writer.newLine();
+                writer.write('\n');
             }
 
             // Sgroup Bond List
@@ -866,7 +866,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     writer.write(' ');
                     writer.write(formatMDLInt(1+container.indexOf(bond), 3));
                 }
-                writer.newLine();
+                writer.write('\n');
             }
 
             // Sgroup Parent List
@@ -879,7 +879,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     writer.write(' ');
                     writer.write(formatMDLInt(1 + sgroups.indexOf(parent), 3));
                 }
-                writer.newLine();
+                writer.write('\n');
             }
 
             Set<SgroupKey> attributeKeys = sgroup.getAttributeKeys();
@@ -891,7 +891,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(formatMDLInt(id, 3));
                         writer.write(' ');
                         writer.write((String) sgroup.getValue(key));
-                        writer.newLine();
+                        writer.write('\n');
                         break;
                     case CtabExpansion:
                         final boolean expanded = sgroup.getValue(key);
@@ -900,7 +900,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             writer.write(formatMDLInt(1, 3));
                             writer.write(' ');
                             writer.write(formatMDLInt(id, 3));
-                            writer.newLine();
+                            writer.write('\n');
                         }
                         break;
                     case CtabBracket:
@@ -913,7 +913,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             writer.write(formatMDLFloat((float) bracket.getFirstPoint().y));
                             writer.write(formatMDLFloat((float) bracket.getSecondPoint().x));
                             writer.write(formatMDLFloat((float) bracket.getSecondPoint().y));
-                            writer.newLine();
+                            writer.write('\n');
                         }
                         break;
                     case CtabBracketStyle:
@@ -923,7 +923,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(formatMDLInt(id, 3));
                         writer.write(' ');
                         writer.write(formatMDLInt((int)sgroup.getValue(key), 3));
-                        writer.newLine();
+                        writer.write('\n');
                         break;
                     case CtabConnectivity:
                         writer.write("M  SCN");
@@ -932,7 +932,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(formatMDLInt(id, 3));
                         writer.write(' ');
                         writer.write(((String) sgroup.getValue(key)).toUpperCase(Locale.ROOT));
-                        writer.newLine();
+                        writer.write('\n');
                         break;
                     case CtabSubType:
                         writer.write("M  SST");
@@ -941,7 +941,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(formatMDLInt(id, 3));
                         writer.write(' ');
                         writer.write((String) sgroup.getValue(key));
-                        writer.newLine();
+                        writer.write('\n');
                         break;
                     case CtabParentAtomList:
                         Set<IAtom> parentAtomList = sgroup.getValue(key);
@@ -953,7 +953,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                                 writer.write(' ');
                                 writer.write(formatMDLInt(1+atomidxs.get(atom), 3));
                             }
-                            writer.newLine();
+                            writer.write('\n');
                         }
                         break;
                     case CtabComponentNumber:
@@ -964,7 +964,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(formatMDLInt(id, 3));
                         writer.write(' ');
                         writer.write(formatMDLInt(compNumber, 3));
-                        writer.newLine();
+                        writer.write('\n');
                         break;
                 }
             }

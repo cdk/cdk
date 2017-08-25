@@ -385,7 +385,7 @@ public class PDBReader extends DefaultChemObjectReader {
                         }
                         if (lineLength > 12) {
                             comment = comment.toString() + cRead.substring(11).trim()
-                                    + System.getProperty("line.separator");
+                                    + "\n";
                             oFile.setProperty(CDKConstants.COMMENT, comment);
                         } else {
                             logger.warn("REMARK line found without any comment!");

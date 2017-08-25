@@ -106,11 +106,11 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
                 writer.write(mopacCommands.getSetting());
                 int formalCharge = AtomContainerManipulator.getTotalFormalCharge(container);
                 if (formalCharge != 0) writer.write(" CHARGE=" + formalCharge);
-                writer.newLine();
+                writer.write('\n');
                 if (container.getProperty("Names") != null) writer.write(container.getProperty("Names").toString());
-                writer.newLine();
+                writer.write('\n');
                 writer.write(getTitle());
-                writer.newLine();
+                writer.write('\n');
 
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     IAtom atom = container.getAtom(i);
@@ -124,7 +124,7 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
                         writeAtom(atom, 0, 0, 0, 1);
                 }
                 writer.write("0");
-                writer.newLine();
+                writer.write('\n');
 
             } catch (IOException ioException) {
                 logger.error(ioException);
@@ -150,7 +150,7 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
         writer.write(BLANK);
         writer.write(Integer.toString(optimize));
         writer.write(BLANK);
-        writer.newLine();
+        writer.write('\n');
     }
 
     @Override
