@@ -1197,8 +1197,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         // check of ill specified atomic mass
         for (IAtom atom : container.atoms()) {
-            if (atom.getMassNumber() != null && atom.getMassNumber() < 0)
-                throw new CDKException("Unstable use of mass delta on " + atom.getSymbol() + " please use M  ISO");
+            if (atom.getMassNumber() != null && atom.getMassNumber() < 0) {
+              handleError("Unstable use of mass delta on " + atom.getSymbol() + " please use M  ISO");
+              atom.setMassNumber(null);
+            }
         }
 
 
