@@ -906,8 +906,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) {
                         index = readMolfileInt(line, st) - 1;
                         int mass = readMolfileInt(line, st + 4);
-                        container.getAtom(offset + index).setMassNumber(mass);
-                    }
+                        if (mass < 0)
+                            handleError("Absolute mass number should be >= 0, " + line);
+                        else
+                            container.getAtom(offset + index).setMassNumber(mass);
+                      }
                     break;
 
                 // M  RADnn8 aaa vvv ...
@@ -1194,8 +1197,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         // check of ill specified atomic mass
         for (IAtom atom : container.atoms()) {
-            if (atom.getMassNumber() != null && atom.getMassNumber() < 0)
-                throw new CDKException("Unstable use of mass delta on " + atom.getSymbol() + " please use M  ISO");
+            if (atom.getMassNumber() != null && atom.getMassNumber() < 0) {
+              handleError("Unstable use of mass delta on " + atom.getSymbol() + " please use M  ISO");
+              atom.setMassNumber(null);
+            }
         }
 
 

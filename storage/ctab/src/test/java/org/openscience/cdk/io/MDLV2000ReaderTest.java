@@ -1701,7 +1701,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test(expected = CDKException.class)
     public void seaborgiumMassDelta() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("seaborgium.mol");
-             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+             MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
             IAtomContainer mol = mdlr.read(new AtomContainer());
         }
     }
@@ -1709,7 +1709,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void seaborgiumAbsMass() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("seaborgium_abs.mol");
-             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+             MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
             IAtomContainer mol = mdlr.read(new AtomContainer());
             assertThat(mol.getAtom(0).getMassNumber(), is(261));
         }
