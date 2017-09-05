@@ -195,6 +195,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
 
                 startSphere = new ArrayList<IAtom>();
                 path = new ArrayList<IAtom>();
+                path.add(atomi);
                 startSphere.add(atomi);
                 try {
                     breadthFirstSearch(container, startSphere, path);

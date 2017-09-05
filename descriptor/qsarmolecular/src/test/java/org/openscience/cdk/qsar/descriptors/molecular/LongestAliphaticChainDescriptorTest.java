@@ -95,7 +95,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC(=O)N1CCN(CC1)c2ccc(NC(=O)COc3ccc(cc3)C(C)(C)C)cc2");
         //logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(3, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     @Test public void ethanol() throws Exception {
