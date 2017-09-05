@@ -5,9 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -92,5 +96,17 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
         IAtomContainer mol = sp.parseSmiles("CC(=O)N1CCN(CC1)c2ccc(NC(=O)COc3ccc(cc3)C(C)(C)C)cc2");
         //logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
         Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test public void ethanol() throws Exception {
+        assertSmiles("CCO", 2);
+        assertSmiles("OCC", 2);
+    }
+
+    private void assertSmiles(String smi, int expected) throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        descriptor.setParameters(new Object[]{true});
+        Assert.assertThat(descriptor.calculate(mol).getValue().toString(), is(Integer.toString(expected)));
     }
 }
