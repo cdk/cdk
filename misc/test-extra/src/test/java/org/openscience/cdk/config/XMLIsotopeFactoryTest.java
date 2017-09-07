@@ -24,18 +24,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Source;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -213,6 +206,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
+    @Ignore
     public void testXMLValidityHybrid() throws Exception {
         assertValidCML("org/openscience/cdk/config/data/isotopes.xml", "Isotopes");
     }

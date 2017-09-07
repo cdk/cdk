@@ -34,6 +34,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+import org.junit.Ignore;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemObject;
@@ -302,26 +303,31 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     }
 
     @Test
+    @Ignore
     public void testXMLValidityMM2() throws Exception {
         assertValidCML("org/openscience/cdk/config/data/mm2_atomtypes.xml", "MM2");
     }
 
     @Test
+    @Ignore
     public void testXMLValidityMMFF94() throws Exception {
         assertValidCML("org/openscience/cdk/config/data/mmff94_atomtypes.xml", "MMFF94");
     }
 
     @Test
+    @Ignore
     public void testXMLValidityMol2() throws Exception {
         assertValidCML("org/openscience/cdk/config/data/mol2_atomtypes.xml", "Mol2");
     }
 
     @Test
+    @Ignore
     public void testXMLValidityPDB() throws Exception {
         assertValidCML("org/openscience/cdk/config/data/pdb_atomtypes.xml", "PDB");
     }
 
     @Test
+    @Ignore
     public void testXMLValidityStructGen() throws Exception {
         assertValidCML("org/openscience/cdk/config/data/structgen_atomtypes.xml", "StructGen");
     }
