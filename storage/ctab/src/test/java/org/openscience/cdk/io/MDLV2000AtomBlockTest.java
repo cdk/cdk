@@ -24,19 +24,19 @@
 
 package org.openscience.cdk.io;
 
-import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * @author John May
@@ -295,4 +295,35 @@ public class MDLV2000AtomBlockTest {
         reader.readMDLCoordinate("  -2.00120    7.8089", 0);
     }
 
+    @Test(expected = CDKException.class)
+    public void readMDLCoordinates_wrong_decimal_position_strict() throws Exception {
+
+        MDLV2000Reader reader = new MDLV2000Reader();
+        reader.setReaderMode(IChemObjectReader.Mode.STRICT);
+        assertThat(reader.readMDLCoordinate("   -2.0012   7.8089 ", 10), is(closeTo(7.8089, 0.1)));
+    }
+
+    @Test
+    public void readMDLCoordinates_wrong_decimal_position_relaxed() throws Exception {
+
+        MDLV2000Reader reader = new MDLV2000Reader();
+        reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
+        assertThat(reader.readMDLCoordinate("   -2.0012   7.8089 ", 10), is(closeTo(7.8089, 0.1)));
+    }
+
+    @Test
+    public void readMDLCoordinates_no_value_relaxed() throws Exception {
+
+        MDLV2000Reader reader = new MDLV2000Reader();
+        reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
+        assertThat(reader.readMDLCoordinate("   -2.0012          ", 10), is(closeTo(0.0, 0.1)));
+    }
+
+    @Test
+    public void readMDLCoordinates_no_decimal_relaxed() throws Exception {
+
+        MDLV2000Reader reader = new MDLV2000Reader();
+        reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
+        assertThat(reader.readMDLCoordinate("   -2.0012   708089 ", 10), is(closeTo(708089, 0.1)));
+    }
 }

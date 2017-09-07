@@ -39,9 +39,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1713,5 +1715,57 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             IAtomContainer mol = mdlr.read(new AtomContainer());
             assertThat(mol.getAtom(0).getMassNumber(), is(261));
         }
+    }
+
+
+
+    @Test
+    public void testBadAtomCoordinateFormat() throws Exception {
+
+        final String mol = "\n" +
+                "\n" +
+                "\n" +
+                " 17 18  0  0  0  0              1 V2000\n" +
+                "  -2.31474   0.50167  -3.30968 C   0  0  0  0  0  0\n" +
+                "  -2.43523  -0.19508  -2.16895 C   0  0  0  0  0  0\n" +
+                "  -1.14825   1.44681  -3.13364 C   0  0  0  0  0  0\n" +
+                "  -1.34937   0.28780  -1.23468 C   0  0  0  0  0  0\n" +
+                "  -1.31596   1.76332  -1.64443 C   0  0  0  0  0  0\n" +
+                "   0.00411  -0.20225  -1.79002 C   0  0  0  0  0  0\n" +
+                "   0.14340   0.60304  -3.11198 C   0  0  0  0  0  0\n" +
+                "  -1.14836   2.30981  -3.79997 H   0  0  0  0  0  0\n" +
+                "   0.23461  -0.05636  -3.98172 H   0  0  0  0  0  0\n" +
+                "   1.03045   1.24486  -3.06787 H   0  0  0  0  0  0\n" +
+                "   0.82300   0.05318  -1.10813 H   0  0  0  0  0  0\n" +
+                "   0.02443  -1.28271  -1.96799 H   0  0  0  0  0  0\n" +
+                "  -1.53255   0.09851  -0.17666 H   0  0  0  0  0  0\n" +
+                "  -0.46658   2.31096  -1.22026 H   0  0  0  0  0  0\n" +
+                "  -2.24286   2.30318  -1.41306 H   0  0  0  0  0  0\n" +
+                "  -3.13662  -0.99036  -1.96785 H   0  0  0  0  0  0\n" +
+                "  -2.90004   0.37818  -4.20802 H   0  0  0  0  0  0\n" +
+                "  1  2  2  0  0  0\n" +
+                "  1  3  1  0  0  0\n" +
+                "  2  4  1  0  0  0\n" +
+                "  4  5  1  0  0  0\n" +
+                "  3  5  1  0  0  0\n" +
+                "  4  6  1  0  0  0\n" +
+                "  6  7  1  0  0  0\n" +
+                "  7  3  1  0  0  0\n" +
+                "  3  8  1  0  0  0\n" +
+                "  7  9  1  0  0  0\n" +
+                "  7 10  1  0  0  0\n" +
+                "  6 11  1  0  0  0\n" +
+                "  6 12  1  0  0  0\n" +
+                "  4 13  1  0  0  0\n" +
+                "  5 14  1  0  0  0\n" +
+                "  5 15  1  0  0  0\n" +
+                "  2 16  1  0  0  0\n" +
+                "  1 17  1  0  0  0\n" +
+                "M  END\n" +
+                "\n";
+        final MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new ByteArrayInputStream(mol.getBytes(StandardCharsets.UTF_8)));
+        mdlv2000Reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
+        final org.openscience.cdk.silent.AtomContainer atomContainer = mdlv2000Reader.read(new org.openscience.cdk.silent.AtomContainer());
+        Assert.assertEquals(17, atomContainer.getAtomCount());
     }
 }
