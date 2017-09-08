@@ -738,7 +738,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
-            assertThat(output, containsString("M  STY  3   1 SUP   2 SUP   3 SUP\n"));
+            assertThat(output, containsString(String.format("M  STY  3   1 SUP   2 SUP   3 SUP%n")));
             assertThat(output, containsString("M  SDS EXP  1   1"));
         }
     }
@@ -775,7 +775,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
-            assertThat(output, containsString("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"));
+            assertThat(output, containsString(String.format("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0%n")));
         }
     }
 
@@ -786,7 +786,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
-            assertThat(output, containsString("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"));
+            assertThat(output, containsString(String.format("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0%n")));
         }
     }
 
@@ -800,7 +800,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             tc.setStereo(tc.getStereo().invert());
             mdlw.write(mol);
             String output = sw.toString();
-            assertThat(output, containsString("    0.0000    0.0000    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n"));
+            assertThat(output, containsString(String.format("    0.0000    0.0000    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0%n")));
         }
     }
 
@@ -831,6 +831,6 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             mdlw.setWriteAromaticBondTypes(true);
             mdlw.write(mol);
         }
-        assertThat(sw.toString(), containsString("  1  2  4  0  0  0  0 \n"));
+        assertThat(sw.toString(), containsString(String.format("  1  2  4  0  0  0  0 %n")));
     }
 }
