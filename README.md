@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/cdk/cdk.svg?branch=master)](https://travis-ci.org/cdk/cdk)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.openscience.cdk/cdk)
 
 # The Chemistry Development Kit (CDK)
  
