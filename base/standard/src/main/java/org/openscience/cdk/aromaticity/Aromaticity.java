@@ -73,16 +73,18 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * {@link ElectronDonation#cdk()}, {@link ElectronDonation#cdkAllowingExocyclic()},
  * {@link ElectronDonation#daylight()} or {@link ElectronDonation#piBonds()}.
  *
+ * <br>
+ * <br>
+ * <b>Recommended Usage:</b><br>
+ * Which model/cycles to use depends on the situation but a good general
+ * purpose configuration is shown below:
  * <blockquote><pre>
- * // mimics the old CDKHuckelAromaticityDetector which uses the CDK atom types
- * ElectronDonation model       = ElectronDonation.cdk();
- * CycleFinder      cycles      = Cycles.cdkAromaticSet();
+ * ElectronDonation model       = ElectronDonation.daylight();
+ * CycleFinder      cycles      = Cycles.or(Cycles.all(), Cycles.all(6));
  * Aromaticity      aromaticity = new Aromaticity(model, cycles);
  *
- * // apply our configured model to each molecule, the CDK model
- * // requires that atom types are perceived
+ * // apply our configured model to each molecule
  * for (IAtomContainer molecule : molecules) {
- *     AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
  *     aromaticity.apply(molecule);
  * }
  * </pre></blockquote>
