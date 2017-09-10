@@ -19,6 +19,8 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.BondRef;
 
 /**
  * Represents a distance relationship between two pharmacophore groups.
@@ -42,14 +44,22 @@ public class PharmacophoreBond extends Bond {
         super(patom1, patom2);
     }
 
+    public static PharmacophoreBond get(IBond bond) {
+        if (bond instanceof PharmacophoreBond)
+            return (PharmacophoreBond) bond;
+        if (bond instanceof BondRef)
+            return get(((BondRef) bond).deref());
+        return null;
+    }
+
     /**
      * Get the distance between the two pharmacophore groups that make up the constraint.
      *
      * @return The distance between the two groups
      */
     public double getBondLength() {
-        PharmacophoreAtom atom1 = (PharmacophoreAtom) getAtom(0);
-        PharmacophoreAtom atom2 = (PharmacophoreAtom) getAtom(1);
+        PharmacophoreAtom atom1 = PharmacophoreAtom.get(getAtom(0));
+        PharmacophoreAtom atom2 = PharmacophoreAtom.get(getAtom(1));
         return atom1.getPoint3d().distance(atom2.getPoint3d());
     }
 

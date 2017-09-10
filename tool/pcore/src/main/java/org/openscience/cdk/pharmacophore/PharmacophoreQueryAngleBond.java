@@ -22,6 +22,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.BondRef;
 
 /**
  * Represents a pharmacophore query angle constraint.
@@ -93,6 +94,7 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
      */
     @Override
     public boolean matches(IBond bond) {
+        bond = BondRef.deref(bond);
         if (bond instanceof PharmacophoreAngleBond) {
             PharmacophoreAngleBond pbond = (PharmacophoreAngleBond) bond;
             double bondLength = round(pbond.getBondLength(), 2);
