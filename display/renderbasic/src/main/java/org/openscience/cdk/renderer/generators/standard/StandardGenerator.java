@@ -557,7 +557,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
                 hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
-                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale);
+                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, new OmitMajorIsotopes());
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {

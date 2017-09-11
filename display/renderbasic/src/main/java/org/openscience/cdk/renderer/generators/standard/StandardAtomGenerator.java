@@ -130,6 +130,7 @@ final class StandardAtomGenerator {
             // unset the mass if it's the major isotope (could be an option)
             Integer mass = atom.getMassNumber();
             if (mass != null &&
+                model != null &&
                 model.get(StandardGenerator.OmitMajorIsotopes.class) &&
                 isMajorIsotope(number, mass)) {
                 mass = null;
