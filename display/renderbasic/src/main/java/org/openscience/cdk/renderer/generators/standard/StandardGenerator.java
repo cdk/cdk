@@ -371,7 +371,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 if (remapped) {
                     symbols[i] = atomGenerator.generateAbbreviatedSymbol(symbolRemap.get(atom), hPosition);
                 } else {
-                    symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
+                    symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition, parameters);
                 }
 
                 if (symbols[i] != null) {
@@ -1070,6 +1070,18 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         @Override
         public Double getDefault() {
             return 0.6;
+        }
+    }
+
+    /**
+     * Whether Major Isotopes e.g. 12C, 16O should be omitted.
+     */
+    public static final class OmitMajorIsotopes extends AbstractGeneratorParameter<Boolean> {
+
+        /**{@inheritDoc} */
+        @Override
+        public Boolean getDefault() {
+            return false;
         }
     }
 }
