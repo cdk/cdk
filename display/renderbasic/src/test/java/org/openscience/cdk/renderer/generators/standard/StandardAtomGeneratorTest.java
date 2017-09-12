@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.renderer.RendererModel;
 
 import java.awt.Font;
 import java.awt.Shape;
@@ -399,8 +400,8 @@ public class StandardAtomGeneratorTest {
         IAtomContainer container = mock(IAtomContainer.class);
         IPseudoAtom atom = mock(IPseudoAtom.class);
         when(atom.getLabel()).thenReturn("R1");
-        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left);
-        List<Shape> shapes = atomSymbol.getOutlines();
+        AtomSymbol    atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
+        List<Shape>   shapes     = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(2));
     }
 
@@ -413,7 +414,7 @@ public class StandardAtomGeneratorTest {
         when(atom.getMassNumber()).thenReturn(12);
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
         when(atom.getFormalCharge()).thenReturn(0);
-        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left);
+        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
     }
@@ -426,7 +427,7 @@ public class StandardAtomGeneratorTest {
         when(atom.getMassNumber()).thenReturn(13);
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
         when(atom.getFormalCharge()).thenReturn(0);
-        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left);
+        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(2));
     }
@@ -439,7 +440,7 @@ public class StandardAtomGeneratorTest {
         when(atom.getMassNumber()).thenReturn(null);
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
         when(atom.getFormalCharge()).thenReturn(0);
-        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left);
+        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
     }
@@ -452,7 +453,7 @@ public class StandardAtomGeneratorTest {
         when(atom.getMassNumber()).thenReturn(12);
         when(atom.getImplicitHydrogenCount()).thenReturn(null);
         when(atom.getFormalCharge()).thenReturn(0);
-        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left);
+        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
     }
@@ -465,7 +466,7 @@ public class StandardAtomGeneratorTest {
         when(atom.getMassNumber()).thenReturn(12);
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
         when(atom.getFormalCharge()).thenReturn(null);
-        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left);
+        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
     }
@@ -479,7 +480,7 @@ public class StandardAtomGeneratorTest {
         when(atom.getMassNumber()).thenReturn(12);
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
         when(atom.getFormalCharge()).thenReturn(0);
-        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left);
+        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
         assertThat(atomSymbol.elementOutline().text(), is("C"));
@@ -494,7 +495,7 @@ public class StandardAtomGeneratorTest {
         when(atom.getMassNumber()).thenReturn(12);
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
         when(atom.getFormalCharge()).thenReturn(0);
-        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left);
+        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
         assertThat(atomSymbol.elementOutline().text(), is("?"));
@@ -509,7 +510,7 @@ public class StandardAtomGeneratorTest {
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
         when(atom.getFormalCharge()).thenReturn(0);
         when(container.getConnectedSingleElectronsCount(atom)).thenReturn(1);
-        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left);
+        AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(2));
         verify(container).getConnectedSingleElectronsCount(atom);

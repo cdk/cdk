@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.generators.standard.AbbreviationLabel.FormattedText;
 
 import java.awt.Font;
@@ -111,9 +112,10 @@ final class StandardAtomGenerator {
      * @param container structure to which the atom belongs
      * @param atom      the atom to generate the symbol for
      * @param position  the hydrogen position
+     * @param model     additional rendering options
      * @return atom symbol
      */
-    AtomSymbol generateSymbol(IAtomContainer container, IAtom atom, HydrogenPosition position) {
+    AtomSymbol generateSymbol(IAtomContainer container, IAtom atom, HydrogenPosition position, RendererModel model) {
         if (atom instanceof IPseudoAtom) {
             IPseudoAtom pAtom = (IPseudoAtom) atom;
             if (pAtom.getAttachPointNum() <= 0)
@@ -127,7 +129,10 @@ final class StandardAtomGenerator {
 
             // unset the mass if it's the major isotope (could be an option)
             Integer mass = atom.getMassNumber();
-            if (mass != null && isMajorIsotope(number, mass)) {
+            if (mass != null &&
+                model != null &&
+                model.get(StandardGenerator.OmitMajorIsotopes.class) &&
+                isMajorIsotope(number, mass)) {
                 mass = null;
             }
 
