@@ -434,7 +434,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 outputContainer = new QueryAtomContainer(molecule.getBuilder());
 
             if (title != null)
-                outputContainer.setProperty(CDKConstants.TITLE, title);
+                outputContainer.setTitle(title);
             if (remark != null)
                 outputContainer.setProperty(CDKConstants.REMARK, remark);
 

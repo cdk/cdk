@@ -27,7 +27,7 @@ public class ConformerContainerTest extends CDKTestCase {
 
     private static IAtomContainer getBaseAtomContainer(int natom, String title) {
         IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        container.setProperty(CDKConstants.TITLE, title);
+        container.setTitle(title);
         for (int i = 0; i < natom; i++) {
             Point3d coord = new Point3d();
             coord.x = rnd.nextDouble();
@@ -73,7 +73,7 @@ public class ConformerContainerTest extends CDKTestCase {
     public void testConformerContainer() {
         ConformerContainer container = new ConformerContainer();
         Assert.assertNotNull(container);
-        base.setProperty(CDKConstants.TITLE, "myMolecule");
+        base.setTitle("myMolecule");
         container.add(base);
         Assert.assertEquals(1, container.size());
 
@@ -163,7 +163,7 @@ public class ConformerContainerTest extends CDKTestCase {
     @Test(expected = IllegalArgumentException.class)
     public void testAdd_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
-        base.setProperty(CDKConstants.TITLE, "junk");
+        base.setTitle("junk");
         container.add(base);
     }
 

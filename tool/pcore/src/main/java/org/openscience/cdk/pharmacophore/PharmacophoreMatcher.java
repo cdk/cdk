@@ -209,7 +209,7 @@ public class PharmacophoreMatcher {
         if (!checkQuery(pharmacophoreQuery))
             throw new CDKException(
                     "A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
-        String title = (String) atomContainer.getProperty(CDKConstants.TITLE);
+        String title = (String) atomContainer.getTitle();
 
         if (initializeTarget)
             pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);
@@ -370,7 +370,7 @@ public class PharmacophoreMatcher {
         final Set<String>            matched     = new HashSet<>();
         final Set<PharmacophoreAtom> uniqueAtoms = new LinkedHashSet<>();
 
-        logger.debug("Converting [" + input.getProperty(CDKConstants.TITLE) + "] to a pcore molecule");
+        logger.debug("Converting [" + input.getTitle() + "] to a pcore molecule");
         
         // lets loop over each pcore query atom
         for (IAtom atom : pharmacophoreQuery.atoms()) {

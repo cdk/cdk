@@ -221,7 +221,7 @@ final class BeamToCDK {
         }
 
         // title suffix
-        ac.setProperty(CDKConstants.TITLE, g.getTitle());
+        ac.setTitle(g.getTitle());
 
         return ac;
     }

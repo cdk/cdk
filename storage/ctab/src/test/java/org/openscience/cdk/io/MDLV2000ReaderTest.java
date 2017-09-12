@@ -260,7 +260,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        Assert.assertEquals("a-pinen.mol", mol.getProperty(CDKConstants.TITLE));
+        Assert.assertEquals("a-pinen.mol", mol.getTitle());
     }
 
     @Test

@@ -217,7 +217,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // no header
                 return line1;
             }
-            readData.setProperty(CDKConstants.TITLE, line1);
+            readData.setTitle(line1);
         }
         readLine();
         String line3 = readLine();

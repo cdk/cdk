@@ -347,7 +347,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 return molecule;
             }
             if (line.length() > 0) {
-                molecule.setProperty(CDKConstants.TITLE, line);
+                molecule.setTitle(line);
             }
             line = input.readLine();
             linecount++;

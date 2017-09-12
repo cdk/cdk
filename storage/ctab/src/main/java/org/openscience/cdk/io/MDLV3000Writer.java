@@ -147,7 +147,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @throws IOException low-level IO error
      */
     private void writeHeader(IAtomContainer mol) throws IOException {
-        final String title = mol.getProperty(CDKConstants.TITLE);
+        final String title = mol.getTitle();
         if (title != null)
             writer.writeDirect(title.substring(0, Math.min(80, title.length())));
         writer.writeDirect('\n');

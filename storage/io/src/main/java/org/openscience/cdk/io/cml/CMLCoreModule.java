@@ -1176,7 +1176,7 @@ public class CMLCoreModule implements ICMLModule {
                     currentMolecule.setProperty(new DictRef(DICTREF, cData), cData);
                 } else {
                     //            		cdo.setObjectProperty("Molecule", "Name", cData);
-                    currentMolecule.setProperty(CDKConstants.TITLE, cData);
+                    currentMolecule.setTitle(cData);
                 }
             }
         } else if ("formula".equals(name)) {

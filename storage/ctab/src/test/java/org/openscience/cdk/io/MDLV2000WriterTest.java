@@ -329,9 +329,9 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void testTwoFragmentsWithTitle() throws Exception {
         IAtomContainer mol1 = TestMoleculeFactory.makeAlphaPinene();
-        mol1.setProperty(CDKConstants.TITLE, "title1");
+        mol1.setTitle("title1");
         IAtomContainer mol2 = TestMoleculeFactory.makeAlphaPinene();
-        mol2.setProperty(CDKConstants.TITLE, "title2");
+        mol2.setTitle("title2");
         IChemModel model = mol1.getBuilder().newInstance(IChemModel.class);
         model.setMoleculeSet(mol1.getBuilder().newInstance(IAtomContainerSet.class));
         model.getMoleculeSet().addAtomContainer(mol1);

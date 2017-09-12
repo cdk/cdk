@@ -93,7 +93,7 @@ public class ConformerContainer implements List<IAtomContainer> {
      */
     public ConformerContainer(IAtomContainer atomContainer) {
         this.atomContainer = atomContainer;
-        title = (String) atomContainer.getProperty(CDKConstants.TITLE);
+        title = (String) atomContainer.getTitle();
         coordinates = new ArrayList<Point3d[]>();
         coordinates.add(getCoordinateList(atomContainer));
     }
@@ -111,9 +111,9 @@ public class ConformerContainer implements List<IAtomContainer> {
         if (atomContainers.length == 0) throw new IllegalArgumentException("Can't use a zero-length molecule array");
 
         // lets check that the titles match
-        title = (String) atomContainers[0].getProperty(CDKConstants.TITLE);
+        title = atomContainers[0].getTitle();
         for (IAtomContainer atomContainer : atomContainers) {
-            String nextTitle = (String) atomContainer.getProperty(CDKConstants.TITLE);
+            String nextTitle = atomContainer.getTitle();
             if (title != null && !nextTitle.equals(title))
                 throw new IllegalArgumentException("Titles of all molecules must match");
         }
@@ -235,14 +235,14 @@ public class ConformerContainer implements List<IAtomContainer> {
     public boolean add(IAtomContainer atomContainer) {
         if (this.atomContainer == null) {
             this.atomContainer = atomContainer;
-            title = (String) atomContainer.getProperty(CDKConstants.TITLE);
+            title = (String) atomContainer.getTitle();
         }
         if (title == null) {
             throw new IllegalArgumentException("At least one of the input molecules does not have a title");
         }
-        if (!title.equals(atomContainer.getProperty(CDKConstants.TITLE)))
+        if (!title.equals(atomContainer.getTitle()))
             throw new IllegalArgumentException("The input molecules does not have the same title ('" + title
-                    + "') as the other conformers ('" + atomContainer.getProperty(CDKConstants.TITLE) + "')");
+                    + "') as the other conformers ('" + atomContainer.getTitle() + "')");
 
         if (atomContainer.getAtomCount() != this.atomContainer.getAtomCount())
             throw new IllegalArgumentException("Doesn't have the same number of atoms as the rest of the conformers");
@@ -323,7 +323,7 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     @Override
     public IAtomContainer set(int i, IAtomContainer atomContainer) {
-        if (!title.equals(atomContainer.getProperty(CDKConstants.TITLE)))
+        if (!title.equals(atomContainer.getTitle()))
             throw new IllegalArgumentException(
                     "The input molecules does not have the same title as the other conformers");
         Point3d[] tmp = getCoordinateList(atomContainer);
@@ -336,10 +336,10 @@ public class ConformerContainer implements List<IAtomContainer> {
     public void add(int i, IAtomContainer atomContainer) {
         if (this.atomContainer == null) {
             this.atomContainer = atomContainer;
-            title = (String) atomContainer.getProperty(CDKConstants.TITLE);
+            title = atomContainer.getTitle();
         }
 
-        if (!title.equals(atomContainer.getProperty(CDKConstants.TITLE)))
+        if (!title.equals(atomContainer.getTitle()))
             throw new IllegalArgumentException(
                     "The input molecules does not have the same title as the other conformers");
 
@@ -376,7 +376,7 @@ public class ConformerContainer implements List<IAtomContainer> {
     @Override
     public int indexOf(Object o) {
         IAtomContainer atomContainer = (IAtomContainer) o;
-        if (!atomContainer.getProperty(CDKConstants.TITLE).equals(title)) return -1;
+        if (!atomContainer.getTitle().equals(title)) return -1;
 
         if (atomContainer.getAtomCount() != this.atomContainer.getAtomCount()) return -1;
 
@@ -410,7 +410,7 @@ public class ConformerContainer implements List<IAtomContainer> {
     @Override
     public int lastIndexOf(Object o) {
         IAtomContainer atomContainer = (IAtomContainer) o;
-        if (!atomContainer.getProperty(CDKConstants.TITLE).equals(title)) return -1;
+        if (!atomContainer.getTitle().equals(title)) return -1;
 
         if (atomContainer.getAtomCount() != coordinates.get(0).length) return -1;
 

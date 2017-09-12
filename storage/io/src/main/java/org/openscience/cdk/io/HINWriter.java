@@ -155,7 +155,7 @@ public class HINWriter extends DefaultChemObjectWriter {
             IAtomContainer mol = som.getAtomContainer(molnum);
 
             try {
-                String molname = "mol " + (molnum + 1) + " " + mol.getProperty(CDKConstants.TITLE);
+                String molname = "mol " + (molnum + 1) + " " + mol.getTitle();
 
                 writer.write(molname, 0, molname.length());
                 writer.write('\n');
