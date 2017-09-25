@@ -314,6 +314,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         int linecount = 0;
         String title = null;
+        String program = null;
         String remark = null;
         String line = "";
 
@@ -333,6 +334,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
             line = input.readLine();
             linecount++;
+            program = line;
             line = input.readLine();
             linecount++;
             if (line.length() > 0) {
@@ -406,8 +408,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                 }
             } else if (!hasZ) {
-
-                if (!forceReadAs3DCoords.isSet()) {
+                //'  CDK     09251712073D'
+                // 0123456789012345678901
+                if (!(program.length() >= 22 && program.substring(20, 22).equals("3D"))
+                    && !forceReadAs3DCoords.isSet()) {
                     for (IAtom atomToUpdate : atoms) {
                         Point3d p3d = atomToUpdate.getPoint3d();
                         if (p3d != null) {

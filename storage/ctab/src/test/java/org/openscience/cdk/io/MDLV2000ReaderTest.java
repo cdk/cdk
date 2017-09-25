@@ -562,6 +562,24 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     /**
+     * @cdk.bug 1732307
+     */
+    @Test
+    public void testZeroZCoordinates3DMarked() throws Exception {
+        String filename = "data/mdl/nozcoord.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+        reader.close();
+        Assert.assertNotNull(mol);
+        Assert.assertEquals(5, mol.getAtomCount());
+
+        boolean has3d = GeometryUtil.has3DCoordinates(mol);
+        assertTrue(has3d);
+    }
+
+    /**
      * @cdk.bug 1826577
      */
     @Test
