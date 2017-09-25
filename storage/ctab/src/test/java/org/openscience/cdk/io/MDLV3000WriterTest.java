@@ -368,9 +368,9 @@ public class MDLV3000WriterTest {
             assertThat(res, CoreMatchers.containsString("M  V30 1 SRU 0 ATOMS=(1 2) XBONDS=(2 1 2) LABEL=n CONNECT=HT BRKXYZ=(9 -2.5742-\n"
                                                         + "M  V30  4.207 0 -3.0692 3.3497 0 0 0 0) BRKXYZ=(9 -3.1626 3.3497 0 -3.6576 4.2-\n"
                                                         + "M  V30 07 0 0 0 0) BRKTYP=PAREN\n"
-                                                        + "M  V30 2 SRU 0 ATOMS=(1 5) XBONDS=(2 3 4) LABEL=n CONNECT=HT BRKXYZ=(9 .9542 4-\n"
-                                                        + "M  V30 .1874 0 .4592 3.33 0 0 0 0) BRKXYZ=(9 .3658 3.33 0 -.1292 4.1874 0 0 0 -\n"
-                                                        + "M  V30 0) BRKTYP=PAREN\n"));
+                                                        + "M  V30 2 SRU 0 ATOMS=(1 5) XBONDS=(2 3 4) LABEL=n CONNECT=HT BRKXYZ=(9 0.9542 -\n"
+                                                        + "M  V30 4.1874 0 0.4592 3.33 0 0 0 0) BRKXYZ=(9 0.3658 3.33 0 -0.1292 4.1874 0 -\n"
+                                                        + "M  V30 0 0 0) BRKTYP=PAREN"));
         }
     }
 
