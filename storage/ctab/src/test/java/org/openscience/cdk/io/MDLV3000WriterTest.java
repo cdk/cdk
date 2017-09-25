@@ -39,6 +39,7 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
+import javax.vecmath.Point2d;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -170,6 +171,15 @@ public class MDLV3000WriterTest {
         mol.getAtom(1).setImplicitHydrogenCount(1);
         String res = writeToStr(mol);
         assertThat(res, CoreMatchers.containsString("M  V30 1 1 2 1 CFG=3\n"));
+    }
+
+    @Test
+    public void writeLeadingZero() throws IOException, CDKException {
+        IAtomContainer mol = new AtomContainer();
+        Atom           atom   = new Atom("C");
+        atom.setPoint2d(new Point2d(0.5, 1.2));
+        mol.addAtom(atom);
+        assertThat(writeToStr(mol), CoreMatchers.containsString("0.5 1.2"));
     }
 
     @Test
