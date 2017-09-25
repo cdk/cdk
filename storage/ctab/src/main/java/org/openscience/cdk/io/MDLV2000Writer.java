@@ -330,6 +330,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * @param container Molecule that is written to an OutputStream
      */
     public void writeMolecule(IAtomContainer container) throws Exception {
+
+        final int dim = getNumberOfDimensions(container);
         String line = "";
         Map<Integer, Integer> rgroups = null;
         Map<Integer, String> aliases = null;
@@ -352,6 +354,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
          */
         writer.write("  CDK     ");
         writer.write(new SimpleDateFormat("MMddyyHHmm").format(System.currentTimeMillis()));
+        if (dim != 0) {
+            writer.write(Integer.toString(dim));
+            writer.write('D');
+        }
         writer.write('\n');
 
         String comment = (String) container.getProperty(CDKConstants.REMARK);
@@ -383,20 +389,30 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         for (int f = 0; f < container.getAtomCount(); f++) {
             IAtom atom = container.getAtom(f);
             line = "";
-            if (atom.getPoint3d() != null && !forceWriteAs2DCoords.isSet()) {
-                line += formatMDLFloat((float) atom.getPoint3d().x);
-                line += formatMDLFloat((float) atom.getPoint3d().y);
-                line += formatMDLFloat((float) atom.getPoint3d().z) + " ";
-            } else if (atom.getPoint2d() != null) {
-                line += formatMDLFloat((float) atom.getPoint2d().x);
-                line += formatMDLFloat((float) atom.getPoint2d().y);
-                line += "    0.0000 ";
-            } else {
-                // if no coordinates available, then output a number
-                // of zeros
-                line += formatMDLFloat((float) 0.0);
-                line += formatMDLFloat((float) 0.0);
-                line += formatMDLFloat((float) 0.0) + " ";
+            switch (dim) {
+                case 0:
+                    // if no coordinates available, then output a number
+                    // of zeros
+                    line += "    0.0000    0.0000    0.0000 ";
+                    break;
+                case 2:
+                    if (atom.getPoint2d() != null) {
+                        line += formatMDLFloat((float) atom.getPoint2d().x);
+                        line += formatMDLFloat((float) atom.getPoint2d().y);
+                        line += "    0.0000 ";
+                    } else {
+                        line += "    0.0000    0.0000    0.0000 ";
+                    }
+                    break;
+                case 3:
+                    if (atom.getPoint3d() != null) {
+                        line += formatMDLFloat((float) atom.getPoint3d().x);
+                        line += formatMDLFloat((float) atom.getPoint3d().y);
+                        line += formatMDLFloat((float) atom.getPoint3d().z) + " ";
+                    } else {
+                        line += "    0.0000    0.0000    0.0000 ";
+                    }
+                    break;
             }
             if (container.getAtom(f) instanceof IPseudoAtom) {
                 //according to http://www.google.co.uk/url?sa=t&ct=res&cd=2&url=http%3A%2F%2Fwww.mdl.com%2Fdownloads%2Fpublic%2Fctfile%2Fctfile.pdf&ei=MsJjSMbjAoyq1gbmj7zCDQ&usg=AFQjCNGaJSvH4wYy4FTXIaQ5f7hjoTdBAw&sig2=eSfruNOSsdMFdlrn7nhdAw an R group is written as R#
@@ -986,6 +1002,16 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             wrapped.add(list.subList(i, list.size()));
         }
         return wrapped;
+    }
+
+    private int getNumberOfDimensions(IAtomContainer mol) {
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getPoint3d() != null && !forceWriteAs2DCoords.isSet())
+                return 3;
+            else if (atom.getPoint2d() != null)
+                return 2;
+        }
+        return 0;
     }
 
     private void writeRadicalPattern(Iterator<Map.Entry<Integer, SPIN_MULTIPLICITY>> iterator, int i)

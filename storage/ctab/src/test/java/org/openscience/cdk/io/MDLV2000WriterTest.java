@@ -833,4 +833,34 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         }
         assertThat(sw.toString(), containsString("  1  2  4  0  0  0  0 \n"));
     }
+
+    @Test
+    public void writeDimensionField() throws Exception {
+        IAtomContainer mol = builder.newAtomContainer();
+        IAtom atom = builder.newAtom();
+        atom.setSymbol("C");
+        atom.setImplicitHydrogenCount(4);
+        atom.setPoint2d(new Point2d(0.5, 0.5));
+        mol.addAtom(atom);
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(), containsString("2D"));
+    }
+
+    @Test
+    public void writeDimensionField3D() throws Exception {
+        IAtomContainer mol = builder.newAtomContainer();
+        IAtom atom = builder.newAtom();
+        atom.setSymbol("C");
+        atom.setImplicitHydrogenCount(4);
+        atom.setPoint3d(new Point3d(0.5, 0.5, 0.1));
+        mol.addAtom(atom);
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(), containsString("3D"));
+    }
 }

@@ -163,6 +163,11 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
          */
         writer.writeDirect("  CDK     ");
         writer.writeDirect(HEADER_DATE_FORMAT.format(System.currentTimeMillis()));
+        final int dim = getNumberOfDimensions(mol);
+        if (dim != 0) {
+            writer.writeDirect(Integer.toString(dim));
+            writer.writeDirect('D');
+        }
         writer.writeDirect('\n');
 
         String comment = mol.getProperty(CDKConstants.REMARK);
@@ -225,6 +230,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                                 Map<IAtom, ITetrahedralChirality> atomToStereo) throws IOException, CDKException {
         if (mol.getAtomCount() == 0)
             return;
+        final int dim = getNumberOfDimensions(mol);
         writer.write("BEGIN ATOM\n");
         int atomIdx = 0;
         for (IAtom atom : atoms) {
@@ -267,18 +273,31 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                   .write(' ')
                   .write(symbol)
                   .write(' ');
+
             Point2d p2d = atom.getPoint2d();
             Point3d p3d = atom.getPoint3d();
-            if (p2d != null) {
-                writer.write(p2d.x).write(' ')
-                        .write(p2d.y).write(' ')
-                        .write("0 ");
-            } else if (p3d != null) {
-                writer.write(p3d.x).write(' ')
-                      .write(p3d.y).write(' ')
-                      .write(p3d.z).write(' ');
-            } else {
-                writer.write("0 0 0 ");
+            switch (dim) {
+                case 0:
+                    writer.write("0 0 0 ");
+                    break;
+                case 2:
+                    if (p2d != null) {
+                        writer.write(p2d.x).writeDirect(' ')
+                              .write(p2d.y).writeDirect(' ')
+                              .write("0 ");
+                    } else {
+                        writer.write("0 0 0 ");
+                    }
+                    break;
+                case 3:
+                    if (p3d != null) {
+                        writer.write(p3d.x).writeDirect(' ')
+                              .write(p3d.y).writeDirect(' ')
+                              .write(p3d.z).writeDirect(' ');
+                    } else {
+                        writer.write("0 0 0 ");
+                    }
+                    break;
             }
             writer.write(nullAsZero(atom.getProperty(ATOM_ATOM_MAPPING, Integer.class)));
 
@@ -479,6 +498,16 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         if (sgroups == null)
             sgroups = new ArrayList<>(0);
         return sgroups;
+    }
+
+    private int getNumberOfDimensions(IAtomContainer mol) {
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getPoint3d() != null)
+                return 3;
+            else if (atom.getPoint2d() != null)
+                return 2;
+        }
+        return 0;
     }
 
     /**
