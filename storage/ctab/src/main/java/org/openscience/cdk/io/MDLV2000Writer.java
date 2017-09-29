@@ -732,10 +732,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             for (int i = 0; i < atomIndexSpinMap.size(); i += NN8) {
                 if (atomIndexSpinMap.size() - i <= NN8) {
                     writer.write("M  RAD" + formatMDLInt(atomIndexSpinMap.size() - i, WIDTH));
-                    writeRadicalPattern(iterator, i);
+                    writeRadicalPattern(iterator, 0);
                 } else {
                     writer.write("M  RAD" + formatMDLInt(NN8, WIDTH));
-                    writeRadicalPattern(iterator, i);
+                    writeRadicalPattern(iterator, 0);
                 }
                 writer.write('\n');
             }
