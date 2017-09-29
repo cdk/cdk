@@ -54,6 +54,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -862,5 +863,22 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             mdlw.write(mol);
         }
         assertThat(sw.toString(), containsString("3D"));
+    }
+
+    @Test
+    public void writeMoreThan8Radicals() throws Exception {
+        IAtomContainer mol = builder.newAtomContainer();
+        for (int i = 0; i < 20; i++) {
+            IAtom atom = builder.newAtom();
+            atom.setSymbol("C");
+            mol.addAtom(atom);
+            mol.addSingleElectron(builder.newInstance(ISingleElectron.class, atom));
+        }
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(),
+                   containsString("M  RAD  8   9   2  10   2  11   2  12   2  13   2  14   2  15   2  16   2"));
     }
 }
