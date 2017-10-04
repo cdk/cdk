@@ -89,7 +89,7 @@
             <name>Miguel Rojas Cherto</name>
         </developer>
         <developer>
-            <name>John May</name>
+            <name>John Mayfield</name>
             <email>john@nextmovesoftware.com</email>
             <url>http://www.github.com/johnmay/</url>
             <timezone>GMT</timezone>
@@ -250,6 +250,9 @@
         <contributor>
             <name>Irilenia Nobeli</name>
         </contributor>
+        <contributor>
+            <name>Noel O'Boyle</name>
+        </contributor>             
         <contributor>
             <name>Peter Odéus</name>
         </contributor>
