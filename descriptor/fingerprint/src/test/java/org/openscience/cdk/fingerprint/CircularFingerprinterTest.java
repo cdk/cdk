@@ -28,6 +28,7 @@
 package org.openscience.cdk.fingerprint;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
 
@@ -36,6 +37,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
@@ -53,6 +55,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.Atom;
@@ -94,6 +97,44 @@ public class CircularFingerprinterTest extends CDKTestCase {
         in.close();
 
         logger.info("CircularFingerprinter test: completed without any problems");
+    }
+
+    @Test public void testUseStereoElements() throws CDKException {
+        final String smiles1  = "CC[C@@H](C)O";
+        final String smiles2  = "CC[C@H](O)C";
+        final String molfile = "\n"
+                             + "  CDK     10121722462D          \n"
+                             + "\n"
+                             + "  5  4  0  0  0  0            999 V2000\n"
+                             + "   -4.1837    2.6984    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                             + "   -3.4692    3.1109    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                             + "   -2.7547    2.6984    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"
+                             + "   -2.0403    3.1109    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                             + "   -2.7547    1.8734    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                             + "  1  2  1  0  0  0  0\n"
+                             + "  2  3  1  0  0  0  0\n"
+                             + "  3  4  1  0  0  0  0\n"
+                             + "  3  5  1  1  0  0  0\n"
+                             + "M  END\n";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(molfile));
+        SmilesParser smipar = new SmilesParser(bldr);
+
+        IAtomContainer mol1 = smipar.parseSmiles(smiles1);
+        IAtomContainer mol2 = smipar.parseSmiles(smiles2);
+        IAtomContainer mol3 = mdlr.read(bldr.newAtomContainer());
+
+        CircularFingerprinter fpr = new CircularFingerprinter();
+
+        // when stereo-chemistry is perceived we don't have coordinates from the
+        // SMILES and so get a different fingerprint
+        fpr.setPerceiveStereo(true);
+        Assert.assertThat(fpr.getFingerprint(mol1), is(fpr.getFingerprint(mol2)));
+        Assert.assertThat(fpr.getFingerprint(mol2), is(not(fpr.getFingerprint(mol3))));
+
+        fpr.setPerceiveStereo(false);
+        Assert.assertThat(fpr.getFingerprint(mol1), is(fpr.getFingerprint(mol2)));
+        Assert.assertThat(fpr.getFingerprint(mol2), is(fpr.getFingerprint(mol3)));
     }
 
     @Test
@@ -340,8 +381,9 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
     @Test public void testVersion() {
-        IFingerprinter fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
-        String expected = "CDK-CircularFingerprinter/" + CDK.getVersion() + " classType=ECFP4";
+        CircularFingerprinter fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
+        String expected = "CDK-CircularFingerprinter/" + CDK.getVersion() +
+                          " classType=ECFP4 perceiveStereochemistry=false";
         Assert.assertThat(fpr.getVersionDescription(),
                           CoreMatchers.is(expected));
     }

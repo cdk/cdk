@@ -30,6 +30,7 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +45,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-
+import org.openscience.cdk.interfaces.IStereoElement;
 
 
 /**
@@ -124,7 +125,6 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private final int      ATOMCLASS_ECFP = 1;
     private final int      ATOMCLASS_FCFP = 2;
 
-    private int            classType, atomClass;
     private IAtomContainer mol;
     private final int      length;
 
@@ -152,6 +152,10 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private boolean[]      isOxide;                                             // true if the atom has a double bond to oxygen
     private boolean[]      lonePair;                                            // true if the atom is N,O,S with octet valence and at least one lone pair
     private boolean[]      tetrazole;                                           // special flag for being in a tetrazole (C1=NN=NN1) ring
+
+    // ------------ options -------------------
+    private int     classType, atomClass;
+    private boolean optPerceiveStereo = false;
 
     // ------------ public methods ------------
 
@@ -188,6 +192,17 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         this.length = len;
     }
 
+    /**
+     * Sets whether stereochemistry should be re-perceived from 2D/3D
+     * coordinates. By default stereochemistry encoded as {@link IStereoElement}s
+     * are used.
+     *
+     * @param val perceived from 2D
+     */
+    public void setPerceiveStereo(boolean val) {
+        this.optPerceiveStereo = val;
+    }
+
     @Override
     protected List<Map.Entry<String, String>> getParameters() {
         String type = null;
@@ -201,8 +216,10 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             case CLASS_FCFP4: type = "FCFP4"; break;
             case CLASS_FCFP6: type = "FCFP6"; break;
         }
-        return Collections.<Map.Entry<String,String>>singletonList(
-            new AbstractMap.SimpleImmutableEntry<>("classType", type)
+        return Arrays.<Map.Entry<String, String>>asList(
+            new AbstractMap.SimpleImmutableEntry<>("classType", type),
+            new AbstractMap.SimpleImmutableEntry<>("perceiveStereochemistry",
+                                                   Boolean.toString(optPerceiveStereo))
         );
     }
 
@@ -617,8 +634,12 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         detectStrictAromaticity();
 
         tetra = new int[na][];
-        for (int n = 0; n < na; n++)
-            tetra[n] = rubricTetrahedral(n);
+        if (optPerceiveStereo) {
+            for (int n = 0; n < na; n++)
+                tetra[n] = rubricTetrahedral(n);
+        } else {
+            rubricTetrahedralsCdk();
+        }
     }
 
     // assign a ring block ID to each atom (0=not in ring)
@@ -829,6 +850,39 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             }
 
             if (!anyChange) break;
+        }
+    }
+
+    // tetrahedral 'rubric': for any sp3 atom that has stereo defined
+    // in the CDK's object model.
+    private void rubricTetrahedralsCdk() {
+        for (IStereoElement se : mol.stereoElements()) {
+            if (se.getConfigClass() == IStereoElement.Tetrahedral) {
+                @SuppressWarnings("unchecked") final IStereoElement<IAtom, IAtom> th =
+                    (IStereoElement<IAtom, IAtom>) se;
+                final IAtom focus = th.getFocus();
+                final List<IAtom> carriers = th.getCarriers();
+                int[]             adj      = new int[4];
+
+                for (int i = 0; i < 4; i++) {
+                    if (focus.equals(carriers.get(i)))
+                        adj[i] = -1; // impl H
+                    else
+                        adj[i] = mol.indexOf(carriers.get(i));
+                }
+                switch (th.getConfig()) {
+                    case IStereoElement.LEFT:
+                        int i = adj[2];
+                        adj[2] = adj[3];
+                        adj[3] = i;
+                        tetra[mol.indexOf(focus)] = adj;
+                        break;
+                    case IStereoElement.RIGHT:
+                        tetra[mol.indexOf(focus)] = adj;
+                        break;
+                    default:
+                }
+            }
         }
     }
 
