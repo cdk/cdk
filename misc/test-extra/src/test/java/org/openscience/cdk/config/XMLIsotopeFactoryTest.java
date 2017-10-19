@@ -28,7 +28,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -206,7 +205,6 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     @Test
-    @Ignore
     public void testXMLValidityHybrid() throws Exception {
         assertValidCML("org/openscience/cdk/config/data/isotopes.xml", "Isotopes");
     }
