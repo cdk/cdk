@@ -838,8 +838,10 @@ public class AtomContainerManipulator {
                     yNew = findOther(org, v, u, y);
                 }
 
-                // no other atoms connected, invalid double-bond configuration?
-                if (x == null || y == null) continue;
+                // no other atoms connected, invalid double-bond configuration
+                // is removed. example [2H]/C=C/[H]
+                if (x == null || y == null ||
+                    xNew == null || yNew == null) continue;
 
                 // no changes
                 if (x.equals(xNew) && y.equals(yNew)) {
@@ -848,10 +850,12 @@ public class AtomContainerManipulator {
                 }
 
                 // XXX: may perform slow operations but works for now
-                IBond cpyLeft = !Objects.equals(xNew, x) ? org.getBond(u, xNew) : orgLeft;
+                IBond cpyLeft  = !Objects.equals(xNew, x) ? org.getBond(u, xNew) : orgLeft;
                 IBond cpyRight = !Objects.equals(yNew, y) ? org.getBond(v, yNew) : orgRight;
 
-                elements.add(new DoubleBondStereochemistry(orgStereo, new IBond[]{cpyLeft, cpyRight}, conformation));
+                elements.add(new DoubleBondStereochemistry(orgStereo,
+                                                           new IBond[]{cpyLeft, cpyRight},
+                                                           conformation));
             } else if (se instanceof Atropisomeric) {
                 // can not have any H's
                 elements.add(se);
@@ -917,7 +921,7 @@ public class AtomContainerManipulator {
         // is the hydrogen an ion?
         if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0) return false;
         // is the hydrogen deuterium / tritium?
-        if (atom.getMassNumber() != null && atom.getMassNumber() != 1) return false;
+        if (atom.getMassNumber() != null) return false;
         // molecule hydrogen with implicit H?
         if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() != 0) return false;
         // molecule hydrogen
@@ -968,7 +972,7 @@ public class AtomContainerManipulator {
         // is the hydrogen an ion?
         if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0) return false;
         // is the hydrogen deuterium / tritium?
-        if (atom.getMassNumber() != null && atom.getMassNumber() != 1) return false;
+        if (atom.getMassNumber() != null) return false;
         // hydrogen is either not attached to 0 or 2 neighbors
         if (graph[v].length != 1) return false;
         // non-single bond

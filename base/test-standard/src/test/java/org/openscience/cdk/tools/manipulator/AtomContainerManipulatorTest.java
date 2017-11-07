@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -1277,6 +1278,23 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertThat(molecularWeight, closeTo(48.069, 0.001));
         assertThat(naturalExactMass, closeTo(47.076, 0.001));
         assertThat(exactMass, closeTo(48.053, 0.001));
+    }
+
+    @Test
+    public void removeBondStereo() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[2H]/C=C/[H]");
+        AtomContainerManipulator.suppressHydrogens(mol);
+        assertThat(mol.stereoElements().iterator().hasNext(),
+                   CoreMatchers.is(false));
+    }
+
+    @Test
+    public void keep1Hisotopes() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[2H]/C=C/[1H]");
+        AtomContainerManipulator.suppressHydrogens(mol);
+        assertThat(mol.getAtomCount(), is(4));
     }
 
     // util for testing hydrogen removal using SMILES
