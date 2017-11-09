@@ -162,7 +162,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             fancyHashedWedges = new FancyHashedWedges(), highlighting = new Highlighting(),
             glowWidth = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
             annFontSize = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
-            sgroupFontScale = new SgroupFontScale();
+            sgroupFontScale = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -557,7 +557,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
                 hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
-                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, new OmitMajorIsotopes());
+                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes);
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {
