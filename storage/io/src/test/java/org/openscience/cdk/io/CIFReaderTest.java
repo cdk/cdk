@@ -27,6 +27,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.silent.ChemFile;
 
 import java.io.IOException;
@@ -62,6 +63,18 @@ public class CIFReaderTest extends ChemObjectIOTest {
         //        } finally {
         cifReader.close();
         //        }
+    }
+
+    @Test()
+    public void cod1100784Cell() throws IOException, CDKException {
+        InputStream in = getClass().getResourceAsStream("1100784.cif");
+        CIFReader cifReader = new CIFReader(in);
+        IChemFile chemFile = cifReader.read(new ChemFile());
+        ICrystal crystal = chemFile.getChemSequence(0).getChemModel(0).getCrystal();
+        Assert.assertTrue( java.lang.Math.abs(crystal.getA().length() - 10.9754) < 1E-5 );
+        Assert.assertTrue( java.lang.Math.abs(crystal.getB().length() - 11.4045) < 1E-5 );
+        Assert.assertTrue( java.lang.Math.abs(crystal.getC().length() - 10.9754) < 1E-5 );
+        cifReader.close();
     }
 
 }

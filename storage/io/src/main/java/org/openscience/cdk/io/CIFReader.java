@@ -23,29 +23,18 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.StringTokenizer;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.CIFFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.io.*;
+import java.util.StringTokenizer;
 
 /**
  * This is not a reader for the CIF and mmCIF crystallographic formats.
@@ -267,7 +256,26 @@ public class CIFReader extends DefaultChemObjectReader {
             processAtomLoopBlock(line);
         } else {
             logger.warn("Skipping loop block");
-            skipUntilEmptyOrCommentLine(line);
+            skipLoopBody(line);
+        }
+    }
+
+    private void skipLoopBody(String line) throws IOException {
+        // skip everything until the end of the loop body
+    	if (line != null) line = line.trim();
+    	// First, skip the loop_ data name list:
+        while (line != null && line.length() > 0 && line.charAt(0) == '_') {
+            line = input.readLine();
+            if (line != null) line = line.trim();
+        }
+        // Then, skip every line that looks like starting with a CIF value:
+        while (line != null && line.length() > 0 &&
+        		line.charAt(0) != '#' &&
+        		line.charAt(0) != '_' &&
+        		!line.startsWith("loop_") &&
+        		!line.startsWith("data_")) {
+            line = input.readLine();
+            if (line != null) line = line.trim();
         }
     }
 
