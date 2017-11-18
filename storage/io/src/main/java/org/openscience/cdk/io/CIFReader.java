@@ -257,7 +257,6 @@ public class CIFReader extends DefaultChemObjectReader {
             return processAtomLoopBlock(line);
         } else {
             logger.warn("Skipping loop block");
-            //skipUntilEmptyOrCommentLine(line);
             return skipLoop(line);
         }
     }
@@ -284,14 +283,6 @@ public class CIFReader extends DefaultChemObjectReader {
             if (line != null) line = line.trim();
         }
         return line;
-    }
-
-    private void skipUntilEmptyOrCommentLine(String line) throws IOException {
-        // skip everything until empty line, or comment line
-        while (line != null && line.length() > 0 && line.charAt(0) != '#') {
-            line = input.readLine();
-            if (line != null) line = line.trim();
-        }
     }
 
     private String processAtomLoopBlock(String firstLine) throws IOException {
