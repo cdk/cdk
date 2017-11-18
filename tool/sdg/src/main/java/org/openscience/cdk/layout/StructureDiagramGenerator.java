@@ -112,7 +112,7 @@ public class StructureDiagramGenerator {
 
     private IAtomContainer molecule;
     private IRingSet       sssr;
-    private double bondLength = DEFAULT_BOND_LENGTH;
+    private final double bondLength = DEFAULT_BOND_LENGTH;
     private Vector2d firstBondVector;
     private RingPlacer       ringPlacer          = new RingPlacer();
     private AtomPlacer       atomPlacer          = new AtomPlacer();
@@ -2072,13 +2072,27 @@ public class StructureDiagramGenerator {
     }
 
     /**
-     * Set the bond length used for laying out the molecule.
-     * The default value is 1.5.
+     * This method used to set the bond length used for laying out the molecule.
+     * Since bond lengths in 2D are are arbitrary, the preferred way to do this
+     * is with {@link GeometryUtil#scaleMolecule(IAtomContainer, double)}.
+     *
+     * <pre>
+     * IAtomContainer mol = ...;
+     * sdg.generateCoordinates(mol);
+     * int targetBondLength = 28;
+     * double factor = targetBondLength/GeometryUtil.getMedianBondLength(mol);
+     * GeometryUtil.scaleMolecule(mol, factor);
+     * </pre>
      *
      * @param bondLength The new bondLength value
+     * @deprecated use {@link GeometryUtil#scaleMolecule(IAtomContainer, double)}
+     * @throws UnsupportedOperationException not supported
      */
+    @Deprecated
     public void setBondLength(double bondLength) {
-        this.bondLength = bondLength;
+        throw new UnsupportedOperationException(
+            "Bond length should be adjusted post layout"
+            + " with GeometryUtil.scaleMolecule();");
     }
 
     /**
