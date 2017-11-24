@@ -51,6 +51,8 @@ import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.nio.charset.StandardCharsets;
@@ -453,16 +455,16 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                     maxRadius = r;
             }
 
-            final Color bg = parameters.get(BasicSceneGenerator.BackgroundColor.class);
-
             for (TextOutline outline : attachNumOutlines) {
                 ElementGroup group = new ElementGroup();
-                group.add(new OvalElement(outline.getCenter().getX(),
-                                          outline.getCenter().getY(),
-                                          2*stroke + maxRadius,
-                                          true,
-                                          foreground));
-                group.add(GeneralPath.shapeOf(outline.getOutline(), bg));
+                double radius = 2*stroke + maxRadius;
+                Shape shape = new Ellipse2D.Double(outline.getCenter().getX() - radius,
+                                                   outline.getCenter().getY() - radius,
+                                                   2*radius,
+                                                   2*radius);
+                Area area1 = new Area(shape);
+                area1.subtract(new Area(outline.getOutline()));
+                group.add(GeneralPath.shapeOf(area1, foreground));
                 annotations.add(group);
             }
 
