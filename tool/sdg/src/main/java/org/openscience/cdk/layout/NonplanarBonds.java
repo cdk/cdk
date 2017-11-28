@@ -26,6 +26,8 @@ package org.openscience.cdk.layout;
 
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,12 +38,18 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.stereo.Atropisomeric;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
+import org.openscience.cdk.stereo.Octahedral;
+import org.openscience.cdk.stereo.SquarePlanar;
+import org.openscience.cdk.stereo.TrigonalBipyramidal;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -50,9 +58,11 @@ import java.util.Set;
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN;
+import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN_INVERTED;
 import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
 import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 import static org.openscience.cdk.interfaces.IBond.Stereo.UP;
+import static org.openscience.cdk.interfaces.IBond.Stereo.UP_INVERTED;
 import static org.openscience.cdk.interfaces.IBond.Stereo.UP_OR_DOWN;
 import static org.openscience.cdk.interfaces.IBond.Stereo.UP_OR_DOWN_INVERTED;
 
@@ -174,12 +184,18 @@ final class NonplanarBonds {
             label(tetrahedralElements[foci[i]]);
         }
 
-        // Extended tetrahedral labels
+        // Rarer types of stereo
         for (IStereoElement se : container.stereoElements()) {
             if (se instanceof ExtendedTetrahedral) {
                 label((ExtendedTetrahedral) se);
             } else if (se instanceof Atropisomeric) {
                 label((Atropisomeric) se);
+            } else if (se instanceof SquarePlanar) {
+                modifyAndLabel((SquarePlanar) se);
+            } else if (se instanceof TrigonalBipyramidal) {
+                modifyAndLabel((TrigonalBipyramidal) se);
+            } else if (se instanceof Octahedral) {
+                modifyAndLabel((Octahedral) se);
             }
         }
 
@@ -187,6 +203,190 @@ final class NonplanarBonds {
         for (IBond bond : findUnspecifiedDoubleBonds(g)) {
             labelUnspecified(bond);
         }
+    }
+
+    private void rotate(Point2d p, Point2d pivot, double cos, double sin) {
+        double x = p.x - pivot.x;
+        double y = p.y - pivot.y;
+        double nx = x * cos + y * sin;
+        double ny = -x * sin + y * cos;
+        p.x = nx + pivot.x;
+        p.y = ny + pivot.y;
+    }
+
+    private Point2d getRotated(Point2d org, Point2d piviot, double theta) {
+        Point2d cpy = new Point2d(org);
+        rotate(cpy, piviot, Math.cos(theta), Math.sin(theta));
+        return cpy;
+    }
+
+    // tP=target point
+    private void snapBondToPosition(IAtom beg, IBond bond, Point2d tP) {
+        IAtom end = bond.getOther(beg);
+        Point2d bP = beg.getPoint2d();
+        Point2d eP = end.getPoint2d();
+        Vector2d curr = new Vector2d(eP.x-bP.x, eP.y-bP.y);
+        Vector2d dest = new Vector2d(tP.x-bP.x, tP.y-bP.y);
+        double theta = Math.atan2(curr.y, curr.x) - Math.atan2(dest.y, dest.x);
+        double sin = Math.sin(theta);
+        double cos = Math.cos(theta);
+        bond.setFlag(CDKConstants.VISITED, true);
+        Deque<IAtom> queue = new ArrayDeque<>();
+        queue.add(end);
+        while (!queue.isEmpty()) {
+            IAtom atom = queue.poll();
+            if (!atom.getFlag(CDKConstants.VISITED)) {
+                rotate(atom.getPoint2d(), bP, cos, sin);
+                atom.setFlag(CDKConstants.VISITED, true);
+            }
+            for (IBond b : container.getConnectedBondsList(atom))
+                if (!b.getFlag(CDKConstants.VISITED)) {
+                    queue.add(b.getOther(atom));
+                    b.setFlag(CDKConstants.VISITED, true);
+                }
+        }
+    }
+
+    private void modifyAndLabel(SquarePlanar se) {
+        List<IAtom> atoms = se.normalize().getCarriers();
+        List<IBond> bonds = new ArrayList<>(4);
+        double blen = 0;
+        for (IAtom atom : atoms) {
+            IBond bond = container.getBond(se.getFocus(), atom);
+            // can't handled these using this method!
+            if (bond.isInRing())
+                return;
+            bonds.add(bond);
+            blen += GeometryUtil.getLength2D(bond);
+        }
+        blen /= bonds.size();
+        IAtom focus = se.getFocus();
+        Point2d fp = focus.getPoint2d();
+
+        for (IAtom atom : container.atoms())
+            atom.setFlag(CDKConstants.VISITED, false);
+        for (IBond bond : container.bonds())
+            bond.setFlag(CDKConstants.VISITED, false);
+        Point2d ref = new Point2d(fp.x, fp.y+blen);
+        snapBondToPosition(focus, bonds.get(0), getRotated(ref, fp, Math.toRadians(-60)));
+        snapBondToPosition(focus, bonds.get(1), getRotated(ref, fp, Math.toRadians(60)));
+        snapBondToPosition(focus, bonds.get(2), getRotated(ref, fp, Math.toRadians(120)));
+        snapBondToPosition(focus, bonds.get(3), getRotated(ref, fp, Math.toRadians(-120)));
+        setBondDisplay(bonds.get(0), focus, DOWN);
+        setBondDisplay(bonds.get(1), focus, DOWN);
+        setBondDisplay(bonds.get(2), focus, UP);
+        setBondDisplay(bonds.get(3), focus, UP);
+    }
+
+    private boolean doMirror(List<IAtom> atoms) {
+        int p = 1;
+        for (int i = 0; i < atoms.size(); i++) {
+            IAtom a = atoms.get(i);
+            for (int j = i+1; j < atoms.size(); j++) {
+                IAtom b = atoms.get(j);
+                if (a.getAtomicNumber() > b.getAtomicNumber())
+                    p *= -1;
+            }
+        }
+        return p < 0;
+    }
+
+    private void modifyAndLabel(TrigonalBipyramidal se) {
+        List<IAtom> atoms = se.normalize().getCarriers();
+        List<IBond> bonds = new ArrayList<>(4);
+        double blen = 0;
+        for (IAtom atom : atoms) {
+            IBond bond = container.getBond(se.getFocus(), atom);
+            // can't handled these using this method!
+            if (bond.isInRing())
+                return;
+            bonds.add(bond);
+            blen += GeometryUtil.getLength2D(bond);
+        }
+        blen /= bonds.size();
+        IAtom focus = se.getFocus();
+        Point2d fp = focus.getPoint2d();
+        for (IAtom atom : container.atoms())
+            atom.setFlag(CDKConstants.VISITED, false);
+        for (IBond bond : container.bonds())
+            bond.setFlag(CDKConstants.VISITED, false);
+        Point2d ref = new Point2d(fp.x, fp.y+blen);
+
+        // Optional but have a look at the equatorial ligands
+        // and maybe invert the image based on the permutation
+        // parity of their atomic numbers.
+        boolean mirror = doMirror(atoms.subList(1,4));
+
+        if (mirror) {
+            snapBondToPosition(focus, bonds.get(0), getRotated(ref, fp, Math.toRadians(0)));
+            snapBondToPosition(focus, bonds.get(3), getRotated(ref, fp, Math.toRadians(-60)));
+            snapBondToPosition(focus, bonds.get(2), getRotated(ref, fp, Math.toRadians(90)));
+            snapBondToPosition(focus, bonds.get(1), getRotated(ref, fp, Math.toRadians(-120)));
+            snapBondToPosition(focus, bonds.get(4), getRotated(ref, fp, Math.toRadians(180)));
+            setBondDisplay(bonds.get(1), focus, UP);
+            setBondDisplay(bonds.get(3), focus, DOWN);
+        } else {
+            snapBondToPosition(focus, bonds.get(0), getRotated(ref, fp, Math.toRadians(0)));
+            snapBondToPosition(focus, bonds.get(1), getRotated(ref, fp, Math.toRadians(60)));
+            snapBondToPosition(focus, bonds.get(2), getRotated(ref, fp, Math.toRadians(-90)));
+            snapBondToPosition(focus, bonds.get(3), getRotated(ref, fp, Math.toRadians(120)));
+            snapBondToPosition(focus, bonds.get(4), getRotated(ref, fp, Math.toRadians(180)));
+            setBondDisplay(bonds.get(1), focus, DOWN);
+            setBondDisplay(bonds.get(3), focus, UP);
+        }
+    }
+
+    private void modifyAndLabel(Octahedral oc) {
+        List<IAtom> atoms = oc.normalize().getCarriers();
+        List<IBond> bonds = new ArrayList<>(4);
+
+        double blen = 0;
+        for (IAtom atom : atoms) {
+            IBond bond = container.getBond(oc.getFocus(), atom);
+            // can't handled these using this method!
+            if (bond.isInRing())
+                return;
+            bonds.add(bond);
+            blen += GeometryUtil.getLength2D(bond);
+        }
+        blen /= bonds.size();
+        IAtom focus = oc.getFocus();
+        Point2d fp = focus.getPoint2d();
+        for (IAtom atom : container.atoms())
+            atom.setFlag(CDKConstants.VISITED, false);
+        for (IBond bond : container.bonds())
+            bond.setFlag(CDKConstants.VISITED, false);
+        Point2d ref = new Point2d(fp.x, fp.y+blen);
+
+        snapBondToPosition(focus, bonds.get(0), getRotated(ref, fp, Math.toRadians(0)));
+        snapBondToPosition(focus, bonds.get(1), getRotated(ref, fp, Math.toRadians(60)));
+        snapBondToPosition(focus, bonds.get(2), getRotated(ref, fp, Math.toRadians(-60)));
+        snapBondToPosition(focus, bonds.get(3), getRotated(ref, fp, Math.toRadians(-120)));
+        snapBondToPosition(focus, bonds.get(4), getRotated(ref, fp, Math.toRadians(120)));
+        snapBondToPosition(focus, bonds.get(5), getRotated(ref, fp, Math.toRadians(180)));
+        setBondDisplay(bonds.get(1), focus, DOWN);
+        setBondDisplay(bonds.get(2), focus, DOWN);
+        setBondDisplay(bonds.get(3), focus, UP);
+        setBondDisplay(bonds.get(4), focus, UP);
+    }
+
+    private IBond.Stereo flip(IBond.Stereo disp) {
+        switch (disp) {
+            case UP: return UP_INVERTED;
+            case UP_INVERTED: return UP;
+            case DOWN: return DOWN_INVERTED;
+            case DOWN_INVERTED: return DOWN;
+            case UP_OR_DOWN: return UP_OR_DOWN_INVERTED;
+            case UP_OR_DOWN_INVERTED: return UP_OR_DOWN;
+            default: return disp;
+        }
+    }
+
+    private void setBondDisplay(IBond bond, IAtom focus, IBond.Stereo display) {
+        if (bond.getBegin().equals(focus))
+            bond.setStereo(display);
+        else
+            bond.setStereo(flip(display));
     }
 
     /**

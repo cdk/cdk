@@ -615,6 +615,7 @@ public class StructureDiagramGenerator {
         refinePlacement(molecule);
         finalizeLayout(molecule);
 
+        // stereo must be after refinement (due to flipping!)
         if (!isSubLayout)
             assignStereochem(molecule);
 
