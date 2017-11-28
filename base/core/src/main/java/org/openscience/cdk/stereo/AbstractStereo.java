@@ -43,12 +43,16 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
     private List<C> carriers;
     private IChemObjectBuilder builder;
 
+    protected static int numCarriers(int cfg) {
+        return ((cfg >>> 12) & 0xf);
+    }
+
     AbstractStereo(F focus, C[] carriers, int value) {
         if (focus == null)
             throw new NullPointerException("Focus of stereochemistry can not be null!");
         if (carriers == null)
             throw new NullPointerException("Carriers of the configuration can not be null!");
-        if (carriers.length != ((value >>> 12) & 0xf))
+        if (carriers.length != numCarriers(value))
             throw new IllegalArgumentException("Unexpected number of stereo carriers! expected " + ((value >>> 12) & 0xf) + " was " + carriers.length);
         for (C carrier : carriers) {
             if (carrier == null)
@@ -88,7 +92,7 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
      * {@inheritDoc}
      */
     @Override
-    public int getConfig() {
+    public int getConfigOrder() {
         return value & CFG_MASK;
     }
 
@@ -96,7 +100,15 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
      * {@inheritDoc}
      */
     @Override
-    public void setConfig(int cfg) {
+    public int getConfig() {
+        return value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setConfigOrder(int cfg) {
         value = getConfigClass() | cfg;
     }
 
@@ -169,5 +181,16 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
 
     protected void setBuilder(IChemObjectBuilder builder) {
         this.builder = builder;
+    }
+
+    // labels for describing permutation
+    protected static final int A = 0, B = 1, C = 2, D = 3, E = 4, F = 5;
+
+    // apply the inverse of a permutation
+    protected static <T> T[] invapply(T[] src, int[] perm) {
+        T[] res = src.clone();
+        for (int i = 0; i < src.length; i++)
+            res[i] = src[perm[i]];
+        return res;
     }
 }

@@ -288,7 +288,7 @@ final class NonplanarBonds {
         final IBond[] bonds = new IBond[4];
 
         int p = 0;
-        switch (element.getConfig()) {
+        switch (element.getConfigOrder()) {
             case IStereoElement.LEFT:
                 p = +1;
                 break;

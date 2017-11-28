@@ -522,7 +522,7 @@ public class AtomContainerManipulator {
 
                 if (hydrogen != null) {
                     replaceAtom(carriers, focus, hydrogen);
-                    stereos.add(new TetrahedralChirality(focus, carriers, tc.getConfig()));
+                    stereos.add(new TetrahedralChirality(focus, carriers, tc.getConfigOrder()));
                 } else {
                     stereos.add(stereo);
                 }
