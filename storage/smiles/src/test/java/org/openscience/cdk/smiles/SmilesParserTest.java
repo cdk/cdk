@@ -53,12 +53,16 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.stereo.Octahedral;
+import org.openscience.cdk.stereo.SquarePlanar;
+import org.openscience.cdk.stereo.TrigonalBipyramidal;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -2526,6 +2530,76 @@ public class SmilesParserTest extends CDKTestCase {
             if (bond.getOrder() == null || bond.getOrder() == IBond.Order.UNSET)
                 fail("Unset bond order");
         }
+    }
+
+    @Test
+    public void cisplatin() throws Exception {
+        IAtomContainer mol = load("[NH3][Pt@SP1]([NH3])(Cl)Cl");
+        Iterator<IStereoElement> ses =mol.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, instanceOf(SquarePlanar.class));
+        assertThat(((SquarePlanar) se).getConfigOrder(), is(1));
+    }
+
+    @Test
+    public void cisplatin_Z() throws Exception {
+        IAtomContainer mol = load("[NH3][Pt@SP3]([NH3])(Cl)Cl");
+        Iterator<IStereoElement> ses =mol.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, instanceOf(SquarePlanar.class));
+        assertThat(((SquarePlanar) se).getConfigOrder(), is(3));
+    }
+
+    @Test
+    public void transplatin() throws Exception {
+        IAtomContainer mol = load("[NH3][Pt@SP2]([NH3])(Cl)Cl");
+        Iterator<IStereoElement> ses =mol.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, instanceOf(SquarePlanar.class));
+        assertThat(((SquarePlanar) se).getConfigOrder(), is(2));
+    }
+
+    @Test
+    public void tbpy1() throws Exception {
+        IAtomContainer mol = load("S[As@TB1](F)(Cl)(Br)N");
+        Iterator<IStereoElement> ses =mol.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, instanceOf(TrigonalBipyramidal.class));
+        assertThat(((TrigonalBipyramidal) se).getConfigOrder(), is(1));
+    }
+
+    @Test
+    public void tbpy2() throws Exception {
+        IAtomContainer mol = load("S[As@TB2](F)(Cl)(Br)N");
+        Iterator<IStereoElement> ses =mol.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, instanceOf(TrigonalBipyramidal.class));
+        assertThat(((TrigonalBipyramidal) se).getConfigOrder(), is(2));
+    }
+
+    @Test
+    public void oh1() throws Exception {
+        IAtomContainer mol = load("C[Co@](F)(Cl)(Br)(I)S");
+        Iterator<IStereoElement> ses =mol.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, instanceOf(Octahedral.class));
+        assertThat(se.getConfigOrder(), is(1));
+    }
+
+    @Test
+    public void oh8() throws Exception {
+        IAtomContainer mol = load("C[Co@OH8](F)(Br)(Cl)(I)S");
+        Iterator<IStereoElement> ses =mol.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, instanceOf(Octahedral.class));
+        assertThat(se.getConfigOrder(), is(8));
     }
 
     /**
