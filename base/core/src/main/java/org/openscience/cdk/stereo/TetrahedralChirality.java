@@ -68,12 +68,12 @@ public class TetrahedralChirality
 
     @Override
     public Stereo getStereo() {
-        return Stereo.toStereo(getConfig());
+        return Stereo.toStereo(getConfigOrder());
     }
 
     @Override
     public void setStereo(Stereo stereo) {
-        setConfig(Stereo.toConfig(stereo));
+        setConfigOrder(Stereo.toConfig(stereo));
     }
 
     @Override

@@ -615,6 +615,7 @@ public class StructureDiagramGenerator {
         refinePlacement(molecule);
         finalizeLayout(molecule);
 
+        // stereo must be after refinement (due to flipping!)
         if (!isSubLayout)
             assignStereochem(molecule);
 
@@ -782,7 +783,7 @@ public class StructureDiagramGenerator {
                                 if (begBonds.size() != 1 || endBonds.size() != 1)
                                     continue;
                                 boolean flipped = begBonds.contains(firstCarrier) != endBonds.contains(secondCarrier);
-                                int cfg = flipped ? se.getConfig() ^ 0x3 : se.getConfig();
+                                int cfg = flipped ? se.getConfigOrder() ^ 0x3 : se.getConfigOrder();
                                 ring.addStereoElement(new DoubleBondStereochemistry(stereoBond,
                                                                                     new IBond[]{begBonds.get(0), endBonds.get(0)},
                                                                                     cfg));

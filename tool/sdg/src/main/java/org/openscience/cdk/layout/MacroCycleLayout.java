@@ -211,7 +211,7 @@ final class MacroCycleLayout {
                     } else {
                         cfg = IStereoElement.OPPOSITE;
                     }
-                    if (cfg == se.getConfig()) {
+                    if (cfg == se.getConfigOrder()) {
                         nCorrectStereo++;
                     } else {
                         nIncorrectStereo++;
