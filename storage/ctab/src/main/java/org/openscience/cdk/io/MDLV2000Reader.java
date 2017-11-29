@@ -465,7 +465,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     IAtom focus = e.getKey();
                     IAtom[] carriers = new IAtom[4];
                     int hidx = -1;
-                    for (IAtom nbr : molecule.getConnectedAtomsList(focus)) {
+                    for (IAtom nbr : outputContainer.getConnectedAtomsList(focus)) {
                         if (idx == 4)
                             continue Parities; // too many neighbors
                         if (nbr.getAtomicNumber() == 1) {
@@ -487,7 +487,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         // we adjust the winding as needed
                         if (hidx == 0 || hidx == 2)
                             winding = winding.invert();
-                        molecule.addStereoElement(new TetrahedralChirality(focus, carriers, winding));
+                        outputContainer.addStereoElement(new TetrahedralChirality(focus, carriers, winding));
                     }
                 }
             }
