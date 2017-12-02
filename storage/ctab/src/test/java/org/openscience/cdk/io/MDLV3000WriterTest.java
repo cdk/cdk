@@ -30,6 +30,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -37,15 +38,19 @@ import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.Bond;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertThat;
 
 public class MDLV3000WriterTest {
 
@@ -170,6 +175,15 @@ public class MDLV3000WriterTest {
         mol.getAtom(1).setImplicitHydrogenCount(1);
         String res = writeToStr(mol);
         assertThat(res, CoreMatchers.containsString("M  V30 1 1 2 1 CFG=3\n"));
+    }
+
+    @Test
+    public void writeLeadingZero() throws IOException, CDKException {
+        IAtomContainer mol = new AtomContainer();
+        Atom           atom   = new Atom("C");
+        atom.setPoint2d(new Point2d(0.5, 1.2));
+        mol.addAtom(atom);
+        assertThat(writeToStr(mol), CoreMatchers.containsString("0.5 1.2"));
     }
 
     @Test
@@ -358,9 +372,9 @@ public class MDLV3000WriterTest {
             assertThat(res, CoreMatchers.containsString("M  V30 1 SRU 0 ATOMS=(1 2) XBONDS=(2 1 2) LABEL=n CONNECT=HT BRKXYZ=(9 -2.5742-\n"
                                                         + "M  V30  4.207 0 -3.0692 3.3497 0 0 0 0) BRKXYZ=(9 -3.1626 3.3497 0 -3.6576 4.2-\n"
                                                         + "M  V30 07 0 0 0 0) BRKTYP=PAREN\n"
-                                                        + "M  V30 2 SRU 0 ATOMS=(1 5) XBONDS=(2 3 4) LABEL=n CONNECT=HT BRKXYZ=(9 .9542 4-\n"
-                                                        + "M  V30 .1874 0 .4592 3.33 0 0 0 0) BRKXYZ=(9 .3658 3.33 0 -.1292 4.1874 0 0 0 -\n"
-                                                        + "M  V30 0) BRKTYP=PAREN\n"));
+                                                        + "M  V30 2 SRU 0 ATOMS=(1 5) XBONDS=(2 3 4) LABEL=n CONNECT=HT BRKXYZ=(9 0.9542 -\n"
+                                                        + "M  V30 4.1874 0 0.4592 3.33 0 0 0 0) BRKXYZ=(9 0.3658 3.33 0 -0.1292 4.1874 0 -\n"
+                                                        + "M  V30 0 0 0) BRKTYP=PAREN"));
         }
     }
 
@@ -398,6 +412,38 @@ public class MDLV3000WriterTest {
             String res = writeToStr(mol);
             assertThat(res, CoreMatchers.containsString("M  V30 8 1 8 9 ATTACH=ANY ENDPTS=(5 2 3 4 5 6)\n"));
         }
+    }
+
+    @Test
+    public void writeDimensionField() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer mol = builder.newAtomContainer();
+        IAtom atom = builder.newAtom();
+        atom.setSymbol("C");
+        atom.setImplicitHydrogenCount(4);
+        atom.setPoint2d(new Point2d(0.5, 0.5));
+        mol.addAtom(atom);
+        StringWriter sw = new StringWriter();
+        try (MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(), containsString("2D"));
+    }
+
+    @Test
+    public void writeDimensionField3D() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer mol = builder.newAtomContainer();
+        IAtom atom = builder.newAtom();
+        atom.setSymbol("C");
+        atom.setImplicitHydrogenCount(4);
+        atom.setPoint3d(new Point3d(0.5, 0.5, 0.1));
+        mol.addAtom(atom);
+        StringWriter sw = new StringWriter();
+        try (MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(), containsString("3D"));
     }
 
     private String writeToStr(IAtomContainer mol) throws IOException, CDKException {

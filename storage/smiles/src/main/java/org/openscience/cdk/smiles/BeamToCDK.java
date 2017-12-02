@@ -32,7 +32,10 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.Octahedral;
+import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.stereo.TrigonalBipyramidal;
 import uk.ac.ebi.beam.Atom;
 import uk.ac.ebi.beam.Bond;
 import uk.ac.ebi.beam.Configuration;
@@ -204,6 +207,21 @@ final class BeamToCDK {
                     }
                     case DoubleBond: {
                         checkBondStereo = true;
+                        break;
+                    }
+                    case SquarePlanar: {
+                        IStereoElement se = newSquarePlanar(u, g.neighbors(u), atoms, c);
+                        if (se != null) ac.addStereoElement(se);
+                        break;
+                    }
+                    case TrigonalBipyramidal: {
+                        IStereoElement se = newTrigonalBipyramidal(u, g.neighbors(u), atoms, c);
+                        if (se != null) ac.addStereoElement(se);
+                        break;
+                    }
+                    case Octahedral: {
+                        IStereoElement se = newOctahedral(u, g.neighbors(u), atoms, c);
+                        if (se != null) ac.addStereoElement(se);
                         break;
                     }
                 }
@@ -394,6 +412,58 @@ final class BeamToCDK {
 
         return new TetrahedralChirality(atoms[u], new IAtom[]{atoms[vs[0]], atoms[vs[1]], atoms[vs[2]], atoms[vs[3]]},
                 stereo);
+    }
+
+    private IStereoElement newSquarePlanar(int u, int[] vs, IAtom[] atoms, Configuration c) {
+
+        if (vs.length != 4)
+            return null;
+
+        int order;
+        switch (c) {
+            case SP1:
+                order = IStereoElement.SP | 1;
+                break;
+            case SP2:
+                order = IStereoElement.SP | 2;
+                break;
+            case SP3:
+                order = IStereoElement.SP | 3;
+                break;
+            default:
+                return null;
+        }
+
+        return new SquarePlanar(atoms[u],
+                                new IAtom[]{atoms[vs[0]], atoms[vs[1]], atoms[vs[2]], atoms[vs[3]]},
+                                order);
+    }
+
+    private IStereoElement newTrigonalBipyramidal(int u, int[] vs, IAtom[] atoms, Configuration c) {
+        if (vs.length != 5)
+            return null;
+        int order = 1 + c.ordinal() - Configuration.TB1.ordinal();
+        if (order < 1 || order > 20)
+            return null;
+        return new TrigonalBipyramidal(atoms[u],
+                                       new IAtom[]{atoms[vs[0]], atoms[vs[1]], atoms[vs[2]], atoms[vs[3]], atoms[vs[4]]},
+                                       order);
+    }
+
+    private IStereoElement newOctahedral(int u, int[] vs, IAtom[] atoms, Configuration c) {
+        if (vs.length != 6)
+            return null;
+        int order = 1 + c.ordinal() - Configuration.OH1.ordinal();
+        if (order < 1 || order > 30)
+            return null;
+        return new Octahedral(atoms[u],
+                              new IAtom[]{atoms[vs[0]],
+                                          atoms[vs[1]],
+                                          atoms[vs[2]],
+                                          atoms[vs[3]],
+                                          atoms[vs[4]],
+                                          atoms[vs[5]]},
+                              order);
     }
 
     private IStereoElement newExtendedTetrahedral(int u, Graph g, IAtom[] atoms) {

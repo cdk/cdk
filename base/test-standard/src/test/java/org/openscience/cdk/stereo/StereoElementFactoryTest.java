@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.smiles.SmiFlavor;
@@ -44,7 +43,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -1172,8 +1170,8 @@ public class StereoElementFactoryTest {
         IStereoElement s2 = stereoDown.get(0);
         assertThat(s1.getFocus(), is(s2.getFocus()));
         assertThat(s1.getCarriers(), is(s2.getCarriers()));
-        assertThat(s1.getConfig(), is(IStereoElement.RIGHT));
-        assertThat(s2.getConfig(), is(IStereoElement.LEFT));
+        assertThat(s1.getConfigOrder(), is(IStereoElement.RIGHT));
+        assertThat(s2.getConfigOrder(), is(IStereoElement.LEFT));
 
         // now test placement of wedges else where
         m.getBond(12).setStereo(IBond.Stereo.NONE);
@@ -1185,7 +1183,7 @@ public class StereoElementFactoryTest {
         IStereoElement s3 = stereoUpOther.get(0);
         assertThat(s3.getFocus(), is(s2.getFocus()));
         assertThat(s3.getCarriers(), is(s2.getCarriers()));
-        assertThat(s3.getConfig(), is(s2.getConfig()));
+        assertThat(s3.getConfigOrder(), is(s2.getConfigOrder()));
 
         m.getBond(m.getAtom(9), m.getAtom(12)).setStereo(IBond.Stereo.DOWN);
         List<IStereoElement> stereoDownOther =
@@ -1195,7 +1193,7 @@ public class StereoElementFactoryTest {
         IStereoElement s4 = stereoDownOther.get(0);
         assertThat(s4.getFocus(), is(s1.getFocus()));
         assertThat(s4.getCarriers(), is(s1.getCarriers()));
-        assertThat(s4.getConfig(), is(s1.getConfig()));
+        assertThat(s4.getConfigOrder(), is(s1.getConfigOrder()));
     }
 
     /**

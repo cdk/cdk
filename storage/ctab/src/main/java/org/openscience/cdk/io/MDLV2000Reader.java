@@ -314,6 +314,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         int linecount = 0;
         String title = null;
+        String program = null;
         String remark = null;
         String line = "";
 
@@ -333,6 +334,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
             line = input.readLine();
             linecount++;
+            program = line;
             line = input.readLine();
             linecount++;
             if (line.length() > 0) {
@@ -406,8 +408,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                 }
             } else if (!hasZ) {
-
-                if (!forceReadAs3DCoords.isSet()) {
+                //'  CDK     09251712073D'
+                // 0123456789012345678901
+                if (!(program.length() >= 22 && program.substring(20, 22).equals("3D"))
+                    && !forceReadAs3DCoords.isSet()) {
                     for (IAtom atomToUpdate : atoms) {
                         Point3d p3d = atomToUpdate.getPoint3d();
                         if (p3d != null) {
@@ -461,7 +465,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     IAtom focus = e.getKey();
                     IAtom[] carriers = new IAtom[4];
                     int hidx = -1;
-                    for (IAtom nbr : molecule.getConnectedAtomsList(focus)) {
+                    for (IAtom nbr : outputContainer.getConnectedAtomsList(focus)) {
                         if (idx == 4)
                             continue Parities; // too many neighbors
                         if (nbr.getAtomicNumber() == 1) {
@@ -483,7 +487,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         // we adjust the winding as needed
                         if (hidx == 0 || hidx == 2)
                             winding = winding.invert();
-                        molecule.addStereoElement(new TetrahedralChirality(focus, carriers, winding));
+                        outputContainer.addStereoElement(new TetrahedralChirality(focus, carriers, winding));
                     }
                 }
             }
@@ -906,8 +910,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) {
                         index = readMolfileInt(line, st) - 1;
                         int mass = readMolfileInt(line, st + 4);
-                        container.getAtom(offset + index).setMassNumber(mass);
-                    }
+                        if (mass < 0)
+                            handleError("Absolute mass number should be >= 0, " + line);
+                        else
+                            container.getAtom(offset + index).setMassNumber(mass);
+                      }
                     break;
 
                 // M  RADnn8 aaa vvv ...
@@ -1194,8 +1201,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         // check of ill specified atomic mass
         for (IAtom atom : container.atoms()) {
-            if (atom.getMassNumber() != null && atom.getMassNumber() < 0)
-                throw new CDKException("Unstable use of mass delta on " + atom.getSymbol() + " please use M  ISO");
+            if (atom.getMassNumber() != null && atom.getMassNumber() < 0) {
+              handleError("Unstable use of mass delta on " + atom.getSymbol() + " please use M  ISO");
+              atom.setMassNumber(null);
+            }
         }
 
 

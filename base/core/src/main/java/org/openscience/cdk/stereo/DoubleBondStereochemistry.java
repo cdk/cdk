@@ -75,7 +75,7 @@ public class DoubleBondStereochemistry
     /** {@inheritDoc} */
     @Override
     public Conformation getStereo() {
-        return Conformation.toConformation(getConfig());
+        return Conformation.toConformation(getConfigOrder());
     }
 
     @Override

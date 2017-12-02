@@ -161,6 +161,13 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
     /** Heptagonal Bipyramidal (HBPY-9) */
     public static final int HeptagonalBipyramidal = HBPY9;
 
+    /** Square Planar Configutation in U Shape */
+    public static final int SPU = SP | 1;
+    /** Square Planar Configutation in 4 Shape */
+    public static final int SP4 = SP | 2;
+    /** Square Planar Configutation in Z Shape */
+    public static final int SPZ = SP | 3;
+
     /**
      * The focus atom or bond at the 'centre' of the stereo-configuration.
      * @return the focus
@@ -180,16 +187,22 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
     int getConfigClass();
 
     /**
-     * The configuration of the stereochemistry.
+     * The configuration order of the stereochemistry.
      * @return configuration
      */
-    int getConfig();
+    int getConfigOrder();
 
     /**
-     * Set the configuration of the stereochemistry.
+     * Set the configuration order of the stereochemistry.
      * @param cfg the new configuration
      */
-    void setConfig(int cfg);
+    void setConfigOrder(int cfg);
+
+    /**
+     * Access the configuration order and class of the stereochemistry.
+     * @return the configuration
+     */
+    int getConfig();
 
     /**
      * Does the stereo element contain the provided atom.

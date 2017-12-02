@@ -1264,4 +1264,10 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         assertThat(numCis, is(2));
         assertThat(numTrans, is(2));
     }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void setBondLength() {
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.setBondLength(2);
+    }
 }

@@ -51,6 +51,8 @@ import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.nio.charset.StandardCharsets;
@@ -162,7 +164,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             fancyHashedWedges = new FancyHashedWedges(), highlighting = new Highlighting(),
             glowWidth = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
             annFontSize = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
-            sgroupFontScale = new SgroupFontScale();
+            sgroupFontScale = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -371,14 +373,14 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 if (remapped) {
                     symbols[i] = atomGenerator.generateAbbreviatedSymbol(symbolRemap.get(atom), hPosition);
                 } else {
-                    symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
+                    symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition, parameters);
                 }
 
                 if (symbols[i] != null) {
 
                     // defines how the element is aligned on the atom point, when
                     // aligned to the left, the first character 'e.g. Cl' is used.
-                    if (visNeighbors.size() > 0) {
+                    if (visNeighbors.size() < 4) {
                         if (hPosition == Left) {
                             symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
                         } else {
@@ -453,16 +455,16 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                     maxRadius = r;
             }
 
-            final Color bg = parameters.get(BasicSceneGenerator.BackgroundColor.class);
-
             for (TextOutline outline : attachNumOutlines) {
                 ElementGroup group = new ElementGroup();
-                group.add(new OvalElement(outline.getCenter().getX(),
-                                          outline.getCenter().getY(),
-                                          2*stroke + maxRadius,
-                                          true,
-                                          foreground));
-                group.add(GeneralPath.shapeOf(outline.getOutline(), bg));
+                double radius = 2*stroke + maxRadius;
+                Shape shape = new Ellipse2D.Double(outline.getCenter().getX() - radius,
+                                                   outline.getCenter().getY() - radius,
+                                                   2*radius,
+                                                   2*radius);
+                Area area1 = new Area(shape);
+                area1.subtract(new Area(outline.getOutline()));
+                group.add(GeneralPath.shapeOf(area1, foreground));
                 annotations.add(group);
             }
 
@@ -557,7 +559,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
                 hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
-                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale);
+                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes);
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {
@@ -1070,6 +1072,18 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         @Override
         public Double getDefault() {
             return 0.6;
+        }
+    }
+
+    /**
+     * Whether Major Isotopes e.g. 12C, 16O should be omitted.
+     */
+    public static final class OmitMajorIsotopes extends AbstractGeneratorParameter<Boolean> {
+
+        /**{@inheritDoc} */
+        @Override
+        public Boolean getDefault() {
+            return false;
         }
     }
 }

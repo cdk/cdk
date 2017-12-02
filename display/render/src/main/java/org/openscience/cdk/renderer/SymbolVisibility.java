@@ -129,7 +129,7 @@ public abstract class SymbolVisibility {
 
             // carbon isotopes are displayed
             Integer mass = atom.getMassNumber();
-            if (mass != null && !isMajorIsotope(element.number(), mass)) return true;
+            if (mass != null) return true;
 
             // no kink between bonds to imply the presence of a carbon and it must
             // be displayed if the bonds have the same bond order
@@ -152,22 +152,6 @@ public abstract class SymbolVisibility {
             // ProblemMarker ?
 
             return false;
-        }
-
-        /**
-         * Determine if the specified mass is the major isotope for the given atomic number.
-         *
-         * @param number atomic number
-         * @param mass   atomic mass
-         * @return the mass is the major mass for the atomic number
-         */
-        private static boolean isMajorIsotope(int number, int mass) {
-            try {
-                IIsotope isotope = Isotopes.getInstance().getMajorIsotope(number);
-                return isotope != null && isotope.getMassNumber().equals(mass);
-            } catch (IOException e) {
-                return false;
-            }
         }
 
         /**
