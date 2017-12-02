@@ -20,7 +20,7 @@ package org.openscience.cdk.qsar.result;
 
 
 /**
- * IDescriptorResult type for booleans.
+ * IDescriptorResult type for boolean.
  *
  * @cdk.module standard
  * @cdk.githash
