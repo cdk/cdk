@@ -139,7 +139,7 @@ public class Tanimoto {
     }
 
     /**
-     * Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
+     * Evaluate continuous Tanimoto coefficient for two feature, count fingerprint representations.
      * <p>
      * Note that feature/count type fingerprints may be of different length.
      *
@@ -167,7 +167,7 @@ public class Tanimoto {
     }
 
     /**
-     * Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
+     * Evaluate continuous Tanimoto coefficient for two feature, count fingerprint representations.
      * <p>
      * Note that feature/count type fingerprints may be of different length.
      * Uses Tanimoto method from 10.1021/ci800326z

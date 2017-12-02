@@ -272,7 +272,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         String output = writer.toString();
         // the current behavior is that if both 2D and 3D coordinates
-        // are available, the 3D is outputed, and the 2D not
+        // are available, the 3D is outputted, and the 2D not
         Assert.assertTrue(output.contains("3.0"));
         Assert.assertTrue(output.contains("4.0"));
         Assert.assertTrue(output.contains("5.0"));
@@ -297,7 +297,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         String output = writer.toString();
         // the current behavior is that if both 2D and 3D coordinates
-        // are available, the 3D is outputed, and the 2D not
+        // are available, the 3D is outputted, and the 2D not
         Assert.assertTrue(output.contains("1.0"));
         Assert.assertTrue(output.contains("2.0"));
     }
