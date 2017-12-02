@@ -3419,7 +3419,7 @@ so that a convention for <h:tt>molecule</h:tt> would by default extend to its <h
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">A flag indicated that the element can detach/delete itself.</h:div>
-                <h:div class="description">An element containg this attribute may only have a transient existence
+                <h:div class="description">An element containing this attribute may only have a transient existence
                 (e.g. a template to create other elements) and this attribute shows that 
                 the element can be deleted at the appropriate stage. The time at which this
                 is called is application dependent. At present the presence of the attribute

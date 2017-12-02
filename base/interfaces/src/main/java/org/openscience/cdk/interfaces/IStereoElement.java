@@ -95,7 +95,7 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
      * there are two geometries with the same number of carriers.
      */
 
-    /** Geomeric CisTrans (e.g. but-2-ene) */
+    /** Geometric CisTrans (e.g. but-2-ene) */
     public static final int CT   = 0x21_00;
 
     /** Tetrahedral (T-4) (e.g. butan-2-ol)*/
@@ -128,7 +128,7 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
     /** Heptagonal Bipyramidal (HBPY-9) */
     public static final int HBPY9 = 0x91_00;
 
-    /** Geomeric CisTrans (e.g. but-2-ene) */
+    /** Geometric CisTrans (e.g. but-2-ene) */
     public static final int CisTrans              = CT;
 
     /** Tetrahedral (T-4) (e.g. butan-2-ol)*/

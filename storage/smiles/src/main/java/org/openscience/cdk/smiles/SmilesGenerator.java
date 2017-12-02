@@ -705,7 +705,7 @@ public final class SmilesGenerator {
             return (long[]) method.invoke(c, container);
         } catch (ClassNotFoundException e) {
             throw new CDKException("The cdk-inchi module is not loaded,"
-                    + " this module is need when gernating absolute SMILES.");
+                    + " this module is need when generating absolute SMILES.");
         } catch (NoSuchMethodException e) {
             throw new CDKException("The method " + mname + " was not found", e);
         } catch (InvocationTargetException e) {
@@ -739,7 +739,7 @@ public final class SmilesGenerator {
         return x;
     }
 
-    // utility method maps the atoms to their indicies using the provided map.
+    // utility method maps the atoms to their indices using the provided map.
     private static List<Integer> toAtomIdxs(Collection<IAtom> atoms, Map<IAtom, Integer> atomidx) {
         List<Integer> idxs = new ArrayList<>(atoms.size());
         for (IAtom atom : atoms)
