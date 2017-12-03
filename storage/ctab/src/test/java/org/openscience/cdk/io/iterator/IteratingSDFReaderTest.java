@@ -115,7 +115,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         Object object = reader.next();
         Assert.assertNotNull(object);
         Assert.assertTrue(object instanceof IAtomContainer);
-        Assert.assertEquals("2-methylbenzo-1,4-quinone", ((IAtomContainer) object).getProperty(CDKConstants.TITLE));
+        Assert.assertEquals("2-methylbenzo-1,4-quinone", ((IAtomContainer) object).getTitle());
         Assert.assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
         reader.close();
     }

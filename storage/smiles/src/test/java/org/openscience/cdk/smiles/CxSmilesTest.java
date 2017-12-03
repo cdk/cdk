@@ -101,21 +101,21 @@ public class CxSmilesTest {
     public void nonCXSMILESLayer() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1 |<benzene>|");
         assertNotNull(mol);
-        assertThat(mol.getProperty(CDKConstants.TITLE, String.class), is("|<benzene>|"));
+        assertThat(mol.getTitle(), is("|<benzene>|"));
     }
 
     @Test
     public void truncatedCXSMILES() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1 |");
         assertNotNull(mol);
-        assertThat(mol.getProperty(CDKConstants.TITLE, String.class), is("|"));
+        assertThat(mol.getTitle(), is("|"));
     }
 
     @Test
     public void correctTitle() throws InvalidSmilesException {
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1 |c:1,3,4| benzene");
         assertNotNull(mol);
-        assertThat(mol.getProperty(CDKConstants.TITLE, String.class), is("benzene"));
+        assertThat(mol.getTitle(), is("benzene"));
     }
 
     @Test
@@ -166,7 +166,7 @@ public class CxSmilesTest {
         // attach-points
         assertThat(mol.getAtom(9), is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom) mol.getAtom(9)).getAttachPointNum(), is(1));
-        assertThat(mol.getProperty(CDKConstants.TITLE, String.class), is(""));
+        assertThat(mol.getTitle(), is(""));
     }
 
     @Test

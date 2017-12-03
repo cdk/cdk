@@ -363,7 +363,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals("acetic acid", mol.getProperty(CDKConstants.TITLE));
+        Assert.assertEquals("acetic acid", mol.getTitle());
     }
 
     /**

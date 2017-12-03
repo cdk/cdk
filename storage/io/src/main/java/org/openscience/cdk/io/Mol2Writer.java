@@ -140,8 +140,8 @@ public class Mol2Writer extends DefaultChemObjectWriter {
         matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
         try {
             logger.debug("Writing header...");
-            if (mol.getProperty(CDKConstants.TITLE) != null) {
-                writer.write("#        Name: " + mol.getProperty(CDKConstants.TITLE));
+            if (mol.getTitle() != null) {
+                writer.write("#        Name: " + mol.getTitle());
                 writer.write('\n');
             }
             // FIXME: add other types of meta data

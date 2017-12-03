@@ -3018,4 +3018,83 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.getConnectedSingleElectronsCount(atom);
     }
 
+    @Test
+    public void addSameAtomTwice() {
+        IAtomContainer mol  = (IAtomContainer) newChemObject();
+        IAtom          atom = mol.getBuilder().newAtom();
+        mol.addAtom(atom);
+        mol.addAtom(atom);
+        assertThat(mol.getAtomCount(), is(1));
+    }
+
+    @Test
+    public void preserveAdjacencyOnSetAtoms() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1  = mol.getBuilder().newAtom();
+        IAtom          a2  = mol.getBuilder().newAtom();
+        IAtom          a3  = mol.getBuilder().newAtom();
+        IAtom          a4  = mol.getBuilder().newAtom();
+        IBond          b1  = mol.getBuilder().newBond();
+        IBond          b2  = mol.getBuilder().newBond();
+        IBond          b3  = mol.getBuilder().newBond();
+        b1.setAtoms(new IAtom[]{a1, a2});
+        b2.setAtoms(new IAtom[]{a2, a3});
+        b3.setAtoms(new IAtom[]{a3, a4});
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        mol.addAtom(a4);
+        mol.addBond(b1);
+        mol.addBond(b2);
+        mol.addBond(b3);
+        assertThat(mol.getConnectedBondsCount(a1), is(1));
+        assertThat(mol.getConnectedBondsCount(a2), is(2));
+        assertThat(mol.getConnectedBondsCount(a3), is(2));
+        assertThat(mol.getConnectedBondsCount(a4), is(1));
+        mol.setAtoms(new IAtom[]{a3, a4, a2, a1});
+        assertThat(mol.getConnectedBondsCount(a1), is(1));
+        assertThat(mol.getConnectedBondsCount(a2), is(2));
+        assertThat(mol.getConnectedBondsCount(a3), is(2));
+        assertThat(mol.getConnectedBondsCount(a4), is(1));
+    }
+
+    @Test
+    public void setConnectedAtomsAfterAddBond() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1  = mol.getBuilder().newAtom();
+        IAtom          a2  = mol.getBuilder().newAtom();
+        IBond          b1  = mol.getBuilder().newBond();
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addBond(b1);
+        // can't call on b1!
+        mol.getBond(0).setAtoms(new IAtom[]{a1, a2});
+        assertThat(mol.getConnectedBondsCount(a1), is(1));
+        assertThat(mol.getConnectedBondsCount(a2), is(1));
+    }
+
+    @Test
+    public void changeConnectedAtomsAfterAddBond() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1  = mol.getBuilder().newAtom();
+        IAtom          a2  = mol.getBuilder().newAtom();
+        IAtom          a3  = mol.getBuilder().newAtom();
+        IBond          b1  = mol.getBuilder().newBond();
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        b1.setAtoms(new IAtom[]{a1, a2});
+        mol.addBond(b1);
+        assertThat(mol.getConnectedBondsCount(a1), is(1));
+        assertThat(mol.getConnectedBondsCount(a2), is(1));
+        assertThat(mol.getConnectedBondsCount(a3), is(0));
+        mol.getBond(0).setAtom(a3, 0);
+        assertThat(mol.getConnectedBondsCount(a1), is(0));
+        assertThat(mol.getConnectedBondsCount(a2), is(1));
+        assertThat(mol.getConnectedBondsCount(a3), is(1));
+        mol.getBond(0).setAtom(a1, 1);
+        assertThat(mol.getConnectedBondsCount(a1), is(1));
+        assertThat(mol.getConnectedBondsCount(a2), is(0));
+        assertThat(mol.getConnectedBondsCount(a3), is(1));
+    }
 }

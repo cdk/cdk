@@ -469,8 +469,8 @@ public class Convertor {
         else
             cmlMolecule.setRef(structure.getID());
 
-        if (structure.getProperty(CDKConstants.TITLE) != null) {
-            cmlMolecule.setTitle((String) structure.getProperty(CDKConstants.TITLE));
+        if (structure.getTitle() != null) {
+            cmlMolecule.setTitle((String) structure.getTitle());
         }
         if (structure.getProperty(CDKConstants.INCHI) != null) {
             CMLIdentifier ident = new CMLIdentifier();

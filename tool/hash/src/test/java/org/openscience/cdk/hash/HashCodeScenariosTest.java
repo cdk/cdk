@@ -56,7 +56,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.openscience.cdk.CDKConstants.TITLE;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
 
@@ -1108,7 +1107,7 @@ public class HashCodeScenariosTest {
     }
 
     private static String title(IAtomContainer mol) {
-        return mol.getProperty(TITLE);
+        return mol.getTitle();
     }
 
     private static String nonEqMesg(IAtomContainer a, IAtomContainer b) {

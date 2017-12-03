@@ -156,7 +156,7 @@ public class XYZReader extends DefaultChemObjectReader {
                 IAtomContainerSet setOfMolecules = file.getBuilder().newInstance(IAtomContainerSet.class);
 
                 IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
-                m.setProperty(CDKConstants.TITLE, info);
+                m.setTitle(info);
 
                 for (int i = 0; i < number_of_atoms; i++) {
                     line = input.readLine();

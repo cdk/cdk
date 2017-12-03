@@ -132,6 +132,9 @@ final class BeamToCDK {
             atoms[i] = toCDKAtom(g.atom(i), g.implHCount(i));
         }
         ac.setAtoms(atoms);
+        // get the atom-refs
+        for (int i = 0; i < g.order(); i++)
+            atoms[i] = ac.getAtom(i);
         for (Edge edge : g.edges()) {
 
             final int u = edge.either();
@@ -236,7 +239,7 @@ final class BeamToCDK {
         }
 
         // title suffix
-        ac.setProperty(CDKConstants.TITLE, g.getTitle());
+        ac.setTitle(g.getTitle());
 
         return ac;
     }

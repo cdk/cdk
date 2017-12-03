@@ -21,6 +21,7 @@ package org.openscience.cdk.pharmacophore;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.BondRef;
 
 /**
  * Represents a pharmacophore query distance constraint.
@@ -90,6 +91,7 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      */
     @Override
     public boolean matches(IBond bond) {
+        bond = BondRef.deref(bond);
         if (bond instanceof PharmacophoreBond) {
             PharmacophoreBond pbond = (PharmacophoreBond) bond;
             double bondLength = round(pbond.getBondLength(), 2);

@@ -255,10 +255,10 @@ public class Mol2Reader extends DefaultChemObjectReader {
 
             // ok, if we're coming from the chemfile functoion, we've alreay read the molecule RTI
             if (firstLineisMolecule)
-                molecule.setProperty(CDKConstants.TITLE, line);
+                molecule.setTitle(line);
             else {
                 line = input.readLine();
-                molecule.setProperty(CDKConstants.TITLE, line);
+                molecule.setTitle(line);
             }
 
             // get atom and bond counts

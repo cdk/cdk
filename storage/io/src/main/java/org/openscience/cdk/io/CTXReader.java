@@ -175,7 +175,7 @@ public class CTXReader extends DefaultChemObjectReader {
         for (int i = 0; i < lineCount; i++) {
             name = name + input.readLine().trim();
         }
-        container.setProperty(CDKConstants.TITLE, name);
+        container.setTitle(name);
     }
 
     private void processAtomsBlock(int lineCount, IAtomContainer container) throws IOException {
