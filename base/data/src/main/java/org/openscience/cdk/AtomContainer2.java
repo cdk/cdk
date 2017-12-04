@@ -179,7 +179,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return atomref;
     }
 
-    private BaseAtomRef newAtomRef(IAtom atom) {
+    private static BaseAtomRef newAtomRef(IAtom atom) {
         // most common implementation we'll encounter..
         if (atom.getClass() == Atom.class)
             return new BaseAtomRef(this, atom);
@@ -209,7 +209,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return null;
     }
 
-    private BaseBondRef newBondRef(IBond bond) {
+    private static BaseBondRef newBondRef(IBond bond) {
         BaseAtomRef beg = bond.getBegin() == null ? null : getAtomRef(bond.getBegin());
         BaseAtomRef end = bond.getEnd() == null ? null : getAtomRef(bond.getEnd());
         if (bond.getClass() == Bond.class)
