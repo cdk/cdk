@@ -66,7 +66,7 @@ public final class SmiFlavor {
 
     /**
      * Writes aromatic atoms as lower case letters. For portability
-     * this option is not recomended.
+     * this option is not recommended.
      */
     public static final int UseAromaticSymbols = 0x010;
 

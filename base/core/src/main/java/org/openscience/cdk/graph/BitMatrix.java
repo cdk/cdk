@@ -150,7 +150,7 @@ final class BitMatrix {
      * @param row the row
      */
     public void add(BitSet row) {
-        if (m >= max) throw new IndexOutOfBoundsException("initalise matrix with more rows");
+        if (m >= max) throw new IndexOutOfBoundsException("initialise matrix with more rows");
         rows[m] = row;
         indices[m] = m;
         m++;

@@ -366,17 +366,17 @@ public abstract class SubstructureTest {
     }
 
     void assertMatch(IAtomContainer query, IAtomContainer target, int count) {
-        assertThat(query.getProperty(TITLE) + " should match " + target.getProperty(TITLE) + " " + count + " times",
+        assertThat(query.getTitle() + " should match " + target.getTitle() + " " + count + " times",
                 create(query).matchAll(target).stereochemistry().count(), is(count));
     }
 
     void assertMatch(IAtomContainer query, IAtomContainer target) {
-        assertTrue(query.getProperty(TITLE) + " should match " + target.getProperty(TITLE),
+        assertTrue(query.getTitle() + " should match " + target.getTitle(),
                 create(query).matches(target));
     }
 
     void assertMismatch(IAtomContainer query, IAtomContainer target) {
-        assertFalse(query.getProperty(TITLE) + " should not matched " + target.getProperty(TITLE), create(query)
+        assertFalse(query.getTitle() + " should not matched " + target.getTitle(), create(query)
                 .matches(target));
     }
 
@@ -385,7 +385,7 @@ public abstract class SubstructureTest {
     // create a container from a smiles string
     IAtomContainer smi(String smi) throws Exception {
         IAtomContainer container = sp.parseSmiles(smi);
-        container.setProperty(TITLE, smi);
+        container.setTitle(smi);
         return container;
     }
 

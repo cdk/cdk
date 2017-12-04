@@ -63,6 +63,8 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
+import java.util.Locale;
+
 /**
  * A factory class to provide implementation independent {@link ICDKObject}s.
  * 
@@ -83,6 +85,35 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
  * @see DynamicFactory
  */
 public class SilentChemObjectBuilder implements IChemObjectBuilder {
+
+    // Improved over System.getBoolean(), if we don't recognize the value we throw
+    // an error rather than return false. The default can also be specified.
+    private static boolean getSystemProp(final String key, final boolean defaultValue) {
+        String val = System.getProperty(key);
+        if (val == null)
+            val = System.getenv(key);
+        if (val == null) {
+            return defaultValue;
+        } else if (val.isEmpty()) {
+            return true;
+        } else {
+            switch (val.toLowerCase(Locale.ROOT)) {
+                case "t":
+                case "true":
+                case "1":
+                    return true;
+                case "f":
+                case "false":
+                case "0":
+                    return false;
+                default:
+                    throw new IllegalArgumentException("Invalid value, expected true/false: " + val);
+            }
+        }
+    }
+
+    private static final boolean CDK_LEGACY_AC
+        = getSystemProp("CdkUseLegacyAtomContainer", true);
 
     private static volatile IChemObjectBuilder instance = null;
     private static final Object                LOCK     = new Object();
@@ -109,7 +140,13 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
         factory.register(ILonePair.class, LonePair.class);
 
         // atom containers
-        factory.register(IAtomContainer.class, AtomContainer.class);
+        if (CDK_LEGACY_AC) {
+            factory.register(IAtomContainer.class, AtomContainer.class);
+        } else {
+            System.err.println("[INFO] Using the new AtomContainer implementation.");
+            factory.register(IAtomContainer.class, AtomContainer2.class);
+        }
+
         factory.register(IRing.class, Ring.class);
         factory.register(ICrystal.class, Crystal.class);
         factory.register(IPolymer.class, Polymer.class);
@@ -222,6 +259,10 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
      */
     @Override
     public IAtomContainer newAtomContainer() {
-        return new AtomContainer(0,0,0,0);
+        if (CDK_LEGACY_AC)
+            return new AtomContainer(0,0,0,0);
+        else
+            return new AtomContainer2(0,0,0,0);
+
     }
 }

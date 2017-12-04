@@ -292,7 +292,7 @@ public final class SmilesParser {
             if ((pos = CxSmilesParser.processCx(title, cxstate = new CxSmilesState())) >= 0) {
 
                 // set the correct title
-                mol.setProperty(CDKConstants.TITLE, title.substring(pos));
+                mol.setTitle(title.substring(pos));
 
                 final Map<IAtom, IAtomContainer> atomToMol = Maps.newHashMapWithExpectedSize(mol.getAtomCount());
                 final List<IAtom> atoms = new ArrayList<>(mol.getAtomCount());

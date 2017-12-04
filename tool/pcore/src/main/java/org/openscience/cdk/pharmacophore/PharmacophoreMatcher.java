@@ -24,11 +24,13 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.vecmath.Point3d;
 
 import com.google.common.collect.HashBiMap;
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
@@ -207,7 +209,7 @@ public class PharmacophoreMatcher {
         if (!checkQuery(pharmacophoreQuery))
             throw new CDKException(
                     "A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
-        String title = (String) atomContainer.getProperty(CDKConstants.TITLE);
+        String title = (String) atomContainer.getTitle();
 
         if (initializeTarget)
             pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);
@@ -216,7 +218,7 @@ public class PharmacophoreMatcher {
             // constant, their coords will differ, so we need to make
             // sure we get the latest set of effective coordinates
             for (IAtom iAtom : pharmacophoreMolecule.atoms()) {
-                PharmacophoreAtom patom = (PharmacophoreAtom) iAtom;
+                PharmacophoreAtom patom = PharmacophoreAtom.get(iAtom);
                 List<Integer> tmpList = new ArrayList<Integer>();
                 for (int idx : patom.getMatchingAtoms())
                     tmpList.add(idx);
@@ -229,7 +231,7 @@ public class PharmacophoreMatcher {
             logger.debug("Target [" + title + "] did not match the query SMARTS. Skipping constraints");
             return false;
         }
-        
+
         mappings = Pattern.findSubstructure(pharmacophoreQuery)
                           .matchAll(pharmacophoreMolecule);
 
@@ -327,7 +329,7 @@ public class PharmacophoreMatcher {
         for (Map<IAtom,IAtom> map : mappings.toAtomMap()) {
             List<PharmacophoreAtom> pcoreatoms = new ArrayList<>();
             for (IAtom atom : map.values())
-                pcoreatoms.add((PharmacophoreAtom) atom);
+                pcoreatoms.add((PharmacophoreAtom) AtomRef.deref(atom));
             atoms.add(pcoreatoms);
         }
         return atoms;
@@ -368,7 +370,7 @@ public class PharmacophoreMatcher {
         final Set<String>            matched     = new HashSet<>();
         final Set<PharmacophoreAtom> uniqueAtoms = new LinkedHashSet<>();
 
-        logger.debug("Converting [" + input.getProperty(CDKConstants.TITLE) + "] to a pcore molecule");
+        logger.debug("Converting [" + input.getTitle() + "] to a pcore molecule");
         
         // lets loop over each pcore query atom
         for (IAtom atom : pharmacophoreQuery.atoms()) {
@@ -410,8 +412,8 @@ public class PharmacophoreMatcher {
             int npatom = pharmacophoreMolecule.getAtomCount();
             for (int i = 0; i < npatom - 1; i++) {
                 for (int j = i + 1; j < npatom; j++) {
-                    PharmacophoreAtom atom1 = (PharmacophoreAtom) pharmacophoreMolecule.getAtom(i);
-                    PharmacophoreAtom atom2 = (PharmacophoreAtom) pharmacophoreMolecule.getAtom(j);
+                    PharmacophoreAtom atom1 = PharmacophoreAtom.get(pharmacophoreMolecule.getAtom(i));
+                    PharmacophoreAtom atom2 = PharmacophoreAtom.get(pharmacophoreMolecule.getAtom(j));
                     PharmacophoreBond bond = new PharmacophoreBond(atom1, atom2);
                     pharmacophoreMolecule.addBond(bond);
                 }
@@ -463,7 +465,7 @@ public class PharmacophoreMatcher {
                     for (int j = 0; j < unique.size(); j++) {
                         if (i == j) continue;
                         IAtom[] seq2 = unique.get(j);
-                        if (seq1[1].equals(seq2[1]) && seq1[0].equals(seq2[2]) && seq1[2].equals(seq2[0])) {
+                        if (Objects.equals(seq1[1],seq2[1]) && Objects.equals(seq1[0], seq2[2]) && Objects.equals(seq1[2], seq2[0])) {
                             isRepeat = true;
                         }
                     }
@@ -472,8 +474,8 @@ public class PharmacophoreMatcher {
 
                 // finally we can add the unique angle to the target
                 for (IAtom[] seq : unique) {
-                    PharmacophoreAngleBond pbond = new PharmacophoreAngleBond((PharmacophoreAtom) seq[0],
-                            (PharmacophoreAtom) seq[1], (PharmacophoreAtom) seq[2]);
+                    PharmacophoreAngleBond pbond = new PharmacophoreAngleBond(PharmacophoreAtom.get(seq[0]),
+                            PharmacophoreAtom.get(seq[1]), PharmacophoreAtom.get(seq[2]));
                     pharmacophoreMolecule.addBond(pbond);
                     nangleDefs++;
                 }

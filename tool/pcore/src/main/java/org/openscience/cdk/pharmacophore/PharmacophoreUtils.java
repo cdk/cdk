@@ -184,7 +184,7 @@ public class PharmacophoreUtils {
             Object description = query.getProperty("description");
             if (description != null) pcore.addAttribute(new Attribute("description", (String) description));
 
-            Object name = query.getProperty(CDKConstants.TITLE);
+            Object name = query.getTitle();
             if (name != null) pcore.addAttribute(new Attribute("name", (String) name));
 
             // we add the pcore groups for this query as local to the group
@@ -274,7 +274,7 @@ public class PharmacophoreUtils {
             throws CDKException {
         PharmacophoreQuery ret = new PharmacophoreQuery();
         ret.setProperty("description", e.getAttributeValue("description"));
-        ret.setProperty(CDKConstants.TITLE, e.getAttributeValue("name"));
+        ret.setTitle(e.getAttributeValue("name"));
 
         // first get any local group definitions
         HashMap<String, String> local = getGroupDefinitions(e);

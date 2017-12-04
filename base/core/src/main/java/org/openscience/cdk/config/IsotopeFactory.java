@@ -140,7 +140,6 @@ public abstract class IsotopeFactory {
      * @return the corresponding isotope
      */
     public IIsotope getIsotope(String symbol, int massNumber) {
-        IIsotope ret = null;
         int elem = Elements.ofString(symbol).number();
         List<IIsotope> isotopes = this.isotopes[elem];
         if (isotopes == null)

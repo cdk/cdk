@@ -88,7 +88,7 @@ public class CTXReaderTest extends SimpleChemObjectReaderTest {
 
         Assert.assertEquals("Petra", container.getID());
 
-        Assert.assertNotNull(container.getProperty(CDKConstants.TITLE));
-        Assert.assertEquals("CH4O", container.getProperty(CDKConstants.TITLE));
+        Assert.assertNotNull(container.getTitle());
+        Assert.assertEquals("CH4O", container.getTitle());
     }
 }

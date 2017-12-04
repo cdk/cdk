@@ -152,7 +152,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
             IAtomContainerSet setOfMolecules = file.getBuilder().newInstance(IAtomContainerSet.class);
 
             IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
-            m.setProperty(CDKConstants.TITLE, info);
+            m.setTitle(info);
 
             String[] types = new String[number_of_atoms];
             double[] d = new double[number_of_atoms];

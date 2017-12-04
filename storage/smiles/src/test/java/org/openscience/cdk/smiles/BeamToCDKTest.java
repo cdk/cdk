@@ -498,17 +498,17 @@ public class BeamToCDKTest {
     }
 
     @Test public void titleWithTab() throws Exception {
-        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").getProperty(CDKConstants.TITLE),
+        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").getTitle(),
                      "caffeine");
     }
 
     @Test public void titleWithSpace() throws Exception {
-        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").getProperty(CDKConstants.TITLE),
+        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").getTitle(),
                      "caffeine");
     }
 
     @Test public void titleWithMultipleSpace() throws Exception {
-        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").getProperty(CDKConstants.TITLE),
+        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").getTitle(),
                      "caffeine compound");
     }
 

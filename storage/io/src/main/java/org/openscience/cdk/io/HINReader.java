@@ -185,7 +185,7 @@ public class HINReader extends DefaultChemObjectReader {
                     line = input.readLine();
                 }
                 IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
-                m.setProperty(CDKConstants.TITLE, info);
+                m.setTitle(info);
 
                 // Each element of cons is an ArrayList of length 3 which stores
                 // the start and end indices and bond order of each bond

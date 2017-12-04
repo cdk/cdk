@@ -140,7 +140,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
 
     private void writeCrystal(ICrystal crystal) {
 
-        Object title = crystal.getProperty(CDKConstants.TITLE);
+        Object title = crystal.getTitle();
         if (title != null && title.toString().trim().length() > 0) {
             writeln("TITL " + title.toString().trim());
         } else {

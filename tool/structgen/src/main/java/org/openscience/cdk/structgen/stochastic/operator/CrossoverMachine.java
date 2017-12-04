@@ -180,7 +180,7 @@ public class CrossoverMachine {
                     }
                 }
             }
-            //if we have combineable fragments
+            //if we have combinable fragments
             if (isok) {
                 //combine the fragments crosswise
                 IAtomContainerSet[] newstrucs = new IAtomContainerSet[2];

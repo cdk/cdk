@@ -19,6 +19,8 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.AtomRef;
 
 import javax.vecmath.Point3d;
 import java.util.Arrays;
@@ -76,6 +78,14 @@ public class PharmacophoreAtom extends Atom {
             matchingAtoms = new int[indices.length];
             System.arraycopy(indices, 0, matchingAtoms, 0, indices.length);
         }
+    }
+
+    public static PharmacophoreAtom get(IAtom atom) {
+        if (atom instanceof PharmacophoreAtom)
+            return (PharmacophoreAtom) atom;
+        if (atom instanceof AtomRef)
+            return get(((AtomRef) atom).deref());
+        return null;
     }
 
     /**

@@ -78,7 +78,7 @@ public class IteratingMDLConformerReader implements Iterator {
                 if (container.size() == 0)
                     container.add(mol);
                 else {
-                    if (container.getTitle().equals(mol.getProperty(CDKConstants.TITLE)))
+                    if (container.getTitle().equals(mol.getTitle()))
                         container.add(mol);
                     else {
                         lastMol = mol;

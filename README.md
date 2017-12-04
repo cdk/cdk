@@ -199,7 +199,7 @@ cdk/tool/forcefield: open target/site/jacoco/index.html
 
 The contribute method determines the number of pi electrons for an element with specified valence (v) and connectivity (x). We can see that two lines are flagged as yellow. On inspection we can see that 1 of 4 branches was missed. There are four branches because of two conditionals (2^2=4) and one of them is missed.
 
-![JaCoCo Report Example](http://i56.photobucket.com/albums/g187/johnymay/cdk-wiki/jacoco-mmff-example_zps529c0073.png)
+![](http://cdk.github.io/cdk/img/jacoco-mmff-example_zps529c0073.png)
 
 IDEs and CI servers (Jenkins) can also integrate the reports directly.
 

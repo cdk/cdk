@@ -34,6 +34,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
+import org.openscience.cdk.AtomRef;
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
@@ -175,16 +177,17 @@ public class PharmacophoreMatcherTest {
         Assert.assertEquals(2, bMatches.size()); // 2 since we haven't gotten a unique set
         Assert.assertEquals(3, bMatches.get(0).size());
 
-        PharmacophoreBond pbond = (PharmacophoreBond) bMatches.get(0).get(0);
-        PharmacophoreAtom patom1 = (PharmacophoreAtom) pbond.getBegin();
-        PharmacophoreAtom patom2 = (PharmacophoreAtom) pbond.getEnd();
+        PharmacophoreBond pbond = (PharmacophoreBond) BondRef.deref(bMatches.get(0).get(0));
+        PharmacophoreAtom patom1 = (PharmacophoreAtom) AtomRef.deref(pbond.getBegin());
+        PharmacophoreAtom patom2 = (PharmacophoreAtom) AtomRef.deref(pbond.getEnd());
         Assert.assertEquals("D", patom1.getSymbol());
         Assert.assertEquals("A", patom2.getSymbol());
 
         List<HashMap<IBond, IBond>> bondMap = matcher.getTargetQueryBondMappings();
         Assert.assertEquals(2, bondMap.size());
         HashMap<IBond, IBond> mapping = bondMap.get(0);
-        IBond value = mapping.get(pbond);
+        // get the 'BondRef' for lookup
+        IBond value = mapping.get(bMatches.get(0).get(0));
         Assert.assertEquals(b1, value);
     }
 
@@ -272,7 +275,7 @@ public class PharmacophoreMatcherTest {
         Assert.assertEquals(1, bmatches.size());
         List<IBond> bmatch = bmatches.get(0);
         Assert.assertEquals(1, bmatch.size());
-        PharmacophoreBond pbond = (PharmacophoreBond) bmatch.get(0);
+        PharmacophoreBond pbond = (PharmacophoreBond) BondRef.deref(bmatch.get(0));
         Assert.assertEquals(5.63, pbond.getBondLength(), 0.01);
     }
 

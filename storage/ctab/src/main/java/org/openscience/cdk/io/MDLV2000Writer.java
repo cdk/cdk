@@ -306,12 +306,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         IAtomContainer bigPile = file.getBuilder().newInstance(IAtomContainer.class);
         for (IAtomContainer container : ChemFileManipulator.getAllAtomContainers(file)) {
             bigPile.add(container);
-            if (container.getProperty(CDKConstants.TITLE) != null) {
-                if (bigPile.getProperty(CDKConstants.TITLE) != null)
-                    bigPile.setProperty(CDKConstants.TITLE,
-                                        bigPile.getProperty(CDKConstants.TITLE) + "; " + container.getProperty(CDKConstants.TITLE));
+            if (container.getTitle() != null) {
+                if (bigPile.getTitle() != null)
+                    bigPile.setTitle(bigPile.getTitle() + "; " + container.getTitle());
                 else
-                    bigPile.setProperty(CDKConstants.TITLE, container.getProperty(CDKConstants.TITLE));
+                    bigPile.setTitle(container.getTitle());
             }
             if (container.getProperty(CDKConstants.REMARK) != null) {
                 if (bigPile.getProperty(CDKConstants.REMARK) != null)
@@ -337,7 +336,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         Map<Integer, String> aliases = null;
         // write header block
         // lines get shortened to 80 chars, that's in the spec
-        String title = (String) container.getProperty(CDKConstants.TITLE);
+        String title = container.getTitle();
         if (title == null) title = "";
         if (title.length() > 80) title = title.substring(0, 80);
         writer.write(title);
