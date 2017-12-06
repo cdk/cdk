@@ -1159,37 +1159,38 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
                     }
                 }
                 numBonds = newNumBonds;
-
-                // update single electrons
-                int newNumSingleElectrons = 0;
-                for (int i = 0; i < numSingleElectrons; i++) {
-                    if (!electrons[i].contains(atom)) {
-                        electrons[newNumBonds] = electrons[i];
-                        newNumSingleElectrons++;
-                    } else {
-                        electrons[i].removeListener(this);
-                    }
-                }
-                numSingleElectrons = newNumSingleElectrons;
-
-                // update lone pairs
-                int newNumLonePairs = 0;
-                for (int i = 0; i < numLonePairs; i++) {
-                    if (!lonepairs[i].contains(atom)) {
-                        lonepairs[newNumBonds] = lonepairs[i];
-                        newNumLonePairs++;
-                    } else {
-                        lonepairs[i].removeListener(this);
-                    }
-                }
-                numLonePairs = newNumLonePairs;
-
-                List<IStereoElement> atomElements = new ArrayList<>();
-                for (IStereoElement element : stereo) {
-                    if (element.contains(atom)) atomElements.add(element);
-                }
-                stereo.removeAll(atomElements);
             }
+
+            // update single electrons
+            int newNumSingleElectrons = 0;
+            for (int i = 0; i < numSingleElectrons; i++) {
+                if (!electrons[i].contains(atom)) {
+                    electrons[newNumSingleElectrons] = electrons[i];
+                    newNumSingleElectrons++;
+                } else {
+                    electrons[i].removeListener(this);
+                }
+            }
+            numSingleElectrons = newNumSingleElectrons;
+
+            // update lone pairs
+            int newNumLonePairs = 0;
+            for (int i = 0; i < numLonePairs; i++) {
+                if (!lonepairs[i].contains(atom)) {
+                    lonepairs[newNumLonePairs] = lonepairs[i];
+                    newNumLonePairs++;
+                } else {
+                    lonepairs[i].removeListener(this);
+                }
+            }
+            numLonePairs = newNumLonePairs;
+
+            List<IStereoElement> atomElements = new ArrayList<>();
+            for (IStereoElement element : stereo) {
+                if (element.contains(atom)) atomElements.add(element);
+            }
+            stereo.removeAll(atomElements);
+            
             removeAtomOnly(atomref.getIndex());
         }
     }
