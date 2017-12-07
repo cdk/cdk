@@ -980,6 +980,64 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(o, acetone.getAtom(2));
     }
 
+    @Test
+    public void testRemoveAtomWithLonePairs() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom c0 = mol.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c1 = mol.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = mol.getBuilder().newInstance(IAtom.class, "C");
+        mol.addAtom(c0);
+        mol.addAtom(c1);
+        mol.addAtom(c2);
+        IBond b1 = mol.getBuilder().newInstance(IBond.class, c0, c1, IBond.Order.SINGLE);
+        IBond b2 = mol.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        mol.addBond(b2);
+                
+        mol.addLonePair(1);
+        mol.addLonePair(2);
+
+        int n;
+        n = mol.getLonePairCount();
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j < n; j++)
+                Assert.assertFalse(mol.getLonePair(i) == mol.getLonePair(j));
+        mol.removeAtom(c0);
+        n = mol.getLonePairCount();
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j < n; j++)
+                Assert.assertFalse(mol.getLonePair(i) == mol.getLonePair(j));
+    }
+
+    @Test
+    public void testRemoveAtomWithSingleElectron() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom c0 = mol.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c1 = mol.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = mol.getBuilder().newInstance(IAtom.class, "C");
+        mol.addAtom(c0);
+        mol.addAtom(c1);
+        mol.addAtom(c2);
+        IBond b1 = mol.getBuilder().newInstance(IBond.class, c0, c1, IBond.Order.SINGLE);
+        IBond b2 = mol.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        mol.addBond(b2);
+
+        mol.addSingleElectron(1);
+        mol.addSingleElectron(2);
+        
+        int n;
+        n = mol.getSingleElectronCount();
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j < n; j++)
+                Assert.assertFalse(mol.getSingleElectron(i) == mol.getSingleElectron(j));
+        mol.removeAtom(0);
+        n = mol.getSingleElectronCount();
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j < n; j++)
+                Assert.assertFalse(mol.getSingleElectron(i) == mol.getSingleElectron(j));
+    }
+
     @Test(expected = IndexOutOfBoundsException.class)
     public void testSetAtomOutOfRange() {
         IAtomContainer container = (IAtomContainer) newChemObject();
