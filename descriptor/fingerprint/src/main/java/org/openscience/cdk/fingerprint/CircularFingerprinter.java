@@ -870,7 +870,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                     else
                         adj[i] = mol.indexOf(carriers.get(i));
                 }
-                switch (th.getConfig()) {
+                switch (th.getConfigOrder()) {
                     case IStereoElement.LEFT:
                         int i = adj[2];
                         adj[2] = adj[3];
