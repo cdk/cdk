@@ -575,6 +575,27 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         assertThat("incorrect chiral atom", cloneChirality.getChiralAtom(), sameInstance(clone.getAtom(0)));
 
     }
+    
+    @Test
+    public void testSetStereoElements_Dup() {
+        IAtomContainer container = (IAtomContainer) newChemObject();
+        IChemObjectBuilder builder = container.getBuilder();
+        IAtom atom = builder.newAtom();
+        IAtom a1 = builder.newAtom();
+        IAtom a2 = builder.newAtom();
+        IAtom a3 = builder.newAtom();
+        IAtom a4 = builder.newAtom();
+        
+        List<IStereoElement> tetrahedralElements = new ArrayList<IStereoElement>();
+        IStereoElement stereo = new TetrahedralChirality(atom, new IAtom[]{a1, a2, a3, a4}, ITetrahedralChirality.Stereo.CLOCKWISE);
+        tetrahedralElements.add(stereo);
+        tetrahedralElements.add(stereo);
+        container.setStereoElements(tetrahedralElements);
+        Iterator<IStereoElement> iter = container.stereoElements().iterator();
+        assertThat(iter.hasNext(), is(true));
+        iter.next();
+        assertThat(iter.hasNext(), is(false));
+    }
 
     @Test
     public void testSetStereoElements_List() {
