@@ -259,7 +259,9 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
         this.stereo.clear();
-        this.stereo.addAll(elements);
+        for (IStereoElement element : elements)
+            if (!this.stereo.contains(element))
+                this.addStereoElement(element);
     }
 
     /**
