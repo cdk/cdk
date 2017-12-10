@@ -970,9 +970,15 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         int[] adj = atomAdj[aidx];
         if (adjc == 3) {
             adj = appendInteger(adj, -1);
-            xp[3] = x0;
-            yp[3] = y0;
-            zp[3] = z0;
+            xp[3] = -(xp[0] + xp[1] + xp[2]); 
+            yp[3] = -(yp[0] + yp[1] + yp[2]); 
+            zp[3] = -(zp[0] + zp[1] + zp[2]); 
+            float dsq = xp[3] * xp[3] + yp[3] * yp[3] + zp[3] * zp[3]; 
+            if (dsq < 0.01f * 0.01f) return null; 
+            float inv = 1.0f / (float) Math.sqrt(dsq); 
+            xp[3] *= inv; 
+            yp[3] *= inv; 
+            zp[3] *= inv; 
         }
 
         // make the call on permutational parity
