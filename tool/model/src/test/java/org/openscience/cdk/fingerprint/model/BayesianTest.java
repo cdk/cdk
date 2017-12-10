@@ -193,10 +193,10 @@ public class BayesianTest {
     public void testExample1() throws Exception {
         logger.info("Bayesian/Fingerprints test: using dataset of binding data to compare to reference data");
 
-        runTest("Binders.sdf", "active", CircularFingerprinter.CLASS_ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian");
+        runTest("Binders.sdf", "active", CircularFingerprinter.CLASS_ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian", true);
         runTest("Binders.sdf", "active", CircularFingerprinter.CLASS_ECFP6, 32768, 5,
-                "Binders-ECFP6-32768-xv5.bayesian");
-        runTest("Binders.sdf", "active", CircularFingerprinter.CLASS_FCFP6, 0, 0, "Binders-FCFP6-0-loo.bayesian");
+                "Binders-ECFP6-32768-xv5.bayesian", true);
+        runTest("Binders.sdf", "active", CircularFingerprinter.CLASS_FCFP6, 0, 0, "Binders-FCFP6-0-loo.bayesian", true);
     }
 
     @Test
@@ -372,6 +372,11 @@ public class BayesianTest {
     // that has been previously serialised
     private void runTest(String sdfile, String actvField, int classType, int folding, int xval, String modelFN)
             throws CDKException {
+    	runTest(sdfile, actvField, classType, folding, xval, modelFN, false);
+    }
+    
+    private void runTest(String sdfile, String actvField, int classType, int folding, int xval, String modelFN, boolean perceiveStereo)
+            throws CDKException {
         writeln("[" + modelFN + "]");
         writeln("    Loading " + sdfile);
 
@@ -379,6 +384,7 @@ public class BayesianTest {
             InputStream in = this.getClass().getClassLoader().getResourceAsStream("data/cdd/" + sdfile);
             IteratingSDFReader rdr = new IteratingSDFReader(in, DefaultChemObjectBuilder.getInstance());
             Bayesian model = new Bayesian(classType, folding);
+            model.setPerceiveStereo(perceiveStereo);
 
             int row = 0, numActives = 0;
             while (rdr.hasNext()) {
