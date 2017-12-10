@@ -66,11 +66,11 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * StereoElementFactory stereo    = StereoElementFactory.using2DCoordinates()
  *                                                      .interpretProjections(Projection.Haworth);
  *
- * // set the elements replacing any existing elements (recommended)
+ * // set the elements replacing any existing elements
  * container.setStereoElements(stereo.createAll());
  *
- * // adding elements individually is no recommended as the AtomContainer
- * // does not check for duplicate or contradicting elements
+ * // adding elements individually is also possible but existing elements are
+ * // are not removed
  * for (IStereoElement element : stereo.createAll())
  *     container.addStereoElement(element); // bad, there may already be elements
  *
