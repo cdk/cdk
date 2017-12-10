@@ -1367,13 +1367,32 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         if (line.charAt(offset + 5) != '.') {
             handleError("Bad coordinate format specified, expected 4 decimal places: " + line.substring(offset));
             int start = offset;
-            int end   = offset;
-            while (line.charAt(start) == ' ')
+            while (line.charAt(start) == ' ' && start < offset + 9)
                 start++;
-            end = start;
-            while (line.charAt(end) != ' ')
-                end++;
-            return Double.parseDouble(line.substring(start, end));
+
+            int dot = -1;
+            int end = start;
+            for (char c = line.charAt(end); c != ' ' && end < offset + 9; c = line.charAt(end), end++) {
+                if(c == '.')
+                    dot = end;
+            }
+
+            if(start == end) {
+
+                return 0.0;
+            } else if(dot != -1) {
+
+                int sign = sign(line.charAt(start));
+                if (sign < 0) start++;
+
+                int integral = readUInt(line, start, dot - start - 1);
+                int fraction = readUInt(line, dot, end - dot);
+
+                return sign * (integral * 10000L + fraction) / 10000d;
+            } else {
+
+                return Double.parseDouble(line.substring(start, end));
+            }
         } else {
             int start = offset;
             while (line.charAt(start) == ' ')

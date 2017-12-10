@@ -290,6 +290,9 @@ public class SDFWriter extends DefaultChemObjectWriter {
                                         writer.write(val.toString());
                                     writer.write('\n');
                                     writer.write('\n');
+                                } else {
+
+                                    logger.info("Skipped property " + propKey + " because only primitive and string properties can be written by SDFWriter");
                                 }
                             }
                         }
