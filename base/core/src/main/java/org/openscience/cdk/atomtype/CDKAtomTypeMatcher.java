@@ -1295,7 +1295,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             } else if (maxBondOrder == Order.SINGLE) {
                 IAtomType type = getAtomType("S.anyl");
                 if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
-            } else if (doubleBondedOxygens == 1) {
+            } else if (doubleBondedOxygens == 1 && countAttachedDoubleBonds == 1) {
                 IAtomType type = getAtomType("S.sp3d1");
                 if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             } else if (countAttachedDoubleBonds == 2 && maxBondOrder == Order.DOUBLE) {
