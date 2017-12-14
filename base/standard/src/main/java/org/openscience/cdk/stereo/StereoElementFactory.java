@@ -812,7 +812,8 @@ public abstract class StereoElementFactory {
          * @return the unit vector
          */
         private Point2d toUnitVector(Point2d from, Point2d to) {
-            if (from == to) return new Point2d(0, 0);
+            if (from.equals(to))
+                return new Point2d(0, 0);
             Vector2d v2d = new Vector2d(to.x - from.x, to.y - from.y);
             v2d.normalize();
             return new Point2d(v2d);
