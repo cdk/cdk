@@ -1423,6 +1423,31 @@ public class StereoElementFactoryTest {
                                 .createAll();
         assertThat(stereo.size(), is(1));
     }
+    
+    @Test
+    public void samePositionWithStereocenter() throws Exception {
+    	IAtomContainer m = new AtomContainer();
+        m.addAtom(atom("F", 0, -1, -1));
+        m.addAtom(atom("Cl", 0, 1, -1));
+        m.addAtom(atom("C", 0, 0, 0));
+        m.addAtom(atom("Br", 0, 1, 1));
+        m.addAtom(atom("H", 0, 0, 0));
+        m.addBond(2, 0, IBond.Order.SINGLE);
+        m.addBond(2, 1, IBond.Order.SINGLE);
+        m.addBond(2, 3, IBond.Order.SINGLE);
+        m.addBond(2, 4, IBond.Order.SINGLE);
+        m.getBond(2).setStereo(IBond.Stereo.DOWN);
+        
+        List<IStereoElement> ses = StereoElementFactory.using2DCoordinates(m).createAll();
+        boolean flag = false;
+        for (IStereoElement se : ses) {
+        	if (se != null) {
+        		flag = true;
+        		break;
+        	}
+        }
+        assertThat(flag, is(true));
+    }
 
     static IAtom atom(String symbol, int h, double x, double y) {
         IAtom a = new Atom(symbol);
