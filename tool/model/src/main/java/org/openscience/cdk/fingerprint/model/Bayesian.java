@@ -114,6 +114,7 @@ public class Bayesian {
     // optional text attributes (serialisable)
     private String                 noteTitle    = null, noteOrigin = null;
     private String[]               noteComments = null;
+    private boolean optPerceiveStereo = false;
 
     private static final Pattern   PTN_HASHLINE = Pattern.compile("^(-?\\d+)=([\\d\\.Ee-]+)");
 
@@ -149,6 +150,17 @@ public class Bayesian {
     }
 
     /**
+     * Sets whether stereochemistry should be re-perceived from 2D/3D
+     * coordinates. By default stereochemistry encoded as {@link IStereoElement}s
+     * are used.
+     *
+     * @param val perceived from 2D
+     */
+    public void setPerceiveStereo(boolean val) {
+        this.optPerceiveStereo = val;
+    }
+    
+    /**
      * Access to the fingerprint type.
      * 
      * @return fingerprint class, one of CircularFingerprinter.CLASS_*
@@ -177,6 +189,7 @@ public class Bayesian {
         if (mol == null || mol.getAtomCount() == 0) throw new CDKException("Molecule cannot be blank or null.");
 
         CircularFingerprinter circ = new CircularFingerprinter(classType);
+        circ.setPerceiveStereo(optPerceiveStereo);
         circ.calculate(mol);
 
         // gather all of the (folded) fingerprints into a sorted set
@@ -261,6 +274,7 @@ public class Bayesian {
         if (mol == null || mol.getAtomCount() == 0) throw new CDKException("Molecule cannot be blank or null.");
 
         CircularFingerprinter circ = new CircularFingerprinter(classType);
+        circ.setPerceiveStereo(optPerceiveStereo);
         circ.calculate(mol);
 
         // gather all of the (folded) fingerprints (eliminating duplicates)

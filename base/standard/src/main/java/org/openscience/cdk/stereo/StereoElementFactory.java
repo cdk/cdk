@@ -66,11 +66,11 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * StereoElementFactory stereo    = StereoElementFactory.using2DCoordinates()
  *                                                      .interpretProjections(Projection.Haworth);
  *
- * // set the elements replacing any existing elements (recommended)
+ * // set the elements replacing any existing elements
  * container.setStereoElements(stereo.createAll());
  *
- * // adding elements individually is no recommended as the AtomContainer
- * // does not check for duplicate or contradicting elements
+ * // adding elements individually is also possible but existing elements are
+ * // are not removed
  * for (IStereoElement element : stereo.createAll())
  *     container.addStereoElement(element); // bad, there may already be elements
  *
@@ -812,7 +812,8 @@ public abstract class StereoElementFactory {
          * @return the unit vector
          */
         private Point2d toUnitVector(Point2d from, Point2d to) {
-            if (from == to) return new Point2d(0, 0);
+            if (from.equals(to))
+                return new Point2d(0, 0);
             Vector2d v2d = new Vector2d(to.x - from.x, to.y - from.y);
             v2d.normalize();
             return new Point2d(v2d);

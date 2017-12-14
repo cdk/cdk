@@ -68,6 +68,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 /**
  * @cdk.module test-standard
@@ -365,6 +366,39 @@ public class CircularFingerprinterTest extends CDKTestCase {
         CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP6);
         assertNotNull(circ.getBitFingerprint(m));
     }
+
+	@Test
+	public void testNonZZeroPlaner() throws Exception {
+	    IAtomContainer mol = new AtomContainer();
+	    Atom[] atoms = new Atom[] {
+	        new Atom("C"),
+	        new Atom("F"),
+	        new Atom("N"),
+	        new Atom("O"),
+	    };
+	    atoms[0].setPoint3d(new Point3d(0, 0, -10));
+	    atoms[1].setPoint3d(new Point3d(0, 1, -10));
+	    atoms[2].setPoint3d(new Point3d(-1, -1, -10));
+	    atoms[3].setPoint3d(new Point3d(1, -1, -10));
+	    mol.setAtoms(atoms);
+	    mol.addBond(0, 1, IBond.Order.SINGLE);
+	    mol.addBond(0, 2, IBond.Order.SINGLE);
+	    mol.addBond(0, 3, IBond.Order.SINGLE);
+	    mol.getBond(0).setStereo(IBond.Stereo.UP);
+	    
+	    CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP6);
+	    circ.setPerceiveStereo(true);
+	    IBitFingerprint fp0 = circ.getBitFingerprint(mol);
+	    
+	    for (int i = 0; i < atoms.length; i++) {
+	        Point3d p = atoms[i].getPoint3d();
+	        atoms[i].setPoint3d(new Point3d(p.getX(), p.getY(), p.getZ() + 20));
+	    }
+	
+	    IBitFingerprint fp1 = circ.getBitFingerprint(mol);
+	    
+	    Assert.assertThat(fp0, is(fp1));
+	}
     
     static IAtom atom(String symbol, int q, int h) {
         IAtom a = new Atom(symbol);
