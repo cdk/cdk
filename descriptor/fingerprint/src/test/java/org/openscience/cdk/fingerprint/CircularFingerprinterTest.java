@@ -392,7 +392,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
 	    
 	    for (int i = 0; i < atoms.length; i++) {
 	        Point3d p = atoms[i].getPoint3d();
-	        atoms[i].setPoint3d(new Point3d(p.getX(), p.getY(), p.getZ() + 20));
+	        atoms[i].setPoint3d(new Point3d(p.x, p.y, p.z + 20));
 	    }
 	
 	    IBitFingerprint fp1 = circ.getBitFingerprint(mol);
