@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.SymbolAndChargeQueryAtom;
@@ -40,9 +41,17 @@ import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.MassAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 /**
  * @cdk.module  test-smarts
@@ -159,5 +168,16 @@ public class SMARTSTest extends CDKTestCase {
             Assert.fail(exception.getMessage());
         }
 
+    }
+
+    @Test public void testUnspecifiedIsotope() {
+        IAtom aexpr = SMARTSParser.parse("[!0]", SilentChemObjectBuilder.getInstance())
+                                  .getAtom(0);
+        assertThat(aexpr, instanceOf(LogicalOperatorAtom.class));
+        assertThat(((LogicalOperatorAtom)aexpr).getOperator(),
+                   is("not"));
+        IQueryAtom subexpr = ((LogicalOperatorAtom) aexpr).getLeft();
+        assertThat(subexpr, instanceOf(MassAtom.class));
+        assertThat(subexpr.getMassNumber(), is(0));
     }
 }
