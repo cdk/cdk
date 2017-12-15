@@ -52,8 +52,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
  * while (iter.hasNext()) {
  *   IBond aBond = (IBond) iter.next();
  * }
- * <p>
- *  </pre>
+ * </pre>
  *
  * @author steinbeck
  * @cdk.module silent

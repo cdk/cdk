@@ -105,7 +105,8 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * Gets the automorphism group of the atom container. By default it uses an
      * initial partition based on the element symbols (so all the carbons are in
      * one cell, all the nitrogens in another, etc). If this behaviour is not
-     * desired, then use the {@link #ignoreElements} flag in the constructor.
+     * desired, then use the {@link AtomDiscretePartitionRefiner#ignoreElements}
+     * flag in the constructor.
      *
      * @param atomContainer the atom container to use
      * @return the automorphism group of the atom container
