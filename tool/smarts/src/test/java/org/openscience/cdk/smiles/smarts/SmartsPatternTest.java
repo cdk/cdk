@@ -232,6 +232,22 @@ public class SmartsPatternTest {
         assertTrue(ptrn.matches(smi("[C@@]1(O[C@@]([C@@]([C@]([C@]1(C)O)(C)O)(O)C)(O)C)(O)C")));
     }
 
+    @Test
+    public void hasIsotope() throws Exception {
+        Pattern ptrn = SmartsPattern.create("[!0]");
+        assertFalse(ptrn.matches(smi("C")));
+        assertTrue(ptrn.matches(smi("[12C]")));
+        assertTrue(ptrn.matches(smi("[13C]")));
+    }
+
+    @Test
+    public void hIsotope() throws Exception {
+        Pattern ptrn = SmartsPattern.create("[2#1,3#1]");
+        assertFalse(ptrn.matches(smi("[H][H]")));
+        assertTrue(ptrn.matches(smi("[2H]")));
+        assertTrue(ptrn.matches(smi("[3H]")));
+    }
+
     IAtomContainer smi(String smi) throws Exception {
         return new SmilesParser(bldr).parseSmiles(smi);
     }

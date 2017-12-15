@@ -315,7 +315,7 @@ TOKEN_MGR_DECLS : {
  * ImplicitHighAndExpression ::= <NotExpression> ( <ImplicitHighAndExpression> ) ?
  *             NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
  * RecursiveSmartsExpression ::= "$" "(" <SmartsExpression> ")"
- *   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
+ *   PrimitiveAtomExpression ::= <AtomicMass> | <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
  *                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "#X" | "G" (<DIGIT>+)  
  *                               | "X" (<Digit>+)? | "x" (<Digit>+)? | "^" (<DIGIT>)
  *                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+) | "@" | "@@" | <Digit>+
@@ -447,15 +447,14 @@ ASTAtom	 AtomExpression() #Atom :
 }
 {
 	( 
-	    ( 
-	    
+	    (
 	    	<L_BRACKET> { token_source.SwitchTo(SMARTSParserConstants.ATOM_EXPRESSION);
 firstToken = getToken(1); 
 secondToken = getToken(2); }
-	    	( AtomicMass() { massNode = (ASTAtomicMass)jjtree.popNode(); }	)?
-	    	LowAndExpression() 
+	    	( LOOKAHEAD(2) AtomicMass() { massNode = (ASTAtomicMass)jjtree.popNode(); }	)?
+	    	LowAndExpression()
 	    	{
-				if (massNode != null) { // insert AtomicMass node into expression       
+				if (massNode != null) { // insert AtomicMass node into expression
 					ASTLowAndExpression topNode = (ASTLowAndExpression)jjtree.popNode();
 					topNode.insertLeafChild(massNode);
 					jjtree.pushNode(topNode);
@@ -600,8 +599,7 @@ void RecursiveSmartsExpression() #RecursiveSmartsExpression : {}
 
 void PrimitiveAtomExpression() : {}
 {
-    (
-        NoHydrogenElement() 
+		(		NoHydrogenElement()
         |
         AnyAtom()
         |
@@ -636,20 +634,22 @@ void PrimitiveAtomExpression() : {}
         NonCHHeavyAtom()
         |
         HybridizationNumber()
+        |
+        AtomicMass()
     )
 }
 
 void TotalHCount() #TotalHCount : 
 { StringBuilder digits = new StringBuilder(); }
 {
-    <H> { jjtThis.setCount(1); } [ ( <DIGIT> { digits.append(token.image); } )+ 
+    <H> { jjtThis.setCount(1); } [ LOOKAHEAD(1) ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
     { jjtThis.setCount( Integer.parseInt(digits.toString()) ); } ]
 }
 
 void ImplicitHCount() #ImplicitHCount: 
 { StringBuilder digits = new StringBuilder(); }
 {
-    <h> { jjtThis.setCount(1); } [ ( <DIGIT> { digits.append(token.image); } )+ 
+    <h> { jjtThis.setCount(1); } [ LOOKAHEAD(1) ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
     { jjtThis.setCount( Integer.parseInt(digits.toString()) ); } ]
 }
 
@@ -657,14 +657,14 @@ void ExplicitConnectivity() #ExplicitConnectivity :
 { StringBuilder digits = new StringBuilder(); }
 {
     <D> { jjtThis.setNumOfConnection(1); } 
-    [ ( <DIGIT> { digits.append(token.image); } )+ 
+    [ LOOKAHEAD(1) ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
     { jjtThis.setNumOfConnection( Integer.parseInt(digits.toString()) ); } ]
 }
 
 void AtomicNumber() #AtomicNumber : 
 { StringBuilder digits = new StringBuilder(); }
 {
-    "#" ( <DIGIT> { digits.append(token.image); } )+ 
+    "#" ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
     { jjtThis.setNumber( Integer.parseInt(digits.toString()) ); }
 }
 
@@ -685,10 +685,10 @@ void Charge() #Charge :
     // with more than 8 of them
     LOOKAHEAD(2)
     "+" { jjtThis.setPositive(true); jjtThis.setCharge(1); } 
-      [ ( <DIGIT> { digits.append(token.image); } )+ 
+      [ LOOKAHEAD(1) ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
       { jjtThis.setCharge( Integer.parseInt(digits.toString()) ); } ]
     | "-" { jjtThis.setPositive(false); jjtThis.setCharge(1); } 
-      [ ( <DIGIT> { digits.append(token.image); } )+ 
+      [ LOOKAHEAD(1) ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
       { jjtThis.setCharge( Integer.parseInt(digits.toString()) ); } ]
     | "--"          { jjtThis.setPositive(false); jjtThis.setCharge(2); }
     | "---"         { jjtThis.setPositive(false); jjtThis.setCharge(3); }
@@ -709,14 +709,14 @@ void Charge() #Charge :
 void RingConnectivity() #RingConnectivity : {}
 {
     <x> { jjtThis.setNumOfConnection(1); } 
-    [ ( <DIGIT> )+ { jjtThis.setNumOfConnection( Integer.parseInt(token.image) ); } ]
+    [ LOOKAHEAD(1) ( LOOKAHEAD(1) <DIGIT> )+ { jjtThis.setNumOfConnection( Integer.parseInt(token.image) ); } ]
 }
 
 void PeriodicGroupNumber() throws ParseException #PeriodicGroupNumber :
 { StringBuilder digits = new StringBuilder(); }
 {
     <G> { }
-    ( <DIGIT> { digits.append(token.image); } )+
+    ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
     { int tmpInt = Integer.parseInt(digits.toString());
       if (tmpInt < 1 || tmpInt > 18) throw new ParseException("Invalid group number");
       jjtThis.setGroupNumber( Integer.parseInt(digits.toString()) ); }
@@ -727,7 +727,7 @@ void TotalConnectivity() #TotalConnectivity :
 { StringBuilder digits = new StringBuilder(); }
 {
     <X> { jjtThis.setNumOfConnection(1); } 
-    [ ( <DIGIT> { digits.append(token.image); } )+ 
+    [ LOOKAHEAD(1) ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
     { jjtThis.setNumOfConnection( Integer.parseInt(digits.toString()) ); } ]
 }
 
@@ -735,7 +735,7 @@ void Valence() #Valence :
 { StringBuilder digits = new StringBuilder(); }
 {
     <v> { jjtThis.setOrder(1); } 
-    [ ( <DIGIT> { digits.append(token.image); })+ 
+    [ LOOKAHEAD(1) ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); })+
     { jjtThis.setOrder( Integer.parseInt(digits.toString()) ); } ]
 }
 
@@ -743,7 +743,7 @@ void RingMembership() #RingMembership :
 { StringBuilder digits = new StringBuilder(); }
 {
     <R> { jjtThis.setNumOfMembership(-1); }
-    [ ( <DIGIT> { digits.append(token.image); } )+ 
+    [ LOOKAHEAD(1) ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
     { jjtThis.setNumOfMembership( Integer.parseInt(digits.toString()) ); } ]
 }
 
@@ -751,7 +751,7 @@ void SmallestRingSize() #SmallestRingSize :
 { StringBuilder digits = new StringBuilder(); }
 {
     <r> { jjtThis.setSize(-1); }
-    [ ( <DIGIT> { digits.append(token.image); } )+ 
+    [ LOOKAHEAD(1) ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
     { jjtThis.setSize( Integer.parseInt(digits.toString()) ); } ]
 }
 
@@ -778,7 +778,7 @@ void AnyAtom() #AnyAtom : {}
 void AtomicMass() #AtomicMass : 
 { StringBuilder digits = new StringBuilder(); }
 {
-    ( <DIGIT> { digits.append(token.image); } )+
+    ( LOOKAHEAD(1) <DIGIT> { digits.append(token.image); } )+
     {
     	jjtThis.setMass( Integer.parseInt(digits.toString()) ); 
     }
@@ -793,7 +793,7 @@ void Chirality() #Chirality :
 { StringBuilder digits = new StringBuilder(); }
 {
     "@" { jjtThis.setClockwise(false); }
-    (
+    (   LOOKAHEAD(1)
         "@" { jjtThis.setClockwise(true); }
     )? 
     ( 
