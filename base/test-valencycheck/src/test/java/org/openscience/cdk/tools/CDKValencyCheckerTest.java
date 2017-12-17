@@ -270,9 +270,8 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 
         // sanity check
         bond.setOrder(Order.DOUBLE);
-        mol.addBond(bond);
         findAndConfigureAtomTypesForAllAtoms(mol);
-        Assert.assertFalse(checker.isSaturated(mol));
+        Assert.assertTrue(checker.isSaturated(mol));
     }
 
     private void findAndConfigureAtomTypesForAllAtoms(IAtomContainer container) throws Exception {
