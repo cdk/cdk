@@ -76,7 +76,7 @@ public class CDKValencyChecker implements IValencyChecker {
 
         if (type.getFormalNeighbourCount() == CDKConstants.UNSET)
             throw new CDKException(
-                    "Atom tfindAndConfigureAtomTypesForAllAtomsype is too general; cannot decide the number of implicit hydrogen to add for: "
+                    "Atom type is too general; cannot decide the number of implicit hydrogen to add for: "
                             + atom.getAtomTypeName());
 
         if (type.getProperty(CDKConstants.PI_BOND_COUNT) == CDKConstants.UNSET)
