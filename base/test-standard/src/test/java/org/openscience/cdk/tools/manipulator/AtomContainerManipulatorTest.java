@@ -1257,7 +1257,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     public void removeHydrogens_molecularH() throws Exception {
         assertRemoveH("[H][H]", "[H][H]");
-        assertRemoveH("[HH]", "[HH]"); // note: illegal SMILES but works okay
+        assertRemoveH("[HH]", "[H][H]");
     }
 
     @Test
