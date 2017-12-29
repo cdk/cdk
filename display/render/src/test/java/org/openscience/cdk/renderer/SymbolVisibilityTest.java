@@ -220,13 +220,35 @@ public class SymbolVisibilityTest {
 
         a1.setPoint2d(new Point2d(0, 0));
         a2.setPoint2d(new Point2d(0.5, -0.5));
-        a2.setPoint2d(new Point2d(1, 0));
+        a3.setPoint2d(new Point2d(1, 0));
 
         IBond bond1 = new Bond(a1, a2, IBond.Order.DOUBLE);
         IBond bond2 = new Bond(a2, a3, IBond.Order.SINGLE);
 
         assertTrue(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon()
-                                   .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
+                                   .visible(a1, Collections.singletonList(bond1), new RendererModel()));
+    }
+
+    @Test
+    public void delocalisedCarbons() {
+        IAtom a1 = new Atom("CH");
+        IAtom a2 = new Atom("CH");
+        IAtom a3 = new Atom("CH");
+
+        a1.setPoint2d(new Point2d(0, 0));
+        a2.setPoint2d(new Point2d(0.5, -0.5));
+        a3.setPoint2d(new Point2d(1, 0));
+
+        IBond bond1 = new Bond(a1, a2, IBond.Order.UNSET);
+        IBond bond2 = new Bond(a2, a3, IBond.Order.UNSET);
+        bond1.setIsAromatic(true);
+        bond2.setIsAromatic(true);
+        a1.setIsAromatic(true);
+        a2.setIsAromatic(true);
+        a3.setIsAromatic(true);
+
+        assertFalse(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon()
+                                    .visible(a2, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
 }

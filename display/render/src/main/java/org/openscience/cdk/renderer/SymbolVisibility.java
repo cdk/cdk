@@ -164,8 +164,23 @@ public abstract class SymbolVisibility {
         private static boolean isFourValent(IAtom atom, List<IBond> bonds) {
             Integer valence = atom.getImplicitHydrogenCount();
             if (valence == null) return true;
-            for (final IBond bond : bonds) {
-                valence += bond.getOrder().numeric();
+            if (atom.isAromatic()) {
+                boolean hasUnsetArom = false;
+                for (final IBond bond : bonds) {
+                    if (bond.getOrder() == IBond.Order.UNSET && bond.isAromatic()) {
+                        hasUnsetArom = true;
+                        valence++;
+                    } else {
+                        valence += bond.getOrder().numeric();
+                    }
+                }
+                // valence nudge, we're only dealing with neutral carbons here
+                // and if
+                if (hasUnsetArom)
+                    valence++;
+            } else {
+                for (final IBond bond : bonds)
+                    valence += bond.getOrder().numeric();
             }
             return valence == 4;
         }
