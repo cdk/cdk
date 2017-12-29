@@ -26,7 +26,6 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import com.google.common.primitives.Ints;
-
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -53,7 +52,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -65,6 +63,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
+import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
 import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 import static org.openscience.cdk.renderer.generators.BasicSceneGenerator.BondLength;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.BondSeparation;
@@ -215,14 +214,18 @@ final class StandardBondGenerator {
                 elem = generateSingleBond(bond, atom1, atom2);
                 break;
             case DOUBLE:
-                elem = generateDoubleBond(bond);
+                elem = generateDoubleBond(bond, false);
                 break;
             case TRIPLE:
                 elem =  generateTripleBond(bond, atom1, atom2);
                 break;
             default:
-                // bond orders > 3 not supported
-                elem = generateDashedBond(atom1, atom2);
+                if (bond.isAromatic() && order == UNSET) {
+                    elem = generateDoubleBond(bond, true);
+                } else {
+                    // bond orders > 3 not supported
+                    elem = generateDashedBond(atom1, atom2);
+                }
                 break;
         }
 
@@ -599,9 +602,10 @@ final class StandardBondGenerator {
      * Generates a double bond rendering element by deciding how best to display it.
      *
      * @param bond the bond to render
+     * @param dashed the second line should be dashed
      * @return rendering element
      */
-    private IRenderingElement generateDoubleBond(IBond bond) {
+    private IRenderingElement generateDoubleBond(IBond bond, boolean dashed) {
 
         final boolean cyclic = ringMap.containsKey(bond);
 
@@ -629,31 +633,37 @@ final class StandardBondGenerator {
         atom2Bonds.remove(bond);
 
         if (cyclic) {
+            // get the winding relative to the ring
             final int wind1 = winding(atom1Bonds.get(0), bond);
             final int wind2 = winding(bond, atom2Bonds.get(0));
-            if (wind1 > 0 && !hasDisplayedSymbol(atom1)) {
-                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds);
-            } else if (wind2 > 0 && !hasDisplayedSymbol(atom2)) {
-                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds);
-            } else if (!hasDisplayedSymbol(atom1)) {
-                // special case, offset line is drawn on the opposite side
-                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, true);
-            } else if (!hasDisplayedSymbol(atom2)) {
-                // special case, offset line is drawn on the opposite side
-                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, true);
+            if (wind1 > 0) {
+                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, dashed);
+            } else if (wind2 > 0) {
+                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, dashed);
+            } else {
+                // special case, offset line is drawn on the opposite side for
+                // when concave in macro cycle
+                //
+                //           ---
+                //         a --- b
+                //        /       \
+                //    -- x         x --
+                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, true, dashed);
+            }
+        } else if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1) && (!hasDisplayedSymbol(atom2) || atom2Bonds.isEmpty())) {
+            return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, dashed);
+        } else if (atom2Bonds.size() == 1 && !hasDisplayedSymbol(atom2) && (!hasDisplayedSymbol(atom1) || atom1Bonds.isEmpty())) {
+            return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, dashed);
+        } else if (specialOffsetBondNextToWedge(atom1, atom1Bonds) && !hasDisplayedSymbol(atom1)) {
+            return generateOffsetDoubleBond(bond, atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds, dashed);
+        } else if (specialOffsetBondNextToWedge(atom2, atom2Bonds) && !hasDisplayedSymbol(atom2)) {
+            return generateOffsetDoubleBond(bond, atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds, dashed);
+        } else {
+            if (dashed) {
+                return generateDashedBond(atom1, atom2);
             } else {
                 return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
             }
-        } else if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1) && (!hasDisplayedSymbol(atom2) || atom2Bonds.isEmpty())) {
-            return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds);
-        } else if (atom2Bonds.size() == 1 && !hasDisplayedSymbol(atom2) && (!hasDisplayedSymbol(atom1) || atom1Bonds.isEmpty())) {
-            return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds);
-        } else if (specialOffsetBondNextToWedge(atom1, atom1Bonds) && !hasDisplayedSymbol(atom1)) {
-            return generateOffsetDoubleBond(bond, atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds);
-        } else if (specialOffsetBondNextToWedge(atom2, atom2Bonds) && !hasDisplayedSymbol(atom2)) {
-            return generateOffsetDoubleBond(bond, atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds);
-        } else {
-            return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
         }
     }
 
@@ -735,8 +745,8 @@ final class StandardBondGenerator {
      * @return the rendered bond element
      */
     private IRenderingElement generateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond,
-            List<IBond> atom2Bonds) {
-        return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bond, atom2Bonds, false);
+            List<IBond> atom2Bonds, boolean dashed) {
+        return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bond, atom2Bonds, false, dashed);
     }
 
     /**
@@ -753,7 +763,7 @@ final class StandardBondGenerator {
      * @return the rendered bond element
      */
     private IRenderingElement generateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond,
-            List<IBond> atom2Bonds, boolean invert) {
+            List<IBond> atom2Bonds, boolean invert, boolean dashed) {
 
         assert !hasDisplayedSymbol(atom1);
         assert atom1Bond != null;
@@ -761,6 +771,7 @@ final class StandardBondGenerator {
         final Point2d atom1Point = atom1.getPoint2d();
         final Point2d atom2Point = atom2.getPoint2d();
 
+        final Point2d atom1BackOffPoint = backOffPoint(atom1, atom2);
         final Point2d atom2BackOffPoint = backOffPoint(atom2, atom1);
 
         final Vector2d unit = newUnitVector(atom1Point, atom2Point);
@@ -783,15 +794,19 @@ final class StandardBondGenerator {
 
         // the offset line isn't drawn the full length and is backed off more depending on the
         // angle of adjacent bonds, see GR-1.10 in the IUPAC recommendations
-        double atom1Offset = adjacentLength(sum(reference, unit), perpendicular, separation);
+        double atom1Offset = 0;
         double atom2Offset = 0;
 
-        // reference bond may be on the other side (invert specified) -     the offset needs negating
+        if (dashed || !hasDisplayedSymbol(atom1)) {
+            atom1Offset = adjacentLength(sum(reference, unit), perpendicular, separation);
+        }
+
+        // reference bond may be on the other side (invert specified) - the offset needs negating
         if (reference.dot(perpendicular) < 0) atom1Offset = -atom1Offset;
 
         // the second atom may have zero or more bonds which we can use to get the offset
         // we find the one which is closest to the perpendicular vector
-        if (!atom2Bonds.isEmpty() && !hasDisplayedSymbol(atom2)) {
+        if (!atom2Bonds.isEmpty() && (dashed || !hasDisplayedSymbol(atom2))) {
             Vector2d closest = getNearestVector(perpendicular, atom2, atom2Bonds);
             atom2Offset = adjacentLength(sum(closest, negate(unit)), perpendicular, separation);
 
@@ -806,9 +821,19 @@ final class StandardBondGenerator {
 
         final ElementGroup group = new ElementGroup();
 
-        group.add(newLineElement(atom1Point, atom2BackOffPoint));
-        group.add(newLineElement(sum(sum(atom1Point, scale(perpendicular, separation)), scale(unit, atom1Offset)),
-                sum(sum(atom2BackOffPoint, scale(perpendicular, separation)), scale(unit, -atom2Offset))));
+        group.add(newLineElement(atom1BackOffPoint, atom2BackOffPoint));
+        if (dashed) {
+            Point2d beg = new Point2d(sum(atom1Point, scale(perpendicular, separation)));
+            Point2d end = new Point2d(sum(atom2Point, scale(perpendicular, separation)));
+            group.add(generateDashedBond(beg, end,
+                                         atom1Offset,
+                                         beg.distance(end) - atom2Offset));
+        } else {
+            Point2d beg = new Point2d(sum(atom1BackOffPoint, scale(perpendicular, separation)));
+            Point2d end = new Point2d(sum(atom2BackOffPoint, scale(perpendicular, separation)));
+            group.add(newLineElement(sum(beg, scale(unit, atom1Offset)),
+                                     sum(end, scale(unit, -atom2Offset))));
+        }
 
         // add annotation label on the opposite side
         String label = StandardGenerator.getAnnotationLabel(bond);
@@ -1102,25 +1127,19 @@ final class StandardBondGenerator {
     /**
      * Generates a rendering element for displaying an 'unknown' bond type.
      *
-     * @param from drawn from this atom
-     * @param to drawn to this atom
+     * @param fromPoint drawn from this point
+     * @param toPoint drawn to this point
+     * @param start only start drawing dashes after this point
+     * @param end stop drawing dashes after this point
      * @return rendering of unknown bond
      */
-    IRenderingElement generateDashedBond(IAtom from, IAtom to) {
-
-        final Point2d fromPoint = from.getPoint2d();
-        final Point2d toPoint = to.getPoint2d();
+    IRenderingElement generateDashedBond(Point2d fromPoint, Point2d toPoint, double start, double end) {
 
         final Vector2d unit = newUnitVector(fromPoint, toPoint);
 
         final int nDashes = parameters.get(StandardGenerator.DashSection.class);
 
         final double step = fromPoint.distance(toPoint) / ((3 * nDashes) - 2);
-
-        final double start = hasDisplayedSymbol(from) ? fromPoint.distance(backOffPoint(from, to))
-                : Double.NEGATIVE_INFINITY;
-        final double end = hasDisplayedSymbol(to) ? fromPoint.distance(backOffPoint(to, from))
-                : Double.POSITIVE_INFINITY;
 
         ElementGroup group = new ElementGroup();
 
@@ -1149,6 +1168,18 @@ final class StandardBondGenerator {
         }
 
         return group;
+    }
+
+    IRenderingElement generateDashedBond(IAtom from, IAtom to) {
+        final Point2d fromPoint = from.getPoint2d();
+        final Point2d toPoint = to.getPoint2d();
+
+        final double start = hasDisplayedSymbol(from) ? fromPoint.distance(backOffPoint(from, to))
+                                                      : Double.NEGATIVE_INFINITY;
+        final double end = hasDisplayedSymbol(to) ? fromPoint.distance(backOffPoint(to, from))
+                                                  : Double.POSITIVE_INFINITY;
+
+        return generateDashedBond(fromPoint, toPoint, start, end);
     }
 
     /**
