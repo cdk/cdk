@@ -55,7 +55,6 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -164,7 +163,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             fancyHashedWedges = new FancyHashedWedges(), highlighting = new Highlighting(),
             glowWidth = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
             annFontSize = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
-            sgroupFontScale = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes();
+            sgroupFontScale = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes(),
+            forceDonuts = new ForceDelocalisedBondDisplay();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -559,7 +559,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
                 hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
-                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes);
+                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes, forceDonuts);
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {
@@ -1079,6 +1079,26 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * Whether Major Isotopes e.g. 12C, 16O should be omitted.
      */
     public static final class OmitMajorIsotopes extends AbstractGeneratorParameter<Boolean> {
+
+        /**{@inheritDoc} */
+        @Override
+        public Boolean getDefault() {
+            return false;
+        }
+    }
+
+    /**
+     * Indicate delocalised/aromatic bonds should always be rendered, even when
+     * there is a valid Kekule structure. Delocalised bonds will either be
+     * rendered as a dashed bond to the side or as a circle/donut/life buoy
+     * inside small rings. This depiction is used by default when a bond does
+     * not have an order assigned (e.g. null/unset). Turning this option on
+     * means all delocalised bonds will be rendered this way.
+     * <br>
+     * <b>As recommended by IUPAC, their usage is discouraged and the Kekule
+     * representation is more clear.</b>
+     */
+    public static final class ForceDelocalisedBondDisplay extends AbstractGeneratorParameter<Boolean> {
 
         /**{@inheritDoc} */
         @Override

@@ -122,8 +122,9 @@ final class StandardBondGenerator {
     private final Color                      foreground, annotationColor;
     private final boolean                    fancyBoldWedges, fancyHashedWedges;
     private final double                     annotationDistance, annotationScale;
-    private final Font                       font;
-    private final ElementGroup               annotations;
+    private final Font         font;
+    private final ElementGroup annotations;
+    private final boolean      forceDelocalised;
 
     /**
      * Create a new standard bond generator for the provided structure (container) with the laid out
@@ -162,6 +163,7 @@ final class StandardBondGenerator {
                 * (parameters.get(BondLength.class) / scale);
         this.annotationScale = (1 / scale) * parameters.get(StandardGenerator.AnnotationFontScale.class);
         this.annotationColor = parameters.get(StandardGenerator.AnnotationColor.class);
+        this.forceDelocalised = parameters.get(StandardGenerator.ForceDelocalisedBondDisplay.class);
         this.font = font;
 
         // foreground is based on the carbon color
@@ -211,10 +213,14 @@ final class StandardBondGenerator {
 
         switch (order) {
             case SINGLE:
-                elem = generateSingleBond(bond, atom1, atom2);
+                if (bond.isAromatic() && forceDelocalised)
+                    elem = generateDoubleBond(bond, true);
+                else
+                    elem = generateSingleBond(bond, atom1, atom2);
                 break;
             case DOUBLE:
-                elem = generateDoubleBond(bond, false);
+                elem = generateDoubleBond(bond,
+                                          bond.isAromatic() && forceDelocalised);
                 break;
             case TRIPLE:
                 elem =  generateTripleBond(bond, atom1, atom2);
