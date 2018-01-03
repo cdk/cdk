@@ -114,6 +114,8 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
             throw new IllegalStateException("descriptor is not initalised, invoke 'initalise' first");
         }
 
+        atomContainer = clone(atomContainer); // don't mod original
+
         // do aromaticity detection
         if (this.checkAromaticity) {
             try {

@@ -65,6 +65,9 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      */
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
+
+        container = clone(container); // don't mod original
+
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 3);
         DoubleResult result;
         try {

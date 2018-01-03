@@ -140,6 +140,7 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
      */
     @Override
     public DescriptorValue calculate(IAtomContainer ac) {
+        ac = clone(ac); // don't mod original
         int rotatableBondsCount = 0;
         int degree0;
         int degree1;

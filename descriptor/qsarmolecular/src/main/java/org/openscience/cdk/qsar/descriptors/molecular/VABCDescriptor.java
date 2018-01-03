@@ -85,7 +85,8 @@ public class VABCDescriptor extends AbstractMolecularDescriptor implements IMole
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         double volume;
         try {
-            volume = VABCVolume.calculate(atomContainer);
+            // clone: don't mod original
+            volume = VABCVolume.calculate(clone(atomContainer));
         } catch (CDKException exception) {
             return getDummyDescriptorValue(exception);
         }
