@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IStereoElement;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 /**
@@ -64,7 +63,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
      */
     public Polymer() {
         super();
-        monomers = new Hashtable<String, IMonomer>();
+        monomers = new HashMap<>();
     }
 
     /**
@@ -115,7 +114,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
     /**
      * Returns a collection of the names of all <code>Monomer</code>s in this
      * polymer.
-     *
+     *f
      * @return a <code>Collection</code> of all the monomer names.
      */
     @Override
@@ -155,11 +154,11 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
     public IPolymer clone() throws CloneNotSupportedException {
         Polymer clone = (Polymer) super.clone();
         clone.removeAllElements();
-        clone.monomers = new Hashtable<String, IMonomer>();
-        for (String monomerName : getMonomerNames()) {
-            Monomer monomerClone = (Monomer) getMonomer(monomerName).clone();
-            for (IAtom atomInMonomer : monomerClone.atoms()) {
-                clone.addAtom(atomInMonomer, monomerClone);
+        clone.monomers = new HashMap<>();
+        for (Map.Entry<String,IMonomer> e : this.monomers.entrySet()) {
+            IMonomer monomer = e.getValue().clone();
+            for (IAtom atomInMonomer : monomer.atoms()) {
+                clone.addAtom(atomInMonomer, monomer);
             }
         }
 
@@ -227,8 +226,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
     }
 
     private boolean atomIsInMonomer(IAtom atom) {
-        for (String monomerName : getMonomerNames()) {
-            IMonomer monomer = getMonomer(monomerName);
+        for (IMonomer monomer : monomers.values()) {
             if (monomer.contains(atom)) return true;
         }
         return false;
