@@ -481,6 +481,7 @@ public final class InChITautomerGenerator {
         int doubleBondCount = 0;
         for (IBond bond : skeleton.bonds()) {
             if (bond.getOrder().equals(IBond.Order.DOUBLE)) {
+            	bond.setOrder(IBond.Order.SINGLE);
                 doubleBondCount++;
             }
         }
@@ -490,11 +491,7 @@ public final class InChITautomerGenerator {
             atom.setImplicitHydrogenCount(0);
         }
 
-        for (IBond bond : skeleton.bonds()) {
-            if (bond.getOrder().equals(IBond.Order.DOUBLE)) {
-                bond.setOrder(IBond.Order.SINGLE);
-            }
-        }
+       
 
         // Make combinations for mobile Hydrogen attachments
         List<List<Integer>> combinations = new ArrayList<List<Integer>>();
