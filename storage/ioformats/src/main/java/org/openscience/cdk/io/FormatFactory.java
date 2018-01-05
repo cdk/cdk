@@ -33,12 +33,14 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
-import com.google.common.io.CharStreams;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
+import org.openscience.cdk.io.formats.IChemFormatMatcher.MatchResult;
 import org.openscience.cdk.io.formats.XYZFormat;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
-import static org.openscience.cdk.io.formats.IChemFormatMatcher.MatchResult;
+import com.google.common.io.CharStreams;
 
 /**
  * A factory for recognizing chemical file formats. Formats
@@ -61,6 +63,7 @@ public class FormatFactory {
     private int                      headerLength;
 
     private List<IChemFormatMatcher> formats = new ArrayList<IChemFormatMatcher>(100);
+    private final static ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(FormatFactory.class);
 
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
@@ -126,7 +129,6 @@ public class FormatFactory {
         if (input == null) {
             throw new IllegalArgumentException("input cannot be null");
         }
-
         // make a copy of the header
         char[] header = new char[this.headerLength];
         if (!input.markSupported()) {
@@ -137,76 +139,61 @@ public class FormatFactory {
         input.reset();
 
         BufferedReader buffer = new BufferedReader(new CharArrayReader(header));
+        IChemFormat chemFormat = getMatchResult(buffer);
 
-        /* Search file for a line containing an identifying keyword */
-        List<String> lines = Collections.unmodifiableList(CharStreams.readLines(buffer));
-        Set<MatchResult> results = new TreeSet<MatchResult>();
-
-        for (IChemFormatMatcher format : formats) {
-            results.add(format.matches(lines));
-        }
-
-        // best result is first element (sorted set)
-        if (results.size() > 1) {
-            MatchResult best = results.iterator().next();
-            if (best.matched()) return best.format();
-        }
-
-        buffer = new BufferedReader(new CharArrayReader(header));
-
-        String line = buffer.readLine();
-        // is it a XYZ file?
-        StringTokenizer tokenizer = new StringTokenizer(line.trim());
-        try {
-            int tokenCount = tokenizer.countTokens();
-            if (tokenCount == 1) {
-                Integer.parseInt(tokenizer.nextToken());
-                // if not failed, then it is a XYZ file
-                return (IChemFormat) XYZFormat.getInstance();
-            } else if (tokenCount == 2) {
-                Integer.parseInt(tokenizer.nextToken());
-                if ("Bohr".equalsIgnoreCase(tokenizer.nextToken())) {
-                    return (IChemFormat) XYZFormat.getInstance();
-                }
-            }
-        } catch (NumberFormatException exception) {
-        }
-
-        return null;
+        if(chemFormat == null){
+        	buffer = new BufferedReader(new CharArrayReader(header));
+            chemFormat = getXYZFormat(buffer);
+          }
+        return chemFormat;
+        
     }
 
     public IChemFormat guessFormat(InputStream input) throws IOException {
         if (input == null) {
             throw new IllegalArgumentException("input cannot be null");
         }
+        if (!input.markSupported()) {
+        	throw new IllegalArgumentException("input must support mark");
+        }
 
         // make a copy of the header
         byte[] header = new byte[this.headerLength];
-        if (!input.markSupported()) {
-            throw new IllegalArgumentException("input must support mark");
-        }
         input.mark(this.headerLength);
         input.read(header, 0, this.headerLength);
         input.reset();
 
         BufferedReader buffer = new BufferedReader(new StringReader(new String(header)));
+        IChemFormat chemFormat = getMatchResult(buffer);
+        
+        if(chemFormat == null){
+            buffer = new BufferedReader(new StringReader(new String(header)));
+            chemFormat = getXYZFormat(buffer);
+          }
 
-        /* Search file for a line containing an identifying keyword */
+        return chemFormat;
+    }
+    
+  
+    private  IChemFormat getMatchResult( BufferedReader buffer) throws IOException{
+    	 /* Search file for a line containing an identifying keyword */
         List<String> lines = Collections.unmodifiableList(CharStreams.readLines(buffer));
         Set<MatchResult> results = new TreeSet<MatchResult>();
 
         for (IChemFormatMatcher format : formats) {
             results.add(format.matches(lines));
         }
-
         // best result is first element (sorted set)
         if (results.size() > 1) {
             MatchResult best = results.iterator().next();
             if (best.matched()) return best.format();
         }
-
-        buffer = new BufferedReader(new StringReader(new String(header)));
-
+		return null;
+    }
+    
+    
+    private IChemFormat getXYZFormat(BufferedReader buffer) throws IOException{
+    	
         String line = buffer.readLine();
         // is it a XYZ file?
         StringTokenizer tokenizer = new StringTokenizer(line.trim());
@@ -223,9 +210,9 @@ public class FormatFactory {
                 }
             }
         } catch (NumberFormatException exception) {
+			LOGGER.error("cannot parse chemical file format"+ exception.getMessage());
         }
-
-        return null;
+		return null;
     }
 
 }
