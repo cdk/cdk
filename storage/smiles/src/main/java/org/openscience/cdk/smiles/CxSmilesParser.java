@@ -428,7 +428,7 @@ final class CxSmilesParser {
                     if (!processCoords(iter, state))
                         return -1;
                     break;
-                case 'c': // Skip cis/trans/unspec
+                case 'c': // cis/trans/unspec ignored
                 case 't':
                     // c/t:
                     if (iter.nextIf(':')) {
@@ -441,10 +441,16 @@ final class CxSmilesParser {
                             return -1;
                     }
                     break;
-                case 'r': // Skip relative stereochemistry
+                case 'r': // relative stereochemistry ignored
                     if (!iter.nextIf(':'))
                         return -1;
                     if (!skipIntList(iter, COMMA_SEPARATOR))
+                        return -1;
+                    break;
+                case 'l': // lone pairs ignored
+                    if (!iter.nextIf("p:"))
+                        return -1;
+                    if (!skipIntMap(iter))
                         return -1;
                     break;
                 case 'f': // fragment grouping
@@ -477,7 +483,7 @@ final class CxSmilesParser {
                         return -1;
                     break;
                 case 'C':
-                case 'H': // skip coordination and hydrogen bonding
+                case 'H': // coordination and hydrogen bonding ignored
                     if (!iter.nextIf(':'))
                         return -1;
                     while (iter.hasNext() && isDigit(iter.curr())) {
@@ -506,6 +512,18 @@ final class CxSmilesParser {
         while (iter.hasNext()) {
             char c = iter.curr();
             if (isDigit(c) || c == sep)
+                iter.next();
+            else
+                return true;
+        }
+        // ran of end
+        return false;
+    }
+
+    private static boolean skipIntMap(CharIter iter) {
+        while (iter.hasNext()) {
+            char c = iter.curr();
+            if (isDigit(c) || c == ',' || c == ':')
                 iter.next();
             else
                 return true;
