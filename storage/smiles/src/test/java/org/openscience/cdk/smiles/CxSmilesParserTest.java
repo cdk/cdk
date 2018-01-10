@@ -113,6 +113,12 @@ public class CxSmilesParserTest {
     }
 
     @Test
+    public void skipLonePairDefinitions() {
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx("|c:6,8,t:4,lp:2:2,4:1,11:1,m:1:8.9|", state), is(not(-1)));
+    }
+
+    @Test
     public void fragmentGrouping() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|f:0.1.2.3,4.5.6|", state), is(not(-1)));
