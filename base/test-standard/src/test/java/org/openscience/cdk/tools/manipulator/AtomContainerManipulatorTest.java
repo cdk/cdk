@@ -1261,6 +1261,24 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
+    public void testSgroupSuppressionSRU() throws Exception {
+        assertRemoveH("CCC([H])CC |Sg:n:1,2,3,4:n:ht|",
+                      "CCCCC");
+    }
+
+    @Test
+    public void testSgroupSuppressionPositionalVariation() throws Exception {
+        assertRemoveH("*[H].C1=CC=CC=C1 |m:0:2.3.4|",
+                      "*[H].C1=CC=CC=C1");
+    }
+
+    @Test
+    public void testSgroupSuppressionSRUCrossingBond() throws Exception {
+        assertRemoveH("CCC[H] |Sg:n:2:n:ht|",
+                      "CCC[H]");
+    }
+
+    @Test
     public void molecularWeight() throws InvalidSmilesException, IOException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[13CH4]CO");

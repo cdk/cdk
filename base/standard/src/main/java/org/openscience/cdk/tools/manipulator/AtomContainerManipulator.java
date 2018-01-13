@@ -64,6 +64,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.stereo.Atropisomeric;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
@@ -730,7 +731,21 @@ public class AtomContainerManipulator {
             }
         }
 
-        if (!anyHydrogenPresent) return org;
+        if (!anyHydrogenPresent)
+            return org;
+
+        // crossing atoms, positional variation atoms etc
+        Set<IAtom> xatoms = Collections.emptySet();
+        List<Sgroup> sgroups = org.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            xatoms = new HashSet<>();
+            for (Sgroup sgroup : sgroups) {
+                for (IBond bond : sgroup.getBonds()) {
+                    xatoms.add(bond.getBegin());
+                    xatoms.add(bond.getEnd());
+                }
+            }
+        }
 
         // we need fast adjacency checks (to check for suppression and
         // update hydrogen counts)
@@ -750,7 +765,8 @@ public class AtomContainerManipulator {
         // be suppressed
         for (int v = 0; v < nOrgAtoms; v++) {
             final IAtom atom = org.getAtom(v);
-            if (suppressibleHydrogen(org, graph, bondmap, v)) {
+            if (suppressibleHydrogen(org, graph, bondmap, v) &&
+                !xatoms.contains(atom)) {
                 hydrogens.add(atom);
                 incrementImplHydrogenCount(org.getAtom(graph[v][0]));
             } else {
