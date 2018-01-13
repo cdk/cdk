@@ -46,6 +46,15 @@ public class SgroupBracket {
     }
 
     /**
+     * Copy constructor.
+     * @param org original sgroup bracket
+     */
+    public SgroupBracket(SgroupBracket org) {
+        this(org.p1.x, org.p1.y,
+             org.p2.x, org.p2.y);
+    }
+
+    /**
      * First point of the bracket (x1,y1).
      *
      * @return first point
