@@ -21,6 +21,7 @@ package org.openscience.cdk;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,6 +34,7 @@ import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -40,6 +42,8 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.tools.manipulator.SgroupManipulator;
 
 /**
  * Base class for all chemical objects that maintain a list of Atoms and
@@ -1392,6 +1396,16 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         // map each stereo element to a new instance in the clone
         for (IStereoElement element : stereoElements) {
             clone.addStereoElement(element.map(atomMap, bondMap));
+        }
+
+        // update sgroups
+        Collection<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            Map<IChemObject,IChemObject> replace = new HashMap<>();
+            replace.putAll(atomMap);
+            replace.putAll(bondMap);
+            clone.setProperty(CDKConstants.CTAB_SGROUPS,
+                              SgroupManipulator.copy(sgroups, replace));
         }
 
         return clone;
