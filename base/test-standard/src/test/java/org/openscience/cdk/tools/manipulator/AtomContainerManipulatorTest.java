@@ -1266,7 +1266,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     public void testSgroupSuppressionSRU() throws Exception {
         assertRemoveH("CCC([H])CC |Sg:n:1,2,3,4:n:ht|",
-                      "CCCCC |Sg:n:1,2,3,4:n:ht|");
+                      "CCCCC |Sg:n:1,2,3:n:ht|");
     }
 
     @Test
