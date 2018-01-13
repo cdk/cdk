@@ -30,6 +30,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -735,8 +736,8 @@ public class AtomContainerManipulator {
             return org;
 
         // crossing atoms, positional variation atoms etc
-        Set<IAtom> xatoms = Collections.emptySet();
-        List<Sgroup> sgroups = org.getProperty(CDKConstants.CTAB_SGROUPS);
+        Set<IAtom>         xatoms  = Collections.emptySet();
+        Collection<Sgroup> sgroups = org.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups != null) {
             xatoms = new HashSet<>();
             for (Sgroup sgroup : sgroups) {
@@ -758,7 +759,8 @@ public class AtomContainerManipulator {
         int nCpyAtoms = 0;
         int nCpyBonds = 0;
 
-        final Set<IAtom> hydrogens = new HashSet<IAtom>(nOrgAtoms);
+        final Set<IAtom> hydrogens        = new HashSet<IAtom>(nOrgAtoms);
+        final Set<IBond> bondsToHydrogens = new HashSet<IBond>();
         final IAtom[] cpyAtoms = new IAtom[nOrgAtoms];
 
         // filter the original container atoms for those that can/can't
@@ -901,6 +903,19 @@ public class AtomContainerManipulator {
             }
             for (ILonePair lp : remove) {
                 org.removeLonePair(lp);
+            }
+        }
+
+        if (sgroups != null) {
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getValue(SgroupKey.CtabParentAtomList) != null) {
+                    Collection<IAtom> pal = sgroup.getValue(SgroupKey.CtabParentAtomList);
+                    pal.removeAll(hydrogens);
+                }
+                for (IAtom hydrogen : hydrogens)
+                    sgroup.removeAtom(hydrogen);
+                for (IBond bondToHydrogen : bondsToHydrogens)
+                    sgroup.removeBond(bondToHydrogen);
             }
         }
 

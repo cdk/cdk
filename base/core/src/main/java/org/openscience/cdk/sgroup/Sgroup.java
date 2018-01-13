@@ -114,12 +114,20 @@ public class Sgroup {
     }
 
     /**
-     * Add a bond to this Sgroup.
+     * Add an atom to this Sgroup.
      *
      * @param atom the atom
      */
     public final void addAtom(IAtom atom) {
         this.atoms.add(atom);
+    }
+
+    /**
+     * Remove an atom from this Sgroup.
+     * @param atom the atom
+     */
+    public final void removeAtom(IAtom atom) {
+        this.atoms.remove(atom);
     }
 
     /**
@@ -129,6 +137,14 @@ public class Sgroup {
      */
     public final void addBond(IBond bond) {
         this.bonds.add(bond);
+    }
+
+    /**
+     * Remove a bond from this Sgroup.
+     * @param bond the bond
+     */
+    public final void removeBond(IBond bond) {
+        this.bonds.remove(bond);
     }
 
     /**

@@ -23,12 +23,14 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +61,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.silent.PseudoAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -1263,19 +1266,31 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     public void testSgroupSuppressionSRU() throws Exception {
         assertRemoveH("CCC([H])CC |Sg:n:1,2,3,4:n:ht|",
-                      "CCCCC");
+                      "CCCCC |Sg:n:1,2,3,4:n:ht|");
+    }
+
+    @Test
+    public void testSgroupSuppressionSRUUpdated() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("CCC([H])CC |Sg:n:1,2,3,4:n:ht|");
+        AtomContainerManipulator.suppressHydrogens(mol);
+        Collection<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        assertNotNull(sgroups);
+        assertThat(sgroups.size(), is(1));
+        Sgroup sgroup = sgroups.iterator().next();
+        assertThat(sgroup.getAtoms().size(), is(3));
     }
 
     @Test
     public void testSgroupSuppressionPositionalVariation() throws Exception {
         assertRemoveH("*[H].C1=CC=CC=C1 |m:0:2.3.4|",
-                      "*[H].C1=CC=CC=C1");
+                      "*[H].C1=CC=CC=C1 |m:0:2.3.4|");
     }
 
     @Test
     public void testSgroupSuppressionSRUCrossingBond() throws Exception {
         assertRemoveH("CCC[H] |Sg:n:2:n:ht|",
-                      "CCC[H]");
+                      "CCC[H] |Sg:n:2:n:ht|");
     }
 
     @Test
@@ -1320,7 +1335,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer m = smipar.parseSmiles(smiIn);
 
-        String smiAct = SmilesGenerator.isomeric().create(AtomContainerManipulator.removeHydrogens(m));
+        String smiAct = new SmilesGenerator().create(AtomContainerManipulator.removeHydrogens(m));
 
         assertThat(smiAct, is(smiExp));
     }
