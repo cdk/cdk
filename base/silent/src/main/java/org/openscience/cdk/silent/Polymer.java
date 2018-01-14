@@ -114,7 +114,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
     /**
      * Returns a collection of the names of all <code>Monomer</code>s in this
      * polymer.
-     *f
+     *
      * @return a <code>Collection</code> of all the monomer names.
      */
     @Override
