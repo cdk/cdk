@@ -2373,8 +2373,24 @@ public class StructureDiagramGenerator {
                     final Vector2d bndXVec = new Vector2d(-bndVec.y, bndVec.x);
 
                     // ensure vector is pointing out of rings
-                    Vector2d centerVec = new Vector2d(center.x - ((newBegP.x + newEndP.x) / 2), center.y - ((newBegP.y + newEndP.y) / 2));
-                    if (bndXVec.dot(centerVec) > 0) {
+                    Vector2d centerVec = new Vector2d(center.x - ((newBegP.x + newEndP.x) / 2),
+                                                      center.y - ((newBegP.y + newEndP.y) / 2));
+
+                    double dot = bndXVec.dot(centerVec);
+                    if (Math.abs(dot) < 0.01) {
+                        // close to zero... grab adjacent bonds and use those as
+                        // well to choose the side we point the bond
+                        Set<IAtom> adj = new HashSet<>();
+                        adj.addAll(mol.getConnectedAtomsList(bond.getBegin()));
+                        adj.addAll(mol.getConnectedAtomsList(bond.getEnd()));
+                        adj.remove(bond.getBegin());
+                        adj.remove(bond.getEnd());
+                        Point2d newCenter = GeometryUtil.get2DCenter(adj);
+                        centerVec = new Vector2d(newCenter.x - ((newBegP.x + newEndP.x) / 2),
+                                                 newCenter.y - ((newBegP.y + newEndP.y) / 2));
+                        if (bndXVec.dot(centerVec) > 0.01)
+                            bndXVec.negate();
+                    } else if (dot > 0) {
                         bndXVec.negate();
                     }
 
@@ -2438,7 +2454,7 @@ public class StructureDiagramGenerator {
                     Vector2d orgVec = new Vector2d(endP.x-begP.x, endP.y-begP.y);
                     Vector2d newVec = new Vector2d(newEndP.x-newBegP.x, newEndP.y-newBegP.y);
 
-                    // need perpendiculat dot product to get signed angle
+                    // need perpendicular dot product to get signed angle
                     double pDot = orgVec.x * newVec.y - orgVec.y * newVec.x;
                     double theta = Math.atan2(pDot, newVec.dot(orgVec));
 
