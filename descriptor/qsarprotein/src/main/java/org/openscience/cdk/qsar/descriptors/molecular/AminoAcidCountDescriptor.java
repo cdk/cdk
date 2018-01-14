@@ -140,6 +140,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
      */
     @Override
     public DescriptorValue calculate(IAtomContainer ac) {
+        ac = clone(ac); // don't modify input
         int resultLength = substructureSet.getAtomContainerCount();
         IntegerArrayResult results = new IntegerArrayResult(resultLength);
 

@@ -142,7 +142,7 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
      */
     @Override
     public DescriptorValue calculate(IAtomContainer mol) {
-
+        mol = clone(mol); // don't mod original
         int lipinskifailures = 0;
 
         IMolecularDescriptor xlogP = new XLogPDescriptor();

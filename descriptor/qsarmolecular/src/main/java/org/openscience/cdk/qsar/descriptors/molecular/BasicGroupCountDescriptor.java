@@ -97,6 +97,8 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
             throw new IllegalStateException("descriptor is not initalised, invoke 'initalise' first");
         }
 
+        atomContainer = clone(atomContainer);
+
         try {
             int count = 0;
             for (SMARTSQueryTool tool : tools) {

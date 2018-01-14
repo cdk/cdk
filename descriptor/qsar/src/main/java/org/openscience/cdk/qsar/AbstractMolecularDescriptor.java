@@ -23,6 +23,8 @@
 
 package org.openscience.cdk.qsar;
 
+import org.openscience.cdk.interfaces.IAtomContainer;
+
 /**
  * A super class for molecular descriptors allowing default implementations for
  * interface methods.
@@ -32,5 +34,13 @@ package org.openscience.cdk.qsar;
  * @cdk.githash
  */
 public abstract class AbstractMolecularDescriptor extends AbstractDescriptor implements IMolecularDescriptor {
+
+    protected static IAtomContainer clone(IAtomContainer mol) {
+        try {
+            return mol.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("Could not clone AtomContainer!");
+        }
+    }
 
 }
