@@ -24,11 +24,14 @@ package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.tools.manipulator.SgroupManipulator;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -221,6 +224,16 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
         // map each stereo element to a new instance in the clone
         for (IStereoElement element : stereoElements) {
             clone.addStereoElement(element.map(atomMap, bondMap));
+        }
+
+        // update sgroups
+        Collection<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            Map<IChemObject,IChemObject> replace = new HashMap<>();
+            replace.putAll(atomMap);
+            replace.putAll(bondMap);
+            clone.setProperty(CDKConstants.CTAB_SGROUPS,
+                              SgroupManipulator.copy(sgroups, replace));
         }
 
         return clone;

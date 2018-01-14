@@ -18,9 +18,26 @@
  */
 package org.openscience.cdk.silent;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.tools.manipulator.SgroupManipulator;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,19 +46,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  * Base class for all chemical objects that maintain a list of Atoms and
@@ -631,7 +635,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      * {@inheritDoc}
      */
     @Override
-    public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
+    public List<IElectronContainer> getConnectedElectronContainersList(
+        IAtom atom) {
         List<IElectronContainer> ecs = new ArrayList<>(4);
         for (int i = 0; i < bondCount; i++) {
             if (bonds[i].contains(atom)) ecs.add(bonds[i]);
@@ -674,8 +679,8 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public int getConnectedBondsCount(int idx) {
-        final IAtom atom = getAtom(idx);
-        int count = 0;
+        final IAtom atom  = getAtom(idx);
+        int         count = 0;
         for (int i = 0; i < bondCount; i++) {
             if (bonds[i].contains(atom)) ++count;
         }
@@ -831,7 +836,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         if (contains(atom)) {
             return;
         }
-        ensureAtomCapacity(atomCount+1);
+        ensureAtomCapacity(atomCount + 1);
         atoms[atomCount++] = atom;
     }
 
@@ -840,7 +845,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void addBond(IBond bond) {
-        ensureBondCapacity(bondCount+1);
+        ensureBondCapacity(bondCount + 1);
         bonds[bondCount++] = bond;
     }
 
@@ -849,7 +854,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void addLonePair(ILonePair lonePair) {
-        ensureLonePairCapacity(lonePairCount+1);
+        ensureLonePairCapacity(lonePairCount + 1);
         lonePairs[lonePairCount++] = lonePair;
     }
 
@@ -858,7 +863,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public void addSingleElectron(ISingleElectron singleElectron) {
-        ensureElectronCapacity(singleElectronCount+1);
+        ensureElectronCapacity(singleElectronCount + 1);
         singleElectrons[singleElectronCount++] = singleElectron;
     }
 
@@ -1329,6 +1334,17 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         for (IStereoElement element : stereoElements) {
             clone.addStereoElement(element.map(atomMap, bondMap));
         }
+
+        // update sgroups
+        Collection<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            Map<IChemObject,IChemObject> replace = new HashMap<>();
+            replace.putAll(atomMap);
+            replace.putAll(bondMap);
+            clone.setProperty(CDKConstants.CTAB_SGROUPS,
+                              SgroupManipulator.copy(sgroups, replace));
+        }
+
 
         return clone;
     }

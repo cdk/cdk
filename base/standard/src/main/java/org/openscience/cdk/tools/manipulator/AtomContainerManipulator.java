@@ -30,6 +30,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -64,6 +65,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.stereo.Atropisomeric;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
@@ -730,7 +732,21 @@ public class AtomContainerManipulator {
             }
         }
 
-        if (!anyHydrogenPresent) return org;
+        if (!anyHydrogenPresent)
+            return org;
+
+        // crossing atoms, positional variation atoms etc
+        Set<IAtom>         xatoms  = Collections.emptySet();
+        Collection<Sgroup> sgroups = org.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            xatoms = new HashSet<>();
+            for (Sgroup sgroup : sgroups) {
+                for (IBond bond : sgroup.getBonds()) {
+                    xatoms.add(bond.getBegin());
+                    xatoms.add(bond.getEnd());
+                }
+            }
+        }
 
         // we need fast adjacency checks (to check for suppression and
         // update hydrogen counts)
@@ -743,14 +759,16 @@ public class AtomContainerManipulator {
         int nCpyAtoms = 0;
         int nCpyBonds = 0;
 
-        final Set<IAtom> hydrogens = new HashSet<IAtom>(nOrgAtoms);
+        final Set<IAtom> hydrogens        = new HashSet<IAtom>(nOrgAtoms);
+        final Set<IBond> bondsToHydrogens = new HashSet<IBond>();
         final IAtom[] cpyAtoms = new IAtom[nOrgAtoms];
 
         // filter the original container atoms for those that can/can't
         // be suppressed
         for (int v = 0; v < nOrgAtoms; v++) {
             final IAtom atom = org.getAtom(v);
-            if (suppressibleHydrogen(org, graph, bondmap, v)) {
+            if (suppressibleHydrogen(org, graph, bondmap, v) &&
+                !xatoms.contains(atom)) {
                 hydrogens.add(atom);
                 incrementImplHydrogenCount(org.getAtom(graph[v][0]));
             } else {
@@ -885,6 +903,19 @@ public class AtomContainerManipulator {
             }
             for (ILonePair lp : remove) {
                 org.removeLonePair(lp);
+            }
+        }
+
+        if (sgroups != null) {
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getValue(SgroupKey.CtabParentAtomList) != null) {
+                    Collection<IAtom> pal = sgroup.getValue(SgroupKey.CtabParentAtomList);
+                    pal.removeAll(hydrogens);
+                }
+                for (IAtom hydrogen : hydrogens)
+                    sgroup.removeAtom(hydrogen);
+                for (IBond bondToHydrogen : bondsToHydrogens)
+                    sgroup.removeBond(bondToHydrogen);
             }
         }
 
