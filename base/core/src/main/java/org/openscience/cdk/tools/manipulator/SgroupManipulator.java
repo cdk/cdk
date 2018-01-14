@@ -44,7 +44,9 @@ public final class SgroupManipulator {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T extends IChemObject> T get(Map<IChemObject,IChemObject> map, T obj) {
+    private static <T extends IChemObject> T get(Map<? extends IChemObject,
+                                                     ? extends IChemObject> map,
+                                                 T obj) {
         if (map == null)
             return obj;
         T val = (T) map.get(obj);
@@ -54,18 +56,26 @@ public final class SgroupManipulator {
     }
 
     /**
-     * Copy a collection of Sgroups, replacing any IAtom/IBond (ChemObject)
+     * Copy a collection of Sgroups, replacing any {@link IAtom}/{@link IBond}
      * references with those present in the provided 'replace' map. If an empty
      * replace map is provided (null or empty) the sgroups are simply
      * duplicated. If an item is not present in the replacement map the original
      * item is preserved.
+     * <br>
+     * <pre>{@code
+     * Map<IChemObject,IChemObject> replace = new HashMap<>();
+     * replace.put(orgAtom, newAtom);
+     * replace.put(orgBond, newBond);
+     * newSgroups = copy(orgSgroups, replace);
+     * }</pre>
      *
      * @param sgroups collection of sgroups, can be null
      * @param replace the replacement map, can be null
      * @return list of copied sgroups, null if sgroups input was null
      */
     public static List<Sgroup> copy(Collection<Sgroup> sgroups,
-                                    Map<IChemObject,IChemObject> replace) {
+                                    Map<? extends IChemObject,
+                                        ? extends IChemObject> replace) {
         if (sgroups == null) return null;
         Map<Sgroup, Sgroup> sgroupMap = new HashMap<>();
         for (Sgroup sgroup : sgroups)
