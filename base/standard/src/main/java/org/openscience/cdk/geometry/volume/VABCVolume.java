@@ -103,7 +103,6 @@ public class VABCVolume {
         }
         sum -= 5.92 * (molecule.getBondCount() + totalHCount);
 
-        boolean[] originalFlags = molecule.getFlags();
         Aromaticity.cdkLegacy().apply(molecule);
         IRingSet ringSet = Cycles.sssr(molecule).toRingSet();
         if (ringSet.getAtomContainerCount() > 0) {
@@ -116,7 +115,6 @@ public class VABCVolume {
                     nonAromRingCount++;
                 }
             }
-            molecule.setFlags(originalFlags);
             sum -= 14.7 * aromRingCount;
             sum -= 3.8 * nonAromRingCount;
         }
