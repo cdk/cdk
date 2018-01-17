@@ -22,7 +22,7 @@ org.openscience.cdk.io.formats.INChIFormat
 org.openscience.cdk.io.formats.INChIPlainTextFormat
 org.openscience.cdk.io.formats.JaguarFormat
 org.openscience.cdk.io.formats.MDLFormat
-org.openscience.cdk.io.formats.MDLRXNFormat
+org.openscience.cdk.io.formats.MDLRXNV2000Format
 org.openscience.cdk.io.formats.MDLRXNV3000Format
 org.openscience.cdk.io.formats.MDLV2000Format
 org.openscience.cdk.io.formats.MDLV3000Format
