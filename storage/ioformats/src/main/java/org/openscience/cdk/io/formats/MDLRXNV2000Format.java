@@ -28,21 +28,21 @@ import java.util.List;
  * @cdk.module ioformats
  * @cdk.githash
  */
-public class MDLRXNV3000Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
+public class MDLRXNV2000Format extends AbstractResourceFormat implements IChemFormatMatcher {
 
     private static IResourceFormat myself = null;
 
-    public MDLRXNV3000Format() {}
+    public MDLRXNV2000Format() {}
 
     public static IResourceFormat getInstance() {
-        if (myself == null) myself = new MDLRXNV3000Format();
+        if (myself == null) myself = new MDLRXNV2000Format();
         return myself;
     }
 
     /** {@inheritDoc} */
     @Override
     public String getFormatName() {
-        return "MDL RXN V3000";
+        return "MDL RXN V2000";
     }
 
     /** {@inheritDoc} */
@@ -66,7 +66,7 @@ public class MDLRXNV3000Format extends SimpleChemFormatMatcher implements IChemF
     /** {@inheritDoc} */
     @Override
     public String getReaderClassName() {
-        return "org.openscience.cdk.io.MDLRXNV3000Reader";
+        return "org.openscience.cdk.io.MDLRXNV2000Reader";
     }
 
     /** {@inheritDoc} */
@@ -74,14 +74,34 @@ public class MDLRXNV3000Format extends SimpleChemFormatMatcher implements IChemF
     public String getWriterClassName() {
         return null;
     }
-    
+
     /** {@inheritDoc} */
     @Override
-    public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("$RXN V3000")) {
-            return true;
+    public MatchResult matches(List<String> lines) {
+
+        // if the first line doesn't have '$RXN' then it can't match
+        if (lines.size() < 1 || !lines.get(0).contains("$RXN")) return NO_MATCH;
+
+        // check the header (fifth line)
+        String header = lines.size() > 4 ? lines.get(4) : "";
+
+        // atom count
+        if (header.length() < 3 || !Character.isDigit(header.charAt(2))) return NO_MATCH;
+        // bond count
+        if (header.length() < 6 || !Character.isDigit(header.charAt(5))) return NO_MATCH;
+
+        // check the rest of the header is only spaces and digits
+        if (header.length() > 6) {
+            String remainder = header.substring(6).trim();
+            for (int i = 0; i < remainder.length(); ++i) {
+                char c = remainder.charAt(i);
+                if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
+                    return NO_MATCH;
+                }
+            }
         }
-        return false;
+
+        return new MatchResult(true, this, 0);
     }
 
     /** {@inheritDoc} */

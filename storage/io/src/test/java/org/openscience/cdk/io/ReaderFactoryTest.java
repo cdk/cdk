@@ -1,4 +1,4 @@
-/* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2003-2018  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -40,6 +40,8 @@ import org.openscience.cdk.io.formats.GhemicalSPMFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
 import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.formats.MDLRXNV2000Format;
+import org.openscience.cdk.io.formats.MDLRXNV3000Format;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.formats.Mol2Format;
@@ -113,6 +115,16 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
         expectReader("data/mdl/molV3000.mol", MDLV3000Format.getInstance(), -1, -1);
     }
 
+    @Test
+    public void testMDLRxnV2000() throws Exception {
+        expectReader("data/mdl/reaction-1.rxn", MDLRXNV2000Format.getInstance(), -1, -1);
+    }
+    
+    @Test
+    public void testMDLRxnV3000() throws Exception {
+        expectReader("data/mdl/reaction_v3.rxn", MDLRXNV3000Format.getInstance(), -1, -1);
+    }
+    
     @Ignore("test moved to cdk-test-pdb/PDBReaderFactoryTest")
     public void testPDB() throws Exception {
         expectReader("data/pdb/coffeine.pdb", PDBFormat.getInstance(), -1, -1);
