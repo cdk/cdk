@@ -83,22 +83,23 @@ final class SvgDrawVisitor implements IDrawVisitor {
     /**
      * Create an SvgDrawVisitor with the specified width/height
      *
-     * @param w width of canvas in mm
-     * @param h height of canvas in mm
+     * @param w width of canvas in 'units'
+     * @param h height of canvas in 'units'
+     * @param units 'px' or 'mm'
      */
-    SvgDrawVisitor(double w, double h) {
-        writeHeader(w, h);
+    SvgDrawVisitor(double w, double h, String units) {
+        writeHeader(w, h, units);
     }
 
-    private void writeHeader(double w, double h) {
+    private void writeHeader(double w, double h, String units) {
         sb.append("<?xml version='1.0' encoding='UTF-8'?>\n")
           .append("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n");
         sb.append("<svg")
           .append(" version='1.2'")
           .append(" xmlns='http://www.w3.org/2000/svg'")
           .append(" xmlns:xlink='http://www.w3.org/1999/xlink'")
-          .append(" width='").append(toStr(w)).append("mm'")
-          .append(" height='").append(toStr(h)).append("mm'")
+          .append(" width='").append(toStr(w)).append(units).append('\'')
+          .append(" height='").append(toStr(h)).append(units).append('\'')
           .append(" viewBox='0 0 ").append(toStr(w)).append(" ").append(toStr(h)).append("'")
           .append(">\n");
         indentLvl += 2;

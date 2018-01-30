@@ -182,17 +182,21 @@ final class MolGridDepiction extends Depiction {
     }
 
     @Override
-    String toVecStr(String fmt) {
+    String toVecStr(String fmt, String units) {
 
         // format margins and padding for raster images
-        double margin  = getMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
+        double margin  = getMarginValue(units.equals(Depiction.UNITS_MM) ? DepictionGenerator.DEFAULT_MM_MARGIN
+                                                                         : DepictionGenerator.DEFAULT_PX_MARGIN);
         double padding = getPaddingValue(DEFAULT_PADDING_FACTOR * margin);
         final double scale   = model.get(BasicSceneGenerator.Scale.class);
+
+        double zoom = model.get(BasicSceneGenerator.ZoomFactor.class);
 
         // All vector graphics will be written in mm not px to we need to
         // adjust the size of the molecules accordingly. For now the rescaling
         // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
-        double zoom = model.get(BasicSceneGenerator.ZoomFactor.class) * rescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
+        if (units.equals(Depiction.UNITS_MM))
+            zoom *= rescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
 
         // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
         if (fmt.equals(PDF_FMT) || fmt.equals(PS_FMT)) {
@@ -215,7 +219,7 @@ final class MolGridDepiction extends Depiction {
         FreeHepWrapper wrapper = null;
         if (!fmt.equals(SVG_FMT))
             wrapper = new FreeHepWrapper(fmt, total.w, total.h);
-        final IDrawVisitor visitor = fmt.equals(SVG_FMT) ? new SvgDrawVisitor(total.w, total.h)
+        final IDrawVisitor visitor = fmt.equals(SVG_FMT) ? new SvgDrawVisitor(total.w, total.h, units)
                                                          : AWTDrawVisitor.forVectorGraphics(wrapper.g2);
 
         if (fmt.equals(SVG_FMT)) {
