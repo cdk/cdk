@@ -92,6 +92,16 @@ public abstract class Depiction {
      */
     public static final String GIF_FMT = "gif";
 
+    /**
+     * Units in MM (specific to SVG).
+     */
+    public static final String UNITS_MM = "mm";
+
+    /**
+     * Units in PX (specific to SVG).
+     */
+    public static final String UNITS_PX = "px";
+
     static final double ACS_1996_BOND_LENGTH_MM = 5.08;
 
     private static final char DOT = '.';
@@ -120,7 +130,19 @@ public abstract class Depiction {
      * @return svg XML content
      */
     public final String toSvgStr() {
-        return toVecStr(SVG_FMT);
+        return toSvgStr(UNITS_MM);
+    }
+
+    /**
+     * Render the image to an SVG image.
+     *
+     * @param units the units for SVG - 'px' or 'mm'
+     * @return svg XML content
+     */
+    public final String toSvgStr(String units) {
+        if (!units.equals(UNITS_MM) && !units.equals(UNITS_PX))
+            throw new IllegalArgumentException("Units must be 'px' or 'mm'!");
+        return toVecStr(SVG_FMT, units);
     }
 
     /**
@@ -129,7 +151,7 @@ public abstract class Depiction {
      * @return eps content
      */
     public final String toEpsStr() {
-        return toVecStr(PS_FMT);
+        return toVecStr(PS_FMT, UNITS_MM);
     }
 
     /**
@@ -138,7 +160,7 @@ public abstract class Depiction {
      * @return pdf content
      */
     public final String toPdfStr() {
-        return toVecStr(PDF_FMT);
+        return toVecStr(PDF_FMT, UNITS_MM);
     }
 
     /**
@@ -174,9 +196,10 @@ public abstract class Depiction {
      * rendering.
      *
      * @param fmt the vector graphics format
+     * @param units the units to use (px or mm)
      * @return the vector graphics format string
      */
-    abstract String toVecStr(String fmt);
+    abstract String toVecStr(String fmt, String units);
 
     /**
      * List the available formats that can be rendered.

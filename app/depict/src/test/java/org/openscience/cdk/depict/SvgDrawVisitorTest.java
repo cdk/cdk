@@ -41,7 +41,7 @@ public class SvgDrawVisitorTest {
 
     @Test
     public void empty() {
-        String empty = new SvgDrawVisitor(50, 50).toString();
+        String empty = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM).toString();
         assertThat(empty, is("<?xml version='1.0' encoding='UTF-8'?>\n"
                              + "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
                              + "<svg version='1.2' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='50.0mm' height='50.0mm' viewBox='0 0 50.0 50.0'>\n"
@@ -51,7 +51,7 @@ public class SvgDrawVisitorTest {
 
     @Test
     public void markedElement() {
-        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.visit(MarkedElement.markup(new LineElement(0, 0, 1, 1, 0.5, Color.RED),
                                            "test-class"));
         assertThat(visitor.toString(), is("<?xml version='1.0' encoding='UTF-8'?>\n"
@@ -66,7 +66,7 @@ public class SvgDrawVisitorTest {
 
     @Test
     public void translatedLine() {
-        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.visit(new LineElement(0, 0, 1, 1, 0.5, Color.RED));
         visitor.setTransform(AffineTransform.getTranslateInstance(10, 10));
         visitor.visit(new LineElement(0, 0, 1, 1, 0.5, Color.RED));
@@ -83,7 +83,7 @@ public class SvgDrawVisitorTest {
 
     @Test
     public void scaledStroke() {
-        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.visit(new LineElement(0, 0, 1, 1, 0.5, Color.RED));
         visitor.setTransform(AffineTransform.getScaleInstance(2, 2));
         visitor.visit(new LineElement(0, 0, 1, 1, 0.5, Color.RED));
@@ -100,7 +100,7 @@ public class SvgDrawVisitorTest {
 
     @Test
     public void filledPath() {
-        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.visit(GeneralPath.shapeOf(new RoundRectangle2D.Double(0,0,10,10,2,2), Color.BLUE));
         assertThat(visitor.toString(), is("<?xml version='1.0' encoding='UTF-8'?>\n"
                                           + "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
@@ -114,7 +114,7 @@ public class SvgDrawVisitorTest {
 
     @Test
     public void transformedPath() {
-        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+        final SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UNITS_MM);
         visitor.setTransform(AffineTransform.getTranslateInstance(15, 15));
         visitor.visit(GeneralPath.shapeOf(new RoundRectangle2D.Double(0, 0, 10, 10, 2, 2), Color.BLUE));
         assertThat(visitor.toString(), is("<?xml version='1.0' encoding='UTF-8'?>\n"
@@ -129,7 +129,7 @@ public class SvgDrawVisitorTest {
 
     @Test
     public void textElements() {
-        final SvgDrawVisitor visitor = new SvgDrawVisitor(100, 100);
+        final SvgDrawVisitor visitor = new SvgDrawVisitor(100, 100, Depiction.UNITS_MM);
         visitor.visit(new TextElement(50, 50, "PNG < EPS < SVG", Color.RED));
         assertThat(visitor.toString(), is("<?xml version='1.0' encoding='UTF-8'?>\n"
                                           + "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
@@ -143,7 +143,7 @@ public class SvgDrawVisitorTest {
 
     @Test
     public void rectElements() {
-        final SvgDrawVisitor visitor = new SvgDrawVisitor(100, 100);
+        final SvgDrawVisitor visitor = new SvgDrawVisitor(100, 100, Depiction.UNITS_MM);
         visitor.visit(new RectangleElement(0,0,100,100, Color.WHITE));
         assertThat(visitor.toString(), is("<?xml version='1.0' encoding='UTF-8'?>\n"
                                           + "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
