@@ -460,6 +460,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20</version>
                 <configuration>
+                    <!-- prevent the annoying ForkedBooter process from stealing
+                         window focus on Mac OS -->
+                    <argLine>-Djava.awt.headless=true</argLine>
                     <excludes>
                         <!-- not a test class -->
                         <exclude>**/TestMoleculeFactory.java</exclude>
@@ -701,6 +704,9 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.16</version>
                         <configuration combine.self="override">
+                            <!-- prevent the annoying ForkedBooter process from stealing
+                                 window focus on Mac OS -->
+                            <argLine>-Djava.awt.headless=true</argLine>
                             <excludes>
                                 <!-- not a test class -->
                                 <exclude>**/TestMoleculeFactory.java</exclude>
