@@ -3,6 +3,7 @@ package org.openscience.cdk.graph.matrix;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
@@ -15,7 +16,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
  */
 public class TopologicalMatrixTest extends CDKTestCase {
 
-    @Test
+    @Ignore // not actually asserting anything
     public void testTopologicalMatrix_IAtomContainer() throws Exception {
         String filename = "data/mdl/clorobenzene.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
