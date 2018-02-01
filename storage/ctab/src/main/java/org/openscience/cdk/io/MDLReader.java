@@ -594,7 +594,6 @@ public class MDLReader extends DefaultChemObjectReader {
             }
 
         } catch (IOException | CDKException | IllegalArgumentException exception) {
-            exception.printStackTrace();
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             logger.error(error);
             logger.debug(exception);

@@ -236,7 +236,8 @@ public class IonizationPotentialTool {
         try {
             peoe.assignGasteigerMarsiliSigmaPartialCharges(container, true);
         } catch (Exception e) {
-            e.printStackTrace();
+            // ignored, underlying classes are logging this and this class
+            // is deprecated
         }
         results[2] = atom.getCharge();
         // partialPiCharge
