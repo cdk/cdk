@@ -40,9 +40,6 @@ public class MDEDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        for (int i = 0; i < 19; i++)
-            System.out.println(result.get(i));
-
         Assert.assertEquals(0.0000, result.get(MDEDescriptor.MDEO11), 0.0001);
         Assert.assertEquals(1.1547, result.get(MDEDescriptor.MDEO12), 0.0001);
         Assert.assertEquals(2.9416, result.get(MDEDescriptor.MDEO22), 0.0001);

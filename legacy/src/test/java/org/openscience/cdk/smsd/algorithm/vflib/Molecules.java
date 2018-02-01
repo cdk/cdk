@@ -145,11 +145,6 @@ public class Molecules {
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
         Aromaticity.cdkLegacy().apply(result);
-
-        SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.create(result);
-        System.out.println("Propane " + oldSmiles);
-
         return result;
     }
 
@@ -192,11 +187,6 @@ public class Molecules {
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
         Aromaticity.cdkLegacy().apply(result);
-
-        SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.create(result);
-        System.out.println("Hexane " + oldSmiles);
-
         return result;
     }
 
@@ -241,11 +231,6 @@ public class Molecules {
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
         Aromaticity.cdkLegacy().apply(result);
-
-        SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.create(result);
-        System.out.println("Benzene " + oldSmiles);
-
         return result;
     }
 
@@ -312,11 +297,6 @@ public class Molecules {
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
         Aromaticity.cdkLegacy().apply(result);
-
-        SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.create(result);
-        System.out.println("Naphthalene " + oldSmiles);
-
         return result;
     }
 
@@ -828,11 +808,6 @@ public class Molecules {
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
         Aromaticity.cdkLegacy().apply(result);
-
-        SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.create(result);
-        System.out.println("SimpleImine " + oldSmiles);
-
         return result;
     }
 

@@ -307,13 +307,11 @@ public class CIPToolTest extends CDKTestCase {
         for (IAtom atom : mol.atoms()) {
             List<IAtom> neighbors = mol.getConnectedAtomsList(atom);
             if (neighbors.size() == 4) {
-                System.out.println("Atom " + mol.indexOf(atom));
                 Stereo stereo = StereoTool.getStereo(neighbors.get(0), neighbors.get(1), neighbors.get(2),
                         neighbors.get(3));
                 ITetrahedralChirality stereoCenter = new TetrahedralChirality(mol.getAtom(0),
                         neighbors.toArray(new IAtom[]{}), stereo);
                 CIP_CHIRALITY chirality = CIPTool.getCIPChirality(mol, stereoCenter);
-                System.out.println("chirality: " + chirality);
             }
         }
     }

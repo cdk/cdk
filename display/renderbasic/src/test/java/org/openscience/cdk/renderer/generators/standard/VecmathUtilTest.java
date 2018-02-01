@@ -203,7 +203,6 @@ public class VecmathUtilTest {
     public void intersection2() {
         Tuple2d intersect = VecmathUtil.intersection(new Point2d(6, 1), new Vector2d(-4, -2), new Point2d(1, 6),
                 new Vector2d(2, 4));
-        System.out.println(intersect);
         assertThat(intersect.x, closeTo(-4, 0.01));
         assertThat(intersect.y, closeTo(-4, 0.01));
     }

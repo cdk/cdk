@@ -314,7 +314,6 @@ public class MoleculeSignatureTest extends CDKTestCase {
         }
 
         MoleculeSignature molSignature = new MoleculeSignature(benzeneRing);
-        System.out.println("" + molSignature.toFullString());
         List<AbstractVertexSignature> signatures = molSignature.getVertexSignatures();
         for (AbstractVertexSignature signature : signatures) {
             for (int i = 0; i < 6; i++) {

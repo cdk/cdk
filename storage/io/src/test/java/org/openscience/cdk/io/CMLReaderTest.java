@@ -305,7 +305,6 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
 
             // OK, now test that the residue identifier is properly read
             Assert.assertEquals("ALAA116", container.getID());
-            System.out.println("" + container);
         } finally {
             reader.close();
         }
