@@ -448,7 +448,6 @@ public class MMFF94BasedParameterSetReader {
 
         if (ins == null) {
             ClassLoader loader = this.getClass().getClassLoader();
-            System.out.println("loader.getClassName:" + loader.getClass().getName());
             ins = loader.getResourceAsStream(configFile);
         }
         if (ins == null) {

@@ -50,6 +50,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -372,17 +373,18 @@ public class TemplateExtractor {
         //QueryAtomContainer query=null;
         IAtomContainer query = null;
         List<IBitFingerprint> data = new ArrayList<IBitFingerprint>();
+        ILoggingTool logger = LoggingToolFactory.createLoggingTool(getClass());
         try {
-            System.out.print("Read data file in ...");
+            logger.info("Read data file in ...");
             imdl = new IteratingSDFReader(fin, builder);
             // fin.close();
-            System.out.println("ready");
+            logger.info("ready");
         } catch (Exception exc) {
             System.out.println("Could not read Molecules from file" + " due to: " + exc.getMessage());
         }
         int moleculeCounter = 0;
         int fingerprintCounter = 0;
-        System.out.print("Generated Fingerprints: " + fingerprintCounter + "    ");
+        logger.info("Generated Fingerprints: " + fingerprintCounter + "    ");
         while (imdl.hasNext() && (moleculeCounter < limit || limit == -1)) {
             m = (IAtomContainer) imdl.next();
             moleculeCounter++;
@@ -410,7 +412,7 @@ public class TemplateExtractor {
                     timings.put(bin, Integer.valueOf(1));
                 }
             } catch (Exception exc1) {
-                System.out.println("QueryFingerprintError: from molecule:" + moleculeCounter + " due to:"
+                logger.info("QueryFingerprintError: from molecule:" + moleculeCounter + " due to:"
                         + exc1.getMessage());
 
                 // OK, just adds a fingerprint with all ones, so that any
@@ -425,12 +427,12 @@ public class TemplateExtractor {
             }
 
             if (fingerprintCounter % 2 == 0)
-                System.out.print("\b" + "/");
+                logger.info("\b" + "/");
             else
-                System.out.print("\b" + "\\");
+                logger.info("\b" + "\\");
 
             if (fingerprintCounter % 100 == 0)
-                System.out.print("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
+                logger.info("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
                         + "Generated Fingerprints: " + fingerprintCounter + "   \n");
 
         }// while
@@ -439,7 +441,7 @@ public class TemplateExtractor {
         } catch (Exception exc2) {
             exc2.printStackTrace();
         }
-        System.out.print("...ready with:" + moleculeCounter + " molecules\nWrite data...of data vector:" + data.size()
+        logger.info("...ready with:" + moleculeCounter + " molecules\nWrite data...of data vector:" + data.size()
                 + " fingerprintCounter:" + fingerprintCounter);
 
         return data;

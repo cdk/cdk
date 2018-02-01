@@ -53,6 +53,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -76,6 +78,8 @@ public class TemplateHandler3D {
     private final List<Pattern>             patterns  = new ArrayList<>();
 
     private static TemplateHandler3D self = null;
+
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
 
     private UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
 
@@ -230,7 +234,7 @@ public class TemplateHandler3D {
             assignCoords(secondBest, secondBestMap);
         }
 
-        System.err.println("WARNING: Maybe RingTemplateError!");
+        logger.warn("Maybe RingTemplateError!");
     }
 
     private void assignCoords(IAtomContainer template,

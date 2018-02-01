@@ -34,6 +34,8 @@ import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Place aliphatic <b>chains</b> with Z matrix method. Please use {@link
@@ -61,6 +63,8 @@ public class AtomPlacer3D {
     private final static double DEFAULT_SP3_ANGLE       = 109.471;
     private final static double DEFAULT_SP2_ANGLE       = 120.000;
     private final static double DEFAULT_SP_ANGLE        = 180.000;
+
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomPlacer3D.class);
 
     AtomPlacer3D() {}
 
@@ -327,8 +331,8 @@ public class AtomPlacer3D {
         } else if (pSet.containsKey(("bond" + id2 + ";" + id1))) {
             dkey = "bond" + id2 + ";" + id1;
         } else {
-            System.out.println("KEYError: Unknown distance key in pSet: " + id2 + ";" + id1
-                    + " take default bond length: " + DEFAULT_BOND_LENGTH);
+            logger.warn("KEYError: Unknown distance key in pSet: " + id2 + ";" + id1
+                               + " take default bond length: " + DEFAULT_BOND_LENGTH);
             return DEFAULT_BOND_LENGTH;
         }
         return ((Double) (pSet.get(dkey).get(0))).doubleValue();
