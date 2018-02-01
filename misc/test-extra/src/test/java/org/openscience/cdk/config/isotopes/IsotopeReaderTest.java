@@ -21,12 +21,12 @@ package org.openscience.cdk.config.isotopes;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.config.isotopes.IsotopeReader;
-import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IIsotope;
 
 import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -44,7 +44,8 @@ public class IsotopeReaderTest extends CDKTestCase {
 
     @Test
     public void testReadIsotopes() {
-        IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream(new byte[0]), new ChemObject().getBuilder());
+        IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream("<?xml version=\"1.0\"?><list></list>".getBytes(StandardCharsets.UTF_8)),
+                                                 new ChemObject().getBuilder());
         Assert.assertNotNull(reader);
         List<IIsotope> isotopes = reader.readIsotopes();
         Assert.assertNotNull(isotopes);
