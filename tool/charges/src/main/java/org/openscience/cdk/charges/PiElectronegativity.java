@@ -22,6 +22,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Calculation of the electronegativity of orbitals of a molecule
@@ -46,6 +48,8 @@ public class PiElectronegativity {
     private IAtomContainer                 molPi;
     private IAtomContainer                 acOldP;
     private double[][]                     gasteigerFactors;
+
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PiElectronegativity.class);
 
     /**
      * Constructor for the PiElectronegativity object.
@@ -120,7 +124,7 @@ public class PiElectronegativity {
                 return ((gasteigerFactors[1][start]) + (q * gasteigerFactors[1][start + 1]) + (gasteigerFactors[1][start + 2] * (q * q)));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
         }
 
         return electronegativity;

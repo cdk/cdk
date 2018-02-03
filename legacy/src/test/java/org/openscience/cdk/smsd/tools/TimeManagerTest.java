@@ -91,17 +91,10 @@ public class TimeManagerTest extends CDKTestCase {
     }
 
     public void myMethod(long timeMillis) {
-        System.out.println("Starting......");
-
-        // pause for a while
-        Thread thisThread = Thread.currentThread();
         try {
-            thisThread.sleep(timeMillis);
-        } catch (Throwable t) {
-
-            throw new OutOfMemoryError("An Error has occurred");
+            Thread.sleep(timeMillis);
+        } catch (InterruptedException e) {
+            // ignored
         }
-        System.out.println("Ending......");
-
     }
 }

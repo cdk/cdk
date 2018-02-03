@@ -64,7 +64,6 @@ public class GaussiansCalculationTest {
     public GaussiansCalculationTest(String inFile) {
         try {
             ISimpleChemObjectReader reader;
-            System.out.println("Loading: " + inFile);
             if (inFile.endsWith(".xyz")) {
                 reader = new XYZReader(new FileReader(inFile));
                 System.out.println("Expecting XYZ format...");

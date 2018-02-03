@@ -352,7 +352,6 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType at = (IAtomType) newChemObject();
         at.setAtomTypeName("N.sp2.3");
         String description = at.toString();
-        System.out.println(description);
         Assert.assertTrue(description.contains("N.sp2.3"));
     }
 

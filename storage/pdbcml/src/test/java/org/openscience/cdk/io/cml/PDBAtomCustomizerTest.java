@@ -77,7 +77,6 @@ public class PDBAtomCustomizerTest extends CDKTestCase {
         cmlWriter.write(polymer1);
         cmlWriter.close();
         String cmlContent1 = writer.toString();
-        System.out.println(cmlContent1.substring(0, 500));
 
         CMLReader reader2 = new CMLReader(new ByteArrayInputStream(cmlContent1.getBytes()));
         IChemFile chemFil2 = (IChemFile) reader2.read(new ChemFile());
@@ -100,7 +99,6 @@ public class PDBAtomCustomizerTest extends CDKTestCase {
         cmlWriter.write(polymer2);
         cmlWriter.close();
         String cmlContent2 = writer.toString();
-        System.out.println(cmlContent2.substring(0, 500));
 
         String conte1 = cmlContent1.substring(0, 1000);
         String conte2 = cmlContent2.substring(0, 1000);

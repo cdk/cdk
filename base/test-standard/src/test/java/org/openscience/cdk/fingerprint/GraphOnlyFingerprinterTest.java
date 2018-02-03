@@ -58,7 +58,6 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
         IFingerprinter printer = new GraphOnlyFingerprinter();
 
         IBitFingerprint bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N"));
-        System.out.println("----");
         IBitFingerprint bs2 = printer.getBitFingerprint(parser.parseSmiles("CCCN"));
 
         Assert.assertEquals(bs1, bs2);

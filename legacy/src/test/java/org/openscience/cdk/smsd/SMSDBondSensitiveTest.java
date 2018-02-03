@@ -64,8 +64,6 @@ public class SMSDBondSensitiveTest {
         Isomorphism sbf = new Isomorphism(Algorithm.SubStructure, true);
         sbf.init(Benzene, Napthalene, true, true);
         sbf.setChemFilters(false, false, false);
-        System.out.println("Match " + sbf.getTanimotoSimilarity());
-        System.out.println("Match count: " + sbf.getAllAtomMapping().size());
         Assert.assertTrue(sbf.isSubgraph());
         Assert.assertEquals(24, sbf.getAllAtomMapping().size());
     }

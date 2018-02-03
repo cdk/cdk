@@ -30,8 +30,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1ccccc1"); // benzol
-        //Assert.assertEquals(6, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-        System.out.println("test1>:" + ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(6, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
     }
 
     @Test

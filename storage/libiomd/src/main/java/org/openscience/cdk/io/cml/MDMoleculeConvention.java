@@ -125,7 +125,6 @@ public class MDMoleculeConvention extends CMLCoreModule {
             //Switching Atom
             if ("md:switchingAtom".equals(DICTREF)) {
                 //Set current atom as switching atom
-                System.out.println("Adding Switching atom: " + currentAtom);
                 currentChargeGroup.setSwitchingAtom(currentAtom);
             } else {
                 super.startElement(xpath, uri, local, raw, atts);

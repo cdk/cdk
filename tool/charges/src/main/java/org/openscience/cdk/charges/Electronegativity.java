@@ -20,6 +20,8 @@ package org.openscience.cdk.charges;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Calculation of the electronegativity of orbitals of a molecule
@@ -43,6 +45,8 @@ public class Electronegativity {
     private IAtomContainer                 molSigma;
     private IAtomContainer                 acOldS;
     private double[]                       marsiliFactors;
+
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Electronegativity.class);
 
     /**
      * Constructor for the PiElectronegativity object.
@@ -111,7 +115,7 @@ public class Electronegativity {
             return electronegativity;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
         }
 
         return electronegativity;

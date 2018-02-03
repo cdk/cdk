@@ -995,8 +995,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         Assert.assertEquals(1, containersList.size());
         IAtomContainer container = containersList.get(0);
         SmilesGenerator smilesGenerator = new SmilesGenerator();
-        String genSmiles = smilesGenerator.create(container);
-        System.out.println(genSmiles);
+        Assert.assertNotNull(smilesGenerator.create(container));
     }
 
     /**

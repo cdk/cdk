@@ -69,7 +69,6 @@ public class CDKValencyChecker implements IValencyChecker {
 
     @Override
     public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException {
-        System.out.println(atom.getAtomTypeName());
         IAtomType type = atomTypeList.getAtomType(atom.getAtomTypeName());
         if (type == null)
             throw new CDKException("Atom type is not a recognized CDK atom type: " + atom.getAtomTypeName());

@@ -68,9 +68,7 @@ public class QSARCMLRoundTripTest {
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, molecule);
 
         Assert.assertEquals(1, roundTrippedMol.getProperties().size());
-        System.out.println("" + roundTrippedMol.getProperties().keySet());
         Object object = roundTrippedMol.getProperties().keySet().toArray()[0];
-        System.out.println("" + object);
         Assert.assertTrue(object instanceof DescriptorSpecification);
         DescriptorSpecification spec = (DescriptorSpecification) object;
         Assert.assertEquals(descriptor.getSpecification().getSpecificationReference(), spec.getSpecificationReference());

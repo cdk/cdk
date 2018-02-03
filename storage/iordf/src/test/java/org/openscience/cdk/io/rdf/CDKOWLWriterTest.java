@@ -22,6 +22,9 @@
  */
 package org.openscience.cdk.io.rdf;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -47,6 +50,8 @@ public class CDKOWLWriterTest extends ChemObjectWriterTest {
 
     @Test
     public void testWriteMolecule() throws Exception {
+        BasicConfigurator.configure();
+        Logger.getRootLogger().setLevel(Level.ERROR);
         StringWriter output = new StringWriter();
         CDKOWLWriter writer = new CDKOWLWriter(output);
 
