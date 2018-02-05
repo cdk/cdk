@@ -22,3 +22,4 @@ target
 *.dot
 /.idea/
 *.iml
+.DS_Store
