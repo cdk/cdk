@@ -2,6 +2,10 @@
  * Note: I adapted this fingerprint from Yap Chun Wei's PaDEL source code, which can be found here:
  * http://www.yapcwsoft.com/dd/padeldescriptor/
  * 
+ * Author: Lyle D. Burgoon, Ph.D. (lyle.d.burgoon@usace.army.mil)
+ * 
+ * This is the work of a US Government employee. This code is in the public domain.
+ * 
  */
 
 
@@ -26,7 +30,7 @@ import java.util.Map;
  * Generates an atom pair 2D fingerprint as implemented in PaDEL given an  {@link IAtomContainer}, that
  * extends the {@link Fingerprinter}.
  *
- * @author Lyle Burgoon
+ * @author Lyle Burgoon (lyle.d.burgoon@usace.army.mil)
  * @cdk.created 2018-02-05
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
@@ -59,6 +63,11 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
         return pathToBit.size();
     }
 
+    /**
+     * Checks if an atom is a halogen
+     * @param atom
+     * @return
+     */
     private static boolean isHalogen(final IAtom atom) {
         switch (atom.getAtomicNumber()) {
             case 9:  // F
@@ -71,6 +80,11 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
         }
     }
 
+    /**
+     * Atoms that we are using in the fingerprint
+     * @param atom
+     * @return
+     */
     private static boolean include(final IAtom atom) {
         switch (atom.getAtomicNumber()) {
             case 5:  // B
@@ -90,15 +104,34 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
         }
     }
 
+    /**
+     * Creates the fingerprint name which is used as a key in our hashes
+     * @param dist
+     * @param a
+     * @param b
+     * @return
+     */
     private static String encodePath(int dist, IAtom a, IAtom b) {
         return dist + "_" + a.getSymbol() + "_" + b.getSymbol();
     }
 
+    /**
+     * Encodes name for halogen paths
+     * @param dist
+     * @param a
+     * @param b
+     * @return
+     */
     private static String encodeHalPath(int dist, IAtom a, IAtom b) {
         return dist + "_" + (isHalogen(a) ? "X" : a.getSymbol()) + "_" +
                (isHalogen(b) ? "X" : b.getSymbol());
     }
 
+    /**
+     * This performs the calculations used to generate the fingerprint
+     * @param paths
+     * @param mol
+     */
     private void calculate(List<String> paths, IAtomContainer mol) {
         AllPairsShortestPaths apsp     = new AllPairsShortestPaths(mol);
         int                   numAtoms = mol.getAtomCount();

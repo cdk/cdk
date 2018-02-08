@@ -1,7 +1,7 @@
 /* This work is the product of a US Government employee as part of his/her regular duties
  * and is thus in the public domain.
  * 
- * Author: Lyle D. Burgoon, Ph.D.
+ * Author: Lyle D. Burgoon, Ph.D. (lyle.d.burgoon@usace.army.mil)
  * Date: 5 FEBRUARY 2018
  * 
  */
