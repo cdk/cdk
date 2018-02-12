@@ -313,7 +313,7 @@
 
 <xsl:template match="bibxml:doi">
 	<xsl:if test=". != ''">	
-		<a href="http://dx.doi.org/{.}">
+		<a href="https://doi.org/{.}">
 		<xsl:value-of select="."/>	
 		</a>
 	</xsl:if>
