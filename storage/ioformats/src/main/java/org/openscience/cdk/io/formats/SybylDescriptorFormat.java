@@ -21,7 +21,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://dx.doi.org/10.1021/ci034207y">here</a>.
+ * See <a href="https://doi.org/10.1021/ci034207y">here</a>.
  *
  * @cdk.module ioformats
  * @cdk.githash
