@@ -75,8 +75,7 @@ public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
         IFingerprinter    printer = new AtomPairs2DFingerprinter();
         IAtomContainer    mol1    = parser.parseSmiles("cccccccccc");
         ICountFingerprint icfp    = printer.getCountFingerprint(mol1);
-        Assert.assertEquals(780, icfp.numOfPopulatedbins());
-        Assert.assertEquals(780, icfp.size());
+        Assert.assertEquals(9, icfp.numOfPopulatedbins());
 
     }
 
