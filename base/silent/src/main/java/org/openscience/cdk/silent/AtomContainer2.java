@@ -222,7 +222,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         if (bond.getClass() == Bond.class)
             return new BaseBondRef(this, bond, beg, end);
         bond = unbox(bond);
-        if (bond instanceof QueryBondRef)
+        if (bond instanceof IQueryBond)
             return new QueryBondRef(this, (IQueryBond) bond, beg, end);
         return new BaseBondRef(this, bond, beg, end);
     }
