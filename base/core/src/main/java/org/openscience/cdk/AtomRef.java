@@ -451,4 +451,9 @@ public class AtomRef extends ChemObjectRef implements IAtom {
     public IAtom clone() throws CloneNotSupportedException {
         return atom.clone();
     }
+
+    @Override
+    public String toString() {
+        return "AtomRef{" + atom + "}";
+    }
 }
