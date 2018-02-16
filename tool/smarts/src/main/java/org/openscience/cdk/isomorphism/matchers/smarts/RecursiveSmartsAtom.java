@@ -25,12 +25,10 @@ import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.ComponentGrouping;
+import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.SmartsStereoMatch;
-import org.openscience.cdk.isomorphism.Ullmann;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.BitSet;
 
@@ -42,9 +40,6 @@ import java.util.BitSet;
  * @cdk.keyword SMARTS
  */
 public final class RecursiveSmartsAtom extends SMARTSAtom {
-
-    private final static ILoggingTool                  logger = LoggingToolFactory
-                                                                      .createLoggingTool(RecursiveSmartsAtom.class);
 
     /** The IQueryAtomContainer created by parsing the recursive smarts */
     private final IQueryAtomContainer                  query;
@@ -66,7 +61,7 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
                     @Override
                     public BitSet load(IAtomContainer target) throws Exception {
                         BitSet hits = new BitSet();
-                        for (int[] mapping : FluentIterable.from(Ullmann.findSubstructure(query).matchAll(target))
+                        for (int[] mapping : FluentIterable.from(Pattern.findSubstructure(query).matchAll(target))
                                 .filter(new SmartsStereoMatch(query, target))
                                 .filter(new ComponentGrouping(query, target))) {
                             hits.set(mapping[0]);

@@ -307,4 +307,9 @@ public class BondRef extends ChemObjectRef implements IBond {
     public IBond clone() throws CloneNotSupportedException {
         return bond.clone();
     }
+
+    @Override
+    public String toString() {
+        return "BondRef{" + bond + "}";
+    }
 }
