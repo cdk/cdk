@@ -212,7 +212,7 @@ public interface IAtom extends IAtomType {
 
     /**
      * Returns the bond connecting 'this' atom to the provided atom. If the
-     * atoms are not bonded, null is return
+     * atoms are not bonded, null is returned.
      * @param atom the other atom
      * @return the bond connecting the atoms
      * @throws UnsupportedOperationException thrown if the bonds are not known
