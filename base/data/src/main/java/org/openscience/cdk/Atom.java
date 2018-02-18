@@ -270,14 +270,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public IBond getBond(IAtom atom) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      *  Sets the partial charge of this atom.
      *
      * @param  charge  The partial charge
