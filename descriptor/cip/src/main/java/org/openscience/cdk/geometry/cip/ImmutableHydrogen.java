@@ -621,6 +621,11 @@ class ImmutableHydrogen implements IAtom {
 
     @Override
     public int getBondCount() {
-        return 0;
+        return 1;
+    }
+
+    @Override
+    public IBond getBond(IAtom atom) {
+        throw new UnsupportedOperationException();
     }
 }
