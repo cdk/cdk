@@ -33,6 +33,10 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+
 /**
  * Checks the functionality of the AtomContainer.
  *
@@ -110,5 +114,26 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         IAtomContainer container = new AtomContainer(acetone);
         Assert.assertEquals(4, container.getAtomCount());
         Assert.assertEquals(3, container.getBondCount());
+    }
+
+    @Test
+    public void testAtomGetBond() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1 = mol.getBuilder().newAtom();
+        IAtom          a2 = mol.getBuilder().newAtom();
+        IAtom          a3 = mol.getBuilder().newAtom();
+        a1.setSymbol("CH3");
+        a2.setSymbol("CH2");
+        a3.setSymbol("OH");
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        assertThat(mol.getBond(0),
+                   is(mol.getAtom(0).getBond(mol.getAtom(1))));
+        assertThat(mol.getBond(1),
+                   is(mol.getAtom(1).getBond(mol.getAtom(2))));
+        assertNull(mol.getAtom(0).getBond(mol.getAtom(2)));
     }
 }

@@ -406,6 +406,14 @@ public class AtomRef extends ChemObjectRef implements IAtom {
      * {@inheritDoc}
      */
     @Override
+    public IBond getBond(IAtom atom) {
+        return this.atom.getBond(atom);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isAromatic() {
         return atom.isAromatic();
     }
