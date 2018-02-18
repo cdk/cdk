@@ -173,6 +173,14 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IBond getBond(IAtom atom) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      *  Sets the partial charge of this atom.
      *
      * @param  charge  The partial charge
