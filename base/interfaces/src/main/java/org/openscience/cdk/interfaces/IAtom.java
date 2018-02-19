@@ -204,7 +204,20 @@ public interface IAtom extends IAtomType {
      */
     Iterable<IBond> bonds();
 
+    /**
+     * Get the number of explicit bonds connected to this atom.
+     * @return the total bond count
+     */
     int getBondCount();
+
+    /**
+     * Returns the bond connecting 'this' atom to the provided atom. If the
+     * atoms are not bonded, null is returned.
+     * @param atom the other atom
+     * @return the bond connecting the atoms
+     * @throws UnsupportedOperationException thrown if the bonds are not known
+     */
+    IBond getBond(IAtom atom);
 
     /**
      * Access whether this atom has been marked as aromatic. The default
