@@ -442,10 +442,13 @@ final class CxSmilesParser {
                     }
                     break;
                 case 'r': // relative stereochemistry ignored
-                    if (!iter.nextIf(':'))
-                        return -1;
-                    if (!skipIntList(iter, COMMA_SEPARATOR))
-                        return -1;
+                    if (iter.nextIf(':')) {
+                        if (!skipIntList(iter, COMMA_SEPARATOR))
+                            return -1;
+                    } else {
+                        if (!iter.nextIf(',') && iter.curr() != '|')
+                            return -1;
+                    }
                     break;
                 case 'l': // lone pairs ignored
                     if (!iter.nextIf("p:"))
