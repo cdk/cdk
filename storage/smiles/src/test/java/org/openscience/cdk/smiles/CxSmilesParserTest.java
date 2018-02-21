@@ -199,6 +199,19 @@ public class CxSmilesParserTest {
         assertThat(CxSmilesParser.unescape("&#9;"), is("\t")); // TAB
     }
 
+    @Test public void relativeStereoMolecule() {
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx("|r|", state), is(not(-1)));
+        assertThat(CxSmilesParser.processCx("|r,$_R1$|", state), is(not(-1)));
+        assertThat(CxSmilesParser.processCx("|$_R1$,r|", state), is(not(-1)));
+    }
+
+
+    @Test public void relativeStereoReaction() {
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx("|r:2,4,5|", state), is(not(-1)));
+    }
+
     /**
      * Custom matcher for checking an array of doubles closely matches (epsilon=0.01)
      * an expected value.
