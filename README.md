@@ -185,15 +185,11 @@ cdk/base/silent: mvn java-formatter:format
 
 #### JaCoCo
 
-[JaCoCo](http://en.wikipedia.org/wiki/Java_Code_Coverage_Tools#JaCoCo) is a tool for analysing test coverage. JaCoCo can install [agent](http://www.javabeat.net/introduction-to-java-agents/) instrumentation and check exactly which lines are called and missed by tests. This not only serves as a quality measure but also can guide optimisation, "why isn't that conditional ever hit by my tests, is it even possible?". 
-
-I'll use the new MMFF atom typing to demonstrate:
+[JaCoCo](http://en.wikipedia.org/wiki/Java_Code_Coverage_Tools#JaCoCo) is a tool for analysing test coverage. JaCoCo installs [agent](http://www.javabeat.net/introduction-to-java-agents/) instrumentation and check exactly which code lines are hit and missed by tests. This not only serves as a quality measure but also can guide optimisation, "why isn't that conditional ever hit by my tests, is it even possible?". 
 
 ```
-cdk/: cd tool/forcefield
-cdk/tool/forcefield: ls
-cdk/tool/forcefield: mvn jacoco:prepare-agent test
-cdk/tool/forcefield: mvn jacoco:report
+cdk/: cd base/silent
+cdk/tool/forcefield: mvn jacoco:prepare-agent test jacoco:report
 cdk/tool/forcefield: open target/site/jacoco/index.html
 ```
 
@@ -201,7 +197,13 @@ The contribute method determines the number of pi electrons for an element with 
 
 ![](http://cdk.github.io/cdk/img/jacoco-mmff-example_zps529c0073.png)
 
-IDEs and CI servers (Jenkins) can also integrate the reports directly.
+You can run single tests as follows:
+
+```
+cdk/base/silent: mvn jacoco:prepare-agent test jacoco:report -DAtomContainerTest
+```
+
+Some IDEs and CI servers are able to integrate the JaCoCo reports directly.
 
 Reporting coverage when the tests are separate to the production code is a little more tricky but possible. Here is an example for the 'cdk-standard' module.
 
