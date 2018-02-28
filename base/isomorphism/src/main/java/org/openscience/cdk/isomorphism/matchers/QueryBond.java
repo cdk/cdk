@@ -23,6 +23,7 @@ import java.util.Iterator;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -527,4 +528,21 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
         notifyChanged();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof BondRef)
+            return super.equals(((BondRef) obj).deref());
+        return super.equals(obj);
+    }
 }

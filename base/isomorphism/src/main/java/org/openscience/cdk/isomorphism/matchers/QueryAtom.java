@@ -22,6 +22,7 @@ package org.openscience.cdk.isomorphism.matchers;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -734,5 +735,23 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     public IAtom clone() throws CloneNotSupportedException {
         // XXX: clone always dodgy
         return (IAtom) super.clone();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AtomRef)
+            return super.equals(((AtomRef) obj).deref());
+        return super.equals(obj);
     }
 }
