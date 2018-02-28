@@ -200,7 +200,7 @@ The contribute method determines the number of pi electrons for an element with 
 You can run single tests as follows:
 
 ```
-cdk/base/silent: mvn jacoco:prepare-agent test jacoco:report -DAtomContainerTest
+cdk/base/silent: mvn jacoco:prepare-agent test jacoco:report -Dtest=AtomContainerTest
 ```
 
 Some IDEs and CI servers are able to integrate the JaCoCo reports directly.
