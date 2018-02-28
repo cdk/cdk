@@ -27,10 +27,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.silent.ChemFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.vecmath.Vector3d;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -62,6 +65,46 @@ public class CIFReaderTest extends ChemObjectIOTest {
         //        } finally {
         cifReader.close();
         //        }
+    }
+
+    @Test
+    public void cod1100784AtomCount() throws IOException, CDKException {
+        InputStream in = getClass().getResourceAsStream("1100784.cif");
+        CIFReader cifReader = new CIFReader(in);
+        IChemFile chemFile = cifReader.read(new ChemFile());
+        ICrystal crystal = chemFile.getChemSequence(0).getChemModel(0).getCrystal();
+        Assert.assertEquals(72, crystal.getAtomCount());
+        cifReader.close();
+    }
+
+    @Test()
+    public void cod1100784CellLengths() throws IOException, CDKException {
+        InputStream in = getClass().getResourceAsStream("1100784.cif");
+        CIFReader cifReader = new CIFReader(in);
+        IChemFile chemFile = cifReader.read(new ChemFile());
+        ICrystal crystal = chemFile.getChemSequence(0).getChemModel(0).getCrystal();
+        Assert.assertTrue( java.lang.Math.abs(crystal.getA().length() - 10.9754) < 1E-5 );
+        Assert.assertTrue( java.lang.Math.abs(crystal.getB().length() - 11.4045) < 1E-5 );
+        Assert.assertTrue( java.lang.Math.abs(crystal.getC().length() - 12.9314) < 1E-5 );
+        cifReader.close();
+    }
+
+    @Test()
+    public void cod1100784CellAngles() throws IOException, CDKException {
+        InputStream in = getClass().getResourceAsStream("1100784.cif");
+        CIFReader cifReader = new CIFReader(in);
+        IChemFile chemFile = cifReader.read(new ChemFile());
+        ICrystal crystal = chemFile.getChemSequence(0).getChemModel(0).getCrystal();
+        Vector3d a = crystal.getA();
+        Vector3d b = crystal.getB();
+        Vector3d c = crystal.getC();
+        double alpha = java.lang.Math.acos(b.dot(c)/(b.length()*c.length()))*180/java.lang.Math.PI;
+        double beta  = java.lang.Math.acos(c.dot(a)/(c.length()*a.length()))*180/java.lang.Math.PI;
+        double gamma = java.lang.Math.acos(a.dot(b)/(a.length()*b.length()))*180/java.lang.Math.PI;
+        Assert.assertTrue( java.lang.Math.abs(alpha - 109.1080) < 1E-5 );
+        Assert.assertTrue( java.lang.Math.abs(beta  -  98.4090) < 1E-5 );
+        Assert.assertTrue( java.lang.Math.abs(gamma - 102.7470) < 1E-5 );
+        cifReader.close();
     }
 
 }

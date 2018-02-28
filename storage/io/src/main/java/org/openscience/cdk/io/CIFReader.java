@@ -23,29 +23,18 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.StringTokenizer;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.CIFFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.io.*;
+import java.util.StringTokenizer;
 
 /**
  * This is not a reader for the CIF and mmCIF crystallographic formats.
@@ -190,7 +179,8 @@ public class CIFReader extends DefaultChemObjectReader {
                 if (command.startsWith("_cell")) {
                     processCellParameter(command, line);
                 } else if (command.equals("loop_")) {
-                    processLoopBlock();
+                    line = processLoopBlock();
+                    continue;
                 } else if (command.equals("_symmetry_space_group_name_H-M")) {
                     String value = line.substring(29).trim();
                     crystal.setSpaceGroup(value);
@@ -260,26 +250,42 @@ public class CIFReader extends DefaultChemObjectReader {
         }
     }
 
-    private void processLoopBlock() throws IOException {
+    private String processLoopBlock() throws IOException {
         String line = input.readLine().trim();
         if (line.startsWith("_atom")) {
             logger.info("Found atom loop block");
-            processAtomLoopBlock(line);
+            return processAtomLoopBlock(line);
         } else {
             logger.warn("Skipping loop block");
-            skipUntilEmptyOrCommentLine(line);
+            return skipLoop(line);
         }
     }
 
-    private void skipUntilEmptyOrCommentLine(String line) throws IOException {
-        // skip everything until empty line, or comment line
-        while (line != null && line.length() > 0 && line.charAt(0) != '#') {
+    private String skipLoop(String line) throws IOException {
+        // skip everything until the end of the loop body
+        if (line != null) line = line.trim();
+        // First, skip the loop_ data name list:
+        while (line != null && line.length() > 0 && line.charAt(0) == '_') {
             line = input.readLine();
             if (line != null) line = line.trim();
         }
+        return skipLoopBody(line);
     }
 
-    private void processAtomLoopBlock(String firstLine) throws IOException {
+    private String skipLoopBody(String line) throws IOException {
+        // Then, skip every line that looks like starting with a CIF value:
+        while (line != null && line.length() > 0 &&
+        		line.charAt(0) != '#' &&
+        		line.charAt(0) != '_' &&
+        		!line.startsWith("loop_") &&
+        		!line.startsWith("data_")) {
+            line = input.readLine();
+            if (line != null) line = line.trim();
+        }
+        return line;
+    }
+
+    private String processAtomLoopBlock(String firstLine) throws IOException {
         int atomLabel = -1; // -1 means not found in this block
         int atomSymbol = -1;
         int atomFractX = -1;
@@ -332,10 +338,14 @@ public class CIFReader extends DefaultChemObjectReader {
         }
         if (hasParsableInformation == false) {
             logger.info("No parsable info found");
-            skipUntilEmptyOrCommentLine(line);
+            return skipLoopBody(line);
         } else {
             // now that headers are parsed, read the data
-            while (line != null && line.length() > 0 && line.charAt(0) != '#') {
+            while (line != null && line.length() > 0 &&
+                    line.charAt(0) != '#' &&
+                    line.charAt(0) != '_' &&
+                    !line.startsWith("loop_") &&
+                    !line.startsWith("data_")) {
                 logger.debug("new row");
                 StringTokenizer tokenizer = new StringTokenizer(line);
                 if (tokenizer.countTokens() < headerCount) {
@@ -404,6 +414,7 @@ public class CIFReader extends DefaultChemObjectReader {
                 if (line != null) line = line.trim();
             }
         }
+        return line;
     }
 
     /**
