@@ -51,7 +51,7 @@ public class MorganNumbersToolsTest extends CDKTestCase {
         long[] reference = {28776, 17899, 23549, 34598, 31846, 36393, 9847, 45904, 15669, 15669};
 
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
-        long[] morganNumbers = MorganNumbersTools.getMorganNumbers((AtomContainer) mol);
+        long[] morganNumbers = MorganNumbersTools.getMorganNumbers(mol);
         Assert.assertEquals(reference.length, morganNumbers.length);
         for (int f = 0; f < morganNumbers.length; f++) {
             //logger.debug(morganNumbers[f]);
@@ -65,7 +65,7 @@ public class MorganNumbersToolsTest extends CDKTestCase {
         String[] reference = {"C-457", "C-428", "C-325", "C-354", "C-325", "C-428", "N-251"};
 
         IAtomContainer mol = TestMoleculeFactory.makePhenylAmine();
-        String[] morganNumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol((AtomContainer) mol);
+        String[] morganNumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(mol);
         Assert.assertEquals(reference.length, morganNumbers.length);
         for (int f = 0; f < morganNumbers.length; f++) {
             //logger.debug(morganNumbers[f]);

@@ -272,11 +272,12 @@ public class PathTools {
             // now look at bonds
             List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
             for (IBond bond : bonds) {
+                nextAtom = bond.getOther(atom);
                 if (!bond.getFlag(CDKConstants.VISITED)) {
+                    molecule.addAtom(nextAtom);
                     molecule.addBond(bond);
                     bond.setFlag(CDKConstants.VISITED, true);
                 }
-                nextAtom = bond.getOther(atom);
                 if (!nextAtom.getFlag(CDKConstants.VISITED)) {
                     //					logger.debug("wie oft???");
                     newSphere.add(nextAtom);

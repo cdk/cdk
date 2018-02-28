@@ -99,7 +99,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
      */
     @Test
     public void testTwoGroup() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "O");
         a1.setFormalCharge(0);
         a1.setPoint2d(new Point2d(5.9019, 0.5282));
@@ -173,7 +173,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
      */
     @Test
     public void testCID() throws Exception {
-        IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "S");
         a1.setFormalCharge(0);
         a1.setPoint2d(new Point2d(9.4651, 0.25));
