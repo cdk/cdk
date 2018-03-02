@@ -78,6 +78,16 @@ public abstract class Pattern {
     }
 
     /**
+     * Determine how many unique mappings of this pattern are in the
+     * {@code target}. Depending on the implementation stereochemistry
+     * may be checked (recommended).
+     *
+     * @param target the container to search for the pattern in
+     * @return the number of unique mappings of the pattern to the target
+     */
+    public abstract int countUniqueMatches(IAtomContainer target);
+
+    /**
      * Determine if there is a mapping of this pattern in the {@code target}
      * reaction.
      *

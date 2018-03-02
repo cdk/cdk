@@ -227,6 +227,8 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     /** {@inheritDoc} */
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
+
+
         throw new UnsupportedOperationException();
     }
 
