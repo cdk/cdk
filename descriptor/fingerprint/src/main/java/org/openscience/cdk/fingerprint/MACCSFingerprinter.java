@@ -280,6 +280,17 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     /** {@inheritDoc} */
     @Override
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
+        // For the counting fingerprints we need to consider how to deal with:
+        // 1) Binary FPs that put molecules into a certain group, e.g. [Ac,Th,Pa,...] 0 | Actinides.
+        //    a) We can count each atom separately.
+        //    b) We stay with the binary version for the groups.
+        // 2) Binary FPs that looking for one, two, etc occurrences:
+        //    a) Merge those fingerprints to a simple count of the corresponding structure.
+        // 3) Rings
+        //    a) Here we need to find out whether we can somehow distinguish the rings uniquely.
+        //       We do not want to count the same ring twice.
+        // 4) How to deal with the fragments?
+
         throw new UnsupportedOperationException();
     }
 
