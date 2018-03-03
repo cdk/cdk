@@ -1090,42 +1090,42 @@ public class ExprTest {
         assertFalse(expr.matches(atom));
     }
 
-    @Ignore("to be added back in later")
-    public void testRecursiveT() {
-        IAtomContainer subexpr = new QueryAtomContainer(null);
-        QueryAtom      qatom   = new QueryAtom(null);
-        qatom.setExpression(new Expr(TRUE));
-        subexpr.addAtom(qatom);
-        Expr           expr = new Expr(RECURSIVE, subexpr);
-        IAtomContainer mol  = TestMoleculeFactory.makeNaphthalene();
-        assertTrue(expr.matches(mol.getAtom(0)));
-    }
-
-    @Ignore("to be added back in later")
-    public void testRecursiveF() {
-        IAtomContainer subexpr = new QueryAtomContainer(null);
-        QueryAtom      qatom   = new QueryAtom(null);
-        qatom.setExpression(new Expr(FALSE));
-        subexpr.addAtom(qatom);
-        Expr           expr = new Expr(RECURSIVE, subexpr);
-        IAtomContainer mol  = TestMoleculeFactory.makeNaphthalene();
-        assertFalse(expr.matches(mol.getAtom(0)));
-    }
-
-    @Ignore("to be added back in later")
-    public void testRecursiveF2() {
-        IAtomContainer subexpr = new QueryAtomContainer(null);
-        QueryAtom      qatom   = new QueryAtom(null);
-        qatom.setExpression(new Expr(ELEMENT, 8));
-        subexpr.addAtom(qatom);
-        Expr           expr = new Expr(RECURSIVE, subexpr);
-        IAtomContainer mol  = TestMoleculeFactory.makeNaphthalene();
-        IAtom          atom = mol.getBuilder().newAtom();
-        atom.setAtomicNumber(8);
-        mol.addAtom(atom);
-        assertFalse(expr.matches(mol.getAtom(0)));
-        assertTrue(expr.matches(mol.getAtom(mol.getAtomCount() - 1)));
-    }
+//    @Ignore("to be added back in later")
+//    public void testRecursiveT() {
+//        IAtomContainer subexpr = new QueryAtomContainer(null);
+//        QueryAtom      qatom   = new QueryAtom(null);
+//        qatom.setExpression(new Expr(TRUE));
+//        subexpr.addAtom(qatom);
+//        Expr           expr = new Expr(RECURSIVE, subexpr);
+//        IAtomContainer mol  = TestMoleculeFactory.makeNaphthalene();
+//        assertTrue(expr.matches(mol.getAtom(0)));
+//    }
+//
+//    @Ignore("to be added back in later")
+//    public void testRecursiveF() {
+//        IAtomContainer subexpr = new QueryAtomContainer(null);
+//        QueryAtom      qatom   = new QueryAtom(null);
+//        qatom.setExpression(new Expr(FALSE));
+//        subexpr.addAtom(qatom);
+//        Expr           expr = new Expr(RECURSIVE, subexpr);
+//        IAtomContainer mol  = TestMoleculeFactory.makeNaphthalene();
+//        assertFalse(expr.matches(mol.getAtom(0)));
+//    }
+//
+//    @Ignore("to be added back in later")
+//    public void testRecursiveF2() {
+//        IAtomContainer subexpr = new QueryAtomContainer(null);
+//        QueryAtom      qatom   = new QueryAtom(null);
+//        qatom.setExpression(new Expr(ELEMENT, 8));
+//        subexpr.addAtom(qatom);
+//        Expr           expr = new Expr(RECURSIVE, subexpr);
+//        IAtomContainer mol  = TestMoleculeFactory.makeNaphthalene();
+//        IAtom          atom = mol.getBuilder().newAtom();
+//        atom.setAtomicNumber(8);
+//        mol.addAtom(atom);
+//        assertFalse(expr.matches(mol.getAtom(0)));
+//        assertTrue(expr.matches(mol.getAtom(mol.getAtomCount() - 1)));
+//    }
 
     /* Bond Exprs */
 
