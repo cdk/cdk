@@ -118,7 +118,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
     }
 
     private static final boolean CDK_LEGACY_AC
-        = getSystemProp("CdkUseLegacyAtomContainer", true);
+        = getSystemProp("CdkUseLegacyAtomContainer", false);
 
     private static volatile IChemObjectBuilder instance = null;
     private static final Object                LOCK     = new Object();
