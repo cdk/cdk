@@ -338,7 +338,8 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     public void testAtomContainerHandling() throws Exception {
         IAtomContainer water1 = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         // creates an AtomContainer with the atoms / bonds from water1
-        IAtomContainer water2 = new AtomContainer(water1);
+        IAtomContainer water2 = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        water2.add(water1);
 
         IDescriptorResult v1 = descriptor.calculate(water1).getValue();
         IDescriptorResult v2 = descriptor.calculate(water2).getValue();
@@ -355,7 +356,8 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
      */
     @Test
     public void testDisconnectedStructureHandling() throws Exception {
-        IAtomContainer disconnected = new AtomContainer();
+        IAtomContainer disconnected = SilentChemObjectBuilder.getInstance()
+                                                             .newAtomContainer();
         IAtom chloride = new Atom("Cl");
         chloride.setFormalCharge(-1);
         disconnected.addAtom(chloride);

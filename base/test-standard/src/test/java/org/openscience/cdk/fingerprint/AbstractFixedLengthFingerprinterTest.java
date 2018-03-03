@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -84,15 +85,16 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      */
     @Test
     public void testBug853254() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         String filename = "data/mdl/bug853254-2.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer superstructure = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer superstructure = reader.read(builder.newAtomContainer());
 
         filename = "data/mdl/bug853254-1.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer substructure = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer substructure = reader.read(builder.newAtomContainer());
 
         // these molecules are different resonance forms of the same molecule
         // make sure aromaticity is detected. although some fingerprinters do this
@@ -140,15 +142,16 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      */
     @Test
     public void testBug771485() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         String filename = "data/mdl/bug771485-1.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer structure1 = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer structure1 = (IAtomContainer) reader.read(builder.newAtomContainer());
 
         filename = "data/mdl/bug771485-2.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer structure2 = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer structure2 = (IAtomContainer) reader.read(builder.newAtomContainer());
 
         // these molecules are different resonance forms of the same molecule
         // make sure aromaticity is detected. although some fingerprinters do this
@@ -184,15 +187,16 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      */
     @Test
     public void testBug931608() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         String filename = "data/mdl/bug931608-1.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer structure1 = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer structure1 = reader.read(builder.newAtomContainer());
 
         filename = "data/mdl/bug931608-2.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer structure2 = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer structure2 = reader.read(builder.newAtomContainer());
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure2);

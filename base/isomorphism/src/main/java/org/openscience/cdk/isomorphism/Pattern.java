@@ -73,7 +73,7 @@ public abstract class Pattern {
      * @param target the container to search for the pattern in
      * @return the mapping from the pattern to the target
      */
-    public final boolean matches(IAtomContainer target) {
+    public boolean matches(IAtomContainer target) {
         return match(target).length > 0;
     }
 
