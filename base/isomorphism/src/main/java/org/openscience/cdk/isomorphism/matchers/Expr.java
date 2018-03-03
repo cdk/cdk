@@ -371,15 +371,15 @@ public final class Expr {
 
             case RECURSIVE:
                 // TO BE OPTIMIZED
-                for (int[] match : VentoFoggia.findSubstructure(query,
-                                                                AtomMatcher.forQuery(),
-                                                                BondMatcher.forQuery())
-                                              .matchAll(atom.getContainer())
-                                              .filter(new StereoFilter(query, atom.getContainer()))
-                                              .filter(new ComponentGrouping(query, atom.getContainer()))) {
-                    if (match[0] == atom.getIndex())
-                        return true;
-                }
+//                for (int[] match : VentoFoggia.findSubstructure(query,
+//                                                                AtomMatcher.forQuery(),
+//                                                                BondMatcher.forQuery())
+//                                              .matchAll(atom.getContainer())
+//                                              .filter(new StereoFilter(query, atom.getContainer()))
+//                                              .filter(new ComponentGrouping(query, atom.getContainer()))) {
+//                    if (match[0] == atom.getIndex())
+//                        return true;
+//                }
                 return false;
 
             default:
