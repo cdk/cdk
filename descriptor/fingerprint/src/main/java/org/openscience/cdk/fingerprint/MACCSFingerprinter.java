@@ -290,14 +290,14 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         // For the counting fingerprints we need to consider how to deal with:
         // 1) Binary FPs that put molecules into a certain group, e.g. [Ac,Th,Pa,...] 0 | Actinides.
-        //    a) We can count each atom separately.
-        //    b) We stay with the binary version for the groups.
+        //    ~~ a) We can count each atom separately. ~~
+        //    ==> We stay with the binary version for the groups.
         // 2) Binary FPs that looking for one, two, etc occurrences:
-        //    a) Merge those fingerprints to a simple count of the corresponding structure.
+        //    ==> Merge those fingerprints to a simple count of the corresponding structure.
         // 3) Rings
-        //    a) Here we need to find out whether we can somehow distinguish the rings uniquely.
-        //       We do not want to count the same ring twice.
-        // 4) How to deal with the fragments?
+        //    ==> Rings are just simply counted.
+        // 4) Fragments
+        //    ==> Number of fragments is counted
 
         MaccsKey[] keys = keys(container.getBuilder());
         Map<String, Integer> fp = new HashMap<>();
@@ -315,9 +315,21 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
             final MaccsKey key     = keys[i];
             final Pattern  pattern = key.pattern;
 
+            // We want to have fixed length MACCS counting fingerprints. So we add
+            // for each SMARTS a (key, value = 0)-pair to the hash-map.
+            // Some keys are repeated in the MACCS definition. We do not want to
+            // override any existing value.
+            if (! fp.containsKey(key.smarts)) {
+                fp.put(key.smarts, 0);
+            }
+
             switch (key.smarts) {
+                // Aromatic ring (??). In the MACCS definitions (bit 124 / row 125) this is marked
+                // with ["!*]. This is somehow strange? However, it is handled together with 6th rings.
                 case "[!*]":
                     break;
+
+                // isotopes
                 case "[!0]":
                     // According to the MACCS definition this pattern checks whether a molecules
                     // is an isotope. In the counting fingerprints we can keep this property binary.
@@ -329,17 +341,35 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
                     }
                     break;
 
-                // ring bits
-                // TODO: How to deal with rings?
+                // groups
+                case "[!#1;!#6;!#7;!#8;!#9;!#14;!#15;!#16;!#17;!#35;!#53]":
+                case "[#104,#105,#106,#107,#108,#109,#110,#111,#112]":
+                case "[#5,Al,Ga,In,Tl]":
+                case "[Ac,Th,Pa,U,Np,Pu,Am,Cm,Bk,Cf,Es,Fm,Md,No,Lr]":
+                case "[Be,Mg,Ca,Sr,Ba,Ra]":
+                case "[Cu,Zn,Ag,Cd,Au,Hg]":
+                case "[Fe,Co,Ni,Ru,Rh,Pd,Os,Ir,Pt]":
+                case "[Ge,As,as,Se,se,Sn,Sb,Te,Tl,Pb,Bi]":
+                case "[La,Ce,Pr,Nd,Pm,Sm,Eu,Gd,Tb,Dy,Ho,Er,Tm,Yb,Lu]":
+                case "[Li,Na,K,Rb,Cs,Fr]":
+                case "[Sc,Ti,Y,Zr,Hf]":
+                case "[V,Cr,Mn,Nb,Mo,Tc,Ta,W,Re]":
+                    if (pattern.matches(container)) {
+                        fp.put(key.smarts, 1);
+                    }
+                    break;
+
+                // ring counts
                 case "[R]1@*@*@1": // 3M RING bit22
                 case "[R]1@*@*@*@1": // 4M RING bit11
                 case "[R]1@*@*@*@*@1": // 5M RING bit96
-                case "[R]1@*@*@*@*@*@1": // 6M RING bit163, x2=bit145
+                case "[R]1@*@*@*@*@*@1": // 6M RING bit163, bit124
                 case "[R]1@*@*@*@*@*@*@1": // 7M RING, bit19
                 case "[R]1@*@*@*@*@*@*@*@1": // 8M RING, bit101
                     // handled separately
                     break;
 
+                // fragments
                 case "(*).(*)":
                     // bit 166 (*).(*) we can match this in SMARTS but it's faster to just
                     // count the number of components or in this case try to traverse the
@@ -365,7 +395,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
                     // NOTE: 'countUnique' is unique in the sense of the set of involved atoms.
                     // TODO: Are there any fingerprint definitions for those we need to treat bonds uniquely?
 
-                    if (! fp.containsKey(key.smarts)) {
+                    if (fp.get(key.smarts) == 0) {
                         // If the key.count == 0, than in the binary fps we only check occurrence, if
                         // key.count == n != 0, than the binary fps checks, whether the substructure
                         // occurred at least n + 1 times. In counting version of the fingerprint we
@@ -376,51 +406,50 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
             }
         }
 
-        // Ring Bits
+        // Ring counts
 
         // threshold=126, see AllRingsFinder.Threshold.PubChem_97
-//        if (numAtoms > 2) {
-//            AllCycles allcycles = new AllCycles(adjlist,
-//                    Math.min(8, numAtoms),
-//                    126);
-//            int numArom = 0;
-//            for (int[] path : allcycles.paths()) {
-//                // length is +1 as we repeat the closure vertex
-//                switch (path.length) {
-//                    case 4: // 3M bit22
-//                        fp.set(21);
-//                        break;
-//                    case 5: // 4M bit11
-//                        fp.set(10);
-//                        break;
-//                    case 6: // 5M bit96
-//                        fp.set(95);
-//                        break;
-//                    case 7: // 6M bit163->bit145, bit124 numArom > 1
-//
-//                        if (numArom < 2) {
-//                            if (isAromPath(path, bmap)) {
-//                                numArom++;
-//                                if (numArom == 2)
-//                                    fp.set(124);
-//                            }
-//                        }
-//
-//                        if (fp.get(162)) {
-//                            fp.set(144); // >0
-//                        } else {
-//                            fp.set(162); // >1
-//                        }
-//                        break;
-//                    case 8: // 7M bit19
-//                        fp.set(18);
-//                        break;
-//                    case 9: // 8M bit101
-//                        fp.set(100);
-//                        break;
-//                }
-//            }
-//        }
+        if (numAtoms > 2) {
+            AllCycles allcycles = new AllCycles(adjlist,
+                    Math.min(8, numAtoms),
+                    126);
+
+            // TODO: Are the cycles here unique?
+            for (int[] path : allcycles.paths()) {
+                String ringSmarts;
+                // length is +1 as we repeat the closure vertex
+                switch (path.length) {
+                    case 4: // 3M bit22
+                        ringSmarts = "[R]1@*@*@1";
+                        break;
+                    case 5: // 4M bit11
+                        ringSmarts = "[R]1@*@*@*@1";
+                        break;
+                    case 6: // 5M bit96
+                        ringSmarts = "[R]1@*@*@*@*@1";
+                        break;
+                    case 7: // 6M bit163->bit145, bit124 numArom > 1
+                        ringSmarts = "[R]1@*@*@*@*@*@1";
+                        // Handle aromatic rings
+                        // SMARTS taken from line 125 in the MACCS definition file.
+                        fp.put("[!*]", fp.get("[!*]") + 1);
+                        break;
+                    case 8: // 7M bit19
+                        ringSmarts = "[R]1@*@*@*@*@*@*@1";
+                        break;
+                    case 9: // 8M bit101
+                        ringSmarts = "[R]1@*@*@*@*@*@*@*@1";
+                        break;
+                    default:
+                        ringSmarts = "NULL";
+                        break;
+                }
+
+                if (! ringSmarts.equals("NULL")) {
+                    fp.put(ringSmarts, fp.get(ringSmarts) + 1);
+                }
+            }
+        }
 
         return new IntArrayCountFingerprint(fp);
     }
