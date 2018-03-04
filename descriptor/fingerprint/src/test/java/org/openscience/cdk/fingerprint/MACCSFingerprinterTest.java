@@ -58,6 +58,42 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
     }
 
     @Test
+    public void testCountFingerprint() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IFingerprinter printer = new MACCSFingerprinter();
+
+//        IAtomContainer mol0 = parser.parseSmiles("C1=CC=CC(=C1)CCCCC2=CC=CC=C2");
+//        IAtomContainer mol1 = parser.parseSmiles("c1ccccc1CCc1ccccc1");
+//        IAtomContainer mol2 = parser.parseSmiles("c1ccccc1CC");
+        IAtomContainer mol3 = parser.parseSmiles("C.C.C");
+
+//        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol0);
+//        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+//        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
+//        Aromaticity.cdkLegacy().apply(mol0);
+//        Aromaticity.cdkLegacy().apply(mol1);
+//        Aromaticity.cdkLegacy().apply(mol2);
+        Aromaticity.cdkLegacy().apply(mol3);
+
+//        BitSet bs0 = printer.getBitFingerprint(mol0).asBitSet();
+//        BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
+//        BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
+        printer.getCountFingerprint(mol3);
+//
+//        Assert.assertEquals(166, printer.getSize());
+//
+//        Assert.assertFalse(bs1.get(165));
+//        Assert.assertTrue(bs1.get(124));
+//
+//        Assert.assertFalse(bs2.get(124));
+//
+//        Assert.assertTrue(bs3.get(165));
+//
+//        Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs2));
+    }
+
+    @Test
     public void testFingerprint() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new MACCSFingerprinter();

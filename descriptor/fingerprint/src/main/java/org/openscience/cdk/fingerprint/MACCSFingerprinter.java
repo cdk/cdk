@@ -38,10 +38,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This fingerprinter generates 166 bit MACCS keys.
@@ -215,6 +212,17 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
         return visited;
     }
 
+    private static int findUnvisited(boolean[] array, int fromIndex) {
+        if (fromIndex < 0 || fromIndex >= array.length) { throw new IndexOutOfBoundsException(); }
+
+        for (int idx = fromIndex; idx < array.length; idx++) {
+            if (! array[idx]) {
+                return idx;
+            }
+        }
+        return -1;
+    }
+
     private static boolean isAromPath(int[] path, GraphUtil.EdgeToBondMap bmap) {
         int end = path.length - 1;
         for (int i = 0; i < end; i++) {
@@ -291,7 +299,130 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
         //       We do not want to count the same ring twice.
         // 4) How to deal with the fragments?
 
-        throw new UnsupportedOperationException();
+        MaccsKey[] keys = keys(container.getBuilder());
+        Map<String, Integer> fp = new HashMap<>();
+
+        // init SMARTS invariants (connectivity, degree, etc)
+        SmartsMatchers.prepare(container, false);
+
+        final int numAtoms = container.getAtomCount();
+
+
+        final GraphUtil.EdgeToBondMap bmap    = GraphUtil.EdgeToBondMap.withSpaceFor(container);
+        final int[][]                 adjlist = GraphUtil.toAdjList(container, bmap);
+
+        for (int i = 0; i < keys.length; i++) {
+            final MaccsKey key     = keys[i];
+            final Pattern  pattern = key.pattern;
+
+            switch (key.smarts) {
+                case "[!*]":
+                    break;
+                case "[!0]":
+                    // According to the MACCS definition this pattern checks whether a molecules
+                    // is an isotope. In the counting fingerprints we can keep this property binary.
+                    for (IAtom atom : container.atoms()) {
+                        if (atom.getMassNumber() != null) {
+                            fp.put(key.smarts, 1);
+                            break;
+                        }
+                    }
+                    break;
+
+                // ring bits
+                // TODO: How to deal with rings?
+                case "[R]1@*@*@1": // 3M RING bit22
+                case "[R]1@*@*@*@1": // 4M RING bit11
+                case "[R]1@*@*@*@*@1": // 5M RING bit96
+                case "[R]1@*@*@*@*@*@1": // 6M RING bit163, x2=bit145
+                case "[R]1@*@*@*@*@*@*@1": // 7M RING, bit19
+                case "[R]1@*@*@*@*@*@*@*@1": // 8M RING, bit101
+                    // handled separately
+                    break;
+
+                case "(*).(*)":
+                    // bit 166 (*).(*) we can match this in SMARTS but it's faster to just
+                    // count the number of components or in this case try to traverse the
+                    // component, iff there are some atoms not visited we have more than
+                    // one component
+                    if (numAtoms > 1) {
+                        boolean[] visited = new boolean[numAtoms];
+                        int numComp = 0;
+                        int beg     = 0;
+                        do {
+                            numComp++;
+                            visitPart(visited, adjlist, beg, -1);
+                            beg = findUnvisited(visited, 0);
+                        } while (beg != -1);
+                        fp.put(key.smarts, numComp);
+                    }
+                    else {
+                        fp.put(key.smarts, numAtoms);
+                    }
+                    break;
+
+                default:
+                    // NOTE: 'countUnique' is unique in the sense of the set of involved atoms.
+                    // TODO: Are there any fingerprint definitions for those we need to treat bonds uniquely?
+
+                    if (! fp.containsKey(key.smarts)) {
+                        // If the key.count == 0, than in the binary fps we only check occurrence, if
+                        // key.count == n != 0, than the binary fps checks, whether the substructure
+                        // occurred at least n + 1 times. In counting version of the fingerprint we
+                        // merge these two cases and simply count the how often a substructure occurred.
+                        fp.put(key.smarts, pattern.matchAll(container).stereochemistry().countUnique());
+                    }
+                    break;
+            }
+        }
+
+        // Ring Bits
+
+        // threshold=126, see AllRingsFinder.Threshold.PubChem_97
+//        if (numAtoms > 2) {
+//            AllCycles allcycles = new AllCycles(adjlist,
+//                    Math.min(8, numAtoms),
+//                    126);
+//            int numArom = 0;
+//            for (int[] path : allcycles.paths()) {
+//                // length is +1 as we repeat the closure vertex
+//                switch (path.length) {
+//                    case 4: // 3M bit22
+//                        fp.set(21);
+//                        break;
+//                    case 5: // 4M bit11
+//                        fp.set(10);
+//                        break;
+//                    case 6: // 5M bit96
+//                        fp.set(95);
+//                        break;
+//                    case 7: // 6M bit163->bit145, bit124 numArom > 1
+//
+//                        if (numArom < 2) {
+//                            if (isAromPath(path, bmap)) {
+//                                numArom++;
+//                                if (numArom == 2)
+//                                    fp.set(124);
+//                            }
+//                        }
+//
+//                        if (fp.get(162)) {
+//                            fp.set(144); // >0
+//                        } else {
+//                            fp.set(162); // >1
+//                        }
+//                        break;
+//                    case 8: // 7M bit19
+//                        fp.set(18);
+//                        break;
+//                    case 9: // 8M bit101
+//                        fp.set(100);
+//                        break;
+//                }
+//            }
+//        }
+
+        return new IntArrayCountFingerprint(fp);
     }
 
     private final Object lock = new Object();
