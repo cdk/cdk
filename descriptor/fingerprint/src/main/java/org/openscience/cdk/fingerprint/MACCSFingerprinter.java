@@ -212,7 +212,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
         return visited;
     }
 
-    private static int findUnvisited(boolean[] array, int fromIndex) {
+    private static int findUnvisited(boolean[] array, int fromIndex) throws IndexOutOfBoundsException {
         if (fromIndex < 0 || fromIndex >= array.length) { throw new IndexOutOfBoundsException(); }
 
         for (int idx = fromIndex; idx < array.length; idx++) {
@@ -234,60 +234,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
 
     /** {@inheritDoc} */
     @Override
-    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
-
-
-        throw new UnsupportedOperationException();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int getSize() {
-        return 166;
-    }
-
-    private MaccsKey[] readKeyDef(final IChemObjectBuilder builder) throws IOException, CDKException {
-        List<MaccsKey> keys = new ArrayList<MaccsKey>(166);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(getClass()
-                .getResourceAsStream(KEY_DEFINITIONS)));
-
-        // now process the keys
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (line.charAt(0) == '#') continue;
-            String data = line.substring(0, line.indexOf('|')).trim();
-            String[] toks = data.split("\\s");
-
-            keys.add(new MaccsKey(toks[1], createPattern(toks[1], builder), Integer.parseInt(toks[2])));
-        }
-        if (keys.size() != 166) throw new CDKException("Found " + keys.size() + " keys during setup. Should be 166");
-        return keys.toArray(new MaccsKey[166]);
-    }
-
-    private class MaccsKey {
-
-        private String  smarts;
-        private int     count;
-        private Pattern pattern;
-
-        private MaccsKey(String smarts, Pattern pattern, int count) {
-            this.smarts = smarts;
-            this.pattern = pattern;
-            this.count = count;
-        }
-
-        public String getSmarts() {
-            return smarts;
-        }
-
-        public int getCount() {
-            return count;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
+    public Map<String, Integer> getRawFingerprint(IAtomContainer container) throws CDKException {
         // For the counting fingerprints we need to consider how to deal with:
         // 1) Binary FPs that put molecules into a certain group, e.g. [Ac,Th,Pa,...] 0 | Actinides.
         //    ~~ a) We can count each atom separately. ~~
@@ -300,13 +247,12 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
         //    ==> Number of fragments is counted
 
         MaccsKey[] keys = keys(container.getBuilder());
-        Map<String, Integer> fp = new HashMap<>();
+        Map<String, Integer> fp = new HashMap<>(); // Tree maps impose an order of the inserted keys
 
         // init SMARTS invariants (connectivity, degree, etc)
         SmartsMatchers.prepare(container, false);
 
         final int numAtoms = container.getAtomCount();
-
 
         final GraphUtil.EdgeToBondMap bmap    = GraphUtil.EdgeToBondMap.withSpaceFor(container);
         final int[][]                 adjlist = GraphUtil.toAdjList(container, bmap);
@@ -354,6 +300,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
                 case "[Li,Na,K,Rb,Cs,Fr]":
                 case "[Sc,Ti,Y,Zr,Hf]":
                 case "[V,Cr,Mn,Nb,Mo,Tc,Ta,W,Re]":
+                case "[F,Cl,Br,I]":
                     if (pattern.matches(container)) {
                         fp.put(key.smarts, 1);
                     }
@@ -410,9 +357,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
 
         // threshold=126, see AllRingsFinder.Threshold.PubChem_97
         if (numAtoms > 2) {
-            AllCycles allcycles = new AllCycles(adjlist,
-                    Math.min(8, numAtoms),
-                    126);
+            AllCycles allcycles = new AllCycles(adjlist, Math.min(8, numAtoms), 126);
 
             // TODO: Are the cycles here unique?
             for (int[] path : allcycles.paths()) {
@@ -430,9 +375,12 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
                         break;
                     case 7: // 6M bit163->bit145, bit124 numArom > 1
                         ringSmarts = "[R]1@*@*@*@*@*@1";
+
                         // Handle aromatic rings
-                        // SMARTS taken from line 125 in the MACCS definition file.
-                        fp.put("[!*]", fp.get("[!*]") + 1);
+                        if (isAromPath(path, bmap)) {
+                            // SMARTS taken from line 125 in the MACCS definition file.
+                            fp.put("[!*]", fp.get("[!*]") + 1);
+                        }
                         break;
                     case 8: // 7M bit19
                         ringSmarts = "[R]1@*@*@*@*@*@*@1";
@@ -451,7 +399,94 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
             }
         }
 
-        return new IntArrayCountFingerprint(fp);
+        return (fp);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getSize() {
+        return 166;
+    }
+
+    private MaccsKey[] readKeyDef(final IChemObjectBuilder builder) throws IOException, CDKException {
+        List<MaccsKey> keys = new ArrayList<MaccsKey>(166);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(getClass()
+                .getResourceAsStream(KEY_DEFINITIONS)));
+
+        // now process the keys
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (line.charAt(0) == '#') continue;
+            String data = line.substring(0, line.indexOf('|')).trim();
+            String[] toks = data.split("\\s");
+
+            keys.add(new MaccsKey(toks[1], createPattern(toks[1], builder), Integer.parseInt(toks[2])));
+        }
+        if (keys.size() != 166) throw new CDKException("Found " + keys.size() + " keys during setup. Should be 166");
+        return keys.toArray(new MaccsKey[166]);
+    }
+
+    private class MaccsKey {
+
+        private String  smarts;
+        private int     count;
+        private Pattern pattern;
+
+        private MaccsKey(String smarts, Pattern pattern, int count) {
+            this.smarts = smarts;
+            this.pattern = pattern;
+            this.count = count;
+        }
+
+        public String getSmarts() {
+            return smarts;
+        }
+
+        public int getCount() {
+            return count;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
+        final Map<String, Integer> rawFingerprint = getRawFingerprint(container);
+        final Map<Integer, String> mapInt2Key = new HashMap<>();
+
+        // Key-set has fixed length of 157, i.e. the number of unique MACCS fps definitions.
+        List<String> keys = new ArrayList<>(rawFingerprint.keySet());
+        Collections.sort(keys);
+        Integer idx = 0;
+        for (String key : keys) { mapInt2Key.put(idx++, key); }
+
+        return new ICountFingerprint() {
+            @Override
+            public long size() { return 157; }
+
+            @Override
+            public int numOfPopulatedbins() { return 157; }
+
+            @Override
+            public int getCount(int index) throws IndexOutOfBoundsException {
+                if ((index < 0) || (index >= numOfPopulatedbins())) { throw new IndexOutOfBoundsException(); }
+                return rawFingerprint.get(mapInt2Key.get(index));
+            }
+
+            @Override
+            public int getHash(int index) { return index; }
+
+            @Override
+            public void merge(ICountFingerprint fp) {}
+
+            @Override
+            public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {}
+
+            @Override
+            public boolean hasHash(int hash) { return true; }
+
+            @Override
+            public int getCountForHash(int hash) { return getCount(hash); }
+        };
     }
 
     private final Object lock = new Object();
