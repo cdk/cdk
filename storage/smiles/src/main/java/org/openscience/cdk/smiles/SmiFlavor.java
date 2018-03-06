@@ -132,7 +132,9 @@ public final class SmiFlavor {
     public static final int CxAtomLabel         = 0x008000;
 
     /**
-     * Output atom values, atom values are specified by {@link IPseudoAtom#getLabel()}.
+     * Output atom values, atom values are specified by the property 
+     * {@link org.openscience.cdk.CDKConstants#COMMENT} using 
+     * {@link org.openscience.cdk.interfaces.IAtom#setProperty(Object, Object)}
      */
     public static final int CxAtomValue         = 0x010000;
 
