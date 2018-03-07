@@ -205,4 +205,12 @@ public interface ILoggingTool {
      * @return true, if debug is enabled
      */
     public boolean isDebugEnabled();
+    
+    /**
+     * Enables debugging output. 
+     * Use this method for computational demanding debug info.
+     * 
+     * @see isDebugEnabled()
+     */
+    public void setDebugEnabled(boolean enabled);
 }

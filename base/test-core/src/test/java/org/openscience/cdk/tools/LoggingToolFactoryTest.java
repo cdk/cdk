@@ -100,6 +100,9 @@ public class LoggingToolFactoryTest {
         public boolean isDebugEnabled() {
             return true;
         }
+        
+        @Override
+        public void setDebugEnabled(boolean enabled) {}
 
         @Override
         public void setStackLength(int length) {}

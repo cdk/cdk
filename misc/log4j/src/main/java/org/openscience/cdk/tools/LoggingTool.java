@@ -448,6 +448,17 @@ public class LoggingTool implements ILoggingTool {
     public boolean isDebugEnabled() {
         return doDebug;
     }
+    
+    /**
+     * Enables debugging output. 
+     * Use this method for computational demanding debug info.
+     * 
+     * @see isDebugEnabled()
+     */
+    @Override
+    public void setDebugEnabled(boolean enabled) {
+        doDebug = enabled;
+    }
 
     private void printToSTDOUT(String level, String message) {
         System.out.print(classname);
@@ -466,5 +477,7 @@ public class LoggingTool implements ILoggingTool {
     public static ILoggingTool create(Class<?> sourceClass) {
         return new LoggingTool(sourceClass);
     }
+    
+    
 
 }
