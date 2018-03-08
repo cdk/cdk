@@ -25,6 +25,7 @@ package org.openscience.cdk.depict;
 
 import org.freehep.graphicsio.pdf.PDFGraphics2D;
 import org.freehep.graphicsio.svg.SVGGraphics2D;
+import org.freehep.graphicsio.ps.PSGraphics2D;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -44,12 +45,14 @@ final class FreeHepWrapper {
     private final ByteArrayOutputStream bout;
     private final String                fmt;
     final         Graphics2D            g2;
+    private final Dimension dim;
 
     public FreeHepWrapper(String fmt, double w, double h) {
+        this.dim = new Dimension((int) Math.ceil(w), (int) Math.ceil(h));
         try {
             this.g2 = createGraphics2d(this.fmt = fmt,
                                        this.bout = new ByteArrayOutputStream(),
-                                       new Dimension((int) Math.ceil(w), (int) Math.ceil(h)));
+                                       this.dim);
         } catch (IOException e) {
             throw new InstantiationError("Could not create Vector Graphics output: " + e.getMessage());
         }
@@ -74,7 +77,15 @@ final class FreeHepWrapper {
                 pdf.writeHeader();
                 return pdf;
             case Depiction.PS_FMT:
-                // can't scale page size correctly in FreeEHP atm
+                PSGraphics2D eps = new PSGraphics2D(out, dim);
+                // For EPS (Encapsulated PostScript) page size has no
+                // meaning since this image is supposed to b eincluded
+                // in another page.
+                Properties eps_props = new Properties();
+                eps_props.setProperty(PDFGraphics2D.FIT_TO_PAGE, "false");
+                eps.setProperties(eps_props);
+                eps.writeHeader();
+                return eps;
             default:
                 throw new IOException("Unsupported vector format, " + fmt);
         }
@@ -104,6 +115,18 @@ final class FreeHepWrapper {
         // we want SVG in mm not pixels!
         if (fmt.equals(Depiction.SVG_FMT)) {
             result = result.replaceAll("\"([-+0-9.]+)px\"", "\"$1mm\"");
+        }
+        if (fmt.equals(Depiction.PS_FMT)) {
+            String split[] = result.split("\\n",2);
+            if( split.length > 1 && split[0].startsWith("%!PS-") ) {
+                String boundingBox = "%%BoundingBox: ";
+                if( this.dim != null ) {
+                    boundingBox += "0 0 " + dim.width + " " + dim.height + "\n";
+                }
+                result = split[0] + "\n" +
+                    "%%BoundingBox: (atend)\n" +
+                    split[1] + boundingBox;
+            }
         }
         return result;
     }
