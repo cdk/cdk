@@ -126,6 +126,13 @@ final class FreeHepWrapper {
                 result = split[0] + "\n" +
                     "%%BoundingBox: (atend)\n" +
                     split[1] + boundingBox;
+
+                result = result.replaceAll("(\\d+ ){4}setmargins",
+                                           "0 0 0 0 setmargins");
+
+                result = result.replaceAll("(\\d+ ){2}setpagesize",
+                                           dim.width + " " + dim.height +
+                                           " setpagesize");
             }
         }
         return result;
