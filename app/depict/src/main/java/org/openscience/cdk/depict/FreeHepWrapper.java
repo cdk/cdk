@@ -117,15 +117,16 @@ final class FreeHepWrapper {
             result = result.replaceAll("\"([-+0-9.]+)px\"", "\"$1mm\"");
         }
         if (fmt.equals(Depiction.PS_FMT)) {
-            String split[] = result.split("\\n",2);
+            String nl = System.getProperty("line.separator");
+            String split[] = result.split(nl,2);
             if( split.length > 1 && split[0].startsWith("%!PS-") ) {
                 String boundingBox = "%%BoundingBox: ";
                 if( this.dim != null ) {
                     boundingBox += "0 0 " + dim.width + " " + dim.height + "\n";
                 }
 
-                result = split[0] + "\n" +
-                    "%%BoundingBox: (atend)\n" +
+                result = split[0] + nl +
+                    "%%BoundingBox: (atend)" + nl +
                     split[1].
                     replaceFirst("(\\d+ ){4}setmargins",
                                "0 0 0 0 setmargins").
