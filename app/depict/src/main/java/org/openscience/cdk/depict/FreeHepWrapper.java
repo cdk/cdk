@@ -133,7 +133,6 @@ final class FreeHepWrapper {
                                dim.width + " " + dim.height +
                                " setpagesize") +
                     boundingBox;
-
             }
         }
         return result;
