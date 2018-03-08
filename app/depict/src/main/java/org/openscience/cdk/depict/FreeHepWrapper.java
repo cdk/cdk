@@ -127,9 +127,9 @@ final class FreeHepWrapper {
                 result = split[0] + "\n" +
                     "%%BoundingBox: (atend)\n" +
                     split[1].
-                    replaceAll("(\\d+ ){4}setmargins",
+                    replaceFirst("(\\d+ ){4}setmargins",
                                "0 0 0 0 setmargins").
-                    replaceAll("(\\d+ ){2}setpagesize",
+                    replaceFirst("(\\d+ ){2}setpagesize",
                                dim.width + " " + dim.height +
                                " setpagesize") +
                     boundingBox;
