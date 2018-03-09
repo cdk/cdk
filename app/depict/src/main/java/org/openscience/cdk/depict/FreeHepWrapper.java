@@ -41,7 +41,10 @@ import java.util.Properties;
  * @see <a href="http://java.freehep.org/">java.freehep.org</a>
  *
  * @cdk.cite The toString() method cites the following documents:
+ *
  * [PLDS92] PostScript Language Document Structuring Conventions Specification, Version 3.0, 25 September 1992
+ * @see <a href="https://www.adobe.com/content/dam/acom/en/devnet/actionscript/articles/5001.DSC_Spec.pdf">5001.DSC_Spec</a>
+ *
  * [EGFF96] J.D.Murray & W. vanPyper, Encyclopedia of Graphics File Formats 2nd ed., O'Reilly & Assoc., 1996
  */
 final class FreeHepWrapper {
