@@ -1,12 +1,14 @@
 package org.openscience.cdk.depict;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
 public class DepictionTest {
 
@@ -15,8 +17,7 @@ public class DepictionTest {
         DepictionGenerator dg = new DepictionGenerator();
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");
-        Depiction d = dg.depict(ac);
-        String eps = d.toPsStr();
+        String eps = dg.depict(ac).toPsStr();
         String nl = System.getProperty("line.separator");
         String lines[] = eps.split(nl,3);
         assertEquals("%!PS-Adobe-3.0", lines[0]);
@@ -28,8 +29,7 @@ public class DepictionTest {
         DepictionGenerator dg = new DepictionGenerator();
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("[nH]1cccc1");
-        Depiction d = dg.depict(ac);
-        String eps = d.toEpsStr();
+        String eps = dg.depict(ac).toEpsStr();
         String nl = System.getProperty("line.separator");
         String lines[] = eps.split(nl,3);
         assertEquals("%!PS-Adobe-3.0 EPSF-3.0", lines[0]);
@@ -41,8 +41,7 @@ public class DepictionTest {
         DepictionGenerator dg = new DepictionGenerator();
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer ac = sp.parseSmiles("C1CCCCC1CCCCC");
-        Depiction d = dg.depict(ac);
-        String eps = d.toEpsStr();
+        String eps = dg.depict(ac).toEpsStr();
         String nl = System.getProperty("line.separator");
         String lines[] = eps.split(nl,3);
         assertEquals("%!PS-Adobe-3.0 EPSF-3.0", lines[0]);
