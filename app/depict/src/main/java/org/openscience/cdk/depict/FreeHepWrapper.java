@@ -76,16 +76,20 @@ final class FreeHepWrapper {
                 pdf.setProperties(props);
                 pdf.writeHeader();
                 return pdf;
-            case Depiction.PS_FMT:
+            case Depiction.EPS_FMT:
                 PSGraphics2D eps = new PSGraphics2D(out, dim);
                 // For EPS (Encapsulated PostScript) page size has no
                 // meaning since this image is supposed to be included
                 // in another page.
-                Properties eps_props = new Properties();
-                eps_props.setProperty(PDFGraphics2D.FIT_TO_PAGE, "false");
-                eps.setProperties(eps_props);
                 eps.writeHeader();
                 return eps;
+            case Depiction.PS_FMT:
+                PSGraphics2D ps = new PSGraphics2D(out, dim);
+                Properties ps_props = new Properties();
+                ps_props.setProperty(PDFGraphics2D.FIT_TO_PAGE, "true");
+                ps.setProperties(ps_props);
+                ps.writeHeader();
+                return ps;
             default:
                 throw new IOException("Unsupported vector format, " + fmt);
         }
@@ -120,7 +124,7 @@ final class FreeHepWrapper {
         if (fmt.equals(Depiction.SVG_FMT)) {
             result = result.replaceAll("\"([-+0-9.]+)px\"", "\"$1mm\"");
         }
-        if (fmt.equals(Depiction.PS_FMT)) {
+        if (fmt.equals(Depiction.EPS_FMT)) {
             String nl = System.getProperty("line.separator");
             String split[] = result.split(nl,2);
             if( split.length > 1 && split[0].startsWith("%!PS-") ) {
