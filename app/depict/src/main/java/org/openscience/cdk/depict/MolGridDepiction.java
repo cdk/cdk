@@ -156,7 +156,7 @@ final class MolGridDepiction extends Depiction {
         Dimensions targetDim = dimensions;
 
         // PDF and PS are in point to we need to account for that
-        if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt))
+        if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt) || EPS_FMT.equals(fmt))
             targetDim = targetDim.scale(MM_TO_POINT);
 
         targetDim = targetDim.add(-2 * margin, -2 * margin)
@@ -174,7 +174,7 @@ final class MolGridDepiction extends Depiction {
                            .add((nCol - 1) * padding, (nRow - 1) * padding);
         } else {
             // we want all vector graphics dims in MM
-            if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt))
+            if (PDF_FMT.equals(fmt) || PS_FMT.equals(fmt) || EPS_FMT.equals(fmt))
                 return dimensions.scale(MM_TO_POINT);
             else
                 return dimensions;
@@ -199,7 +199,7 @@ final class MolGridDepiction extends Depiction {
             zoom *= rescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
 
         // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
-        if (fmt.equals(PDF_FMT) || fmt.equals(PS_FMT)) {
+        if (fmt.equals(PDF_FMT) || fmt.equals(PS_FMT) || fmt.equals(EPS_FMT)) {
             zoom    *= MM_TO_POINT;
             margin  *= MM_TO_POINT;
             padding *= MM_TO_POINT;
