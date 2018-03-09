@@ -160,7 +160,7 @@ public abstract class Depiction {
     }
 
     /**
-     * Render the image to an EPS (ncapsulated PostScript) format
+     * Render the image to an EPS (Encapsulated PostScript) format
      * string.
      *
      * @return EPS content
