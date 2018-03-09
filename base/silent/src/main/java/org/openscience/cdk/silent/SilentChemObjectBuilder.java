@@ -143,7 +143,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
         if (CDK_LEGACY_AC) {
             factory.register(IAtomContainer.class, AtomContainer.class);
         } else {
-            // System.err.println("[INFO] Using the new AtomContainer implementation.");
+            System.err.println("[INFO] Using the new AtomContainer implementation.");
             factory.register(IAtomContainer.class, AtomContainer2.class);
         }
 
