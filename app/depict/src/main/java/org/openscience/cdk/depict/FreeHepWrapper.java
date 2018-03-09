@@ -145,8 +145,8 @@ final class FreeHepWrapper {
                 // header section, %%DocumentResources:, %%Title:, and %%Creator: may
                 // appear in any order."
                 //
-                // Thus, the "%%BoundingBox:" comment may be added immediately after the
-                // "%!PS-..." header line.
+                // Thus, I infer that the "%%BoundingBox:" comment may be added immediately after the
+                // "%!PS-..." header line (S.G.).
 
                 result = split[0] + nl +
                     boundingBox +
