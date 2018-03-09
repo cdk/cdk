@@ -120,20 +120,22 @@ final class FreeHepWrapper {
             String nl = System.getProperty("line.separator");
             String split[] = result.split(nl,2);
             if( split.length > 1 && split[0].startsWith("%!PS-") ) {
-                String boundingBox = "%%BoundingBox: ";
+                String boundingBox;
                 if( this.dim != null ) {
-                    boundingBox += "0 0 " + dim.width + " " + dim.height + "\n";
+                    boundingBox = "%%BoundingBox: 0 0 " +
+                        dim.width + " " + dim.height + nl;
+                } else {
+                    boundingBox = "";
                 }
 
                 result = split[0] + nl +
-                    "%%BoundingBox: (atend)" + nl +
+                    boundingBox +
                     split[1].
                     replaceFirst("(\\d+ ){4}setmargins",
-                               "0 0 0 0 setmargins").
+                                 "0 0 0 0 setmargins").
                     replaceFirst("(\\d+ ){2}setpagesize",
-                               dim.width + " " + dim.height +
-                               " setpagesize") +
-                    boundingBox;
+                                 dim.width + " " + dim.height +
+                                 " setpagesize");
             }
         }
         return result;
