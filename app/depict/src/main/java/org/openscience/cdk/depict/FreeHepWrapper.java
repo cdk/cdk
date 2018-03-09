@@ -39,6 +39,10 @@ import java.util.Properties;
  * Internal - wrapper around the FreeHEP vector graphics output that makes things consistent
  * in terms of writing the required headers and footers.
  * @see <a href="http://java.freehep.org/">java.freehep.org</a>
+ *
+ * @cdk.cite The toString() method cites the following documents:
+ * [PLDS92] PostScript Language Document Structuring Conventions Specification, Version 3.0, 25 September 1992
+ * [EGFF96] J.D.Murray & W. vanPyper, Encyclopedia of Graphics File Formats 2nd ed., O'Reilly & Assoc., 1996
  */
 final class FreeHepWrapper {
 
@@ -115,10 +119,6 @@ final class FreeHepWrapper {
         }
         g2.dispose();
     }
-
-    // Documents cited below:
-    // [PLDS92] PostScript Language Document Structuring Conventions Specification, Version 3.0, 25 September 1992
-    // [EGFF96] J.D.Murray & W. vanPyper, Encyclopedia of Graphics File Formats 2nd ed., O'Reilly & Assoc., 1996
 
     @Override
     public String toString() {
