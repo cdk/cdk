@@ -109,6 +109,10 @@ final class FreeHepWrapper {
         g2.dispose();
     }
 
+    // Documents cited below:
+    // [PLDS92] PostScript Language Document Structuring Conventions Specification, Version 3.0, 25 September 1992
+    // [EGFF96] J.D.Murray & W. vanPyper, Encyclopedia of Graphics File Formats 2nd ed., O'Reilly & Assoc., 1996
+
     @Override
     public String toString() {
         String result = new String(bout.toByteArray(), StandardCharsets.UTF_8);
@@ -127,6 +131,22 @@ final class FreeHepWrapper {
                 } else {
                     boundingBox = "";
                 }
+                if(!split[0].contains("EPS") && !boundingBox.equals("")) {
+                    split[0] += " EPSF-3.0";
+                }
+                // EGFF96 (p. 379):
+                // "Both the %%PS-Adobe- [sic] and the %%BoundingBox: lines must appear in every EPS file.
+                // Ordinary PostScript files may formally be changed into EPS files by adding these two lines
+                // to the PostScript header."
+
+                // PLDS92 (p. 29):
+                // "The order of some comments in the document is significant, but in a
+                // section of the document they may appear in any order. For example, in the
+                // header section, %%DocumentResources:, %%Title:, and %%Creator: may
+                // appear in any order."
+                //
+                // Thus, the "%%BoundingBox:" comment may be added immediately after the
+                // "%!PS-..." header line.
 
                 result = split[0] + nl +
                     boundingBox +
