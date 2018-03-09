@@ -128,7 +128,17 @@ final class FreeHepWrapper {
             result = result.replaceAll("\"([-+0-9.]+)px\"", "\"$1mm\"");
         }
         if (fmt.equals(Depiction.EPS_FMT)) {
-            String nl = System.getProperty("line.separator");
+            String nl;
+            // We should determine new-line separator (nl) not from OS type, but from the line-endings
+            // in the actual EPS outpu; there is nothing that would prevent us from generating Unix-style
+            // file in Windows :)
+            if( result.contains("\n\r")) {
+                nl = "\n\r";
+            } else if( result.contains("\r")) {
+                nl = "\r";
+            } else {
+                nl = "\n";
+            }
             String split[] = result.split(nl,2);
             if( split.length > 1 && split[0].startsWith("%!PS-") ) {
                 String boundingBox;
