@@ -25,6 +25,7 @@ public class DepictionTest {
         assertEquals("%%Creator: FreeHEP Graphics2D Driver", lines[1]);
     }
 
+    @Test
     public void depictAsEps() throws CDKException {
         DepictionGenerator dg = new DepictionGenerator();
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
