@@ -79,7 +79,7 @@ final class FreeHepWrapper {
             case Depiction.PS_FMT:
                 PSGraphics2D eps = new PSGraphics2D(out, dim);
                 // For EPS (Encapsulated PostScript) page size has no
-                // meaning since this image is supposed to b eincluded
+                // meaning since this image is supposed to be included
                 // in another page.
                 Properties eps_props = new Properties();
                 eps_props.setProperty(PDFGraphics2D.FIT_TO_PAGE, "false");
