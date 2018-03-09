@@ -227,6 +227,8 @@ public abstract class Depiction {
         formats.add(SVG_FMT.toUpperCase(Locale.ROOT));
         formats.add(PS_FMT);
         formats.add(PS_FMT.toUpperCase(Locale.ROOT));
+        formats.add(EPS_FMT);
+        formats.add(EPS_FMT.toUpperCase(Locale.ROOT));
         formats.add(PDF_FMT);
         formats.add(PDF_FMT.toUpperCase(Locale.ROOT));
         formats.addAll(Arrays.asList(ImageIO.getWriterFormatNames()));
