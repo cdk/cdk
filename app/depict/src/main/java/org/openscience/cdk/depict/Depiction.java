@@ -73,7 +73,7 @@ public abstract class Depiction {
     public static final String PS_FMT = "ps";
 
     /**
-     * Encapsulated PostScript (PS) format key.
+     * Encapsulated PostScript (EPS) format key.
      */
     public static final String EPS_FMT = "eps";
 
