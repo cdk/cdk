@@ -126,8 +126,7 @@ final class FreeHepWrapper {
         // we want SVG in mm not pixels!
         if (fmt.equals(Depiction.SVG_FMT)) {
             result = result.replaceAll("\"([-+0-9.]+)px\"", "\"$1mm\"");
-        }
-        if (fmt.equals(Depiction.EPS_FMT)) {
+        } else if (fmt.equals(Depiction.EPS_FMT)) {
             String nl;
             // We should determine new-line separator (nl) not from OS type, but from the line-endings
             // in the actual EPS outpu; there is nothing that would prevent us from generating Unix-style
