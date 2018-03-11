@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 John May <jwmay@users.sf.net>
+ * Copyright (c) 2018 Saulius Gražulis <grazulis@ibt.lt>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
