@@ -189,8 +189,8 @@ cdk/base/silent: mvn java-formatter:format
 
 ```
 cdk/: cd base/silent
-cdk/tool/forcefield: mvn jacoco:prepare-agent test jacoco:report
-cdk/tool/forcefield: open target/site/jacoco/index.html
+cdk/base/silent: mvn jacoco:prepare-agent test jacoco:report
+cdk/base/silent: open target/site/jacoco/index.html
 ```
 
 The contribute method determines the number of pi electrons for an element with specified valence (v) and connectivity (x). We can see that two lines are flagged as yellow. On inspection we can see that 1 of 4 branches was missed. There are four branches because of two conditionals (2^2=4) and one of them is missed.
