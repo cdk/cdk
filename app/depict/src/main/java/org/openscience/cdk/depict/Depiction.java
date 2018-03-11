@@ -73,6 +73,11 @@ public abstract class Depiction {
     public static final String PS_FMT = "ps";
 
     /**
+     * Encapsulated PostScript (EPS) format key.
+     */
+    public static final String EPS_FMT = "eps";
+
+    /**
      * Portable Document Format (PDF) format key.
      */
     public static final String PDF_FMT = "pdf";
@@ -146,12 +151,22 @@ public abstract class Depiction {
     }
 
     /**
-     * Render the image to an EPS format string.
+     * Render the image to an PS (PostScript) format string.
      *
-     * @return eps content
+     * @return PS content
+     */
+    public final String toPsStr() {
+        return toVecStr(PS_FMT, UNITS_MM);
+    }
+
+    /**
+     * Render the image to an EPS (Encapsulated PostScript) format
+     * string.
+     *
+     * @return EPS content
      */
     public final String toEpsStr() {
-        return toVecStr(PS_FMT, UNITS_MM);
+        return toVecStr(EPS_FMT, UNITS_MM);
     }
 
     /**
@@ -212,6 +227,8 @@ public abstract class Depiction {
         formats.add(SVG_FMT.toUpperCase(Locale.ROOT));
         formats.add(PS_FMT);
         formats.add(PS_FMT.toUpperCase(Locale.ROOT));
+        formats.add(EPS_FMT);
+        formats.add(EPS_FMT.toUpperCase(Locale.ROOT));
         formats.add(PDF_FMT);
         formats.add(PDF_FMT.toUpperCase(Locale.ROOT));
         formats.addAll(Arrays.asList(ImageIO.getWriterFormatNames()));

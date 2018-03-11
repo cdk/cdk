@@ -68,6 +68,11 @@
             <artifactId>freehep-graphicsio-pdf</artifactId>
             <version>2.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-graphicsio-ps</artifactId>
+            <version>2.4</version>
+        </dependency>
     </dependencies>
 
 </project>
