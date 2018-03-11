@@ -256,9 +256,12 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     /**
-     * Protected method which must not be used, except for testing purposes.
+     * Enables debugging output. 
+     * Use this method for computational demanding debug info.
+     * 
+     * @see isDebugEnabled()
      */
-    protected void setDebugEnabled(boolean enabled) {
+    public void setDebugEnabled(boolean enabled) {
         doDebug = enabled;
     }
 
