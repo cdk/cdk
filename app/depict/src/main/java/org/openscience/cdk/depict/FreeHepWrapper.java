@@ -42,9 +42,9 @@ import java.util.Properties;
  *
  * The toString() method cites the following documents:
  *
- * [PLDS92]  {@cdk.cite Adobe1992}
- * [PLDS92a] {@cdk.cite Adobe1992a}
- * [EGFF96]  {@cdk.cite Murray1996}
+ * [PLDS92] {@cdk.cite Adobe1992}
+ * [EPSF92] {@cdk.cite Adobe1992a}
+ * [EGFF96] {@cdk.cite Murray1996}
  */
 final class FreeHepWrapper {
 
@@ -164,7 +164,7 @@ final class FreeHepWrapper {
                 // appear in any order."
                 //
                 // Thus, I infer that the "%%BoundingBox:" comment may be added immediately after the
-                // "%!PS-..." header line. This is also given as a valid example in PLDS92a, p. 4.
+                // "%!PS-..." header line. This is also given as a valid example in EPSF92, p. 4.
 
                 result = split[0] + nl +
                     boundingBox +
