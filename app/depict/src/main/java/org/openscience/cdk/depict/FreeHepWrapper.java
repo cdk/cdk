@@ -134,8 +134,8 @@ final class FreeHepWrapper {
             // We should determine new-line separator (nl) not from OS type, but from the line-endings
             // in the actual EPS outpu; there is nothing that would prevent us from generating Unix-style
             // file in Windows :)
-            if( result.contains("\n\r")) {
-                nl = "\n\r";
+            if( result.contains("\r\n")) {
+                nl = "\r\n";
             } else if( result.contains("\r")) {
                 nl = "\r";
             } else {
