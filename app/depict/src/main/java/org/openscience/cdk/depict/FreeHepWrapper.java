@@ -40,12 +40,11 @@ import java.util.Properties;
  * in terms of writing the required headers and footers.
  * @see <a href="http://java.freehep.org/">java.freehep.org</a>
  *
- * @cdk.cite The toString() method cites the following documents:
+ * The toString() method cites the following documents:
  *
- * [PLDS92] PostScript Language Document Structuring Conventions Specification, Version 3.0, 25 September 1992
- * @see <a href="https://www.adobe.com/content/dam/acom/en/devnet/actionscript/articles/5001.DSC_Spec.pdf">5001.DSC_Spec</a>
- *
- * [EGFF96] J.D.Murray & W. vanPyper, Encyclopedia of Graphics File Formats 2nd ed., O'Reilly & Assoc., 1996
+ * [PLDS92]  {@cdk.cite Adobe1992}
+ * [PLDS92a] {@cdk.cite Adobe1992a}
+ * [EGFF96]  {@cdk.cite Murray1996}
  */
 final class FreeHepWrapper {
 
@@ -165,7 +164,7 @@ final class FreeHepWrapper {
                 // appear in any order."
                 //
                 // Thus, I infer that the "%%BoundingBox:" comment may be added immediately after the
-                // "%!PS-..." header line (S.G.).
+                // "%!PS-..." header line. This is also given as a valid example in PLDS92a, p. 4.
 
                 result = split[0] + nl +
                     boundingBox +
