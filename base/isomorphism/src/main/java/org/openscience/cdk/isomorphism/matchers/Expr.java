@@ -691,6 +691,15 @@ public final class Expr {
         return right;
     }
 
+    /**
+     * Access the sub-query, only applicable to recursive types.
+     * @return the sub-query
+     * @see Type#RECURSIVE
+     */
+    public IAtomContainer subquery() {
+        return query;
+    }
+
     /* Property Caches */
     private static LoadingCache<IAtomContainer, int[]> cacheRCounts;
 
