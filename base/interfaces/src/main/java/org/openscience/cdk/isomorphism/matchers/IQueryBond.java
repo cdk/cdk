@@ -21,12 +21,11 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Defines the abililty to be matched against IBond's. Most prominent application
- * is in isomorphism and substructure matching in the UniversalIsomorphismTester.
+ * Defines the abililty to be matched against IBond's.
  *
  * @cdk.module interfaces
  * @cdk.githash
- * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
+ * @see        org.openscience.cdk.isomorphism.Pattern
  */
 public interface IQueryBond extends IBond {
 
