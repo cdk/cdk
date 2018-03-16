@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.created 2010-12-16
  */
-public abstract class QueryBond extends QueryChemObject implements IQueryBond {
+public class QueryBond extends QueryChemObject implements IQueryBond {
 
     /**
      * The bond order of this query bond.
@@ -59,6 +59,11 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
      * A descriptor the stereochemical orientation of this query bond.
      */
     protected IQueryBond.Stereo stereo;
+
+    /**
+     * The bond expression.
+     */
+    private Expr expr = new Expr(Expr.Type.TRUE);
 
     /**
      * Constructs an empty query bond.
@@ -544,5 +549,29 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond {
         if (obj instanceof BondRef)
             return super.equals(((BondRef) obj).deref());
         return super.equals(obj);
+    }
+
+    /**
+     * Access the bond expression predicate associated with this query bond.
+     * @return the bond expression
+     */
+    public Expr getExpression() {
+        return expr;
+    }
+
+    /**
+     * Set the bond expression for this query bond.
+     * @param expr the new bond expression
+     */
+    public void setExpression(Expr expr) {
+        this.expr = expr;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean matches(IBond bond) {
+        return expr.matches(bond);
     }
 }
