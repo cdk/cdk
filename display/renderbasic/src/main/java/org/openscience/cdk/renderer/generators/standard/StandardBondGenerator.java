@@ -771,7 +771,6 @@ final class StandardBondGenerator {
     private IRenderingElement generateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond,
             List<IBond> atom2Bonds, boolean invert, boolean dashed) {
 
-        assert !hasDisplayedSymbol(atom1);
         assert atom1Bond != null;
 
         final Point2d atom1Point = atom1.getPoint2d();
