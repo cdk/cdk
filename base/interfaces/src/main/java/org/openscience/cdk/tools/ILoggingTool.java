@@ -91,17 +91,30 @@ package org.openscience.cdk.tools;
  */
 public interface ILoggingTool {
 
+    /** Trace, Debug, Info, Warn, Error, and Fatal messages will be emitted. */
+    int TRACE = 0;
+    /** Debug, Info, Warn, Error, and Fatal messages will be emitted. */
+    int DEBUG = 1;
+    /** Info, Warn, Error, and Fatal messages will be emitted. */
+    int INFO  = 2;
+    /** Warn, Error, and Fatal messages will be emitted. */
+    int WARN  = 3;
+    /** Error, and Fatal messages will be emitted. */
+    int ERROR = 4;
+    /** Only Fatal messages will be emitted. */
+    int FATAL = 5;
+
     /**
      * Default number of StackTraceElements to be printed by debug(Exception).
      */
-    public final int DEFAULT_STACK_LENGTH = 5;
+    int DEFAULT_STACK_LENGTH = 5;
 
     /**
      * Outputs system properties for the operating system and the java
      * version. More specifically: os.name, os.version, os.arch, java.version
      * and java.vendor.
      */
-    public void dumpSystemProperties();
+    void dumpSystemProperties();
 
     /**
      * Sets the number of StackTraceElements to be printed in DEBUG mode when
@@ -112,12 +125,12 @@ public interface ILoggingTool {
      *
      * @see #DEFAULT_STACK_LENGTH
      */
-    public void setStackLength(int length);
+    void setStackLength(int length);
 
     /**
      * Outputs the system property for java.class.path.
      */
-    public void dumpClasspath();
+    void dumpClasspath();
 
     /**
      * Shows DEBUG output for the Object. If the object is an instanceof
@@ -126,7 +139,7 @@ public interface ILoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
-    public void debug(Object object);
+    void debug(Object object);
 
     /**
      * Shows DEBUG output for the given Object's. It uses the
@@ -135,14 +148,14 @@ public interface ILoggingTool {
      * @param object  Object to apply toString() too and output
      * @param objects Object... to apply toString() too and output
      */
-    public void debug(Object object, Object... objects);
+    void debug(Object object, Object... objects);
 
     /**
      * Shows ERROR output for the Object. It uses the toString() method.
      *
      * @param object Object to apply toString() too and output
      */
-    public void error(Object object);
+    void error(Object object);
 
     /**
      * Shows ERROR output for the given Object's. It uses the
@@ -151,21 +164,21 @@ public interface ILoggingTool {
      * @param object  Object to apply toString() too and output
      * @param objects Object... to apply toString() too and output
      */
-    public void error(Object object, Object... objects);
+    void error(Object object, Object... objects);
 
     /**
      * Shows FATAL output for the Object. It uses the toString() method.
      *
      * @param object Object to apply toString() too and output
      */
-    public void fatal(Object object);
+    void fatal(Object object);
 
     /**
      * Shows INFO output for the Object. It uses the toString() method.
      *
      * @param object Object to apply toString() too and output
      */
-    public void info(Object object);
+    void info(Object object);
 
     /**
      * Shows INFO output for the given Object's. It uses the
@@ -174,14 +187,14 @@ public interface ILoggingTool {
      * @param object  Object to apply toString() too and output
      * @param objects Object... to apply toString() too and output
      */
-    public void info(Object object, Object... objects);
+    void info(Object object, Object... objects);
 
     /**
      * Shows WARN output for the Object. It uses the toString() method.
      *
      * @param object Object to apply toString() too and output
      */
-    public void warn(Object object);
+    void warn(Object object);
 
     /**
      * Shows WARN output for the given Object's. It uses the
@@ -190,7 +203,7 @@ public interface ILoggingTool {
      * @param object Object to apply toString() too and output
      * @param objects Object... to apply toString() too and output
      */
-    public void warn(Object object, Object... objects);
+    void warn(Object object, Object... objects);
 
     /**
      * Use this method for computational demanding debug info.
@@ -204,5 +217,23 @@ public interface ILoggingTool {
      *
      * @return true, if debug is enabled
      */
-    public boolean isDebugEnabled();
+    boolean isDebugEnabled();
+
+    /**
+     * Set the level of this logger. The level is provided in one of the
+     * constants: {@link #TRACE}, {@link #DEBUG}, {@link #INFO}, {@link #WARN}
+     * , {@link #ERROR}, {@link #FATAL}. After setting the level only messages
+     * above the specified level will be emitted.
+     *
+     * @param level the level
+     */
+    void setLevel(int level);
+
+    /**
+     * Get the current level of this logger. The level is provided in one of the
+     * constants: {@link #TRACE}, {@link #DEBUG}, {@link #INFO}, {@link #WARN}
+     * , {@link #ERROR}, {@link #FATAL}.
+     * @return the current level
+     */
+    int getLevel();
 }

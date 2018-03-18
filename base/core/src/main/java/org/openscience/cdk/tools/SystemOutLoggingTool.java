@@ -32,8 +32,8 @@ import java.io.StringWriter;
  */
 public class SystemOutLoggingTool implements ILoggingTool {
 
-    /** Boolean which is true when debug messages are send to System.out. */
-    private boolean             doDebug = false;
+    /** The logging level, default anything above warnings. */
+    private int level = ILoggingTool.FATAL;
 
     /** Logger used to report internal problems. */
     private static ILoggingTool logger;
@@ -52,10 +52,9 @@ public class SystemOutLoggingTool implements ILoggingTool {
      */
     public SystemOutLoggingTool(Class<?> classInst) {
         this.classname = classInst.getName();
-        doDebug = false;
         if (System.getProperty("cdk.debugging", "false").equals("true")
                 || System.getProperty("cdk.debug.stdout", "false").equals("true")) {
-            doDebug = true;
+            level = DEBUG;
         }
     }
 
@@ -84,7 +83,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** {@inheritDoc} */
     @Override
     public void debug(Object object) {
-        if (doDebug) {
+        if (level <= DEBUG) {
             if (object instanceof Throwable) {
                 debugThrowable((Throwable) object);
             } else {
@@ -100,7 +99,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** {@inheritDoc} */
     @Override
     public void debug(Object object, Object... objects) {
-        if (doDebug) {
+        if (level <= DEBUG) {
             StringBuilder result = new StringBuilder();
             result.append(object.toString());
             for (Object obj : objects) {
@@ -151,7 +150,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** {@inheritDoc} */
     @Override
     public void error(Object object) {
-        if (doDebug) {
+        if (level <= ERROR) {
             errorString("" + object);
         }
     }
@@ -159,7 +158,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** {@inheritDoc} */
     @Override
     public void error(Object object, Object... objects) {
-        if (doDebug) {
+        if (level <= ERROR) {
             StringBuilder result = new StringBuilder();
             result.append(object.toString());
             for (Object obj : objects) {
@@ -176,7 +175,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** {@inheritDoc} */
     @Override
     public void fatal(Object object) {
-        if (doDebug) {
+        if (level <= FATAL) {
             printToSTDOUT("FATAL", object.toString());
         }
     }
@@ -184,7 +183,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** {@inheritDoc} */
     @Override
     public void info(Object object) {
-        if (doDebug) {
+        if (level <= INFO) {
             infoString("" + object);
         }
     }
@@ -192,7 +191,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** {@inheritDoc} */
     @Override
     public void info(Object object, Object... objects) {
-        if (doDebug) {
+        if (level <= INFO) {
             StringBuilder result = new StringBuilder();
             result.append(object.toString());
             for (Object obj : objects) {
@@ -209,7 +208,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** {@inheritDoc} */
     @Override
     public void warn(Object object) {
-        if (doDebug) {
+        if (level <= WARN) {
             warnString("" + object);
         }
     }
@@ -221,7 +220,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** {@inheritDoc} */
     @Override
     public void warn(Object object, Object... objects) {
-        if (doDebug) {
+        if (level <= WARN) {
             StringBuilder result = new StringBuilder();
             result.append(object.toString());
             for (Object obj : objects) {
@@ -234,7 +233,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** {@inheritDoc} */
     @Override
     public boolean isDebugEnabled() {
-        return doDebug;
+        return level <= DEBUG;
     }
 
     private void printToSTDOUT(String level, String message) {
@@ -257,9 +256,29 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /**
      * Protected method which must not be used, except for testing purposes.
+     * @deprecated use {@link #setLevel(int)}
      */
+    @Deprecated
     protected void setDebugEnabled(boolean enabled) {
-        doDebug = enabled;
+        if (enabled)
+            setLevel(DEBUG);
+        else
+            setLevel(FATAL);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getLevel() {
+        return level;
+    }
 }

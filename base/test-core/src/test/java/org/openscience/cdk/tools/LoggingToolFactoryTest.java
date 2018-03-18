@@ -109,5 +109,15 @@ public class LoggingToolFactoryTest {
 
         @Override
         public void warn(Object object, Object... objects) {}
+
+        @Override
+        public void setLevel(int level) {
+
+        }
+
+        @Override
+        public int getLevel() {
+            return 0;
+        }
     }
 }
