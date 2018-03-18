@@ -33,7 +33,7 @@ import java.io.StringWriter;
 public class SystemOutLoggingTool implements ILoggingTool {
 
     /** The logging level, default anything above warnings. */
-    private int level = ILoggingTool.FATAL;
+    private int level = ILoggingTool.WARN;
 
     /** Name of the class for which this {@link ILoggingTool} is reporting. */
     private String              classname;
