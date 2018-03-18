@@ -35,9 +35,6 @@ public class SystemOutLoggingTool implements ILoggingTool {
     /** The logging level, default anything above warnings. */
     private int level = ILoggingTool.FATAL;
 
-    /** Logger used to report internal problems. */
-    private static ILoggingTool logger;
-
     /** Name of the class for which this {@link ILoggingTool} is reporting. */
     private String              classname;
 
@@ -137,7 +134,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
             } catch (Exception ioException) {
                 error("Serious error in LoggingTool while printing exception " + "stack trace: ",
                         ioException.getMessage());
-                logger.debug(ioException);
+                ioException.printStackTrace();
             }
             Throwable cause = problem.getCause();
             if (cause != null) {
