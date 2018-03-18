@@ -468,10 +468,14 @@ public final class Expr {
         if (type == Type.TRUE) {
             set(expr);
         } else if (expr.type != Type.TRUE) {
-            if (type.isLogical() && !expr.type.isLogical())
-                setLogical(Type.AND, expr, new Expr(this));
-            else
+            if (type.isLogical() && !expr.type.isLogical()) {
+                if (type == AND)
+                    right.and(expr);
+                else
+                    setLogical(Type.AND, expr, new Expr(this));
+            } else {
                 setLogical(Type.AND, new Expr(this), expr);
+            }
         }
         return this;
     }

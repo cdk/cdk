@@ -23,7 +23,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
@@ -35,8 +34,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.Expr;
-import org.openscience.cdk.isomorphism.matchers.QueryAtom;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import java.util.Arrays;
@@ -1449,7 +1446,10 @@ public class ExprTest {
         Expr expr1 = new Expr(ELEMENT, 9);
         Expr expr2 = new Expr(DEGREE, 2).and(new Expr(HAS_IMPLICIT_HYDROGEN));
         expr2.and(expr1);
-        assertThat(expr2.left().type(), is(ELEMENT));
+        assertThat(expr2.left().type(), is(DEGREE));
+        assertThat(expr2.right().type(), is(AND));
+        assertThat(expr2.right().left().type(), is(HAS_IMPLICIT_HYDROGEN));
+        assertThat(expr2.right().right().type(), is(ELEMENT));
     }
 
     @Test public void alwaysTrueAnd() {
