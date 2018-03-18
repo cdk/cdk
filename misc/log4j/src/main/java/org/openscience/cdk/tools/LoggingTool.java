@@ -492,7 +492,10 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public int getLevel() {
-        switch (log4jLogger.getLevel().toInt()) {
+        Level level = log4jLogger.getLevel();
+        if (level == null)
+            level = Logger.getRootLogger().getLevel();
+        switch (level.toInt()) {
             case Level.TRACE_INT:
                 return TRACE;
             case Level.DEBUG_INT:
@@ -506,7 +509,7 @@ public class LoggingTool implements ILoggingTool {
             case Level.FATAL_INT:
                 return FATAL;
             default:
-                throw new IllegalArgumentException("Unsupported log4j level: " + log4jLogger.getLevel());
+                throw new IllegalArgumentException("Unsupported log4j level: " + level);
         }
     }
 }
