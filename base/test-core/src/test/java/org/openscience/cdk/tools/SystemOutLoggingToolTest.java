@@ -41,7 +41,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -51,7 +51,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -70,7 +70,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -90,7 +90,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("1"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -110,7 +110,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("1.0"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -119,7 +119,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -130,7 +130,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("true"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -139,7 +139,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -149,7 +149,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -158,7 +158,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -168,7 +168,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -177,7 +177,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -187,7 +187,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -196,7 +196,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -206,7 +206,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -215,7 +215,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -225,7 +225,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -234,7 +234,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -245,7 +245,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("1"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -254,7 +254,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -265,7 +265,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("1.0"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -274,7 +274,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -285,7 +285,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("true"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -294,7 +294,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -304,7 +304,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -313,7 +313,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -323,7 +323,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -332,7 +332,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -342,7 +342,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -351,7 +351,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -361,7 +361,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -370,7 +370,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -380,7 +380,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -389,7 +389,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -400,7 +400,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("1"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -409,7 +409,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -420,7 +420,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("1.0"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -429,7 +429,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -440,7 +440,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("true"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -449,7 +449,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -459,7 +459,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -468,7 +468,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -478,7 +478,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -487,7 +487,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -497,7 +497,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -506,7 +506,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -516,7 +516,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -525,7 +525,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -535,7 +535,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -544,7 +544,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -555,7 +555,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("1"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -564,7 +564,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -575,7 +575,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("1.0"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -584,7 +584,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -595,7 +595,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("true"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -604,7 +604,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -614,7 +614,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -623,7 +623,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -633,7 +633,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -642,7 +642,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -652,7 +652,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -661,7 +661,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -671,7 +671,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -687,7 +687,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -698,7 +698,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("java.class.path"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test
@@ -707,7 +707,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        System.setErr(new PrintStream(out));
 
         // do the testing
         SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
@@ -722,7 +722,7 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
         Assert.assertTrue(out.toString().contains("java.vendor"));
 
         // reset the STDOUT
-        System.setOut(stdout);
+        System.setErr(stdout);
     }
 
     @Test

@@ -19,13 +19,20 @@
  */
 package org.openscience.cdk.tools;
 
+import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @cdk.module test-log4j
  */
 public class LoggingToolTest extends AbstractLoggingToolTest {
+
+    @BeforeClass
+    public static void ensureLog4JConfigured() {
+        BasicConfigurator.configure();
+    }
 
     @Override
     public LoggingTool getLoggingTool() {

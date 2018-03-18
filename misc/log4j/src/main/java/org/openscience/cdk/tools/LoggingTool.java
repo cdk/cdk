@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -78,14 +79,13 @@ import org.apache.log4j.Logger;
  * }
  * </pre>
  *
- * <p>The class uses log4j as a backend if available, and System.out otherwise.
+ * <p>The class uses log4j as a backend if available, and {@link System#err} otherwise.
  *
  * @cdk.module log4j
  * @cdk.githash
  */
 public class LoggingTool implements ILoggingTool {
 
-    private boolean             doDebug              = false;
     private boolean             toSTDOUT             = false;
 
     private Logger              log4jLogger;
@@ -142,7 +142,6 @@ public class LoggingTool implements ILoggingTool {
          * exception handler. So we are going to check the JVM version first
          * **************************************************************
          */
-        doDebug = false;
         String strJvmVersion = System.getProperty("java.version");
         if (strJvmVersion.compareTo("1.2") >= 0) {
             // Use a try {} to catch SecurityExceptions when used in applets
@@ -150,7 +149,7 @@ public class LoggingTool implements ILoggingTool {
                 // by default debugging is set off, but it can be turned on
                 // with starting java like "java -Dcdk.debugging=true"
                 if (System.getProperty("cdk.debugging", "false").equals("true")) {
-                    doDebug = true;
+                    log4jLogger.setLevel(Level.DEBUG);
                 }
                 if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
                     toSTDOUT = true;
@@ -226,7 +225,7 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void debug(Object object) {
-        if (doDebug) {
+        if (isDebugEnabled()) {
             if (object instanceof Throwable) {
                 debugThrowable((Throwable) object);
             } else {
@@ -237,7 +236,7 @@ public class LoggingTool implements ILoggingTool {
 
     private void debugString(String string) {
         if (toSTDOUT) {
-            printToSTDOUT("DEBUG", string);
+            printToStderr("DEBUG", string);
         } else {
             log4jLogger.debug(string);
         }
@@ -252,7 +251,7 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void debug(Object object, Object... objects) {
-        if (doDebug) {
+        if (isDebugEnabled()) {
             StringBuilder result = new StringBuilder();
             result.append(object.toString());
             for (Object obj : objects) {
@@ -306,9 +305,7 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void error(Object object) {
-        if (doDebug) {
-            errorString("" + object);
-        }
+        errorString("" + object);
     }
 
     /**
@@ -320,7 +317,7 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void error(Object object, Object... objects) {
-        if (doDebug) {
+        if (getLevel() <= ERROR) {
             StringBuilder result = new StringBuilder();
             result.append(object.toString());
             for (Object obj : objects) {
@@ -332,7 +329,7 @@ public class LoggingTool implements ILoggingTool {
 
     private void errorString(String string) {
         if (toSTDOUT) {
-            printToSTDOUT("ERROR", string);
+            printToStderr("ERROR", string);
         } else {
             log4jLogger.error(string);
         }
@@ -345,12 +342,10 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void fatal(Object object) {
-        if (doDebug) {
-            if (toSTDOUT) {
-                printToSTDOUT("FATAL", object.toString());
-            } else {
-                log4jLogger.fatal("" + object.toString());
-            }
+        if (toSTDOUT) {
+            printToStderr("FATAL", object.toString());
+        } else {
+            log4jLogger.fatal("" + object.toString());
         }
     }
 
@@ -361,9 +356,7 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void info(Object object) {
-        if (doDebug) {
-            infoString("" + object);
-        }
+        infoString("" + object);
     }
 
     /**
@@ -375,7 +368,7 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void info(Object object, Object... objects) {
-        if (doDebug) {
+        if (getLevel() <= INFO) {
             StringBuilder result = new StringBuilder();
             result.append(object.toString());
             for (Object obj : objects) {
@@ -387,7 +380,7 @@ public class LoggingTool implements ILoggingTool {
 
     private void infoString(String string) {
         if (toSTDOUT) {
-            printToSTDOUT("INFO", string);
+            printToStderr("INFO", string);
         } else {
             log4jLogger.info(string);
         }
@@ -400,14 +393,12 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void warn(Object object) {
-        if (doDebug) {
-            warnString("" + object);
-        }
+        warnString("" + object);
     }
 
     private void warnString(String string) {
         if (toSTDOUT) {
-            printToSTDOUT("WARN", string);
+            printToStderr("WARN", string);
         } else {
             log4jLogger.warn(string);
         }
@@ -422,7 +413,7 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void warn(Object object, Object... objects) {
-        if (doDebug) {
+        if (getLevel() <= WARN) {
             StringBuilder result = new StringBuilder();
             result.append(object.toString());
             for (Object obj : objects) {
@@ -446,15 +437,15 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public boolean isDebugEnabled() {
-        return doDebug;
+        return log4jLogger.isDebugEnabled();
     }
 
-    private void printToSTDOUT(String level, String message) {
-        System.out.print(classname);
-        System.out.print(" ");
-        System.out.print(level);
-        System.out.print(": ");
-        System.out.println(message);
+    private void printToStderr(String level, String message) {
+        System.err.print(classname);
+        System.err.print(" ");
+        System.err.print(level);
+        System.err.print(": ");
+        System.err.println(message);
     }
 
     /**
@@ -467,4 +458,58 @@ public class LoggingTool implements ILoggingTool {
         return new LoggingTool(sourceClass);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLevel(int level) {
+        switch (level) {
+            case TRACE:
+                log4jLogger.setLevel(Level.TRACE);
+                break;
+            case DEBUG:
+                log4jLogger.setLevel(Level.DEBUG);
+                break;
+            case INFO:
+                log4jLogger.setLevel(Level.INFO);
+                break;
+            case WARN:
+                log4jLogger.setLevel(Level.WARN);
+                break;
+            case ERROR:
+                log4jLogger.setLevel(Level.ERROR);
+                break;
+            case FATAL:
+                log4jLogger.setLevel(Level.FATAL);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid log level: " + level);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getLevel() {
+        Level level = log4jLogger.getLevel();
+        if (level == null)
+            level = Logger.getRootLogger().getLevel();
+        switch (level.toInt()) {
+            case Level.TRACE_INT:
+                return TRACE;
+            case Level.DEBUG_INT:
+                return DEBUG;
+            case Level.INFO_INT:
+                return INFO;
+            case Level.WARN_INT:
+                return WARN;
+            case Level.ERROR_INT:
+                return ERROR;
+            case Level.FATAL_INT:
+                return FATAL;
+            default:
+                throw new IllegalArgumentException("Unsupported log4j level: " + level);
+        }
+    }
 }
