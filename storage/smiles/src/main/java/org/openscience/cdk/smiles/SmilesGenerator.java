@@ -448,7 +448,10 @@ public final class SmilesGenerator {
                 // determine the output order
                 int[] labels = labels(flavour, molecule);
 
-                g = g.permute(labels).resonate();
+                g = g.permute(labels);
+
+                if (!SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols))
+                    g = g.resonate();
 
                 if (SmiFlavor.isSet(flavour, SmiFlavor.StereoCisTrans)) {
 

@@ -1252,6 +1252,21 @@ public class SmilesGeneratorTest extends CDKTestCase {
         assertThat(new SmilesGenerator(SmiFlavor.AtomicMass).create(mol), is("[12CH3]C"));
     }
 
+    @Test
+    public void cyclobutene() throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C1(C)=C(c2ccccc2)C=C1.C1(C)C(c2ccccc2)=CC=1");
+        // by default we generate SMILES that allows all double bonds to move
+        // and remove differences just because of kekule assignment. This matches
+        // InChI behavior
+        assertThat(new SmilesGenerator(SmiFlavor.Canonical).create(mol),
+                   is("C=1C=CC(=CC1)C=2C=CC2C.C=1C=CC(=CC1)C=2C=CC2C"));
+        // this might not be desirable in some cases, so if UseAromaticSymbols
+        // is set, double bonds are in rings are not allowed to move
+        assertThat(new SmilesGenerator(SmiFlavor.Canonical+SmiFlavor.UseAromaticSymbols).create(mol),
+                   is("c1ccc(cc1)C=2C=CC2C.c1ccc(cc1)C2=CC=C2C"));
+    }
+
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
         return new TetrahedralChirality(container.getAtom(central), new IAtom[]{container.getAtom(a1),
                                                                                 container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},
