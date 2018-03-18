@@ -79,7 +79,7 @@ import org.apache.log4j.Logger;
  * }
  * </pre>
  *
- * <p>The class uses log4j as a backend if available, and System.out otherwise.
+ * <p>The class uses log4j as a backend if available, and {@link System#err} otherwise.
  *
  * @cdk.module log4j
  * @cdk.githash
@@ -236,7 +236,7 @@ public class LoggingTool implements ILoggingTool {
 
     private void debugString(String string) {
         if (toSTDOUT) {
-            printToSTDOUT("DEBUG", string);
+            printToStderr("DEBUG", string);
         } else {
             log4jLogger.debug(string);
         }
@@ -328,7 +328,7 @@ public class LoggingTool implements ILoggingTool {
 
     private void errorString(String string) {
         if (toSTDOUT) {
-            printToSTDOUT("ERROR", string);
+            printToStderr("ERROR", string);
         } else {
             log4jLogger.error(string);
         }
@@ -342,7 +342,7 @@ public class LoggingTool implements ILoggingTool {
     @Override
     public void fatal(Object object) {
         if (toSTDOUT) {
-            printToSTDOUT("FATAL", object.toString());
+            printToStderr("FATAL", object.toString());
         } else {
             log4jLogger.fatal("" + object.toString());
         }
@@ -377,7 +377,7 @@ public class LoggingTool implements ILoggingTool {
 
     private void infoString(String string) {
         if (toSTDOUT) {
-            printToSTDOUT("INFO", string);
+            printToStderr("INFO", string);
         } else {
             log4jLogger.info(string);
         }
@@ -395,7 +395,7 @@ public class LoggingTool implements ILoggingTool {
 
     private void warnString(String string) {
         if (toSTDOUT) {
-            printToSTDOUT("WARN", string);
+            printToStderr("WARN", string);
         } else {
             log4jLogger.warn(string);
         }
@@ -435,12 +435,12 @@ public class LoggingTool implements ILoggingTool {
         return log4jLogger.isDebugEnabled();
     }
 
-    private void printToSTDOUT(String level, String message) {
-        System.out.print(classname);
-        System.out.print(" ");
-        System.out.print(level);
-        System.out.print(": ");
-        System.out.println(message);
+    private void printToStderr(String level, String message) {
+        System.err.print(classname);
+        System.err.print(" ");
+        System.err.print(level);
+        System.err.print(": ");
+        System.err.println(message);
     }
 
     /**

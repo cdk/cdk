@@ -25,7 +25,7 @@ import java.io.StringWriter;
 
 /**
  * Implementation of the {@link ILoggingTool} interface that sends output to
- * the {@link System}.out channel.
+ * the {@link System#err} channel.
  *
  * @cdk.module core
  * @cdk.githash
@@ -90,7 +90,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     private void debugString(String string) {
-        printToSTDOUT("DEBUG", string);
+        printToStderr("DEBUG", string);
     }
 
     /** {@inheritDoc} */
@@ -166,14 +166,14 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     private void errorString(String string) {
-        printToSTDOUT("ERROR", string);
+        printToStderr("ERROR", string);
     }
 
     /** {@inheritDoc} */
     @Override
     public void fatal(Object object) {
         if (level <= FATAL) {
-            printToSTDOUT("FATAL", object.toString());
+            printToStderr("FATAL", object.toString());
         }
     }
 
@@ -199,7 +199,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     private void infoString(String string) {
-        printToSTDOUT("INFO", string);
+        printToStderr("INFO", string);
     }
 
     /** {@inheritDoc} */
@@ -211,7 +211,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     private void warnString(String string) {
-        printToSTDOUT("WARN", string);
+        printToStderr("WARN", string);
     }
 
     /** {@inheritDoc} */
@@ -233,12 +233,12 @@ public class SystemOutLoggingTool implements ILoggingTool {
         return level <= DEBUG;
     }
 
-    private void printToSTDOUT(String level, String message) {
-        System.out.print(classname);
-        System.out.print(" ");
-        System.out.print(level);
-        System.out.print(": ");
-        System.out.println(message);
+    private void printToStderr(String level, String message) {
+        System.err.print(classname);
+        System.err.print(" ");
+        System.err.print(level);
+        System.err.print(": ");
+        System.err.println(message);
     }
 
     /**
