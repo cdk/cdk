@@ -317,13 +317,14 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void error(Object object, Object... objects) {
-        StringBuilder result = new StringBuilder();
-        result.append(object.toString());
-        for (Object obj : objects) {
-            result.append(obj.toString());
+        if (getLevel() <= ERROR) {
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            errorString(result.toString());
         }
-        errorString(result.toString());
-
     }
 
     private void errorString(String string) {
@@ -367,12 +368,14 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void info(Object object, Object... objects) {
-        StringBuilder result = new StringBuilder();
-        result.append(object.toString());
-        for (Object obj : objects) {
-            result.append(obj.toString());
+        if (getLevel() <= INFO) {
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            infoString(result.toString());
         }
-        infoString(result.toString());
     }
 
     private void infoString(String string) {
@@ -410,12 +413,14 @@ public class LoggingTool implements ILoggingTool {
      */
     @Override
     public void warn(Object object, Object... objects) {
-        StringBuilder result = new StringBuilder();
-        result.append(object.toString());
-        for (Object obj : objects) {
-            result.append(obj.toString());
+        if (getLevel() <= WARN) {
+            StringBuilder result = new StringBuilder();
+            result.append(object.toString());
+            for (Object obj : objects) {
+                result.append(obj.toString());
+            }
+            warnString(result.toString());
         }
-        warnString(result.toString());
     }
 
     /**
