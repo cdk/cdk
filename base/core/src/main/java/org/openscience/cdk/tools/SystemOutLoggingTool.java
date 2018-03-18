@@ -98,13 +98,9 @@ public class SystemOutLoggingTool implements ILoggingTool {
     public void debug(Object object, Object... objects) {
         if (level <= DEBUG) {
             StringBuilder result = new StringBuilder();
-            result.append(object.toString());
+            result.append(object);
             for (Object obj : objects) {
-                if (obj == null) {
-                    result.append("null");
-                } else {
-                    result.append(obj.toString());
-                }
+                result.append(obj);
             }
             debugString(result.toString());
         }
@@ -157,9 +153,9 @@ public class SystemOutLoggingTool implements ILoggingTool {
     public void error(Object object, Object... objects) {
         if (level <= ERROR) {
             StringBuilder result = new StringBuilder();
-            result.append(object.toString());
+            result.append(object);
             for (Object obj : objects) {
-                result.append(obj.toString());
+                result.append(obj);
             }
             errorString(result.toString());
         }
@@ -190,9 +186,9 @@ public class SystemOutLoggingTool implements ILoggingTool {
     public void info(Object object, Object... objects) {
         if (level <= INFO) {
             StringBuilder result = new StringBuilder();
-            result.append(object.toString());
+            result.append(object);
             for (Object obj : objects) {
-                result.append(obj.toString());
+                result.append(obj);
             }
             infoString(result.toString());
         }
@@ -219,9 +215,9 @@ public class SystemOutLoggingTool implements ILoggingTool {
     public void warn(Object object, Object... objects) {
         if (level <= WARN) {
             StringBuilder result = new StringBuilder();
-            result.append(object.toString());
+            result.append(object);
             for (Object obj : objects) {
-                result.append(obj.toString());
+                result.append(obj);
             }
             warnString(result.toString());
         }
