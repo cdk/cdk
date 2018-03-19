@@ -18,20 +18,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -45,9 +31,9 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
@@ -77,6 +63,19 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import javax.vecmath.Point2d;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author         steinbeck
@@ -1250,6 +1249,21 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[12CH3]C");
         assertThat(new SmilesGenerator(SmiFlavor.AtomicMass).create(mol), is("[12CH3]C"));
+    }
+
+    @Test
+    public void cyclobutene() throws CDKException {
+        SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol    = smipar.parseSmiles("C1(C)=C(c2ccccc2)C=C1.C1(C)C(c2ccccc2)=CC=1");
+        // by default we generate SMILES that allows all double bonds to move
+        // and remove differences just because of kekule assignment. This matches
+        // InChI behavior
+        assertThat(new SmilesGenerator(SmiFlavor.Canonical).create(mol),
+                   is("C=1C=CC(=CC1)C=2C=CC2C.C=1C=CC(=CC1)C=2C=CC2C"));
+        // this might not be desirable in some cases, so if UseAromaticSymbols
+        // is set, double bonds are in rings are not allowed to move
+        assertThat(new SmilesGenerator(SmiFlavor.Canonical + SmiFlavor.UseAromaticSymbols).create(mol),
+                   is("c1ccc(cc1)C=2C=CC2C.c1ccc(cc1)C2=CC=C2C"));
     }
 
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
