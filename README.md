@@ -32,7 +32,9 @@ CDK library.
 Compiling the library is performed with Apache Maven and currently requires Java 1.7 or later. From the root of the project run:
 
 ```bash
-cdk/$ mvn package -DskipTests # run the tests if you like!
+$ git clone https://github.com/cdk/cdk.git
+$ cd cdk/
+$ mvn package -DskipTests # run the tests if you like!
 ```
 
 This will produce a 'jar' file for each module located in each modules 'target/' directory. The **uber** jar with everything included is located in ``cdk/bundle/target/cdk-<version>.jar``.
