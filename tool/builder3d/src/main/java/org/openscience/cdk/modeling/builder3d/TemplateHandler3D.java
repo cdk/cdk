@@ -232,9 +232,9 @@ public class TemplateHandler3D {
             assignCoords(best, bestMap);
         } else if (secondBest != null) {
             assignCoords(secondBest, secondBestMap);
+        } else {
+            logger.warn("Maybe RingTemplateError!");
         }
-
-        logger.warn("Maybe RingTemplateError!");
     }
 
     private void assignCoords(IAtomContainer template,
