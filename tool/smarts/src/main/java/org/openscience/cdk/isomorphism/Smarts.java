@@ -100,7 +100,7 @@ import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TRUE;
  * }
  * }
  * </pre>
- * When parsing SMARTS several flavors are available. The flavors effect how
+ * When parsing SMARTS several flavors are available. The flavors affect how
  * queries are interpreted. The following flavors are available:
  * <ul>
  *     <li>{@link #FLAVOR_LOOSE} - allows all unambiguous extensions.</li>
