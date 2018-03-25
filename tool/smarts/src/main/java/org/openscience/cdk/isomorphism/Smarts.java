@@ -2704,6 +2704,10 @@ public final class Smarts {
                 switch (expr.type()) {
                     case TRUE:
                         return "*";
+                    case IS_AROMATIC:
+                        return "a";
+                    case IS_ALIPHATIC:
+                        return "A";
                     case ELEMENT:
                         switch (expr.value()) {
                             case 9:
