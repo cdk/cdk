@@ -83,6 +83,44 @@ import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TOTAL_DEGREE;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TOTAL_H_COUNT;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TRUE;
 
+/**
+ * Parse and generate the SMARTS query language. Given an {@link IAtomContainer}
+ * a SMARTS pattern is parsed and new
+ * {@link org.openscience.cdk.isomorphism.matchers.IQueryAtom}s and
+ * {@link org.openscience.cdk.isomorphism.matchers.IQueryBond}s are appended
+ * to the connection table. Each query atom/bond contains an {@link Expr} that
+ * describes the predicate to check when matching. This {@link Expr} is also
+ * used for generating SMARTS.
+ * <br>
+ * <pre>
+ * {@code
+ * IAtomContainer mol = ...;
+ * if (Smarts.parse(mol, "[aD3]a-a([aD3])[aD3]")) {
+ *     String smarts = Smarts.generate(mol);
+ * }
+ * }
+ * </pre>
+ * When parsing SMARTS several flavors are available. The flavors effect how
+ * queries are interpreted. The following flavors are available:
+ * <ul>
+ *     <li>{@link #FLAVOR_LOOSE} - allows all unambiguous extensions.</li>
+ *     <li>{@link #FLAVOR_DAYLIGHT} - no extensions, as documented in
+ *         <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">
+ *         Daylight theory manual</a>.</li>
+ *     <li>{@link #FLAVOR_CACTVS} - '[#X]' hetero atom, '[#G8]' periodic group 8,
+ *         '[G]' or '[i]' means insaturation. '[Z2]' means 2 aliphatic hetero
+ *         neighbors, '[z2]' means 2 aliphatic hetero </li>
+ *     <li>{@link #FLAVOR_MOE} - '[#X]' hetero atom, '[#G8]' periodic group 8,
+ *         '[i]' insaturation.</li>
+ *     <li>{@link #FLAVOR_OECHEM} - '[R3]' means ring bond count 3 (e.g. [x3])
+ *         instead of in 3 rings (problems with SSSR uniqueness). '[^2]' matches
+ *         hybridisation (2=Sp2)</li>
+ *     <li>{@link #FLAVOR_CDK} - Same as {@link #FLAVOR_LOOSE}</li>
+ *     <li>{@link #FLAVOR_CDK_LEGACY} - '[D3]' means heavy degree 3 instead of
+ *         explicit degree 3. '[^2]' means hybridisation (2=Sp2). '[G8]' periodic
+ *         group 8</li>
+ * </ul>
+ */
 public final class Smarts {
 
     public static final int FLAVOR_LOOSE      = 0x01;
@@ -90,7 +128,8 @@ public final class Smarts {
     public static final int FLAVOR_CACTVS     = 0x04;
     public static final int FLAVOR_MOE        = 0x08;
     public static final int FLAVOR_OECHEM     = 0x10;
-    public static final int FLAVOR_CDK_LEGACY = 0x20;
+    public static final int FLAVOR_CDK        = FLAVOR_LOOSE;
+    public static final int FLAVOR_CDK_LEGACY = 0x40;
 
     // input flags
     private static final int BOND_UNSPEC = '?';
@@ -98,22 +137,22 @@ public final class Smarts {
     private static final int BOND_DOWN   = '\\';
 
     // flags used for generating bond stereo
-    public static final int BSTEREO_ANY             = 0b111;
-    public static final int BSTEREO_INVALID         = 0b000;
-    public static final int BSTEREO_CIS             = 0b100;
-    public static final int BSTEREO_TRANS           = 0b010;
-    public static final int BSTEREO_UNSPEC          = 0b001;
-    public static final int BSTEREO_CIS_OR_TRANS    = 0b110;
-    public static final int BSTEREO_CIS_OR_UNSPEC   = 0b101;
-    public static final int BSTEREO_TRANS_OR_UNSPEC = 0b011;
+    private static final int BSTEREO_ANY             = 0b111;
+    private static final int BSTEREO_INVALID         = 0b000;
+    private static final int BSTEREO_CIS             = 0b100;
+    private static final int BSTEREO_TRANS           = 0b010;
+    private static final int BSTEREO_UNSPEC          = 0b001;
+    private static final int BSTEREO_CIS_OR_TRANS    = 0b110;
+    private static final int BSTEREO_CIS_OR_UNSPEC   = 0b101;
+    private static final int BSTEREO_TRANS_OR_UNSPEC = 0b011;
 
     // symbols used for encoding bond stereo
-    public static final String BSTEREO_UP      = "/";
-    public static final String BSTEREO_DN      = "\\";
-    public static final String BSTEREO_NEITHER = "!/!\\";
-    public static final String BSTEREO_EITHER  = "/,\\";
-    public static final String BSTEREO_UPU     = "/?";
-    public static final String BSTEREO_DNU     = "\\?";
+    private static final String BSTEREO_UP      = "/";
+    private static final String BSTEREO_DN      = "\\";
+    private static final String BSTEREO_NEITHER = "!/!\\";
+    private static final String BSTEREO_EITHER  = "/,\\";
+    private static final String BSTEREO_UPU     = "/?";
+    private static final String BSTEREO_DNU     = "\\?";
 
     private static final class Parser {
         private String         str;
@@ -1866,10 +1905,66 @@ public final class Smarts {
         return true;
     }
 
+    /**
+     * Parse the provided SMARTS string appending query atom/bonds to the
+     * provided molecule. This method allows the flavor of SMARTS to specified
+     * that changes the meaning of queries.
+     *
+     * @param mol the molecule to store the query in
+     * @param smarts the SMARTS string
+     * @param flavor the SMARTS flavor (e.g. {@link Smarts#FLAVOR_LOOSE}.
+     * @see Expr
+     * @see org.openscience.cdk.isomorphism.matchers.IQueryAtom
+     * @see org.openscience.cdk.isomorphism.matchers.IQueryBond
+     * @return whether the SMARTS was valid
+     */
+    public static boolean parse(IAtomContainer mol, String smarts, int flavor) {
+        Parser state = new Parser(mol, smarts, flavor);
+        return state.parse();
+    }
+
+    /**
+     * Parse the provided SMARTS string appending query atom/bonds to the
+     * provided molecule. This method uses {@link Smarts#FLAVOR_LOOSE}.
+     *
+     * @param mol the molecule to store the query in
+     * @param smarts the SMARTS string
+     * @see Expr
+     * @see org.openscience.cdk.isomorphism.matchers.IQueryAtom
+     * @see org.openscience.cdk.isomorphism.matchers.IQueryBond
+     * @return whether the SMARTS was valid
+     */
+    public static boolean parse(IAtomContainer mol, String smarts) {
+        return parse(mol, smarts, FLAVOR_LOOSE);
+    }
+
+    /**
+     * Utility to generate an atom expression.
+     * <pre>{@code
+     * Expr   expr  = new Expr(Expr.Type.DEGREE, 4).and(
+     *                  new Expr(Expr.Type.IS_AROMATIC));
+     * String aExpr = Smarts.generateAtom(expr);
+     * // aExpr='[D4a]'
+     * }</pre>
+     * @see Expr
+     * @param expr the expression
+     * @return the SMARTS atom expression
+     */
     public static String generateAtom(Expr expr) {
         return new Generator(null).generateAtom(null, expr);
     }
 
+    /**
+     * Utility to generate a bond expression.
+     * <pre>{@code
+     * Expr   expr  = new Expr(Expr.Type.TRUE);
+     * String bExpr = Smarts.generateBond(expr);
+     * // bExpr='~'
+     * }</pre>
+     * @see Expr
+     * @param expr the expression
+     * @return the SMARTS atom expression
+     */
     public static String generateBond(Expr expr) {
         // default bond type
         if (expr.type() == SINGLE_OR_AROMATIC)
@@ -1879,13 +1974,35 @@ public final class Smarts {
         return sb.toString();
     }
 
-    public static boolean parse(IAtomContainer mol, String smarts, int flavor) {
-        Parser state = new Parser(mol, smarts, flavor);
-        return state.parse();
-    }
-
-    public static boolean parse(IAtomContainer mol, String smarts) {
-        return parse(mol, smarts, FLAVOR_LOOSE);
+    /**
+     * Generate a SMARTS string from the provided molecule. The generator uses
+     * {@link Expr}s stored on the {@link QueryAtom} and {@link QueryBond}
+     * instances.
+     * <pre>
+     * {@code
+     * IAtomContainer mol = ...;
+     * QueryAtom qatom1 = new QueryAtom(mol.getBuilder());
+     * QueryAtom qatom2 = new QueryAtom(mol.getBuilder());
+     * QueryBond qbond  = new QueryBond(mol.getBuilder());
+     * qatom1.setExpression(new Expr(Expr.Type.IS_AROMATIC));
+     * qatom2.setExpression(new Expr(Expr.Type.IS_AROMATIC));
+     * qbond.setExpression(new Expr(Expr.Type.IS_ALIPHATIC));
+     * qbond.setAtoms(new IAtom[]{qatom1, qatom2});
+     * mol.addAtom(qatom1);
+     * mol.addAtom(qatom2);
+     * mol.addBond(qbond);
+     * String smartsStr = Smarts.generate(mol);
+     * // smartsStr = 'a!:a'
+     * }
+     * </pre>
+     * @param mol the query molecule
+     * @return the SMARTS
+     * @see Expr
+     * @see org.openscience.cdk.isomorphism.matchers.IQueryAtom
+     * @see org.openscience.cdk.isomorphism.matchers.IQueryBond
+     */
+    public static String generate(IAtomContainer mol) {
+        return new Generator(mol).generate();
     }
 
     private static final class Generator {
@@ -2758,10 +2875,6 @@ public final class Smarts {
                             }
                         });
         }
-    }
-
-    public static String generate(IAtomContainer mol) {
-        return new Generator(mol).generate();
     }
 
     private static int compGroup(IAtom atom) {
