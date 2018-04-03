@@ -21,12 +21,11 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * Defines the ability to be matched against {@link IAtom}'s. Most prominent application
- * is in isomorphism and substructure matching in the {@link org.openscience.cdk.isomorphism.UniversalIsomorphismTester}.
+ * Defines the ability to be matched against {@link IAtom}'s.
  *
  * @cdk.module interfaces
  * @cdk.githash
- * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
+ * @see        org.openscience.cdk.isomorphism.Pattern
  */
 public interface IQueryAtom extends IAtom {
 

@@ -29,13 +29,17 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * @cdk.module  isomorphism
  * @cdk.githash
  */
-public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
+public class QueryAtom extends QueryChemObject implements IQueryAtom {
+
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(QueryAtom.class);
 
     /**
      *  The partial charge of the atom.
@@ -131,6 +135,9 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
 
     /** The atomic number for this element giving their position in the periodic table. */
     protected Integer                 atomicNumber         = (Integer) CDKConstants.UNSET;
+
+    /** Atom Expression */
+    private Expr expr = new Expr(Expr.Type.TRUE);
 
     public QueryAtom(String symbol, IChemObjectBuilder builder) {
         this(builder);
@@ -729,6 +736,30 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     @Override
     public void setIsInRing(boolean ring) {
         setFlag(CDKConstants.ISINRING, ring);
+    }
+
+    /**
+     * Set the atom-expression predicate for this query atom.
+     * @param expr the expression
+     */
+    public void setExpression(Expr expr) {
+        this.expr = expr;
+    }
+
+    /**
+     * Get the atom-expression predicate for this query atom.
+     * @return the expression
+     */
+    public Expr getExpression() {
+        return expr;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean matches(IAtom atom) {
+        return expr.matches(atom);
     }
 
     @Override
