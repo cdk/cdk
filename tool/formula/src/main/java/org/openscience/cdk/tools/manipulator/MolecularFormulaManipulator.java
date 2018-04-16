@@ -24,11 +24,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
+import java.util.*;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -189,6 +185,9 @@ public class MolecularFormulaManipulator {
      * @param orderElements The order of Elements
      * @param setOne        True, when must be set the value 1 for elements with
      * 					    one atom
+     * @param setMassNumber If the formula contains an isotope of an element that is the
+     *                      non-major isotope, the element is represented as <code>[XE]</code> where
+     *                      <code>X</code> is the mass number and <code>E</code> is the element symbol
      * @return              A String containing the molecular formula
      *
      * @see #getHTML(IMolecularFormula)
@@ -197,7 +196,8 @@ public class MolecularFormulaManipulator {
      * @see #generateOrderEle_Hill_WithCarbons()
      *
      */
-    public static String getString(IMolecularFormula formula, String[] orderElements, boolean setOne) {
+    public static String getString(IMolecularFormula formula, String[] orderElements,
+                                   boolean setOne, boolean setMassNumber) {
         StringBuffer stringMF = new StringBuffer();
         List<IIsotope> isotopesList = putInOrder(orderElements, formula);
 
@@ -209,14 +209,31 @@ public class MolecularFormulaManipulator {
             if (!elemSet.contains(symbol)) elemSet.add(symbol);
         }
 
-        for (String elem : elemSet) {
-            int count = 0;
-            for (IIsotope isotope : formula.isotopes()) {
-                if (isotope.getSymbol().equals(elem)) count += formula.getIsotopeCount(isotope);
+        if (!setMassNumber) {
+            for (String elem : elemSet) {
+                int count = 0;
+                for (IIsotope isotope : formula.isotopes()) {
+                    if (isotope.getSymbol().equals(elem)) count += formula.getIsotopeCount(isotope);
+                }
+                stringMF.append(elem);
+                if (!(count == 1 && !setOne)) stringMF.append(count);
             }
-            stringMF.append(elem);
-            if (!(count == 1 && !setOne)) stringMF.append(count);
+        } else {
+            for (IIsotope isotope : isotopesList) {
+                int count = formula.getIsotopeCount(isotope);
+                try {
+                    IIsotope major = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
+                    if (Objects.equals(isotope.getMassNumber(), major.getMassNumber()))
+                        stringMF.append(isotope.getSymbol());
+                    else
+                        stringMF.append("["+isotope.getMassNumber()+isotope.getSymbol()+"]");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (!(count == 1 && !setOne)) stringMF.append(count);
+            }
         }
+
         return stringMF.toString();
     }
 
@@ -258,9 +275,37 @@ public class MolecularFormulaManipulator {
     public static String getString(IMolecularFormula formula, boolean setOne) {
 
         if (containsElement(formula, formula.getBuilder().newInstance(IElement.class, "C")))
-            return getString(formula, generateOrderEle_Hill_WithCarbons(), setOne);
+            return getString(formula, generateOrderEle_Hill_WithCarbons(), setOne, false);
         else
-            return getString(formula, generateOrderEle_Hill_NoCarbons(), setOne);
+            return getString(formula, generateOrderEle_Hill_NoCarbons(), setOne, false);
+    }
+
+
+    /**
+     * Returns the string representation of the molecule formula.
+     * Based on Hill System. The Hill system is a system of writing
+     * chemical formulas such that the number of carbon atoms in a
+     * molecule is indicated first, the number of hydrogen atoms next,
+     * and then the number of all other chemical elements subsequently,
+     * in alphabetical order. When the formula contains no carbon, all
+     * the elements, including hydrogen, are listed alphabetically.
+     *
+     * @param  formula  The IMolecularFormula Object
+     * @param  setOne   True, when must be set the value 1 for elements with
+     * 					one atom
+     * @param setMassNumber If the formula contains an isotope of an element that is the
+     *                      non-major isotope, the element is represented as <code>[XE]</code> where
+     *                      <code>X</code> is the mass number and <code>E</code> is the element symbol
+     * @return          A String containing the molecular formula
+     *
+     * @see #getHTML(IMolecularFormula)
+     */
+    public static String getString(IMolecularFormula formula, boolean setOne, boolean setMassNumber) {
+
+        if (containsElement(formula, formula.getBuilder().newInstance(IElement.class, "C")))
+            return getString(formula, generateOrderEle_Hill_WithCarbons(), setOne, setMassNumber);
+        else
+            return getString(formula, generateOrderEle_Hill_NoCarbons(), setOne, setMassNumber);
     }
 
     public static List<IIsotope> putInOrder(String[] orderElements, IMolecularFormula formula) {

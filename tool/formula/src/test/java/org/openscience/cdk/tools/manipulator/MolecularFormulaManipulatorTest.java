@@ -176,7 +176,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         newOrder[0] = "H";
         newOrder[1] = "C";
 
-        Assert.assertEquals("H2C2", MolecularFormulaManipulator.getString(formula, newOrder, true));
+        Assert.assertEquals("H2C2", MolecularFormulaManipulator.getString(formula, newOrder, true, false));
 
     }
 
@@ -1321,4 +1321,26 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(mf.getIsotopeCount(deuterium), is(1));
         assertThat(mf.getIsotopeCount(hydrogen), is(5));
     }
+
+    @Test public void testMassNumberDisplay() throws Exception {
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope c = ifac.getMajorIsotope("C");
+        IIsotope h = ifac.getMajorIsotope("H");
+        IIsotope o = ifac.getMajorIsotope("O");
+        IIsotope br79 = ifac.getMajorIsotope("Br");
+        IIsotope br81 = ifac.getIsotope("Br", 81);
+
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = bldr.newInstance(IMolecularFormula.class);
+
+        mf.addIsotope(c,7);
+        mf.addIsotope(o, 3);
+        mf.addIsotope(h, 3);
+        mf.addIsotope(br79, 1);
+        mf.addIsotope(br81, 1);
+
+        assertThat(MolecularFormulaManipulator.getString(mf, false, false), is("C7H3Br2O3"));
+        assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3Br[81Br]O3"));
+    }
+
 }
