@@ -184,17 +184,33 @@ public class MolecularFormulaManipulator {
      * @param formula       The IMolecularFormula Object
      * @param orderElements The order of Elements
      * @param setOne        True, when must be set the value 1 for elements with
-     * 					    one atom
-     * @param setMassNumber If the formula contains an isotope of an element that is the
-     *                      non-major isotope, the element is represented as <code>[XE]</code> where
-     *                      <code>X</code> is the mass number and <code>E</code> is the element symbol
-     * @return              A String containing the molecular formula
-     *
+     *                      one atom
+     * @return A String containing the molecular formula
      * @see #getHTML(IMolecularFormula)
      * @see #generateOrderEle()
      * @see #generateOrderEle_Hill_NoCarbons()
      * @see #generateOrderEle_Hill_WithCarbons()
+     */
+    public static String getString(IMolecularFormula formula, String[] orderElements,
+                                   boolean setOne) {
+        return getString(formula, orderElements, setOne, true);
+    }
+
+    /**
+     * Returns the string representation of the molecule formula.
      *
+     * @param formula       The IMolecularFormula Object
+     * @param orderElements The order of Elements
+     * @param setOne        True, when must be set the value 1 for elements with
+     *                      one atom
+     * @param setMassNumber If the formula contains an isotope of an element that is the
+     *                      non-major isotope, the element is represented as <code>[XE]</code> where
+     *                      <code>X</code> is the mass number and <code>E</code> is the element symbol
+     * @return A String containing the molecular formula
+     * @see #getHTML(IMolecularFormula)
+     * @see #generateOrderEle()
+     * @see #generateOrderEle_Hill_NoCarbons()
+     * @see #generateOrderEle_Hill_WithCarbons()
      */
     public static String getString(IMolecularFormula formula, String[] orderElements,
                                    boolean setOne, boolean setMassNumber) {
@@ -223,8 +239,7 @@ public class MolecularFormulaManipulator {
                 int count = formula.getIsotopeCount(isotope);
                 try {
                     IIsotope major = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
-                    if (isotope.getMassNumber() == null ||
-                            Objects.equals(isotope.getMassNumber(), major.getMassNumber()))
+                    if (isotope.getMassNumber() == null)
                         stringMF.append(isotope.getSymbol());
                     else
                         stringMF.append("[")
