@@ -158,6 +158,16 @@
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>uk.ac.ebi.beam</groupId>
+            <artifactId>beam-core</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.ebi.beam</groupId>
+            <artifactId>beam-core</artifactId>
+            <version>RELEASE</version>
+        </dependency>
     </dependencies>
 
 </project>
