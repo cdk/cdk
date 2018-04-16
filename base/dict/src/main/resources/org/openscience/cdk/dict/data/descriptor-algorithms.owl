@@ -377,6 +377,18 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
+    <Descriptor rdf:ID="nSpiroAtom">
+        <rdfs:label>Spiro Atom Count</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:date>2018-01-07</dc:date>
+        <definition rdf:parseType='Literal'>
+            Counts the number of spiro atoms.
+        </definition>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+
     <Descriptor rdf:ID="aromaticBondsCount">
         <rdfs:label>Aromatic Bonds Count</rdfs:label>
         <dc:contributor rdf:resource="#mf"/>
