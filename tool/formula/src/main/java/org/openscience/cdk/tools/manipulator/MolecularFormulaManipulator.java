@@ -223,10 +223,14 @@ public class MolecularFormulaManipulator {
                 int count = formula.getIsotopeCount(isotope);
                 try {
                     IIsotope major = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
-                    if (Objects.equals(isotope.getMassNumber(), major.getMassNumber()))
+                    if (isotope.getMassNumber() == null ||
+                            Objects.equals(isotope.getMassNumber(), major.getMassNumber()))
                         stringMF.append(isotope.getSymbol());
                     else
-                        stringMF.append("["+isotope.getMassNumber()+isotope.getSymbol()+"]");
+                        stringMF.append("[")
+                                .append(isotope.getMassNumber())
+                                .append(isotope.getSymbol())
+                                .append("]");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
