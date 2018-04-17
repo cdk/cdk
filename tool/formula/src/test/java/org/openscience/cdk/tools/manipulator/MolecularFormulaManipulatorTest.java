@@ -1321,4 +1321,22 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(mf.getIsotopeCount(deuterium), is(1));
         assertThat(mf.getIsotopeCount(hydrogen), is(5));
     }
+
+    @Test public void testMassNumberDisplay() throws Exception {
+        IsotopeFactory ifac = Isotopes.getInstance();
+        IIsotope br81 = ifac.getIsotope("Br", 81);
+
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = bldr.newInstance(IMolecularFormula.class);
+
+        mf.addIsotope(new Atom("C"), 7);
+        mf.addIsotope(new Atom("O"), 3);
+        mf.addIsotope(new Atom("H"), 3);
+        mf.addIsotope(new Atom("Br"), 1);
+        mf.addIsotope(ifac.getIsotope("Br", 81), 1);
+
+        assertThat(MolecularFormulaManipulator.getString(mf, false, false), is("C7H3Br2O3"));
+        assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3[81Br]BrO3"));
+    }
+
 }
