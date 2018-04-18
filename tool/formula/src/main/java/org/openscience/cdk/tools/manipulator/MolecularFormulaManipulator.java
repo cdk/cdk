@@ -28,6 +28,7 @@ import java.util.*;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -196,6 +197,18 @@ public class MolecularFormulaManipulator {
         return getString(formula, orderElements, setOne, true);
     }
 
+    private static void appendElement(StringBuilder sb, Integer mass, int elem, int count) {
+        if (mass != null)
+            sb.append('[')
+              .append(mass)
+              .append(Elements.ofNumber(elem).symbol())
+              .append(']');
+        else
+            sb.append(Elements.ofNumber(elem).symbol());
+        if (count != 0)
+            sb.append(count);
+    }
+
     /**
      * Returns the string representation of the molecule formula.
      *
@@ -214,42 +227,33 @@ public class MolecularFormulaManipulator {
      */
     public static String getString(IMolecularFormula formula, String[] orderElements,
                                    boolean setOne, boolean setMassNumber) {
-        StringBuffer stringMF = new StringBuffer();
+        StringBuilder  stringMF     = new StringBuilder();
         List<IIsotope> isotopesList = putInOrder(orderElements, formula);
 
-        // collect elements in a map - since different isotopes of the
-        // same element will get repeated in the formula
-        List<String> elemSet = new ArrayList<String>();
-        for (IIsotope isotope : isotopesList) {
-            String symbol = isotope.getSymbol();
-            if (!elemSet.contains(symbol)) elemSet.add(symbol);
-        }
-
         if (!setMassNumber) {
-            for (String elem : elemSet) {
-                int count = 0;
-                for (IIsotope isotope : formula.isotopes()) {
-                    if (isotope.getSymbol().equals(elem)) count += formula.getIsotopeCount(isotope);
-                }
-                stringMF.append(elem);
-                if (!(count == 1 && !setOne)) stringMF.append(count);
+            int count = 0;
+            int prev  = -1;
+            for (IIsotope isotope : isotopesList) {
+                if (!Objects.equals(isotope.getAtomicNumber(), prev)) {
+                    if (count != 0)
+                        appendElement(stringMF,
+                                      null, prev,
+                                      setOne || count != 1 ? count : 0);
+                    prev   = isotope.getAtomicNumber();
+                    count  = formula.getIsotopeCount(isotope);
+                } else
+                    count += formula.getIsotopeCount(isotope);
             }
+            if (count != 0)
+                appendElement(stringMF,
+                              null, prev,
+                              setOne || count != 1 ? count : 0);
         } else {
             for (IIsotope isotope : isotopesList) {
                 int count = formula.getIsotopeCount(isotope);
-                try {
-                    IIsotope major = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
-                    if (isotope.getMassNumber() == null)
-                        stringMF.append(isotope.getSymbol());
-                    else
-                        stringMF.append("[")
-                                .append(isotope.getMassNumber())
-                                .append(isotope.getSymbol())
-                                .append("]");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (!(count == 1 && !setOne)) stringMF.append(count);
+                appendElement(stringMF,
+                              isotope.getMassNumber(), isotope.getAtomicNumber(),
+                              setOne || count != 1 ? count : 0);
             }
         }
 
@@ -333,9 +337,7 @@ public class MolecularFormulaManipulator {
             IElement element = formula.getBuilder().newInstance(IElement.class, orderElement);
             if (containsElement(formula, element)) {
                 List<IIsotope> isotopes = getIsotopes(formula, element);
-                for (IIsotope isotope : isotopes) {
-                    isotopesList.add(isotope);
-                }
+                isotopesList.addAll(isotopes);
             }
         }
         return isotopesList;
