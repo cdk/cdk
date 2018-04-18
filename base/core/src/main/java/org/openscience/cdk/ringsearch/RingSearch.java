@@ -220,7 +220,7 @@ public final class RingSearch {
      * @return whether the atom is in a ring
      * @throws NoSuchAtomException the atom was not found
      */
-    public boolean cyclic(IAtom atom) throws NoSuchAtomException {
+    public boolean cyclic(IAtom atom) {
         int i = container.indexOf(atom);
         if (i < 0) throw new NoSuchAtomException("no such atom");
         return cyclic(i);
