@@ -18,9 +18,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -29,21 +32,15 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.result.IntegerResultType;
-import org.openscience.cdk.ringsearch.RingSearch;
-import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
 
 /**
  * Returns the number of spiro atoms.
  *
  * @author rguha
- * @cdk.module qsarmolecular
  * @cdk.dictref qsar-descriptors:nSpiroAtom
  */
 public class SpiroAtomCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
@@ -66,7 +63,7 @@ public class SpiroAtomCountDescriptor extends AbstractMolecularDescriptor implem
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#nSpiroAtoms",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#nSpiroAtom",
                 this.getClass().getName(), "The Chemistry Development Kit");
     }
 
@@ -93,37 +90,64 @@ public class SpiroAtomCountDescriptor extends AbstractMolecularDescriptor implem
         return NAMES;
     }
 
+    private static void traverseRings(IAtomContainer mol, IAtom atom, IBond prev) {
+        atom.setFlag(CDKConstants.VISITED, true);
+        prev.setFlag(CDKConstants.VISITED, true);
+        for (IBond bond : mol.getConnectedBondsList(atom)) {
+            IAtom nbr = bond.getOther(atom);
+            if (!nbr.getFlag(CDKConstants.VISITED))
+                traverseRings(mol, nbr, bond);
+            else
+                bond.setFlag(CDKConstants.VISITED, true);
+        }
+    }
+
+    private static int getSpiroDegree(IAtomContainer mol, IAtom atom) {
+        if (!atom.isInRing())
+            return 0;
+        List<IBond> rbonds = new ArrayList<>(4);
+        for (IBond bond : mol.getConnectedBondsList(atom)) {
+            if (bond.isInRing())
+                rbonds.add(bond);
+        }
+        if (rbonds.size() < 4)
+            return 0;
+        int degree = 0;
+        // clear flags
+        for (IBond b : mol.bonds())
+            b.setFlag(CDKConstants.VISITED, false);
+        for (IAtom a : mol.atoms())
+            a.setFlag(CDKConstants.VISITED, false);
+        // visit rings
+        atom.setFlag(CDKConstants.VISITED, true);
+        for (IBond rbond : rbonds) {
+            if (!rbond.getFlag(CDKConstants.VISITED)) {
+                traverseRings(mol, rbond.getOther(atom), rbond);
+                degree++;
+            }
+        }
+        return degree < 2 ? 0 : degree;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
+        int nSpiro = 0;
 
-        RingSearch rs = new RingSearch(atomContainer);
-        Set<Integer> spiroAtomIdx = new HashSet<>();
-
-        // rings identified this way are either spiro or have no common edges
-        int[][] isorings = rs.isolated();
-
-        for (int i = 0; i < isorings.length - 1; i++) {
-            for (int j = i + 1; j < isorings.length; j++) {
-                List<Integer> idxi = new ArrayList<>();
-                for (int k = 0; k < isorings[i].length; k++) idxi.add(isorings[i][k]);
-
-                List<Integer> idxj = new ArrayList<>();
-                for (int k = 0; k < isorings[j].length; k++) idxj.add(isorings[j][k]);
-
-                // find atom indices common to the two rings
-                idxi.retainAll(idxj);
-                
-                // for spiro rings, should just have 1 atom
-                if (idxi.size() == 1)
-                    spiroAtomIdx.add(idxi.get(0));
+        try {
+            IAtomContainer local = atomContainer.clone();
+            Cycles.markRingAtomsAndBonds(local);
+            for (IAtom atom : local.atoms()) {
+                if (getSpiroDegree(local, atom) != 0)
+                    nSpiro++;
             }
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult(nSpiro), getDescriptorNames());
+        } catch (CloneNotSupportedException e) {
+            return getDummyDescriptorValue(e);
         }
-
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(spiroAtomIdx.size()), getDescriptorNames());
     }
 
     /**

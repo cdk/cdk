@@ -35,13 +35,13 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 public class SpiroAtomCountDescriptorTest extends MolecularDescriptorTest {
 
-    SmilesParser sp;
+    static SmilesParser sp;
 
     public SpiroAtomCountDescriptorTest() {
     }
 
     @BeforeClass
-    public void setupBeforeClass() throws Exception {
+    public static void setupBeforeClass() throws Exception {
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
