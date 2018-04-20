@@ -378,7 +378,7 @@
     </Descriptor>
 
     <Descriptor rdf:ID="nSpiroAtom">
-        <rdfs:label>SpiroAtoms Count</rdfs:label>
+        <rdfs:label>Spiro Atom Count</rdfs:label>
         <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2018-01-07</dc:date>
         <definition rdf:parseType='Literal'>
