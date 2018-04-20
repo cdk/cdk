@@ -318,8 +318,4 @@ public class NumericalSurface {
         }
         return (ret);
     }
-
-    public static void main(String[] args) {
-        
-    }
 }
