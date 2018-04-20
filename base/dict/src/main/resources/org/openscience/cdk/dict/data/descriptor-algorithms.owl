@@ -379,10 +379,10 @@
 
     <Descriptor rdf:ID="nSpiroAtom">
         <rdfs:label>SpiroAtoms Count</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
+        <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2018-01-07</dc:date>
         <definition rdf:parseType='Literal'>
-            Counts the number of spiro atoms
+            Counts the number of spiro atoms.
         </definition>
         <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
