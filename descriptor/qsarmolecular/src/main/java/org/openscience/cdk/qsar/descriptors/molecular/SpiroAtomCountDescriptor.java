@@ -1,4 +1,4 @@
-/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2018  Rajarshi Guha <rajarshi.guha@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
