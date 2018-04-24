@@ -822,6 +822,27 @@ public class AtomContainerManipulator {
                 } else {
                     elements.add(new TetrahedralChirality(focus, neighbors, tc.getStereo()));
                 }
+            } else if (se instanceof ExtendedTetrahedral) {
+                ExtendedTetrahedral tc = (ExtendedTetrahedral) se;
+                IAtom   focus    = tc.getFocus();
+                IAtom[] carriers = tc.getCarriers().toArray(new IAtom[4]);
+                IAtom[] ends     = ExtendedTetrahedral.findTerminalAtoms(org, focus);
+                boolean updated = false;
+                for (int i = 0; i < carriers.length; i++) {
+                    if (hydrogens.contains(carriers[i])) {
+                        if (org.getBond(carriers[i], ends[0]) != null)
+                            carriers[i] = ends[0];
+                        else
+                            carriers[i] = ends[1];
+                        updated = true;
+                    }
+                }
+                // no changes
+                if (!updated) {
+                    elements.add(tc);
+                } else {
+                    elements.add(new ExtendedTetrahedral(focus, carriers, tc.getConfigOrder()));
+                }
             } else if (se instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry db = (IDoubleBondStereochemistry) se;
                 Conformation conformation = db.getStereo();
