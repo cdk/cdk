@@ -907,7 +907,8 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mol.addAtom(atom);
         StringWriter sw = new StringWriter();
         try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
-            mdlw.getSetting("IgnoreMajorIsotopes").setSetting("true");
+            mdlw.getSetting(MDLV2000Writer.OptWriteMajorIsotopes)
+                .setSetting("false");
             mdlw.write(mol);
         }
         assertThat(sw.toString(),

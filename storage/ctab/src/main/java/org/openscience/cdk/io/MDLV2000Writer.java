@@ -108,6 +108,11 @@ import java.util.regex.Pattern;
  */
 public class MDLV2000Writer extends DefaultChemObjectWriter {
 
+    public static final String OptForceWriteAs2DCoordinates = "ForceWriteAs2DCoordinates";
+    public static final String OptWriteMajorIsotopes        = "WriteMajorIsotopes";
+    public static final String OptWriteAromaticBondTypes    = "WriteAromaticBondTypes";
+    public static final String OptWriteQueryFormatValencies = "WriteQueryFormatValencies";
+
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
 
     // regular expression to capture R groups with attached numbers
@@ -181,7 +186,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     private BooleanIOSetting forceWriteAs2DCoords;
 
-    private BooleanIOSetting ignoreMajorIsotopes;
+    private BooleanIOSetting writeMajorIsotopes;
 
     // The next two options are MDL Query format options, not really
     // belonging to the MDLV2000 format, and will be removed when
@@ -763,7 +768,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             IAtom atom = container.getAtom(i);
             if (!(atom instanceof IPseudoAtom)) {
                 Integer atomicMass = atom.getMassNumber();
-                if (ignoreMajorIsotopes.isSet() &&
+                if (!writeMajorIsotopes.isSet() &&
                     isMajorIsotope(atom))
                     atomicMass = null;
                 if (atomicMass != null) {
@@ -1108,13 +1113,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * so a 'query file' is created if the container has aromatic bonds and this settings is true.
      */
     private void initIOSettings() {
-        forceWriteAs2DCoords = addSetting(new BooleanIOSetting("ForceWriteAs2DCoordinates", IOSetting.Importance.LOW,
+        forceWriteAs2DCoords = addSetting(new BooleanIOSetting(OptForceWriteAs2DCoordinates, IOSetting.Importance.LOW,
                                                                "Should coordinates always be written as 2D?", "false"));
-        ignoreMajorIsotopes = addSetting(new BooleanIOSetting("IgnoreMajorIsotopes", IOSetting.Importance.LOW,
-                                                               "Do not write atomic mass of major isotopes (e.g. [12]C)", "false"));
-        writeAromaticBondTypes = addSetting(new BooleanIOSetting("WriteAromaticBondTypes", IOSetting.Importance.LOW,
+        writeMajorIsotopes = addSetting(new BooleanIOSetting(OptWriteMajorIsotopes, IOSetting.Importance.LOW,
+                                                             "Write atomic mass of any non-null atomic mass including major isotopes (e.g. [12]C)", "true"));
+        writeAromaticBondTypes = addSetting(new BooleanIOSetting(OptWriteAromaticBondTypes, IOSetting.Importance.LOW,
                                                                  "Should aromatic bonds be written as bond type 4?", "false"));
-        writeQueryFormatValencies = addSetting(new BooleanIOSetting("WriteQueryFormatValencies",
+        writeQueryFormatValencies = addSetting(new BooleanIOSetting(OptWriteQueryFormatValencies,
                                                                     IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
     }
 
