@@ -914,4 +914,34 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         assertThat(sw.toString(),
                    not(containsString("M  ISO  1   1  12")));
     }
+
+    @Test
+    public void writeCarbon13AtomProps() throws Exception {
+        IAtomContainer mol = builder.newAtomContainer();
+        IAtom atom = builder.newAtom();
+        atom.setSymbol("C");
+        atom.setMassNumber(13);
+        mol.addAtom(atom);
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(),
+                   containsString("C   1"));
+    }
+
+    @Test
+    public void writeChargeAtomProps() throws Exception {
+        IAtomContainer mol = builder.newAtomContainer();
+        IAtom atom = builder.newAtom();
+        atom.setSymbol("C");
+        atom.setFormalCharge(+1);
+        mol.addAtom(atom);
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(),
+                   containsString("C   0  3"));
+    }
 }

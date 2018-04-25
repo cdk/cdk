@@ -474,6 +474,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
             // atom properties
             int[] atomprops = new int[12];
+            atomprops[0] = determineIsotope(atom);
+            atomprops[1] = determineCharge(container, atom);
             atomprops[2] = determineStereoParity(container, atomstereo, atomindex, atom);
             atomprops[5] = determineValence(container, atom);
             atomprops[9] = determineAtomMap(atom);
@@ -720,6 +722,47 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.flush();
     }
 
+    // 0 = uncharged or value other than these, 1 = +3, 2 = +2, 3 = +1,
+    // 4 = doublet radical, 5 = -1, 6 = -2, 7 = -3
+    private int determineCharge(IAtomContainer mol, IAtom atom) {
+        Integer q = atom.getFormalCharge();
+        if (q == null)
+            q = 0;
+        switch (q) {
+            case -3: return 7;
+            case -2: return 6;
+            case -1: return 5;
+            case 0:
+                if (mol.getConnectedSingleElectronsCount(atom) == 1)
+                    return 4;
+                return 0;
+            case +1:  return 3;
+            case +2:  return 2;
+            case +3:  return 1;
+        }
+        return 0;
+    }
+
+    private int determineIsotope(IAtom atom) {
+        Integer  mass  = atom.getMassNumber();
+        IIsotope major = null;
+        if (mass == null)
+            return 0;
+        try {
+            major = Isotopes.getInstance().getMajorIsotope(atom.getSymbol());
+        } catch (IOException e) {
+            // ignored
+        }
+        if (!writeMajorIsotopes.isSet() &&
+            major != null &&
+            mass.equals(major.getMassNumber()))
+            mass = null;
+        if (mass != null) {
+            mass -= major != null ? major.getMassNumber() : 0;
+            return mass >= -3 && mass <= 4 ? mass : 0;
+        } return 0;
+    }
+
     private int determineAtomMap(IAtom atom) {
         Object amap   = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
         if (amap == null)
@@ -801,11 +844,15 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         return parity;
     }
 
-    private boolean isMajorIsotope(IAtom atom) throws IOException {
+    private boolean isMajorIsotope(IAtom atom)  {
         if (atom.getMassNumber() == null)
             return false;
-        IIsotope major = Isotopes.getInstance().getMajorIsotope(atom.getSymbol());
-        return major != null && major.getMassNumber().equals(atom.getMassNumber());
+        try {
+            IIsotope major = Isotopes.getInstance().getMajorIsotope(atom.getSymbol());
+            return major != null && major.getMassNumber().equals(atom.getMassNumber());
+        } catch (IOException ex) {
+            return false;
+        }
     }
 
     private void writeSgroups(IAtomContainer container, BufferedWriter writer, Map<IAtom,Integer> atomidxs) throws IOException {
