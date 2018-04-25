@@ -62,6 +62,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -600,9 +601,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     default:
                         line.append("0");
                 }
-                line.append("  0  0  0 ");
+                if (writeDefaultProps.isSet())
+                    line.append("  0  0  0 ");
+                line.append('\n');
                 writer.write(line.toString());
-                writer.write('\n');
             }
         }
 
@@ -1073,23 +1075,20 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * Formats an integer to fit into the connection table and changes it
      * to a String.
      *
-     * @param i The int to be formated
-     * @param l Length of the String
+     * @param x The int to be formated
+     * @param n Length of the String
      * @return The String to be written into the connectiontable
      */
-    protected static String formatMDLInt(int i, int l) {
-        String s = "", fs = "";
-        NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
-        nf.setParseIntegerOnly(true);
-        nf.setMinimumIntegerDigits(1);
-        nf.setMaximumIntegerDigits(l);
-        nf.setGroupingUsed(false);
-        s = nf.format(i);
-        l = l - s.length();
-        for (int f = 0; f < l; f++)
-            fs += " ";
-        fs += s;
-        return fs;
+    protected static String formatMDLInt(int x, int n) {
+        char[] buf = new char[n];
+        Arrays.fill(buf, ' ');
+        String val = Integer.toString(x);
+        if (val.length() > n)
+            val = "0";
+        int off = n - val.length();
+        for (int i = 0; i < val.length(); i++)
+            buf[off+i] = val.charAt(i);
+        return new String(buf);
     }
 
     /**
