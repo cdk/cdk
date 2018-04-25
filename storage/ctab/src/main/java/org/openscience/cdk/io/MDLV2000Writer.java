@@ -112,6 +112,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public static final String OptWriteMajorIsotopes        = "WriteMajorIsotopes";
     public static final String OptWriteAromaticBondTypes    = "WriteAromaticBondTypes";
     public static final String OptWriteQueryFormatValencies = "WriteQueryFormatValencies";
+    public static final String OptWriteDefaultProperties    = "WriteDefaultProperties";
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
 
@@ -201,6 +202,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     /* Should atomic valencies be written in the Query format. */
     @Deprecated
     private BooleanIOSetting writeQueryFormatValencies;
+
+    private BooleanIOSetting writeDefaultProps;
 
     private BufferedWriter writer;
 
@@ -480,7 +483,20 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             atomprops[5] = determineValence(container, atom);
             atomprops[9] = determineAtomMap(atom);
             line.append(formatMDLInt(atomprops[0], 2)); // dd (mass-number)
-            for (int i = 1; i < atomprops.length; i++)
+            line.append(formatMDLInt(atomprops[1], 3)); // ccc (charge)
+            int last = atomprops.length-1;
+            if (!writeDefaultProps.isSet())
+            {
+                while (last >= 0) {
+                    if (atomprops[last] != 0)
+                        break;
+                    last--;
+                }
+                // matches BIOVIA syntax
+                if (last >= 2 && last < atomprops.length)
+                    last = 5;
+            }
+            for (int i = 2; i <= last; i++)
                 line.append(formatMDLInt(atomprops[i], 3));
             line.append('\n');
             writer.write(line.toString());
@@ -1134,6 +1150,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                                                                  "Should aromatic bonds be written as bond type 4?", "false"));
         writeQueryFormatValencies = addSetting(new BooleanIOSetting(OptWriteQueryFormatValencies,
                                                                     IOSetting.Importance.LOW, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
+        writeDefaultProps = addSetting(new BooleanIOSetting(OptWriteDefaultProperties,
+                                                            IOSetting.Importance.LOW,
+                                                            "Write trailing zero's on atom/bond property blocks even if they're not used.",
+                                                            "true"));
     }
 
     /**
