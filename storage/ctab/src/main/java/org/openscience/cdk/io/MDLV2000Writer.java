@@ -339,7 +339,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public void writeMolecule(IAtomContainer container) throws Exception {
 
         final int dim = getNumberOfDimensions(container);
-        String line = "";
+        StringBuilder line = new StringBuilder();
         Map<Integer, Integer> rgroups = null;
         Map<Integer, String> aliases = null;
         // write header block
@@ -383,41 +383,41 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             atomindex.put(atom, atomindex.size());
 
         // write Counts line
-        line += formatMDLInt(container.getAtomCount(), 3);
-        line += formatMDLInt(container.getBondCount(), 3);
-        line += "  0  0";
+        line.append(formatMDLInt(container.getAtomCount(), 3));
+        line.append(formatMDLInt(container.getBondCount(), 3));
+        line.append("  0  0");
         // we mark all stereochemistry to absolute for now
-        line += atomstereo.isEmpty() ? "  0" : "  1";
-        line += "  0  0  0  0  0999 V2000";
-        writer.write(line);
+        line.append(atomstereo.isEmpty() ? "  0" : "  1");
+        line.append("  0  0  0  0  0999 V2000");
+        writer.write(line.toString());
         writer.write('\n');
 
         // write Atom block
         for (int f = 0; f < container.getAtomCount(); f++) {
             IAtom atom = container.getAtom(f);
-            line = "";
+            line = new StringBuilder();
             switch (dim) {
                 case 0:
                     // if no coordinates available, then output a number
                     // of zeros
-                    line += "    0.0000    0.0000    0.0000 ";
+                    line.append("    0.0000    0.0000    0.0000 ");
                     break;
                 case 2:
                     if (atom.getPoint2d() != null) {
-                        line += formatMDLFloat((float) atom.getPoint2d().x);
-                        line += formatMDLFloat((float) atom.getPoint2d().y);
-                        line += "    0.0000 ";
+                        line.append(formatMDLFloat((float) atom.getPoint2d().x));
+                        line.append(formatMDLFloat((float) atom.getPoint2d().y));
+                        line.append("    0.0000 ");
                     } else {
-                        line += "    0.0000    0.0000    0.0000 ";
+                        line.append("    0.0000    0.0000    0.0000 ");
                     }
                     break;
                 case 3:
                     if (atom.getPoint3d() != null) {
-                        line += formatMDLFloat((float) atom.getPoint3d().x);
-                        line += formatMDLFloat((float) atom.getPoint3d().y);
-                        line += formatMDLFloat((float) atom.getPoint3d().z) + " ";
+                        line.append(formatMDLFloat((float) atom.getPoint3d().x));
+                        line.append(formatMDLFloat((float) atom.getPoint3d().y));
+                        line.append(formatMDLFloat((float) atom.getPoint3d().z)).append(" ");
                     } else {
-                        line += "    0.0000    0.0000    0.0000 ";
+                        line.append("    0.0000    0.0000    0.0000 ");
                     }
                     break;
             }
@@ -432,7 +432,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 Matcher matcher = NUMERED_R_GROUP.matcher(label);
                 if (pseudoAtom.getSymbol().equals("R") && !label.isEmpty() && matcher.matches()) {
 
-                    line += "R# ";
+                    line.append("R# ");
                     if (rgroups == null) {
                         // we use a tree map to ensure the output order is always the same
                         rgroups = new TreeMap<Integer, Integer>();
@@ -455,26 +455,26 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
                         aliases.put(f + 1, label); // atom index to alias
 
-                        line += formatMDLString(atom.getSymbol(), 3);
+                        line.append(formatMDLString(atom.getSymbol(), 3));
 
                     } else { // label is short enough to fit in the atom block
 
                         // make sure it's not empty
                         if (!label.isEmpty())
-                            line += formatMDLString(label, 3);
+                            line.append(formatMDLString(label, 3));
                         else
-                            line += formatMDLString(atom.getSymbol(), 3);
+                            line.append(formatMDLString(atom.getSymbol(), 3));
 
                     }
                 }
 
             } else {
-                line += formatMDLString(container.getAtom(f).getSymbol(), 3);
+                line.append(formatMDLString(container.getAtom(f).getSymbol(), 3));
             }
 
             final ITetrahedralChirality tc = atomstereo.get(atom);
             if (tc == null) {
-                line += " 0  0  0  0  0";
+                line.append(" 0  0  0  0  0");
             } else {
                 int parity = tc.getStereo() == ITetrahedralChirality.Stereo.CLOCKWISE ? 1 : 2;
                 IAtom   focus    = tc.getChiralAtom();
@@ -503,7 +503,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         }
                     }
                 }
-                line += String.format(" 0  0  %d  0  0", parity);
+                line.append(String.format(" 0  0  %d  0  0", parity));
             }
 
             // write valence - this is a bit of pain as the CDK has both
@@ -519,7 +519,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     Integer element = atom.getAtomicNumber();
 
                     if (element == null) {
-                        line += formatMDLInt(0, 3);
+                        line.append(formatMDLInt(0, 3));
                     } else {
 
                         int implied = MDLValence.implicitValence(element, charge, explicitValence);
@@ -532,26 +532,26 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             // valence from h count differs from field? we still
                             // set to default - which one has more merit?
                             if (valence != actual || implied == atom.getValency())
-                                line += formatMDLInt(0, 3);
+                                line.append(formatMDLInt(0, 3));
                             else if (valence == 0)
-                                line += formatMDLInt(15, 3);
+                                line.append(formatMDLInt(15, 3));
                             else if (valence > 0 && valence < 15)
-                                line += formatMDLInt(valence, 3);
+                                line.append(formatMDLInt(valence, 3));
                             else
-                                line += formatMDLInt(0, 3);
+                                line.append(formatMDLInt(0, 3));
                         } else if (atom.getImplicitHydrogenCount() != null) {
 
                             int actual = explicitValence + atom.getImplicitHydrogenCount();
 
                             if (implied == actual) {
-                                line += formatMDLInt(0, 3);
+                                line.append(formatMDLInt(0, 3));
                             } else {
                                 if (actual == 0)
-                                    line += formatMDLInt(15, 3);
+                                    line.append(formatMDLInt(15, 3));
                                 else if (actual > 0 && actual < 15)
-                                    line += formatMDLInt(actual, 3);
+                                    line.append(formatMDLInt(actual, 3));
                                 else
-                                    line += formatMDLInt(0, 3);
+                                    line.append(formatMDLInt(0, 3));
                             }
                         } else {
                             int valence = atom.getValency();
@@ -559,44 +559,44 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             // valence from h count differs from field? we still
                             // set to default - which one has more merit?
                             if (implied == valence)
-                                line += formatMDLInt(0, 3);
+                                line.append(formatMDLInt(0, 3));
                             else if (valence == 0)
-                                line += formatMDLInt(15, 3);
+                                line.append(formatMDLInt(15, 3));
                             else if (valence > 0 && valence < 15)
-                                line += formatMDLInt(valence, 3);
+                                line.append(formatMDLInt(valence, 3));
                             else
-                                line += formatMDLInt(0, 3);
+                                line.append(formatMDLInt(0, 3));
                         }
                     }
 
                 } catch (RuntimeException e) {
                     // null bond order, query bond order - who knows.. but
-                    line += formatMDLInt(0, 3);
+                    line.append(formatMDLInt(0, 3));
                 }
             }
-            line += "  0  0  0";
+            line.append("  0  0  0");
 
             if (container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING) != null) {
                 Object atomAtomMapping = container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                 if (atomAtomMapping instanceof String) {
                     try {
                         int value = Integer.parseInt((String) atomAtomMapping);
-                        line += formatMDLInt(value, 3);
+                        line.append(formatMDLInt(value, 3));
                     } catch (NumberFormatException exception) {
-                        line += formatMDLInt(0, 3);
+                        line.append(formatMDLInt(0, 3));
                         logger.warn("Skipping atom-atom mapping, invalid value: " + atomAtomMapping);
                     }
                 } else if (atomAtomMapping instanceof Integer) {
                     int value = (Integer) atomAtomMapping;
-                    line += formatMDLInt(value, 3);
+                    line.append(formatMDLInt(value, 3));
                 } else {
-                    line += formatMDLInt(0, 3);
+                    line.append(formatMDLInt(0, 3));
                 }
             } else {
-                line += formatMDLInt(0, 3);
+                line.append(formatMDLInt(0, 3));
             }
-            line += "  0  0";
-            writer.write(line);
+            line.append("  0  0");
+            writer.write(line.toString());
             writer.write('\n');
         }
 
@@ -608,11 +608,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 if (bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED
                     || bond.getStereo() == IBond.Stereo.UP_OR_DOWN_INVERTED) {
                     // turn around atom coding to correct for inv stereo
-                    line = formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3);
-                    line += formatMDLInt(atomindex.get(bond.getBegin()) + 1, 3);
+                    line = new StringBuilder(formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3));
+                    line.append(formatMDLInt(atomindex.get(bond.getBegin()) + 1, 3));
                 } else {
-                    line = formatMDLInt(atomindex.get(bond.getBegin()) + 1, 3);
-                    line += formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3);
+                    line = new StringBuilder(formatMDLInt(atomindex.get(bond.getBegin()) + 1, 3));
+                    line.append(formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3));
                 }
 
                 int bondType = 0;
@@ -670,35 +670,35 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 if (bondType == 0)
                     throw new CDKException("Bond at idx=" + container.indexOf(bond) + " is not supported by Molfile, bond=" + bond.getOrder());
 
-                line += formatMDLInt(bondType, 3);
-                line += "  ";
+                line.append(formatMDLInt(bondType, 3));
+                line.append("  ");
                 switch (bond.getStereo()) {
                     case UP:
-                        line += "1";
+                        line.append("1");
                         break;
                     case UP_INVERTED:
-                        line += "1";
+                        line.append("1");
                         break;
                     case DOWN:
-                        line += "6";
+                        line.append("6");
                         break;
                     case DOWN_INVERTED:
-                        line += "6";
+                        line.append("6");
                         break;
                     case UP_OR_DOWN:
-                        line += "4";
+                        line.append("4");
                         break;
                     case UP_OR_DOWN_INVERTED:
-                        line += "4";
+                        line.append("4");
                         break;
                     case E_OR_Z:
-                        line += "3";
+                        line.append("3");
                         break;
                     default:
-                        line += "0";
+                        line.append("0");
                 }
-                line += "  0  0  0 ";
-                writer.write(line);
+                line.append("  0  0  0 ");
+                writer.write(line.toString());
                 writer.write('\n');
             }
         }
