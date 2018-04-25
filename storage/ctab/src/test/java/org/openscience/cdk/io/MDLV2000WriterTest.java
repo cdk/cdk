@@ -62,6 +62,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
@@ -880,5 +881,36 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         }
         assertThat(sw.toString(),
                    containsString("M  RAD  8   9   2  10   2  11   2  12   2  13   2  14   2  15   2  16   2"));
+    }
+
+    @Test
+    public void writeCarbon12() throws Exception {
+        IAtomContainer mol = builder.newAtomContainer();
+        IAtom atom = builder.newAtom();
+        atom.setSymbol("C");
+        atom.setMassNumber(12);
+        mol.addAtom(atom);
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(),
+                   containsString("M  ISO  1   1  12"));
+    }
+
+    @Test
+    public void ignoreCarbon12() throws Exception {
+        IAtomContainer mol = builder.newAtomContainer();
+        IAtom atom = builder.newAtom();
+        atom.setSymbol("C");
+        atom.setMassNumber(12);
+        mol.addAtom(atom);
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.getSetting("IgnoreMajorIsotopes").setSetting("true");
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(),
+                   not(containsString("M  ISO  1   1  12")));
     }
 }

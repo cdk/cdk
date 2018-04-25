@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -179,6 +180,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private static final int WIDTH = 3;
 
     private BooleanIOSetting forceWriteAs2DCoords;
+
+    private BooleanIOSetting ignoreMajorIsotopes;
 
     // The next two options are MDL Query format options, not really
     // belonging to the MDLV2000 format, and will be removed when
@@ -495,7 +498,6 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         }
                     }
                 }
-
                 line += String.format(" 0  0  %d  0  0", parity);
             }
 
@@ -761,15 +763,15 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             IAtom atom = container.getAtom(i);
             if (!(atom instanceof IPseudoAtom)) {
                 Integer atomicMass = atom.getMassNumber();
+                if (ignoreMajorIsotopes.isSet() &&
+                    isMajorIsotope(atom))
+                    atomicMass = null;
                 if (atomicMass != null) {
-                    int majorMass = Isotopes.getInstance().getMajorIsotope(atom.getSymbol()).getMassNumber();
-                    if (atomicMass != majorMass) {
-                        writer.write("M  ISO  1 ");
-                        writer.write(formatMDLInt(i + 1, 3));
-                        writer.write(" ");
-                        writer.write(formatMDLInt(atomicMass, 3));
-                        writer.write('\n');
-                    }
+                    writer.write("M  ISO  1 ");
+                    writer.write(formatMDLInt(i + 1, 3));
+                    writer.write(" ");
+                    writer.write(formatMDLInt(atomicMass, 3));
+                    writer.write('\n');
                 }
             }
         }
@@ -826,6 +828,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write("M  END");
         writer.write('\n');
         writer.flush();
+    }
+
+    private boolean isMajorIsotope(IAtom atom) throws IOException {
+        if (atom.getMassNumber() == null)
+            return false;
+        IIsotope major = Isotopes.getInstance().getMajorIsotope(atom.getSymbol());
+        return major != null && major.getMassNumber().equals(atom.getMassNumber());
     }
 
     private void writeSgroups(IAtomContainer container, BufferedWriter writer, Map<IAtom,Integer> atomidxs) throws IOException {
@@ -1101,6 +1110,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private void initIOSettings() {
         forceWriteAs2DCoords = addSetting(new BooleanIOSetting("ForceWriteAs2DCoordinates", IOSetting.Importance.LOW,
                                                                "Should coordinates always be written as 2D?", "false"));
+        ignoreMajorIsotopes = addSetting(new BooleanIOSetting("IgnoreMajorIsotopes", IOSetting.Importance.LOW,
+                                                               "Do not write atomic mass of major isotopes (e.g. [12]C)", "false"));
         writeAromaticBondTypes = addSetting(new BooleanIOSetting("WriteAromaticBondTypes", IOSetting.Importance.LOW,
                                                                  "Should aromatic bonds be written as bond type 4?", "false"));
         writeQueryFormatValencies = addSetting(new BooleanIOSetting("WriteQueryFormatValencies",
