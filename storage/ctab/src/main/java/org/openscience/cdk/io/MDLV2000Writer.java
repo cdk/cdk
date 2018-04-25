@@ -395,7 +395,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // write Atom block
         for (int f = 0; f < container.getAtomCount(); f++) {
             IAtom atom = container.getAtom(f);
-            line = new StringBuilder();
+            line.setLength(0);
             switch (dim) {
                 case 0:
                     // if no coordinates available, then output a number
@@ -472,146 +472,31 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 line.append(formatMDLString(container.getAtom(f).getSymbol(), 3));
             }
 
-            final ITetrahedralChirality tc = atomstereo.get(atom);
-            if (tc == null) {
-                line.append(" 0  0  0  0  0");
-            } else {
-                int parity = tc.getStereo() == ITetrahedralChirality.Stereo.CLOCKWISE ? 1 : 2;
-                IAtom   focus    = tc.getChiralAtom();
-                IAtom[] carriers = tc.getLigands();
-
-                int hidx = -1;
-                for (int i = 0; i < 4; i++) {
-                    // hydrogen position
-                    if (carriers[i].equals(focus) || carriers[i].getAtomicNumber() == 1) {
-                        if (hidx >= 0) parity = 0;
-                        hidx = i;
-                    }
-                }
-
-                if (parity != 0) {
-                    for (int i = 0; i < 4; i++) {
-                        for (int j = i + 1; j < 4; j++) {
-                            int a = atomindex.get(carriers[i]);
-                            int b = atomindex.get(carriers[j]);
-                            if (i == hidx)
-                                a = container.getAtomCount();
-                            if (j == hidx)
-                                b = container.getAtomCount();
-                            if (a > b)
-                                parity ^= 0x3;
-                        }
-                    }
-                }
-                line.append(String.format(" 0  0  %d  0  0", parity));
-            }
-
-            // write valence - this is a bit of pain as the CDK has both
-            // valence and implied hydrogen counts making life a lot more
-            // difficult than it needs to be - we also have formal
-            // neighbor count but to avoid more verbosity that check has been
-            // omitted
-            {
-                try {
-                    // slow but neat
-                    int explicitValence = (int) AtomContainerManipulator.getBondOrderSum(container, atom);
-                    int charge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
-                    Integer element = atom.getAtomicNumber();
-
-                    if (element == null) {
-                        line.append(formatMDLInt(0, 3));
-                    } else {
-
-                        int implied = MDLValence.implicitValence(element, charge, explicitValence);
-
-                        if (atom.getValency() != null && atom.getImplicitHydrogenCount() != null) {
-
-                            int valence = atom.getValency();
-                            int actual = explicitValence + atom.getImplicitHydrogenCount();
-
-                            // valence from h count differs from field? we still
-                            // set to default - which one has more merit?
-                            if (valence != actual || implied == atom.getValency())
-                                line.append(formatMDLInt(0, 3));
-                            else if (valence == 0)
-                                line.append(formatMDLInt(15, 3));
-                            else if (valence > 0 && valence < 15)
-                                line.append(formatMDLInt(valence, 3));
-                            else
-                                line.append(formatMDLInt(0, 3));
-                        } else if (atom.getImplicitHydrogenCount() != null) {
-
-                            int actual = explicitValence + atom.getImplicitHydrogenCount();
-
-                            if (implied == actual) {
-                                line.append(formatMDLInt(0, 3));
-                            } else {
-                                if (actual == 0)
-                                    line.append(formatMDLInt(15, 3));
-                                else if (actual > 0 && actual < 15)
-                                    line.append(formatMDLInt(actual, 3));
-                                else
-                                    line.append(formatMDLInt(0, 3));
-                            }
-                        } else {
-                            int valence = atom.getValency();
-
-                            // valence from h count differs from field? we still
-                            // set to default - which one has more merit?
-                            if (implied == valence)
-                                line.append(formatMDLInt(0, 3));
-                            else if (valence == 0)
-                                line.append(formatMDLInt(15, 3));
-                            else if (valence > 0 && valence < 15)
-                                line.append(formatMDLInt(valence, 3));
-                            else
-                                line.append(formatMDLInt(0, 3));
-                        }
-                    }
-
-                } catch (RuntimeException e) {
-                    // null bond order, query bond order - who knows.. but
-                    line.append(formatMDLInt(0, 3));
-                }
-            }
-            line.append("  0  0  0");
-
-            if (container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING) != null) {
-                Object atomAtomMapping = container.getAtom(f).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-                if (atomAtomMapping instanceof String) {
-                    try {
-                        int value = Integer.parseInt((String) atomAtomMapping);
-                        line.append(formatMDLInt(value, 3));
-                    } catch (NumberFormatException exception) {
-                        line.append(formatMDLInt(0, 3));
-                        logger.warn("Skipping atom-atom mapping, invalid value: " + atomAtomMapping);
-                    }
-                } else if (atomAtomMapping instanceof Integer) {
-                    int value = (Integer) atomAtomMapping;
-                    line.append(formatMDLInt(value, 3));
-                } else {
-                    line.append(formatMDLInt(0, 3));
-                }
-            } else {
-                line.append(formatMDLInt(0, 3));
-            }
-            line.append("  0  0");
+            // atom properties
+            int[] atomprops = new int[12];
+            atomprops[2] = determineStereoParity(container, atomstereo, atomindex, atom);
+            atomprops[5] = determineValence(container, atom);
+            atomprops[9] = determineAtomMap(atom);
+            line.append(formatMDLInt(atomprops[0], 2)); // dd (mass-number)
+            for (int i = 1; i < atomprops.length; i++)
+                line.append(formatMDLInt(atomprops[i], 3));
+            line.append('\n');
             writer.write(line.toString());
-            writer.write('\n');
         }
 
         // write Bond block
         for (IBond bond : container.bonds()) {
+            line.setLength(0);
             if (bond.getAtomCount() != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
             } else {
                 if (bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED
                     || bond.getStereo() == IBond.Stereo.UP_OR_DOWN_INVERTED) {
                     // turn around atom coding to correct for inv stereo
-                    line = new StringBuilder(formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3));
+                    line.append(formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3));
                     line.append(formatMDLInt(atomindex.get(bond.getBegin()) + 1, 3));
                 } else {
-                    line = new StringBuilder(formatMDLInt(atomindex.get(bond.getBegin()) + 1, 3));
+                    line.append(formatMDLInt(atomindex.get(bond.getBegin()) + 1, 3));
                     line.append(formatMDLInt(atomindex.get(bond.getEnd()) + 1, 3));
                 }
 
@@ -833,6 +718,87 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write("M  END");
         writer.write('\n');
         writer.flush();
+    }
+
+    private int determineAtomMap(IAtom atom) {
+        Object amap   = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+        if (amap == null)
+            return 0;
+        if (amap instanceof Integer)
+            return (Integer) amap;
+        else {
+            if (amap instanceof String) {
+                try {
+                    return Integer.parseInt((String) amap);
+                } catch (NumberFormatException ex) {
+                    //ignored
+                }
+            }
+            logger.warn("Skipping non-integer atom map: " + amap +
+                        " type:" + amap);
+            return 0;
+        }
+    }
+
+    private int determineValence(IAtomContainer container, IAtom atom) {
+        int explicitValence = (int) AtomContainerManipulator.getBondOrderSum(container, atom);
+        int charge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
+        Integer element = atom.getAtomicNumber();
+        int valence = 0;
+
+        if (element != null) {
+            int implied = MDLValence.implicitValence(element, charge, explicitValence);
+            int actual;
+            if (atom.getImplicitHydrogenCount() != null)
+                actual = explicitValence + atom.getImplicitHydrogenCount();
+            else if (atom.getValency() != null)
+                actual = atom.getValency();
+            else
+                return 0;
+            if (implied != actual) {
+                if (actual == 0)
+                    return 15;
+                else if (actual > 0 && actual < 15)
+                    return actual;
+            }
+        }
+        return valence;
+    }
+
+    private int determineStereoParity(IAtomContainer container,
+                                      Map<IAtom, ITetrahedralChirality> atomstereo,
+                                      Map<IAtom, Integer> atomindex, IAtom atom) {
+        final ITetrahedralChirality tc = atomstereo.get(atom);
+        if (tc == null)
+            return 0;
+        int parity = tc.getStereo() == ITetrahedralChirality.Stereo.CLOCKWISE ? 1 : 2;
+        IAtom   focus    = tc.getChiralAtom();
+        IAtom[] carriers = tc.getLigands();
+
+        int hidx = -1;
+        for (int i = 0; i < 4; i++) {
+            // hydrogen position
+            if (carriers[i].equals(focus) || carriers[i].getAtomicNumber() == 1) {
+                if (hidx >= 0) parity = 0;
+                hidx = i;
+            }
+        }
+
+        if (parity != 0) {
+            for (int i = 0; i < 4; i++) {
+                for (int j = i + 1; j < 4; j++) {
+                    int a = atomindex.get(carriers[i]);
+                    int b = atomindex.get(carriers[j]);
+                    if (i == hidx)
+                        a = container.getAtomCount();
+                    if (j == hidx)
+                        b = container.getAtomCount();
+                    if (a > b)
+                        parity ^= 0x3;
+                }
+            }
+        }
+        return parity;
     }
 
     private boolean isMajorIsotope(IAtom atom) throws IOException {
