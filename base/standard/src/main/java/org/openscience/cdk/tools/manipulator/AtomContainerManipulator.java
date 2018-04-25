@@ -779,8 +779,6 @@ public class AtomContainerManipulator {
         // none of the hydrogens could be suppressed - no changes need to be made
         if (hydrogens.isEmpty()) return org;
 
-        org.setAtoms(Arrays.copyOf(cpyAtoms, nCpyAtoms));
-
         // we now update the bonds - we have auxiliary variable remaining that
         // bypasses the set membership checks if all suppressed bonds are found
         IBond[] cpyBonds = new IBond[nOrgBonds - hydrogens.size()];
@@ -798,8 +796,6 @@ public class AtomContainerManipulator {
         // same number of bonds otherwise the containers is a strange
         if (nCpyBonds != cpyBonds.length)
             throw new IllegalArgumentException("number of removed bonds was less than the number of removed hydrogens");
-
-        org.setBonds(cpyBonds);
 
         List<IStereoElement> elements = new ArrayList<IStereoElement>();
 
@@ -901,6 +897,8 @@ public class AtomContainerManipulator {
             }
         }
 
+        org.setAtoms(Arrays.copyOf(cpyAtoms, nCpyAtoms));
+        org.setBonds(cpyBonds);
         org.setStereoElements(elements);
 
         // single electron and lone pairs are not really used but we update
