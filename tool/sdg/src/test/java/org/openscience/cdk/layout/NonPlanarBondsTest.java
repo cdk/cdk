@@ -679,6 +679,26 @@ public class NonPlanarBondsTest {
         sdg.generateCoordinates(mol);
     }
 
+    @Test public void avoidBondsToOtherStereoCentres() throws CDKException {
+        final String smi = "[H][C@@]([C@H](C)N)([C@@H](C)O)[C@@H](C)OC";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int wedgeCount = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP:
+                case DOWN:
+                case UP_INVERTED:
+                case DOWN_INVERTED:
+                    wedgeCount++;
+                    break;
+            }
+        }
+        assertThat(wedgeCount, is(4));
+    }
+
     static IAtom atom(String symbol, int hCount, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(hCount);
