@@ -145,6 +145,44 @@ public abstract class StereoElementFactory {
                               1);
     }
 
+    private IBond getOtherDb(IAtom a, IBond other) {
+        IBond result = null;
+        for (IBond bond : container.getConnectedBondsList(a)) {
+            if (bond.equals(other))
+                continue;
+            if (bond.getOrder() != IBond.Order.DOUBLE)
+                continue;
+            if (result != null)
+                return null;
+            result = bond;
+        }
+        return result;
+    }
+
+    private static IAtom getShared(IBond a, IBond b) {
+        if (b.contains(a.getBegin()))
+            return a.getBegin();
+        if (b.contains(a.getEnd()))
+            return a.getEnd();
+        return null;
+    }
+
+    private List<IBond> getCumulatedDbs(IBond endBond) {
+        List<IBond> dbs = new ArrayList<>();
+        dbs.add(endBond);
+        IBond other = getOtherDb(endBond.getBegin(), endBond);
+        if (other == null)
+            other = getOtherDb(endBond.getEnd(), endBond);
+        if (other == null)
+            return null;
+        while (other != null) {
+            dbs.add(other);
+            IAtom a = getShared(dbs.get(dbs.size() - 1), dbs.get(dbs.size() - 2));
+            other = getOtherDb(other.getOther(a), other);
+        }
+        return dbs;
+    }
+
     /**
      * Creates all stereo elements found by {@link Stereocenters} using the or
      * 2D/3D coordinates to specify the configuration (clockwise/anticlockwise).
@@ -175,15 +213,20 @@ public abstract class StereoElementFactory {
                 // elongated tetrahedrals
                 case Bicoordinate:
                     int t0 = graph[v][0];
-                    int t1 = graph[v][1];
-                    if (centers.elementType(t0) == Stereocenters.Type.Tricoordinate
-                            && centers.elementType(t1) == Stereocenters.Type.Tricoordinate) {
-                        if (check && centers.isStereocenter(t0) && centers.isStereocenter(t1)) {
+                    // end of an extended tetrahedral or cis/trans
+                    if (centers.elementType(t0) == Stereocenters.Type.Tricoordinate) {
+                        List<IBond> dbs = getCumulatedDbs(container.getBond(container.getAtom(t0),
+                                                          container.getAtom(v)));
+                        if (dbs.size() == 2) {
+                            // extended tetrahedral
                             IStereoElement element = createExtendedTetrahedral(v, centers);
                             if (element != null) elements.add(element);
                         } else {
-                            IStereoElement element = createExtendedTetrahedral(v, centers);
-                            if (element != null) elements.add(element);
+                            if (container.indexOf(dbs.get(0)) < container.indexOf(dbs.get(dbs.size()-1))) {
+                                // extended cis-trans
+                                IStereoElement element = createExtendedCisTrans(dbs);
+                                if (element != null) elements.add(element);
+                            }
                         }
                     }
                     break;
@@ -364,6 +407,24 @@ public abstract class StereoElementFactory {
      * @return a new stereo element
      */
     abstract ExtendedTetrahedral createExtendedTetrahedral(int v, Stereocenters stereocenters);
+
+    /**
+     * Create an extended cis/trans bond (cumulated) given one end (see diagram
+     * below). The stereo element geometry will only be created if there is an
+     * odd number of cumulated double bonds.
+     *
+     * <pre>
+     *  C               C
+     *   \             /
+     *    C = C = C = C
+     *      ^   ^   ^
+     *      ^---^---^----- bonds
+     * </pre>
+     *
+     * @param bonds cumulated double bonds
+     * @return the extended cis/trans geometry if one could be created
+     */
+    abstract ExtendedCisTrans createExtendedCisTrans(List<IBond> bonds);
 
     /**
      * Indicate that stereochemistry drawn as a certain projection should be
@@ -739,6 +800,52 @@ public abstract class StereoElementFactory {
             return new ExtendedTetrahedral(focus, neighbors, winding);
         }
 
+        @Override
+        ExtendedCisTrans createExtendedCisTrans(List<IBond> dbs) {
+
+            // only applies to odd-counts
+            if ((dbs.size() & 0x1) == 0)
+                return null;
+
+            IBond   focus    = dbs.get(dbs.size()/2);
+            IBond[] carriers = new IBond[2];
+            int     config   = 0;
+
+            IAtom begAtom = dbs.get(0).getOther(getShared(dbs.get(0), dbs.get(1)));
+            IAtom endAtom = dbs.get(dbs.size()-1).getOther(getShared(dbs.get(dbs.size()-1), dbs.get(dbs.size()-2)));
+
+            List<IBond> begBonds = container.getConnectedBondsList(begAtom);
+            List<IBond> endBonds = container.getConnectedBondsList(endAtom);
+
+            if (begBonds.size() < 2 || endBonds.size() < 2)
+                return null;
+
+            begBonds.remove(dbs.get(0));
+            endBonds.remove(dbs.get(dbs.size()-1));
+
+            carriers[0] = begBonds.get(0);
+            carriers[1] = endBonds.get(0);
+
+            IAtom begNbr = carriers[0].getOther(begAtom);
+            IAtom endNbr = carriers[1].getOther(endAtom);
+
+            Vector2d begVec = new Vector2d(begNbr.getPoint2d().x - begAtom.getPoint2d().x,
+                                           begNbr.getPoint2d().y - begAtom.getPoint2d().y);
+            Vector2d endVec = new Vector2d(endNbr.getPoint2d().x - endAtom.getPoint2d().x,
+                                           endNbr.getPoint2d().y - endAtom.getPoint2d().y);
+
+            begVec.normalize();
+            endVec.normalize();
+
+            double dot = begVec.dot(endVec);
+            if (dot < 0)
+                config = IStereoElement.OPPOSITE;
+            else
+                config = IStereoElement.TOGETHER;
+
+            return new ExtendedCisTrans(focus, carriers, config);
+        }
+
         /**
          * Is the provided bond have an unspecified stereo label.
          *
@@ -1099,6 +1206,58 @@ public abstract class StereoElementFactory {
             Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE : Stereo.CLOCKWISE;
 
             return new ExtendedTetrahedral(focus, neighbors, winding);
+        }
+
+        @Override
+        ExtendedCisTrans createExtendedCisTrans(List<IBond> dbs) {
+
+            // only applies to odd-counts
+            if ((dbs.size() & 0x1) == 0)
+                return null;
+
+            IBond   focus    = dbs.get(dbs.size()/2);
+            IBond[] carriers = new IBond[2];
+            int     config   = 0;
+
+            IAtom begAtom = dbs.get(0).getOther(getShared(dbs.get(0),
+                                                          dbs.get(1)));
+            IAtom endAtom = dbs.get(dbs.size()-1)
+                               .getOther(getShared(dbs.get(dbs.size()-1),
+                                                   dbs.get(dbs.size()-2)));
+
+            List<IBond> begBonds = container.getConnectedBondsList(begAtom);
+            List<IBond> endBonds = container.getConnectedBondsList(endAtom);
+
+            if (begBonds.size() < 2 || endBonds.size() < 2)
+                return null;
+
+            begBonds.remove(dbs.get(0));
+            endBonds.remove(dbs.get(dbs.size()-1));
+
+            carriers[0] = begBonds.get(0);
+            carriers[1] = endBonds.get(0);
+
+            IAtom begNbr = carriers[0].getOther(begAtom);
+            IAtom endNbr = carriers[1].getOther(endAtom);
+
+
+            Vector3d begVec = new Vector3d(begNbr.getPoint3d().x - begAtom.getPoint3d().x,
+                                           begNbr.getPoint3d().y - begAtom.getPoint3d().y,
+                                           begNbr.getPoint3d().z - begAtom.getPoint3d().z);
+            Vector3d endVec = new Vector3d(endNbr.getPoint3d().x - endAtom.getPoint3d().x,
+                                           endNbr.getPoint3d().y - endAtom.getPoint3d().y,
+                                           endNbr.getPoint3d().z - endAtom.getPoint3d().z);
+
+            begVec.normalize();
+            endVec.normalize();
+
+            double dot = begVec.dot(endVec);
+            if (dot < 0)
+                config = IStereoElement.OPPOSITE;
+            else
+                config = IStereoElement.TOGETHER;
+
+            return new ExtendedCisTrans(focus, carriers, config);
         }
 
         private boolean isColinear(IAtom focus, IAtom[] terminals) {
