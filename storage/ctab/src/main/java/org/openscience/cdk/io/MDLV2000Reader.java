@@ -419,6 +419,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                             atomToUpdate.setPoint3d(null);
                         }
                     }
+                } else {
+                    hasZ = true;
                 }
             }
 
