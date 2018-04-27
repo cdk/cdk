@@ -212,21 +212,23 @@ public abstract class StereoElementFactory {
             switch (centers.elementType(v)) {
                 // elongated tetrahedrals
                 case Bicoordinate:
-                    int t0 = graph[v][0];
-                    // end of an extended tetrahedral or cis/trans
-                    if (centers.elementType(t0) == Stereocenters.Type.Tricoordinate) {
-                        List<IBond> dbs = getCumulatedDbs(container.getBond(container.getAtom(t0),
-                                                          container.getAtom(v)));
-                        if (dbs.size() == 2) {
-                            // extended tetrahedral
-                            IStereoElement element = createExtendedTetrahedral(v, centers);
-                            if (element != null) elements.add(element);
-                        } else {
-                            if (container.indexOf(dbs.get(0)) < container.indexOf(dbs.get(dbs.size()-1))) {
-                                // extended cis-trans
-                                IStereoElement element = createExtendedCisTrans(dbs);
+                    for (int w : graph[v]) {
+                        // end of an extended tetrahedral or cis/trans
+                        if (centers.elementType(w) == Stereocenters.Type.Tricoordinate) {
+                            List<IBond> dbs = getCumulatedDbs(container.getBond(container.getAtom(w),
+                                                                                container.getAtom(v)));
+                            if (dbs.size() == 2) {
+                                // extended tetrahedral
+                                IStereoElement element = createExtendedTetrahedral(v, centers);
                                 if (element != null) elements.add(element);
+                            } else {
+                                if (container.indexOf(dbs.get(0)) < container.indexOf(dbs.get(dbs.size() - 1))) {
+                                    // extended cis-trans
+                                    IStereoElement element = createExtendedCisTrans(dbs);
+                                    if (element != null) elements.add(element);
+                                }
                             }
+                            break;
                         }
                     }
                     break;
