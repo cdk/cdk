@@ -1266,6 +1266,19 @@ public class SmilesGeneratorTest extends CDKTestCase {
                    is("c1ccc(cc1)C=2C=CC2C.c1ccc(cc1)C2=CC=C2C"));
     }
 
+    @Test
+    public void roundTripExtendedCisTrans() throws CDKException {
+        SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol    = smipar.parseSmiles("C/C=C=C=C/C");
+        assertThat(new SmilesGenerator(SmiFlavor.Stereo).create(mol),
+                   is("C/C=C=C=C/C"));
+        for (IStereoElement se : mol.stereoElements()) {
+            se.setConfigOrder(se.getConfigOrder() ^ 0x3); // flip
+        }
+        assertThat(new SmilesGenerator(SmiFlavor.Stereo).create(mol),
+                   is("C/C=C=C=C\\C"));
+    }
+
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
         return new TetrahedralChirality(container.getAtom(central), new IAtom[]{container.getAtom(a1),
                                                                                 container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},

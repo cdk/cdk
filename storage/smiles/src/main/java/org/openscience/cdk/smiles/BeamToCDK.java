@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -32,6 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.Octahedral;
 import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.stereo.TetrahedralChirality;
@@ -43,6 +43,7 @@ import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.Element;
 import uk.ac.ebi.beam.Graph;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -204,7 +205,6 @@ final class BeamToCDK {
                     }
                     case ExtendedTetrahedral: {
                         IStereoElement se = newExtendedTetrahedral(u, g, atoms);
-
                         if (se != null) ac.addStereoElement(se);
                         break;
                     }
@@ -244,6 +244,17 @@ final class BeamToCDK {
         return ac;
     }
 
+    private Edge findCumulatedEdge(Graph g, int v, Edge e) {
+        Edge res = null;
+        for (Edge f : g.edges(v)) {
+            if (f != e && f.bond() == Bond.DOUBLE) {
+                if (res != null) return null;
+                res = f;
+            }
+        }
+        return res;
+    }
+
     /**
      * Adds double-bond conformations ({@link DoubleBondStereochemistry}) to the
      * atom-container.
@@ -261,27 +272,58 @@ final class BeamToCDK {
             int v = e.other(u);
 
             // find a directional bond for either end
-            Edge first = null;
+            Edge first  = null;
             Edge second = null;
 
             // if either atom is not incident to a directional label there
             // is no configuration
-            if ((first = findDirectionalEdge(g, u)) != null && (second = findDirectionalEdge(g, v)) != null) {
+            if ((first = findDirectionalEdge(g, u)) != null) {
+                if ((second = findDirectionalEdge(g, v)) != null) {
 
-                // if the directions (relative to the double bond) are the
-                // same then they are on the same side - otherwise they
-                // are opposite
-                Conformation conformation = first.bond(u) == second.bond(v) ? Conformation.TOGETHER : Conformation.OPPOSITE;
+                    // if the directions (relative to the double bond) are the
+                    // same then they are on the same side - otherwise they
+                    // are opposite
+                    Conformation conformation = first.bond(u) == second.bond(v) ?
+                                                Conformation.TOGETHER : Conformation.OPPOSITE;
 
-                // get the stereo bond and build up the ligands for the
-                // stereo-element - linear search could be improved with
-                // map or API change to double bond element
-                IBond db = ac.getBond(ac.getAtom(u), ac.getAtom(v));
+                    // get the stereo bond and build up the ligands for the
+                    // stereo-element - linear search could be improved with
+                    // map or API change to double bond element
+                    IBond db = ac.getBond(ac.getAtom(u), ac.getAtom(v));
 
-                IBond[] ligands = new IBond[]{ac.getBond(ac.getAtom(u), ac.getAtom(first.other(u))),
-                                              ac.getBond(ac.getAtom(v), ac.getAtom(second.other(v)))};
+                    IBond[] ligands = new IBond[]{
+                        ac.getBond(ac.getAtom(u), ac.getAtom(first.other(u))),
+                        ac.getBond(ac.getAtom(v), ac.getAtom(second.other(v)))};
 
-                ac.addStereoElement(new DoubleBondStereochemistry(db, ligands, conformation));
+                    ac.addStereoElement(new DoubleBondStereochemistry(db, ligands, conformation));
+                } else {
+                    List<Edge> edges = new ArrayList<>();
+                    edges.add(e);
+                    Edge f = findCumulatedEdge(g, v, e);
+                    while (f != null) {
+                        edges.add(f);
+                        v = f.other(v);
+                        f = findCumulatedEdge(g, v, f);
+                    }
+                    // only odd number of cumulated bonds here, otherwise is
+                    // extended tetrahedral
+                    if ((edges.size() & 0x1) == 0)
+                        continue;
+                    second = findDirectionalEdge(g, v);
+                    if (second != null) {
+                        int   cfg        = first.bond(u) == second.bond(v)
+                                           ? IStereoElement.TOGETHER
+                                           : IStereoElement.OPPOSITE;
+                        Edge  middleEdge = edges.get(edges.size()/2);
+                        IBond middleBond = ac.getBond(ac.getAtom(middleEdge.either()),
+                                                      ac.getAtom(middleEdge.other(middleEdge.either())));
+                        IBond[] ligands = new IBond[]{
+                            ac.getBond(ac.getAtom(u), ac.getAtom(first.other(u))),
+                            ac.getBond(ac.getAtom(v), ac.getAtom(second.other(v)))};
+
+                        ac.addStereoElement(new ExtendedCisTrans(middleBond, ligands, cfg));
+                    }
+                }
             }
             // extension F[C@]=[C@@]F
             else {

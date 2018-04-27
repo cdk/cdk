@@ -53,6 +53,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.Octahedral;
 import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.stereo.TrigonalBipyramidal;
@@ -2600,6 +2601,65 @@ public class SmilesParserTest extends CDKTestCase {
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(Octahedral.class));
         assertThat(se.getConfigOrder(), is(8));
+    }
+
+    @Test
+    public void extendedExtendedTrans3() throws Exception {
+        IAtomContainer mol = load("C/C=C=C=C/C");
+        for (IStereoElement se : mol.stereoElements()) {
+            if (se instanceof ExtendedCisTrans) {
+                ExtendedCisTrans ect = (ExtendedCisTrans) se;
+                assertThat(ect.getConfigOrder(),
+                           is(IStereoElement.OPPOSITE));
+                assertThat(ect.getFocus(), is(mol.getBond(2)));
+                assertThat(ect.getCarriers().get(0),
+                           is(mol.getBond(0)));
+                assertThat(ect.getCarriers().get(1),
+                           is(mol.getBond(4)));
+            }
+        }
+    }
+
+    @Test
+    public void extendedExtendedCis3() throws Exception {
+        IAtomContainer mol = load("C/C=C=C=C\\C");
+        for (IStereoElement se : mol.stereoElements()) {
+            if (se instanceof ExtendedCisTrans) {
+                ExtendedCisTrans ect = (ExtendedCisTrans) se;
+                assertThat(ect.getConfigOrder(),
+                           is(IStereoElement.TOGETHER));
+                assertThat(ect.getFocus(), is(mol.getBond(2)));
+                assertThat(ect.getCarriers().get(0),
+                           is(mol.getBond(0)));
+                assertThat(ect.getCarriers().get(1),
+                           is(mol.getBond(4)));
+            }
+        }
+    }
+
+    @Test
+    public void extendedExtendedCis5() throws Exception {
+        IAtomContainer mol = load("C/C=C=C=C=C=C\\C");
+        for (IStereoElement se : mol.stereoElements()) {
+            if (se instanceof ExtendedCisTrans) {
+                ExtendedCisTrans ect = (ExtendedCisTrans) se;
+                assertThat(ect.getConfigOrder(),
+                           is(IStereoElement.TOGETHER));
+                assertThat(ect.getFocus(), is(mol.getBond(3)));
+                assertThat(ect.getCarriers().get(0),
+                           is(mol.getBond(0)));
+                assertThat(ect.getCarriers().get(1),
+                           is(mol.getBond(6)));
+            }
+        }
+    }
+
+    // an even number of double bonds is extended tetrahedral not
+    // extended Cis/Trans
+    @Test
+    public void extendedExtendedCis4() throws Exception {
+        IAtomContainer mol = load("C/C=C=C=C=C\\C");
+        assertFalse(mol.stereoElements().iterator().hasNext());
     }
 
     /**
