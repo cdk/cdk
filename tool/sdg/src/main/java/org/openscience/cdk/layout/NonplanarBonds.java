@@ -53,6 +53,7 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
@@ -745,11 +746,36 @@ final class NonplanarBonds {
         return rank;
     }
 
+    // indicates where an atom is a Sp3 carbon and is possibly a stereo-centre
     private boolean isSp3Carbon(IAtom atom, int deg) {
         Integer elem = atom.getAtomicNumber();
         Integer hcnt = atom.getImplicitHydrogenCount();
         if (elem == null || hcnt == null) return false;
-        return elem == 6 && hcnt <= 1 && deg + hcnt == 4;
+        if (elem == 6 && hcnt <= 1 && deg + hcnt == 4) {
+            // more expensive check, look one out and see if we have any
+            // duplicate terminal neighbors
+            List<IAtom> terminals = new ArrayList<>();
+            for (IBond bond : container.getConnectedBondsList(atom)) {
+                IAtom nbr = bond.getOther(atom);
+                if (container.getConnectedBondsCount(nbr) == 1) {
+                    for (IAtom terminal : terminals) {
+                        if (Objects.equals(terminal.getAtomicNumber(),
+                                           nbr.getAtomicNumber()) &&
+                            Objects.equals(terminal.getMassNumber(),
+                                           nbr.getMassNumber()) &&
+                            Objects.equals(terminal.getFormalCharge(),
+                                           nbr.getFormalCharge()) &&
+                            Objects.equals(terminal.getImplicitHydrogenCount(),
+                                           nbr.getImplicitHydrogenCount())) {
+                            return false;
+                        }
+                    }
+                    terminals.add(nbr);
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -774,6 +800,7 @@ final class NonplanarBonds {
 
         boolean iIsSp3 = isSp3Carbon(iAtom, graph[i].length);
         boolean jIsSp3 = isSp3Carbon(jAtom, graph[j].length);
+
         if (iIsSp3 != jIsSp3)
             return !iIsSp3;
 

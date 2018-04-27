@@ -53,6 +53,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
 
@@ -697,6 +698,27 @@ public class NonPlanarBondsTest {
             }
         }
         assertThat(wedgeCount, is(4));
+    }
+
+    @Test public void avoidWedgingRingBond() throws CDKException {
+        final String smi = "CC(C)[C@@H]1CCCCO1";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int wedgeCount = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP:
+                case DOWN:
+                case UP_INVERTED:
+                case DOWN_INVERTED:
+                    assertFalse(bond.isInRing());
+                    ++wedgeCount;
+                    break;
+            }
+        }
+        assertThat(wedgeCount, is(1));
     }
 
     static IAtom atom(String symbol, int hCount, double x, double y) {
