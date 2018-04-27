@@ -104,6 +104,9 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
     /** ExtendedTetrahedral (e.g. 2,3-pentadiene) */
     public static final int AL   = 0x43_00;
 
+    /** ExtendedCisTrans (Cumulene) */
+    public static final int CU   = 0x22_00;
+
     /** Atropisomeric (e.g. BiNAP) */
     public static final int AT   = 0x44_00;
 
@@ -136,6 +139,9 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
 
     /** ExtendedTetrahedral (e.g. 2,3-pentadiene) */
     public static final int Allenal               = AL;
+
+    /** Cumulene */
+    public static final int Cumulene              = CU;
 
     /** Atropisomeric (e.g. BiNAP) */
     public static final int Atropisomeric         = AT;
