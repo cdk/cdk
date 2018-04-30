@@ -113,36 +113,47 @@ public abstract class StereoElementFactory {
         this.bondMap = bondMap;
     }
 
-    private boolean visitSmallRing(boolean[] mark, int aidx, int prev,
-                                   int first, int depth) {
-        if (depth > 7)
+    private boolean visitSmallRing(int[] mark, int aidx, int prev, int depth,
+                                   int max) {
+        if (mark[aidx] == 2)
+            return true;
+        if (depth == max)
             return false;
-        mark[aidx] = true;
+        if (mark[aidx] == 1)
+            return false;
+        mark[aidx] = 1;
         for (int nbr : graph[aidx]) {
-            if (nbr == prev)
-                continue;
-            if (nbr == first)
-                return true;
-            else if (!mark[nbr] && visitSmallRing(mark, nbr, aidx, first, depth + 1))
+            if (nbr != prev && visitSmallRing(mark, nbr, aidx, depth + 1, max))
                 return true;
         }
-        mark[aidx] = false;
+        mark[aidx] = 0;
         return false;
     }
 
-    private boolean isInSmallRing(IBond bond) {
+    private boolean isInSmallRing(IBond bond, int max) {
         if (!bond.isInRing())
             return false;
-        IAtom     beg  = bond.getBegin();
-        IAtom     end  = bond.getEnd();
-        boolean[] mark = new boolean[container.getAtomCount()];
-        int       bidx = container.indexOf(beg);
-        int       eidx = container.indexOf(end);
+        IAtom beg  = bond.getBegin();
+        IAtom end  = bond.getEnd();
+        int[] mark = new int[container.getAtomCount()];
+        int   bidx = container.indexOf(beg);
+        int   eidx = container.indexOf(end);
+        mark[bidx] = 2;
         return visitSmallRing(mark,
-                              bidx,
                               eidx,
                               bidx,
-                              1);
+                              1,
+                              max);
+    }
+
+    private boolean isInSmallRing(IAtom atom, int max) {
+        if (!atom.isInRing())
+            return false;
+        for (IBond bond : container.getConnectedBondsList(atom)) {
+            if (isInSmallRing(bond, max))
+                return true;
+        }
+        return false;
     }
 
     private IBond getOtherDb(IAtom a, IBond other) {
