@@ -741,6 +741,28 @@ public class NonPlanarBondsTest {
         assertThat(wedgeCount, is(2));
     }
 
+    // this structure should be displayed with 7 wedges, for some reason the
+    // atom order affects whether multiple wedges are used
+    @Test public void minWedges() throws CDKException {
+        final String smi = "[C@](([C@@H](C)Cl)([C@H](C)Cl)[C@H](O)[C@](([C@@H](C)Cl)[C@H](C)Cl)[H])[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int wedgeCount = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP:
+                case DOWN:
+                case UP_INVERTED:
+                case DOWN_INVERTED:
+                    ++wedgeCount;
+                    break;
+            }
+        }
+        assertThat(wedgeCount, is(7));
+    }
+
     static IAtom atom(String symbol, int hCount, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(hCount);

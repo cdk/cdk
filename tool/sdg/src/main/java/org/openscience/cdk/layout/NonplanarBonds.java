@@ -674,7 +674,7 @@ final class NonplanarBonds {
             // second label
             else if (labels[v] != firstlabel) {
                 // don't add if it's possibly a stereo-centre
-                if (isSp3Carbon(atoms[v], graph[v].length))
+                if (isSp3Carbon(atoms[v], graph[container.indexOf(atoms[v])].length))
                     break;
                 bond.setAtoms(new IAtom[]{focus, atoms[v]}); // avoids UP_INVERTED/DOWN_INVERTED
                 bond.setStereo(labels[v]);
