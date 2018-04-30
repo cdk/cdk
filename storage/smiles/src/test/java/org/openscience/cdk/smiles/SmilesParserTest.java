@@ -54,6 +54,7 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.ExtendedCisTrans;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.Octahedral;
 import org.openscience.cdk.stereo.SquarePlanar;
 import org.openscience.cdk.stereo.TrigonalBipyramidal;
@@ -2657,9 +2658,28 @@ public class SmilesParserTest extends CDKTestCase {
     // an even number of double bonds is extended tetrahedral not
     // extended Cis/Trans
     @Test
-    public void extendedExtendedCis4() throws Exception {
+    public void notExtendedCis() throws Exception {
         IAtomContainer mol = load("C/C=C=C=C=C\\C");
         assertFalse(mol.stereoElements().iterator().hasNext());
+    }
+
+    @Test public void extendedTetrahedral7() throws InvalidSmilesException {
+        IAtomContainer mol = load("CC=C=C=[C@]=C=C=CC");
+        for (IStereoElement se : mol.stereoElements()) {
+            if (se instanceof ExtendedTetrahedral) {
+                ExtendedTetrahedral et = (ExtendedTetrahedral) se;
+                assertThat(et.getConfigOrder(),
+                           is(IStereoElement.LEFT));
+                assertThat(et.getFocus(), is(mol.getAtom(4)));
+                assertThat(et.getCarriers().toArray(new IAtom[4]),
+                           is(new IAtom[]{
+                               mol.getAtom(0),
+                               mol.getAtom(1),
+                               mol.getAtom(7),
+                               mol.getAtom(8)
+                           }));
+            }
+        }
     }
 
     /**

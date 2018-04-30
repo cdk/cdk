@@ -296,7 +296,7 @@ final class BeamToCDK {
                         ac.getBond(ac.getAtom(v), ac.getAtom(second.other(v)))};
 
                     ac.addStereoElement(new DoubleBondStereochemistry(db, ligands, conformation));
-                } else {
+                } else if (g.degree(v) == 2) {
                     List<Edge> edges = new ArrayList<>();
                     edges.add(e);
                     Edge f = findCumulatedEdge(g, v, e);
@@ -511,9 +511,39 @@ final class BeamToCDK {
                               order);
     }
 
+    private int getOtherDb(Graph g, int u, int v) {
+        for (Edge e : g.edges(u)) {
+            if (e.bond() != Bond.DOUBLE)
+                continue;
+            int nbr = e.other(u);
+            if (nbr == v)
+                continue;
+            return nbr;
+        }
+        return -1;
+    }
+
+    private int[] findExtendedTetrahedralEnds(Graph g, int focus) {
+        List<Edge> es = g.edges(focus);
+        int prevEnd1 = focus;
+        int prevEnd2 = focus;
+        int end1 = es.get(0).other(prevEnd2);
+        int end2 = es.get(1).other(prevEnd2);
+        int tmp;
+        while (end1 >= 0 && end2 >= 0) {
+            tmp = getOtherDb(g, end1, prevEnd1);
+            prevEnd1 = end1;
+            end1 = tmp;
+            tmp = getOtherDb(g, end2, prevEnd2);
+            prevEnd2 = end2;
+            end2 = tmp;
+        }
+        return new int[]{prevEnd1, prevEnd2};
+    }
+
     private IStereoElement newExtendedTetrahedral(int u, Graph g, IAtom[] atoms) {
 
-        int[] terminals = g.neighbors(u);
+        int[] terminals = findExtendedTetrahedralEnds(g, u);
         int[] xs = new int[]{-1, terminals[0], -1, terminals[1]};
 
         int n = 0;
