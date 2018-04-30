@@ -834,13 +834,20 @@ public abstract class StereoElementFactory {
                 return null;
 
             begBonds.remove(dbs.get(0));
-            endBonds.remove(dbs.get(dbs.size()-1));
+            endBonds.remove(dbs.get(dbs.size() - 1));
 
-            carriers[0] = begBonds.get(0);
-            carriers[1] = endBonds.get(0);
+            IAtom[] ends = ExtendedCisTrans.findTerminalAtoms(container, focus);
+            assert ends != null;
+            if (ends[0].equals(begAtom)) {
+                carriers[0] = begBonds.get(0);
+                carriers[1] = endBonds.get(0);
+            } else {
+                carriers[1] = begBonds.get(0);
+                carriers[0] = endBonds.get(0);
+            }
 
-            IAtom begNbr = carriers[0].getOther(begAtom);
-            IAtom endNbr = carriers[1].getOther(endAtom);
+            IAtom begNbr = begBonds.get(0).getOther(begAtom);
+            IAtom endNbr = endBonds.get(0).getOther(endAtom);
 
             Vector2d begVec = new Vector2d(begNbr.getPoint2d().x - begAtom.getPoint2d().x,
                                            begNbr.getPoint2d().y - begAtom.getPoint2d().y);
@@ -1245,14 +1252,20 @@ public abstract class StereoElementFactory {
                 return null;
 
             begBonds.remove(dbs.get(0));
-            endBonds.remove(dbs.get(dbs.size()-1));
+            endBonds.remove(dbs.get(dbs.size() - 1));
 
-            carriers[0] = begBonds.get(0);
-            carriers[1] = endBonds.get(0);
+            IAtom[] ends = ExtendedCisTrans.findTerminalAtoms(container, focus);
+            assert ends != null;
+            if (ends[0].equals(begAtom)) {
+                carriers[0] = begBonds.get(0);
+                carriers[1] = endBonds.get(0);
+            } else {
+                carriers[1] = begBonds.get(0);
+                carriers[0] = endBonds.get(0);
+            }
 
-            IAtom begNbr = carriers[0].getOther(begAtom);
-            IAtom endNbr = carriers[1].getOther(endAtom);
-
+            IAtom begNbr = begBonds.get(0).getOther(begAtom);
+            IAtom endNbr = endBonds.get(0).getOther(endAtom);
 
             Vector3d begVec = new Vector3d(begNbr.getPoint3d().x - begAtom.getPoint3d().x,
                                            begNbr.getPoint3d().y - begAtom.getPoint3d().y,
