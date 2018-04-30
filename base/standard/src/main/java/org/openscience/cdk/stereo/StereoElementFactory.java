@@ -255,8 +255,9 @@ public abstract class StereoElementFactory {
                         if (w > v &&
                             centers.elementType(w) == Stereocenters.Type.Tricoordinate &&
                             bond.getOrder() == IBond.Order.SINGLE &&
-                            !bond.isInRing() &&
-                            bond.getBegin().isInRing() && bond.getEnd().isInRing()) {
+                            !isInSmallRing(bond, 6) &&
+                            isInSmallRing(bond.getBegin(), 6) &&
+                            isInSmallRing(bond.getEnd(), 6)) {
                             element = createAtropisomer(v, w, centers);
                             if (element != null)
                                 elements.add(element);
