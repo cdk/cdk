@@ -228,16 +228,21 @@ public abstract class StereoElementFactory {
                         if (centers.elementType(w) == Stereocenters.Type.Tricoordinate) {
                             List<IBond> dbs = getCumulatedDbs(container.getBond(container.getAtom(w),
                                                                                 container.getAtom(v)));
-                            if (dbs.size() == 2) {
+                            if (dbs == null)
+                                continue;
+                            if (container.indexOf(dbs.get(0)) > container.indexOf(dbs.get(dbs.size() - 1)))
+                                continue;
+                            if ((dbs.size() & 0x1) == 0) {
+                                IAtom focus = getShared(dbs.get(dbs.size() / 2),
+                                                        dbs.get((dbs.size() / 2)-1));
                                 // extended tetrahedral
-                                IStereoElement element = createExtendedTetrahedral(v, centers);
+                                IStereoElement element = createExtendedTetrahedral(container.indexOf(focus),
+                                                                                   centers);
                                 if (element != null) elements.add(element);
                             } else {
-                                if (container.indexOf(dbs.get(0)) < container.indexOf(dbs.get(dbs.size() - 1))) {
-                                    // extended cis-trans
-                                    IStereoElement element = createExtendedCisTrans(dbs);
-                                    if (element != null) elements.add(element);
-                                }
+                                // extended cis-trans
+                                IStereoElement element = createExtendedCisTrans(dbs);
+                                if (element != null) elements.add(element);
                             }
                             break;
                         }
@@ -770,10 +775,6 @@ public abstract class StereoElementFactory {
             int t0 = container.indexOf(terminals[0]);
             int t1 = container.indexOf(terminals[1]);
 
-            // check the focus is cumulated
-            if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE
-                    || bondMap.get(v, t1).getOrder() != IBond.Order.DOUBLE) return null;
-
             IAtom[] neighbors = new IAtom[4];
             int[] elevation = new int[4];
 
@@ -784,23 +785,25 @@ public abstract class StereoElementFactory {
             for (int w : graph[t0]) {
                 IBond bond = bondMap.get(t0, w);
                 if (w == v) continue;
-                if (bond.getOrder() != IBond.Order.SINGLE) return null;
+                if (bond.getOrder() != IBond.Order.SINGLE) continue;
                 if (isUnspecified(bond)) return null;
                 neighbors[n] = container.getAtom(w);
                 elevation[n] = elevationOf(terminals[0], bond);
                 n++;
             }
+            if (n == 0)
+                return null;
             n = 2;
             for (int w : graph[t1]) {
                 IBond bond = bondMap.get(t1, w);
-                if (w == v) continue;
-                if (bond.getOrder() != IBond.Order.SINGLE) return null;
+                if (bond.getOrder() != IBond.Order.SINGLE) continue;
                 if (isUnspecified(bond)) return null;
                 neighbors[n] = container.getAtom(w);
                 elevation[n] = elevationOf(terminals[1], bond);
                 n++;
             }
-
+            if (n == 2)
+                return null;
             if (elevation[0] != 0 || elevation[1] != 0) {
                 if (elevation[2] != 0 || elevation[3] != 0) return null;
             } else {
@@ -1200,10 +1203,6 @@ public abstract class StereoElementFactory {
             int t0 = container.indexOf(terminals[0]);
             int t1 = container.indexOf(terminals[1]);
 
-            // check the focus is cumulated
-            if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE
-                    || bondMap.get(v, t1).getOrder() != IBond.Order.DOUBLE) return null;
-
             // check for kinked cumulated bond
             if (!isColinear(focus, terminals))
                 return null;
@@ -1213,14 +1212,20 @@ public abstract class StereoElementFactory {
 
             int n = 0;
             for (int w : graph[t0]) {
-                if (bondMap.get(t0, w).getOrder() != IBond.Order.SINGLE) continue;
+                if (bondMap.get(t0, w).getOrder() != IBond.Order.SINGLE)
+                    continue;
                 neighbors[n++] = container.getAtom(w);
             }
+            if (n == 0)
+                return null;
             n = 2;
             for (int w : graph[t1]) {
-                if (bondMap.get(t1, w).getOrder() != IBond.Order.SINGLE) continue;
+                if (bondMap.get(t1, w).getOrder() != IBond.Order.SINGLE)
+                    continue;
                 neighbors[n++] = container.getAtom(w);
             }
+            if (n == 2)
+                return null;
 
             int parity = parity(neighbors);
 

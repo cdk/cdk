@@ -721,6 +721,26 @@ public class NonPlanarBondsTest {
         assertThat(wedgeCount, is(1));
     }
 
+    @Test public void wedgeExtendedTetrahedral() throws CDKException {
+        final String smi = "C(=C=C=[C@@]=C=C=CC)C";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int wedgeCount = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP:
+                case DOWN:
+                case UP_INVERTED:
+                case DOWN_INVERTED:
+                    ++wedgeCount;
+                    break;
+            }
+        }
+        assertThat(wedgeCount, is(2));
+    }
+
     static IAtom atom(String symbol, int hCount, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(hCount);
