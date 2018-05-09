@@ -285,7 +285,7 @@ public abstract class StereoElementFactory {
                         IBond bond = bondMap.get(v, w);
                         if (w > v && bond.getOrder() == IBond.Order.DOUBLE) {
                             if (centers.elementType(w) == Stereocenters.Type.Tricoordinate
-                                && centers.isStereocenter(w) && !isInSmallRing(bond)) {
+                                && centers.isStereocenter(w) && !isInSmallRing(bond, 7)) {
                                 IStereoElement element = createGeometric(v, w, centers);
                                 if (element != null) elements.add(element);
                             }
