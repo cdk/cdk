@@ -38,7 +38,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -241,7 +240,8 @@ public abstract class StereoElementFactory {
                                 if (element != null) elements.add(element);
                             } else {
                                 // extended cis-trans
-                                IStereoElement element = createExtendedCisTrans(dbs);
+                                IStereoElement element = createExtendedCisTrans(dbs,
+                                                                                centers);
                                 if (element != null) elements.add(element);
                             }
                             break;
@@ -441,9 +441,11 @@ public abstract class StereoElementFactory {
      * </pre>
      *
      * @param bonds cumulated double bonds
+     * @param centers discovered stereocentres
      * @return the extended cis/trans geometry if one could be created
      */
-    abstract ExtendedCisTrans createExtendedCisTrans(List<IBond> bonds);
+    abstract ExtendedCisTrans createExtendedCisTrans(List<IBond> bonds,
+                                                     Stereocenters centers);
 
     /**
      * Indicate that stereochemistry drawn as a certain projection should be
@@ -775,6 +777,11 @@ public abstract class StereoElementFactory {
             int t0 = container.indexOf(terminals[0]);
             int t1 = container.indexOf(terminals[1]);
 
+            if (stereocenters.isSymmetryChecked() &&
+                (!stereocenters.isStereocenter(t0) ||
+                 !stereocenters.isStereocenter(t1)))
+                return null;
+
             IAtom[] neighbors = new IAtom[4];
             int[] elevation = new int[4];
 
@@ -817,8 +824,7 @@ public abstract class StereoElementFactory {
             return new ExtendedTetrahedral(focus, neighbors, winding);
         }
 
-        @Override
-        ExtendedCisTrans createExtendedCisTrans(List<IBond> dbs) {
+        ExtendedCisTrans createExtendedCisTrans(List<IBond> dbs, Stereocenters stereocenters) {
 
             // only applies to odd-counts
             if ((dbs.size() & 0x1) == 0)
@@ -833,6 +839,11 @@ public abstract class StereoElementFactory {
 
             List<IBond> begBonds = container.getConnectedBondsList(begAtom);
             List<IBond> endBonds = container.getConnectedBondsList(endAtom);
+
+            if (stereocenters.isSymmetryChecked() &&
+                (!stereocenters.isStereocenter(container.indexOf(begAtom)) ||
+                 !stereocenters.isStereocenter(container.indexOf(endAtom))))
+                return null;
 
             if (begBonds.size() < 2 || endBonds.size() < 2)
                 return null;
@@ -1235,7 +1246,8 @@ public abstract class StereoElementFactory {
         }
 
         @Override
-        ExtendedCisTrans createExtendedCisTrans(List<IBond> dbs) {
+        ExtendedCisTrans createExtendedCisTrans(List<IBond> dbs,
+                                                Stereocenters centers) {
 
             // only applies to odd-counts
             if ((dbs.size() & 0x1) == 0)

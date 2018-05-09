@@ -26,6 +26,7 @@ package org.openscience.cdk.stereo;
 
 import com.google.common.collect.Iterables;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -224,7 +225,7 @@ public class StereoElementFactoryTest {
         dbs.add(mol.getBond(0));
         dbs.add(mol.getBond(1));
         dbs.add(mol.getBond(2));
-        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs);
+        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
         assertNotNull(element);
         assertThat(element.getConfigOrder(), is(IStereoElement.OPPOSITE));
     }
@@ -252,7 +253,7 @@ public class StereoElementFactoryTest {
         dbs.add(mol.getBond(0));
         dbs.add(mol.getBond(1));
         dbs.add(mol.getBond(2));
-        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs);
+        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
         assertNotNull(element);
         assertThat(element.getConfigOrder(), is(IStereoElement.TOGETHER));
     }
@@ -280,7 +281,7 @@ public class StereoElementFactoryTest {
         dbs.add(mol.getBond(0));
         dbs.add(mol.getBond(1));
         dbs.add(mol.getBond(2));
-        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs);
+        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
         assertNotNull(element);
         assertThat(element.getConfigOrder(), is(IStereoElement.OPPOSITE));
     }
@@ -308,7 +309,7 @@ public class StereoElementFactoryTest {
         dbs.add(mol.getBond(0));
         dbs.add(mol.getBond(1));
         dbs.add(mol.getBond(2));
-        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs);
+        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
         assertNotNull(element);
         assertThat(element.getConfigOrder(), is(IStereoElement.TOGETHER));
     }

@@ -210,6 +210,10 @@ public final class Stereocenters {
             return elements[v].type;
     }
 
+    boolean isSymmetryChecked() {
+        return checkSymmetry;
+    }
+
     /**
      * Is the atom be a stereocenter (i.e. True or Para).
      *
