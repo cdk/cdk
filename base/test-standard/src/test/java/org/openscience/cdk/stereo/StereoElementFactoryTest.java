@@ -26,6 +26,7 @@ package org.openscience.cdk.stereo;
 
 import com.google.common.collect.Iterables;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,6 +44,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -198,6 +200,118 @@ public class StereoElementFactoryTest {
 
         assertNotNull(element);
         assertThat(element.getStereo(), is(TOGETHER));
+    }
+
+    /**
+     * (E)-hexa-2,3,4-triene
+     * @cdk.smiles C/C=C=C=C/C
+     */
+    @Test
+    public void e_hexa234triene() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(atom("C", 1, 2.48d, 0.00d));
+        mol.addAtom(atom("C", 0, 1.65d, 0.00d));
+        mol.addAtom(atom("C", 0, 0.83d, 0.00d));
+        mol.addAtom(atom("C", 1, 0.00d, 0.00d));
+        mol.addAtom(atom("C", 3, -0.41d, -0.71d));
+        mol.addAtom(atom("C", 3, 2.89d, 0.71d));
+        mol.addBond(0,1,IBond.Order.DOUBLE);
+        mol.addBond(1,2,IBond.Order.DOUBLE);
+        mol.addBond(2,3,IBond.Order.DOUBLE);
+        mol.addBond(3,4,IBond.Order.SINGLE);
+        mol.addBond(0,5,IBond.Order.SINGLE);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(mol);
+        List<IBond> dbs = new ArrayList<>();
+        dbs.add(mol.getBond(0));
+        dbs.add(mol.getBond(1));
+        dbs.add(mol.getBond(2));
+        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
+        assertNotNull(element);
+        assertThat(element.getConfigOrder(), is(IStereoElement.OPPOSITE));
+    }
+
+    /**
+     * (Z)-hexa-2,3,4-triene
+     * @cdk.smiles C/C=C=C=C\C
+     */
+    @Test
+    public void z_hexa234triene() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(atom("C", 1, 2.48d, 0.00d));
+        mol.addAtom(atom("C", 0, 1.65d, 0.00d));
+        mol.addAtom(atom("C", 0, 0.83d, 0.00d));
+        mol.addAtom(atom("C", 1, 0.00d, 0.00d));
+        mol.addAtom(atom("C", 3, -0.41d, -0.71d));
+        mol.addAtom(atom("C", 3, 2.92d, -0.69d));
+        mol.addBond(0,1,IBond.Order.DOUBLE);
+        mol.addBond(1,2,IBond.Order.DOUBLE);
+        mol.addBond(2,3,IBond.Order.DOUBLE);
+        mol.addBond(3,4,IBond.Order.SINGLE);
+        mol.addBond(0,5,IBond.Order.SINGLE);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(mol);
+        List<IBond> dbs = new ArrayList<>();
+        dbs.add(mol.getBond(0));
+        dbs.add(mol.getBond(1));
+        dbs.add(mol.getBond(2));
+        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
+        assertNotNull(element);
+        assertThat(element.getConfigOrder(), is(IStereoElement.TOGETHER));
+    }
+
+    /**
+     * (E)-hexa-2,3,4-triene
+     * @cdk.smiles C/C=C=C=C/C
+     */
+    @Test
+    public void e_hexa234triene_3D() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(atom("C", 1, 0.29d, 0.01d, 0.02d));
+        mol.addAtom(atom("C", 0, -0.56d, -0.90d, 0.25d));
+        mol.addAtom(atom("C", 0, -1.37d, -1.75d, 0.46d));
+        mol.addAtom(atom("C", 1, -2.24d, -2.65d, 0.67d));
+        mol.addAtom(atom("C", 3, -3.66d, -2.36d, 0.68d));
+        mol.addAtom(atom("C", 3, 1.69d, -0.32d, -0.11d));
+        mol.addBond(0,1,IBond.Order.DOUBLE);
+        mol.addBond(1,2,IBond.Order.DOUBLE);
+        mol.addBond(2,3,IBond.Order.DOUBLE);
+        mol.addBond(3,4,IBond.Order.SINGLE);
+        mol.addBond(0,5,IBond.Order.SINGLE);
+        StereoElementFactory factory = StereoElementFactory.using3DCoordinates(mol);
+        List<IBond> dbs = new ArrayList<>();
+        dbs.add(mol.getBond(0));
+        dbs.add(mol.getBond(1));
+        dbs.add(mol.getBond(2));
+        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
+        assertNotNull(element);
+        assertThat(element.getConfigOrder(), is(IStereoElement.OPPOSITE));
+    }
+
+    /**
+     * (Z)-hexa-2,3,4-triene
+     * @cdk.smiles C/C=C=C=C\C
+     */
+    @Test
+    public void z_hexa234triene_3D() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(atom("C", 1, -0.09d, -0.45d, -1.07d));
+        mol.addAtom(atom("C", 0, -0.67d, -1.04d, -0.11d));
+        mol.addAtom(atom("C", 0, -1.23d, -1.59d, 0.79d));
+        mol.addAtom(atom("C", 1, -1.84d, -2.17d, 1.74d));
+        mol.addAtom(atom("C", 3, -3.13d, -1.73d, 2.21d));
+        mol.addAtom(atom("C", 3, -0.70d, 0.69d, -1.73d));
+        mol.addBond(0,1,IBond.Order.DOUBLE);
+        mol.addBond(1,2,IBond.Order.DOUBLE);
+        mol.addBond(2,3,IBond.Order.DOUBLE);
+        mol.addBond(3,4,IBond.Order.SINGLE);
+        mol.addBond(0,5,IBond.Order.SINGLE);
+        StereoElementFactory factory = StereoElementFactory.using3DCoordinates(mol);
+        List<IBond> dbs = new ArrayList<>();
+        dbs.add(mol.getBond(0));
+        dbs.add(mol.getBond(1));
+        dbs.add(mol.getBond(2));
+        ExtendedCisTrans element = factory.createExtendedCisTrans(dbs, Stereocenters.of(mol));
+        assertNotNull(element);
+        assertThat(element.getConfigOrder(), is(IStereoElement.TOGETHER));
     }
 
     @Test

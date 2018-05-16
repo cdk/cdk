@@ -28,6 +28,7 @@ import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.invariant.Canon;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.ringsearch.RingSearch;
 
@@ -207,6 +208,10 @@ public final class Stereocenters {
             return Type.None;
         else
             return elements[v].type;
+    }
+
+    boolean isSymmetryChecked() {
+        return checkSymmetry;
     }
 
     /**
@@ -522,7 +527,7 @@ public final class Stereocenters {
                 if (x == 4 && h == 0 && (q == 0 && v == 5 || q == 1 && v == 4))
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
                 // note: bridgehead not allowed by InChI but makes sense
-                return x == 3 && h == 0 && (isBridgeHeadNitrogen(i) || inThreeMemberRing(i)) ? Type.Tetracoordinate : Type.None;
+                return x == 3 && h == 0 && (isBridgeHead(i) || inThreeMemberRing(i)) ? Type.Tetracoordinate : Type.None;
 
             case 14: // silicon
                 if (v != 4 || q != 0) return Type.None;
@@ -673,12 +678,65 @@ public final class Stereocenters {
         return false;
     }
 
-    private boolean isBridgeHeadNitrogen(int v) {
-        if (g[v].length != 3)
+    private void visitPart(boolean[] visit, IAtom atom) {
+        visit[container.indexOf(atom)] = true;
+        for (IBond bond : container.getConnectedBondsList(atom)) {
+            IAtom nbr = bond.getOther(atom);
+            if (!visit[container.indexOf(nbr)])
+                visitPart(visit, nbr);
+        }
+    }
+
+    /**
+     * Detects if a bond is a fused-ring bond (e.g. napthalene). A bond is a
+     * ring fusion if deleting it creates a new component. Or to put it another
+     * way if using a flood-fill we can't visit every atom without going through
+     * this bond, not we only check ring bonds.
+     *
+     * @param bond the bond
+     * @return the bond is a fused bond
+     */
+    private boolean isFusedBond(IBond bond) {
+        IAtom     beg    = bond.getBegin();
+        IAtom     end    = bond.getEnd();
+        if (getRingDegree(container.indexOf(beg)) < 3 &&
+            getRingDegree(container.indexOf(end)) < 3)
             return false;
-        return ringSearch.cyclic(v, g[v][0]) &&
-               ringSearch.cyclic(v, g[v][1]) &&
-               ringSearch.cyclic(v, g[v][2]);
+        boolean[] avisit = new boolean[container.getBondCount()];
+        avisit[container.indexOf(beg)] = true;
+        avisit[container.indexOf(end)] = true;
+        int count = 0;
+        for (IBond nbond : container.getConnectedBondsList(beg)) {
+            IAtom nbr = nbond.getOther(beg);
+            if (nbr.equals(end) || !ringSearch.cyclic(nbond))
+                continue;
+            if (count == 0) {
+                count++;
+                visitPart(avisit, nbr);
+            } else {
+                if (!avisit[container.indexOf(nbr)])
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private int getRingDegree(int v) {
+        int x = 0;
+        for (int w : g[v])
+            if (ringSearch.cyclic(v, w))
+                x++;
+        return x;
+    }
+
+    private boolean isBridgeHead(int v) {
+        if (getRingDegree(v) < 3)
+            return false;
+        IAtom atom = container.getAtom(v);
+        for (IBond bond : container.getConnectedBondsList(atom))
+            if (isFusedBond(bond))
+                return false;
+        return true;
     }
 
     /**

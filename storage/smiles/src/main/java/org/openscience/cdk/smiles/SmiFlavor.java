@@ -93,6 +93,8 @@ public final class SmiFlavor {
      */
     public static final int StereoExTetrahedral = 0x400;
 
+    public static final int StereoExCisTrans    = 0x500;
+
     /**
      * Generate SMILES with the major isotopes, only omit mass numbers when it
      * is unset.
@@ -109,7 +111,10 @@ public final class SmiFlavor {
      * @see #StereoCisTrans
      * @see #StereoExTetrahedral
      */
-    public static final int Stereo              = StereoTetrahedral | StereoCisTrans | StereoExTetrahedral;
+    public static final int Stereo              = StereoTetrahedral |
+                                                  StereoCisTrans |
+                                                  StereoExTetrahedral |
+                                                  StereoExCisTrans;
 
     /**
      * Output 2D coordinates.

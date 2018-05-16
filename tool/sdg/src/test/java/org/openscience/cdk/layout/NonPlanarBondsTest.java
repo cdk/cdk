@@ -53,6 +53,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
 
@@ -677,6 +678,89 @@ public class NonPlanarBondsTest {
         mol.removeAtomOnly(2); // unsafe-removes
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         sdg.generateCoordinates(mol);
+    }
+
+    @Test public void avoidBondsToOtherStereoCentres() throws CDKException {
+        final String smi = "[H][C@@]([C@H](C)N)([C@@H](C)O)[C@@H](C)OC";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int wedgeCount = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP:
+                case DOWN:
+                case UP_INVERTED:
+                case DOWN_INVERTED:
+                    wedgeCount++;
+                    break;
+            }
+        }
+        assertThat(wedgeCount, is(4));
+    }
+
+    @Test public void avoidWedgingRingBond() throws CDKException {
+        final String smi = "CC(C)[C@@H]1CCCCO1";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int wedgeCount = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP:
+                case DOWN:
+                case UP_INVERTED:
+                case DOWN_INVERTED:
+                    assertFalse(bond.isInRing());
+                    ++wedgeCount;
+                    break;
+            }
+        }
+        assertThat(wedgeCount, is(1));
+    }
+
+    @Test public void wedgeExtendedTetrahedral() throws CDKException {
+        final String smi = "C(=C=C=[C@@]=C=C=CC)C";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int wedgeCount = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP:
+                case DOWN:
+                case UP_INVERTED:
+                case DOWN_INVERTED:
+                    ++wedgeCount;
+                    break;
+            }
+        }
+        assertThat(wedgeCount, is(2));
+    }
+
+    // this structure should be displayed with 7 wedges, for some reason the
+    // atom order affects whether multiple wedges are used
+    @Test public void minWedges() throws CDKException {
+        final String smi = "[C@](([C@@H](C)Cl)([C@H](C)Cl)[C@H](O)[C@](([C@@H](C)Cl)[C@H](C)Cl)[H])[H]";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smi);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        int wedgeCount = 0;
+        for (IBond bond : mol.bonds()) {
+            switch (bond.getStereo()) {
+                case UP:
+                case DOWN:
+                case UP_INVERTED:
+                case DOWN_INVERTED:
+                    ++wedgeCount;
+                    break;
+            }
+        }
+        assertThat(wedgeCount, is(7));
     }
 
     static IAtom atom(String symbol, int hCount, double x, double y) {

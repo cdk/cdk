@@ -184,6 +184,17 @@ public class InChIGeneratorFactoryTest {
                    not(containsString("/i")));
     }
 
+    // InChI only supports cumulenes of length 2 (CC=[C@]=CC) and 3
+    // (C/C=C=C=C=C/C) longer ones should be ignored
+    @Test
+    public void longerExtendedTetrahedralsIgnored() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol  = smipar.parseSmiles("CC=C=C=[C@]=C=C=CC");
+        InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(mol);
+        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals("InChI=1S/C9H8/c1-3-5-7-9-8-6-4-2/h3-4H,1-2H3", gen.getInchi());
+    }
+
     /**
      * Tests the aromatic bonds option in the InChI factory class.
      */

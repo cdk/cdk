@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
+import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import uk.ac.ebi.beam.Atom;
 import uk.ac.ebi.beam.AtomBuilder;
@@ -49,6 +50,7 @@ import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.GraphBuilder;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -155,6 +157,9 @@ final class CDKToBeam {
                 } else if (SmiFlavor.isSet(flavour, SmiFlavor.StereoExTetrahedral) &&
                            se instanceof ExtendedTetrahedral) {
                     addExtendedTetrahedralConfiguration((ExtendedTetrahedral) se, gb, indices);
+                } else if (SmiFlavor.isSet(flavour, SmiFlavor.StereoExCisTrans) &&
+                           se instanceof ExtendedCisTrans) {
+                    addExtendedCisTransConfig((ExtendedCisTrans) se, gb, indices, ac);
                 }
             }
         }
@@ -360,5 +365,26 @@ final class CDKToBeam {
 
         gb.extendedTetrahedral(u).lookingFrom(vs[0]).neighbors(vs[1], vs[2], vs[3])
                 .winding(et.winding() == CLOCKWISE ? Configuration.CLOCKWISE : Configuration.ANTI_CLOCKWISE).build();
+    }
+
+    private static void addExtendedCisTransConfig(ExtendedCisTrans ect, GraphBuilder gb,
+                                                  Map<IAtom, Integer> indices,
+                                                  IAtomContainer container) {
+
+        IAtom[] ends     = ExtendedCisTrans.findTerminalAtoms(container, ect.getFocus());
+        IBond[] carriers = ect.getCarriers().toArray(new IBond[2]);
+        if (ends != null) {
+            Configuration.DoubleBond config;
+            if (ect.getConfigOrder() == IStereoElement.TOGETHER)
+                config = Configuration.DoubleBond.TOGETHER;
+            else if (ect.getConfigOrder() == IStereoElement.OPPOSITE)
+                config = Configuration.DoubleBond.OPPOSITE;
+            else
+                config = Configuration.DoubleBond.UNSPECIFIED;
+            gb.extendedGeometric(indices.get(ends[0]), indices.get(ends[1]))
+              .configure(indices.get(carriers[0].getOther(ends[0])),
+                         indices.get(carriers[1].getOther(ends[1])),
+                         config);
+        }
     }
 }

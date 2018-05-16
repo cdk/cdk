@@ -1618,8 +1618,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         @Override
         public IBond getBond(IAtom atom) {
             for (IBond bond : bonds) {
-                if (bond.getBegin().equals(atom) ||
-                    bond.getEnd().equals(atom))
+                if (bond.getOther(this).equals(atom))
                     return bond;
             }
             return null;

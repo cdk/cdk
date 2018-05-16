@@ -781,6 +781,15 @@ public class StereocentersTest {
         none("[NH2+](=[NH+]C)C");
     }
 
+    @Test
+    public void bridgehead_nitrogens() throws Exception {
+        tetrahedral("N1(CC2)CC2CC1");
+        // fused
+        none("N1(CCCC2)CCCC12");
+        // adjacent to fused (but not fused)
+        tetrahedral("N1(c(cccc3)c32)CC2CC1");
+    }
+
     // assert the first atom of the SMILES is accepted as a tetrahedral center
     void tetrahedral(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());

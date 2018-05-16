@@ -40,6 +40,7 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -3199,5 +3200,25 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         assertTrue(clonedSgroup.getAtoms().contains(clone.getAtom(1)));
         assertTrue(clonedSgroup.getBonds().contains(clone.getBond(0)));
         assertTrue(clonedSgroup.getBonds().contains(clone.getBond(1)));
+    }
+
+    @Test
+    public void getSelfBond() {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1  = mol.getBuilder().newAtom();
+        IAtom          a2  = mol.getBuilder().newAtom();
+        IAtom          a3  = mol.getBuilder().newAtom();
+        IBond          b1  = mol.getBuilder().newBond();
+        IBond          b2  = mol.getBuilder().newBond();
+        b1.setAtom(a1, 0);
+        b1.setAtom(a2, 1);
+        b2.setAtom(a2, 0);
+        b2.setAtom(a3, 1);
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        mol.addBond(b1);
+        mol.addBond(b2);
+        assertThat(mol.getBond(a1, a1), is(nullValue()));
     }
 }

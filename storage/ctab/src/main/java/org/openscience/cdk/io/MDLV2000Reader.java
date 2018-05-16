@@ -410,8 +410,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             } else if (!hasZ) {
                 //'  CDK     09251712073D'
                 // 0123456789012345678901
-                if (!(program.length() >= 22 && program.substring(20, 22).equals("3D"))
-                    && !forceReadAs3DCoords.isSet()) {
+                if (is3Dfile(program)) {
+                    hasZ = true;
+                } else if (!forceReadAs3DCoords.isSet()) {
                     for (IAtom atomToUpdate : atoms) {
                         Point3d p3d = atomToUpdate.getPoint3d();
                         if (p3d != null) {
@@ -537,6 +538,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
 
         return outputContainer;
+    }
+
+    private boolean is3Dfile(String program) {
+        return program.length() >= 22 && program.substring(20, 22).equals("3D");
     }
 
     /**

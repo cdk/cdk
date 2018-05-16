@@ -38,7 +38,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -113,36 +112,85 @@ public abstract class StereoElementFactory {
         this.bondMap = bondMap;
     }
 
-    private boolean visitSmallRing(boolean[] mark, int aidx, int prev,
-                                   int first, int depth) {
-        if (depth > 7)
+    private boolean visitSmallRing(int[] mark, int aidx, int prev, int depth,
+                                   int max) {
+        if (mark[aidx] == 2)
+            return true;
+        if (depth == max)
             return false;
-        mark[aidx] = true;
+        if (mark[aidx] == 1)
+            return false;
+        mark[aidx] = 1;
         for (int nbr : graph[aidx]) {
-            if (nbr == prev)
-                continue;
-            if (nbr == first)
-                return true;
-            else if (!mark[nbr] && visitSmallRing(mark, nbr, aidx, first, depth + 1))
+            if (nbr != prev && visitSmallRing(mark, nbr, aidx, depth + 1, max))
                 return true;
         }
-        mark[aidx] = false;
+        mark[aidx] = 0;
         return false;
     }
 
-    private boolean isInSmallRing(IBond bond) {
+    private boolean isInSmallRing(IBond bond, int max) {
         if (!bond.isInRing())
             return false;
-        IAtom     beg  = bond.getBegin();
-        IAtom     end  = bond.getEnd();
-        boolean[] mark = new boolean[container.getAtomCount()];
-        int       bidx = container.indexOf(beg);
-        int       eidx = container.indexOf(end);
+        IAtom beg  = bond.getBegin();
+        IAtom end  = bond.getEnd();
+        int[] mark = new int[container.getAtomCount()];
+        int   bidx = container.indexOf(beg);
+        int   eidx = container.indexOf(end);
+        mark[bidx] = 2;
         return visitSmallRing(mark,
-                              bidx,
                               eidx,
                               bidx,
-                              1);
+                              1,
+                              max);
+    }
+
+    private boolean isInSmallRing(IAtom atom, int max) {
+        if (!atom.isInRing())
+            return false;
+        for (IBond bond : container.getConnectedBondsList(atom)) {
+            if (isInSmallRing(bond, max))
+                return true;
+        }
+        return false;
+    }
+
+    private IBond getOtherDb(IAtom a, IBond other) {
+        IBond result = null;
+        for (IBond bond : container.getConnectedBondsList(a)) {
+            if (bond.equals(other))
+                continue;
+            if (bond.getOrder() != IBond.Order.DOUBLE)
+                continue;
+            if (result != null)
+                return null;
+            result = bond;
+        }
+        return result;
+    }
+
+    private static IAtom getShared(IBond a, IBond b) {
+        if (b.contains(a.getBegin()))
+            return a.getBegin();
+        if (b.contains(a.getEnd()))
+            return a.getEnd();
+        return null;
+    }
+
+    private List<IBond> getCumulatedDbs(IBond endBond) {
+        List<IBond> dbs = new ArrayList<>();
+        dbs.add(endBond);
+        IBond other = getOtherDb(endBond.getBegin(), endBond);
+        if (other == null)
+            other = getOtherDb(endBond.getEnd(), endBond);
+        if (other == null)
+            return null;
+        while (other != null) {
+            dbs.add(other);
+            IAtom a = getShared(dbs.get(dbs.size() - 1), dbs.get(dbs.size() - 2));
+            other = getOtherDb(other.getOther(a), other);
+        }
+        return dbs;
     }
 
     /**
@@ -174,16 +222,29 @@ public abstract class StereoElementFactory {
             switch (centers.elementType(v)) {
                 // elongated tetrahedrals
                 case Bicoordinate:
-                    int t0 = graph[v][0];
-                    int t1 = graph[v][1];
-                    if (centers.elementType(t0) == Stereocenters.Type.Tricoordinate
-                            && centers.elementType(t1) == Stereocenters.Type.Tricoordinate) {
-                        if (check && centers.isStereocenter(t0) && centers.isStereocenter(t1)) {
-                            IStereoElement element = createExtendedTetrahedral(v, centers);
-                            if (element != null) elements.add(element);
-                        } else {
-                            IStereoElement element = createExtendedTetrahedral(v, centers);
-                            if (element != null) elements.add(element);
+                    for (int w : graph[v]) {
+                        // end of an extended tetrahedral or cis/trans
+                        if (centers.elementType(w) == Stereocenters.Type.Tricoordinate) {
+                            List<IBond> dbs = getCumulatedDbs(container.getBond(container.getAtom(w),
+                                                                                container.getAtom(v)));
+                            if (dbs == null)
+                                continue;
+                            if (container.indexOf(dbs.get(0)) > container.indexOf(dbs.get(dbs.size() - 1)))
+                                continue;
+                            if ((dbs.size() & 0x1) == 0) {
+                                IAtom focus = getShared(dbs.get(dbs.size() / 2),
+                                                        dbs.get((dbs.size() / 2)-1));
+                                // extended tetrahedral
+                                IStereoElement element = createExtendedTetrahedral(container.indexOf(focus),
+                                                                                   centers);
+                                if (element != null) elements.add(element);
+                            } else {
+                                // extended cis-trans
+                                IStereoElement element = createExtendedCisTrans(dbs,
+                                                                                centers);
+                                if (element != null) elements.add(element);
+                            }
+                            break;
                         }
                     }
                     break;
@@ -199,8 +260,9 @@ public abstract class StereoElementFactory {
                         if (w > v &&
                             centers.elementType(w) == Stereocenters.Type.Tricoordinate &&
                             bond.getOrder() == IBond.Order.SINGLE &&
-                            !bond.isInRing() &&
-                            bond.getBegin().isInRing() && bond.getEnd().isInRing()) {
+                            !isInSmallRing(bond, 6) &&
+                            isInSmallRing(bond.getBegin(), 6) &&
+                            isInSmallRing(bond.getEnd(), 6)) {
                             element = createAtropisomer(v, w, centers);
                             if (element != null)
                                 elements.add(element);
@@ -223,7 +285,7 @@ public abstract class StereoElementFactory {
                         IBond bond = bondMap.get(v, w);
                         if (w > v && bond.getOrder() == IBond.Order.DOUBLE) {
                             if (centers.elementType(w) == Stereocenters.Type.Tricoordinate
-                                && centers.isStereocenter(w) && !isInSmallRing(bond)) {
+                                && centers.isStereocenter(w) && !isInSmallRing(bond, 7)) {
                                 IStereoElement element = createGeometric(v, w, centers);
                                 if (element != null) elements.add(element);
                             }
@@ -364,6 +426,27 @@ public abstract class StereoElementFactory {
      * @return a new stereo element
      */
     abstract ExtendedTetrahedral createExtendedTetrahedral(int v, Stereocenters stereocenters);
+
+    /**
+     * Create an extended cis/trans bond (cumulated) given one end (see diagram
+     * below). The stereo element geometry will only be created if there is an
+     * odd number of cumulated double bonds. The double bond list ('bonds')
+     * should be ordered consecutively from one end to the other.
+     *
+     * <pre>
+     *  C               C
+     *   \             /
+     *    C = C = C = C
+     *      ^   ^   ^
+     *      ^---^---^----- bonds
+     * </pre>
+     *
+     * @param bonds cumulated double bonds
+     * @param centers discovered stereocentres
+     * @return the extended cis/trans geometry if one could be created
+     */
+    abstract ExtendedCisTrans createExtendedCisTrans(List<IBond> bonds,
+                                                     Stereocenters centers);
 
     /**
      * Indicate that stereochemistry drawn as a certain projection should be
@@ -695,9 +778,10 @@ public abstract class StereoElementFactory {
             int t0 = container.indexOf(terminals[0]);
             int t1 = container.indexOf(terminals[1]);
 
-            // check the focus is cumulated
-            if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE
-                    || bondMap.get(v, t1).getOrder() != IBond.Order.DOUBLE) return null;
+            if (stereocenters.isSymmetryChecked() &&
+                (!stereocenters.isStereocenter(t0) ||
+                 !stereocenters.isStereocenter(t1)))
+                return null;
 
             IAtom[] neighbors = new IAtom[4];
             int[] elevation = new int[4];
@@ -709,23 +793,25 @@ public abstract class StereoElementFactory {
             for (int w : graph[t0]) {
                 IBond bond = bondMap.get(t0, w);
                 if (w == v) continue;
-                if (bond.getOrder() != IBond.Order.SINGLE) return null;
+                if (bond.getOrder() != IBond.Order.SINGLE) continue;
                 if (isUnspecified(bond)) return null;
                 neighbors[n] = container.getAtom(w);
                 elevation[n] = elevationOf(terminals[0], bond);
                 n++;
             }
+            if (n == 0)
+                return null;
             n = 2;
             for (int w : graph[t1]) {
                 IBond bond = bondMap.get(t1, w);
-                if (w == v) continue;
-                if (bond.getOrder() != IBond.Order.SINGLE) return null;
+                if (bond.getOrder() != IBond.Order.SINGLE) continue;
                 if (isUnspecified(bond)) return null;
                 neighbors[n] = container.getAtom(w);
                 elevation[n] = elevationOf(terminals[1], bond);
                 n++;
             }
-
+            if (n == 2)
+                return null;
             if (elevation[0] != 0 || elevation[1] != 0) {
                 if (elevation[2] != 0 || elevation[3] != 0) return null;
             } else {
@@ -737,6 +823,63 @@ public abstract class StereoElementFactory {
             Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE : Stereo.CLOCKWISE;
 
             return new ExtendedTetrahedral(focus, neighbors, winding);
+        }
+
+        ExtendedCisTrans createExtendedCisTrans(List<IBond> dbs, Stereocenters stereocenters) {
+
+            // only applies to odd-counts
+            if ((dbs.size() & 0x1) == 0)
+                return null;
+
+            IBond   focus    = dbs.get(dbs.size()/2);
+            IBond[] carriers = new IBond[2];
+            int     config   = 0;
+
+            IAtom begAtom = dbs.get(0).getOther(getShared(dbs.get(0), dbs.get(1)));
+            IAtom endAtom = dbs.get(dbs.size()-1).getOther(getShared(dbs.get(dbs.size()-1), dbs.get(dbs.size()-2)));
+
+            List<IBond> begBonds = container.getConnectedBondsList(begAtom);
+            List<IBond> endBonds = container.getConnectedBondsList(endAtom);
+
+            if (stereocenters.isSymmetryChecked() &&
+                (!stereocenters.isStereocenter(container.indexOf(begAtom)) ||
+                 !stereocenters.isStereocenter(container.indexOf(endAtom))))
+                return null;
+
+            if (begBonds.size() < 2 || endBonds.size() < 2)
+                return null;
+
+            begBonds.remove(dbs.get(0));
+            endBonds.remove(dbs.get(dbs.size() - 1));
+
+            IAtom[] ends = ExtendedCisTrans.findTerminalAtoms(container, focus);
+            assert ends != null;
+            if (ends[0].equals(begAtom)) {
+                carriers[0] = begBonds.get(0);
+                carriers[1] = endBonds.get(0);
+            } else {
+                carriers[1] = begBonds.get(0);
+                carriers[0] = endBonds.get(0);
+            }
+
+            IAtom begNbr = begBonds.get(0).getOther(begAtom);
+            IAtom endNbr = endBonds.get(0).getOther(endAtom);
+
+            Vector2d begVec = new Vector2d(begNbr.getPoint2d().x - begAtom.getPoint2d().x,
+                                           begNbr.getPoint2d().y - begAtom.getPoint2d().y);
+            Vector2d endVec = new Vector2d(endNbr.getPoint2d().x - endAtom.getPoint2d().x,
+                                           endNbr.getPoint2d().y - endAtom.getPoint2d().y);
+
+            begVec.normalize();
+            endVec.normalize();
+
+            double dot = begVec.dot(endVec);
+            if (dot < 0)
+                config = IStereoElement.OPPOSITE;
+            else
+                config = IStereoElement.TOGETHER;
+
+            return new ExtendedCisTrans(focus, carriers, config);
         }
 
         /**
@@ -1072,10 +1215,6 @@ public abstract class StereoElementFactory {
             int t0 = container.indexOf(terminals[0]);
             int t1 = container.indexOf(terminals[1]);
 
-            // check the focus is cumulated
-            if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE
-                    || bondMap.get(v, t1).getOrder() != IBond.Order.DOUBLE) return null;
-
             // check for kinked cumulated bond
             if (!isColinear(focus, terminals))
                 return null;
@@ -1085,20 +1224,85 @@ public abstract class StereoElementFactory {
 
             int n = 0;
             for (int w : graph[t0]) {
-                if (bondMap.get(t0, w).getOrder() != IBond.Order.SINGLE) continue;
+                if (bondMap.get(t0, w).getOrder() != IBond.Order.SINGLE)
+                    continue;
                 neighbors[n++] = container.getAtom(w);
             }
+            if (n == 0)
+                return null;
             n = 2;
             for (int w : graph[t1]) {
-                if (bondMap.get(t1, w).getOrder() != IBond.Order.SINGLE) continue;
+                if (bondMap.get(t1, w).getOrder() != IBond.Order.SINGLE)
+                    continue;
                 neighbors[n++] = container.getAtom(w);
             }
+            if (n == 2)
+                return null;
 
             int parity = parity(neighbors);
 
             Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE : Stereo.CLOCKWISE;
 
             return new ExtendedTetrahedral(focus, neighbors, winding);
+        }
+
+        @Override
+        ExtendedCisTrans createExtendedCisTrans(List<IBond> dbs,
+                                                Stereocenters centers) {
+
+            // only applies to odd-counts
+            if ((dbs.size() & 0x1) == 0)
+                return null;
+
+            IBond   focus    = dbs.get(dbs.size()/2);
+            IBond[] carriers = new IBond[2];
+            int     config   = 0;
+
+            IAtom begAtom = dbs.get(0).getOther(getShared(dbs.get(0),
+                                                          dbs.get(1)));
+            IAtom endAtom = dbs.get(dbs.size()-1)
+                               .getOther(getShared(dbs.get(dbs.size()-1),
+                                                   dbs.get(dbs.size()-2)));
+
+            List<IBond> begBonds = container.getConnectedBondsList(begAtom);
+            List<IBond> endBonds = container.getConnectedBondsList(endAtom);
+
+            if (begBonds.size() < 2 || endBonds.size() < 2)
+                return null;
+
+            begBonds.remove(dbs.get(0));
+            endBonds.remove(dbs.get(dbs.size() - 1));
+
+            IAtom[] ends = ExtendedCisTrans.findTerminalAtoms(container, focus);
+            assert ends != null;
+            if (ends[0].equals(begAtom)) {
+                carriers[0] = begBonds.get(0);
+                carriers[1] = endBonds.get(0);
+            } else {
+                carriers[1] = begBonds.get(0);
+                carriers[0] = endBonds.get(0);
+            }
+
+            IAtom begNbr = begBonds.get(0).getOther(begAtom);
+            IAtom endNbr = endBonds.get(0).getOther(endAtom);
+
+            Vector3d begVec = new Vector3d(begNbr.getPoint3d().x - begAtom.getPoint3d().x,
+                                           begNbr.getPoint3d().y - begAtom.getPoint3d().y,
+                                           begNbr.getPoint3d().z - begAtom.getPoint3d().z);
+            Vector3d endVec = new Vector3d(endNbr.getPoint3d().x - endAtom.getPoint3d().x,
+                                           endNbr.getPoint3d().y - endAtom.getPoint3d().y,
+                                           endNbr.getPoint3d().z - endAtom.getPoint3d().z);
+
+            begVec.normalize();
+            endVec.normalize();
+
+            double dot = begVec.dot(endVec);
+            if (dot < 0)
+                config = IStereoElement.OPPOSITE;
+            else
+                config = IStereoElement.TOGETHER;
+
+            return new ExtendedCisTrans(focus, carriers, config);
         }
 
         private boolean isColinear(IAtom focus, IAtom[] terminals) {

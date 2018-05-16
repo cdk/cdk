@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.RingSearch;
+import org.openscience.cdk.stereo.ExtendedCisTrans;
 
 import javax.vecmath.Point2d;
 import java.util.Arrays;
@@ -114,6 +115,8 @@ final class CorrectGeometricConfiguration {
         for (IStereoElement element : container.stereoElements()) {
             if (element instanceof IDoubleBondStereochemistry) {
                 adjust((IDoubleBondStereochemistry) element);
+            } else if (element instanceof ExtendedCisTrans) {
+                adjust((ExtendedCisTrans) element);
             }
         }
     }
@@ -163,6 +166,52 @@ final class CorrectGeometricConfiguration {
     }
 
     /**
+     * Adjust the configuration of the cumulated double bonds to be
+     * either Cis or Trans.
+     *
+     * @param elem the stereo element to adjust
+     */
+    private void adjust(ExtendedCisTrans elem) {
+
+        IBond   middle = elem.getFocus();
+        IAtom[] ends   = ExtendedCisTrans.findTerminalAtoms(container, middle);
+        IBond[] bonds  = elem.getCarriers().toArray(new IBond[2]);
+
+        IAtom left  = ends[0];
+        IAtom right = ends[1];
+
+        int p = parity(elem);
+        int q = parity(getAtoms(left, bonds[0].getOther(left), right))
+                * parity(getAtoms(right, bonds[1].getOther(right), left));
+
+        // configuration is unspecified? then we add an unspecified bond.
+        // note: IDoubleBondStereochemistry doesn't indicate this yet
+        if (p == 0) {
+            for (IBond bond : container.getConnectedBondsList(left))
+                bond.setStereo(IBond.Stereo.NONE);
+            for (IBond bond : container.getConnectedBondsList(right))
+                bond.setStereo(IBond.Stereo.NONE);
+            bonds[0].setStereo(IBond.Stereo.UP_OR_DOWN);
+            return;
+        }
+
+        // configuration is already correct
+        if (p == q) return;
+
+        Arrays.fill(visited, false);
+        visited[atomToIndex.get(left)] = true;
+
+        if (ringSearch.cyclic(atomToIndex.get(middle.getBegin()),
+                              atomToIndex.get(middle.getEnd()))) {
+            return;
+        }
+
+        for (int w : graph[atomToIndex.get(right)]) {
+            if (!visited[w]) reflect(w, middle);
+        }
+    }
+
+    /**
      * Create an array of three atoms for a side of the double bond. This is
      * used to determine the 'winding' of one side of the double bond.
      *
@@ -190,11 +239,11 @@ final class CorrectGeometricConfiguration {
      * @param element double bond element
      * @return together = -1, opposite = +1
      */
-    private static int parity(IDoubleBondStereochemistry element) {
-        switch (element.getStereo()) {
-            case TOGETHER:
+    private static int parity(IStereoElement element) {
+        switch (element.getConfigOrder()) {
+            case IStereoElement.TOGETHER:
                 return -1;
-            case OPPOSITE:
+            case IStereoElement.OPPOSITE:
                 return +1;
             default:
                 return 0;

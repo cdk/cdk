@@ -53,6 +53,7 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
@@ -390,6 +391,35 @@ final class NonplanarBonds {
     }
 
     /**
+     * Find a bond between two possible atoms. For example beg1 - end or
+     * beg2 - end.
+     * @param beg1 begin 1
+     * @param beg2 begin 2
+     * @param end end
+     * @return the bond (or null if none)
+     */
+    private IBond findBond(IAtom beg1, IAtom beg2, IAtom end) {
+        IBond bond = container.getBond(beg1, end);
+        if (bond != null)
+            return bond;
+        return container.getBond(beg2, end);
+    }
+
+    /**
+     * Sets a wedge bond, because wedges are relative we may need to flip
+     * the storage order on the bond.
+     *
+     * @param bond the bond
+     * @param end the expected end atom (fat end of wedge)
+     * @param style the wedge style
+     */
+    private void setWedge(IBond bond, IAtom end, IBond.Stereo style) {
+        if (!bond.getEnd().equals(end))
+            bond.setAtoms(new IAtom[]{bond.getEnd(), bond.getBegin()});
+        bond.setStereo(style);
+    }
+
+    /**
      * Assign non-planar labels (wedge/hatch) to the bonds of extended
      * tetrahedral elements to correctly represent its stereochemistry.
      *
@@ -413,18 +443,17 @@ final class NonplanarBonds {
 
         IAtom[] terminals = element.findTerminalAtoms(container);
 
-        IAtom left = terminals[0];
+        IAtom left  = terminals[0];
         IAtom right = terminals[1];
 
         // some bonds may be null if, this happens when an implicit atom
         // is present and one or more 'atoms' is a terminal atom
-        bonds[0] = container.getBond(left, atoms[0]);
-        bonds[1] = container.getBond(left, atoms[1]);
-        bonds[2] = container.getBond(right, atoms[2]);
-        bonds[3] = container.getBond(right, atoms[3]);
+        for (int i = 0; i < 4; i++)
+            bonds[i] = findBond(left, right, atoms[i]);
+
 
         // find the clockwise ordering (in the plane of the page) by sorting by
-        // polar corodinates
+        // polar coordinates
         int[] rank = new int[4];
         for (int i = 0; i < 4; i++)
             rank[i] = i;
@@ -452,23 +481,15 @@ final class NonplanarBonds {
         // we now check which side was more favourable and assign two labels
         // to that side only
         if (priority[0] + priority[1] < priority[2] + priority[3]) {
-            if (priority[0] < 5) {
-                bonds[0].setAtoms(new IAtom[]{left, atoms[0]});
-                bonds[0].setStereo(labels[0]);
-            }
-            if (priority[1] < 5) {
-                bonds[1].setAtoms(new IAtom[]{left, atoms[1]});
-                bonds[1].setStereo(labels[1]);
-            }
+            if (priority[0] < 5)
+                setWedge(bonds[0], atoms[0], labels[0]);
+            if (priority[1] < 5)
+                setWedge(bonds[1], atoms[1], labels[1]);
         } else {
-            if (priority[2] < 5) {
-                bonds[2].setAtoms(new IAtom[]{right, atoms[2]});
-                bonds[2].setStereo(labels[2]);
-            }
-            if (priority[3] < 5) {
-                bonds[3].setAtoms(new IAtom[]{right, atoms[3]});
-                bonds[3].setStereo(labels[3]);
-            }
+            if (priority[2] < 5)
+                setWedge(bonds[2], atoms[2], labels[2]);
+            if (priority[3] < 5)
+                setWedge(bonds[3], atoms[3], labels[3]);
         }
 
     }
@@ -652,6 +673,9 @@ final class NonplanarBonds {
             }
             // second label
             else if (labels[v] != firstlabel) {
+                // don't add if it's possibly a stereo-centre
+                if (isSp3Carbon(atoms[v], graph[container.indexOf(atoms[v])].length))
+                    break;
                 bond.setAtoms(new IAtom[]{focus, atoms[v]}); // avoids UP_INVERTED/DOWN_INVERTED
                 bond.setStereo(labels[v]);
                 break;
@@ -742,11 +766,36 @@ final class NonplanarBonds {
         return rank;
     }
 
+    // indicates where an atom is a Sp3 carbon and is possibly a stereo-centre
     private boolean isSp3Carbon(IAtom atom, int deg) {
         Integer elem = atom.getAtomicNumber();
         Integer hcnt = atom.getImplicitHydrogenCount();
         if (elem == null || hcnt == null) return false;
-        return elem == 6 && hcnt <= 1 && deg + hcnt == 4;
+        if (elem == 6 && hcnt <= 1 && deg + hcnt == 4) {
+            // more expensive check, look one out and see if we have any
+            // duplicate terminal neighbors
+            List<IAtom> terminals = new ArrayList<>();
+            for (IBond bond : container.getConnectedBondsList(atom)) {
+                IAtom nbr = bond.getOther(atom);
+                if (container.getConnectedBondsCount(nbr) == 1) {
+                    for (IAtom terminal : terminals) {
+                        if (Objects.equals(terminal.getAtomicNumber(),
+                                           nbr.getAtomicNumber()) &&
+                            Objects.equals(terminal.getMassNumber(),
+                                           nbr.getMassNumber()) &&
+                            Objects.equals(terminal.getFormalCharge(),
+                                           nbr.getFormalCharge()) &&
+                            Objects.equals(terminal.getImplicitHydrogenCount(),
+                                           nbr.getImplicitHydrogenCount())) {
+                            return false;
+                        }
+                    }
+                    terminals.add(nbr);
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -771,6 +820,7 @@ final class NonplanarBonds {
 
         boolean iIsSp3 = isSp3Carbon(iAtom, graph[i].length);
         boolean jIsSp3 = isSp3Carbon(jAtom, graph[j].length);
+
         if (iIsSp3 != jIsSp3)
             return !iIsSp3;
 
