@@ -254,6 +254,6 @@ public class InChIToStructureTest extends CDKTestCase {
             if (mass != null && mass.equals(2))
                 dCount++;
         }
-        assertThat(dCount, is(2));
+        assertThat(dCount, is(5));
     }
 }

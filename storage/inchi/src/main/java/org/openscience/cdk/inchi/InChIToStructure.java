@@ -195,7 +195,7 @@ public class InChIToStructure {
 
             molecule.addAtom(cAt);
             cAt = molecule.getAtom(molecule.getAtomCount()-1);
-            if (iAt.getImplicitDeuterium() > 0) {
+            for (int j = 0; j < iAt.getImplicitDeuterium(); j++) {
                 IAtom deut = builder.newInstance(IAtom.class);
                 deut.setAtomicNumber(1);
                 deut.setSymbol("H");
@@ -206,7 +206,7 @@ public class InChIToStructure {
                 IBond bond = builder.newInstance(IBond.class, cAt, deut, Order.SINGLE);
                 molecule.addBond(bond);
             }
-            if (iAt.getImplicitTritium() > 0) {
+            for (int j = 0; j < iAt.getImplicitTritium(); j++) {
                 IAtom trit = builder.newInstance(IAtom.class);
                 trit.setAtomicNumber(1);
                 trit.setSymbol("H");
