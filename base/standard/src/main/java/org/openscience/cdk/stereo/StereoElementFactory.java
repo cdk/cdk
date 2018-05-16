@@ -430,7 +430,8 @@ public abstract class StereoElementFactory {
     /**
      * Create an extended cis/trans bond (cumulated) given one end (see diagram
      * below). The stereo element geometry will only be created if there is an
-     * odd number of cumulated double bonds.
+     * odd number of cumulated double bonds. The double bond list ('bonds')
+     * should be ordered consecutively from one end to the other.
      *
      * <pre>
      *  C               C
