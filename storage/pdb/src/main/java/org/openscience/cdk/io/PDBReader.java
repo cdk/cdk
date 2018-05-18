@@ -426,7 +426,7 @@ public class PDBReader extends DefaultChemObjectReader {
                                     }
                                     if (atomFromNumber != -1 && atomToNumber != -1) {
                                         addBond(molecule, atomFromNumber, atomToNumber);
-                                        logger.warn("Bonded " + atomFromNumber + " with " + atomToNumber);
+                                        logger.debug("Bonded " + atomFromNumber + " with " + atomToNumber);
                                     }
                                 }
                                 lineIndex += 5;
