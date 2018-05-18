@@ -365,6 +365,8 @@ public class PDBReader extends DefaultChemObjectReader {
                                 oBP = new PDBPolymer();
                                 oModel = oFile.getBuilder().newInstance(IChemModel.class);
                                 oSet = oFile.getBuilder().newInstance(IAtomContainerSet.class);
+                                // avoid duplicate atom warnings
+                                atomNumberMap.clear();
                             }
                         } else {
                             if (molecularStructure.getAtomCount() > 0) {
