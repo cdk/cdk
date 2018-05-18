@@ -1182,8 +1182,7 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("formula".equals(name)) {
             currentMolecule.setProperty(CDKConstants.FORMULA, cData);
         } else {
-
-            logger.warn("Skipping element: " + name);
+            logger.debug("Skipping end element: " + name);
         }
 
         currentChars = "";
