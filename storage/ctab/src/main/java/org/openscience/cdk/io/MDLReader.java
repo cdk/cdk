@@ -485,7 +485,7 @@ public class MDLReader extends DefaultChemObjectReader {
                     handleError("Atom charge count is empty", linecount, 35, 39);
                 }
 
-                try {
+                if (line.length() >= 64) {
                     // read the mmm field as position 61-63
                     String reactionAtomIDString = line.substring(60, 63).trim();
                     logger.debug("Parsing mapping id: ", reactionAtomIDString);
@@ -498,9 +498,6 @@ public class MDLReader extends DefaultChemObjectReader {
                         logger.error("Mapping number ", reactionAtomIDString, " is not an integer.");
                         logger.debug(exception);
                     }
-                } catch (Exception exception) {
-                    // older mol files don't have all these fields...
-                    logger.warn("A few fields are missing. Older MDL MOL file?");
                 }
 
                 //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk

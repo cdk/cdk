@@ -365,6 +365,8 @@ public class PDBReader extends DefaultChemObjectReader {
                                 oBP = new PDBPolymer();
                                 oModel = oFile.getBuilder().newInstance(IChemModel.class);
                                 oSet = oFile.getBuilder().newInstance(IAtomContainerSet.class);
+                                // avoid duplicate atom warnings
+                                atomNumberMap.clear();
                             }
                         } else {
                             if (molecularStructure.getAtomCount() > 0) {
@@ -424,7 +426,7 @@ public class PDBReader extends DefaultChemObjectReader {
                                     }
                                     if (atomFromNumber != -1 && atomToNumber != -1) {
                                         addBond(molecule, atomFromNumber, atomToNumber);
-                                        logger.warn("Bonded " + atomFromNumber + " with " + atomToNumber);
+                                        logger.debug("Bonded " + atomFromNumber + " with " + atomToNumber);
                                     }
                                 }
                                 lineIndex += 5;

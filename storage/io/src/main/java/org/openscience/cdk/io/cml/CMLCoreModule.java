@@ -1182,8 +1182,7 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("formula".equals(name)) {
             currentMolecule.setProperty(CDKConstants.FORMULA, cData);
         } else {
-
-            logger.warn("Skipping element: " + name);
+            logger.debug("Skipping end element: " + name);
         }
 
         currentChars = "";
@@ -1515,23 +1514,32 @@ public class CMLCoreModule implements ICMLModule {
         }
 
         for (int i = 0; i < atomCounter; i++) {
-            if (hasAtomParities && atomParities.get(i) != null) {
+            if (hasAtomParities &&
+                atomParities.get(i) != null &&
+                !atomParities.get(i).isEmpty()) {
+                IAtom ligandAtom1 = atomEnumeration.get(parityARef1.get(i));
+                IAtom ligandAtom2 = atomEnumeration.get(parityARef2.get(i));
+                IAtom ligandAtom3 = atomEnumeration.get(parityARef3.get(i));
+                IAtom ligandAtom4 = atomEnumeration.get(parityARef4.get(i));
+                IAtom[] ligandAtoms = new IAtom[]{ligandAtom1, ligandAtom2, ligandAtom3, ligandAtom4};
+                Stereo config;
+                int parity = 0;
                 try {
-                    int parity = (int) Math.round(Double.parseDouble(atomParities.get(i)));
-                    //currentAtom.setStereoParity(parity);
-                    IAtom ligandAtom1 = atomEnumeration.get(parityARef1.get(i));
-                    IAtom ligandAtom2 = atomEnumeration.get(parityARef2.get(i));
-                    IAtom ligandAtom3 = atomEnumeration.get(parityARef3.get(i));
-                    IAtom ligandAtom4 = atomEnumeration.get(parityARef4.get(i));
-                    IAtom[] ligandAtoms = new IAtom[]{ligandAtom1, ligandAtom2, ligandAtom3, ligandAtom4};
-                    Stereo stereo = (parity == 1 ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE);
-                    TetrahedralChirality chirality = new TetrahedralChirality(currentMolecule.getAtom(i), ligandAtoms,
-                            stereo);
+                    parity = (int) Math.signum(Double.parseDouble(atomParities.get(i)));
+                } catch (NumberFormatException ex) {
+                    // ignored
+                }
+                if (parity > 0)
+                    config = Stereo.CLOCKWISE;
+                else if (parity < 0)
+                    config = Stereo.ANTI_CLOCKWISE;
+                else {
+                    config = null;
+                    logger.warn("Cannot interpret stereo information, invalid parity: '" + atomParities.get(i) + "'");
+                }
+                if (config != null) {
+                    TetrahedralChirality chirality = new TetrahedralChirality(currentMolecule.getAtom(i), ligandAtoms, config);
                     currentMolecule.addStereoElement(chirality);
-                } catch (NumberFormatException e) {
-                    if (!e.getMessage().equals("empty String")) {
-                        logger.warn("Cannot interpret stereo information: " + atomParities.get(i));
-                    }
                 }
             }
         }
@@ -1604,8 +1612,8 @@ public class CMLCoreModule implements ICMLModule {
                         currentBond.setStereo(IBond.Stereo.DOWN);
                     } else if ("W".equals(nextStereo)) {
                         currentBond.setStereo(IBond.Stereo.UP);
-                    } else if (nextStereo != null) {
-                        logger.warn("Cannot interpret stereo information: " + nextStereo);
+                    } else if (nextStereo != null && !nextStereo.isEmpty()) {
+                        logger.warn("Cannot interpret bond display information: '" + nextStereo + "'");
                     }
                 }
 
