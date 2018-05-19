@@ -178,7 +178,6 @@ public class InChIToStructure {
             // hydrogen count (implicit) and isotopic mass
             cAt.setFormalCharge(iAt.getCharge());
             cAt.setImplicitHydrogenCount(iAt.getImplicitH());
-
             int isotopicMass = iAt.getIsotopicMass();
 
             if (isotopicMass != 0) {
@@ -195,6 +194,29 @@ public class InChIToStructure {
             }
 
             molecule.addAtom(cAt);
+            cAt = molecule.getAtom(molecule.getAtomCount()-1);
+            for (int j = 0; j < iAt.getImplicitDeuterium(); j++) {
+                IAtom deut = builder.newInstance(IAtom.class);
+                deut.setAtomicNumber(1);
+                deut.setSymbol("H");
+                deut.setMassNumber(2);
+                deut.setImplicitHydrogenCount(0);
+                molecule.addAtom(deut);
+                deut = molecule.getAtom(molecule.getAtomCount()-1);
+                IBond bond = builder.newInstance(IBond.class, cAt, deut, Order.SINGLE);
+                molecule.addBond(bond);
+            }
+            for (int j = 0; j < iAt.getImplicitTritium(); j++) {
+                IAtom trit = builder.newInstance(IAtom.class);
+                trit.setAtomicNumber(1);
+                trit.setSymbol("H");
+                trit.setMassNumber(3);
+                trit.setImplicitHydrogenCount(0);
+                molecule.addAtom(trit);
+                trit = molecule.getAtom(molecule.getAtomCount()-1);
+                IBond bond = builder.newInstance(IBond.class, cAt, trit, Order.SINGLE);
+                molecule.addBond(bond);
+            }
         }
 
         for (int i = 0; i < output.getNumBonds(); i++) {

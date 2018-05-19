@@ -32,6 +32,8 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
 import java.util.Iterator;
@@ -239,5 +241,19 @@ public class InChIToStructureTest extends CDKTestCase {
         IAtomContainer mol = parse.getAtomContainer();
         assertThat(mol.getAtomCount(), is(4));
         assertThat(mol.stereoElements().iterator().hasNext(), is(true));
+    }
+
+    @Test
+    public void readImplicitDeuteriums() throws Exception {
+        String inchi = "InChI=1S/C22H32O2/c1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22(23)24/h3-4,6-7,9-10,12-13,15-16,18-19H,2,5,8,11,14,17,20-21H2,1H3,(H,23,24)/b4-3-,7-6-,10-9-,13-12-,16-15-,19-18-/i1D3,2D2";
+        InChIToStructure intostruct = InChIGeneratorFactory.getInstance().getInChIToStructure(inchi, DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = intostruct.getAtomContainer();
+        int dCount = 0;
+        for (IAtom atom : mol.atoms()) {
+            Integer mass = atom.getMassNumber();
+            if (mass != null && mass.equals(2))
+                dCount++;
+        }
+        assertThat(dCount, is(5));
     }
 }
