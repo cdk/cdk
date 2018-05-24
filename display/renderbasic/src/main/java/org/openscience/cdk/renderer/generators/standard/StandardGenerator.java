@@ -94,7 +94,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * SymbolVisibility}.
      *
      * <pre>{@code
-     * atom.setProperty(CDKConstants.HIGHLIGHT_COLOR, Color.RED);
+     * atom.setProperty(StandardGenerator.HIGHLIGHT_COLOR, Color.RED);
      * }</pre>
      */
     public final static String          HIGHLIGHT_COLOR       = "stdgen.highlight.color";
