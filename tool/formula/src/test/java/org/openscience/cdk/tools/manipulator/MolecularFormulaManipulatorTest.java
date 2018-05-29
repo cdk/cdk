@@ -1355,4 +1355,12 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(MolecularFormulaManipulator.getString(mf, false, false), is("C7H3Br2O3"));
         assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3Br[81]BrO3"));
     }
+
+    @Test public void parseMFMass() throws Exception {
+        String str = "C7H3[81]BrBrO3";
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(str, builder);
+        assertThat(MolecularFormulaManipulator.getString(mf, false, true),
+            is("C7H3Br[81]BrO3"));
+    }
 }
