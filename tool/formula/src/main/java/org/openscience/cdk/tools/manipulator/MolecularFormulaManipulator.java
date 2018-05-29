@@ -200,9 +200,9 @@ public class MolecularFormulaManipulator {
     private static void appendElement(StringBuilder sb, Integer mass, int elem, int count) {
         if (mass != null)
             sb.append('[')
-              .append(mass)
-              .append(Elements.ofNumber(elem).symbol())
-              .append(']');
+                    .append(mass)
+                    .append(']')
+                    .append(Elements.ofNumber(elem).symbol());
         else
             sb.append(Elements.ofNumber(elem).symbol());
         if (count != 0)
@@ -229,6 +229,12 @@ public class MolecularFormulaManipulator {
                                    boolean setOne, boolean setMassNumber) {
         StringBuilder  stringMF     = new StringBuilder();
         List<IIsotope> isotopesList = putInOrder(orderElements, formula);
+        IsotopeFactory ifac = null;
+        try {
+            ifac = Isotopes.getInstance();
+        } catch (IOException e) {
+            throw new RuntimeException("IsotopeFactory could not be loaded");
+        }
 
         if (!setMassNumber) {
             int count = 0;
@@ -251,9 +257,13 @@ public class MolecularFormulaManipulator {
         } else {
             for (IIsotope isotope : isotopesList) {
                 int count = formula.getIsotopeCount(isotope);
+                Integer massNumber = isotope.getMassNumber();
+                if (massNumber != null && massNumber.equals(ifac.getMajorIsotope(isotope.getAtomicNumber()).getMassNumber()))
+                    massNumber = null;
                 appendElement(stringMF,
-                              isotope.getMassNumber(), isotope.getAtomicNumber(),
-                              setOne || count != 1 ? count : 0);
+                        massNumber,
+                        isotope.getAtomicNumber(),
+                        setOne || count != 1 ? count : 0);
             }
         }
 
