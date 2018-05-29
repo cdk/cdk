@@ -201,8 +201,8 @@ public class MolecularFormulaManipulator {
         if (mass != null)
             sb.append('[')
               .append(mass)
-              .append(Elements.ofNumber(elem).symbol())
-              .append(']');
+              .append(']')
+              .append(Elements.ofNumber(elem).symbol());
         else
             sb.append(Elements.ofNumber(elem).symbol());
         if (count != 0)

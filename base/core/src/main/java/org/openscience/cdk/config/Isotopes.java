@@ -32,7 +32,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.common.collect.FluentIterable;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
@@ -50,6 +56,9 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.githash
  */
 public class Isotopes extends IsotopeFactory {
+
+    private static final ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(Isotopes.class);
 
     private static Isotopes myself = null;
 
@@ -84,5 +93,57 @@ public class Isotopes extends IsotopeFactory {
                     natAbund);
             add(isotope);
         }
+    }
+
+    private static boolean isMajor(IIsotope atom) {
+        Integer mass = atom.getMassNumber();
+        if (mass == null)
+            return false;
+        try {
+            Isotopes instance = Isotopes.getInstance();
+            IIsotope major = instance.getMajorIsotope(atom.getAtomicNumber());
+            if (major == null)
+                return false; // no major isotope
+            return major.getMassNumber().equals(mass);
+        } catch (IOException e) {
+            logger.error("Could not load Isotope data: ", e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Clear the isotope information from atoms that are major isotopes (e.g.
+     * 12C, 1H, etc).
+     * @param mol the molecule
+     */
+    public static void clearMajorIsotopes(IAtomContainer mol) {
+        for (IAtom atom : mol.atoms())
+            if (isMajor(atom)) {
+                atom.setMassNumber(null);
+                atom.setExactMass(null);
+                atom.setNaturalAbundance(null);
+            }
+    }
+
+    /**
+     * Clear the isotope information from istopes that are major (e.g.
+     * 12C, 1H, etc).
+     * @param formula the formula
+     */
+    public static void clearMajorIsotopes(IMolecularFormula formula) {
+        for (IIsotope iso : FluentIterable.from(formula.isotopes()).toList())
+            if (isMajor(iso)) {
+                int count = formula.getIsotopeCount(iso);
+                formula.removeIsotope(iso);
+                iso.setMassNumber(null);
+                // may be immutable
+                if (iso.getMassNumber() != null) {
+                    iso = formula.getBuilder().newInstance(IIsotope.class, iso.getSymbol());
+                    iso.setAtomicNumber(iso.getAtomicNumber());
+                }
+                iso.setExactMass(null);
+                iso.setNaturalAbundance(null);
+                formula.addIsotope(iso, count);
+            }
     }
 }
