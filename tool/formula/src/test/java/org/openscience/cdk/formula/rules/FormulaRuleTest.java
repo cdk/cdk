@@ -34,15 +34,15 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 public abstract class FormulaRuleTest extends CDKTestCase {
 
     protected static IRule rule;
+    private static Class<? extends IRule> ruleClass;
 
-    public static void setRule(Class ruleClass) throws Exception {
-        if (FormulaRuleTest.rule == null) {
-            Object rule = (Object) ruleClass.newInstance();
-            if (!(rule instanceof IRule)) {
-                throw new CDKException("The passed rule class must be a IRule");
-            }
-            FormulaRuleTest.rule = (IRule) rule;
-        }
+    public static void setRule(Class<? extends IRule> ruleClass) throws Exception {
+        FormulaRuleTest.ruleClass = ruleClass;
+        FormulaRuleTest.rule = getRule();
+    }
+    
+    private static IRule getRule() throws Exception {
+        return ruleClass.newInstance();
     }
 
     /**
@@ -81,12 +81,15 @@ public abstract class FormulaRuleTest extends CDKTestCase {
 
     @Test
     public void testSetParameters_arrayObject() throws Exception {
+        IRule rule = getRule();
         Object[] defaultParams = rule.getParameters();
         rule.setParameters(defaultParams);
     }
 
     @Test
     public void testValidate_IMolecularFormula() throws Exception {
+        IRule rule = getRule();
+    	
         IMolecularFormula mf = new MolecularFormula();
         mf.addIsotope(new Isotope("C", 13));
         mf.addIsotope(new Isotope("H", 2), 4);
