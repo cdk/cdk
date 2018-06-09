@@ -78,7 +78,7 @@ public class ElementRule implements IRule {
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) throw new CDKException("ElementRule expects one parameters");
 
-        if (!(params[0] instanceof MolecularFormulaRange))
+        if (!(params[0] == null || params[0] instanceof MolecularFormulaRange))
             throw new CDKException("The parameter must be of type MolecularFormulaExpand");
 
         mfRange = (MolecularFormulaRange) params[0];
