@@ -42,7 +42,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     @BeforeClass
     public static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
-        setRule(ChargeRule.class);
+        setRule(RDBERule.class);
     }
 
     /**

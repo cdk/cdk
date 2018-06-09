@@ -40,7 +40,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     @BeforeClass
     public static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
-        setRule(ChargeRule.class);
+        setRule(NitrogenRule.class);
     }
 
     /**
