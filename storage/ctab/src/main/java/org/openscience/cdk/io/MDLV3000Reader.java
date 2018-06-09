@@ -165,7 +165,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 foundEND = true;
             } else if ("BEGIN CTAB".equals(command)) {
                 // that's fine
-            } else if ("COUNTS".equals(command)) {
+            } else if (command.startsWith("COUNTS ")) {
                 // don't think I need to parse this
             } else if ("BEGIN ATOM".equals(command)) {
                 readAtomBlock(readData);
