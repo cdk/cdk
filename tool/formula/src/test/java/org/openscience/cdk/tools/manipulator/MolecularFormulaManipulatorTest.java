@@ -1336,7 +1336,31 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf.addIsotope(ifac.getIsotope("Br", 81), 1);
 
         assertThat(MolecularFormulaManipulator.getString(mf, false, false), is("C7H3Br2O3"));
-        assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3[81Br]BrO3"));
+        assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3[81]BrBrO3"));
     }
 
+    @Test
+    public void testMassNumberDisplayWithDefinedIsotopes() throws Exception {
+        IsotopeFactory ifac = Isotopes.getInstance();
+
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = bldr.newInstance(IMolecularFormula.class);
+
+        mf.addIsotope(ifac.getMajorIsotope("C"), 7);
+        mf.addIsotope(ifac.getMajorIsotope("O"), 3);
+        mf.addIsotope(ifac.getMajorIsotope("H"), 3);
+        mf.addIsotope(ifac.getMajorIsotope("Br"), 1);
+        mf.addIsotope(ifac.getIsotope("Br", 81), 1);
+        Isotopes.clearMajorIsotopes(mf);
+        assertThat(MolecularFormulaManipulator.getString(mf, false, false), is("C7H3Br2O3"));
+        assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3Br[81]BrO3"));
+    }
+
+    @Test public void parseMFMass() throws Exception {
+        String str = "C7H3[81]BrBrO3";
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(str, builder);
+        assertThat(MolecularFormulaManipulator.getString(mf, false, true),
+            is("C7H3Br[81]BrO3"));
+    }
 }

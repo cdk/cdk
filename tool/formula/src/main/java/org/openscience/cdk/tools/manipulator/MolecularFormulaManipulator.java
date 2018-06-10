@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -201,8 +202,8 @@ public class MolecularFormulaManipulator {
         if (mass != null)
             sb.append('[')
               .append(mass)
-              .append(Elements.ofNumber(elem).symbol())
-              .append(']');
+              .append(']')
+              .append(Elements.ofNumber(elem).symbol());
         else
             sb.append(Elements.ofNumber(elem).symbol());
         if (count != 0)
@@ -539,6 +540,96 @@ public class MolecularFormulaManipulator {
         return getMolecularFormula(stringMF, formula, false);
     }
 
+    private static boolean isUpper(char c) {
+        return c >= 'A' && c <= 'Z';
+    }
+
+    private static boolean isLower(char c) {
+        return c >= 'a' && c <= 'z';
+    }
+
+    private static boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
+
+    // helper class for parsing MFs
+    private static final class CharIter {
+        int pos;
+        String str;
+
+        char next() {
+            return pos == str.length() ? '\0' : str.charAt(pos++);
+        }
+
+        int nextUInt() {
+            char c = next();
+            if (!isDigit(c)) {
+                if (c != '\0')
+                    pos--;
+                return -1;
+            }
+            int res = c - '0';
+            while (isDigit(c = next()))
+                res = (10 * res) + (c - '0');
+            if (c != '\0')
+                pos--;
+            return res;
+        }
+
+        boolean nextIf(char c) {
+            if (str.charAt(pos) == c) {
+                pos++;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    // parses an isotope from a symbol in the form:
+     // ('[' <DIGIT> ']')? <UPPER> <LOWER>? <DIGIT>+?
+    private static boolean parseIsotope(CharIter iter,
+                                        IMolecularFormula mf,
+                                        boolean setMajor) {
+        Elements elem = null;
+        int mass = 0;
+        int count = 0;
+        if (iter.nextIf('[')) {
+            mass = iter.nextUInt();
+            if (mass < 0)
+                return false;
+            if (!iter.nextIf(']'))
+                return false;
+        }
+        char c1 = iter.next();
+        char c2 = iter.next();
+        if (!isLower(c2)) {
+            // could use a switch, see SMARTS parser
+            elem = Elements.ofString("" + c1);
+            if (c2 != '\0')
+                iter.pos--;
+        } else {
+            elem = Elements.ofString("" + c1 + c2);
+        }
+        count = iter.nextUInt();
+        if (count < 0)
+            count = 1;
+        IIsotope isotope = mf.getBuilder().newInstance(IIsotope.class, elem.symbol());
+        isotope.setAtomicNumber(elem.number());
+        if (mass != 0)
+            isotope.setMassNumber(mass);
+        else if (setMajor) {
+            try {
+                IIsotope major = Isotopes.getInstance().getMajorIsotope(elem.number());
+                if (major != null)
+                    isotope.setMassNumber(major.getMassNumber());
+            } catch (IOException ex) {
+                // ignored
+            }
+        }
+        mf.addIsotope(isotope, count);
+        return true;
+    }
+
     /**
      * Add to an instance of IMolecularFormula the elements extracts form
      * molecular formula string. The string is immediately analyzed and a set of Nodes
@@ -564,68 +655,19 @@ public class MolecularFormulaManipulator {
             charge = extractCharge(stringMF);
             stringMF = cleanMFfromCharge(stringMF);
         }
-
-        // FIXME: MF: variables with lower case first char
-        char ThisChar;
-        /*
-         * Buffer for
-         */
-        String RecentElementSymbol = "";
-        String RecentElementCountString = "0";
-        /*
-         * String to be converted to an integer
-         */
-        int RecentElementCount;
-
-        if (stringMF.length() == 0) {
+        if (stringMF.isEmpty())
             return null;
-        }
-
-        for (int f = 0; f < stringMF.length(); f++) {
-            ThisChar = stringMF.charAt(f);
-            if (f < stringMF.length()) {
-                if (ThisChar >= 'A' && ThisChar <= 'Z') {
-                    /*
-                     * New Element begins
-                     */
-                    RecentElementSymbol = java.lang.String.valueOf(ThisChar);
-                    RecentElementCountString = "0";
-                }
-                if (ThisChar >= 'a' && ThisChar <= 'z') {
-                    /*
-                     * Two-letter Element continued
-                     */
-                    RecentElementSymbol += ThisChar;
-                }
-                if (ThisChar >= '0' && ThisChar <= '9') {
-                    /*
-                     * Two-letter Element continued
-                     */
-                    RecentElementCountString += ThisChar;
-                }
-            }
-            if (f == stringMF.length() - 1 || (stringMF.charAt(f + 1) >= 'A' && stringMF.charAt(f + 1) <= 'Z')) {
-                /*
-                 * Here an element symbol as well as its number should have been
-                 * read completely
-                 */
-                RecentElementCount = Integer.valueOf(RecentElementCountString);
-                if (RecentElementCount == 0) {
-                    RecentElementCount = 1;
-                }
-
-                IIsotope isotope = formula.getBuilder().newInstance(IIsotope.class, RecentElementSymbol);
-                if (assumeMajorIsotope) {
-                    try {
-                        isotope = Isotopes.getInstance().getMajorIsotope(RecentElementSymbol);
-                    } catch (IOException e) {
-                        throw new RuntimeException("Cannot load the IsotopeFactory");
-                    }
-                }
-                formula.addIsotope(isotope, RecentElementCount);
-
+        int len = stringMF.length();
+        CharIter iter = new CharIter();
+        iter.str = stringMF;
+        while (iter.pos < len) {
+            if (!parseIsotope(iter, formula, assumeMajorIsotope)) {
+                LoggingToolFactory.createLoggingTool(MolecularFormulaManipulator.class)
+                    .error("Could not parse MF: " + iter.str);
+                return null;
             }
         }
+
         if (charge != null) formula.setCharge(charge);
         return formula;
     }

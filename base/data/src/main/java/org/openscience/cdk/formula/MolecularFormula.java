@@ -18,10 +18,7 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -378,6 +375,10 @@ public class MolecularFormula implements IMolecularFormula {
      * @return             True, if both isotope are the same
      */
     protected boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
+
+        if (!Objects.equals(isotopeOne.getMassNumber(),
+                            isotopeTwo.getMassNumber()))
+            return false;
 
         Double natAbund1 = isotopeOne.getNaturalAbundance();
         Double natAbund2 = isotopeTwo.getNaturalAbundance();
