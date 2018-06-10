@@ -113,7 +113,7 @@ public class Isotopes extends IsotopeFactory {
 
     /**
      * Clear the isotope information from atoms that are major isotopes (e.g.
-     * 12C, 1H, etc).
+     * <sup>12</sup>C, <sub>1</sup>H, etc).
      * @param mol the molecule
      */
     public static void clearMajorIsotopes(IAtomContainer mol) {
@@ -127,7 +127,7 @@ public class Isotopes extends IsotopeFactory {
 
     /**
      * Clear the isotope information from istopes that are major (e.g.
-     * 12C, 1H, etc).
+     * <sup>12</sup>C, <sub>1</sup>H, etc).
      * @param formula the formula
      */
     public static void clearMajorIsotopes(IMolecularFormula formula) {
