@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Locale;
 
 /**
  * Implementation of the {@link ILoggingTool} interface that sends output to
@@ -52,6 +53,28 @@ public class SystemOutLoggingTool implements ILoggingTool {
         if (System.getProperty("cdk.debugging", "false").equals("true")
                 || System.getProperty("cdk.debug.stdout", "false").equals("true")) {
             level = DEBUG;
+        }
+        // change logging level from system prop
+        String val = System.getProperty("cdk.logging.level", "warn");
+        switch (val.toLowerCase(Locale.ROOT)) {
+            case "trace":
+                level = ILoggingTool.TRACE;
+                break;
+            case "debug":
+                level = ILoggingTool.DEBUG;
+                break;
+            case "info":
+                level = ILoggingTool.INFO;
+                break;
+            case "warn":
+                level = ILoggingTool.WARN;
+                break;
+            case "error":
+                level = ILoggingTool.ERROR;
+                break;
+            case "fatal":
+                level = ILoggingTool.FATAL;
+                break;
         }
     }
 
