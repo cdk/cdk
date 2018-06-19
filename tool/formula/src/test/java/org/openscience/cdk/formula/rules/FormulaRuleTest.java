@@ -65,28 +65,6 @@ public abstract class FormulaRuleTest extends CDKTestCase {
     }
 
     @Test
-    public void testGetParameters() {
-        Object[] params = rule.getParameters();
-        //		FIXME: the next would be nice, but not currently agreed-upon policy
-        //		assertNotNull(
-        //			"The method getParameters() must return a non-null value, possible a zero length Object[] array",
-        //			paramNames
-        //		);
-        //		FIXME: so instead:
-        if (params == null) params = new Object[0];
-        for (int i = 0; i < params.length; i++) {
-            Assert.assertNotNull("A parameter default must not be null.", params[i]);
-        }
-    }
-
-    @Test
-    public void testSetParameters_arrayObject() throws Exception {
-        IRule rule = getRule();
-        Object[] defaultParams = rule.getParameters();
-        rule.setParameters(defaultParams);
-    }
-
-    @Test
     public void testValidate_IMolecularFormula() throws Exception {
         IRule rule = getRule();
     	
@@ -98,5 +76,4 @@ public abstract class FormulaRuleTest extends CDKTestCase {
         // can it handle an empty MF?
         rule.validate(new MolecularFormula());
     }
-
 }

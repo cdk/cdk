@@ -131,7 +131,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
      * @return    The test suite
      */
     @Test
-    public void testDefaultValidTrue() throws Exception {
+    public void testValidate_IMolecularFormula() throws Exception {
 
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(ifac.getMajorIsotope("C"), 5);
