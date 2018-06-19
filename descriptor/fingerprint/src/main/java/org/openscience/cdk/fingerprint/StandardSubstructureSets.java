@@ -16,9 +16,6 @@ import java.util.List;
  * @cdk.githash
  */
 public class StandardSubstructureSets {
-
-    private static String[] smarts = null;
-
     /**
      * The functional groups.
      *
@@ -26,9 +23,39 @@ public class StandardSubstructureSets {
      * @throws Exception if there is an error parsing SMILES for the functional groups
      */
     public static String[] getFunctionalGroupSMARTS() throws Exception {
-        if (smarts != null) return smarts;
+        return readSMARTSPattern("org/openscience/cdk/fingerprint/data/SMARTS_InteLigand.txt");
+    }
 
-        String filename = "org/openscience/cdk/fingerprint/data/SMARTS_InteLigand.txt";
+    /**
+     * Subset of the MACCS fingerprint definitions. The subset encompasses the pattern
+     * that are countable:
+     * <ul>
+     *     <li>Patterns have obvious counting nature, <i>e.g., 6-Ring, C=O, etc.</i></li>
+     *     <li>Patterns like <i>"Is there at least 1 of this and that?", "Are there at least 2 ..."</i> etc. are merged</li>
+     *     <li>Patterns clearly corresponding to binary properties, <i>e.g., actinide group ([Ac,Th,Pa,...]), isotope, etc.,</i> have been removed.</li>
+     * </ul>
+     *
+     *
+     * @return Countable subset of the MACCS fingerprint definition
+     * @throws Exception if there is an error parsing SMILES patterns
+     */
+    public static String[] getCountableMACCSSMARTS() throws Exception {
+        return readSMARTSPattern("org/openscience/cdk/fingerprint/data/SMARTS_countable_MACCS_keys.txt");
+    }
+
+    /**
+     * Load a list of SMARTS patterns from the specified file.
+     *
+     * Each line in the file corresponds to a pattern with the following structure:
+     * PATTERN_DESCRIPTION: SMARTS_PATTERN, <i>e.g., Thioketone: [#6][CX3](=[SX1])[#6]</i>
+     *
+     * Empty lines and lines starting with a "#" are skipped.
+     *
+     * @param filename list of the SMARTS pattern to be loaded
+     * @return list of strings containing the loaded SMARTS pattern
+     * @throws Exception if there is an error parsing SMILES patterns
+     */
+    private static String[] readSMARTSPattern(String filename) throws Exception {
         InputStream ins = StandardSubstructureSets.class.getClassLoader().getResourceAsStream(filename);
         BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 
@@ -43,9 +70,6 @@ public class StandardSubstructureSets {
             s.append(toks[toks.length - 1]);
             tmp.add(s.toString().trim());
         }
-        smarts = tmp.toArray(new String[]{});
-        return smarts;
-
+        return tmp.toArray(new String[]{});
     }
-
 }
