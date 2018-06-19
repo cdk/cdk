@@ -27,8 +27,13 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.BitSet;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,6 +52,12 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     public void testSize() throws Exception {
         SubstructureFingerprinter fp = new SubstructureFingerprinter();
         Assert.assertEquals(307, fp.getSize());
+
+        fp = new SubstructureFingerprinter(SubstructureFingerprinter.Type.FUNCTIONAL_GROUPS);
+        Assert.assertEquals(307, fp.getSize());
+
+        fp = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        Assert.assertEquals(142, fp.getSize());
     }
 
     @Test
@@ -92,7 +103,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testFingerprint() throws Exception {
+    public void testFunctionalGroupsBinary() throws Exception {
         IFingerprinter printer = new SubstructureFingerprinter();
         Assert.assertEquals(307, printer.getSize());
 
@@ -104,6 +115,44 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         Assert.assertTrue(fp.get(0));
         Assert.assertTrue(fp.get(1));
         Assert.assertFalse(fp.get(100));
+    }
+
+    @Test
+    public void testFunctionalGroupsCount() throws Exception {
+        // TODO: Implement tests
+    }
+
+    @Test
+    public void testCountableMACCSBinary() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+
+        IAtomContainer mol0 = parser.parseSmiles("C1=CC=CC(=C1)CCCCC2=CC=CC=C2");
+        IAtomContainer mol1 = parser.parseSmiles("c1ccccc1CCc1ccccc1");
+        IAtomContainer mol2 = parser.parseSmiles("c1ccccc1CC");
+        IAtomContainer mol3 = parser.parseSmiles("CCC.CCC");
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol0);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
+        Aromaticity.cdkLegacy().apply(mol0);
+        Aromaticity.cdkLegacy().apply(mol1);
+        Aromaticity.cdkLegacy().apply(mol2);
+        Aromaticity.cdkLegacy().apply(mol3);
+
+        BitSet bs0 = printer.getBitFingerprint(mol0).asBitSet();
+        BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
+        BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
+        BitSet bs3 = printer.getBitFingerprint(mol3).asBitSet();
+
+        Assert.assertEquals(142, printer.getSize());
+
+        Assert.assertTrue(bs1.get(111));
+
+        Assert.assertTrue(bs2.get(111));
+
+        Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs2));
     }
 
     /**
