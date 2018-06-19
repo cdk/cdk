@@ -364,20 +364,19 @@ import java.util.Map;
  * @cdk.module   fingerprint
  * @cdk.githash
  */
+
+
 public class SubstructureFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     private String[] smarts;
+    public enum Type {COUNTABLE_MACCS166, FUNCTIONAL_GROUPS}
 
     /**
      * Set up the fingerprinter to use the fragments from
      * {@link org.openscience.cdk.fingerprint.StandardSubstructureSets}.
      */
     public SubstructureFingerprinter() {
-        try {
-            smarts = StandardSubstructureSets.getFunctionalGroupSMARTS();
-        } catch (Exception e) {
-            smarts = null;
-        }
+        this(Type.FUNCTIONAL_GROUPS);
     }
 
     /**
@@ -387,6 +386,37 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
      */
     public SubstructureFingerprinter(String[] smarts) {
         this.smarts = smarts;
+    }
+
+    /**
+     * Set up the fingerprinter to use a pre-defined set of fragments.
+     *
+     * Available sets are:
+     * <ul>
+     *     <li>Functional Groups:</li>
+     *     <li>Countable MACCS patterns:</li>
+     * </ul>
+     *
+     * @todo: Somehow we should handle this exceptions in a way, that it is transparent to the user why 'smarts==null'.
+     * 
+     * @param type The desired type of substructures.
+     */
+    public SubstructureFingerprinter(Type type) {
+        try {
+            switch (type) {
+                case FUNCTIONAL_GROUPS:
+                    smarts = StandardSubstructureSets.getFunctionalGroupSMARTS();
+                    break;
+                case COUNTABLE_MACCS166:
+                    smarts = StandardSubstructureSets.getCountableMACCSSMARTS();
+                    break;
+                default:
+                    smarts = null;
+            }
+        } catch (Exception e) {
+            smarts = null;
+        }
+
     }
 
     /** {@inheritDoc} */
