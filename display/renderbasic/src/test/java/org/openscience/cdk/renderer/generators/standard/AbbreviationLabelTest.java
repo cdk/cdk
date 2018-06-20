@@ -108,6 +108,21 @@ public class AbbreviationLabelTest {
         assertThat(formatted.get(1).style, is(-1));
     }
 
+    @Test
+    public void formatRubpy3Cl2() {
+        List<String> tokens = new ArrayList<>();
+        assertTrue(AbbreviationLabel.parse("Ru(bpy)3Cl2", tokens));
+        List<AbbreviationLabel.FormattedText> formatted = AbbreviationLabel.format(tokens);
+        AbbreviationLabel.reduce(formatted, 0, formatted.size());
+        assertThat(formatted.get(0).text, is("Ru(bpy)"));
+        assertThat(formatted.get(0).style, is(0));
+        assertThat(formatted.get(1).text, is("3"));
+        assertThat(formatted.get(1).style, is(-1));
+        assertThat(formatted.get(2).text, is("Cl"));
+        assertThat(formatted.get(2).style, is(0));
+        assertThat(formatted.get(3).text, is("2"));
+        assertThat(formatted.get(3).style, is(-1));
+    }
 
     @Test
     public void CO2Et() {
