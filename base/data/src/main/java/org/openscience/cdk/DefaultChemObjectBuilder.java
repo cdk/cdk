@@ -146,6 +146,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 
         // atom containers
         if (CDK_LEGACY_AC) {
+            System.err.println("[WARN] Using the old AtomContainer implementation.");
             factory.register(IAtomContainer.class, AtomContainer.class);
         } else {
             factory.register(IAtomContainer.class, AtomContainer2.class);

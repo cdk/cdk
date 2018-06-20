@@ -338,6 +338,20 @@ public class MolecularFormulaManipulator {
             IElement element = formula.getBuilder().newInstance(IElement.class, orderElement);
             if (containsElement(formula, element)) {
                 List<IIsotope> isotopes = getIsotopes(formula, element);
+                Collections.sort(isotopes,
+                                 new Comparator<IIsotope>() {
+                                     @Override
+                                     public int compare(IIsotope a,
+                                                        IIsotope b) {
+                                         Integer aMass = a.getMassNumber();
+                                         Integer bMass = b.getMassNumber();
+                                         if (aMass == null)
+                                             return -1;
+                                         if (bMass == null)
+                                             return +1;
+                                         return aMass.compareTo(bMass);
+                                     }
+                                 });
                 isotopesList.addAll(isotopes);
             }
         }

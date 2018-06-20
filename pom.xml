@@ -471,7 +471,7 @@
                 <configuration>
                     <!-- prevent the annoying ForkedBooter process from stealing
                          window focus on Mac OS -->
-                    <argLine>-Djava.awt.headless=true</argLine>
+                    <argLine>-Djava.awt.headless=true -Dcdk.logging.level=ERROR</argLine>
                     <excludes>
                         <!-- not a test class -->
                         <exclude>**/TestMoleculeFactory.java</exclude>

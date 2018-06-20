@@ -1336,7 +1336,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf.addIsotope(ifac.getIsotope("Br", 81), 1);
 
         assertThat(MolecularFormulaManipulator.getString(mf, false, false), is("C7H3Br2O3"));
-        assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3[81]BrBrO3"));
+        assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3Br[81]BrO3"));
     }
 
     @Test

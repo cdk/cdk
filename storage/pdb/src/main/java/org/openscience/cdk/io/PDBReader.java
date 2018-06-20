@@ -241,11 +241,7 @@ public class PDBReader extends DefaultChemObjectReader {
                 logger.debug("Read line: ", cRead);
                 if (cRead != null) {
                     lineLength = cRead.length();
-
-                    if (lineLength < 80) {
-                        logger.warn("Line is not of the expected length 80!");
-                    }
-
+                    
                     // make sure the record name is 6 characters long
                     if (lineLength < 6) {
                         cRead = cRead + "      ";
