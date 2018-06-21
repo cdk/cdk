@@ -124,35 +124,149 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
     @Test
     public void testCountableMACCSBinary() throws Exception {
+        // Tests are modified copy of the test included in the MACCS-FPs class
+
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        Assert.assertEquals(142, printer.getSize());
 
-        IAtomContainer mol0 = parser.parseSmiles("C1=CC=CC(=C1)CCCCC2=CC=CC=C2");
+        IAtomContainer mol0 = parser.parseSmiles("CC(N)CCCN");
         IAtomContainer mol1 = parser.parseSmiles("c1ccccc1CCc1ccccc1");
         IAtomContainer mol2 = parser.parseSmiles("c1ccccc1CC");
-        IAtomContainer mol3 = parser.parseSmiles("CCC.CCC");
+        IAtomContainer mol3 = parser.parseSmiles("CC(N)CCC");
+        IAtomContainer mol4 = parser.parseSmiles("CCCC");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol0);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol4);
+
         Aromaticity.cdkLegacy().apply(mol0);
         Aromaticity.cdkLegacy().apply(mol1);
         Aromaticity.cdkLegacy().apply(mol2);
         Aromaticity.cdkLegacy().apply(mol3);
+        Aromaticity.cdkLegacy().apply(mol4);
 
         BitSet bs0 = printer.getBitFingerprint(mol0).asBitSet();
         BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
         BitSet bs3 = printer.getBitFingerprint(mol3).asBitSet();
+        BitSet bs4 = printer.getBitFingerprint(mol4).asBitSet();
 
-        Assert.assertEquals(142, printer.getSize());
-
+        // Check for the aromatic 6M rings
+        Assert.assertFalse(bs0.get(111));
         Assert.assertTrue(bs1.get(111));
-
         Assert.assertTrue(bs2.get(111));
+        Assert.assertFalse(bs3.get(111));
+        Assert.assertFalse(bs4.get(111));
 
+        // Check for the fingerprints being subsets
         Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs2));
+        Assert.assertFalse(FingerprinterTool.isSubset(bs0, bs3));
+        Assert.assertTrue(FingerprinterTool.isSubset(bs3, bs4));
+    }
+
+    @Test
+    public void testCountableMACCSBinary2() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        IAtomContainer mol;
+        BitSet bs;
+
+        // Test molecule 1
+        mol = parser.parseSmiles("C([S](O)(=O)=O)C1=C(C=CC=C1)CCCC[N+](=O)[O-]");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        bs = printer.getBitFingerprint(mol).asBitSet();
+
+        Assert.assertTrue(bs.get(46));
+        Assert.assertTrue(bs.get(27));
+        Assert.assertTrue(bs.get(59));
+        Assert.assertTrue(bs.get(49));
+        Assert.assertTrue(bs.get(111));
+        Assert.assertTrue(bs.get(129));
+        Assert.assertTrue(bs.get(115));
+        Assert.assertTrue(bs.get(120));
+        Assert.assertTrue(bs.get(41));
+
+        Assert.assertFalse(bs.get(93));
+        Assert.assertFalse(bs.get(91));
+        Assert.assertFalse(bs.get(24));
+
+        // Test molecule 2: Diatrizoic acid
+        mol = parser.parseSmiles("CC(=O)NC1=C(C(=C(C(=C1I)C(=O)O)I)NC(=O)C)I");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        bs = printer.getBitFingerprint(mol).asBitSet();
+
+        Assert.assertTrue(bs.get(15));
+        Assert.assertTrue(bs.get(135));
+        Assert.assertTrue(bs.get(139));
+        Assert.assertTrue(bs.get(93));
+        Assert.assertTrue(bs.get(73));
+
+        Assert.assertFalse(bs.get(91));
+    }
+
+    @Test
+    public void testCountableMACCSBinary_Rings() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        IAtomContainer mol;
+        BitSet bs;
+
+        // Aromatic 6-rings
+        mol = parser.parseSmiles("C1=CC=CC(=C1)CCCC2=CC=CC=C2");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        bs = printer.getBitFingerprint(mol).asBitSet();
+
+        Assert.assertTrue(bs.get(128)); // 6-ring
+        Assert.assertTrue(bs.get(111)); // aromaticity
+
+        Assert.assertFalse(bs.get(7)); // 7-ring
+        Assert.assertFalse(bs.get(82)); // 5-ring
+
+        // Non-aromatic 6-rings
+        mol = parser.parseSmiles("C1CC(CCC1)CCCCC2CCCCC2");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        bs = printer.getBitFingerprint(mol).asBitSet();
+
+        Assert.assertTrue(bs.get(128)); // 6-ring
+
+        Assert.assertFalse(bs.get(111)); // aromaticity
+        Assert.assertFalse(bs.get(7)); // 7-ring
+        Assert.assertFalse(bs.get(82)); // 5-ring
+
+        // Aromatic 6-ring, 3-ring and 4-ring
+        mol = parser.parseSmiles("C1CC1C(CCC2CCC2)CC3=CC=CC=C3");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        bs = printer.getBitFingerprint(mol).asBitSet();
+
+        Assert.assertTrue(bs.get(128)); // 6-ring
+        Assert.assertTrue(bs.get(111)); // aromaticity
+        Assert.assertTrue(bs.get(10)); // 3-ring
+        Assert.assertTrue(bs.get(1)); // 4-ring
+
+        Assert.assertFalse(bs.get(7)); // 7-ring
+        Assert.assertFalse(bs.get(82)); // 5-ring
+
+        // Aromatic 6-ring, 3-ring and 4-ring
+        mol = parser.parseSmiles("C1(CC1C(CCC2CCC2)CC3=CC=CC=C3)C(C(C(C4CC4)C5CC5)C6CC6)C7CC7");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        bs = printer.getBitFingerprint(mol).asBitSet();
+
+        Assert.assertTrue(bs.get(128)); // 6-ring
+        Assert.assertTrue(bs.get(111)); // aromaticity
+        Assert.assertTrue(bs.get(10)); // 3-ring
+        Assert.assertTrue(bs.get(1)); // 4-ring
+
+        Assert.assertFalse(bs.get(7)); // 7-ring
+        Assert.assertFalse(bs.get(82)); // 5-ring
     }
 
     /**
