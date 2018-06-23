@@ -140,12 +140,6 @@ public final class VentoFoggia extends Pattern {
         return new Mappings(query, target, iterable);
     }
 
-    /**{@inheritDoc} */
-    @Override
-    public int countUniqueMatches(final IAtomContainer target) {
-        return matchAll(target).stereochemistry().countUnique();
-    }
-
     /**
      * Create a pattern which can be used to find molecules which contain the
      * {@code query} structure.
