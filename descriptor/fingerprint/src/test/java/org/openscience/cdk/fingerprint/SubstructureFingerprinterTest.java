@@ -178,6 +178,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         mol = parser.parseSmiles("C([S](O)(=O)=O)C1=C(C=CC=C1)CCCC[N+](=O)[O-]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
+
         bs = printer.getBitFingerprint(mol).asBitSet();
 
         Assert.assertTrue(bs.get(46));
@@ -207,6 +208,111 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         Assert.assertTrue(bs.get(73));
 
         Assert.assertFalse(bs.get(91));
+    }
+
+    @Test
+    public void testGetCountFingerprint() throws Exception {}
+
+    @Test
+    public void testCountableMACCSCount2() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        IAtomContainer mol;
+        ICountFingerprint cfp;
+
+        // Test molecule 1
+        mol = parser.parseSmiles("C([S](O)(=O)=O)C1=C(C=CC=C1)CCCC[N+](=O)[O-]");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        cfp = printer.getCountFingerprint(mol);
+
+        Assert.assertTrue(cfp.getCountForHash(46) == 2);
+        Assert.assertTrue(cfp.getCountForHash(27) == 1);
+        Assert.assertTrue(cfp.getCountForHash(59) == 2);
+        Assert.assertTrue(cfp.getCountForHash(49) == 1);
+        Assert.assertTrue(cfp.getCountForHash(111) == 1);
+        Assert.assertTrue(cfp.getCountForHash(129) == 3);
+        Assert.assertTrue(cfp.getCountForHash(115) == 2);
+        Assert.assertTrue(cfp.getCountForHash(120) == 3);
+        Assert.assertTrue(cfp.getCountForHash(41) == 3);
+
+        Assert.assertTrue(cfp.getCountForHash(93) == 0);
+        Assert.assertTrue(cfp.getCountForHash(91) == 0);
+        Assert.assertTrue(cfp.getCountForHash(24) == 0);
+
+        // Test molecule 2: Diatrizoic acid
+        mol = parser.parseSmiles("CC(=O)NC1=C(C(=C(C(=C1I)C(=O)O)I)NC(=O)C)I");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        cfp = printer.getCountFingerprint(mol);
+
+        Assert.assertTrue(cfp.getCountForHash(15) == 3);
+        Assert.assertTrue(cfp.getCountForHash(135) == 3);
+        Assert.assertTrue(cfp.getCountForHash(139) == 4);
+        Assert.assertTrue(cfp.getCountForHash(93) == 3);
+        Assert.assertTrue(cfp.getCountForHash(73) == 6);
+
+        Assert.assertTrue(cfp.getCountForHash(91) == 0);
+    }
+
+    @Test
+    public void testCountableMACCSCount_Rings() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        IAtomContainer mol;
+        ICountFingerprint cfp;
+
+        // Aromatic 6-rings
+        mol = parser.parseSmiles("C1=CC=CC(=C1)CCCC2=CC=CC=C2");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        cfp = printer.getCountFingerprint(mol);
+
+        Assert.assertTrue(cfp.getCountForHash(128) == 2); // 6-ring
+        Assert.assertTrue(cfp.getCountForHash(111) == 2); // aromaticity
+
+        Assert.assertTrue(cfp.getCountForHash(7) == 0); // 7-ring
+        Assert.assertTrue(cfp.getCountForHash(82) == 0); // 5-ring
+
+        // Non-aromatic 6-rings
+        mol = parser.parseSmiles("C1CC(CCC1)CCCCC2CCCCC2");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        cfp = printer.getCountFingerprint(mol);
+
+        Assert.assertTrue(cfp.getCountForHash(128) == 2); // 6-ring
+
+        Assert.assertTrue(cfp.getCountForHash(111) == 0); // aromaticity
+        Assert.assertTrue(cfp.getCountForHash(7) == 0); // 7-ring
+        Assert.assertTrue(cfp.getCountForHash(82) == 0); // 5-ring
+
+        // Aromatic 6-ring, 3-ring and 4-ring
+        mol = parser.parseSmiles("C1CC1C(CCC2CCC2)CC3=CC=CC=C3");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        cfp = printer.getCountFingerprint(mol);
+
+        Assert.assertTrue(cfp.getCountForHash(128) == 1); // 6-ring
+        Assert.assertTrue(cfp.getCountForHash(111) == 1); // aromaticity
+        Assert.assertTrue(cfp.getCountForHash(10) == 1); // 3-ring
+        Assert.assertTrue(cfp.getCountForHash(1) == 1); // 4-ring
+
+        Assert.assertTrue(cfp.getCountForHash(7) == 0); // 7-ring
+        Assert.assertTrue(cfp.getCountForHash(82) == 0); // 5-ring
+
+        // Aromatic 6-ring, 3-ring and 4-ring
+        mol = parser.parseSmiles("C1(CC1C(CCC2CCC2)CC3=CC=CC=C3)C(C(C(C4CC4)C5CC5)C6CC6)C7CC7");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        cfp = printer.getCountFingerprint(mol);
+
+        Assert.assertTrue(cfp.getCountForHash(128) == 1); // 6-ring
+        Assert.assertTrue(cfp.getCountForHash(111) == 1); // aromaticity
+        Assert.assertTrue(cfp.getCountForHash(10) == 5); // 3-ring
+        Assert.assertTrue(cfp.getCountForHash(1) == 1); // 4-ring
+
+        Assert.assertTrue(cfp.getCountForHash(7) == 0); // 7-ring
+        Assert.assertTrue(cfp.getCountForHash(82) == 0); // 5-ring
     }
 
     @Test

@@ -24,10 +24,16 @@ package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.VentoFoggia;
+import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 
 import java.util.BitSet;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * {@link IFingerprinter} that gives a bit set which has a size equal to the number
@@ -397,8 +403,6 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
      *     <li>Countable MACCS patterns:</li>
      * </ul>
      *
-     * @todo: Somehow we should handle this exceptions in a way, that it is transparent to the user why 'smarts==null'.
-     * 
      * @param type The desired type of substructures.
      */
     public SubstructureFingerprinter(Type type) {
@@ -440,6 +444,61 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         return new BitSetFingerprint(fingerPrint);
     }
 
+
+    /** {@inheritDoc} */
+    @Override
+    public ICountFingerprint getCountFingerprint(IAtomContainer atomContainer) throws CDKException {
+        if (smarts == null) {
+            throw new CDKException("No substructures were defined");
+        }
+
+        IChemObjectBuilder aCBuilder = atomContainer.getBuilder();
+
+        // init SMARTS invariants (connectivity, degree, etc)
+
+        SmartsMatchers.prepare(atomContainer, false);
+
+        final Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+        for (int i = 0; i < smarts.length; i++) {
+            Pattern pattern = VentoFoggia.findSubstructure(SMARTSParser.parse(smarts[i], aCBuilder));
+            map.put(i, pattern.matchAll(atomContainer).stereochemistry().countUnique());
+        }
+
+        final int sz = map.size();
+        final int[] hash = new int[sz], count = new int[sz];
+        int n = 0;
+        for (int h : map.keySet()) {
+            hash[n] = h;
+            count[n++] = map.get(h);
+        }
+
+        return new ICountFingerprint() {
+            @Override
+            public long size() { return smarts.length; }
+
+            @Override
+            public int numOfPopulatedbins() { return sz; }
+
+            @Override
+            public int getCount(int index) { return count[index]; }
+
+            @Override
+            public int getHash(int index) { return hash[index]; }
+
+            @Override
+            public void merge(ICountFingerprint fp) {}
+
+            @Override
+            public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {}
+
+            @Override
+            public boolean hasHash(int hash) { return map.containsKey(hash); }
+
+            @Override
+            public int getCountForHash(int hash) { return map.get(hash); }
+        };
+    }
+
     /** {@inheritDoc} */
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
@@ -463,11 +522,4 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
     public String getSubstructure(int bitIndex) {
         return smarts[bitIndex];
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
-        throw new UnsupportedOperationException();
-    }
-
 }
