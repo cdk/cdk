@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import org.apache.commons.math3.random.BitsStreamGenerator;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -58,6 +59,9 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
         fp = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
         Assert.assertEquals(142, fp.getSize());
+
+        fp = new SubstructureFingerprinter(SubstructureFingerprinter.Type.BINARY_MACCS166);
+        Assert.assertEquals(14, fp.getSize());
     }
 
     @Test
@@ -165,6 +169,39 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs2));
         Assert.assertFalse(FingerprinterTool.isSubset(bs0, bs3));
         Assert.assertTrue(FingerprinterTool.isSubset(bs3, bs4));
+    }
+
+
+    @Test
+    public void testBinaryMACCS() throws Exception {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.BINARY_MACCS166);
+
+        // == Isotopes ==
+        // Isotopic molecule: Carbon C-13
+        IAtomContainer mol = parser.parseSmiles("[13CH4]");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        BitSet bs = printer.getBitFingerprint(mol).asBitSet();
+
+        Assert.assertTrue(bs.get(0));
+
+        // Non-isotopic molecule: Carbon C-13
+        mol = parser.parseSmiles("c1ccccc1CCc1ccccc1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        bs = printer.getBitFingerprint(mol).asBitSet();
+
+        Assert.assertFalse(bs.get(0));
+
+        // == Groups ==
+        mol = parser.parseSmiles("P(#[Fe])=[Fe]");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+        bs = printer.getBitFingerprint(mol).asBitSet();
+
+        Assert.assertTrue(bs.get(7));
+        Assert.assertFalse(bs.get(2));
     }
 
     @Test

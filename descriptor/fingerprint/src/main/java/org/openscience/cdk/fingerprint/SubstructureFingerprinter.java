@@ -375,7 +375,7 @@ import java.util.TreeMap;
 public class SubstructureFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     private String[] smarts;
-    public enum Type {COUNTABLE_MACCS166, FUNCTIONAL_GROUPS}
+    public enum Type {COUNTABLE_MACCS166, BINARY_MACCS166, FUNCTIONAL_GROUPS}
 
     /**
      * Set up the fingerprinter to use the fragments from
@@ -413,6 +413,9 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
                     break;
                 case COUNTABLE_MACCS166:
                     smarts = StandardSubstructureSets.getCountableMACCSSMARTS();
+                    break;
+                case BINARY_MACCS166:
+                    smarts = StandardSubstructureSets.getBinaryMACCSSMARTS();
                     break;
                 default:
                     smarts = null;

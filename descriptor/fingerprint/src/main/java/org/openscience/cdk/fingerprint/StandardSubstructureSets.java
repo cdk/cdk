@@ -35,12 +35,22 @@ public class StandardSubstructureSets {
      *     <li>Patterns clearly corresponding to binary properties, <i>e.g., actinide group ([Ac,Th,Pa,...]), isotope, etc.,</i> have been removed.</li>
      * </ul>
      *
-     *
      * @return Countable subset of the MACCS fingerprint definition
      * @throws Exception if there is an error parsing SMILES patterns
      */
     public static String[] getCountableMACCSSMARTS() throws Exception {
         return readSMARTSPattern("org/openscience/cdk/fingerprint/data/SMARTS_countable_MACCS_keys.txt");
+    }
+
+    /**
+     * Subset of the MACCS fingerprint definitions. The subset encompasses the pattern
+     * that are binary properties, e.g. groups (actinide group ([Ac,Th,Pa,...])).
+     *
+     * @return Binary subset of the MACCS fingerprint definition
+     * @throws Exception if there is an error parsing SMILES patterns
+     */
+    public static String[] getBinaryMACCSSMARTS() throws Exception {
+        return readSMARTSPattern("org/openscience/cdk/fingerprint/data/SMARTS_binary_MACCS_keys.txt");
     }
 
     /**
