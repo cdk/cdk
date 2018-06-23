@@ -177,11 +177,6 @@ public final class SmartsPattern extends Pattern {
         return mappings;
     }
 
-
-    /**{@inheritDoc} */
-    @Override
-    public int countUniqueMatches(final IAtomContainer target) { return matchAll(target).countUnique(); }
-
     /**
      * Create a {@link Pattern} that will match the given {@code smarts} query.
      *
