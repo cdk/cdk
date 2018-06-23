@@ -110,7 +110,7 @@ MACCS_ID_122: [#7](~*)(~*)~*
 MACCS_ID_123: [#8]~[#6]~[#8]
 MACCS_ID_124_and_130: [!#6;!#1]~[!#6;!#1]
 # Aromatic rings. Original pattern: [!*]
-MACCS_ID_125: [aR]1:@a:@a:@a:@a:@a:@1
+MACCS_ID_125: a:1:a:a:a:a:a1
 MACCS_ID_126: [#8](!@*)!@*
 MACCS_ID_127_and_143: [#8]!@[R]@*
 MACCS_ID_128: [#6H2](~*~*~*~[#6H2]~*)~*
