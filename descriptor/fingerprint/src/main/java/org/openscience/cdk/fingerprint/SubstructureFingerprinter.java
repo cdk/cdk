@@ -395,6 +395,19 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
     }
 
     /**
+     * Set up the fingerprinter to use a user-defined set of fragments provided as SMARTS pattern list.
+     *
+     * @param filename The SMARTS pattern list
+     */
+    public SubstructureFingerprinter(String filename) {
+        try {
+            smarts = StandardSubstructureSets.readSMARTSPattern(filename);
+        } catch (Exception e) {
+            smarts = null;
+        }
+    }
+
+    /**
      * Set up the fingerprinter to use a pre-defined set of fragments.
      *
      * Available sets are:

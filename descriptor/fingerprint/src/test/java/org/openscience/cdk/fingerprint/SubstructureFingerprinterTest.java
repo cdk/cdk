@@ -60,6 +60,9 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         fp = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
         Assert.assertEquals(142, fp.getSize());
 
+        fp = new SubstructureFingerprinter("org/openscience/cdk/fingerprint/data/SMARTS_countable_MACCS_keys.txt");
+        Assert.assertEquals(142, fp.getSize());
+
         fp = new SubstructureFingerprinter(SubstructureFingerprinter.Type.BINARY_MACCS166);
         Assert.assertEquals(14, fp.getSize());
     }

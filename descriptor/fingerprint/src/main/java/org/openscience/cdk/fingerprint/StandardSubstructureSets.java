@@ -65,7 +65,7 @@ public class StandardSubstructureSets {
      * @return list of strings containing the loaded SMARTS pattern
      * @throws Exception if there is an error parsing SMILES patterns
      */
-    private static String[] readSMARTSPattern(String filename) throws Exception {
+    public static String[] readSMARTSPattern(String filename) throws Exception {
         InputStream ins = StandardSubstructureSets.class.getClassLoader().getResourceAsStream(filename);
         BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 
