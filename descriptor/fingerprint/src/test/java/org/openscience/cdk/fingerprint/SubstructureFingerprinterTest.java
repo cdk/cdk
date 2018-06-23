@@ -211,7 +211,9 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testGetCountFingerprint() throws Exception {}
+    public void testGetCountFingerprint() throws Exception {
+        // See other function for specific test cases
+    }
 
     @Test
     public void testCountableMACCSCount2() throws Exception {
