@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**

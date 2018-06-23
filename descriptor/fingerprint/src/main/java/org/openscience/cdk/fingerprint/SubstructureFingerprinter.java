@@ -23,17 +23,18 @@
 package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.Smarts;
 import org.openscience.cdk.isomorphism.VentoFoggia;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 
-import java.util.BitSet;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * {@link IFingerprinter} that gives a bit set which has a size equal to the number
@@ -374,16 +375,17 @@ import java.util.TreeMap;
 
 public class SubstructureFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
-    private String[] smarts;
-    public enum Type {COUNTABLE_MACCS166, FUNCTIONAL_GROUPS}
+    private static final class Key {
+        final String smarts;
+        final Pattern pattern;
 
-    /**
-     * Set up the fingerprinter to use the fragments from
-     * {@link org.openscience.cdk.fingerprint.StandardSubstructureSets}.
-     */
-    public SubstructureFingerprinter() {
-        this(Type.FUNCTIONAL_GROUPS);
+        public Key(String smarts, Pattern pattern) {
+            this.smarts = smarts;
+            this.pattern = pattern;
+        }
     }
+
+    private List<Key> keys = new ArrayList<>();
 
     /**
      * Set up the fingerprinter to use a user-defined set of fragments.
@@ -391,55 +393,46 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
      * @param smarts The collection of fragments to look for
      */
     public SubstructureFingerprinter(String[] smarts) {
-        this.smarts = smarts;
+        setSmarts(smarts);
     }
 
     /**
-     * Set up the fingerprinter to use a pre-defined set of fragments.
-     *
-     * Available sets are:
-     * <ul>
-     *     <li>Functional Groups:</li>
-     *     <li>Countable MACCS patterns:</li>
-     * </ul>
-     *
-     * @param type The desired type of substructures.
+     * Set up the fingerprinter to use the fragments from
+     * {@link org.openscience.cdk.fingerprint.StandardSubstructureSets}.
      */
-    public SubstructureFingerprinter(Type type) {
+    public SubstructureFingerprinter() {
         try {
-            switch (type) {
-                case FUNCTIONAL_GROUPS:
-                    smarts = StandardSubstructureSets.getFunctionalGroupSMARTS();
-                    break;
-                case COUNTABLE_MACCS166:
-                    smarts = StandardSubstructureSets.getCountableMACCSSMARTS();
-                    break;
-                default:
-                    smarts = null;
-            }
-        } catch (Exception e) {
-            smarts = null;
+            setSmarts(StandardSubstructureSets.getFunctionalGroupSMARTS());
+        } catch (Exception ex) {
+            throw new IllegalStateException("Could not load SMARTS patterns", ex);
         }
+    }
 
+    /**
+     * Set the SMARTS patterns.
+     * @param smarts the SMARTS
+     */
+    private void setSmarts(String[] smarts) {
+        keys.clear();
+        for (String key : smarts) {
+            QueryAtomContainer qmol = SMARTSParser.parse(key, null);
+            keys.add(new Key(key,
+                             Pattern.findSubstructure(qmol)));
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
-        if (smarts == null) {
+        if (keys.isEmpty()) {
             throw new CDKException("No substructures were defined");
         }
 
-        int bitsetLength = smarts.length;
-        BitSet fingerPrint = new BitSet(bitsetLength);
-
-        SMARTSQueryTool sqt = new SMARTSQueryTool("C", atomContainer.getBuilder());
-        for (int i = 0; i < smarts.length; i++) {
-            String pattern = smarts[i];
-
-            sqt.setSmarts(pattern);
-            boolean status = sqt.matches(atomContainer);
-            if (status) fingerPrint.set(i, true);
+        SmartsMatchers.prepare(atomContainer, true);
+        BitSet fingerPrint = new BitSet(keys.size());
+        for (int i = 0; i < keys.size(); i++) {
+            if (keys.get(i).pattern.matches(atomContainer))
+                fingerPrint.set(i, true);
         }
         return new BitSetFingerprint(fingerPrint);
     }
@@ -448,24 +441,24 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
     /** {@inheritDoc} */
     @Override
     public ICountFingerprint getCountFingerprint(IAtomContainer atomContainer) throws CDKException {
-        if (smarts == null) {
+        if (keys.isEmpty()) {
             throw new CDKException("No substructures were defined");
         }
 
-        IChemObjectBuilder aCBuilder = atomContainer.getBuilder();
-
         // init SMARTS invariants (connectivity, degree, etc)
-
         SmartsMatchers.prepare(atomContainer, false);
 
         final Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
-        for (int i = 0; i < smarts.length; i++) {
-            Pattern pattern = VentoFoggia.findSubstructure(SMARTSParser.parse(smarts[i], aCBuilder));
-            map.put(i, pattern.matchAll(atomContainer).stereochemistry().countUnique());
+        for (int i = 0; i < keys.size(); i++) {
+            Pattern ptrn = keys.get(i).pattern;
+            map.put(i,
+                    ptrn.matchAll(atomContainer)
+                        .countUnique());
         }
 
-        final int sz = map.size();
-        final int[] hash = new int[sz], count = new int[sz];
+        final int length = keys.size();
+        final int size = map.size();
+        final int[] hash = new int[size], count = new int[size];
         int n = 0;
         for (int h : map.keySet()) {
             hash[n] = h;
@@ -473,11 +466,12 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         }
 
         return new ICountFingerprint() {
-            @Override
-            public long size() { return smarts.length; }
 
             @Override
-            public int numOfPopulatedbins() { return sz; }
+            public long size() { return length; }
+
+            @Override
+            public int numOfPopulatedbins() { return size; }
 
             @Override
             public int getCount(int index) { return count[index]; }
@@ -508,7 +502,7 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
     /** {@inheritDoc} */
     @Override
     public int getSize() {
-        return smarts.length;
+        return keys.size();
     }
 
     /**
@@ -520,6 +514,6 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
      *         index <code>bitIndex</code>.
      */
     public String getSubstructure(int bitIndex) {
-        return smarts[bitIndex];
+        return keys.get(bitIndex).smarts;
     }
 }

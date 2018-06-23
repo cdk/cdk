@@ -53,10 +53,10 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         SubstructureFingerprinter fp = new SubstructureFingerprinter();
         Assert.assertEquals(307, fp.getSize());
 
-        fp = new SubstructureFingerprinter(SubstructureFingerprinter.Type.FUNCTIONAL_GROUPS);
+        fp = new SubstructureFingerprinter(StandardSubstructureSets.getFunctionalGroupSMARTS());
         Assert.assertEquals(307, fp.getSize());
 
-        fp = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        fp = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         Assert.assertEquals(142, fp.getSize());
     }
 
@@ -127,7 +127,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         // Tests are modified copy of the test included in the MACCS-FPs class
 
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         Assert.assertEquals(142, printer.getSize());
 
         IAtomContainer mol0 = parser.parseSmiles("CC(N)CCCN");
@@ -170,7 +170,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     @Test
     public void testCountableMACCSBinary2() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
         BitSet bs;
 
@@ -218,7 +218,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     @Test
     public void testCountableMACCSCount2() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
         ICountFingerprint cfp;
 
@@ -228,19 +228,19 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
-        Assert.assertTrue(cfp.getCountForHash(46) == 2);
-        Assert.assertTrue(cfp.getCountForHash(27) == 1);
-        Assert.assertTrue(cfp.getCountForHash(59) == 2);
-        Assert.assertTrue(cfp.getCountForHash(49) == 1);
-        Assert.assertTrue(cfp.getCountForHash(111) == 1);
-        Assert.assertTrue(cfp.getCountForHash(129) == 3);
-        Assert.assertTrue(cfp.getCountForHash(115) == 2);
-        Assert.assertTrue(cfp.getCountForHash(120) == 3);
-        Assert.assertTrue(cfp.getCountForHash(41) == 3);
+        Assert.assertEquals(cfp.getCountForHash(46), 2);
+        Assert.assertEquals(cfp.getCountForHash(27), 1);
+        Assert.assertEquals(cfp.getCountForHash(59), 2);
+        Assert.assertEquals(cfp.getCountForHash(49), 1);
+        Assert.assertEquals(cfp.getCountForHash(111), 1);
+        Assert.assertEquals(cfp.getCountForHash(129), 3);
+        Assert.assertEquals(cfp.getCountForHash(115), 2);
+        Assert.assertEquals(cfp.getCountForHash(120), 3);
+        Assert.assertEquals(cfp.getCountForHash(41), 3);
 
-        Assert.assertTrue(cfp.getCountForHash(93) == 0);
-        Assert.assertTrue(cfp.getCountForHash(91) == 0);
-        Assert.assertTrue(cfp.getCountForHash(24) == 0);
+        Assert.assertEquals(cfp.getCountForHash(93), 0);
+        Assert.assertEquals(cfp.getCountForHash(91), 0);
+        Assert.assertEquals(cfp.getCountForHash(24), 0);
 
         // Test molecule 2: Diatrizoic acid
         mol = parser.parseSmiles("CC(=O)NC1=C(C(=C(C(=C1I)C(=O)O)I)NC(=O)C)I");
@@ -248,19 +248,19 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
-        Assert.assertTrue(cfp.getCountForHash(15) == 3);
-        Assert.assertTrue(cfp.getCountForHash(135) == 3);
-        Assert.assertTrue(cfp.getCountForHash(139) == 4);
-        Assert.assertTrue(cfp.getCountForHash(93) == 3);
-        Assert.assertTrue(cfp.getCountForHash(73) == 6);
+        Assert.assertEquals(cfp.getCountForHash(15), 3);
+        Assert.assertEquals(cfp.getCountForHash(135), 3);
+        Assert.assertEquals(cfp.getCountForHash(139), 4);
+        Assert.assertEquals(cfp.getCountForHash(93), 3);
+        Assert.assertEquals(cfp.getCountForHash(73), 6);
 
-        Assert.assertTrue(cfp.getCountForHash(91) == 0);
+        Assert.assertEquals(cfp.getCountForHash(91), 0);
     }
 
     @Test
     public void testCountableMACCSCount_Rings() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
         ICountFingerprint cfp;
 
@@ -270,11 +270,11 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
-        Assert.assertTrue(cfp.getCountForHash(128) == 2); // 6-ring
-        Assert.assertTrue(cfp.getCountForHash(111) == 2); // aromaticity
+        Assert.assertEquals(cfp.getCountForHash(128), 2); // 6-ring
+        Assert.assertEquals(cfp.getCountForHash(111), 2); // aromaticity
 
-        Assert.assertTrue(cfp.getCountForHash(7) == 0); // 7-ring
-        Assert.assertTrue(cfp.getCountForHash(82) == 0); // 5-ring
+        Assert.assertEquals(cfp.getCountForHash(7), 0); // 7-ring
+        Assert.assertEquals(cfp.getCountForHash(82), 0); // 5-ring
 
         // Non-aromatic 6-rings
         mol = parser.parseSmiles("C1CC(CCC1)CCCCC2CCCCC2");
@@ -282,11 +282,11 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
-        Assert.assertTrue(cfp.getCountForHash(128) == 2); // 6-ring
+        Assert.assertEquals(cfp.getCountForHash(128), 2); // 6-ring
 
-        Assert.assertTrue(cfp.getCountForHash(111) == 0); // aromaticity
-        Assert.assertTrue(cfp.getCountForHash(7) == 0); // 7-ring
-        Assert.assertTrue(cfp.getCountForHash(82) == 0); // 5-ring
+        Assert.assertEquals(cfp.getCountForHash(111), 0); // aromaticity
+        Assert.assertEquals(cfp.getCountForHash(7), 0); // 7-ring
+        Assert.assertEquals(cfp.getCountForHash(82), 0); // 5-ring
 
         // Aromatic 6-ring, 3-ring and 4-ring
         mol = parser.parseSmiles("C1CC1C(CCC2CCC2)CC3=CC=CC=C3");
@@ -294,13 +294,13 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
-        Assert.assertTrue(cfp.getCountForHash(128) == 1); // 6-ring
-        Assert.assertTrue(cfp.getCountForHash(111) == 1); // aromaticity
-        Assert.assertTrue(cfp.getCountForHash(10) == 1); // 3-ring
-        Assert.assertTrue(cfp.getCountForHash(1) == 1); // 4-ring
+        Assert.assertEquals(cfp.getCountForHash(128), 1); // 6-ring
+        Assert.assertEquals(cfp.getCountForHash(111), 1); // aromaticity
+        Assert.assertEquals(cfp.getCountForHash(10), 1); // 3-ring
+        Assert.assertEquals(cfp.getCountForHash(1), 1); // 4-ring
 
-        Assert.assertTrue(cfp.getCountForHash(7) == 0); // 7-ring
-        Assert.assertTrue(cfp.getCountForHash(82) == 0); // 5-ring
+        Assert.assertEquals(cfp.getCountForHash(7), 0); // 7-ring
+        Assert.assertEquals(cfp.getCountForHash(82), 0); // 5-ring
 
         // Aromatic 6-ring, 3-ring and 4-ring
         mol = parser.parseSmiles("C1(CC1C(CCC2CCC2)CC3=CC=CC=C3)C(C(C(C4CC4)C5CC5)C6CC6)C7CC7");
@@ -308,19 +308,19 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         Aromaticity.cdkLegacy().apply(mol);
         cfp = printer.getCountFingerprint(mol);
 
-        Assert.assertTrue(cfp.getCountForHash(128) == 1); // 6-ring
-        Assert.assertTrue(cfp.getCountForHash(111) == 1); // aromaticity
-        Assert.assertTrue(cfp.getCountForHash(10) == 5); // 3-ring
-        Assert.assertTrue(cfp.getCountForHash(1) == 1); // 4-ring
+        Assert.assertEquals(cfp.getCountForHash(128), 1); // 6-ring
+        Assert.assertEquals(cfp.getCountForHash(111), 1); // aromaticity
+        Assert.assertEquals(cfp.getCountForHash(10), 5); // 3-ring
+        Assert.assertEquals(cfp.getCountForHash(1), 1); // 4-ring
 
-        Assert.assertTrue(cfp.getCountForHash(7) == 0); // 7-ring
-        Assert.assertTrue(cfp.getCountForHash(82) == 0); // 5-ring
+        Assert.assertEquals(cfp.getCountForHash(7), 0); // 7-ring
+        Assert.assertEquals(cfp.getCountForHash(82), 0); // 5-ring
     }
 
     @Test
     public void testCountableMACCSBinary_Rings() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IFingerprinter printer = new SubstructureFingerprinter(SubstructureFingerprinter.Type.COUNTABLE_MACCS166);
+        IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
         BitSet bs;
 
