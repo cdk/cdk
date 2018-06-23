@@ -47,6 +47,9 @@ public class KlekotaRothFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Test
+    public void testGetCountFingerprint() throws Exception {}
+
+    @Test
     public void testFingerprint() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IFingerprinter printer = getBitFingerprinter();
