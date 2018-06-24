@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.ComponentGrouping;
 import org.openscience.cdk.isomorphism.SmartsStereoMatch;
 import org.openscience.cdk.isomorphism.Ullmann;
+import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
@@ -363,7 +364,7 @@ public class SMARTSQueryTool {
                 }
             }
         } else {
-            mappings = FluentIterable.from(Ullmann.findSubstructure(query).matchAll(atomContainer))
+            mappings = FluentIterable.from(VentoFoggia.findSubstructure(query).matchAll(atomContainer))
                     .filter(new SmartsStereoMatch(query, atomContainer))
                     .filter(new ComponentGrouping(query, atomContainer)).toList();
         }
