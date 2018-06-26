@@ -168,6 +168,12 @@ public final class Bounds implements IRenderingElement {
                 add(lineElem.secondPointX + vec.x + ortho.x, lineElem.secondPointY + vec.y + ortho.y);
                 add(lineElem.firstPointX - vec.x - ortho.x, lineElem.firstPointY - vec.y - ortho.y);
                 add(lineElem.secondPointX + vec.x - ortho.x, lineElem.secondPointY + vec.y - ortho.y);
+            } else if (element instanceof OvalElement) {
+                OvalElement oval = (OvalElement) element;
+                add(oval.xCoord - oval.radius, oval.yCoord);
+                add(oval.xCoord + oval.radius, oval.yCoord);
+                add(oval.xCoord, oval.yCoord - oval.radius);
+                add(oval.xCoord, oval.yCoord + oval.radius);
             } else if (element instanceof ElementGroup) {
                 for (IRenderingElement child : (ElementGroup) element)
                     stack.add(child);
