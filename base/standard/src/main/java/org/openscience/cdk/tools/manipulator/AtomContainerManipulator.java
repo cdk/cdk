@@ -71,6 +71,9 @@ import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 /**
  * Class with convenience methods that provide methods to manipulate
  * AtomContainer's. For example:
@@ -1491,7 +1494,15 @@ public class AtomContainerManipulator {
         IBond[] bonds = new IBond[src.getBondCount()];
 
         for (int i = 0; i < atoms.length; i++) {
-            atoms[i] = builder.newInstance(IAtom.class, "C");
+            atoms[i] = builder.newAtom();
+            atoms[i].setAtomicNumber(6);
+            atoms[i].setSymbol("C");
+            atoms[i].setImplicitHydrogenCount(0);
+            IAtom srcAtom = src.getAtom(i);
+            if (srcAtom.getPoint2d() != null)
+                atoms[i].setPoint2d(new Point2d(srcAtom.getPoint2d()));
+            if (srcAtom.getPoint3d() != null)
+                atoms[i].setPoint3d(new Point3d(srcAtom.getPoint3d()));
         }
         for (int i = 0; i < bonds.length; i++) {
             IBond bond = src.getBond(i);

@@ -360,7 +360,6 @@ public final class TemplateHandler {
     IdentityTemplateLibrary toIdentityTemplateLibrary() {
         IdentityTemplateLibrary lib = IdentityTemplateLibrary.empty();
         for (IAtomContainer mol : templates) {
-            lib.add(mol);
             lib.add(AtomContainerManipulator.anonymise(mol));
         }
         return lib;
