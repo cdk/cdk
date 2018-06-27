@@ -26,10 +26,17 @@ package org.openscience.cdk.graph.invariant;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.xmlcml.euclid.Int;
+
+import java.util.Comparator;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -53,6 +60,33 @@ public class CanonTest {
         IAtomContainer m = smi("OC1=CC=CC=C1");
         long[] labels = Canon.label(m, GraphUtil.toAdjList(m));
         assertThat(labels, is(new long[]{1, 7, 5, 3, 2, 4, 6}));
+    }
+
+    @Test
+    public void atomComparatorLabelling() throws Exception {
+        IAtomContainer m = smi("c1ccccc1O");
+        long[] labels = Canon.label(m, GraphUtil.toAdjList(m),
+                new Comparator<IAtom>() {
+                    @Override
+                    public int compare(IAtom o1, IAtom o2) {
+                        return Integer.compare(o1.getAtomicNumber(), o2.getAtomicNumber());
+                    }
+                });
+        for (int i = 0; i<labels.length; i++)
+            m.getAtom(i).setProperty(CDKConstants.ATOM_ATOM_MAPPING,
+                                     (int)labels[i]);
+        assertThat(smigen(m), is("[CH:4]1=[CH:2][CH:1]=[CH:3][CH:5]=[C:6]1[OH:7]"));
+        long[] labels2 = Canon.label(m, GraphUtil.toAdjList(m),
+                new Comparator<IAtom>() {
+                    @Override
+                    public int compare(IAtom o1, IAtom o2) {
+                        return -Integer.compare(o1.getAtomicNumber(), o2.getAtomicNumber());
+                    }
+                });
+        for (int i = 0; i<labels.length; i++)
+            m.getAtom(i).setProperty(CDKConstants.ATOM_ATOM_MAPPING,
+                    (int)labels2[i]);
+        assertThat(smigen(m), is("[CH:5]1=[CH:3][CH:2]=[CH:4][CH:6]=[C:7]1[OH:1]"));
     }
 
     /**
@@ -150,9 +184,14 @@ public class CanonTest {
                 10, 23, 5, 6, 7}));
     }
 
-    static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static final SmilesParser    sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static final SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Isomeric | SmiFlavor.AtomAtomMap);
 
     static IAtomContainer smi(String smi) throws Exception {
         return sp.parseSmiles(smi);
+    }
+
+    static String smigen(IAtomContainer mol) throws Exception {
+        return sg.create(mol);
     }
 }
