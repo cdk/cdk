@@ -153,7 +153,16 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          *
          * @see StandardGenerator.OuterGlowWidth
          */
-        OuterGlow
+        OuterGlow,
+
+        /**
+         * Same as outer glow but puts a white edge around element symbols.
+         * This is useful if color atoms are used in combination with an
+         * outer glow highlight.
+         *
+         * @see StandardGenerator.OuterGlowWidth
+         */
+        OuterGlowWhiteEdge
     }
 
     private final IGeneratorParameter<?> atomColor = new AtomColor(), visibility = new Visibility(),
@@ -222,7 +231,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 continue;
 
             Color highlight = getHighlightColor(bond, parameters);
-            if (highlight != null && style == HighlightStyle.OuterGlow) {
+            if (highlight != null && (style == HighlightStyle.OuterGlow || style == HighlightStyle.OuterGlowWhiteEdge)) {
                 backLayer.add(MarkedElement.markup(outerGlow(bondElements[i], highlight, glowWidth, stroke), "outerglow"));
             }
             if (highlight != null && style == HighlightStyle.Colored) {
@@ -244,8 +253,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             if (symbols[i] == null) {
                 // we add a 'ball' around atoms with no symbols (e.g. carbons)
-                if (highlight != null && style == HighlightStyle.OuterGlow) {
-                    backLayer.add(MarkedElement.markup(new OvalElement(atom.getPoint2d().x, atom.getPoint2d().y,1.75 * glowWidth * stroke, true, highlight),
+                if (highlight != null && (style == HighlightStyle.OuterGlow || style == HighlightStyle.OuterGlowWhiteEdge)) {
+                	double glowWidthExt = glowWidth;
+                	if (style == HighlightStyle.OuterGlowWhiteEdge && highlight.equals(Color.WHITE)) {
+                		glowWidthExt *= 1.75;
+                	}
+                    backLayer.add(MarkedElement.markup(new OvalElement(atom.getPoint2d().x, atom.getPoint2d().y,1.75 * glowWidthExt * stroke, true, highlight),
                                                        "outerglow"));
                 }
                 continue;
@@ -262,8 +275,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 annotations.add(MarkedElement.markup(GeneralPath.shapeOf(shape, annotationColor), "annotation"));
             }
 
-            if (highlight != null && style == HighlightStyle.OuterGlow) {
-                backLayer.add(MarkedElement.markup(outerGlow(symbolElements, highlight, glowWidth, stroke), "outerglow"));
+            if (highlight != null && (style == HighlightStyle.OuterGlow || style == HighlightStyle.OuterGlowWhiteEdge)) {
+            	double glowWidthExt = glowWidth;
+            	if (style == HighlightStyle.OuterGlowWhiteEdge && highlight.equals(Color.WHITE)) {
+            		glowWidthExt *= 1.75;
+            	}
+                backLayer.add(MarkedElement.markup(outerGlow(symbolElements, highlight, glowWidthExt, stroke), "outerglow"));
             }
 
             if (highlight != null && style == HighlightStyle.Colored) {
@@ -271,6 +288,32 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             } else {
                 middleLayer.add(MarkedElement.markupAtom(symbolElements, atom));
             }
+        }
+        
+        if (style == HighlightStyle.OuterGlowWhiteEdge) {
+	        for (int i = 0; i < container.getAtomCount(); i++) {
+	            IAtom atom = container.getAtom(i);
+	
+	            if (isHidden(atom))
+	                continue;
+	
+	            Color highlight = getHighlightColor(atom, parameters);
+	            Color color = highlight != null ? highlight : coloring.getAtomColor(atom);
+
+	            if (symbols[i] == null) {
+	                continue;
+	            }
+	
+	            ElementGroup symbolElements = new ElementGroup();
+	            for (Shape shape : symbols[i].getOutlines()) {
+	                GeneralPath path = GeneralPath.shapeOf(shape, color);
+	                symbolElements.add(path);
+	            }
+	
+	            if (highlight != null && !highlight.equals(Color.WHITE)) {
+	            	backLayer.add(MarkedElement.markup(outerGlow(symbolElements, Color.WHITE, 10*stroke, stroke), "outerglow"));
+	            }
+	        }  
         }
 
         // Add the Sgroups display elements to the front layer
