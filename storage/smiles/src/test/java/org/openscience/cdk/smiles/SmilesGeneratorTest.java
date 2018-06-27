@@ -1279,6 +1279,17 @@ public class SmilesGeneratorTest extends CDKTestCase {
                    is("C/C=C=C=C\\C"));
     }
 
+    @Test
+    public void canonAtomMaps() throws CDKException {
+        SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol    = smipar.parseSmiles("[*:2]C(CC[*:3])[*:1]");
+        assertThat(new SmilesGenerator(SmiFlavor.Canonical|SmiFlavor.AtomAtomMap).create(mol),
+                   is("[*:1]C([*:2])CC[*:3]"));
+        IAtomContainer mol2    = smipar.parseSmiles("[*:2]C(CC[*:1])[*:2]");
+        assertThat(new SmilesGenerator(SmiFlavor.Canonical|SmiFlavor.AtomAtomMap).create(mol2),
+                   is("[*:1]CCC([*:2])[*:2]"));
+    }
+
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
         return new TetrahedralChirality(container.getAtom(central), new IAtom[]{container.getAtom(a1),
                                                                                 container.getAtom(a2), container.getAtom(a3), container.getAtom(a4)},

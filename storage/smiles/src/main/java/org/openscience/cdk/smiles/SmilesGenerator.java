@@ -49,6 +49,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -672,7 +673,9 @@ public final class SmilesGenerator {
     private static int[] labels(int flavour, final IAtomContainer molecule) throws CDKException {
         // FIXME: use SmiOpt.InChiLabelling
         long[] labels = SmiFlavor.isSet(flavour, SmiFlavor.Isomeric) ? inchiNumbers(molecule)
-                                                                     : Canon.label(molecule, GraphUtil.toAdjList(molecule));
+                : Canon.label(molecule,
+                              GraphUtil.toAdjList(molecule),
+                              createComparator(molecule, flavour));
         int[] cpy = new int[labels.length];
         for (int i = 0; i < labels.length; i++)
             cpy[i] = (int) labels[i] - 1;
@@ -920,6 +923,74 @@ public final class SmilesGenerator {
             default:
                 throw new IllegalArgumentException();
         }
+    }
+
+    public static Comparator<IAtom> createComparator(final IAtomContainer mol,
+                                                     final int flavor) {
+        return new Comparator<IAtom>() {
+
+            final int unbox(Integer x) {
+                return x != null ? x : 0;
+            }
+
+            @Override
+            public int compare(IAtom a, IAtom b) {
+                final List<IBond> aBonds = mol.getConnectedBondsList(a);
+                final List<IBond> bBonds = mol.getConnectedBondsList(b);
+                final int aH = unbox(a.getImplicitHydrogenCount());
+                final int bH = unbox(b.getImplicitHydrogenCount());
+                int cmp;
+
+                // 1) Connectivity, X=D+h
+                if ((cmp = Integer.compare(aBonds.size() + aH,
+                                           bBonds.size() + bH)) != 0)
+                    return cmp;
+                // 2) Degree, D
+                if ((cmp = Integer.compare(aBonds.size(),
+                                           bBonds.size())) != 0)
+                    return cmp;
+                // 3) Element, #<N>
+                if ((cmp = Integer.compare(unbox(a.getAtomicNumber()),
+                                           unbox(b.getAtomicNumber()))) != 0)
+                    return cmp;
+                // 4a) charge sign
+                int aQ = unbox(a.getFormalCharge());
+                int bQ = unbox(b.getFormalCharge());
+                if ((cmp = Integer.compare((aQ >> 31) & 0x1,
+                                           (bQ >> 31) & 0x1)) != 0)
+                    return cmp;
+                // 4b) charge magnitude
+                if ((cmp = Integer.compare(Math.abs(aQ),
+                                           Math.abs(bQ))) != 0)
+                    return cmp;
+
+                int aTotalH = aH;
+                int bTotalH = bH;
+                for (IBond bond : aBonds)
+                    aTotalH += bond.getOther(a).getAtomicNumber() == 1 ? 1 : 0;
+                for (IBond bond : bBonds)
+                    bTotalH += bond.getOther(b).getAtomicNumber() == 1 ? 1 : 0;
+                // 5) total H count
+                if ((cmp = Integer.compare(aTotalH, bTotalH)) != 0)
+                    return cmp;
+
+                // XXX: valence and ring membership should also be used to split
+                //      ties, but will change the current canonical labelling!
+
+                // extra 1) atomic mass
+                if (SmiFlavor.isSet(flavor, SmiFlavor.Isomeric)
+                    && (cmp = Integer.compare(a.getMassNumber(), b.getMassNumber())) != 0)
+                    return cmp;
+                // extra 2) atom map
+                if (SmiFlavor.isSet(flavor, SmiFlavor.AtomAtomMap)) {
+                    Integer aMapIdx = a.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                    Integer bMapIdx = b.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+                    if ((cmp = Integer.compare(unbox(aMapIdx), unbox(bMapIdx))) != 0)
+                        return cmp;
+                }
+                return 0;
+            }
+        };
     }
 
 }
