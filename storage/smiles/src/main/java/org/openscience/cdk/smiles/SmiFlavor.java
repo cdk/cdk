@@ -165,6 +165,11 @@ public final class SmiFlavor {
     public static final int CxFragmentGroup     = 0x100000;
 
     /**
+     * Renumber AtomAtomMaps during canonical generation
+     */
+    public static final int AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x200000;
+
+    /**
      * Output CXSMILES layers.
      */
     public static final int CxSmiles            = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer;

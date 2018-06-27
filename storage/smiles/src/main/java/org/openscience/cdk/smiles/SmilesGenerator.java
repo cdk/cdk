@@ -450,6 +450,9 @@ public final class SmilesGenerator {
 
                 g = g.permute(labels);
 
+                if ((flavour & SmiFlavor.AtomAtomMapRenumber) == SmiFlavor.AtomAtomMapRenumber)
+                    g = Functions.renumberAtomMaps(g);
+
                 if (!SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols))
                     g = g.resonate();
 
@@ -982,7 +985,8 @@ public final class SmilesGenerator {
                     && (cmp = Integer.compare(a.getMassNumber(), b.getMassNumber())) != 0)
                     return cmp;
                 // extra 2) atom map
-                if (SmiFlavor.isSet(flavor, SmiFlavor.AtomAtomMap)) {
+                if (SmiFlavor.isSet(flavor, SmiFlavor.AtomAtomMap) &&
+                    (flavor & SmiFlavor.AtomAtomMapRenumber) != SmiFlavor.AtomAtomMapRenumber) {
                     Integer aMapIdx = a.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                     Integer bMapIdx = b.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                     if ((cmp = Integer.compare(unbox(aMapIdx), unbox(bMapIdx))) != 0)
