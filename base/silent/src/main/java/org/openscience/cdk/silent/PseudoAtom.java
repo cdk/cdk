@@ -83,11 +83,11 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
      */
     public PseudoAtom(IElement element) {
         super(element);
+        setAtomicNumber(0);
         if (element instanceof IPseudoAtom) {
             this.label = ((IPseudoAtom) element).getLabel();
         } else {
-            super.symbol = "R";
-            this.label = element.getSymbol();
+            this.label = "R";
         }
     }
 

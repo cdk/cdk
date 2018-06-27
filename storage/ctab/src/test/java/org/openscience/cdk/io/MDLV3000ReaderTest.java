@@ -111,7 +111,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             molecule = reader.read(molecule);
             reader.close();
             Assert.assertTrue(molecule.getAtom(9) instanceof IPseudoAtom);
-            Assert.assertEquals("Leu", molecule.getAtom(9).getSymbol());
+            Assert.assertEquals("R", molecule.getAtom(9).getSymbol());
             IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(9);
             Assert.assertEquals("Leu", pa.getLabel());
         }

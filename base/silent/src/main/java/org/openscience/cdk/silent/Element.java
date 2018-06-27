@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 import com.google.common.base.Objects;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
@@ -56,18 +57,14 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      */
     private static final long serialVersionUID = 3062529834691231436L;
 
-    /** The element symbol for this element as listed in the periodic table. */
-    protected String          symbol;
-
     /** The atomic number for this element giving their position in the periodic table. */
-    protected Integer         atomicNumber     = (Integer) CDKConstants.UNSET;
+    protected Integer atomicNumber = null;
 
     /**
      * Constructs an empty Element.
      */
     public Element() {
         super();
-        this.symbol = null;
     }
 
     /**
@@ -79,7 +76,6 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      */
     public Element(IElement element) {
         super(element);
-        this.symbol = element.getSymbol();
         this.atomicNumber = element.getAtomicNumber();
     }
 
@@ -90,7 +86,8 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * @param   symbol The element symbol that this element should have.
      */
     public Element(String symbol) {
-        this(symbol, PeriodicTable.getAtomicNumber(symbol));
+        this();
+        setSymbolInternal(symbol);
     }
 
     /**
@@ -101,7 +98,6 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * @param   atomicNumber  The atomicNumber of this element.
      */
     public Element(String symbol, Integer atomicNumber) {
-        this.symbol = symbol;
         this.atomicNumber = atomicNumber;
     }
 
@@ -148,7 +144,11 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      */
     @Override
     public String getSymbol() {
-        return this.symbol;
+        if (atomicNumber == null)
+            return null;
+        if (atomicNumber == 0)
+            return "R";
+        return Elements.ofNumber(atomicNumber).symbol();
     }
 
     /**
@@ -160,7 +160,14 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      */
     @Override
     public void setSymbol(String symbol) {
-        this.symbol = symbol;
+        setSymbolInternal(symbol);
+    }
+
+    private void setSymbolInternal(String symbol) {
+        if (symbol == null)
+            this.atomicNumber = null;
+        else
+            this.atomicNumber = Elements.ofString(symbol).number();
     }
 
     @Override
@@ -200,6 +207,6 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
             return false;
         }
         Element elem = (Element) object;
-        return Objects.equal(atomicNumber, elem.atomicNumber) && Objects.equal(symbol, elem.symbol);
+        return Objects.equal(atomicNumber, elem.atomicNumber);
     }
 }

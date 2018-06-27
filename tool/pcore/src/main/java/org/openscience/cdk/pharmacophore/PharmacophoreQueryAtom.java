@@ -44,6 +44,7 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
 
     private String smarts;
     private IQueryAtomContainer[] compiledSmarts;
+    private String symbol;
 
     /**
      * Creat a new query pharmacophore group
@@ -52,7 +53,7 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      * @param smarts The SMARTS pattern to be used for matching
      */
     public PharmacophoreQueryAtom(String symbol, String smarts) {
-        setSymbol(symbol);
+        this.symbol = symbol;
         this.smarts = smarts;
         // Note that we allow a special form of SMARTS where the | operator
         // represents logical or of multi-atom groups (as opposed to ','
@@ -61,6 +62,22 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
         this.compiledSmarts = new IQueryAtomContainer[subSmarts.length];
         for (int i = 0; i < compiledSmarts.length; i++)
             compiledSmarts[i] = SMARTSParser.parse(subSmarts[i], null);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getSymbol() {
+        return this.symbol;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     /**

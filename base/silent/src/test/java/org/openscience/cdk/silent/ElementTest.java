@@ -69,7 +69,7 @@ public class ElementTest extends AbstractElementTest {
     @Test
     public void testElement_X() {
         IElement e = new Element("X");
-        Assert.assertEquals("X", e.getSymbol());
+        Assert.assertEquals("R", e.getSymbol());
         // and it should not throw exceptions
         Assert.assertNotNull(e.getAtomicNumber());
         Assert.assertThat(e.getAtomicNumber(), is(0));
