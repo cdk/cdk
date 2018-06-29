@@ -403,7 +403,8 @@ public class RingPlacer {
         for (int i = 0; i < ring.getBondCount(); i++) {
             currentBond = ring.getNextBond(currentBond, currentAtom);
             currentAtom = currentBond.getOther(currentAtom);
-            atomsToDraw.addElement(currentAtom);
+            if (!currentAtom.equals(startAtom))
+                atomsToDraw.addElement(currentAtom);
         }
         logger.debug("currentAtom  " + currentAtom);
         logger.debug("startAtom  " + startAtom);
