@@ -341,34 +341,59 @@ public class RingPlacer {
      * @param   ringCenterVector  A vector pointing the the center of the new ring
      * @param   bondLength  The standard bondlength
      */
-    public void placeSpiroRing(IRing ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter,
-            Vector2d ringCenterVector, double bondLength) {
+    public void placeSpiroRing(IRing ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector, double bondLength) {
 
-        logger.debug("placeSpiroRing");
+        IAtom startAtom = sharedAtoms.getAtom(0);
+        List<IBond> mBonds = molecule.getConnectedBondsList(sharedAtoms.getAtom(0));
+        final int degree = mBonds.size();
+        logger.debug("placeSpiroRing: D=", degree);
+
+        // recalculate the ringCentreVector
+        if (degree != 4) {
+
+            int numPlaced = 0;
+            for (IBond bond : mBonds) {
+                IAtom nbr = bond.getOther(sharedAtoms.getAtom(0));
+                if (!nbr.getFlag(CDKConstants.ISPLACED))
+                    continue;
+                numPlaced++;
+            }
+
+            if (numPlaced == 2) {
+                // nudge the shared atom such that bond lengths will be
+                // equal
+                startAtom.getPoint2d().add(ringCenterVector);
+                sharedAtomsCenter.add(ringCenterVector);
+            }
+
+            double theta = Math.PI-(2 * Math.PI / (degree / 2));
+            rotate(ringCenterVector, theta);
+        }
+
         double radius = getNativeRingRadius(ring, bondLength);
         Point2d ringCenter = new Point2d(sharedAtomsCenter);
-        ringCenterVector.normalize();
-        ringCenterVector.scale(radius);
+        if (degree == 4) {
+            ringCenterVector.normalize();
+            ringCenterVector.scale(radius);
+        } else {
+            // spread things out a little for multiple spiro centres
+            ringCenterVector.normalize();
+            ringCenterVector.scale(2*radius);
+        }
         ringCenter.add(ringCenterVector);
         double addAngle = 2 * Math.PI / ring.getRingSize();
 
-        IAtom startAtom = sharedAtoms.getAtom(0);
-
-        //double centerX = ringCenter.x;
-        //double centerY = ringCenter.y;
-
-        //int direction = 1;
-
         IAtom currentAtom = startAtom;
-        double startAngle = GeometryUtil.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y
-                - ringCenter.y);
+        double startAngle = GeometryUtil.getAngle(startAtom.getPoint2d().x - ringCenter.x,
+                                                  startAtom.getPoint2d().y - ringCenter.y);
+
         /*
          * Get one bond connected to the spiro bridge atom. It doesn't matter in
          * which direction we draw.
          */
-        List bonds = ring.getConnectedBondsList(startAtom);
+        List rBonds = ring.getConnectedBondsList(startAtom);
 
-        IBond currentBond = (IBond) bonds.get(0);
+        IBond currentBond = (IBond) rBonds.get(0);
 
         Vector atomsToDraw = new Vector();
         /*
