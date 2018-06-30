@@ -123,7 +123,7 @@ public final class Canon {
     /**
      * Compute the canonical labels for the provided structure. The labelling
      * does not consider isomer information or stereochemistry. This method
-     * allows provision of a custom array of initial initial.
+     * allows provision of a custom array of initial invariants.
      *
      * 
      * The current
