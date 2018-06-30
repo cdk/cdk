@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.fragment;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,6 +30,7 @@ import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -54,7 +56,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
     @BeforeClass
     public static void setup() {
-        fragmenter = new MurckoFragmenter();
+        fragmenter = new MurckoFragmenter(false, 5);
         smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
@@ -332,5 +334,18 @@ public class MurckoFragmenterTest extends CDKTestCase {
         assertThat(rs.length, is(2));
         String[] fs = fragmenter.getFragments();
         assertThat(fs.length, is(3));
+    }
+
+    /**
+     * @see <a href="https://github.com/cdk/cdk/issues/263">GitHub Issue #263</a>
+     */
+    @Test
+    public void testCHEMBL529226() throws CDKException {
+        String smiles = "CC1=CN([C@@H]2O[C@@]3(COP(=S)(O)O[C@H]4[C@H]5OC[C@]4(COP(=S)(O)O[C@H]6C[C@@H](O[C@@H]6COP(=S)(O)O[C@H]7[C@@H](O)[C@@H](O[C@@H]7COP(=S)(O)O[C@H]8[C@@H](O)[C@@H](O[C@@H]8COP(=S)(O)O[C@H]9[C@@H](O)[C@@H](O[C@@H]9COP(=S)(O)O[C@H]%10[C@@H](O)[C@@H](O[C@@H]%10COP(=S)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11COP(=S)(O)O[C@H]%12[C@@H](O)[C@@H](O[C@@H]%12COP(=S)(O)O[C@H]%13[C@@H](O)[C@@H](O[C@@H]%13COP(=S)(O)O[C@H]%14[C@@H](O)[C@@H](O[C@@H]%14COP(=S)(O)O[C@H]%15[C@@H](O)[C@@H](O[C@@H]%15COP(=S)(O)O[C@H]%16[C@H]%17OC[C@]%16(COP(=S)(O)O[C@H]%18[C@H]%19OC[C@]%18(CO)O[C@H]%19N%20C=C(C)C(=O)NC%20=O)O[C@H]%17N%21C=C(C)C(=NC%21=O)N)N%22C=CC(=NC%22=O)N)n%23cnc%24C(=O)NC(=Nc%23%24)N)n%25cnc%26C(=O)NC(=Nc%25%26)N)N%27C=C(C)C(=O)NC%27=O)N%28C=CC(=NC%28=O)N)n%29cnc%30c(N)ncnc%29%30)N%31C=CC(=NC%31=O)N)n%32cnc%33C(=O)NC(=Nc%32%33)N)n%34cnc%35C(N)NC=Nc%34%35)N%36C=C(C)C(=O)NC%36=O)O[C@H]5N%37C=C(C)C(=O)NC%37=O)CO[C@@H]2[C@@H]3O)C(=O)N=C1N";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+        fragmenter.generateFragments(mol);
+        assertThat(fragmenter.getFrameworks().length, CoreMatchers.is(1));
     }
 }

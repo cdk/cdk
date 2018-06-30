@@ -36,13 +36,16 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -84,6 +87,7 @@ public class MurckoFragmenter implements IFragmenter {
     Map<Long, IAtomContainer>   ringMap              = new HashMap<Long, IAtomContainer>();
 
     boolean                     singleFrameworkOnly  = false;
+    boolean                     ringFragments        = true;
     int                         minimumFragmentSize  = 5;
 
     /**
@@ -93,7 +97,7 @@ public class MurckoFragmenter implements IFragmenter {
      * frameworks if available.
      */
     public MurckoFragmenter() {
-        this(false, 5, null);
+        this(true, 5, null);
     }
 
     /**
@@ -127,6 +131,15 @@ public class MurckoFragmenter implements IFragmenter {
     }
 
     /**
+     * Sets whether to calculate ring fragments (true by default).
+     *
+     * @param val true/false
+     */
+    public void setComputeRingFragments(boolean val) {
+        this.ringFragments = val;
+    }
+
+    /**
      * Perform the fragmentation procedure.
      *
      * @param atomContainer The input molecule
@@ -140,7 +153,93 @@ public class MurckoFragmenter implements IFragmenter {
         run(atomContainer, fragmentSet);
     }
 
+    /**
+     * Computes the Murcko Scaffold for the provided molecule in linear time.
+     * Note the return value contains the same atoms/bonds as in the input
+     * and an additional clone and valence adjustments may be required.
+     *
+     * @param mol the molecule
+     * @return the atoms and bonds in the scaffold
+     */
+    public static IAtomContainer scaffold(final IAtomContainer mol) {
+
+        // Old AtomContainer IMPL, cannot work with this
+        if (!mol.isEmpty() && mol.getAtom(0).getContainer() == null)
+            return null;
+
+        Deque<IAtom> queue = new ArrayDeque<>();
+        int[] bcount = new int[mol.getAtomCount()];
+
+        // Step 1. Mark and queue all terminal (degree 1) atoms
+        for (IAtom atom : mol.atoms()) {
+            int numBonds = atom.getBondCount();
+            bcount[atom.getIndex()] = numBonds;
+            if (numBonds == 1)
+                queue.add(atom);
+        }
+
+        // Step 2. Iteratively remove terminal atoms queuing new atoms
+        //         as they become terminal
+        while (!queue.isEmpty()) {
+            IAtom atom = queue.poll();
+            if (atom == null)
+                continue;
+            bcount[atom.getIndex()] = 0;
+            for (IBond bond : atom.bonds()) {
+                IAtom nbr = bond.getOther(atom);
+                bcount[nbr.getIndex()]--;
+                if (bcount[nbr.getIndex()] == 1)
+                    queue.add(nbr);
+            }
+        }
+
+        // Step 3. Copy out the atoms/bonds that are part of the Murcko
+        //         scaffold
+        IAtomContainer scaffold = mol.getBuilder().newAtomContainer();
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            IAtom atom = mol.getAtom(i);
+            if (bcount[i] > 0)
+                scaffold.addAtom(atom);
+        }
+        for (int i = 0; i < mol.getBondCount(); i++) {
+            IBond bond = mol.getBond(i);
+            if (bcount[bond.getBegin().getIndex()] > 0 &&
+                bcount[bond.getEnd().getIndex()] > 0)
+                scaffold.addBond(bond);
+        }
+        return scaffold;
+    }
+
+    private void addRingFragment(IAtomContainer mol) {
+        if (mol.getAtomCount() < minimumFragmentSize)
+            return;
+        long hash = generator.generate(mol);
+        ringMap.put(hash, mol);
+    }
+
     private void run(IAtomContainer atomContainer, Set<Long> fragmentSet) throws CDKException {
+
+        if (singleFrameworkOnly) {
+            IAtomContainer scaffold = scaffold(atomContainer);
+            if (scaffold != null) {
+                try {
+                    scaffold = scaffold.clone();
+                } catch (CloneNotSupportedException e) {
+                    throw new IllegalStateException("Clone not supported!");
+                }
+                if (scaffold.getAtomCount() >= minimumFragmentSize)
+                    frameMap.put(0L, scaffold);
+                if (ringFragments) {
+                    RingSearch rs = new RingSearch(scaffold);
+                    for (IAtomContainer rset : rs.fusedRingFragments())
+                        addRingFragment(rset);
+                    for (IAtomContainer rset : rs.isolatedRingFragments())
+                        addRingFragment(rset);
+                }
+                return;
+            }
+        }
+
         Long hash;
 
         // identify rings
