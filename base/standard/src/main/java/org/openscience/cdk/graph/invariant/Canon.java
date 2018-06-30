@@ -27,11 +27,14 @@ package org.openscience.cdk.graph.invariant;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * An implementation based on the canon algorithm {@cdk.cite WEI89}. The
@@ -131,15 +134,43 @@ public final class Canon {
      *
      * @param container  structure
      * @param g          adjacency list graph representation
-     * @param invariants initial invariants
+     * @param initial    initial seed invariants
      * @return the canonical labelling
      * @see EquivalentClassPartitioner
      * @see InChINumbersTools
      */
-    public static long[] label(IAtomContainer container, int[][] g, long[] invariants) {
-        if (invariants.length != g.length)
-            throw new IllegalArgumentException("number of invariants != number of atoms");
-        return new Canon(g, invariants, terminalHydrogens(container, g), false).labelling;
+    public static long[] label(IAtomContainer container, int[][] g, long[] initial) {
+        if (initial.length != g.length)
+            throw new IllegalArgumentException("number of initial != number of atoms");
+        return new Canon(g, initial, terminalHydrogens(container, g), false).labelling;
+    }
+
+    /**
+     * Compute the canonical labels for the provided structure. The initial
+     * labelling is seed-ed with the provided atom comparator <code>cmp</code>
+     * allowing arbitary properties to be distinguished or ignored.
+     *
+     * @param container  structure
+     * @param g          adjacency list graph representation
+     * @param cmp        comparator to compare atoms
+     * @return the canonical labelling
+     */
+    public static long[] label(IAtomContainer    container,
+                               int[][]           g,
+                               Comparator<IAtom> cmp) {
+        if (g.length == 0)
+            return new long[0];
+        IAtom[] atoms = AtomContainerManipulator.getAtomArray(container);
+        Arrays.sort(atoms, cmp);
+        long[] initial = new long[atoms.length];
+        long   part    = 1;
+        initial[container.indexOf(atoms[0])] = part;
+        for (int i=1; i<atoms.length; i++) {
+            if (cmp.compare(atoms[i], atoms[i-1]) != 0)
+                ++part;
+            initial[container.indexOf(atoms[i])] = part;
+        }
+        return label(container, g, initial);
     }
 
     /**
