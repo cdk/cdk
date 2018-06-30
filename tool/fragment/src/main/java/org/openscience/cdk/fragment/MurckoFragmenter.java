@@ -87,7 +87,7 @@ public class MurckoFragmenter implements IFragmenter {
     Map<Long, IAtomContainer>   ringMap              = new HashMap<Long, IAtomContainer>();
 
     boolean                     singleFrameworkOnly  = false;
-    boolean                     ringFramgnets        = true;
+    boolean                     ringFragments        = true;
     int                         minimumFragmentSize  = 5;
 
     /**
@@ -97,7 +97,7 @@ public class MurckoFragmenter implements IFragmenter {
      * frameworks if available.
      */
     public MurckoFragmenter() {
-        this(false, 5, null);
+        this(true, 5, null);
     }
 
     /**
@@ -136,7 +136,7 @@ public class MurckoFragmenter implements IFragmenter {
      * @param val true/false
      */
     public void setComputeRingFragments(boolean val) {
-        this.ringFramgnets = val;
+        this.ringFragments = val;
     }
 
     /**
@@ -229,7 +229,7 @@ public class MurckoFragmenter implements IFragmenter {
                 }
                 if (scaffold.getAtomCount() >= minimumFragmentSize)
                     frameMap.put(0L, scaffold);
-                if (ringFramgnets) {
+                if (ringFragments) {
                     RingSearch rs = new RingSearch(scaffold);
                     for (IAtomContainer rset : rs.fusedRingFragments())
                         addRingFragment(rset);

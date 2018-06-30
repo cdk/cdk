@@ -56,7 +56,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
     @BeforeClass
     public static void setup() {
-        fragmenter = new MurckoFragmenter();
+        fragmenter = new MurckoFragmenter(false, 5);
         smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
