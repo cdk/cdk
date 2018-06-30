@@ -72,7 +72,7 @@ public class ElementTest extends AbstractElementTest {
     @Test
     public void testElement_X() {
         IElement e = new Element("X");
-        Assert.assertEquals("X", e.getSymbol());
+        Assert.assertEquals("R", e.getSymbol());
         // and it should not throw exceptions
         Assert.assertNotNull(e.getAtomicNumber());
         Assert.assertThat(e.getAtomicNumber(), is(0));
@@ -108,8 +108,10 @@ public class ElementTest extends AbstractElementTest {
 
     @Test
     public void compareDiffAtomicNumber() {
-        Element e1 = new Element(new String("H"), 1);
-        Element e2 = new Element(new String("H"), null);
+        Element e1 = new Element();
+        Element e2 = new Element();
+        e1.setAtomicNumber(1);
+        e1.setAtomicNumber(2);
         Assert.assertFalse(e1.compare(e2));
     }
 }

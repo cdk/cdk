@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -280,8 +281,7 @@ public class AtomTypeFactory {
         logger.debug("Request for atomtype for symbol ", symbol);
         List<IAtomType> atomList = new ArrayList<IAtomType>();
         for (IAtomType atomType : atomTypes.values()) {
-            // logger.debug("  does symbol match for: ", atomType);
-            if (atomType.getSymbol().equals(symbol)) {
+            if (Objects.equals(atomType.getSymbol(), symbol)) {
                 atomList.add(atomType);
             }
         }

@@ -439,7 +439,7 @@ public class BeamToCDKTest {
     @Test
     public void erroneousLabels_tRNA() throws Exception {
         IAtomContainer ac = convert("[tRNA]CC");
-        assertThat(ac.getAtom(0).getSymbol(), is("*"));
+        assertThat(ac.getAtom(0).getSymbol(), is("R"));
         assertThat(ac.getAtom(0), is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom) ac.getAtom(0)).getLabel(), is("tRNA"));
     }
@@ -449,7 +449,7 @@ public class BeamToCDKTest {
     @Test
     public void erroneousLabels_nested() throws Exception {
         IAtomContainer ac = convert("[now-[this]-is-mean]CC");
-        assertThat(ac.getAtom(0).getSymbol(), is("*"));
+        assertThat(ac.getAtom(0).getSymbol(), is("R"));
         assertThat(ac.getAtom(0), is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom) ac.getAtom(0)).getLabel(), is("now-[this]-is-mean"));
     }

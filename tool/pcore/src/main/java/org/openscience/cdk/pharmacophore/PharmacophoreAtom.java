@@ -47,6 +47,7 @@ public class PharmacophoreAtom extends Atom {
 
     private String smarts;
     private int[]  matchingAtoms;
+    private String symbol;
 
     /**
      * Create a pharmacophore group.
@@ -105,6 +106,16 @@ public class PharmacophoreAtom extends Atom {
      */
     public String getSmarts() {
         return smarts;
+    }
+
+    @Override
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    @Override
+    public String getSymbol() {
+        return symbol;
     }
 
     /**

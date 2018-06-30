@@ -43,8 +43,8 @@ public abstract class AbstractElementTest extends AbstractChemObjectTest {
     @Test
     public void testGetSymbol() {
         IElement e = (IElement) newChemObject();
-        e.setSymbol("X");
-        Assert.assertEquals("X", e.getSymbol());
+        e.setSymbol("Ir");
+        Assert.assertEquals("Ir", e.getSymbol());
     }
 
     @Test

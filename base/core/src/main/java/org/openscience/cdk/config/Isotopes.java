@@ -25,6 +25,7 @@ package org.openscience.cdk.config;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -82,7 +83,7 @@ public class Isotopes extends IsotopeFactory {
         fcIn.read(bin);
         fcIn.close();
         ins.close();
-        bin.position(0);
+        ((Buffer) bin).position(0);
         int isotopeCount = bin.getInt();
         for (int i = 0; i < isotopeCount; i++) {
             int atomicNum = (int) bin.get();
