@@ -64,7 +64,9 @@ public class ReactionEngine {
             EntryReact entry = initiateDictionary("reaction-processes", (IReactionProcess) reaction);
             initiateParameterMap2(entry);
             reaction.setParameterList(getParameterList());
-            extractMechanism(entry);
+            // extract mechanism dependence, if there is one
+            if (entry.getMechanism() != null && !entry.getMechanism().isEmpty())
+                extractMechanism(entry);
         } catch (Exception e) {
             e.printStackTrace();
         }

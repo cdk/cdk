@@ -40,12 +40,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-core</artifactId>
             <version>${project.parent.version}</version>
@@ -76,12 +70,6 @@
             <version>${project.parent.version}</version>
             <type>test-jar</type>
             <scope>test</scope>            
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-log4j</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

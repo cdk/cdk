@@ -37,12 +37,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>javax.vecmath</groupId>
             <artifactId>vecmath</artifactId>
             <scope>test</scope>
@@ -131,12 +125,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-pdb</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-log4j</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>

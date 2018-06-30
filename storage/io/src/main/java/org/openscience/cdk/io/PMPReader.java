@@ -246,9 +246,10 @@ public class PMPReader extends DefaultChemObjectReader {
                                 atomGivenIds.put(Integer.valueOf((String) chemObject.getProperty(PMP_ID)),
                                         Integer.valueOf(id));
                                 modelStructure.addAtom((IAtom) chemObject);
-                                //                            } else if (chemObject instanceof IBond) {
-                                //                                bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
-                                //                                molecule.addBond((IBond)chemObject);
+                            } else if (chemObject instanceof IBond) {
+                                // ignored: bonds may be defined before their
+                                // atoms so their handling is deferred until the
+                                // end of the model
                             } else {
                                 logger.error("chemObject is not initialized or of bad class type");
                             }

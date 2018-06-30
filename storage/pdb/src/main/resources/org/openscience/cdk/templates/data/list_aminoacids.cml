@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.xml-cml.org/schema ../../org/openscience/cdk/io/cml/data/cmlAll.xsd">
 
-    <molecule id="alanine" dictRef="pdb:aminoAcid">
+    <molecule id="alanine">
         <name>alanine</name>
         <name dictRef="pdb:residueName">Ala</name>
         <name dictRef="pdb:oneLetterCode">A</name>
@@ -26,7 +26,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="arginine" dictRef="pdb:aminoAcid">
+    <molecule id="arginine">
         <name>arginine</name>
         <name dictRef="pdb:residueName">Arg</name>
         <name dictRef="pdb:oneLetterCode">R</name>
@@ -60,7 +60,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="asparagine" dictRef="pdb:aminoAcid">
+    <molecule id="asparagine">
         <name>asparagine</name>
         <name dictRef="pdb:residueName">Asn</name>
         <name dictRef="pdb:oneLetterCode">N</name>
@@ -88,7 +88,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="asparticAcid" dictRef="pdb:aminoAcid">
+    <molecule id="asparticAcid">
         <name>aspartic acid</name>
         <name dictRef="pdb:residueName">Asp</name>
         <name dictRef="pdb:oneLetterCode">D</name>
@@ -116,7 +116,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="cysteine" dictRef="pdb:aminoAcid">
+    <molecule id="cysteine">
         <name>cysteine</name>
         <name dictRef="pdb:residueName">Cys</name>
         <name dictRef="pdb:oneLetterCode">C</name>
@@ -140,7 +140,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="phenylalanine" dictRef="pdb:aminoAcid">
+    <molecule id="phenylalanine">
         <name>phenylalanine</name>
         <name dictRef="pdb:residueName">Phe</name>
         <name dictRef="pdb:oneLetterCode">F</name>
@@ -175,7 +175,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="glutamine" dictRef="pdb:aminoAcid">
+    <molecule id="glutamine">
         <name>glutamine</name>
         <name dictRef="pdb:residueName">Gln</name>
         <name dictRef="pdb:oneLetterCode">Q</name>
@@ -205,7 +205,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="glutamicAcid" dictRef="pdb:aminoAcid">
+    <molecule id="glutamicAcid">
         <name>glutamic acid</name>
         <name dictRef="pdb:residueName">Glu</name>
         <name dictRef="pdb:oneLetterCode">E</name>
@@ -235,7 +235,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="glycine" dictRef="pdb:aminoAcid">
+    <molecule id="glycine">
         <name>glycine</name>
         <name dictRef="pdb:residueName">Gly</name>
         <name dictRef="pdb:oneLetterCode">G</name>
@@ -255,7 +255,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="histidine" dictRef="pdb:aminoAcid">
+    <molecule id="histidine">
         <name>histidine</name>
         <name dictRef="pdb:residueName">His</name>
         <name dictRef="pdb:oneLetterCode">H</name>
@@ -288,7 +288,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="isoleucine" dictRef="pdb:aminoAcid">
+    <molecule id="isoleucine">
         <name>isoleucine</name>
         <name dictRef="pdb:residueName">Ile</name>
         <name dictRef="pdb:oneLetterCode">I</name>
@@ -316,7 +316,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="proline" dictRef="pdb:aminoAcid">
+    <molecule id="proline">
         <name>proline</name>
         <name dictRef="pdb:residueName">Pro</name>
         <name dictRef="pdb:oneLetterCode">P</name>
@@ -343,7 +343,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="leucine" dictRef="pdb:aminoAcid">
+    <molecule id="leucine">
         <name>leucine</name>
         <name dictRef="pdb:residueName">Leu</name>
         <name dictRef="pdb:oneLetterCode">L</name>
@@ -371,7 +371,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="lysine" dictRef="pdb:aminoAcid">
+    <molecule id="lysine">
         <name>lysine</name>
         <name dictRef="pdb:residueName">Lys</name>
         <name dictRef="pdb:oneLetterCode">K</name>
@@ -401,7 +401,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="methionine" dictRef="pdb:aminoAcid">
+    <molecule id="methionine">
         <name>methionine</name>
         <name dictRef="pdb:residueName">Met</name>
         <name dictRef="pdb:oneLetterCode">M</name>
@@ -429,7 +429,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="serine" dictRef="pdb:aminoAcid">
+    <molecule id="serine">
         <name>serine</name>
         <name dictRef="pdb:residueName">Ser</name>
         <name dictRef="pdb:oneLetterCode">S</name>
@@ -453,7 +453,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="threonine" dictRef="pdb:aminoAcid">
+    <molecule id="threonine">
         <name>threonine</name>
         <name dictRef="pdb:residueName">Thr</name>
         <name dictRef="pdb:oneLetterCode">T</name>
@@ -479,7 +479,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="tyrosine" dictRef="pdb:aminoAcid">
+    <molecule id="tyrosine">
         <name>tyrosine</name>
         <name dictRef="pdb:residueName">Tyr</name>
         <name dictRef="pdb:oneLetterCode">Y</name>
@@ -516,7 +516,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="valine" dictRef="pdb:aminoAcid">
+    <molecule id="valine">
         <name>valine</name>
         <name dictRef="pdb:residueName">Val</name>
         <name dictRef="pdb:oneLetterCode">V</name>
@@ -542,7 +542,7 @@
         </bondArray>
     </molecule>
 
-    <molecule id="tryptophan" dictRef="pdb:aminoAcid">
+    <molecule id="tryptophan">
         <name>tryptophan</name>
         <name dictRef="pdb:residueName">Trp</name>
         <name dictRef="pdb:oneLetterCode">W</name>
