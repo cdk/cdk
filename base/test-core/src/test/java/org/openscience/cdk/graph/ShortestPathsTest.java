@@ -163,11 +163,12 @@ public class ShortestPathsTest {
         //   5 - 4
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testIsPrecedingPathTo_OutOfBounds() {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         ShortestPaths paths = new ShortestPaths(benzene, benzene.getAtom(0));
         assertFalse(paths.isPrecedingPathTo(-1));
+        assertFalse(paths.isPrecedingPathTo(10));
     }
 
     /**

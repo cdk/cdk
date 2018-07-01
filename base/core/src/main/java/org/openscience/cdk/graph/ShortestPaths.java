@@ -342,7 +342,7 @@ public final class ShortestPaths {
      *         preceding the <i>start</i>
      */
     public boolean isPrecedingPathTo(int end) {
-        return (end >= 0 || end < routeTo.length) && precedes[end];
+        return (end >= 0 && end < routeTo.length) && precedes[end];
     }
 
     /**
