@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -52,6 +53,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -1269,5 +1271,21 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     public void setBondLength() {
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         sdg.setBondLength(2);
+    }
+
+    /**
+     * Reaction from US20050272744A1 [0195], a bond is broken and made. The
+     * reaction layout should not crash.
+     */
+    @Test
+    public void alignReactionBondBrokenAndMade() throws CDKException {
+        String smiles = "[CH3:18][NH:19][CH3:20].[cH:14]1[cH:13][cH:12][c:11]([cH:16][cH:15]1)[CH2:10][O:9][C:1](=[O:17])[NH:2][C@H:3]2[CH2:8][C:6](=[O:7])[O:5][CH2:4]2>C1CCOC1>[CH3:18][N:19]([CH3:20])[C:6](=[O:7])[CH2:8][C@H:3]([CH2:4][OH:5])[NH:2][C:1](=[O:17])[O:9][CH2:10][c:11]1[cH:12][cH:13][cH:14][cH:15][cH:16]1";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction reaction =  smipar.parseReactionSmiles(smiles);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.setAlignMappedReaction(true);
+        sdg.generateCoordinates(reaction);
+        for (IAtom atom : ReactionManipulator.toMolecule(reaction).atoms())
+            assertNotNull(atom.getPoint2d());
     }
 }
