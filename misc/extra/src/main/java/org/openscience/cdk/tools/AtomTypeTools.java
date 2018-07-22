@@ -181,16 +181,20 @@ public class AtomTypeTools {
         return SmilesGenerator.unique().create(mol);
     }
 
-    private String PYRROLE_SMI    = null;
-    private String FURAN_SMI      = null;
-    private String THIOPHENE_SMI  = null;
-    private String PYRIDINE_SMI   = null;
-    private String PYRIMIDINE_SMI = null;
-    private String BENZENE_SMI    = null;
-
-    private static String smicache(String cached, SmilesParser smipar, String input) throws CDKException {
-        if (cached != null) return cached;
-        return cached = cansmi(smipar.parseSmiles(input));
+    private static String PYRROLE_SMI    = null;
+    private static String FURAN_SMI      = null;
+    private static String THIOPHENE_SMI  = null;
+    private static String PYRIDINE_SMI   = null;
+    private static String PYRIMIDINE_SMI = null;
+    private static String BENZENE_SMI    = null;
+    
+    private static void initCache(SmilesParser smipar) throws CDKException{
+    	PYRROLE_SMI = cansmi(smipar.parseSmiles("c1cc[nH]c1"));
+    	FURAN_SMI = cansmi(smipar.parseSmiles("o1cccc1"));
+    	THIOPHENE_SMI = cansmi(smipar.parseSmiles("c1ccsc1"));
+    	PYRIDINE_SMI = cansmi(smipar.parseSmiles("c1ccncc1"));
+    	PYRIMIDINE_SMI = cansmi(smipar.parseSmiles("c1cncnc1"));
+    	BENZENE_SMI = cansmi(smipar.parseSmiles("c1ccccc1"));
     }
 
     /**
@@ -204,20 +208,23 @@ public class AtomTypeTools {
     private int ringSystemClassifier(IRing ring, String smile) throws CDKException {
         /* System.out.println("IN AtomTypeTools Smile:"+smile); */
         logger.debug("Comparing ring systems: SMILES=", smile);
+        
+        if (PYRROLE_SMI == null) {
+            final SmilesParser smipar = new SmilesParser(ring.getBuilder());
+            initCache(smipar);
+        }
 
-        final SmilesParser smipar = new SmilesParser(ring.getBuilder());
-
-        if (smile.equals(smicache(PYRROLE_SMI, smipar, "c1cc[nH]c1")))
+        if (smile.equals(PYRROLE_SMI))
             return PYROLE_RING;
-        else if (smile.equals(smicache(FURAN_SMI, smipar, "o1cccc1")))
+        else if (smile.equals(FURAN_SMI))
             return FURAN_RING;
-        else if (smile.equals(smicache(THIOPHENE_SMI, smipar, "c1ccsc1")))
+        else if (smile.equals(THIOPHENE_SMI))
             return THIOPHENE_RING;
-        else if (smile.equals(smicache(PYRIDINE_SMI, smipar, "c1ccncc1")))
+        else if (smile.equals(PYRIDINE_SMI))
             return PYRIDINE_RING;
-        else if (smile.equals(smicache(PYRIMIDINE_SMI, smipar, "c1cncnc1")))
+        else if (smile.equals(PYRIMIDINE_SMI))
             return PYRIMIDINE_RING;
-        else if (smile.equals(smicache(BENZENE_SMI, smipar, "c1ccccc1")))
+        else if (smile.equals(BENZENE_SMI))
             return BENZENE_RING;
 
         int ncount = 0;
