@@ -251,4 +251,13 @@ public class AtomTest extends AbstractAtomTest {
     public void testNotifyChanged_RemoveProperty() {
         ChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
+    
+    @Test
+    public void testNewAtomImplicitHydrogenCount() {
+        Assert.assertNotNull(new Atom("C").getImplicitHydrogenCount());
+        Assert.assertNotNull(new Atom("*").getImplicitHydrogenCount());
+        Assert.assertNotNull(new Atom("H").getImplicitHydrogenCount());
+        Assert.assertNotNull(new Atom("D").getImplicitHydrogenCount());
+        Assert.assertNotNull(new Atom("T").getImplicitHydrogenCount());
+    }   
 }
