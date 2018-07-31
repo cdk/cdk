@@ -135,6 +135,70 @@ public class CDKConstants {
      * @see org.openscience.cdk.ChemObject
      */
     public final static String      NMRSHIFT_DEUTERIUM           = "deuterium nmr shift";
+    
+    /**
+     * Sulfur NMR shift constant for use as a key in the
+     * IChemObject.physicalProperties hashtable.
+     *
+     * @see org.openscience.cdk.ChemObject
+     */
+    public final static String NMRSHIFT_SULFUR = "sulfur nmr shift";
+
+    /**
+     * NMR spectrum type constant for use as key for an arbitrary 1-dimensional
+     * NMR experiment.
+     *
+     * @see casekit.model.NMR#Spectrum
+     */
+    public final static String NMRSPECTYPE_1D = "1D spectrum";
+
+    /**
+     * NMR spectrum type constant for use as key for a 1-dimensional DEPT90
+     * NMR experiment.
+     *
+     * @see casekit.model.NMR#Spectrum
+     */
+    public final static String NMRSPECTYPE_1D_DEPT90 = "DEPT90 spectrum";
+
+    /**
+     * NMR spectrum type constant for use as key for a 1-dimensional DEPT135
+     * NMR experiment.
+     *
+     * @see casekit.model.NMR#Spectrum
+     */
+    public final static String NMRSPECTYPE_1D_DEPT135 = "DEPT135 spectrum";
+
+    /**
+     * NMR spectrum type constant for use as key for a 2-dimensional HSQC
+     * NMR experiment.
+     *
+     * @see casekit.model.NMR#Spectrum
+     */
+    public final static String NMRSPECTYPE_2D_HSQC = "HSQC spectrum";
+
+    /**
+     * NMR spectrum type constant for use as key for a 2-dimensional H,H-COSY
+     * NMR experiment.
+     *
+     * @see casekit.model.NMR#Spectrum
+     */
+    public final static String NMRSPECTYPE_2D_HHCOSY = "HHCOSY spectrum";
+
+    /**
+     * NMR spectrum type constant for use as key for a 2-dimensional INADEQUATE
+     * NMR experiment.
+     *
+     * @see casekit.model.NMR#Spectrum
+     */
+    public final static String NMRSPECTYPE_2D_INADEQUATE = "INADEQUATE spectrum";
+
+    /**
+     * NMR spectrum type constant for use as key for a 2-dimensional HMBC
+     * NMR experiment.
+     *
+     * @see casekit.model.NMR#Spectrum
+     */
+    public final static String NMRSPECTYPE_2D_HMBC = "HMBC spectrum";
 
     /**
      * Property key to store the CIP descriptor label for an atom / bond. The
