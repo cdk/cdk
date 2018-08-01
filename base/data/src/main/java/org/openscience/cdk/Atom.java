@@ -565,7 +565,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
 
         int mass = -1;
         int anum = 0;
-        int hcnt = 0;
+        int hcnt = -1;
         int chg = 0;
         String symbol = null;
         boolean flag = false;
@@ -613,6 +613,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
                         case 'H':
                             pos++;
                             if (pos < len && isDigit(str.charAt(pos))) {
+                            	hcnt = 0;
                                 while (pos < len && isDigit(str.charAt(pos)))
                                     hcnt = 10 * hcnt + (str.charAt(pos++) - '0');
                             } else {
@@ -660,12 +661,13 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             atom.setMassNumber(mass);
         atom.setAtomicNumber(anum);
         atom.setSymbol(symbol);
-        atom.setImplicitHydrogenCount(hcnt);
+        if (hcnt >= 0)
+        	atom.setImplicitHydrogenCount(hcnt);
         atom.setFormalCharge(chg);
 
         return true;
     }
-
+    
     /**
      * {@inheritDoc}
      */

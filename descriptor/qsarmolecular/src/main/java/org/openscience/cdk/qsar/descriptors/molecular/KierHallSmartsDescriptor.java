@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.config.fragments.EStateFragments;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -389,6 +390,10 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
         IAtomContainer atomContainer;
         try {
             atomContainer = (IAtomContainer) container.clone();
+            for (IAtom atom : atomContainer.atoms()) {
+                if (atom.getImplicitHydrogenCount() == null)
+                    atom.setImplicitHydrogenCount(0);
+            }
             atomContainer = AtomContainerManipulator.removeHydrogens(atomContainer);
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(new CDKException("Error during clone"));

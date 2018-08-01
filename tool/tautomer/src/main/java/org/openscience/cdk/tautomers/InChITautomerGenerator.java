@@ -155,6 +155,10 @@ public final class InChITautomerGenerator {
 
         // shallow copy since we will suppress hydrogens
         mol = mol.getBuilder().newInstance(IAtomContainer.class, mol);
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getImplicitHydrogenCount() == null)
+                atom.setImplicitHydrogenCount(0);
+        }
 
         List<IAtomContainer> tautomers = new ArrayList<IAtomContainer>();
         if (!inchi.contains("(H")) { //No mobile H atoms according to InChI, so bail out.

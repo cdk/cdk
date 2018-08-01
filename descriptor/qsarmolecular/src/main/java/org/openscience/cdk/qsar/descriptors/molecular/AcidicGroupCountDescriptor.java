@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -115,6 +116,10 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
         }
 
         atomContainer = clone(atomContainer); // don't mod original
+        for (IAtom atom : atomContainer.atoms()) {
+            if (atom.getImplicitHydrogenCount() == null)
+                atom.setImplicitHydrogenCount(0);
+        }
 
         // do aromaticity detection
         if (this.checkAromaticity) {

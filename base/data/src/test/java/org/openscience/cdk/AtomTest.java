@@ -130,7 +130,7 @@ public class AtomTest extends AbstractAtomTest {
         IAtom a = new Atom("O-");
         Assert.assertEquals("O", a.getSymbol());
         Assert.assertEquals((Integer) 8, a.getAtomicNumber());
-        Assert.assertEquals((Integer) 0, a.getImplicitHydrogenCount());
+        Assert.assertEquals(null, a.getImplicitHydrogenCount());
         Assert.assertEquals(Integer.valueOf(-1), a.getFormalCharge());
         Assert.assertNull(a.getPoint2d());
         Assert.assertNull(a.getPoint3d());
@@ -142,7 +142,7 @@ public class AtomTest extends AbstractAtomTest {
         IAtom a = new Atom("Ca+2");
         Assert.assertEquals("Ca", a.getSymbol());
         Assert.assertEquals((Integer) 20, a.getAtomicNumber());
-        Assert.assertEquals((Integer) 0, a.getImplicitHydrogenCount());
+        Assert.assertEquals(null, a.getImplicitHydrogenCount());
         Assert.assertEquals(Integer.valueOf(+2), a.getFormalCharge());
         Assert.assertNull(a.getPoint2d());
         Assert.assertNull(a.getPoint3d());
@@ -209,10 +209,10 @@ public class AtomTest extends AbstractAtomTest {
 
     @Test
     public void testNewAtomImplicitHydrogenCount() {
-        Assert.assertNotNull(new Atom("C").getImplicitHydrogenCount());
-        Assert.assertNotNull(new Atom("*").getImplicitHydrogenCount());
-        Assert.assertNotNull(new Atom("H").getImplicitHydrogenCount());
-        Assert.assertNotNull(new Atom("D").getImplicitHydrogenCount());
-        Assert.assertNotNull(new Atom("T").getImplicitHydrogenCount());
+        Assert.assertNull(new Atom("C").getImplicitHydrogenCount());
+        Assert.assertNull(new Atom("*").getImplicitHydrogenCount());
+        Assert.assertNull(new Atom("H").getImplicitHydrogenCount());
+        Assert.assertNull(new Atom("D").getImplicitHydrogenCount());
+        Assert.assertNull(new Atom("T").getImplicitHydrogenCount());
     }
 }
