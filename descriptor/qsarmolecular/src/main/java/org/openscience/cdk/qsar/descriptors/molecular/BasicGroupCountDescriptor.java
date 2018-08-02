@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -98,6 +99,10 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
         }
 
         atomContainer = clone(atomContainer);
+        for (IAtom atom : atomContainer.atoms()) {
+            if (atom.getImplicitHydrogenCount() == null)
+                atom.setImplicitHydrogenCount(0);
+        }
 
         try {
             int count = 0;

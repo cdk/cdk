@@ -176,13 +176,12 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             throw new IllegalArgumentException("Cannot pass atom symbol: " + symbol);
     }
 
-
     /**
-         * Constructs an Atom from an Element and a Point3d.
-         *
-         * @param   elementSymbol   The symbol of the atom
-         * @param   point3d         The 3D coordinates of the atom
-         */
+     * Constructs an Atom from an Element and a Point3d.
+     *
+     * @param   elementSymbol   The symbol of the atom
+     * @param   point3d         The 3D coordinates of the atom
+     */
     public Atom(String elementSymbol, Point3d point3d) {
         this(elementSymbol);
         this.point3d = point3d;
@@ -548,7 +547,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
         return (IAtom) clone;
     }
 
-
     private static boolean isUpper(char c) {
         return c >= 'A' && c <= 'Z';
     }
@@ -567,8 +565,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
 
         int mass = -1;
         int anum = 0;
-        int hcnt = 0;
+        int hcnt = -1;
         int chg = 0;
+        String symbol = null;
+        boolean flag = false;
 
         // optional mass
         if (pos < len && isDigit(str.charAt(pos))) {
@@ -576,89 +576,98 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             while (pos < len && isDigit(str.charAt(pos)))
                 mass = 10 * mass + (str.charAt(pos++) - '0');
         } else if ("R".equals(str)) {
-            atom.setAtomicNumber(0);
-            atom.setSymbol("R");
-            return true;
+            anum = 0;
+            symbol = "R";
+            flag = true;
         } else if ("*".equals(str)) {
-            atom.setAtomicNumber(0);
-            atom.setSymbol("*");
-            return true;
+            anum = 0;
+            symbol = "*";
+            flag = true;
         } else if ("D".equals(str)) {
-            atom.setAtomicNumber(1);
-            atom.setMassNumber(2);
-            atom.setSymbol("H");
-            return true;
+            anum = 1;
+            mass = 2;
+            symbol = "H";
+            flag = true;
         } else if ("T".equals(str)) {
-            atom.setAtomicNumber(1);
-            atom.setMassNumber(3);
-            atom.setSymbol("H");
-            return true;
+            anum = 1;
+            mass = 3;
+            symbol = "H";
+            flag = true;
         }
 
-        // atom symbol
-        if (pos < len && isUpper(str.charAt(pos))) {
-            int beg = pos;
-            pos++;
-            while (pos < len && isLower(str.charAt(pos)))
+        if (flag == false) {
+            // atom symbol
+            if (pos < len && isUpper(str.charAt(pos))) {
+                int beg = pos;
                 pos++;
-            Elements elem = Elements.ofString(str.substring(beg, pos));
-            if (elem == Elements.Unknown)
-                return false;
-            anum = elem.number();
-
-            // optional fields after atom symbol
-            while (pos < len) {
-                switch (str.charAt(pos)) {
-                    case 'H':
-                        pos++;
-                        if (pos < len && isDigit(str.charAt(pos))) {
-                            while (pos < len && isDigit(str.charAt(pos)))
-                                hcnt = 10 * hcnt + (str.charAt(pos++) - '0');
-                        } else {
-                            hcnt = 1;
-                        }
-                        break;
-                    case '+':
-                        pos++;
-                        if (pos < len && isDigit(str.charAt(pos))) {
-                            chg = (str.charAt(pos++) - '0');
-                            while (pos < len && isDigit(str.charAt(pos)))
-                                chg = 10 * chg + (str.charAt(pos++) - '0');
-                        } else {
-                            chg = +1;
-                        }
-                        break;
-                    case '-':
-                        pos++;
-                        if (pos < len && isDigit(str.charAt(pos))) {
-                            chg = (str.charAt(pos++) - '0');
-                            while (pos < len && isDigit(str.charAt(pos)))
-                                chg = 10 * chg + (str.charAt(pos++) - '0');
-                            chg *= -1;
-                        } else {
-                            chg = -1;
-                        }
-                        break;
-                    default:
-                        return false;
+                while (pos < len && isLower(str.charAt(pos)))
+                    pos++;
+                Elements elem = Elements.ofString(str.substring(beg, pos));
+                if (elem == Elements.Unknown)
+                    return false;
+                anum = elem.number();
+    
+                // optional fields after atom symbol
+                while (pos < len) {
+                    switch (str.charAt(pos)) {
+                        case 'H':
+                            pos++;
+                            if (pos < len && isDigit(str.charAt(pos))) {
+                            	hcnt = 0;
+                                while (pos < len && isDigit(str.charAt(pos)))
+                                    hcnt = 10 * hcnt + (str.charAt(pos++) - '0');
+                            } else {
+                                hcnt = 1;
+                            }
+                            break;
+                        case '+':
+                            pos++;
+                            if (pos < len && isDigit(str.charAt(pos))) {
+                                chg = (str.charAt(pos++) - '0');
+                                while (pos < len && isDigit(str.charAt(pos)))
+                                    chg = 10 * chg + (str.charAt(pos++) - '0');
+                            } else {
+                                chg = +1;
+                            }
+                            break;
+                        case '-':
+                            pos++;
+                            if (pos < len && isDigit(str.charAt(pos))) {
+                                chg = (str.charAt(pos++) - '0');
+                                while (pos < len && isDigit(str.charAt(pos)))
+                                    chg = 10 * chg + (str.charAt(pos++) - '0');
+                                chg *= -1;
+                            } else {
+                                chg = -1;
+                            }
+                            break;
+                        default:
+                            return false;
+                    }
                 }
+            } else {
+                return false;
             }
-        } else {
-            return false;
+            flag = pos == len && len > 0;
+            symbol = Elements.ofNumber(anum).symbol();
         }
+        
+        if (!flag)
+            return false;
 
         if (mass < 0)
             atom.setMassNumber(null);
         else
             atom.setMassNumber(mass);
         atom.setAtomicNumber(anum);
-        atom.setSymbol(Elements.ofNumber(anum).symbol());
-        atom.setImplicitHydrogenCount(hcnt);
+        atom.setSymbol(symbol);
+        if (hcnt >= 0)
+        	atom.setImplicitHydrogenCount(hcnt);
         atom.setFormalCharge(chg);
 
-        return pos == len && len > 0;
+        return true;
     }
-
+    
     /**
      * {@inheritDoc}
      */
