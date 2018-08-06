@@ -148,57 +148,57 @@ public class CDKConstants {
      * NMR spectrum type constant for use as key for an arbitrary 1-dimensional
      * NMR experiment.
      *
-     * @see casekit.model.NMR#Spectrum
+     * @see casekit.NMR.model.Spectrum#specType
      */
-    public final static String NMRSPECTYPE_1D = "1D spectrum";
+    public final static String NMRSPECTYPE_1D_ARBITRARY = "1D NMR spectrum: arbitrary";
 
     /**
      * NMR spectrum type constant for use as key for a 1-dimensional DEPT90
      * NMR experiment.
      *
-     * @see casekit.model.NMR#Spectrum
+     * @see casekit.NMR.model.Spectrum#specType
      */
-    public final static String NMRSPECTYPE_1D_DEPT90 = "DEPT90 spectrum";
+    public final static String NMRSPECTYPE_1D_DEPT90 = "1D NMR spectrum: DEPT90";
 
     /**
      * NMR spectrum type constant for use as key for a 1-dimensional DEPT135
      * NMR experiment.
      *
-     * @see casekit.model.NMR#Spectrum
+     * @see casekit.NMR.model.Spectrum#specType
      */
-    public final static String NMRSPECTYPE_1D_DEPT135 = "DEPT135 spectrum";
+    public final static String NMRSPECTYPE_1D_DEPT135 = "1D NMR spectrum: DEPT135";
 
     /**
      * NMR spectrum type constant for use as key for a 2-dimensional HSQC
      * NMR experiment.
      *
-     * @see casekit.model.NMR#Spectrum
+     * @see casekit.NMR.model.Spectrum#specType
      */
-    public final static String NMRSPECTYPE_2D_HSQC = "HSQC spectrum";
+    public final static String NMRSPECTYPE_2D_HSQC = "2D NMR spectrum: HSQC";
 
     /**
      * NMR spectrum type constant for use as key for a 2-dimensional H,H-COSY
      * NMR experiment.
      *
-     * @see casekit.model.NMR#Spectrum
+     * @see casekit.NMR.model.Spectrum#specType
      */
-    public final static String NMRSPECTYPE_2D_HHCOSY = "HHCOSY spectrum";
+    public final static String NMRSPECTYPE_2D_HHCOSY = "2D NMR spectrum: HHCOSY";
 
     /**
      * NMR spectrum type constant for use as key for a 2-dimensional INADEQUATE
      * NMR experiment.
      *
-     * @see casekit.model.NMR#Spectrum
+     * @see casekit.NMR.model.Spectrum#specType
      */
-    public final static String NMRSPECTYPE_2D_INADEQUATE = "INADEQUATE spectrum";
+    public final static String NMRSPECTYPE_2D_INADEQUATE = "2D NMR spectrum: INADEQUATE";
 
     /**
      * NMR spectrum type constant for use as key for a 2-dimensional HMBC
      * NMR experiment.
      *
-     * @see casekit.model.NMR#Spectrum
+     * @see casekit.NMR.model.Spectrum#specType
      */
-    public final static String NMRSPECTYPE_2D_HMBC = "HMBC spectrum";
+    public final static String NMRSPECTYPE_2D_HMBC = "2D NMR spectrum: HMBC";
 
     /**
      * Property key to store the CIP descriptor label for an atom / bond. The
