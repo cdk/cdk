@@ -178,6 +178,6 @@ public abstract class Pattern {
      * @see VentoFoggia
      */
     public static Pattern findIdentical(IAtomContainer query) {
-        return VentoFoggia.findSubstructure(query);
+        return VentoFoggia.findIdentical(query);
     }
 }
