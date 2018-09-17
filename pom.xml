@@ -45,7 +45,7 @@
     </scm>
 
     <issueManagement>
-        <url>http://sourceforge.net/p/cdk/bugs/</url>
+        <url>https://github.com/cdk/cdk/issues</url>
         <system>SourceForge Tracker</system>
     </issueManagement>
 
