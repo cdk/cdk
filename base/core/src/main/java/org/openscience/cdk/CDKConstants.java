@@ -150,7 +150,7 @@ public class CDKConstants {
      *
      * @see casekit.NMR.model.Spectrum#specType
      */
-    public final static String NMRSPECTYPE_1D_ARBITRARY = "1D NMR spectrum: arbitrary";
+    public final static String NMRSPECTYPE_1D = "1D NMR spectrum";
 
     /**
      * NMR spectrum type constant for use as key for a 1-dimensional DEPT90
