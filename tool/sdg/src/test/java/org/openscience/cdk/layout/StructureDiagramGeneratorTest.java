@@ -1288,4 +1288,16 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         for (IAtom atom : ReactionManipulator.toMolecule(reaction).atoms())
             assertNotNull(atom.getPoint2d());
     }
+
+    @Test
+    public void alignReactionBondBrokenAndMade2() throws CDKException {
+        String smiles = "[CH2:2]1[CH2:3][CH:4]2[CH2:5][CH2:6][CH:1]1[O:7]2.[IH:8]>>[OH:7][C@H:1]1[CH2:6][CH2:5][C@H:4]([I:8])[CH2:3][CH2:2]1";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction reaction =  smipar.parseReactionSmiles(smiles);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.setAlignMappedReaction(true);
+        sdg.generateCoordinates(reaction);
+        for (IAtom atom : ReactionManipulator.toMolecule(reaction).atoms())
+            assertNotNull(atom.getPoint2d());
+    }
 }
