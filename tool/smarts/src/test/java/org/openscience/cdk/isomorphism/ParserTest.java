@@ -1484,6 +1484,16 @@ public class ParserTest extends CDKTestCase {
         parse(">>");
     }
 
+    @Test
+    public void atomMaps() throws Exception {
+        parse("[C&x2X4:1]1-[C&x2X4:2]-[C&x2X4h2]-[N&x2X3h1]-[C&x2X4h2]-[C&x2X4h2]-1");
+    }
+
+    @Test
+    public void atomMaps2() throws Exception {
+        parse("[O!RX2:2]-[C&x2X3h0]1=[C&x2X3h1]-[C&x3X3h0]2=[C&x3X3h0](-[C&x2X4h2]-[C&x2X4h2]-[C&x2X3h0](=[O!RX&h0])-[N&x2X3h1]-2)-[C&x2X3h1]=[C&x2X3h1]-1");
+    }
+
     /**
      * @cdk.bug 909
      */

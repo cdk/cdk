@@ -1097,7 +1097,10 @@ public final class Smarts {
                         if (num != 0)
                             atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, num);
                         // should be add end of expr
-                        return next() == ']';
+                        if (lastOp != 0)
+                            return peek() == ']';
+                        else
+                            return next() == ']';
                     case ']':
                         if (dest == null || dest.type() == Expr.Type.NONE)
                             return false;
