@@ -387,7 +387,7 @@ final class ReactionDepiction extends Depiction {
         FreeHepWrapper wrapper = null;
         if (!fmt.equals(SVG_FMT))
             wrapper = new FreeHepWrapper(fmt, total.w, total.h);
-        final IDrawVisitor visitor = fmt.equals(SVG_FMT) ? new SvgDrawVisitor(total.w, total.h, "mm")
+        final IDrawVisitor visitor = fmt.equals(SVG_FMT) ? new SvgDrawVisitor(total.w, total.h, units)
                                                          : AWTDrawVisitor.forVectorGraphics(wrapper.g2);
         if (fmt.equals(SVG_FMT)) {
             svgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor) visitor, mainComp);
