@@ -152,7 +152,11 @@ public class SmartsExprWriteTest {
 
     @Test public void atomicNum() {
         assertThat(Smarts.generateAtom(expr(ELEMENT, 0)), is("[#0]"));
+        assertThat(Smarts.generateAtom(expr(ALIPHATIC_ELEMENT, 0)), is("[#0]"));
+        assertThat(Smarts.generateAtom(expr(AROMATIC_ELEMENT, 0)), is("[#0]"));
         assertThat(Smarts.generateAtom(expr(ELEMENT, 1)), is("[#1]"));
+        assertThat(Smarts.generateAtom(expr(ALIPHATIC_ELEMENT, 1)), is("[#1]"));
+        assertThat(Smarts.generateAtom(expr(AROMATIC_ELEMENT, 1)), is("[#1]"));
         assertThat(Smarts.generateAtom(expr(ELEMENT, 2)), is("[He]"));
         assertThat(Smarts.generateAtom(expr(ELEMENT, 3)), is("[Li]"));
         assertThat(Smarts.generateAtom(expr(ELEMENT, 6)), is("[#6]"));
@@ -181,11 +185,11 @@ public class SmartsExprWriteTest {
         assertThat(Smarts.generateAtom(expr(ELEMENT, Elements.Nihonium.number())),
                    is("[#113]"));
         assertThat(Smarts.generateAtom(expr(ALIPHATIC_ELEMENT, Elements.Darmstadtium.number())),
-                   is("[#110A]"));
+                   is("[#110]"));
         assertThat(Smarts.generateAtom(expr(ALIPHATIC_ELEMENT, Elements.Tennessine.number())),
-                   is("[#117A]"));
+                   is("[#117]"));
         assertThat(Smarts.generateAtom(expr(ALIPHATIC_ELEMENT, Elements.Nihonium.number())),
-                   is("[#113A]"));
+                   is("[#113]"));
     }
 
     @Test public void aromaticElement() {

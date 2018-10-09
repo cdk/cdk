@@ -2445,25 +2445,28 @@ public final class Smarts {
                         case 1:
                             sb.append("#1");
                             break;
-                        case 5: // B
-                        case 6: // C
-                        case 7: //
-                        case 8:
-                        case 13:
-                        case 14:
-                        case 15:
-                        case 16:
-                        case 33:
-                        case 34:
-                        case 51:
-                        case 52:
+                        // may be aromatic? write as '#<num>'
+                        case 5:  // B
+                        case 6:  // C
+                        case 7:  // N
+                        case 8:  // O
+                        case 13: // Al
+                        case 14: // Si
+                        case 15: // P
+                        case 16: // S
+                        case 33: // As
+                        case 34: // Se
+                        case 51: // Sb
+                        case 52: // Te
                             sb.append('#').append(expr.value());
                             break;
                         default:
-                            // can't be aromatic, just emit the symbol
+                            // can't be aromatic, just emit the upper case symbol
                             Elements elem = Elements.ofNumber(expr.value());
                             if (elem == Elements.Unknown)
                                 throw new IllegalArgumentException("No element with atomic number: " + expr.value());
+                            // portability for older matchers, write very high atomic
+                            // num elements as #<num>
                             if (expr.value() > Elements.RADON.getAtomicNumber())
                                 sb.append('#').append(expr.value());
                             else
@@ -2472,20 +2475,65 @@ public final class Smarts {
                     }
                     break;
                 case ALIPHATIC_ELEMENT:
-                    Elements elem = Elements.ofNumber(expr.value());
-                    if (elem == Elements.Unknown)
-                        throw new IllegalArgumentException("No element with atomic number: " + expr.value());
-                    if (expr.value() > Elements.RADON.getAtomicNumber())
-                        sb.append('#').append(expr.value()).append('A');
-                    else
-                        sb.append(elem.symbol());
+                    switch (expr.value()) {
+                        case 0:
+                            sb.append("#0");
+                            break;
+                        case 1:
+                            sb.append("#1");
+                            break;
+                        default:
+                            // can't be aromatic, just emit the symbol
+                            Elements elem = Elements.ofNumber(expr.value());
+                            if (elem == Elements.Unknown)
+                                throw new IllegalArgumentException("No element with atomic number: " + expr.value());
+                            // portability for older matchers, write very high atomic
+                            // num elements as #<num>
+                            if (expr.value() > Elements.RADON.getAtomicNumber())
+                                sb.append('#').append(expr.value());
+                            else
+                                sb.append(elem.symbol());
+                            break;
+                    }
                     break;
                 case AROMATIC_ELEMENT:
                     // could restrict
-                    elem = Elements.ofNumber(expr.value());
-                    if (elem == Elements.Unknown)
-                        throw new IllegalArgumentException("No element with atomic number: " + expr.value());
-                    sb.append(elem.symbol().toLowerCase(Locale.ROOT));
+                    switch (expr.value()) {
+                        case 0:
+                            sb.append("#0");
+                            break;
+                        case 1:
+                            sb.append("#1");
+                            break;
+                        case 5:  // B
+                        case 6:  // C
+                        case 7:  // N
+                        case 8:  // O
+                        case 13: // Al
+                        case 14: // Si
+                        case 15: // P
+                        case 16: // S
+                        case 33: // As
+                        case 34: // Se
+                        case 51: // Sb
+                        case 52: // Te
+                            Elements elem = Elements.ofNumber(expr.value());
+                            if (elem == Elements.Unknown)
+                                throw new IllegalArgumentException("No element with atomic number: " + expr.value());
+                            sb.append(elem.symbol().toLowerCase());
+                            break;
+                        default:
+                            elem = Elements.ofNumber(expr.value());
+                            if (elem == Elements.Unknown)
+                                throw new IllegalArgumentException("No element with atomic number: " + expr.value());
+                            // portability for older matchers, write very high atomic
+                            // num elements as #<num>
+                            if (expr.value() > Elements.RADON.getAtomicNumber())
+                                sb.append('#').append(expr.value());
+                            else
+                                sb.append(elem.symbol()); // Must be aliphatic
+                            break;
+                    }
                     break;
                 case AND:
 
