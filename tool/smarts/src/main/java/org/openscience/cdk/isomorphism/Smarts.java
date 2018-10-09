@@ -154,7 +154,62 @@ public final class Smarts {
     private static final String BSTEREO_UPU     = "/?";
     private static final String BSTEREO_DNU     = "\\?";
 
+
+    private static final class SmartsError {
+        private String str;
+        private int    pos;
+        private String mesg;
+
+        public SmartsError(String str, int pos, String mesg) {
+            this.str = str;
+            this.pos = pos;
+            this.mesg = mesg;
+        }
+    }
+
+    public static ThreadLocal<SmartsError> lastError = new ThreadLocal<>();
+
+    private static void setErrorMesg(String sma, int pos, String str) {
+        lastError.set(new SmartsError(sma, pos, str));
+    }
+
+    /**
+     * Access the error message from previously parsed SMARTS (when
+     * {@link #parse)=false).
+     *
+     * @return the error message, or null if none
+     */
+    public static String getLastErrorMesg() {
+        SmartsError error = lastError.get();
+        if (error != null)
+            return error.mesg;
+        return null;
+    }
+
+    /**
+     * Access a display of the error position from previously parsed SMARTS
+     * (when {@link #parse)=false).
+     *
+     * @return the error message, or null if none
+     */
+    public static String getLastErrorLocation() {
+        SmartsError error = lastError.get();
+        if (error != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(error.str);
+            sb.append('\n');
+            char[] cs = new char[error.pos-1];
+            Arrays.fill(cs, ' ');
+            sb.append(cs);
+            sb.append('^');
+            sb.append('\n');
+            return sb.toString();
+        }
+        return null;
+    }
+
     private static final class Parser {
+        public  String         error;
         private String         str;
         private IAtomContainer mol;
         private int            flav;
@@ -495,8 +550,6 @@ public final class Smarts {
                                 break;
                         }
                         break;
-                    case 'J':
-                        return false;
                     case 'K':
                         switch (next()) {
                             case 'r': // Kr=Krypton
@@ -1232,7 +1285,8 @@ public final class Smarts {
         }
 
         private void unget() {
-            pos--;
+            if (pos <= str.length())
+                pos--;
         }
 
         private boolean hasPrecedence(char lastOp, char currOp) {
@@ -1247,8 +1301,11 @@ public final class Smarts {
             QueryAtom atom = new QueryAtom(mol.getBuilder());
             Expr      expr = new Expr(Expr.Type.NONE);
             atom.setExpression(expr);
-            if (!parseExplicitHydrogen(atom, expr) && !parseAtomExpr(atom, expr, '\0'))
+            if (!parseExplicitHydrogen(atom, expr) &&
+                !parseAtomExpr(atom, expr, '\0')) {
+                error = "Invalid atom expression";
                 return false;
+            }
             append(atom);
             return true;
         }
@@ -1256,7 +1313,11 @@ public final class Smarts {
         boolean parseBondExpr() {
             bond = new QueryBond(mol.getBuilder());
             bond.setExpression(new Expr(Expr.Type.NONE));
-            return parseBondExpr(bond.getExpression(), bond, '\0');
+            if (!parseBondExpr(bond.getExpression(), bond, '\0')) {
+                error = "Invalid bond expression";
+                return false;
+            }
+            return true;
         }
 
         void newFragment() {
@@ -1270,22 +1331,28 @@ public final class Smarts {
 
         boolean endComponentGroup() {
             // closing an unopen component group
-            if (curComponentId == 0)
+            if (curComponentId == 0) {
+                error = "Closing unopened component grouping";
                 return false;
+            }
             curComponentId = 0;
             return true;
         }
 
         boolean openBranch() {
-            if (prev == null || bond != null)
+            if (prev == null || bond != null) {
+                error = "No previous atom to open branch";
                 return false;
+            }
             stack.push(prev);
             return true;
         }
 
         boolean closeBranch() {
-            if (stack.isEmpty() || bond != null)
+            if (stack.isEmpty() || bond != null) {
+                error = "Closing unopened branch";
                 return false;
+            }
             prev = stack.pop();
             return true;
         }
@@ -1311,8 +1378,10 @@ public final class Smarts {
                 Expr closeExpr = ((QueryBond) BondRef.deref(this.bond)).getExpression();
                 if (openExpr == null)
                     ((QueryBond) BondRef.deref(bond)).setExpression(closeExpr);
-                else if (!openExpr.equals(closeExpr))
+                else if (!openExpr.equals(closeExpr)) {
+                    error = "Open/close expressions are not equivalent";
                     return false;
+                }
                 this.bond = null;
             } else if (openExpr == null) {
                 ((QueryBond) BondRef.deref(bond)).setExpression(new Expr(SINGLE_OR_AROMATIC));
@@ -1453,11 +1522,15 @@ public final class Smarts {
         // final check
         boolean finish() {
             // check for unclosed rings, components, and branches
-            if (numRingOpens != 0 || curComponentId != 0 || !stack.isEmpty())
+            if (numRingOpens != 0 || curComponentId != 0 || !stack.isEmpty()) {
+                error = "Unclosed ring, component group, or branch";
                 return false;
+            }
             if (role != ReactionRole.None) {
-                if (role != ReactionRole.Agent)
+                if (role != ReactionRole.Agent) {
+                    error = "Missing '>' to complete reaction";
                     return false;
+                }
                 markReactionRoles();
                 for (IAtom atom : mol.atoms()) {
                     ReactionRole role = atom.getProperty(CDKConstants.REACTION_ROLE);
@@ -1573,7 +1646,10 @@ public final class Smarts {
         }
 
         private char next() {
-            return pos < str.length() ? str.charAt(pos++) : '\0';
+            if (pos < str.length())
+                return str.charAt(pos++);
+            pos++;
+            return '\0';
         }
 
         private static boolean isDigit(char c) {
@@ -1750,6 +1826,7 @@ public final class Smarts {
                         return finish();
 
                     default:
+                        error = "Unexpected character";
                         return false;
                 }
             }
@@ -1764,7 +1841,7 @@ public final class Smarts {
             else if (role == ReactionRole.Agent)
                 role = ReactionRole.Product;
             else
-                return false;
+                error = "To many '>' in reaction";
             int idx = mol.getAtomCount() - 1;
             while (idx >= 0) {
                 IAtom atom = mol.getAtom(idx--);
@@ -1923,7 +2000,11 @@ public final class Smarts {
      */
     public static boolean parse(IAtomContainer mol, String smarts, int flavor) {
         Parser state = new Parser(mol, smarts, flavor);
-        return state.parse();
+        if (!state.parse()) {
+            setErrorMesg(smarts, state.pos, state.error);
+            return false;
+        }
+        return true;
     }
 
     /**

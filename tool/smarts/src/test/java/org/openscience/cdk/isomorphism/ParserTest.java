@@ -18,19 +18,13 @@
  */
 package org.openscience.cdk.isomorphism;
 
-import org.junit.Assert;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
+import static org.junit.Assert.assertThat;
 
 /**
  * JUnit test routines for the SMARTS parser.
@@ -44,11 +38,20 @@ public class ParserTest extends CDKTestCase {
     private void parse(String smarts, int flav) throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         if (!Smarts.parse(builder.newAtomContainer(), smarts, flav))
-            throw new Exception("Invalid SMARTS!");
+            throw new Exception(Smarts.getLastErrorMesg());
     }
 
     private void parse(String smarts) throws Exception {
         parse(smarts, Smarts.FLAVOR_LOOSE);
+    }
+
+    @Test
+    public void errorHandling() {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        if (!Smarts.parse(builder.newAtomContainer(), "CCCJCCC")) {
+            assertThat(Smarts.getLastErrorMesg(),     CoreMatchers.is("Unexpected character"));
+            assertThat(Smarts.getLastErrorLocation(), CoreMatchers.is("CCCJCCC\n   ^\n"));
+        }
     }
 
     @Test
