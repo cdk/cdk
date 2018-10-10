@@ -25,16 +25,13 @@
 package org.openscience.cdk.forcefield.mmff;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.Pattern;
-import org.openscience.cdk.isomorphism.VentoFoggia;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
-import org.openscience.cdk.smiles.smarts.parser.TokenMgrError;
+import org.openscience.cdk.smarts.SmartsPattern;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -205,7 +202,7 @@ final class MmffAtomTypeMatcher {
     private void assignPreliminaryTypes(IAtomContainer container, String[] symbs) {
         // shallow copy
         IAtomContainer cpy = container.getBuilder().newInstance(IAtomContainer.class, container);
-        SmartsMatchers.prepare(cpy, true);
+        Cycles.markRingAtomsAndBonds(cpy);
         for (AtomTypePattern matcher : patterns) {
             for (final int idx : matcher.matches(cpy)) {
                 if (symbs[idx] == null) {
@@ -233,14 +230,10 @@ final class MmffAtomTypeMatcher {
             String[] cols = line.split(" ");
             String sma = cols[0];
             String symb = cols[1];
-
             try {
-                IQueryAtomContainer container = SMARTSParser.parse(sma, null);
-                matchers.add(new AtomTypePattern(VentoFoggia.findSubstructure(container), symb));
-            } catch (IllegalArgumentException e) {
-                throw new IOException(line + " could not be loaded: " + e.getMessage());
-            } catch (TokenMgrError e) {
-                throw new IOException(line + " could not be loaded: " + e.getMessage());
+                matchers.add(new AtomTypePattern(SmartsPattern.create(sma).setPrepare(false), symb));
+            } catch (IllegalArgumentException ex) {
+                throw new IOException(ex);
             }
         }
 

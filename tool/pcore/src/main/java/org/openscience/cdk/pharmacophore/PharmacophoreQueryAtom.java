@@ -22,7 +22,9 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.smarts.Smarts;
+import org.openscience.cdk.smarts.SmartsPattern;
 
 /**
  * Represents a query pharmacophore group.
@@ -43,7 +45,7 @@ import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
 
     private String smarts;
-    private IQueryAtomContainer[] compiledSmarts;
+    private SmartsPattern[] compiledSmarts;
     private String symbol;
 
     /**
@@ -59,9 +61,11 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
         // represents logical or of multi-atom groups (as opposed to ','
         // which is for single atom matches)
         String[] subSmarts = smarts.split("\\|");
-        this.compiledSmarts = new IQueryAtomContainer[subSmarts.length];
-        for (int i = 0; i < compiledSmarts.length; i++)
-            compiledSmarts[i] = SMARTSParser.parse(subSmarts[i], null);
+        this.compiledSmarts = new SmartsPattern[subSmarts.length];
+        for (int i = 0; i < compiledSmarts.length; i++) {
+            compiledSmarts[i] = SmartsPattern.create(subSmarts[i])
+                                             .setPrepare(false);
+        }
     }
 
     /**
@@ -90,11 +94,11 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
     }
 
     /**
-     * Accessed the compiled SMARTS for this pcore query atom.  
-     * @return compiled SMARTS
+     * Accessed the compiled SMARTS for this pcore query atom.
+     * @return compiled SMARTS patterns
      */
-    IQueryAtomContainer[] getCompiledSmarts() {
-        return compiledSmarts;    
+    SmartsPattern[] getCompiledSmarts() {
+        return compiledSmarts;
     }
 
     /**

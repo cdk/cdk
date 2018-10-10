@@ -23,17 +23,13 @@
 package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.Pattern;
-import org.openscience.cdk.isomorphism.Smarts;
-import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
-import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
+import org.openscience.cdk.smarts.Smarts;
+import org.openscience.cdk.smarts.SmartsPattern;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -415,9 +411,11 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
     private void setSmarts(String[] smarts) {
         keys.clear();
         for (String key : smarts) {
-            QueryAtomContainer qmol = SMARTSParser.parse(key, null);
-            keys.add(new Key(key,
-                             Pattern.findSubstructure(qmol)));
+            QueryAtomContainer qmol = new QueryAtomContainer(null);
+            SmartsPattern ptrn = null;
+            ptrn = SmartsPattern.create(key);
+            ptrn.setPrepare(false); // prepare is done once
+            keys.add(new Key(key, ptrn));
         }
     }
 
@@ -428,7 +426,7 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
             throw new CDKException("No substructures were defined");
         }
 
-        SmartsMatchers.prepare(atomContainer, true);
+        SmartsPattern.prepare(atomContainer);
         BitSet fingerPrint = new BitSet(keys.size());
         for (int i = 0; i < keys.size(); i++) {
             if (keys.get(i).pattern.matches(atomContainer))
@@ -446,7 +444,7 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         }
 
         // init SMARTS invariants (connectivity, degree, etc)
-        SmartsMatchers.prepare(atomContainer, false);
+        SmartsPattern.prepare(atomContainer);
 
         final Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
         for (int i = 0; i < keys.size(); i++) {

@@ -33,7 +33,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.result.IntegerResultType;
-import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -53,7 +53,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
             "[$([NH](S(=O)=O)C(F)(F)F)]", "[$(n1nnnc1)]"};
     private final static String[] NAMES          = {"nAcid"};
 
-    private List<SMARTSQueryTool> tools          = new ArrayList<SMARTSQueryTool>();
+    private List<SmartsPattern> tools  = new ArrayList<SmartsPattern>();
     private boolean               checkAromaticity;
 
     /**
@@ -66,7 +66,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
     @Override
     public void initialise(IChemObjectBuilder builder) {
         for (String smarts : SMARTS_STRINGS) {
-            tools.add(new SMARTSQueryTool(smarts, builder));
+            tools.add(SmartsPattern.create(smarts));
         }
     }
 
@@ -131,16 +131,12 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
             }
         }
 
-        try {
-            int count = 0;
-            for (SMARTSQueryTool tool : tools) {
-                if (tool.matches(atomContainer)) count += tool.countMatches();
-            }
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                    count), getDescriptorNames());
-        } catch (CDKException exception) {
-            return getDummyDescriptorValue(exception);
-        }
+        int count = 0;
+        for (SmartsPattern tool : tools)
+            count += tool.matchAll(atomContainer).count();
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                                   getParameters(), new IntegerResult(count),
+                                   getDescriptorNames());
     }
 
     /** {@inheritDoc} */

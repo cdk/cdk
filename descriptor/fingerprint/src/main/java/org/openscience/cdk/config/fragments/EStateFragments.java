@@ -30,6 +30,10 @@
  */
 package org.openscience.cdk.config.fragments;
 
+import org.openscience.cdk.smarts.SmartsPattern;
+
+import java.io.IOException;
+
 /**
  * A class representing the 79 E-state atom types in terms of SMARTS.
  * 
@@ -95,5 +99,14 @@ public class EStateFragments {
      */
     public static String[] getSmarts() {
         return SMARTS;
+    }
+
+    public static SmartsPattern[] getPatterns() {
+        SmartsPattern[] ptrns = new SmartsPattern[SMARTS.length];
+        for (int i = 0; i < ptrns.length; i++) {
+            ptrns[i] = SmartsPattern.create(SMARTS[i]);
+            ptrns[i].setPrepare(false);
+        }
+        return ptrns;
     }
 }
