@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package org.openscience.cdk.isomorphism;
+package org.openscience.cdk.smarts;
 
 import org.junit.Test;
 import org.openscience.cdk.AtomRef;
@@ -37,6 +37,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.smarts.Smarts;
 
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;

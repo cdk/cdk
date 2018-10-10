@@ -22,15 +22,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.isomorphism;
+package org.openscience.cdk.smarts;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
+
+import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -393,8 +396,10 @@ public abstract class SubstructureTest {
     // Note: only use simple constructs! the target properties will not
     // currently be initialised. avoid aromaticity, rings etc.
     IAtomContainer sma(String sma) throws Exception {
-        IAtomContainer container = SMARTSParser.parse(sma, SilentChemObjectBuilder.getInstance());
-        container.setProperty(TITLE, sma);
-        return container;
+        IAtomContainer query = new QueryAtomContainer(null);
+        if (!Smarts.parse(query, sma)) {
+            throw new IOException(Smarts.getLastErrorMesg());
+        }
+        return query;
     }
 }

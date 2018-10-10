@@ -22,18 +22,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-package org.openscience.cdk.isomorphism;
+package org.openscience.cdk.smarts;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.Ullmann;
 
 /**
  * @author John May
  * @cdk.module test-smarts
  */
-public class VFSubstructureTest extends SubstructureTest {
+public class UllmannSubstructureTest extends SubstructureTest {
 
     @Override
     Pattern create(IAtomContainer container) {
-        return VentoFoggia.findSubstructure(container);
+        return Ullmann.findSubstructure(container);
     }
 }

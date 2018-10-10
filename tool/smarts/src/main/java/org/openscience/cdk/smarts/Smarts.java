@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package org.openscience.cdk.isomorphism;
+package org.openscience.cdk.smarts;
 
 import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.BondRef;
@@ -52,7 +52,6 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -1358,6 +1357,10 @@ public final class Smarts {
         }
 
         boolean openRing(int rnum) {
+            if (prev == null) {
+                error = "Cannot open ring, no previous atom";
+                return false;
+            }
             if (bond == null) {
                 bond = new QueryBond(null);
                 bond.setExpression(null);

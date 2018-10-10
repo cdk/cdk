@@ -1,4 +1,5 @@
-/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/*
+ * Copyright (C) 2018  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -6,22 +7,19 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * All I ask is that proper credit is given for my work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.isomorphism;
+package org.openscience.cdk.smiles.smarts;
 
+import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -46,12 +45,11 @@ import org.openscience.cdk.isomorphism.matchers.smarts.MassAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 /**
  * @cdk.module  test-smarts
@@ -175,9 +173,9 @@ public class SMARTSTest extends CDKTestCase {
                                   .getAtom(0);
         assertThat(aexpr, instanceOf(LogicalOperatorAtom.class));
         assertThat(((LogicalOperatorAtom)aexpr).getOperator(),
-                   is("not"));
+                   Is.is("not"));
         IQueryAtom subexpr = ((LogicalOperatorAtom) aexpr).getLeft();
         assertThat(subexpr, instanceOf(MassAtom.class));
-        assertThat(subexpr.getMassNumber(), is(0));
+        assertThat(subexpr.getMassNumber(), Is.is(0));
     }
 }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package org.openscience.cdk.isomorphism;
+package org.openscience.cdk.smarts;
 
 import org.junit.Test;
 import org.openscience.cdk.config.Elements;
@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.smarts.Smarts;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import static junit.framework.TestCase.assertTrue;
