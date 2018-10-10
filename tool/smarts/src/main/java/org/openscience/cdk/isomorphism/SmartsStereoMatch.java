@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.StereoBond;
 
@@ -81,8 +82,6 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
     public SmartsStereoMatch(IAtomContainer query, IAtomContainer target) {
 
         if (!(query instanceof IQueryAtomContainer))
-            throw new IllegalArgumentException("match predicate is for SMARTS only");
-        if (!(query.getAtom(0) instanceof SMARTSAtom))
             throw new IllegalArgumentException("match predicate is for SMARTS only");
 
         this.query = query;
@@ -139,7 +138,7 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
         ITetrahedralChirality queryElement = (ITetrahedralChirality) queryElements[u];
         ITetrahedralChirality targetElement = (ITetrahedralChirality) targetElements[v];
 
-        SMARTSAtom queryAtom = (SMARTSAtom) query.getAtom(u);
+        IAtom queryAtom = query.getAtom(u);
         IAtom targetAtom = target.getAtom(v);
 
         int[] us = neighbors(queryElement, queryMap);
@@ -147,7 +146,12 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
         int p = permutationParity(us);
 
         // check if unspecified was allowed
-        if (targetTypes[v] == null) return queryAtom.chiralityMatches(targetAtom, 0, p);
+        if (targetTypes[v] == null) {
+            if (queryAtom instanceof SMARTSAtom)
+                return ((SMARTSAtom) queryAtom).chiralityMatches(targetAtom, 0, p);
+            else
+                return ((QueryAtom)queryAtom).getExpression().matches(targetAtom, 0);
+        }
 
         // target was non-tetrahedral
         if (targetTypes[v] != Type.Tetrahedral) return false;
@@ -155,7 +159,17 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
         int[] vs = neighbors(targetElement, targetMap);
         int q = permutationParity(vs) * parity(targetElement.getStereo());
 
-        return queryAtom.chiralityMatches(targetAtom, q, p);
+        if (queryAtom instanceof SMARTSAtom)
+            return ((SMARTSAtom) queryAtom).chiralityMatches(targetAtom, q, p);
+        else {
+            q *= p;
+            if (q < 0)
+                return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, IStereoElement.LEFT);
+            else if (q > 0)
+                return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, IStereoElement.RIGHT);
+            else
+                return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, 0);
+        }
     }
 
     /**
