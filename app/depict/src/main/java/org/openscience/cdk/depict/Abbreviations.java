@@ -38,15 +38,13 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.AtomicNumberAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.TotalConnectionAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtom;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -74,8 +72,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom.and;
 
 /**
  * Utility class for abbreviating (sub)structures. Using either self assigned structural
@@ -688,10 +684,13 @@ public class Abbreviations implements Iterable<String> {
                 hcnt++;
         }
 
-        return and(and(new AtomicNumberAtom(elem, bldr),
-                       new TotalConnectionAtom(con, bldr)),
-                   and(new TotalHCountAtom(hcnt, bldr),
-                       new TotalValencyAtom(val, bldr)));
+        QueryAtom qatom = new QueryAtom(atom.getBuilder());
+        Expr expr = new Expr(Expr.Type.ELEMENT, elem)
+                .and(new Expr(Expr.Type.TOTAL_DEGREE, con))
+                .and(new Expr(Expr.Type.TOTAL_H_COUNT, hcnt))
+                .and(new Expr(Expr.Type.VALENCE, val));
+        qatom.setExpression(expr);
+        return qatom;
     }
 
     /**
@@ -724,7 +723,8 @@ public class Abbreviations implements Iterable<String> {
             if (beg == null || end == null)
                 continue;
 
-            IQueryBond qbond = new AnyOrderQueryBond(bldr);
+            IQueryBond qbond = new QueryBond(bldr);
+            ((QueryBond) qbond).setExpression(new Expr(Expr.Type.TRUE));
             qbond.setAtom(beg, 0);
             qbond.setAtom(end, 1);
             qry.addBond(qbond);
