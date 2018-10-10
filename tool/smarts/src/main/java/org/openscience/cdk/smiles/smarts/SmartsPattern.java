@@ -23,18 +23,20 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.ComponentGrouping;
 import org.openscience.cdk.isomorphism.Mappings;
 import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.Smarts;
 import org.openscience.cdk.isomorphism.SmartsStereoMatch;
-import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.IOException;
@@ -81,11 +83,17 @@ public final class SmartsPattern extends Pattern {
     private final Pattern        pattern;
 
     /** Include invariants about ring size / number. */
-    private final boolean        ringInfo, hasStereo, hasCompGrp, hasRxnMap;
+    private final boolean        hasStereo, hasCompGrp, hasRxnMap;
+
+    /**
+     * Prepare the target molecule (i.e. detect rings, aromaticity) before
+     * matching the SMARTS.
+     */
+    private boolean doPrep = true;
 
     /** Aromaticity model. */
-    private final Aromaticity    arom = new Aromaticity(ElectronDonation.daylight(), Cycles.or(Cycles.all(),
-                                              Cycles.relevant()));
+    private static final Aromaticity    arom = new Aromaticity(ElectronDonation.daylight(),
+                                                               Cycles.or(Cycles.all(), Cycles.relevant()));
 
 
 
@@ -97,20 +105,47 @@ public final class SmartsPattern extends Pattern {
      * @throws IOException the pattern could not be parsed
      */
     private SmartsPattern(final String smarts, IChemObjectBuilder builder) throws IOException {
-        try {
-            this.query = SMARTSParser.parse(smarts, builder);
-        } catch (Exception e) {
-            throw new IOException(e);
-        }
+        this.query = new QueryAtomContainer(null);
+        if (!Smarts.parse(query, smarts))
+            throw new IOException("Could not parse SMARTS: " + smarts);
         this.pattern = Pattern.findSubstructure(query);
 
         // X<num>, R and @ are cheap and done always but R<num>, r<num> are not
         // we inspect the SMARTS pattern string to determine if ring
         // size or number queries are needed
-        this.ringInfo   = ringSizeOrNumber(smarts);
         this.hasStereo  = query.stereoElements().iterator().hasNext();
-        this.hasCompGrp = query.getProperty(ComponentGrouping.KEY) != null;
+        this.hasCompGrp = hasCompGrouping(query);
         this.hasRxnMap  = smarts.contains(":");
+    }
+
+    private boolean hasCompGrouping(IAtomContainer query) {
+        for (IAtom atom : query.atoms()) {
+            if (atom.getProperty(CDKConstants.REACTION_GROUP) != null)
+                return true;
+        }
+        return query.getProperty(ComponentGrouping.KEY) != null;
+    }
+
+    static void prepare(IAtomContainer target) {
+        // apply the daylight aromaticity model
+        try {
+            Cycles.markRingAtomsAndBonds(target);
+            arom.apply(target);
+        } catch (CDKException e) {
+            LoggingToolFactory.createLoggingTool(SmartsPattern.class).error(e);
+        }
+    }
+
+    /**
+     * Sets whether the molecule should be "prepared" for a SMARTS match,
+     * including set ring flags and perceiving aromaticity. The main reason
+     * to skip preparation (via {@link #prepare(IAtomContainer)}) is if it has
+     * already been done, for example when matching multiple SMARTS patterns.
+     *
+     * @param doPrep whether preparation should be done
+     */
+    public void setPrepare(boolean doPrep) {
+        this.doPrep = doPrep;
     }
 
     /**
@@ -146,20 +181,8 @@ public final class SmartsPattern extends Pattern {
     @Override
     public Mappings matchAll(final IAtomContainer target) {
 
-        // TODO: prescreen target for element frequency before intialising
-        // invariants and applying aromaticity, requires pattern enumeration -
-        // see http://www.daylight.com/meetings/emug00/Sayle/substruct.html.
-
-        // assign additional atom invariants for SMARTS queries, a CDK quirk
-        // as each atom knows not which molecule from wence it came
-        SmartsMatchers.prepare(target, ringInfo);
-
-        // apply the daylight aromaticity model
-        try {
-            arom.apply(target);
-        } catch (CDKException e) {
-            LoggingToolFactory.createLoggingTool(getClass()).error(e);
-        }
+        if (doPrep)
+            prepare(target);
 
         Mappings mappings = pattern.matchAll(target);
 
@@ -198,22 +221,5 @@ public final class SmartsPattern extends Pattern {
      */
     public static SmartsPattern create(String smarts) throws IOException {
         return new SmartsPattern(smarts, null);
-    }
-
-    /**
-     * Checks a smarts string for !R, R<num> or r<num>. If found then the more
-     * expensive ring info needs to be initlised before querying.
-     *
-     * @param smarts pattern string
-     * @return the pattern has a ring size or number query
-     */
-    static boolean ringSizeOrNumber(final String smarts) {
-        for (int i = 0, end = smarts.length() - 1; i <= end; i++) {
-            char c = smarts.charAt(i);
-            if ((c == 'r' || c == 'R') && i < end && Character.isDigit(smarts.charAt(i + 1))) return true;
-            // !R = R0
-            if (c == '!' && i < end && smarts.charAt(i + 1) == 'R') return true;
-        }
-        return false;
     }
 }

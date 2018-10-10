@@ -49,47 +49,6 @@ public class SmartsPatternTest {
     IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
 
     @Test
-    public void ringSizeOrNumber_membership() throws Exception {
-        assertFalse(SmartsPattern.ringSizeOrNumber("[R]"));
-    }
-
-    @Test
-    public void ringSizeOrNumber_ringConnectivity() throws Exception {
-        assertFalse(SmartsPattern.ringSizeOrNumber("[X2]"));
-    }
-
-    @Test
-    public void ringSizeOrNumber_elements() throws Exception {
-        assertFalse(SmartsPattern.ringSizeOrNumber("[Br]"));
-        assertFalse(SmartsPattern.ringSizeOrNumber("[Cr]"));
-        assertFalse(SmartsPattern.ringSizeOrNumber("[Fr]"));
-        assertFalse(SmartsPattern.ringSizeOrNumber("[Sr]"));
-        assertFalse(SmartsPattern.ringSizeOrNumber("[Ra]"));
-        assertFalse(SmartsPattern.ringSizeOrNumber("[Re]"));
-        assertFalse(SmartsPattern.ringSizeOrNumber("[Rf]"));
-    }
-
-    @Test
-    public void ringSizeOrNumber_negatedMembership() throws Exception {
-        assertTrue(SmartsPattern.ringSizeOrNumber("[!R]"));
-    }
-
-    @Test
-    public void ringSizeOrNumber_membershipZero() throws Exception {
-        assertTrue(SmartsPattern.ringSizeOrNumber("[R0]"));
-    }
-
-    @Test
-    public void ringSizeOrNumber_membershipTwo() throws Exception {
-        assertTrue(SmartsPattern.ringSizeOrNumber("[R2]"));
-    }
-
-    @Test
-    public void ringSizeOrNumber_ringSize() throws Exception {
-        assertTrue(SmartsPattern.ringSizeOrNumber("[r5]"));
-    }
-
-    @Test
     public void isotopes() throws Exception {
         // FIXME SMARTS Grammar needs fixing/replacing [12] is not considered valid
 
