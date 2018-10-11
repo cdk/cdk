@@ -230,6 +230,10 @@ public class MolecularFormulaManipulator {
                                    boolean setOne, boolean setMassNumber) {
         StringBuilder  stringMF     = new StringBuilder();
         List<IIsotope> isotopesList = putInOrder(orderElements, formula);
+        Integer q = formula.getCharge();
+
+        if (q != null && q != 0)
+            stringMF.append('[');
 
         if (!setMassNumber) {
             int count = 0;
@@ -255,6 +259,20 @@ public class MolecularFormulaManipulator {
                 appendElement(stringMF,
                               isotope.getMassNumber(), isotope.getAtomicNumber(),
                               setOne || count != 1 ? count : 0);
+            }
+        }
+
+
+        if (q != null && q != 0) {
+            stringMF.append(']');
+            if (q > 0) {
+                if (q > 1)
+                    stringMF.append(q);
+                stringMF.append('+');
+            } else {
+                if (q < 1)
+                    stringMF.append(-q);
+                stringMF.append('-');
             }
         }
 
@@ -539,7 +557,7 @@ public class MolecularFormulaManipulator {
     private static final char MINUS  = '–';
     private static final String HYPHEN_STR = "-";
     private static final String MINUS_STR  = "–";
-    
+
     /**
      * add in a instance of IMolecularFormula the elements extracts form
      * molecular formula string. The string is immediately analyzed and a set of Nodes
@@ -707,7 +725,7 @@ public class MolecularFormulaManipulator {
         }
         return finalFormula;
     }
-    
+
     /**
      * Extract the charge given a molecular formula format [O3S]2-.
      *
