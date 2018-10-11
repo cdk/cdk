@@ -270,7 +270,7 @@ public class MolecularFormulaManipulator {
                     stringMF.append(q);
                 stringMF.append('+');
             } else {
-                if (q < 1)
+                if (q < -1)
                     stringMF.append(-q);
                 stringMF.append('-');
             }

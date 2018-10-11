@@ -1107,7 +1107,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
         Assert.assertTrue(MolecularFormulaManipulator.compare(formula1,
                 MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
-        Assert.assertEquals("O3S", MolecularFormulaManipulator.getString(ff));
+        Assert.assertEquals("[O3S]2-", MolecularFormulaManipulator.getString(ff));
         Assert.assertEquals(-2, ff.getCharge(), 0.00001);
     }
 
@@ -1257,7 +1257,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("C6H6O", bldr);
         assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, -1));
-        assertThat(MolecularFormulaManipulator.getString(mf), is("C6H5O"));
+        assertThat(MolecularFormulaManipulator.getString(mf), is("[C6H5O]-"));
         assertThat(mf.getCharge(), is(-1));
     }
 
@@ -1283,7 +1283,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("HCl", bldr);
         assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, -1));
-        assertThat(MolecularFormulaManipulator.getString(mf), is("Cl"));
+        assertThat(MolecularFormulaManipulator.getString(mf), is("[Cl]-"));
         assertThat(mf.getCharge(), is(-1));
         assertThat(mf.getIsotopeCount(), is(1));
     }
