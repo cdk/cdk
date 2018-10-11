@@ -29,6 +29,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class LogicalOperatorBond extends SMARTSBond {
 
     private static final long serialVersionUID = 7508020488830371461L;

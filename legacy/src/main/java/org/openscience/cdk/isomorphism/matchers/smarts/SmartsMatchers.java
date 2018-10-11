@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.module smarts
  * @cdk.githash
  */
+@Deprecated
 public final class SmartsMatchers {
 
     /**

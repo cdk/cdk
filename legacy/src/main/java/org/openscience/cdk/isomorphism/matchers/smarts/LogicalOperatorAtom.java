@@ -29,6 +29,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class LogicalOperatorAtom extends SMARTSAtom {
 
     /**

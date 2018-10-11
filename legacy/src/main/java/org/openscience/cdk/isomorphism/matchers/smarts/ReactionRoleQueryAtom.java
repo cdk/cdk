@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Matches atoms with a particular role in a reaction.
  */
+@Deprecated
 public class ReactionRoleQueryAtom extends SMARTSAtom {
 
     public static final int ROLE_REACTANT = 0x1;

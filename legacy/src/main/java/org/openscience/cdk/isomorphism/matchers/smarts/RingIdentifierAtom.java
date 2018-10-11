@@ -30,6 +30,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class RingIdentifierAtom extends SMARTSAtom {
 
     private static final long serialVersionUID = -6812146026923460637L;

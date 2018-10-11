@@ -37,14 +37,11 @@ import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.IOException;
-
 /**
  * A {@link Pattern} for matching a single SMARTS query against multiple target
- * compounds. The class should <b>not</b> be used for matching many queries
- * against a single target as in substructure keyed fingerprints. The {@link
- * SMARTSQueryTool} is currently a better option as less target initialistion is
- * performed.
+ * compounds. The class can be used for efficiently matching many queries
+ * against a single target if {@link #setPrepare(boolean)} is disabled ({@link
+ * #prepare(IAtomContainer)}) should be called manually once for each molecule.
  *
  * Simple usage:
  *
@@ -102,7 +99,7 @@ public final class SmartsPattern extends Pattern {
      * @param builder the builder
      */
     private SmartsPattern(final String smarts, IChemObjectBuilder builder) {
-        this.query = new QueryAtomContainer(null);
+        this.query = new QueryAtomContainer(builder);
         if (!Smarts.parse(query, smarts))
             throw new IllegalArgumentException("Could not parse SMARTS: " +
                                                smarts + "\n" +
@@ -208,7 +205,6 @@ public final class SmartsPattern extends Pattern {
      * @param smarts  SMARTS pattern string
      * @param builder chem object builder used to create objects
      * @return a new pattern
-     * @throws IOException the smarts could not be parsed
      */
     public static SmartsPattern create(String smarts, IChemObjectBuilder builder) {
         return new SmartsPattern(smarts, builder);
@@ -219,7 +215,6 @@ public final class SmartsPattern extends Pattern {
      *
      * @param smarts SMARTS pattern string
      * @return a SMARTS pattern
-     * @throws IOException problem with SMARTS string syntax/semantics
      */
     public static SmartsPattern create(String smarts) {
         return new SmartsPattern(smarts, null);

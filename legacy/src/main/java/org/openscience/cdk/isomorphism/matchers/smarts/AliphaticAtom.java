@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class AliphaticAtom extends SMARTSAtom {
 
     private static final long serialVersionUID = 5145049891214205622L;

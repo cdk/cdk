@@ -31,6 +31,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryBond;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class SMARTSBond extends QueryBond implements IQueryBond {
 
     private static final long serialVersionUID = 6164978147730140061L;

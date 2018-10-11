@@ -66,6 +66,7 @@ import java.util.Set;
  *
  * @see <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">Daylight Theory Manual</a>
  */
+@Deprecated
 final class SmartsAtomAtomMapFilter implements Predicate<int[]> {
 
     private final List<MappedPairs> mapped = new ArrayList<>();

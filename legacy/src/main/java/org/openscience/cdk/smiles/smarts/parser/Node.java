@@ -30,6 +30,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
+@Deprecated
 public interface Node {
 
     /** This method is called after the node has been made the current

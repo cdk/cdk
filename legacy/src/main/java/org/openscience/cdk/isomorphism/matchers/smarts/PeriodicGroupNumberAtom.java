@@ -35,6 +35,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.keyword SMARTS
  */
 
+@Deprecated
 public class PeriodicGroupNumberAtom extends SMARTSAtom {
 
     int groupNumber;

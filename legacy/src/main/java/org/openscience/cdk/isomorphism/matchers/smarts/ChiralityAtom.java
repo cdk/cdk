@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class ChiralityAtom extends SMARTSAtom {
 
     /**

@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class RingBond extends SMARTSBond {
 
     private static final long serialVersionUID = -8670609649648985629L;

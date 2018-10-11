@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  */
 
+@Deprecated
 public class HybridizationNumberAtom extends SMARTSAtom {
 
     /**

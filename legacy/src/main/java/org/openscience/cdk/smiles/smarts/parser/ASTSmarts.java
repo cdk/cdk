@@ -28,6 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
+@Deprecated
 class ASTSmarts extends SimpleNode {
 
     /** Component level grouping. */

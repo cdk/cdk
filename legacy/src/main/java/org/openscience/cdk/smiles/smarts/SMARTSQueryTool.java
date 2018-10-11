@@ -108,7 +108,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @cdk.githash
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
+ * @deprecated use {@link org.openscience.cdk.smarts.SmartsPattern}
  */
+@Deprecated
 public class SMARTSQueryTool {
 
     private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(SMARTSQueryTool.class);

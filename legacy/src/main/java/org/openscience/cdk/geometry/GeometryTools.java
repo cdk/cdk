@@ -67,7 +67,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *
  * @cdk.module    standard
  * @cdk.githash
+ * @deprecated use {@link GeometryUtil} moved for dependency reorganisation
  */
+@Deprecated
 public class GeometryTools {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GeometryTools.class);

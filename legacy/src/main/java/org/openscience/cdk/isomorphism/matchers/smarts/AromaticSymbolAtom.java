@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class AromaticSymbolAtom extends SMARTSAtom {
 
     public AromaticSymbolAtom(String symbol, IChemObjectBuilder builder) {

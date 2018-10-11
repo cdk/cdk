@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public final class TotalConnectionAtom extends SMARTSAtom {
 
     /** Total number of connections from an atom including H count. */

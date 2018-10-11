@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  * @cdk.githash
  */
+@Deprecated
 public class RingMembershipAtom extends SMARTSAtom {
 
     /**

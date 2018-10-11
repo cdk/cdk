@@ -58,6 +58,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @author John May
  * @cdk.module smarts
  */
+@Deprecated
 final class SMARTSAtomInvariants {
 
     /** Property key to index the class by. */

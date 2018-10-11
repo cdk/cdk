@@ -30,6 +30,7 @@ import java.lang.reflect.InvocationTargetException;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
+@Deprecated
 class SimpleNode implements Node, Cloneable {
 
     protected Node         parent;

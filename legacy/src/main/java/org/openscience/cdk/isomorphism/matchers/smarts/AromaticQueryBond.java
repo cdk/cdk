@@ -30,6 +30,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class AromaticQueryBond extends SMARTSBond {
 
     private static final long serialVersionUID = 6941220923564432716L;

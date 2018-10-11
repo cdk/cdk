@@ -55,6 +55,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * @cdk.module smarts
  * @cdk.githash
  */
+@Deprecated
 public final class SmartsStereoMatch implements Predicate<int[]> {
 
     /** Query and target contains. */

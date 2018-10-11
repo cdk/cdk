@@ -28,6 +28,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.ReactionRoleQueryAtom;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
+@Deprecated
 class ASTGroup extends SimpleNode {
 
     static final int ROLE_REACTANT = ReactionRoleQueryAtom.ROLE_REACTANT;

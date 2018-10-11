@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class ImplicitHCountAtom extends SMARTSAtom {
 
     private static final long serialVersionUID = 6752937431492584928L;

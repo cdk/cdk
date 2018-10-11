@@ -174,7 +174,7 @@ public final class Smarts {
 
     /**
      * Access the error message from previously parsed SMARTS (when
-     * {@link #parse)=false).
+     * {@link #parse}=false).
      *
      * @return the error message, or null if none
      */
@@ -187,7 +187,7 @@ public final class Smarts {
 
     /**
      * Access a display of the error position from previously parsed SMARTS
-     * (when {@link #parse)=false).
+     * (when {@link #parse}=false)
      *
      * @return the error message, or null if none
      */

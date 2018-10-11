@@ -27,6 +27,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
+@Deprecated
 public class Smarts2MQLVisitor implements SMARTSParserVisitor {
 
     public Object visit(ASTRingIdentifier node, Object data) {

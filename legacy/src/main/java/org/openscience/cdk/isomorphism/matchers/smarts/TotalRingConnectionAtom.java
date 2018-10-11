@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public final class TotalRingConnectionAtom extends SMARTSAtom {
 
     /** Number of rings. */

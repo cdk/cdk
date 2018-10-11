@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  * @cdk.githash
  */
+@Deprecated
 public final class SmallestRingAtom extends SMARTSAtom {
 
     /** Ring size to check. */

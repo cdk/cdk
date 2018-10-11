@@ -26,6 +26,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 class ASTPrimitiveAtomExpression extends SimpleNode {
 
     /**

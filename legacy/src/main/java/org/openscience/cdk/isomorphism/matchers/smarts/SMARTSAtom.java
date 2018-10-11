@@ -30,6 +30,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public abstract class SMARTSAtom extends QueryAtom implements IQueryAtom {
 
     public SMARTSAtom(IChemObjectBuilder builder) {

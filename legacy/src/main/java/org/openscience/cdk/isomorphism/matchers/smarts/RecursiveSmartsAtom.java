@@ -39,6 +39,7 @@ import java.util.BitSet;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public final class RecursiveSmartsAtom extends SMARTSAtom {
 
     /** The IQueryAtomContainer created by parsing the recursive smarts */

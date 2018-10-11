@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  * @cdk.githash
  */
+@Deprecated
 public final class TotalHCountAtom extends SMARTSAtom {
 
     /** The total hydrogen count to match. */

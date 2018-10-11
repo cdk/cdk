@@ -30,6 +30,7 @@ import java.util.Objects;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class FormalChargeAtom extends SMARTSAtom {
 
     private static final long serialVersionUID = 1203658471548492071L;

@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  * @cdk.githash
  */
+@Deprecated
 public final class ExplicitConnectionAtom extends SMARTSAtom {
 
     /** Number of explicit connections. */

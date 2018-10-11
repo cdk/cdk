@@ -30,6 +30,7 @@ import java.util.List;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
+@Deprecated
 public class HydrogenAtom extends SMARTSAtom {
 
     /** Creates a new instance. */

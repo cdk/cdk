@@ -96,6 +96,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
+@Deprecated
 public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
     // current atoms with a ring identifier
