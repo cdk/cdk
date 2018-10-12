@@ -32,7 +32,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @cdk.module  isomorphism
  * @cdk.githash
+ * @deprecated Use {@link Expr.Type#SINGLE_OR_AROMATIC} etc.
  */
+@Deprecated
 public class CTFileQueryBond extends QueryBond implements IQueryBond {
 
     /*

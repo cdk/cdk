@@ -25,6 +25,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.module  isomorphism
  * @cdk.githash
  */
+@Deprecated
 public class SymbolQueryAtom extends QueryAtom implements IQueryAtom {
 
     private static final long serialVersionUID = -5774610415273279451L;

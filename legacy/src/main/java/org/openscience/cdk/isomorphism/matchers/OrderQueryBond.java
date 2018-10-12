@@ -27,6 +27,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.module isomorphism
  * @cdk.githash
  */
+@Deprecated
 public class OrderQueryBond extends QueryBond implements IQueryBond {
 
     private static final long serialVersionUID = 2292654937621883661L;

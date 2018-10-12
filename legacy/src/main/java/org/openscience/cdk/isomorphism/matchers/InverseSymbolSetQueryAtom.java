@@ -1,4 +1,5 @@
-/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/*  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *                     2010  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,27 +26,29 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- *  A QueryAtom that matches all symbols in this container. You may add symbols
- *  to this container. This QueryAtom will only give a match if it contains the
- *  symbol of the Atom to match (example: add "F", "Cl", "Br", "I" to get a
- *  match for the most common halogens).
+ *  A QueryAtom that matches all symbols but those in this container. You may
+ *  add symbols to this container. This QueryAtom will only give a match if it
+ *  does NOT contain the symbol of the Atom to match (example: add "C" to get a
+ *  match for all non-"C"-Atoms).
  *
- *@author        kha
+ * @author        kha
  * @cdk.githash
- *@cdk.created   2004-09-16
- *@see           InverseSymbolSetQueryAtom
- *@cdk.module    isomorphism
+ * @cdk.created   2004-09-16
+ * @see           SymbolSetQueryAtom
+ * @cdk.module    isomorphism
+ * @deprecated @deprecated Use {@code new Expr(Element, 6).and(new Expr(Element, 8)).negate() } etc
  */
-public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
+@Deprecated
+public class InverseSymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
 
-    private static final long serialVersionUID = 7539577277779603551L;
+    private static final long serialVersionUID = -6570190504347822438L;
 
     private Set<String>       symbols          = new HashSet<String>();
 
     /**
-     *  Constructor for the SymbolSetQueryAtom object
+     *  Constructor for the InverseSymbolSetQueryAtom object
      */
-    public SymbolSetQueryAtom(IChemObjectBuilder builder) {
+    public InverseSymbolSetQueryAtom(IChemObjectBuilder builder) {
         super(builder);
     }
 
@@ -59,7 +62,7 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
      */
     @Override
     public boolean matches(IAtom atom) {
-        return symbols.contains(atom.getSymbol());
+        return !symbols.contains(atom.getSymbol());
     }
 
     /**
@@ -107,15 +110,10 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("SymbolSetQueryAtom(");
+        s.append("InverseSymbolSetQueryAtom(");
         s.append(this.hashCode() + ", ");
         s.append(symbols.toString());
         s.append(')');
         return s.toString();
-    }
-
-    @Override
-    public IAtom clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
     }
 }

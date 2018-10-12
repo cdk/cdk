@@ -395,6 +395,9 @@ public final class Expr {
                 return !bond.isAromatic() &&
                        bond.getOrder() != null &&
                        bond.getOrder().numeric() == value;
+            case ORDER:
+                return bond.getOrder() != null &&
+                       bond.getOrder().numeric() == value;
             case IS_AROMATIC:
                 return bond.isAromatic();
             case IS_ALIPHATIC:
@@ -909,6 +912,9 @@ public final class Expr {
          *  value and the bond is not marked as aromatic
          *  ({@link IAtom#isAromatic()}). */
         ALIPHATIC_ORDER,
+        /** True if the bond order {@link IBond#getOrder()} equals the specified
+         *  value and the bond, aromaticity is not check. */
+        ORDER,
 
         /* Binary/unary internal nodes */
 
