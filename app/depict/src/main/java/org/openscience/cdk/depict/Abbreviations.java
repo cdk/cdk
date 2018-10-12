@@ -684,13 +684,11 @@ public class Abbreviations implements Iterable<String> {
                 hcnt++;
         }
 
-        QueryAtom qatom = new QueryAtom(atom.getBuilder());
         Expr expr = new Expr(Expr.Type.ELEMENT, elem)
                 .and(new Expr(Expr.Type.TOTAL_DEGREE, con))
                 .and(new Expr(Expr.Type.TOTAL_H_COUNT, hcnt))
                 .and(new Expr(Expr.Type.VALENCE, val));
-        qatom.setExpression(expr);
-        return qatom;
+        return new QueryAtom(expr);
     }
 
     /**
@@ -723,10 +721,7 @@ public class Abbreviations implements Iterable<String> {
             if (beg == null || end == null)
                 continue;
 
-            IQueryBond qbond = new QueryBond(bldr);
-            ((QueryBond) qbond).setExpression(new Expr(Expr.Type.TRUE));
-            qbond.setAtom(beg, 0);
-            qbond.setAtom(end, 1);
+            IQueryBond qbond = new QueryBond(beg, end, Expr.Type.TRUE);
             qry.addBond(qbond);
         }
 

@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -784,5 +785,53 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
         if (obj instanceof AtomRef)
             return super.equals(((AtomRef) obj).deref());
         return super.equals(obj);
+    }
+
+    /**
+     * Create a new query atom with the given an expression.
+     *
+     * <pre>{@code
+     * // oxygen in a ring
+     * Expr expr = new Expr(IS_IN_RING);
+     * expr.and(new Expr(ELEMENT, 8));
+     * new QueryAtom(expr);
+     * }</pre>
+     *
+     * @param expr the expr
+     * @return the query atom
+     */
+    public QueryAtom(Expr expr) {
+        this((IChemObjectBuilder) null);
+        this.expr.set(expr);
+    }
+
+    /**
+     * Create a new query atom with the given an predicate expression type.
+     *
+     * <pre>{@code
+     * new QueryAtom(IS_IN_RING);
+     * }</pre>
+     *
+     * @param type the expr type
+     * @return the query atom
+     */
+    public QueryAtom (Expr.Type type) {
+        this(new Expr(type));
+    }
+
+    /**
+     * Create a new query atom with the given an value expression type.
+     *
+     * <pre>{@code
+     * // oxygen
+     * new QueryAtom(ELEMENT, 8);
+     * }</pre>
+     *
+     * @param type the expr type
+     * @param val the expr value
+     * @return the query atom
+     */
+    public QueryAtom(Expr.Type type, int val) {
+        this(new Expr(type, val));
     }
 }

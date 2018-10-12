@@ -890,8 +890,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                         || (bondAtom0.getSymbol().equals("N") && bondAtom1.getSymbol().equals("C"))
                         && bond.getOrder() == IBond.Order.SINGLE) {
                     aminoAcid.removeBond(bondAtom0, bondAtom1);
-                    QueryBond qbond = new QueryBond(bondAtom0, bondAtom1, atomContainer.getBuilder());
-                    qbond.setExpression(new Expr(Expr.Type.SINGLE_OR_AROMATIC));
+                    QueryBond qbond = new QueryBond(bondAtom0, bondAtom1, Expr.Type.SINGLE_OR_AROMATIC);
                     aminoAcid.addBond(qbond);
                     break;
                 }
