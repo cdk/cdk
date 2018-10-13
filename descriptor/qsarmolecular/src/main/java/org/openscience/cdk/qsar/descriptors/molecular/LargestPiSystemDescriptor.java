@@ -179,7 +179,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
                     || Math.abs(container.getAtom(i).getFormalCharge()) >= 1
                     || container.getAtom(i).getFlag(CDKConstants.ISAROMATIC)
                     || container.getAtom(i).getSymbol().equals("N") || container.getAtom(i).getSymbol().equals("O"))
-                    & !container.getAtom(i).getFlag(CDKConstants.VISITED)) {
+                    && !container.getAtom(i).getFlag(CDKConstants.VISITED)) {
                 //logger.debug("...... -> Accepted");
                 startSphere = new ArrayList<IAtom>();
                 path = new ArrayList<IAtom>();
