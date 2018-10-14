@@ -31,7 +31,6 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.isomorphism.ComponentGrouping;
 import org.openscience.cdk.isomorphism.Mappings;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -77,9 +76,6 @@ public final class SmartsPattern extends Pattern {
     /** Subgraph mapping. */
     private final Pattern        pattern;
 
-    /** Include invariants about ring size / number. */
-    private final boolean        hasStereo, hasCompGrp, hasRxnMap;
-
     /**
      * Prepare the target molecule (i.e. detect rings, aromaticity) before
      * matching the SMARTS.
@@ -106,21 +102,6 @@ public final class SmartsPattern extends Pattern {
                                                Smarts.getLastErrorMesg() + "\n" +
                                                Smarts.getLastErrorLocation());
         this.pattern = Pattern.findSubstructure(query);
-
-        // X<num>, R and @ are cheap and done always but R<num>, r<num> are not
-        // we inspect the SMARTS pattern string to determine if ring
-        // size or number queries are needed
-        this.hasStereo  = query.stereoElements().iterator().hasNext();
-        this.hasCompGrp = hasCompGrouping(query);
-        this.hasRxnMap  = smarts.contains(":");
-    }
-
-    private boolean hasCompGrouping(IAtomContainer query) {
-        for (IAtom atom : query.atoms()) {
-            if (atom.getProperty(CDKConstants.REACTION_GROUP) != null)
-                return true;
-        }
-        return query.getProperty(ComponentGrouping.KEY) != null;
     }
 
     public static void prepare(IAtomContainer target) {
@@ -183,20 +164,9 @@ public final class SmartsPattern extends Pattern {
         if (doPrep)
             prepare(target);
 
-        Mappings mappings = pattern.matchAll(target);
-
-        // apply required post-match filters
-        if (hasStereo)
-            mappings = mappings.filter(new SmartsStereoFilter(query, target));
-        if (hasCompGrp)
-            mappings = mappings.filter(new ComponentGrouping(query, target));
-        if (hasRxnMap)
-            mappings = mappings.filter(new SmartsAamFilter(query, target));
-
         // Note: Mappings is lazy, we can't reset aromaticity etc as the
         // substructure match may not have finished
-
-        return mappings;
+        return pattern.matchAll(target);
     }
 
     /**

@@ -1974,16 +1974,6 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     /**
-     * Ensure a class cast exception is not thrown when matching stereochemistry. 
-     * @cdk.bug 1358
-     */
-    @Test
-    public void bug1358() throws Exception {
-        assertThat(match("[$([*@](~*)(~*)(*)*),$([*@H](*)(*)*),$([*@](~*)(*)*)]",
-                         "N#CN/C(=N/CCSCC=1N=CNC1C)NC"), is(new int[]{0, 0}));        
-    }
-
-    /**
      * Ensure 'r' without a size is equivalent to !R0 and R.
      * @cdk.bug 1364
      */

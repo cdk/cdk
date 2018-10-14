@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
+ *                    John May
+ *               2018 John Mayfield (ne May)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -19,7 +20,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 package org.openscience.cdk.isomorphism;
@@ -57,7 +58,7 @@ import java.util.Arrays;
  * @cdk.module isomorphism
  * @see Pattern
  */
-public final class ComponentGrouping implements Predicate<int[]> {
+final class ComponentFilter implements Predicate<int[]> {
 
     /**
      * Key indicates where the grouping should be store in the query
@@ -77,7 +78,7 @@ public final class ComponentGrouping implements Predicate<int[]> {
      * @param query  query structure
      * @param target target structure
      */
-    public ComponentGrouping(IAtomContainer query, IAtomContainer target) {
+    public ComponentFilter(IAtomContainer query, IAtomContainer target) {
         this(query.getProperty(KEY) == null ? determineComponents(query, false) : query.getProperty(KEY, int[].class),
              determineComponents(target, true));
     }
@@ -121,7 +122,7 @@ public final class ComponentGrouping implements Predicate<int[]> {
      * @param grouping  query grouping
      * @param targetComponents connected component of the target
      */
-    public ComponentGrouping(int[] grouping, int[] targetComponents) {
+    public ComponentFilter(int[] grouping, int[] targetComponents) {
         this.queryComponents  = grouping;
         this.targetComponents = targetComponents;
     }

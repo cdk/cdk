@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
+ *                    John May
+ *               2018 John Mayfield (ne May)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -19,10 +20,10 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package org.openscience.cdk.smarts;
+package org.openscience.cdk.isomorphism;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
@@ -55,7 +56,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * @cdk.module smarts
  * @cdk.githash
  */
-final class SmartsStereoFilter implements Predicate<int[]> {
+final class QueryStereoFilter implements Predicate<int[]> {
 
     /** Query and target contains. */
     private final IAtomContainer query, target;
@@ -79,7 +80,7 @@ final class SmartsStereoFilter implements Predicate<int[]> {
      * @param query query container
      * @param target target container
      */
-    public SmartsStereoFilter(IAtomContainer query, IAtomContainer target) {
+    public QueryStereoFilter(IAtomContainer query, IAtomContainer target) {
 
         if (!(query instanceof IQueryAtomContainer))
             throw new IllegalArgumentException("match predicate is for SMARTS only");
@@ -131,7 +132,7 @@ final class SmartsStereoFilter implements Predicate<int[]> {
     private boolean checkTetrahedral(int u, int[] mapping) {
 
         int v = mapping[u];
-        
+
         if (targetTypes[v] != null && targetTypes[v] != Type.Tetrahedral)
             return false;
 
@@ -155,7 +156,6 @@ final class SmartsStereoFilter implements Predicate<int[]> {
 
         int[] vs = neighbors(targetElement, targetMap);
         int q = permutationParity(vs) * parity(targetElement.getStereo());
-
         q *= p;
         if (q < 0)
             return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, IStereoElement.LEFT);

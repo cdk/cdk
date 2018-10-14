@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.AtomMatcher;
 import org.openscience.cdk.isomorphism.BondMatcher;
-import org.openscience.cdk.isomorphism.ComponentGrouping;
+import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.VentoFoggia;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
@@ -370,11 +370,8 @@ public final class Expr {
                          left.type == OR && left.left.type == STEREOCHEMISTRY));
 
             case RECURSIVE:
-                for (int[] match : VentoFoggia.findSubstructure(query,
-                                                                AtomMatcher.forQuery(),
-                                                                BondMatcher.forQuery())
-                                              .matchAll(atom.getContainer())
-                                              .filter(new ComponentGrouping(query, atom.getContainer()))) {
+                for (int[] match : Pattern.findSubstructure(query)
+                                          .matchAll(atom.getContainer())) {
                     if (match[0] == atom.getIndex())
                         return true;
                 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 John May <jwmay@users.sf.net>
+ * Copyright (C) 2016-2018  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -18,10 +18,10 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package org.openscience.cdk.smarts;
+package org.openscience.cdk.isomorphism;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.ArrayListMultimap;
@@ -66,12 +66,12 @@ import java.util.Set;
  *
  * @see <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">Daylight Theory Manual</a>
  */
-final class SmartsAamFilter implements Predicate<int[]> {
+final class AtomMapFilter implements Predicate<int[]> {
 
     private final List<MappedPairs> mapped = new ArrayList<>();
     private final IAtomContainer target;
 
-    SmartsAamFilter(IAtomContainer query, IAtomContainer target) {
+    AtomMapFilter(IAtomContainer query, IAtomContainer target) {
 
         Multimap<Integer,Integer> reactInvMap = null;
         Multimap<Integer,Integer> prodInvMap  = null;

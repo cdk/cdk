@@ -29,7 +29,9 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.isomorphism.Mappings;
 import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -202,6 +204,50 @@ public class SmartsPatternTest {
         assertFalse(ptrn.matches(smi("[H][H]")));
         assertTrue(ptrn.matches(smi("[2H]")));
         assertTrue(ptrn.matches(smi("[3H]")));
+    }
+
+    /**
+     * Ensure a class cast exception is not thrown when matching stereochemistry.
+     * @cdk.bug 1358
+     */
+    @Test
+    public void bug1358() throws Exception {
+        Pattern ptrn = SmartsPattern.create("[$([*@](~*)(~*)(*)*),$([*@H](*)(*)*),$([*@](~*)(*)*)]");
+        assertFalse(ptrn.matches(smi("N#CN/C(=N/CCSCC=1N=CNC1C)NC")));
+    }
+
+    private void assertMatch(String sma, String smiles, int numHits, int uniqNumHits) throws Exception {
+        Pattern  ptrn     = SmartsPattern.create(sma);
+        Mappings mappings = ptrn.matchAll(smi(smiles));
+        assertThat(mappings.count(), is(numHits));
+        assertThat(mappings.countUnique(), is(uniqNumHits));
+    }
+
+    @Test
+    public void recursiveGeometric_trans() throws Exception {
+        assertMatch("[$(*/C=C/*)]", "C/C=C/C", 2, 2);
+        assertMatch("[$(*/C=C/*)]", "F/C=C/Cl", 2, 2);
+        assertMatch("[$(*/C=C/*)]", "CC=CC", 0, 0);
+        assertMatch("[$(*/C=C/*)]", "FC=CCl", 0, 0);
+        assertMatch("[$(*/C=C/*)]", "C/C=C\\C", 0, 0);
+        assertMatch("[$(*/C=C/*)]", "F/C=C\\Cl", 0, 0);
+    }
+
+    @Test
+    public void recursiveGeometric_cis() throws Exception {
+        assertMatch("[$(C(/*)=C/*)]", "C/C=C/C", 0, 0);
+        assertMatch("[$(C(/*)=C/*)]", "F/C=C/Cl", 0, 0);
+        assertMatch("[$(C(/*)=C/*)]", "CC=CC", 0, 0);
+        assertMatch("[$(C(/*)=C/*)]", "FC=CCl", 0, 0);
+        assertMatch("[$(C(/*)=C/*)]", "C/C=C\\C", 2, 2);
+        assertMatch("[$(C(/*)=C/*)]", "F/C=C\\Cl", 2, 2);
+    }
+
+    @Test
+    public void recursiveTetrahedral() throws Exception {
+        assertMatch("[$([C@](C)(CC)(N)O)]", "C[C@@](N)(CC)O", 1, 1);
+        assertMatch("[$([C@](C)(CC)(N)O)]", "C[C@](N)(CC)O", 0, 0);
+        assertMatch("[$([C@](C)(CC)(N)O)]", "CC(N)(CC)O", 0, 0);
     }
 
     IAtomContainer smi(String smi) throws Exception {

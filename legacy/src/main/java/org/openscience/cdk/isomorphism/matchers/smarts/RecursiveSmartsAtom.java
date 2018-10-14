@@ -21,12 +21,9 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.isomorphism.ComponentGrouping;
 import org.openscience.cdk.isomorphism.Pattern;
-import org.openscience.cdk.isomorphism.SmartsStereoMatch;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
@@ -62,9 +59,8 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
                     @Override
                     public BitSet load(IAtomContainer target) throws Exception {
                         BitSet hits = new BitSet();
-                        for (int[] mapping : FluentIterable.from(Pattern.findSubstructure(query).matchAll(target))
-                                .filter(new SmartsStereoMatch(query, target))
-                                .filter(new ComponentGrouping(query, target))) {
+                        for (int[] mapping : Pattern.findSubstructure(query)
+                                                    .matchAll(target)) {
                             hits.set(mapping[0]);
                         }
                         return hits;

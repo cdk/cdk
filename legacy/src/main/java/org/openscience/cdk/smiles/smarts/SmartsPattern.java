@@ -23,20 +23,16 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.isomorphism.ComponentGrouping;
 import org.openscience.cdk.isomorphism.Mappings;
 import org.openscience.cdk.isomorphism.Pattern;
-import org.openscience.cdk.smarts.Smarts;
-import org.openscience.cdk.isomorphism.SmartsStereoMatch;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.smarts.Smarts;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.IOException;
@@ -84,9 +80,6 @@ public final class SmartsPattern extends Pattern {
     /** Subgraph mapping. */
     private final Pattern        pattern;
 
-    /** Include invariants about ring size / number. */
-    private final boolean        hasStereo, hasCompGrp, hasRxnMap;
-
     /**
      * Prepare the target molecule (i.e. detect rings, aromaticity) before
      * matching the SMARTS.
@@ -111,21 +104,6 @@ public final class SmartsPattern extends Pattern {
         if (!Smarts.parse(query, smarts))
             throw new IOException("Could not parse SMARTS: " + smarts);
         this.pattern = Pattern.findSubstructure(query);
-
-        // X<num>, R and @ are cheap and done always but R<num>, r<num> are not
-        // we inspect the SMARTS pattern string to determine if ring
-        // size or number queries are needed
-        this.hasStereo  = query.stereoElements().iterator().hasNext();
-        this.hasCompGrp = hasCompGrouping(query);
-        this.hasRxnMap  = smarts.contains(":");
-    }
-
-    private boolean hasCompGrouping(IAtomContainer query) {
-        for (IAtom atom : query.atoms()) {
-            if (atom.getProperty(CDKConstants.REACTION_GROUP) != null)
-                return true;
-        }
-        return query.getProperty(ComponentGrouping.KEY) != null;
     }
 
     static void prepare(IAtomContainer target) {
@@ -186,20 +164,10 @@ public final class SmartsPattern extends Pattern {
         if (doPrep)
             prepare(target);
 
-        Mappings mappings = pattern.matchAll(target);
-
-        // apply required post-match filters
-        if (hasStereo)
-            mappings = mappings.filter(new SmartsStereoMatch(query, target));
-        if (hasCompGrp)
-            mappings = mappings.filter(new ComponentGrouping(query, target));
-        if (hasRxnMap)
-            mappings = mappings.filter(new SmartsAtomAtomMapFilter(query, target));
+        return pattern.matchAll(target);
 
         // Note: Mappings is lazy, we can't reset aromaticity etc as the
         // substructure match may not have finished
-
-        return mappings;
     }
 
     /**

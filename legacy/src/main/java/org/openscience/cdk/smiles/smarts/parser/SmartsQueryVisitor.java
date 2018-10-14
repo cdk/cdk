@@ -24,7 +24,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
-import org.openscience.cdk.isomorphism.ComponentGrouping;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
@@ -274,8 +273,9 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             fullQuery = new QueryAtomContainer(builder);
 
         // keeps track of component grouping
-        int[] components = fullQuery.getProperty(ComponentGrouping.KEY) != null ? fullQuery.getProperty(ComponentGrouping.KEY, int[].class)
-                                                                                : new int[0];
+        int[] components = fullQuery.getProperty("COMPONENT.GROUPING") != null
+                ? fullQuery.getProperty("COMPONENT.GROUPING", int[].class)
+                : new int[0];
         int maxId = 0;
         if (components.length > 0) {
             for (int id : components)
@@ -303,7 +303,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
         // only store if there was a component grouping
         if (maxId > 0) {
             components[components.length - 1] = maxId; // we left space to store how many groups there were
-            fullQuery.setProperty(ComponentGrouping.KEY, components);
+            fullQuery.setProperty("COMPONENT.GROUPING", components);
         }
 
         // create tetrahedral elements

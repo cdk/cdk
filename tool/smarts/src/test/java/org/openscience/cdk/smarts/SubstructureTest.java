@@ -370,7 +370,7 @@ public abstract class SubstructureTest {
 
     void assertMatch(IAtomContainer query, IAtomContainer target, int count) {
         assertThat(query.getTitle() + " should match " + target.getTitle() + " " + count + " times",
-                create(query).matchAll(target).stereochemistry().count(), is(count));
+                create(query).matchAll(target).count(), is(count));
     }
 
     void assertMatch(IAtomContainer query, IAtomContainer target) {
