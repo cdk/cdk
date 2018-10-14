@@ -1101,6 +1101,23 @@
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
     </Descriptor>
 
+    <Descriptor rdf:ID="Fsp3">
+        <rdfs:label>Number of sp3 hybridized carbons/total carbon count</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resource="#ku"/>
+                <dc:date>2018-10-14</dc:date>
+            </documentation>
+        </annotation>
+        <definition rdf:parseType='Literal'>
+            Returns the number of sp3 hybridized carbons divided by total carbon count.
+        </definition>
+        <description rdf:parseType='Literal'>
+            This descriptor is described by Lovering et al <bibtex:cite ref="Lovering2009"/>.
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+    
     <Descriptor rdf:ID="gravitationalIndex">
         <rdfs:label>Gravitational Index</rdfs:label>
         <annotation>
