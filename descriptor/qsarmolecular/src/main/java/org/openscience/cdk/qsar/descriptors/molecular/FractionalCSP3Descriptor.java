@@ -21,10 +21,11 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -32,17 +33,16 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.DoubleResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * An implementation of the Fractional CSP3 descriptor characterizing non-flatness of a molecule.
+ * An implementation of the Fractional CSP3 descriptor described in {@cdk.cite Lovering2009}. 
+ * This descriptor is characterizing non-flatness of a molecule.
  * 
  * This descriptor returns a single double value, labeled as "Fsp3"
  * 
  * @author Kazuya Ujihara
  * @cdk.module qsarmolecular
  * @cdk.dictref qsar-descriptors:Fsp3
- * @cdk.githash
  */
 public class FractionalCSP3Descriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
     public FractionalCSP3Descriptor() { }
@@ -91,27 +91,24 @@ public class FractionalCSP3Descriptor extends AbstractMolecularDescriptor implem
      */
     @Override
     public DescriptorValue calculate(IAtomContainer mol) {
-        try {
-            mol = mol.clone();
-        } catch (CloneNotSupportedException ex) {
-        }
-        
-        int nC = 0;
-        int nCSP3 = 0;
         DoubleResult result;
         try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-            for (IAtom atom: mol.atoms()) {
-                if (atom.getAtomicNumber() == 6) {
-                    nC++;
-                    if (atom.getHybridization() == Hybridization.SP3)
-                        nCSP3++;
-                }
-            }
-            result = new DoubleResult(nC == 0 ? 0 : (double)nCSP3 / nC);
+            int nC = 0;
+            int nCSP3 = 0;
+	        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+	        for (IAtom atom : mol.atoms()) {
+	            if (atom.getAtomicNumber() == 6) {
+	            	nC++;
+	                IAtomType matched = matcher.findMatchingAtomType(mol, atom);
+	                if (matched != null && matched.getHybridization() == IAtomType.Hybridization.SP3) {
+	                	nCSP3++;
+	                }
+	            }
+	        }
+	        result = new DoubleResult(nC == 0 ? 0 : (double)nCSP3 / nC);
         }
         catch (CDKException e) {
-            result = new DoubleResult(Double.NaN);
+        	result = new DoubleResult(Double.NaN);
         }
         
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
