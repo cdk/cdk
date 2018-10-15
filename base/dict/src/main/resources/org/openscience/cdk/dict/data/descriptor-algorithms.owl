@@ -181,6 +181,10 @@
         <rdfs:label>Alex Clark</rdfs:label>
     </Contributor>
 
+    <Contributor rdf:ID="ku">
+        <rdfs:label>Kazuya Ujihara</rdfs:label>
+    </Contributor>
+    
     <!-- the facts: Categories -->
 
     <Category rdf:ID="descriptorCategories">
