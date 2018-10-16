@@ -287,7 +287,7 @@ public class MMElementRule implements IRule {
         map.put("F", 16);
         map.put("Cl", 10);
         map.put("Br", 4);
-        map.put("Br", 8);
+        map.put("Si", 8);
 
         return map;
     }
