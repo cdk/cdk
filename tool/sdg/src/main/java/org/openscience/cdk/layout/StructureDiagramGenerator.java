@@ -236,6 +236,8 @@ public class StructureDiagramGenerator {
                 afix.clear();
                 bfix.clear();
 
+                boolean aggresive = false;
+
                 if (largest != null && largest.getAtomCount() > 1) {
 
                     int idx = largest.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
@@ -246,12 +248,21 @@ public class StructureDiagramGenerator {
                         idx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                         final IAtom src = reference.get(idx);
                         if (src == null) continue;
+                        if (!aggresive) {
+                            // no way to get the container of 'src' without
+                            // lots of refactoring, instead we just use the
+                            // new API points - first checking these will not
+                            // fail
+                            if (src.getContainer() != null
+                                && atom.getContainer() != null
+                                && AtomPlacer.isColinear(src, src.bonds())
+                                   != AtomPlacer.isColinear(atom, atom.bonds()))
+                                continue;
+                        }
                         atom.setPoint2d(new Point2d(src.getPoint2d()));
                         afix.put(atom, src);
                     }
                 }
-
-                boolean aggresive = false;
 
                 if (!afix.isEmpty()) {
                     if (aggresive) {
