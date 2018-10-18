@@ -19,7 +19,7 @@ GNU Lesser General Public License v2. This has implications on what you can do w
 binaries of the CDK library. For details, please refer to the file LICENSE, which should have been
 provided with this distribution.
 
-PLEASE NOTE: This is a library of useful data structures and algorithms to manipulate them 
+**PLEASE NOTE**: This is a library of useful data structures and algorithms to manipulate them 
 from the area of structural chemo- and bioinformatics. As such, it is intended for the use by
 programmers, who wish to save some effort by reusing code. It is not intended for the enduser. 
 If you consider yourself to be more like user, you might not find what you wanted. 
@@ -68,7 +68,7 @@ the documentation using the following command:
 cdk/$ firefox target/site/apidocs/index.html
 ```
 
-## Creating a Jar of all sources
+## Creating a Jar of All Sources
 
 To create a Jar containing all source files use the following command on the main pom. 
 
@@ -78,7 +78,7 @@ cdk/$ mvn source:aggregate
 
 The `cdk-{version}-sources.jar` will be generated in the `target/directory`.
 
-## Running tests
+## Running Tests
 
 IMPORTANT: this requires the Git version of the sources, because the test files are not included in
 the source code distribution.
@@ -147,7 +147,7 @@ also be downloaded and included.
 
 To include everything in the library use the `cdk-bundle` artefact.
 
-### Maven reporting plugins 
+### Maven Reporting Plugins 
 
 This section details how to run the plugins and access the reports.
 
@@ -225,7 +225,7 @@ Maven can create a dependency tree with the following command:
 cdk/: mvn dependency:tree
 ```
 
-## Examples and tutorials
+## Examples and Tutorials
 
 To get started using the CDK, you may be interested in the following websites which contain
 examples and tutorials:
