@@ -1,4 +1,5 @@
 # Molecular QSAR descriptors
+org.openscience.cdk.qsar.descriptors.molecular.FractionalCSP3Descriptor
 org.openscience.cdk.qsar.descriptors.molecular.SmallRingDescriptor
 org.openscience.cdk.qsar.descriptors.molecular.FractionalPSADescriptor
 org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptor
