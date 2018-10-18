@@ -385,7 +385,8 @@ public class Abbreviations implements Iterable<String> {
                             best = sgroup2;
                     }
 
-                    return Collections.singletonList(best);
+                    if (best != null)
+                        return Collections.singletonList(best);
                 }
 
             } catch (CDKException ignored) {
