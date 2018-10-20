@@ -272,6 +272,28 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getSubscript(), is("HOOH"));
     }
 
+    @Test public void multipleDisconnectedAbbreviations() throws Exception {
+        String smi = "ClCCl.Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1";
+        Abbreviations factory = new Abbreviations();
+        factory.add("ClCCl DCM");
+        factory.add("Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2");
+        IAtomContainer mol = smi(smi);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("Pd(dppf)Cl2·DCM"));
+    }
+
+    @Test public void multipleDisconnectedAbbreviations2() throws Exception {
+        String smi = "ClCCl.Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1";
+        Abbreviations factory = new Abbreviations();
+        factory.add("Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2");
+        factory.add("Cl[Pd]Cl PdCl2");
+        IAtomContainer mol = smi(smi);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("Pd(dppf)Cl2"));
+    }
+
     @Test
     public void loadFromFile() throws Exception {
         Abbreviations factory = new Abbreviations();

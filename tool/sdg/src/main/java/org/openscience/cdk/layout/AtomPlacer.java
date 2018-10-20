@@ -940,15 +940,14 @@ public class AtomPlacer {
      * -C=[N+]=N
      * -N=[N+]=N
      */
-    boolean isColinear(IAtom atom, List<IBond> bonds) {
-        if (bonds.size() != 2)
-            return false;
-
+    static boolean isColinear(IAtom atom, Iterable<IBond> bonds) {
         int numSgl = atom.getImplicitHydrogenCount() == null ? 0 : atom.getImplicitHydrogenCount();
         int numDbl = 0;
         int numTpl = 0;
+        int count  = 0;
 
         for (IBond bond : bonds) {
+            ++count;
             switch (bond.getOrder()) {
                 case SINGLE:
                     numSgl++;
@@ -965,6 +964,9 @@ public class AtomPlacer {
                     return false;
             }
         }
+
+        if (count != 2)
+            return false;
 
         switch (atom.getAtomicNumber()) {
             case 6:
