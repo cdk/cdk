@@ -765,20 +765,27 @@ public class MolecularFormulaManipulator {
      * @return         The summed exact mass of all atoms in this MolecularFormula
      */
     public static double getTotalExactMass(IMolecularFormula formula) {
-        Double mass = 0.0;
-
+        double mass = 0.0;
         for (IIsotope isotope : formula.isotopes()) {
-            if (isotope.getExactMass() == CDKConstants.UNSET) {
-                try {
+            try {
+                Integer massNum  = isotope.getMassNumber();
+                Double  exactMass = isotope.getExactMass();
+                if (massNum == null || massNum == 0) {
                     IIsotope majorIsotope = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
-                    if (majorIsotope != null) {
-                        mass += majorIsotope.getExactMass() * formula.getIsotopeCount(isotope);
+                    if (majorIsotope != null)
+                        exactMass = majorIsotope.getExactMass();
+                } else {
+                    if (exactMass == null) {
+                        IIsotope temp = Isotopes.getInstance().getIsotope(isotope.getSymbol(), massNum);
+                        if (temp != null)
+                            exactMass = temp.getExactMass();
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException("Could not instantiate the IsotopeFactory.");
                 }
-            } else
-                mass += isotope.getExactMass() * formula.getIsotopeCount(isotope);
+                if (exactMass != null)
+                    mass += exactMass * formula.getIsotopeCount(isotope);
+            } catch (IOException e) {
+                throw new RuntimeException("Could not instantiate the IsotopeFactory.");
+            }
         }
         if (formula.getCharge() != null) mass = correctMass(mass, formula.getCharge());
         return mass;
