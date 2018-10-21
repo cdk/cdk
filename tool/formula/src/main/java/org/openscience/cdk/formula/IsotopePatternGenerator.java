@@ -50,8 +50,9 @@ public class IsotopePatternGenerator {
     private ILoggingTool       logger         = LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class);
 
     /** Minimal abundance of the isotopes to be added in the combinatorial search.*/
-    private double             minAbundance   = .1;
-    private double             TOLERANCE      = 0.00005f;
+    private double minIntensity = .1;
+    private double minAbundance = 1E-10;
+    private double TOLERANCE    = 0.00005f;
 
     /**
      *  Constructor for the IsotopeGenerator. The minimum abundance is set to
@@ -69,7 +70,7 @@ public class IsotopePatternGenerator {
      *
      */
     public IsotopePatternGenerator(double minAb) {
-        minAbundance = minAb;
+        minIntensity = minAb;
         logger.info("Generating all Isotope structures with IsotopeGenerator");
     }
 
@@ -104,7 +105,7 @@ public class IsotopePatternGenerator {
         }
 
         IsotopePattern isoP = IsotopePatternManipulator.sortAndNormalizedByIntensity(abundance_Mass);
-        isoP = cleanAbundance(isoP, minAbundance);
+        isoP = cleanAbundance(isoP, minIntensity);
         IsotopePattern isoPattern = IsotopePatternManipulator.sortByMass(isoP);
         return isoPattern;
 
@@ -115,7 +116,7 @@ public class IsotopePatternGenerator {
      * atom. Receives the periodic table element and calculate the isotopes, if
      * there exist a previous calculation, add these new isotopes. In the
      * process of adding the new isotopes, remove those that has an abundance
-     * less than setup parameter minAbundance, and remove duplicated masses.
+     * less than setup parameter minIntensity, and remove duplicated masses.
      *
      * @param elementSymbol  The chemical element symbol
      * @return the calculation was successful
@@ -175,7 +176,7 @@ public class IsotopePatternGenerator {
                     }
 
                     // Filter isotopes too small
-                    if (newAbundance > 1E-10)
+                    if (newAbundance > minAbundance)
                         containers.add(new IsotopeContainer(mass, newAbundance));
                 }
             }
@@ -193,10 +194,10 @@ public class IsotopePatternGenerator {
      * of the most abundant isotope.
      *
      * @param isopattern   The IsotopePattern object
-     * @param minAbundance The minimum abundance
+     * @param minIntensity The minimum abundance
      * @return             The IsotopePattern cleaned
      */
-    private IsotopePattern cleanAbundance(IsotopePattern isopattern, double minAbundance) {
+    private IsotopePattern cleanAbundance(IsotopePattern isopattern, double minIntensity) {
 
         double intensity, biggestIntensity = 0.0f;
 
@@ -221,7 +222,7 @@ public class IsotopePatternGenerator {
         sortedIsoPattern.setMonoIsotope(new IsotopeContainer(isopattern.getIsotopes().get(0).getMass(), isopattern
                 .getIsotopes().get(0).getIntensity()));
         for (int i = 1; i < isopattern.getNumberOfIsotopes(); i++) {
-            if (isopattern.getIsotopes().get(i).getIntensity() >= (minAbundance))
+            if (isopattern.getIsotopes().get(i).getIntensity() >= (minIntensity))
                 sortedIsoPattern.addIsotope(new IsotopeContainer(isopattern.getIsotopes().get(i).getMass(), isopattern
                         .getIsotopes().get(i).getIntensity()));
         }
