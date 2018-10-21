@@ -19,18 +19,17 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Generates all Combinatorial chemical isotopes given a structure.
@@ -52,10 +51,11 @@ public class IsotopePatternGenerator {
 
     /** Minimal abundance of the isotopes to be added in the combinatorial search.*/
     private double             minAbundance   = .1;
+    private double             TOLERANCE      = 0.00005f;
 
     /**
-     *  Constructor for the IsotopeGenerator. The minimum abundance is set to 
-     *                          0.1 (10% abundance) by default. 
+     *  Constructor for the IsotopeGenerator. The minimum abundance is set to
+     *                          0.1 (10% abundance) by default.
      */
     public IsotopePatternGenerator() {
         this(0.1);
@@ -128,10 +128,10 @@ public class IsotopePatternGenerator {
 
         if (isotopes.length == 0) return isotopePattern;
 
-        double mass, previousMass, abundance, totalAbundance, newAbundance;
+        double mass, abundance, totalAbundance, newAbundance;
 
-        HashMap<Double, Double> isotopeMassAndAbundance = new HashMap<Double, Double>();
-        IsotopePattern currentISOPattern = new IsotopePattern();
+        List<IsotopeContainer>  containers              = new ArrayList<>();
+        IsotopePattern          currentISOPattern       = new IsotopePattern();
 
         // Generate isotopes for the current atom (element)
         for (int i = 0; i < isotopes.length; i++) {
@@ -160,49 +160,32 @@ public class IsotopePatternGenerator {
                     newAbundance = totalAbundance * abundance * 0.01;
                     mass += currentISOPattern.getIsotopes().get(j).getMass();
 
-                    // Filter duplicated masses
-                    previousMass = searchMass(isotopeMassAndAbundance.keySet(), mass);
-                    if (isotopeMassAndAbundance.containsKey(previousMass)) {
-                        newAbundance += isotopeMassAndAbundance.get(previousMass);
-                        mass = previousMass;
+                    // merge duplicates
+                    IsotopeContainer existing = null;
+                    for (IsotopeContainer container : containers) {
+                        if (Math.abs(container.getMass() - mass) < TOLERANCE) {
+                            existing = container;
+                            break;
+                        }
+                    }
+
+                    if (existing != null) {
+                        existing.setIntensity(existing.getIntensity() + newAbundance);
+                        continue;
                     }
 
                     // Filter isotopes too small
-                    if (newAbundance > 1E-10) {
-                        isotopeMassAndAbundance.put(mass, newAbundance);
-                    }
-                    previousMass = 0;
+                    if (newAbundance > 1E-10)
+                        containers.add(new IsotopeContainer(mass, newAbundance));
                 }
             }
 
-            Iterator<Double> itr = isotopeMassAndAbundance.keySet().iterator();
             isotopePattern = new IsotopePattern();
-            while (itr.hasNext()) {
-                mass = itr.next();
-                isotopePattern.addIsotope(new IsotopeContainer(mass, isotopeMassAndAbundance.get(mass)));
+            for (IsotopeContainer container : containers) {
+                isotopePattern.addIsotope(container);
             }
         }
-
         return isotopePattern;
-
-    }
-
-    /**
-     * Search the key mass in this Set.
-     *
-     * @param keySet  The Set object
-     * @param mass    The mass to look for
-     * @return        The key value
-     */
-    private double searchMass(Set<Double> keySet, double mass) {
-        double TOLERANCE = 0.00005f;
-        double diff;
-        for (double key : keySet) {
-            diff = Math.abs(key - mass);
-            if (diff < TOLERANCE) return key;
-        }
-
-        return 0.0d;
     }
 
     /**
