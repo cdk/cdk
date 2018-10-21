@@ -50,6 +50,12 @@ public class IsotopeContainer {
         inte = intensity;
     }
 
+    public IsotopeContainer(IsotopeContainer container) {
+        masOs = container.masOs;
+        inte = container.inte;
+        form = container.form;
+    }
+
     /**
      * Set IMolecularFormula object of this container.
      *
