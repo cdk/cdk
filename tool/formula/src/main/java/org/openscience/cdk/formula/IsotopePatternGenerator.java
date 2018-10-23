@@ -30,6 +30,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Generates all Combinatorial chemical isotopes given a structure.
@@ -142,9 +143,23 @@ public class IsotopePatternGenerator {
         for (IIsotope isos : molecularFormula.isotopes()) {
             String elementSymbol = isos.getSymbol();
             int atomCount = molecularFormula.getIsotopeCount(isos);
-            for (int i = 0; i < atomCount; i++) {
-                abundance_Mass = calculateAbundanceAndMass(abundance_Mass, elementSymbol);
+
+            // Generate possible isotope containers for the current atom's
+            // these will then me 'multiplied' with the existing patten
+            List<IsotopeContainer> additional = new ArrayList<>();
+            for (IIsotope isotope : isoFactory.getIsotopes(elementSymbol)) {
+                double mass      = isotope.getExactMass();
+                double abundance = isotope.getNaturalAbundance();
+                if (abundance <= 0.000000001)
+                    continue;
+                IsotopeContainer container = new IsotopeContainer(mass, abundance);
+                if (storeFormula)
+                    container.setFormula(asFormula(isotope));
+                additional.add(container);
             }
+
+            for (int i = 0; i < atomCount; i++)
+                abundance_Mass = calculateAbundanceAndMass(abundance_Mass, additional);
         }
 
         IsotopePattern isoP = IsotopePatternManipulator.sortAndNormalizedByIntensity(abundance_Mass);
@@ -184,39 +199,24 @@ public class IsotopePatternGenerator {
      * process of adding the new isotopes, remove those that has an abundance
      * less than setup parameter minIntensity, and remove duplicated masses.
      *
-     * @param elementSymbol  The chemical element symbol
+     * @param additional additional isotopes to 'multiple' the current pattern by
      * @return the calculation was successful
      */
-    private IsotopePattern calculateAbundanceAndMass(IsotopePattern current, String elementSymbol) {
+    private IsotopePattern calculateAbundanceAndMass(IsotopePattern current, List<IsotopeContainer> additional) {
 
-        IIsotope[] isotopes = isoFactory.getIsotopes(elementSymbol);
-
-        if (isotopes == null) return current;
-
-        if (isotopes.length == 0) return current;
+        if (additional == null || additional.size() == 0) return current;
 
         List<IsotopeContainer>  containers = new ArrayList<>();
-        IsotopePattern          extended   = new IsotopePattern();
-
-        // Generate isotopes for the current atom (element)
-        for (int i = 0; i < isotopes.length; i++) {
-            double mass = isotopes[i].getExactMass();
-            double abundance = isotopes[i].getNaturalAbundance();
-            if (abundance <= 0.000000001)
-                continue;
-            IsotopeContainer container = new IsotopeContainer(mass, abundance);
-            if (storeFormula)
-                container.setFormula(asFormula(isotopes[i]));
-            extended.addIsotope(container);
-        }
 
         // Verify if there is a previous calculation. If it exists, add the new
         // isotopes
         if (current == null) {
-            current = extended;
+            current = new IsotopePattern();
+            for (IsotopeContainer container : additional)
+                current.addIsotope(container);
         } else {
             for (IsotopeContainer container : current.getIsotopes()) {
-                for (IsotopeContainer other : extended.getIsotopes()) {
+                for (IsotopeContainer other : additional) {
 
                     double abundance = container.getIntensity() * other.getIntensity() * 0.01;
                     double mass      = container.getMass() + other.getMass();
