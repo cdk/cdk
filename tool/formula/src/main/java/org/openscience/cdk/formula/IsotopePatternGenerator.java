@@ -202,6 +202,8 @@ public class IsotopePatternGenerator {
         for (int i = 0; i < isotopes.length; i++) {
             double mass = isotopes[i].getExactMass();
             double abundance = isotopes[i].getNaturalAbundance();
+            if (abundance <= 0.000000001)
+                continue;
             IsotopeContainer container = new IsotopeContainer(mass, abundance);
             if (storeFormula)
                 container.setFormula(asFormula(isotopes[i]));
@@ -214,10 +216,7 @@ public class IsotopePatternGenerator {
             current = extended;
         } else {
             for (IsotopeContainer container : current.getIsotopes()) {
-                if (container.getIntensity() == 0) continue;
-
                 for (IsotopeContainer other : extended.getIsotopes()) {
-                    if (other.getIntensity() == 0) continue;
 
                     double abundance = container.getIntensity() * other.getIntensity() * 0.01;
                     double mass      = container.getMass() + other.getMass();
