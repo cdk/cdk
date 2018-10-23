@@ -122,7 +122,7 @@ final class QueryStereoFilter implements Predicate<int[]> {
     }
 
     /**
-     * Verify the tetrahedral stereochemistry (clockwise/anticlockwise) of atom
+     * Verify the tetrahedral stereo-chemistry (clockwise/anticlockwise) of atom
      * {@code u} is preserved in the target when the {@code mapping} is used.
      *
      * @param u       tetrahedral index in the target
@@ -136,34 +136,50 @@ final class QueryStereoFilter implements Predicate<int[]> {
         if (targetTypes[v] != null && targetTypes[v] != Type.Tetrahedral)
             return false;
 
-        ITetrahedralChirality queryElement = (ITetrahedralChirality) queryElements[u];
+        ITetrahedralChirality queryElement  = (ITetrahedralChirality) queryElements[u];
         ITetrahedralChirality targetElement = (ITetrahedralChirality) targetElements[v];
 
-        IAtom queryAtom = query.getAtom(u);
+        IAtom queryAtom  = query.getAtom(u);
         IAtom targetAtom = target.getAtom(v);
 
-        int[] us = neighbors(queryElement, queryMap);
-        us = map(u, v, us, mapping);
-        int p = permutationParity(us);
-
         // check if unspecified was allowed
-        if (targetTypes[v] == null) {
+        if (targetTypes[v] == null)
             return ((QueryAtom)queryAtom).getExpression().matches(targetAtom, 0);
-        }
 
         // target was non-tetrahedral
-        if (targetTypes[v] != Type.Tetrahedral) return false;
+        if (targetTypes[v] != Type.Tetrahedral)
+            return false;
 
+        int[] us = map(u, v, neighbors(queryElement, queryMap), mapping);
         int[] vs = neighbors(targetElement, targetMap);
-        int q = permutationParity(vs) * parity(targetElement.getStereo());
-        q *= p;
-        if (q < 0)
-            return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, IStereoElement.LEFT);
-        else if (q > 0)
-            return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, IStereoElement.RIGHT);
-        else
-            return ((QueryAtom) queryAtom).getExpression().matches(targetAtom, 0);
 
+        // adjustment needed for implicit neighbor (H or lone pair)
+        int focusIdx = targetMap.get(targetAtom);
+        for (int i = 0; i < 4; i++) {
+            int j = 0, k = 0;
+            for (; j < 4; j++) {
+                if (vs[i] == us[j])
+                    break;
+                if (us[j] == focusIdx)
+                    k = j;
+            }
+            if (j == 4)
+                us[k] = vs[i];
+        }
+
+        int parity = permutationParity(us)
+                     * permutationParity(vs)
+                     * parity(targetElement.getStereo());
+
+        if (parity < 0)
+            return ((QueryAtom) queryAtom).getExpression()
+                                          .matches(targetAtom, IStereoElement.LEFT);
+        else if (parity > 0)
+            return ((QueryAtom) queryAtom).getExpression()
+                                          .matches(targetAtom, IStereoElement.RIGHT);
+        else
+            return ((QueryAtom) queryAtom).getExpression()
+                                          .matches(targetAtom, 0);
     }
 
     /**
