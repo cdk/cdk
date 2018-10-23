@@ -52,7 +52,7 @@ public class IsotopePatternGenerator {
     /** Minimal abundance of the isotopes to be added in the combinatorial search.*/
     private double  minIntensity = .1;
     private double  minAbundance = 1E-10;
-    private double  TOLERANCE    = 0.00005f;
+    private double  resolution   = 0.00005f;
     private boolean storeFormula = false;
 
     /**
@@ -92,6 +92,17 @@ public class IsotopePatternGenerator {
      */
     public IsotopePatternGenerator setMinAbundance(double minAbundance) {
         this.minAbundance = minAbundance;
+        return this;
+    }
+
+    /**
+     * Set the minimum resolution at which peaks within this mass difference
+     * should be considered equivalent.
+     * @param resolution the minimum resolution
+     * @return self for method chaining
+     */
+    public IsotopePatternGenerator setMinResolution(double resolution) {
+        this.resolution = resolution;
         return this;
     }
 
@@ -199,10 +210,10 @@ public class IsotopePatternGenerator {
                     newAbundance = totalAbundance * abundance * 0.01;
                     mass += currentISOPattern.getIsotopes().get(j).getMass();
 
-                    // merge duplicates
+                    // merge duplicates with some resolution
                     IsotopeContainer existing = null;
                     for (IsotopeContainer container : containers) {
-                        if (Math.abs(container.getMass() - mass) < TOLERANCE) {
+                        if (Math.abs(container.getMass() - mass) <= resolution) {
                             existing = container;
                             break;
                         }
