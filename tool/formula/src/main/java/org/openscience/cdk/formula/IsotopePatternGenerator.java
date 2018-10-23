@@ -209,6 +209,7 @@ public class IsotopePatternGenerator {
                     }
 
                     if (existing != null) {
+                        existing.setMass((existing.getMass() + mass) / 2); // moving avg.
                         existing.setIntensity(existing.getIntensity() + newAbundance);
                         continue;
                     }
