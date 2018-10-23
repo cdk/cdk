@@ -51,7 +51,7 @@ public class IsotopePatternGenerator {
 
     /** Minimal abundance of the isotopes to be added in the combinatorial search.*/
     private double  minIntensity = 0.00001;
-    private double  minAbundance = 1E-10;
+    private double  minAbundance = 1E-10; // n.b. not actually abundance
     private double  resolution   = 0.00005f;
     private boolean storeFormula = false;
 
@@ -66,12 +66,11 @@ public class IsotopePatternGenerator {
     /**
      * Constructor for the IsotopeGenerator.
      *
-     * @param minAb Minimal abundance of the isotopes to be added
-     * 				in the combinatorial search (scale 0.0 to 1.0)
-     *
+     * @param minIntensity Minimal intensity of the isotopes to be added
+     * 				       in the combinatorial search (scale 0.0 to 1.0)
      */
-    public IsotopePatternGenerator(double minAb) {
-        minIntensity = minAb;
+    public IsotopePatternGenerator(double minIntensity) {
+        this.minIntensity = minIntensity;
         logger.info("Generating all Isotope structures with IsotopeGenerator");
     }
 
@@ -82,16 +81,6 @@ public class IsotopePatternGenerator {
      */
     public IsotopePatternGenerator setMinIntensity(double minIntensity) {
         this.minIntensity = minIntensity;
-        return this;
-    }
-
-    /**
-     * Set the minimum abundance (pre-normalize) to generate.
-     * @param minAbundance the minimum abundance
-     * @return self for method chaining
-     */
-    public IsotopePatternGenerator setMinAbundance(double minAbundance) {
-        this.minAbundance = minAbundance;
         return this;
     }
 
