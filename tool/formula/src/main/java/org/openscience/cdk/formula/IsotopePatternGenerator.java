@@ -219,8 +219,11 @@ public class IsotopePatternGenerator {
                     // merge duplicates with some resolution
                     IsotopeContainer existing = findExisting(containers, mass, resolution);
                     if (existing != null) {
-                        existing.setMass((existing.getMass() + mass) / 2); // moving avg.
-                        existing.setIntensity(existing.getIntensity() + abundance);
+                        double newIntensity = existing.getIntensity() + abundance;
+                        // moving weighted avg
+                        existing.setMass((existing.getMass()*existing.getIntensity() +
+                                          mass*abundance) / newIntensity);
+                        existing.setIntensity(newIntensity);
                         if (storeFormula) {
                             for (IMolecularFormula mf : container.getFormulas())
                                 addDistinctFormula(existing, union(mf, other.getFormula()));
