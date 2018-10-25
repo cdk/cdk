@@ -1972,6 +1972,9 @@ public final class Smarts {
             case SINGLE_OR_DOUBLE:
                 sb.append("-,=");
                 break;
+            case ORDER:
+                LoggingToolFactory.createLoggingTool(Smarts.class)
+                                  .warn("Expr.Type.ORDER can not be round-tripped via SMARTS!");
             case ALIPHATIC_ORDER:
                 switch (expr.value()) {
                     case 1:
