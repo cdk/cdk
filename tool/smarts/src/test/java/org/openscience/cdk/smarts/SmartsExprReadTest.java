@@ -430,7 +430,7 @@ public class SmartsExprReadTest {
     @Test
     public void ringSize() {
         IAtomContainer mol = new AtomContainer();
-        assertTrue(Smarts.parse(mol, "[Z8]", Smarts.FLAVOR_LOOSE));
+        assertTrue(Smarts.parse(mol, "[Z8]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(RING_SIZE, 8);
         assertThat(actual, is(expected));
@@ -439,7 +439,7 @@ public class SmartsExprReadTest {
     @Test
     public void ringSize0() {
         IAtomContainer mol = new AtomContainer();
-        assertTrue(Smarts.parse(mol, "[Z0]", Smarts.FLAVOR_LOOSE));
+        assertTrue(Smarts.parse(mol, "[Z0]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(IS_IN_CHAIN);
         assertThat(actual, is(expected));
@@ -448,7 +448,7 @@ public class SmartsExprReadTest {
     @Test
     public void ringSizeDefault() {
         IAtomContainer mol = new AtomContainer();
-        assertTrue(Smarts.parse(mol, "[Z]", Smarts.FLAVOR_LOOSE));
+        assertTrue(Smarts.parse(mol, "[Z]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(IS_IN_RING);
         assertThat(actual, is(expected));
@@ -697,7 +697,9 @@ public class SmartsExprReadTest {
     @Test
     public void atomStereoSimpleLeft() {
         Expr actual   = getAtomExpr("[C@H]");
-        System.out.println(actual);
+        assertThat(actual, is(new Expr(ALIPHATIC_ELEMENT, 6)
+                                      .and(new Expr(STEREOCHEMISTRY, 1))
+                                      .and(new Expr(TOTAL_H_COUNT, 1))));
     }
 
     @Test

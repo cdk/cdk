@@ -864,7 +864,7 @@ public final class Smarts {
                             default:  // Z=None
                                 unget();
                                 num = nextUnsignedInt();
-                                if (isFlavor(FLAVOR_LOOSE | FLAVOR_DAYLIGHT)) {
+                                if (isFlavor(FLAVOR_DAYLIGHT)) {
                                     if (num < 0)
                                         expr = new Expr(IS_IN_RING);
                                     else if (num == 0)
