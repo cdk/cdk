@@ -218,7 +218,7 @@ public class SmartsExprWriteTest {
             .or(new Expr(ELEMENT, 17))
             .or(new Expr(ELEMENT, 35))
             .negate();
-        assertThat(Smarts.generateAtom(expr), is("[!$([Br,F,Cl])]"));
+        assertThat(Smarts.generateAtom(expr), is("[!$([F,Cl,Br])]"));
     }
 
     // or -> and -> or needs to be recursive

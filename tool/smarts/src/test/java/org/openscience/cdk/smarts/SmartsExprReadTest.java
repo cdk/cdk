@@ -903,48 +903,48 @@ public class SmartsExprReadTest {
     @Test
     public void degreeRange() {
         Expr expr = getAtomExpr("[D{1-3}]");
-        assertThat(expr, is(or(expr(DEGREE, 3),
-                               or(expr(DEGREE, 1),
-                                  expr(DEGREE, 2)))));
+        assertThat(expr, is(or(expr(DEGREE, 1),
+                               or(expr(DEGREE, 2),
+                                  expr(DEGREE, 3)))));
     }
 
     @Test
     public void implHRange() {
         Expr expr = getAtomExpr("[h{1-3}]");
-        assertThat(expr, is(or(expr(IMPL_H_COUNT, 3),
-                               or(expr(IMPL_H_COUNT, 1),
-                                  expr(IMPL_H_COUNT, 2)))));
+        assertThat(expr, is(or(expr(IMPL_H_COUNT, 1),
+                               or(expr(IMPL_H_COUNT, 2),
+                                  expr(IMPL_H_COUNT, 3)))));
     }
 
     @Test
     public void totalHCountRange() {
         Expr expr = getAtomExpr("[H{1-3}]");
-        assertThat(expr, is(or(expr(TOTAL_H_COUNT, 3),
-                               or(expr(TOTAL_H_COUNT, 1),
-                                  expr(TOTAL_H_COUNT, 2)))));
+        assertThat(expr, is(or(expr(TOTAL_H_COUNT, 1),
+                               or(expr(TOTAL_H_COUNT, 2),
+                                  expr(TOTAL_H_COUNT, 3)))));
     }
 
     @Test
     public void valenceRange() {
         Expr expr = getAtomExpr("[v{1-3}]");
-        assertThat(expr, is(or(expr(VALENCE, 3),
-                               or(expr(VALENCE, 1),
-                                  expr(VALENCE, 2)))));
+        assertThat(expr, is(or(expr(VALENCE, 1),
+                               or(expr(VALENCE, 2),
+                                  expr(VALENCE, 3)))));
     }
 
     @Test
     public void ringBondCountRange() {
         Expr expr = getAtomExpr("[x{2-4}]");
-        assertThat(expr, is(or(expr(RING_BOND_COUNT, 4),
-                               or(expr(RING_BOND_COUNT, 2),
-                                  expr(RING_BOND_COUNT, 3)))));
+        assertThat(expr, is(or(expr(RING_BOND_COUNT, 2),
+                               or(expr(RING_BOND_COUNT, 3),
+                                  expr(RING_BOND_COUNT, 4)))));
     }
 
     @Test
     public void ringSmallestSizeCountRange() {
         Expr expr = getAtomExpr("[r{5-7}]");
-        assertThat(expr, is(or(expr(RING_SMALLEST, 7),
-                               or(expr(RING_SMALLEST, 5),
-                                  expr(RING_SMALLEST, 6)))));
+        assertThat(expr, is(or(expr(RING_SMALLEST, 5),
+                               or(expr(RING_SMALLEST, 6),
+                                  expr(RING_SMALLEST, 7)))));
     }
 }

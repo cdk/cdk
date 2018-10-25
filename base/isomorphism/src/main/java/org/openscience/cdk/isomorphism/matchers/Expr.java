@@ -492,8 +492,12 @@ public final class Expr {
         } else if (expr.type != Type.TRUE &&
                    expr.type != Type.FALSE &&
                    expr.type != Type.NONE) {
-            if (type.isLogical() && !expr.type.isLogical())
-                setLogical(Type.OR, expr, new Expr(this));
+            if (type.isLogical() && !expr.type.isLogical()) {
+                if (type == OR)
+                    right.or(expr);
+                else
+                    setLogical(Type.OR, expr, new Expr(this));
+            }
             else
                 setLogical(Type.OR, new Expr(this), expr);
         }
