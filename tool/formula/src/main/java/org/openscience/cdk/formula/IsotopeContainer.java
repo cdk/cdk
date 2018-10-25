@@ -3,6 +3,10 @@ package org.openscience.cdk.formula;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * This class defines a isotope container. It contains in principle a
  * IMolecularFormula, a mass and intensity/abundance value.
@@ -14,9 +18,9 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class IsotopeContainer {
 
-    private IMolecularFormula form;
-    private double            masOs;
-    private double            inte;
+    private List<IMolecularFormula> forms = new ArrayList<>();
+    private double                  masOs;
+    private double                  inte;
 
     /**
      * Constructor of the IsotopeContainer object.
@@ -33,7 +37,7 @@ public class IsotopeContainer {
      * @param intensity      The intensity of this container
      */
     public IsotopeContainer(IMolecularFormula formula, double intensity) {
-        form = formula;
+        forms.add(formula);
         if (formula != null) masOs = MolecularFormulaManipulator.getTotalExactMass(formula);
         inte = intensity;
     }
@@ -50,13 +54,28 @@ public class IsotopeContainer {
         inte = intensity;
     }
 
+    public IsotopeContainer(IsotopeContainer container) {
+        masOs = container.masOs;
+        inte  = container.inte;
+        forms = new ArrayList<>(container.forms);
+    }
+
     /**
      * Set IMolecularFormula object of this container.
      *
      * @param formula The IMolecularFormula of the this container
      */
     public void setFormula(IMolecularFormula formula) {
-        form = formula;
+        forms.clear();
+        forms.add(formula);
+    }
+
+    /**
+     * Add a formula to this isotope container.
+     * @param formula the new formula
+     */
+    public void addFormula(IMolecularFormula formula) {
+        this.forms.add(formula);
     }
 
     /**
@@ -83,7 +102,15 @@ public class IsotopeContainer {
      * @return The IMolecularformula of the this container
      */
     public IMolecularFormula getFormula() {
-        return form;
+        return forms.isEmpty() ? null : forms.get(0);
+    }
+
+    /**
+     * Access the formulas of this isotope container.
+     * @return the formulas
+     */
+    public List<IMolecularFormula> getFormulas() {
+        return Collections.unmodifiableList(forms);
     }
 
     /**
@@ -112,10 +139,35 @@ public class IsotopeContainer {
     @Override
     public Object clone() throws CloneNotSupportedException {
         IsotopeContainer isoClone = new IsotopeContainer();
-        isoClone.setFormula(getFormula());
+        isoClone.forms.addAll(getFormulas());
         isoClone.setIntensity(getIntensity());
         isoClone.setMass(getMass());
         return isoClone;
     }
 
+    /**
+     * Pretty-print the MFs of this isotope container.
+     * @return the MFs
+     */
+    String getFormulasString() {
+        StringBuilder sb = new StringBuilder();
+        for (IMolecularFormula mf : getFormulas()) {
+            if (sb.length() != 0)
+                sb.append(", ");
+            sb.append(MolecularFormulaManipulator.getString(mf, false, true));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "IsotopeContainer{" +
+               "mass=" + masOs +
+               ", intensity=" + inte +
+               ", MF=" + getFormulasString() +
+               '}';
+    }
 }

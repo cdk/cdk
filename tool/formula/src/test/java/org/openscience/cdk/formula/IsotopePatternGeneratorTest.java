@@ -18,15 +18,21 @@
  */
 package org.openscience.cdk.formula;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Checks the functionality of the IsotopePatternGenerator.
@@ -330,6 +336,19 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
         Assert.assertEquals(ip1.getIsotope(0).getMass(), ip2.getIsotope(0).getMass(), 0.001);
     }
 
-
+    @Test
+    public void testMultipleFormulasForAMass() {
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("C6Cl2", builder);
+        IsotopePatternGenerator isogen = new IsotopePatternGenerator(0.1).setMinIntensity(0.01)
+                                                                         .setMinResolution(0.01)
+                                                                         .setStoreFormulas(true);
+        IsotopePattern pattern = isogen.getIsotopes(mf);
+        List<IsotopeContainer> isotopes = pattern.getIsotopes();
+        Assert.assertThat(isotopes.get(0).getFormulas().size(), is(1));
+        Assert.assertThat(isotopes.get(1).getFormulas().size(), is(1));
+        Assert.assertThat(isotopes.get(2).getFormulas().size(), is(2));
+        Assert.assertThat(isotopes.get(3).getFormulas().size(), is(2));
+        Assert.assertThat(isotopes.get(4).getFormulas().size(), is(3));
+    }
 
 }
