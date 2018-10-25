@@ -55,32 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.ALIPHATIC_ELEMENT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.ALIPHATIC_HETERO_SUBSTITUENT_COUNT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.ALIPHATIC_ORDER;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.AND;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.AROMATIC_ELEMENT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.DEGREE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.ELEMENT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.FORMAL_CHARGE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.HAS_ALIPHATIC_HETERO_SUBSTITUENT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.HAS_HETERO_SUBSTITUENT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.HEAVY_DEGREE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.HETERO_SUBSTITUENT_COUNT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.INSATURATION;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.IS_ALIPHATIC;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.IS_AROMATIC;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.IS_IN_CHAIN;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.IS_IN_RING;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.NONE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.PERIODIC_GROUP;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.REACTION_ROLE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.RING_SIZE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.SINGLE_OR_AROMATIC;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.STEREOCHEMISTRY;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TOTAL_DEGREE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TOTAL_H_COUNT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TRUE;
+import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
 /**
  * Parse and generate the SMARTS query language. Given an {@link IAtomContainer}
@@ -311,6 +286,28 @@ public final class Smarts {
             }
         }
 
+        private boolean parseRange(Expr expr) {
+            if (next() != '{')
+                return false;
+            int lo = nextUnsignedInt();
+            if (next() != '-')
+                return false;
+            int hi = nextUnsignedInt();
+            Expr.Type type = expr.type();
+
+            // adjusted types
+            switch (type) {
+                case HAS_IMPLICIT_HYDROGEN:
+                    type = IMPL_H_COUNT;
+                    break;
+            }
+
+            expr.setPrimitive(type, lo);
+            for (int i = lo + 1; i <= hi; i++)
+                expr.or(new Expr(type, i));
+            return next() == '}';
+        }
+
         boolean parseAtomExpr(IAtom atom, Expr dest, char lastOp) {
             Expr expr = null;
             int  num;
@@ -439,6 +436,9 @@ public final class Smarts {
                                         expr = new Expr(HEAVY_DEGREE, 1);
                                     else
                                         expr = new Expr(DEGREE, 1);
+                                    // CACTVS style ranges D{0-2}
+                                    if (peek() == '{' && !parseRange(expr))
+                                        return false;
                                 } else {
                                     if (isFlavor(FLAVOR_CDK_LEGACY))
                                         expr = new Expr(HEAVY_DEGREE, num);
@@ -528,9 +528,12 @@ public final class Smarts {
                             default:  // H=Hydrogen
                                 unget();
                                 num = nextUnsignedInt();
-                                if (num < 0)
+                                if (num < 0) {
                                     expr = new Expr(TOTAL_H_COUNT, 1);
-                                else
+                                    // CACTVS style ranges H{0-2}
+                                    if (peek() == '{' && !parseRange(expr))
+                                        return false;
+                                } else
                                     expr = new Expr(TOTAL_H_COUNT, num);
                                 break;
                         }
@@ -714,8 +717,15 @@ public final class Smarts {
                             default:  // R=Ring Count
                                 unget();
                                 num = nextUnsignedInt();
-                                if (num < 0)
+                                if (num < 0) {
                                     expr = new Expr(Expr.Type.IS_IN_RING);
+                                    // CACTVS style ranges R{0-2}
+                                    if (peek() == '{') {
+                                        expr.setPrimitive(RING_COUNT, 0);
+                                        if (!parseRange(expr))
+                                            return false;
+                                    }
+                                }
                                 else if (num == 0)
                                     expr = new Expr(Expr.Type.IS_IN_CHAIN);
                                 else if (isFlavor(FLAVOR_OECHEM))
@@ -822,9 +832,12 @@ public final class Smarts {
                             default:  // X=Connectivity
                                 unget();
                                 num = nextUnsignedInt();
-                                if (num < 0)
+                                if (num < 0) {
                                     expr = new Expr(TOTAL_DEGREE, 1);
-                                else
+                                    // CACTVS style ranges X{0-2}
+                                    if (peek() == '{' && !parseRange(expr))
+                                        return false;
+                                } else
                                     expr = new Expr(TOTAL_DEGREE, num);
                                 break;
                         }
@@ -936,8 +949,15 @@ public final class Smarts {
 
                     case 'r':
                         num = nextUnsignedInt();
-                        if (num < 0)
+                        if (num < 0) {
                             expr = new Expr(Expr.Type.IS_IN_RING);
+                            // CACTVS style ranges r{0-2}
+                            if (peek() == '{') {
+                                expr.setPrimitive(RING_SMALLEST, 0);
+                                if (!parseRange(expr))
+                                    return false;
+                            }
+                        }
                         else if (num == 0)
                             expr = new Expr(Expr.Type.IS_IN_CHAIN);
                         else if (num > 2)
@@ -947,22 +967,36 @@ public final class Smarts {
                         break;
                     case 'v':
                         num = nextUnsignedInt();
-                        if (num < 0)
+                        if (num < 0) {
                             expr = new Expr(Expr.Type.VALENCE, 1);
-                        else
+                            // CACTVS style ranges v{0-2}
+                            if (peek() == '{' && !parseRange(expr))
+                                return false;
+                        } else
                             expr = new Expr(Expr.Type.VALENCE, num);
                         break;
                     case 'h':
                         num = nextUnsignedInt();
-                        if (num < 0)
+                        if (num < 0) {
                             expr = new Expr(Expr.Type.HAS_IMPLICIT_HYDROGEN);
+                            // CACTVS style ranges h{0-2}
+                            if (peek() == '{' && !parseRange(expr))
+                                return false;
+                        }
                         else
                             expr = new Expr(Expr.Type.IMPL_H_COUNT, num);
                         break;
                     case 'x':
                         num = nextUnsignedInt();
-                        if (num < 0)
+                        if (num < 0) {
                             expr = new Expr(Expr.Type.IS_IN_RING);
+                            // CACTVS style ranges D{0-2}
+                            if (peek() == '{') {
+                                expr.setPrimitive(RING_BOND_COUNT, 0);
+                                if (!parseRange(expr))
+                                    return false;
+                            }
+                        }
                         else if (num == 0)
                             expr = new Expr(Expr.Type.IS_IN_CHAIN);
                         else if (num > 1)
