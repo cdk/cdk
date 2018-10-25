@@ -18,14 +18,19 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
+import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
 
 /**
  *@cdk.module   isomorphism
@@ -43,33 +48,12 @@ public class QueryAtomContainerCreator {
      *@return            The new QueryAtomContainer created from container.
      */
     public static QueryAtomContainer createBasicQueryContainer(IAtomContainer container) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            QueryAtom qatom = new QueryAtom(Expr.Type.ELEMENT,
-                                            container.getAtom(i).getAtomicNumber());
-            qatom.setSymbol(container.getAtom(i).getSymbol()); // backwards compatibility
-            queryContainer.addAtom(qatom);
-        }
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBegin());
-            int index2 = container.indexOf(bond.getEnd());
-            if (bond.isAromatic()) {
-                QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                                 queryContainer.getAtom(index2),
-                                                 Expr.Type.IS_AROMATIC);
-                queryContainer.addBond(qbond);
-            } else {
-                QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                                queryContainer.getAtom(index2),
-                                                Expr.Type.ALIPHATIC_ORDER,
-                                                bond.getOrder().numeric());
-                qbond.setOrder(bond.getOrder()); // backwards compatibility
-                queryContainer.addBond(qbond);
-            }
-        }
-        return queryContainer;
+        return QueryAtomContainer.create(container,
+                                         Expr.Type.ALIPHATIC_ELEMENT,
+                                         Expr.Type.AROMATIC_ELEMENT,
+                                         Expr.Type.IS_AROMATIC,
+                                         Expr.Type.ALIPHATIC_ORDER,
+                                         Expr.Type.STEREOCHEMISTRY);
     }
 
     /**
@@ -80,26 +64,9 @@ public class QueryAtomContainerCreator {
      * @return            The new QueryAtomContainer created from container.
      */
     public static QueryAtomContainer createSymbolAndBondOrderQueryContainer(IAtomContainer container) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            QueryAtom qatom = new QueryAtom(Expr.Type.ELEMENT,
-                                            container.getAtom(i).getAtomicNumber());
-            qatom.setSymbol(container.getAtom(i).getSymbol()); // backwards compatibility
-            queryContainer.addAtom(qatom);
-        }
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
-            int index1 = container.indexOf(bond.getBegin());
-            int index2 = container.indexOf(bond.getEnd());
-            QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                            queryContainer.getAtom(index2),
-                                            Expr.Type.ORDER,
-                                            bond.getOrder().numeric());
-            qbond.setOrder(bond.getOrder()); // backwards compatibility
-            queryContainer.addBond(qbond);
-        }
-        return queryContainer;
+        return QueryAtomContainer.create(container,
+                                         Expr.Type.ELEMENT,
+                                         Expr.Type.ORDER);
     }
 
     /**
@@ -110,38 +77,11 @@ public class QueryAtomContainerCreator {
      *@return            The new QueryAtomContainer created from container.
      */
     public static QueryAtomContainer createSymbolAndChargeQueryContainer(IAtomContainer container) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            Expr expr = new Expr(Expr.Type.ELEMENT, container.getAtom(i).getAtomicNumber());
-            Integer q = container.getAtom(i).getFormalCharge();
-            if (q == null) q = 0;
-            expr.and(new Expr(Expr.Type.FORMAL_CHARGE, q));
-            QueryAtom qatom = new QueryAtom(expr);
-            // backwards compatibility
-            qatom.setSymbol(container.getAtom(i).getSymbol());
-            qatom.setFormalCharge(q);
-            queryContainer.addAtom(qatom);
-        }
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBegin());
-            int index2 = container.indexOf(bond.getEnd());
-            if (bond.isAromatic()) {
-                QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                                queryContainer.getAtom(index2),
-                                                Expr.Type.IS_AROMATIC);
-                queryContainer.addBond(qbond);
-            } else {
-                QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                                queryContainer.getAtom(index2),
-                                                Expr.Type.ORDER,
-                                                bond.getOrder().numeric());
-                qbond.setOrder(bond.getOrder()); // backwards compatibility
-                queryContainer.addBond(qbond);
-            }
-        }
-        return queryContainer;
+        return QueryAtomContainer.create(container,
+                                         Expr.Type.ELEMENT,
+                                         Expr.Type.FORMAL_CHARGE,
+                                         Expr.Type.IS_AROMATIC,
+                                         Expr.Type.ORDER);
     }
 
     public static QueryAtomContainer createSymbolChargeIDQueryContainer(IAtomContainer container) {
@@ -180,41 +120,18 @@ public class QueryAtomContainerCreator {
      *@return              The new QueryAtomContainer created from container
      */
     public static QueryAtomContainer createAnyAtomContainer(IAtomContainer container, boolean aromaticity) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
-
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            if (aromaticity && container.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
-                queryContainer.addAtom(new QueryAtom(Expr.Type.IS_AROMATIC));
-            } else {
-                queryContainer.addAtom(new QueryAtom(Expr.Type.TRUE));
-            }
-        }
-
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBegin());
-            int index2 = container.indexOf(bond.getEnd());
-            if (aromaticity && bond.isAromatic()) {
-                QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                                queryContainer.getAtom(index2),
-                                                Expr.Type.IS_AROMATIC);
-                queryContainer.addBond(qbond);
-            } else {
-                QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                                queryContainer.getAtom(index2),
-                                                aromaticity ? Expr.Type.ALIPHATIC_ORDER : Expr.Type.ORDER,
-                                                bond.getOrder().numeric());
-                qbond.setOrder(bond.getOrder()); // backwards compatibility
-                queryContainer.addBond(qbond);
-            }
-        }
-        return queryContainer;
+        if (aromaticity)
+            return QueryAtomContainer.create(container,
+                                             Expr.Type.IS_AROMATIC,
+                                             Expr.Type.ALIPHATIC_ORDER);
+        else
+            return QueryAtomContainer.create(container,
+                                             Expr.Type.ORDER);
     }
 
     /**
      * Creates a QueryAtomContainer with wildcard atoms and wildcard bonds.
-     * 
+     *
      * This method thus allows the user to search based only on connectivity.
      *
      * @param container   The AtomContainer that stands as the model
@@ -223,24 +140,10 @@ public class QueryAtomContainerCreator {
      * @return The new QueryAtomContainer
      */
     public static QueryAtomContainer createAnyAtomAnyBondContainer(IAtomContainer container, boolean aromaticity) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
-
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            if (aromaticity && container.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
-                queryContainer.addAtom(new QueryAtom(Expr.Type.IS_AROMATIC));
-            } else {
-                queryContainer.addAtom(new QueryAtom(Expr.Type.TRUE));
-            }
-        }
-
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBegin());
-            int index2 = container.indexOf(bond.getEnd());
-            queryContainer.addBond(new QueryBond(queryContainer.getAtom(index1), queryContainer.getAtom(index2), Expr.Type.TRUE));
-        }
-        return queryContainer;
+        if (aromaticity)
+            return QueryAtomContainer.create(container, Expr.Type.IS_AROMATIC);
+        else
+            return QueryAtomContainer.create(container);
     }
 
     /**
@@ -252,35 +155,9 @@ public class QueryAtomContainerCreator {
      *@return            The new QueryAtomContainer created from container.
      */
     public static QueryAtomContainer createAnyAtomForPseudoAtomQueryContainer(IAtomContainer container) {
-        QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            if (container.getAtom(i) instanceof IPseudoAtom) {
-                queryContainer.addAtom(new QueryAtom(Expr.Type.TRUE));
-            } else {
-                queryContainer.addAtom(new QueryAtom(Expr.Type.ELEMENT,
-                                                     container.getAtom(i).getAtomicNumber()));
-            }
-
-        }
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBegin());
-            int index2 = container.indexOf(bond.getEnd());
-            if (bond.isAromatic()) {
-                QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                                queryContainer.getAtom(index2),
-                                                Expr.Type.IS_AROMATIC);
-                queryContainer.addBond(qbond);
-            } else {
-                QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
-                                                queryContainer.getAtom(index2),
-                                                Expr.Type.ORDER,
-                                                bond.getOrder().numeric());
-                qbond.setOrder(bond.getOrder()); // backwards compatibility
-                queryContainer.addBond(qbond);
-            }
-        }
-        return queryContainer;
+        return QueryAtomContainer.create(container,
+                                         Expr.Type.ELEMENT,
+                                         Expr.Type.IS_AROMATIC,
+                                         Expr.Type.ALIPHATIC_ORDER);
     }
 }
