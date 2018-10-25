@@ -20,11 +20,13 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import javax.vecmath.Point3d;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -118,5 +120,18 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
         Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    /**
+     * @see <a href="https://github.com/cdk/cdk/issues/495">Issue 495</a>
+     */
+    @Test
+    public void exocyclicOxygenInAromaticRing() throws InvalidSmilesException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer m = sp.parseSmiles("Cn1c2nc([nH]c2c(=O)n(c1=O)C)C1CCCC1");
+
+        HBondAcceptorCountDescriptor hbond_acceptor_desc = new HBondAcceptorCountDescriptor();
+        int actual = ((IntegerResult)hbond_acceptor_desc.calculate(m).getValue()).intValue();
+        Assert.assertThat(actual, CoreMatchers.is(3));
     }
 }

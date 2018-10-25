@@ -192,11 +192,15 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
             // looking for suitable oxygen atoms
             else if (atom.getSymbol().equals("O") && atom.getFormalCharge() <= 0) {
                 //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
-                List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
-                for (IAtom neighbour : neighbours)
-                    if (neighbour.getSymbol().equals("N")
-                            || (neighbour.getSymbol().equals("C") && neighbour.getFlag(CDKConstants.ISAROMATIC)))
-                        continue atomloop;
+                List<IBond> neighbours = ac.getConnectedBondsList(atom);
+                for (IBond bond : neighbours) {
+                    IAtom neighbor = bond.getOther(atom);
+                    if (neighbor.getSymbol().equals("N") ||
+                        (neighbor.getSymbol().equals("C") &&
+                         neighbor.isAromatic() &&
+                         bond.getOrder() != IBond.Order.DOUBLE))
+                        continue atomloop;;
+                }
                 hBondAcceptors++;
             }
         }
