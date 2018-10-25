@@ -70,6 +70,12 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         addImplicitHydrogens(superStructure);
         addImplicitHydrogens(subStructure);
 
+        // SMARTS is now correct and D will include H atoms, CDK had this wrong
+        // for years (had it has non-H count). Whilst you can set the optional
+        // SMARTS flavor CDK_LEGACY this is not correct
+        AtomContainerManipulator.suppressHydrogens(superStructure);
+        AtomContainerManipulator.suppressHydrogens(subStructure);
+
         IFingerprinter fpr = getBitFingerprinter();
         IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);
         IBitFingerprint subBits = fpr.getBitFingerprint(subStructure);

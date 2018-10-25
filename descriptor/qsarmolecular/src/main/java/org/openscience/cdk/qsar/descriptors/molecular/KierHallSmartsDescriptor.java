@@ -29,7 +29,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -307,7 +307,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static String[] names;
-    private static final String[] SMARTS = EStateFragments.getSmarts();
+    private static final SmartsPattern[] SMARTS = EStateFragments.getPatterns();
 
     public KierHallSmartsDescriptor() {
         String[] tmp = EStateFragments.getNames();
@@ -369,7 +369,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         IntegerArrayResult result = new IntegerArrayResult();
-        for (String smart : SMARTS)
+        for (int i = 0; i < SMARTS.length; i++)
             result.add((int) Double.NaN);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
                                    getDescriptorNames(), e);
@@ -400,19 +400,9 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
         }
 
         int[] counts = new int[SMARTS.length];
-        try {
-            SMARTSQueryTool sqt = new SMARTSQueryTool("C", container.getBuilder());
-            for (int i = 0; i < SMARTS.length; i++) {
-                sqt.setSmarts(SMARTS[i]);
-                boolean status = sqt.matches(atomContainer);
-                if (status) {
-                    counts[i] = sqt.getUniqueMatchingAtoms().size();
-                }
-                else
-                    counts[i] = 0;
-            }
-        } catch (CDKException e) {
-            return getDummyDescriptorValue(e);
+        SmartsPattern.prepare(atomContainer);
+        for (int i = 0; i < SMARTS.length; i++) {
+            counts[i] = SMARTS[i].matchAll(atomContainer).countUnique();
         }
 
         IntegerArrayResult result = new IntegerArrayResult();

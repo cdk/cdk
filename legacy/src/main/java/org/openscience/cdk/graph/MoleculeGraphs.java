@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.githash
  *
  */
+@Deprecated
 public class MoleculeGraphs {
 
     // make class non-instantiable

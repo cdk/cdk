@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.AtomMatcher;
 import org.openscience.cdk.isomorphism.BondMatcher;
-import org.openscience.cdk.isomorphism.ComponentGrouping;
+import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.VentoFoggia;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
@@ -370,16 +370,11 @@ public final class Expr {
                          left.type == OR && left.left.type == STEREOCHEMISTRY));
 
             case RECURSIVE:
-                // TO BE OPTIMIZED
-//                for (int[] match : VentoFoggia.findSubstructure(query,
-//                                                                AtomMatcher.forQuery(),
-//                                                                BondMatcher.forQuery())
-//                                              .matchAll(atom.getContainer())
-//                                              .filter(new StereoFilter(query, atom.getContainer()))
-//                                              .filter(new ComponentGrouping(query, atom.getContainer()))) {
-//                    if (match[0] == atom.getIndex())
-//                        return true;
-//                }
+                for (int[] match : Pattern.findSubstructure(query)
+                                          .matchAll(atom.getContainer())) {
+                    if (match[0] == atom.getIndex())
+                        return true;
+                }
                 return false;
 
             default:
@@ -396,6 +391,9 @@ public final class Expr {
             case ALIPHATIC_ORDER:
                 return !bond.isAromatic() &&
                        bond.getOrder() != null &&
+                       bond.getOrder().numeric() == value;
+            case ORDER:
+                return bond.getOrder() != null &&
                        bond.getOrder().numeric() == value;
             case IS_AROMATIC:
                 return bond.isAromatic();
@@ -911,6 +909,9 @@ public final class Expr {
          *  value and the bond is not marked as aromatic
          *  ({@link IAtom#isAromatic()}). */
         ALIPHATIC_ORDER,
+        /** True if the bond order {@link IBond#getOrder()} equals the specified
+         *  value and the bond, aromaticity is not check. */
+        ORDER,
 
         /* Binary/unary internal nodes */
 

@@ -30,10 +30,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
+import java.io.IOException;
 import java.util.BitSet;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -93,10 +95,9 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
 
     private byte[]          m_bits;
 
-    private SMARTSQueryTool sqt;
+    private Map<String,SmartsPattern> cache = new HashMap<>();
 
     public PubchemFingerprinter(IChemObjectBuilder builder) {
-        sqt = new SMARTSQueryTool("C", builder);
         m_bits = new byte[(FP_SIZE + 7) >> 3];
     }
 
@@ -295,16 +296,18 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
         }
 
         public int countSubstructure(String smarts) throws CDKException {
-            sqt.setSmarts(smarts);
-            boolean status = sqt.matches(mol);
-            if (status) {
-                return sqt.getUniqueMatchingAtoms().size();
-            } else
-                return 0;
+            SmartsPattern ptrn = cache.get(smarts);
+            if (ptrn == null) {
+                ptrn = SmartsPattern.create(smarts);
+                ptrn.setPrepare(false);
+                cache.put(smarts, ptrn);
+            }
+            return ptrn.matchAll(mol).countUnique();
         }
     }
 
     private void _generateFp(byte[] fp, IAtomContainer mol) throws CDKException {
+        SmartsPattern.prepare(mol);
         countElements(fp, mol);
         countRings(fp, mol);
         countSubstructures(fp, mol);

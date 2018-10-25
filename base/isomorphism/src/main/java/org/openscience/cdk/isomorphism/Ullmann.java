@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
@@ -88,9 +89,6 @@ public final class Ullmann extends Pattern {
     /** The bond matcher to determine atom feasibility. */
     private final BondMatcher    bondMatcher;
 
-    /** Is the query matching query atoms/bonds etc? */
-    private final boolean        queryMatching;
-
     /**
      * Non-public constructor for-now the atom/bond semantics are fixed.
      *
@@ -104,12 +102,12 @@ public final class Ullmann extends Pattern {
         this.bondMatcher = bondMatcher;
         this.bonds1 = EdgeToBondMap.withSpaceFor(query);
         this.g1 = GraphUtil.toAdjList(query, bonds1);
-        this.queryMatching = query instanceof IQueryAtomContainer;
+        determineFilters(query);
     }
 
     @Override
     public int[] match(IAtomContainer target) {
-        return matchAll(target).stereochemistry().first();
+        return matchAll(target).first();
     }
 
     @Override
@@ -117,7 +115,8 @@ public final class Ullmann extends Pattern {
         EdgeToBondMap bonds2 = EdgeToBondMap.withSpaceFor(target);
         int[][] g2 = GraphUtil.toAdjList(target, bonds2);
         Iterable<int[]> iterable = new UllmannIterable(query, target, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher);
-        return new Mappings(query, target, iterable);
+        Mappings mappings = new Mappings(query, target, iterable);
+        return filter(mappings, query, target);
     }
 
     /**

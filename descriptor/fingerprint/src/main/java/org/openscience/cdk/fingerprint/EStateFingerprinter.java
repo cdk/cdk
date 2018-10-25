@@ -25,7 +25,7 @@ package org.openscience.cdk.fingerprint;
 import org.openscience.cdk.config.fragments.EStateFragments;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.smarts.SmartsPattern;
 
 import java.util.BitSet;
 import java.util.Map;
@@ -62,7 +62,7 @@ import java.util.Map;
  */
 public class EStateFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
-    private static final String[] PATTERNS = EStateFragments.getSmarts();
+    private static final SmartsPattern[] PATTERNS = EStateFragments.getPatterns();
 
     public EStateFingerprinter() {}
 
@@ -73,11 +73,10 @@ public class EStateFingerprinter extends AbstractFingerprinter implements IFinge
         int bitsetLength = PATTERNS.length;
         BitSet fingerPrint = new BitSet(bitsetLength);
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("C", atomContainer.getBuilder());
+        SmartsPattern.prepare(atomContainer);
         for (int i = 0; i < PATTERNS.length; i++) {
-            sqt.setSmarts(PATTERNS[i]);
-            boolean status = sqt.matches(atomContainer);
-            if (status) fingerPrint.set(i, true);
+            if (PATTERNS[i].matches(atomContainer))
+                fingerPrint.set(i, true);
         }
         return new BitSetFingerprint(fingerPrint);
     }

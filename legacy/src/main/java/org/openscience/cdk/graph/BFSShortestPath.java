@@ -40,7 +40,9 @@ import java.util.List;
  * @cdk.module  standard
  * @cdk.githash
  * @cdk.created 2004-10-19
+ * @deprecated Use {@link ShortestPaths}
  */
+@Deprecated
 public final class BFSShortestPath {
 
     private BFSShortestPath() {} // ensure non-instantiability.

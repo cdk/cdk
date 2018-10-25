@@ -28,6 +28,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smarts.SmartsPattern;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -85,6 +87,12 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
         addImplicitHydrogens(superStructure);
         addImplicitHydrogens(subStructure);
+
+        // SMARTS is now correct and D will include H atoms, CDK had this wrong
+        // for years (had it has non-H count). Whilst you can set the optional
+        // SMARTS flavor CDK_LEGACY this is not correct
+        AtomContainerManipulator.suppressHydrogens(superStructure);
+        AtomContainerManipulator.suppressHydrogens(subStructure);
 
         IFingerprinter fpr = new EStateFingerprinter();
         IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);

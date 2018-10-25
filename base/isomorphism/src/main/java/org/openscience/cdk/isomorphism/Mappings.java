@@ -256,7 +256,10 @@ public final class Mappings implements Iterable<int[]> {
      * the query.
      *
      * @return fluent-api instance
+     * @deprecated Results now automatically consider stereo if it's present, to
+     *             match without stereochemistry remove the stereo features.
      */
+    @Deprecated
     public Mappings stereochemistry() {
         // query structures currently have special requirements (i.e. SMARTS)
         if (query instanceof IQueryAtomContainer) return this;

@@ -24,7 +24,9 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
@@ -92,9 +94,6 @@ public final class VentoFoggia extends Pattern {
     /** Search for a subgraph. */
     private final boolean        subgraph;
 
-    /** Is the query matching query atoms/bonds etc? */
-    private final boolean        queryMatching;
-
     /**
      * Non-public constructor for-now the atom/bond semantics are fixed.
      *
@@ -110,13 +109,13 @@ public final class VentoFoggia extends Pattern {
         this.bonds1 = EdgeToBondMap.withSpaceFor(query);
         this.g1 = GraphUtil.toAdjList(query, bonds1);
         this.subgraph = substructure;
-        this.queryMatching = query instanceof IQueryAtomContainer;
+        determineFilters(query);
     }
 
     /**{@inheritDoc} */
     @Override
     public int[] match(IAtomContainer target) {
-        return matchAll(target).stereochemistry().first();
+        return matchAll(target).first();
     }
 
     /**{@inheritDoc} */
@@ -135,9 +134,14 @@ public final class VentoFoggia extends Pattern {
         bonds2 = cached.bmap;
         g2 = cached.g;
 
-        Iterable<int[]> iterable = new VFIterable(query, target, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher,
-                subgraph);
-        return new Mappings(query, target, iterable);
+        Iterable<int[]> iterable = new VFIterable(query, target,
+                                                  g1, g2,
+                                                  bonds1, bonds2,
+                                                  atomMatcher, bondMatcher,
+                                                  subgraph);
+
+        Mappings mappings = new Mappings(query, target, iterable);
+        return filter(mappings, query, target);
     }
 
     /**

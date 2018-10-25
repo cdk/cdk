@@ -42,7 +42,8 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
+import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -521,19 +522,15 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
                 int bondType = 0;
 
-                if (bond instanceof CTFileQueryBond) {
-                    // Could do ordinal()-1 but this is clearer
-                    switch (((CTFileQueryBond) bond).getType()) {
-                        case SINGLE:
-                            bondType = 1;
+                if (bond instanceof QueryBond) {
+                    QueryBond qbond = ((QueryBond)bond);
+                    Expr e = qbond.getExpression();
+                    switch (e.type()) {
+                        case ALIPHATIC_ORDER:
+                        case ORDER:
+                            bondType = e.value();
                             break;
-                        case DOUBLE:
-                            bondType = 2;
-                            break;
-                        case TRIPLE:
-                            bondType = 3;
-                            break;
-                        case AROMATIC:
+                        case IS_AROMATIC:
                             bondType = 4;
                             break;
                         case SINGLE_OR_DOUBLE:
@@ -545,9 +542,25 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         case DOUBLE_OR_AROMATIC:
                             bondType = 7;
                             break;
-                        case ANY:
+                        case TRUE:
                             bondType = 8;
                             break;
+                        case OR:
+                            // SINGLE_OR_DOUBLE
+                            if (e.equals(new Expr(Expr.Type.ALIPHATIC_ORDER, 1).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 2))) ||
+                                e.equals(new Expr(Expr.Type.ALIPHATIC_ORDER, 2).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 1))))
+                                bondType = 5;
+                            // SINGLE_OR_AROMATIC
+                            else if (e.equals(new Expr(Expr.Type.ALIPHATIC_ORDER, 1).or(new Expr(Expr.Type.IS_AROMATIC))) ||
+                                e.equals(new Expr(Expr.Type.IS_AROMATIC).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 1))))
+                                bondType = 6;
+                            // DOUBLE_OR_AROMATIC
+                            else if (e.equals(new Expr(Expr.Type.ALIPHATIC_ORDER, 2).or(new Expr(Expr.Type.IS_AROMATIC))) ||
+                                     e.equals(new Expr(Expr.Type.IS_AROMATIC).or(new Expr(Expr.Type.ALIPHATIC_ORDER, 2))))
+                                bondType = 6;
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Unsupported bond type!");
                     }
                 } else {
                     if (bond.getOrder() != null) {
