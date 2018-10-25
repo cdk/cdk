@@ -352,6 +352,13 @@ public abstract class SubstructureTest {
         assertMismatch(sma("CC[C@@H](C)O"), smi("CC[C@](C)(N)O"));
     }
 
+    @Test
+    public void sulfoxide() throws Exception {
+        assertMatch(sma("[S@](=O)(C)CC"), smi("O=[S@@](C)CC"), 1);
+        assertMatch(smi("O1.[S@]=1(C)CC"), smi("O=[S@@](C)CC"), 1);
+        assertMatch(sma("O1.[S@]=1(C)CC"), smi("O=[S@@](C)CC"), 1);
+    }
+
     // doesn't matter if the match takes place but it should not cause and error
     // if the query is larger than the target
     @Test

@@ -182,6 +182,15 @@ public final class Smarts {
         return null;
     }
 
+    private static final class LocalNbrs {
+        List<IBond> bonds = new ArrayList<>(4);
+        boolean     isFirst;
+
+        LocalNbrs(boolean first) {
+            this.isFirst = first;
+        }
+    }
+
     private static final class Parser {
         public  String         error;
         private String         str;
@@ -193,7 +202,7 @@ public final class Smarts {
         private QueryBond bond;
         private Deque<IAtom>            stack   = new ArrayDeque<>();
         private IBond                   rings[] = new IBond[100];
-        private Map<IAtom, List<IBond>> local   = new HashMap<>();
+        private Map<IAtom, LocalNbrs>   local   = new HashMap<>();
         private Set<IAtom>              astereo = new HashSet<>();
         private Set<IBond>              bstereo = new HashSet<>();
         private int numRingOpens;
@@ -213,10 +222,10 @@ public final class Smarts {
                 mol.addBond(bond);
                 bond = mol.getBond(mol.getBondCount() - 1);
             }
-            List<IBond> nbr = local.get(atom);
-            if (nbr == null)
-                local.put(atom, nbr = new ArrayList<>(4));
-            nbr.add(bond);
+            LocalNbrs nbrs = local.get(atom);
+            if (nbrs == null)
+                local.put(atom, nbrs = new LocalNbrs(false));
+            nbrs.bonds.add(bond);
             return bond;
         }
 
@@ -1579,20 +1588,18 @@ public final class Smarts {
             }
             // setup data structures for stereo chemistry
             for (IAtom atom : astereo) {
-                if (local.get(atom) == null)
+                LocalNbrs nbrinfo = local.get(atom);
+                if (nbrinfo == null)
                     continue;
                 IAtom[] ligands = new IAtom[4];
                 int     degree  = 0;
-                for (IBond bond : local.get(atom))
+                for (IBond bond : nbrinfo.bonds)
                     ligands[degree++] = bond.getOther(atom);
                 // add implicit neighbor, and move to correct position
                 if (degree == 3) {
                     ligands[degree++] = atom;
-                    for (int j = 3; j > 0; j--) {
-                        if (mol.indexOf(ligands[j]) > mol.indexOf(ligands[j - 1]))
-                            break;
-                        swap(ligands, j, j - 1);
-                    }
+                    if (nbrinfo.isFirst)
+                        swap(ligands, 2, 3);
                 }
                 if (degree == 4) {
                     // Note the left and right is stored in the atom expression, we
@@ -1606,17 +1613,17 @@ public final class Smarts {
                     Expr expr = ((QueryBond) BondRef.deref(bond)).getExpression();
                     if (hasAliphaticDoubleBond(expr)) {
                         IBond left = null, right = null;
-                        List<IBond> bBonds = local.get(bond.getBegin());
-                        List<IBond> eBonds = local.get(bond.getEnd());
+                        LocalNbrs bBonds = local.get(bond.getBegin());
+                        LocalNbrs eBonds = local.get(bond.getEnd());
 
                         // not part of this parse
                         if (bBonds == null || eBonds == null)
                             continue;
 
-                        for (IBond b : bBonds)
+                        for (IBond b : bBonds.bonds)
                             if (bstereo.contains(b))
                                 left = b;
-                        for (IBond b : eBonds)
+                        for (IBond b : eBonds.bonds)
                             if (bstereo.contains(b))
                                 right = b;
                         if (left == null || right == null)
@@ -1667,7 +1674,8 @@ public final class Smarts {
                 bond.setAtom(atom, 1);
                 addBond(prev, bond);
                 addBond(atom, bond);
-            }
+            } else
+                local.put(atom, new LocalNbrs(true));
             prev = atom;
             bond = null;
         }
