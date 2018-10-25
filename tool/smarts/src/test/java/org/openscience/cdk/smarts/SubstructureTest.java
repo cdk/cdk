@@ -347,8 +347,9 @@ public abstract class SubstructureTest {
     }
 
     @Test
-    public void erm() throws Exception {
-        assertMismatch(smi("CC[C@@H](C)O"), smi("CC[C@](C)(N)O"));
+    public void shouldMatchAsSmilesButNotSmarts() throws Exception {
+        // H > 0
+        assertMismatch(sma("CC[C@@H](C)O"), smi("CC[C@](C)(N)O"));
     }
 
     // doesn't matter if the match takes place but it should not cause and error
@@ -396,10 +397,11 @@ public abstract class SubstructureTest {
     // Note: only use simple constructs! the target properties will not
     // currently be initialised. avoid aromaticity, rings etc.
     IAtomContainer sma(String sma) throws Exception {
-        IAtomContainer query = new QueryAtomContainer(null);
+        IAtomContainer query = new QueryAtomContainer(SilentChemObjectBuilder.getInstance());
         if (!Smarts.parse(query, sma)) {
             throw new IOException(Smarts.getLastErrorMesg());
         }
+        query.setTitle(sma);
         return query;
     }
 }
