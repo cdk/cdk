@@ -25,6 +25,7 @@ package org.openscience.cdk.smarts;
 
 import org.junit.Test;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -45,6 +46,7 @@ public class MolToQueryTest {
 
     private void test(String expected, String smi, Expr.Type... opts) throws InvalidSmilesException {
         IAtomContainer      mol   = smipar.parseSmiles(smi);
+        Cycles.markRingAtomsAndBonds(mol);
         IQueryAtomContainer query = QueryAtomContainer.create(mol, opts);
         String actual = Smarts.generate(query);
         assertThat(actual, is(expected));
@@ -86,20 +88,24 @@ public class MolToQueryTest {
              Expr.Type.ELEMENT, Expr.Type.DEGREE);
     }
 
-    @Test public void test() {
-        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        IAtomContainer query2 = builder.newInstance(IAtomContainer.class);
-        query2.addAtom(builder.newInstance(IAtom.class, "C"));
-        query2.addAtom(builder.newInstance(IAtom.class, "C"));
-        query2.addAtom(builder.newInstance(IAtom.class, "C"));
-        query2.addAtom(builder.newInstance(IAtom.class, "C"));
-        query2.addAtom(builder.newInstance(IAtom.class, "C"));
-        query2.addAtom(builder.newInstance(IAtom.class, "C"));
-        query2.addBond(0, 1, IBond.Order.DOUBLE);
-        query2.addBond(1, 2, IBond.Order.SINGLE);
-        query2.addBond(3, 0, IBond.Order.SINGLE);
-        query2.addBond(0, 4, IBond.Order.SINGLE);
-        query2.addBond(1, 5, IBond.Order.SINGLE);
-        System.out.println(Smarts.generate(QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query2)));
+    @Test
+    public void complexDocExample() throws InvalidSmilesException {
+        test("[nx2+0]1:[cx2+0]:[cx2+0]:[cx2+0](=[O&x0+0]):[cx2+0]:[cx2+0]:1",
+             "[nH]1ccc(=O)cc1",
+             Expr.Type.ALIPHATIC_ELEMENT,
+             Expr.Type.AROMATIC_ELEMENT,
+             Expr.Type.SINGLE_OR_AROMATIC,
+             Expr.Type.ALIPHATIC_ORDER,
+             Expr.Type.ISOTOPE,
+             Expr.Type.RING_BOND_COUNT,
+             Expr.Type.FORMAL_CHARGE);
+        test("[0n+0]1:[0c+0]:[0c+0]:[0c+0](=[O+0]):[0c+0]:[0c+0]:1",
+             "[0nH]1[0cH][0cH][0cH](=O)[0cH][0cH]1",
+             Expr.Type.ALIPHATIC_ELEMENT,
+             Expr.Type.AROMATIC_ELEMENT,
+             Expr.Type.SINGLE_OR_AROMATIC,
+             Expr.Type.ALIPHATIC_ORDER,
+             Expr.Type.ISOTOPE,
+             Expr.Type.FORMAL_CHARGE);
     }
 }
