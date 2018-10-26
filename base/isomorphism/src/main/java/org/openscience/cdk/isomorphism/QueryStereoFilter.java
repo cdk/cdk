@@ -123,7 +123,7 @@ final class QueryStereoFilter implements Predicate<int[]> {
 
     private static int indexOf(int[] xs, int x) {
         for (int i = 0; i < xs.length; i++)
-            if (xs[x] == x)
+            if (xs[i] == x)
                 return i;
         return -1;
     }
