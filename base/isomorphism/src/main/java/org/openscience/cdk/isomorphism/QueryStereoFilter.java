@@ -121,6 +121,13 @@ final class QueryStereoFilter implements Predicate<int[]> {
         return true;
     }
 
+    private static int indexOf(int[] xs, int x) {
+        for (int i = 0; i < xs.length; i++)
+            if (xs[x] == x)
+                return i;
+        return -1;
+    }
+
     /**
      * Verify the tetrahedral stereo-chemistry (clockwise/anticlockwise) of atom
      * {@code u} is preserved in the target when the {@code mapping} is used.
@@ -156,15 +163,13 @@ final class QueryStereoFilter implements Predicate<int[]> {
         // adjustment needed for implicit neighbor (H or lone pair)
         int focusIdx = targetMap.get(targetAtom);
         for (int i = 0; i < 4; i++) {
-            int j = 0, k = 0;
-            for (; j < 4; j++) {
-                if (vs[i] == us[j])
-                    break;
-                if (us[j] == focusIdx)
-                    k = j;
-            }
-            if (j == 4)
-                us[k] = vs[i];
+            // find mol neighbor in mapped query list
+            int j = indexOf(us, vs[i]);
+            // not found then it was implicit, replace the implicit neighbor
+            // (which we store as focusIdx) with this neighbor
+            if (j < 0)
+                us[indexOf(us, focusIdx)] = vs[i];
+
         }
 
         int parity = permutationParity(us)
