@@ -55,32 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.ALIPHATIC_ELEMENT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.ALIPHATIC_HETERO_SUBSTITUENT_COUNT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.ALIPHATIC_ORDER;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.AND;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.AROMATIC_ELEMENT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.DEGREE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.ELEMENT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.FORMAL_CHARGE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.HAS_ALIPHATIC_HETERO_SUBSTITUENT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.HAS_HETERO_SUBSTITUENT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.HEAVY_DEGREE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.HETERO_SUBSTITUENT_COUNT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.INSATURATION;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.IS_ALIPHATIC;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.IS_AROMATIC;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.IS_IN_CHAIN;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.IS_IN_RING;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.NONE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.PERIODIC_GROUP;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.REACTION_ROLE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.RING_SIZE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.SINGLE_OR_AROMATIC;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.STEREOCHEMISTRY;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TOTAL_DEGREE;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TOTAL_H_COUNT;
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TRUE;
+import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
 /**
  * Parse and generate the SMARTS query language. Given an {@link IAtomContainer}
@@ -119,6 +94,10 @@ import static org.openscience.cdk.isomorphism.matchers.Expr.Type.TRUE;
  *         explicit degree 3. '[^2]' means hybridisation (2=Sp2). '[G8]' periodic
  *         group 8</li>
  * </ul>
+ * <br>
+ * In addition to the flavors above CACTVS toolkit style ranges are supported.
+ * For example <code>[D{2-4}]</code> means degree 2, 3, or 4. On writing such
+ * ranges are converted to <code>[D2,D3,D4]</code>.
  */
 public final class Smarts {
 
@@ -207,6 +186,15 @@ public final class Smarts {
         return null;
     }
 
+    private static final class LocalNbrs {
+        List<IBond> bonds = new ArrayList<>(4);
+        boolean     isFirst;
+
+        LocalNbrs(boolean first) {
+            this.isFirst = first;
+        }
+    }
+
     private static final class Parser {
         public  String         error;
         private String         str;
@@ -218,7 +206,7 @@ public final class Smarts {
         private QueryBond bond;
         private Deque<IAtom>            stack   = new ArrayDeque<>();
         private IBond                   rings[] = new IBond[100];
-        private Map<IAtom, List<IBond>> local   = new HashMap<>();
+        private Map<IAtom, LocalNbrs>   local   = new HashMap<>();
         private Set<IAtom>              astereo = new HashSet<>();
         private Set<IBond>              bstereo = new HashSet<>();
         private int numRingOpens;
@@ -238,10 +226,10 @@ public final class Smarts {
                 mol.addBond(bond);
                 bond = mol.getBond(mol.getBondCount() - 1);
             }
-            List<IBond> nbr = local.get(atom);
-            if (nbr == null)
-                local.put(atom, nbr = new ArrayList<>(4));
-            nbr.add(bond);
+            LocalNbrs nbrs = local.get(atom);
+            if (nbrs == null)
+                local.put(atom, nbrs = new LocalNbrs(false));
+            nbrs.bonds.add(bond);
             return bond;
         }
 
@@ -309,6 +297,28 @@ public final class Smarts {
                 pos = mark;
                 return false;
             }
+        }
+
+        private boolean parseRange(Expr expr) {
+            if (next() != '{')
+                return false;
+            int lo = nextUnsignedInt();
+            if (next() != '-')
+                return false;
+            int hi = nextUnsignedInt();
+            Expr.Type type = expr.type();
+
+            // adjusted types
+            switch (type) {
+                case HAS_IMPLICIT_HYDROGEN:
+                    type = IMPL_H_COUNT;
+                    break;
+            }
+
+            expr.setPrimitive(type, lo);
+            for (int i = lo + 1; i <= hi; i++)
+                expr.or(new Expr(type, i));
+            return next() == '}';
         }
 
         boolean parseAtomExpr(IAtom atom, Expr dest, char lastOp) {
@@ -439,6 +449,9 @@ public final class Smarts {
                                         expr = new Expr(HEAVY_DEGREE, 1);
                                     else
                                         expr = new Expr(DEGREE, 1);
+                                    // CACTVS style ranges D{0-2}
+                                    if (peek() == '{' && !parseRange(expr))
+                                        return false;
                                 } else {
                                     if (isFlavor(FLAVOR_CDK_LEGACY))
                                         expr = new Expr(HEAVY_DEGREE, num);
@@ -528,9 +541,12 @@ public final class Smarts {
                             default:  // H=Hydrogen
                                 unget();
                                 num = nextUnsignedInt();
-                                if (num < 0)
+                                if (num < 0) {
                                     expr = new Expr(TOTAL_H_COUNT, 1);
-                                else
+                                    // CACTVS style ranges H{0-2}
+                                    if (peek() == '{' && !parseRange(expr))
+                                        return false;
+                                } else
                                     expr = new Expr(TOTAL_H_COUNT, num);
                                 break;
                         }
@@ -714,8 +730,15 @@ public final class Smarts {
                             default:  // R=Ring Count
                                 unget();
                                 num = nextUnsignedInt();
-                                if (num < 0)
+                                if (num < 0) {
                                     expr = new Expr(Expr.Type.IS_IN_RING);
+                                    // CACTVS style ranges R{0-2}
+                                    if (peek() == '{') {
+                                        expr.setPrimitive(RING_COUNT, 0);
+                                        if (!parseRange(expr))
+                                            return false;
+                                    }
+                                }
                                 else if (num == 0)
                                     expr = new Expr(Expr.Type.IS_IN_CHAIN);
                                 else if (isFlavor(FLAVOR_OECHEM))
@@ -822,9 +845,12 @@ public final class Smarts {
                             default:  // X=Connectivity
                                 unget();
                                 num = nextUnsignedInt();
-                                if (num < 0)
+                                if (num < 0) {
                                     expr = new Expr(TOTAL_DEGREE, 1);
-                                else
+                                    // CACTVS style ranges X{0-2}
+                                    if (peek() == '{' && !parseRange(expr))
+                                        return false;
+                                } else
                                     expr = new Expr(TOTAL_DEGREE, num);
                                 break;
                         }
@@ -851,7 +877,7 @@ public final class Smarts {
                             default:  // Z=None
                                 unget();
                                 num = nextUnsignedInt();
-                                if (isFlavor(FLAVOR_LOOSE | FLAVOR_DAYLIGHT)) {
+                                if (isFlavor(FLAVOR_DAYLIGHT)) {
                                     if (num < 0)
                                         expr = new Expr(IS_IN_RING);
                                     else if (num == 0)
@@ -936,8 +962,15 @@ public final class Smarts {
 
                     case 'r':
                         num = nextUnsignedInt();
-                        if (num < 0)
+                        if (num < 0) {
                             expr = new Expr(Expr.Type.IS_IN_RING);
+                            // CACTVS style ranges r{0-2}
+                            if (peek() == '{') {
+                                expr.setPrimitive(RING_SMALLEST, 0);
+                                if (!parseRange(expr))
+                                    return false;
+                            }
+                        }
                         else if (num == 0)
                             expr = new Expr(Expr.Type.IS_IN_CHAIN);
                         else if (num > 2)
@@ -947,22 +980,36 @@ public final class Smarts {
                         break;
                     case 'v':
                         num = nextUnsignedInt();
-                        if (num < 0)
+                        if (num < 0) {
                             expr = new Expr(Expr.Type.VALENCE, 1);
-                        else
+                            // CACTVS style ranges v{0-2}
+                            if (peek() == '{' && !parseRange(expr))
+                                return false;
+                        } else
                             expr = new Expr(Expr.Type.VALENCE, num);
                         break;
                     case 'h':
                         num = nextUnsignedInt();
-                        if (num < 0)
+                        if (num < 0) {
                             expr = new Expr(Expr.Type.HAS_IMPLICIT_HYDROGEN);
+                            // CACTVS style ranges h{0-2}
+                            if (peek() == '{' && !parseRange(expr))
+                                return false;
+                        }
                         else
                             expr = new Expr(Expr.Type.IMPL_H_COUNT, num);
                         break;
                     case 'x':
                         num = nextUnsignedInt();
-                        if (num < 0)
+                        if (num < 0) {
                             expr = new Expr(Expr.Type.IS_IN_RING);
+                            // CACTVS style ranges D{0-2}
+                            if (peek() == '{') {
+                                expr.setPrimitive(RING_BOND_COUNT, 0);
+                                if (!parseRange(expr))
+                                    return false;
+                            }
+                        }
                         else if (num == 0)
                             expr = new Expr(Expr.Type.IS_IN_CHAIN);
                         else if (num > 1)
@@ -1545,20 +1592,18 @@ public final class Smarts {
             }
             // setup data structures for stereo chemistry
             for (IAtom atom : astereo) {
-                if (local.get(atom) == null)
+                LocalNbrs nbrinfo = local.get(atom);
+                if (nbrinfo == null)
                     continue;
                 IAtom[] ligands = new IAtom[4];
                 int     degree  = 0;
-                for (IBond bond : local.get(atom))
+                for (IBond bond : nbrinfo.bonds)
                     ligands[degree++] = bond.getOther(atom);
                 // add implicit neighbor, and move to correct position
                 if (degree == 3) {
                     ligands[degree++] = atom;
-                    for (int j = 3; j > 0; j--) {
-                        if (mol.indexOf(ligands[j]) > mol.indexOf(ligands[j - 1]))
-                            break;
-                        swap(ligands, j, j - 1);
-                    }
+                    if (nbrinfo.isFirst)
+                        swap(ligands, 2, 3);
                 }
                 if (degree == 4) {
                     // Note the left and right is stored in the atom expression, we
@@ -1572,17 +1617,17 @@ public final class Smarts {
                     Expr expr = ((QueryBond) BondRef.deref(bond)).getExpression();
                     if (hasAliphaticDoubleBond(expr)) {
                         IBond left = null, right = null;
-                        List<IBond> bBonds = local.get(bond.getBegin());
-                        List<IBond> eBonds = local.get(bond.getEnd());
+                        LocalNbrs bBonds = local.get(bond.getBegin());
+                        LocalNbrs eBonds = local.get(bond.getEnd());
 
                         // not part of this parse
                         if (bBonds == null || eBonds == null)
                             continue;
 
-                        for (IBond b : bBonds)
+                        for (IBond b : bBonds.bonds)
                             if (bstereo.contains(b))
                                 left = b;
-                        for (IBond b : eBonds)
+                        for (IBond b : eBonds.bonds)
                             if (bstereo.contains(b))
                                 right = b;
                         if (left == null || right == null)
@@ -1633,7 +1678,8 @@ public final class Smarts {
                 bond.setAtom(atom, 1);
                 addBond(prev, bond);
                 addBond(atom, bond);
-            }
+            } else
+                local.put(atom, new LocalNbrs(true));
             prev = atom;
             bond = null;
         }
@@ -1930,6 +1976,9 @@ public final class Smarts {
             case SINGLE_OR_DOUBLE:
                 sb.append("-,=");
                 break;
+            case ORDER:
+                LoggingToolFactory.createLoggingTool(Smarts.class)
+                                  .warn("Expr.Type.ORDER cannot be round-tripped via SMARTS!");
             case ALIPHATIC_ORDER:
                 switch (expr.value()) {
                     case 1:

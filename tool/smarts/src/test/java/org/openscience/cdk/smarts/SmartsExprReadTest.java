@@ -430,7 +430,7 @@ public class SmartsExprReadTest {
     @Test
     public void ringSize() {
         IAtomContainer mol = new AtomContainer();
-        assertTrue(Smarts.parse(mol, "[Z8]", Smarts.FLAVOR_LOOSE));
+        assertTrue(Smarts.parse(mol, "[Z8]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(RING_SIZE, 8);
         assertThat(actual, is(expected));
@@ -439,7 +439,7 @@ public class SmartsExprReadTest {
     @Test
     public void ringSize0() {
         IAtomContainer mol = new AtomContainer();
-        assertTrue(Smarts.parse(mol, "[Z0]", Smarts.FLAVOR_LOOSE));
+        assertTrue(Smarts.parse(mol, "[Z0]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(IS_IN_CHAIN);
         assertThat(actual, is(expected));
@@ -448,7 +448,7 @@ public class SmartsExprReadTest {
     @Test
     public void ringSizeDefault() {
         IAtomContainer mol = new AtomContainer();
-        assertTrue(Smarts.parse(mol, "[Z]", Smarts.FLAVOR_LOOSE));
+        assertTrue(Smarts.parse(mol, "[Z]", Smarts.FLAVOR_DAYLIGHT));
         Expr actual   = getAtomExpr(mol.getAtom(0));
         Expr expected = expr(IS_IN_RING);
         assertThat(actual, is(expected));
@@ -697,7 +697,9 @@ public class SmartsExprReadTest {
     @Test
     public void atomStereoSimpleLeft() {
         Expr actual   = getAtomExpr("[C@H]");
-        System.out.println(actual);
+        assertThat(actual, is(new Expr(ALIPHATIC_ELEMENT, 6)
+                                      .and(new Expr(STEREOCHEMISTRY, 1))
+                                      .and(new Expr(TOTAL_H_COUNT, 1))));
     }
 
     @Test
@@ -898,5 +900,53 @@ public class SmartsExprReadTest {
     public void ringOpenCloseConsistency() {
         assertTrue(Smarts.parse(new QueryAtomContainer(null), "C-,=1CC-,=1"));
         assertTrue(Smarts.parse(new QueryAtomContainer(null), "C!~1CC!~1"));
+    }
+
+    @Test
+    public void degreeRange() {
+        Expr expr = getAtomExpr("[D{1-3}]");
+        assertThat(expr, is(or(expr(DEGREE, 1),
+                               or(expr(DEGREE, 2),
+                                  expr(DEGREE, 3)))));
+    }
+
+    @Test
+    public void implHRange() {
+        Expr expr = getAtomExpr("[h{1-3}]");
+        assertThat(expr, is(or(expr(IMPL_H_COUNT, 1),
+                               or(expr(IMPL_H_COUNT, 2),
+                                  expr(IMPL_H_COUNT, 3)))));
+    }
+
+    @Test
+    public void totalHCountRange() {
+        Expr expr = getAtomExpr("[H{1-3}]");
+        assertThat(expr, is(or(expr(TOTAL_H_COUNT, 1),
+                               or(expr(TOTAL_H_COUNT, 2),
+                                  expr(TOTAL_H_COUNT, 3)))));
+    }
+
+    @Test
+    public void valenceRange() {
+        Expr expr = getAtomExpr("[v{1-3}]");
+        assertThat(expr, is(or(expr(VALENCE, 1),
+                               or(expr(VALENCE, 2),
+                                  expr(VALENCE, 3)))));
+    }
+
+    @Test
+    public void ringBondCountRange() {
+        Expr expr = getAtomExpr("[x{2-4}]");
+        assertThat(expr, is(or(expr(RING_BOND_COUNT, 2),
+                               or(expr(RING_BOND_COUNT, 3),
+                                  expr(RING_BOND_COUNT, 4)))));
+    }
+
+    @Test
+    public void ringSmallestSizeCountRange() {
+        Expr expr = getAtomExpr("[r{5-7}]");
+        assertThat(expr, is(or(expr(RING_SMALLEST, 5),
+                               or(expr(RING_SMALLEST, 6),
+                                  expr(RING_SMALLEST, 7)))));
     }
 }

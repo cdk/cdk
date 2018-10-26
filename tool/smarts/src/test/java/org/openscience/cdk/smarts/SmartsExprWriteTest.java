@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.smarts;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
@@ -218,7 +219,7 @@ public class SmartsExprWriteTest {
             .or(new Expr(ELEMENT, 17))
             .or(new Expr(ELEMENT, 35))
             .negate();
-        assertThat(Smarts.generateAtom(expr), is("[!$([Br,F,Cl])]"));
+        assertThat(Smarts.generateAtom(expr), is("[!$([F,Cl,Br])]"));
     }
 
     // or -> and -> or needs to be recursive
@@ -479,5 +480,11 @@ public class SmartsExprWriteTest {
         assertTrue(Smarts.parse(mol, "C/C=C/C"));
         assertTrue(Smarts.parse(mol, "C/C=C\\C"));
         assertThat(Smarts.generate(mol), is("C/C=C/C.C/C=C\\C"));
+    }
+
+    @Test public void roundTripStereo() {
+        QueryAtomContainer mol = new QueryAtomContainer(null);
+        Smarts.parse(mol, "O1.[S@]=1(C)CC");
+        assertThat(Smarts.generate(mol), is("O=[S@@](C)CC"));
     }
 }
