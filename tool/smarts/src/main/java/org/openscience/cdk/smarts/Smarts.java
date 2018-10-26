@@ -94,6 +94,10 @@ import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
  *         explicit degree 3. '[^2]' means hybridisation (2=Sp2). '[G8]' periodic
  *         group 8</li>
  * </ul>
+ * <br>
+ * In addition to the flavors above CACTVS toolkit style ranges are supported.
+ * For example <code>[D{2-4}]</code> means degree 2, 3, or 4. On writing such
+ * ranges are converted to <code>[D2,D3,D4]</code>.
  */
 public final class Smarts {
 
@@ -1974,7 +1978,7 @@ public final class Smarts {
                 break;
             case ORDER:
                 LoggingToolFactory.createLoggingTool(Smarts.class)
-                                  .warn("Expr.Type.ORDER can not be round-tripped via SMARTS!");
+                                  .warn("Expr.Type.ORDER cannot be round-tripped via SMARTS!");
             case ALIPHATIC_ORDER:
                 switch (expr.value()) {
                     case 1:
