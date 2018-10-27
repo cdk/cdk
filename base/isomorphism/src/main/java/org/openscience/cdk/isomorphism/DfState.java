@@ -31,6 +31,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -101,8 +102,12 @@ final class DfState implements Iterable<int[]> {
     DfState(IQueryAtomContainer query) {
 
         IChemObjectBuilder builder = query.getBuilder();
-        if (builder == null)
-            throw new IllegalArgumentException();
+        if (builder == null) {
+            builder = findBuilder();
+            if (builder == null)
+                throw new IllegalArgumentException("Please ensure query molecule" +
+                                                   "has a IChemObjectBuilder set!");
+        }
 
         IAtomContainer tmp = builder.newAtomContainer();
         tmp.add(query);
@@ -116,7 +121,8 @@ final class DfState implements Iterable<int[]> {
                     stackSize += prepare(atom, null) + 1;
                 }
             } else
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(
+                        "All atoms must be IQueryAtoms!");
         }
 
         this.stack = new StackFrame[stackSize + 2];
@@ -148,6 +154,28 @@ final class DfState implements Iterable<int[]> {
         for (int i = 0; i < stack.length; i++)
             this.stack[i] = new StackFrame(state.stack[i]);
         this.sptr = state.sptr;
+    }
+
+    private static IChemObjectBuilder BUILDER;
+
+    // we find a IChemObjectBuilder using reflection if one wasn't provided
+    // with the query
+    private static IChemObjectBuilder findBuilder() {
+        if (BUILDER != null)
+            return BUILDER;
+        for (String name : new String[]{
+                "org.openscience.cdk.silent.SilentChemObjectBuilder",
+                "org.openscience.cdk.DefaultChemObjectBuilder"
+        }) {
+            try {
+                Class<?> cls    = Class.forName(name);
+                Method   method = cls.getMethod("getInstance");
+                return BUILDER = (IChemObjectBuilder) method.invoke(cls);
+            } catch (Exception ex) {
+                // ignored
+            }
+        }
+        return null;
     }
 
     // prepare the query, the required stack size is returned
