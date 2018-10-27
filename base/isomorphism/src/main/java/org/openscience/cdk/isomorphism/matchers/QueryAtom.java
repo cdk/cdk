@@ -798,7 +798,6 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * }</pre>
      *
      * @param expr the expr
-     * @return the query atom
      */
     public QueryAtom(Expr expr) {
         this((IChemObjectBuilder) null);
@@ -813,7 +812,6 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * }</pre>
      *
      * @param type the expr type
-     * @return the query atom
      */
     public QueryAtom (Expr.Type type) {
         this(new Expr(type));
@@ -829,7 +827,6 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @param type the expr type
      * @param val the expr value
-     * @return the query atom
      */
     public QueryAtom(Expr.Type type, int val) {
         this(new Expr(type, val));

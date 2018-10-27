@@ -84,8 +84,8 @@ public class FractionalCSP3Descriptor extends AbstractMolecularDescriptor implem
     /**
      * Calculates the Fsp<sup>3</sup> descriptor value for the given {@link IAtomContainer}.
      *
-     * @param container An {@link org.openscience.cdk.interfaces.IAtomContainer} for which this descriptor
-     *                  should be calculated
+     * @param mol An {@link org.openscience.cdk.interfaces.IAtomContainer} for which this descriptor
+     *            should be calculated
      * @return An object of {@link org.openscience.cdk.qsar.DescriptorValue} that contains the
      *         calculated Fsp<sup>3</sup> descriptor value
      */
