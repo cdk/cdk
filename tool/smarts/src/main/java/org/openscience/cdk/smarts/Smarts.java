@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 John Mayfield <jwmay@users.sf.net>
+ * Copyright (c) 2018 NextMove Software
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
