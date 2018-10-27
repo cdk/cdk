@@ -1605,7 +1605,27 @@ Method </bibtex:title>
             <bibtex:url>http://arxiv.org/abs/1307.7805</bibtex:url>
         </bibtex:inproceedings>
     </bibtex:entry>
-
+    <bibtex:entry id="Ray57">
+        <bibtex:article>
+            <bibtex:author>Louis C. Ray and Russell A. Kirsch</bibtex:author>
+            <bibtex:title>Finding Chemical Records by Digital Computers</bibtex:title>
+            <bibtex:journal>Science</bibtex:journal>
+            <bibtex:year>1957</bibtex:year>
+            <bibtex:volume>126</bibtex:volume>
+            <bibtex:number>3278</bibtex:number>
+            <bibtex:pages>814-819</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
+    <bibtex:entry id="Jeliazkova18">
+        <bibtex:article>
+            <bibtex:author>Nina Jeliazkova and Nikolay Kochev</bibtex:author>
+            <bibtex:title>AMBIT‐SMARTS: Efficient Searching of Chemical Structures and Fragments</bibtex:title>
+            <bibtex:journal>Molecular Informatics</bibtex:journal>
+            <bibtex:year>2011</bibtex:year>
+            <bibtex:volume>30</bibtex:volume>
+            <bibtex:number>8</bibtex:number>
+            <bibtex:pages>707-720</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
     <!-- DO NOT EDIT. INSTEAD EDIT THIS FILE: https://github.com/cdk/cdk-build-util/blob/master/src/main/resources/net/sf/cdk/tools/doclets/cheminf.bibx -->
-
 </bibtex:file>
