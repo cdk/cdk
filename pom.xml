@@ -589,6 +589,8 @@
                         <version>1.0.2.5</version>
                     </tagletArtifact>
                     <failOnError>false</failOnError>
+                    <doctitle>Chemistry Development Kit ${project.version} API</doctitle>
+                    <stylesheetfile>${basedir}/doc/javadoc/stylesheet.css</stylesheetfile>
                 </configuration>
                 <executions>
                     <execution>
