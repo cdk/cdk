@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @cdk.module  isomorphism
  * @cdk.githash
- * @deprecated Use {@link new QueryBond(beg, end, ORDER, bord)}
+ * @deprecated Use {@code new QueryBond(beg, end, ORDER, bord)}
  */
 @Deprecated
 public class OrderQueryBondOrderOnly extends QueryBond implements IQueryBond {

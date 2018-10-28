@@ -308,7 +308,9 @@ public class UniversalIsomorphismTester {
      * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
      * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
      * @return     true if g2 a subgraph on g1
+     * @deprecated Use the Pattern APIs from the cdk-isomorphism module
      */
+    @Deprecated
     public boolean isSubgraph(IAtomContainer g1, IAtomContainer g2) throws CDKException {
         if (g1 instanceof IQueryAtomContainer)
             throw new CDKException("The first IAtomContainer must not be an IQueryAtomContainer");
