@@ -5,7 +5,7 @@
  
 Copyright &copy; 1997-2018 The CDK Development Team
 
-License: LGPL v2, see doc/lgpl.license
+License: LGPL v2, see LICENSE.txt
 
 [Home Page](https://cdk.github.io/) | [JavaDoc](http://cdk.github.io/cdk/latest/docs/api/index.html?overview-summary.html) | [Wiki](https://github.com/cdk/cdk/wiki) | [Issues](https://github.com/cdk/cdk/issues) | [Mailing List](https://sourceforge.net/projects/cdk/lists/cdk-user)
 
