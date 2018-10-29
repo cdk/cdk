@@ -145,6 +145,22 @@ public class CDKConstants {
     public final static String NMRSHIFT_SULFUR = "sulfur nmr shift";
 
     /**
+     * NMR signal multiplicity constant for use as a key in the
+     * IChemObject.physicalProperties hashtable.
+     *
+     * @see org.openscience.cdk.ChemObject
+     */
+    public final static String NMRSIGNAL_MULTIPLICITY = "nmr signal multiplicity";
+    
+    /**
+     * NMR signal intensity constant for use as a key in the
+     * IChemObject.physicalProperties hashtable.
+     *
+     * @see org.openscience.cdk.ChemObject
+     */
+    public final static String NMRSIGNAL_INTENSITY = "nmr signal intensity";
+    
+    /**
      * NMR spectrum type constant for use as key for an arbitrary 1-dimensional
      * NMR experiment.
      */
