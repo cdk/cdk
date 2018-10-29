@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 John Mayfield <jwmay@users.sf.net>
+ * Copyright (c) 2018 NextMove Software
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,10 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.AtomMatcher;
-import org.openscience.cdk.isomorphism.BondMatcher;
-import org.openscience.cdk.isomorphism.Pattern;
-import org.openscience.cdk.isomorphism.VentoFoggia;
+import org.openscience.cdk.isomorphism.DfPattern;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
 import java.util.ArrayDeque;
@@ -120,6 +117,7 @@ public final class Expr {
     private Expr left, right;
     // user for recursive expression types
     private IAtomContainer query;
+    private DfPattern      ptrn;
 
     /**
      * Creates an atom expression that will always match ({@link Type#TRUE}).
@@ -368,15 +366,10 @@ public final class Expr {
                        (stereo == UNKNOWN_STEREO &&
                         (left.type == STEREOCHEMISTRY ||
                          left.type == OR && left.left.type == STEREOCHEMISTRY));
-
             case RECURSIVE:
-                for (int[] match : Pattern.findSubstructure(query)
-                                          .matchAll(atom.getContainer())) {
-                    if (match[0] == atom.getIndex())
-                        return true;
-                }
-                return false;
-
+                if (ptrn == null)
+                    ptrn = DfPattern.findSubstructure(query);
+                return ptrn.matchesRoot(atom);
             default:
                 throw new IllegalArgumentException("Cannot match AtomExpr, type=" + type);
         }
@@ -639,6 +632,7 @@ public final class Expr {
                 this.left = null;
                 this.right = null;
                 this.query = mol;
+                this.ptrn  = null;
                 break;
             default:
                 throw new IllegalArgumentException();
