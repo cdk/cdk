@@ -8,7 +8,7 @@
     <artifactId>cdk</artifactId>
     <name>cdk</name>
     <description>Modular library for Cheminformatics</description>
-    <version>2.2-SNAPSHOT</version>
+    <version>2.2</version>
     <packaging>pom</packaging>
     <url>http://sourceforge.net/projects/cdk/</url>
 
