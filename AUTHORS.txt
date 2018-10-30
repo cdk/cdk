@@ -2,6 +2,7 @@ Sam Adams
 Jonathan Alvarsson
 Rich Apodaca
 Saravanaraj N Ayyampalayam
+Eric Bach
 Ulrich Bauer
 Stephan Beisken
 Arvid Berg
@@ -96,6 +97,7 @@ Kazuya Ujihara
 Mark B Vine
 Joerg Wegner
 Yap Chun Wei
+Michael Wenk
 Stephane Werner
 Mark Williamson
 Egon Willighagen
