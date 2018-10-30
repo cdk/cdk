@@ -47,7 +47,7 @@ import java.util.Objects;
  * A expression stores a predicate tree for checking properties of atoms
  * and bonds.
  * <pre>
- * Expr expr = new Expr(ExprType.ELEMENT, 6);
+ * Expr expr = new Expr(ELEMENT, 6);
  * if (expr.matches(atom)) {
  *   // expression matches if atom is a carbon!
  * }
@@ -57,13 +57,13 @@ import java.util.Objects;
  * an intermediate (logical) node. The simplest expression trees contain a
  * single leaf node:
  * <pre>
- * new Expr(ExprType.IS_AROMATIC; // matches any aromatic atom
- * new Expr(ExprType.ELEMENT, 6); // matches any carbon atom (atomic num=6)
- * new Expr(ExprType.VALENCE, 4); // matches an atom with valence 4
- * new Expr(ExprType.DEGREE, 1);  // matches a terminal atom, e.g. -OH, =O
- * new Expr(ExprType.IS_IN_RING); // matches any atom marked as in a ring
- * new Expr(ExprType.IS_HETERO);  // matches anything other than carbon or nitrogen
- * new Expr(ExprType.TRUE);       // any atom
+ * new Expr(IS_AROMATIC); // matches any aromatic atom
+ * new Expr(ELEMENT, 6);  // matches any carbon atom (atomic num=6)
+ * new Expr(VALENCE, 4);  // matches an atom with valence 4
+ * new Expr(DEGREE, 1);   // matches a terminal atom, e.g. -OH, =O
+ * new Expr(IS_IN_RING);  // matches any atom marked as in a ring
+ * new Expr(IS_HETERO);   // matches anything other than carbon or nitrogen
+ * new Expr(TRUE);        // any atom
  * </pre>
  * Logical internal nodes combine one or two sub-expressions with conjunction
  * (and), disjunction (or), and negation (not).
@@ -79,24 +79,24 @@ import java.util.Objects;
  * </pre>
  * We can construct this tree as follows:
  * <pre>
- * Expr expr = new Expr(ExprType.ELEMENT, 35) // Br
- *                  .or(new Expr(ExprType.ELEMENT, 17)) // Cl
- *                  .or(new Expr(ExprType.ELEMENT, 9))  // F</pre>
+ * Expr expr = new Expr(ELEMENT, 9) // F
+ *                  .or(new Expr(ELEMENT, 17)) // Cl
+ *                  .or(new Expr(ELEMENT, 35))  // Br</pre>
  * A more verbose construction could also be used:
  * <pre>
- * Expr leafF  = new Expr(ExprType.ELEMENT, 9); // F
- * Expr leafCl = new Expr(ExprType.ELEMENT, 17); // Cl
- * Expr leafBr = new Expr(ExprType.ELEMENT, 35);  // Br
- * Expr node4  = new Expr(ExprType.OR, leaf2, leaf3);
- * Expr node5  = new Expr(ExprType.OR, leaf1, node4);
+ * Expr leafF  = new Expr(ELEMENT, 9); // F
+ * Expr leafCl = new Expr(ELEMENT, 17); // Cl
+ * Expr leafBr = new Expr(ELEMENT, 35);  // Br
+ * Expr node4  = new Expr(OR, leaf2, leaf3);
+ * Expr node5  = new Expr(OR, leaf1, node4);
  * </pre>
  *
  * Expressions can be used to match bonds. Note some expressions apply to either
  * atoms or bonds.
  * <pre>
- * new Expr(ExprType.TRUE);               // any bond
- * new Expr(ExprType.IS_IN_RING);         // any ring bond
- * new Expr(ExprType.ALIPHATIC_ORDER, 2); // double bond
+ * new Expr(TRUE);               // any bond
+ * new Expr(IS_IN_RING);         // any ring bond
+ * new Expr(ALIPHATIC_ORDER, 2); // double bond
  * </pre>
  * See the documentation for {@link Type}s for a detail explanation of
  * each type.
