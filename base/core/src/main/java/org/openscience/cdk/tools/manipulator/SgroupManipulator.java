@@ -103,10 +103,10 @@ public final class SgroupManipulator {
                     }
                     break;
                     case CtabBracket: {
-                        Collection<IAtom> orgVal = orgSgroup.getValue(key);
-                        if (orgVal != null) {
-                            cpySgroup.putValue(key,
-                                               new SgroupBracket((SgroupBracket) orgVal));
+                        Collection<SgroupBracket> orgVals = orgSgroup.getValue(key);
+                        if (orgVals != null) {
+                            for (SgroupBracket bracket : orgVals)
+                                cpySgroup.addBracket(new SgroupBracket(bracket));
                         }
                     }
                     break;
