@@ -223,7 +223,7 @@ public class AtomContainerManipulator {
 
             Isotopes isotopes = Isotopes.getInstance();
             double mass = 0.0;
-            double hExactMass = isotopes.getMajorIsotope(1).getExactMass();
+            double hExactMass = isotopes.getMajorIsotope("H").getExactMass();
             for (IAtom atom : atomContainer.atoms()) {
                 if (atom.getImplicitHydrogenCount() == null)
                     throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");
@@ -314,7 +314,7 @@ public class AtomContainerManipulator {
         try {
             Isotopes isotopes = Isotopes.getInstance();
             double abundance = 1.0;
-            double hAbundance = isotopes.getMajorIsotope(1).getNaturalAbundance();
+            double hAbundance = isotopes.getMajorIsotope("H").getNaturalAbundance();
 
             int nImplH = 0;
 
