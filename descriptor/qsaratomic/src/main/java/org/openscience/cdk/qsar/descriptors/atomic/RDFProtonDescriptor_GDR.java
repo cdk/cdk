@@ -404,14 +404,14 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
             IAtom goodAtom1;
             limitInf = 0;
             limitSup = Math.PI / 2;
-            step = (limitSup - limitInf) / 7;
             position = 0;
             partial = 0;
             IBond theDoubleBond;
             smooth = -1.15;
             int goodPosition = 0;
             IBond goodBond;
-            for (double ghd = limitInf; ghd < limitSup; ghd = ghd + step) {
+            for (int c = 0; c < gdr_desc_length; c++) {
+            	double ghd = limitInf + (limitSup - limitInf) * ((double)c / gdr_desc_length);
                 sum = 0;
                 for (int dou = 0; dou < doubles.size(); dou++) {
                     partial = 0;

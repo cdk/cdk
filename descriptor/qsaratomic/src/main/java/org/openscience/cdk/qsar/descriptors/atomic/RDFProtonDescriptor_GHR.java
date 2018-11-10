@@ -392,12 +392,12 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
         int position;
         double limitInf = 1.4;
         double limitSup = 4;
-        double step = (limitSup - limitInf) / 15;
         IAtom atom2;
 
         ///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r	 WITH PARTIAL CHARGES:
         if (atoms.size() > 0) {
-            for (double ghr = limitInf; ghr < limitSup; ghr = ghr + step) {
+        	for (int c = 0; c < ghr_desc_length; c++) {
+            	double ghr = limitInf + (limitSup - limitInf) * ((double)c / ghr_desc_length);
                 sum = 0;
                 for (Object atom1 : atoms) {
                     distance = 0;
