@@ -51,7 +51,7 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); //
         addExplicitHydrogens(mol);
-        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(3, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     @Test
