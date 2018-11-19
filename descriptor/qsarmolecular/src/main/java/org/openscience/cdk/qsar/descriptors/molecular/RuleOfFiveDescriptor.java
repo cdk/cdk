@@ -162,7 +162,7 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
             int donors = ((IntegerResult) don.calculate(mol).getValue()).intValue();
 
             IMolecularDescriptor mw = new WeightDescriptor();
-            Object[] mwparams = {""};
+            Object[] mwparams = {"*"};
             mw.setParameters(mwparams);
             double mwvalue = ((DoubleResult) mw.calculate(mol).getValue()).doubleValue();
 
