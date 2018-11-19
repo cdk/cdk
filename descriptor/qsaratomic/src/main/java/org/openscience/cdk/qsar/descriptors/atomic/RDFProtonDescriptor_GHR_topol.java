@@ -401,12 +401,12 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         Integer thisAtom;
         limitInf = 1.4;
         limitSup = 4;
-        step = (limitSup - limitInf) / 15;
 
         if (atoms.size() > 0) {
             //ArrayList gHr_topol_function = new ArrayList(15);
             ShortestPaths shortestPaths = new ShortestPaths(mol, startVertex);
-            for (double ghrt = limitInf; ghrt < limitSup; ghrt = ghrt + step) {
+            for (int c = 0; c < ghr_topol_desc_length; c++) {
+            	double ghrt = limitInf + (limitSup - limitInf) * ((double)c / ghr_topol_desc_length);
                 sum = 0;
                 for (int at = 0; at < atoms.size(); at++) {
                     distance = 0;
