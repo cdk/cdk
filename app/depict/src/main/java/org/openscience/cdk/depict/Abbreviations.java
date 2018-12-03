@@ -444,6 +444,9 @@ public class Abbreviations implements Iterable<String> {
             }
         }
 
+        if (!contractOnHetero)
+            return newSgroups;
+
         // now collapse
         for (IAtom attach : mol.atoms()) {
             if (usedAtoms.contains(attach))
