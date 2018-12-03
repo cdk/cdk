@@ -118,14 +118,24 @@ final class StandardAtomGenerator {
     AtomSymbol generateSymbol(IAtomContainer container, IAtom atom, HydrogenPosition position, RendererModel model) {
         if (atom instanceof IPseudoAtom) {
             IPseudoAtom pAtom = (IPseudoAtom) atom;
-            if (pAtom.getAttachPointNum() <= 0)
+            if (pAtom.getAttachPointNum() <= 0) {
+                if (pAtom.getLabel().equals("*")) {
+                    int mass = unboxSafely(pAtom.getMassNumber(), 0);
+                    int charge  = unboxSafely(pAtom.getFormalCharge(), 0);
+                    int hcnt    = unboxSafely(pAtom.getImplicitHydrogenCount(), 0);
+                    int nrad = container.getConnectedSingleElectronsCount(atom);
+                    if (mass != 0 || charge != 0 || hcnt != 0) {
+                        return generatePeriodicSymbol(0, hcnt,
+                                                      mass, charge,
+                                                      nrad, position);
+                    }
+                }
                 return generatePseudoSymbol(accessPseudoLabel(pAtom, "?"), position);
+            }
             else
                 return null; // attach point drawn in bond generator
         } else {
             int number = unboxSafely(atom.getAtomicNumber(), Elements.ofString(atom.getSymbol()).number());
-
-            if (number == 0) return generatePseudoSymbol("?", position);
 
             // unset the mass if it's the major isotope (could be an option)
             Integer mass = atom.getMassNumber();
@@ -363,7 +373,8 @@ final class StandardAtomGenerator {
     AtomSymbol generatePeriodicSymbol(final int number, final int hydrogens, final int mass, final int charge,
                                       final int unpaired, HydrogenPosition position) {
 
-        TextOutline element = new TextOutline(Elements.ofNumber(number).symbol(), font);
+        TextOutline element = number == 0 ? new TextOutline("*", font)
+                                          : new TextOutline(Elements.ofNumber(number).symbol(), font);
         TextOutline hydrogenAdjunct = defaultHydrogenLabel;
 
         // the hydrogen count, charge, and mass adjuncts are script size
@@ -392,7 +403,7 @@ final class StandardAtomGenerator {
         if (hydrogens > 0) adjuncts.add(hydrogenAdjunct);
         if (hydrogens > 1) adjuncts.add(hydrogenCount);
         if (charge != 0 || unpaired > 0) adjuncts.add(chargeAdjunct);
-        if (mass >= 0) adjuncts.add(massAdjunct);
+        if (mass > 0) adjuncts.add(massAdjunct);
 
         return new AtomSymbol(element, adjuncts);
     }
