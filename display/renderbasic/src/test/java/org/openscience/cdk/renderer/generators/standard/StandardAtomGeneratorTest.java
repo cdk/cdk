@@ -503,13 +503,13 @@ public class StandardAtomGeneratorTest {
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(null);
         when(atom.getSymbol()).thenReturn(null);
-        when(atom.getMassNumber()).thenReturn(12);
+        when(atom.getMassNumber()).thenReturn(0);
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
         when(atom.getFormalCharge()).thenReturn(0);
         AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
-        assertThat(atomSymbol.elementOutline().text(), is("?"));
+        assertThat(atomSymbol.elementOutline().text(), is("*"));
     }
 
     @Test

@@ -444,7 +444,11 @@ public class Abbreviations implements Iterable<String> {
             }
         }
 
+        if (!contractOnHetero)
+            return newSgroups;
+
         // now collapse
+        collapse:
         for (IAtom attach : mol.atoms()) {
             if (usedAtoms.contains(attach))
                 continue;
@@ -467,8 +471,16 @@ public class Abbreviations implements Iterable<String> {
             for (Sgroup sgroup : sgroupAdjs.get(attach)) {
                 if (containsChargeChar(sgroup.getSubscript()))
                     continue;
-                xbonds.addAll(sgroup.getBonds());
+                if (sgroup.getBonds().size() != 1)
+                    continue;
+                IBond xbond = sgroup.getBonds().iterator().next();
+                xbonds.add(xbond);
                 xatoms.addAll(sgroup.getAtoms());
+                if (attach.getSymbol().length() == 1 &&
+                    Character.isLowerCase(sgroup.getSubscript().charAt(0))) {
+                    if (Elements.ofString(attach.getSymbol() + sgroup.getSubscript().charAt(0)) != Elements.Unknown)
+                        continue collapse;
+                }
                 nbrSymbols.add(sgroup.getSubscript());
                 todelete.add(sgroup);
             }

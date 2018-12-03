@@ -294,6 +294,17 @@ public class AbbreviationsTest {
         assertThat(sgroups.get(0).getSubscript(), is("Pd(dppf)Cl2"));
     }
 
+    // Don't generate NiPr
+    @Test public void avoidAmbiguity() throws Exception {
+        String smi = "C1CCCCC1=NC(C)C";
+        Abbreviations factory = new Abbreviations();
+        factory.add("*C(C)C iPr");
+        IAtomContainer mol = smi(smi);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("iPr"));
+    }
+
     @Test
     public void loadFromFile() throws Exception {
         Abbreviations factory = new Abbreviations();

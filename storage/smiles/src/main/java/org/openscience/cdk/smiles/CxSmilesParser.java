@@ -78,9 +78,15 @@ final class CxSmilesParser {
                 return true;
             } else {
                 iter.pos--; // push back
-                final int beg = iter.pos;
+                int beg = iter.pos;
                 int rollback = beg;
                 while (iter.hasNext()) {
+
+                    if (iter.pos == beg && iter.curr() == '_' &&
+                        iter.peek() == 'R') {
+                        ++beg;
+                    }
+
                     // correct step over of escaped label
                     if (iter.curr() == '&') {
                         rollback = iter.pos;
@@ -675,6 +681,10 @@ final class CxSmilesParser {
          */
         char next() {
             return str.charAt(pos++);
+        }
+
+        public char peek() {
+            return pos < str.length() ? str.charAt(pos+1) : '\0';
         }
 
 
