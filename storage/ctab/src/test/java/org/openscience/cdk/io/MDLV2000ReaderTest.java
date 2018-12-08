@@ -1727,8 +1727,20 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-
-
+	@Test
+    public void testMassDiff() throws Exception {
+        String mdl = "deuterium.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1 V2000\n"
+                + "    0.0000    0.0000    0.0000 H  +1  0  0  0  0\n"
+                + "M  END\n";
+        try (StringReader in = new StringReader(mdl)) {
+            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl), Mode.STRICT);
+            IAtomContainer mol = reader.read(new AtomContainer());
+            IAtom atom = mol.getAtom(0);
+            Assert.assertEquals(1, atom.getAtomicNumber().intValue());
+            Assert.assertEquals(2, atom.getMassNumber().intValue());
+        }
+    }
+	
     @Test
     public void testBadAtomCoordinateFormat() throws Exception {
 
