@@ -450,8 +450,6 @@ public class AtomTyperTests {
 		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer molecule = parser.parseSmiles(smiles);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(molecule);
-		CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
-		hAdder.addImplicitHydrogens(molecule);
 		AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
 		Aromaticity.cdkLegacy().apply(molecule);
 		return molecule;
