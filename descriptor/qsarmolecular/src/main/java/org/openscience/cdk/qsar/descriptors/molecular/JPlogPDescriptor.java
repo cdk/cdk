@@ -38,17 +38,16 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * model. See Journal of Cheminformatics 2018 10:61 https://doi.org/10.1186/s13321-018-0316-5
  *  
  * @author Jeffrey Plante
- * @cdk.created    2018-12-15
+ * @cdk.created 2018-12-15
  * @cdk.keyword JPLogP
  * @cdk.keyword descriptor
  * @cdk.keyword lipophilicity
- * @cdk.cite Journal of Cheminformatics 2018 10:61 https://doi.org/10.1186/s13321-018-0316-5
  */
 public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
 	private static final String[] NAMES = { "JPLogP" };
 	private boolean addImplicitH = true;
-	JPlogPcalculator jplogp = null;
+	JPlogPCalculator jplogp = null;
 
 	/**
 	 * Default constructor which will setup the required coefficients to enable
@@ -56,7 +55,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 	 */
 	public JPlogPDescriptor() 
 	{
-		jplogp = new JPlogPcalculator();
+		jplogp = new JPlogPCalculator();
 	}
 
 	@Override
@@ -135,24 +134,34 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 
 
 
-	
-	protected class JPlogPcalculator
+	/**
+	 * The class that calculated the logP according to the JPlogP method described in:
+	 * Journal of Cheminformatics 2018 10:61 https://doi.org/10.1186/s13321-018-0316-5
+	 * 
+	 * This is lower level access and should normally be obtained through the descriptor above.
+	 * 
+	 * @author Jeffrey
+	 *
+	 */
+	protected class JPlogPCalculator
 	{
 		Map<Integer, Double> coeffs = null;
 		
 		/**
-		 * initialise the model with the required values. Could instead read from a
-		 * serialised file, but this is simpler and the number of coefficients isn't
-		 * too large. Quite simple to update as well when able to output the model
-		 * to the screen with minor text manupilation with regex strings.
+		 * Initialises the required coefficients for the trained model from the paper.
 		 */
-		public JPlogPcalculator() 
+		public JPlogPCalculator() 
 		{
 				coeffs = new HashMap<>();
 				initcoeffs();
-						
 		}
 		
+		/**
+		 * Given a structure in the correct configuration (explicit H and aromatised) it will return the logP as a Double
+		 * or if it is out of domain (encounters an unknown atomtype) it will return Double.NaN
+		 * @param struct the structure to calculate it must have explicit H and be aromatised.
+		 * @return The calculated logP as a Double
+		 */
 		protected Double calcLogP(IAtomContainer struct)
 		{
 			boolean inDomain = true;
@@ -172,11 +181,8 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 				} else {
 					System.out.println(atomtype + " not found");
 					return Double.NaN;
-//					new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-//							new DoubleResult(Double.NaN), getDescriptorNames());
 				}
 			}
-			
 			return logP;
 		}
 		
@@ -184,7 +190,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 		 * Used in Training the model
 		 * 
 		 * @param struct
-		 * @return
+		 * @return Map representing the Hologram of the given structure
 		 */
 		public Map<Integer, Integer> getMappedHologram(IAtomContainer struct) {
 			Map<Integer, Integer> holo = new HashMap<>();
@@ -204,7 +210,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 		
 		/**
 		 * Returns the AtomCode for the logP atomtype as previously developed at
-		 * Lhasa
+		 * Lhasa see citation at top of class for more information
 		 * 
 		 * @param atom
 		 *            the atom to type
@@ -253,6 +259,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 				break;
 			}
 			returnMe += toadd;
+			// check for any errors and if so return a null value
 			if (toadd != 99) {
 				return returnMe;
 			} else
@@ -260,7 +267,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 		}
 
 		/**
-		 * 
+		 * Determines and returns the SS (subsection) portion of the atomtype integer for a Hydrogen Atom
 		 * @param atom
 		 * @return the final 2 digits for the given atom
 		 */
@@ -312,7 +319,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 		}
 
 		/**
-		 * 
+		 * Determines and returns the SS (subsection) portion of the atomtype integer for a "Default" ie not C,N,O,H,F Atom
 		 * @param atom
 		 * @return the final 2 digits for the given atom
 		 */
@@ -332,7 +339,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 		}
 
 		/**
-		 * 
+		 * Determines and returns the SS (subsection) portion of the atomtype integer for a Fluorine Atom
 		 * @param atom
 		 * @return the final 2 digits for the given atom
 		 */
@@ -367,7 +374,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 		}
 
 		/**
-		 * 
+		 * Determines and returns the SS (subsection) portion of the atomtype integer for an Oxygen Atom
 		 * @param atom
 		 * @return the final 2 digits for the given atom
 		 */
@@ -406,7 +413,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 		}
 
 		/**
-		 * 
+		 * Determines and returns the SS (subsection) portion of the atomtype integer for a Nitrogen Atom
 		 * @param atom
 		 * @return the final 2 digits for the given atom
 		 */
@@ -449,7 +456,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 		}
 
 		/**
-		 * 
+		 * Determines and returns the SS (subsection) portion of the atomtype integer for a Carbon Atom
 		 * @param atom
 		 * @return the final 2 digits for the given atom
 		 */
@@ -670,7 +677,13 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 			return false;
 		}
 		
-		protected void initcoeffs()
+		/**
+		 * initialise the model with the required values. Could instead read from a
+		 * serialised file, but this is simpler and the number of coefficients isn't
+		 * too large. Quite simple to update as well when able to output the model
+		 * to the screen with minor text manupilation with regex strings.
+		 */
+		private void initcoeffs()
 		{
 			coeffs.put(115200, 0.3428999504964441);
 			coeffs.put(134400, -0.6009339899021935);
