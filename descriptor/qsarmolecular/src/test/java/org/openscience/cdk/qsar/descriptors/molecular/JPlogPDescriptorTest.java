@@ -94,7 +94,7 @@ public class JPlogPDescriptorTest {
 		JPlogPDescriptor desc = new JPlogPDescriptor();
 		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer molecule = parseSmiles("c1ccccc1");
-		Map<Integer, Integer> holo = desc.getMappedHologram(molecule);
+		Map<Integer, Integer> holo = desc.jplogp.getMappedHologram(molecule);
 		assertEquals(2, holo.keySet().size());
 		assertEquals(6, holo.get(106204).intValue());
 	}
