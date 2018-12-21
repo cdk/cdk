@@ -2663,6 +2663,27 @@ public class SmilesParserTest extends CDKTestCase {
         assertFalse(mol.stereoElements().iterator().hasNext());
     }
 
+    @Test
+    public void warnOnDirectionalBonds() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C/C=C/1.C/1");
+    }
+
+    @Test(expected = InvalidSmilesException.class)
+    public void failOnDirectionalBondsWhenStrict() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        smipar.setStrict(true);
+        IAtomContainer mol = smipar.parseSmiles("C/C=C/1.C/1");
+    }
+
+    @Test
+    public void ignoreDoubleBond() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C/C=C(/F)/C");
+        assertThat(mol.stereoElements().iterator().hasNext(),
+                   is(false));
+    }
+
     @Test public void extendedTetrahedral7() throws InvalidSmilesException {
         IAtomContainer mol = load("CC=C=C=[C@]=C=C=CC");
         for (IStereoElement se : mol.stereoElements()) {

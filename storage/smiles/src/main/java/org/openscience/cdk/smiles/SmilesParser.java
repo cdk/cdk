@@ -43,6 +43,8 @@ import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.smiles.CxSmilesState.DataSgroup;
 import org.openscience.cdk.smiles.CxSmilesState.PolymerSgroup;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import uk.ac.ebi.beam.Graph;
 
@@ -130,6 +132,8 @@ import java.util.Set;
  */
 public final class SmilesParser {
 
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmilesParser.class);
+
     /**
      * The builder determines which CDK domain objects to create.
      */
@@ -150,6 +154,11 @@ public final class SmilesParser {
     private boolean                  kekulise = true;
 
     /**
+     * Whether the parser is in strict mode or not.
+     */
+    private boolean                  strict = false;
+
+    /**
      * Create a new SMILES parser which will create {@link IAtomContainer}s with
      * the specified builder.
      *
@@ -158,6 +167,16 @@ public final class SmilesParser {
     public SmilesParser(final IChemObjectBuilder builder) {
         this.builder = builder;
         this.beamToCDK = new BeamToCDK(builder);
+    }
+
+    /**
+     * Sets whether the parser is in strict mode. In non-strict mode (default)
+     * recoverable issues with SMILES are reported as warnings.
+     *
+     * @param strict strict mode true/false.
+     */
+    public void setStrict(boolean strict) {
+        this.strict = strict;
     }
 
     /**
@@ -239,8 +258,11 @@ public final class SmilesParser {
 
     private IAtomContainer parseSmiles(String smiles, boolean isRxnPart) throws InvalidSmilesException {
         try {
-            // create the Beam object from the SMILES
-            Graph g = Graph.fromSmiles(smiles);
+            // create the Beam object from parsing the SMILES
+            Set<String> warnings = new HashSet<>();
+            Graph g = Graph.parse(smiles, strict, warnings);
+            for (String warning : warnings)
+              logger.warn(warning);
 
             // convert the Beam object model to the CDK - note exception thrown
             // if a kekule structure could not be assigned.
