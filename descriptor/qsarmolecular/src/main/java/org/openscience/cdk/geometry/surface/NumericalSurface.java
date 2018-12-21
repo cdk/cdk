@@ -75,6 +75,7 @@ public class NumericalSurface {
      */
     public NumericalSurface(IAtomContainer atomContainer) {
         this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
+        init();
     }
 
     /**
@@ -93,15 +94,26 @@ public class NumericalSurface {
         this.solventRadius = solventRadius;
         this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
         this.tesslevel = tesslevel;
+        init();
     }
 
     /**
      * Evaluate the surface.
      *
      * This method generates the points on the accessible surface area of each atom
-     * as well as calculating the surface area of each atom
+     * as well as calculating the surface area of each atom.
+     * @deprecated
      */
+    @Deprecated
     public void calculateSurface() {
+        // NO-OP
+    }
+
+    /**
+     * Initialize the surface, generating the points on the accessible surface
+     * area of each atom as well as calculating the surface area of each atom.
+     */
+    private void init() {
 
         // invariants
         for (IAtom atom : atoms) {
