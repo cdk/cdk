@@ -253,11 +253,8 @@ public class SystemOutLoggingTool implements ILoggingTool {
     }
 
     private void printToStderr(String level, String message) {
-        System.err.print(classname);
-        System.err.print(" ");
-        System.err.print(level);
-        System.err.print(": ");
-        System.err.println(message);
+        for (String line : message.split("\n"))
+            System.err.println(classname + ' ' + level + ": " + line);
     }
 
     /**
