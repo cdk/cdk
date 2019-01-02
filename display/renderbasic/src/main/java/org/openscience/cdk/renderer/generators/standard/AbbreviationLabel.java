@@ -381,9 +381,6 @@ final class AbbreviationLabel {
      * @return normalised character
      */
     private static char norm(char c) {
-        // if character is out of scope don't
-        if (c > 128)
-            return 0;
         switch (c) {
             case '\u002d': // hyphen
             case '\u2012': // figure dash
