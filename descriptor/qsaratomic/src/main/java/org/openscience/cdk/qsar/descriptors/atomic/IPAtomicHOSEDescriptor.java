@@ -331,20 +331,19 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
      */
     private static List<String> extractInfo(String str) {
 
-        StringBuffer idEdited = new StringBuffer();
-        StringBuffer valEdited = new StringBuffer();
+        StringBuilder idEdited  = new StringBuilder();
+        StringBuilder valEdited = new StringBuilder();
 
         int strlen = str.length();
 
         boolean foundSpace = false;
-        int countSpace = 0;
         boolean foundDigit = false;
         for (int i = 0; i < strlen; i++) {
-            if (!foundDigit) if (Character.isLetter(str.charAt(i))) foundDigit = true;
-
+            if (!foundDigit)
+                if (Character.isLetter(str.charAt(i))) foundDigit = true;
             if (foundDigit) {
                 if (Character.isWhitespace(str.charAt(i))) {
-                    if (countSpace == 0) {
+                    if (!foundSpace) {
                         foundSpace = true;
                     } else
                         break;
@@ -357,7 +356,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
                 }
             }
         }
-        List<String> objec = new ArrayList<String>();
+        List<String> objec = new ArrayList<>();
         objec.add(idEdited.toString());
         objec.add(valEdited.toString());
         return objec;
