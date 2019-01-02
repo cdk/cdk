@@ -213,14 +213,14 @@ public class PDBConvention extends CMLCoreModule {
             storeData();
             if (xpath.size() == 1) {
                 //	        	cdo.endObject("Molecule");
-                if (currentMolecule instanceof IAtomContainer) {
-                    logger.debug("Adding molecule to set");
-                    currentMoleculeSet.addAtomContainer(currentMolecule);
-                    logger.debug("#mols in set: " + currentMoleculeSet.getAtomContainerCount());
-                } else if (currentMolecule instanceof ICrystal) {
+                if (currentMolecule instanceof ICrystal) {
                     logger.debug("Adding crystal to chemModel");
                     currentChemModel.setCrystal((ICrystal) currentMolecule);
                     currentChemSequence.addChemModel(currentChemModel);
+                } else {
+                    logger.debug("Adding molecule to set");
+                    currentMoleculeSet.addAtomContainer(currentMolecule);
+                    logger.debug("#mols in set: " + currentMoleculeSet.getAtomContainerCount());
                 }
             }
         }
