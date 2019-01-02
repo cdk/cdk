@@ -984,7 +984,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
      * @param container container of the atom
      *
      * @return whether the atom's only bonds are to heteroatoms
-     * @see #perceiveNitrogens(org.openscience.cdk.interfaces.IAtomContainer, org.openscience.cdk.interfaces.IAtom)
+     * @see #perceiveNitrogens(IAtomContainer, IAtom, RingSearch, List)
      */
     private boolean isSingleHeteroAtom(IAtom atom, IAtomContainer container) {
 
@@ -2344,10 +2344,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 }
             }
             return null;
-        } else if ((atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() == -1)) {
+        } else if (atom.getFormalCharge() != null && atom.getFormalCharge() == -1) {
             IAtomType type = getAtomType("Br.minus");
             if (isAcceptable(atom, atomContainer, type)) return type;
-        } else if (atom.getFormalCharge() == 1) {
+        } else if (atom.getFormalCharge() != null && atom.getFormalCharge() == 1) {
             IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
             if (maxBondOrder == IBond.Order.DOUBLE) {
                 IAtomType type = getAtomType("Br.plus.sp2");
@@ -2441,7 +2441,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     /**
      * Count the number of doubly bonded atoms.
      *
-     * @param container the molecule in which to look
+     * @param connectedBonds bonds connected to the atom
      * @param atom the atom being looked at
      * @param order the desired bond order of the attached bonds
      * @param symbol If not null, then it only counts the double bonded atoms which
