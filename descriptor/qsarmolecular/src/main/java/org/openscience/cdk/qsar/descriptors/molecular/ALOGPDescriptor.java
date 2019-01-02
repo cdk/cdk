@@ -1071,11 +1071,14 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 else if (xCount == 3)
                     return 54;
                 else if (xCount >= 4) return 55;
-            } else if (hybrid.equals("sp2")) return 47;
+            } else if (hybrid.equals("sp2")) {
+                return 47;
+            } else if (hybrid.equals("sp")) {
+                return 48;
+            }
         } else if (oxNum == 1 && hybrid.equals("sp3"))
             return 47;
-        else if ((oxNum == 2 && hybrid.equals("sp3")) || (oxNum == 1 && hybrid.equals("sp2"))
-                || (oxNum == 0 && hybrid.equals("sp")))
+        else if (oxNum == 2 && hybrid.equals("sp3") || oxNum == 1 && hybrid.equals("sp2"))
             return 48;
         else if ((oxNum == 3 && hybrid.equals("sp3")) || (oxNum >= 2 && hybrid.equals("sp2"))
                 || (oxNum >= 1 && hybrid.equals("sp"))) return 49;
