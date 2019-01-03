@@ -411,6 +411,8 @@ final class AbbreviationLabel {
         if (i == string.length())
             return best;
         final char c = norm(string.charAt(i));
+        if (c > 128)
+            return best;
         return findPrefix(trie.children[c], string, i + 1, best);
     }
 
