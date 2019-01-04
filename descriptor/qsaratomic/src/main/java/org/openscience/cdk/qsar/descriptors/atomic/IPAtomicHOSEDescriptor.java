@@ -330,37 +330,19 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
      * @return     List with String = HOSECode and String = energy
      */
     private static List<String> extractInfo(String str) {
-
-        StringBuffer idEdited = new StringBuffer();
-        StringBuffer valEdited = new StringBuffer();
-
-        int strlen = str.length();
-
-        boolean foundSpace = false;
-        int countSpace = 0;
-        boolean foundDigit = false;
-        for (int i = 0; i < strlen; i++) {
-            if (!foundDigit) if (Character.isLetter(str.charAt(i))) foundDigit = true;
-
-            if (foundDigit) {
-                if (Character.isWhitespace(str.charAt(i))) {
-                    if (countSpace == 0) {
-                        foundSpace = true;
-                    } else
-                        break;
-                } else {
-                    if (foundSpace) {
-                        valEdited.append(str.charAt(i));
-                    } else {
-                        idEdited.append(str.charAt(i));
-                    }
-                }
-            }
-        }
-        List<String> objec = new ArrayList<String>();
-        objec.add(idEdited.toString());
-        objec.add(valEdited.toString());
-        return objec;
-
+        int beg = 0;
+        int end = 0;
+        int len = str.length();
+        List<String> parts = new ArrayList<>();
+        while (end < len && !Character.isSpaceChar(str.charAt(end)))
+            end++;
+        parts.add(str.substring(beg,end));
+        while (end < len && Character.isSpaceChar(str.charAt(end)))
+            end++;
+        beg = end;
+        while (end < len && !Character.isSpaceChar(str.charAt(end)))
+            end++;
+        parts.add(str.substring(beg,end));
+        return parts;
     }
 }

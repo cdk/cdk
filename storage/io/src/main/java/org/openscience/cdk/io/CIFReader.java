@@ -188,16 +188,12 @@ public class CIFReader extends DefaultChemObjectReader {
                     // skip command
                     logger.warn("Skipping command: ", command);
                     line = input.readLine();
-                    if (line.startsWith(";")) {
+                    if (line != null && line.startsWith(";")) {
                         logger.debug("Skipping block content");
-                        line = input.readLine();
-                        if (line != null) line = line.trim();
-                        while (!line.equals(";")) {
-                            line = input.readLine();
-                            if (line != null) line = line.trim();
+                        while ((line = input.readLine()) != null &&
+                               !line.startsWith(";")) {
                             logger.debug("Skipping block line: ", line);
                         }
-                        line = input.readLine();
                     }
                 }
             }
@@ -336,7 +332,7 @@ public class CIFReader extends DefaultChemObjectReader {
             }
             line = input.readLine().trim();
         }
-        if (hasParsableInformation == false) {
+        if (!hasParsableInformation) {
             logger.info("No parsable info found");
             return skipLoopBody(line);
         } else {

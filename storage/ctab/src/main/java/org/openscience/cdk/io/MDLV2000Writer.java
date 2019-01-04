@@ -495,7 +495,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     last--;
                 }
                 // matches BIOVIA syntax
-                if (last >= 2 && last < atomprops.length)
+                if (last >= 2 && last < 5)
                     last = 5;
             }
             for (int i = 2; i <= last; i++)

@@ -88,13 +88,12 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
+        if (params.length > 1)
             throw new CDKException("SigmaElectronegativityDescriptor only expects one parameter");
-        }
-        if (!(params[0] instanceof Integer)) {
+        if (params.length == 0)
+            return;
+        if (!(params[0] instanceof Integer))
             throw new CDKException("The parameter must be of type Integer");
-        }
-        if (params.length == 0) return;
         maxIterations = (Integer) params[0];
     }
 

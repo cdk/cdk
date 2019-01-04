@@ -61,12 +61,8 @@ public class IMatrix {
     public IMatrix(Matrix m) {
         rows = m.rows;
         columns = m.columns;
-        int i, j;
-        for (i = 0; i < rows; i++)
-            for (j = 0; j < columns; j++) {
-                realmatrix[i][j] = m.matrix[i][j];
-                imagmatrix[i][j] = 0d;
-            }
+        realmatrix = m.matrix.clone();
+        imagmatrix = new double[rows][columns];
     }
 
     /**
