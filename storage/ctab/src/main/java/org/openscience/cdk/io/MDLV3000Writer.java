@@ -51,6 +51,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
     public static final  SimpleDateFormat HEADER_DATE_FORMAT = new SimpleDateFormat("MMddyyHHmm");
-    public static final  NumberFormat     DECIMAL_FORMAT     = new DecimalFormat("#.####");
+    public static final  NumberFormat     DECIMAL_FORMAT     = new DecimalFormat("#.####", DecimalFormatSymbols.getInstance(Locale.US));
     private static final Pattern          R_GRP_NUM          = Pattern.compile("R(\\d+)");
     private V30LineWriter writer;
 
