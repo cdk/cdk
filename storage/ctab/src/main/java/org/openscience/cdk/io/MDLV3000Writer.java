@@ -627,8 +627,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                             final Point2d p1 = bracket.getFirstPoint();
                             final Point2d p2 = bracket.getSecondPoint();
                             writer.write("9");
-                            writer.write(' ').write(p1.x).write(' ').write(DECIMAL_FORMAT.format(p1.y)).write(" 0");
-                            writer.write(' ').write(p2.x).write(' ').write(DECIMAL_FORMAT.format(p2.y)).write(" 0");
+                            writer.write(' ').write(DECIMAL_FORMAT.format(p1.x)).write(' ').write(DECIMAL_FORMAT.format(p1.y)).write(" 0");
+                            writer.write(' ').write(DECIMAL_FORMAT.format(p2.x)).write(' ').write(DECIMAL_FORMAT.format(p2.y)).write(" 0");
                             writer.write(" 0 0 0");
                             writer.write(")");
                         }
