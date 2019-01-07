@@ -27,6 +27,7 @@ import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.JniInchiException;
 import net.sf.jniinchi.JniInchiInput;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -91,7 +92,14 @@ public class JniInChIInputAdapter extends JniInchiInput {
                     sbOptions.append(" ");
                 }
             } else if (isTimeoutOptions(op)) {
-                sbOptions.append(FLAG_CHAR).append(op);
+                if (op.contains(".") || op.contains(",")) { // only reformat if we actually have a decimal
+                    // because the JNI-InChI library is expecting an platform number, format it as such
+	                Double time = Double.parseDouble(op.substring(1));
+	                DecimalFormat format = new DecimalFormat("#.##");
+	                sbOptions.append(FLAG_CHAR).append('W').append(format.format(time));
+                } else {
+                    sbOptions.append(FLAG_CHAR).append(op);
+                }
                 hasUserSpecifiedTimeout = true;
                 if (tok.hasMoreTokens()) {
                     sbOptions.append(" ");
