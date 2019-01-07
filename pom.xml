@@ -595,7 +595,7 @@
                     <tagletArtifact>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.2.5</version>
+                        <version>1.0.2.6</version>
                     </tagletArtifact>
                     <failOnError>false</failOnError>
                     <doctitle>Chemistry Development Kit ${project.version} API</doctitle>

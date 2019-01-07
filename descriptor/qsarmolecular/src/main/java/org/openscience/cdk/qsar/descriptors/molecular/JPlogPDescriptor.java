@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * A logP model donated by Lhasa Limited. It is based on an atom contribution
- * model. See Journal of Cheminformatics 2018 10:61 https://doi.org/10.1186/s13321-018-0316-5
+ * model. See {@cdk.cite Plante2018}.
  *  
  * @author Jeffrey Plante
  * @cdk.created 2018-12-15
