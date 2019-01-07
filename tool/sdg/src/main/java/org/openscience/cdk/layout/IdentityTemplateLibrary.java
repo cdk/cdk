@@ -85,7 +85,7 @@ import static java.util.Map.Entry;
  */
 final class IdentityTemplateLibrary {
 
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##", DecimalFormatSymbols.getInstance(Locale.US));
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##", DecimalFormatSymbols.getInstance(Locale.ROOT));
 
     private final Multimap<String, Point2d[]> templateMap = LinkedListMultimap.create();
 

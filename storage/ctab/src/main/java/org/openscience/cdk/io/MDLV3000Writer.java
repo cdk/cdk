@@ -87,7 +87,7 @@ import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
     public static final  SimpleDateFormat HEADER_DATE_FORMAT = new SimpleDateFormat("MMddyyHHmm");
-    public static final  NumberFormat     DECIMAL_FORMAT     = new DecimalFormat("#.####", DecimalFormatSymbols.getInstance(Locale.US));
+    public static final  NumberFormat     DECIMAL_FORMAT     = new DecimalFormat("#.####", DecimalFormatSymbols.getInstance(Locale.ROOT));
     private static final Pattern          R_GRP_NUM          = Pattern.compile("R(\\d+)");
     private V30LineWriter writer;
 

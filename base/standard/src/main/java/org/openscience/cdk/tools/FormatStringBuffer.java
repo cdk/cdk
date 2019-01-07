@@ -335,9 +335,9 @@ public class FormatStringBuffer {
 
         NumberFormat nf;
         if ((fmt.flags & SCI) > 0) {
-            nf = new DecimalFormat("0.#E00", DecimalFormatSymbols.getInstance(Locale.US));
+            nf = new DecimalFormat("0.#E00", DecimalFormatSymbols.getInstance(Locale.ROOT));
         } else {
-            nf = NumberFormat.getInstance(Locale.US);
+            nf = NumberFormat.getInstance(Locale.ROOT);
         }
         nf.setGroupingUsed((fmt.flags & GROUPING) != 0);
         if (fmt.precision != -1) {

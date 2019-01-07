@@ -188,7 +188,7 @@ public class CxSmilesGenerator {
         // 2D/3D Coordinates
         if (SmiFlavor.isSet(opts, SmiFlavor.CxCoordinates) &&
             state.atomCoords != null && !state.atomCoords.isEmpty()) {
-            DecimalFormat fmt = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.US));
+            DecimalFormat fmt = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.ROOT));
             if (sb.length() > 2) sb.append(',');
             sb.append('(');
             for (int i = 0; i < ordering.length; i++) {
