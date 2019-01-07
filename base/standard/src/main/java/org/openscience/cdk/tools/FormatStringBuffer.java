@@ -36,7 +36,9 @@ package org.openscience.cdk.tools;
 
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * A class for formatting output similar to the C <tt>printf</tt> command.
@@ -333,9 +335,9 @@ public class FormatStringBuffer {
 
         NumberFormat nf;
         if ((fmt.flags & SCI) > 0) {
-            nf = new DecimalFormat("0.#E00");
+            nf = new DecimalFormat("0.#E00", DecimalFormatSymbols.getInstance(Locale.ROOT));
         } else {
-            nf = NumberFormat.getInstance();
+            nf = NumberFormat.getInstance(Locale.ROOT);
         }
         nf.setGroupingUsed((fmt.flags & GROUPING) != 0);
         if (fmt.precision != -1) {

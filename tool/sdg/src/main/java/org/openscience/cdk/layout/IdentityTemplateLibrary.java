@@ -45,11 +45,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static java.util.AbstractMap.SimpleEntry;
@@ -83,7 +85,7 @@ import static java.util.Map.Entry;
  */
 final class IdentityTemplateLibrary {
 
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##");
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##", DecimalFormatSymbols.getInstance(Locale.ROOT));
 
     private final Multimap<String, Point2d[]> templateMap = LinkedListMultimap.create();
 

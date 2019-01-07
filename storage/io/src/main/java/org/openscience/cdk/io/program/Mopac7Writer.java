@@ -90,7 +90,7 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
      * @param  out {@link Writer} to which the output is written
      */
     public Mopac7Writer(Writer out) throws IOException {
-        numberFormat = NumberFormat.getInstance(Locale.US);
+        numberFormat = NumberFormat.getInstance(Locale.ROOT);
         numberFormat.setMaximumFractionDigits(4);
         writer = new BufferedWriter(out);
         initIOSettings();

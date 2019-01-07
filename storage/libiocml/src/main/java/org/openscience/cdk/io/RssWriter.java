@@ -185,7 +185,7 @@ public class RssWriter extends DefaultChemObjectWriter {
                 }
                 if (datemap.get(chemObject) != null) {
                     Element dateElement = new Element("dc:date", NS_DCELEMENTS);
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT);
                     dateElement.appendChild(new Text(formatter.format((Date) datemap.get(chemObject)) + timezone));
                     itemElement.appendChild(dateElement);
                 }
