@@ -81,7 +81,6 @@ public class PMPReader extends DefaultChemObjectReader {
     /* Keep an index of PMP id -> AtomCountainer id */
     private Map<Integer, Integer> atomids      = new Hashtable<>();
     private Map<Integer, Integer> atomGivenIds = new Hashtable<>();
-    private Map<Integer, Integer> atomZOrders  = new Hashtable<>();
     private Map<Integer, Integer> bondids      = new Hashtable<>();
     private Map<Integer, Integer> bondAtomOnes = new Hashtable<>();
     private Map<Integer, Integer> bondAtomTwos = new Hashtable<>();
@@ -241,8 +240,6 @@ public class PMPReader extends DefaultChemObjectReader {
                             }
                             if (chemObject instanceof IAtom) {
                                 atomids.put(id, modelStructure.getAtomCount());
-                                atomZOrders.put(Integer.valueOf((String) chemObject.getProperty(PMP_ZORDER)),
-                                                id);
                                 atomGivenIds.put(Integer.valueOf((String) chemObject.getProperty(PMP_ID)),
                                                  id);
                                 modelStructure.addAtom((IAtom) chemObject);
