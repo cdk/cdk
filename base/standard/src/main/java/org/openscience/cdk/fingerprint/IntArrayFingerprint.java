@@ -169,6 +169,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
             int[] tmp = new int[trueBits.length - 1];
             System.arraycopy(trueBits, 0, tmp, 0, i);
             System.arraycopy(trueBits, i + 1, tmp, i, trueBits.length - i - 1);
+            trueBits = tmp;
         }
         // bit at index is set to false and shall be set to true
         else if (i < 0 && value) {
@@ -176,9 +177,8 @@ public class IntArrayFingerprint implements IBitFingerprint {
             System.arraycopy(trueBits, 0, tmp, 0, trueBits.length);
             tmp[tmp.length - 1] = index;
             trueBits = tmp;
+            Arrays.sort(trueBits);
         }
-        //rest of possible ops are no-ops
-        Arrays.sort(trueBits);
     }
 
     @Override
@@ -203,7 +203,8 @@ public class IntArrayFingerprint implements IBitFingerprint {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         IntArrayFingerprint other = (IntArrayFingerprint) obj;
-        return Arrays.equals(trueBits, other.trueBits);
+        if (!Arrays.equals(trueBits, other.trueBits)) return false;
+        return true;
     }
 
     @Override
