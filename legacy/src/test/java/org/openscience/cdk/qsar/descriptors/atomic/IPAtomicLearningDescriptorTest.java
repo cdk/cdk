@@ -387,11 +387,9 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
 
         double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
-        Assert.assertNotNull(result);
-
+        Assert.assertFalse(Double.isNaN(result));
         result = ((DoubleResult) descriptor.calculate(mol.getAtom(7), mol).getValue()).doubleValue();
-        Assert.assertNotNull(result);
-
+        Assert.assertFalse(Double.isNaN(result));
     }
 
     //    /**
