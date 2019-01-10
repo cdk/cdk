@@ -86,7 +86,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      */
     private RendererModel                   rendererModel;
 
-    private final Map<Integer, BasicStroke> strokeMap = new HashMap<Integer, BasicStroke>();
+    private final Map<Integer, BasicStroke> strokeMap = new HashMap<>();
 
     /**
      * Returns the current {@link RendererModel}.
@@ -105,8 +105,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     public Map<Integer, BasicStroke> getStrokeMap() {
         return strokeMap;
     }
-
-    private final Map<TextAttribute, Object> map = new Hashtable<TextAttribute, Object>();
 
     private final float                      minStroke;
 
@@ -152,8 +150,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.rendererModel = null;
         this.strokeCache = strokeCache;
         this.minStroke = minStroke;
-
-        map.put(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB);
     }
 
     /**
@@ -402,11 +398,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             chargeString = atomSymbol.formalCharge + "+";
         } else if (atomSymbol.formalCharge == -1) {
             chargeString = "-";
-        } else if (atomSymbol.formalCharge < -1) {
+        } else {
             int absCharge = Math.abs(atomSymbol.formalCharge);
             chargeString = absCharge + "-";
-        } else {
-            return;
         }
 
         int xCoord = (int) bounds.getCenterX();
@@ -507,8 +501,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
             @Override
             public int currentSegment(float[] coords) {
-
-                float[] src = path.elements.get(index).points();
+                double[] src = new double[6];
+                path.elements.get(index).points(src);
                 transform.transform(src, 0, coords, 0, src.length / 2);
                 return type(path.elements.get(index).type());
             }
@@ -672,7 +666,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
         if (rendererModel.hasParameter(UseAntiAliasing.class)) {
-            if ((boolean) rendererModel.getParameter(UseAntiAliasing.class).getValue()) {
+            if (rendererModel.getParameter(UseAntiAliasing.class).getValue()) {
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 // g.setStroke(new BasicStroke((int)rendererModel.getBondWidth()));
             }
