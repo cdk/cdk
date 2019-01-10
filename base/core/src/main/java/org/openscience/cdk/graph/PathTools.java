@@ -476,7 +476,7 @@ public class PathTools {
                     index = tmp;
                 }
             }
-            qList.remove(index);
+            qList.remove((Integer)index);
             if (index == endNumber) break;
 
             // relaxation
