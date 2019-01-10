@@ -150,6 +150,8 @@ public class LoggingTool implements ILoggingTool {
                 // with starting java like "java -Dcdk.debugging=true"
                 if (System.getProperty("cdk.debugging", "false").equals("true")) {
                     log4jLogger.setLevel(Level.DEBUG);
+                } else {
+                    log4jLogger.setLevel(Level.WARN);
                 }
                 if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
                     toSTDOUT = true;
