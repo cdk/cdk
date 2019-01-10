@@ -84,7 +84,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
 
     @Override
     public long size() {
-        return 4294967296l;
+        return 4294967296L;
     }
 
     @Override
@@ -99,7 +99,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
     }
 
     public void and(IntArrayFingerprint fingerprint) {
-        List<Integer> tmp = new ArrayList<Integer>();
+        List<Integer> tmp = new ArrayList<>();
         int i = 0;
         int j = 0;
         while (i < trueBits.length && j < fingerprint.trueBits.length) {
@@ -135,9 +135,9 @@ public class IntArrayFingerprint implements IBitFingerprint {
     }
 
     public void or(IntArrayFingerprint fingerprint) {
-        Set<Integer> tmp = new HashSet<Integer>();
-        for (int i = 0; i < trueBits.length; i++) {
-            tmp.add(trueBits[i]);
+        Set<Integer> tmp = new HashSet<>();
+        for (int trueBit : trueBits) {
+            tmp.add(trueBit);
         }
         for (int i = 0; i < fingerprint.trueBits.length; i++) {
             tmp.add(fingerprint.trueBits[i]);
@@ -203,8 +203,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         IntArrayFingerprint other = (IntArrayFingerprint) obj;
-        if (!Arrays.equals(trueBits, other.trueBits)) return false;
-        return true;
+        return Arrays.equals(trueBits, other.trueBits);
     }
 
     @Override
