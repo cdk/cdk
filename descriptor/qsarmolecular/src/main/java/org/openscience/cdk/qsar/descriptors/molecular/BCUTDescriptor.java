@@ -311,7 +311,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         int counter;
         IAtomContainer molecule;
         try {
-            molecule = (IAtomContainer) container.clone();
+            molecule = container.clone();
         } catch (CloneNotSupportedException e) {
             logger.debug("Error during clone");
             return getDummyDescriptorValue(new CDKException("Error occurred during clone " + e));
@@ -421,9 +421,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval3 = eigenDecomposition.getRealEigenvalues();
 
-        String[] names;
-        String[] suffix = {"w", "c", "p"};
-
         // return only the n highest & lowest eigenvalues
         int lnlow, lnhigh, enlow, enhigh;
         if (nlow > nheavy) {
@@ -471,19 +468,9 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         for (int i = 0; i < enhigh; i++)
             retval.add(Double.NaN);
 
-        names = new String[3 * nhigh + 3 * nlow];
-        counter = 0;
-        for (String aSuffix : suffix) {
-            for (int i = 0; i < nhigh; i++) {
-                names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "l";
-            }
-            for (int i = 0; i < nlow; i++) {
-                names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "h";
-            }
-        }
-
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
-                getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                                   getParameters(), retval,
+                                   getDescriptorNames());
     }
 
     /**
