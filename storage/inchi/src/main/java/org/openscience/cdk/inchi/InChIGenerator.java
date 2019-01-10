@@ -270,18 +270,14 @@ public class InChIGenerator {
         }
 
         // Process bonds
-        Map<IBond, JniInchiBond> bondMap = new HashMap<IBond, JniInchiBond>();
-        Iterator<IBond> bonds = atomContainer.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
-
+        for (IBond bond : atomContainer.bonds()) {
             // Assumes 2 centre bond
             JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getBegin());
             JniInchiAtom at1 = (JniInchiAtom) atomMap.get(bond.getEnd());
 
             // Get bond order
             INCHI_BOND_TYPE order;
-            IBond.Order bo = bond.getOrder();
+            Order           bo = bond.getOrder();
             if (!ignore && bond.getFlag(CDKConstants.ISAROMATIC)) {
                 order = INCHI_BOND_TYPE.ALTERN;
             } else if (bo == Order.SINGLE) {
@@ -296,7 +292,6 @@ public class InChIGenerator {
 
             // Create InChI bond
             JniInchiBond ibond = new JniInchiBond(at0, at1, order);
-            bondMap.put(bond, ibond);
             input.addBond(ibond);
 
             // Check for bond stereo definitions
