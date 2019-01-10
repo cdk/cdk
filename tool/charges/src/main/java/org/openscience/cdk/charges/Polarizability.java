@@ -164,11 +164,7 @@ public class Polarizability {
         } else {
             acH = atomContainer;
         }
-
-        List<IAtom> startAtom = new ArrayList<>(1);
-        startAtom.add(0, atom);
         double bond;
-
         polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
         for (int i = 0; i < acH.getAtomCount(); i++) {
             if (!acH.getAtom(i).equals(atom)) {
