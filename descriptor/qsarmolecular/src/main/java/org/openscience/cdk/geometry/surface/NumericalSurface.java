@@ -31,6 +31,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.Iterator;
+import org.openscience.cdk.geometry.surface.Point_Type;
 
 /**
  * A class representing the solvent accessible surface area surface of a molecule.
@@ -165,7 +166,7 @@ public class NumericalSurface {
         logger.info("Obtained points, areas and volumes");
 
     }
-
+	
     /**
      * Get an array of all the points on the molecular surface.
      *
@@ -188,6 +189,29 @@ public class NumericalSurface {
             }
         }
         return (ret);
+    }
+    
+    public ArrayList<Point_Type> getAllPointswithAtomType() {
+    	int npt = 0;
+        for (int i = 0; i < this.surfPoints.length; i++)
+            npt += this.surfPoints[i].size();
+        //Point3d[] ret = new Point3d[npt];
+        ArrayList<Point_Type> point_types = new ArrayList<Point_Type>(npt);
+        //ArrayList<Integer> atomtype = new ArrayList<Integer>(npt);
+        int j = 0;
+        for (int i = 0; i < this.surfPoints.length; i++) {
+            ArrayList arl = this.surfPoints[i];
+            //atomtype.add(this.atoms[i].getAtomicNumber());
+            for (Iterator it = arl.iterator(); it.hasNext();) {
+                //ret[j] = (Point3d) it.next();
+                Point_Type point_type = new Point_Type();
+                point_type.setAtom(this.atoms[i].getAtomicNumber());
+                point_type.setCoord((Point3d) it.next());
+                point_types.add(point_type);
+                j++;
+            }
+        }
+        return (point_types);
     }
 
     /**
