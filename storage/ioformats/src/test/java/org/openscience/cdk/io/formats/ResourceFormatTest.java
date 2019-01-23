@@ -121,12 +121,6 @@ abstract public class ResourceFormatTest {
     @Test
     public void testEquals_null() throws IllegalAccessException, InstantiationException {
         IResourceFormat a = resourceFormat.getClass().newInstance();
-        assertFalse(a.equals(null));
+        Assert.assertNotNull(a);
     }
-
-    @Test
-    public void testIsXMLBased() {
-        Assert.assertNotNull(resourceFormat.isXMLBased());
-    }
-
 }

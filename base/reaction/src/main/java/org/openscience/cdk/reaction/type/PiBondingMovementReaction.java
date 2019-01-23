@@ -133,7 +133,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
         //		}
 
         AllRingsFinder arf = new AllRingsFinder();
-        IRingSet ringSet = arf.findAllRings((IAtomContainer) reactant);
+        IRingSet ringSet = arf.findAllRings(reactant);
         for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
             IRing ring = (IRing) ringSet.getAtomContainer(ir);
 
@@ -141,9 +141,8 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
             int nrAtoms = ring.getAtomCount();
             if (nrAtoms % 2 == 0) {
                 int nrSingleBonds = 0;
-                Iterator<IBond> bondrs = ring.bonds().iterator();
-                while (bondrs.hasNext()) {
-                    if (bondrs.next().getOrder() == IBond.Order.SINGLE) nrSingleBonds++;
+                for (IBond iBond : ring.bonds()) {
+                    if (iBond.getOrder() == IBond.Order.SINGLE) nrSingleBonds++;
                 }
                 //if exactly half (nrAtoms/2==nrSingleBonds)
                 if (nrSingleBonds != 0 && nrAtoms / 2 == nrSingleBonds) {
@@ -164,14 +163,12 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 
                     IAtomContainer reactantCloned;
                     try {
-                        reactantCloned = (IAtomContainer) reactant.clone();
+                        reactantCloned = reactant.clone();
                     } catch (CloneNotSupportedException e) {
                         throw new CDKException("Could not clone IAtomContainer!", e);
                     }
 
-                    Iterator<IBond> bondis = ring.bonds().iterator();
-                    while (bondis.hasNext()) {
-                        IBond bondi = bondis.next();
+                    for (IBond bondi : ring.bonds()) {
                         int bondiP = reactant.indexOf(bondi);
                         if (bondi.getOrder() == IBond.Order.SINGLE)
                             BondManipulator.increaseBondOrder(reactantCloned.getBond(bondiP));
@@ -180,7 +177,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 
                     }
 
-                    reaction.addProduct((IAtomContainer) reactantCloned);
+                    reaction.addProduct(reactantCloned);
                     setOfReactions.addReaction(reaction);
                 }
 
@@ -198,7 +195,6 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
      * FIXME REACT: It could be possible that a ring is a super ring of others small rings
      *
      * @param reactant The molecule to set the activity
-     * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
         AllRingsFinder arf = new AllRingsFinder();
@@ -209,15 +205,13 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
             int nrAtoms = ring.getAtomCount();
             if (nrAtoms % 2 == 0) {
                 int nrSingleBonds = 0;
-                Iterator<IBond> bondrs = ring.bonds().iterator();
-                while (bondrs.hasNext()) {
-                    if (bondrs.next().getOrder() == IBond.Order.SINGLE) nrSingleBonds++;
+                for (IBond iBond : ring.bonds()) {
+                    if (iBond.getOrder() == IBond.Order.SINGLE) nrSingleBonds++;
                 }
                 //if exactly half (nrAtoms/2==nrSingleBonds)
                 if (nrSingleBonds != 0 && nrAtoms / 2 == nrSingleBonds) {
-                    Iterator<IBond> bondfs = ring.bonds().iterator();
-                    while (bondfs.hasNext())
-                        bondfs.next().setFlag(CDKConstants.REACTIVE_CENTER, true);
+                    for (IBond iBond : ring.bonds())
+                        iBond.setFlag(CDKConstants.REACTIVE_CENTER, true);
 
                 }
             }

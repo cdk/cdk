@@ -790,6 +790,7 @@ public class AtomContainerManipulator {
 
         for (final IBond bond : org.bonds()) {
             if (remaining > 0 && (hydrogens.contains(bond.getBegin()) || hydrogens.contains(bond.getEnd()))) {
+                bondsToHydrogens.add(bond);
                 remaining--;
                 continue;
             }

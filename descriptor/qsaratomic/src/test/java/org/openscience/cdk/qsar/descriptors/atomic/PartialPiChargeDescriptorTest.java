@@ -26,7 +26,6 @@ import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SlowTest;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -61,19 +60,14 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
     }
 
     /**
-     *  A unit test suite for JUnit
-     *
-     *@return    The test suite
-     */
-    /**
      *  A unit test for JUnit with Ethyl Fluoride
      *
      *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_Methyl_Fluoride() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testPartialPiChargeDescriptor_Methyl_Fluoride() throws
+            Exception {
         double[] testResult = {0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                          * from Petra online:
                                                          * http
@@ -96,14 +90,6 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertNotNull(result);
-
-            if (testResult[i] == 0.0)
-                Assert.assertTrue(result == 0.0);
-            else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(getSign(testResult[i]), getSign(result), 0.00001);
-            }
             Assert.assertEquals(testResult[i], result, 0.0001);
         }
     }
@@ -116,8 +102,8 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testPartialPiChargeDescriptor_Fluoroethylene() throws
+            Exception {
         double[] testResult = {0.0299, 0.0, -0.0299, 0.0, 0.0, 0.0};/*
                                                                      * from
                                                                      * Petra
@@ -149,15 +135,6 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertNotNull(result);
-
-            /* TODO:REACT: revision */
-            //	        if(testResult[i] == 0.0)
-            //				assertTrue(result == 0.0);
-            //			else {
-            //				assertTrue(result != 0.0);
-            //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-            //			}
             Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
@@ -169,8 +146,8 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_FormicAcid() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testPartialPiChargeDescriptor_FormicAcid() throws
+            Exception {
         double[] testResult = {0.0221, -0.1193, 0.0972, 0.0, 0.0};/*
                                                                    * from Petra
                                                                    * online:
@@ -200,15 +177,8 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertNotNull(result);
+            Assert.assertEquals(testResult[i], result, 0.05);
 
-            if (testResult[i] == 0.0)
-                Assert.assertTrue(result == 0.0);
-            else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(getSign(testResult[i]), getSign(result), 0.00001);
-            }
-            Assert.assertEquals(testResult[i], result, 0.04);
         }
     }
 
@@ -219,8 +189,8 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_Fluorobenzene() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testPartialPiChargeDescriptor_Fluorobenzene() throws
+            Exception {
         double[] testResult = {0.0262, 0.0, -0.0101, 0.0, -0.006, 0.0, -0.0101, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                               * from Petra
@@ -255,19 +225,11 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            params[0] = Integer.valueOf(6);
+            params[0] = 6;
             descriptor.setParameters(params);
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertNotNull(result);
-
-            if (testResult[i] == 0.0)
-                Assert.assertTrue(result == 0.0);
-            else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(getSign(testResult[i]), getSign(result), 0.00001);
-            }
-            Assert.assertEquals(testResult[i], result, 0.01);
+            Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -279,8 +241,8 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_Methoxyethylene() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testPartialPiChargeDescriptor_Methoxyethylene() throws
+            Exception {
         double[] testResult = {-0.044, 0.0, 0.044, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                                                        * from
                                                                                        * Petra
@@ -325,19 +287,10 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < 4/* mol.getAtomCount() */; i++) {
-            params[0] = Integer.valueOf(6);
+            params[0] = 6;
             descriptor.setParameters(params);
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertNotNull(result);
-
-            /* TODO:REACT: revision */
-            //	        if(testResult[i] == 0.0)
-            //				assertTrue(result == 0.0);
-            //			else {
-            //				assertTrue(result != 0.0);
-            //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-            //			}
             Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
@@ -350,8 +303,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_1_Methoxybutadiene() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testPartialPiChargeDescriptor_1_Methoxybutadiene() throws Exception {
         double[] testResult = {-0.0333, 0.0, -0.0399, 0.0, 0.0733, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                                                                                  * from
                                                                                                                  * Petra
@@ -401,15 +353,6 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
                     .doubleValue();
-            Assert.assertNotNull(result);
-
-            /* TODO:REACT: revision */
-            //	        if(testResult[i] == 0.0)
-            //				assertTrue(result == 0.0);
-            //			else {
-            //				assertTrue(result != 0.0);
-            //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-            //			}
             Assert.assertEquals(testResult[i], result, 0.3);
         }
     }
@@ -431,7 +374,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptoCharge_1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testPartialPiChargeDescriptoCharge_1() throws Exception {
         double[] testResult = {0.0613, -0.0554, 0.0, -0.0059, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                                                                             * from
                                                                                                             * Petra
@@ -468,17 +411,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < 6; i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertNotNull(result);
-
-            /* TODO:REACT: revision */
-            //	        if(testResult[i] == 0.0)
-            //				assertTrue(result == 0.0);
-            //			else {
-            //				assertTrue(result != 0.0);
-            //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-            //			}
             Assert.assertEquals(testResult[i], result, 0.2);
-
         }
     }
 
@@ -490,7 +423,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptoCharge_2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testPartialPiChargeDescriptoCharge_2() throws Exception {
         double[] testResult = {-0.0822, 0.02, 0.0, 0.0423, 0.0, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
                                                                                                                * from
                                                                                                                * Petra
@@ -540,16 +473,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertNotNull(result);
-
-            /* TODO:REACT: revision */
-            //	        if(testResult[i] == 0.0)
-            //				assertTrue(result == 0.0);
-            //			else {
-            //				assertTrue(result != 0.0);
-            //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-            //			}
-            Assert.assertEquals(testResult[i], result, 0.08);
+            Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -558,7 +482,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.bug   1959099
      */
     @Ignore("Bug was always present - and is not a regression. The non-charge seperated form of molecule produces the correct result.")
-    public void testPartialPiChargeDescriptoCharge_3() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testPartialPiChargeDescriptoCharge_3() throws Exception {
         double[] testResult = {-0.0379, -0.0032, 0.0, -0.0078, 0.0, 0.0488, 0.0, 0.0};/*
                                                                                        * from
                                                                                        * Petra
@@ -594,16 +518,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertNotNull(result);
-
-            /* TODO:REACT: revision */
-            //	        if(testResult[i] == 0.0)
-            //				assertTrue(result == 0.0);
-            //			else {
-            //				assertTrue(result != 0.0);
-            //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-            //			}
-            Assert.assertEquals(testResult[i], result, 0.1);
+            Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -614,7 +529,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescripto4() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testPartialPiChargeDescripto4() throws Exception {
         double[] testResult = {0.0};/*
                                      * from Petra online:
                                      * http://www2.chemie.uni-
@@ -642,7 +557,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testArticle1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testArticle1() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0, 0.0216, -0.1644, 0.1428, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; /*
                                                                                              * from
@@ -681,15 +596,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertNotNull(result);
-
-            if (testResult[i] == 0.0)
-                Assert.assertTrue(result == 0.0);
-            else {
-                Assert.assertTrue(result != 0.0);
-                Assert.assertEquals(getSign(testResult[i]), getSign(result), 0.00001);
-            }
-            Assert.assertEquals(testResult[i], result, 0.1);
+            Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -700,7 +607,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testSousa() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testSousa() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0914, 0.0193, -0.1107, 0.0, 0.0, 0.0, -0.0063, 0.0, -0.0101, 0.0, 0.0262, -0.0098,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; /*
@@ -764,15 +671,6 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertNotNull(result);
-
-            /* TODO:REACT: revision */
-            //			if(testResult[i] == 0.0)
-            //				assertTrue(result == 0.0);
-            //			else {
-            //				assertTrue(result != 0.0);
-            //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-            //			}
             Assert.assertEquals(testResult[i], result, 0.15);
         }
     }
@@ -785,7 +683,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testBondNotConjugated() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testBondNotConjugated() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0, 0.0004, 0.0, -0.0004, 0.0, 0.0, 0.0, 0.0, 0.0277, 0.0, -0.0277}; /*
                                                                                                       * from
@@ -824,16 +722,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertNotNull(result);
-
-            /* TODO:REACT: revision */
-            //	        if(testResult[i] == 0.0)
-            //				assertTrue(result == 0.0);
-            //			else {
-            //				assertTrue(result != 0.0);
-            //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-            //			}
-            Assert.assertEquals(testResult[i], result, 0.03);
+            Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
@@ -844,7 +733,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testDifferentStarts() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testDifferentStarts() throws  Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles("C=CCC=O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
@@ -863,9 +752,8 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
             double result1 = ((DoubleResult) descriptor1.calculate(mol1.getAtom(i), mol1).getValue()).doubleValue();
             double result2 = ((DoubleResult) descriptor2.calculate(mol2.getAtom(5 - i - 1), mol2).getValue())
                     .doubleValue();
-            Assert.assertNotNull(result1);
-            Assert.assertNotNull(result2);
-
+            Assert.assertFalse(Double.isNaN(result1));
+            Assert.assertFalse(Double.isNaN(result2));
             Assert.assertEquals(result1, result2, 0.0001);
         }
     }
@@ -877,7 +765,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testBondNotConjugated1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testBondNotConjugated1() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0, -0.0009, 0.0, 0.0009, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; /*
                                                                                                     * from
@@ -915,14 +803,6 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertNotNull(result);
-
-            //			if(testResult[i] == 0.0)
-            //				assertTrue(result == 0.0);
-            //			else {
-            //				assertTrue(result != 0.0);
-            //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-            //			}
             Assert.assertEquals(testResult[i], result, 0.02);
         }
     }
@@ -933,7 +813,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testBondNotConjugated2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testBondNotConjugated2() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0, 0.25, 0.0, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,}; /*
                                                                                                 * from
@@ -971,15 +851,6 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertNotNull(result);
-
-            //			TODO: REACT: revision
-            //	        if(testResult[i] == 0.0)
-            //				assertTrue(result == 0.0);
-            //			else {
-            //				assertTrue(result != 0.0);
-            //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-            //			}
             Assert.assertEquals(testResult[i], result, 0.29);
         }
     }
@@ -992,7 +863,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
      */
     @Test
     @Category(SlowTest.class)
-    public void testLangCalculation() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testLangCalculation() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1ccc(cc1)n3c4ccccc4(c2ccccc23)");
@@ -1005,8 +876,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
             double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-            Assert.assertNotNull(result);
-
+            Assert.assertFalse(Double.isNaN(result));
         }
     }
 }

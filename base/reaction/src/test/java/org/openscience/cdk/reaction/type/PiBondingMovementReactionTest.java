@@ -67,7 +67,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
      *  The JUnit setup method
      */
     @Test
-    public void testPiBondingMovementReaction() throws Exception {
+    public void testPiBondingMovementReaction() {
         IReactionProcess type = new PiBondingMovementReaction();
         Assert.assertNotNull(type);
     }
@@ -78,8 +78,6 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
      * Automatic search of the center active.
      *
      * InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
-     *
-     * @return    The test suite
      */
     @Test
     @Override
@@ -108,7 +106,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         /* initiate */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -131,8 +129,6 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
      * Automatic search of the center active.
      *
      * InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
-     *
-     * @return    The test suite
      */
     @Test
     public void testAutomaticSearchCentreActiveExample1() throws Exception {
@@ -164,10 +160,11 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         /* initiate */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
+        type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         Assert.assertEquals(1, setOfReactions.getReactionCount());
@@ -215,8 +212,6 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
      * Automatic search of the center active.
      *
      * InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
-     *
-     * @return    The test suite
      */
     @Test
     public void testDoubleRingConjugated() throws Exception {
@@ -225,10 +220,11 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         IAtomContainerSet setOfReactants = getExampleReactants();
 
         /* initiate */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
+        type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         Assert.assertEquals(2, setOfReactions.getReactionCount());
@@ -286,7 +282,6 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
      *
      * InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
      *
-     * @return    The test suite
      */
     @Test
     public void testDoubleRingConjugated2() throws Exception {
@@ -305,7 +300,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         molecule.getBond(11).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
         /* initiate */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -422,7 +417,6 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
      * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
      *
      * @param molecule          The IAtomContainer to analyze
-     * @throws CDKException
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
 
