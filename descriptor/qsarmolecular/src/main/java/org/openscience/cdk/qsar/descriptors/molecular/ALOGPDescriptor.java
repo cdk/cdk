@@ -38,7 +38,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.AtomicProperties;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -1935,15 +1934,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer container;
         try {
-            container = (IAtomContainer) atomContainer.clone();
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-            CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-            hAdder.addImplicitHydrogens(container);
+            container = atomContainer.clone();
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(new CDKException("Error during clone"));
-        } catch (CDKException e) {
-            return getDummyDescriptorValue(new CDKException("Error during atom typing" + e.getMessage()));
         }
 
         IRingSet rs;
