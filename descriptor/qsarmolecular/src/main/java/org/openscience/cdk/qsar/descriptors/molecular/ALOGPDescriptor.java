@@ -995,44 +995,36 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
     }
 
-    private int getHAtomType(IAtom ai, java.util.List connectedAtoms) {
+    private int getHAtomType(IAtom ai, List connectedAtoms) {
         //ai is the atom connected to a H atoms.
         //ai environment determines what is the H atom type
         //This procedure is applied only for carbons
         //i.e. H atom type 50 is never returned
 
-        java.util.List ca;
+        List<IAtom> ca;
         if (connectedAtoms == null)
             ca = atomContainer.getConnectedAtomsList(ai);
         else
             ca = connectedAtoms;
 
         // first check for alpha carbon:
+        // -C=X, -C#X and -C:X
         if (ai.getSymbol().equals("C") && !ai.getFlag(CDKConstants.ISAROMATIC)) {
             for (int j = 0; j <= ca.size() - 1; j++) {
                 if (atomContainer.getBond(ai, ((IAtom) ca.get(j))).getOrder() == IBond.Order.SINGLE
                         && ((IAtom) ca.get(j)).getSymbol().equals("C")) { // single bonded
-                    java.util.List ca2 = atomContainer.getConnectedAtomsList((IAtom) ca.get(j));
-
-                    for (int k = 0; k <= ca2.size() - 1; k++) {
-                        IAtom ca2k = (IAtom) ca2.get(k);
-                        if (!ca2k.getSymbol().equals("C")) {
-                            if (atomContainer.getBond(((IAtom) ca.get(j)), ca2k).getOrder() != IBond.Order.SINGLE)
+                    IAtom aCarbon = ca.get(j);
+                    for (IBond bond : aCarbon.bonds()) {
+                        IAtom nbor = bond.getOther(aCarbon);
+                        if (nbor.getAtomicNumber() != 6)
+                            if (bond.isAromatic() || bond.getOrder() != IBond.Order.SINGLE)
                                 return 51;
-
-                            if (((IAtom) ca.get(j)).getFlag(CDKConstants.ISAROMATIC)
-                                    && ca2k.getFlag(CDKConstants.ISAROMATIC)) {
-                                if (inSameAromaticRing(atomContainer, ((IAtom) ca.get(j)), ca2k, rs)) {
-                                    return 51;
-                                }
-                            }
-                        } // end !ca2[k].getSymbol().equals("C"))
-                    } // end k loop
+                    }
                 } // end if (atomContainer.getBond(ai, ((IAtom)ca.get(j))).getOrder() == IBond.Order.SINGLE) {
             }// end j loop
         } // end if(ai.getSymbol().equals("C") && !ai.getFlag(CDKConstants.ISAROMATIC))
 
-        java.util.List bonds = atomContainer.getConnectedBondsList(ai);
+        List bonds = atomContainer.getConnectedBondsList(ai);
         int doublebondcount = 0;
         int triplebondcount = 0;
         String hybrid = "";
