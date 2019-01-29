@@ -1944,6 +1944,17 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         EStateAtomTypeMatcher eStateMatcher = new EStateAtomTypeMatcher();
         eStateMatcher.setRingSet(rs);
 
+        for (IAtomContainer ring : rs.atomContainers()) {
+            boolean arom = true;
+            for (IBond bond : ring.bonds()) {
+                if (!bond.isAromatic()) {
+                    arom = false;
+                    break;
+                }
+            }
+            ring.setFlag(CDKConstants.ISAROMATIC, arom);
+        }
+
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtomType atomType = eStateMatcher.findMatchingAtomType(container, container.getAtom(i));
             if (atomType == null) {
