@@ -1303,8 +1303,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         } else if (fragment[i].equals("SaaNH") || fragment[i].equals("SsaaN")) { // R...NH...R
             frags[73]++;
             alogpfrag[i] = 73;
-            if (fragment[i].equals("SaaNH"))
-                frags[htype]++;
         } else if (fragment[i].equals("SssNH")) {
             if (nAr == 2 && nAl == 0) { // Ar2NH
                 frags[73]++;
@@ -1317,7 +1315,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 frags[67]++;
                 alogpfrag[i] = 67;
             }
-            frags[htype]++;
         } else if (fragment[i].equals("SsssN")) {
             if ((nAr == 3 && nAl == 0) || (nAr == 2 && nAl == 1)) { // Ar3N &
                 // Ar2NAl
@@ -1370,8 +1367,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         } else if (fragment[i].equals("SdNH") || fragment[i].equals("SdsN")) {
             // test for RO-NO
             if (fragment[i].equals("SdsN")) {
-                IAtom ca0 = (IAtom) nbors.get(0);
-                IAtom ca1 = (IAtom) nbors.get(1);
+                IAtom ca0 = nbors.get(0);
+                IAtom ca1 = nbors.get(1);
                 if (ca0.getSymbol().equals("O") && ca1.getSymbol().equals("O")) {
                     frags[76]++;
                     alogpfrag[i] = 76;
@@ -1402,13 +1399,12 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 if (flag1 && flag2) { // X-N=X or Ar-N=X
                     frags[78]++;
                     alogpfrag[i] = 78;
+                    return;
                 } else {
                     //logger.debug("missing group: R-N=X");
                 }
             }
 
-            if (fragment[i].equals("SdNH"))
-                frags[50]++;
         } else if (fragment[i].indexOf('p') > -1) {
             frags[79]++;
             alogpfrag[i] = 79;
