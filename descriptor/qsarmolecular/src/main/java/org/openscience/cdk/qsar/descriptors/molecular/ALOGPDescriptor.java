@@ -1033,6 +1033,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         // first check for alpha carbon:
         // -C=X, -C#X and -C:X
         if (ai.getSymbol().equals("C") && !ai.getFlag(CDKConstants.ISAROMATIC)) {
+            boolean noXfirstShell = true;
+            boolean xInSecondShell = false;
             for (int j = 0; j <= ca.size() - 1; j++) {
                 if (atomContainer.getBond(ai, ((IAtom) ca.get(j))).getOrder() == IBond.Order.SINGLE
                         && ((IAtom) ca.get(j)).getSymbol().equals("C")) { // single bonded
@@ -1042,8 +1044,13 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                         if (isHetero(nbor) && (bond.isAromatic() || bond.getOrder() != IBond.Order.SINGLE))
                             xInSecondShell = true;
                     }
-                } // end if (atomContainer.getBond(ai, ((IAtom)ca.get(j))).getOrder() == IBond.Order.SINGLE) {
-            }// end j loop
+                } else {
+                    if (isHetero(ca.get(j)))
+                        noXfirstShell = false;
+                }
+            }
+            if (noXfirstShell && xInSecondShell)
+                return 51;
         } // end if(ai.getSymbol().equals("C") && !ai.getFlag(CDKConstants.ISAROMATIC))
 
         List bonds = atomContainer.getConnectedBondsList(ai);
