@@ -444,6 +444,23 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
     }
 
+    private static boolean isHetero(IAtom atom) {
+        switch (atom.getAtomicNumber()) {
+            case 7: // N
+            case 8: // O
+            case 9: // F
+            case 15: // P
+            case 16: // S
+            case 17: // Cl
+            case 34: // Se
+            case 35: // Br
+            case 53: // I
+                return true;
+            default:
+                return false;
+        }
+    }
+
     private void calcGroup001_005(int i) {
         // C in CH3R
         if (fragment[i].equals("SsCH3")) {
@@ -1016,9 +1033,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     IAtom aCarbon = ca.get(j);
                     for (IBond bond : aCarbon.bonds()) {
                         IAtom nbor = bond.getOther(aCarbon);
-                        if (nbor.getAtomicNumber() != 6)
-                            if (bond.isAromatic() || bond.getOrder() != IBond.Order.SINGLE)
-                                return 51;
+                        if (isHetero(nbor) && (bond.isAromatic() || bond.getOrder() != IBond.Order.SINGLE))
+                            xInSecondShell = true;
                     }
                 } // end if (atomContainer.getBond(ai, ((IAtom)ca.get(j))).getOrder() == IBond.Order.SINGLE) {
             }// end j loop
