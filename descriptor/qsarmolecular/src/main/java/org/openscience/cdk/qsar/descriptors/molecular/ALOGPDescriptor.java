@@ -1455,16 +1455,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         for (int j = 0; j <= ca2.size() - 1; j++) {
             IAtom ca2j = (IAtom) ca2.get(j);
-
-            // // F,O,Cl,Br,N
-
-            // if (s.equals("F") || s.equals("O") || s.equals("Cl")
-            // || s.equals("Br") || s.equals("N") || s.equals("S"))
-
-            if (ap.getNormalizedElectronegativity(ca2j.getSymbol()) > 1) {
-                oxNum += BondManipulator.destroyBondOrder(atomContainer.getBond(ca0, ca2j).getOrder());
-            }
-
+            if (isHetero(ca2j))
+                oxNum += atomContainer.getBond(ca0, ca2j).getOrder().numeric();
         }
 
         if (hybrid.equals("sp3") && oxNum == 1) {
