@@ -1222,11 +1222,13 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         IAtom ai = atomContainer.getAtom(i);
         if (!ai.getSymbol().equals("N")) return;
         List<IAtom> nbors = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
-        int htype = 50; //H atom attached to a hetero atom
 
+        int htype = 50; //H atom attached to a hetero atom
         for (IAtom nbor : nbors)
-            if (nbor.getAtomicNumber() == 1)
+            if (nbor.getAtomicNumber() == 1) {
                 alogpfrag[nbor.getIndex()] = htype;
+                frags[htype]++;
+            }
 
         for (int j = 0; j <= nbors.size() - 1; j++) {
             if (((IAtom) nbors.get(j)).getSymbol().equals("H")) continue;
