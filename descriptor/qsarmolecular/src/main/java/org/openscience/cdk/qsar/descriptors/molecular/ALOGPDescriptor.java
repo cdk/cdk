@@ -705,15 +705,21 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (haveCdX) {
             if (aromaticCount >= 1) { // Ar-C(=X)-R
-                // TODO: add code to check if have R or X for nonaromatic
-                // attachment to C?
-                // if we do this check we would have missing fragment for
-                // Ar-C(=X)-X
-                // TODO: which fragment to use if we have Ar-C(=X)-Ar? Currently
-                // this frag is used
+                for (IBond bond : ai.bonds()) {
+                    if (bond.getOrder() != IBond.Order.SINGLE)
+                        continue;
+                    IAtom nbor = bond.getOther(ai);
+                    if (!nbor.isAromatic()) {
+                        if (isHetero(nbor)) {
+                            frags[40]++;
+                            alogpfrag[i] = 40;
+                        } else {
+                            frags[39]++;
+                            alogpfrag[i] = 39;
+                        }
+                    }
+                }
 
-                frags[39]++;
-                alogpfrag[i] = 39;
             }
             else if (aromaticCount == 0) {
                 if (rCount == 1 && xCount == 1) {
