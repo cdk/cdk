@@ -524,7 +524,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (fragment[i].equals("SsssCH")) {
 
-            java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+            List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
             int htype = getHAtomType(atomContainer.getAtom(i), ca);
             int carbonCount = 0;
             int heteroCount = 0;
@@ -562,7 +562,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     private void calcGroup004_011_to_014(int i) {
         // C in CR4, CR3X, CX4
         if (fragment[i].equals("SssssC")) {
-            java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+            List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
             int carbonCount = 0;
             int heteroCount = 0;
             // logger.debug("here");
@@ -675,7 +675,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (!fragment[i].equals("SdssC")) return;
 
-        java.util.List ca = atomContainer.getConnectedAtomsList(ai);
+        List ca = atomContainer.getConnectedAtomsList(ai);
 
         int rCount = 0;
         int xCount = 0;
@@ -848,7 +848,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
 
         // check if both hetero atoms have at least one double bond
-        java.util.List bonds = atomContainer.getConnectedBondsList(ca0);
+        List bonds = atomContainer.getConnectedBondsList(ca0);
         boolean haveDouble1 = false;
         for (int k = 0; k <= bonds.size() - 1; k++) {
             if (((IBond) bonds.get(k)).getOrder() == IBond.Order.DOUBLE) {
@@ -904,7 +904,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         if (!fragment[i].equals("SsaaC") && !fragment[i].equals("SaaaC")) return;
 
         IAtom ai = atomContainer.getAtom(i);
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
 
         IAtom[] sameringatoms = new IAtom[2];
         IAtom nonringatom = atomContainer.getBuilder().newInstance(IAtom.class);
@@ -936,7 +936,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
 
         // check if both hetero atoms have at least one double bond
-        java.util.List bonds = atomContainer.getConnectedBondsList(sameringatoms[0]);
+        List bonds = atomContainer.getConnectedBondsList(sameringatoms[0]);
 
         boolean haveDouble1 = false;
 
@@ -1151,7 +1151,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             return;
         }
 
-        java.util.List ca2 = atomContainer.getConnectedAtomsList(ca0);
+        List ca2 = atomContainer.getConnectedAtomsList(ca0);
         for (int j = 0; j <= ca2.size() - 1; j++) {
             if (atomContainer.getBond((IAtom) ca2.get(j), ca0).getOrder() == IBond.Order.DOUBLE) {
                 frags[57]++;
@@ -1164,7 +1164,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     }
 
     private void calcGroup058_61(int i) {
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
 
         // 58: O in =O
         // 61: --O in nitro, N-oxides
@@ -1199,7 +1199,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         if (!fragment[i].equals("SssO") && !fragment[i].equals("SaaO")) return;
 
         // Al-O-Ar, Ar2O
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
         IAtom ca0 = (IAtom) ca.get(0);
         IAtom ca1 = (IAtom) ca.get(1);
 
@@ -1215,7 +1215,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     // O-P(=S)
                     // was considered to count as group 60
 
-                    java.util.List ca2 = atomContainer.getConnectedAtomsList(((IAtom) ca.get(j)));
+                    List ca2 = atomContainer.getConnectedAtomsList(((IAtom) ca.get(j)));
                     for (int k = 0; k <= ca2.size() - 1; k++) {
                         if (atomContainer.getBond(((IAtom) ca.get(j)), (IAtom) ca2.get(k)).getOrder() == IBond.Order.DOUBLE) {
                             if (!((IAtom) ca2.get(k)).getSymbol().equals("C")) {
@@ -1271,7 +1271,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         for (int j = 0; j <= nbors.size() - 1; j++) {
             if (nbors.get(j).getAtomicNumber() == 1)
                 continue;
-            java.util.List ca2 = atomContainer.getConnectedAtomsList((IAtom) nbors.get(j));
+            List ca2 = atomContainer.getConnectedAtomsList((IAtom) nbors.get(j));
             for (int k = 0; k <= ca2.size() - 1; k++) {
                 IAtom ca2k = (IAtom) ca2.get(k);
                 if (atomContainer.indexOf(ca2k) != i) {
@@ -1426,10 +1426,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (!fragment[i].equals("SsF")) return;
 
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
         IAtom ca0 = (IAtom) ca.get(0);
 
-        java.util.List bonds = atomContainer.getConnectedBondsList(ca0);
+        List bonds = atomContainer.getConnectedBondsList(ca0);
 
         int doublebondcount = 0;
         int triplebondcount = 0;
@@ -1456,10 +1456,9 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             hybrid = "sp";
         }
 
-        java.util.List ca2 = atomContainer.getConnectedAtomsList(ca0);
+        List ca2 = atomContainer.getConnectedAtomsList(ca0);
 
         int oxNum = 0;
-
         for (int j = 0; j <= ca2.size() - 1; j++) {
             IAtom ca2j = (IAtom) ca2.get(j);
             if (isHetero(ca2j))
@@ -1490,10 +1489,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (!fragment[i].equals("SsCl")) return;
 
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
         IAtom ca0 = (IAtom) ca.get(0);
 
-        java.util.List bonds = atomContainer.getConnectedBondsList(ca0);
+        List bonds = atomContainer.getConnectedBondsList(ca0);
 
         int doublebondcount = 0;
         int triplebondcount = 0;
@@ -1520,7 +1519,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             hybrid = "sp";
         }
 
-        java.util.List ca2 = atomContainer.getConnectedAtomsList(ca0);
+        List ca2 = atomContainer.getConnectedAtomsList(ca0);
 
         int oxNum = 0;
 
@@ -1561,10 +1560,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (!fragment[i].equals("SsBr")) return;
 
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
         IAtom ca0 = (IAtom) ca.get(0);
 
-        java.util.List bonds = atomContainer.getConnectedBondsList(ca0);
+        List bonds = atomContainer.getConnectedBondsList(ca0);
 
         int doublebondcount = 0;
         int triplebondcount = 0;
@@ -1591,7 +1590,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             hybrid = "sp";
         }
 
-        java.util.List ca2 = atomContainer.getConnectedAtomsList(ca0);
+        List ca2 = atomContainer.getConnectedAtomsList(ca0);
 
         int oxNum = 0;
 
@@ -1633,10 +1632,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (!fragment[i].equals("SsI")) return;
 
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
         IAtom ca0 = (IAtom) ca.get(0);
 
-        java.util.List bonds = atomContainer.getConnectedBondsList(ca0);
+        List bonds = atomContainer.getConnectedBondsList(ca0);
 
         int doublebondcount = 0;
         int triplebondcount = 0;
@@ -1663,7 +1662,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             hybrid = "sp";
         }
 
-        java.util.List ca2 = atomContainer.getConnectedAtomsList(ca0);
+        List ca2 = atomContainer.getConnectedAtomsList(ca0);
 
         int oxNum = 0;
 
@@ -1780,7 +1779,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         // (it doesn't check which atoms are singly bonded to S
         if (!fragment[i].equals("SdssS")) return;
 
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
         IAtom ai = atomContainer.getAtom(i);
         int sdOCount = 0;
         int ssCCount = 0;
@@ -1805,7 +1804,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     private void calcGroup110(int i) {
         if (!fragment[i].equals("SddssS")) return;
 
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
         IAtom ai = atomContainer.getAtom(i);
         int sdOCount = 0;
         int ssCCount = 0;
@@ -1839,7 +1838,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         // S in R=S
 
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
         IAtom ai = atomContainer.getAtom(i);
 
         int xCount = 0;
@@ -1880,7 +1879,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     private void calcGroup118_119(int i) {
         if (!fragment[i].equals("SsssP")) return;
 
-        java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
         IAtom ai = atomContainer.getAtom(i);
         int xCount = 0;
         int rCount = 0;
