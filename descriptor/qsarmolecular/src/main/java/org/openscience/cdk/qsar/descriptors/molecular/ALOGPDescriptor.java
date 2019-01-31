@@ -1018,6 +1018,26 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
     }
 
+    private boolean isPyrroleLikeHetero(IAtom atom) {
+        if (!atom.isAromatic())
+            return false;
+        switch (atom.getAtomicNumber()) {
+            case 7:
+            case 15:
+                if (atom.getBondCount() == 3 && atom.getFormalCharge() == 0)
+                    return true;
+                if (atom.getBondCount() == 2 && atom.getImplicitHydrogenCount() == 1)
+                    return true;
+                if (atom.getBondCount() == 2 && atom.getFormalCharge() == -1)
+                    return true;
+                return false;
+            case 8:
+            case 16:
+                return true;
+        }
+        return false;
+    }
+
     private int getHAtomType(IAtom ai, List connectedAtoms) {
         //ai is the atom connected to a H atoms.
         //ai environment determines what is the H atom type
@@ -1053,76 +1073,95 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 return 51;
         } // end if(ai.getSymbol().equals("C") && !ai.getFlag(CDKConstants.ISAROMATIC))
 
-        List bonds = atomContainer.getConnectedBondsList(ai);
-        int doublebondcount = 0;
-        int triplebondcount = 0;
-        String hybrid = "";
+        IAtomType.Hybridization hyb;
 
-        for (int j = 0; j <= bonds.size() - 1; j++) {
-            if (((IBond) bonds.get(j)).getOrder() == IBond.Order.DOUBLE)
-                doublebondcount++;
-            else if (((IBond) bonds.get(j)).getOrder() == IBond.Order.TRIPLE) triplebondcount++;
-        }
-
-        if (doublebondcount == 0 && triplebondcount == 0)
-            hybrid = "sp3";
-        else if (doublebondcount == 1 && triplebondcount == 0)
-            hybrid = "sp2";
-        else if (doublebondcount == 2 || triplebondcount == 1) hybrid = "sp";
+        int ndoub = 0;
+        int ntrip = 0;
         int oxNum = 0;
         int xCount = 0;
+        boolean hasConjHetereo = false;
 
-        for (int j = 0; j <= ca.size() - 1; j++) {
-            //String s = ((IAtom)ca.get(j)).getSymbol();
-            // if (s.equals("F") || s.equals("O") || s.equals("Cl")
-            // || s.equals("Br") || s.equals("N") || s.equals("S"))
-            if (ap.getNormalizedElectronegativity(((IAtom) ca.get(j)).getSymbol()) > 1) {
-                java.util.List bonds2 = atomContainer.getConnectedBondsList(((IAtom) ca.get(j)));
-                boolean haveDouble = false;
-                for (int k = 0; k <= bonds2.size() - 1; k++) {
-                    if (((IBond) bonds2.get(k)).getOrder() == IBond.Order.DOUBLE) {
-                        haveDouble = true;
-                        break;
+        for (IBond bond : ai.bonds()) {
+            if (bond.getOrder() == IBond.Order.DOUBLE)
+                ndoub++;
+            else if (bond.getOrder() == IBond.Order.TRIPLE)
+                ntrip++;
+            final IAtom nbor = bond.getOther(ai);
+            if (isHetero(nbor)) {
+                if (bond.isAromatic()) {
+                    if (bond.getOrder() == IBond.Order.SINGLE) {
+                        if (!isPyrroleLikeHetero(nbor) && !hasConjHetereo) {
+                            oxNum += 2;
+                            hasConjHetereo = true;
+                        } else
+                            oxNum++;
+                    } else if (!hasConjHetereo) {
+                        hasConjHetereo = true;
+                        oxNum += 2;
+                    } else {
+                        oxNum++;
                     }
+                } else
+                    oxNum += bond.getOrder().numeric();
+            }
+            else if (nbor.getAtomicNumber() == 6) {
+                for (IBond bond2 : nbor.bonds()) {
+                    IAtom nbor2 = bond2.getOther(nbor);
+                    if (isHetero(nbor2))
+                        xCount++;
                 }
-                if (haveDouble && ((IAtom) ca.get(j)).getSymbol().equals("N"))
-                    oxNum += 2; // C-N bond order for pyridine type N's is considered to be 2
-                else
-                    oxNum += BondManipulator
-                            .destroyBondOrder(atomContainer.getBond(ai, ((IAtom) ca.get(j))).getOrder());
             }
-            java.util.List ca2 = atomContainer.getConnectedAtomsList(((IAtom) ca.get(j)));
+        }
 
-            for (int k = 0; k <= ca2.size() - 1; k++) {
-                String s2 = ((IAtom) ca2.get(k)).getSymbol();
-                if (!s2.equals("C")) xCount++;
-            }
-        }// end j loop
+        if (ndoub == 0 && ntrip == 0)
+            hyb = IAtomType.Hybridization.SP3;
+        else if (ndoub == 1 && ntrip == 0)
+            hyb = IAtomType.Hybridization.SP2;
+        else if (ndoub == 2 || ntrip == 1)
+            hyb = IAtomType.Hybridization.SP1;
+        else
+            return 0; // unknown
 
-        if (oxNum == 0) {
-            if (hybrid.equals("sp3")) {
-                if (xCount == 0)
-                    return 46;
-                else if (xCount == 1)
-                    return 52;
-                else if (xCount == 2)
-                    return 53;
-                else if (xCount == 3)
-                    return 54;
-                else if (xCount >= 4) return 55;
-            } else if (hybrid.equals("sp2")) {
-                return 47;
-            } else if (hybrid.equals("sp")) {
-                return 48;
-            }
-        } else if (oxNum == 1 && hybrid.equals("sp3"))
-            return 47;
-        else if (oxNum == 2 && hybrid.equals("sp3") || oxNum == 1 && hybrid.equals("sp2"))
-            return 48;
-        else if ((oxNum == 3 && hybrid.equals("sp3")) || (oxNum >= 2 && hybrid.equals("sp2"))
-                || (oxNum >= 1 && hybrid.equals("sp"))) return 49;
+        switch (hyb) {
+            case SP1:
+                if (oxNum == 0)
+                    return 48;
+                if (oxNum == 1)
+                    return 49;
+                break;
+            case SP2:
+                if (oxNum == 0)
+                    return 47;
+                if (oxNum == 1)
+                    return 48;
+                if (oxNum == 2 || oxNum == 3)
+                    return 49;
+                break;
+            case SP3:
+                if (oxNum == 0) {
+                    if (xCount == 0)
+                        return 46;
+                    else if (xCount == 1)
+                        return 52;
+                    else if (xCount == 2)
+                        return 53;
+                    else if (xCount == 3)
+                        return 54;
+                    else if (xCount == 4)
+                        return 55;
+                }
+                if (oxNum == 1)
+                    return 47;
+                if (oxNum == 2)
+                    return 48;
+                if (oxNum == 3)
+                    return 49;
+                break;
+        }
 
-        return (0);
+        System.out.println("Fall through");
+
+        return 0;
     }
 
     private void calcGroup056_57(int i) {
