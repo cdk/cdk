@@ -392,7 +392,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             frags[i] = 0;
         }
 
-        for (int i = 0; i <= atomContainer.getAtomCount() - 1; i++) {
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             // alogpfrag[i] = 0; // not needed (new array initalized above)
             try {
                 if (fragment[i] != null) {
@@ -469,7 +469,9 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         // C in CH3R
         if (fragment[i].equals("SsCH3")) {
             List<IAtom> ca    = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
-            int         htype = getHAtomType(atomContainer.getAtom(i), ca);
+            IAtom       atom  = atomContainer.getAtom(i);
+            int         htype = getHAtomType(atom, ca);
+            frags[htype] += atom.getImplicitHydrogenCount();
             for (int j = 0; j < ca.size(); j++) {
                 if (ca.get(j).getSymbol().equals("C")) {
                     frags[1]++;
@@ -493,8 +495,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (fragment[i].equals("SssCH2")) {
 
-            List<IAtom> nbors          = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
-            int         htype       = getHAtomType(atomContainer.getAtom(i), nbors);
+            IAtom       atom  = atomContainer.getAtom(i);
+            List<IAtom> nbors = atomContainer.getConnectedAtomsList(atom);
+            int         htype = getHAtomType(atom, nbors);
+            frags[htype] += atom.getImplicitHydrogenCount();
+
             int         carbonCount = 0;
             int         heteroCount = 0;
             // logger.debug("here");
@@ -528,8 +533,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (fragment[i].equals("SsssCH")) {
 
-            List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
-            int htype = getHAtomType(atomContainer.getAtom(i), ca);
+            IAtom atom  = atomContainer.getAtom(i);
+            List  ca    = atomContainer.getConnectedAtomsList(atom);
+            int   htype = getHAtomType(atom, ca);
+            frags[htype] += atom.getImplicitHydrogenCount();
+
             int carbonCount = 0;
             int heteroCount = 0;
             // logger.debug("here");
@@ -822,7 +830,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         IAtom ca0;
         IAtom ca1;
         // determine which neighbor is the H atom
-        if (nbors.get(0).getAtomicNumber() == 1) {
+        if (atom.getImplicitHydrogenCount() == 1) {
+            ca0 = nbors.get(0);
+            ca1 = nbors.get(1);
+        } else if (nbors.get(0).getAtomicNumber() == 1) {
             alogpfrag[atomContainer.indexOf(nbors.get(0))] = htype;
             ca0 = nbors.get(1);
             ca1 = nbors.get(2);
@@ -1293,11 +1304,12 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     }
 
     private void calcGroup066_to_079(int i) {
-        int nAr = 0;
-        int nAl = 0;
-        IAtom ai = atomContainer.getAtom(i);
+        int   nAr  = 0;
+        int   nAl  = 0;
+        IAtom atom = atomContainer.getAtom(i);
+        IAtom ai   = atom;
         if (!ai.getSymbol().equals("N")) return;
-        List<IAtom> nbors = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        List<IAtom> nbors = atomContainer.getConnectedAtomsList(atom);
 
         int htype = 50; //H atom attached to a hetero atom
         for (IAtom nbor : nbors)
@@ -1305,6 +1317,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 alogpfrag[nbor.getIndex()] = htype;
                 frags[htype]++;
             }
+        frags[htype] += atom.getImplicitHydrogenCount();
 
         for (int j = 0; j <= nbors.size() - 1; j++) {
             if (((IAtom) nbors.get(j)).getSymbol().equals("H")) continue;
@@ -1800,8 +1813,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
     }
 
     private boolean isBondedToHydrogenOnly(IAtom ai) {
-        return ai.getBondCount() == 1 &&
-               ai.bonds().iterator().next().getOther(ai).getAtomicNumber() == 1;
+        return ai.getBondCount() == 0 && ai.getImplicitHydrogenCount() == 1 ||
+               ai.getBondCount() == 1 && ai.bonds().iterator().next().getOther(ai).getAtomicNumber() == 1;
     }
 
     private void calcGroup106(int i) {
@@ -2037,15 +2050,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
      * @return the result of the calculation
      */
     @Override
-    public DescriptorValue calculate(IAtomContainer atomContainer) {
-        IAtomContainer container;
-        try {
-            container = atomContainer.clone();
-            AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
-        } catch (CloneNotSupportedException e) {
-            return getDummyDescriptorValue(new CDKException("Error during clone"));
-        }
-
+    public DescriptorValue calculate(IAtomContainer container) {
         IRingSet rs;
         try {
             AllRingsFinder arf = new AllRingsFinder();
@@ -2082,6 +2087,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         try {
             ret = calculate(container, fragment, rs);
         } catch (CDKException e) {
+            e.printStackTrace();
             return getDummyDescriptorValue(new CDKException(e.getMessage()));
         }
 
@@ -2105,7 +2111,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
+     *
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
