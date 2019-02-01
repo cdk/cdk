@@ -1520,20 +1520,25 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 oxNum += atomContainer.getBond(ca0, ca2j).getOrder().numeric();
         }
 
-        if (hybrid.equals("sp3") && oxNum == 1) {
-            frags[81]++;
-            alogpfrag[i] = 81;
-        } else if (hybrid.equals("sp3") && oxNum == 2) {
-            frags[82]++;
-            alogpfrag[i] = 82;
-        } else if (hybrid.equals("sp3") && oxNum == 3) {
-            frags[83]++;
-            alogpfrag[i] = 83;
-        } else if (hybrid.equals("sp2") && oxNum == 1) {
-            frags[84]++;
-            alogpfrag[i] = 84;
-        } else if ((hybrid.equals("sp2") && oxNum > 1) || (hybrid.equals("sp") && oxNum >= 1)
-                || (hybrid.equals("sp3") && oxNum == 4) || !ca0.getSymbol().equals("C")) {
+        if (ca0.getAtomicNumber() == 6) {
+            if (hybrid.equals("sp3") && oxNum == 1) {
+                frags[81]++;
+                alogpfrag[i] = 81;
+            } else if (hybrid.equals("sp3") && oxNum == 2) {
+                frags[82]++;
+                alogpfrag[i] = 82;
+            } else if (hybrid.equals("sp3") && oxNum == 3) {
+                frags[83]++;
+                alogpfrag[i] = 83;
+            } else if (hybrid.equals("sp2") && oxNum == 1) {
+                frags[84]++;
+                alogpfrag[i] = 84;
+            } else if ((hybrid.equals("sp2") && oxNum > 1) || (hybrid.equals("sp") && oxNum >= 1)
+                       || (hybrid.equals("sp3") && oxNum == 4)) {
+                frags[85]++;
+                alogpfrag[i] = 85;
+            }
+        } else {
             frags[85]++;
             alogpfrag[i] = 85;
         }
@@ -1591,20 +1596,25 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             }
         }
 
-        if (hybrid.equals("sp3") && oxNum == 1) {
-            frags[86]++;
-            alogpfrag[i] = 86;
-        } else if (hybrid.equals("sp3") && oxNum == 2) {
-            frags[87]++;
-            alogpfrag[i] = 87;
-        } else if (hybrid.equals("sp3") && oxNum == 3) {
-            frags[88]++;
-            alogpfrag[i] = 88;
-        } else if (hybrid.equals("sp2") && oxNum == 1) {
-            frags[89]++;
-            alogpfrag[i] = 89;
-        } else if ((hybrid.equals("sp2") && oxNum > 1) || (hybrid.equals("sp") && oxNum >= 1)
-                || (hybrid.equals("sp3") && oxNum == 4) || !ca0.getSymbol().equals("C")) {
+        if (ca0.getAtomicNumber() == 6) {
+            if (hybrid.equals("sp3") && oxNum == 1) {
+                frags[86]++;
+                alogpfrag[i] = 86;
+            } else if (hybrid.equals("sp3") && oxNum == 2) {
+                frags[87]++;
+                alogpfrag[i] = 87;
+            } else if (hybrid.equals("sp3") && oxNum == 3) {
+                frags[88]++;
+                alogpfrag[i] = 88;
+            } else if (hybrid.equals("sp2") && oxNum == 1) {
+                frags[89]++;
+                alogpfrag[i] = 89;
+            } else if ((hybrid.equals("sp2") && oxNum > 1) || (hybrid.equals("sp") && oxNum >= 1)
+                       || (hybrid.equals("sp3") && oxNum == 4)) {
+                frags[90]++;
+                alogpfrag[i] = 90;
+            }
+        } else {
             frags[90]++;
             alogpfrag[i] = 90;
         }
@@ -1663,20 +1673,25 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         }
 
-        if (hybrid.equals("sp3") && oxNum == 1) {
-            frags[91]++;
-            alogpfrag[i] = 91;
-        } else if (hybrid.equals("sp3") && oxNum == 2) {
-            frags[92]++;
-            alogpfrag[i] = 92;
-        } else if (hybrid.equals("sp3") && oxNum == 3) {
-            frags[93]++;
-            alogpfrag[i] = 93;
-        } else if (hybrid.equals("sp2") && oxNum == 1) {
-            frags[94]++;
-            alogpfrag[i] = 94;
-        } else if ((hybrid.equals("sp2") && oxNum > 1) || (hybrid.equals("sp") && oxNum >= 1)
-                || (hybrid.equals("sp3") && oxNum == 4) || !ca0.getSymbol().equals("C")) {
+        if (ca0.getAtomicNumber() == 6) {
+            if (hybrid.equals("sp3") && oxNum == 1) {
+                frags[91]++;
+                alogpfrag[i] = 91;
+            } else if (hybrid.equals("sp3") && oxNum == 2) {
+                frags[92]++;
+                alogpfrag[i] = 92;
+            } else if (hybrid.equals("sp3") && oxNum == 3) {
+                frags[93]++;
+                alogpfrag[i] = 93;
+            } else if (hybrid.equals("sp2") && oxNum == 1) {
+                frags[94]++;
+                alogpfrag[i] = 94;
+            } else if ((hybrid.equals("sp2") && oxNum > 1) || (hybrid.equals("sp") && oxNum >= 1)
+                       || (hybrid.equals("sp3") && oxNum == 4)) {
+                frags[95]++;
+                alogpfrag[i] = 95;
+            }
+        } else {
             frags[95]++;
             alogpfrag[i] = 95;
         }
@@ -1735,20 +1750,25 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         }
 
-        if (hybrid.equals("sp3") && oxNum == 1) {
-            frags[96]++;
-            alogpfrag[i] = 96;
-        } else if (hybrid.equals("sp3") && oxNum == 2) {
-            frags[97]++;
-            alogpfrag[i] = 97;
-        } else if (hybrid.equals("sp3") && oxNum == 3) {
-            frags[98]++;
-            alogpfrag[i] = 98;
-        } else if (hybrid.equals("sp2") && oxNum == 1) {
-            frags[99]++;
-            alogpfrag[i] = 99;
-        } else if ((hybrid.equals("sp2") && oxNum > 1) || (hybrid.equals("sp") && oxNum >= 1)
-                || (hybrid.equals("sp3") && oxNum == 4) || !ca0.getSymbol().equals("C")) {
+        if (ca0.getAtomicNumber() == 6) {
+            if (hybrid.equals("sp3") && oxNum == 1) {
+                frags[96]++;
+                alogpfrag[i] = 96;
+            } else if (hybrid.equals("sp3") && oxNum == 2) {
+                frags[97]++;
+                alogpfrag[i] = 97;
+            } else if (hybrid.equals("sp3") && oxNum == 3) {
+                frags[98]++;
+                alogpfrag[i] = 98;
+            } else if (hybrid.equals("sp2") && oxNum == 1) {
+                frags[99]++;
+                alogpfrag[i] = 99;
+            } else if ((hybrid.equals("sp2") && oxNum > 1) || (hybrid.equals("sp") && oxNum >= 1)
+                       || (hybrid.equals("sp3") && oxNum == 4)) {
+                frags[100]++;
+                alogpfrag[i] = 100;
+            }
+        } else {
             frags[100]++;
             alogpfrag[i] = 100;
         }
