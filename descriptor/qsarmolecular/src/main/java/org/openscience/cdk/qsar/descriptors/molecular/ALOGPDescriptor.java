@@ -1743,7 +1743,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         IAtom ai = atomContainer.getAtom(i);
         String s = ai.getSymbol();
 
-        if (ai.getFormalCharge() == -1) {
+        if (ai.getFormalCharge() == -1 ||
+            (ai.getFormalCharge() == 0 && isBondedToHydrogenOnly(ai))) {
             if (s.equals("F")) {
                 frags[101]++;
                 alogpfrag[i] = 101;
@@ -1760,6 +1761,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         }
 
+    }
+
+    private boolean isBondedToHydrogenOnly(IAtom ai) {
+        return ai.getBondCount() == 1 &&
+               ai.bonds().iterator().next().getOther(ai).getAtomicNumber() == 1;
     }
 
     private void calcGroup106(int i) {
