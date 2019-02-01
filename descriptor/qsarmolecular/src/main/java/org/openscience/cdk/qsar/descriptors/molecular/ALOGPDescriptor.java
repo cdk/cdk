@@ -908,15 +908,15 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (!fragment[i].equals("SsaaC") && !fragment[i].equals("SaaaC")) return;
 
-        IAtom ai = atomContainer.getAtom(i);
-        List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        IAtom       atm = atomContainer.getAtom(i);
+        List<IAtom> nbors = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
 
         IAtom[] sameringatoms = new IAtom[2];
         IAtom nonringatom = atomContainer.getBuilder().newInstance(IAtom.class);
 
         int sameringatomscount = 0;
-        for (int j = 0; j <= ca.size() - 1; j++) {
-            if (inSameAromaticRing(atomContainer, ai, ((IAtom) ca.get(j)), rs)) {
+        for (int j = 0; j <= nbors.size() - 1; j++) {
+            if (inSameAromaticRing(atomContainer, atm, ((IAtom) nbors.get(j)), rs)) {
                 sameringatomscount++;
             }
 
