@@ -675,7 +675,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         IAtom ai = atomContainer.getAtom(i);
 
-        if (!fragment[i].equals("SdssC")) return;
+        if (!fragment[i].equals("SdssC") &&
+            !fragment[i].equals("SdaaC")) {
+            return;
+        }
 
         List ca = atomContainer.getConnectedAtomsList(ai);
 
