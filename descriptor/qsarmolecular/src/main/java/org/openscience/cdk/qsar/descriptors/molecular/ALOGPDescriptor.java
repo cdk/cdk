@@ -1367,8 +1367,10 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 frags[66]++;
                 alogpfrag[i] = 66;
             }
-            frags[50] += 2;
-        } else if (fragment[i].equals("SaaNH") || fragment[i].equals("SsaaN")) { // R...NH...R
+        } else if (fragment[i].equals("SaaNH") ||
+                   fragment[i].equals("SsaaN") ||
+                   fragment[i].equals("SaaaN") ||
+                   fragment[i].equals("SaaNm")) { // R...NH...R
             frags[73]++;
             alogpfrag[i] = 73;
         } else if (fragment[i].equals("SssNH")) {
