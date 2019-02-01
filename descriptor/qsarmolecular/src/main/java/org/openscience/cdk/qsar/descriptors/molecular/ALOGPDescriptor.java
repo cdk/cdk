@@ -450,9 +450,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
     private static boolean isHetero(IAtom atom) {
         switch (atom.getAtomicNumber()) {
+            case 5: // B
             case 7: // N
             case 8: // O
             case 9: // F
+            case 14: // Si
             case 15: // P
             case 16: // S
             case 17: // Cl
@@ -1129,7 +1131,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                         if (isHetero(nbor2)) {
                             switch (bond2.getOrder()) {
                                 case SINGLE:
-                                    if (bond2.isAromatic() && !isPyrroleLikeHetero(nbor2))
+                                    if (bond2.isAromatic())
                                         numAromX++;
                                     break;
                                 case DOUBLE:
