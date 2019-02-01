@@ -919,20 +919,27 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         if (sameringatomscount == 2) {
             int count = 0;
-            for (int j = 0; j <= ca.size() - 1; j++) {
-                if (inSameAromaticRing(atomContainer, ai, ((IAtom) ca.get(j)), rs)) {
-                    sameringatoms[count] = (IAtom) ca.get(j);
+            for (int j = 0; j <= nbors.size() - 1; j++) {
+                if (inSameAromaticRing(atomContainer, atm, ((IAtom) nbors.get(j)), rs)) {
+                    sameringatoms[count] = (IAtom) nbors.get(j);
                     count++;
                 } else {
-                    nonringatom = (IAtom) ca.get(j);
+                    nonringatom = (IAtom) nbors.get(j);
                 }
 
             }
         } else { // sameringsatomscount==3
             // arbitrarily assign atoms: (no way to decide consistently)
-            sameringatoms[0] = (IAtom) ca.get(0);
-            sameringatoms[1] = (IAtom) ca.get(1);
-            nonringatom = (IAtom) ca.get(2);
+            // but to match VEGA we choose to but hetero atoms in the ring
+            Collections.sort(nbors, new Comparator<IAtom>() {
+                @Override
+                public int compare(IAtom a, IAtom b) {
+                    return -Boolean.compare(isHetero(a), isHetero(b));
+                }
+            });
+            sameringatoms[0] = (IAtom) nbors.get(0);
+            sameringatoms[1] = (IAtom) nbors.get(1);
+            nonringatom = (IAtom) nbors.get(2);
         }
 
         // check if both hetero atoms have at least one double bond
