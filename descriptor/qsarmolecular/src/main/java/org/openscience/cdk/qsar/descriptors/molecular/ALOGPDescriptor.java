@@ -1160,8 +1160,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 break;
         }
 
-        System.out.println("Fall through");
-
         return 0;
     }
 
@@ -1261,22 +1259,19 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             } else {
 
                 for (int j = 0; j <= ca.size() - 1; j++) {
-                    // if (((IAtom)ca.get(j)).getSymbol().equals("C")) { // for malathion
-                    // O-P(=S)
-                    // was considered to count as group 60
-
-                    List ca2 = atomContainer.getConnectedAtomsList(((IAtom) ca.get(j)));
-                    for (int k = 0; k <= ca2.size() - 1; k++) {
-                        if (atomContainer.getBond(((IAtom) ca.get(j)), (IAtom) ca2.get(k)).getOrder() == IBond.Order.DOUBLE) {
-                            if (!((IAtom) ca2.get(k)).getSymbol().equals("C")) {
-                                frags[60]++;
-                                alogpfrag[i] = 60;
-                                return;
-                            }
-                        }
-                    }
-
-                } // end j ca loop
+                     if (((IAtom)ca.get(j)).getSymbol().equals("C")) {
+                         List ca2 = atomContainer.getConnectedAtomsList(((IAtom) ca.get(j)));
+                         for (int k = 0; k <= ca2.size() - 1; k++) {
+                             if (atomContainer.getBond(((IAtom) ca.get(j)), (IAtom) ca2.get(k)).getOrder() == IBond.Order.DOUBLE) {
+                                 if (!((IAtom) ca2.get(k)).getSymbol().equals("C")) {
+                                     frags[60]++;
+                                     alogpfrag[i] = 60;
+                                     return;
+                                 }
+                             }
+                         }
+                     }
+                }
 
                 if (ca0.getSymbol().equals("O") || ca1.getSymbol().equals("O")) {
                     frags[63]++;
@@ -1317,22 +1312,26 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 nAl++;
         }
 
-        // first check if have RC(=O)N or NX=X
-        for (int j = 0; j <= nbors.size() - 1; j++) {
-            if (nbors.get(j).getAtomicNumber() == 1)
-                continue;
-            List ca2 = atomContainer.getConnectedAtomsList((IAtom) nbors.get(j));
-            for (int k = 0; k <= ca2.size() - 1; k++) {
-                IAtom ca2k = (IAtom) ca2.get(k);
-                if (atomContainer.indexOf(ca2k) != i) {
-                    if (!ca2k.getSymbol().equals("C")) {
-                        if (!ca2k.getFlag(CDKConstants.ISAROMATIC)
+        if (fragment[i].equals("SsssN") ||
+            fragment[i].equals("SssNH") ||
+            fragment[i].equals("SsNH2")) {
+            // first check if have RC(=O)N or NX=X
+            for (int j = 0; j <= nbors.size() - 1; j++) {
+                if (nbors.get(j).getAtomicNumber() == 1)
+                    continue;
+                List ca2 = atomContainer.getConnectedAtomsList((IAtom) nbors.get(j));
+                for (int k = 0; k <= ca2.size() - 1; k++) {
+                    IAtom ca2k = (IAtom) ca2.get(k);
+                    if (atomContainer.indexOf(ca2k) != i) {
+                        if (!ca2k.getSymbol().equals("C")) {
+                            if (!ca2k.getFlag(CDKConstants.ISAROMATIC)
                                 && !((IAtom) nbors.get(j)).getFlag(CDKConstants.ISAROMATIC)
                                 && !ai.getFlag(CDKConstants.ISAROMATIC)) {
-                            if (atomContainer.getBond(((IAtom) nbors.get(j)), ca2k).getOrder() == IBond.Order.DOUBLE) {
-                                frags[72]++;
-                                alogpfrag[i] = 72;
-                                return;
+                                if (atomContainer.getBond(((IAtom) nbors.get(j)), ca2k).getOrder() == IBond.Order.DOUBLE) {
+                                    frags[72]++;
+                                    alogpfrag[i] = 72;
+                                    return;
+                                }
                             }
                         }
                     }
@@ -1437,7 +1436,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     return;
                 }
             }
-
             boolean flag1 = false;
             boolean flag2 = false;
 
