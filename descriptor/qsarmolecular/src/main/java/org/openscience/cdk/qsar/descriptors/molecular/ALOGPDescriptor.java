@@ -1248,10 +1248,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         // 58: O in =O
         // 61: --O in nitro, N-oxides
         // 62: O in O-
-        IAtom ca0 = (IAtom) ca.get(0);
-
         if (fragment[i].equals("SsOm")) {
-
+            IAtom ca0 = (IAtom) ca.get(0);
             if (ca0.getSymbol().equals("N") && ca0.getFormalCharge() == 1) {
                 frags[61]++;
                 alogpfrag[i] = 61;
@@ -1261,6 +1259,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             }
 
         } else if (fragment[i].equals("SdO")) {
+            IAtom ca0 = (IAtom) ca.get(0);
             if (ca0.getSymbol().equals("N") && ca0.getFormalCharge() == 1) {
                 frags[61]++;
                 alogpfrag[i] = 61;
