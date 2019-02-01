@@ -1050,29 +1050,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         else
             ca = connectedAtoms;
 
-        // first check for alpha carbon:
-        // -C=X, -C#X and -C:X
-        if (ai.getSymbol().equals("C") && !ai.getFlag(CDKConstants.ISAROMATIC)) {
-            boolean noXfirstShell = true;
-            boolean xInSecondShell = false;
-            for (int j = 0; j <= ca.size() - 1; j++) {
-                if (atomContainer.getBond(ai, ((IAtom) ca.get(j))).getOrder() == IBond.Order.SINGLE
-                        && ((IAtom) ca.get(j)).getSymbol().equals("C")) { // single bonded
-                    IAtom aCarbon = ca.get(j);
-                    for (IBond bond : aCarbon.bonds()) {
-                        IAtom nbor = bond.getOther(aCarbon);
-                        if (isHetero(nbor) && (bond.isAromatic() || bond.getOrder() != IBond.Order.SINGLE))
-                            xInSecondShell = true;
-                    }
-                } else {
-                    if (isHetero(ca.get(j)))
-                        noXfirstShell = false;
-                }
-            }
-            if (noXfirstShell && xInSecondShell)
-                return 51;
-        } // end if(ai.getSymbol().equals("C") && !ai.getFlag(CDKConstants.ISAROMATIC))
-
         IAtomType.Hybridization hyb;
 
         int ndoub = 0;
@@ -1121,6 +1098,29 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             hyb = IAtomType.Hybridization.SP1;
         else
             return 0; // unknown
+
+        // first check for alpha carbon:
+        // -C=X, -C#X and -C:X
+        if (ai.getAtomicNumber() == 6 && !ai.isAromatic() && hyb == IAtomType.Hybridization.SP3) {
+            boolean noXfirstShell = true;
+            boolean xInSecondShell = false;
+            for (int j = 0; j <= ca.size() - 1; j++) {
+                if (atomContainer.getBond(ai, ((IAtom) ca.get(j))).getOrder() == IBond.Order.SINGLE
+                    && ((IAtom) ca.get(j)).getSymbol().equals("C")) { // single bonded
+                    IAtom aCarbon = ca.get(j);
+                    for (IBond bond : aCarbon.bonds()) {
+                        IAtom nbor = bond.getOther(aCarbon);
+                        if (isHetero(nbor) && (bond.isAromatic() || bond.getOrder() != IBond.Order.SINGLE))
+                            xInSecondShell = true;
+                    }
+                } else {
+                    if (isHetero(ca.get(j)))
+                        noXfirstShell = false;
+                }
+            }
+            if (noXfirstShell && xInSecondShell)
+                return 51;
+        }
 
         switch (hyb) {
             case SP1:
