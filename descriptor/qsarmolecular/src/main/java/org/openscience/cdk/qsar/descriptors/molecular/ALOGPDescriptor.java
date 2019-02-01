@@ -1383,16 +1383,17 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         } else if (fragment[i].equals("SaaN")) {
             frags[75]++;
             alogpfrag[i] = 75;
-        } else if (fragment[i].equals("SssdNp")) {
-            boolean haveSsOm = false;
-            boolean haveSdO = false;
-            boolean ar = false;
+        } else if (fragment[i].equals("SdssNp") ||
+                   fragment[i].equals("SddsN")) {
+            int     haveSsOm = 0;
+            int     haveSdO  = 0;
+            boolean ar       = false;
 
             for (int j = 0; j <= nbors.size() - 1; j++) {
                 if (fragment[atomContainer.indexOf(((IAtom) nbors.get(j)))].equals("SsOm")) {
-                    haveSsOm = true;
+                    haveSsOm++;
                 } else if (fragment[atomContainer.indexOf(((IAtom) nbors.get(j)))].equals("SdO")) {
-                    haveSdO = true;
+                    haveSdO++;
                 } else {
                     if (((IAtom) nbors.get(j)).getFlag(CDKConstants.ISAROMATIC)) {
                         ar = true;
@@ -1400,10 +1401,12 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                 }
             }
 
-            if (haveSsOm && haveSdO && ar) {
+            boolean isNitro = haveSdO == 2 || (haveSsOm >= 1 && haveSdO >= 1);
+
+            if (isNitro && ar) {
                 frags[76]++;
                 alogpfrag[i] = 76;
-            } else if (haveSsOm && haveSdO && !ar) {
+            } else if (isNitro && !ar) {
                 frags[77]++;
                 alogpfrag[i] = 77;
             } else {
