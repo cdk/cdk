@@ -1052,7 +1052,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         return false;
     }
 
-    private int getHAtomType(IAtom ai, List connectedAtoms) {
+    private int getHAtomType(IAtom atom, List connectedAtoms) {
         //ai is the atom connected to a H atoms.
         //ai environment determines what is the H atom type
         //This procedure is applied only for carbons
@@ -1060,7 +1060,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         List<IAtom> ca;
         if (connectedAtoms == null)
-            ca = atomContainer.getConnectedAtomsList(ai);
+            ca = atomContainer.getConnectedAtomsList(atom);
         else
             ca = connectedAtoms;
 
@@ -1072,12 +1072,12 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         int xCount = 0;
         boolean hasConjHetereo = false;
 
-        for (IBond bond : ai.bonds()) {
+        for (IBond bond : atom.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE)
                 ndoub++;
             else if (bond.getOrder() == IBond.Order.TRIPLE)
                 ntrip++;
-            final IAtom nbor = bond.getOther(ai);
+            final IAtom nbor = bond.getOther(atom);
             if (isHetero(nbor)) {
                 if (bond.isAromatic()) {
                     if (bond.getOrder() == IBond.Order.SINGLE) {
@@ -1115,27 +1115,43 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         // first check for alpha carbon:
         // -C=X, -C#X and -C:X
-        if (ai.getAtomicNumber() == 6 && !ai.isAromatic() && hyb == IAtomType.Hybridization.SP3) {
-            boolean noXfirstShell = true;
-            boolean xInSecondShell = false;
-            for (int j = 0; j <= ca.size() - 1; j++) {
-                if (atomContainer.getBond(ai, ((IAtom) ca.get(j))).getOrder() == IBond.Order.SINGLE
-                    && ((IAtom) ca.get(j)).getSymbol().equals("C")) { // single bonded
-                    IAtom aCarbon = ca.get(j);
-                    for (IBond bond : aCarbon.bonds()) {
-                        IAtom nbor = bond.getOther(aCarbon);
-                        if (isHetero(nbor) && (bond.isAromatic() || bond.getOrder() != IBond.Order.SINGLE))
-                            xInSecondShell = true;
+        boolean isAlphaC = false;
+        if (atom.getAtomicNumber() == 6 && hyb == IAtomType.Hybridization.SP3) {
+            for (IBond bond : atom.bonds()) {
+                IAtom nbor = bond.getOther(atom);
+                if (isHetero(nbor)) {
+                    isAlphaC = false;
+                    break;
+                } else if (nbor.getAtomicNumber() == 6) {
+                    int numDoubX = 0, numTripX = 0, numAromX = 0;
+                    for (IBond bond2 : nbor.bonds()) {
+                        IAtom nbor2 = bond2.getOther(nbor);
+                        if (isHetero(nbor2)) {
+                            switch (bond2.getOrder()) {
+                                case SINGLE:
+                                    if (bond2.isAromatic() && !isPyrroleLikeHetero(nbor2))
+                                        numAromX++;
+                                    break;
+                                case DOUBLE:
+                                    if (bond2.isAromatic())
+                                        numAromX++;
+                                    else
+                                        numDoubX++;
+                                    break;
+                                case TRIPLE:
+                                    numTripX++;
+                                    break;
+                            }
+                        }
                     }
-                } else {
-                    if (isHetero(ca.get(j)))
-                        noXfirstShell = false;
+                    if (numDoubX + numTripX + numAromX == 1)
+                        isAlphaC = true;
                 }
             }
-            if (noXfirstShell && xInSecondShell)
-                return 51;
         }
 
+        if (isAlphaC)
+            return 51;
         switch (hyb) {
             case SP1:
                 if (oxNum == 0)
