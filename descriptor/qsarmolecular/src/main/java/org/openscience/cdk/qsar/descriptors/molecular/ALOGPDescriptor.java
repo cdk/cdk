@@ -680,51 +680,42 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             return;
         }
 
-        List ca = atomContainer.getConnectedAtomsList(ai);
+        List<IAtom> ca = atomContainer.getConnectedAtomsList(ai);
 
         int rCount = 0;
         int xCount = 0;
         boolean haveCdX = false;
         int aromaticCount = 0;
 
-        for (int j = 0; j <= ca.size() - 1; j++) {
-            if (atomContainer.getBond(ai, ((IAtom) ca.get(j))).getOrder() == IBond.Order.SINGLE) {
-                if (((IAtom) ca.get(j)).getSymbol().equals("C")) {
+        for (IBond bond : ai.bonds()) {
+            IAtom nbor = bond.getOther(ai);
+            if (bond.getOrder() == IBond.Order.SINGLE) {
+                if (nbor.getAtomicNumber() == 6) {
                     rCount++;
+                    if (nbor.isAromatic())
+                        aromaticCount++;
                 }
-                else {
+                else
                     xCount++;
-                }
-
-                if (((IAtom) ca.get(j)).getFlag(CDKConstants.ISAROMATIC)) {
-                    aromaticCount++;
-                }
-
             }
-            else if (atomContainer.getBond(ai, ((IAtom) ca.get(j))).getOrder() == IBond.Order.DOUBLE) {
-                if (!((IAtom) ca.get(j)).getSymbol().equals("C")) {
+            else if (bond.getOrder() == IBond.Order.DOUBLE) {
+                if (isHetero(nbor)) {
                     haveCdX = true;
                 }
             }
         }
 
         if (haveCdX) {
-            if (aromaticCount >= 1) { // Ar-C(=X)-R
-                for (IBond bond : ai.bonds()) {
-                    if (bond.getOrder() != IBond.Order.SINGLE)
-                        continue;
-                    IAtom nbor = bond.getOther(ai);
-                    if (!nbor.isAromatic()) {
-                        if (isHetero(nbor)) {
-                            frags[40]++;
-                            alogpfrag[i] = 40;
-                        } else {
-                            frags[39]++;
-                            alogpfrag[i] = 39;
-                        }
-                    }
+            if (aromaticCount >= 1) {
+                // Ar-C(=X)-R 39
+                // Ar-C(=X)-X 40
+                if (xCount == 1) {
+                    frags[40]++;
+                    alogpfrag[i] = 40;
+                } else {
+                    frags[39]++;
+                    alogpfrag[i] = 39;
                 }
-
             }
             else if (aromaticCount == 0) {
                 if (rCount == 1 && xCount == 1) {
@@ -739,9 +730,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     frags[38]++;
                     alogpfrag[i] = 38;
                 }
-
             }
-
         }
         else {
             if (rCount == 2 && xCount == 0) {
