@@ -69,8 +69,8 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
                         .addImplicitHydrogens(mol);
 
         DescriptorValue v = descriptor.calculate(mol);
-        Assert.assertEquals(0.5192, ((DoubleArrayResult) v.getValue()).get(0), 0.0001);
-        Assert.assertEquals(19.1381, ((DoubleArrayResult) v.getValue()).get(2), 0.0001);
+        Assert.assertEquals(1.719, ((DoubleArrayResult) v.getValue()).get(0), 0.01);
+        Assert.assertEquals(20.585, ((DoubleArrayResult) v.getValue()).get(2), 0.01);
     }
 
 }
