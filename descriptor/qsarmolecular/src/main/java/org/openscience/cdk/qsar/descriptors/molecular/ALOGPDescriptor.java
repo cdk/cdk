@@ -421,6 +421,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     calcGroup109(i);
                     calcGroup110(i);
                     calcGroup111(i);
+                    calcGroup112(i);
                     calcGroup116_117_120(i);
                     calcGroup118_119(i);
                 }
@@ -1890,6 +1891,14 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         if (fragment[i].equals("SssssSi")) {
             frags[111]++;
             alogpfrag[i] = 111;
+        }
+    }
+
+    private void calcGroup112(int i) {
+        if (fragment[i].equals("SsssB") ||
+            fragment[i].equals("SssBm")) {
+            frags[112]++;
+            alogpfrag[i] = 112;
         }
     }
 
