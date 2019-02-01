@@ -1182,31 +1182,41 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         // carboxyl= HO-C(=O)-
 
         if (!fragment[i].equals("SsOH")) return;
-        List<IAtom> nbor = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
+        IAtom       atm  = atomContainer.getAtom(i);
         int htype = 50; //H atom attached to a hetero atom
         frags[htype]++;
 
-        IAtom ca0 = (IAtom) nbor.get(0);
-        if (ca0.getAtomicNumber() == 1) {
-            ca0 = (IAtom) nbor.get(1);
-            alogpfrag[atomContainer.indexOf(nbor.get(0))] = htype;
-        } else
-            alogpfrag[atomContainer.indexOf(nbor.get(1))] = htype;
+        IAtom ca0 = null;
+        for (IBond bond : atm.bonds()) {
+            IAtom nbor = bond.getOther(atm);
+            if (nbor.getAtomicNumber() == 6)
+                ca0 = nbor;
+            else if (nbor.getAtomicNumber() == 1)
+                alogpfrag[nbor.getIndex()] = htype;
+        }
 
+
+        if (ca0 != null) {
         if (ca0.isAromatic()) { // phenol
             frags[57]++;
             alogpfrag[i] = 57;
             return;
         }
 
-        List ca2 = atomContainer.getConnectedAtomsList(ca0);
-        for (int j = 0; j <= ca2.size() - 1; j++) {
-            if (atomContainer.getBond((IAtom) ca2.get(j), ca0).getOrder() == IBond.Order.DOUBLE) {
+            // Check for C=COH, and C(OH)=O
+            for (IBond bond : ca0.bonds()) {
+                IAtom nbor2 = bond.getOther(ca0);
+                if (nbor2 == atm)
+                    continue;
+                if (bond.getOrder() == IBond.Order.DOUBLE &&
+                    (nbor2.getAtomicNumber() == 6 || nbor2.getAtomicNumber() == 8)) {
                 frags[57]++;
                 alogpfrag[i] = 57;
                 return;
             }
         }
+        }
+
         frags[56]++;
         alogpfrag[i] = 56;
     }
