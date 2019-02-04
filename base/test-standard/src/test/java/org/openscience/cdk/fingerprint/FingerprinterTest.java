@@ -394,8 +394,8 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     @Test public void pseudoAtomFingerprintArom() throws CDKException {
         final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        final String query  = "*1cccc1";
-        final String indole = "o1cccc1";
+        final String query  = "*1cnccc1";
+        final String indole = "n1cnccc1";
         IAtomContainer queryMol  = smipar.parseSmiles(query);
         IAtomContainer indoleMol = smipar.parseSmiles(indole);
         Fingerprinter fpr = new Fingerprinter();
