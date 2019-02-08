@@ -45,12 +45,12 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testWeightDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testWeightDescriptor() throws Exception {
         Object[] params = {"*"};
         descriptor.setParameters(params);
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("CCC");
-        Assert.assertEquals(44.06, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = smilesParser.parseSmiles("CCC");
+        Assert.assertEquals(44.095, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.001);
     }
 
     /**
@@ -63,7 +63,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
-        Assert.assertEquals(12.00, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+        Assert.assertEquals(12.0107, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
     }
 
     /**
@@ -84,7 +84,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(0, 2, Order.SINGLE);
         mol.addBond(0, 3, Order.SINGLE);
         mol.addBond(0, 4, Order.SINGLE);
-        Assert.assertEquals(16.01, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+        Assert.assertEquals(16.042, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.001);
     }
 
     /**
@@ -98,7 +98,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.getAtom(0).setImplicitHydrogenCount(4);
-        Assert.assertEquals(16.01, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+        Assert.assertEquals(16.042, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.001);
     }
 
 }

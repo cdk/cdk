@@ -18,9 +18,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.IOException;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -140,36 +143,43 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
     }
 
     /**
-     * Calculate the weight of specified element type in the supplied {@link IAtomContainer}.
+     * Calculate the natural weight of specified elements type in the supplied {@link IAtomContainer}.
      *
      * @param  container The AtomContainer for which this descriptor is to be calculated. If 'H'
      * is specified as the element symbol make sure that the AtomContainer has hydrogens.
-     *@return The total weight of atoms of the specified element type
+     *@return The total natural weight of atoms of the specified element type
      */
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         double weight = 0;
+        double hydrogenNaturalMass;
+        try {
+            IIsotope hydrogen = Isotopes.getInstance().getMajorIsotope("H");
+            hydrogenNaturalMass = Isotopes.getInstance().getNaturalMass(hydrogen);
+        } catch (IOException e) {
+            return getDummyDescriptorValue(e);
+        }
+
         if (elementName.equals("*")) {
             try {
-                for (int i = 0; i < container.getAtomCount(); i++) {
-                    //logger.debug("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
-                    weight += Isotopes.getInstance().getMajorIsotope(container.getAtom(i).getSymbol()).getExactMass();
-                    Integer hcount = container.getAtom(i).getImplicitHydrogenCount();
-                    if (hcount == CDKConstants.UNSET) hcount = 0;
-                    weight += (hcount * 1.00782504);
+                for (IAtom atom : container.atoms()) {
+                    weight += Isotopes.getInstance().getNaturalMass(atom);
+                    Integer implicitHydrogenCount = atom.getImplicitHydrogenCount();
+                    if (implicitHydrogenCount == CDKConstants.UNSET) {
+                        implicitHydrogenCount = 0;
+                    }
+                    weight += (implicitHydrogenCount * hydrogenNaturalMass);
                 }
             } catch (Exception e) {
                 return getDummyDescriptorValue(e);
             }
         } else if (elementName.equals("H")) {
             try {
-                IIsotope h = Isotopes.getInstance().getMajorIsotope("H");
-                for (int i = 0; i < container.getAtomCount(); i++) {
-                    if (container.getAtom(i).getSymbol().equals(elementName)) {
-                        weight += Isotopes.getInstance().getMajorIsotope(container.getAtom(i).getSymbol())
-                                .getExactMass();
+                for (IAtom atom : container.atoms()) {
+                    if (atom.getSymbol().equals(elementName)) {
+                        weight += hydrogenNaturalMass;
                     } else {
-                        weight += (container.getAtom(i).getImplicitHydrogenCount() * h.getExactMass());
+                        weight += (atom.getImplicitHydrogenCount() * hydrogenNaturalMass);
                     }
                 }
             } catch (Exception e) {
@@ -177,10 +187,9 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
             }
         } else {
             try {
-                for (int i = 0; i < container.getAtomCount(); i++) {
-                    if (container.getAtom(i).getSymbol().equals(elementName)) {
-                        weight += Isotopes.getInstance().getMajorIsotope(container.getAtom(i).getSymbol())
-                                .getExactMass();
+                for (IAtom atom : container.atoms()) {
+                    if (atom.getSymbol().equals(elementName)) {
+                        weight += Isotopes.getInstance().getNaturalMass(atom);
                     }
                 }
             } catch (Exception e) {
@@ -195,7 +204,7 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
+     *
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
