@@ -61,11 +61,15 @@ public class JniInChIInputAdapter extends JniInchiInput {
             pos++;
         while (pos < len && Character.isDigit(op.charAt(pos)))
             pos++;
-        if (pos < len && op.charAt(pos) == '.')
+        if (pos < len && (op.charAt(pos) == '.' || op.charAt(pos) == ','))
             pos++;
         while (pos < len && Character.isDigit(op.charAt(pos)))
             pos++;
         return pos == len;
+    }
+
+    private static boolean isSubSecondTimeout(String op) {
+        return op.indexOf('.') >= 0 || op.indexOf(',') >= 0;
     }
 
     private static String checkOptions(final String ops) throws JniInchiException {
@@ -92,7 +96,8 @@ public class JniInChIInputAdapter extends JniInchiInput {
                     sbOptions.append(" ");
                 }
             } else if (isTimeoutOptions(op)) {
-                if (op.contains(".") || op.contains(",")) { // only reformat if we actually have a decimal
+                // only reformat if we actually have a decimal
+                if (isSubSecondTimeout(op)) {
                     // because the JNI-InChI library is expecting an platform number, format it as such
 	                Double time = Double.parseDouble(op.substring(1));
 	                DecimalFormat format = new DecimalFormat("#.##");
@@ -131,7 +136,6 @@ public class JniInChIInputAdapter extends JniInchiInput {
 
         return sbOptions.toString();
     }
-
 
     private static String checkOptions(List<INCHI_OPTION> ops) throws JniInchiException {
         if (ops == null) {
