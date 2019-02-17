@@ -462,6 +462,8 @@ public final class Expr {
             if (type.isLogical() && !expr.type.isLogical()) {
                 if (type == AND)
                     right.and(expr);
+                else if (type != NOT)
+                    setLogical(Type.AND, expr, new Expr(this));
                 else
                     setLogical(Type.AND, expr, new Expr(this));
             } else {
@@ -488,8 +490,10 @@ public final class Expr {
             if (type.isLogical() && !expr.type.isLogical()) {
                 if (type == OR)
                     right.or(expr);
-                else
+                else if (type != NOT)
                     setLogical(Type.OR, expr, new Expr(this));
+                else
+                    setLogical(Type.OR, new Expr(this), expr);
             }
             else
                 setLogical(Type.OR, new Expr(this), expr);
