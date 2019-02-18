@@ -18,23 +18,6 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.number.IsCloseTo.closeTo;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -69,6 +52,18 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.junit.Assert.*;
+import static org.openscience.cdk.tools.manipulator.AtomContainerManipulator.*;
 
 /**
  * @cdk.module test-standard
@@ -1338,5 +1333,64 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         String smiAct = new SmilesGenerator().create(AtomContainerManipulator.removeHydrogens(m));
 
         assertThat(smiAct, is(smiExp));
+    }
+
+    @Test public void getMassC6Br6() throws InvalidSmilesException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("Brc1c(Br)c(Br)c(Br)c(Br)c1Br");
+        assertThat(AtomContainerManipulator.getMass(mol, MolWeight),
+                   closeTo(551.485, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, AverageWeight),
+                   closeTo(551.485, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MonoIsotopic),
+                   closeTo(545.510, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MostAbundant),
+                   closeTo(551.503, 0.001));
+    }
+
+    @Test public void getMassCranbin() {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IAtomContainer mol =
+                MolecularFormulaManipulator.getAtomContainer("C202H315N55O64S6",
+                                                              bldr);
+        assertThat(AtomContainerManipulator.getMass(mol, MolWeight),
+                   closeTo(4730.397, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, AverageWeight),
+                   closeTo(4730.397, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MonoIsotopic),
+                   closeTo(4727.140, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MostAbundant),
+                   closeTo(4729.147, 0.001));
+    }
+
+    @Test public void getMassCranbinSpecIsotopes() {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IAtomContainer mol =
+                MolecularFormulaManipulator.getAtomContainer("[12]C200[13]C2[1]H315[14]N55[16]O64[32]S6",
+                                                             bldr);
+        assertThat(AtomContainerManipulator.getMass(mol, MolWeight),
+                   closeTo(4729.147, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, AverageWeight),
+                   closeTo(4730.397, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MonoIsotopic),
+                   closeTo(4729.147, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MostAbundant),
+                   closeTo(4729.147, 0.001));
+    }
+
+    @Test public void getMassCranbinMixedSpecIsotopes() {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IAtomContainer mol =
+                MolecularFormulaManipulator.getAtomContainer("C200[13]C2H315N55O64S6",
+                                                             bldr);
+        assertThat(AtomContainerManipulator.getMass(mol, MolWeight),
+                   closeTo(4732.382, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, AverageWeight),
+                   closeTo(4730.397, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MonoIsotopic),
+                   closeTo(4729.147, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MostAbundant),
+                   closeTo(4731.154, 0.001));
     }
 }
