@@ -18,17 +18,6 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.number.IsCloseTo.closeTo;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -52,6 +41,18 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.openscience.cdk.tools.manipulator.AtomContainerManipulator.*;
 
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
@@ -1374,5 +1375,26 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                 MolecularFormulaManipulator.getMolecularFormula(f,
                                                                 SilentChemObjectBuilder.getInstance());
         assertThat(MolecularFormulaManipulator.getString(m), is("[C3H7]+"));
+    }
+
+    @Test
+    public void getMostAbundant() {
+        IMolecularFormula mf = new MolecularFormula();
+        mf.addIsotope(new Atom("C"), 6);
+        mf.addIsotope(new Atom("Br"), 6);
+        IMolecularFormula mamf = MolecularFormulaManipulator.getMostAbundant(mf);
+        assertThat(MolecularFormulaManipulator.getString(mamf, false, true),
+                   is("[12]C6[79]Br3[81]Br3"));
+    }
+
+    // Iron has 4 stable isotopes, 54 @ 5.85%, 56 @ 91.57%, 57 @ 2.12%, and
+    // 58 @ 0.28%. Given 100 iron's we expected ~6 @ 54, ~92 @ 56 and 2 @ 57
+    @Test
+    public void getMostAbundantFe100() {
+        IMolecularFormula mf = new MolecularFormula();
+        mf.addIsotope(new Atom("Fe"), 100);
+        IMolecularFormula mamf = MolecularFormulaManipulator.getMostAbundant(mf);
+        assertThat(MolecularFormulaManipulator.getString(mamf, false, true),
+                   is("[54]Fe6[56]Fe92[57]Fe2"));
     }
 }

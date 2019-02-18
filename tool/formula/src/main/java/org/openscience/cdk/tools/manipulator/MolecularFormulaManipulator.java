@@ -58,6 +58,14 @@ import java.util.TreeMap;
  */
 public class MolecularFormulaManipulator {
 
+    public static final Comparator<IIsotope> NAT_ABUN_COMP = new Comparator<IIsotope>() {
+        @Override
+        public int compare(IIsotope o1, IIsotope o2) {
+            return -Double.compare(o1.getNaturalAbundance(),
+                                   o2.getNaturalAbundance());
+        }
+    };
+
     /**
      *  Checks a set of Nodes for the occurrence of each isotopes
      *  instance in the molecular formula. In short number of atoms.
@@ -1410,5 +1418,90 @@ public class MolecularFormulaManipulator {
         mf.setCharge(chg + hcnt);
 
         return true;
+    }
+
+    /**
+     * Helper method for adding isotope distributions to a MF. The method adds
+     * a distribution of isotopes by splitting the set of isotopes in two,
+     * the one under consideration (specified by 'idx') and the remaining to be
+     * considered ('&gt;idx'). The inflection point is calculate as 'k'
+     * &le 'count' isotopes added. If there are remaining isotopes the method
+     * calls it's self with 'idx+1' and 'count := k'.
+     *
+     * @param mf       the molecular formula to update
+     * @param isotopes the isotopes, sorted most abundance to least
+     * @param idx      which isotope we're currently considering
+     * @param count    the number of isotopes remaining to select from
+     * @return the distribution is unique (or not)
+     */
+    private static boolean addIsotopeDist(IMolecularFormula mf,
+                                          IIsotope[] isotopes,
+                                          int idx, int count) {
+        if (count == 0)
+            return true;
+        double frac = 100d;
+        for (int i = 0; i < idx; i++)
+            frac -= isotopes[i].getNaturalAbundance();
+        double p = isotopes[idx].getNaturalAbundance() / frac;
+
+        if (p >= 1.0) {
+            mf.addIsotope(isotopes[idx], count);
+            return true;
+        }
+
+        double kMin = (count + 1) * (1 - p) - 1;
+        double kMax = (count + 1) * (1 - p);
+        if ((int) Math.ceil(kMin) == (int) Math.floor(kMax)) {
+            int k = (int) kMax;
+            mf.addIsotope(isotopes[idx], count - k);
+            // recurse with remaining
+            return addIsotopeDist(mf, isotopes, idx + 1, k);
+        }
+        return false; // multiple are most abundant
+    }
+
+    /**
+     * Compute the most abundant MF. Given the MF C<sub>6</sub>Br<sub>6</sub>
+     * this function rapidly computes the most abundant MF as
+     * <sup>12</sup>C<sub>6</sub><sup>79</sup>Br<sub>3</sub><sup>81
+     * </sup>Br<sub>3</sub>.
+     *
+     * @param mf a molecular formula with unspecified isotopes
+     * @return the most abundant MF, or null if it could not be computed
+     */
+    public static IMolecularFormula getMostAbundant(IMolecularFormula mf) {
+        final Isotopes isofact;
+        try {
+            isofact = Isotopes.getInstance();
+        } catch (IOException e) {
+            return null;
+        }
+        IMolecularFormula res = mf.getBuilder()
+                                  .newInstance(IMolecularFormula.class);
+        for (IIsotope iso : mf.isotopes()) {
+            int count = mf.getIsotopeCount(iso);
+            if (iso.getMassNumber() == null || iso.getMassNumber() == 0) {
+                IIsotope[] isotopes = isofact.getIsotopes(iso.getSymbol());
+                Arrays.sort(isotopes, NAT_ABUN_COMP);
+                if (!addIsotopeDist(res, isotopes, 0, count))
+                    return null;
+            } else
+                res.addIsotope(iso, count);
+        }
+        return res;
+    }
+
+    /**
+     * Compute the most abundant MF. Given the a molecule
+     * C<sub>6</sub>Br<sub>6</sub> this function rapidly computes the most
+     * abundant MF as
+     * <sup>12</sup>C<sub>6</sub><sup>79</sup>Br<sub>3</sub><sup>81
+     * </sup>Br<sub>3</sub>.
+     *
+     * @param mol a molecule with unspecified isotopes
+     * @return the most abundant MF, or null if it could not be computed
+     */
+    public static IMolecularFormula getMostAbundant(IAtomContainer mol) {
+        return getMostAbundant(getMolecularFormula(mol));
     }
 }
