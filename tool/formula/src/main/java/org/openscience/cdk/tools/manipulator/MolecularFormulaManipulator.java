@@ -813,6 +813,8 @@ public class MolecularFormulaManipulator {
      * @return          The mass with the correction
      */
     private static double correctMass(double mass, Integer charge) {
+        if (charge == null)
+            return mass;
         double massE = 0.00054857990927;
         if (charge > 0)
             mass -= massE * charge;
