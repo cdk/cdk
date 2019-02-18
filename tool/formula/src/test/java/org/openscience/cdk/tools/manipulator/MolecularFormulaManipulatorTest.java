@@ -1397,4 +1397,49 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         assertThat(MolecularFormulaManipulator.getString(mamf, false, true),
                    is("[54]Fe6[56]Fe92[57]Fe2"));
     }
+
+    @Test public void getMassCranbin() {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf =
+                MolecularFormulaManipulator.getMolecularFormula("C202H315N55O64S6",
+                                                                bldr);
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
+                          closeTo(4730.397, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, AverageWeight),
+                          closeTo(4730.397, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
+                          closeTo(4727.140, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
+                          closeTo(4729.147, 0.001));
+    }
+
+    @Test public void getMassCranbinSpecIsotopes() {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf =
+                MolecularFormulaManipulator.getMolecularFormula("[12]C200[13]C2[1]H315[14]N55[16]O64[32]S6",
+                                                               bldr);
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
+                          closeTo(4729.147, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, AverageWeight),
+                          closeTo(4730.397, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
+                          closeTo(4729.147, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
+                          closeTo(4729.147, 0.001));
+    }
+
+    @Test public void getMassCranbinMixedSpecIsotopes() {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf =
+                MolecularFormulaManipulator.getMolecularFormula("C200[13]C2H315N55O64S6",
+                                                                bldr);
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
+                          closeTo(4732.382, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, AverageWeight),
+                          closeTo(4730.397, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
+                          closeTo(4729.147, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
+                          closeTo(4731.154, 0.001));
+    }
 }

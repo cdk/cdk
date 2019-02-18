@@ -771,37 +771,14 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Get the summed exact mass of all isotopes from an MolecularFormula. It
-     * assumes isotope masses to be preset, and returns 0.0 if not.
-     *
-     * @param  formula The IMolecularFormula to calculate
-     * @return         The summed exact mass of all atoms in this MolecularFormula
+     * @deprecated calls {@link #getMass(IMolecularFormula, int)} with option
+     * {@link #MonoIsotopic} and adjusts for charge with
+     * {@link #correctMass(double, Integer)}. These functions should be used
+     * directly.
      */
+    @Deprecated
     public static double getTotalExactMass(IMolecularFormula formula) {
-        double mass = 0.0;
-        for (IIsotope isotope : formula.isotopes()) {
-            try {
-                Integer massNum  = isotope.getMassNumber();
-                Double  exactMass = isotope.getExactMass();
-                if (massNum == null || massNum == 0) {
-                    IIsotope majorIsotope = Isotopes.getInstance().getMajorIsotope(isotope.getSymbol());
-                    if (majorIsotope != null)
-                        exactMass = majorIsotope.getExactMass();
-                } else {
-                    if (exactMass == null) {
-                        IIsotope temp = Isotopes.getInstance().getIsotope(isotope.getSymbol(), massNum);
-                        if (temp != null)
-                            exactMass = temp.getExactMass();
-                    }
-                }
-                if (exactMass != null)
-                    mass += exactMass * formula.getIsotopeCount(isotope);
-            } catch (IOException e) {
-                throw new RuntimeException("Could not instantiate the IsotopeFactory.");
-            }
-        }
-        if (formula.getCharge() != null) mass = correctMass(mass, formula.getCharge());
-        return mass;
+        return correctMass(getMass(formula, MonoIsotopic), formula.getCharge());
     }
 
     /**
@@ -844,48 +821,135 @@ public class MolecularFormulaManipulator {
         return mass;
     }
 
+    private static final int MolWeight     = 0x1;
+    private static final int AverageWeight = 0x2;
+    private static final int MonoIsotopic  = 0x3;
+    private static final int MostAbundant  = 0x4;
+
+    private static double getExactMass(IsotopeFactory isofact, IIsotope atom) {
+        if (atom.getExactMass() != null)
+            return atom.getExactMass();
+        else if (atom.getMassNumber() != null)
+            return isofact.getExactMass(atom.getAtomicNumber(),
+                                        atom.getMassNumber());
+        else
+            return isofact.getMajorIsotopeMass(atom.getAtomicNumber());
+    }
+
+    private static double getMassOrAvg(IsotopeFactory isofact, IIsotope atom) {
+        if (atom.getMassNumber() == null ||
+            atom.getMassNumber() == 0)
+            return isofact.getNaturalMass(atom);
+        else
+            return getExactMass(isofact, atom);
+    }
+
     /**
-     * Get the summed natural mass of all elements from an MolecularFormula.
+     * Calculate the mass of a molecule, this function takes an optional
+     * 'mass flavour' that switches the computation type, the flavours are:
+     * <br>
+     * <ul>
+     * <li>{@link #MolWeight} (default) - use and isotopes the natural mass
+     * unless a specific isotope is specified</li>
+     * <li>{@link #AverageWeight} - use and isotopes the natural mass even
+     * if a specific isotope is specified</li>
+     * <li>{@link #MonoIsotopic} - use and isotopes the major isotope mass
+     * even if a specific isotope is specified</li>
+     * <li>{@link #MostAbundant} - use the distribution of isotopes
+     * based on their abundance and select the most abundant. For example
+     * C<sub>6</sub>Br<sub>6</sub> would have three <sup>79</sup>Br and
+     * <sup>81</sup>Br because their abundance is 51 and 49%.
+     * </ul>
      *
-     * @param  formula The IMolecularFormula to calculate
-     * @return         The summed exact mass of all atoms in this MolecularFormula
+     * @param mf   molecular formula
+     * @param flav the mass flavour
+     * @return the mass of the molecule
+     * @see #MolWeight
+     * @see #AverageWeight
+     * @see #MonoIsotopic
+     * @see #MostAbundant
      */
-    public static double getNaturalExactMass(IMolecularFormula formula) {
-        double mass = 0.0;
-        IsotopeFactory factory;
+    public static double getMass(IMolecularFormula mf, int flav) {
+        final Isotopes isofact;
         try {
-            factory = Isotopes.getInstance();
+            isofact = Isotopes.getInstance();
         } catch (IOException e) {
-            throw new RuntimeException("Could not instantiate the IsotopeFactory.");
+            throw new IllegalStateException("Could not load Isotopes!");
         }
-        for (IIsotope isotope : formula.isotopes()) {
-            IElement isotopesElement = formula.getBuilder().newInstance(IElement.class, isotope);
-            mass += factory.getNaturalMass(isotopesElement) * formula.getIsotopeCount(isotope);
+
+        double mass = 0;
+        switch (flav & 0xf) {
+            case MolWeight:
+                for (IIsotope iso : mf.isotopes()) {
+                    mass += mf.getIsotopeCount(iso) *
+                              getMassOrAvg(isofact, iso);
+                }
+                break;
+            case AverageWeight:
+                for (IIsotope iso : mf.isotopes()) {
+                    mass += mf.getIsotopeCount(iso) *
+                              isofact.getNaturalMass(iso.getAtomicNumber());
+                }
+                break;
+            case MonoIsotopic:
+                for (IIsotope iso : mf.isotopes()) {
+                    mass += mf.getIsotopeCount(iso) *
+                              getExactMass(isofact, iso);
+                }
+                break;
+            case MostAbundant:
+                IMolecularFormula mamf = getMostAbundant(mf);
+                if (mamf != null)
+                    mass = getMass(mamf, MonoIsotopic);
+                break;
         }
         return mass;
     }
 
     /**
-     * Get the summed major isotopic mass of all elements from an MolecularFormula.
+     * Calculate the mass of a molecule, this function takes an optional
+     * 'mass flavour' that switches the computation type, the flavours are:
+     * <br>
+     * <ul>
+     * <li>{@link #MolWeight} (default) - use and isotopes the natural mass
+     * unless a specific isotope is specified</li>
+     * <li>{@link #AverageWeight} - use and isotopes the natural mass even
+     * if a specific isotope is specified</li>
+     * <li>{@link #MonoIsotopic} - use and isotopes the major isotope mass
+     * even if a specific isotope is specified</li>
+     * <li>{@link #MostAbundant} - use the distribution of isotopes
+     * based on their abundance and select the most abundant. For example
+     * C<sub>6</sub>Br<sub>6</sub> would have three <sup>79</sup>Br and
+     * <sup>81</sup>Br because their abundance is 51 and 49%.
+     * </ul>
      *
-     * @param  formula The IMolecularFormula to calculate
-     * @return         The summed exact major isotope masses of all atoms in this MolecularFormula
+     * @param mf molecular formula
+     * @return the mass of the molecule
+     * @see #MolWeight
+     * @see #AverageWeight
+     * @see #MonoIsotopic
+     * @see #MostAbundant
      */
-    public static double getMajorIsotopeMass(IMolecularFormula formula) {
-        double mass = 0.0;
-        IsotopeFactory factory;
-        try {
-            factory = Isotopes.getInstance();
-        } catch (IOException e) {
-            throw new RuntimeException("Could not instantiate the IsotopeFactory.");
-        }
-        for (IIsotope isotope : formula.isotopes()) {
-            IIsotope major = factory.getMajorIsotope(isotope.getSymbol());
-            if (major != null) {
-                mass += major.getExactMass() * formula.getIsotopeCount(isotope);
+    public static double getMass(IMolecularFormula mf) {
+        return getMass(mf, MolWeight);
             }
+
+    /**
+     * @deprecated use {@link #getMass(IMolecularFormula, int)} with option
+     * {@link #AverageWeight}.
+     */
+    @Deprecated
+    public static double getNaturalExactMass(IMolecularFormula formula) {
+        return getMass(formula, AverageWeight);
         }
-        return mass;
+
+    /**
+     * @deprecated use {@link #getMass(IMolecularFormula, int)} with option
+     * {@link #MonoIsotopic}.
+     */
+    @Deprecated
+    public static double getMajorIsotopeMass(IMolecularFormula formula) {
+        return getMass(formula, MonoIsotopic);
     }
 
     /**
@@ -960,15 +1024,17 @@ public class MolecularFormulaManipulator {
      */
     public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer, IMolecularFormula formula) {
         int charge = 0;
-        IAtom hAtom = null;
+        int hcnt   = 0;
         for (IAtom iAtom : atomContainer.atoms()) {
             formula.addIsotope(iAtom);
-            if (iAtom.getFormalCharge() != null) charge += iAtom.getFormalCharge();
-
-            if (iAtom.getImplicitHydrogenCount() != null && (iAtom.getImplicitHydrogenCount() > 0)) {
-                if (hAtom == null) hAtom = atomContainer.getBuilder().newInstance(IAtom.class, "H");
-                formula.addIsotope(hAtom, iAtom.getImplicitHydrogenCount());
+            if (iAtom.getFormalCharge() != null)
+                charge += iAtom.getFormalCharge();
+            if (iAtom.getImplicitHydrogenCount() != null)
+                hcnt += iAtom.getImplicitHydrogenCount();
             }
+        if (hcnt != 0) {
+            IAtom hAtom = atomContainer.getBuilder().newInstance(IAtom.class, "H");
+            formula.addIsotope(hAtom, hcnt);
         }
         formula.setCharge(charge);
         return formula;
@@ -1005,6 +1071,7 @@ public class MolecularFormulaManipulator {
             int occur = formula.getIsotopeCount(isotope);
             for (int i = 0; i < occur; i++) {
                 IAtom atom = formula.getBuilder().newInstance(IAtom.class, isotope);
+                atom.setImplicitHydrogenCount(0);
                 atomContainer.addAtom(atom);
             }
         }
