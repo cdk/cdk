@@ -1214,7 +1214,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         Assert.assertEquals("C6H6", MolecularFormulaManipulator.getString(f));
 
     }
-    
+
     @Test public void noNullPointerExceptionForExactMassOfRGroups() throws Exception {
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(new Isotope("C"));
@@ -1222,8 +1222,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(new Isotope("R"));
         assertThat(MolecularFormulaManipulator.getTotalExactMass(formula),
                    closeTo(15.0234, 0.01));
-    } 
-    
+    }
+
     @Test public void noNullPointerExceptionForMassOfRGroups() throws Exception {
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(new Isotope("C"));
@@ -1231,7 +1231,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(new Isotope("R"));
         assertThat(MolecularFormulaManipulator.getTotalMassNumber(formula),
                    closeTo(15.0, 0.01));
-    } 
+    }
 
     @Test public void noNullPointerExceptionForMajorMassOfRGroups() throws Exception {
         IMolecularFormula formula = new MolecularFormula();
@@ -1249,7 +1249,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf.addIsotope(carbon, 10);
         MolecularFormulaManipulator.getNaturalExactMass(mf);
     }
-    
+
     @Test public void acceptMinusAsInput() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[PO4]3–",
@@ -1385,6 +1385,25 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula mamf = MolecularFormulaManipulator.getMostAbundant(mf);
         assertThat(MolecularFormulaManipulator.getString(mamf, false, true),
                    is("[12]C6[79]Br3[81]Br3"));
+    }
+
+
+    private static void assertMass(String str, double expMass, int flav) {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf =
+            MolecularFormulaManipulator.getMolecularFormula(str, bldr);
+        double act = MolecularFormulaManipulator.getMass(mf, flav);
+        assertThat(act, is(closeTo(expMass, 0.01)));
+    }
+
+    @Test
+    public void C6Br6() {
+        assertMass("C6Br6", 551.485, MolWeight);
+        assertMass("C6Br6", 545.510, MonoIsotopic);
+        assertMass("C6Br6", 551.503, MostAbundant);
+        assertMass("[12]C4[13]C2Br6", 553.427, MolWeight);
+        assertMass("[12]C4[13]C2Br6", 547.516, MonoIsotopic);
+        assertMass("[12]C4[13]C2Br6", 553.510, MostAbundant);
     }
 
     // Iron has 4 stable isotopes, 54 @ 5.85%, 56 @ 91.57%, 57 @ 2.12%, and

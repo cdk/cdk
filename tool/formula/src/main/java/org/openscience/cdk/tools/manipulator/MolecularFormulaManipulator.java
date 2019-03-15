@@ -821,10 +821,10 @@ public class MolecularFormulaManipulator {
         return mass;
     }
 
-    private static final int MolWeight     = 0x1;
-    private static final int AverageWeight = 0x2;
-    private static final int MonoIsotopic  = 0x3;
-    private static final int MostAbundant  = 0x4;
+    public static final int MolWeight     = 0x1;
+    public static final int AverageWeight = 0x2;
+    public static final int MonoIsotopic  = 0x3;
+    public static final int MostAbundant  = 0x4;
 
     private static double getExactMass(IsotopeFactory isofact, IIsotope atom) {
         if (atom.getExactMass() != null)
