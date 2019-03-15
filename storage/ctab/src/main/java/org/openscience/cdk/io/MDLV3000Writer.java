@@ -36,6 +36,8 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -68,6 +70,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
+import static org.openscience.cdk.io.MDLV2000Writer.OptProgramName;
 
 /**
  * Ctab V3000 format output. This writer provides output to the more modern (but less widely
@@ -89,7 +92,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
     public static final  SimpleDateFormat HEADER_DATE_FORMAT = new SimpleDateFormat("MMddyyHHmm");
     public static final  NumberFormat     DECIMAL_FORMAT     = new DecimalFormat("#.####", DecimalFormatSymbols.getInstance(Locale.ROOT));
     private static final Pattern          R_GRP_NUM          = Pattern.compile("R(\\d+)");
-    private V30LineWriter writer;
+    private V30LineWriter                 writer;
+    private StringIOSetting               programNameOpt;
 
     /**
      * Create a new V3000 writer, output to the provided JDK writer.
@@ -97,6 +101,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @param writer output location
      */
     public MDLV3000Writer(Writer writer) {
+        this();
         this.writer = new V30LineWriter(writer);
     }
 
@@ -106,6 +111,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @param out output location
      */
     public MDLV3000Writer(OutputStream out) throws CDKException {
+        this();
         this.setWriter(out);
     }
 
@@ -113,6 +119,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * Default empty constructor.
      */
     public MDLV3000Writer() {
+        initIOSettings();
     }
 
     /**
@@ -140,6 +147,17 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         return idx;
     }
 
+    private String getProgName() {
+        String progname = programNameOpt.getSetting();
+        if (progname == null)
+            return "        ";
+        else if (progname.length() > 8)
+            return progname.substring(0, 8);
+        else if (progname.length() < 8)
+            return String.format("%-8s", progname);
+        else
+            return progname;
+    }
 
     /**
      * Write the three line header of the MDL format: title, version/timestamp, remark.
@@ -162,7 +180,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
          * program input, internal registry number (R) if input through MDL
          * form. A blank line can be substituted for line 2.
          */
-        writer.writeDirect("  CDK     ");
+        writer.writeDirect("  ");
+        writer.writeDirect(getProgName());
         writer.writeDirect(HEADER_DATE_FORMAT.format(System.currentTimeMillis()));
         final int dim = getNumberOfDimensions(mol);
         if (dim != 0) {
@@ -920,5 +939,17 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         public void close() throws IOException {
             writer.close();
         }
+    }
+
+    /**
+     * Initializes IO settings.<br>
+     * Please note with regards to "writeAromaticBondTypes": bond type values 4 through 8 are for SSS queries only,
+     * so a 'query file' is created if the container has aromatic bonds and this settings is true.
+     */
+    private void initIOSettings() {
+        programNameOpt = addSetting(new StringIOSetting(OptProgramName,
+                                                        IOSetting.Importance.LOW,
+                                                        "Program name to write at the top of the molfile header, should be exactly 8 characters long",
+                                                        "CDK"));
     }
 }

@@ -27,6 +27,7 @@ import java.io.StringWriter;
 import java.util.Collections;
 import java.util.Properties;
 
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -344,5 +345,29 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         String out = sw.toString();
         assertFalse(out.contains("> <two>"));
         assertFalse(out.contains("> <one>"));
+    }
+
+    @Test
+    public void setProgramName() {
+        StringWriter sw = new StringWriter();
+        try (SDFWriter sdfw = new SDFWriter(sw)) {
+            sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
+                .setSetting("false");
+            sdfw.getSetting(MDLV2000Writer.OptProgramName)
+                .setSetting("Bioclipse");
+
+            sdfw.write(TestMoleculeFactory.make123Triazole());
+
+            sdfw.getSetting(SDFWriter.OptAlwaysV3000)
+                .setSetting("true");
+
+            sdfw.write(TestMoleculeFactory.make123Triazole());
+        } catch (IOException | CDKException e) {
+            e.printStackTrace();
+        }
+        String sdf = sw.toString();
+        for (String mol : sdf.split("\\$\\$\\$\\$", 2)) {
+            assertThat(mol, CoreMatchers.containsString("Bioclip"));
+        }
     }
 }
