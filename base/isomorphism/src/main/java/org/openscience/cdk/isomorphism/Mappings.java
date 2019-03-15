@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -352,7 +353,14 @@ public final class Mappings implements Iterable<int[]> {
      * @return array of mappings
      */
     public int[][] toArray() {
-        return Iterables.toArray(iterable, int[].class);
+        int[][] res = new int[14][];
+        int size = 0;
+        for (int[] map : this) {
+            if (size == res.length)
+                res = Arrays.copyOf(res, size + (size >> 1));
+            res[size++] = map.clone();
+        }
+        return Arrays.copyOf(res, size);
     }
 
     /**
