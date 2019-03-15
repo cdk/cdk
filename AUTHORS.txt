@@ -57,6 +57,7 @@ Todd Martin
 John Mayfield
 Nathanaël Mazuir
 Stephan Michels
+Martin Morissette
 Hirotomo Moriwaki
 Scooter Morris
 Peter Murray-Rust
