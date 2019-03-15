@@ -1321,13 +1321,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             return atom;
         }
         if (symbol.equals("D") && interpretHydrogenIsotopes.isSet()) {
-            if (mode == Mode.STRICT) throw new CDKException("invalid symbol: " + symbol);
+            handleError("invalid symbol: " + symbol, lineNum, 31, 33);
             IAtom atom = builder.newInstance(IAtom.class, "H");
             atom.setMassNumber(2);
             return atom;
         }
         if (symbol.equals("T") && interpretHydrogenIsotopes.isSet()) {
-            if (mode == Mode.STRICT) throw new CDKException("invalid symbol: " + symbol);
+            handleError("invalid symbol: " + symbol, lineNum, 31, 33);
             IAtom atom = builder.newInstance(IAtom.class, "H");
             atom.setMassNumber(3);
             return atom;
