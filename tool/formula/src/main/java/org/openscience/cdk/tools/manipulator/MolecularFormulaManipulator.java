@@ -1232,25 +1232,40 @@ public class MolecularFormulaManipulator {
      * @return        Formula with the correction
      */
     private static String breakExtractor(String formula) {
+    	boolean started = false;
         boolean finalBreak = false;
         String recentformula = "";
-        String multiple = "0";
+        String multiple = "";
+        String finalformula = "";
         for (int f = 0; f < formula.length(); f++) {
             char thisChar = formula.charAt(f);
-            if (thisChar == '(') {
-                // start
-            } else if (thisChar == ')') {
-                // final
-                finalBreak = true;
-            } else if (!finalBreak) {
-                recentformula += thisChar;
-            } else {
-                multiple += thisChar;
+            if (!started) {
+            	 if (thisChar == '(') {
+            		 // start
+                     started = true;
+                 }else {
+                	 finalformula += thisChar;
+                 }
+            }else {
+            	if (thisChar == ')') {
+                    // final
+                    finalBreak = true;
+                } else if (!finalBreak) {
+                    recentformula += thisChar;
+                } else if ( isDigit(thisChar) ){
+                    multiple += thisChar;
+                } else {
+                	finalformula += formula.substring(f, formula.length());
+                	break;
+                }
             }
         }
-
-        String finalformula = muliplier(recentformula, Integer.valueOf(multiple));
-        return finalformula;
+        finalformula += muliplier(recentformula, multiple.isEmpty() ? 1:Integer.valueOf(multiple));
+        
+        if (finalformula.contains("("))
+        	return breakExtractor(finalformula);
+        else
+        	return finalformula;
     }
 
     /**
