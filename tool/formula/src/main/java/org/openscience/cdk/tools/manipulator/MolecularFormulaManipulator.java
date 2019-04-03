@@ -1234,6 +1234,16 @@ public class MolecularFormulaManipulator {
      * @return        Formula with the correction
      */
     private static String breakExtractor(String formula) {
+    	/* Regex explanation:
+    	 * (.*) Takes everything from before the formula  					(Group 1)
+    	 * \( Matches the open bracket "("									(No group)				
+    	 * ([^(]+?) Matches everything that isn't an opening 
+    	 * 			bracket (The formula inside the inner most bracket) 	(Group 2)
+    	 * \) Matches a closing bracket										(No group)
+    	 * ([0-9]*)	Matches the multiplier number, if any					(Group 3)
+    	 * (.*) Takes everything from after the formula to remove the 
+    	 * 			parenthesis from 										(Group 4)
+    	 */     
     	Pattern pattern = Pattern.compile("(.*)\\(([^(]+?)\\)([0-9]*)(.*)");
     	
     	while (formula.contains("(")) {
