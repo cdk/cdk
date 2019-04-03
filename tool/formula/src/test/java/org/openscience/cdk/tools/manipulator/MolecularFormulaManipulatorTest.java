@@ -209,6 +209,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void testGetString__String_IMolecularFormula() {
         Assert.assertNotNull(MolecularFormulaManipulator.getMolecularFormula("C10H16", new MolecularFormula()));
         Assert.assertNotNull(MolecularFormulaManipulator.getMolecularFormula("C10H16", builder));
+        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("O3(Fe(O2))3", builder);
+        Assert.assertEquals( formula.getIsotopeCount( new Atom("Fe") ), 3);
+        Assert.assertEquals( formula.getIsotopeCount( new Atom("O") ), 9);
     }
 
     /** Test if formula-order is independent of isotope-insertion order */
