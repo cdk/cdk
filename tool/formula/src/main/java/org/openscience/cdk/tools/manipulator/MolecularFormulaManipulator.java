@@ -1232,41 +1232,25 @@ public class MolecularFormulaManipulator {
      * @return        Formula with the correction
      */
     private static String breakExtractor(String formula) {
-    	boolean started = false;
-        boolean finalBreak = false;
-        String recentformula = "";
-        String multiple = "";
-        String finalformula = "";
-        for (int f = 0; f < formula.length(); f++) {
-            char thisChar = formula.charAt(f);
-            if (!started) {
-            	 if (thisChar == '(') {
-            		 // start
-                     started = true;
-                 }else {
-                	 finalformula += thisChar;
-                 }
-            }else {
-            	if (thisChar == ')') {
-                    // final
-                    finalBreak = true;
-                } else if (!finalBreak) {
-                    recentformula += thisChar;
-                } else if ( isDigit(thisChar) ){
-                    multiple += thisChar;
-                } else {
-                	finalformula += formula.substring(f, formula.length());
-                	break;
-                }
-            }
-        }
-        finalformula += muliplier(recentformula, multiple.isEmpty() ? 1:Integer.valueOf(multiple));
-        
-        if (finalformula.contains("("))
-        	return breakExtractor(finalformula);
-        else
-        	return finalformula;
-    }
+    	Pattern pattern = Pattern.compile("(.*)\\(([^(]+?)\\)([0-9]*)(.*)");
+    	
+    	while (formula.contains("(")) {
+    		Matcher matcher = pattern.matcher(formula);
+    		String newFormula = formula;
+    		
+        	while ( matcher.find() ) {
+        		String multiplierStr = matcher.group(3);
+        		int multiplier = multiplierStr.isEmpty() ? 1:Integer.parseInt(multiplierStr);
+        		newFormula = matcher.group(1) + muliplier(matcher.group(2), multiplier) + matcher.group(4);
+        	}
+        	
+        	if (newFormula == formula)
+        		return formula;
+        	formula = newFormula;
+    	}
+    	
+    	return formula;
+    }    
 
     /**
      * The starting with numeric value is used to show a quantity by which a formula is multiplied.
