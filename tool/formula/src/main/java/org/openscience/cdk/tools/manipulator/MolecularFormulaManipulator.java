@@ -1234,35 +1234,42 @@ public class MolecularFormulaManipulator {
      * @return        Formula with the correction
      */
     private static String breakExtractor(String formula) {
-    	/* Regex explanation:
-    	 * (.*) Takes everything from before the formula  					(Group 1)
-    	 * \( Matches the open bracket "("									(No group)				
-    	 * ([^(]+?) Matches everything that isn't an opening 
-    	 * 			bracket (The formula inside the inner most bracket) 	(Group 2)
-    	 * \) Matches a closing bracket										(No group)
-    	 * ([0-9]*)	Matches the multiplier number, if any					(Group 3)
-    	 * (.*) Takes everything from after the formula to remove the 
-    	 * 			parenthesis from 										(Group 4)
-    	 */     
-    	Pattern pattern = Pattern.compile("(.*)\\(([^(]+?)\\)([0-9]*)(.*)");
-    	
-    	while (formula.contains("(")) {
-    		Matcher matcher = pattern.matcher(formula);
-    		String newFormula = formula;
-    		
-        	while ( matcher.find() ) {
-        		String multiplierStr = matcher.group(3);
-        		int multiplier = multiplierStr.isEmpty() ? 1:Integer.parseInt(multiplierStr);
-        		newFormula = matcher.group(1) + muliplier(matcher.group(2), multiplier) + matcher.group(4);
+        boolean finalBreak = false;
+
+        int innerMostBracket = formula.lastIndexOf("(");
+        
+        if (innerMostBracket<0)
+        	return formula;
+        
+        String finalformula = formula.substring(0, innerMostBracket);
+        String multipliedformula = "";
+        String formulaEnd = "";
+        String multiple = "";
+        
+        for (int f = innerMostBracket + 1; f < formula.length(); f++) {
+            char thisChar = formula.charAt(f);
+            
+        	if ( finalBreak ) {
+        		if ( isDigit(thisChar) ){
+                    multiple += thisChar;
+                } else {
+                	formulaEnd = formula.substring(f, formula.length());
+                	break;
+                }
+        	}else {
+        		if ( thisChar == ')' ) {
+                    finalBreak = true;
+                }else
+                    multipliedformula += thisChar;
         	}
-        	
-        	if (newFormula == formula)
-        		return formula;
-        	formula = newFormula;
-    	}
-    	
-    	return formula;
-    }    
+        }
+        finalformula += muliplier(multipliedformula, multiple.isEmpty() ? 1:Integer.valueOf(multiple)) + formulaEnd;
+        
+        if (finalformula.contains("("))
+        	return breakExtractor(finalformula);
+        else
+        	return finalformula;
+    }
 
     /**
      * The starting with numeric value is used to show a quantity by which a formula is multiplied.
