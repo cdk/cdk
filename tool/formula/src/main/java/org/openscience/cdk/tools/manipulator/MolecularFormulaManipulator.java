@@ -25,6 +25,8 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -1233,24 +1235,40 @@ public class MolecularFormulaManipulator {
      */
     private static String breakExtractor(String formula) {
         boolean finalBreak = false;
-        String recentformula = "";
-        String multiple = "0";
-        for (int f = 0; f < formula.length(); f++) {
-            char thisChar = formula.charAt(f);
-            if (thisChar == '(') {
-                // start
-            } else if (thisChar == ')') {
-                // final
-                finalBreak = true;
-            } else if (!finalBreak) {
-                recentformula += thisChar;
-            } else {
-                multiple += thisChar;
-            }
-        }
 
-        String finalformula = muliplier(recentformula, Integer.valueOf(multiple));
-        return finalformula;
+        int innerMostBracket = formula.lastIndexOf("(");
+        
+        if (innerMostBracket<0)
+        	return formula;
+        
+        String finalformula = formula.substring(0, innerMostBracket);
+        String multipliedformula = "";
+        String formulaEnd = "";
+        String multiple = "";
+        
+        for (int f = innerMostBracket + 1; f < formula.length(); f++) {
+            char thisChar = formula.charAt(f);
+            
+        	if ( finalBreak ) {
+        		if ( isDigit(thisChar) ){
+                    multiple += thisChar;
+                } else {
+                	formulaEnd = formula.substring(f, formula.length());
+                	break;
+                }
+        	}else {
+        		if ( thisChar == ')' ) {
+                    finalBreak = true;
+                }else
+                    multipliedformula += thisChar;
+        	}
+        }
+        finalformula += muliplier(multipliedformula, multiple.isEmpty() ? 1:Integer.valueOf(multiple)) + formulaEnd;
+        
+        if (finalformula.contains("("))
+        	return breakExtractor(finalformula);
+        else
+        	return finalformula;
     }
 
     /**
