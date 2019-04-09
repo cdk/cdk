@@ -41,23 +41,22 @@ import java.util.List;
  */
 public class NeighborList {
 
-    HashMap<String, List> boxes;
+    HashMap<String, List<Integer>> boxes;
     double                boxSize;
     IAtom[]               atoms;
 
     public NeighborList(IAtom[] atoms, double radius) {
         this.atoms = atoms;
-        this.boxes = new HashMap<String, List>();
+        this.boxes = new HashMap<>();
         this.boxSize = 2 * radius;
         for (int i = 0; i < atoms.length; i++) {
             String key = getKeyString(atoms[i]);
-
             if (this.boxes.containsKey(key)) {
-                List arl = this.boxes.get(key);
+                List<Integer> arl = this.boxes.get(key);
                 arl.add(i);
                 this.boxes.put(key, arl);
             } else {
-                this.boxes.put(key, new ArrayList());
+                this.boxes.put(key, new ArrayList<Integer>());
             }
         }
     }
@@ -72,8 +71,7 @@ public class NeighborList {
         k2 = (int) (Math.floor(y / boxSize));
         k3 = (int) (Math.floor(z / boxSize));
 
-        String key = Integer.toString(k1) + " " + Integer.toString(k2) + " " + Integer.toString(k3) + " ";
-        return (key);
+        return (k1 + " " + k2 + " " + k3 + " ");
     }
 
     private int[] getKeyArray(IAtom atom) {
@@ -86,8 +84,7 @@ public class NeighborList {
         k2 = (int) (Math.floor(y / boxSize));
         k3 = (int) (Math.floor(z / boxSize));
 
-        int[] ret = {k1, k2, k3};
-        return (ret);
+        return (new int[]{k1, k2, k3});
     }
 
     public int getNumberOfNeighbors(int i) {
@@ -99,29 +96,23 @@ public class NeighborList {
 
         IAtom ai = this.atoms[ii];
         int[] key = getKeyArray(ai);
-        ArrayList nlist = new ArrayList();
+        List<Integer> nlist = new ArrayList<>();
 
         int[] bval = {-1, 0, 1};
-        for (int i = 0; i < bval.length; i++) {
-            int x = bval[i];
-            for (int j = 0; j < bval.length; j++) {
-                int y = bval[j];
-                for (int k = 0; k < bval.length; k++) {
-                    int z = bval[k];
-
-                    String keyj = Integer.toString(key[0] + x) + " " + Integer.toString(key[1] + y) + " "
-                            + Integer.toString(key[2] + z) + " ";
+        for (int x : bval) {
+            for (int y : bval) {
+                for (int z : bval) {
+                    String keyj = (key[0] + x) + " " + (key[1] + y) + " " + (key[2] + z) + " ";
                     if (boxes.containsKey(keyj)) {
-                        ArrayList nbrs = (ArrayList) boxes.get(keyj);
-                        for (int l = 0; l < nbrs.size(); l++) {
-                            int i2 = (Integer) nbrs.get(l);
-                            if (i2 != ii) {
-                                IAtom aj = atoms[i2];
+                        List<Integer> nbrs = boxes.get(keyj);
+                        for (Integer nbr : nbrs) {
+                            if (nbr != ii) {
+                                IAtom  aj  = atoms[nbr];
                                 double x12 = aj.getPoint3d().x - ai.getPoint3d().x;
                                 double y12 = aj.getPoint3d().y - ai.getPoint3d().y;
                                 double z12 = aj.getPoint3d().z - ai.getPoint3d().z;
-                                double d2 = x12 * x12 + y12 * y12 + z12 * z12;
-                                if (d2 < maxDist2) nlist.add(i2);
+                                double d2  = x12 * x12 + y12 * y12 + z12 * z12;
+                                if (d2 < maxDist2) nlist.add(nbr);
                             }
                         }
                     }
