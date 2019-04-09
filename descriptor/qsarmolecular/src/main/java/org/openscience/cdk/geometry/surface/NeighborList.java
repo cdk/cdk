@@ -20,8 +20,6 @@
 
 package org.openscience.cdk.geometry.surface;
 
-import org.openscience.cdk.geometry.GeometryUtil;
-import org.openscience.cdk.graph.rebond.Point;
 import org.openscience.cdk.interfaces.IAtom;
 
 import javax.vecmath.Point3d;
