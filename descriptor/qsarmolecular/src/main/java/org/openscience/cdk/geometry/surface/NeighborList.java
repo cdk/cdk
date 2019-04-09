@@ -51,13 +51,10 @@ public class NeighborList {
         this.boxSize = 2 * radius;
         for (int i = 0; i < atoms.length; i++) {
             String key = getKeyString(atoms[i]);
-            if (this.boxes.containsKey(key)) {
-                List<Integer> arl = this.boxes.get(key);
-                arl.add(i);
-                this.boxes.put(key, arl);
-            } else {
-                this.boxes.put(key, new ArrayList<Integer>());
-            }
+            List<Integer> arl = this.boxes.get(key);
+            if (arl == null)
+                this.boxes.put(key, arl = new ArrayList<>());
+            arl.add(i);
         }
     }
 
