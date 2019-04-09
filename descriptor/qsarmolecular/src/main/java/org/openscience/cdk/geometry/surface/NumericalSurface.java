@@ -31,7 +31,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.openscience.cdk.geometry.surface.Point_Type;
 
 /**
  * A class representing the solvent accessible surface area surface of a molecule.
@@ -144,8 +143,6 @@ public class NumericalSurface {
         logger.info("Got tesselation, number of triangles = " + tess.getNumberOfTriangles());
 
         // get neighbor list
-        // QQ: the neighbor list of an atom is the index of other atoms that whose distance with
-        // this atom is less than boxsize (= 2* radius, radius = maxRadius + solventRadius). 
         NeighborList nbrlist = new NeighborList(atoms, maxRadius + solventRadius);
         logger.info("Got neighbor list");
 
@@ -162,15 +159,13 @@ public class NumericalSurface {
 
         for (int i = 0; i < atoms.length; i++) {
             int pointDensity = tess.getNumberOfTriangles() * 3;
-            // QQ: Get the real surface points for each atom.
             Point3d[][] points = atomicSurfacePoints(nbrlist, i, atoms[i], tess);
-            // compute the volume, area, and surface points for each atom, save them in this.surfPoints etc.
             translatePoints(i, points, pointDensity, atoms[i], cp);
         }
         logger.info("Obtained points, areas and volumes");
 
     }
-	
+
     /**
      * Get an array of all the points on the molecular surface.
      *
@@ -193,29 +188,6 @@ public class NumericalSurface {
             }
         }
         return (ret);
-    }
-    
-    public ArrayList<Point_Type> getAllPointswithAtomType() {
-    	int npt = 0;
-        for (int i = 0; i < this.surfPoints.length; i++)
-            npt += this.surfPoints[i].size();
-        //Point3d[] ret = new Point3d[npt];
-        ArrayList<Point_Type> point_types = new ArrayList<Point_Type>(npt);
-        //ArrayList<Integer> atomtype = new ArrayList<Integer>(npt);
-        int j = 0;
-        for (int i = 0; i < this.surfPoints.length; i++) {
-            ArrayList arl = this.surfPoints[i];
-            //atomtype.add(this.atoms[i].getAtomicNumber());
-            for (Iterator it = arl.iterator(); it.hasNext();) {
-                //ret[j] = (Point3d) it.next();
-                Point_Type point_type = new Point_Type();
-                point_type.setAtom(this.atoms[i].getAtomicNumber());
-                point_type.setCoord((Point3d) it.next());
-                point_types.add(point_type);
-                j++;
-            }
-        }
-        return (point_types);
     }
 
     /**
@@ -302,11 +274,9 @@ public class NumericalSurface {
             tmp.add(points[i][0]);
         this.surfPoints[atmIdx] = tmp;
     }
-	
-	// QQ: compare current atom points with other neighbor atoms, like filter.
+
     private Point3d[][] atomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, IAtom atom, Tessellate tess) {
-		
-		// QQ: totalRadius is the current atom vadw radisus
+
         double totalRadius = PeriodicTable.getVdwRadius(atom.getSymbol()) + solventRadius;
         double totalRadius2 = totalRadius * totalRadius;
         double twiceTotalRadius = 2 * totalRadius;
@@ -317,13 +287,10 @@ public class NumericalSurface {
             double x12 = atoms[nlist[i]].getPoint3d().x - atom.getPoint3d().x;
             double y12 = atoms[nlist[i]].getPoint3d().y - atom.getPoint3d().y;
             double z12 = atoms[nlist[i]].getPoint3d().z - atom.getPoint3d().z;
-			
+
             double d2 = x12 * x12 + y12 * y12 + z12 * z12;
             double tmp = PeriodicTable.getVdwRadius(atoms[nlist[i]].getSymbol()) + solventRadius;
             tmp = tmp * tmp;
-            // QQ: tmp is the range that neighbor atom can reach.
-            // QQ: thresh = (D^2 -R1^2 - R2^2)/(2R1), R1 for curent atom, 
-            // R2 for compare atom in neighbor list, D is distance between them.
             double thresh = (d2 + totalRadius2 - tmp) / twiceTotalRadius;
 
             data[i][0] = x12;
@@ -336,9 +303,6 @@ public class NumericalSurface {
         ArrayList points = new ArrayList();
         for (int i = 0; i < tessPoints.length; i++) {
             Point3d pt = tessPoints[i];
-            // QQ: before every point (i) assign to atom,
-            //  test if the point was covered by any other atoms (j).
-            // According to Formula 3 in DCLM paper
             boolean buried = false;
             for (int j = 0; j < data.length; j++) {
                 if (data[j][0] * pt.x + data[j][1] * pt.y + data[j][2] * pt.z > data[j][3]) {

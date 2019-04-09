@@ -44,31 +44,24 @@ public class NeighborList {
     HashMap<String, List> boxes;
     double                boxSize;
     IAtom[]               atoms;
-	
-	/* QQ: Strange thing: if only one atom in the box, then this box contains empty list. */
-	// QQ: Should not this be: every atom will assign to one box?
-	// QQ: in each box, the index of atom is saved.
+
     public NeighborList(IAtom[] atoms, double radius) {
         this.atoms = atoms;
         this.boxes = new HashMap<String, List>();
         this.boxSize = 2 * radius;
         for (int i = 0; i < atoms.length; i++) {
             String key = getKeyString(atoms[i]);
-
-            if (this.boxes.containsKey(key)) {
+            
+			if (this.boxes.containsKey(key)) {
                 List arl = this.boxes.get(key);
-                arl.add(i);
-                this.boxes.put(key, arl);
             } else {
             	ArrayList arl = new ArrayList();
-            	arl.add(i);
-                this.boxes.put(key, arl);
-                // this.boxes.put(key, new ArrayList());
             }
+            arl.add(i);
+            this.boxes.put(key, arl);
         }
     }
-	
-	/* QQ: from the coordinates to get index along all directions. (Start from 0) */
+
     private String getKeyString(IAtom atom) {
         double x = atom.getPoint3d().x;
         double y = atom.getPoint3d().y;
@@ -82,8 +75,7 @@ public class NeighborList {
         String key = Integer.toString(k1) + " " + Integer.toString(k2) + " " + Integer.toString(k3) + " ";
         return (key);
     }
-	
-	
+
     private int[] getKeyArray(IAtom atom) {
         double x = atom.getPoint3d().x;
         double y = atom.getPoint3d().y;
@@ -97,22 +89,18 @@ public class NeighborList {
         int[] ret = {k1, k2, k3};
         return (ret);
     }
-	
+
     public int getNumberOfNeighbors(int i) {
         return getNeighbors(i).length;
     }
-	
-	// QQ: For each atom, find all other atoms in 27 neighbor/self boxes that 
-	// distance^2 is less than maxDist^2. (possibly overlapped sepheres.)
+
     public int[] getNeighbors(int ii) {
         double maxDist2 = this.boxSize * this.boxSize;
 
         IAtom ai = this.atoms[ii];
         int[] key = getKeyArray(ai);
-        ArrayList nlist = new ArrayList(); // nlist is the real list of all neighbor index.
-		
-		
-		// QQ: bval to find all neighbors of a box according to the key.
+        ArrayList nlist = new ArrayList();
+
         int[] bval = {-1, 0, 1};
         for (int i = 0; i < bval.length; i++) {
             int x = bval[i];
@@ -123,11 +111,8 @@ public class NeighborList {
 
                     String keyj = Integer.toString(key[0] + x) + " " + Integer.toString(key[1] + y) + " "
                             + Integer.toString(key[2] + z) + " ";
-                            
-                    /* QQ: x,y,z will go over every neighbor boxes of given atom. */
                     if (boxes.containsKey(keyj)) {
                         ArrayList nbrs = (ArrayList) boxes.get(keyj);
-                        /* QQ: go over every item in the neighbor list. */
                         for (int l = 0; l < nbrs.size(); l++) {
                             int i2 = (Integer) nbrs.get(l);
                             if (i2 != ii) {
