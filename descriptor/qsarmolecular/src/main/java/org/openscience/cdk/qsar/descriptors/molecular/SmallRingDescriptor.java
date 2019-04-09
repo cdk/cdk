@@ -68,7 +68,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     private int[]                 ringBlock;       // ring block identifier; 0=not in a ring
     private int[][]               smallRings;      // all rings of size 3 through 7
     private int[]                 bondOrder;       // numeric bond order for easy reference
-    private boolean[]             bondArom; // aromaticity precalculated
+    private boolean[]             atomArom, bondArom; // aromaticity precalculated
     private boolean[]             piAtom;            // true for all atoms involved in a double bond
     private int[]                 implicitH;         // hydrogens in addition to those encoded
 
@@ -143,7 +143,10 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     @Override
     public DescriptorValue calculate(IAtomContainer mol) {
         this.mol = mol;
-        excavateMolecule();
+        try {
+            excavateMolecule();
+        } catch (CDKException ex) {
+        }
 
         int nSmallRings = smallRings.length;
         int nAromRings = 0;
@@ -197,7 +200,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     }
 
     // analyze the molecule graph, and build up the desired properties
-    private void excavateMolecule() {
+    private void excavateMolecule() throws CDKException {
         final int na = mol.getAtomCount(), nb = mol.getBondCount();
 
         // build up an index-based neighbour/edge graph
@@ -253,7 +256,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
 
         markRingBlocks();
 
-        ArrayList<int[]> rings = new ArrayList<>();
+        ArrayList<int[]> rings = new ArrayList<int[]>();
         for (int rsz = 3; rsz <= 7; rsz++) {
             int[] path = new int[rsz];
             for (int n = 0; n < na; n++)
@@ -352,8 +355,8 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
                     }
                 if (!fnd) {
                     int newPath[] = new int[capacity];
-                    if (psize >= 0)
-                        System.arraycopy(path, 0, newPath, 0, psize);
+                    for (int i = 0; i < psize; i++)
+                        newPath[i] = path[i];
                     newPath[psize] = adj;
                     recursiveRingFind(newPath, psize + 1, capacity, rblk, rings);
                 }
@@ -373,11 +376,11 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
 
         // make sure every element in the path has exactly 2 neighbours within the path; otherwise it is spanning a bridge, which
         // is an undesirable ring definition
-        for (int aPath : path) {
-            int count = 0;
-            for (int i = 0; i < atomAdj[aPath].length; i++)
-                for (int aPath1 : path)
-                    if (atomAdj[aPath][i] == aPath1) {
+        for (int n = 0; n < path.length; n++) {
+            int count = 0, p = path[n];
+            for (int i = 0; i < atomAdj[p].length; i++)
+                for (int j = 0; j < path.length; j++)
+                    if (atomAdj[p][i] == path[j]) {
                         count++;
                         break;
                     }
@@ -397,7 +400,8 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
             path = newPath;
         }
 
-        for (int[] look : rings) {
+        for (int n = 0; n < rings.size(); n++) {
+            int[] look = rings.get(n);
             boolean same = true;
             for (int i = 0; i < psize; i++)
                 if (look[i] != path[i]) {
@@ -415,6 +419,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     // rings such as thiophene, imidazolium, porphyrins, etc.: these systems will be left in their original single/double bond form
     private void detectStrictAromaticity() {
         final int na = mol.getAtomCount(), nb = mol.getBondCount();
+        atomArom = new boolean[na];
         bondArom = new boolean[nb];
 
         if (smallRings.length == 0) return;
@@ -427,7 +432,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
                 piAtom[mol.indexOf(bond.getEnd())] = true;
             }
 
-        ArrayList<int[]> maybe = new ArrayList<>(); // rings which may yet be aromatic
+        ArrayList<int[]> maybe = new ArrayList<int[]>(); // rings which may yet be aromatic
         for (int[] r : smallRings)
             if (r.length == 6) {
                 boolean consider = true;
@@ -464,6 +469,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
 
                 // the ring is deemed aromatic: mark the flags and remove from the maybe list
                 for (int i = 0; i < r.length; i++) {
+                    atomArom[r[i]] = true;
                     bondArom[findBond(r[i], r[i == 5 ? 0 : i + 1])] = true;
                 }
                 maybe.remove(n);
@@ -503,7 +509,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
             }
 
         // pull out all of the small rings that could be upgraded to aromatic
-        ArrayList<int[]> rings = new ArrayList<>();
+        ArrayList<int[]> rings = new ArrayList<int[]>();
         for (int[] r : smallRings)
             if (r.length <= 7) {
                 boolean alreadyArom = true, isInvalid = false;
@@ -553,6 +559,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
                 if (arom) {
                     for (int i = 0; i < r.length; i++) {
                         int a = r[i], b = findBond(r[i], r[i < r.length - 1 ? i + 1 : 0]);
+                        atomArom[a] = true;
                         bondArom[b] = true;
                     }
                     rings.remove(n);
@@ -611,7 +618,8 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     private int[] appendInteger(int[] a, int v) {
         if (a == null || a.length == 0) return new int[]{v};
         int[] b = new int[a.length + 1];
-        System.arraycopy(a, 0, b, 0, a.length);
+        for (int n = a.length - 1; n >= 0; n--)
+            b[n] = a[n];
         b[a.length] = v;
         return b;
     }

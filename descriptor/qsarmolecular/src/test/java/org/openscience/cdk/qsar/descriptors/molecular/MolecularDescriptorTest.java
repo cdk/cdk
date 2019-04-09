@@ -32,7 +32,6 @@ import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -88,7 +87,6 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     public void descriptorDoesNotChangeFlags() throws CDKException {
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        Cycles.markRingAtomsAndBonds(mol);
         Number   mflags = mol.getFlagValue();
         Number[] aflags = getAtomFlags(mol);
         Number[] bflags = getBondFlags(mol);
