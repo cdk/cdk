@@ -20,8 +20,11 @@
 
 package org.openscience.cdk.geometry.surface;
 
+import org.openscience.cdk.geometry.GeometryUtil;
+import org.openscience.cdk.graph.rebond.Point;
 import org.openscience.cdk.interfaces.IAtom;
 
+import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -120,12 +123,11 @@ public class NeighborList {
                     if (nbrs != null) {
                         for (Integer nbr : nbrs) {
                             if (nbr != i) {
-                                IAtom  aj  = atoms[nbr];
-                                double x12 = aj.getPoint3d().x - atom.getPoint3d().x;
-                                double y12 = aj.getPoint3d().y - atom.getPoint3d().y;
-                                double z12 = aj.getPoint3d().z - atom.getPoint3d().z;
-                                double d2  = x12 * x12 + y12 * y12 + z12 * z12;
-                                if (d2 < maxDist2) result.add(nbr);
+                                IAtom   anbr = atoms[nbr];
+                                Point3d p1 = anbr.getPoint3d();
+                                Point3d p2 = atom.getPoint3d();
+                                if (p1.distanceSquared(p2) < maxDist2)
+                                    result.add(nbr);
                             }
                         }
                     }
