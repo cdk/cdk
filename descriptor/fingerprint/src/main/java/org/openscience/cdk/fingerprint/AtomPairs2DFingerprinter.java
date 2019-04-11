@@ -160,8 +160,11 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
         BitSet fp = new BitSet(pathToBit.size());
         List<String> paths = new ArrayList<>();
         calculate(paths, container);
-        for (String path : paths)
+        for (String path : paths) {
+        	if (!pathToBit.containsKey(path))
+        		continue;
             fp.set(pathToBit.get(path));
+        }
         return new BitSetFingerprint(fp);
     }
 
