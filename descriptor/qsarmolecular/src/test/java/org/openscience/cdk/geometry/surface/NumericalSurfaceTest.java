@@ -46,7 +46,7 @@ public class NumericalSurfaceTest {
     public void testCranbinSurface() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IChemFile chemFile;
-        String path = "/data/pdb/1crn.pdb";
+        String path = "/data/pdb/1CRN.pdb";
         try (InputStream in = getClass().getResourceAsStream(path);
              PDBReader pdbr = new PDBReader(in)) {
             chemFile = pdbr.read(bldr.newInstance(IChemFile.class));
