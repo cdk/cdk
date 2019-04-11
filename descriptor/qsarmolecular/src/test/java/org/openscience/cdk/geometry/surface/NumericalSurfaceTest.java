@@ -35,10 +35,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import javax.vecmath.Point3d;
 import java.io.InputStream;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static org.junit.Assert.assertThat;
 
