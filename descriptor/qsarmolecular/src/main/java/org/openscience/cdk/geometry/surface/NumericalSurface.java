@@ -30,7 +30,10 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import javax.vecmath.Point3d;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A class representing the solvent accessible surface area surface of a molecule.
@@ -119,8 +122,8 @@ public class NumericalSurface {
         for (IAtom atom : atoms) {
             if (atom.getPoint3d() == null)
                 throw new IllegalArgumentException("One or more atoms had no 3D coordinate set");
-        }                
-        
+        }
+
         // get r_f and geometric center
         Point3d cp = new Point3d(0, 0, 0);
         double maxRadius = 0;
@@ -165,7 +168,7 @@ public class NumericalSurface {
         logger.info("Obtained points, areas and volumes");
 
     }
-	
+
     /**
      * Get an array of all the points on the molecular surface.
      *
@@ -187,24 +190,20 @@ public class NumericalSurface {
         }
         return (ret);
     }
-    
-    public ArrayList<Point_Type> getAllPointswithAtomType() {
-    	int npt = 0;
-        for (List<Point3d> surfPoint : this.surfPoints)
-            npt += surfPoint.size();
-        ArrayList<Point_Type> point_types = new ArrayList<Point_Type>(npt);
-        int j = 0;
+
+    /**
+     * Get the map from atom to surface points. If an atom does not appear in
+     * the map it is buried. Atoms may share surface points with other atoms.
+     *
+     * @return surface atoms and associated points on the surface
+     */
+    public Map<IAtom, List<Point3d>> getAtomSurfaceMap() {
+        Map<IAtom,List<Point3d>> map = new HashMap<>();
         for (int i = 0; i < this.surfPoints.length; i++) {
-            List<Point3d> arl = this.surfPoints[i];
-            for (Point3d p : arl) {
-                Point_Type point_type = new Point_Type();
-                point_type.setAtom(this.atoms[i].getAtomicNumber());
-                point_type.setCoord(p);
-                point_types.add(point_type);
-                j++;
-            }
+            if (!this.surfPoints[i].isEmpty())
+                map.put(this.atoms[i], Collections.unmodifiableList(this.surfPoints[i]));
         }
-        return (point_types);
+        return map;
     }
 
     /**
