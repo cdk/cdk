@@ -1341,7 +1341,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         IAtomContainer mol = smipar.parseSmiles("Brc1c(Br)c(Br)c(Br)c(Br)c1Br");
         assertThat(AtomContainerManipulator.getMass(mol, MolWeight),
                    closeTo(551.485, 0.001));
-        assertThat(AtomContainerManipulator.getMass(mol, AverageWeight),
+        assertThat(AtomContainerManipulator.getMass(mol, MolWeightIgnoringSpecified),
                    closeTo(551.485, 0.001));
         assertThat(AtomContainerManipulator.getMass(mol, MonoIsotopic),
                    closeTo(545.510, 0.001));
@@ -1356,7 +1356,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
                                                               bldr);
         assertThat(AtomContainerManipulator.getMass(mol, MolWeight),
                    closeTo(4730.397, 0.001));
-        assertThat(AtomContainerManipulator.getMass(mol, AverageWeight),
+        assertThat(AtomContainerManipulator.getMass(mol, MolWeightIgnoringSpecified),
                    closeTo(4730.397, 0.001));
         assertThat(AtomContainerManipulator.getMass(mol, MonoIsotopic),
                    closeTo(4727.140, 0.001));
@@ -1371,7 +1371,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
                                                              bldr);
         assertThat(AtomContainerManipulator.getMass(mol, MolWeight),
                    closeTo(4729.147, 0.001));
-        assertThat(AtomContainerManipulator.getMass(mol, AverageWeight),
+        assertThat(AtomContainerManipulator.getMass(mol, MolWeightIgnoringSpecified),
                    closeTo(4730.397, 0.001));
         assertThat(AtomContainerManipulator.getMass(mol, MonoIsotopic),
                    closeTo(4729.147, 0.001));
@@ -1386,7 +1386,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
                                                              bldr);
         assertThat(AtomContainerManipulator.getMass(mol, MolWeight),
                    closeTo(4732.382, 0.001));
-        assertThat(AtomContainerManipulator.getMass(mol, AverageWeight),
+        assertThat(AtomContainerManipulator.getMass(mol, MolWeightIgnoringSpecified),
                    closeTo(4730.397, 0.001));
         assertThat(AtomContainerManipulator.getMass(mol, MonoIsotopic),
                    closeTo(4729.147, 0.001));

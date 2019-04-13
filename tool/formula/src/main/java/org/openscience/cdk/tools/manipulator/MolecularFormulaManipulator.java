@@ -58,6 +58,38 @@ import java.util.TreeMap;
  */
 public class MolecularFormulaManipulator {
 
+    /**
+     * For use with {@link #getMass(IMolecularFormula)}. This option uses the mass
+     * stored on atoms ({@link IAtom#getExactMass()}) or the average mass of the
+     * element when unspecified.
+     */
+    public static final int MolWeight                = AtomContainerManipulator.MolWeight;
+
+    /**
+     * For use with {@link #getMass(IMolecularFormula)}. This option ignores the
+     * mass stored on atoms ({@link IAtom#getExactMass()}) and uses the average
+     * mass of each element. This option is primarily provided for backwards
+     * compatibility.
+     */
+    public static final int MolWeightIgnoreSpecified = AtomContainerManipulator.MolWeightIgnoreSpecified;
+
+    /**
+     * For use with {@link #getMass(IMolecularFormula)}. This option uses the mass
+     * stored on atoms {@link IAtom#getExactMass()} or the mass of the major
+     * isotope when this is not specified.
+     */
+    public static final int MonoIsotopic             = AtomContainerManipulator.MonoIsotopic;
+
+    /**
+     * For use with {@link #getMass(IMolecularFormula)}. This option uses the mass
+     * stored on atoms {@link IAtom#getExactMass()} and then calculates a
+     * distribution for any unspecified atoms and uses the most abundant
+     * distribution. For example C<sub>6</sub>Br<sub>6</sub> would have three
+     * <sup>79</sup>Br and <sup>81</sup>Br because their abundance is 51 and
+     * 49%.
+     */
+    public static final int MostAbundant             = AtomContainerManipulator.MostAbundant;
+
     public static final Comparator<IIsotope> NAT_ABUN_COMP = new Comparator<IIsotope>() {
         @Override
         public int compare(IIsotope o1, IIsotope o2) {
@@ -821,11 +853,6 @@ public class MolecularFormulaManipulator {
         return mass;
     }
 
-    public static final int MolWeight     = 0x1;
-    public static final int AverageWeight = 0x2;
-    public static final int MonoIsotopic  = 0x3;
-    public static final int MostAbundant  = 0x4;
-
     private static double getExactMass(IsotopeFactory isofact, IIsotope atom) {
         if (atom.getExactMass() != null)
             return atom.getExactMass();
@@ -845,27 +872,34 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Calculate the mass of a molecule, this function takes an optional
-     * 'mass flavour' that switches the computation type, the flavours are:
+     * Calculate the mass of a formula, this function takes an optional
+     * 'mass flavour' that switches the computation type. The key distinction
+     * is how specified/unspecified isotopes are handled. A specified isotope
+     * is an atom that has either {@link IAtom#setMassNumber(Integer)}
+     * or {@link IAtom#setExactMass(Double)} set to non-null and non-zero.
+     * <br>
+     * The flavours are:
      * <br>
      * <ul>
-     * <li>{@link #MolWeight} (default) - use and isotopes the natural mass
-     * unless a specific isotope is specified</li>
-     * <li>{@link #AverageWeight} - use and isotopes the natural mass even
-     * if a specific isotope is specified</li>
-     * <li>{@link #MonoIsotopic} - use and isotopes the major isotope mass
-     * even if a specific isotope is specified</li>
-     * <li>{@link #MostAbundant} - use the distribution of isotopes
-     * based on their abundance and select the most abundant. For example
-     * C<sub>6</sub>Br<sub>6</sub> would have three <sup>79</sup>Br and
-     * <sup>81</sup>Br because their abundance is 51 and 49%.
+     *     <li>{@link #MolWeight} (default) - uses the exact mass of each
+     *     atom when specified, if not specified the average mass of the element
+     *     is used.</li>
+     *     <li>{@link #MolWeightIgnoreSpecified} - uses the average mass of each
+     *     element ignoring any exact mass that has been specified.</li>
+     *     <li>{@link #MonoIsotopic} - uses the exact mass of each atom when
+     *      specified, if not specified the major isotope mass for that
+     *      element is used.</li>
+     *     <li>{@link #MostAbundant} - uses the exact mass of each atom when
+     *     specified, if not specified a distribution is calculated and the
+     *     most abundant isotope pattern is used.</li>
      * </ul>
      *
-     * @param mf   molecular formula
-     * @param flav the mass flavour
+     * @param mf molecule formula
+     * @param flav flavor
      * @return the mass of the molecule
+     * @see #getMass(IMolecularFormula, int)
      * @see #MolWeight
-     * @see #AverageWeight
+     * @see #MolWeightIgnoreSpecified
      * @see #MonoIsotopic
      * @see #MostAbundant
      */
@@ -882,19 +916,19 @@ public class MolecularFormulaManipulator {
             case MolWeight:
                 for (IIsotope iso : mf.isotopes()) {
                     mass += mf.getIsotopeCount(iso) *
-                              getMassOrAvg(isofact, iso);
+                            getMassOrAvg(isofact, iso);
                 }
                 break;
-            case AverageWeight:
+            case MolWeightIgnoreSpecified:
                 for (IIsotope iso : mf.isotopes()) {
                     mass += mf.getIsotopeCount(iso) *
-                              isofact.getNaturalMass(iso.getAtomicNumber());
+                            isofact.getNaturalMass(iso.getAtomicNumber());
                 }
                 break;
             case MonoIsotopic:
                 for (IIsotope iso : mf.isotopes()) {
                     mass += mf.getIsotopeCount(iso) *
-                              getExactMass(isofact, iso);
+                            getExactMass(isofact, iso);
                 }
                 break;
             case MostAbundant:
@@ -907,41 +941,48 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Calculate the mass of a molecule, this function takes an optional
-     * 'mass flavour' that switches the computation type, the flavours are:
+     * Calculate the mass of a formula, this function takes an optional
+     * 'mass flavour' that switches the computation type. The key distinction
+     * is how specified/unspecified isotopes are handled. A specified isotope
+     * is an atom that has either {@link IAtom#setMassNumber(Integer)}
+     * or {@link IAtom#setExactMass(Double)} set to non-null and non-zero.
+     * <br>
+     * The flavours are:
      * <br>
      * <ul>
-     * <li>{@link #MolWeight} (default) - use and isotopes the natural mass
-     * unless a specific isotope is specified</li>
-     * <li>{@link #AverageWeight} - use and isotopes the natural mass even
-     * if a specific isotope is specified</li>
-     * <li>{@link #MonoIsotopic} - use and isotopes the major isotope mass
-     * even if a specific isotope is specified</li>
-     * <li>{@link #MostAbundant} - use the distribution of isotopes
-     * based on their abundance and select the most abundant. For example
-     * C<sub>6</sub>Br<sub>6</sub> would have three <sup>79</sup>Br and
-     * <sup>81</sup>Br because their abundance is 51 and 49%.
+     *     <li>{@link #MolWeight} (default) - uses the exact mass of each
+     *     atom when specified, if not specified the average mass of the element
+     *     is used.</li>
+     *     <li>{@link #MolWeightIgnoreSpecified} - uses the average mass of each
+     *     element ignoring any exact mass that has been specified.</li>
+     *     <li>{@link #MonoIsotopic} - uses the exact mass of each atom when
+     *      specified, if not specified the major isotope mass for that
+     *      element is used.</li>
+     *     <li>{@link #MostAbundant} - uses the exact mass of each atom when
+     *     specified, if not specified a distribution is calculated and the
+     *     most abundant isotope pattern is used.</li>
      * </ul>
      *
-     * @param mf molecular formula
+     * @param mf molecule formula
      * @return the mass of the molecule
+     * @see #getMass(IMolecularFormula, int)
      * @see #MolWeight
-     * @see #AverageWeight
+     * @see #MolWeightIgnoreSpecified
      * @see #MonoIsotopic
      * @see #MostAbundant
      */
     public static double getMass(IMolecularFormula mf) {
         return getMass(mf, MolWeight);
-            }
+    }
 
     /**
      * @deprecated use {@link #getMass(IMolecularFormula, int)} with option
-     * {@link #AverageWeight}.
+     * {@link #MolWeightIgnoreSpecified}.
      */
     @Deprecated
     public static double getNaturalExactMass(IMolecularFormula formula) {
-        return getMass(formula, AverageWeight);
-        }
+        return getMass(formula, MolWeightIgnoreSpecified);
+    }
 
     /**
      * @deprecated use {@link #getMass(IMolecularFormula, int)} with option

@@ -1424,7 +1424,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                                                                 bldr);
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
                           closeTo(4730.397, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, AverageWeight),
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoringSpecified),
                           closeTo(4730.397, 0.001));
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
                           closeTo(4727.140, 0.001));
@@ -1439,7 +1439,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                                                                bldr);
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
                           closeTo(4729.147, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, AverageWeight),
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoringSpecified),
                           closeTo(4730.397, 0.001));
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
                           closeTo(4729.147, 0.001));
@@ -1454,7 +1454,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                                                                 bldr);
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
                           closeTo(4732.382, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, AverageWeight),
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoringSpecified),
                           closeTo(4730.397, 0.001));
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
                           closeTo(4729.147, 0.001));
