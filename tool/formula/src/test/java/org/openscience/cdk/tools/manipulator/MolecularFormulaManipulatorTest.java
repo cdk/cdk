@@ -52,7 +52,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.openscience.cdk.tools.manipulator.AtomContainerManipulator.*;
+import static org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator.*;
 
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
@@ -1424,7 +1424,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                                                                 bldr);
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
                           closeTo(4730.397, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoringSpecified),
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
                           closeTo(4730.397, 0.001));
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
                           closeTo(4727.140, 0.001));
@@ -1439,7 +1439,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                                                                bldr);
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
                           closeTo(4729.147, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoringSpecified),
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
                           closeTo(4730.397, 0.001));
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
                           closeTo(4729.147, 0.001));
@@ -1454,7 +1454,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
                                                                 bldr);
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
                           closeTo(4732.382, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoringSpecified),
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
                           closeTo(4730.397, 0.001));
         Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
                           closeTo(4729.147, 0.001));
