@@ -110,6 +110,8 @@ public class MolecularFormula implements IMolecularFormula {
      */
     @Override
     public IMolecularFormula addIsotope(IIsotope isotope, int count) {
+        if (count == 0)
+            return this;
         boolean flag = false;
         for (IIsotope thisIsotope : isotopes()) {
             if (isTheSame(thisIsotope, isotope)) {
