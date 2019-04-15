@@ -227,7 +227,7 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Returns the string representation of the molecule formula.
+     * Returns the string representation of the molecular formula.
      *
      * @param formula       The IMolecularFormula Object
      * @param orderElements The order of Elements
@@ -257,7 +257,7 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Returns the string representation of the molecule formula.
+     * Returns the string representation of the molecular formula.
      *
      * @param formula       The IMolecularFormula Object
      * @param orderElements The order of Elements
@@ -326,7 +326,7 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Returns the string representation of the molecule formula.
+     * Returns the string representation of the molecular formula.
      * Based on Hill System. The Hill system is a system of writing
      * chemical formulas such that the number of carbon atoms in a
      * molecule is indicated first, the number of hydrogen atoms next,
@@ -345,7 +345,7 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Returns the string representation of the molecule formula.
+     * Returns the string representation of the molecular formula.
      * Based on Hill System. The Hill system is a system of writing
      * chemical formulas such that the number of carbon atoms in a
      * molecule is indicated first, the number of hydrogen atoms next,
@@ -370,7 +370,7 @@ public class MolecularFormulaManipulator {
 
 
     /**
-     * Returns the string representation of the molecule formula.
+     * Returns the string representation of the molecular formula.
      * Based on Hill System. The Hill system is a system of writing
      * chemical formulas such that the number of carbon atoms in a
      * molecule is indicated first, the number of hydrogen atoms next,
@@ -464,7 +464,7 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Returns the string representation of the molecule formula based on Hill
+     * Returns the string representation of the molecular formula based on Hill
      * System with numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags. Useful for
      * displaying formulae in Swing components or on the web.
      *
@@ -479,7 +479,7 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Returns the string representation of the molecule formula based on Hill
+     * Returns the string representation of the molecular formula based on Hill
      * System with numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the
      * isotope of each Element in &lt;sup&gt;&lt;/sup&gt; tags and the total
      * charge of IMolecularFormula in &lt;sup&gt;&lt;/sup&gt; tags. Useful for
@@ -503,7 +503,7 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Returns the string representation of the molecule formula with numbers
+     * Returns the string representation of the molecular formula with numbers
      * wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the isotope of each Element
      * in &lt;sup&gt;&lt;/sup&gt; tags and the total showCharge of IMolecularFormula
      * in &lt;sup&gt;&lt;/sup&gt; tags. Useful for displaying formulae in Swing
@@ -895,7 +895,7 @@ public class MolecularFormulaManipulator {
      *     most abundant isotope pattern is used.</li>
      * </ul>
      *
-     * @param mf molecule formula
+     * @param mf molecular formula
      * @param flav flavor
      * @return the mass of the molecule
      * @see #getMass(IMolecularFormula, int)
@@ -964,7 +964,7 @@ public class MolecularFormulaManipulator {
      *     most abundant isotope pattern is used.</li>
      * </ul>
      *
-     * @param mf molecule formula
+     * @param mf molecular formula
      * @return the mass of the molecule
      * @see #getMass(IMolecularFormula, int)
      * @see #MolWeight
