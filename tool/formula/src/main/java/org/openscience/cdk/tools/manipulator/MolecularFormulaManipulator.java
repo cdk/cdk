@@ -883,13 +883,13 @@ public class MolecularFormulaManipulator {
      * <br>
      * <ul>
      *     <li>{@link #MolWeight} (default) - uses the exact mass of each
-     *     atom when specified, if not specified the average mass of the element
-     *     is used.</li>
+     *     atom when an isotope is specified, if not specified the average mass
+     *     of the element is used.</li>
      *     <li>{@link #MolWeightIgnoreSpecified} - uses the average mass of each
-     *     element ignoring any exact mass that has been specified.</li>
-     *     <li>{@link #MonoIsotopic} - uses the exact mass of each atom when
-     *      specified, if not specified the major isotope mass for that
-     *      element is used.</li>
+     *     element, ignoring any isotopic/exact mass specification</li>
+     *     <li>{@link #MonoIsotopic} - uses the exact mass of each
+     *     atom when an isotope is specified, if not specified the major isotope
+     *     mass for that element is used.</li>
      *     <li>{@link #MostAbundant} - uses the exact mass of each atom when
      *     specified, if not specified a distribution is calculated and the
      *     most abundant isotope pattern is used.</li>
@@ -952,13 +952,13 @@ public class MolecularFormulaManipulator {
      * <br>
      * <ul>
      *     <li>{@link #MolWeight} (default) - uses the exact mass of each
-     *     atom when specified, if not specified the average mass of the element
-     *     is used.</li>
+     *     atom when an isotope is specified, if not specified the average mass
+     *     of the element is used.</li>
      *     <li>{@link #MolWeightIgnoreSpecified} - uses the average mass of each
-     *     element ignoring any exact mass that has been specified.</li>
-     *     <li>{@link #MonoIsotopic} - uses the exact mass of each atom when
-     *      specified, if not specified the major isotope mass for that
-     *      element is used.</li>
+     *     element, ignoring any isotopic/exact mass specification</li>
+     *     <li>{@link #MonoIsotopic} - uses the exact mass of each
+     *     atom when an isotope is specified, if not specified the major isotope
+     *     mass for that element is used.</li>
      *     <li>{@link #MostAbundant} - uses the exact mass of each atom when
      *     specified, if not specified a distribution is calculated and the
      *     most abundant isotope pattern is used.</li>
