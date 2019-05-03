@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
@@ -21,7 +22,7 @@
 package org.openscience.cdk.geometry.surface;
 
 import javax.vecmath.Point3d;
-
+import java.util.*;
 /**
  * Performs a tessellation of the unit sphere.
  *
@@ -79,6 +80,7 @@ public class Tessellate {
 
     public void doTessellate() {
         for (int j = 1; j < maxlevel; j++) {
+        	// QQ: N is for number of triangles.
             int oldN = this.oldtess.length;
             int newN = oldN * 4;
             Triangle[] newtess = new Triangle[newN];
@@ -115,12 +117,19 @@ public class Tessellate {
     }
 
     public Point3d[] getTessAsPoint3ds() {
-        Point3d[] ret = new Point3d[getNumberOfTriangles() * 3];
+		Set<Point3d> ret_set = new HashSet<>();
         for (int i = 0; i < getNumberOfTriangles(); i++) {
-            ret[i * 3] = oldtess[i].p1;
-            ret[i * 3 + 1] = oldtess[i].p2;
-            ret[i * 3 + 2] = oldtess[i].p3;
+        	ret_set.add(oldtess[i].p1);
+        	ret_set.add(oldtess[i].p2);
+        	ret_set.add(oldtess[i].p3);
+//             ret[i * 3] = oldtess[i].p1;
+//             ret[i * 3 + 1] = oldtess[i].p2;
+//             ret[i * 3 + 2] = oldtess[i].p3;
         }
+        Point3d[] ret = new Point3d[ret_set.size()];
+        int i = 0;
+        for (Point3d s: ret_set)
+			ret[i++] = s;
         return (ret);
     }
 

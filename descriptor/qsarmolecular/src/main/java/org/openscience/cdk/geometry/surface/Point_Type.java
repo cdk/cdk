@@ -27,7 +27,22 @@ public class Point_Type
 {
     public int number;
     public Point3d coord;
+    public String source;
     // Add constructor, get, set, as needed.
+    
+    Point_Type(){
+    }
+    
+    Point_Type(int number, Point3d coord){
+    	this.number = number;
+    	this.coord = coord;
+    }
+    
+    Point_Type(int number, Point3d coord, String source){
+    	this.number = number;
+    	this.coord = coord;
+    	this.source = source;
+    }
     
     public int getAtom() {
     return number;
@@ -44,6 +59,15 @@ public class Point_Type
 	public void setCoord(Point3d coord) {
     	this.coord = coord;
 	}
+	
+	public void setSource(String source){
+		this.source = source;
+	}
+	
+	public String getSource(){
+		return this.source;
+	}
+	
 }
 
 

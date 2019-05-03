@@ -199,19 +199,19 @@ public class NumericalSurface {
     	int npt = 0;
         for (int i = 0; i < this.surfPoints.length; i++)
             npt += this.surfPoints[i].size();
-        //Point3d[] ret = new Point3d[npt];
         ArrayList<Point_Type> point_types = new ArrayList<Point_Type>(npt);
-        //ArrayList<Integer> atomtype = new ArrayList<Integer>(npt);
         int j = 0;
         for (int i = 0; i < this.surfPoints.length; i++) {
             ArrayList arl = this.surfPoints[i];
-            //atomtype.add(this.atoms[i].getAtomicNumber());
             for (Iterator it = arl.iterator(); it.hasNext();) {
-                //ret[j] = (Point3d) it.next();
                 Point_Type point_type = new Point_Type();
                 point_type.setAtom(this.atoms[i].getAtomicNumber());
                 point_type.setCoord((Point3d) it.next());
-                point_types.add(point_type);
+                if (point_types.contains(point_type)){
+                	System.out.println("In " + i + "-th atom, " + point_type.getAtom() + " has already include point " + point_type.getCoord());
+                }else{
+                	point_types.add(point_type);
+                }
                 j++;
             }
         }

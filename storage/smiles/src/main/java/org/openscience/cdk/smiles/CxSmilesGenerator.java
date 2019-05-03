@@ -26,7 +26,6 @@ package org.openscience.cdk.smiles;
 import org.openscience.cdk.smiles.CxSmilesState.PolymerSgroup;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -188,7 +187,7 @@ public class CxSmilesGenerator {
         // 2D/3D Coordinates
         if (SmiFlavor.isSet(opts, SmiFlavor.CxCoordinates) &&
             state.atomCoords != null && !state.atomCoords.isEmpty()) {
-            DecimalFormat fmt = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.ROOT));
+            DecimalFormat fmt = new DecimalFormat("#.##");
             if (sb.length() > 2) sb.append(',');
             sb.append('(');
             for (int i = 0; i < ordering.length; i++) {

@@ -32,6 +32,7 @@ import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.openscience.cdk.geometry.surface.Point_Type;
+import java.util.*;
 
 /**
  * A class representing the solvent accessible surface area surface of a molecule.
@@ -127,16 +128,23 @@ public class AdaptiveNumericalSurface {
         
         // get r_f and geometric center
         Point3d cp = new Point3d(0, 0, 0);
+        // get ligand center
+        Point3d cp_ligand = new Point3d(0, 0, 0);
+        
         double maxRadius = 0;
         for (int i = 0; i < atoms.length; i++) {
             double vdwr = PeriodicTable.getVdwRadius(atoms[i].getSymbol());
             if (vdwr + solventRadius > maxRadius)
                 maxRadius = PeriodicTable.getVdwRadius(atoms[i].getSymbol()) + solventRadius;
-
+			
+			IAtom atom = atoms[i];
+			// TO-DO: find the source of atoms. ligand or protein.
+			
             cp.x = cp.x + atoms[i].getPoint3d().x;
             cp.y = cp.y + atoms[i].getPoint3d().y;
             cp.z = cp.z + atoms[i].getPoint3d().z;
         }
+        
         cp.x = cp.x / atoms.length;
         cp.y = cp.y / atoms.length;
         cp.z = cp.z / atoms.length;
@@ -220,9 +228,9 @@ public class AdaptiveNumericalSurface {
         int npt = 0;
         for (int i = 0; i < this.surfPoints.length; i++)
             npt += this.surfPoints[i].size();
-        //Point3d[] ret = new Point3d[npt];
-        ArrayList<Point_Type> point_types = new ArrayList<Point_Type>(npt);
-        //ArrayList<Integer> atomtype = new ArrayList<Integer>(npt);
+            
+//         Set<Point_Type> point_types = new HashSet<>();
+     ArrayList<Point_Type> point_types = new ArrayList<Point_Type>(npt);
         int j = 0;
         for (int i = 0; i < this.surfPoints.length; i++) {
             ArrayList arl = this.surfPoints[i];
@@ -236,6 +244,9 @@ public class AdaptiveNumericalSurface {
                 j++;
             }
         }
+//         ArrayList<Point_Type> point_type_list = new ArrayList<Point_Type>();
+// 		point_type_list.addAll(point_types);
+// 		return(mainList);
         return (point_types);
     }
 

@@ -295,9 +295,6 @@
             <name>Diego Pedrosa</name>
         </contributor>
         <contributor>
-            <name>Jeffrey Plante</name>
-        </contributor>
-        <contributor>
             <name>Tomáš Pluskal</name>
         </contributor>
         <contributor>
@@ -595,7 +592,7 @@
                     <tagletArtifact>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.2.6</version>
+                        <version>1.0.2.5</version>
                     </tagletArtifact>
                     <failOnError>false</failOnError>
                     <doctitle>Chemistry Development Kit ${project.version} API</doctitle>
