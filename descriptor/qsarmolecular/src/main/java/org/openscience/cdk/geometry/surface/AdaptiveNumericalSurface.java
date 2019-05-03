@@ -56,11 +56,12 @@ import org.openscience.cdk.geometry.surface.Point_Type;
  * @cdk.githash
  * @cdk.bug     1846421
  */
-public class NumericalSurface {
+public class AdaptiveNumericalSurface {
 
     private static ILoggingTool logger         = LoggingToolFactory.createLoggingTool(NumericalSurface.class);
     double                      solventRadius  = 1.4;
     int                         tesslevel      = 4;
+    String                       tess_init      = "ico";
     IAtom[]                     atoms;
     ArrayList[]                 surfPoints;
     double[]                    areas;
@@ -74,7 +75,7 @@ public class NumericalSurface {
      *
      * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
      */
-    public NumericalSurface(IAtomContainer atomContainer) {
+    public AdaptiveNumericalSurface(IAtomContainer atomContainer) {
         this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
         init();
     }
@@ -91,10 +92,12 @@ public class NumericalSurface {
      * @param tesslevel The number of levels that the subdivision algorithm for tessellation
      * should use
      */
-    public NumericalSurface(IAtomContainer atomContainer, double solventRadius, int tesslevel) {
+
+    public AdaptiveNumericalSurface(IAtomContainer atomContainer, double solventRadius, int tesslevel, String tess_init) {
         this.solventRadius = solventRadius;
         this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
         this.tesslevel = tesslevel;
+        this.tess_init = tess_init;
         init();
     }
 
@@ -139,13 +142,20 @@ public class NumericalSurface {
         cp.z = cp.z / atoms.length;
 
         // do the tesselation
-        Tessellate tess = new Tessellate("ico", tesslevel);
+        Tessellate tess = new Tessellate(this.tess_init, tesslevel);
         tess.doTessellate();
-        logger.info("Got tesselation, number of triangles = " + tess.getNumberOfTriangles());
+
+        Tessellate tess_p = new Tessellate(this.tess_init, tesslevel+1);
+        tess_p.doTessellate();
+
+        Tessellate tess_p2 = new Tessellate(this.tess_init, tesslevel+2);
+        tess_p2.doTessellate();
+
+        logger.info("Got tesselation, number of triangles for tess = " + tess.getNumberOfTriangles());
+        logger.info("Got tesselation, number of triangles for tess_plus = " + tess_p.getNumberOfTriangles());
+        logger.info("Got tesselation, number of triangles for tess_plus2 = " + tess_p2.getNumberOfTriangles());
 
         // get neighbor list
-        // QQ: the neighbor list of an atom is the index of other atoms that whose distance with
-        // this atom is less than boxsize (= 2* radius, radius = maxRadius + solventRadius). 
         NeighborList nbrlist = new NeighborList(atoms, maxRadius + solventRadius);
         logger.info("Got neighbor list");
 
@@ -161,16 +171,27 @@ public class NumericalSurface {
         this.volumes = new double[atoms.length];
 
         for (int i = 0; i < atoms.length; i++) {
-            int pointDensity = tess.getNumberOfTriangles() * 3;
-            // QQ: Get the real surface points for each atom.
-            Point3d[][] points = atomicSurfacePoints(nbrlist, i, atoms[i], tess);
-            // compute the volume, area, and surface points for each atom, save them in this.surfPoints etc.
-            translatePoints(i, points, pointDensity, atoms[i], cp);
+            double vdwr = PeriodicTable.getVdwRadius(atoms[i].getSymbol());
+            if((vdwr + solventRadius)/1.2 < 2){
+                Point3d[][] points = atomicSurfacePoints(nbrlist, i, atoms[i], tess);
+                int pointDensity = tess.getNumberOfTriangles() * 3;
+                translatePoints(i, points, pointDensity, atoms[i], cp);
+            }
+            else if((vdwr + solventRadius)/1.2 < 4){
+                Point3d[][] points = atomicSurfacePoints(nbrlist, i, atoms[i], tess_p);
+                int pointDensity = tess_p.getNumberOfTriangles() * 3;
+                translatePoints(i, points, pointDensity, atoms[i], cp);
+            }
+            else{
+                Point3d[][] points = atomicSurfacePoints(nbrlist, i, atoms[i], tess_p2);
+                int pointDensity = tess_p2.getNumberOfTriangles() * 3;
+                translatePoints(i, points, pointDensity, atoms[i], cp);
+            }
+            
         }
         logger.info("Obtained points, areas and volumes");
-
     }
-	
+    
     /**
      * Get an array of all the points on the molecular surface.
      *
@@ -196,7 +217,7 @@ public class NumericalSurface {
     }
     
     public ArrayList<Point_Type> getAllPointswithAtomType() {
-    	int npt = 0;
+        int npt = 0;
         for (int i = 0; i < this.surfPoints.length; i++)
             npt += this.surfPoints[i].size();
         //Point3d[] ret = new Point3d[npt];
@@ -302,11 +323,9 @@ public class NumericalSurface {
             tmp.add(points[i][0]);
         this.surfPoints[atmIdx] = tmp;
     }
-	
-	// QQ: compare current atom points with other neighbor atoms, like filter.
+
     private Point3d[][] atomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, IAtom atom, Tessellate tess) {
-		
-		// QQ: totalRadius is the current atom vadw radisus
+
         double totalRadius = PeriodicTable.getVdwRadius(atom.getSymbol()) + solventRadius;
         double totalRadius2 = totalRadius * totalRadius;
         double twiceTotalRadius = 2 * totalRadius;
@@ -317,13 +336,10 @@ public class NumericalSurface {
             double x12 = atoms[nlist[i]].getPoint3d().x - atom.getPoint3d().x;
             double y12 = atoms[nlist[i]].getPoint3d().y - atom.getPoint3d().y;
             double z12 = atoms[nlist[i]].getPoint3d().z - atom.getPoint3d().z;
-			
+
             double d2 = x12 * x12 + y12 * y12 + z12 * z12;
             double tmp = PeriodicTable.getVdwRadius(atoms[nlist[i]].getSymbol()) + solventRadius;
             tmp = tmp * tmp;
-            // QQ: tmp is the range that neighbor atom can reach.
-            // QQ: thresh = (D^2 -R1^2 - R2^2)/(2R1), R1 for curent atom, 
-            // R2 for compare atom in neighbor list, D is distance between them.
             double thresh = (d2 + totalRadius2 - tmp) / twiceTotalRadius;
 
             data[i][0] = x12;
@@ -336,9 +352,6 @@ public class NumericalSurface {
         ArrayList points = new ArrayList();
         for (int i = 0; i < tessPoints.length; i++) {
             Point3d pt = tessPoints[i];
-            // QQ: before every point (i) assign to atom,
-            //  test if the point was covered by any other atoms (j).
-            // According to Formula 3 in DCLM paper
             boolean buried = false;
             for (int j = 0; j < data.length; j++) {
                 if (data[j][0] * pt.x + data[j][1] * pt.y + data[j][2] * pt.z > data[j][3]) {

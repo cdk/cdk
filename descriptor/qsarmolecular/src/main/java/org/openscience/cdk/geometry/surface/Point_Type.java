@@ -22,23 +22,28 @@ package org.openscience.cdk.geometry.surface;
 
 import javax.vecmath.Point3d;
 
-/**
- * Representation of a triangle in 3D.
- *
- * By default this class represent the triangle in clockwise
- * fashion.
- *
- * @author Rajarshi Guha
- * @cdk.module  qsarmolecular
- * @cdk.githash
- */
-public class Triangle {
 
-    Point3d p1, p2, p3;
+public class Point_Type
+{
+    public int number;
+    public Point3d coord;
+    // Add constructor, get, set, as needed.
+    
+    public int getAtom() {
+    return number;
+	}
 
-    public Triangle(Point3d p1, Point3d p2, Point3d p3) {
-        this.p1 = p1;
-        this.p2 = p2;
-        this.p3 = p3;
-    }
+	public void setAtom(int number) {
+    	this.number = number;
+	}
+
+	public Point3d getCoord() {
+    	return coord;
+	}
+
+	public void setCoord(Point3d coord) {
+    	this.coord = coord;
+	}
 }
+
+
