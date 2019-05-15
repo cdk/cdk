@@ -460,7 +460,7 @@ public class MDLV3000WriterTest {
         StringWriter sw = new StringWriter();
         try (MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {
             Properties sdfWriterProps = new Properties();
-            sdfWriterProps.put("PorgramName", "FakeNews");
+            sdfWriterProps.put(MDLV2000Writer.OptProgramName, "FakeNews");
             mdlw.addChemObjectIOListener(new PropertiesListener(sdfWriterProps));
             mdlw.customizeJob();
             mdlw.write(mol);
