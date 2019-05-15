@@ -116,7 +116,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public static final String OptWriteAromaticBondTypes    = "WriteAromaticBondTypes";
     public static final String OptWriteQueryFormatValencies = "WriteQueryFormatValencies";
     public static final String OptWriteDefaultProperties    = "WriteDefaultProperties";
-    public static final String OptProgramName               = "PorgramName";
+    public static final String OptProgramName               = "ProgramName";
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
 
