@@ -462,7 +462,7 @@ public class MDLV3000WriterTest {
             Properties sdfWriterProps = new Properties();
             sdfWriterProps.put("PorgramName", "FakeNews");
             mdlw.addChemObjectIOListener(new PropertiesListener(sdfWriterProps));
-            // mdlw.customizeJob();
+            mdlw.customizeJob();
             mdlw.write(mol);
         }
         assertThat(sw.toString(), containsString("FakeNews"));

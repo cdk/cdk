@@ -952,4 +952,11 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                                                         "Program name to write at the top of the molfile header, should be exactly 8 characters long",
                                                         "CDK"));
     }
+
+    public void customizeJob() {
+        for (IOSetting setting : getSettings()) {
+            fireIOSettingQuestion(setting);
+        }
+    }
+
 }
