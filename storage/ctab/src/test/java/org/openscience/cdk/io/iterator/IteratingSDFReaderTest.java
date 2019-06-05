@@ -349,4 +349,38 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     }
 
+    @Test
+    public void testNewLineAfterMEnd() throws Exception {
+        InputStream in = getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/io/LMSDFDownload3Jan19-first-entry-newline.sdf");
+
+        checkLipidMapsEntry(in);
+    }
+
+    @Test
+    public void testNoNewLineAfterMEnd() throws Exception {
+        InputStream in = getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/io/LMSDFDownload3Jan19-first-entry-no-newline.sdf");
+
+        checkLipidMapsEntry(in);
+    }
+
+    private void checkLipidMapsEntry(InputStream in) throws IOException {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IteratingSDFReader reader = new IteratingSDFReader(in, builder);
+        int count = 0;
+
+        while (reader.hasNext()) {
+            IAtomContainer container = reader.next();
+            Assert.assertNotNull(container);
+            Assert.assertTrue(container.getAtomCount() > 0);
+            Assert.assertTrue(container.getBondCount() > 0);
+            Assert.assertNull(container.getProperty("<LM_ID>"));
+            Assert.assertNotNull(container.getProperty("LM_ID"));
+            count++;
+        }
+
+        reader.close();
+
+        Assert.assertEquals(1, count);
+    }
+
 }

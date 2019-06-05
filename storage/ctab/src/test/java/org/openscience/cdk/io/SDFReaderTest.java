@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.silent.AtomContainer;
 
 import java.io.InputStream;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -224,4 +225,35 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(">1", m.getProperty("IC50_uM"));
     }
 
+    @Test
+    public void testNewLineAfterMEnd() throws Exception {
+        try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("LMSDFDownload3Jan19-first-entry-newline.sdf"))) {
+            checkLipidMapsSdfEntry(reader);
+        }
+    }
+    
+    @Test
+    public void testNoNewLineAfterMEnd() throws Exception {
+        try (MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("LMSDFDownload3Jan19-first-entry-no-newline.sdf"))) {
+            checkLipidMapsSdfEntry(reader);
+        }
+    }
+    
+    private void checkLipidMapsSdfEntry(final MDLV2000Reader reader) throws CDKException {
+        IChemFile fileContents = (IChemFile)reader.read(new ChemFile());
+        Assert.assertEquals(1, fileContents.getChemSequenceCount());
+        IChemSequence sequence = fileContents.getChemSequence(0);
+        IChemModel model = sequence.getChemModel(0);
+        Assert.assertNotNull(model);
+        IAtomContainerSet som = model.getMoleculeSet();
+        Assert.assertNotNull(som);
+        Assert.assertEquals(1, som.getAtomContainerCount());
+        IAtomContainer container = som.getAtomContainer(0);
+        Assert.assertNotNull(container);
+        Assert.assertNotNull(container);
+        Assert.assertTrue(container.getAtomCount() > 0);
+        Assert.assertTrue(container.getBondCount() > 0);
+        Assert.assertNull(container.getProperty("<LM_ID>"));
+        Assert.assertNotNull(container.getProperty("LM_ID"));
+    }
 }
