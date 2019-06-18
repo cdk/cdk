@@ -412,8 +412,6 @@ public final class DepictionGenerator {
      */
     public Depiction depict(IReaction rxn) throws CDKException {
 
-        ensure2dLayout(rxn); // can reorder components!
-
         final Color fgcol = getParameterValue(StandardGenerator.AtomColor.class).getAtomColor(rxn.getBuilder()
                                                                                                  .newInstance(IAtom.class, "C"));
 
@@ -439,6 +437,8 @@ public final class DepictionGenerator {
             setIfMissing(mol, MarkedElement.CLASS_KEY, "agent");
             layoutBackups.add(new LayoutBackup(mol));
         }
+
+        ensure2dLayout(rxn); // can reorder components!
 
         final Map<IChemObject, Color> myHighlight = new HashMap<>();
         if (highlightAtomMap) {
