@@ -337,6 +337,8 @@ public final class DepictionGenerator {
         List<LayoutBackup> layoutBackups = new ArrayList<>();
         int molId = 0;
         for (IAtomContainer mol : mols) {
+            if (mol == null)
+                throw new NullPointerException("Null molecule provided!");
             setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
             layoutBackups.add(new LayoutBackup(mol));
         }
