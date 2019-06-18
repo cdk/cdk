@@ -337,6 +337,8 @@ public final class DepictionGenerator {
         List<LayoutBackup> layoutBackups = new ArrayList<>();
         int molId = 0;
         for (IAtomContainer mol : mols) {
+            if (mol == null)
+                throw new NullPointerException("Null molecule provided!");
             setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
             layoutBackups.add(new LayoutBackup(mol));
         }
@@ -410,7 +412,7 @@ public final class DepictionGenerator {
      */
     public Depiction depict(IReaction rxn) throws CDKException {
 
-        ensure2dLayout(rxn); // can reorder components!
+        ensure2dLayout(rxn); // can reorder components if align is enabled!
 
         final Color fgcol = getParameterValue(StandardGenerator.AtomColor.class).getAtomColor(rxn.getBuilder()
                                                                                                  .newInstance(IAtom.class, "C"));
@@ -977,8 +979,15 @@ public final class DepictionGenerator {
      */
     public DepictionGenerator withHighlight(Iterable<? extends IChemObject> chemObjs, Color color) {
         DepictionGenerator copy = new DepictionGenerator(this);
-        for (IChemObject chemObj : chemObjs)
-            copy.highlight.put(chemObj, color);
+        for (IChemObject chemObj : chemObjs) {
+            if (chemObj instanceof IAtomContainer) {
+                for (IAtom atom : ((IAtomContainer) chemObj).atoms())
+                    copy.highlight.put(atom, color);
+                for (IBond bond : ((IAtomContainer) chemObj).bonds())
+                    copy.highlight.put(bond, color);
+            }
+            else copy.highlight.put(chemObj, color);
+        }
         return copy;
     }
 
