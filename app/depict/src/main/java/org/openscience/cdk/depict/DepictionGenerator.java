@@ -979,8 +979,15 @@ public final class DepictionGenerator {
      */
     public DepictionGenerator withHighlight(Iterable<? extends IChemObject> chemObjs, Color color) {
         DepictionGenerator copy = new DepictionGenerator(this);
-        for (IChemObject chemObj : chemObjs)
-            copy.highlight.put(chemObj, color);
+        for (IChemObject chemObj : chemObjs) {
+            if (chemObj instanceof IAtomContainer) {
+                for (IAtom atom : ((IAtomContainer) chemObj).atoms())
+                    copy.highlight.put(atom, color);
+                for (IBond bond : ((IAtomContainer) chemObj).bonds())
+                    copy.highlight.put(bond, color);
+            }
+            else copy.highlight.put(chemObj, color);
+        }
         return copy;
     }
 
