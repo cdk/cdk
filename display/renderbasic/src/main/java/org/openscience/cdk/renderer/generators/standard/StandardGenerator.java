@@ -929,7 +929,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          */
         @Override
         public Double getDefault() {
-            return 0.18;
+            return 0.16;
         }
     }
 
