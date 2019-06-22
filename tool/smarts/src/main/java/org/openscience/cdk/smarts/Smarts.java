@@ -1181,7 +1181,8 @@ public final class Smarts {
                         if (!new Parser(submol, str.substring(beg, end - 1), flav).parse())
                             return false;
                         if (submol.getAtomCount() == 1) {
-                            expr = ((QueryAtom) submol.getAtom(0)).getExpression();
+                            expr = ((QueryAtom) AtomRef.deref(submol.getAtom(0)))
+                                    .getExpression();
                         } else {
                             expr = new Expr(Expr.Type.RECURSIVE, submol);
                         }
@@ -1584,7 +1585,7 @@ public final class Smarts {
                 markReactionRoles();
                 for (IAtom atom : mol.atoms()) {
                     ReactionRole role = atom.getProperty(CDKConstants.REACTION_ROLE);
-                    ((QueryAtom) atom).getExpression().and(
+                    ((QueryAtom) AtomRef.deref(atom)).getExpression().and(
                         new Expr(Expr.Type.REACTION_ROLE,
                                  role.ordinal())
                     );
