@@ -135,17 +135,17 @@ public interface IBond extends IElectronContainer {
      * Bond display style, controlling how bonds appear in a 2D depiction.
      */
     enum Display {
-        /** Display as a solid line (default). */
+        /** A solid line (default). */
         Solid,
-        /** Display as a dashed line. */
+        /** A dashed line. */
         Dash,
-        /** Display as a hashed line. */
+        /** A hashed line (bold dashed). */
         Hash,
-        /** Display as a bold line. */
+        /** A bold line. */
         Bold,
-        /** Display as a wavy line. */
+        /** A wavy line. */
         Wavy,
-        /** Display as a dotted line. */
+        /** A dotted line. */
         Dot,
         /**
          * Display as a hashed wedge, with the narrow end
@@ -168,12 +168,12 @@ public interface IBond extends IElectronContainer {
          */
         WedgeEnd,
         /**
-         * Display as an arrow (e.g. coordination bond), the arrow points
+         * Display as an arrow (e.g. co-ordination bond), the arrow points
          * to the begin ({@link IBond#getBegin()}) atom.
          */
         ArrowBeg,
         /**
-         * Display as an arrow (e.g. coordination bond), the arrow points
+         * Display as an arrow (e.g. co-ordination bond), the arrow points
          * to the end ({@link IBond#getEnd()}) atom.
          */
         ArrowEnd
