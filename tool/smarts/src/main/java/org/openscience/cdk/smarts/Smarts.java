@@ -1573,7 +1573,8 @@ public final class Smarts {
         // final check
         boolean finish() {
             // check for unclosed rings, components, and branches
-            if (numRingOpens != 0 || curComponentId != 0 || !stack.isEmpty()) {
+            if (numRingOpens != 0 || curComponentId != 0 ||
+                !stack.isEmpty() || bond != null) {
                 error = "Unclosed ring, component group, or branch";
                 return false;
             }
@@ -1805,6 +1806,8 @@ public final class Smarts {
                     case '!':
                     case '/':
                     case '\\':
+                        if (prev == null)
+                            return false;
                         unget();
                         if (!parseBondExpr())
                             return false;

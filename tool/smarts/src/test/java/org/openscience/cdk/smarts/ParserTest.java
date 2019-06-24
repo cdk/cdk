@@ -22,6 +22,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smarts.Smarts;
 
@@ -36,10 +37,16 @@ import static org.junit.Assert.assertThat;
  */
 public class ParserTest extends CDKTestCase {
 
+    private static final class InvalidSmarts extends Exception {
+        public InvalidSmarts(String message) {
+            super(message);
+        }
+    }
+
     private void parse(String smarts, int flav) throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         if (!Smarts.parse(builder.newAtomContainer(), smarts, flav))
-            throw new Exception(Smarts.getLastErrorMesg());
+            throw new InvalidSmarts(Smarts.getLastErrorMesg());
     }
 
     private void parse(String smarts) throws Exception {
@@ -1503,6 +1510,16 @@ public class ParserTest extends CDKTestCase {
      */
     @Test public void bug909() throws Exception {
         parse("O=C1NCCSc2ccccc12");
+    }
+
+    @Test(expected = InvalidSmarts.class)
+    public void testBondPrefix() throws Exception {
+        parse("-CCO");
+    }
+
+    @Test(expected = InvalidSmarts.class)
+    public void trailingBond() throws Exception {
+        parse("CCO-");
     }
 
 }
