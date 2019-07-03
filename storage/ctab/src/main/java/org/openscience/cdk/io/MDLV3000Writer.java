@@ -52,6 +52,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -775,8 +776,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * for Sgroups but all lines are handled.
      */
     private static final class V30LineWriter implements Closeable {
-        public static final String PREFIX = "M  V30 ";
-        public static final int    LIMIT  = 78; // -\n takes two chars (80 total)
+        // note: non-static
+        private final DecimalFormat decimalFmt = new DecimalFormat("#.#####");
+        public static final String  PREFIX     = "M  V30 ";
+        public static final int     LIMIT      = 78; // -\n takes two chars (80 total)
 
         // the base writer instance
         private final Writer writer;
@@ -854,7 +857,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
          * @throws IOException low-level IO error
          */
         V30LineWriter write(double num) throws IOException {
-            return write(String.format(Locale.ROOT, "%.5f", num));
+            return write(decimalFmt.format(num));
         }
 
         /**
