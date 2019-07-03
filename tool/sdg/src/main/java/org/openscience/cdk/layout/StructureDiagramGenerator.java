@@ -604,6 +604,10 @@ public class StructureDiagramGenerator {
      */
     private void generateCoordinates(Vector2d firstBondVector, boolean isConnected, boolean isSubLayout) throws CDKException {
 
+        // defensive copy, vectors are mutable!
+        if (firstBondVector == DEFAULT_BOND_VECTOR)
+            firstBondVector = new Vector2d(firstBondVector);
+
         final int numAtoms = molecule.getAtomCount();
         final int numBonds = molecule.getBondCount();
         this.firstBondVector = firstBondVector;
