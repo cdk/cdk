@@ -108,9 +108,12 @@ import java.util.Set;
  */
 public class StructureDiagramGenerator {
 
-    public static final double RAD_30 = Math.toRadians(-30);
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
-    public static final double       DEFAULT_BOND_LENGTH = 1.5;
+    private static final double                  DEFAULT_BOND_LENGTH      = 1.5;
+    private static final Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
+    private static final IdentityTemplateLibrary DEFAULT_TEMPLATE_LIBRARY = IdentityTemplateLibrary.loadFromResource("custom-templates.smi")
+                                                                                                   .add(IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi"));
+    private static final double                  RAD_30                   = Math.toRadians(-30);
+    private static final ILoggingTool            logger                   = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
 
     private IAtomContainer molecule;
     private IRingSet       sssr;
@@ -134,9 +137,7 @@ public class StructureDiagramGenerator {
      */
     private IdentityTemplateLibrary identityLibrary;
 
-    public static  Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
-    private static IdentityTemplateLibrary DEFAULT_TEMPLATE_LIBRARY = IdentityTemplateLibrary.loadFromResource("custom-templates.smi")
-                                                                                             .add(IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi"));
+
 
 
     /**
