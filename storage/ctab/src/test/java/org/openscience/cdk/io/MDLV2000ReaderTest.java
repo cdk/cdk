@@ -24,6 +24,7 @@
  *  */
 package org.openscience.cdk.io;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,6 +41,8 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -51,6 +54,7 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -1789,5 +1793,24 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         mdlv2000Reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
         final org.openscience.cdk.silent.AtomContainer atomContainer = mdlv2000Reader.read(new org.openscience.cdk.silent.AtomContainer());
         Assert.assertEquals(17, atomContainer.getAtomCount());
+    }
+
+    @Test public void test() throws Exception {
+        String input = "\n" +
+                       "Structure query\n" +
+                       "\n" +
+                       "  1  0  0  0  0  0  0  0  0  0999 V2000\n" +
+                       " 2430.7100 2427.0000    0.0000 C   0  0  0  0  0  0\n" +
+                       "A   1\n" +
+                       "Blah\n" +
+                       "M  END";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input))) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            assertThat(mol.getAtom(0),
+                       instanceOf(IPseudoAtom.class));
+            assertThat(((IPseudoAtom)mol.getAtom(0)).getLabel(),
+                       is("Blah"));
+        }
     }
 }
