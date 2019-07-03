@@ -295,9 +295,9 @@ final class IdentityTemplateLibrary {
         for (Point2d point : points) {
             if (sb.length() > 2) sb.append(";");
             DecimalFormat fmt;
-            sb.append(String.format(Locale.ROOT, "%.5f", point.x));
+            sb.append(String.format(Locale.ROOT, "%.2f", point.x));
             sb.append(',');
-            sb.append(String.format(Locale.ROOT, "%.5f", point.y));
+            sb.append(String.format(Locale.ROOT, "%.2f", point.y));
             sb.append(',');
         }
         sb.append(")|");
