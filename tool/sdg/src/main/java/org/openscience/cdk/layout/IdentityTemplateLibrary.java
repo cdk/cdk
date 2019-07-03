@@ -290,7 +290,7 @@ final class IdentityTemplateLibrary {
      * @return extended SMILES format coordinates
      */
     static String encodeCoordinates(Point2d[] points) {
-        DecimalFormat fmt = new DecimalFormat("#.##");
+        DecimalFormat fmt = new DecimalFormat(".##");
         StringBuilder sb = new StringBuilder();
         sb.append("|(");
         for (Point2d point : points) {
