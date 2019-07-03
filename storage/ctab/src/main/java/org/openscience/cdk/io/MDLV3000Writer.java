@@ -53,8 +53,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -89,11 +87,9 @@ import static org.openscience.cdk.io.MDLV2000Writer.OptProgramName;
  */
 public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
-    public static final  SimpleDateFormat HEADER_DATE_FORMAT = new SimpleDateFormat("MMddyyHHmm");
-    public static final  NumberFormat     DECIMAL_FORMAT     = new DecimalFormat("#.####", DecimalFormatSymbols.getInstance(Locale.ROOT));
-    private static final Pattern          R_GRP_NUM          = Pattern.compile("R(\\d+)");
-    private V30LineWriter                 writer;
-    private StringIOSetting               programNameOpt;
+    private static final Pattern         R_GRP_NUM = Pattern.compile("R(\\d+)");
+    private              V30LineWriter   writer;
+    private              StringIOSetting programNameOpt;
 
     /**
      * Create a new V3000 writer, output to the provided JDK writer.
@@ -182,7 +178,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
          */
         writer.writeDirect("  ");
         writer.writeDirect(getProgName());
-        writer.writeDirect(HEADER_DATE_FORMAT.format(System.currentTimeMillis()));
+        writer.writeDirect(new SimpleDateFormat("MMddyyHHmm").format(System.currentTimeMillis()));
         final int dim = getNumberOfDimensions(mol);
         if (dim != 0) {
             writer.writeDirect(Integer.toString(dim));
@@ -646,8 +642,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                             final Point2d p1 = bracket.getFirstPoint();
                             final Point2d p2 = bracket.getSecondPoint();
                             writer.write("9");
-                            writer.write(' ').write(DECIMAL_FORMAT.format(p1.x)).write(' ').write(DECIMAL_FORMAT.format(p1.y)).write(" 0");
-                            writer.write(' ').write(DECIMAL_FORMAT.format(p2.x)).write(' ').write(DECIMAL_FORMAT.format(p2.y)).write(" 0");
+                            writer.write(' ').write(p1.x).write(' ').write(p1.y).write(" 0");
+                            writer.write(' ').write(p2.x).write(' ').write(p2.y).write(" 0");
                             writer.write(" 0 0 0");
                             writer.write(")");
                         }
@@ -780,8 +776,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * for Sgroups but all lines are handled.
      */
     private static final class V30LineWriter implements Closeable {
-        public static final String PREFIX = "M  V30 ";
-        public static final int    LIMIT  = 78; // -\n takes two chars (80 total)
+        // note: non-static
+        private final DecimalFormat decimalFmt = new DecimalFormat("#.#####");
+        public static final String  PREFIX     = "M  V30 ";
+        public static final int     LIMIT      = 78; // -\n takes two chars (80 total)
 
         // the base writer instance
         private final Writer writer;
@@ -859,7 +857,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
          * @throws IOException low-level IO error
          */
         V30LineWriter write(double num) throws IOException {
-            return write(DECIMAL_FORMAT.format(num));
+            return write(decimalFmt.format(num));
         }
 
         /**
@@ -958,5 +956,4 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
             fireIOSettingQuestion(setting);
         }
     }
-
 }

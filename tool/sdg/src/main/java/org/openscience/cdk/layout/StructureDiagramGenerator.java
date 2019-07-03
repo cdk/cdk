@@ -108,9 +108,12 @@ import java.util.Set;
  */
 public class StructureDiagramGenerator {
 
-    public static final double RAD_30 = Math.toRadians(-30);
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
-    public static final double       DEFAULT_BOND_LENGTH = 1.5;
+    static final double                          DEFAULT_BOND_LENGTH      = 1.5;
+    private static final Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
+    private static final IdentityTemplateLibrary DEFAULT_TEMPLATE_LIBRARY = IdentityTemplateLibrary.loadFromResource("custom-templates.smi")
+                                                                                                   .add(IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi"));
+    private static final double                  RAD_30                   = Math.toRadians(-30);
+    private static final ILoggingTool            logger                   = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
 
     private IAtomContainer molecule;
     private IRingSet       sssr;
@@ -134,9 +137,7 @@ public class StructureDiagramGenerator {
      */
     private IdentityTemplateLibrary identityLibrary;
 
-    public static  Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
-    private static IdentityTemplateLibrary DEFAULT_TEMPLATE_LIBRARY = IdentityTemplateLibrary.loadFromResource("custom-templates.smi")
-                                                                                             .add(IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi"));
+
 
 
     /**
@@ -604,6 +605,10 @@ public class StructureDiagramGenerator {
      */
     private void generateCoordinates(Vector2d firstBondVector, boolean isConnected, boolean isSubLayout) throws CDKException {
 
+        // defensive copy, vectors are mutable!
+        if (firstBondVector == DEFAULT_BOND_VECTOR)
+            firstBondVector = new Vector2d(firstBondVector);
+
         final int numAtoms = molecule.getAtomCount();
         final int numBonds = molecule.getBondCount();
         this.firstBondVector = firstBondVector;
@@ -888,9 +893,9 @@ public class StructureDiagramGenerator {
                 }
             }
 
-            // no attachment point, rorate to maximise horizontal spread etc.
+            // no attachment point, rotate to maximise horizontal spread etc.
             if (begAttach == null) {
-                selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
+                selectOrientation(molecule, DEFAULT_BOND_LENGTH, 1);
             }
             // use attachment point bond to rotate
             else {
@@ -959,6 +964,7 @@ public class StructureDiagramGenerator {
 
 
         double maxWidth = minmax[2] - minmax[0];
+        double begWidth = maxWidth;
         int maxAligned = countAlignedBonds(mol);
 
         Point2d[] coords = new Point2d[mol.getAtomCount()];
@@ -973,11 +979,11 @@ public class StructureDiagramGenerator {
             minmax = GeometryUtil.getMinMax(mol);
 
             double width = minmax[2] - minmax[0];
-            double delta = Math.abs(width - maxWidth);
+            double delta = Math.abs(width - begWidth);
 
             // if this orientation is significantly wider than the
             // best so far select it
-            if (delta > widthDiff && width > maxWidth) {
+            if (delta >= widthDiff && width > maxWidth) {
                 maxWidth = width;
                 for (int j = 0; j < mol.getAtomCount(); j++)
                     coords[j] = new Point2d(mol.getAtom(j).getPoint2d());
