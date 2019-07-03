@@ -45,7 +45,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -84,8 +83,6 @@ import static java.util.Map.Entry;
  * @author John May
  */
 final class IdentityTemplateLibrary {
-
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##", DecimalFormatSymbols.getInstance(Locale.ROOT));
 
     private final Multimap<String, Point2d[]> templateMap = LinkedListMultimap.create();
 
@@ -297,9 +294,10 @@ final class IdentityTemplateLibrary {
         sb.append("|(");
         for (Point2d point : points) {
             if (sb.length() > 2) sb.append(";");
-            sb.append(DECIMAL_FORMAT.format(point.x));
+            DecimalFormat fmt;
+            sb.append(String.format(Locale.ROOT, "%.5f", point.x));
             sb.append(',');
-            sb.append(DECIMAL_FORMAT.format(point.y));
+            sb.append(String.format(Locale.ROOT, "%.5f", point.y));
             sb.append(',');
         }
         sb.append(")|");
