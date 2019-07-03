@@ -241,6 +241,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
         }
 
+        // donuts for delocalised aromatic
+        if (bondElements.length > container.getBondCount()) {
+            frontLayer.add(bondElements[bondElements.length - 1]);
+        }
+
         // convert the atom symbols to IRenderingElements
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom atom = container.getAtom(i);
