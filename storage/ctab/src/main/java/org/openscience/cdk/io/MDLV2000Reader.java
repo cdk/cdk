@@ -1519,6 +1519,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             default:
                 return 0;
         }
+        if (line.length() <= index + 1) {
+			return result;
+		}
         switch ((c = line.charAt(index + 1))) {
             case ' ':
                 if (result > 0) return sign * result;
@@ -1542,6 +1545,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             default:
                 return sign * result;
         }
+        if (line.length() <= index + 2) {
+			return result;
+		}
         switch ((c = line.charAt(index + 2))) {
             case ' ':
                 if (result > 0) return sign * result;
