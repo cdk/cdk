@@ -656,14 +656,21 @@ final class StandardBondGenerator {
                 //    -- x         x --
                 return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, true, dashed);
             }
-        } else if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1) && (!hasDisplayedSymbol(atom2) || atom2Bonds.isEmpty())) {
-            return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, dashed);
-        } else if (atom2Bonds.size() == 1 && !hasDisplayedSymbol(atom2) && (!hasDisplayedSymbol(atom1) || atom1Bonds.isEmpty())) {
-            return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, dashed);
-        } else if (specialOffsetBondNextToWedge(atom1, atom1Bonds) && !hasDisplayedSymbol(atom1)) {
-            return generateOffsetDoubleBond(bond, atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds, dashed);
-        } else if (specialOffsetBondNextToWedge(atom2, atom2Bonds) && !hasDisplayedSymbol(atom2)) {
-            return generateOffsetDoubleBond(bond, atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds, dashed);
+        } else if (!(hasDisplayedSymbol(atom1) && !hasDisplayedSymbol(atom2))) {
+            if (atom1Bonds.size() == 1 && atom2Bonds.isEmpty())
+                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, dashed);
+            else if (atom2Bonds.size() == 1 && atom1Bonds.isEmpty())
+                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, dashed);
+            else if (specialOffsetBondNextToWedge(atom1, atom1Bonds))
+                return generateOffsetDoubleBond(bond, atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds, dashed);
+            else if (specialOffsetBondNextToWedge(atom2, atom2Bonds))
+                return generateOffsetDoubleBond(bond, atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds, dashed);
+            else if (atom1Bonds.size() == 1)
+                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, dashed);
+            else if (atom2Bonds.size() == 1)
+                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, dashed);
+            else
+                return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
         } else {
             if (dashed) {
                 return generateDashedBond(atom1, atom2);
