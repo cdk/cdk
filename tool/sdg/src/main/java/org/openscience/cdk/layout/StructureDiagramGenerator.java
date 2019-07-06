@@ -949,6 +949,35 @@ public class StructureDiagramGenerator {
     }
 
     /**
+     * Calculates a histogram of bond directions, this allows us to select an
+     * orientation that has bonds at nice angles (e.g. 60/120 deg). The limit
+     * parameter is used to quantize the vectors within a range. For example
+     * a limit of 60 will fill the histogram 0..59 and Bond's orientated at 0,
+     * 60, 120 degrees will all be counted in the 0 bucket.
+     *
+     * @param mol molecule
+     * @param counts the histogram is stored here, will be cleared
+     * @param lim wrap angles to the (180 max)
+     * @return number of aligned bonds
+     */
+    private static void calcDirectionHistogram(IAtomContainer mol,
+                                               int[] counts,
+                                               int lim) {
+        if (lim > 180)
+            throw new IllegalArgumentException("limit must be ≤ 180");
+        Arrays.fill(counts, 0);
+        for (IBond bond : mol.bonds()) {
+            Point2d beg = bond.getBegin().getPoint2d();
+            Point2d end = bond.getEnd().getPoint2d();
+            Vector2d vec = new Vector2d(end.x - beg.x, end.y - beg.y);
+            if (vec.x < 0)
+                vec.negate();
+            double angle = Math.PI/2 + Math.atan2(vec.y, vec.x);
+            counts[(int)(Math.round(Math.toDegrees(angle))%lim)]++;
+        }
+    }
+
+    /**
      * Select the global orientation of the layout. We click round at 30 degree increments
      * and select the orientation that a) is the widest or b) has the most bonds aligned to
      * +/- 30 degrees {@cdk.cite Clark06}.
@@ -957,24 +986,40 @@ public class StructureDiagramGenerator {
      * @param widthDiff parameter at which to consider orientations equally good (wide select)
      * @param alignDiff parameter at which we consider orientations equally good (bond align select)
      */
-    private static void selectOrientation(IAtomContainer mol, double widthDiff, int alignDiff) {
-        double[] minmax = GeometryUtil.getMinMax(mol);
+    private void selectOrientation(IAtomContainer mol, double widthDiff, int alignDiff) {
+
+        int[]    dirhist = new int[180];
+        double[] minmax  = GeometryUtil.getMinMax(mol);
         Point2d pivot = new Point2d(minmax[0] + ((minmax[2] - minmax[0]) / 2),
                                     minmax[1] + ((minmax[3] - minmax[1]) / 2));
 
+        // initial alignment to snapping bonds 60 degrees
+        calcDirectionHistogram(mol, dirhist, 60);
+        int max = 0;
+        for (int i = 1; i < dirhist.length; i++)
+            if (dirhist[i] > dirhist[max])
+                max = i;
+        // only apply if 50% of the bonds are pointing the same 'wrapped'
+        // direction, max=0 means already aligned
+        if (max != 0 && dirhist[max]/(double)mol.getBondCount() > 0.5)
+            GeometryUtil.rotate(mol, pivot, Math.toRadians(60-max));
 
         double maxWidth = minmax[2] - minmax[0];
         double begWidth = maxWidth;
-        int maxAligned = countAlignedBonds(mol);
+        calcDirectionHistogram(mol, dirhist, 180);
+        int maxAligned = dirhist[60]+dirhist[120];
 
         Point2d[] coords = new Point2d[mol.getAtomCount()];
         for (int i = 0; i < mol.getAtomCount(); i++)
             coords[i] = new Point2d(mol.getAtom(i).getPoint2d());
 
-        final double step = Math.toRadians(30);
-        final int numSteps = (360 / 30) - 1;
-        for (int i = 0; i < numSteps; i++) {
+        double step = Math.PI/3;
+        double tau = 2*Math.PI;
+        double total = 0;
 
+        while (total < tau) {
+
+            total += step;
             GeometryUtil.rotate(mol, pivot, step);
             minmax = GeometryUtil.getMinMax(mol);
 
@@ -991,7 +1036,8 @@ public class StructureDiagramGenerator {
             // width is not significantly better or worse so check
             // the number of bonds aligned to 30 deg (aesthetics)
             else if (delta <= widthDiff) {
-                int aligned = countAlignedBonds(mol);
+                calcDirectionHistogram(mol, dirhist, 180);
+                int aligned = dirhist[60]+dirhist[120];
                 int alignDelta = aligned - maxAligned;
                 if (alignDelta > alignDiff || (alignDelta == 0 && width > maxWidth)) {
                     maxAligned = aligned;
@@ -1005,34 +1051,6 @@ public class StructureDiagramGenerator {
         // set the best coordinates we found
         for (int i = 0; i < mol.getAtomCount(); i++)
             mol.getAtom(i).setPoint2d(coords[i]);
-    }
-
-    /**
-     * Count the number of bonds aligned to 30 degrees.
-     *
-     * @param mol molecule
-     * @return number of aligned bonds
-     */
-    private static int countAlignedBonds(IAtomContainer mol) {
-        final double ref = Math.toRadians(30);
-        final double diff = Math.toRadians(1);
-        int count = 0;
-        for (IBond bond : mol.bonds()) {
-            Point2d beg = bond.getBegin().getPoint2d();
-            Point2d end = bond.getEnd().getPoint2d();
-            if (beg.x > end.x) {
-                Point2d tmp = beg;
-                beg = end;
-                end = tmp;
-            }
-            Vector2d vec = new Vector2d(end.x - beg.x, end.y - beg.y);
-            double angle = Math.atan2(vec.y, vec.x);
-
-            if (Math.abs(angle) - ref < diff) {
-                count++;
-            }
-        }
-        return count;
     }
 
     private final double adjustForHydrogen(IAtom atom, IAtomContainer mol) {
