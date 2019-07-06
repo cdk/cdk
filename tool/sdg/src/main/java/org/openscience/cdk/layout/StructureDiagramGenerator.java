@@ -986,20 +986,22 @@ public class StructureDiagramGenerator {
      * @param widthDiff parameter at which to consider orientations equally good (wide select)
      * @param alignDiff parameter at which we consider orientations equally good (bond align select)
      */
-    private static void selectOrientation(IAtomContainer mol, double widthDiff, int alignDiff) {
+    private void selectOrientation(IAtomContainer mol, double widthDiff, int alignDiff) {
 
         int[]    dirhist = new int[180];
         double[] minmax  = GeometryUtil.getMinMax(mol);
         Point2d pivot = new Point2d(minmax[0] + ((minmax[2] - minmax[0]) / 2),
                                     minmax[1] + ((minmax[3] - minmax[1]) / 2));
 
-        // initial alignment to 60 degrees
+        // initial alignment to snapping bonds 60 degrees
         calcDirectionHistogram(mol, dirhist, 60);
         int max = 0;
         for (int i = 1; i < dirhist.length; i++)
             if (dirhist[i] > dirhist[max])
                 max = i;
-        if (max != 0)
+        // only apply if 50% of the bonds are pointing the same 'wrapped'
+        // direction, max=0 means already aligned
+        if (max != 0 && dirhist[max]/(double)mol.getBondCount() > 0.5)
             GeometryUtil.rotate(mol, pivot, Math.toRadians(60-max));
 
         double maxWidth = minmax[2] - minmax[0];
