@@ -53,6 +53,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -777,7 +778,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      */
     private static final class V30LineWriter implements Closeable {
         // note: non-static
-        private final DecimalFormat decimalFmt = new DecimalFormat("#.#####");
+        private final DecimalFormat decimalFmt = new DecimalFormat("#.#####", DecimalFormatSymbols.getInstance(Locale.ROOT));
         public static final String  PREFIX     = "M  V30 ";
         public static final int     LIMIT      = 78; // -\n takes two chars (80 total)
 
