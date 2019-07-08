@@ -656,7 +656,7 @@ final class StandardBondGenerator {
                 //    -- x         x --
                 return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, true, dashed);
             }
-        } else if (!(hasDisplayedSymbol(atom1) && !hasDisplayedSymbol(atom2))) {
+        } else if (!(hasDisplayedSymbol(atom1) && hasDisplayedSymbol(atom2))) {
             if (atom1Bonds.size() == 1 && atom2Bonds.isEmpty())
                 return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, dashed);
             else if (atom2Bonds.size() == 1 && atom1Bonds.isEmpty())
