@@ -45,6 +45,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -290,7 +291,7 @@ final class IdentityTemplateLibrary {
      * @return extended SMILES format coordinates
      */
     static String encodeCoordinates(Point2d[] points) {
-        DecimalFormat fmt = new DecimalFormat(".##");
+        DecimalFormat fmt = new DecimalFormat(".##", DecimalFormatSymbols.getInstance(Locale.ROOT));
         StringBuilder sb = new StringBuilder();
         sb.append("|(");
         for (Point2d point : points) {
