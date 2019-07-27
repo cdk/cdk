@@ -211,9 +211,15 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         ElementGroup annotations = new ElementGroup();
 
+        StandardDonutGenerator donutGenerator = new StandardDonutGenerator(container, parameters);
+        IRenderingElement donuts = donutGenerator.generate();
+
         AtomSymbol[] symbols = generateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, foreground, stroke);
-        IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke,
-                                                                               font, annotations);
+        IRenderingElement[] bondElements;
+        bondElements = StandardBondGenerator.generateBonds(container, symbols,
+                                                           parameters, stroke,
+                                                           font, annotations,
+                                                           donutGenerator);
 
         final HighlightStyle style = parameters.get(Highlighting.class);
         final double glowWidth = parameters.get(OuterGlowWidth.class);
@@ -241,10 +247,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
         }
 
-        // donuts for delocalised aromatic
-        if (bondElements.length > container.getBondCount()) {
-            frontLayer.add(bondElements[bondElements.length - 1]);
-        }
+        // bonds for delocalised aromatic
+        frontLayer.add(donuts);
 
         // convert the atom symbols to IRenderingElements
         for (int i = 0; i < container.getAtomCount(); i++) {
@@ -1156,7 +1160,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Render small delocalised rings as donuts/life buoys? This can sometimes
+     * Render small delocalised rings as bonds/life buoys? This can sometimes
      * be misleading for fused rings but is commonly used.
      */
     public static final class DelocalisedDonutsBondDisplay extends AbstractGeneratorParameter<Boolean> {
