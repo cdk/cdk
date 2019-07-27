@@ -168,12 +168,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     private final IGeneratorParameter<?> atomColor = new AtomColor(), visibility = new Visibility(),
             strokeRatio = new StrokeRatio(), separationRatio = new BondSeparation(), wedgeRatio = new WedgeRatio(),
             marginRatio = new SymbolMarginRatio(), hatchSections = new HashSpacing(), dashSections = new DashSection(),
-            waveSections = new WaveSpacing(), fancyBoldWedges = new FancyBoldWedges(),
+            waveSections      = new WaveSpacing(), fancyBoldWedges = new FancyBoldWedges(),
             fancyHashedWedges = new FancyHashedWedges(), highlighting = new Highlighting(),
-            glowWidth = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
-            annFontSize = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
-            sgroupFontScale = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes(),
-            forceDonuts = new ForceDelocalisedBondDisplay();
+            glowWidth         = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
+            annFontSize       = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
+            sgroupFontScale   = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes(),
+            forceDelocalised  = new ForceDelocalisedBondDisplay(), delocaliseDonuts = new DelocalisedDonutsBondDisplay();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -606,8 +606,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
-                hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
-                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes, forceDonuts);
+                             hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
+                             annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes, forceDelocalised, delocaliseDonuts);
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {
@@ -1152,6 +1152,19 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         @Override
         public Boolean getDefault() {
             return false;
+        }
+    }
+
+    /**
+     * Render small delocalised rings as donuts/life buoys? This can sometimes
+     * be misleading for fused rings but is commonly used.
+     */
+    public static final class DelocalisedDonutsBondDisplay extends AbstractGeneratorParameter<Boolean> {
+
+        /**{@inheritDoc} */
+        @Override
+        public Boolean getDefault() {
+            return true;
         }
     }
 }

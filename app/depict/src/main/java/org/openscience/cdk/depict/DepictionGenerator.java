@@ -43,6 +43,8 @@ import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.standard.SelectionVisibility;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
+import org.openscience.cdk.renderer.generators.standard.StandardGenerator.DelocalisedDonutsBondDisplay;
+import org.openscience.cdk.renderer.generators.standard.StandardGenerator.ForceDelocalisedBondDisplay;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
@@ -1069,6 +1071,25 @@ public final class DepictionGenerator {
      */
     public DepictionGenerator withFillToFit() {
         return withParam(BasicSceneGenerator.FitToScreen.class,
+                         true);
+    }
+
+    /**
+     * When aromaticity is set on bonds, display this in the diagram. IUPAC
+     * recommends depicting kekulé structures to avoid ambiguity but it's common
+     * practice to render delocalised rings "donuts" or "life buoys". With fused
+     * rings this can be somewhat confusing as you end up with three lines at
+     * the fusion point. <br>
+     * By default small rings are renders as donuts with dashed bonds used
+     * otherwise. You can use dashed bonds always by turning off the
+     * {@link DelocalisedDonutsBondDisplay}.
+     *
+     * @return new generator for method chaining
+     * @see ForceDelocalisedBondDisplay
+     * @see DelocalisedDonutsBondDisplay
+     */
+    public DepictionGenerator withAromaticDisplay() {
+        return withParam(ForceDelocalisedBondDisplay.class,
                          true);
     }
 

@@ -56,7 +56,6 @@ import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -104,6 +103,7 @@ final class StandardBondGenerator {
     // indexes of atoms and rings
     private final Map<IAtom, Integer>        atomIndexMap = new HashMap<IAtom, Integer>();
     private final Map<IBond, IAtomContainer> ringMap;
+    private final Set<IBond> donuts = new HashSet<>();
 
     // parameters
     private final double                     scale;
@@ -116,7 +116,7 @@ final class StandardBondGenerator {
     private final Color                      foreground, annotationColor;
     private final boolean                    fancyBoldWedges, fancyHashedWedges;
     private final double                     annotationDistance, annotationScale;
-    private final boolean                    aromaticDonuts = true;
+    private final boolean      delocalisedDonuts;
     private final Font         font;
     private final ElementGroup annotations;
     private final boolean      forceDelocalised;
@@ -159,6 +159,7 @@ final class StandardBondGenerator {
         this.annotationScale = (1 / scale) * parameters.get(StandardGenerator.AnnotationFontScale.class);
         this.annotationColor = parameters.get(StandardGenerator.AnnotationColor.class);
         this.forceDelocalised = parameters.get(StandardGenerator.ForceDelocalisedBondDisplay.class);
+        this.delocalisedDonuts = parameters.get(StandardGenerator.DelocalisedDonutsBondDisplay.class);
         this.font = font;
 
         // foreground is based on the carbon color
@@ -180,40 +181,55 @@ final class StandardBondGenerator {
             double stroke, Font font, ElementGroup annotations) {
         StandardBondGenerator bondGenerator = new StandardBondGenerator(container, symbols, parameters, annotations,
                 font, stroke);
-        IRenderingElement[] elements = new IRenderingElement[container.getBondCount()];
+        IRenderingElement[] elements;
+
+        IRenderingElement donuts = bondGenerator.generateDonuts();
+        if (donuts != null) {
+            elements = new IRenderingElement[container.getBondCount()+1];
+            elements[elements.length-1] = donuts;
+        } else {
+            elements = new IRenderingElement[container.getBondCount()];
+        }
+
         for (int i = 0; i < container.getBondCount(); i++) {
             final IBond bond = container.getBond(i);
             if (!StandardGenerator.isHidden(bond)) {
                 elements[i] = bondGenerator.generate(bond);
             }
         }
-        if (bondGenerator.aromaticDonuts) {
-            IRenderingElement donuts = bondGenerator.generateDonuts();
-            if (donuts != null) {
-                elements = Arrays.copyOf(elements, elements.length + 1);
-                elements[elements.length-1] = donuts;
-            }
-        }
         return elements;
     }
 
+    boolean canDelocalise(final IAtomContainer ring) {
+        boolean okay = ring.getBondCount() <= 8;
+        if (!okay)
+            return false;
+        for (IBond bond : ring.bonds()) {
+            if (!bond.isAromatic())
+                okay = false;
+            if ((bond.getOrder() != null &&
+                 bond.getOrder() != UNSET) &&
+                !forceDelocalised)
+                okay = false;
+        }
+        return okay;
+    }
+
     IRenderingElement generateDonuts() {
+        if (!delocalisedDonuts)
+            return null;
         ElementGroup        group = new ElementGroup();
         Set<IAtomContainer> rings = new HashSet<>(ringMap.values());
         for (IAtomContainer ring : rings) {
-            if (ring.getBondCount() <= 8) {
-                Point2d p2 = GeometryUtil.get2DCenter(ring);
-                if (ring.getBondCount() == 5) {
-                    TextOutline to = new TextOutline("–", font).resize(1/scale, -1/scale);
-                    to = to.translate(p2.x-to.getCenter().getX(),
-                                      p2.y-to.getCenter().getY());
-                   // group.add(GeneralPath.shapeOf(to.getOutline(), foreground));
-                }
-                double s = GeometryUtil.getBondLengthMedian(ring);
-                double n = ring.getBondCount();
-                double r = s / (2*Math.tan(Math.PI/n));
-                // group.add(new OvalElement(p2.x, p2.y, r-separation, false, foreground));
-            }
+            if (!canDelocalise(ring))
+                continue;
+            for (IBond bond : ring.bonds())
+                donuts.add(bond);
+            Point2d p2 = GeometryUtil.get2DCenter(ring);
+            double s = GeometryUtil.getBondLengthMedian(ring);
+            double n = ring.getBondCount();
+            double r = s / (2*Math.tan(Math.PI/n));
+            group.add(new OvalElement(p2.x, p2.y, r-separation, false, foreground));
         }
         return group;
     }
@@ -238,16 +254,18 @@ final class StandardBondGenerator {
             case SINGLE:
                 // TODO check small ring!
                 if (bond.isAromatic()) {
-                    if (forceDelocalised && !aromaticDonuts) {
-                        elem = generateDoubleBond(bond, true);
-                    } else
+                    if (donuts.contains(bond))
+                        elem = generateSingleBond(bond, atom1, atom2);
+                    else if (forceDelocalised)
+                        elem = generateDoubleBond(bond, forceDelocalised);
+                    else
                         elem = generateSingleBond(bond, atom1, atom2);
                 } else
                     elem = generateSingleBond(bond, atom1, atom2);
                 break;
             case DOUBLE:
                 if (bond.isAromatic()) {
-                    if (forceDelocalised && aromaticDonuts)
+                    if (donuts.contains(bond))
                         elem = generateSingleBond(bond, atom1, atom2);
                     else
                         elem = generateDoubleBond(bond, forceDelocalised);
@@ -259,7 +277,10 @@ final class StandardBondGenerator {
                 break;
             default:
                 if (bond.isAromatic() && order == UNSET) {
-                    elem = generateDoubleBond(bond, true);
+                    if (donuts.contains(bond))
+                        elem = generateSingleBond(bond, atom1, atom2);
+                    else
+                        elem = generateDoubleBond(bond, true);
                 } else {
                     // bond orders > 3 not supported
                     elem = generateDashedBond(atom1, atom2);
@@ -700,17 +721,17 @@ final class StandardBondGenerator {
             }
         } else if (!(hasDisplayedSymbol(atom1) && hasDisplayedSymbol(atom2))) {
             if (atom1Bonds.size() == 1 && atom2Bonds.isEmpty())
-                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, dashed);
+                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, arom);
             else if (atom2Bonds.size() == 1 && atom1Bonds.isEmpty())
-                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, dashed);
+                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, arom);
             else if (specialOffsetBondNextToWedge(atom1, atom1Bonds))
-                return generateOffsetDoubleBond(bond, atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds, dashed);
+                return generateOffsetDoubleBond(bond, atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds, arom);
             else if (specialOffsetBondNextToWedge(atom2, atom2Bonds))
-                return generateOffsetDoubleBond(bond, atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds, dashed);
+                return generateOffsetDoubleBond(bond, atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds, arom);
             else if (atom1Bonds.size() == 1)
-                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, dashed);
+                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, arom);
             else if (atom2Bonds.size() == 1)
-                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, dashed);
+                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, arom);
             else
                 return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
         } else {
