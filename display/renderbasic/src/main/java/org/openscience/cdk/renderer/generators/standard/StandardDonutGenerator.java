@@ -32,13 +32,16 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
+import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.DelocalisedDonutsBondDisplay;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.ForceDelocalisedBondDisplay;
 
 import javax.vecmath.Point2d;
 import java.awt.Color;
+import java.awt.Font;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,19 +51,25 @@ final class StandardDonutGenerator {
 
     // bonds involved in donuts!
     private final Set<IBond> bonds = new HashSet<>();
+    // atoms with delocalised charge
+    private final Set<IAtom> atoms = new HashSet<>();
     private final boolean    forceDelocalised;
     private final boolean    delocalisedDonuts;
     private final double     dbSpacing;
+    private final double     scale;
     private final Color      fgColor;
+    private final Font       font;
     private final IAtomContainer mol;
 
-    public StandardDonutGenerator(IAtomContainer mol, RendererModel model) {
+    public StandardDonutGenerator(IAtomContainer mol, Font font, RendererModel model) {
+        this.mol = mol;
+        this.font = font;
         this.forceDelocalised = model.get(ForceDelocalisedBondDisplay.class);
         this.delocalisedDonuts = model.get(DelocalisedDonutsBondDisplay.class);
         this.dbSpacing = model.get(StandardGenerator.BondSeparation.class);
+        this.scale = model.get(BasicSceneGenerator.Scale.class);
         this.fgColor = model.get(StandardGenerator.AtomColor.class).getAtomColor(
                              mol.getBuilder().newInstance(IAtom.class, "C"));
-        this.mol = mol;
     }
 
     private boolean canDelocalise(final IAtomContainer ring) {
@@ -89,11 +98,42 @@ final class StandardDonutGenerator {
             for (IBond bond : ring.bonds()) {
                 bonds.add(bond);
             }
+            int charge   = 0;
+            int unpaired = 0;
+            for (IAtom atom : ring.atoms()) {
+                Integer q = atom.getFormalCharge();
+                if (q == null || q == 0) {
+                    continue;
+                }
+                int nCyclic = 0;
+                for (IBond bond : mol.getConnectedBondsList(atom))
+                    if (bond.isInRing())
+                        nCyclic++;
+                if (nCyclic > 2)
+                    continue;
+                atoms.add(atom);
+                charge += atom.getFormalCharge();
+            }
             Point2d p2 = GeometryUtil.get2DCenter(ring);
+
+            if (charge != 0) {
+                String qText = charge < 0 ? "–" : "+";
+                if (charge < -1)
+                    qText = Math.abs(charge) + qText;
+                else if (charge > +1)
+                    qText = Math.abs(charge) + qText;
+
+                TextOutline qSym = new TextOutline(qText, font);
+                qSym = qSym.resize(1 / scale, -1 / scale);
+                qSym = qSym.translate(p2.x - qSym.getCenter().getX(),
+                                      p2.y - qSym.getCenter().getY());
+                group.add(GeneralPath.shapeOf(qSym.getOutline(), fgColor));
+            }
+
             double  s  = GeometryUtil.getBondLengthMedian(ring);
             double  n  = ring.getBondCount();
             double  r  = s / (2 * Math.tan(Math.PI / n));
-            group.add(new OvalElement(p2.x, p2.y, r - dbSpacing,
+            group.add(new OvalElement(p2.x, p2.y, r - 1.5*dbSpacing,
                                       false, fgColor));
         }
         return group;
@@ -101,5 +141,9 @@ final class StandardDonutGenerator {
 
     boolean isDelocalised(IBond bond) {
         return bonds.contains(bond);
+    }
+
+    boolean isChargeDelocalised(IAtom atom) {
+        return atoms.contains(atom);
     }
 }

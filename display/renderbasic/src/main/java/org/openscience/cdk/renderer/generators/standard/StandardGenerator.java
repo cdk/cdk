@@ -211,10 +211,14 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         ElementGroup annotations = new ElementGroup();
 
-        StandardDonutGenerator donutGenerator = new StandardDonutGenerator(container, parameters);
+        StandardDonutGenerator donutGenerator;
+        donutGenerator = new StandardDonutGenerator(container, font, parameters);
         IRenderingElement donuts = donutGenerator.generate();
 
-        AtomSymbol[] symbols = generateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, foreground, stroke);
+        AtomSymbol[] symbols = generateAtomSymbols(container, symbolRemap,
+                                                   visibility, parameters,
+                                                   annotations, foreground,
+                                                   stroke, donutGenerator);
         IRenderingElement[] bondElements;
         bondElements = StandardBondGenerator.generateBonds(container, symbols,
                                                            parameters, stroke,
@@ -367,7 +371,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                              RendererModel parameters,
                                              ElementGroup annotations,
                                              Color foreground,
-                                             double stroke) {
+                                             double stroke,
+                                             StandardDonutGenerator donutGen) {
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
         final double annDist = parameters.get(AnnotationDistance.class)
@@ -424,9 +429,16 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
                 if (remapped) {
                     symbols[i] = atomGenerator.generateAbbreviatedSymbol(symbolRemap.get(atom), hPosition);
-                } else {
+                } else if (donutGen.isChargeDelocalised(atom)) {
+                    Integer charge = atom.getFormalCharge();
+                    atom.setFormalCharge(0);
+                    // can't think of a better way to handle this without API
+                    // change to symbol visibility
+                    if (atom.getAtomicNumber() != 6)
+                        symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition, parameters);
+                    atom.setFormalCharge(charge);
+                } else
                     symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition, parameters);
-                }
 
                 if (symbols[i] != null) {
 
