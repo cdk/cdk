@@ -534,6 +534,14 @@ public enum Elements {
             case 54: // Xe
             case 86: // Rn
                 return false;
+            case 5:   // B
+            case 14:  // Si
+            case 32:  // Ge
+            case 33:  // As
+            case 51:  // Sb
+            case 52:  // Te
+            case 85:  // At
+                return false;
         }
         return true;
     }
