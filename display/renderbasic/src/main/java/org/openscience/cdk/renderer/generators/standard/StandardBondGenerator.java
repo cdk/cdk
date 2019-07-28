@@ -224,7 +224,7 @@ final class StandardBondGenerator {
                 if (bond.isAromatic()) {
                     if (donutGenerator.isDelocalised(bond))
                         elem = generateSingleBond(bond, atom1, atom2);
-                    else if (forceDelocalised)
+                    else if (forceDelocalised && bond.isInRing())
                         elem = generateDoubleBond(bond, forceDelocalised);
                     else
                         elem = generateSingleBond(bond, atom1, atom2);
