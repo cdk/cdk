@@ -25,6 +25,7 @@ package org.openscience.cdk.layout;
 
 import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -941,6 +942,10 @@ public class AtomPlacer {
      * -N=[N+]=N
      */
     static boolean isColinear(IAtom atom, Iterable<IBond> bonds) {
+
+        if (Elements.isMetal(atom))
+            return true;
+
         int numSgl = atom.getImplicitHydrogenCount() == null ? 0 : atom.getImplicitHydrogenCount();
         int numDbl = 0;
         int numTpl = 0;
