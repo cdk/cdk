@@ -1599,7 +1599,7 @@ final class StandardBondGenerator {
 
         final List<IAtomContainer> rings = AtomContainerSetManipulator.getAllAtomContainers(smallest);
 
-        Collections.sort(rings, new RingBondOffsetComparator());
+        Collections.sort(rings, new RingBondOffsetComparator(container));
 
         final Map<IBond, IAtomContainer> ringMap = new HashMap<IBond, IAtomContainer>();
 
@@ -1689,29 +1689,52 @@ final class StandardBondGenerator {
             }
         }
 
+        private final boolean hasMetal;
+
         /**
          * Create a new comparator.
          */
-        RingBondOffsetComparator() {}
+        RingBondOffsetComparator(IAtomContainer mol) {
+            hasMetal = hasMetal(mol);
+        }
+
+        RingBondOffsetComparator() {
+            hasMetal = false;
+        }
+
+        private static boolean hasMetal(IAtomContainer mol) {
+            for (IAtom atom : mol.atoms())
+                if (Elements.isMetal(atom))
+                    return true;
+            return false;
+        }
 
         /**
          *{@inheritDoc}
          */
         @Override
-        public int compare(IAtomContainer containerA, IAtomContainer containerB) {
+        public int compare(IAtomContainer ringa, IAtomContainer ringb) {
 
-            // first order by size
-            int sizeCmp = Ints.compare(sizePreference(containerA.getAtomCount()),
-                    sizePreference(containerB.getAtomCount()));
+            // non-metal rings (e.g. carbo/hetro cycles first)
+            if (hasMetal) {
+                int cmp = Boolean.compare(hasMetal(ringa),
+                                          hasMetal(ringb));
+                if (cmp != 0)
+                    return cmp;
+            }
+
+            // order by size 6,5,7,4,3,rest
+            int sizeCmp = Ints.compare(sizePreference(ringa.getAtomCount()),
+                    sizePreference(ringb.getAtomCount()));
             if (sizeCmp != 0) return sizeCmp;
 
             // now order by number of double bonds
-            int piBondCmp = Ints.compare(nDoubleBonds(containerA), nDoubleBonds(containerB));
+            int piBondCmp = Ints.compare(nDoubleBonds(ringa), nDoubleBonds(ringb));
             if (piBondCmp != 0) return -piBondCmp;
 
             // order by element frequencies, all carbon rings are preferred
-            int[] freqA = countLightElements(containerA);
-            int[] freqB = countLightElements(containerB);
+            int[] freqA = countLightElements(ringa);
+            int[] freqB = countLightElements(ringb);
 
             for (Elements element : Arrays.asList(Elements.Carbon, Elements.Nitrogen, Elements.Oxygen, Elements.Sulfur,
                     Elements.Phosphorus)) {
