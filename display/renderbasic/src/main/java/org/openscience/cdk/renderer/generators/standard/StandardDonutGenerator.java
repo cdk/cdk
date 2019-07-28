@@ -28,7 +28,6 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -53,6 +52,9 @@ final class StandardDonutGenerator {
     private final Set<IBond> bonds = new HashSet<>();
     // atoms with delocalised charge
     private final Set<IAtom> atoms = new HashSet<>();
+    // smallest rings through each edge
+    IRingSet smallest;
+
     private final boolean    forceDelocalised;
     private final boolean    delocalisedDonuts;
     private final double     dbSpacing;
@@ -91,8 +93,8 @@ final class StandardDonutGenerator {
         if (!delocalisedDonuts)
             return null;
         ElementGroup group = new ElementGroup();
-        IRingSet     rset  = Cycles.edgeShort(mol).toRingSet();
-        for (IAtomContainer ring : rset.atomContainers()) {
+        smallest = Cycles.edgeShort(mol).toRingSet();
+        for (IAtomContainer ring : smallest.atomContainers()) {
             if (!canDelocalise(ring))
                 continue;
             for (IBond bond : ring.bonds()) {
