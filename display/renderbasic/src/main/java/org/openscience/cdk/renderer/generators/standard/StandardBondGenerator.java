@@ -146,7 +146,7 @@ final class StandardBondGenerator {
         // index atoms and rings
         for (int i = 0; i < container.getAtomCount(); i++)
             atomIndexMap.put(container.getAtom(i), i);
-        ringMap = ringPreferenceMap(container);
+        ringMap = ringPreferenceMap(container, donutGenerator.smallest);
 
         // set parameters
         this.scale = parameters.get(BasicSceneGenerator.Scale.class);
@@ -1588,12 +1588,16 @@ final class StandardBondGenerator {
      * Creates a mapping of bonds to preferred rings (stored as IAtomContainers).
      *
      * @param container structure representation
+     * @param smallest smallest ring set to use (e.g. through each bond)
      * @return bond to ring map
      */
-    static Map<IBond, IAtomContainer> ringPreferenceMap(IAtomContainer container) {
+    static Map<IBond, IAtomContainer> ringPreferenceMap(IAtomContainer container,
+                                                        IRingSet smallest) {
 
-        final IRingSet relevantRings = Cycles.edgeShort(container).toRingSet();
-        final List<IAtomContainer> rings = AtomContainerSetManipulator.getAllAtomContainers(relevantRings);
+        if (smallest == null)
+            smallest = Cycles.edgeShort(container).toRingSet();
+
+        final List<IAtomContainer> rings = AtomContainerSetManipulator.getAllAtomContainers(smallest);
 
         Collections.sort(rings, new RingBondOffsetComparator());
 
@@ -1609,6 +1613,16 @@ final class StandardBondGenerator {
         }
 
         return Collections.unmodifiableMap(ringMap);
+    }
+
+    /**
+     * Creates a mapping of bonds to preferred rings (stored as IAtomContainers).
+     *
+     * @param container structure representation
+     * @return bond to ring map
+     */
+    static Map<IBond, IAtomContainer> ringPreferenceMap(IAtomContainer container) {
+        return ringPreferenceMap(container, Cycles.edgeShort(container).toRingSet());
     }
 
     /**
