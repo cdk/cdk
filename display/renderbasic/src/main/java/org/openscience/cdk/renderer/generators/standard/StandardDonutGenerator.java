@@ -46,6 +46,14 @@ import java.util.Set;
 
 import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
 
+/**
+ * Generates aromatic donuts (or life buoys) as ovals in small (<8) aromatic
+ * rings. If the ring is charged (and the charged is not shared with another
+ * ring, e.g. rbonds > 2) it will be depicted in the middle of the ring.
+ *
+ * @see ForceDelocalisedBondDisplay
+ * @see DelocalisedDonutsBondDisplay
+ */
 final class StandardDonutGenerator {
 
     // bonds involved in donuts!
@@ -63,7 +71,13 @@ final class StandardDonutGenerator {
     private final Font       font;
     private final IAtomContainer mol;
 
-    public StandardDonutGenerator(IAtomContainer mol, Font font, RendererModel model) {
+    /**
+     * Create a new generator for a molecule.
+     * @param mol molecule
+     * @param font the font
+     * @param model the rendering parameters
+     */
+    StandardDonutGenerator(IAtomContainer mol, Font font, RendererModel model) {
         this.mol = mol;
         this.font = font;
         this.forceDelocalised = model.get(ForceDelocalisedBondDisplay.class);
@@ -75,7 +89,7 @@ final class StandardDonutGenerator {
     }
 
     private boolean canDelocalise(final IAtomContainer ring) {
-        boolean okay = ring.getBondCount() <= 8;
+        boolean okay = ring.getBondCount() < 8;
         if (!okay)
             return false;
         for (IBond bond : ring.bonds()) {

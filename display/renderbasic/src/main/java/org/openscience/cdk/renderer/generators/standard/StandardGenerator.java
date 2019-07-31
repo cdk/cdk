@@ -1156,13 +1156,16 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * there is a valid Kekule structure. Delocalised bonds will either be
      * rendered as a dashed bond to the side or as a circle/donut/life buoy
      * inside small rings. This depiction is used by default when a bond does
-     * not have an order assigned (e.g. null/unset). Turning this option on
-     * means all delocalised bonds will be rendered this way.
+     * not have an order assigned (e.g. null/unset), for example: c1cccc1.
+     * Turning this option on means all delocalised bonds will be rendered this
+     * way even when they have bond orders correctly assigned: e.g. c1ccccc1,
+     * [cH-]1cccc1.
      * <br>
      * <b>As recommended by IUPAC, their usage is discouraged and the Kekule
      * representation is more clear.</b>
      */
-    public static final class ForceDelocalisedBondDisplay extends AbstractGeneratorParameter<Boolean> {
+    public static final class ForceDelocalisedBondDisplay
+            extends AbstractGeneratorParameter<Boolean> {
 
         /**{@inheritDoc} */
         @Override
@@ -1175,7 +1178,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * Render small delocalised rings as bonds/life buoys? This can sometimes
      * be misleading for fused rings but is commonly used.
      */
-    public static final class DelocalisedDonutsBondDisplay extends AbstractGeneratorParameter<Boolean> {
+    public static final class DelocalisedDonutsBondDisplay
+            extends AbstractGeneratorParameter<Boolean> {
 
         /**{@inheritDoc} */
         @Override
