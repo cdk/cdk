@@ -36,7 +36,10 @@ public class OvalElement implements IRenderingElement {
     public final double  yCoord;
 
     /** The radius of the oval. **/
-    public final double  radius; // TODO : width AND height
+    public final double  radius;
+
+    /** The stroke width. */
+    public final double stroke;
 
     /** If true, draw the oval as filled. **/
     public final boolean fill;
@@ -76,10 +79,22 @@ public class OvalElement implements IRenderingElement {
      * @param fill if true, fill the oval when drawing
      * @param color the color of the oval
      */
-    public OvalElement(double xCoord, double yCoord, double radius, boolean fill, Color color) {
+    public OvalElement(double xCoord, double yCoord, double radius, double stroke,
+                       boolean fill, Color color) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.radius = radius;
+        this.stroke = stroke;
+        this.fill = fill;
+        this.color = color;
+    }
+
+    public OvalElement(double xCoord, double yCoord, double radius,
+                       boolean fill, Color color) {
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
+        this.radius = radius;
+        this.stroke = 1;
         this.fill = fill;
         this.color = color;
     }

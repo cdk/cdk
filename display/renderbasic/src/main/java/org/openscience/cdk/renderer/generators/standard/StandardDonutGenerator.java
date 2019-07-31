@@ -67,6 +67,7 @@ final class StandardDonutGenerator {
     private final boolean    delocalisedDonuts;
     private final double     dbSpacing;
     private final double     scale;
+    private final double     stroke;
     private final Color      fgColor;
     private final Font       font;
     private final IAtomContainer mol;
@@ -77,13 +78,15 @@ final class StandardDonutGenerator {
      * @param font the font
      * @param model the rendering parameters
      */
-    StandardDonutGenerator(IAtomContainer mol, Font font, RendererModel model) {
+    StandardDonutGenerator(IAtomContainer mol, Font font, RendererModel model,
+                           double stroke) {
         this.mol = mol;
         this.font = font;
         this.forceDelocalised = model.get(ForceDelocalisedBondDisplay.class);
         this.delocalisedDonuts = model.get(DelocalisedDonutsBondDisplay.class);
         this.dbSpacing = model.get(StandardGenerator.BondSeparation.class);
         this.scale = model.get(BasicSceneGenerator.Scale.class);
+        this.stroke = stroke;
         this.fgColor = model.get(StandardGenerator.AtomColor.class).getAtomColor(
                              mol.getBuilder().newInstance(IAtom.class, "C"));
     }
@@ -150,7 +153,7 @@ final class StandardDonutGenerator {
             double  n  = ring.getBondCount();
             double  r  = s / (2 * Math.tan(Math.PI / n));
             group.add(new OvalElement(p2.x, p2.y, r - 1.5*dbSpacing,
-                                      false, fgColor));
+                                      stroke, false, fgColor));
         }
         return group;
     }

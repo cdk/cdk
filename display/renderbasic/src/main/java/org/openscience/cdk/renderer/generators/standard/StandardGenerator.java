@@ -212,7 +212,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         ElementGroup annotations = new ElementGroup();
 
         StandardDonutGenerator donutGenerator;
-        donutGenerator = new StandardDonutGenerator(container, font, parameters);
+        donutGenerator = new StandardDonutGenerator(container, font, parameters,
+                                                    stroke);
         IRenderingElement donuts = donutGenerator.generate();
 
         AtomSymbol[] symbols = generateAtomSymbols(container, symbolRemap,
