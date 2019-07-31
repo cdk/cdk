@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.config;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 
 import java.util.HashMap;
@@ -506,4 +507,53 @@ public enum Elements {
     // Incorrect spelling
     @Deprecated
     public final static IElement PLUTOMNIUM    = PLUTONIUM;
+
+    /**
+     * Utility method to determine if an atomic number is a metal.
+     * @param atno atomic number
+     * @return the atomic number is a metal (or not)
+     */
+    public static boolean isMetal(int atno) {
+        switch (atno) {
+            case 0:  // *
+            case 1:  // H
+            case 2:  // He
+            case 6:  // C
+            case 7:  // N
+            case 8:  // O
+            case 9:  // F
+            case 10: // Ne
+            case 15: // P
+            case 16: // S
+            case 17: // Cl
+            case 18: // Ar
+            case 34: // Se
+            case 35: // Br
+            case 36: // Kr
+            case 53: // I
+            case 54: // Xe
+            case 86: // Rn
+                return false;
+            case 5:   // B
+            case 14:  // Si
+            case 32:  // Ge
+            case 33:  // As
+            case 51:  // Sb
+            case 52:  // Te
+            case 85:  // At
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Utility method to determine if an atom is a metal.
+     *
+     * @param atom atom
+     * @return the atom is a metal (or not)
+     */
+    public static boolean isMetal(IAtom atom) {
+        return atom.getAtomicNumber() != null &&
+               isMetal(atom.getAtomicNumber());
+    }
 }

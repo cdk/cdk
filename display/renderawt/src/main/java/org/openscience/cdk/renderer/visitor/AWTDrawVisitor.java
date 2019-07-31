@@ -215,6 +215,22 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             this.graphics.fillOval(transformX(oval.xCoord) - radius, transformY(oval.yCoord) - radius, diameter,
                     diameter);
         } else {
+            Stroke savedStroke = this.graphics.getStroke();
+
+            // scale the stroke by zoom + scale (both included in the AffineTransform)
+            float width = (float) (oval.stroke * transform.getScaleX());
+            if (width < minStroke) width = minStroke;
+
+            int key = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
+
+            if (strokeCache && strokeMap.containsKey(key)) {
+                this.graphics.setStroke(strokeMap.get(key));
+            } else {
+                BasicStroke stroke = new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+                this.graphics.setStroke(stroke);
+                strokeMap.put(key, stroke);
+            }
+
             this.graphics.drawOval(transformX(oval.xCoord) - radius, transformY(oval.yCoord) - radius, diameter,
                     diameter);
         }

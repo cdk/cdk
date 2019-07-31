@@ -418,6 +418,22 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
+     * Not used for query bonds. {@inheritDoc}
+     */
+    @Override
+    public Display getDisplay() {
+        return null;
+    }
+
+    /**
+     * Not used for query bonds. {@inheritDoc}
+     */
+    @Override
+    public void setDisplay(Display display) {
+
+    }
+
+    /**
      * Returns the geometric 2D center of the query bond.
      *
      * @return The geometric 2D center of the query bond
