@@ -951,6 +951,14 @@ public class SmartsExprReadTest {
     }
 
     @Test
+    public void supportInsaturatedByDefault() {
+        Expr expr = getAtomExpr("[Oi]");
+        assertThat(expr, is(or(expr(RING_SMALLEST, 5),
+                               or(expr(RING_SMALLEST, 6),
+                                  expr(RING_SMALLEST, 7)))));
+    }
+
+    @Test
     public void supportHGt() {
         Expr expr = getAtomExpr("[H>1]");
         assertThat(expr, is(and(expr(TOTAL_H_COUNT, 0).negate(),

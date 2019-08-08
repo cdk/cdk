@@ -1189,7 +1189,7 @@ public final class Smarts {
                         expr = new Expr(Expr.Type.HYBRIDISATION_NUMBER, num);
                         break;
                     case 'i':
-                        if (!isFlavor(FLAVOR_MOE | FLAVOR_CACTVS))
+                        if (!isFlavor(FLAVOR_MOE | FLAVOR_CACTVS | FLAVOR_LOOSE))
                             return false;
                         num = nextUnsignedInt();
                         if (num <= 0 || num > 8)
