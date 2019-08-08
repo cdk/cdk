@@ -1193,8 +1193,9 @@ public final class Smarts {
                             return false;
                         num = nextUnsignedInt();
                         if (num <= 0 || num > 8)
-                            return false;
-                        expr = new Expr(Expr.Type.INSATURATION, num);
+                            expr = new Expr(UNSATURATED);
+                        else
+                            expr = new Expr(Expr.Type.INSATURATION, num);
                         break;
                     case 'z':
                         if (!isFlavor(FLAVOR_CACTVS))
