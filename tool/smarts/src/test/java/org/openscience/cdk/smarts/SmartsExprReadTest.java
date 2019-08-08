@@ -949,4 +949,32 @@ public class SmartsExprReadTest {
                                or(expr(RING_SMALLEST, 6),
                                   expr(RING_SMALLEST, 7)))));
     }
+
+    @Test
+    public void supportHGt() {
+        Expr expr = getAtomExpr("[H>1]");
+        assertThat(expr, is(and(expr(TOTAL_H_COUNT, 0).negate(),
+                                expr(TOTAL_H_COUNT, 1).negate())));
+    }
+
+    @Test
+    public void supportHLt() {
+        Expr expr = getAtomExpr("[H<2]");
+        assertThat(expr, is(or(expr(TOTAL_H_COUNT, 0),
+                               expr(TOTAL_H_COUNT, 1))));
+    }
+
+    @Test
+    public void supportDGt() {
+        Expr expr = getAtomExpr("[D>1]");
+        assertThat(expr, is(and(expr(DEGREE, 0).negate(),
+                                expr(DEGREE, 1).negate())));
+    }
+
+    @Test
+    public void supportDLt() {
+        Expr expr = getAtomExpr("[D<2]");
+        assertThat(expr, is(or(expr(DEGREE, 0),
+                               expr(DEGREE, 1))));
+    }
 }
