@@ -321,6 +321,45 @@ public final class Smarts {
             return next() == '}';
         }
 
+        private boolean parseGt(Expr expr) {
+            if (next() != '>')
+                return false;
+            int lo = nextUnsignedInt();
+            Expr.Type type = expr.type();
+
+            // adjusted types
+            switch (type) {
+                case HAS_IMPLICIT_HYDROGEN:
+                    type = IMPL_H_COUNT;
+                    break;
+            }
+
+            expr.setPrimitive(type, 0);
+            expr.negate();
+            for (int i = 1; i <= lo; i++)
+                expr.and(new Expr(type, i).negate());
+            return true;
+        }
+
+        private boolean parseLt(Expr expr) {
+            if (next() != '<')
+                return false;
+            int lo = nextUnsignedInt();
+            Expr.Type type = expr.type();
+
+            // adjusted types
+            switch (type) {
+                case HAS_IMPLICIT_HYDROGEN:
+                    type = IMPL_H_COUNT;
+                    break;
+            }
+
+            expr.setPrimitive(type, 0);
+            for (int i = 1; i < lo; i++)
+                expr.or(new Expr(type, i));
+            return true;
+        }
+
         boolean parseAtomExpr(IAtom atom, Expr dest, char lastOp) {
             Expr expr = null;
             int  num;
@@ -449,9 +488,23 @@ public final class Smarts {
                                         expr = new Expr(HEAVY_DEGREE, 1);
                                     else
                                         expr = new Expr(DEGREE, 1);
-                                    // CACTVS style ranges D{0-2}
-                                    if (peek() == '{' && !parseRange(expr))
-                                        return false;
+                                    switch (peek()) {
+                                        case '{':
+                                            // CACTVS style ranges D{0-2}
+                                            if (!parseRange(expr))
+                                                return false;
+                                            break;
+                                        case '>':
+                                            // Lilly/CACTVS/NextMove inequalities
+                                            if (!parseGt(expr))
+                                                return false;
+                                            break;
+                                        case '<':
+                                            // Lilly/CACTVS/NextMove inequalities
+                                            if (!parseLt(expr))
+                                                return false;
+                                            break;
+                                    }
                                 } else {
                                     if (isFlavor(FLAVOR_CDK_LEGACY))
                                         expr = new Expr(HEAVY_DEGREE, num);
@@ -543,9 +596,23 @@ public final class Smarts {
                                 num = nextUnsignedInt();
                                 if (num < 0) {
                                     expr = new Expr(TOTAL_H_COUNT, 1);
-                                    // CACTVS style ranges H{0-2}
-                                    if (peek() == '{' && !parseRange(expr))
-                                        return false;
+                                    switch (peek()) {
+                                        case '{':
+                                            // CACTVS style ranges H{0-2}
+                                            if (!parseRange(expr))
+                                                return false;
+                                            break;
+                                        case '>':
+                                            // Lilly/CACTVS/NextMove inequalities
+                                            if (!parseGt(expr))
+                                                return false;
+                                            break;
+                                        case '<':
+                                            // Lilly/CACTVS/NextMove inequalities
+                                            if (!parseLt(expr))
+                                                return false;
+                                            break;
+                                    }
                                 } else
                                     expr = new Expr(TOTAL_H_COUNT, num);
                                 break;
@@ -732,11 +799,25 @@ public final class Smarts {
                                 num = nextUnsignedInt();
                                 if (num < 0) {
                                     expr = new Expr(Expr.Type.IS_IN_RING);
-                                    // CACTVS style ranges R{0-2}
-                                    if (peek() == '{') {
-                                        expr.setPrimitive(RING_COUNT, 0);
-                                        if (!parseRange(expr))
-                                            return false;
+                                    switch (peek()) {
+                                        case '{':
+                                            // CACTVS style ranges H{0-2}
+                                            expr.setPrimitive(RING_COUNT, 0);
+                                            if (!parseRange(expr))
+                                                return false;
+                                            break;
+                                        case '>':
+                                            // Lilly/CACTVS/NextMove inequalities
+                                            expr.setPrimitive(RING_COUNT, 0);
+                                            if (!parseGt(expr))
+                                                return false;
+                                            break;
+                                        case '<':
+                                            // Lilly/CACTVS/NextMove inequalities
+                                            expr.setPrimitive(RING_COUNT, 0);
+                                            if (!parseLt(expr))
+                                                return false;
+                                            break;
                                     }
                                 }
                                 else if (num == 0)
@@ -847,9 +928,23 @@ public final class Smarts {
                                 num = nextUnsignedInt();
                                 if (num < 0) {
                                     expr = new Expr(TOTAL_DEGREE, 1);
-                                    // CACTVS style ranges X{0-2}
-                                    if (peek() == '{' && !parseRange(expr))
-                                        return false;
+                                    switch (peek()) {
+                                        case '{':
+                                            // CACTVS style ranges X{0-2}
+                                            if (!parseRange(expr))
+                                                return false;
+                                            break;
+                                        case '>':
+                                            // Lilly/CACTVS/NextMove inequalities
+                                            if (!parseGt(expr))
+                                                return false;
+                                            break;
+                                        case '<':
+                                            // Lilly/CACTVS/NextMove inequalities
+                                            if (!parseLt(expr))
+                                                return false;
+                                            break;
+                                    }
                                 } else
                                     expr = new Expr(TOTAL_DEGREE, num);
                                 break;
@@ -983,8 +1078,23 @@ public final class Smarts {
                         if (num < 0) {
                             expr = new Expr(Expr.Type.VALENCE, 1);
                             // CACTVS style ranges v{0-2}
-                            if (peek() == '{' && !parseRange(expr))
-                                return false;
+                            switch (peek()) {
+                                case '{':
+                                    // CACTVS style ranges v{0-2}
+                                    if (!parseRange(expr))
+                                        return false;
+                                    break;
+                                case '>':
+                                    // Lilly/CACTVS/NextMove inequalities
+                                    if (!parseGt(expr))
+                                        return false;
+                                    break;
+                                case '<':
+                                    // Lilly/CACTVS/NextMove inequalities
+                                    if (!parseLt(expr))
+                                        return false;
+                                    break;
+                            }
                         } else
                             expr = new Expr(Expr.Type.VALENCE, num);
                         break;
@@ -992,9 +1102,23 @@ public final class Smarts {
                         num = nextUnsignedInt();
                         if (num < 0) {
                             expr = new Expr(Expr.Type.HAS_IMPLICIT_HYDROGEN);
-                            // CACTVS style ranges h{0-2}
-                            if (peek() == '{' && !parseRange(expr))
-                                return false;
+                            switch (peek()) {
+                                case '{':
+                                    // CACTVS style ranges h{0-2}
+                                    if (!parseRange(expr))
+                                        return false;
+                                    break;
+                                case '>':
+                                    // Lilly/CACTVS/NextMove inequalities
+                                    if (!parseGt(expr))
+                                        return false;
+                                    break;
+                                case '<':
+                                    // Lilly/CACTVS/NextMove inequalities
+                                    if (!parseLt(expr))
+                                        return false;
+                                    break;
+                            }
                         }
                         else
                             expr = new Expr(Expr.Type.IMPL_H_COUNT, num);
@@ -1003,11 +1127,25 @@ public final class Smarts {
                         num = nextUnsignedInt();
                         if (num < 0) {
                             expr = new Expr(Expr.Type.IS_IN_RING);
-                            // CACTVS style ranges D{0-2}
-                            if (peek() == '{') {
-                                expr.setPrimitive(RING_BOND_COUNT, 0);
-                                if (!parseRange(expr))
-                                    return false;
+                            switch (peek()) {
+                                case '{':
+                                    // CACTVS style ranges x{0-2}
+                                    expr.setPrimitive(RING_BOND_COUNT, 0);
+                                    if (!parseRange(expr))
+                                        return false;
+                                    break;
+                                case '>':
+                                    // Lilly/CACTVS/NextMove inequalities
+                                    expr.setPrimitive(RING_BOND_COUNT, 0);
+                                    if (!parseGt(expr))
+                                        return false;
+                                    break;
+                                case '<':
+                                    // Lilly/CACTVS/NextMove inequalities
+                                    expr.setPrimitive(RING_BOND_COUNT, 0);
+                                    if (!parseLt(expr))
+                                        return false;
+                                    break;
                             }
                         }
                         else if (num == 0)
@@ -1051,12 +1189,13 @@ public final class Smarts {
                         expr = new Expr(Expr.Type.HYBRIDISATION_NUMBER, num);
                         break;
                     case 'i':
-                        if (!isFlavor(FLAVOR_MOE | FLAVOR_CACTVS))
+                        if (!isFlavor(FLAVOR_MOE | FLAVOR_CACTVS | FLAVOR_LOOSE))
                             return false;
                         num = nextUnsignedInt();
                         if (num <= 0 || num > 8)
-                            return false;
-                        expr = new Expr(Expr.Type.INSATURATION, num);
+                            expr = new Expr(UNSATURATED);
+                        else
+                            expr = new Expr(Expr.Type.INSATURATION, num);
                         break;
                     case 'z':
                         if (!isFlavor(FLAVOR_CACTVS))
