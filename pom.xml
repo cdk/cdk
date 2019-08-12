@@ -25,6 +25,7 @@
     </modules>
 
     <properties>
+        <argLine></argLine>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -492,7 +493,7 @@
                 <configuration>
                     <!-- prevent the annoying ForkedBooter process from stealing
                          window focus on Mac OS -->
-                    <argLine>-Djava.awt.headless=true -Dcdk.logging.level=ERROR</argLine>
+                    <argLine>${argLine} -Djava.awt.headless=true -Dcdk.logging.level=ERROR</argLine>
                     <excludes>
                         <!-- not a test class -->
                         <exclude>**/TestMoleculeFactory.java</exclude>
@@ -601,7 +602,7 @@
                     <tagletArtifact>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.2.7</version>
+                        <version>1.0.2.8</version>
                     </tagletArtifact>
                     <failOnError>false</failOnError>
                     <doctitle>Chemistry Development Kit ${project.version} API</doctitle>
