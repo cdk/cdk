@@ -964,8 +964,9 @@ public class AtomPlacer {
      */
     static boolean isColinear(IAtom atom, Iterable<IBond> bonds) {
 
-        if (Elements.isMetal(atom))
-            return true;
+        if (Elements.isMetal(atom)) {
+            return FluentIterable.from(bonds).size() == 2;
+        }
 
         int numSgl = atom.getImplicitHydrogenCount() == null ? 0 : atom.getImplicitHydrogenCount();
         int numDbl = 0;
