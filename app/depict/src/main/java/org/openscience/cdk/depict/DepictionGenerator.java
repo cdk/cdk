@@ -58,6 +58,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * A high-level API for depicting molecules and reactions.
@@ -511,8 +512,10 @@ public final class DepictionGenerator {
      */
     private Map<IChemObject, Color> makeHighlightAtomMap(List<IAtomContainer> reactants,
                                                          List<IAtomContainer> products) {
+
         Map<IChemObject, Color> colorMap = new HashMap<>();
         Map<Integer, Color> mapToColor = new HashMap<>();
+        Map<Integer, IAtom> amap = new TreeMap<>();
         int colorIdx = -1;
         for (IAtomContainer mol : reactants) {
             int prevPalletIdx = colorIdx;
@@ -527,6 +530,7 @@ public final class DepictionGenerator {
                     Color color = atomMapColors[colorIdx];
                     colorMap.put(atom, color);
                     mapToColor.put(mapidx, color);
+                    amap.put(mapidx, atom);
                 }
             }
             if (colorIdx > prevPalletIdx) {
@@ -548,13 +552,25 @@ public final class DepictionGenerator {
                     colorMap.put(atom, mapToColor.get(mapidx));
                 }
             }
-            for (IBond bond : mol.bonds()) {
-                IAtom a1 = bond.getBegin();
-                IAtom a2 = bond.getEnd();
-                Color c1 = colorMap.get(a1);
-                Color c2 = colorMap.get(a2);
-                if (c1 != null && c1 == c2)
-                    colorMap.put(bond, c1);
+            for (IBond pBnd : mol.bonds()) {
+                IAtom pBeg = pBnd.getBegin();
+                IAtom pEnd = pBnd.getEnd();
+                Color c1 = colorMap.get(pBeg);
+                Color c2 = colorMap.get(pEnd);
+                if (c1 != null && c1 == c2) {
+                    IAtom rBeg = amap.get(accessAtomMap(pBeg));
+                    IAtom rEnd = amap.get(accessAtomMap(pEnd));
+                    if (rBeg != null && rEnd != null) {
+                        IBond rBnd = rBeg.getBond(rEnd);
+                        if (rBnd != null &&
+                            ((pBnd.isAromatic() && rBnd.isAromatic()) ||
+                              rBnd.getOrder() == pBnd.getOrder())) {
+                            colorMap.put(pBnd, c1);
+                        } else {
+                            colorMap.remove(rBnd);
+                        }
+                    }
+                }
             }
         }
 
