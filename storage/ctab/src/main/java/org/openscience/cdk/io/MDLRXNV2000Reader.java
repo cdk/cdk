@@ -227,8 +227,10 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         try {
             for (int i = 1; i <= reactantCount; i++) {
                 StringBuffer molFile = new StringBuffer();
-                input.readLine(); // announceMDLFileLine
                 String molFileLine = "";
+                while (!input.readLine().startsWith("$MOL")) {
+                    // skip
+                }
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
@@ -256,7 +258,9 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         try {
             for (int i = 1; i <= productCount; i++) {
                 StringBuffer molFile = new StringBuffer();
-                input.readLine(); // String announceMDLFileLine =
+                while (!input.readLine().startsWith("$MOL")) {
+                    // skip
+                }
                 String molFileLine = "";
                 do {
                     molFileLine = input.readLine();
