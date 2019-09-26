@@ -383,7 +383,7 @@ public class Abbreviations implements Iterable<String> {
                             combined.setType(SgroupType.CtabAbbreviation);
                             return Collections.singletonList(combined);
                         }
-                        if (sgroup1 != null && (best == null || sgroup1.getAtoms().size() < best.getAtoms().size()))
+                        if (sgroup1 != null && (best == null || sgroup1.getAtoms().size() > best.getAtoms().size()))
                             best = sgroup1;
                         if (sgroup2 != null && (best == null || sgroup2.getAtoms().size() < best.getAtoms().size()))
                             best = sgroup2;

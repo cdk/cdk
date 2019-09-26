@@ -51,6 +51,7 @@ public class AbbreviationsTest {
         IAtomContainer mol = smi("[K+].[O-]C(=O)[O-].[K+]");
         Abbreviations factory = new Abbreviations();
         factory.add("[K+].[O-]C(=O)[O-].[K+] K2CO3");
+        factory.setContractToSingleLabel(true);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("K2CO3"));
@@ -302,6 +303,7 @@ public class AbbreviationsTest {
     @Test public void hclSaltOfEdci() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("CCN=C=NCCCN(C)C EDCI");
+        factory.setContractToSingleLabel(true);
         IAtomContainer mol = smi("CCN=C=NCCCN(C)C.Cl");
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
@@ -329,6 +331,7 @@ public class AbbreviationsTest {
         Abbreviations factory = new Abbreviations();
         factory.add("ClCCl DCM");
         factory.add("Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2");
+        factory.setContractToSingleLabel(true);
         IAtomContainer mol = smi(smi);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
@@ -340,6 +343,7 @@ public class AbbreviationsTest {
         Abbreviations factory = new Abbreviations();
         factory.add("Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2");
         factory.add("Cl[Pd]Cl PdCl2");
+        factory.setContractToSingleLabel(true);
         IAtomContainer mol = smi(smi);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
