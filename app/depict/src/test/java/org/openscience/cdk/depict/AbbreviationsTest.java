@@ -23,10 +23,9 @@
 
 package org.openscience.cdk.depict;
 
-import org.junit.Ignore;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -83,6 +82,59 @@ public class AbbreviationsTest {
         factory.add("*c1ccccc1 Ph");
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(0));
+    }
+
+    @Test
+    public void TFASaltDisconnected() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("c1ccccc1c1ccccc1.FC(F)(F)C(=O)O");
+        factory.add("*C(F)(F)F CF3");
+        factory.add("*C(=O)O CO2H");
+        factory.add("FC(F)(F)C(=O)O TFA");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("TFA"));
+    }
+
+    @Test
+    public void TFASaltConnected() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("FC(F)(F)C(=O)O");
+        factory.add("*C(F)(F)F CF3");
+        factory.add("*C(=O)O CO2H");
+        factory.add("FC(F)(F)C(=O)O TFA");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(2));
+        assertThat(sgroups.get(0).getSubscript(),
+                   CoreMatchers.anyOf(is("CF3"), is("CO2H")));
+        assertThat(sgroups.get(1).getSubscript(),
+                   CoreMatchers.anyOf(is("CF3"), is("CO2H")));
+        assertThat(sgroups.get(1).getSubscript(),
+                   CoreMatchers.not(is(sgroups.get(0).getSubscript())));
+    }
+
+    @Test
+    public void DcmAndTfa() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("ClCCl.FC(F)(F)C(=O)O");
+        factory.add("ClCCl DCM");
+        factory.add("FC(F)(F)C(=O)O TFA");
+        factory.setContractToSingleLabel(true);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("TFA·DCM"));
+    }
+
+    @Test
+    public void DcmAndTfaNoSingleFrag() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("ClCCl.FC(F)(F)C(=O)O");
+        factory.add("ClCCl DCM");
+        factory.add("FC(F)(F)C(=O)O TFA");
+        factory.setContractToSingleLabel(false);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("DCM"));
     }
 
     @Test
