@@ -132,6 +132,7 @@ public class Abbreviations implements Iterable<String> {
 
     private final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
     private boolean contractOnHetero = true;
+    private boolean contractSingleFragments = false;
 
     public Abbreviations() {
     }
@@ -177,6 +178,10 @@ public class Abbreviations implements Iterable<String> {
      */
     public void setContractOnHetero(boolean val) {
         this.contractOnHetero = val;
+    }
+
+    public void setContractToSingleLabel(boolean val) {
+        this.contractSingleFragments = val;
     }
 
     private static Set<IBond> findCutBonds(IAtomContainer mol, EdgeToBondMap bmap, int[][] adjlist) {
@@ -334,6 +339,8 @@ public class Abbreviations implements Iterable<String> {
                 usedAtoms.addAll(sgroup.getAtoms());
         }
 
+        final List<Sgroup> newSgroups = new ArrayList<>();
+
         // disconnected abbreviations, salts, common reagents, large compounds
         if (usedAtoms.isEmpty()) {
             try {
@@ -341,7 +348,7 @@ public class Abbreviations implements Iterable<String> {
                 String cansmi = usmigen.create(copy);
                 String label = disconnectedAbbreviations.get(cansmi);
 
-                if (label != null && !disabled.contains(label)) {
+                if (label != null && !disabled.contains(label) && contractSingleFragments) {
                     Sgroup sgroup = new Sgroup();
                     sgroup.setType(SgroupType.CtabAbbreviation);
                     sgroup.setSubscript(label);
@@ -351,7 +358,8 @@ public class Abbreviations implements Iterable<String> {
                 } else if (cansmi.contains(".")) {
                     IAtomContainerSet parts = ConnectivityChecker.partitionIntoMolecules(mol);
 
-                    // partiton in two two parts
+
+                    // leave one out
                     Sgroup best = null;
                     for (int i = 0; i < parts.getAtomContainerCount(); i++) {
                         IAtomContainer a = parts.getAtomContainer(i);
@@ -361,7 +369,7 @@ public class Abbreviations implements Iterable<String> {
                                 b.add(parts.getAtomContainer(j));
                         Sgroup sgroup1 = getAbbr(a);
                         Sgroup sgroup2 = getAbbr(b);
-                        if (sgroup1 != null && sgroup2 != null) {
+                        if (sgroup1 != null && sgroup2 != null && contractSingleFragments) {
                             Sgroup combined = new Sgroup();
                             label = null;
                             for (IAtom atom : sgroup1.getAtoms())
@@ -377,19 +385,20 @@ public class Abbreviations implements Iterable<String> {
                         }
                         if (sgroup1 != null && (best == null || sgroup1.getAtoms().size() > best.getAtoms().size()))
                             best = sgroup1;
-                        if (sgroup2 != null && (best == null || sgroup2.getAtoms().size() > best.getAtoms().size()))
+                        if (sgroup2 != null && (best == null || sgroup2.getAtoms().size() < best.getAtoms().size()))
                             best = sgroup2;
                     }
 
-                    if (best != null)
-                        return Collections.singletonList(best);
+                    if (best != null) {
+                        newSgroups.add(best);
+                        usedAtoms.addAll(best.getAtoms());
+                    }
                 }
 
             } catch (CDKException ignored) {
             }
         }
 
-        final List<Sgroup> newSgroups = new ArrayList<>();
         List<IAtomContainer> fragments = generateFragments(mol);
         Multimap<IAtom, Sgroup> sgroupAdjs = ArrayListMultimap.create();
 

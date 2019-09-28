@@ -23,10 +23,9 @@
 
 package org.openscience.cdk.depict;
 
-import org.junit.Ignore;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -52,6 +51,7 @@ public class AbbreviationsTest {
         IAtomContainer mol = smi("[K+].[O-]C(=O)[O-].[K+]");
         Abbreviations factory = new Abbreviations();
         factory.add("[K+].[O-]C(=O)[O-].[K+] K2CO3");
+        factory.setContractToSingleLabel(true);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
         assertThat(sgroups.get(0).getSubscript(), is("K2CO3"));
@@ -83,6 +83,59 @@ public class AbbreviationsTest {
         factory.add("*c1ccccc1 Ph");
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(0));
+    }
+
+    @Test
+    public void TFASaltDisconnected() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("c1ccccc1c1ccccc1.FC(F)(F)C(=O)O");
+        factory.add("*C(F)(F)F CF3");
+        factory.add("*C(=O)O CO2H");
+        factory.add("FC(F)(F)C(=O)O TFA");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("TFA"));
+    }
+
+    @Test
+    public void TFASaltConnected() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("FC(F)(F)C(=O)O");
+        factory.add("*C(F)(F)F CF3");
+        factory.add("*C(=O)O CO2H");
+        factory.add("FC(F)(F)C(=O)O TFA");
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(2));
+        assertThat(sgroups.get(0).getSubscript(),
+                   CoreMatchers.anyOf(is("CF3"), is("CO2H")));
+        assertThat(sgroups.get(1).getSubscript(),
+                   CoreMatchers.anyOf(is("CF3"), is("CO2H")));
+        assertThat(sgroups.get(1).getSubscript(),
+                   CoreMatchers.not(is(sgroups.get(0).getSubscript())));
+    }
+
+    @Test
+    public void DcmAndTfa() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("ClCCl.FC(F)(F)C(=O)O");
+        factory.add("ClCCl DCM");
+        factory.add("FC(F)(F)C(=O)O TFA");
+        factory.setContractToSingleLabel(true);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("TFA·DCM"));
+    }
+
+    @Test
+    public void DcmAndTfaNoSingleFrag() throws Exception {
+        Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = smi("ClCCl.FC(F)(F)C(=O)O");
+        factory.add("ClCCl DCM");
+        factory.add("FC(F)(F)C(=O)O TFA");
+        factory.setContractToSingleLabel(false);
+        List<Sgroup> sgroups = factory.generate(mol);
+        assertThat(sgroups.size(), is(1));
+        assertThat(sgroups.get(0).getSubscript(), is("DCM"));
     }
 
     @Test
@@ -250,6 +303,7 @@ public class AbbreviationsTest {
     @Test public void hclSaltOfEdci() throws Exception {
         Abbreviations factory = new Abbreviations();
         factory.add("CCN=C=NCCCN(C)C EDCI");
+        factory.setContractToSingleLabel(true);
         IAtomContainer mol = smi("CCN=C=NCCCN(C)C.Cl");
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
@@ -277,6 +331,7 @@ public class AbbreviationsTest {
         Abbreviations factory = new Abbreviations();
         factory.add("ClCCl DCM");
         factory.add("Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2");
+        factory.setContractToSingleLabel(true);
         IAtomContainer mol = smi(smi);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));
@@ -288,6 +343,7 @@ public class AbbreviationsTest {
         Abbreviations factory = new Abbreviations();
         factory.add("Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2");
         factory.add("Cl[Pd]Cl PdCl2");
+        factory.setContractToSingleLabel(true);
         IAtomContainer mol = smi(smi);
         List<Sgroup> sgroups = factory.generate(mol);
         assertThat(sgroups.size(), is(1));

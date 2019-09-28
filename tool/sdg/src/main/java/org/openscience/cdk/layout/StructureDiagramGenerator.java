@@ -108,12 +108,19 @@ import java.util.Set;
  */
 public class StructureDiagramGenerator {
 
-    static final double                          DEFAULT_BOND_LENGTH      = 1.5;
-    private static final Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
-    private static final IdentityTemplateLibrary DEFAULT_TEMPLATE_LIBRARY = IdentityTemplateLibrary.loadFromResource("custom-templates.smi")
+    static final         double                     DEFAULT_BOND_LENGTH      = 1.5;
+    private static final Vector2d                   DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
+    private static final IdentityTemplateLibrary    DEFAULT_TEMPLATE_LIBRARY = IdentityTemplateLibrary.loadFromResource("custom-templates.smi")
                                                                                                    .add(IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi"));
-    private static final double                  RAD_30                   = Math.toRadians(-30);
+    private static final double                     RAD_30                   = Math.toRadians(-30);
     private static final ILoggingTool            logger                   = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
+
+    public static final Comparator<IAtomContainer> LARGEST_FIRST_COMPARATOR = new Comparator<IAtomContainer>() {
+        @Override
+        public int compare(IAtomContainer o1, IAtomContainer o2) {
+            return Integer.compare(o2.getBondCount(), o1.getBondCount());
+        }
+    };
 
     private IAtomContainer molecule;
     private IRingSet       sssr;
@@ -637,7 +644,12 @@ public class StructureDiagramGenerator {
             final IAtomContainerSet frags = ConnectivityChecker.partitionIntoMolecules(molecule);
             if (frags.getAtomContainerCount() > 1) {
                 IAtomContainer rollback = molecule;
-                generateFragmentCoordinates(molecule, toList(frags));
+
+                // large => small (e.g. salt will appear on the right)
+                List<IAtomContainer> fragList = toList(frags);
+                Collections.sort(fragList, LARGEST_FIRST_COMPARATOR);
+                generateFragmentCoordinates(molecule, fragList);
+
                 // don't call set molecule as it wipes x,y coordinates!
                 // this looks like a self assignment but actually the fragment
                 // method changes this.molecule
