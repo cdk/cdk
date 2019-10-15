@@ -518,7 +518,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.11</version>
+                <version>3.1.1</version>
                 <configuration>
                     <tags>
                         <!--cdk.depends and cdk.builddepends no longer used-->
