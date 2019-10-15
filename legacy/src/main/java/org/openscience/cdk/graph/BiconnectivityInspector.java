@@ -42,6 +42,7 @@ import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphVertexChangeEvent;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org._3pq.jgrapht.graph.Subgraph;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Finds the biconnected components of a graph.
@@ -52,8 +53,10 @@ import org._3pq.jgrapht.graph.Subgraph;
  *
  * @cdk.module standard
  * @cdk.githash
- *
+ * @deprecated Use {@link org.openscience.cdk.ringsearch.RingSearch} or
+ *             {@link Cycles#markRingAtomsAndBonds(IAtomContainer)}
  */
+@Deprecated
 public class BiconnectivityInspector {
 
     private List            biconnectedSets;

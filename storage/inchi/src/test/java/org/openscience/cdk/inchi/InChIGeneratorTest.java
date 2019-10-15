@@ -896,7 +896,11 @@ public class InChIGeneratorTest extends CDKTestCase {
         }
     }
 
-    @Test
+    // if this test hits the timeout it's likely the users Locale is mixed, the
+    // InChI library was loaded in one mode and java is in another, the issue
+    // is InChI takes timeout in seconds and fractional seconds will be either
+    // 0.1 or 0,1 depending on locale.
+    @Test(timeout = 500)
     public void timeout() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);

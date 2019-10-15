@@ -78,11 +78,7 @@ import org.openscience.cdk.interfaces.IStereoElement;
  *  <p>For the FCFP class of fingerprints, atom typing is done using a scheme similar to that described by
  *  Green et al {@cdk.cite Green1994}.</p>
  *  
- *  <p>The fingerprints and their uses have been described in the literature: A.M. Clark, M. Sarker, E. Ekins,
- *  "New target prediction and visualization tools incorporating open source molecular fingerprints for TB Mobile 2.0",
- *  Journal of Cheminformatics, 6:38 (2014).</p>
- *  
- *  	<a href="http://www.jcheminf.com/content/6/1/38">http://www.jcheminf.com/content/6/1/38</a>
+ *  <p>The fingerprints and their uses have been described in Clark et al. {@cdk.cite Clark2014}.
  *
  * @author         am.clark
  * @cdk.created    2014-01-01

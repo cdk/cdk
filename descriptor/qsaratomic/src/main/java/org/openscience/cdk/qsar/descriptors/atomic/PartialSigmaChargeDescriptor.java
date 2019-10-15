@@ -128,14 +128,14 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
-        // FIXME: for now I'll cache the original charges, and restore them at the end of this method
-        Double originalCharge = atom.getCharge();
         if (!isCachedAtomContainer(ac)) {
+            Double[] org = new Double[ac.getAtomCount()];
+            for (int i = 0; i < org.length; i++)
+                org[i] = ac.getAtom(i).getCharge();
             IAtomContainer mol = atom.getBuilder().newInstance(IAtomContainer.class, ac);
             if (maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
             try {
                 peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
-
                 for (int i = 0; i < ac.getAtomCount(); i++) {
                     // assume same order, so mol.getAtom(i) == ac.getAtom(i)
                     cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(mol.getAtom(i).getCharge()));
@@ -144,9 +144,9 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                         Double.NaN), NAMES, e);
             }
+            for (int i = 0; i < org.length; i++)
+                mol.getAtom(i).setCharge(org[i]);
         }
-        atom.setCharge(originalCharge);
-
         return getCachedDescriptorValue(atom) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
                 getParameters(), getCachedDescriptorValue(atom), NAMES) : null;
     }

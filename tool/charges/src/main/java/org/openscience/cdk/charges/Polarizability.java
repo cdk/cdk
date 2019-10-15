@@ -60,9 +60,7 @@ public class Polarizability {
     private void addExplicitHydrogens(IAtomContainer container) {
         try {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-            Iterator<IAtom> atoms = container.atoms().iterator();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
+            for (IAtom atom : container.atoms()) {
                 IAtomType type = matcher.findMatchingAtomType(container, atom);
                 AtomTypeManipulator.configure(atom, type);
             }
@@ -125,7 +123,7 @@ public class Polarizability {
             acH = atomContainer;
         }
 
-        List<IAtom> startAtom = new ArrayList<IAtom>(1);
+        List<IAtom> startAtom = new ArrayList<>(1);
         startAtom.add(0, atom);
         double bond;
 
@@ -166,11 +164,7 @@ public class Polarizability {
         } else {
             acH = atomContainer;
         }
-
-        List<IAtom> startAtom = new ArrayList<IAtom>(1);
-        startAtom.add(0, atom);
         double bond;
-
         polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
         for (int i = 0; i < acH.getAtomCount(); i++) {
             if (!acH.getAtom(i).equals(atom)) {
@@ -215,70 +209,81 @@ public class Polarizability {
         double polarizabilitiyFactor = 0;
         String AtomSymbol;
         AtomSymbol = atom.getSymbol();
-        if (AtomSymbol.equals("H")) {
-            polarizabilitiyFactor = 0.387;
-        } else if (AtomSymbol.equals("C")) {
-            if (atom.getFlag(CDKConstants.ISAROMATIC)) {
-                polarizabilitiyFactor = 1.230;
-            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
-                polarizabilitiyFactor = 1.064;/* 1.064 */
-            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
-                if (getNumberOfHydrogen(atomContainer, atom) == 0) {
-                    polarizabilitiyFactor = 1.382;
-                } else {
-                    polarizabilitiyFactor = 1.37;
+        switch (AtomSymbol) {
+            case "H":
+                polarizabilitiyFactor = 0.387;
+                break;
+            case "C":
+                if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+                    polarizabilitiyFactor = 1.230;
+                } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
+                    polarizabilitiyFactor = 1.064;/* 1.064 */
+                } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
+                    if (getNumberOfHydrogen(atomContainer, atom) == 0) {
+                        polarizabilitiyFactor = 1.382;
+                    } else {
+                        polarizabilitiyFactor = 1.37;
+                    }
+                } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.TRIPLE
+                           || atomContainer.getMaximumBondOrder(atom) == IBond.Order.QUADRUPLE) {
+                    polarizabilitiyFactor = 1.279;
                 }
-            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.TRIPLE
-                    || atomContainer.getMaximumBondOrder(atom) == IBond.Order.QUADRUPLE) {
-                polarizabilitiyFactor = 1.279;
-            }
-        } else if (AtomSymbol.equals("N")) {
-            if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() < 0) {
-                polarizabilitiyFactor = 1.090;
-            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
-                polarizabilitiyFactor = 1.094;
-            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
-                polarizabilitiyFactor = 1.030;
-            } else {
-                polarizabilitiyFactor = 0.852;
-            }
-        } else if (AtomSymbol.equals("O")) {
-            if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() == -1) {
-                polarizabilitiyFactor = 1.791;
-            } else if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() == 1) {
-                polarizabilitiyFactor = 0.422;
-            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
-                polarizabilitiyFactor = 0.664;
-            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
-                polarizabilitiyFactor = 0.460;
-            }
-        } else if (AtomSymbol.equals("P")) {
-            if (atomContainer.getConnectedBondsCount(atom) == 4
+                break;
+            case "N":
+                if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() < 0) {
+                    polarizabilitiyFactor = 1.090;
+                } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
+                    polarizabilitiyFactor = 1.094;
+                } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
+                    polarizabilitiyFactor = 1.030;
+                } else {
+                    polarizabilitiyFactor = 0.852;
+                }
+                break;
+            case "O":
+                if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() == -1) {
+                    polarizabilitiyFactor = 1.791;
+                } else if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() == 1) {
+                    polarizabilitiyFactor = 0.422;
+                } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
+                    polarizabilitiyFactor = 0.664;
+                } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
+                    polarizabilitiyFactor = 0.460;
+                }
+                break;
+            case "P":
+                if (atomContainer.getConnectedBondsCount(atom) == 4
                     && atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
-                polarizabilitiyFactor = 0;
-            }
-        } else if (AtomSymbol.equals("S")) {
-            if (atom.getFlag(CDKConstants.ISAROMATIC)) {
-                polarizabilitiyFactor = 3.38;
-            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
-                polarizabilitiyFactor = 3.20;/* 3.19 */
-            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
-                if (getNumberOfHydrogen(atomContainer, atom) == 0) {
-                    polarizabilitiyFactor = 3.51;
-                } else {
-                    polarizabilitiyFactor = 3.50;
+                    polarizabilitiyFactor = 0;
                 }
-            } else {
-                polarizabilitiyFactor = 3.42;
-            }
-        } else if (AtomSymbol.equals("F")) {
-            polarizabilitiyFactor = 0.296;
-        } else if (AtomSymbol.equals("Cl")) {
-            polarizabilitiyFactor = 2.343;
-        } else if (AtomSymbol.equals("Br")) {
-            polarizabilitiyFactor = 3.5;
-        } else if (AtomSymbol.equals("I")) {
-            polarizabilitiyFactor = 5.79;
+                break;
+            case "S":
+                if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+                    polarizabilitiyFactor = 3.38;
+                } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
+                    polarizabilitiyFactor = 3.20;/* 3.19 */
+                } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
+                    if (getNumberOfHydrogen(atomContainer, atom) == 0) {
+                        polarizabilitiyFactor = 3.51;
+                    } else {
+                        polarizabilitiyFactor = 3.50;
+                    }
+                } else {
+                    polarizabilitiyFactor = 3.42;
+                }
+                break;
+            case "F":
+                polarizabilitiyFactor = 0.296;
+                break;
+            case "Cl":
+                polarizabilitiyFactor = 2.343;
+                break;
+            case "Br":
+                polarizabilitiyFactor = 3.5;
+                break;
+            case "I":
+                polarizabilitiyFactor = 5.79;
+                break;
         }
         return polarizabilitiyFactor;
     }

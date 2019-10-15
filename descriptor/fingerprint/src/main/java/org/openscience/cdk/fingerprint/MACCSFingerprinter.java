@@ -29,9 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.Pattern;
-import org.openscience.cdk.isomorphism.VentoFoggia;
-import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
+import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -98,7 +96,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
         BitSet fp = new BitSet(keys.length);
 
         // init SMARTS invariants (connectivity, degree, etc)
-        SmartsMatchers.prepare(container, false);
+        SmartsPattern.prepare(container);
 
         final int numAtoms = container.getAtomCount();
 
@@ -314,8 +312,9 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
      * @param builder chem object builder
      * @return the pattern to match
      */
-    private Pattern createPattern(String smarts, IChemObjectBuilder builder) {
-        if (smarts.equals("[!0]")) return null; // FIXME can't be parsed by our SMARTS Grammar ATM
-        return VentoFoggia.findSubstructure(SMARTSParser.parse(smarts, builder));
+    private Pattern createPattern(String smarts, IChemObjectBuilder builder) throws IOException {
+        SmartsPattern ptrn = SmartsPattern.create(smarts, builder);
+        ptrn.setPrepare(false); // avoid redoing aromaticity etc
+        return ptrn;
     }
 }

@@ -19,18 +19,17 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Generates all Combinatorial chemical isotopes given a structure.
@@ -51,11 +50,14 @@ public class IsotopePatternGenerator {
     private ILoggingTool       logger         = LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class);
 
     /** Minimal abundance of the isotopes to be added in the combinatorial search.*/
-    private double             minAbundance   = .1;
+    private double  minIntensity = 0.00001;
+    private double  minAbundance = 1E-10; // n.b. not actually abundance
+    private double  resolution   = 0.00005f;
+    private boolean storeFormula = false;
 
     /**
-     *  Constructor for the IsotopeGenerator. The minimum abundance is set to 
-     *                          0.1 (10% abundance) by default. 
+     *  Constructor for the IsotopeGenerator. The minimum abundance is set to
+     *                          0.1 (10% abundance) by default.
      */
     public IsotopePatternGenerator() {
         this(0.1);
@@ -64,13 +66,44 @@ public class IsotopePatternGenerator {
     /**
      * Constructor for the IsotopeGenerator.
      *
-     * @param minAb Minimal abundance of the isotopes to be added
-     * 				in the combinatorial search (scale 0.0 to 1.0)
-     *
+     * @param minIntensity Minimal intensity of the isotopes to be added
+     * 				       in the combinatorial search (scale 0.0 to 1.0)
      */
-    public IsotopePatternGenerator(double minAb) {
-        minAbundance = minAb;
+    public IsotopePatternGenerator(double minIntensity) {
+        this.minIntensity = minIntensity;
         logger.info("Generating all Isotope structures with IsotopeGenerator");
+    }
+
+    /**
+     * Set the minimum (normalised) intensity to generate.
+     * @param minIntensity the minimum intensity
+     * @return self for method chaining
+     */
+    public IsotopePatternGenerator setMinIntensity(double minIntensity) {
+        this.minIntensity = minIntensity;
+        return this;
+    }
+
+    /**
+     * Set the minimum resolution at which peaks within this mass difference
+     * should be considered equivalent.
+     * @param resolution the minimum resolution
+     * @return self for method chaining
+     */
+    public IsotopePatternGenerator setMinResolution(double resolution) {
+        this.resolution = resolution;
+        return this;
+    }
+
+    /**
+     * When generating the isotope containers store the MF for each
+     * {@link IsotopeContainer}.
+     * @param storeFormula formulas should be stored
+     * @return self for method chaining
+     */
+    public IsotopePatternGenerator setStoreFormulas(boolean storeFormula) {
+        this.storeFormula = storeFormula;
+        return this;
     }
 
     /**
@@ -98,16 +131,60 @@ public class IsotopePatternGenerator {
         for (IIsotope isos : molecularFormula.isotopes()) {
             String elementSymbol = isos.getSymbol();
             int atomCount = molecularFormula.getIsotopeCount(isos);
-            for (int i = 0; i < atomCount; i++) {
-                abundance_Mass = calculateAbundanceAndMass(abundance_Mass, elementSymbol);
+
+            // Generate possible isotope containers for the current atom's
+            // these will then me 'multiplied' with the existing patten
+            List<IsotopeContainer> additional = new ArrayList<>();
+            for (IIsotope isotope : isoFactory.getIsotopes(elementSymbol)) {
+                double mass      = isotope.getExactMass();
+                double abundance = isotope.getNaturalAbundance();
+                if (abundance <= 0.000000001)
+                    continue;
+                IsotopeContainer container = new IsotopeContainer(mass, abundance);
+                if (storeFormula)
+                    container.setFormula(asFormula(isotope));
+                additional.add(container);
             }
+
+            for (int i = 0; i < atomCount; i++)
+                abundance_Mass = calculateAbundanceAndMass(abundance_Mass, additional);
         }
 
         IsotopePattern isoP = IsotopePatternManipulator.sortAndNormalizedByIntensity(abundance_Mass);
-        isoP = cleanAbundance(isoP, minAbundance);
+        isoP = cleanAbundance(isoP, minIntensity);
         IsotopePattern isoPattern = IsotopePatternManipulator.sortByMass(isoP);
         return isoPattern;
 
+    }
+
+    private IMolecularFormula asFormula(IIsotope isotope) {
+        IMolecularFormula mf = builder.newInstance(IMolecularFormula.class);
+        mf.addIsotope(isotope);
+        return mf;
+    }
+
+    private IMolecularFormula union(IMolecularFormula a, IMolecularFormula b) {
+        IMolecularFormula mf = builder.newInstance(IMolecularFormula.class);
+        mf.add(a);
+        mf.add(b);
+        return mf;
+    }
+
+    private static IsotopeContainer findExisting(List<IsotopeContainer> containers,
+                                                 double mass, double treshhold) {
+        for (IsotopeContainer container : containers) {
+            if (Math.abs(container.getMass() - mass) <= treshhold) {
+                return container;
+            }
+        }
+        return null;
+    }
+
+    private void addDistinctFormula(IsotopeContainer container, IMolecularFormula mf) {
+        for (IMolecularFormula curr : container.getFormulas())
+            if (MolecularFormulaManipulator.compare(curr, mf))
+                return;
+        container.addFormula(mf);
     }
 
     /**
@@ -115,94 +192,63 @@ public class IsotopePatternGenerator {
      * atom. Receives the periodic table element and calculate the isotopes, if
      * there exist a previous calculation, add these new isotopes. In the
      * process of adding the new isotopes, remove those that has an abundance
-     * less than setup parameter minAbundance, and remove duplicated masses.
+     * less than setup parameter minIntensity, and remove duplicated masses.
      *
-     * @param elementSymbol  The chemical element symbol
+     * @param additional additional isotopes to 'multiple' the current pattern by
      * @return the calculation was successful
      */
-    private IsotopePattern calculateAbundanceAndMass(IsotopePattern isotopePattern, String elementSymbol) {
+    private IsotopePattern calculateAbundanceAndMass(IsotopePattern current, List<IsotopeContainer> additional) {
 
-        IIsotope[] isotopes = isoFactory.getIsotopes(elementSymbol);
+        if (additional == null || additional.size() == 0) return current;
 
-        if (isotopes == null) return isotopePattern;
-
-        if (isotopes.length == 0) return isotopePattern;
-
-        double mass, previousMass, abundance, totalAbundance, newAbundance;
-
-        HashMap<Double, Double> isotopeMassAndAbundance = new HashMap<Double, Double>();
-        IsotopePattern currentISOPattern = new IsotopePattern();
-
-        // Generate isotopes for the current atom (element)
-        for (int i = 0; i < isotopes.length; i++) {
-            mass = isotopes[i].getExactMass();
-            abundance = isotopes[i].getNaturalAbundance();
-            currentISOPattern.addIsotope(new IsotopeContainer(mass, abundance));
-        }
+        List<IsotopeContainer>  containers = new ArrayList<>();
 
         // Verify if there is a previous calculation. If it exists, add the new
         // isotopes
-        if (isotopePattern == null) {
-            isotopePattern = currentISOPattern;
+        if (current == null) {
+            current = new IsotopePattern();
+            for (IsotopeContainer container : additional)
+                current.addIsotope(container);
         } else {
-            for (int i = 0; i < isotopePattern.getNumberOfIsotopes(); i++) {
-                totalAbundance = isotopePattern.getIsotopes().get(i).getIntensity();
+            for (IsotopeContainer container : current.getIsotopes()) {
+                for (IsotopeContainer other : additional) {
 
-                if (totalAbundance == 0) continue;
+                    double abundance = container.getIntensity() * other.getIntensity() * 0.01;
+                    double mass      = container.getMass() + other.getMass();
 
-                for (int j = 0; j < currentISOPattern.getNumberOfIsotopes(); j++) {
-
-                    abundance = currentISOPattern.getIsotopes().get(j).getIntensity();
-                    mass = isotopePattern.getIsotopes().get(i).getMass();
-
-                    if (abundance == 0) continue;
-
-                    newAbundance = totalAbundance * abundance * 0.01;
-                    mass += currentISOPattern.getIsotopes().get(j).getMass();
-
-                    // Filter duplicated masses
-                    previousMass = searchMass(isotopeMassAndAbundance.keySet(), mass);
-                    if (isotopeMassAndAbundance.containsKey(previousMass)) {
-                        newAbundance += isotopeMassAndAbundance.get(previousMass);
-                        mass = previousMass;
+                    // merge duplicates with some resolution
+                    IsotopeContainer existing = findExisting(containers, mass, resolution);
+                    if (existing != null) {
+                        double newIntensity = existing.getIntensity() + abundance;
+                        // moving weighted avg
+                        existing.setMass((existing.getMass()*existing.getIntensity() +
+                                          mass*abundance) / newIntensity);
+                        existing.setIntensity(newIntensity);
+                        if (storeFormula) {
+                            for (IMolecularFormula mf : container.getFormulas())
+                                addDistinctFormula(existing, union(mf, other.getFormula()));
+                        }
+                        continue;
                     }
 
                     // Filter isotopes too small
-                    if (newAbundance > 1E-10) {
-                        isotopeMassAndAbundance.put(mass, newAbundance);
+                    if (abundance > minAbundance) {
+                        IsotopeContainer newcontainer = new IsotopeContainer(mass, abundance);
+                        if (storeFormula) {
+                            for (IMolecularFormula mf : container.getFormulas())
+                                newcontainer.addFormula(union(mf, other.getFormula()));
+                        }
+                        containers.add(newcontainer);
                     }
-                    previousMass = 0;
                 }
             }
 
-            Iterator<Double> itr = isotopeMassAndAbundance.keySet().iterator();
-            isotopePattern = new IsotopePattern();
-            while (itr.hasNext()) {
-                mass = itr.next();
-                isotopePattern.addIsotope(new IsotopeContainer(mass, isotopeMassAndAbundance.get(mass)));
+            current = new IsotopePattern();
+            for (IsotopeContainer container : containers) {
+                current.addIsotope(container);
             }
         }
-
-        return isotopePattern;
-
-    }
-
-    /**
-     * Search the key mass in this Set.
-     *
-     * @param keySet  The Set object
-     * @param mass    The mass to look for
-     * @return        The key value
-     */
-    private double searchMass(Set<Double> keySet, double mass) {
-        double TOLERANCE = 0.00005f;
-        double diff;
-        for (double key : keySet) {
-            diff = Math.abs(key - mass);
-            if (diff < TOLERANCE) return key;
-        }
-
-        return 0.0d;
+        return current;
     }
 
     /**
@@ -210,10 +256,10 @@ public class IsotopePatternGenerator {
      * of the most abundant isotope.
      *
      * @param isopattern   The IsotopePattern object
-     * @param minAbundance The minimum abundance
+     * @param minIntensity The minimum abundance
      * @return             The IsotopePattern cleaned
      */
-    private IsotopePattern cleanAbundance(IsotopePattern isopattern, double minAbundance) {
+    private IsotopePattern cleanAbundance(IsotopePattern isopattern, double minIntensity) {
 
         double intensity, biggestIntensity = 0.0f;
 
@@ -231,16 +277,15 @@ public class IsotopePatternGenerator {
             if (intensity < 0) intensity = 0;
 
             sc.setIntensity(intensity);
-
         }
 
         IsotopePattern sortedIsoPattern = new IsotopePattern();
-        sortedIsoPattern.setMonoIsotope(new IsotopeContainer(isopattern.getIsotopes().get(0).getMass(), isopattern
-                .getIsotopes().get(0).getIntensity()));
+        sortedIsoPattern.setMonoIsotope(new IsotopeContainer(isopattern.getIsotopes().get(0)));
         for (int i = 1; i < isopattern.getNumberOfIsotopes(); i++) {
-            if (isopattern.getIsotopes().get(i).getIntensity() >= (minAbundance))
-                sortedIsoPattern.addIsotope(new IsotopeContainer(isopattern.getIsotopes().get(i).getMass(), isopattern
-                        .getIsotopes().get(i).getIntensity()));
+            if (isopattern.getIsotopes().get(i).getIntensity() >= (minIntensity)) {
+                IsotopeContainer container = new IsotopeContainer(isopattern.getIsotopes().get(i));
+                sortedIsoPattern.addIsotope(container);
+            }
         }
         return sortedIsoPattern;
 

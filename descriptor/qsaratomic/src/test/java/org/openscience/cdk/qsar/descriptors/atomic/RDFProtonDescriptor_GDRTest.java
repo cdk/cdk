@@ -53,6 +53,7 @@ public class RDFProtonDescriptor_GDRTest extends AtomicDescriptorTest {
                 IDescriptorResult result = dv.getValue();
                 //				System.out.println("array: " + result.toString());
                 Assert.assertNotNull(result);
+                Assert.assertEquals(dv.getNames().length, result.length());
             }
 
         }

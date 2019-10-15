@@ -27,6 +27,7 @@ import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.JniInchiException;
 import net.sf.jniinchi.JniInchiInput;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -60,11 +61,15 @@ public class JniInChIInputAdapter extends JniInchiInput {
             pos++;
         while (pos < len && Character.isDigit(op.charAt(pos)))
             pos++;
-        if (pos < len && op.charAt(pos) == '.')
+        if (pos < len && (op.charAt(pos) == '.' || op.charAt(pos) == ','))
             pos++;
         while (pos < len && Character.isDigit(op.charAt(pos)))
             pos++;
         return pos == len;
+    }
+
+    private static boolean isSubSecondTimeout(String op) {
+        return op.indexOf('.') >= 0 || op.indexOf(',') >= 0;
     }
 
     private static String checkOptions(final String ops) throws JniInchiException {
@@ -91,7 +96,15 @@ public class JniInChIInputAdapter extends JniInchiInput {
                     sbOptions.append(" ");
                 }
             } else if (isTimeoutOptions(op)) {
-                sbOptions.append(FLAG_CHAR).append(op);
+                // only reformat if we actually have a decimal
+                if (isSubSecondTimeout(op)) {
+                    // because the JNI-InChI library is expecting an platform number, format it as such
+	                Double time = Double.parseDouble(op.substring(1));
+	                DecimalFormat format = new DecimalFormat("#.##");
+	                sbOptions.append(FLAG_CHAR).append('W').append(format.format(time));
+                } else {
+                    sbOptions.append(FLAG_CHAR).append(op);
+                }
                 hasUserSpecifiedTimeout = true;
                 if (tok.hasMoreTokens()) {
                     sbOptions.append(" ");
@@ -123,7 +136,6 @@ public class JniInChIInputAdapter extends JniInchiInput {
 
         return sbOptions.toString();
     }
-
 
     private static String checkOptions(List<INCHI_OPTION> ops) throws JniInchiException {
         if (ops == null) {

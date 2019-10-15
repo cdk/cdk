@@ -89,7 +89,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     public void testAddAtom_IAtom_IMonomer() {
         IStrand oStrand = (IStrand) newChemObject();
         IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C");
@@ -105,9 +105,9 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     public void testGetMonomerCount() {
         IStrand oStrand = (IStrand) newChemObject();
         IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         oStrand.addAtom(oAtom2, oMono1);
@@ -120,9 +120,9 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     public void testGetMonomer_String() {
         IStrand oStrand = (IStrand) newChemObject();
         IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         oStrand.addAtom(oAtom2, oMono1);
@@ -137,9 +137,9 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     public void testGetMonomerNames() {
         IStrand oStrand = (IStrand) newChemObject();
         IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         oStrand.addAtom(oAtom2, oMono1);
@@ -167,7 +167,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     public void testRemoveMonomer_String() {
         IStrand oStrand = (IStrand) newChemObject();
         IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         oStrand.addAtom(oAtom1, oMono1);
         Assert.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
@@ -181,9 +181,9 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     public void testGetMonomers() {
         IStrand oStrand = (IStrand) newChemObject();
         IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         oStrand.addAtom(oAtom2, oMono1);
@@ -207,20 +207,16 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     public void testToString() {
         IStrand oStrand = (IStrand) newChemObject();
         IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         oStrand.addAtom(oAtom2, oMono1);
         oStrand.addAtom(oAtom3, oMono2);
-        Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
         IMonomer oMon = oStrand.getBuilder().newInstance(IMonomer.class);
         oMon.setMonomerName("");
         oMon.setMonomerType("UNKNOWN");
-        monomers.put("", oMon);
-        monomers.put("TRP279", oMono1);
-        monomers.put("HOH", oMono2);
         String description = oStrand.toString();
         for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue('\n' != description.charAt(i));
@@ -236,7 +232,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     public void testClone() throws Exception {
         IStrand strand = (IStrand) newChemObject();
         Object clone = strand.clone();
-        Assert.assertTrue(clone instanceof IStrand);
+        Assert.assertNotNull(clone);
     }
 
 }

@@ -33,6 +33,8 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupBracket;
+import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
@@ -3200,6 +3202,57 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         assertTrue(clonedSgroup.getAtoms().contains(clone.getAtom(1)));
         assertTrue(clonedSgroup.getBonds().contains(clone.getBond(0)));
         assertTrue(clonedSgroup.getBonds().contains(clone.getBond(1)));
+    }
+
+    @Test public void cloneSgroupsBrackets() throws CloneNotSupportedException {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1  = mol.getBuilder().newAtom();
+        IAtom          a2  = mol.getBuilder().newAtom();
+        IAtom          a3  = mol.getBuilder().newAtom();
+        IBond          b1  = mol.getBuilder().newBond();
+        IBond          b2  = mol.getBuilder().newBond();
+        b1.setAtom(a1, 0);
+        b1.setAtom(a2, 1);
+        b2.setAtom(a2, 0);
+        b2.setAtom(a3, 1);
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        mol.addBond(b1);
+        mol.addBond(b2);
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabStructureRepeatUnit);
+        sgroup.setSubscript("n");
+        sgroup.addAtom(a2);
+        sgroup.addBond(b1);
+        sgroup.addBond(b2);
+        SgroupBracket bracket1 = new SgroupBracket(0, 1, 2, 3);
+        SgroupBracket bracket2 = new SgroupBracket(1, 2, 3, 4);
+        sgroup.addBracket(bracket1);
+        sgroup.addBracket(bracket2);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                        Collections.singletonList(sgroup));
+        IAtomContainer clone = mol.clone();
+        Collection<Sgroup> sgroups = clone.getProperty(CDKConstants.CTAB_SGROUPS);
+        assertNotNull(sgroups);
+        assertThat(sgroups.size(), is(1));
+        Sgroup clonedSgroup = sgroups.iterator().next();
+        assertThat(clonedSgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
+        assertThat(clonedSgroup.getSubscript(), is("n"));
+        assertFalse(clonedSgroup.getAtoms().contains(a2));
+        assertFalse(clonedSgroup.getBonds().contains(b1));
+        assertFalse(clonedSgroup.getBonds().contains(b2));
+        assertTrue(clonedSgroup.getAtoms().contains(clone.getAtom(1)));
+        assertTrue(clonedSgroup.getBonds().contains(clone.getBond(0)));
+        assertTrue(clonedSgroup.getBonds().contains(clone.getBond(1)));
+        List<SgroupBracket> brackets = clonedSgroup.getValue(SgroupKey.CtabBracket);
+        assertThat(brackets.size(), is(2));
+        assertThat(brackets.get(0), is(not(sameInstance(bracket1))));
+        assertThat(brackets.get(1), is(not(sameInstance(bracket2))));
+        assertEquals(brackets.get(0).getFirstPoint(), new Point2d(0, 1), 0.01);
+        assertEquals(brackets.get(0).getSecondPoint(), new Point2d(2, 3), 0.01);
+        assertEquals(brackets.get(1).getFirstPoint(), new Point2d(1, 2), 0.01);
+        assertEquals(brackets.get(1).getSecondPoint(), new Point2d(3, 4), 0.01);
     }
 
     @Test

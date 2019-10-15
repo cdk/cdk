@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 John Mayfield <jwmay@users.sf.net>
+ * Copyright (c) 2018 NextMove Software
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,10 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.AtomMatcher;
-import org.openscience.cdk.isomorphism.BondMatcher;
-import org.openscience.cdk.isomorphism.ComponentGrouping;
-import org.openscience.cdk.isomorphism.VentoFoggia;
+import org.openscience.cdk.isomorphism.DfPattern;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
 import java.util.ArrayDeque;
@@ -50,7 +47,7 @@ import java.util.Objects;
  * A expression stores a predicate tree for checking properties of atoms
  * and bonds.
  * <pre>
- * Expr expr = new Expr(ExprType.ELEMENT, 6);
+ * Expr expr = new Expr(ELEMENT, 6);
  * if (expr.matches(atom)) {
  *   // expression matches if atom is a carbon!
  * }
@@ -60,13 +57,13 @@ import java.util.Objects;
  * an intermediate (logical) node. The simplest expression trees contain a
  * single leaf node:
  * <pre>
- * new Expr(ExprType.IS_AROMATIC; // matches any aromatic atom
- * new Expr(ExprType.ELEMENT, 6); // matches any carbon atom (atomic num=6)
- * new Expr(ExprType.VALENCE, 4); // matches an atom with valence 4
- * new Expr(ExprType.DEGREE, 1);  // matches a terminal atom, e.g. -OH, =O
- * new Expr(ExprType.IS_IN_RING); // matches any atom marked as in a ring
- * new Expr(ExprType.IS_HETERO);  // matches anything other than carbon or nitrogen
- * new Expr(ExprType.TRUE);       // any atom
+ * new Expr(IS_AROMATIC); // matches any aromatic atom
+ * new Expr(ELEMENT, 6);  // matches any carbon atom (atomic num=6)
+ * new Expr(VALENCE, 4);  // matches an atom with valence 4
+ * new Expr(DEGREE, 1);   // matches a terminal atom, e.g. -OH, =O
+ * new Expr(IS_IN_RING);  // matches any atom marked as in a ring
+ * new Expr(IS_HETERO);   // matches anything other than carbon or nitrogen
+ * new Expr(TRUE);        // any atom
  * </pre>
  * Logical internal nodes combine one or two sub-expressions with conjunction
  * (and), disjunction (or), and negation (not).
@@ -82,24 +79,24 @@ import java.util.Objects;
  * </pre>
  * We can construct this tree as follows:
  * <pre>
- * Expr expr = new Expr(ExprType.ELEMENT, 35) // Br
- *                  .or(new Expr(ExprType.ELEMENT, 17)) // Cl
- *                  .or(new Expr(ExprType.ELEMENT, 9))  // F</pre>
+ * Expr expr = new Expr(ELEMENT, 9) // F
+ *                  .or(new Expr(ELEMENT, 17)) // Cl
+ *                  .or(new Expr(ELEMENT, 35))  // Br</pre>
  * A more verbose construction could also be used:
  * <pre>
- * Expr leafF  = new Expr(ExprType.ELEMENT, 9); // F
- * Expr leafCl = new Expr(ExprType.ELEMENT, 17); // Cl
- * Expr leafBr = new Expr(ExprType.ELEMENT, 35);  // Br
- * Expr node4  = new Expr(ExprType.OR, leaf2, leaf3);
- * Expr node5  = new Expr(ExprType.OR, leaf1, node4);
+ * Expr leafF  = new Expr(ELEMENT, 9); // F
+ * Expr leafCl = new Expr(ELEMENT, 17); // Cl
+ * Expr leafBr = new Expr(ELEMENT, 35);  // Br
+ * Expr node4  = new Expr(OR, leaf2, leaf3);
+ * Expr node5  = new Expr(OR, leaf1, node4);
  * </pre>
  *
  * Expressions can be used to match bonds. Note some expressions apply to either
  * atoms or bonds.
  * <pre>
- * new Expr(ExprType.TRUE);               // any bond
- * new Expr(ExprType.IS_IN_RING);         // any ring bond
- * new Expr(ExprType.ALIPHATIC_ORDER, 2); // double bond
+ * new Expr(TRUE);               // any bond
+ * new Expr(IS_IN_RING);         // any ring bond
+ * new Expr(ALIPHATIC_ORDER, 2); // double bond
  * </pre>
  * See the documentation for {@link Type}s for a detail explanation of
  * each type.
@@ -120,6 +117,7 @@ public final class Expr {
     private Expr left, right;
     // user for recursive expression types
     private IAtomContainer query;
+    private DfPattern      ptrn;
 
     /**
      * Creates an atom expression that will always match ({@link Type#TRUE}).
@@ -368,20 +366,10 @@ public final class Expr {
                        (stereo == UNKNOWN_STEREO &&
                         (left.type == STEREOCHEMISTRY ||
                          left.type == OR && left.left.type == STEREOCHEMISTRY));
-
             case RECURSIVE:
-                // TO BE OPTIMIZED
-//                for (int[] match : VentoFoggia.findSubstructure(query,
-//                                                                AtomMatcher.forQuery(),
-//                                                                BondMatcher.forQuery())
-//                                              .matchAll(atom.getContainer())
-//                                              .filter(new StereoFilter(query, atom.getContainer()))
-//                                              .filter(new ComponentGrouping(query, atom.getContainer()))) {
-//                    if (match[0] == atom.getIndex())
-//                        return true;
-//                }
-                return false;
-
+                if (ptrn == null)
+                    ptrn = DfPattern.findSubstructure(query);
+                return ptrn.matchesRoot(atom);
             default:
                 throw new IllegalArgumentException("Cannot match AtomExpr, type=" + type);
         }
@@ -396,6 +384,9 @@ public final class Expr {
             case ALIPHATIC_ORDER:
                 return !bond.isAromatic() &&
                        bond.getOrder() != null &&
+                       bond.getOrder().numeric() == value;
+            case ORDER:
+                return bond.getOrder() != null &&
                        bond.getOrder().numeric() == value;
             case IS_AROMATIC:
                 return bond.isAromatic();
@@ -471,6 +462,8 @@ public final class Expr {
             if (type.isLogical() && !expr.type.isLogical()) {
                 if (type == AND)
                     right.and(expr);
+                else if (type != NOT)
+                    setLogical(Type.AND, expr, new Expr(this));
                 else
                     setLogical(Type.AND, expr, new Expr(this));
             } else {
@@ -494,8 +487,14 @@ public final class Expr {
         } else if (expr.type != Type.TRUE &&
                    expr.type != Type.FALSE &&
                    expr.type != Type.NONE) {
-            if (type.isLogical() && !expr.type.isLogical())
-                setLogical(Type.OR, expr, new Expr(this));
+            if (type.isLogical() && !expr.type.isLogical()) {
+                if (type == OR)
+                    right.or(expr);
+                else if (type != NOT)
+                    setLogical(Type.OR, expr, new Expr(this));
+                else
+                    setLogical(Type.OR, new Expr(this), expr);
+            }
             else
                 setLogical(Type.OR, new Expr(this), expr);
         }
@@ -637,6 +636,7 @@ public final class Expr {
                 this.left = null;
                 this.right = null;
                 this.query = mol;
+                this.ptrn  = null;
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -911,6 +911,9 @@ public final class Expr {
          *  value and the bond is not marked as aromatic
          *  ({@link IAtom#isAromatic()}). */
         ALIPHATIC_ORDER,
+        /** True if the bond order {@link IBond#getOrder()} equals the specified
+         *  value and the bond, aromaticity is not check. */
+        ORDER,
 
         /* Binary/unary internal nodes */
 

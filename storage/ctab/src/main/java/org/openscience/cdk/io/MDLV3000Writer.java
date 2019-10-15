@@ -36,6 +36,8 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -51,7 +53,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -67,6 +69,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
+import static org.openscience.cdk.io.MDLV2000Writer.OptProgramName;
 
 /**
  * Ctab V3000 format output. This writer provides output to the more modern (but less widely
@@ -85,10 +88,9 @@ import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
  */
 public final class MDLV3000Writer extends DefaultChemObjectWriter {
 
-    public static final  SimpleDateFormat HEADER_DATE_FORMAT = new SimpleDateFormat("MMddyyHHmm");
-    public static final  NumberFormat     DECIMAL_FORMAT     = new DecimalFormat("#.####");
-    private static final Pattern          R_GRP_NUM          = Pattern.compile("R(\\d+)");
-    private V30LineWriter writer;
+    private static final Pattern         R_GRP_NUM = Pattern.compile("R(\\d+)");
+    private              V30LineWriter   writer;
+    private              StringIOSetting programNameOpt;
 
     /**
      * Create a new V3000 writer, output to the provided JDK writer.
@@ -96,6 +98,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @param writer output location
      */
     public MDLV3000Writer(Writer writer) {
+        this();
         this.writer = new V30LineWriter(writer);
     }
 
@@ -105,6 +108,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * @param out output location
      */
     public MDLV3000Writer(OutputStream out) throws CDKException {
+        this();
         this.setWriter(out);
     }
 
@@ -112,6 +116,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * Default empty constructor.
      */
     public MDLV3000Writer() {
+        initIOSettings();
     }
 
     /**
@@ -139,6 +144,17 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         return idx;
     }
 
+    private String getProgName() {
+        String progname = programNameOpt.getSetting();
+        if (progname == null)
+            return "        ";
+        else if (progname.length() > 8)
+            return progname.substring(0, 8);
+        else if (progname.length() < 8)
+            return String.format("%-8s", progname);
+        else
+            return progname;
+    }
 
     /**
      * Write the three line header of the MDL format: title, version/timestamp, remark.
@@ -161,8 +177,9 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
          * program input, internal registry number (R) if input through MDL
          * form. A blank line can be substituted for line 2.
          */
-        writer.writeDirect("  CDK     ");
-        writer.writeDirect(HEADER_DATE_FORMAT.format(System.currentTimeMillis()));
+        writer.writeDirect("  ");
+        writer.writeDirect(getProgName());
+        writer.writeDirect(new SimpleDateFormat("MMddyyHHmm").format(System.currentTimeMillis()));
         final int dim = getNumberOfDimensions(mol);
         if (dim != 0) {
             writer.writeDirect(Integer.toString(dim));
@@ -626,8 +643,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                             final Point2d p1 = bracket.getFirstPoint();
                             final Point2d p2 = bracket.getSecondPoint();
                             writer.write("9");
-                            writer.write(' ').write(p1.x).write(' ').write(DECIMAL_FORMAT.format(p1.y)).write(" 0");
-                            writer.write(' ').write(p2.x).write(' ').write(DECIMAL_FORMAT.format(p2.y)).write(" 0");
+                            writer.write(' ').write(p1.x).write(' ').write(p1.y).write(" 0");
+                            writer.write(' ').write(p2.x).write(' ').write(p2.y).write(" 0");
                             writer.write(" 0 0 0");
                             writer.write(")");
                         }
@@ -760,8 +777,10 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
      * for Sgroups but all lines are handled.
      */
     private static final class V30LineWriter implements Closeable {
-        public static final String PREFIX = "M  V30 ";
-        public static final int    LIMIT  = 78; // -\n takes two chars (80 total)
+        // note: non-static
+        private final DecimalFormat decimalFmt = new DecimalFormat("#.#####", DecimalFormatSymbols.getInstance(Locale.ROOT));
+        public static final String  PREFIX     = "M  V30 ";
+        public static final int     LIMIT      = 78; // -\n takes two chars (80 total)
 
         // the base writer instance
         private final Writer writer;
@@ -839,7 +858,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
          * @throws IOException low-level IO error
          */
         V30LineWriter write(double num) throws IOException {
-            return write(DECIMAL_FORMAT.format(num));
+            return write(decimalFmt.format(num));
         }
 
         /**
@@ -918,6 +937,24 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         @Override
         public void close() throws IOException {
             writer.close();
+        }
+    }
+
+    /**
+     * Initializes IO settings.<br>
+     * Please note with regards to "writeAromaticBondTypes": bond type values 4 through 8 are for SSS queries only,
+     * so a 'query file' is created if the container has aromatic bonds and this settings is true.
+     */
+    private void initIOSettings() {
+        programNameOpt = addSetting(new StringIOSetting(OptProgramName,
+                                                        IOSetting.Importance.LOW,
+                                                        "Program name to write at the top of the molfile header, should be exactly 8 characters long",
+                                                        "CDK"));
+    }
+
+    public void customizeJob() {
+        for (IOSetting setting : getSettings()) {
+            fireIOSettingQuestion(setting);
         }
     }
 }

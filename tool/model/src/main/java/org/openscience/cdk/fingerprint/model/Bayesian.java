@@ -151,7 +151,7 @@ public class Bayesian {
 
     /**
      * Sets whether stereochemistry should be re-perceived from 2D/3D
-     * coordinates. By default stereochemistry encoded as {@link IStereoElement}s
+     * coordinates. By default stereochemistry encoded as {@link org.openscience.cdk.interfaces.IStereoElement}s
      * are used.
      *
      * @param val perceived from 2D

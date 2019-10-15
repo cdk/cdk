@@ -45,11 +45,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static java.util.AbstractMap.SimpleEntry;
@@ -82,8 +84,6 @@ import static java.util.Map.Entry;
  * @author John May
  */
 final class IdentityTemplateLibrary {
-
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##");
 
     private final Multimap<String, Point2d[]> templateMap = LinkedListMultimap.create();
 
@@ -291,13 +291,14 @@ final class IdentityTemplateLibrary {
      * @return extended SMILES format coordinates
      */
     static String encodeCoordinates(Point2d[] points) {
+        DecimalFormat fmt = new DecimalFormat(".##", DecimalFormatSymbols.getInstance(Locale.ROOT));
         StringBuilder sb = new StringBuilder();
         sb.append("|(");
         for (Point2d point : points) {
             if (sb.length() > 2) sb.append(";");
-            sb.append(DECIMAL_FORMAT.format(point.x));
+            sb.append(fmt.format(point.x));
             sb.append(',');
-            sb.append(DECIMAL_FORMAT.format(point.y));
+            sb.append(fmt.format(point.y));
             sb.append(',');
         }
         sb.append(")|");

@@ -44,7 +44,7 @@ import org.openscience.cdk.isomorphism.Mappings;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
+import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -148,9 +148,6 @@ public class PharmacophoreMatcher {
     private IAtomContainer                pharmacophoreMolecule = null;
     
     private Mappings mappings = null;
-    
-    private final Aromaticity arom = new Aromaticity(ElectronDonation.daylight(),
-                                                     Cycles.or(Cycles.all(), Cycles.relevant()));
 
     /**
      * An empty constructor.
@@ -389,12 +386,11 @@ public class PharmacophoreMatcher {
             // matching atoms and for each set make a new pcore atom and
             // add it to the pcore atom container object
             int count = 0;
-            for (final IQueryAtomContainer query : qatom.getCompiledSmarts()) {
+            for (final SmartsPattern query : qatom.getCompiledSmarts()) {
                 
                 // create the lazy mappings iterator
-                final Mappings mappings = Pattern.findSubstructure(query)
-                                                 .matchAll(input)
-                                                 .uniqueAtoms();
+                final Mappings mappings = query.matchAll(input)
+                                               .uniqueAtoms();
                 
                 for (final int[] mapping : mappings) {
                     uniqueAtoms.add(newPCoreAtom(input, qatom, smarts, mapping));
@@ -496,8 +492,7 @@ public class PharmacophoreMatcher {
     }
 
     private void prepareInput(IAtomContainer input) throws CDKException {
-        SmartsMatchers.prepare(input, true);
-        arom.apply(input);
+        SmartsPattern.prepare(input);
     }
 
     private boolean hasDistanceConstraints(IQueryAtomContainer query) {

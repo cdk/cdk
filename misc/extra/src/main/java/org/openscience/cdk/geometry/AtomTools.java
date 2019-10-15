@@ -242,17 +242,19 @@ public class AtomTools {
      * @return Point3d[] nwanted points (or zero if failed)
      */
     public static Point3d[] calculate3DCoordinates0(Point3d aPoint, int nwanted, double length) {
-        Point3d points[] = new Point3d[0];
+        Point3d[] points;
         if (nwanted == 1) {
             points = new Point3d[1];
             points[0] = new Point3d(aPoint);
             points[0].add(new Vector3d(length, 0.0, 0.0));
         } else if (nwanted == 2) {
+            points = new Point3d[2];
             points[0] = new Point3d(aPoint);
             points[0].add(new Vector3d(length, 0.0, 0.0));
             points[1] = new Point3d(aPoint);
             points[1].add(new Vector3d(-length, 0.0, 0.0));
         } else if (nwanted == 3) {
+            points = new Point3d[3];
             points[0] = new Point3d(aPoint);
             points[0].add(new Vector3d(length, 0.0, 0.0));
             points[1] = new Point3d(aPoint);
@@ -260,6 +262,7 @@ public class AtomTools {
             points[2] = new Point3d(aPoint);
             points[2].add(new Vector3d(-length * 0.5, length * 0.5 * Math.sqrt(3.0), 0.0f));
         } else if (nwanted == 4) {
+            points = new Point3d[4];
             double dx = length / Math.sqrt(3.0);
             points[0] = new Point3d(aPoint);
             points[0].add(new Vector3d(dx, dx, dx));
@@ -269,7 +272,8 @@ public class AtomTools {
             points[2].add(new Vector3d(-dx, -dx, dx));
             points[3] = new Point3d(aPoint);
             points[3].add(new Vector3d(-dx, dx, -dx));
-        }
+        } else
+            points = new Point3d[0];
         return points;
     }
 

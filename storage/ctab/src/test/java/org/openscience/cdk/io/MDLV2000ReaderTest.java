@@ -24,32 +24,7 @@
  *  */
 package org.openscience.cdk.io;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -66,20 +41,43 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
-import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
+import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -973,15 +971,14 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         for (IAtom atom : atc.atoms()) {
             if (atom.getSymbol().equals("Ir")) {
                 for (IBond bond : atc.getConnectedBondsList(atom)) {
-                    if (bond instanceof CTFileQueryBond) {
+                    if (bond instanceof QueryBond) {
                         queryBondCount++;
-                        assertTrue(((CTFileQueryBond) bond).getType() == CTFileQueryBond.Type.ANY);
-                        Assert.assertEquals(IBond.Order.UNSET, bond.getOrder());
+                        assertSame(((QueryBond) bond).getExpression().type(), Expr.Type.TRUE);
                     }
                 }
             }
         }
-        assertTrue("Expecting three 'query' bond types to 'Ir'", queryBondCount == 3);
+        Assert.assertEquals("Expecting three 'query' bond types to 'Ir'", 3, queryBondCount);
     }
 
     /**
@@ -997,13 +994,12 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         int queryBondCount = 0;
 
         for (IBond bond : atc.bonds()) {
-            if (bond instanceof CTFileQueryBond) {
+            if (bond instanceof QueryBond) {
                 queryBondCount++;
-                assertTrue(((CTFileQueryBond) bond).getType() == CTFileQueryBond.Type.SINGLE_OR_AROMATIC);
-                Assert.assertEquals(IBond.Order.UNSET, bond.getOrder());
+                assertSame(((QueryBond) bond).getExpression().type(), Expr.Type.SINGLE_OR_AROMATIC);
             }
         }
-        assertTrue("Expecting six 'query' bond types", queryBondCount == 6);
+        Assert.assertEquals("Expecting six 'query' bond types", 6, queryBondCount);
     }
 
     /**
@@ -1735,8 +1731,20 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-
-
+	@Test
+    public void testMassDiff() throws Exception {
+        String mdl = "deuterium.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1 V2000\n"
+                + "    0.0000    0.0000    0.0000 H  +1  0  0  0  0\n"
+                + "M  END\n";
+        try (StringReader in = new StringReader(mdl)) {
+            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl), Mode.STRICT);
+            IAtomContainer mol = reader.read(new AtomContainer());
+            IAtom atom = mol.getAtom(0);
+            Assert.assertEquals(1, atom.getAtomicNumber().intValue());
+            Assert.assertEquals(2, atom.getMassNumber().intValue());
+        }
+    }
+	
     @Test
     public void testBadAtomCoordinateFormat() throws Exception {
 
@@ -1785,5 +1793,24 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         mdlv2000Reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
         final org.openscience.cdk.silent.AtomContainer atomContainer = mdlv2000Reader.read(new org.openscience.cdk.silent.AtomContainer());
         Assert.assertEquals(17, atomContainer.getAtomCount());
+    }
+
+    @Test public void test() throws Exception {
+        String input = "\n" +
+                       "Structure query\n" +
+                       "\n" +
+                       "  1  0  0  0  0  0  0  0  0  0999 V2000\n" +
+                       " 2430.7100 2427.0000    0.0000 C   0  0  0  0  0  0\n" +
+                       "A   1\n" +
+                       "Blah\n" +
+                       "M  END";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input))) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            assertThat(mol.getAtom(0),
+                       instanceOf(IPseudoAtom.class));
+            assertThat(((IPseudoAtom)mol.getAtom(0)).getLabel(),
+                       is("Blah"));
+        }
     }
 }

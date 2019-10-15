@@ -226,6 +226,23 @@ public class BondRef extends ChemObjectRef implements IBond {
         bond.setStereo(stereo);
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Display getDisplay() {
+        return bond.getDisplay();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setDisplay(Display display) {
+        bond.setDisplay(display);
+    }
+
     /**
      * {@inheritDoc}
      */

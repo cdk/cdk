@@ -47,8 +47,9 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
+import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
@@ -344,7 +345,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             line = input.readLine();
             linecount++;
 
-            // if the line is empty we hav a problem - either a malformed
+            // if the line is empty we have a problem - either a malformed
             // molecule entry or just extra new lines at the end of the file
             if (line.length() == 0) {
                 handleError("Unexpected empty line", linecount, 0, 0);
@@ -801,10 +802,16 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 atoms[v].setFlag(CDKConstants.ISAROMATIC, true);
                 break;
             case 5: // single or double
+                bond = new QueryBond(bond.getBegin(), bond.getEnd(), Expr.Type.SINGLE_OR_DOUBLE);
+                break;
             case 6: // single or aromatic
+                bond = new QueryBond(bond.getBegin(), bond.getEnd(), Expr.Type.SINGLE_OR_AROMATIC);
+                break;
             case 7: // double or aromatic
+                bond = new QueryBond(bond.getBegin(), bond.getEnd(), Expr.Type.DOUBLE_OR_AROMATIC);
+                break;
             case 8: // any
-                bond = CTFileQueryBond.ofType(bond, type);
+                bond = new QueryBond(bond.getBegin(), bond.getEnd(), Expr.Type.TRUE);
                 break;
             default:
                 throw new CDKException("unrecognised bond type: " + type + ", " + line);
@@ -1314,13 +1321,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             return atom;
         }
         if (symbol.equals("D") && interpretHydrogenIsotopes.isSet()) {
-            if (mode == Mode.STRICT) throw new CDKException("invalid symbol: " + symbol);
+            handleError("invalid symbol: " + symbol, lineNum, 31, 33);
             IAtom atom = builder.newInstance(IAtom.class, "H");
             atom.setMassNumber(2);
             return atom;
         }
         if (symbol.equals("T") && interpretHydrogenIsotopes.isSet()) {
-            if (mode == Mode.STRICT) throw new CDKException("invalid symbol: " + symbol);
+            handleError("invalid symbol: " + symbol, lineNum, 31, 33);
             IAtom atom = builder.newInstance(IAtom.class, "H");
             atom.setMassNumber(3);
             return atom;
@@ -1512,6 +1519,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             default:
                 return 0;
         }
+        if (index+1 == line.length())
+            return sign * result;
         switch ((c = line.charAt(index + 1))) {
             case ' ':
                 if (result > 0) return sign * result;
@@ -1535,13 +1544,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             default:
                 return sign * result;
         }
+        if (index+2 == line.length())
+            return sign * result;
         switch ((c = line.charAt(index + 2))) {
             case ' ':
                 if (result > 0) return sign * result;
-                break;
-            case '-':
-                if (result > 0) return sign * result;
-                sign = -1;
                 break;
             case '0':
             case '1':
@@ -1837,26 +1844,27 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             a2.setFlag(CDKConstants.ISAROMATIC, true);
             explicitValence[atom1 - 1] = explicitValence[atom2 - 1] = Integer.MIN_VALUE;
         } else {
-            newBond = new CTFileQueryBond(builder);
+            newBond = new QueryBond(builder);
             IAtom[] bondAtoms = {a1, a2};
             newBond.setAtoms(bondAtoms);
-            newBond.setOrder(IBond.Order.UNSET);
-            CTFileQueryBond.Type queryBondType = null;
             switch (order) {
                 case 5:
-                    queryBondType = CTFileQueryBond.Type.SINGLE_OR_DOUBLE;
+                    ((QueryBond) newBond).getExpression()
+                                         .setPrimitive(Expr.Type.SINGLE_OR_DOUBLE);
                     break;
                 case 6:
-                    queryBondType = CTFileQueryBond.Type.SINGLE_OR_AROMATIC;
+                    ((QueryBond) newBond).getExpression()
+                                         .setPrimitive(Expr.Type.SINGLE_OR_AROMATIC);
                     break;
                 case 7:
-                    queryBondType = CTFileQueryBond.Type.DOUBLE_OR_AROMATIC;
+                    ((QueryBond) newBond).getExpression()
+                                         .setPrimitive(Expr.Type.DOUBLE_OR_AROMATIC);
                     break;
                 case 8:
-                    queryBondType = CTFileQueryBond.Type.ANY;
+                    ((QueryBond) newBond).getExpression()
+                                         .setPrimitive(Expr.Type.TRUE);
                     break;
             }
-            ((CTFileQueryBond) newBond).setType(queryBondType);
             newBond.setStereo(stereo);
             explicitValence[atom1 - 1] = explicitValence[atom2 - 1] = Integer.MIN_VALUE;
         }

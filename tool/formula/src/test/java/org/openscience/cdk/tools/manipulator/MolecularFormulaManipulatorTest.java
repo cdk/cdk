@@ -18,17 +18,6 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.number.IsCloseTo.closeTo;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -52,6 +41,18 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator.*;
 
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
@@ -209,6 +210,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void testGetString__String_IMolecularFormula() {
         Assert.assertNotNull(MolecularFormulaManipulator.getMolecularFormula("C10H16", new MolecularFormula()));
         Assert.assertNotNull(MolecularFormulaManipulator.getMolecularFormula("C10H16", builder));
+        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("O3(Fe(O2))3", builder);
+        Assert.assertEquals( formula.getIsotopeCount( new Atom("Fe") ), 3);
+        Assert.assertEquals( formula.getIsotopeCount( new Atom("O") ), 9);
     }
 
     /** Test if formula-order is independent of isotope-insertion order */
@@ -1107,7 +1111,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
         Assert.assertTrue(MolecularFormulaManipulator.compare(formula1,
                 MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
-        Assert.assertEquals("O3S", MolecularFormulaManipulator.getString(ff));
+        Assert.assertEquals("[O3S]2-", MolecularFormulaManipulator.getString(ff));
         Assert.assertEquals(-2, ff.getCharge(), 0.00001);
     }
 
@@ -1210,7 +1214,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         Assert.assertEquals("C6H6", MolecularFormulaManipulator.getString(f));
 
     }
-    
+
     @Test public void noNullPointerExceptionForExactMassOfRGroups() throws Exception {
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(new Isotope("C"));
@@ -1218,8 +1222,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(new Isotope("R"));
         assertThat(MolecularFormulaManipulator.getTotalExactMass(formula),
                    closeTo(15.0234, 0.01));
-    } 
-    
+    }
+
     @Test public void noNullPointerExceptionForMassOfRGroups() throws Exception {
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(new Isotope("C"));
@@ -1227,7 +1231,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(new Isotope("R"));
         assertThat(MolecularFormulaManipulator.getTotalMassNumber(formula),
                    closeTo(15.0, 0.01));
-    } 
+    }
 
     @Test public void noNullPointerExceptionForMajorMassOfRGroups() throws Exception {
         IMolecularFormula formula = new MolecularFormula();
@@ -1245,7 +1249,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf.addIsotope(carbon, 10);
         MolecularFormulaManipulator.getNaturalExactMass(mf);
     }
-    
+
     @Test public void acceptMinusAsInput() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[PO4]3–",
@@ -1257,7 +1261,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("C6H6O", bldr);
         assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, -1));
-        assertThat(MolecularFormulaManipulator.getString(mf), is("C6H5O"));
+        assertThat(MolecularFormulaManipulator.getString(mf), is("[C6H5O]-"));
         assertThat(mf.getCharge(), is(-1));
     }
 
@@ -1283,7 +1287,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("HCl", bldr);
         assertTrue(MolecularFormulaManipulator.adjustProtonation(mf, -1));
-        assertThat(MolecularFormulaManipulator.getString(mf), is("Cl"));
+        assertThat(MolecularFormulaManipulator.getString(mf), is("[Cl]-"));
         assertThat(mf.getCharge(), is(-1));
         assertThat(mf.getIsotopeCount(), is(1));
     }
@@ -1362,5 +1366,99 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(str, builder);
         assertThat(MolecularFormulaManipulator.getString(mf, false, true),
             is("C7H3Br[81]BrO3"));
+    }
+
+    @Test
+    public void testRoundTripCharge() {
+        String f = "[C3H7]+";
+        IMolecularFormula m =
+                MolecularFormulaManipulator.getMolecularFormula(f,
+                                                                SilentChemObjectBuilder.getInstance());
+        assertThat(MolecularFormulaManipulator.getString(m), is("[C3H7]+"));
+    }
+
+    @Test
+    public void getMostAbundant() {
+        IMolecularFormula mf = new MolecularFormula();
+        mf.addIsotope(new Atom("C"), 6);
+        mf.addIsotope(new Atom("Br"), 6);
+        IMolecularFormula mamf = MolecularFormulaManipulator.getMostAbundant(mf);
+        assertThat(MolecularFormulaManipulator.getString(mamf, false, true),
+                   is("[12]C6[79]Br3[81]Br3"));
+    }
+
+
+    private static void assertMass(String str, double expMass, int flav) {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf =
+            MolecularFormulaManipulator.getMolecularFormula(str, bldr);
+        double act = MolecularFormulaManipulator.getMass(mf, flav);
+        assertThat(act, is(closeTo(expMass, 0.01)));
+    }
+
+    @Test
+    public void C6Br6() {
+        assertMass("C6Br6", 551.485, MolWeight);
+        assertMass("C6Br6", 545.510, MonoIsotopic);
+        assertMass("C6Br6", 551.503, MostAbundant);
+        assertMass("[12]C4[13]C2Br6", 553.427, MolWeight);
+        assertMass("[12]C4[13]C2Br6", 547.516, MonoIsotopic);
+        assertMass("[12]C4[13]C2Br6", 553.510, MostAbundant);
+    }
+
+    // Iron has 4 stable isotopes, 54 @ 5.85%, 56 @ 91.57%, 57 @ 2.12%, and
+    // 58 @ 0.28%. Given 100 iron's we expected ~6 @ 54, ~92 @ 56 and 2 @ 57
+    @Test
+    public void getMostAbundantFe100() {
+        IMolecularFormula mf = new MolecularFormula();
+        mf.addIsotope(new Atom("Fe"), 100);
+        IMolecularFormula mamf = MolecularFormulaManipulator.getMostAbundant(mf);
+        assertThat(MolecularFormulaManipulator.getString(mamf, false, true),
+                   is("[54]Fe6[56]Fe92[57]Fe2"));
+    }
+
+    @Test public void getMassCranbin() {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf =
+                MolecularFormulaManipulator.getMolecularFormula("C202H315N55O64S6",
+                                                                bldr);
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
+                          closeTo(4730.397, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
+                          closeTo(4730.397, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
+                          closeTo(4727.140, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
+                          closeTo(4729.147, 0.001));
+    }
+
+    @Test public void getMassCranbinSpecIsotopes() {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf =
+                MolecularFormulaManipulator.getMolecularFormula("[12]C200[13]C2[1]H315[14]N55[16]O64[32]S6",
+                                                               bldr);
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
+                          closeTo(4729.147, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
+                          closeTo(4730.397, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
+                          closeTo(4729.147, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
+                          closeTo(4729.147, 0.001));
+    }
+
+    @Test public void getMassCranbinMixedSpecIsotopes() {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf =
+                MolecularFormulaManipulator.getMolecularFormula("C200[13]C2H315N55O64S6",
+                                                                bldr);
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
+                          closeTo(4732.382, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
+                          closeTo(4730.397, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
+                          closeTo(4729.147, 0.001));
+        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
+                          closeTo(4731.154, 0.001));
     }
 }

@@ -18,15 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,8 +26,18 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.HOSECodeGenerator;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  *  This class returns the proton affinity of an atom containing.
@@ -117,7 +118,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
-        double value = 0;
+        double value;
 
         try {
             int i = container.indexOf(atom);
@@ -130,10 +131,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
             LonePairElectronChecker lpcheck = new LonePairElectronChecker();
             lpcheck.saturate(container);
-        } catch (CDKException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, null);
-        } catch (CloneNotSupportedException e) {
+        } catch (CDKException | CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                     Double.NaN), NAMES, null);
         }
@@ -185,8 +183,8 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
      */
     private class Affinitydb {
 
-        HashMap<String, HashMap<String, Double>> listGroup  = new HashMap<String, HashMap<String, Double>>();
-        HashMap<String, HashMap<String, Double>> listGroupS = new HashMap<String, HashMap<String, Double>>();
+        public static final String X_AFFI_PROTON_HOSE_DB = "/org/openscience/cdk/qsar/descriptors/atomic/data/X_AffiProton_HOSE.db";
+        public static final String X_AFFI_PROTON_HOSE_S_DB = "/org/openscience/cdk/qsar/descriptors/atomic/data/X_AffiProton_HOSE_S.db";
 
         /**
          * The constructor of the IPdb.
@@ -205,26 +203,23 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
          */
         public double extractAffinity(IAtomContainer container, IAtom atom) {
             // loading the files if they are not done
-            String name = "";
-            String nameS = "";
-            HashMap<String, Double> hoseVSenergy = new HashMap<String, Double>();
-            HashMap<String, Double> hoseVSenergyS = new HashMap<String, Double>();
+            HashMap<String, Double> hoseVSenergy;
+            HashMap<String, Double> hoseVSenergyS;
 
             if (familyHalogen(atom)) {
-                name = "X_AffiProton_HOSE.db";
-                nameS = "X_AffiProton_HOSE_S.db";
-                if (listGroup.containsKey(name)) {
-                    hoseVSenergy = listGroup.get(name);
-                    hoseVSenergyS = listGroupS.get(nameS);
-                } else {
-                    String path = "org/openscience/cdk/qsar/descriptors/atomic/data/" + name;
-                    String pathS = "org/openscience/cdk/qsar/descriptors/atomic/data/" + nameS;
-                    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(path);
-                    BufferedReader insr = new BufferedReader(new InputStreamReader(ins));
+                try (InputStream ins = getClass().getResourceAsStream(X_AFFI_PROTON_HOSE_DB);
+                     BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
                     hoseVSenergy = extractAttributes(insr);
-                    ins = this.getClass().getClassLoader().getResourceAsStream(pathS);
-                    insr = new BufferedReader(new InputStreamReader(ins));
+                } catch (IOException e) {
+                    LoggingToolFactory.createLoggingTool(getClass()).error(e);
+                    return 0;
+                }
+                try (InputStream ins = getClass().getResourceAsStream(X_AFFI_PROTON_HOSE_S_DB);
+                     BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
                     hoseVSenergyS = extractAttributes(insr);
+                } catch (IOException e) {
+                    LoggingToolFactory.createLoggingTool(getClass()).error(e);
+                    return 0;
                 }
             } else
                 return 0;
@@ -292,7 +287,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
          * @return       HashMap with the Hose vs energy attributes
          */
         private HashMap<String, Double> extractAttributes(BufferedReader input) {
-            HashMap<String, Double> hoseVSenergy = new HashMap<String, Double>();
+            HashMap<String, Double> hoseVSenergy = new HashMap<>();
             String line;
 
             try {
@@ -316,37 +311,19 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
      * @return     List with String = HOSECode and String = energy
      */
     private static List<String> extractInfo(String str) {
-
-        StringBuffer idEdited = new StringBuffer();
-        StringBuffer valEdited = new StringBuffer();
-
-        int strlen = str.length();
-
-        boolean foundSpace = false;
-        int countSpace = 0;
-        boolean foundDigit = false;
-        for (int i = 0; i < strlen; i++) {
-            if (!foundDigit) if (Character.isLetter(str.charAt(i))) foundDigit = true;
-
-            if (foundDigit) {
-                if (Character.isWhitespace(str.charAt(i))) {
-                    if (countSpace == 0) {
-                        foundSpace = true;
-                    } else
-                        break;
-                } else {
-                    if (foundSpace) {
-                        valEdited.append(str.charAt(i));
-                    } else {
-                        idEdited.append(str.charAt(i));
-                    }
-                }
-            }
-        }
-        List<String> objec = new ArrayList<String>();
-        objec.add(idEdited.toString());
-        objec.add(valEdited.toString());
-        return objec;
-
+        int beg = 0;
+        int end = 0;
+        int len = str.length();
+        List<String> parts = new ArrayList<>();
+        while (end < len && !Character.isSpaceChar(str.charAt(end)))
+            end++;
+        parts.add(str.substring(beg,end));
+        while (end < len && Character.isSpaceChar(str.charAt(end)))
+            end++;
+        beg = end;
+        while (end < len && !Character.isSpaceChar(str.charAt(end)))
+            end++;
+        parts.add(str.substring(beg,end));
+        return parts;
     }
 }

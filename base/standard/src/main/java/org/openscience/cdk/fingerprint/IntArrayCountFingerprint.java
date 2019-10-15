@@ -52,7 +52,7 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
     }
 
     public IntArrayCountFingerprint(Map<String, Integer> rawFingerprint) {
-        Map<Integer, Integer> hashedFP = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> hashedFP = new HashMap<>();
         for (String key : rawFingerprint.keySet()) {
             Integer hashedKey = key.hashCode();
             Integer count = hashedFP.get(hashedKey);
@@ -61,7 +61,7 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
             }
             hashedFP.put(hashedKey, count + rawFingerprint.get(key));
         }
-        List<Integer> keys = new ArrayList<Integer>(hashedFP.keySet());
+        List<Integer> keys = new ArrayList<>(hashedFP.keySet());
         Collections.sort(keys);
         hitHashes = new int[keys.size()];
         numOfHits = new int[keys.size()];
@@ -78,8 +78,8 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
      * and if <code>behaveAsBitFingerprint</code> make it only return 0 or 1
      * as count thus behaving like a bit finger print.
      *
-     * @param rawFingerprint
-     * @param behaveAsBitFingerprint
+     * @param rawFingerprint the raw fp
+     * @param behaveAsBitFingerprint whether to behave as binary fp or not
      */
     public IntArrayCountFingerprint(Map<String, Integer> rawFingerprint, boolean behaveAsBitFingerprint) {
         this(rawFingerprint);
@@ -88,7 +88,7 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 
     @Override
     public long size() {
-        return 4294967296l;
+        return 4294967296L;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 
     @Override
     public void merge(ICountFingerprint fp) {
-        Map<Integer, Integer> newFp = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> newFp = new HashMap<>();
         for (int i = 0; i < hitHashes.length; i++) {
             newFp.put(hitHashes[i], numOfHits[i]);
         }
@@ -122,7 +122,7 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
             }
             newFp.put(fp.getHash(i), count + fp.getCount(i));
         }
-        List<Integer> keys = new ArrayList<Integer>(newFp.keySet());
+        List<Integer> keys = new ArrayList<>(newFp.keySet());
         Collections.sort(keys);
         hitHashes = new int[keys.size()];
         numOfHits = new int[keys.size()];

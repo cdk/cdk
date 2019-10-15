@@ -64,10 +64,10 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
          * retval.size(); i++) { System.out.println( retval.get(i) ); }
          */
 
-        Assert.assertEquals(0, retval.get(28), 0.0001);
-        Assert.assertEquals(1, retval.get(27), 0.0001);
-        Assert.assertEquals(0, retval.get(26), 0.0001);
-        Assert.assertEquals(356.8849, retval.get(25), 0.0001);
+        Assert.assertEquals(0, retval.get(28), 0.0001); // RPSA
+        Assert.assertEquals(1, retval.get(27), 0.0001); // RHSA
+        Assert.assertEquals(0, retval.get(26), 0.0001); // TPSA
+        Assert.assertEquals(231.66182, retval.get(25), 0.0001); // THSA
 
     }
 

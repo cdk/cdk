@@ -24,9 +24,15 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+
+import java.util.Map;
 
 /**
  * A structural pattern for finding an exact matching in a target compound.
@@ -35,6 +41,40 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @cdk.module isomorphism
  */
 public abstract class Pattern {
+
+    /** Additional filters on results. */
+    private boolean hasStereo, hasQueryStereo, hasCompGrp, hasRxnMap;
+
+    void determineFilters(IAtomContainer query) {
+        hasStereo  = query.stereoElements().iterator().hasNext();
+        hasCompGrp = query.getProperty(ComponentFilter.KEY) != null;
+        for (IAtom atom : query.atoms()) {
+            Integer compId = atom.getProperty(CDKConstants.REACTION_GROUP);
+            Integer mapIdx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+            if (mapIdx != null && mapIdx != 0)
+                hasRxnMap = true;
+            if (compId != null && compId != 0)
+                hasCompGrp = true;
+            if (atom instanceof IQueryAtom)
+                hasQueryStereo = true;
+            if (hasRxnMap && hasCompGrp && hasQueryStereo)
+                break;
+        }
+    }
+
+    Mappings filter(Mappings mappings, IAtomContainer query, IAtomContainer target) {
+        // apply required post-match filters
+        if (hasStereo) {
+            mappings = hasQueryStereo
+                    ? mappings.filter(new QueryStereoFilter(query, target))
+                    : mappings.filter(new StereoMatch(query, target));
+        }
+        if (hasCompGrp)
+            mappings = mappings.filter(new ComponentFilter(query, target));
+        if (hasRxnMap)
+            mappings = mappings.filter(new AtomMapFilter(query, target));
+        return mappings;
+    }
 
     /**
      * Find a matching of this pattern in the {@code target}. If no such order
@@ -178,6 +218,6 @@ public abstract class Pattern {
      * @see VentoFoggia
      */
     public static Pattern findIdentical(IAtomContainer query) {
-        return VentoFoggia.findSubstructure(query);
+        return VentoFoggia.findIdentical(query);
     }
 }

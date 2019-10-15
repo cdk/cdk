@@ -83,4 +83,14 @@ public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
     public void testGetRawFingerprint() throws Exception {
         IFingerprinter printer = new AtomPairs2DFingerprinter();
     }
+    
+    @Test
+    public void testNullPointerExceptionInGetBitFingerprint() throws Exception {
+        IFingerprinter printer = new AtomPairs2DFingerprinter();
+        IAtomContainer chlorobenzene;
+        chlorobenzene = parser.parseSmiles("Clc1ccccc1");
+        BitSetFingerprint bsfp1 = (BitSetFingerprint) printer.getBitFingerprint(chlorobenzene);
+        chlorobenzene = parser.parseSmiles("c1ccccc1Cl");
+        BitSetFingerprint bsfp2 = (BitSetFingerprint) printer.getBitFingerprint(chlorobenzene);
+    }
 }

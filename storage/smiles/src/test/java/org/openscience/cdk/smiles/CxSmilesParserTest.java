@@ -89,6 +89,13 @@ public class CxSmilesParserTest {
     }
 
     @Test
+    public void removeUnderscore() {
+        CxSmilesState state = new CxSmilesState();
+        CxSmilesParser.processCx("|$;;;_R1;$|", state);
+        assertThat(state.atomLabels.get(3), is("R1"));
+    }
+
+    @Test
     public void skipCis() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|c:1,4,5|", state), is(not(-1)));

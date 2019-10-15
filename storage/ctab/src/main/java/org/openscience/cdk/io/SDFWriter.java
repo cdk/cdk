@@ -66,6 +66,9 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SDFWriter.class);
 
+    public static final String OptAlwaysV3000 = "writeV3000";
+    public static final String OptWriteData = "writeProperties";
+
     private BufferedWriter   writer;
     private BooleanIOSetting paramWriteData;
     private BooleanIOSetting paramWriteV3000;
@@ -355,10 +358,10 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        paramWriteData = addSetting(new BooleanIOSetting("writeProperties",
+        paramWriteData = addSetting(new BooleanIOSetting(OptWriteData,
                                                          IOSetting.Importance.LOW,
                                                          "Should molecule properties be written as non-structural data", "true"));
-        paramWriteV3000 = addSetting(new BooleanIOSetting("writeV3000",
+        paramWriteV3000 = addSetting(new BooleanIOSetting(OptAlwaysV3000,
                                                           IOSetting.Importance.LOW,
                                                           "Write all records as V3000", "false"));
         addSettings(new MDLV2000Writer().getSettings());

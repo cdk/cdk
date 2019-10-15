@@ -35,18 +35,17 @@ import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.AtomicNumberAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.TotalConnectionAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtom;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -75,12 +74,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom.and;
-
 /**
  * Utility class for abbreviating (sub)structures. Using either self assigned structural
  * motifs or pre-loading a common set a structure depiction can be made more concise with
- * the use of abbreviations (sometimes called superatoms). 
+ * the use of abbreviations (sometimes called superatoms).
  * <p>
  * Basic usage:
  * <pre>{@code
@@ -135,6 +132,7 @@ public class Abbreviations implements Iterable<String> {
 
     private final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
     private boolean contractOnHetero = true;
+    private boolean contractSingleFragments = false;
 
     public Abbreviations() {
     }
@@ -180,6 +178,10 @@ public class Abbreviations implements Iterable<String> {
      */
     public void setContractOnHetero(boolean val) {
         this.contractOnHetero = val;
+    }
+
+    public void setContractToSingleLabel(boolean val) {
+        this.contractSingleFragments = val;
     }
 
     private static Set<IBond> findCutBonds(IAtomContainer mol, EdgeToBondMap bmap, int[][] adjlist) {
@@ -337,6 +339,8 @@ public class Abbreviations implements Iterable<String> {
                 usedAtoms.addAll(sgroup.getAtoms());
         }
 
+        final List<Sgroup> newSgroups = new ArrayList<>();
+
         // disconnected abbreviations, salts, common reagents, large compounds
         if (usedAtoms.isEmpty()) {
             try {
@@ -344,7 +348,7 @@ public class Abbreviations implements Iterable<String> {
                 String cansmi = usmigen.create(copy);
                 String label = disconnectedAbbreviations.get(cansmi);
 
-                if (label != null && !disabled.contains(label)) {
+                if (label != null && !disabled.contains(label) && contractSingleFragments) {
                     Sgroup sgroup = new Sgroup();
                     sgroup.setType(SgroupType.CtabAbbreviation);
                     sgroup.setSubscript(label);
@@ -352,54 +356,42 @@ public class Abbreviations implements Iterable<String> {
                         sgroup.addAtom(atom);
                     return Collections.singletonList(sgroup);
                 } else if (cansmi.contains(".")) {
-                    List<Sgroup> complexAbbr = new ArrayList<>(4); // e.g. NEt3
-                    List<Sgroup> simpleAbbr  = new ArrayList<>(4); // e.g. HCl
-                    for (IAtomContainer part : ConnectivityChecker.partitionIntoMolecules(mol).atomContainers()) {
-                        if (part.getAtomCount() == 1) {
-                            IAtom atom = part.getAtom(0);
-                            label = getBasicElementSymbol(atom);
-                            if (label != null) {
-                                Sgroup sgroup = new Sgroup();
-                                sgroup.setType(SgroupType.CtabAbbreviation);
-                                sgroup.setSubscript(label);
-                                sgroup.addAtom(atom);
-                                simpleAbbr.add(sgroup);
-                            }
-                        } else {
-                            cansmi = usmigen.create(part);
-                            label = disconnectedAbbreviations.get(cansmi);
-                            if (label != null && !disabled.contains(label)) {
-                                Sgroup sgroup = new Sgroup();
-                                sgroup.setType(SgroupType.CtabAbbreviation);
-                                sgroup.setSubscript(label);
-                                for (IAtom atom : part.atoms())
-                                    sgroup.addAtom(atom);
-                                complexAbbr.add(sgroup);
-                            }
-                        }
-                    }
-                    if (!complexAbbr.isEmpty()) {
-                        // merge together the abbreviations, iff there is at least
-                        // one complex abbr
-                        if (complexAbbr.size() > 0 &&
-                            complexAbbr.size() + simpleAbbr.size() > 1) {
+                    IAtomContainerSet parts = ConnectivityChecker.partitionIntoMolecules(mol);
+
+
+                    // leave one out
+                    Sgroup best = null;
+                    for (int i = 0; i < parts.getAtomContainerCount(); i++) {
+                        IAtomContainer a = parts.getAtomContainer(i);
+                        IAtomContainer b = a.getBuilder().newAtomContainer();
+                        for (int j = 0; j < parts.getAtomContainerCount(); j++)
+                            if (j != i)
+                                b.add(parts.getAtomContainer(j));
+                        Sgroup sgroup1 = getAbbr(a);
+                        Sgroup sgroup2 = getAbbr(b);
+                        if (sgroup1 != null && sgroup2 != null && contractSingleFragments) {
                             Sgroup combined = new Sgroup();
                             label = null;
-                            complexAbbr.addAll(simpleAbbr);
-                            for (Sgroup sgroup : complexAbbr) {
-                                if (label == null)
-                                    label = sgroup.getSubscript();
-                                else
-                                    label += INTERPUNCT + sgroup.getSubscript();
-                                for (IAtom atom : sgroup.getAtoms())
-                                    combined.addAtom(atom);
-                            }
-                            combined.setSubscript(label);
+                            for (IAtom atom : sgroup1.getAtoms())
+                                combined.addAtom(atom);
+                            for (IAtom atom : sgroup2.getAtoms())
+                                combined.addAtom(atom);
+                            if (sgroup1.getSubscript().length() > sgroup2.getSubscript().length())
+                                combined.setSubscript(sgroup1.getSubscript() + INTERPUNCT + sgroup2.getSubscript());
+                            else
+                                combined.setSubscript(sgroup2.getSubscript() + INTERPUNCT + sgroup1.getSubscript());
                             combined.setType(SgroupType.CtabAbbreviation);
-                            complexAbbr.clear();
-                            complexAbbr.add(combined);
+                            return Collections.singletonList(combined);
                         }
-                        return complexAbbr;
+                        if (sgroup1 != null && (best == null || sgroup1.getAtoms().size() > best.getAtoms().size()))
+                            best = sgroup1;
+                        if (sgroup2 != null && (best == null || sgroup2.getAtoms().size() < best.getAtoms().size()))
+                            best = sgroup2;
+                    }
+
+                    if (best != null) {
+                        newSgroups.add(best);
+                        usedAtoms.addAll(best.getAtoms());
                     }
                 }
 
@@ -407,7 +399,6 @@ public class Abbreviations implements Iterable<String> {
             }
         }
 
-        final List<Sgroup> newSgroups = new ArrayList<>();
         List<IAtomContainer> fragments = generateFragments(mol);
         Multimap<IAtom, Sgroup> sgroupAdjs = ArrayListMultimap.create();
 
@@ -462,7 +453,11 @@ public class Abbreviations implements Iterable<String> {
             }
         }
 
+        if (!contractOnHetero)
+            return newSgroups;
+
         // now collapse
+        collapse:
         for (IAtom attach : mol.atoms()) {
             if (usedAtoms.contains(attach))
                 continue;
@@ -485,8 +480,16 @@ public class Abbreviations implements Iterable<String> {
             for (Sgroup sgroup : sgroupAdjs.get(attach)) {
                 if (containsChargeChar(sgroup.getSubscript()))
                     continue;
-                xbonds.addAll(sgroup.getBonds());
+                if (sgroup.getBonds().size() != 1)
+                    continue;
+                IBond xbond = sgroup.getBonds().iterator().next();
+                xbonds.add(xbond);
                 xatoms.addAll(sgroup.getAtoms());
+                if (attach.getSymbol().length() == 1 &&
+                    Character.isLowerCase(sgroup.getSubscript().charAt(0))) {
+                    if (Elements.ofString(attach.getSymbol() + sgroup.getSubscript().charAt(0)) != Elements.Unknown)
+                        continue collapse;
+                }
                 nbrSymbols.add(sgroup.getSubscript());
                 todelete.add(sgroup);
             }
@@ -562,6 +565,34 @@ public class Abbreviations implements Iterable<String> {
         }
 
         return newSgroups;
+    }
+
+    private Sgroup getAbbr(IAtomContainer part) throws CDKException {
+        String label;
+        String cansmi;
+        if (part.getAtomCount() == 1) {
+            IAtom atom = part.getAtom(0);
+            label = getBasicElementSymbol(atom);
+            if (label != null) {
+                Sgroup sgroup = new Sgroup();
+                sgroup.setType(SgroupType.CtabAbbreviation);
+                sgroup.setSubscript(label);
+                sgroup.addAtom(atom);
+                return sgroup;
+            }
+        } else {
+            cansmi = usmigen.create(part);
+            label  = disconnectedAbbreviations.get(cansmi);
+            if (label != null && !disabled.contains(label)) {
+                Sgroup sgroup = new Sgroup();
+                sgroup.setType(SgroupType.CtabAbbreviation);
+                sgroup.setSubscript(label);
+                for (IAtom atom : part.atoms())
+                    sgroup.addAtom(atom);
+                return sgroup;
+            }
+        }
+        return null;
     }
 
     /**
@@ -688,10 +719,11 @@ public class Abbreviations implements Iterable<String> {
                 hcnt++;
         }
 
-        return and(and(new AtomicNumberAtom(elem, bldr),
-                       new TotalConnectionAtom(con, bldr)),
-                   and(new TotalHCountAtom(hcnt, bldr),
-                       new TotalValencyAtom(val, bldr)));
+        Expr expr = new Expr(Expr.Type.ELEMENT, elem)
+                .and(new Expr(Expr.Type.TOTAL_DEGREE, con))
+                .and(new Expr(Expr.Type.TOTAL_H_COUNT, hcnt))
+                .and(new Expr(Expr.Type.VALENCE, val));
+        return new QueryAtom(expr);
     }
 
     /**
@@ -724,9 +756,7 @@ public class Abbreviations implements Iterable<String> {
             if (beg == null || end == null)
                 continue;
 
-            IQueryBond qbond = new AnyOrderQueryBond(bldr);
-            qbond.setAtom(beg, 0);
-            qbond.setAtom(end, 1);
+            IQueryBond qbond = new QueryBond(beg, end, Expr.Type.TRUE);
             qry.addBond(qbond);
         }
 
@@ -770,12 +800,12 @@ public class Abbreviations implements Iterable<String> {
      * Add an abbreviation to the factory. Abbreviations can be of various flavour based
      * on the number of attachments:
      * <p>
-     * 
-     * <b>Detached</b> - zero attachments, the abbreviation covers the whole structure (e.g. THF) 
+     *
+     * <b>Detached</b> - zero attachments, the abbreviation covers the whole structure (e.g. THF)
      * <b>Terminal</b> - one attachment, covers substituents (e.g. Ph for Phenyl)
-     * <b>Linker</b> - [NOT SUPPORTED YET] two attachments, covers long repeated chains (e.g. PEG4) 
+     * <b>Linker</b> - [NOT SUPPORTED YET] two attachments, covers long repeated chains (e.g. PEG4)
      * <p>
-     * Attachment points (if present) must be specified with zero element atoms. 
+     * Attachment points (if present) must be specified with zero element atoms.
      * <pre>
      * *c1ccccc1 Ph
      * *OC(=O)C OAc

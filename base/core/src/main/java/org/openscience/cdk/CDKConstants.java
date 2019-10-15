@@ -135,6 +135,72 @@ public class CDKConstants {
      * @see org.openscience.cdk.ChemObject
      */
     public final static String      NMRSHIFT_DEUTERIUM           = "deuterium nmr shift";
+    
+    /**
+     * Sulfur NMR shift constant for use as a key in the
+     * IChemObject.physicalProperties hashtable.
+     *
+     * @see org.openscience.cdk.ChemObject
+     */
+    public final static String NMRSHIFT_SULFUR = "sulfur nmr shift";
+
+    /**
+     * NMR signal multiplicity constant for use as a key in the
+     * IChemObject.physicalProperties hashtable.
+     *
+     * @see org.openscience.cdk.ChemObject
+     */
+    public final static String NMRSIGNAL_MULTIPLICITY = "nmr signal multiplicity";
+    
+    /**
+     * NMR signal intensity constant for use as a key in the
+     * IChemObject.physicalProperties hashtable.
+     *
+     * @see org.openscience.cdk.ChemObject
+     */
+    public final static String NMRSIGNAL_INTENSITY = "nmr signal intensity";
+    
+    /**
+     * NMR spectrum type constant for use as key for an arbitrary 1-dimensional
+     * NMR experiment.
+     */
+    public final static String NMRSPECTYPE_1D = "1D NMR spectrum";
+
+    /**
+     * NMR spectrum type constant for use as key for a 1-dimensional DEPT90
+     * NMR experiment.
+     */
+    public final static String NMRSPECTYPE_1D_DEPT90 = "1D NMR spectrum: DEPT90";
+
+    /**
+     * NMR spectrum type constant for use as key for a 1-dimensional DEPT135
+     * NMR experiment.
+     */
+    public final static String NMRSPECTYPE_1D_DEPT135 = "1D NMR spectrum: DEPT135";
+
+    /**
+     * NMR spectrum type constant for use as key for a 2-dimensional HSQC
+     * NMR experiment.
+     */
+    public final static String NMRSPECTYPE_2D_HSQC = "2D NMR spectrum: HSQC";
+
+    /**
+     * NMR spectrum type constant for use as key for a 2-dimensional H,H-COSY
+     * NMR experiment.
+     */
+    public final static String NMRSPECTYPE_2D_HHCOSY = "2D NMR spectrum: HHCOSY";
+
+    /**
+     * NMR spectrum type constant for use as key for a 2-dimensional INADEQUATE
+     * NMR experiment.
+     */
+    public final static String NMRSPECTYPE_2D_INADEQUATE = "2D NMR spectrum: INADEQUATE";
+
+    /**
+     * NMR spectrum type constant for use as key for a 2-dimensional HMBC
+     * NMR experiment.
+     */
+    public final static String NMRSPECTYPE_2D_HMBC = "2D NMR spectrum: HMBC";
 
     /**
      * Property key to store the CIP descriptor label for an atom / bond. The

@@ -116,13 +116,14 @@ public class RingPlacer {
      */
     public void placeRing(IRing ring, IAtomContainer sharedAtoms, Point2d sharedAtomsCenter, Vector2d ringCenterVector,
                           double bondLength) {
-        int sharedAtomCount = sharedAtoms.getAtomCount();
-        logger.debug("placeRing -> sharedAtomCount: " + sharedAtomCount);
-        if (sharedAtomCount > 2) {
+        int numSharedAtoms = sharedAtoms.getAtomCount();
+        int numSharedBonds = sharedAtoms.getBondCount();
+        logger.debug("placeRing -> sharedAtomCount: " + numSharedAtoms);
+        if (numSharedAtoms > 2 && numSharedBonds > 1) {
             placeBridgedRing(ring, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
-        } else if (sharedAtomCount == 2) {
+        } else if (numSharedAtoms == 2 && numSharedBonds == 1) {
             placeFusedRing(ring, sharedAtoms, ringCenterVector, bondLength);
-        } else if (sharedAtomCount == 1) {
+        } else if (numSharedAtoms == 1 && numSharedBonds == 0) {
             placeSpiroRing(ring, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
         }
     }
@@ -533,7 +534,7 @@ public class RingPlacer {
     }
 
     /**
-     * Completes the layout of a partiallyed laid out ring.
+     * Completes the layout of a partially laid out ring.
      *
      * @param rset ring set
      * @param ring the ring to complete

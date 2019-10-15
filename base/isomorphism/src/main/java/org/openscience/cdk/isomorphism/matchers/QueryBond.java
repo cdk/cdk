@@ -66,6 +66,55 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     private Expr expr = new Expr(Expr.Type.TRUE);
 
     /**
+     * Constructs an query bond from an expression.
+     *
+     * <pre>{@code
+     * // pi-bond in a ring
+     * Expr e = new Expr(IS_IN_RING);
+     * e.and(new Expr(ALIPHATIC_ORDER, 2));
+     * new QueryBond(beg, end, e);
+     * }</pre>
+     *
+     * @param expr the expression
+     */
+    public QueryBond(IAtom beg, IAtom end, Expr expr) {
+        this(beg, end, null, IQueryBond.Stereo.NONE, beg.getBuilder());
+        this.expr.set(expr);
+        atomCount = 2;
+    }
+
+    /**
+     * Constructs an query bond from an expression type.
+     *
+     * <pre>{@code
+     * new QueryBond(beg, end, IS_IN_RING);
+     * }</pre>
+     *
+     * @param type the expression type
+     */
+    public QueryBond(IAtom beg, IAtom end, Expr.Type type) {
+        this(beg, end, null, IQueryBond.Stereo.NONE, beg.getBuilder());
+        this.expr.setPrimitive(type);
+        atomCount = 2;
+    }
+
+    /**
+     * Constructs an query bond from an expression type and value.
+     *
+     * <pre>{@code
+     * new QueryBond(beg, end, ALIPHATIC_ORDER, 8);
+     * }</pre>
+     *
+     * @param type the expression type
+     * @param val the expression value
+     */
+    public QueryBond(IAtom beg, IAtom end, Expr.Type type, int val) {
+        this(beg, end, null, IQueryBond.Stereo.NONE, beg.getBuilder());
+        this.expr.setPrimitive(type, val);
+        atomCount = 2;
+    }
+
+    /**
      * Constructs an empty query bond.
      */
     public QueryBond(IChemObjectBuilder builder) {
@@ -366,6 +415,22 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     public void setStereo(IQueryBond.Stereo stereo) {
         this.stereo = stereo;
         notifyChanged();
+    }
+
+    /**
+     * Not used for query bonds. {@inheritDoc}
+     */
+    @Override
+    public Display getDisplay() {
+        return null;
+    }
+
+    /**
+     * Not used for query bonds. {@inheritDoc}
+     */
+    @Override
+    public void setDisplay(Display display) {
+
     }
 
     /**

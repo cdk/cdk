@@ -264,7 +264,8 @@ public class BasicValidator extends AbstractValidator {
         try {
             IsotopeFactory isotopeFac = Isotopes.getInstance();
             IIsotope[] isotopes = isotopeFac.getIsotopes(isotope.getSymbol());
-            if (isotope.getMassNumber() != 0) {
+            if (isotope.getMassNumber() != null &&
+                isotope.getMassNumber() != 0) {
                 boolean foundKnownIsotope = false;
                 for (int i = 0; i < isotopes.length; i++) {
                     if (Objects.equals(isotopes[i].getMassNumber(), isotope.getMassNumber())) {
@@ -277,7 +278,7 @@ public class BasicValidator extends AbstractValidator {
                     report.addOK(isotopeExists);
                 }
             } else {
-                // isotopic number is not set
+                // isotopic is unspecified
                 report.addOK(isotopeExists);
             }
         } catch (Exception exception) {

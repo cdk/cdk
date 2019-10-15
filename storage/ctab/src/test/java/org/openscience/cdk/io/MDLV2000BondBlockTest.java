@@ -31,7 +31,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
+import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -93,7 +94,6 @@ public class MDLV2000BondBlockTest {
     public void aromaticBond() throws Exception {
         String input = "  1  3  4  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getOrder(), is(IBond.Order.UNSET));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
         assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
         assertTrue(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
@@ -103,48 +103,44 @@ public class MDLV2000BondBlockTest {
     public void singleOrDoubleBond() throws Exception {
         String input = "  1  3  5  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getOrder(), is(IBond.Order.UNSET));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
         assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
         assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        assertThat(bond, is(instanceOf(CTFileQueryBond.class)));
-        assertThat(((CTFileQueryBond) bond).getType(), is(CTFileQueryBond.Type.SINGLE_OR_DOUBLE));
+        assertThat(bond, is(instanceOf(QueryBond.class)));
+        assertThat(((QueryBond) bond).getExpression().type(), is(Expr.Type.SINGLE_OR_DOUBLE));
     }
 
     @Test
     public void singleOrAromaticBond() throws Exception {
         String input = "  1  3  6  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getOrder(), is(IBond.Order.UNSET));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
         assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
         assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        assertThat(bond, is(instanceOf(CTFileQueryBond.class)));
-        assertThat(((CTFileQueryBond) bond).getType(), is(CTFileQueryBond.Type.SINGLE_OR_AROMATIC));
+        assertThat(bond, is(instanceOf(QueryBond.class)));
+        assertThat(((QueryBond) bond).getExpression().type(), is(Expr.Type.SINGLE_OR_AROMATIC));
     }
 
     @Test
     public void doubleOrAromaticBond() throws Exception {
         String input = "  1  3  7  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getOrder(), is(IBond.Order.UNSET));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
         assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
         assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        assertThat(bond, is(instanceOf(CTFileQueryBond.class)));
-        assertThat(((CTFileQueryBond) bond).getType(), is(CTFileQueryBond.Type.DOUBLE_OR_AROMATIC));
+        assertThat(bond, is(instanceOf(QueryBond.class)));
+        assertThat(((QueryBond) bond).getExpression().type(), is(Expr.Type.DOUBLE_OR_AROMATIC));
     }
 
     @Test
     public void anyBond() throws Exception {
         String input = "  1  3  8  0  0  0  0";
         IBond bond = reader.readBondFast(input, builder, atoms, new int[atoms.length], 1);
-        assertThat(bond.getOrder(), is(IBond.Order.UNSET));
         assertThat(bond.getStereo(), is(IBond.Stereo.NONE));
         assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
         assertFalse(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-        assertThat(bond, is(instanceOf(CTFileQueryBond.class)));
-        assertThat(((CTFileQueryBond) bond).getType(), is(CTFileQueryBond.Type.ANY));
+        assertThat(bond, is(instanceOf(QueryBond.class)));
+        assertThat(((QueryBond) bond).getExpression().type(), is(Expr.Type.TRUE));
     }
 
     @Test

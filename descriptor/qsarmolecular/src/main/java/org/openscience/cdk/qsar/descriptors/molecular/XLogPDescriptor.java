@@ -38,14 +38,10 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -53,6 +49,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -890,8 +887,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                         || (bondAtom0.getSymbol().equals("N") && bondAtom1.getSymbol().equals("C"))
                         && bond.getOrder() == IBond.Order.SINGLE) {
                     aminoAcid.removeBond(bondAtom0, bondAtom1);
-                    aminoAcid.addBond(new AnyOrderQueryBond((IQueryAtom) bondAtom0, (IQueryAtom) bondAtom1,
-                            IBond.Order.SINGLE, atomContainer.getBuilder()));
+                    QueryBond qbond = new QueryBond(bondAtom0, bondAtom1, Expr.Type.SINGLE_OR_AROMATIC);
+                    aminoAcid.addBond(qbond);
                     break;
                 }
             }
@@ -944,34 +941,11 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
             }
         }
 
-        //		 ortho oxygen pair
-        //AtomContainer orthopair = sp.parseSmiles("OCCO");
-        QueryAtomContainer orthopair = new QueryAtomContainer(atomContainer.getBuilder());
-        AromaticAtom atom1 = new AromaticAtom(atomContainer.getBuilder());
-        atom1.setSymbol("C");
-        AromaticAtom atom2 = new AromaticAtom(atomContainer.getBuilder());
-        atom2.setSymbol("C");
-        SymbolQueryAtom atom3 = new SymbolQueryAtom(atomContainer.getBuilder());
-        atom3.setSymbol("O");
-        SymbolQueryAtom atom4 = new SymbolQueryAtom(atomContainer.getBuilder());
-        atom4.setSymbol("O");
-
-        orthopair.addAtom(atom1);
-        orthopair.addAtom(atom2);
-        orthopair.addAtom(atom3);
-        orthopair.addAtom(atom4);
-
-        orthopair.addBond(new AromaticQueryBond(atom1, atom2, IBond.Order.SINGLE, atomContainer.getBuilder()));
-        orthopair.addBond(new OrderQueryBond(atom1, atom3, IBond.Order.SINGLE, atomContainer.getBuilder()));
-        orthopair.addBond(new OrderQueryBond(atom2, atom4, IBond.Order.SINGLE, atomContainer.getBuilder()));
-
-        try {
-            if (universalIsomorphismTester.isSubgraph(ac, orthopair)) {
-                xlogP -= 0.268;
-                //logger.debug("XLOGP: Ortho oxygen pair	-0.268");
-            }
-        } catch (CDKException e) {
-            return getDummyDescriptorValue(e);
+        // ortho oxygen pair
+        SmartsPattern orthopair = SmartsPattern.create("OccO");
+        if (orthopair.matches(ac)) {
+            xlogP -= 0.268;
+            //logger.debug("XLOGP: Ortho oxygen pair	-0.268");
         }
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(xlogP),

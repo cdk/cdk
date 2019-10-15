@@ -81,18 +81,28 @@ public abstract class IsotopeFactory {
      * Gets an array of all isotopes known to the IsotopeFactory for the given
      * element symbol.
      *
-     *@param  symbol  An element symbol to search for
-     *@return         An array of isotopes that matches the given element symbol
+     * @param elem atomic number
+     * @return An array of isotopes that matches the given element symbol
      */
-    public IIsotope[] getIsotopes(String symbol) {
-        final int elem = Elements.ofString(symbol).number();
+    public IIsotope[] getIsotopes(int elem) {
         if (isotopes[elem] == null)
             return EMPTY_ISOTOPE_ARRAY;
-        List<IIsotope> list = new ArrayList<IIsotope>();
+        List<IIsotope> list = new ArrayList<>();
         for (IIsotope isotope : isotopes[elem]) {
             list.add(clone(isotope));
         }
-        return list.toArray(new IIsotope[list.size()]);
+        return list.toArray(new IIsotope[0]);
+    }
+
+    /**
+     * Gets an array of all isotopes known to the IsotopeFactory for the given
+     * element symbol.
+     *
+     * @param symbol An element symbol to search for
+     * @return An array of isotopes that matches the given element symbol
+     */
+    public IIsotope[] getIsotopes(String symbol) {
+        return getIsotopes(Elements.ofString(symbol).number());
     }
 
     /**
@@ -210,6 +220,36 @@ public abstract class IsotopeFactory {
         return clone(major);
     }
 
+    /**
+     * Get the mass of the most abundant (major) isotope, if there is no
+     * major isotopes 0 is returned.
+     *
+     * @param elem the atomic number
+     * @return the major isotope mass
+     */
+    public double getMajorIsotopeMass(int elem) {
+        if (this.majorIsotope[elem] != null)
+            return this.majorIsotope[elem].getExactMass();
+        IIsotope major = getMajorIsotope(elem);
+        return major != null ? major.getExactMass() : 0;
+    }
+
+    /**
+     * Get the exact mass of a specified isotope for an atom.
+     * @param atomicNumber atomic number
+     * @param massNumber the mass number
+     * @return the exact mass
+     */
+    public double getExactMass(Integer atomicNumber, Integer massNumber) {
+        if (atomicNumber == null || massNumber == null)
+            return 0;
+        for (IIsotope isotope : this.isotopes[atomicNumber]) {
+            if (isotope.getMassNumber().equals(massNumber))
+                return isotope.getExactMass();
+        }
+        return 0;
+    }
+
     private IIsotope clone(IIsotope isotope) {
         if (isotope == null)
             return null;
@@ -320,23 +360,35 @@ public abstract class IsotopeFactory {
     }
 
     /**
-     *  Gets the natural mass of this element, defined as average of masses of isotopes,
-     *  weighted by abundance.
+     * Gets the natural mass of this element, defined as average of masses of
+     * isotopes, weighted by abundance.
      *
-     * @param  element                     the element in question
-     * @return                             The natural mass value
+     * @param atomicNum the element in question
+     * @return The natural mass value
      */
-    public double getNaturalMass(IElement element) {
-        IIsotope[] isotopes = getIsotopes(element.getSymbol());
+    public double getNaturalMass(int atomicNum) {
+        List<IIsotope> isotopes = this.isotopes[atomicNum];
+        if (isotopes == null)
+            return 0;
         double summedAbundances = 0;
         double summedWeightedAbundances = 0;
         double getNaturalMass = 0;
-        for (int i = 0; i < isotopes.length; i++) {
-            summedAbundances += isotopes[i].getNaturalAbundance();
-            summedWeightedAbundances += isotopes[i].getNaturalAbundance() * isotopes[i].getExactMass();
+        for (IIsotope isotope : isotopes) {
+            summedAbundances += isotope.getNaturalAbundance();
+            summedWeightedAbundances += isotope.getNaturalAbundance() * isotope.getExactMass();
             getNaturalMass = summedWeightedAbundances / summedAbundances;
         }
         return getNaturalMass;
     }
 
+    /**
+     * Gets the natural mass of this element, defined as average of masses of
+     * isotopes, weighted by abundance.
+     *
+     * @param element the element in question
+     * @return The natural mass value
+     */
+    public double getNaturalMass(IElement element) {
+        return getNaturalMass(element.getAtomicNumber());
+    }
 }

@@ -47,8 +47,9 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
  *
  * @cdk.module standard
  * @cdk.githash
- *
+ * @deprecated use {@link ShortestPaths}
  */
+@Deprecated
 public class MinimalPathIterator implements Iterator {
 
     private Object        sourceVertex, targetVertex;

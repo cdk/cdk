@@ -404,9 +404,9 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
             IBond theSingleBond = null;
             limitInf = 0;
             limitSup = Math.PI / 2;
-            step = (limitSup - limitInf) / 7;
             smooth = -1.15;
-            for (double ghs = 0; ghs < limitSup; ghs = ghs + step) {
+            for (int c = 0; c < gsr_desc_length; c++) {
+            	double ghs = limitSup * ((double)c / gsr_desc_length);
                 sum = 0;
                 for (int sing = 0; sing < singles.size(); sing++) {
                     angle = 0;

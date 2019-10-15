@@ -422,13 +422,13 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
             IBond theInCycloexBond;
             limitInf = 0;
             limitSup = Math.PI;
-            step = (limitSup - limitInf) / 13;
             position = 0;
             smooth = -2.86;
             angle = 0;
             int yaCounter = 0;
             List<IAtom> connAtoms;
-            for (double g3r = 0; g3r < limitSup; g3r = g3r + step) {
+            for (int c = 0; c < G3R_DESC_LENGTH; c++) {
+            	double g3r = limitSup * ((double)c / G3R_DESC_LENGTH);
                 sum = 0;
                 for (Integer aBondsInCycloex : bondsInCycloex) {
                     yaCounter = 0;

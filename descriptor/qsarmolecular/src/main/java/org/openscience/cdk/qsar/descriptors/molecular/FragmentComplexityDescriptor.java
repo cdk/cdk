@@ -123,7 +123,7 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
             if (!container.getAtom(i).getSymbol().equals("H")) {
                 a++;
             }
-            if (!container.getAtom(i).getSymbol().equals("H") & !container.getAtom(i).getSymbol().equals("C")) {
+            if (!container.getAtom(i).getSymbol().equals("H") && !container.getAtom(i).getSymbol().equals("C")) {
                 h++;
             }
         }

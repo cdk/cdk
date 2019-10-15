@@ -168,12 +168,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     private final IGeneratorParameter<?> atomColor = new AtomColor(), visibility = new Visibility(),
             strokeRatio = new StrokeRatio(), separationRatio = new BondSeparation(), wedgeRatio = new WedgeRatio(),
             marginRatio = new SymbolMarginRatio(), hatchSections = new HashSpacing(), dashSections = new DashSection(),
-            waveSections = new WaveSpacing(), fancyBoldWedges = new FancyBoldWedges(),
+            waveSections      = new WaveSpacing(), fancyBoldWedges = new FancyBoldWedges(),
             fancyHashedWedges = new FancyHashedWedges(), highlighting = new Highlighting(),
-            glowWidth = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
-            annFontSize = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
-            sgroupFontScale = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes(),
-            forceDonuts = new ForceDelocalisedBondDisplay();
+            glowWidth         = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
+            annFontSize       = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
+            sgroupFontScale   = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes(),
+            forceDelocalised  = new ForceDelocalisedBondDisplay(), delocaliseDonuts = new DelocalisedDonutsBondDisplay();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -211,9 +211,20 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         ElementGroup annotations = new ElementGroup();
 
-        AtomSymbol[] symbols = generateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, foreground, stroke);
-        IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke,
-                                                                               font, annotations);
+        StandardDonutGenerator donutGenerator;
+        donutGenerator = new StandardDonutGenerator(container, font, parameters,
+                                                    stroke);
+        IRenderingElement donuts = donutGenerator.generate();
+
+        AtomSymbol[] symbols = generateAtomSymbols(container, symbolRemap,
+                                                   visibility, parameters,
+                                                   annotations, foreground,
+                                                   stroke, donutGenerator);
+        IRenderingElement[] bondElements;
+        bondElements = StandardBondGenerator.generateBonds(container, symbols,
+                                                           parameters, stroke,
+                                                           font, annotations,
+                                                           donutGenerator);
 
         final HighlightStyle style = parameters.get(Highlighting.class);
         final double glowWidth = parameters.get(OuterGlowWidth.class);
@@ -240,6 +251,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 middleLayer.add(MarkedElement.markupBond(bondElements[i], bond));
             }
         }
+
+        // bonds for delocalised aromatic
+        frontLayer.add(donuts);
 
         // convert the atom symbols to IRenderingElements
         for (int i = 0; i < container.getAtomCount(); i++) {
@@ -358,7 +372,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                              RendererModel parameters,
                                              ElementGroup annotations,
                                              Color foreground,
-                                             double stroke) {
+                                             double stroke,
+                                             StandardDonutGenerator donutGen) {
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
         final double annDist = parameters.get(AnnotationDistance.class)
@@ -415,9 +430,16 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
                 if (remapped) {
                     symbols[i] = atomGenerator.generateAbbreviatedSymbol(symbolRemap.get(atom), hPosition);
-                } else {
+                } else if (donutGen.isChargeDelocalised(atom)) {
+                    Integer charge = atom.getFormalCharge();
+                    atom.setFormalCharge(0);
+                    // can't think of a better way to handle this without API
+                    // change to symbol visibility
+                    if (atom.getAtomicNumber() != 6)
+                        symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition, parameters);
+                    atom.setFormalCharge(charge);
+                } else
                     symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition, parameters);
-                }
 
                 if (symbols[i] != null) {
 
@@ -601,8 +623,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
-                hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
-                annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes, forceDonuts);
+                             hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
+                             annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes, forceDelocalised, delocaliseDonuts);
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {
@@ -929,7 +951,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          */
         @Override
         public Double getDefault() {
-            return 0.18;
+            return 0.16;
         }
     }
 
@@ -1135,18 +1157,35 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * there is a valid Kekule structure. Delocalised bonds will either be
      * rendered as a dashed bond to the side or as a circle/donut/life buoy
      * inside small rings. This depiction is used by default when a bond does
-     * not have an order assigned (e.g. null/unset). Turning this option on
-     * means all delocalised bonds will be rendered this way.
+     * not have an order assigned (e.g. null/unset), for example: c1cccc1.
+     * Turning this option on means all delocalised bonds will be rendered this
+     * way even when they have bond orders correctly assigned: e.g. c1ccccc1,
+     * [cH-]1cccc1.
      * <br>
      * <b>As recommended by IUPAC, their usage is discouraged and the Kekule
      * representation is more clear.</b>
      */
-    public static final class ForceDelocalisedBondDisplay extends AbstractGeneratorParameter<Boolean> {
+    public static final class ForceDelocalisedBondDisplay
+            extends AbstractGeneratorParameter<Boolean> {
 
         /**{@inheritDoc} */
         @Override
         public Boolean getDefault() {
             return false;
+        }
+    }
+
+    /**
+     * Render small delocalised rings as bonds/life buoys? This can sometimes
+     * be misleading for fused rings but is commonly used.
+     */
+    public static final class DelocalisedDonutsBondDisplay
+            extends AbstractGeneratorParameter<Boolean> {
+
+        /**{@inheritDoc} */
+        @Override
+        public Boolean getDefault() {
+            return true;
         }
     }
 }

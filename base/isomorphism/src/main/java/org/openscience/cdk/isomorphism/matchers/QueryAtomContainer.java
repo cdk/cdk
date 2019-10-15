@@ -19,22 +19,29 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
+
+import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
 /**
  * @cdk.module  isomorphism
@@ -1636,5 +1643,229 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     public void setStereoElements(List<IStereoElement> elements) {
         this.stereoElements.clear();
         this.stereoElements.addAll(elements);
+    }
+
+    /**
+     * Create a query from a molecule and a provided set of expressions. The
+     * molecule is converted and any features specified in the {@code opts}
+     * will be matched. <br><br>
+     * A good starting point is the following options:
+     * <pre>{@code
+     * // [nH]1ccc(=O)cc1 => n1:c:c:c(=O):c:c:1
+     * QueryAtomContainer.create(mol, ALIPHATIC_ELEMENT,
+     *                                AROMATIC_ELEMENT,
+     *                                SINGLE_OR_AROMATIC,
+     *                                ALIPHATIC_ORDER,
+     *                                STEREOCHEMISTRY);
+     * }</pre>
+     * <br>
+     * Specifying {@link Expr.Type#DEGREE} (or {@link Expr.Type#TOTAL_DEGREE} +
+     * {@link Expr.Type#IMPL_H_COUNT}) means the molecule will not match as a
+     * substructure.
+     * <br>
+     * <pre>{@code
+     * // [nH]1ccc(=O)cc1 => [nD2]1:[cD2]:[cD2]:[cD2](=[OD1]):[cD2]:[cD2]:1
+     * QueryAtomContainer.create(mol, ALIPHATIC_ELEMENT,
+     *                                AROMATIC_ELEMENT,
+     *                                DEGREE,
+     *                                SINGLE_OR_AROMATIC,
+     *                                ALIPHATIC_ORDER);
+     * }</pre>
+     * <br>
+     * The {@link Expr.Type#RING_BOND_COUNT} property is useful for locking in
+     * ring systems. Specifying the ring bond count on benzene means it will
+     * not match larger ring systems (e.g. naphthalenee) but can still be
+     * substituted.
+     * <br>
+     * <pre>{@code
+     * // [nH]1ccc(=O)cc1 =>
+     * //   [nx2+0]1:[cx2+0]:[cx2+0]:[cx2+0](=[O&x0+0]):[cx2+0]:[cx2+0]:1
+     * // IMPORTANT! use Cycles.markRingAtomsAndBonds(mol) to set ring status
+     * QueryAtomContainer.create(mol, ALIPHATIC_ELEMENT,
+     *                                AROMATIC_ELEMENT,
+     *                                FORMAL_CHARGE,
+     *                                ISOTOPE,
+     *                                RING_BOND_COUNT,
+     *                                SINGLE_OR_AROMATIC,
+     *                                ALIPHATIC_ORDER);
+     * }</pre>
+     * <br>
+     * Note that {@link Expr.Type#FORMAL_CHARGE},
+     * {@link Expr.Type#IMPL_H_COUNT}, and {@link Expr.Type#ISOTOPE} are ignored
+     * if null. Explicitly setting these to zero (only required for Isotope from
+     * SMILES) forces their inclusion.
+     * <br>
+     * <pre>{@code
+     * // [nH]1ccc(=O)cc1 =>
+     * //   [0n+0]1:[0c+0]:[0c+0]:[0c+0](=[O+0]):[0c+0]:[0c+0]:1
+     * QueryAtomContainer.create(mol, ALIPHATIC_ELEMENT,
+     *                                AROMATIC_ELEMENT,
+     *                                FORMAL_CHARGE,
+     *                                ISOTOPE,
+     *                                RING_BOND_COUNT,
+     *                                SINGLE_OR_AROMATIC,
+     *                                ALIPHATIC_ORDER);
+     * }</pre>
+     *
+     * Please note not all {@link Expr.Type}s are currently supported, if you
+     * require a specific type that you think is useful please open an issue.
+     *
+     * @param mol the molecule
+     * @param opts set of the expr types to match
+     * @return the query molecule
+     */
+    public static QueryAtomContainer create(IAtomContainer mol, Expr.Type... opts) {
+        Set<Expr.Type> optset = EnumSet.noneOf(Expr.Type.class);
+        optset.addAll(Arrays.asList(opts));
+
+        QueryAtomContainer               query   = new QueryAtomContainer(mol.getBuilder());
+        Map<IChemObject, IChemObject>    mapping = new HashMap<>();
+        Map<IChemObject, IStereoElement> stereos = new HashMap<>();
+
+        for (IStereoElement se : mol.stereoElements())
+            stereos.put(se.getFocus(), se);
+        List<IStereoElement> qstereo = new ArrayList<>();
+
+        for (IAtom atom : mol.atoms()) {
+            Expr expr = new Expr();
+
+            // isotope first
+            if (optset.contains(ISOTOPE) && atom.getMassNumber() != null)
+                expr.and(new Expr(ISOTOPE, atom.getMassNumber()));
+
+            if (atom.getAtomicNumber() != null &&
+                atom.getAtomicNumber() != 0) {
+                if (atom.isAromatic()) {
+                    if (optset.contains(AROMATIC_ELEMENT)) {
+                        expr.and(new Expr(AROMATIC_ELEMENT,
+                                          atom.getAtomicNumber()));
+                    } else {
+                        if (optset.contains(IS_AROMATIC)) {
+                            if (optset.contains(ELEMENT))
+                                expr.and(new Expr(AROMATIC_ELEMENT,
+                                                  atom.getAtomicNumber()));
+                            else
+                                expr.and(new Expr(Expr.Type.IS_AROMATIC));
+                        } else if (optset.contains(ELEMENT)) {
+                            expr.and(new Expr(ELEMENT,
+                                              atom.getAtomicNumber()));
+                        }
+                    }
+                } else {
+                    if (optset.contains(ALIPHATIC_ELEMENT)) {
+                        expr.and(new Expr(ALIPHATIC_ELEMENT,
+                                          atom.getAtomicNumber()));
+                    }  else {
+                        if (optset.contains(IS_ALIPHATIC)) {
+                            if (optset.contains(ELEMENT))
+                                expr.and(new Expr(ALIPHATIC_ELEMENT,
+                                                  atom.getAtomicNumber()));
+                            else
+                                expr.and(new Expr(Expr.Type.IS_ALIPHATIC));
+                        } else if (optset.contains(ELEMENT)) {
+                            expr.and(new Expr(ELEMENT,
+                                              atom.getAtomicNumber()));
+                        }
+                    }
+                }
+            }
+
+            if (optset.contains(DEGREE))
+                expr.and(new Expr(DEGREE,
+                                  atom.getBondCount()));
+            if (optset.contains(TOTAL_DEGREE))
+                expr.and(new Expr(DEGREE,
+                                  atom.getBondCount() + atom.getImplicitHydrogenCount()));
+            if (optset.contains(IS_IN_RING) ||
+                optset.contains(IS_IN_CHAIN))
+                expr.and(new Expr(atom.isInRing() ? IS_IN_RING : IS_IN_CHAIN));
+            if (optset.contains(IMPL_H_COUNT))
+                expr.and(new Expr(IMPL_H_COUNT));
+            if (optset.contains(RING_BOND_COUNT)) {
+                int rbonds = 0;
+                for (IBond bond : mol.getConnectedBondsList(atom))
+                    if (bond.isInRing())
+                        rbonds++;
+
+                expr.and(new Expr(RING_BOND_COUNT, rbonds));
+            }
+            if (optset.contains(FORMAL_CHARGE) && atom.getFormalCharge() != null)
+                expr.and(new Expr(FORMAL_CHARGE, atom.getFormalCharge()));
+
+            IStereoElement se = stereos.get(atom);
+            if (se != null &&
+                se.getConfigClass() == IStereoElement.TH &&
+                optset.contains(STEREOCHEMISTRY)) {
+                expr.and(new Expr(STEREOCHEMISTRY, se.getConfigOrder()));
+                qstereo.add(se);
+            }
+
+            QueryAtom qatom = new QueryAtom(expr);
+
+            // backward compatibility for naughty methods that are expecting
+            // these to be set for a query!
+            if (optset.contains(Expr.Type.ELEMENT) ||
+                optset.contains(Expr.Type.AROMATIC_ELEMENT) ||
+                optset.contains(Expr.Type.ALIPHATIC_ELEMENT))
+                qatom.setSymbol(atom.getSymbol());
+            if (optset.contains(Expr.Type.AROMATIC_ELEMENT) ||
+                optset.contains(Expr.Type.IS_AROMATIC))
+                qatom.setIsAromatic(atom.isAromatic());
+
+            mapping.put(atom, qatom);
+            query.addAtom(qatom);
+        }
+
+        for (IBond bond : mol.bonds()) {
+            Expr expr = new Expr();
+
+            if (bond.isAromatic() &&
+                (optset.contains(SINGLE_OR_AROMATIC) ||
+                 optset.contains(DOUBLE_OR_AROMATIC) ||
+                 optset.contains(IS_AROMATIC)))
+                expr.and(new Expr(Expr.Type.IS_AROMATIC));
+            else if ((optset.contains(SINGLE_OR_AROMATIC) ||
+                      optset.contains(DOUBLE_OR_AROMATIC) ||
+                      optset.contains(ALIPHATIC_ORDER)) && !bond.isAromatic())
+                expr.and(new Expr(ALIPHATIC_ORDER, bond.getOrder().numeric()));
+            else if (bond.isAromatic() && optset.contains(IS_ALIPHATIC))
+                expr.and(new Expr(IS_ALIPHATIC));
+            else if (optset.contains(ORDER))
+                expr.and(new Expr(ORDER, bond.getOrder().numeric()));
+
+
+            if (optset.contains(IS_IN_RING) && bond.isInRing())
+                expr.and(new Expr(IS_IN_RING));
+            else if (optset.contains(IS_IN_CHAIN) && !bond.isInRing())
+                expr.and(new Expr(IS_IN_CHAIN));
+
+            IStereoElement se = stereos.get(bond);
+            if (se != null &&
+                optset.contains(STEREOCHEMISTRY)) {
+                expr.and(new Expr(STEREOCHEMISTRY, se.getConfigOrder()));
+                qstereo.add(se);
+            }
+
+            QueryBond qbond = new QueryBond((IAtom) mapping.get(bond.getBegin()),
+                                            (IAtom) mapping.get(bond.getEnd()),
+                                            expr);
+            // backward compatibility for naughty methods that are expecting
+            // these to be set for a query!
+            if (optset.contains(Expr.Type.ALIPHATIC_ORDER) ||
+                optset.contains(Expr.Type.ORDER))
+                qbond.setOrder(bond.getOrder());
+            if (optset.contains(Expr.Type.SINGLE_OR_AROMATIC) ||
+                optset.contains(Expr.Type.DOUBLE_OR_AROMATIC) ||
+                optset.contains(Expr.Type.IS_AROMATIC))
+                qbond.setIsAromatic(bond.isAromatic());
+
+            mapping.put(bond, qbond);
+            query.addBond(qbond);
+        }
+
+        for (IStereoElement se : qstereo)
+            query.addStereoElement(se.map(mapping));
+
+        return query;
     }
 }

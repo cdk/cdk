@@ -37,6 +37,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.HOSECodeGenerator;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -199,8 +200,8 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
      */
     private class IPdb {
 
-        HashMap<String, HashMap<String, Double>> listGroup  = new HashMap<String, HashMap<String, Double>>();
-        HashMap<String, HashMap<String, Double>> listGroupS = new HashMap<String, HashMap<String, Double>>();
+        public static final String X_IP_HOSE_DB = "/org/openscience/cdk/qsar/descriptors/atomic/data/X_IP_HOSE.db";
+        public static final String X_IP_HOSE_DB_S = "/org/openscience/cdk/qsar/descriptors/atomic/data/X_IP_HOSE_S.db";
 
         /**
          * The constructor of the IPdb.
@@ -219,26 +220,22 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
          */
         public double extractIP(IAtomContainer container, IAtom atom) {
             // loading the files if they are not done
-            String name = "";
-            String nameS = "";
-            HashMap<String, Double> hoseVSenergy = new HashMap<String, Double>();
-            HashMap<String, Double> hoseVSenergyS = new HashMap<String, Double>();
+            HashMap<String, Double> hoseVSenergy;
+            HashMap<String, Double> hoseVSenergyS;
             if (familyHalogen(atom)) {
-                name = "X_IP_HOSE.db";
-                nameS = "X_IP_HOSE_S.db";
-                if (listGroup.containsKey(name)) {
-                    hoseVSenergy = listGroup.get(name);
-                    hoseVSenergyS = listGroupS.get(nameS);
-                } else {
-                    String path = "org/openscience/cdk/qsar/descriptors/atomic/data/" + name;
-                    String pathS = "org/openscience/cdk/qsar/descriptors/atomic/data/" + nameS;
-                    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(path);
-                    BufferedReader insr = new BufferedReader(new InputStreamReader(ins));
+                try (InputStream ins = getClass().getResourceAsStream(X_IP_HOSE_DB);
+                     BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
                     hoseVSenergy = extractAttributes(insr);
-
-                    ins = this.getClass().getClassLoader().getResourceAsStream(pathS);
-                    insr = new BufferedReader(new InputStreamReader(ins));
+                } catch (IOException e) {
+                    LoggingToolFactory.createLoggingTool(getClass()).error(e);
+                    return 0;
+                }
+                try (InputStream ins = getClass().getResourceAsStream(X_IP_HOSE_DB_S);
+                     BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
                     hoseVSenergyS = extractAttributes(insr);
+                } catch (IOException e) {
+                    LoggingToolFactory.createLoggingTool(getClass()).error(e);
+                    return 0;
                 }
             } else
                 return 0;
@@ -270,9 +267,9 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
                         int sign = -1;
                         if (plusMinus == 1) sign = 1;
 
-                        StringTokenizer st = new StringTokenizer(hoseCode, "()/");
-                        StringBuffer hoseCodeBuffer = new StringBuffer();
-                        int sum = exactSphere + sign * (i + 1);
+                        StringTokenizer st             = new StringTokenizer(hoseCode, "()/");
+                        StringBuilder   hoseCodeBuffer = new StringBuilder();
+                        int             sum            = exactSphere + sign * (i + 1);
                         for (int k = 0; k < sum; k++) {
                             if (st.hasMoreTokens()) {
                                 String partcode = st.nextToken();
@@ -306,7 +303,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
          * @return       HashMap with the Hose vs energy attributes
          */
         private HashMap<String, Double> extractAttributes(BufferedReader input) {
-            HashMap<String, Double> hoseVSenergy = new HashMap<String, Double>();
+            HashMap<String, Double> hoseVSenergy = new HashMap<>();
             String line;
 
             try {
@@ -330,37 +327,19 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
      * @return     List with String = HOSECode and String = energy
      */
     private static List<String> extractInfo(String str) {
-
-        StringBuffer idEdited = new StringBuffer();
-        StringBuffer valEdited = new StringBuffer();
-
-        int strlen = str.length();
-
-        boolean foundSpace = false;
-        int countSpace = 0;
-        boolean foundDigit = false;
-        for (int i = 0; i < strlen; i++) {
-            if (!foundDigit) if (Character.isLetter(str.charAt(i))) foundDigit = true;
-
-            if (foundDigit) {
-                if (Character.isWhitespace(str.charAt(i))) {
-                    if (countSpace == 0) {
-                        foundSpace = true;
-                    } else
-                        break;
-                } else {
-                    if (foundSpace) {
-                        valEdited.append(str.charAt(i));
-                    } else {
-                        idEdited.append(str.charAt(i));
-                    }
-                }
-            }
-        }
-        List<String> objec = new ArrayList<String>();
-        objec.add(idEdited.toString());
-        objec.add(valEdited.toString());
-        return objec;
-
+        int beg = 0;
+        int end = 0;
+        int len = str.length();
+        List<String> parts = new ArrayList<>();
+        while (end < len && !Character.isSpaceChar(str.charAt(end)))
+            end++;
+        parts.add(str.substring(beg,end));
+        while (end < len && Character.isSpaceChar(str.charAt(end)))
+            end++;
+        beg = end;
+        while (end < len && !Character.isSpaceChar(str.charAt(end)))
+            end++;
+        parts.add(str.substring(beg,end));
+        return parts;
     }
 }

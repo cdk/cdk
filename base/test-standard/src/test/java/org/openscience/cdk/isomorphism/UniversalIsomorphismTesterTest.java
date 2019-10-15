@@ -23,10 +23,6 @@
  */
 package org.openscience.cdk.isomorphism;
 
-import java.io.InputStream;
-import java.util.BitSet;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,21 +44,21 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AliphaticSymbolAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.smarts.Smarts;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.BitSet;
+import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -108,23 +104,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         atomContainer.addBond(0, 1, IBond.Order.SINGLE);
         atomContainer.addBond(1, 2, IBond.Order.SINGLE);
         IQueryAtomContainer query = new QueryAtomContainer(DefaultChemObjectBuilder.getInstance());
-        IQueryAtom a1 = new SymbolQueryAtom(DefaultChemObjectBuilder.getInstance());
-        a1.setSymbol("C");
-
-        AnyAtom a2 = new AnyAtom(DefaultChemObjectBuilder.getInstance());
-
-        IBond b1 = new OrderQueryBond(a1, a2, IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
-
-        IQueryAtom a3 = new SymbolQueryAtom(DefaultChemObjectBuilder.getInstance());
-        a3.setSymbol("C");
-
-        IBond b2 = new OrderQueryBond(a2, a3, IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
-        query.addAtom(a1);
-        query.addAtom(a2);
-        query.addAtom(a3);
-
-        query.addBond(b1);
-        query.addBond(b2);
+        if (!Smarts.parse(query, "C*C"))
+            Assert.fail(Smarts.getLastErrorMesg());
 
         List<List<RMap>> list = uiTester.getSubgraphMaps(atomContainer, query);
 
@@ -606,28 +587,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
     @Test
     public void testUITSymmetricMatch() throws Exception {
         QueryAtomContainer q = new QueryAtomContainer(DefaultChemObjectBuilder.getInstance());
-        //setting atoms
-        IQueryAtom a0 = new AliphaticSymbolAtom("C", DefaultChemObjectBuilder.getInstance());
-        q.addAtom(a0);
-        IQueryAtom a1 = new AnyAtom(DefaultChemObjectBuilder.getInstance());
-        q.addAtom(a1);
-        IQueryAtom a2 = new AnyAtom(DefaultChemObjectBuilder.getInstance());
-        q.addAtom(a2);
-        IQueryAtom a3 = new AliphaticSymbolAtom("C", DefaultChemObjectBuilder.getInstance());
-        q.addAtom(a3);
-        //setting bonds
-        org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond b0 = new org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond(
-                IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
-        b0.setAtoms(new IAtom[]{a0, a1});
-        q.addBond(b0);
-        org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond b1 = new org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond(
-                IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
-        b1.setAtoms(new IAtom[]{a1, a2});
-        q.addBond(b1);
-        org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond b2 = new org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond(
-                IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
-        b2.setAtoms(new IAtom[]{a2, a3});
-        q.addBond(b2);
+        if (!Smarts.parse(q, "C**C"))
+            Assert.fail(Smarts.getLastErrorMesg());
 
         //Creating 'SCCS' target molecule
         AtomContainer target = new AtomContainer();
