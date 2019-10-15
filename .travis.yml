@@ -13,4 +13,5 @@ cache:
 
 install: true
 
-script: mvn clean test -q
+script: mvn clean test javadoc:javadoc -q
+
