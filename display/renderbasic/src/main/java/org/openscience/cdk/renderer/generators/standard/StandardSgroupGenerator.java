@@ -62,7 +62,7 @@ import java.util.Set;
 final class StandardSgroupGenerator {
 
     public static final double          EQUIV_THRESHOLD = 0.1;
-    public static final char            BULLET          = '•';
+    public static final char            INTERPUNCT      = '·';
     private final double                stroke;
     private final double                scale;
     private final double                bracketDepth;
@@ -374,15 +374,15 @@ final class StandardSgroupGenerator {
             double yDiff = sgrpCenter.y - molCenter.y;
             if (xDiff > 0.1) {
                 labelLocation.x = minMax[0]; // min x
-                label = BULLET + label;
+                label = INTERPUNCT + label;
             }
             else if (xDiff < -0.1) {
                 labelLocation.x = minMax[2]; // max x
-                label = label + BULLET;
+                label = label + INTERPUNCT;
             }
             else {
                 labelLocation.x = sgrpCenter.x;
-                label = BULLET + label;
+                label = INTERPUNCT + label;
             }
             if (yDiff > 0.1)
                 labelLocation.y = minMax[1]; // min y
