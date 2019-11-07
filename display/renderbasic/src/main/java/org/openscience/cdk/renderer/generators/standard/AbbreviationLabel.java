@@ -192,7 +192,7 @@ final class AbbreviationLabel {
             }
 
             // separators
-            if (c == '/' || c == '·' || c == '.' || c == '•') {
+            if (c == '/' || c == '·' || c == '.' || c == '•' || c == '=') {
                 tokens.add(Character.toString(c));
                 i++;
                 continue;
