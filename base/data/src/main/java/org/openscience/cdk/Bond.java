@@ -409,6 +409,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public void setStereo(IBond.Stereo stereo) {
+        this.stereo = stereo;
         if (stereo == null) {
             this.display = Display.Solid;
         } else {
