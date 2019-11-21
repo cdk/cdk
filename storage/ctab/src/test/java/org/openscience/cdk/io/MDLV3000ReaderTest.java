@@ -22,6 +22,7 @@
  *  */
 package org.openscience.cdk.io;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -30,10 +31,12 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -142,6 +145,13 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
             assertThat(container.getSingleElectronCount(), is(1));
             assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(3));
+        }
+    }
+
+    @Test public void issue602() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("issue602.mol"))) {
+            IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            assertThat(mol.getAtomCount(), CoreMatchers.is(31));
         }
     }
 }

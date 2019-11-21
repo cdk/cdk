@@ -409,24 +409,27 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public void setStereo(IBond.Stereo stereo) {
-        this.stereo = stereo;
-        switch (stereo) {
-            case UP:
-                display = Display.WedgeBegin;
-                break;
-            case DOWN:
-                display = Display.WedgedHashBegin;
-                break;
-            case UP_INVERTED:
-                display = Display.WedgeEnd;
-                break;
-            case DOWN_INVERTED:
-                display = Display.WedgedHashEnd;
-                break;
-            case UP_OR_DOWN:
-            case UP_OR_DOWN_INVERTED:
-                display = Display.Wavy;
-                break;
+        if (stereo == null) {
+            this.display = Display.Solid;
+        } else {
+            switch (stereo) {
+                case UP:
+                    display = Display.WedgeBegin;
+                    break;
+                case DOWN:
+                    display = Display.WedgedHashBegin;
+                    break;
+                case UP_INVERTED:
+                    display = Display.WedgeEnd;
+                    break;
+                case DOWN_INVERTED:
+                    display = Display.WedgedHashEnd;
+                    break;
+                case UP_OR_DOWN:
+                case UP_OR_DOWN_INVERTED:
+                    display = Display.Wavy;
+                    break;
+            }
         }
         notifyChanged();
     }
