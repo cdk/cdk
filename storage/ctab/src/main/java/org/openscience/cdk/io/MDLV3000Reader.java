@@ -469,7 +469,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                     } else if (configuration == 1) {
                                         bond.setStereo(IBond.Stereo.UP);
                                     } else if (configuration == 2) {
-                                        bond.setStereo((IBond.Stereo) CDKConstants.UNSET);
+                                        bond.setStereo(IBond.Stereo.UP_OR_DOWN);
                                     } else if (configuration == 3) {
                                         bond.setStereo(IBond.Stereo.DOWN);
                                     }
