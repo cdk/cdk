@@ -1012,7 +1012,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         reader.read(molecule);
         reader.close();
-        Assert.assertEquals("R", molecule.getAtom(55).getSymbol());
+        IAtom atom = molecule.getAtom(55);
+        Assert.assertThat(atom, CoreMatchers.<IAtom>instanceOf(IPseudoAtom.class));
+        Assert.assertEquals("R", ((IPseudoAtom)atom).getLabel());
     }
 
     @Test
@@ -1368,6 +1370,17 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertThat(((IPseudoAtom) container.getAtom(6)).getLabel(), is("R6"));
         assertThat(container.getAtom(7), is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom) container.getAtom(7)).getLabel(), is("Protein"));
+    }
+
+    @Test
+    public void keepAtomicNumberOfAlias() throws Exception {
+        InputStream in = getClass().getResourceAsStream("/data/mdl/element-with-alias.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer container = reader.read(new AtomContainer());
+        reader.close();
+        assertThat(container.getAtom(6), is(instanceOf(IPseudoAtom.class)));
+        assertThat(((IPseudoAtom) container.getAtom(6)).getLabel(), is("N1"));
+        assertThat(((IPseudoAtom) container.getAtom(6)).getAtomicNumber(), is(7));
     }
 
     @Test
