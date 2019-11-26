@@ -1585,7 +1585,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             pseudoAtom.setLabel(label);
         } else {
             pseudoAtom.setSymbol(label);
-            pseudoAtom.setAtomicNumber(0);
+            pseudoAtom.setAtomicNumber(atom.getAtomicNumber());
             pseudoAtom.setPoint2d(atom.getPoint2d());
             pseudoAtom.setPoint3d(atom.getPoint3d());
             pseudoAtom.setMassNumber(atom.getMassNumber());
@@ -1922,6 +1922,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
 
                 IAtom newPseudoAtom = container.getBuilder().newInstance(IPseudoAtom.class, alias);
+                newPseudoAtom.setAtomicNumber(aliasAtom.getAtomicNumber());
                 if (aliasAtom.getPoint2d() != null) newPseudoAtom.setPoint2d(aliasAtom.getPoint2d());
                 if (aliasAtom.getPoint3d() != null) newPseudoAtom.setPoint3d(aliasAtom.getPoint3d());
                 AtomContainerManipulator.replaceAtomByAtom(container, aliasAtom, newPseudoAtom);
