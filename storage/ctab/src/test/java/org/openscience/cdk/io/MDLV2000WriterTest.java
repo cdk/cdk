@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.io;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -1025,5 +1026,26 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             String writtenMol = sw.toString();
             assertThat(writtenMol, containsString("M  ALS   1  3 F F   N   O"));
         }
+    }
+
+    @Test
+    public void dataSgroupRoundTrip() {
+      String path = "/data/mdl/hbr_acoh_mix.mol";
+      try (InputStream in = getClass().getResourceAsStream(path)) {
+        MDLV2000Reader     mdlr    = new MDLV2000Reader(in);
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer     mol     = mdlr.read(builder.newAtomContainer());
+        try (StringWriter sw = new StringWriter();
+             MDLV2000Writer writer = new MDLV2000Writer(sw)) {
+          writer.write(mol);
+          String output = sw.toString();
+          assertThat(output,
+                     CoreMatchers.containsString("M  SDT   3 WEIGHT_PERCENT                N %"));
+          assertThat(output,
+                     CoreMatchers.containsString("M  SED   3 33%"));
+        }
+      } catch (IOException | CDKException e) {
+        Assert.fail(e.getMessage());
+      }
     }
 }

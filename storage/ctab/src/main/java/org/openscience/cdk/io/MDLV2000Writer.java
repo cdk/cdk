@@ -1119,6 +1119,60 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(formatMDLInt(compNumber, 3));
                         writer.write('\n');
                         break;
+                    case Data:
+                        String data = sgroup.getValue(SgroupKey.Data);
+                        if (data == null)
+                            break;
+                        // replace CR/LF with space
+                        data = data.replaceAll("[\r\n]", " ");
+                        while (data.length() > 69) {
+                            writer.write("M  SCD ");
+                            writer.write(formatMDLInt(id, 3));
+                            writer.write(' ');
+                            writer.write(data.substring(0, 69));
+                            writer.write('\n');
+                            data = data.substring(69);
+                        }
+                        writer.write("M  SED ");
+                        writer.write(formatMDLInt(id, 3));
+                        writer.write(' ');
+                        writer.write(data);
+                        writer.write('\n');
+                        break;
+                    case DataFieldName:
+                        char[] pad = new char[30];
+                        Arrays.fill(pad, ' ');
+                        String name = sgroup.getValue(SgroupKey.DataFieldName);
+                        String fmt = sgroup.getValue(SgroupKey.DataFieldFormat);
+                        String units = sgroup.getValue(SgroupKey.DataFieldUnits);
+                        if (name == null)
+                            break;
+                        if (name.length() > 30)
+                            name = name.substring(0, 30);
+                        writer.write("M  SDT ");
+                        writer.write(formatMDLInt(id, 3));
+                        writer.write(' ');
+                        writer.write(name);
+                        writer.write(pad, 0, 30-name.length());
+                        if (fmt != null && fmt.length()>0 &&
+                            (fmt.charAt(0) == 'N' ||
+                             fmt.charAt(0) == 'F' ||
+                             fmt.charAt(0) == 'T')) {
+                            writer.write(fmt.charAt(0) + " ");
+                        } else {
+                            writer.write("  ");
+                        }
+                        if (units != null) {
+                            if (units.length() > 20)
+                                units = units.substring(0, 20);
+                            writer.write(units);
+                        }
+                        writer.write('\n');
+                        break;
+                    case DataFieldFormat:
+                    case DataFieldUnits:
+                        // written as part of the field name
+                        break;
                 }
             }
 
