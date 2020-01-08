@@ -44,5 +44,12 @@ public enum SgroupKey {
     CtabBracket,
     CtabBracketStyle,
     CtabClass,
-    CtabParentAtomList, CtabComponentNumber;
+    CtabParentAtomList,
+    CtabComponentNumber,
+    // Data Sgroups
+    DataFieldName,
+    DataFieldFormat,
+    DataFieldUnits,
+    DataDisplayInformation,
+    Data;
 }
