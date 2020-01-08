@@ -476,7 +476,10 @@ final class StandardAtomGenerator {
      * @param hydrogen  the hydrogen label outline
      * @return positioned charge label
      */
-    TextOutline positionChargeLabel(int hydrogens, HydrogenPosition position, TextOutline charge, TextOutline element,
+    TextOutline positionChargeLabel(int hydrogens,
+                                    HydrogenPosition position,
+                                    TextOutline charge,
+                                    TextOutline element,
                                     TextOutline hydrogen) {
 
         final Rectangle2D chargeBounds = charge.getBounds();
@@ -486,12 +489,14 @@ final class StandardAtomGenerator {
         // are in the way - in which case we place it relative to the
         // hydrogen
         Rectangle2D referenceBounds = element.getBounds();
-        if (hydrogens > 0 && position == Right)
+        if (hydrogens > 0 && (position == Left || position == Right))
             referenceBounds = hydrogen.getBounds();
-        else if (hydrogens > 1 && position == Above) referenceBounds = hydrogen.getBounds();
-
-        return charge.translate((referenceBounds.getMaxX() + padding) - chargeBounds.getMinX(),
-                                (referenceBounds.getMinY() - (chargeBounds.getHeight() / 2)) - chargeBounds.getMinY());
+        if (position == Left)
+            return charge.translate((referenceBounds.getMinX() - padding) - chargeBounds.getMaxX(),
+                                    (referenceBounds.getMinY() - (chargeBounds.getHeight() / 2)) - chargeBounds.getMinY());
+        else
+            return charge.translate((referenceBounds.getMaxX() + padding) - chargeBounds.getMinX(),
+                                    (referenceBounds.getMinY() - (chargeBounds.getHeight() / 2)) - chargeBounds.getMinY());
     }
 
     /**
