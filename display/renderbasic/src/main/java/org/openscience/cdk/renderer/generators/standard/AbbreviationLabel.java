@@ -195,6 +195,13 @@ final class AbbreviationLabel {
             if (c == '/' || c == '·' || c == '.' || c == '•' || c == '=') {
                 tokens.add(Character.toString(c));
                 i++;
+
+                int beg = i;
+                while (i < label.length() && isDigit(label.charAt(i))) {
+                    i++;
+                }
+                if (i > beg)
+                    tokens.add(label.substring(beg, i));
                 continue;
             }
 
