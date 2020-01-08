@@ -489,7 +489,7 @@ final class StandardAtomGenerator {
         // are in the way - in which case we place it relative to the
         // hydrogen
         Rectangle2D referenceBounds = element.getBounds();
-        if (hydrogens > 0 && position != Below)
+        if (hydrogens > 0 && (position == Left || position == Right))
             referenceBounds = hydrogen.getBounds();
         if (position == Left)
             return charge.translate((referenceBounds.getMinX() - padding) - chargeBounds.getMaxX(),

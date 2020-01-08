@@ -159,7 +159,7 @@ public class StandardAtomGeneratorTest {
         Rectangle2D chargeBounds = positioned.getBounds();
 
         assertThat(chargeBounds.getMinX(), greaterThan(elementBounds.getMinX()));
-        assertThat(chargeBounds.getCenterY(), closeTo(elementBounds.getMinY(), 0.01));
+        assertThat(chargeBounds.getCenterY(), closeTo(localHydrogen.getBounds().getMinY(), 0.01));
     }
 
     @Test
@@ -186,8 +186,9 @@ public class StandardAtomGeneratorTest {
         Rectangle2D hydrogenBounds = localHydrogen.getBounds();
         Rectangle2D chargeBounds = positioned.getBounds();
 
-        assertThat(chargeBounds.getMinX(), greaterThan(hydrogenBounds.getMinX()));
-        assertThat(chargeBounds.getCenterY(), closeTo(hydrogenBounds.getMinY(), 0.01));
+        Rectangle2D elementBounds = element.getBounds();
+        assertThat(chargeBounds.getMinX(), greaterThan(elementBounds.getMinX()));
+        assertThat(chargeBounds.getCenterY(), closeTo(elementBounds.getMinY(), 0.01));
     }
 
     @Test
