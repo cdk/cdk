@@ -719,7 +719,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("M  STY  3   1 COM   2 COM   3 MIX"));
-            assertThat(output, containsString("M  SPL  1   1   3"));
+            assertThat(output, containsString("M  SPL  2   1   3   2   3"));
         }
     }
 

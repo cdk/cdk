@@ -66,7 +66,18 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -978,8 +989,17 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // going to modify
         sgroups = new ArrayList<>(sgroups);
 
+
         // remove non-ctab Sgroups
         sgroups.removeIf(sgroup -> !sgroup.getType().isCtabStandard());
+
+        List<Map.Entry<Sgroup,Sgroup>> parentList = new ArrayList<>();
+
+        // collect parents
+        for (Sgroup sgroup : sgroups) {
+            for (Sgroup parent : sgroup.getParents())
+                parentList.add(new AbstractMap.SimpleEntry<>(sgroup, parent));
+        }
 
         for (List<Sgroup> wrapSgroups : wrap(sgroups, 8)) {
             // Declare the SGroup type
@@ -990,6 +1010,19 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.write(formatMDLInt(1 + sgroups.indexOf(sgroup), 3));
                 writer.write(' ');
                 writer.write(sgroup.getType().getKey());
+            }
+            writer.write('\n');
+        }
+
+        // Sgroup Parent List
+        for (List<Map.Entry<Sgroup,Sgroup>> parents : wrap(parentList, 8)) {
+            writer.write("M  SPL");
+            writer.write(formatMDLInt(parents.size(), 3));
+            for (Map.Entry<Sgroup,Sgroup> e : parents) {
+                writer.write(' ');
+                writer.write(formatMDLInt(1+sgroups.indexOf(e.getKey()), 3));
+                writer.write(' ');
+                writer.write(formatMDLInt(1+sgroups.indexOf(e.getValue()), 3));
             }
             writer.write('\n');
         }
@@ -1018,19 +1051,6 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 for (IBond bond : bonds) {
                     writer.write(' ');
                     writer.write(formatMDLInt(1+container.indexOf(bond), 3));
-                }
-                writer.write('\n');
-            }
-
-            // Sgroup Parent List
-            for (List<Sgroup> parents : wrap(sgroup.getParents(), 8)) {
-                writer.write("M  SPL");
-                writer.write(formatMDLInt(parents.size(), 3));
-                for (Sgroup parent : parents) {
-                    writer.write(' ');
-                    writer.write(formatMDLInt(id, 3));
-                    writer.write(' ');
-                    writer.write(formatMDLInt(1 + sgroups.indexOf(parent), 3));
                 }
                 writer.write('\n');
             }
