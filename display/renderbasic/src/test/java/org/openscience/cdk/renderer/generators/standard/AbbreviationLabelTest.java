@@ -164,6 +164,13 @@ public class AbbreviationLabelTest {
     }
 
     @Test
+    public void hydrateFormatting() {
+        List<String> tokens = new ArrayList<>();
+        assertTrue(AbbreviationLabel.parse("SnCl4.2H2O", tokens));
+        System.out.println(tokens);
+    }
+
+    @Test
     public void nonAbbreviationLabel() {
         List<String> tokens = new ArrayList<>();
         assertFalse(AbbreviationLabel.parse("A Random Label - Don't Reverse", tokens));

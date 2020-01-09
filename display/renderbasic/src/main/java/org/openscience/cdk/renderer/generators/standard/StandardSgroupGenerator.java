@@ -569,7 +569,7 @@ final class StandardSgroupGenerator {
             if (isUnsignedInt(subscriptSuffix) &&
                 crossingBonds.isEmpty() &&
                 symbols.containsKey(atom)) {
-                TextOutline prefix = new TextOutline('·' + subscriptSuffix, font).resize(1/scale,1/-scale);
+                TextOutline prefix = new TextOutline(INTERPUNCT + subscriptSuffix, font).resize(1/scale,1/-scale);
                 Rectangle2D prefixBounds = prefix.getLogicalBounds();
 
                 AtomSymbol symbol = symbols.get(atom);
