@@ -175,9 +175,14 @@ public final class SmiFlavor {
     public static final int AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x2000000;
 
     /**
+     * Output data Sgroups.
+     */
+    public static final int CxDataSgroups       = 0x200000;
+
+    /**
      * Output CXSMILES layers.
      */
-    public static final int CxSmiles            = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer | CxLigandOrder;
+    public static final int CxSmiles            = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer | CxLigandOrder | CxDataSgroups;
 
     /**
      * Output CXSMILES layers and coordinates.

@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.smiles.CxSmilesState.CxPolymerSgroup;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import uk.ac.ebi.beam.Functions;
 import uk.ac.ebi.beam.Graph;
@@ -827,8 +828,9 @@ public final class SmilesGenerator {
         }
 
         List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        Map<Sgroup, CxSmilesState.CxSgroup> mapping = new HashMap<>();
         if (sgroups != null) {
-            state.sgroups = new ArrayList<>();
+            state.mysgroups = new ArrayList<>();
             state.positionVar = new HashMap<>();
             state.ligandOrdering = new HashMap<>();
             for (Sgroup sgroup : sgroups) {
@@ -846,11 +848,16 @@ public final class SmilesGenerator {
                     case CtabGeneric:
                     case CtabComponent:
                     case CtabGraft:
+                        if ((flavour&SmiFlavor.CxPolymer) == 0)
+                            break;
                         String supscript = sgroup.getValue(SgroupKey.CtabConnectivity);
-                        state.sgroups.add(new CxSmilesState.PolymerSgroup(getSgroupPolymerKey(sgroup),
-                                                                          toAtomIdxs(sgroup.getAtoms(), atomidx),
-                                                                          sgroup.getSubscript(),
-                                                                          supscript));
+                        CxPolymerSgroup cxSgrp;
+                        cxSgrp= new CxPolymerSgroup(getSgroupPolymerKey(sgroup),
+                                                                 toAtomIdxs(sgroup.getAtoms(), atomidx),
+                                                                 sgroup.getSubscript(),
+                                                                 supscript);
+                        state.mysgroups.add(cxSgrp);
+                        mapping.put(sgroup, cxSgrp);
                         break;
 
                     case ExtMulticenter: {
@@ -894,11 +901,33 @@ public final class SmilesGenerator {
                         // display shortcuts are not output
                         break;
                     case CtabData:
+                        if ((flavour&SmiFlavor.CxDataSgroups) == 0)
+                            break;
                         // can be generated but currently ignored
+                        CxSmilesState.CxDataSgroup cxDataSgrp;
+                        cxDataSgrp= new CxSmilesState.CxDataSgroup(toAtomIdxs(sgroup.getAtoms(), atomidx),
+                                                                  (String)sgroup.getValue(SgroupKey.DataFieldName),
+                                                                  (String)sgroup.getValue(SgroupKey.Data),
+                                                                   null,
+                                                                  (String)sgroup.getValue(SgroupKey.DataFieldUnits),
+                                                                  null);
+                        state.mysgroups.add(cxDataSgrp);
+                        mapping.put(sgroup, cxDataSgrp);
                         break;
                     default:
                         throw new UnsupportedOperationException("Unsupported Sgroup Polymer");
+                }
+            }
 
+            for (Sgroup sgroup : sgroups) {
+                CxSmilesState.CxSgroup cxChild = mapping.get(sgroup);
+                if (cxChild == null)
+                    continue;
+                for (Sgroup parent : sgroup.getParents()) {
+                    CxSmilesState.CxSgroup cxParent = mapping.get(parent);
+                    if (cxParent == null)
+                        continue;
+                    cxParent.children.add(cxChild);
                 }
             }
         }

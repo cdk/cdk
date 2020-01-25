@@ -379,6 +379,7 @@ public class CxSmilesTest {
         assertThat(smigen.create(mol), is("OC=1C=CC=CC1 |$_AV:6;5;0;1;2;3;4$|"));
     }
 
+
     @Test public void roundTripLigandOrdering() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
@@ -388,11 +389,18 @@ public class CxSmilesTest {
     }
 
     @Test public void canonLigandOrdering() throws CDKException {
-        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
-        SmilesParser smipar = new SmilesParser(bldr);
-        IAtomContainer mol = smipar.parseSmiles("Cl[*](I)Br |$;_R1;;$,LO:1:0.2.3|");
-        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical|SmiFlavor.CxSmiles);
+        IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
+        SmilesParser       smipar = new SmilesParser(bldr);
+        IAtomContainer     mol    = smipar.parseSmiles("Cl[*](I)Br |$;_R1;;$,LO:1:0.2.3|");
+        SmilesGenerator    smigen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.CxSmiles);
         assertThat(smigen.create(mol), is("Cl*(Br)I |$;R1$,LO:1:0.3.2|"));
     }
 
+    @Test public void roundTripSgroupParents() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("CN1CCCCC1.CO.O |Sg:c:0,1,2,3,4,5,6::,Sg:c:7,8::,Sg:c:9::,Sg:mix:0,1,2,3,4,5,6,7,8,9::,Sg:mix:7,8,9::,SgH:3:4.0,4:2.1|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
+        assertThat(smigen.create(mol), is("CN1CCCCC1.CO.O |Sg:c:0,1,2,3,4,5,6:c:,Sg:c:7,8:c:,Sg:c:9:c:,Sg:mix:0,1,2,3,4,5,6,7,8,9:mix:,Sg:mix:7,8,9:mix:,SgH:4:2.1,3:4.0|"));
+    }
 }

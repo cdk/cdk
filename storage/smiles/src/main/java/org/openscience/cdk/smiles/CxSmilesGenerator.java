@@ -23,7 +23,10 @@
 
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.smiles.CxSmilesState.PolymerSgroup;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.smiles.CxSmilesState.CxDataSgroup;
+import org.openscience.cdk.smiles.CxSmilesState.CxPolymerSgroup;
+import org.openscience.cdk.smiles.CxSmilesState.CxSgroup;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -31,10 +34,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 public class CxSmilesGenerator {
@@ -254,38 +260,113 @@ public class CxSmilesGenerator {
         }
 
 
+        int numSgroups = 0;
+
         // *CCO* |$_AP1;;;;_AP2$,Sg:n:1,2,3::ht|
         if (SmiFlavor.isSet(opts, SmiFlavor.CxPolymer) &&
-            state.sgroups != null && !state.sgroups.isEmpty()) {
-            List<PolymerSgroup> sgroups = new ArrayList<>(state.sgroups);
+            state.mysgroups != null && !state.mysgroups.isEmpty()) {
+            List<CxPolymerSgroup> polysgroups = new ArrayList<>();
+            for (CxSgroup polysgroup : state.mysgroups) {
+                if (polysgroup instanceof CxPolymerSgroup) {
+                    polysgroups.add((CxPolymerSgroup) polysgroup);
+                    Collections.sort(polysgroup.atoms, comp);
+                }
+            }
 
-            for (PolymerSgroup psgroup : sgroups)
-                Collections.sort(psgroup.atomset, comp);
-
-            Collections.sort(sgroups, new Comparator<PolymerSgroup>() {
+            Collections.sort(polysgroups, new Comparator<CxPolymerSgroup>() {
                 @Override
-                public int compare(PolymerSgroup a, PolymerSgroup b) {
+                public int compare(CxPolymerSgroup a, CxPolymerSgroup b) {
                     int cmp = 0;
                     cmp = a.type.compareTo(b.type);
                     if (cmp != 0) return cmp;
-                    cmp = CxSmilesGenerator.compare(comp, a.atomset, b.atomset);
+                    cmp = CxSmilesGenerator.compare(comp, a.atoms, b.atoms);
                     return cmp;
                 }
             });
 
-            for (int i = 0; i < sgroups.size(); i++) {
+            for (CxPolymerSgroup cxPolymerSgroup : polysgroups) {
+                cxPolymerSgroup.id = numSgroups++;
                 if (sb.length() > 2) sb.append(',');
                 sb.append("Sg:");
-                PolymerSgroup sgroup = sgroups.get(i);
-                sb.append(sgroup.type);
+                sb.append(cxPolymerSgroup.type);
                 sb.append(':');
-                appendIntegers(ordering, ',', sb, sgroup.atomset);
+                appendIntegers(ordering, ',', sb, cxPolymerSgroup.atoms);
                 sb.append(':');
-                if (sgroup.subscript != null)
-                    sb.append(sgroup.subscript);
+                if (cxPolymerSgroup.subscript != null)
+                    sb.append(cxPolymerSgroup.subscript);
                 sb.append(':');
-                if (sgroup.supscript != null)
-                    sb.append(sgroup.supscript.toLowerCase(Locale.ROOT));
+                if (cxPolymerSgroup.supscript != null)
+                    sb.append(cxPolymerSgroup.supscript.toLowerCase(Locale.ROOT));
+            }
+        }
+
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxDataSgroups) &&
+            state.mysgroups != null && !state.mysgroups.isEmpty()) {
+            List<CxDataSgroup> datasgroups = new ArrayList<>();
+            for (CxSgroup datasgroup : state.mysgroups) {
+                if (datasgroup instanceof CxDataSgroup) {
+                    datasgroups.add((CxDataSgroup)datasgroup);
+                    Collections.sort(datasgroup.atoms, comp);
+                }
+            }
+
+            Collections.sort(datasgroups, new Comparator<CxDataSgroup>() {
+                @Override
+                public int compare(CxDataSgroup a, CxDataSgroup b) {
+                    int cmp = 0;
+                    cmp = a.field.compareTo(b.field);
+                    if (cmp != 0) return cmp;
+                    cmp = a.value.compareTo(b.value);
+                    if (cmp != 0) return cmp;
+                    cmp = CxSmilesGenerator.compare(comp, a.atoms, b.atoms);
+                    return cmp;
+                }
+            });
+
+            for (CxDataSgroup cxDataSgroup : datasgroups) {
+                cxDataSgroup.id = numSgroups++;
+                if (sb.length() > 2) sb.append(',');
+                sb.append("SgD:");
+                appendIntegers(ordering, ',', sb, cxDataSgroup.atoms);
+                sb.append(':');
+                if (cxDataSgroup.field != null)
+                    sb.append(cxDataSgroup.field);
+                sb.append(':');
+                if (cxDataSgroup.value != null)
+                    sb.append(cxDataSgroup.value);
+                sb.append(':');
+                if (cxDataSgroup.operator != null)
+                    sb.append(cxDataSgroup.operator);
+                sb.append(':');
+                if (cxDataSgroup.unit != null)
+                    sb.append(cxDataSgroup.unit);
+                // fmt (t/f/n) + coords?
+            }
+        }
+
+        // hierarchy information
+        if (numSgroups > 0) {
+            boolean firstSgH = true;
+            if (state.mysgroups != null) {
+                for (CxSgroup sgroup : state.mysgroups) {
+                    if (sgroup.children.isEmpty())
+                        continue;
+                    if (sb.length() > 2) sb.append(',');
+                    if (firstSgH) {
+                        sb.append("SgH:");
+                        firstSgH = false;
+                    }
+                    sb.append(sgroup.id).append(':');
+                    boolean first = true;
+                    for (CxSgroup child : sgroup.children) {
+                        if (child.id < 0)
+                            continue;
+                        if (!first)
+                            sb.append('.');
+                        first = false;
+                        sb.append(child.id);
+                    }
+                }
             }
         }
 
