@@ -108,12 +108,13 @@ import java.util.Set;
  */
 public class StructureDiagramGenerator {
 
-    static final         double                     DEFAULT_BOND_LENGTH      = 1.5;
+    static final double DEFAULT_BOND_LENGTH           = 1.5;
+    static final double SGROUP_BRACKET_PADDING_FACTOR = 0.5;
     private static final Vector2d                   DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
     private static final IdentityTemplateLibrary    DEFAULT_TEMPLATE_LIBRARY = IdentityTemplateLibrary.loadFromResource("custom-templates.smi")
                                                                                                    .add(IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi"));
     private static final double                     RAD_30                   = Math.toRadians(-30);
-    private static final ILoggingTool            logger                   = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
+    private static final ILoggingTool               logger                   = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
 
     public static final Comparator<IAtomContainer> LARGEST_FIRST_COMPARATOR = new Comparator<IAtomContainer>() {
         @Override
@@ -893,18 +894,18 @@ public class StructureDiagramGenerator {
         LayoutRefiner refiner = new LayoutRefiner(molecule, afix, bfix);
         refiner.refine();
 
+        // check for attachment points, these override the direction which we rorate structures
+        IAtom begAttach = null;
+        for (IAtom atom : molecule.atoms()) {
+            if (atom instanceof IPseudoAtom && ((IPseudoAtom) atom).getAttachPointNum() == 1) {
+                begAttach = atom;
+                selectOrientation = true;
+                break;
+            }
+        }
+
         // choose the orientation in which to display the structure
         if (selectOrientation) {
-
-            // check for attachment points, these override the direction which we rorate structures
-            IAtom begAttach = null;
-            for (IAtom atom : molecule.atoms()) {
-                if (atom instanceof IPseudoAtom && ((IPseudoAtom) atom).getAttachPointNum() == 1) {
-                    begAttach = atom;
-                    break;
-                }
-            }
-
             // no attachment point, rotate to maximise horizontal spread etc.
             if (begAttach == null) {
                 selectOrientation(molecule, DEFAULT_BOND_LENGTH, 1);
@@ -1170,12 +1171,42 @@ public class StructureDiagramGenerator {
         Set<IAtom> afixbackup = new HashSet<>(afix);
         Set<IBond> bfixbackup = new HashSet<>(bfix);
 
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+
         // generate the sub-layouts
         for (IAtomContainer fragment : frags) {
             setMolecule(fragment, false, afix, bfix);
             generateCoordinates(DEFAULT_BOND_VECTOR, true, true);
             lengthenIonicBonds(ionicBonds, fragment);
-            limits.add(getAprxBounds(fragment));
+            double[] aprxBounds = getAprxBounds(fragment);
+
+            if (sgroups != null && sgroups.size() > 0) {
+                boolean hasBracket = false;
+                for (Sgroup sgroup : sgroups) {
+                    if (!hasBrackets(sgroup))
+                        continue;
+                    boolean contained = true;
+                    Set<IAtom> aset = sgroup.getAtoms();
+                    for (IAtom atom : sgroup.getAtoms()) {
+                        if (!aset.contains(atom))
+                            contained = false;
+                    }
+                    if (contained) {
+                        hasBracket = true;
+                        break;
+                    }
+                }
+
+                if (hasBracket) {
+                    // consider potential Sgroup brackets
+                    aprxBounds[0] -= SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                    aprxBounds[1] -= SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                    aprxBounds[2] += SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                    aprxBounds[3] += SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                }
+            }
+
+            limits.add(aprxBounds);
         }
 
         // restore
@@ -2613,6 +2644,12 @@ public class StructureDiagramGenerator {
         return cnt;
     }
 
+    private void updateMinMax(double[] minmax, Point2d p) {
+        minmax[0] = Math.min(p.x, minmax[0]);
+        minmax[1] = Math.min(p.y, minmax[1]);
+        minmax[2] = Math.max(p.x, minmax[2]);
+        minmax[3] = Math.max(p.y, minmax[3]);
+    }
 
     /**
      * Place and update brackets for polymer Sgroups.
@@ -2625,6 +2662,7 @@ public class StructureDiagramGenerator {
 
         // index all crossing bonds
         final Multimap<IBond,Sgroup> bondMap = HashMultimap.create();
+        final Multimap<Sgroup,Sgroup> childMap = HashMultimap.create();
         final Map<IBond,Integer> counter = new HashMap<>();
         for (Sgroup sgroup : sgroups) {
             if (!hasBrackets(sgroup))
@@ -2633,19 +2671,16 @@ public class StructureDiagramGenerator {
                 bondMap.put(bond, sgroup);
                 counter.put(bond, 0);
             }
+            for (Sgroup parent : sgroup.getParents())
+                childMap.put(parent, sgroup);
         }
         sgroups = new ArrayList<>(sgroups);
-        // place child sgroups first
+        // place child sgroups first, or those with less total children
         Collections.sort(sgroups,
                          new Comparator<Sgroup>() {
                              @Override
                              public int compare(Sgroup o1, Sgroup o2) {
-                                 if (o1.getParents().isEmpty() != o2.getParents().isEmpty()) {
-                                     if (o1.getParents().isEmpty())
-                                         return +1;
-                                     return -1;
-                                 }
-                                 return 0;
+                                 return Integer.compare(childMap.get(o1).size(), childMap.get(o2).size());
                              }
                          });
 
@@ -2684,7 +2719,20 @@ public class StructureDiagramGenerator {
                 for (IAtom atom : atoms)
                     tmp.addAtom(atom);
                 double[] minmax = GeometryUtil.getMinMax(tmp);
-                double padding  = 0.7 * bondLength;
+
+                // if a child Sgroup also has brackets, account for that in our
+                // bounds calculation
+                for (Sgroup child : childMap.get(sgroup)) {
+                    List<SgroupBracket> brackets = child.getValue(SgroupKey.CtabBracket);
+                    if (brackets != null) {
+                        for (SgroupBracket bracket : brackets) {
+                            updateMinMax(minmax, bracket.getFirstPoint());
+                            updateMinMax(minmax, bracket.getSecondPoint());
+                        }
+                    }
+                }
+
+                double padding  = SGROUP_BRACKET_PADDING_FACTOR * bondLength;
                 sgroup.addBracket(new SgroupBracket(minmax[0] - padding, minmax[1] - padding,
                                                     minmax[0] - padding, minmax[3] + padding));
                 sgroup.addBracket(new SgroupBracket(minmax[2] + padding, minmax[1] - padding,
