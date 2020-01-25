@@ -23,12 +23,15 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.renderer.RendererModel;
+import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
@@ -48,8 +51,12 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -71,6 +78,8 @@ final class StandardSgroupGenerator {
     private final double                labelScale;
     private final StandardAtomGenerator atomGenerator;
     private final RendererModel         parameters;
+    private final Multimap<Sgroup,Sgroup> children = HashMultimap.create();
+    private final Map<Sgroup,Bounds>      boundsMap = new HashMap<>();
 
     private StandardSgroupGenerator(RendererModel parameters, StandardAtomGenerator atomGenerator, double stroke,
                                     Font font, Color foreground) {
@@ -274,6 +283,17 @@ final class StandardSgroupGenerator {
         }
     }
 
+    int getTotalChildCount(Multimap<Sgroup,Sgroup> map, Sgroup key) {
+        int count = 0;
+        Deque<Sgroup> deque = new ArrayDeque<>(map.get(key));
+        while (!deque.isEmpty()) {
+            Sgroup sgroup = deque.poll();
+            deque.addAll(map.get(sgroup));
+            ++count;
+        }
+        return count;
+    }
+
     /**
      * Generate the Sgroup elements for the provided atom contains.
      *
@@ -293,6 +313,21 @@ final class StandardSgroupGenerator {
             if (symbols[i] != null)
                 symbolMap.put(container.getAtom(i), symbols[i]);
         }
+        for (Sgroup sgroup : sgroups) {
+            for (Sgroup parent : sgroup.getParents()) {
+                children.put(parent, sgroup);
+            }
+        }
+
+        // generate child brackets first
+        sgroups = new ArrayList<>(sgroups);
+        Collections.sort(sgroups, new Comparator<Sgroup>() {
+            @Override
+            public int compare(Sgroup o1, Sgroup o2) {
+                return Integer.compare(getTotalChildCount(children, o1),
+                                       getTotalChildCount(children, o2));
+            }
+        });
 
         for (Sgroup sgroup : sgroups) {
 
@@ -316,7 +351,7 @@ final class StandardSgroupGenerator {
                 case CtabComponent:
                 case CtabMixture:
                 case CtabFormulation:
-                    result.add(generateMixtureSgroup(sgroup));
+                    result.add(generateMixtureSgroup(sgroup, sgroups, symbolMap));
                     break;
                 case CtabGeneric:
                     // not strictly a polymer but okay to draw as one
@@ -484,7 +519,9 @@ final class StandardSgroupGenerator {
         }
     }
 
-    private IRenderingElement generateMixtureSgroup(Sgroup sgroup) {
+    private IRenderingElement generateMixtureSgroup(Sgroup sgroup,
+                                                    List<Sgroup> sgroups,
+                                                    Map<IAtom,AtomSymbol> symbolMap) {
         // draw the brackets
         // TODO - mixtures normally have attached Sgroup data
         // TODO - e.g. COMPONENT_FRACTION, ACTIVITY_TYPE, WEIGHT_PERCENT
@@ -509,11 +546,27 @@ final class StandardSgroupGenerator {
                     break;
             }
 
+            String superscript = null;
+            for (Sgroup child : sgroups) {
+                if (child.getType() == SgroupType.CtabData &&
+                    child.getParents().contains(sgroup)) {
+                    String value = child.getValue(SgroupKey.Data);
+                    String units = child.getValue(SgroupKey.DataFieldUnits);
+                    if (value != null) {
+                        superscript = value;
+                        if (units != null)
+                            superscript += units;
+                    }
+                    break;
+                }
+            }
+
             return generateSgroupBrackets(sgroup,
                                           brackets,
-                                          null,
+                                          symbolMap,
                                           subscript,
-                                          null);
+                                          null,
+                                          superscript);
         } else {
             return new ElementGroup();
         }
@@ -539,6 +592,15 @@ final class StandardSgroupGenerator {
                                                      Map<IAtom, AtomSymbol> symbols,
                                                      String subscriptSuffix,
                                                      String superscriptSuffix) {
+        return generateSgroupBrackets(sgroup, brackets, symbols, subscriptSuffix, superscriptSuffix, null);
+    }
+
+    private IRenderingElement generateSgroupBrackets(Sgroup sgroup,
+                                                     List<SgroupBracket> brackets,
+                                                     Map<IAtom, AtomSymbol> symbols,
+                                                     String subscriptSuffix,
+                                                     String superscriptSuffix,
+                                                     String superscriptPrefix) {
 
         // brackets are square by default (style:0)
         Integer style = sgroup.getValue(SgroupKey.CtabBracketStyle);
@@ -561,7 +623,9 @@ final class StandardSgroupGenerator {
                                                                                   : Collections.<SgroupBracket, IBond>emptyMap();
 
         // override bracket layout around single atoms to bring them in closer
-        if (atoms.size() == 1) {
+        if (atoms.size() == 1 &&
+            (sgroup.getType() == SgroupType.CtabStructureRepeatUnit ||
+             sgroup.getType() == SgroupType.CtabMultipleGroup)) {
 
             IAtom atom = atoms.iterator().next();
 
@@ -624,6 +688,7 @@ final class StandardSgroupGenerator {
                 result.add(GeneralPath.shapeOf(leftBracket.getOutline(), foreground));
                 result.add(GeneralPath.shapeOf(rightBracket.getOutline(), foreground));
 
+                Rectangle2D leftBracketBounds = leftBracket.getBounds();
                 Rectangle2D rightBracketBounds = rightBracket.getBounds();
 
                 // subscript/superscript suffix annotation
@@ -640,6 +705,14 @@ final class StandardSgroupGenerator {
                                                                         new Point2d(rightBracketBounds.getMaxX(),
                                                                                     rightBracketBounds.getMaxY() + 0.1),
                                                                         new Vector2d(-rightBracketBounds.getWidth(), 0),
+                                                                        scriptscale));
+                    result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
+                }
+                if (superscriptPrefix != null && !superscriptPrefix.isEmpty()) {
+                    TextOutline superscriptOutline = rightAlign(makeText(superscriptPrefix.toLowerCase(Locale.ROOT),
+                                                                        new Point2d(leftBracketBounds.getMaxX(),
+                                                                                    leftBracketBounds.getMaxY() + 0.1),
+                                                                        new Vector2d(-leftBracketBounds.getWidth(), 0),
                                                                         scriptscale));
                     result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
                 }
@@ -725,14 +798,40 @@ final class StandardSgroupGenerator {
                                                                         supSufPnt, suffixBracketPerp, labelScale));
                     result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
                 }
-
             }
-        } else if (brackets.size() == 2) {
+        }
+        // no crossing-bonds we can shrink things down
+        else if (brackets.size() == 2) {
 
-            final Point2d b1p1 = brackets.get(0).getFirstPoint();
-            final Point2d b1p2 = brackets.get(0).getSecondPoint();
-            final Point2d b2p1 = brackets.get(1).getFirstPoint();
-            final Point2d b2p2 = brackets.get(1).getSecondPoint();
+            Bounds bounds = new Bounds();
+            for (IAtom atom : sgroup.getAtoms()) {
+                AtomSymbol  atomSymbol = symbols.get(atom);
+                if (atomSymbol != null) {
+                    ConvexHull  hull     = atomSymbol.getConvexHull();
+                    Rectangle2D bounds2D = hull.outline().getBounds2D();
+                    bounds.add(bounds2D.getMinX(), bounds2D.getMinY());
+                    bounds.add(bounds2D.getMaxX(), bounds2D.getMaxY());
+                } else {
+                    bounds.add(atom.getPoint2d().x, atom.getPoint2d().y);
+                }
+            }
+            for (Sgroup child : children.get(sgroup)) {
+                Bounds childBounds = boundsMap.get(child);
+                if (childBounds != null)
+                    bounds.add(childBounds);
+            }
+
+            Point2d b1p1 = brackets.get(0).getFirstPoint();
+            Point2d b1p2 = brackets.get(0).getSecondPoint();
+            Point2d b2p1 = brackets.get(1).getFirstPoint();
+            Point2d b2p2 = brackets.get(1).getSecondPoint();
+
+            double margin = 5*(parameters.get(BasicSceneGenerator.Margin.class)/scale);
+
+            b1p1 = new Point2d(bounds.minX+margin, bounds.minY+margin);
+            b1p2 = new Point2d(bounds.minX+margin, bounds.maxY-margin);
+            b2p1 = new Point2d(bounds.maxX-margin, bounds.minY+margin);
+            b2p2 = new Point2d(bounds.maxX-margin, bounds.maxY-margin);
 
             final Vector2d b1vec = VecmathUtil.newUnitVector(b1p1, b1p2);
             final Vector2d b2vec = VecmathUtil.newUnitVector(b2p1, b2p2);
@@ -795,8 +894,9 @@ final class StandardSgroupGenerator {
             double b1MaxY = Math.max(b1p1.y, b1p2.y);
             double b2MaxY = Math.max(b2p1.y, b2p2.y);
 
-            Point2d subSufPnt = b2p2;
-            Point2d supSufPnt = b2p1;
+            Point2d subSufPnt  = b2p2;
+            Point2d supSufPnt  = b2p1;
+            Point2d supPrefPnt = b1p2;
             Vector2d subpvec = b2pvec;
 
             double bXDiff = b1MaxX - b2MaxX;
@@ -828,8 +928,19 @@ final class StandardSgroupGenerator {
                                                                     supSufPnt, subpvec, labelScale));
                 result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
             }
+            if (superscriptPrefix != null && !superscriptPrefix.isEmpty()) {
+                subpvec.negate();
+                TextOutline superscriptOutline = rightAlign(makeText(superscriptPrefix.toLowerCase(Locale.ROOT),
+                                                                     supPrefPnt, subpvec, labelScale));
+                result.add(GeneralPath.shapeOf(superscriptOutline.getOutline(), foreground));
+            }
 
         }
+
+        Bounds bounds = new Bounds();
+        bounds.add(result);
+        boundsMap.put(sgroup, bounds);
+
         return result;
     }
 
@@ -893,5 +1004,12 @@ final class StandardSgroupGenerator {
         Point2D first = outline.getFirstGlyphCenter();
         return outline.translate(center.getX() - first.getX(),
                                  center.getY() - first.getY());
+    }
+
+    private TextOutline rightAlign(TextOutline outline) {
+        Point2D center = outline.getCenter();
+        Point2D last  = outline.getLastGlyphCenter();
+        return outline.translate(center.getX() - last.getX(),
+                                 center.getY() - last.getY());
     }
 }
