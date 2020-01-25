@@ -893,18 +893,18 @@ public class StructureDiagramGenerator {
         LayoutRefiner refiner = new LayoutRefiner(molecule, afix, bfix);
         refiner.refine();
 
+        // check for attachment points, these override the direction which we rorate structures
+        IAtom begAttach = null;
+        for (IAtom atom : molecule.atoms()) {
+            if (atom instanceof IPseudoAtom && ((IPseudoAtom) atom).getAttachPointNum() == 1) {
+                begAttach = atom;
+                selectOrientation = true;
+                break;
+            }
+        }
+
         // choose the orientation in which to display the structure
         if (selectOrientation) {
-
-            // check for attachment points, these override the direction which we rorate structures
-            IAtom begAttach = null;
-            for (IAtom atom : molecule.atoms()) {
-                if (atom instanceof IPseudoAtom && ((IPseudoAtom) atom).getAttachPointNum() == 1) {
-                    begAttach = atom;
-                    break;
-                }
-            }
-
             // no attachment point, rotate to maximise horizontal spread etc.
             if (begAttach == null) {
                 selectOrientation(molecule, DEFAULT_BOND_LENGTH, 1);
