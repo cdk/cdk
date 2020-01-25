@@ -24,7 +24,6 @@
  *  */
 package org.openscience.cdk.io;
 
-import jdk.internal.util.xml.impl.Input;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
