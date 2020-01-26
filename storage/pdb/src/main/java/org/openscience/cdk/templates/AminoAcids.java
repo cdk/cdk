@@ -26,8 +26,11 @@ import java.util.Map;
 
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,6 +40,7 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -112,6 +116,11 @@ public class AminoAcids {
             return aminoAcids;
         }
 
+        // amino-acids only have benzene aromaticity so we can run a simple
+        // alternating pi-bond arom model to keep things in a consistent state
+        Aromaticity arom = new Aromaticity(ElectronDonation.cdk(),
+                                           Cycles.all(6));
+
         // Create set of AtomContainers
         aminoAcids = new AminoAcid[20];
 
@@ -169,6 +178,10 @@ public class AminoAcids {
                 AminoAcidManipulator.removeAcidicOxygen(aminoAcid);
                 aminoAcid.setProperty(NO_ATOMS, "" + aminoAcid.getAtomCount());
                 aminoAcid.setProperty(NO_BONDS, "" + aminoAcid.getBondCount());
+
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(aminoAcid);
+                arom.apply(aminoAcid);
+
                 if (counter < aminoAcids.length) {
                     aminoAcids[counter] = aminoAcid;
                 } else {
