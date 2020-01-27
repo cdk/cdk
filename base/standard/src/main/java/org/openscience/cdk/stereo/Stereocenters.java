@@ -232,7 +232,7 @@ public final class Stereocenters {
      * resembles a stereo centre but has constitutionally equivalent neighbors
      * (e.g. inositol, decalin). The stereocenter depends on the configuration
      * of one or more stereocenters.</li> <li>{@link Stereocenter#Potential} -
-     * the atom can supported stereo chemistry but has not be shown ot be a true
+     * the atom can supported stereo chemistry but has not be shown to be a true
      * or para center.</li> <li>{@link Stereocenter#Non} - the atom is not a
      * stereocenter (e.g. methane).</li> </ul>
      *
