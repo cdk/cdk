@@ -597,6 +597,9 @@ public final class Stereocenters {
 
         boolean found = false;
 
+        // group the 'X' neighbours we care about,
+        // N=>1, O=>2, S=>3, etc, anything we don't care
+        // about goes in slot 0
         for (int w : g[v]) {
             int idx = indexNeighbor(container.getAtom(w));
             atoms[idx][counts[idx]++] = w;
@@ -605,6 +608,10 @@ public final class Stereocenters {
 
         if (!found) return true;
 
+        // now we have the neighbours group check out one,
+        // N first, O, then S, etc and check if there is at
+        // least two terminals atom and the total number of H
+        // connected to these terminals is >= 1. i.e. -XHm and -XHn, (n+m>0)
         for (int i = 1; i < counts.length; i++) {
             if (counts[i] < 2) continue;
 
@@ -612,19 +619,23 @@ public final class Stereocenters {
             int terminalHCount = 0;
 
             for (int j = 0; j < counts[i]; j++) {
-                int   hCount = 0;
-                int[] ws     = g[atoms[i][j]];
+                int   explHCount = 0;
+                int[] ws = g[atoms[i][j]];
                 for (int w : g[atoms[i][j]]) {
                     IAtom atom = container.getAtom(w);
                     if (atomicNumber(atom) == 1 && atom.getMassNumber() == null) {
-                        hCount++;
+                        explHCount++;
                     }
                 }
 
-                // is terminal?
-                if (ws.length - hCount == 1) {
+                final int degree = ws.length - explHCount;
+                if (degree == 1) {
                     terminalCount++;
-                    terminalHCount += hCount + container.getAtom(atoms[i][j]).getImplicitHydrogenCount();
+                    terminalHCount += explHCount;
+                    IAtom atom = container.getAtom(atoms[i][j]);
+                    Integer implHCount = atom.getImplicitHydrogenCount();
+                    if (implHCount != null)
+                        terminalHCount += implHCount;
                 }
             }
 
