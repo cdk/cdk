@@ -636,6 +636,9 @@ public final class Stereocenters {
                     Integer implHCount = atom.getImplicitHydrogenCount();
                     if (implHCount != null)
                         terminalHCount += implHCount;
+                    // O, S, Se, Te, or N with -1 charge is equiv to having a H
+                    if (atom.getFormalCharge() == -1)
+                        terminalHCount++;
                 }
             }
 
