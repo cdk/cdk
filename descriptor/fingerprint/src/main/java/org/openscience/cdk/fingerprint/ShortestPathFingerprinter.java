@@ -72,6 +72,10 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * malformed symbols are present, their atomic number is taken as one more than the last element currently supported in {@link PeriodicTable}.
  * </P>
  *
+ * <br/>
+ * <b>
+ * Important! this fingerprint can not be used for substructure screening.
+ * </b>
  *
  * @author Syed Asad Rahman (2012)
  * @cdk.keyword fingerprint

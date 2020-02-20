@@ -80,6 +80,11 @@ import org.openscience.cdk.interfaces.IStereoElement;
  *  
  *  <p>The fingerprints and their uses have been described in Clark et al. {@cdk.cite Clark2014}.
  *
+ * <br/>
+ * <b>
+ * Important! this fingerprint can not be used for substructure screening.
+ * </b>
+ *
  * @author         am.clark
  * @cdk.created    2014-01-01
  * @cdk.keyword    fingerprint
