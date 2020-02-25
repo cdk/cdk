@@ -47,8 +47,8 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 /**
  * Generates a fingerprint for a given {@link IAtomContainer}. Fingerprints are one-dimensional bit arrays, where bits
  * are set according to a the occurrence of a particular structural feature (See for example the Daylight inc. theory
- * manual for more information). Fingerprints allow for a fast screening step to exclude candidates for a substructure
- * search in a database. They are also a means for determining the similarity of chemical structures.
+ * manual for more information). Fingerprints are a means for determining the similarity of chemical structures,
+ * some fingerprints (not this one) allow database pre-screening for substructure searches.
 
  * <pre>
  *
