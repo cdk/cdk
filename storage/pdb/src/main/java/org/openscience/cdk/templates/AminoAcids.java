@@ -153,7 +153,7 @@ public class AminoAcids {
                             aminoAcid.setProperty(RESIDUE_NAME_SHORT, ac.getProperty(dictRef));
                         } else if (dictRef.getType().equals("pdb:id")) {
                             aminoAcid.setProperty(ID, ac.getProperty(dictRef));
-                            LOGGER.debug("Set AA ID to: ", ac.getProperty(dictRef));
+                            LOGGER.debug("Set AA ID to: ", (Object)ac.getProperty(dictRef));
                         } else {
                             LOGGER.error("Cannot deal with dictRef!");
                         }
