@@ -25,8 +25,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.MMElementRule;
@@ -122,7 +122,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         IMolecularFormula formulaWith = MFChecker.isValid(formula);
 
-        Assert.assertEquals(0.0, formulaWith.getProperty((new MMElementRule()).getClass()));
+        Assert.assertEquals(0.0, (double)formulaWith.getProperty((new MMElementRule()).getClass()), 0.001);
 
     }
 
@@ -170,8 +170,8 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         IMolecularFormula formulaWith = MFChecker.isValid(formula);
 
-        Assert.assertEquals(0.0, formulaWith.getProperty((new MMElementRule()).getClass()));
-        Assert.assertEquals(1.0, formulaWith.getProperty((new ChargeRule()).getClass()));
+        Assert.assertEquals(0.0, (double)formulaWith.getProperty((new MMElementRule()).getClass()), 0.001);
+        Assert.assertEquals(1.0, (double)formulaWith.getProperty((new ChargeRule()).getClass()), 0.001);
 
     }
 
@@ -219,8 +219,8 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         IMolecularFormula formulaWith = MFChecker.isValid(formula);
 
-        Assert.assertEquals(1.0, formulaWith.getProperty((new MMElementRule()).getClass()));
-        Assert.assertEquals(1.0, formulaWith.getProperty((new ChargeRule()).getClass()));
+        Assert.assertEquals(1.0, (double)formulaWith.getProperty((new MMElementRule()).getClass()), 0.001);
+        Assert.assertEquals(1.0, (double)formulaWith.getProperty((new ChargeRule()).getClass()), 0.001);
 
     }
 }
