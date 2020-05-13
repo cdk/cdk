@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IBond;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * benzylbenzene ring search unit tests

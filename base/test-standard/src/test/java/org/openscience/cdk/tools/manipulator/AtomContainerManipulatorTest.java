@@ -62,6 +62,7 @@ import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 import static org.openscience.cdk.tools.manipulator.AtomContainerManipulator.*;
 
@@ -220,7 +221,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(6, mol.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
         Assert.assertEquals(2, ac.getAtomCount());
-        Assert.assertTrue(ac.getFlag(CDKConstants.ISAROMATIC));
+        assertTrue(ac.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
@@ -391,12 +392,12 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         List<String> ids = AtomContainerManipulator.getAllIDs(mol);
         Assert.assertEquals(6, ids.size());
-        Assert.assertTrue(ids.contains("a1"));
-        Assert.assertTrue(ids.contains("a2"));
-        Assert.assertTrue(ids.contains("a3"));
-        Assert.assertTrue(ids.contains("a4"));
-        Assert.assertTrue(ids.contains("a5"));
-        Assert.assertTrue(ids.contains("a6"));
+        assertTrue(ids.contains("a1"));
+        assertTrue(ids.contains("a2"));
+        assertTrue(ids.contains("a3"));
+        assertTrue(ids.contains("a4"));
+        assertTrue(ids.contains("a5"));
+        assertTrue(ids.contains("a6"));
     }
 
     @Test
@@ -693,9 +694,9 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         IAtomContainer intersection = AtomContainerManipulator.getIntersection(container1, container2);
         Assert.assertEquals(2, intersection.getAtomCount());
         Assert.assertEquals(1, intersection.getBondCount());
-        Assert.assertTrue(intersection.contains(b2));
-        Assert.assertTrue(intersection.contains(o));
-        Assert.assertTrue(intersection.contains(c2));
+        assertTrue(intersection.contains(b2));
+        assertTrue(intersection.contains(o));
+        assertTrue(intersection.contains(c2));
     }
 
     @Test
@@ -742,14 +743,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
         for (IAtom atom : container.atoms()) {
-            Assert.assertTrue(atom.getAtomTypeName() != CDKConstants.UNSET);
-            Assert.assertTrue(atom.getHybridization() != CDKConstants.UNSET);
+            assertTrue(atom.getAtomTypeName() != CDKConstants.UNSET);
+            assertTrue(atom.getHybridization() != CDKConstants.UNSET);
         }
 
         AtomContainerManipulator.clearAtomConfigurations(container);
         for (IAtom atom : container.atoms()) {
-            Assert.assertTrue(atom.getAtomTypeName() == CDKConstants.UNSET);
-            Assert.assertTrue(atom.getHybridization() == CDKConstants.UNSET);
+            assertTrue(atom.getAtomTypeName() == CDKConstants.UNSET);
+            assertTrue(atom.getHybridization() == CDKConstants.UNSET);
         }
     }
 
@@ -1034,7 +1035,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(mol);
         String smiles2 = "C1CCCCC1";
         IAtomContainer mol2 = sp.parseSmiles(smiles2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(mol, mol2));
+        assertTrue(new UniversalIsomorphismTester().isIsomorph(mol, mol2));
     }
 
     @Test
@@ -1052,7 +1053,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         IAtomContainer anonymous = AtomContainerManipulator.anonymise(cyclohexane);
 
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(anonymous, TestMoleculeFactory.makeCyclohexane()));
+        assertTrue(new UniversalIsomorphismTester().isIsomorph(anonymous, TestMoleculeFactory.makeCyclohexane()));
 
         assertThat(anonymous.getAtom(0).getSymbol(), is("C"));
         assertThat(anonymous.getAtom(2).getSymbol(), is("C"));
