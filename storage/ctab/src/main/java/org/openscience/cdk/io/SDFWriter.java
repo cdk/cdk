@@ -68,10 +68,13 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
     public static final String OptAlwaysV3000 = "writeV3000";
     public static final String OptWriteData = "writeProperties";
+    public static final String OptTruncateLongData  = "TruncateLongData";
 
-    private BufferedWriter   writer;
+
+  private BufferedWriter   writer;
     private BooleanIOSetting paramWriteData;
     private BooleanIOSetting paramWriteV3000;
+    private BooleanIOSetting truncateData;
     private Set<String>      propertiesToWrite;
 
     /**
@@ -289,8 +292,20 @@ public class SDFWriter extends DefaultChemObjectWriter {
                                 if (isPrimitiveDataValue(val)) {
                                     writer.write("> <" + cleanHeaderKey + ">");
                                     writer.write('\n');
-                                    if (val != null)
-                                        writer.write(val.toString());
+                                    if (val != null) {
+                                      String valStr = val.toString();
+                                      int maxDataLen = 200; // set in the spec
+                                      if (truncateData.isSet()) {
+                                        for (String line : valStr.split("\n")) {
+                                          if (line.length() > maxDataLen)
+                                            writer.write(line.substring(0, maxDataLen));
+                                          else
+                                            writer.write(valStr);
+                                        }
+                                      } else {
+                                        writer.write(valStr);
+                                      }
+                                    }
                                     writer.write('\n');
                                     writer.write('\n');
                                 } else {
@@ -364,6 +379,9 @@ public class SDFWriter extends DefaultChemObjectWriter {
         paramWriteV3000 = addSetting(new BooleanIOSetting(OptAlwaysV3000,
                                                           IOSetting.Importance.LOW,
                                                           "Write all records as V3000", "false"));
+        truncateData = addSetting(new BooleanIOSetting(OptTruncateLongData,
+                                                       IOSetting.Importance.LOW,
+                                                       "Truncate long data files >200 characters", "false"));
         addSettings(new MDLV2000Writer().getSettings());
         addSettings(new MDLV3000Writer().getSettings());
     }

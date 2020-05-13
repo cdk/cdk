@@ -48,7 +48,7 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 import static org.junit.Assert.assertFalse;
@@ -369,5 +369,34 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         for (String mol : sdf.split("\\$\\$\\$\\$", 2)) {
             assertThat(mol, CoreMatchers.containsString("Bioclip"));
         }
+    }
+
+    @Test
+    public void optionallyTruncateLongProperties() {
+        StringWriter sw = new StringWriter();
+        try (SDFWriter sdfw = new SDFWriter(sw)) {
+            sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
+                .setSetting("false");
+            sdfw.getSetting(SDFWriter.OptTruncateLongData)
+                .setSetting("true");
+            IAtomContainer mol = TestMoleculeFactory.make123Triazole();
+            mol.setProperty("MyLongField",
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped");
+            sdfw.write(mol);
+        } catch (IOException | CDKException e) {
+            e.printStackTrace();
+        }
+        String sdf = sw.toString();
+        assertThat(sdf,
+                   CoreMatchers.containsString("ThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisI\n"));
     }
 }
