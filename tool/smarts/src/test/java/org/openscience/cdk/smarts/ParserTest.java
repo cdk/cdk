@@ -26,7 +26,7 @@ import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smarts.Smarts;
 
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * JUnit test routines for the SMARTS parser.

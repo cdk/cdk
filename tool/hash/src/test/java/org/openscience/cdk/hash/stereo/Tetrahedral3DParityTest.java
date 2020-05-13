@@ -30,7 +30,7 @@ import org.openscience.cdk.hash.stereo.Tetrahedral3DParity;
 import javax.vecmath.Point3d;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author John May
