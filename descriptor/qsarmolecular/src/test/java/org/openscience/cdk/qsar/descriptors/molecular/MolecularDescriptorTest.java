@@ -93,11 +93,11 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
         Number[] aflags = getAtomFlags(mol);
         Number[] bflags = getBondFlags(mol);
         descriptor.calculate(mol);
-        Assert.assertThat("Molecule flags were modified by descriptor!",
+        org.hamcrest.MatcherAssert.assertThat("Molecule flags were modified by descriptor!",
                           mol.getFlagValue(), CoreMatchers.is(mflags));
-        Assert.assertThat("Molecule's Atom flags were modified by descriptor!",
+        org.hamcrest.MatcherAssert.assertThat("Molecule's Atom flags were modified by descriptor!",
                           getAtomFlags(mol), CoreMatchers.is(aflags));
-        Assert.assertThat("Molecule's Bond flags were modified by descriptor!",
+        org.hamcrest.MatcherAssert.assertThat("Molecule's Bond flags were modified by descriptor!",
                           getBondFlags(mol), CoreMatchers.is(bflags));
     }
 

@@ -196,7 +196,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
         IAtomType type = matcher.findMatchingAtomType(mol, atom);
         Assert.assertNotNull(type);
-        Assert.assertThat(type.getAtomTypeName(), is("X"));
+        org.hamcrest.MatcherAssert.assertThat(type.getAtomTypeName(), is("X"));
     }
 
     @Test

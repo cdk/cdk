@@ -212,7 +212,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.write(molecule);
 
         sdfWriter.close();
-        Assert.assertThat(writer.toString(), Matchers.containsString("> <http://not_valid_com>"));
+        org.hamcrest.MatcherAssert.assertThat(writer.toString(), Matchers.containsString("> <http://not_valid_com>"));
     }
 
     @Test

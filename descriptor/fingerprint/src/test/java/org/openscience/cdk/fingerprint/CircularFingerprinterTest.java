@@ -130,12 +130,12 @@ public class CircularFingerprinterTest extends CDKTestCase {
         // when stereo-chemistry is perceived we don't have coordinates from the
         // SMILES and so get a different fingerprint
         fpr.setPerceiveStereo(true);
-        Assert.assertThat(fpr.getFingerprint(mol1), is(fpr.getFingerprint(mol2)));
-        Assert.assertThat(fpr.getFingerprint(mol2), is(not(fpr.getFingerprint(mol3))));
+        org.hamcrest.MatcherAssert.assertThat(fpr.getFingerprint(mol1), is(fpr.getFingerprint(mol2)));
+        org.hamcrest.MatcherAssert.assertThat(fpr.getFingerprint(mol2), is(not(fpr.getFingerprint(mol3))));
 
         fpr.setPerceiveStereo(false);
-        Assert.assertThat(fpr.getFingerprint(mol1), is(fpr.getFingerprint(mol2)));
-        Assert.assertThat(fpr.getFingerprint(mol2), is(fpr.getFingerprint(mol3)));
+        org.hamcrest.MatcherAssert.assertThat(fpr.getFingerprint(mol1), is(fpr.getFingerprint(mol2)));
+        org.hamcrest.MatcherAssert.assertThat(fpr.getFingerprint(mol2), is(fpr.getFingerprint(mol3)));
     }
 
     @Test
@@ -397,7 +397,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
 	
 	    IBitFingerprint fp1 = circ.getBitFingerprint(mol);
 	    
-	    Assert.assertThat(fp0, is(fp1));
+	    org.hamcrest.MatcherAssert.assertThat(fp0, is(fp1));
 	}
     
     static IAtom atom(String symbol, int q, int h) {
@@ -418,7 +418,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
         CircularFingerprinter fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
         String expected = "CDK-CircularFingerprinter/" + CDK.getVersion() +
                           " classType=ECFP4 perceiveStereochemistry=false";
-        Assert.assertThat(fpr.getVersionDescription(),
+        org.hamcrest.MatcherAssert.assertThat(fpr.getVersionDescription(),
                           CoreMatchers.is(expected));
     }
 

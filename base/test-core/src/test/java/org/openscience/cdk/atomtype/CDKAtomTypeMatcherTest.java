@@ -129,7 +129,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         IAtomType type = matcher.findMatchingAtomType(mol, atom);
         Assert.assertNotNull(type);
-        Assert.assertThat(type.getAtomTypeName(), is("X"));
+        org.hamcrest.MatcherAssert.assertThat(type.getAtomTypeName(), is("X"));
     }
 
     @Test
@@ -3054,7 +3054,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.getAtom(0).setFormalCharge(+1);
         IAtomType type = atm.findMatchingAtomType(mol, mol.getAtom(0));
         Assert.assertNotNull(type);
-        Assert.assertThat(type.getAtomTypeName(), is("X"));
+        org.hamcrest.MatcherAssert.assertThat(type.getAtomTypeName(), is("X"));
 
         for (int i = 0; i < 3; i++) {
             mol.addAtom(new Atom("H"));

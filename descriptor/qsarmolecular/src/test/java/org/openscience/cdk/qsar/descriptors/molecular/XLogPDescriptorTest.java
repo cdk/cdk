@@ -297,7 +297,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         aromaticity.apply(mol);
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
-        Assert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.02, 0.01));
+        org.hamcrest.MatcherAssert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.02, 0.01));
     }
 
     @Test
@@ -308,7 +308,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("C1=CC=CC=C1"); // benzene
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
-        Assert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.08, 0.01));
+        org.hamcrest.MatcherAssert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.08, 0.01));
     }
 
     @Test
@@ -319,6 +319,6 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("C1=CC=CC=C1"); // benzene
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
-        Assert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.02, 0.01));
+        org.hamcrest.MatcherAssert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.02, 0.01));
     }
 }

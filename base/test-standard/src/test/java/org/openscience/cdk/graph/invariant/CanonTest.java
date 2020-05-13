@@ -166,21 +166,21 @@ public class CanonTest {
     public void canonicallyLabelEthaneWithInConsistentHydrogenRepresentation() throws Exception {
         IAtomContainer m = smi("CC[H]");
         long[] labels = Canon.label(m, GraphUtil.toAdjList(m));
-        Assert.assertThat(labels, is(new long[]{2, 3, 1}));
+        org.hamcrest.MatcherAssert.assertThat(labels, is(new long[]{2, 3, 1}));
     }
 
     @Test
     public void canonicallyLabelEthaneWithInConsistentHydrogenRepresentation2() throws Exception {
         IAtomContainer m = smi("CC([H])([H])");
         long[] labels = Canon.label(m, GraphUtil.toAdjList(m));
-        Assert.assertThat(labels, is(new long[]{3, 4, 1, 2}));
+        org.hamcrest.MatcherAssert.assertThat(labels, is(new long[]{3, 4, 1, 2}));
     }
 
     @Test
     public void canonicallyLabelCaffeineWithExplicitHydrogenRepresentation() throws Exception {
         IAtomContainer m = smi("[H]C1=NC2=C(N1C([H])([H])[H])C(=O)N(C(=O)N2C([H])([H])[H])C([H])([H])[H]");
         long[] labels = Canon.label(m, GraphUtil.toAdjList(m));
-        Assert.assertThat(labels, is(new long[]{1, 14, 13, 16, 18, 19, 22, 2, 3, 4, 15, 11, 20, 17, 12, 21, 24, 8, 9,
+        org.hamcrest.MatcherAssert.assertThat(labels, is(new long[]{1, 14, 13, 16, 18, 19, 22, 2, 3, 4, 15, 11, 20, 17, 12, 21, 24, 8, 9,
                 10, 23, 5, 6, 7}));
     }
 

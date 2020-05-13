@@ -139,27 +139,27 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         // map the existing element a new element
         ITetrahedralChirality mapped = original.map(mapping, Collections.EMPTY_MAP);
 
-        Assert.assertThat("mapped chiral atom was the same as the original", mapped.getChiralAtom(),
+        org.hamcrest.MatcherAssert.assertThat("mapped chiral atom was the same as the original", mapped.getChiralAtom(),
                 is(not(sameInstance(original.getChiralAtom()))));
-        Assert.assertThat("mapped chiral atom was not the clone", mapped.getChiralAtom(), is(sameInstance(c1clone)));
+        org.hamcrest.MatcherAssert.assertThat("mapped chiral atom was not the clone", mapped.getChiralAtom(), is(sameInstance(c1clone)));
 
         IAtom[] originalLigands = original.getLigands();
         IAtom[] mappedLigands = mapped.getLigands();
 
-        Assert.assertThat("first ligand was te same as the original", mappedLigands[0],
+        org.hamcrest.MatcherAssert.assertThat("first ligand was te same as the original", mappedLigands[0],
                 is(not(sameInstance(originalLigands[0]))));
-        Assert.assertThat("first mapped ligand was not the clone", mappedLigands[0], is(sameInstance(o2clone)));
-        Assert.assertThat("second ligand was te same as the original", mappedLigands[1],
+        org.hamcrest.MatcherAssert.assertThat("first mapped ligand was not the clone", mappedLigands[0], is(sameInstance(o2clone)));
+        org.hamcrest.MatcherAssert.assertThat("second ligand was te same as the original", mappedLigands[1],
                 is(not(sameInstance(originalLigands[1]))));
-        Assert.assertThat("second mapped ligand was not the clone", mappedLigands[1], is(sameInstance(n3clone)));
-        Assert.assertThat("third ligand was te same as the original", mappedLigands[2],
+        org.hamcrest.MatcherAssert.assertThat("second mapped ligand was not the clone", mappedLigands[1], is(sameInstance(n3clone)));
+        org.hamcrest.MatcherAssert.assertThat("third ligand was te same as the original", mappedLigands[2],
                 is(not(sameInstance(originalLigands[2]))));
-        Assert.assertThat("third mapped ligand was not the clone", mappedLigands[2], is(sameInstance(c4clone)));
-        Assert.assertThat("forth ligand was te same as the original", mappedLigands[3],
+        org.hamcrest.MatcherAssert.assertThat("third mapped ligand was not the clone", mappedLigands[2], is(sameInstance(c4clone)));
+        org.hamcrest.MatcherAssert.assertThat("forth ligand was te same as the original", mappedLigands[3],
                 is(not(sameInstance(originalLigands[3]))));
-        Assert.assertThat("forth mapped ligand was not the clone", mappedLigands[3], is(sameInstance(h5clone)));
+        org.hamcrest.MatcherAssert.assertThat("forth mapped ligand was not the clone", mappedLigands[3], is(sameInstance(h5clone)));
 
-        Assert.assertThat("stereo was not mapped", mapped.getStereo(), is(original.getStereo()));
+        org.hamcrest.MatcherAssert.assertThat("stereo was not mapped", mapped.getStereo(), is(original.getStereo()));
 
     }
 
@@ -199,7 +199,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         // map the existing element a new element - should through an IllegalArgumentException
         ITetrahedralChirality mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
 
-        Assert.assertThat(mapped, is(sameInstance(original)));
+        org.hamcrest.MatcherAssert.assertThat(mapped, is(sameInstance(original)));
     }
 
     @Test

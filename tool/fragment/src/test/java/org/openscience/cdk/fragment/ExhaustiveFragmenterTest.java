@@ -70,7 +70,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1CC");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
-        Assert.assertThat(frags, is(new String[]{"C1CCCCC1"}));
+        org.hamcrest.MatcherAssert.assertThat(frags, is(new String[]{"C1CCCCC1"}));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        Assert.assertThat(frags, is(new String[]{"c1ccccc1"}));
+        org.hamcrest.MatcherAssert.assertThat(frags, is(new String[]{"c1ccccc1"}));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        Assert.assertThat(Arrays.asList(frags), hasItems("c1ccc(cc1)C", "c1ccccc1"));
+        org.hamcrest.MatcherAssert.assertThat(Arrays.asList(frags), hasItems("c1ccc(cc1)C", "c1ccccc1"));
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(2, fragmenter.getFragmentsAsContainers().length);
 
@@ -100,7 +100,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        Assert.assertThat(frags, is(new String[]{"c1ccccc1"}));
+        org.hamcrest.MatcherAssert.assertThat(frags, is(new String[]{"c1ccccc1"}));
 
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(1, fragmenter.getFragmentsAsContainers().length);
@@ -118,7 +118,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(25, fragmenter.getFragmentsAsContainers().length);
 
-        Assert.assertThat(frags, hasItems("c1ccccc1", "c1ccc(cc1)C2(CCC(CC)C2)CC3C=CC=C3", "c1ccc(cc1)C2(C)CCC(C)C2"));
+        org.hamcrest.MatcherAssert.assertThat(frags, hasItems("c1ccccc1", "c1ccc(cc1)C2(CCC(CC)C2)CC3C=CC=C3", "c1ccc(cc1)C2(C)CCC(C)C2"));
     }
 
     @Test

@@ -344,11 +344,11 @@ public class IsotopePatternGeneratorTest extends CDKTestCase {
                                                                          .setStoreFormulas(true);
         IsotopePattern pattern = isogen.getIsotopes(mf);
         List<IsotopeContainer> isotopes = pattern.getIsotopes();
-        Assert.assertThat(isotopes.get(0).getFormulas().size(), is(1));
-        Assert.assertThat(isotopes.get(1).getFormulas().size(), is(1));
-        Assert.assertThat(isotopes.get(2).getFormulas().size(), is(2));
-        Assert.assertThat(isotopes.get(3).getFormulas().size(), is(2));
-        Assert.assertThat(isotopes.get(4).getFormulas().size(), is(3));
+        org.hamcrest.MatcherAssert.assertThat(isotopes.get(0).getFormulas().size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(isotopes.get(1).getFormulas().size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(isotopes.get(2).getFormulas().size(), is(2));
+        org.hamcrest.MatcherAssert.assertThat(isotopes.get(3).getFormulas().size(), is(2));
+        org.hamcrest.MatcherAssert.assertThat(isotopes.get(4).getFormulas().size(), is(3));
     }
 
 }

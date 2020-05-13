@@ -41,13 +41,13 @@ public class IntArrayFingerprintTest extends AbstractBitFingerprintTest {
         fp.set(219, true);
         fp.set(3, true);
         fp.set(24, true);
-        Assert.assertThat(new int[]{1, 3, 24, 55, 219},
+        org.hamcrest.MatcherAssert.assertThat(new int[]{1, 3, 24, 55, 219},
                           is(fp.getSetbits()));
         fp.set(24, false);
-        Assert.assertThat(new int[]{1, 3, 55, 219},
+        org.hamcrest.MatcherAssert.assertThat(new int[]{1, 3, 55, 219},
                           is(fp.getSetbits()));
         fp.set(26, true);
-        Assert.assertThat(new int[]{1, 3, 26, 55, 219},
+        org.hamcrest.MatcherAssert.assertThat(new int[]{1, 3, 26, 55, 219},
                           is(fp.getSetbits()));
     }
 

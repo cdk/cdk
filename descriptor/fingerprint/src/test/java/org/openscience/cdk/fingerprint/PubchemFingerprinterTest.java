@@ -347,13 +347,13 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);
         IBitFingerprint subBits = fpr.getBitFingerprint(subStructure);
 
-        Assert.assertThat(
+        org.hamcrest.MatcherAssert.assertThat(
                 subBits.asBitSet(),
                 is(asBitSet(9, 10, 14, 18, 19, 33, 143, 146, 255, 256, 283, 284, 285, 293, 301, 332, 344, 349, 351,
                         353, 355, 368, 370, 371, 376, 383, 384, 395, 401, 412, 416, 421, 423, 434, 441, 446, 449, 454,
                         455, 464, 470, 471, 480, 489, 490, 500, 502, 507, 513, 514, 516, 520, 524, 531, 532, 545, 546,
                         549, 552, 556, 558, 564, 570, 586, 592, 599, 600, 607, 633, 658, 665)));
-        Assert.assertThat(
+        org.hamcrest.MatcherAssert.assertThat(
                 superBits.asBitSet(),
                 is(asBitSet(9, 10, 11, 14, 18, 19, 33, 34, 143, 146, 150, 153, 255, 256, 257, 258, 283, 284, 285, 293,
                         301, 332, 344, 349, 351, 353, 355, 368, 370, 371, 374, 376, 383, 384, 395, 401, 412, 416, 417,

@@ -827,8 +827,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(mol);
         Assert.assertEquals(2, mol.getAtom(0).getValency().intValue());
         Assert.assertEquals(3, mol.getAtom(1).getValency().intValue());
-        Assert.assertThat(mol.getAtom(2).getValency(), is(not(0)));
-        Assert.assertThat(mol.getAtom(2).getValency(), is(4));
+        org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), is(not(0)));
+        org.hamcrest.MatcherAssert.assertThat(mol.getAtom(2).getValency(), is(4));
         Assert.assertEquals(0, mol.getAtom(3).getValency().intValue());
     }
 
@@ -1013,7 +1013,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.read(molecule);
         reader.close();
         IAtom atom = molecule.getAtom(55);
-        Assert.assertThat(atom, CoreMatchers.<IAtom>instanceOf(IPseudoAtom.class));
+        org.hamcrest.MatcherAssert.assertThat(atom, CoreMatchers.<IAtom>instanceOf(IPseudoAtom.class));
         Assert.assertEquals("R", ((IPseudoAtom)atom).getLabel());
     }
 

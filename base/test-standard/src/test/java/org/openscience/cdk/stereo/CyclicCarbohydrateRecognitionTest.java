@@ -53,7 +53,7 @@ import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn.Righ
 public class CyclicCarbohydrateRecognitionTest {
 
     @Test public void haworthAnticlockwise() throws Exception {
-        Assert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
+        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(4.1, 3.0),
                 new Point2d(3.3, 2.6),
                 new Point2d(3.3, 1.8),
@@ -65,7 +65,7 @@ public class CyclicCarbohydrateRecognitionTest {
 
 
     @Test public void haworthClockwise() throws Exception {
-        Assert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
+        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(4.1, 3.0),
                 new Point2d(4.8, 2.6),
                 new Point2d(4.8, 1.8),
@@ -76,7 +76,7 @@ public class CyclicCarbohydrateRecognitionTest {
     }
 
     @Test public void chairAnticlockwise() throws Exception {
-        Assert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
+        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(0.9, 2.6),
                 new Point2d(0.1, 2.4),
                 new Point2d(0.2, 3.1),
@@ -87,7 +87,7 @@ public class CyclicCarbohydrateRecognitionTest {
     }
 
     @Test public void chairClockwise() throws Exception {
-        Assert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
+        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(1.7, 2.4),
                 new Point2d(1.3, 3.1),
                 new Point2d(0.5, 2.9),
@@ -99,7 +99,7 @@ public class CyclicCarbohydrateRecognitionTest {
     
 
     @Test public void boatAnticlockwise() throws Exception {
-        Assert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
+        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(3.3, 3.8),
                 new Point2d(2.1, 3.8),
                 new Point2d(1.6, 4.9),
@@ -110,7 +110,7 @@ public class CyclicCarbohydrateRecognitionTest {
     }
 
     @Test public void boatClockwise() throws Exception {
-        Assert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
+        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
                 new Point2d(3.8, 4.8),
                 new Point2d(3.1, 4.2),
                 new Point2d(2.3, 4.2),
@@ -675,11 +675,11 @@ public class CyclicCarbohydrateRecognitionTest {
                                         IAtom focus,
                                         ITetrahedralChirality.Stereo winding,
                                         IAtom ... neighbors) {
-        Assert.assertThat(element, is(instanceOf(ITetrahedralChirality.class)));
+        org.hamcrest.MatcherAssert.assertThat(element, is(instanceOf(ITetrahedralChirality.class)));
         ITetrahedralChirality actual = (ITetrahedralChirality) element;
-        Assert.assertThat(actual.getChiralAtom(), is(sameInstance(focus)));
-        Assert.assertThat(actual.getStereo(), is(winding));
-        Assert.assertThat(actual.getLigands(), is(neighbors));
+        org.hamcrest.MatcherAssert.assertThat(actual.getChiralAtom(), is(sameInstance(focus)));
+        org.hamcrest.MatcherAssert.assertThat(actual.getStereo(), is(winding));
+        org.hamcrest.MatcherAssert.assertThat(actual.getLigands(), is(neighbors));
     }
     
     static IAtom atom(String symbol, int h, double x, double y) {

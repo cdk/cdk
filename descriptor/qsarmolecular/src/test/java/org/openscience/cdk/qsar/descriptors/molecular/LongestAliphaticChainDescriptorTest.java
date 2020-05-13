@@ -107,6 +107,6 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles(smi);
         descriptor.setParameters(new Object[]{true});
-        Assert.assertThat(descriptor.calculate(mol).getValue().toString(), is(Integer.toString(expected)));
+        org.hamcrest.MatcherAssert.assertThat(descriptor.calculate(mol).getValue().toString(), is(Integer.toString(expected)));
     }
 }

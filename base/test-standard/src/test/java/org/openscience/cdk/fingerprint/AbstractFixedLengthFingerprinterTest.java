@@ -77,7 +77,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         BitSet superBS = fingerprinter.getBitFingerprint(superStructure).asBitSet();
         BitSet subBS = fingerprinter.getBitFingerprint(subStructure).asBitSet();
 
-        Assert.assertThat(and(superBS, subBS), is(subBS));
+        org.hamcrest.MatcherAssert.assertThat(and(superBS, subBS), is(subBS));
     }
 
     /**
@@ -132,7 +132,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         BitSet superBS = fingerprinter.getBitFingerprint(superStructure).asBitSet();
         BitSet subBS = fingerprinter.getBitFingerprint(subStructure).asBitSet();
 
-        Assert.assertThat(and(superBS, subBS), is(subBS));
+        org.hamcrest.MatcherAssert.assertThat(and(superBS, subBS), is(subBS));
     }
 
     /**

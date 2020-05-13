@@ -130,7 +130,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
         for (IAtom atom : molecule.atoms())
             atom.setCharge(0.0);
 
-        Assert.assertThat(peoe.assignGasteigerSigmaMarsiliFactors(molecule).length,
+        org.hamcrest.MatcherAssert.assertThat(peoe.assignGasteigerSigmaMarsiliFactors(molecule).length,
                           is(not(0)));
 
     }

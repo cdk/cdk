@@ -1109,7 +1109,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
             if (expected == null)
                 assertNull(actual);
             else
-                Assert.assertThat(actual,
+                org.hamcrest.MatcherAssert.assertThat(actual,
                                   is(closeTo(expected, 0.001)));
         }
     }

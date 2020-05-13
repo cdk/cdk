@@ -1422,13 +1422,13 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula mf =
                 MolecularFormulaManipulator.getMolecularFormula("C202H315N55O64S6",
                                                                 bldr);
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
                           closeTo(4730.397, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
                           closeTo(4730.397, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
                           closeTo(4727.140, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
                           closeTo(4729.147, 0.001));
     }
 
@@ -1437,13 +1437,13 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula mf =
                 MolecularFormulaManipulator.getMolecularFormula("[12]C200[13]C2[1]H315[14]N55[16]O64[32]S6",
                                                                bldr);
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
                           closeTo(4729.147, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
                           closeTo(4730.397, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
                           closeTo(4729.147, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
                           closeTo(4729.147, 0.001));
     }
 
@@ -1452,13 +1452,13 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         IMolecularFormula mf =
                 MolecularFormulaManipulator.getMolecularFormula("C200[13]C2H315N55O64S6",
                                                                 bldr);
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeight),
                           closeTo(4732.382, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MolWeightIgnoreSpecified),
                           closeTo(4730.397, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MonoIsotopic),
                           closeTo(4729.147, 0.001));
-        Assert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
+        org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
                           closeTo(4731.154, 0.001));
     }
 }

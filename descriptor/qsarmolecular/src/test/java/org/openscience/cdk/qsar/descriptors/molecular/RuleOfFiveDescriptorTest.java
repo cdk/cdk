@@ -61,7 +61,7 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC1=CC(NC(=O)CC)=CC(CCC)=C1"); // nRot = 10 (excl. amide C-N bond)
         addExplicitHydrogens(mol);
-        Assert.assertThat(((IntegerResult) descriptor.calculate(mol).getValue()).intValue(), is(0));
+        org.hamcrest.MatcherAssert.assertThat(((IntegerResult) descriptor.calculate(mol).getValue()).intValue(), is(0));
     }
 
     @Test
@@ -71,6 +71,6 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCCC1=CC(CCC)=CC(NC(=O)CC)=C1"); // nRot = 11 (excl. amide C-N bond)
         addExplicitHydrogens(mol);
-        Assert.assertThat(((IntegerResult) descriptor.calculate(mol).getValue()).intValue(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(((IntegerResult) descriptor.calculate(mol).getValue()).intValue(), is(1));
     }
 }
