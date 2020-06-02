@@ -140,7 +140,7 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
         atomloop: for (int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++) {
             IAtom atom = (IAtom) ac.getAtom(atomIndex);
             // checking for O and N atoms where the formal charge is >= 0
-            if ((atom.getSymbol().equals("O") || atom.getSymbol().equals("N")) && atom.getFormalCharge() >= 0) {
+            if ((atom.getAtomicNumber() == IAtom.O || atom.getAtomicNumber() == IAtom.N) && atom.getFormalCharge() >= 0) {
                 // implicit hydrogens
                 Integer implicitH = atom.getImplicitHydrogenCount();
                 if (implicitH == CDKConstants.UNSET) implicitH = 0;
@@ -151,7 +151,7 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
                 // explicit hydrogens
                 java.util.List neighbours = ac.getConnectedAtomsList(atom);
                 for (Object neighbour : neighbours) {
-                    if (((IAtom) neighbour).getSymbol().equals("H")) {
+                    if (((IAtom) neighbour).getAtomicNumber() == IAtom.H) {
                         hBondDonors++;
                         continue atomloop;
                     }
