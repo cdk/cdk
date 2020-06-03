@@ -1481,5 +1481,6 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         roundtrip("[2]H2+", "[[2]H2]+");
         // +2 => 2+ with brackets
         roundtrip("[2H]2+2", "[[2]H2]2+");
+        roundtrip("H+", "[H]+");
     }
 }

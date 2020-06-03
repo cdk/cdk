@@ -750,9 +750,9 @@ public class MolecularFormulaManipulator {
 
         // Extract charge from String when contains []X- format
         Integer charge = null;
-        if ((stringMF.contains("[") && stringMF.contains("]")) && (stringMF.contains("+") || stringMF.contains(HYPHEN_STR) || stringMF.contains(MINUS_STR))) {
+        if ((stringMF.contains("+") || stringMF.contains(HYPHEN_STR) || stringMF.contains(MINUS_STR))) {
             int pos = findChargePosition(stringMF);
-            if (pos >= 0) {
+            if (pos >= 0 && pos != stringMF.length()) {
                 charge = parseCharge(new CharIter(pos, stringMF));
                 stringMF = stringMF.substring(0, pos);
                 if (stringMF.charAt(0) == '[' &&
@@ -827,7 +827,6 @@ public class MolecularFormulaManipulator {
             pos--;
         if (pos == mark2 && formula.charAt(pos) != ']')
             pos = mark1; // not a charge CH3- we sucked up a number
-        if (pos == 0) return -1;
         return pos+1;
     }
 
