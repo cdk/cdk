@@ -630,10 +630,21 @@ public class MolecularFormulaManipulator {
         return c >= '0' && c <= '9';
     }
 
+    private static boolean isSign(char c) {
+        return c == '+' || c == '-' || c == MINUS;
+    }
+
     // helper class for parsing MFs
     private static final class CharIter {
         int pos;
         String str;
+
+
+        public CharIter(int pos, String str) {
+            this.pos = pos;
+            this.str = str;
+        }
+
 
         char next() {
             return pos == str.length() ? '\0' : str.charAt(pos++);
@@ -652,6 +663,20 @@ public class MolecularFormulaManipulator {
             if (c != '\0')
                 pos--;
             return res;
+        }
+
+        Elements nextElement() {
+            char c1 = next();
+            if (!isUpper(c1)) {
+                if (c1 != '\0') pos--;
+                return null;
+            }
+            char c2 = next();
+            if (!isLower(c2)) {
+                if (c2 != '\0') pos--;
+                return Elements.ofString("" + c1);
+            }
+            return Elements.ofString("" + c1 + c2);
         }
 
         boolean nextIf(char c) {
@@ -675,18 +700,14 @@ public class MolecularFormulaManipulator {
             mass = iter.nextUInt();
             if (mass < 0)
                 return false;
+            elem = iter.nextElement(); // optional
             if (!iter.nextIf(']'))
                 return false;
         }
-        char c1 = iter.next();
-        char c2 = iter.next();
-        if (!isLower(c2)) {
-            // could use a switch, see SMARTS parser
-            elem = Elements.ofString("" + c1);
-            if (c2 != '\0')
-                iter.pos--;
-        } else {
-            elem = Elements.ofString("" + c1 + c2);
+        if (elem == null) {
+            elem = iter.nextElement();
+            if (elem == null)
+                return false;
         }
         count = iter.nextUInt();
         if (count < 0)
@@ -730,13 +751,19 @@ public class MolecularFormulaManipulator {
         // Extract charge from String when contains []X- format
         Integer charge = null;
         if ((stringMF.contains("[") && stringMF.contains("]")) && (stringMF.contains("+") || stringMF.contains(HYPHEN_STR) || stringMF.contains(MINUS_STR))) {
-            charge = extractCharge(stringMF);
-            stringMF = cleanMFfromCharge(stringMF);
+            int pos = findChargePosition(stringMF);
+            if (pos >= 0) {
+                charge = parseCharge(new CharIter(pos, stringMF));
+                stringMF = stringMF.substring(0, pos);
+                if (stringMF.charAt(0) == '[' &&
+                    stringMF.charAt(stringMF.length()-1) == ']')
+                    stringMF = stringMF.substring(1, stringMF.length()-1);
+            }
         }
         if (stringMF.isEmpty())
             return null;
         int len = stringMF.length();
-        CharIter iter = new CharIter();
+        CharIter iter = new CharIter(0, stringMF);
         iter.str = stringMF;
         while (iter.pos < len) {
             if (!parseIsotope(iter, formula, assumeMajorIsotope)) {
@@ -750,57 +777,58 @@ public class MolecularFormulaManipulator {
         return formula;
     }
 
-    /**
-     * Extract the molecular formula when it is defined with charge. e.g. [O3S]2-.
-     *
-     * @param formula  The formula to inspect
-     * @return         The corrected formula
-     */
-    private static String cleanMFfromCharge(String formula) {
-        if (!(formula.contains("[") && formula.contains("]"))) return formula;
-        boolean startBreak = false;
-        String finalFormula = "";
-        for (int f = 0; f < formula.length(); f++) {
-            char thisChar = formula.charAt(f);
-            if (thisChar == '[') {
-                // start
-                startBreak = true;
-            } else if (thisChar == ']') {
+
+    private static int parseCharge(CharIter iter) {
+        int sign = 0;
+        int number = iter.nextUInt();
+        switch (iter.next()) {
+            case '+':
+                sign = +1;
                 break;
-            } else if (startBreak) finalFormula += thisChar;
+            case HYPHEN:
+            case MINUS:
+                sign = -1;
+                break;
         }
-        return finalFormula;
+        if (number < 0)
+            number = iter.nextUInt();
+        if (number < 0)
+            number = 1;
+        if (sign == 0) {
+            switch (iter.next()) {
+                case '+':
+                    sign = +1;
+                    break;
+                case HYPHEN:
+                case MINUS:
+                    sign = -1;
+                    break;
+            }
+        }
+        return sign * number;
     }
 
     /**
-     * Extract the charge given a molecular formula format [O3S]2-.
+     * Extract the charge position given a molecular formula format [O3S]2-.
      *
      * @param formula The formula to inspect
-     * @return        The charge
+     * @return        The charge position in the string
      */
-    private static int extractCharge(String formula) {
-
-        if (!(formula.contains("[") && formula.contains("]") && (formula.contains("+") || formula.contains(HYPHEN_STR) || formula.contains(MINUS_STR))))
-            return 0;
-
-        boolean finishBreak = false;
-        String multiple = "";
-        for (int f = 0; f < formula.length(); f++) {
-            char thisChar = formula.charAt(f);
-            if (thisChar == ']') {
-                // finish
-                finishBreak = true;
-            } else if (thisChar == HYPHEN || thisChar == MINUS) {
-                multiple = HYPHEN + multiple;
-                break;
-            } else if (thisChar == '+') {
-                break;
-            } else if (finishBreak) {
-                multiple += thisChar;
-            }
-        }
-        if (multiple.isEmpty() || multiple.equals(HYPHEN_STR) || multiple.equals(MINUS_STR)) multiple += 1;
-        return Integer.valueOf(multiple);
+    private static int findChargePosition(String formula) {
+        int end  = formula.length() - 1;
+        int pos  = end;
+        while (pos >= 0 && isSign(formula.charAt(pos)))
+            pos--;
+        int mark1 = pos;
+        while (pos >= 0 && isDigit(formula.charAt(pos)))
+            pos--;
+        int mark2 = pos;
+        while (pos >= 0 && isSign(formula.charAt(pos)))
+            pos--;
+        if (pos == mark2 && formula.charAt(pos) != ']')
+            pos = mark1; // not a charge CH3- we sucked up a number
+        if (pos == 0) return -1;
+        return pos+1;
     }
 
     /**
@@ -1359,18 +1387,18 @@ public class MolecularFormulaManipulator {
         boolean finalBreak = false;
 
         int innerMostBracket = formula.lastIndexOf("(");
-        
+
         if (innerMostBracket<0)
         	return formula;
-        
+
         String finalformula = formula.substring(0, innerMostBracket);
         String multipliedformula = "";
         String formulaEnd = "";
         String multiple = "";
-        
+
         for (int f = innerMostBracket + 1; f < formula.length(); f++) {
             char thisChar = formula.charAt(f);
-            
+
         	if ( finalBreak ) {
         		if ( isDigit(thisChar) ){
                     multiple += thisChar;
@@ -1386,7 +1414,7 @@ public class MolecularFormulaManipulator {
         	}
         }
         finalformula += muliplier(multipliedformula, multiple.isEmpty() ? 1:Integer.valueOf(multiple)) + formulaEnd;
-        
+
         if (finalformula.contains("("))
         	return breakExtractor(finalformula);
         else
