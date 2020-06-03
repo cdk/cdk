@@ -25,6 +25,7 @@
 package org.openscience.cdk.io;
 
 import com.google.common.collect.ImmutableSet;
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -48,6 +49,10 @@ import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -430,8 +435,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 linecount++;
 
                 bonds[i] = readBondFast(line, molecule.getBuilder(), atoms, explicitValence, linecount);
-                hasQueryBonds = hasQueryBonds
-                        || (bonds[i].getOrder() == IBond.Order.UNSET && !bonds[i].getFlag(CDKConstants.ISAROMATIC));
+                hasQueryBonds = hasQueryBonds ||
+                                bonds[i] instanceof IQueryBond ||
+                                (bonds[i].getOrder() == IBond.Order.UNSET &&
+                                 !bonds[i].getFlag(CDKConstants.ISAROMATIC));
             }
 
             if (!hasQueryBonds)
@@ -517,7 +524,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // sanity check that we have a decent molecule, query bonds mean we
             // don't have a hydrogen count for atoms and stereo perception isn't
             // currently possible
-            if (!hasQueryBonds && addStereoElements.isSet() && hasX && hasY) {
+            if (!(outputContainer instanceof IQueryAtomContainer) && addStereoElements.isSet() && hasX && hasY) {
                 if (hasZ) { // has 3D coordinates
                     outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
                             .createAll());
@@ -894,6 +901,47 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     // final int    to    = readMolfileInt(line, 6) - 1;
                     final String group = input.readLine();
                     if (group == null) return;
+                    break;
+
+                // M  ALS aaannn e 11112222 ...
+                // 012345678901234567
+                // aaa:  atom index
+                // nnn:  count
+                // e:    T/F(default) exclusion list
+                // 1111: symbol
+                case M_ALS:
+                    index = readUInt(line, 7, 3)-1;
+                    // count = readUInt(line, 10, 3); // not needed
+                    {
+                        boolean negate = line.charAt(13) == 'T' ||
+                                         line.charAt(14) == 'T';
+                        Expr expr = new Expr(Expr.Type.TRUE);
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 16; i < line.length(); i++) {
+                            if (line.charAt(i) != ' ') {
+                                sb.append(line.charAt(i));
+                            } else if (sb.length() != 0) {
+                                int elem = Elements.ofString(sb.toString()).number();
+                                if (elem != 0)
+                                    expr.or(new Expr(Expr.Type.ELEMENT, elem));
+                                sb.setLength(0);
+                            }
+                        }
+                        if (sb.length() != 0) {
+                            int elem = Elements.ofString(sb.toString()).number();
+                            if (elem != 0)
+                                expr.or(new Expr(Expr.Type.ELEMENT, elem));
+                        }
+                        if (negate)
+                            expr.negate();
+                        IAtom atom = container.getAtom(index);
+                        if (AtomRef.deref(atom) instanceof QueryAtom) {
+                            QueryAtom ref = (QueryAtom)AtomRef.deref(atom);
+                            ref.setExpression(expr);
+                        } else {
+                            container.setAtom(index, new QueryAtom(expr));
+                        }
+                    }
                     break;
 
                 // M  CHGnn8 aaa vvv ...
