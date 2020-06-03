@@ -315,6 +315,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      */
     private IAtomContainer readAtomContainer(IAtomContainer molecule) throws CDKException {
 
+        boolean isQuery = molecule instanceof IQueryAtomContainer;
         IAtomContainer outputContainer = null;
         Map<IAtom,Integer> parities = new HashMap<>();
 
@@ -394,7 +395,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 line = input.readLine();
                 linecount++;
 
-                final IAtom atom = readAtomFast(line, molecule.getBuilder(), parities, linecount);
+                final IAtom atom = readAtomFast(line, molecule.getBuilder(), parities, linecount, isQuery);
 
                 atoms[i] = atom;
 
@@ -429,19 +430,18 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
             }
 
-            boolean hasQueryBonds = false;
             for (int i = 0; i < nBonds; i++) {
                 line = input.readLine();
                 linecount++;
 
-                bonds[i] = readBondFast(line, molecule.getBuilder(), atoms, explicitValence, linecount);
-                hasQueryBonds = hasQueryBonds ||
+                bonds[i] = readBondFast(line, molecule.getBuilder(), atoms, explicitValence, linecount, isQuery);
+                isQuery = isQuery ||
                                 bonds[i] instanceof IQueryBond ||
                                 (bonds[i].getOrder() == IBond.Order.UNSET &&
                                  !bonds[i].getFlag(CDKConstants.ISAROMATIC));
             }
 
-            if (!hasQueryBonds)
+            if (!isQuery)
                 outputContainer = molecule;
             else
                 outputContainer = new QueryAtomContainer(molecule.getBuilder());
@@ -514,7 +514,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             for (int i = offset; i < outputContainer.getAtomCount(); i++) {
                 int valence = explicitValence[i - offset];
                 if (valence < 0) {
-                    hasQueryBonds = true; // also counts aromatic bond as query
+                    isQuery = true; // also counts aromatic bond as query
                 } else {
                     int unpaired = outputContainer.getConnectedSingleElectronsCount(outputContainer.getAtom(i));
                     applyMDLValenceModel(outputContainer.getAtom(i), valence + unpaired, unpaired);
@@ -638,7 +638,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     IAtom readAtomFast(String line, IChemObjectBuilder builder, int lineNum) throws CDKException, IOException {
-        return readAtomFast(line, builder, Collections.<IAtom,Integer>emptyMap(), lineNum);
+        return readAtomFast(line, builder, Collections.<IAtom,Integer>emptyMap(), lineNum, false);
     }
 
     /**
@@ -661,7 +661,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @param lineNum the line number - for printing error messages
      * @return a new atom instance
      */
-    IAtom readAtomFast(String line, IChemObjectBuilder builder, Map<IAtom,Integer> parities, int lineNum) throws CDKException, IOException {
+    IAtom readAtomFast(String line, IChemObjectBuilder builder, Map<IAtom,Integer> parities, int lineNum, boolean isQuery) throws CDKException, IOException {
 
         // The line may be truncated and it's checked in reverse at the specified
         // lengths:
@@ -672,7 +672,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         String symbol;
         double x, y, z;
-        int massDiff = 0, charge = 0, parity = 0, valence = 0, mapping = 0;
+        int massDiff = 0, charge = 0, parity = 0, valence = 0, mapping = 0, hcount = 0;
 
         int length = length(line);
         if (length > 69) // excess data we should check all fields
@@ -692,6 +692,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 valence = readMolfileInt(line, 48);
             case 48: // bbb: stereo care [query]
             case 45: // hhh: hydrogen count + 1 [query]
+                hcount = readMolfileInt(line, 42);
             case 42: // sss: stereo parity
                 parity = toInt(line.charAt(41));
             case 39: // ccc: charge
@@ -713,6 +714,17 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         IAtom atom = createAtom(symbol, builder, lineNum);
 
+        if (isQuery) {
+            Expr expr = new Expr(Expr.Type.ELEMENT, atom.getAtomicNumber());
+            if (hcount != 0) {
+                if (hcount < 0)
+                    hcount = 0;
+                expr.and(new Expr(Expr.Type.IMPL_H_COUNT, hcount));
+            }
+            atom = new QueryAtom(builder);
+            ((QueryAtom)atom).setExpression(expr);
+        }
+
         atom.setPoint3d(new Point3d(x, y, z));
         atom.setFormalCharge(charge);
         atom.setStereoParity(parity);
@@ -732,7 +744,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         if (mapping != 0) atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, mapping);
 
+
         return atom;
+    }
+
+    // for testing
+    IBond readBondFast(String line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int lineNum) throws CDKException {
+        return readBondFast(line, builder, atoms, explicitValence, lineNum, false);
     }
 
     /**
@@ -756,7 +774,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @throws CDKException thrown if the input was malformed or didn't make
      *                      sense
      */
-    IBond readBondFast(String line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int lineNum)
+    IBond readBondFast(String line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int lineNum,
+                       boolean isQuery)
             throws CDKException {
 
         // The line may be truncated and it's checked in reverse at the specified
@@ -829,6 +848,18 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             explicitValence[v] += type;
         } else {
             explicitValence[u] = explicitValence[v] = Integer.MIN_VALUE;
+        }
+
+        if (isQuery && bond.getClass() != QueryBond.class) {
+            IBond.Order order = bond.getOrder();
+            Expr expr = null;
+            if (bond.isAromatic()) {
+                expr = new Expr(Expr.Type.IS_AROMATIC);
+            } else {
+                expr = new Expr(Expr.Type.ORDER,
+                                bond.getOrder().numeric());
+            }
+            bond = new QueryBond(atoms[u], atoms[v], expr);
         }
 
         return bond;
