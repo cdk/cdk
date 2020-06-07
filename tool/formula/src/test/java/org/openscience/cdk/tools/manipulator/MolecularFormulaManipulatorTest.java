@@ -1461,4 +1461,26 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         org.hamcrest.MatcherAssert.assertThat(MolecularFormulaManipulator.getMass(mf, MostAbundant),
                           closeTo(4731.154, 0.001));
     }
+
+    public void roundtrip(String mfStr, String expected) {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IMolecularFormula mf =
+            MolecularFormulaManipulator.getMolecularFormula(mfStr, bldr);
+        String actual = getString(mf, false, true);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test public void testIsotopeAndChargeParsing() {
+        // proffered input
+        roundtrip("[[2]H2]-", "[[2]H2]-");
+        // missing outer brackets, isotope+element in square brackets
+        roundtrip("[[2H]2]-", "[[2]H2]-");
+        roundtrip("[[2H]2]+", "[[2]H2]+"); // [2H]2+ is ambiguous
+        // missing outer brackets, isotope in square brackets
+        roundtrip("[2]H2-", "[[2]H2]-");
+        roundtrip("[2]H2+", "[[2]H2]+");
+        // +2 => 2+ with brackets
+        roundtrip("[2H]2+2", "[[2]H2]2+");
+        roundtrip("H+", "[H]+");
+    }
 }
