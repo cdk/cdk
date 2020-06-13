@@ -632,7 +632,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         line.append("0");
                 }
                 if (writeDefaultProps.isSet())
-                    line.append("  0  0  0 ");
+                    line.append("  0  0  0");
                 line.append('\n');
                 writer.write(line.toString());
             }
