@@ -74,10 +74,7 @@ public class INChIPlainTextFormat extends SimpleChemFormatMatcher implements ICh
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("INChI=")) {
-            return true;
-        }
-        return false;
+        return line.startsWith("InChI=");
     }
 
     /** {@inheritDoc} */
