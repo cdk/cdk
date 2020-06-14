@@ -87,8 +87,8 @@ import java.util.Set;
  * <pre>
  * new StructureDiagramGenerator().generateCoordinates(molecule);
  * </pre>
- * The older versions of the API using the following a set/generate/get idiom
- * but this performs an unnecessary (in most cases) copy.
+ * The older versions of the API suggested using the following a
+ * set/generate/get idiom but this performs an unnecessary (in most cases) copy.
  * <pre>
  * StructureDiagramGenerator sdg = new StructureDiagramGenerator();
  * sdg.setMolecule(molecule); // cloned!
@@ -96,7 +96,7 @@ import java.util.Set;
  * molecule = sdg.getMolecule();
  * </pre>
  * This idiom only needs to be used when 'fixing' parts of an existing
- * layout: {@link #setMolecule(IAtomContainer, boolean, Set, Set)}
+ * layout with {@link #setMolecule(IAtomContainer, boolean, Set, Set)}
  * <br/>
  *
  * @author steinbeck
