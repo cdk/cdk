@@ -79,19 +79,25 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Generates 2D coordinates for a molecule for which only connectivity is known
- * or the coordinates have been discarded for some reason. Usage: Create an
- * instance of this class, thereby assigning a molecule, call
- * generateCoordinates() and get your molecule back:
+ * Generates 2D coordinates for a molecule.
+ *
+ * <b>Basic Usage:</b>
+ * If you just want to generate coordinate for a molecule (or reaction) you
+ * can use the following one-liner:
+ * <pre>
+ * new StructureDiagramGenerator().generateCoordinates(molecule);
+ * </pre>
+ * The older versions of the API suggested using the following a
+ * set/generate/get idiom but this performs an unnecessary (in most cases) copy.
  * <pre>
  * StructureDiagramGenerator sdg = new StructureDiagramGenerator();
- * sdg.setMolecule(someMolecule);
+ * sdg.setMolecule(molecule); // cloned!
  * sdg.generateCoordinates();
- * IAtomContainer layedOutMol = sdg.getMolecule();
+ * molecule = sdg.getMolecule();
  * </pre>
- * 
- * <p>The method will fail if the molecule is disconnected. The
- * partitionIntoMolecules(AtomContainer) can help here.
+ * This idiom only needs to be used when 'fixing' parts of an existing
+ * layout with {@link #setMolecule(IAtomContainer, boolean, Set, Set)}
+ * <br/>
  *
  * @author steinbeck
  * @cdk.created 2004-02-02
@@ -104,7 +110,6 @@ import java.util.Set;
  * @cdk.githash
  * @cdk.bug 1536561
  * @cdk.bug 1788686
- * @see org.openscience.cdk.graph.ConnectivityChecker#partitionIntoMolecules(IAtomContainer)
  */
 public class StructureDiagramGenerator {
 

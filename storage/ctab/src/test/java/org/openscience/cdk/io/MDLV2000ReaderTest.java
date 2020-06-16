@@ -29,6 +29,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -49,6 +50,9 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
@@ -1825,6 +1829,37 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                        instanceOf(IPseudoAtom.class));
             assertThat(((IPseudoAtom)mol.getAtom(0)).getLabel(),
                        is("Blah"));
+        }
+    }
+
+    @Test public void atomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_atomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
+            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
+            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            QueryAtom           queryAtom = (QueryAtom) deref;
+            Expr expr = queryAtom.getExpression();
+            Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
+                .or(new Expr(Expr.Type.ELEMENT, 7)) // N
+                .or(new Expr(Expr.Type.ELEMENT, 8)); // O
+            assertThat(expr, is(expected));
+        }
+    }
+
+    @Test public void notatomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_notatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
+            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
+            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            QueryAtom           queryAtom = (QueryAtom) deref;
+            Expr expr = queryAtom.getExpression();
+            Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
+                                   .or(new Expr(Expr.Type.ELEMENT, 7)) // N
+                                   .or(new Expr(Expr.Type.ELEMENT, 8)); // O
+            expected = expected.negate();
+            assertThat(expr, is(expected));
         }
     }
 }
