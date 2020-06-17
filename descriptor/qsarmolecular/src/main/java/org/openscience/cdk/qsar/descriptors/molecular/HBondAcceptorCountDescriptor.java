@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -173,13 +174,13 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
         // labelled for loop to allow for labelled continue statements within the loop
         atomloop: for (IAtom atom : ac.atoms()) {
             // looking for suitable nitrogen atoms
-            if (atom.getSymbol().equals("N") && atom.getFormalCharge() <= 0) {
+            if (atom.getAtomicNumber() == IElement.N && atom.getFormalCharge() <= 0) {
 
                 // excluding nitrogens that are adjacent to an oxygen
                 List<IBond> bonds = ac.getConnectedBondsList(atom);
                 int nPiBonds = 0;
                 for (IBond bond : bonds) {
-                    if (bond.getOther(atom).getSymbol().equals("O")) continue atomloop;
+                    if (bond.getOther(atom).getAtomicNumber() == IElement.O) continue atomloop;
                     if (IBond.Order.DOUBLE.equals(bond.getOrder())) nPiBonds++;
                 }
 
@@ -190,13 +191,13 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
                 hBondAcceptors++;
             }
             // looking for suitable oxygen atoms
-            else if (atom.getSymbol().equals("O") && atom.getFormalCharge() <= 0) {
+            else if (atom.getAtomicNumber() == IElement.O && atom.getFormalCharge() <= 0) {
                 //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
                 List<IBond> neighbours = ac.getConnectedBondsList(atom);
                 for (IBond bond : neighbours) {
                     IAtom neighbor = bond.getOther(atom);
-                    if (neighbor.getSymbol().equals("N") ||
-                        (neighbor.getSymbol().equals("C") &&
+                    if (neighbor.getAtomicNumber() == IElement.N ||
+                        (neighbor.getAtomicNumber() == IElement.C &&
                          neighbor.isAromatic() &&
                          bond.getOrder() != IBond.Order.DOUBLE))
                         continue atomloop;;
