@@ -265,12 +265,12 @@ final class LayoutRefiner {
                     amax = a1;
                 }
                 if (b1 < b2) {
-                    bmin = a1;
-                    bmax = a2;
+                    bmin = b1;
+                    bmax = b2;
                 }
                 else {
-                    bmin = a2;
-                    bmax = a1;
+                    bmin = b2;
+                    bmax = b1;
                 }
                 int cmp = Integer.compare(amin, bmin);
                 if (cmp != 0) return cmp;
