@@ -24,6 +24,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -154,12 +155,12 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
         int c4sp3 = 0;
 
         for (IAtom atom : container.atoms()) {
-            if (!atom.getSymbol().equals("C") && !atom.getSymbol().equals("c")) continue;
+            if (atom.getAtomicNumber() != IElement.C) continue;
             List<IAtom> connectedAtoms = container.getConnectedAtomsList(atom);
 
             int cc = 0;
             for (IAtom connectedAtom : connectedAtoms) {
-                if (connectedAtom.getSymbol().equals("C") || connectedAtom.getSymbol().equals("c")) cc++;
+                if (connectedAtom.getAtomicNumber() == IElement.C) cc++;
             }
 
             IBond.Order maxBondOrder = getHighestBondOrder(container, atom);

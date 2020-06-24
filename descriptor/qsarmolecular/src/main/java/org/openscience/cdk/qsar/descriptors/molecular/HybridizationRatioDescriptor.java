@@ -22,6 +22,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
@@ -122,7 +123,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
             int nsp2 = 0;
             int nsp3 = 0;
             for (IAtom atom : clone.atoms()) {
-                if (!atom.getSymbol().equals("C")) continue;
+                if (atom.getAtomicNumber() != IElement.C) continue;
                 if (atom.getHybridization() == Hybridization.SP2)
                     nsp2++;
                 else if (atom.getHybridization() == Hybridization.SP3) nsp3++;
