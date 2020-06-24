@@ -27,6 +27,7 @@ import java.util.List;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -194,18 +195,18 @@ class ChiIndexUtils {
      *         environments, -1 otherwise
      */
     protected static double deltavSulphur(IAtom atom, IAtomContainer atomContainer) {
-        if (!atom.getSymbol().equals("S")) return -1;
+        if (atom.getAtomicNumber() != IElement.S) return -1;
 
         // check whether it's a S in S-S
         List<IAtom> connected = atomContainer.getConnectedAtomsList(atom);
         for (IAtom connectedAtom : connected) {
-            if (connectedAtom.getSymbol().equals("S")
+            if (connectedAtom.getAtomicNumber() == IElement.S
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE) return .89;
         }
 
         int count = 0;
         for (IAtom connectedAtom : connected) {
-            if (connectedAtom.getSymbol().equals("O")
+            if (connectedAtom.getAtomicNumber() == IElement.O
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE) count++;
         }
         if (count == 1)
@@ -226,7 +227,7 @@ class ChiIndexUtils {
      *         -1 otherwise
      */
     private static double deltavPhosphorous(IAtom atom, IAtomContainer atomContainer) {
-        if (!atom.getSymbol().equals("P")) return -1;
+        if (atom.getAtomicNumber() != IElement.P) return -1;
 
         List<IAtom> connected = atomContainer.getConnectedAtomsList(atom);
         int conditions = 0;
@@ -234,7 +235,7 @@ class ChiIndexUtils {
         if (connected.size() == 4) conditions++;
 
         for (IAtom connectedAtom : connected) {
-            if (connectedAtom.getSymbol().equals("O")
+            if (connectedAtom.getAtomicNumber() == IElement.O
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE) conditions++;
             if (atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE) conditions++;
         }

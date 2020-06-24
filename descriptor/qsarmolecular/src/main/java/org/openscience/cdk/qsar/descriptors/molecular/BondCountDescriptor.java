@@ -20,6 +20,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -140,7 +141,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
             for (IBond bond : container.bonds()) {
                 boolean hasHydrogen = false;
                 for (int i = 0; i < bond.getAtomCount(); i++) {
-                    if (bond.getAtom(i).getSymbol().equals("H")) {
+                    if (bond.getAtom(i).getAtomicNumber() == IElement.H) {
                         hasHydrogen = true;
                         break;
                     }

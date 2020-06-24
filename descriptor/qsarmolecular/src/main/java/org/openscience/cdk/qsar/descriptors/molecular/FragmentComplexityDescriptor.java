@@ -24,6 +24,7 @@ import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -120,10 +121,10 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
         int a = 0;
         double h = 0;
         for (int i = 0; i < container.getAtomCount(); i++) {
-            if (!container.getAtom(i).getSymbol().equals("H")) {
+            if (container.getAtom(i).getAtomicNumber() != IElement.H) {
                 a++;
             }
-            if (!container.getAtom(i).getSymbol().equals("H") && !container.getAtom(i).getSymbol().equals("C")) {
+            if (container.getAtom(i).getAtomicNumber() != IElement.H && container.getAtom(i).getAtomicNumber() != IElement.C) {
                 h++;
             }
         }
