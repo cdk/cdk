@@ -433,12 +433,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             for (int i = 0; i < nBonds; i++) {
                 line = input.readLine();
                 linecount++;
-
                 bonds[i] = readBondFast(line, molecule.getBuilder(), atoms, explicitValence, linecount, isQuery);
                 isQuery = isQuery ||
                                 bonds[i] instanceof IQueryBond ||
-                                (bonds[i].getOrder() == IBond.Order.UNSET &&
-                                 !bonds[i].getFlag(CDKConstants.ISAROMATIC));
+                                (bonds[i].getOrder() == IBond.Order.UNSET && !bonds[i].isAromatic());
             }
 
             if (!isQuery)
@@ -524,7 +522,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // sanity check that we have a decent molecule, query bonds mean we
             // don't have a hydrogen count for atoms and stereo perception isn't
             // currently possible
-            if (!(outputContainer instanceof IQueryAtomContainer) && addStereoElements.isSet() && hasX && hasY) {
+            if (!(outputContainer instanceof IQueryAtomContainer) && !isQuery &&
+                addStereoElements.isSet() && hasX && hasY) {
                 if (hasZ) { // has 3D coordinates
                     outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
                             .createAll());
