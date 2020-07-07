@@ -919,7 +919,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                 break;
             }
             if (stereo == IBond.Stereo.UP_OR_DOWN) return null; // squiggly line: definitely not
-            Point3d o3d = atom.getPoint3d();
+            Point3d o3d = mol.getBond(bondAdj[aidx][n]).getOther(atom).getPoint3d();
             if (a3d != null && o3d != null && a3d.z != o3d.z) {
                 wedgeOr3D = true;
                 break;
