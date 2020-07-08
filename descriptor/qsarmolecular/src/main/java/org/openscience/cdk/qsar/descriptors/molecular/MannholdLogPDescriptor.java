@@ -22,6 +22,7 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -114,8 +115,8 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
         int carbonCount = 0;
         int heteroCount = 0;
         for (IAtom atom : ac.atoms()) {
-            if (!Elements.HYDROGEN.getSymbol().equals(atom.getSymbol())) {
-                if (Elements.CARBON.getSymbol().equals(atom.getSymbol())) {
+            if (atom.getAtomicNumber() != IElement.H) {
+                if (atom.getAtomicNumber() == IElement.C) {
                     carbonCount++;
                 } else {
                     heteroCount++;
