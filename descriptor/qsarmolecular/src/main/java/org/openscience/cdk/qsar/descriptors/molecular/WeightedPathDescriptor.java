@@ -40,7 +40,7 @@ import java.util.List;
  * 
  * These decsriptors were described  by Randic ({@cdk.cite RAN84}) and characterize molecular
  * branching. Five descriptors are calculated, based on the implementation in the ADAPT
- * software package. Note that the descriptor is based on identifying <b>all</b> pahs between pairs of
+ * software package. Note that the descriptor is based on identifying <b>all</b> paths between pairs of
  * atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
  * The class returns a <code>DoubleArrayResult</code> containing the five
  * descriptors in the order described below.
