@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.openscience.cdk</groupId>
     <artifactId>cdk</artifactId>
     <name>cdk</name>
@@ -11,7 +8,6 @@
     <version>2.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://sourceforge.net/projects/cdk/</url>
-
     <modules>
         <module>bundle</module>
         <module>base</module>
@@ -23,13 +19,11 @@
         <module>legacy</module>
         <module>app</module>
     </modules>
-
     <properties>
         <argLine></argLine>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
-
     <licenses>
         <license>
             <name>GNU LGPL 2.1 or later</name>
@@ -37,19 +31,16 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
     <scm>
         <url>https://github.com/cdk/cdk</url>
         <connection>scm:git:git://github.com/cdk/cdk.git</connection>
         <developerConnection>scm:git:git@github.com:cdk/cdk.git
         </developerConnection>
     </scm>
-
     <issueManagement>
         <url>https://github.com/cdk/cdk/issues</url>
         <system>SourceForge Tracker</system>
     </issueManagement>
-
     <!-- define the cdk.repo.url and cdk.repo.snapshots.url properties in 
          ~/.m2/settings.xml -->
     <distributionManagement>
@@ -68,19 +59,15 @@
             <url>http://cdk.github.io/cdk/</url>
         </site>
     </distributionManagement>
-
     <repositories>
         <repository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            
         </repository>
     </repositories>
-
     <prerequisites>
         <maven>3.0</maven>
     </prerequisites>
-
     <!-- developer = commit access -->
     <developers>
         <developer>
@@ -104,7 +91,6 @@
             <timezone>GMT</timezone>
         </developer>
     </developers>
-
     <contributors>
         <contributor>
             <name>Sam Adams</name>
@@ -428,7 +414,6 @@
             <name>Daniel Zaharevitz</name>
         </contributor>
     </contributors>
-
     <!-- Plugin repository (EBI) is required for cdk-build-utils and
          ojdcheck to build the javadoc. -->
     <pluginRepositories>
@@ -447,8 +432,6 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
-
     <!-- centralised versions for common dependencies -->
     <dependencyManagement>
         <dependencies>
@@ -465,7 +448,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>17.0</version>
+                <version>29.0-jre</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -504,7 +487,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
@@ -512,8 +494,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -529,7 +511,6 @@
                         <exclude>**/TestMoleculeFactory.java</exclude>
                         <!-- missing functionality -->
                         <exclude>**/cdk/limitations/**</exclude>
-
                         <!-- coverage tests need updating -->
                         <exclude>**/*CoverageTest.java</exclude>
                         <!-- module suites not needed -->
@@ -571,31 +552,37 @@
                         <tag>
                             <name>cdk.set</name>
                             <placement>a</placement>
+
                             <head>Belongs to the set:</head>
                         </tag>
                         <tag>
                             <name>cdk.keyword</name>
                             <placement>a</placement>
+
                             <head>Keywords:</head>
                         </tag>
                         <tag>
                             <name>cdk.created</name>
                             <placement>a</placement>
+
                             <head>Created on:</head>
                         </tag>
                         <tag>
                             <name>cdk.require</name>
                             <placement>a</placement>
+
                             <head>Requires:</head>
                         </tag>
                         <tag>
                             <name>cdk.todo</name>
                             <placement>a</placement>
+
                             <head>To do:</head>
                         </tag>
                         <tag>
                             <name>cdk.license</name>
                             <placement>a</placement>
+
                             <head>License:</head>
                         </tag>
                     </tags>
@@ -755,8 +742,7 @@
                 <version>RELEASE</version>
             </plugin>
         </plugins>
-    </reporting>  
-
+    </reporting>
     <profiles>
         <profile>
             <id>slow-tests</id>
@@ -847,7 +833,6 @@
             </build>
         </profile>
     </profiles>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
