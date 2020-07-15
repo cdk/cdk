@@ -896,10 +896,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         }
     }
 
-    // if this test hits the timeout it's likely the users Locale is mixed, the
-    // InChI library was loaded in one mode and java is in another, the issue
-    // is InChI takes timeout in seconds and fractional seconds will be either
-    // 0.1 or 0,1 depending on locale.
+    // TODO if this test hits the timeout it's likely the users Locale is mixed
     @Test(timeout = 500)
     public void timeout() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
@@ -908,6 +905,17 @@ public class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer mol = smipar.parseSmiles(smiles);
         InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
         InChIGenerator generator = inchiFact.getInChIGenerator(mol, "W0.01");
+        assertThat(generator.getReturnStatus(), is(INCHI_RET.ERROR));
+        assertThat(generator.getLog(), containsString("Time limit exceeded"));
+    }
+    @Test(timeout = 500)
+    public void timeoutLocalizedValue() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        String smiles = "C(CCCNC(=N)N)(COCC(COP([O])(=O)OCCCCCCNC(NC1=CC(=C(C=C1)C2(C3=CC=C(C=C3OC=4C2=CC=C(C4)O)O)C)C(=O)[O])=S)OP(=O)([O])OCC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(=N)N)CCCNC(=N)N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP(OCC(COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCCNC(N)=N)CCC/[NH]=C(/N)\\[NH])OP([O])(=O)CCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP([O])(=O)OCC(COCC(CCCNC(N)=N)(CCCNC(N)=N)CCC/[NH]=C(\\[NH])/N)OP(OCC(COCC(CCCNC(N)=N)(CCC/[NH]=C(/N)\\[NH])CCCNC(N)=N)O=P([O])(OCC(COP(=OC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(N)=N)CCCNC(N)=N)COP([O])(=O)OC(COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP([O])(=O)OC(COP(OC(COP(OC(COP(=O)([O])OC(COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(N)=N)CCCNC(=N)N)COP([O])(=O)OCCCCCCNC(NC=5C=CC(=C(C5)C(=O)[O])C6(C7=CC=C(C=C7OC=8C6=CC=C(C8)O)O)C)=S)COCC(CCCNC(N)=N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)([O])=O)([O])=O)COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(=N)N)CCCNC(=N)N)([O])[O])(C)COP(OCCCCCCO)(=O)[O])[O])(=O)[O])([O])=O)(CCC/[NH]=C(\\[NH])/[NH])CCCNC(=N)N";
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
+        InChIGenerator generator = inchiFact.getInChIGenerator(mol, "W0,01"); // decimal separator: ,
         assertThat(generator.getReturnStatus(), is(INCHI_RET.ERROR));
         assertThat(generator.getLog(), containsString("Time limit exceeded"));
     }

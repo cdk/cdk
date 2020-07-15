@@ -28,7 +28,10 @@ import net.sf.jniinchi.JniInchiException;
 import net.sf.jniinchi.JniInchiInput;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 public class JniInChIInputAdapter extends JniInchiInput {
@@ -98,10 +101,23 @@ public class JniInChIInputAdapter extends JniInchiInput {
             } else if (isTimeoutOptions(op)) {
                 // only reformat if we actually have a decimal
                 if (isSubSecondTimeout(op)) {
-                    // because the JNI-InChI library is expecting an platform number, format it as such
-	                Double time = Double.parseDouble(op.substring(1));
-	                DecimalFormat format = new DecimalFormat("#.##");
-	                sbOptions.append(FLAG_CHAR).append('W').append(format.format(time));
+                    DecimalFormat format = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.ROOT));
+                    if (op.contains(",")) { // we accept ',' as decimal separator
+                        final DecimalFormatSymbols decimalFormatSymbols = format.getDecimalFormatSymbols();
+                        decimalFormatSymbols.setGroupingSeparator('\'');
+                        decimalFormatSymbols.setDecimalSeparator(',');
+                        format.setDecimalFormatSymbols(decimalFormatSymbols);
+                    }
+                    double time;
+                    try {
+                        time = format.parse(op.substring(1)).doubleValue();
+                        if (time <= 0.0) {
+                            throw new JniInchiException("Timeout value must be greater than 0.");
+                        }
+                    } catch (ParseException e) {
+                        throw new NumberFormatException(op.substring(1));
+                    }
+                    sbOptions.append(FLAG_CHAR).append('W').append(time);
                 } else {
                     sbOptions.append(FLAG_CHAR).append(op);
                 }
