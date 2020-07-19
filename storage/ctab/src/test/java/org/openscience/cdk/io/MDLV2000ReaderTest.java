@@ -69,6 +69,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
@@ -1863,5 +1864,17 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             expected = expected.negate();
             assertThat(expr, is(expected));
         }
+    }
+
+    @Test public void sgroupsAbbrRoundTrip() throws IOException, CDKException {
+        StringWriter sw = new StringWriter();
+        try (InputStream in = getClass().getResourceAsStream("sgroup-sup.mol3");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in);
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+            mol = mdlr.read(mol);
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(), containsString("M  SAL   1  2   2   3"));
     }
 }
