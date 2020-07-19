@@ -1806,8 +1806,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             // these to be set for a query!
             if (optset.contains(Expr.Type.ELEMENT) ||
                 optset.contains(Expr.Type.AROMATIC_ELEMENT) ||
-                optset.contains(Expr.Type.ALIPHATIC_ELEMENT))
+                optset.contains(Expr.Type.ALIPHATIC_ELEMENT)) {
                 qatom.setSymbol(atom.getSymbol());
+                qatom.setAtomicNumber(atom.getAtomicNumber());
+            }
             if (optset.contains(Expr.Type.AROMATIC_ELEMENT) ||
                 optset.contains(Expr.Type.IS_AROMATIC))
                 qatom.setIsAromatic(atom.isAromatic());
