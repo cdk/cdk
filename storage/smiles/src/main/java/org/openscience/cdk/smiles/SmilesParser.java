@@ -26,7 +26,9 @@ package org.openscience.cdk.smiles;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -307,7 +309,7 @@ public final class SmilesParser {
      * @param title SMILES title field
      * @param mol   molecule
      */
-    private void parseMolCXSMILES(String title, IAtomContainer mol) {
+    private void parseMolCXSMILES(String title, IAtomContainer mol) throws InvalidSmilesException {
         CxSmilesState cxstate;
         int pos;
         if (title != null && title.startsWith("|")) {
@@ -335,7 +337,7 @@ public final class SmilesParser {
      * @param title SMILES title field
      * @param rxn   parsed reaction
      */
-    private void parseRxnCXSMILES(String title, IReaction rxn) {
+    private void parseRxnCXSMILES(String title, IReaction rxn) throws InvalidSmilesException {
         CxSmilesState cxstate;
         int pos;
         if (title != null && title.startsWith("|")) {
@@ -460,7 +462,7 @@ public final class SmilesParser {
                                     IChemObject chemObj,
                                     List<IAtom> atoms,
                                     Map<IAtom, IAtomContainer> atomToMol,
-                                    CxSmilesState cxstate) {
+                                    CxSmilesState cxstate) throws InvalidSmilesException {
 
         // atom-labels - must be done first as we replace atoms
         if (cxstate.atomLabels != null) {
@@ -486,7 +488,7 @@ public final class SmilesParser {
                 IAtomContainer mol = atomToMol.get(old);
                 AtomContainerManipulator.replaceAtomByAtom(mol, old, pseudo);
                 atomToMol.put(pseudo, mol);
-                atoms.set(e.getKey(), pseudo);
+                atoms.set(e.getKey(), mol.getAtom(old.getIndex()));
             }
         }
 
@@ -553,11 +555,34 @@ public final class SmilesParser {
                 IAtomContainer mol = atomToMol.get(beg);
                 List<IBond> bonds = mol.getConnectedBondsList(beg);
                 if (bonds.isEmpty())
-                    continue; // bad
+                    continue; // possibly okay
                 sgroup.addAtom(beg);
                 sgroup.addBond(bonds.get(0));
                 for (Integer endpt : e.getValue())
                     sgroup.addAtom(atoms.get(endpt));
+                sgroupMap.put(mol, sgroup);
+            }
+        }
+
+        // ligand ordering
+        if (cxstate.ligandOrdering != null) {
+            for (Map.Entry<Integer, List<Integer>> e : cxstate.ligandOrdering.entrySet()) {
+                Sgroup sgroup = new Sgroup();
+                sgroup.setType(SgroupType.ExtAttachOrdering);
+                IAtom beg = atoms.get(e.getKey());
+                IAtomContainer mol = atomToMol.get(beg);
+                List<IBond> bonds = mol.getConnectedBondsList(beg);
+                if (bonds.isEmpty())
+                    throw new InvalidSmilesException("CXSMILES LO: no bonds to order");
+                if (bonds.size() != e.getValue().size())
+                    throw new InvalidSmilesException("CXSMILES LO: bond count and ordering count was different");
+                sgroup.addAtom(beg);
+                for (Integer endpt : e.getValue()) {
+                    IBond bond = beg.getBond(atoms.get(endpt));
+                    if (bond == null)
+                        throw new InvalidSmilesException("CXSMILES LO: defined ordering to non-existant bond");
+                    sgroup.addBond(bond);
+                }
                 sgroupMap.put(mol, sgroup);
             }
         }

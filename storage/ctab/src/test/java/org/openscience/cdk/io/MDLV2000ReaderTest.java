@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  *                    2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
@@ -69,6 +69,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
@@ -977,8 +978,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             if (atom.getSymbol().equals("Ir")) {
                 for (IBond bond : atc.getConnectedBondsList(atom)) {
                     if (bond instanceof QueryBond) {
+                      if (((QueryBond) bond).getExpression().type() == Expr.Type.TRUE) {
                         queryBondCount++;
-                        assertSame(((QueryBond) bond).getExpression().type(), Expr.Type.TRUE);
+                      }
                     }
                 }
             }
@@ -1000,8 +1002,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         for (IBond bond : atc.bonds()) {
             if (bond instanceof QueryBond) {
-                queryBondCount++;
-                assertSame(((QueryBond) bond).getExpression().type(), Expr.Type.SINGLE_OR_AROMATIC);
+                if (((QueryBond) bond).getExpression().type() == Expr.Type.SINGLE_OR_AROMATIC) {
+                    queryBondCount++;
+                }
             }
         }
         Assert.assertEquals("Expecting six 'query' bond types", 6, queryBondCount);
@@ -1762,7 +1765,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             Assert.assertEquals(2, atom.getMassNumber().intValue());
         }
     }
-	
+
     @Test
     public void testBadAtomCoordinateFormat() throws Exception {
 
@@ -1861,5 +1864,17 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             expected = expected.negate();
             assertThat(expr, is(expected));
         }
+    }
+
+    @Test public void sgroupsAbbrRoundTrip() throws IOException, CDKException {
+        StringWriter sw = new StringWriter();
+        try (InputStream in = getClass().getResourceAsStream("sgroup-sup.mol3");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in);
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
+            mol = mdlr.read(mol);
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(), containsString("M  SAL   1  2   2   3"));
     }
 }

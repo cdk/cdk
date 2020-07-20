@@ -76,7 +76,9 @@ public enum SgroupType {
     CtabGeneric("GEN"),
 
     // extension for handling positional variation and distributed coordination bonds
-    ExtMulticenter("N/A");
+    ExtMulticenter("_MAP", false),
+    // extension for handling bond attachment, LO: in CXSMILES
+    ExtAttachOrdering("_APO", false);
 
 
     static final Map<String, SgroupType> map = new HashMap<>();
@@ -86,11 +88,28 @@ public enum SgroupType {
             map.put(t.ctabKey, t);
     }
 
-    private final String ctabKey;
+    private final String  ctabKey;
+    private final boolean ctabStandard;
 
     SgroupType(String ctabKey) {
-        this.ctabKey = ctabKey;
+        this(ctabKey, true);
     }
+
+    SgroupType(String ctabKey, boolean ctabStandard) {
+        this.ctabKey      = ctabKey;
+        this.ctabStandard = ctabStandard;
+    }
+
+
+    /**
+     * Indicates if this SGroup type is support by standard CTAB
+     * (Molfile/SDfile) sgroups.
+     * @return true/false
+     */
+    public boolean isCtabStandard() {
+        return ctabStandard;
+    }
+
 
     public String getKey() {
         return ctabKey;

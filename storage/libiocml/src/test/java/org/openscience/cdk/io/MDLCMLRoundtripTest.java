@@ -71,7 +71,7 @@ public class MDLCMLRoundtripTest {
         mdlWriter.close();
         String output = writermdl.toString();
         //if there would be 3 instances (as in the bug), the only instance wouldnt't be right at the end
-        Assert.assertEquals(2994, output.indexOf("M  END"));
+        Assert.assertEquals(2961, output.indexOf("M  END"));
         //there would need some $$$$ to be in
         Assert.assertEquals(-1, output.indexOf("$$$$"));
         //check atom/bond count

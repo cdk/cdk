@@ -836,7 +836,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             mdlw.setWriteAromaticBondTypes(true);
             mdlw.write(mol);
         }
-        assertThat(sw.toString(), containsString("  1  2  4  0  0  0  0 \n"));
+        assertThat(sw.toString(), containsString("  1  2  4  0  0  0  0\n"));
     }
 
     @Test
