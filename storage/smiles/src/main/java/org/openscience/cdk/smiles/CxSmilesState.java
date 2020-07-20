@@ -38,6 +38,7 @@ final class CxSmilesState {
     List<double[]>              atomCoords  = null;
     List<List<Integer>>         fragGroups  = null;
     Map<Integer, Radical>       atomRads    = null;
+    Map<Integer, List<Integer>> ligandOrdering = null;
     Map<Integer, List<Integer>> positionVar = null;
     List<PolymerSgroup>         sgroups     = null;
     List<DataSgroup>            dataSgroups = null;
