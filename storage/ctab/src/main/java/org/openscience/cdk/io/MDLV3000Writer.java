@@ -541,11 +541,7 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         sgroups = new ArrayList<>(sgroups);
 
         // remove non-ctab Sgroups
-        Iterator<Sgroup> iter = sgroups.iterator();
-        while (iter.hasNext()) {
-            if (iter.next().getType() == SgroupType.ExtMulticenter)
-                iter.remove();
-        }
+        sgroups.removeIf(sgroup -> !sgroup.getType().isCtabStandard());
 
         if (sgroups.isEmpty())
             return;
@@ -670,8 +666,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         List<Sgroup> sgroups = getSgroups(mol);
 
         int numSgroups = 0;
-        for (int i = 0; i < sgroups.size(); i++)
-            if (sgroups.get(i).getType() != SgroupType.ExtMulticenter)
+        for (Sgroup sgroup : sgroups)
+            if (sgroup.getType().isCtabStandard())
                 numSgroups++;
 
         writer.write("BEGIN CTAB\n");

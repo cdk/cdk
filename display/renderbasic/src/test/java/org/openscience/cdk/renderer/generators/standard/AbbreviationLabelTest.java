@@ -169,7 +169,7 @@ public class AbbreviationLabelTest {
     public void hydrateFormatting() {
         List<String> tokens = new ArrayList<>();
         assertTrue(AbbreviationLabel.parse("SnCl4.2H2O", tokens));
-        System.out.println(tokens);
+        assertThat(tokens, is(Arrays.asList("Sn", "Cl4", ".", "2", "H2", "O")));
     }
 
     @Test

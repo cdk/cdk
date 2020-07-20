@@ -217,14 +217,7 @@ public class CxSmilesGenerator {
             List<Map.Entry<Integer, List<Integer>>> multicenters = new ArrayList<>(state.positionVar.entrySet());
 
             // consistent output order
-            Collections.sort(multicenters,
-                             new Comparator<Map.Entry<Integer, List<Integer>>>() {
-                                 @Override
-                                 public int compare(Map.Entry<Integer, List<Integer>> a,
-                                                    Map.Entry<Integer, List<Integer>> b) {
-                                     return comp.compare(a.getKey(), b.getKey());
-                                 }
-                             });
+            multicenters.sort((a, b) -> comp.compare(a.getKey(), b.getKey()));
 
             for (int i = 0; i < multicenters.size(); i++) {
                 if (i != 0) sb.append(',');
@@ -232,8 +225,30 @@ public class CxSmilesGenerator {
                 sb.append(ordering[e.getKey()]);
                 sb.append(':');
                 List<Integer> vals = new ArrayList<>(e.getValue());
-                Collections.sort(vals, comp);
+                vals.sort(comp);
                 appendIntegers(ordering, '.', sb, vals);
+            }
+
+        }
+
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxLigandOrder) &&
+            state.ligandOrdering != null && !state.ligandOrdering.isEmpty()) {
+
+            if (sb.length() > 2) sb.append(',');
+            sb.append("LO");
+            sb.append(':');
+
+            List<Map.Entry<Integer, List<Integer>>> ligandorderings = new ArrayList<>(state.ligandOrdering.entrySet());
+
+            // consistent output order
+            ligandorderings.sort((a, b) -> comp.compare(a.getKey(), b.getKey()));
+
+            for (int i = 0; i < ligandorderings.size(); i++) {
+                if (i != 0) sb.append(',');
+                Map.Entry<Integer, List<Integer>> e = ligandorderings.get(i);
+                sb.append(ordering[e.getKey()]);
+                sb.append(':');
+                appendIntegers(ordering, '.', sb, e.getValue());
             }
 
         }

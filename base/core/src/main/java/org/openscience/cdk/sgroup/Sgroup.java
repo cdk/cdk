@@ -36,9 +36,9 @@ import java.util.*;
  */
 public class Sgroup {
 
-    private final Set<IAtom>  atoms   = new HashSet<>();
-    private final Set<IBond>  bonds   = new HashSet<>();
-    private final Set<Sgroup> parents = new HashSet<>();
+    private final Set<IAtom>  atoms   = new LinkedHashSet<>();
+    private final Set<IBond>  bonds   = new LinkedHashSet<>();
+    private final Set<Sgroup> parents = new LinkedHashSet<>();
 
     private final Map<SgroupKey, Object> attributes = new EnumMap<>(SgroupKey.class);
 
