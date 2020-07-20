@@ -231,7 +231,8 @@ public class CxSmilesGenerator {
 
         }
 
-        if (state.ligandOrdering != null && !state.ligandOrdering.isEmpty()) {
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxLigandOrder) &&
+            state.ligandOrdering != null && !state.ligandOrdering.isEmpty()) {
 
             if (sb.length() > 2) sb.append(',');
             sb.append("LO");
