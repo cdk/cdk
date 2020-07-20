@@ -166,15 +166,15 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     private final IGeneratorParameter<?> atomColor = new AtomColor(), visibility = new Visibility(),
-            strokeRatio = new StrokeRatio(), separationRatio = new BondSeparation(), wedgeRatio = new WedgeRatio(),
-            marginRatio = new SymbolMarginRatio(), hatchSections = new HashSpacing(), dashSections = new DashSection(),
-            waveSections      = new WaveSpacing(), fancyBoldWedges = new FancyBoldWedges(),
-            fancyHashedWedges = new FancyHashedWedges(), highlighting = new Highlighting(),
-            glowWidth         = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
-            annFontSize       = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
-            sgroupFontScale   = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes(),
-            forceDelocalised  = new ForceDelocalisedBondDisplay(), delocaliseDonuts = new DelocalisedDonutsBondDisplay(),
-            deuteriumSymbol = new DeuteriumSymbol();
+            strokeRatio                            = new StrokeRatio(), separationRatio = new BondSeparation(), wedgeRatio = new WedgeRatio(),
+            marginRatio                            = new SymbolMarginRatio(), hatchSections = new HashSpacing(), dashSections = new DashSection(),
+            waveSections                           = new WaveSpacing(), fancyBoldWedges = new FancyBoldWedges(),
+            fancyHashedWedges                      = new FancyHashedWedges(), highlighting = new Highlighting(),
+            glowWidth                              = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
+            annFontSize                            = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
+            sgroupFontScale                        = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes(),
+            forceDelocalised                       = new ForceDelocalisedBondDisplay(), delocaliseDonuts = new DelocalisedDonutsBondDisplay(),
+            deuteriumSymbol                        = new DeuteriumSymbol(), pseudoFontStyle = new PseudoFontStyle();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -626,7 +626,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
                              hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
                              annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes, forceDelocalised, delocaliseDonuts,
-                             deuteriumSymbol);
+                             deuteriumSymbol, pseudoFontStyle);
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {
@@ -1201,6 +1201,21 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         @Override
         public Boolean getDefault() {
             return true;
+        }
+    }
+
+    /**
+     * The default font style for pseudo-atoms, is Bold and Italic. This
+     * allows one to distinguish a 'Y/W' for an R group 'Y' Yttrium etc. To
+     * render symbols the same as other atoms set this to '0'.
+     */
+    public static final class PseudoFontStyle
+        extends AbstractGeneratorParameter<Integer> {
+
+        /**{@inheritDoc} */
+        @Override
+        public Integer getDefault() {
+            return 3; // Font.BOLD|Font.ITALIC;
         }
     }
 }
