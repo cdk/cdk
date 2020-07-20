@@ -401,7 +401,7 @@ public class StandardAtomGeneratorTest {
         IAtomContainer container = mock(IAtomContainer.class);
         IPseudoAtom atom = mock(IPseudoAtom.class);
         when(atom.getLabel()).thenReturn("R1");
-        AtomSymbol    atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
+        AtomSymbol    atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, null);
         List<Shape>   shapes     = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(2));
     }
