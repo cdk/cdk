@@ -52,6 +52,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -829,6 +830,7 @@ public final class SmilesGenerator {
         if (sgroups != null) {
             state.sgroups = new ArrayList<>();
             state.positionVar = new HashMap<>();
+            state.ligandOrdering = new HashMap<>();
             for (Sgroup sgroup : sgroups) {
                 switch (sgroup.getType()) {
                     // polymer SRU
@@ -851,10 +853,10 @@ public final class SmilesGenerator {
                                                                           supscript));
                         break;
 
-                    case ExtMulticenter:
-                        IAtom beg = null;
-                        List<IAtom> ends = new ArrayList<>();
-                        Set<IBond> bonds = sgroup.getBonds();
+                    case ExtMulticenter: {
+                        IAtom       beg   = null;
+                        List<IAtom> ends  = new ArrayList<>();
+                        Set<IBond>  bonds = sgroup.getBonds();
                         if (bonds.size() != 1)
                             throw new IllegalArgumentException("Multicenter Sgroup in inconsistent state!");
                         IBond bond = bonds.iterator().next();
@@ -869,6 +871,23 @@ public final class SmilesGenerator {
                         }
                         state.positionVar.put(ensureNotNull(atomidx.get(beg)),
                                               toAtomIdxs(ends, atomidx));
+                        }
+                        break;
+                    case ExtAttachOrdering: {
+                        IAtom       beg   = null;
+                        List<IAtom> ends  = new ArrayList<>();
+                        if (sgroup.getAtoms().size() != 1)
+                            throw new IllegalArgumentException("Attach ordering in inconsistent state!");
+                        beg = sgroup.getAtoms().iterator().next();
+                        for (IBond bond : sgroup.getBonds()) {
+                            IAtom nbr = bond.getOther(beg);
+                            if (nbr == null)
+                                throw new IllegalArgumentException("Attach ordering in inconsistent state!");
+                            ends.add(nbr);
+                        }
+                        state.ligandOrdering.put(ensureNotNull(atomidx.get(beg)),
+                                                 toAtomIdxs(ends, atomidx));
+                        }
                         break;
                     case CtabAbbreviation:
                     case CtabMultipleGroup:

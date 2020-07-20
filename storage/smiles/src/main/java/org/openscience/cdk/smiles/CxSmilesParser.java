@@ -327,6 +327,24 @@ final class CxSmilesParser {
         return false;
     }
 
+    private static boolean processIntListMap(Map<Integer,List<Integer>> map, CharIter iter) {
+        while (iter.hasNext()) {
+            if (isDigit(iter.curr())) {
+                final int beg = processUnsignedInt(iter);
+                if (!iter.nextIf(':'))
+                    return false;
+                List<Integer> endpoints = new ArrayList<>(6);
+                if (!processIntList(iter, DOT_SEPARATOR, endpoints))
+                    return false;
+                iter.nextIf(',');
+                map.put(beg, endpoints);
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Positional variation/multi centre bonding. Describe as a begin atom and one or more end points.
      *
@@ -337,21 +355,20 @@ final class CxSmilesParser {
     private static boolean processPositionalVariation(CharIter iter, CxSmilesState state) {
         if (state.positionVar == null)
             state.positionVar = new TreeMap<>();
-        while (iter.hasNext()) {
-            if (isDigit(iter.curr())) {
-                final int beg = processUnsignedInt(iter);
-                if (!iter.nextIf(':'))
-                    return false;
-                List<Integer> endpoints = new ArrayList<>(6);
-                if (!processIntList(iter, DOT_SEPARATOR, endpoints))
-                    return false;
-                iter.nextIf(',');
-                state.positionVar.put(beg, endpoints);
-            } else {
-                return true;
-            }
-        }
-        return false;
+        return processIntListMap(state.positionVar, iter);
+    }
+
+
+    /**
+     * Ligand ordering indicate attachments around R groups.
+     * @param iter the character iterator
+     * @param state the CX state
+     * @return parse was a success (or not)
+     */
+    private static boolean processLigandOrdering(CharIter iter, CxSmilesState state) {
+        if (state.ligandOrdering == null)
+            state.ligandOrdering = new TreeMap<>();
+        return processIntListMap(state.ligandOrdering, iter);
     }
 
     /**
@@ -505,6 +522,19 @@ final class CxSmilesParser {
                     // consume optional separators
                     if (!iter.nextIf(' ')) iter.nextIf('\t');
                     return iter.pos;
+                case 'L':
+                    // LO, Ligand Ordering
+                    if (iter.nextIf('O')) {
+                        if (!iter.nextIf(':'))
+                            return -1;
+                        if (!processLigandOrdering(iter, state))
+                            return -1;
+                    }
+                    else {
+                        // LP, bond connected lone pair?
+                        return -1;
+                    }
+                    break;
                 default:
                     return -1;
             }

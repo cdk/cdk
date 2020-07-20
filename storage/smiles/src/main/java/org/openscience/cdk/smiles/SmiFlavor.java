@@ -165,14 +165,19 @@ public final class SmiFlavor {
     public static final int CxFragmentGroup     = 0x100000;
 
     /**
+     * Output ligand order information.
+     */
+    public static final int CxLigandOrder       = 0x200000;
+
+    /**
      * Renumber AtomAtomMaps during canonical generation
      */
-    public static final int AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x200000;
+    public static final int AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x2000000;
 
     /**
      * Output CXSMILES layers.
      */
-    public static final int CxSmiles            = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer;
+    public static final int CxSmiles            = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer | CxLigandOrder;
 
     /**
      * Output CXSMILES layers and coordinates.
