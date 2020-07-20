@@ -24,6 +24,8 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -45,6 +47,8 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -504,12 +508,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                                        new ArrayList<Vector2d>());
 
                 final TextOutline outline = generateAnnotation(atom.getPoint2d(),
-                                                                  Integer.toString(attachNum),
-                                                                  vector,
-                                                                  1.75 * annDist + strokeAdjust,
-                                                                  annScale,
-                                                                  font.deriveFont(Font.BOLD),
-                                                                  null);
+                                                               Integer.toString(attachNum),
+                                                               vector,
+                                                               1.75 * annDist + strokeAdjust,
+                                                               annScale,
+                                                               font.deriveFont(Font.BOLD),
+                                                               null);
 
                 attachNumOutlines.add(outline);
 
@@ -522,7 +526,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             for (TextOutline outline : attachNumOutlines) {
                 ElementGroup group = new ElementGroup();
-                double radius = 2*stroke + maxRadius;
+                double radius = 1.2*stroke + maxRadius;
                 Shape shape = new Ellipse2D.Double(outline.getCenter().getX() - radius,
                                                    outline.getCenter().getY() - radius,
                                                    2*radius,
@@ -532,7 +536,55 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 group.add(GeneralPath.shapeOf(area1, foreground));
                 annotations.add(group);
             }
+        }
 
+        // ligand/attachment ordering annotations on bonds
+        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+
+            List<TextOutline> attachNumOutlines = new ArrayList<>();
+            double maxRadius = 0;
+
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getType() == SgroupType.ExtAttachOrdering) {
+                    int number = 1;
+                    for (IBond bond : sgroup.getBonds()) {
+                        Point2d beg = bond.getBegin().getPoint2d();
+                        Point2d end = bond.getEnd().getPoint2d();
+                        Point2d mid = VecmathUtil.midpoint(beg, end);
+
+                        final TextOutline outline = generateAnnotation(mid,
+                                                                       Integer.toString(number++),
+                                                                       new Vector2d(0,0),
+                                                                       0,
+                                                                       annScale,
+                                                                       font.deriveFont(Font.BOLD),
+                                                                       null);
+
+                        attachNumOutlines.add(outline);
+
+                        double w = outline.getBounds().getWidth();
+                        double h = outline.getBounds().getHeight();
+                        double r = Math.sqrt(w * w + h * h)/2;
+                        if (r > maxRadius)
+                            maxRadius = r;
+                    }
+                }
+            }
+
+            for (TextOutline outline : attachNumOutlines) {
+                ElementGroup group = new ElementGroup();
+                double radius = 1.2*stroke + maxRadius;
+                Shape shape = new Ellipse2D.Double(outline.getCenter().getX() - radius,
+                                                   outline.getCenter().getY() - radius,
+                                                   2*radius,
+                                                   2*radius);
+                Area area1 = new Area(shape);
+                group.add(GeneralPath.shapeOf(shape, Color.white));
+                group.add(GeneralPath.outlineOf(shape, 0.2*stroke, foreground));
+                group.add(GeneralPath.shapeOf(outline.getOutline(), foreground));
+                annotations.add(group);
+            }
         }
 
         return symbols;
