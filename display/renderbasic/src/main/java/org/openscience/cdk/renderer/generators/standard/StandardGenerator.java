@@ -173,7 +173,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             glowWidth         = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
             annFontSize       = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
             sgroupFontScale   = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes(),
-            forceDelocalised  = new ForceDelocalisedBondDisplay(), delocaliseDonuts = new DelocalisedDonutsBondDisplay();
+            forceDelocalised  = new ForceDelocalisedBondDisplay(), delocaliseDonuts = new DelocalisedDonutsBondDisplay(),
+            deuteriumSymbol = new DeuteriumSymbol();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -624,7 +625,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
                              hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
-                             annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes, forceDelocalised, delocaliseDonuts);
+                             annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes, forceDelocalised, delocaliseDonuts,
+                             deuteriumSymbol);
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {
@@ -1181,6 +1183,19 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public static final class DelocalisedDonutsBondDisplay
             extends AbstractGeneratorParameter<Boolean> {
+
+        /**{@inheritDoc} */
+        @Override
+        public Boolean getDefault() {
+            return true;
+        }
+    }
+
+    /**
+     * Display deuterium {@code [2H]} as 'D'.
+     */
+    public static final class DeuteriumSymbol
+        extends AbstractGeneratorParameter<Boolean> {
 
         /**{@inheritDoc} */
         @Override

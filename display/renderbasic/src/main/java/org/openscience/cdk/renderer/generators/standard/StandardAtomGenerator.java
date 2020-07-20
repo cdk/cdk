@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.generators.standard.AbbreviationLabel.FormattedText;
+import org.openscience.cdk.renderer.generators.standard.StandardGenerator.DeuteriumSymbol;
 
 import java.awt.Font;
 import java.awt.geom.Rectangle2D;
@@ -127,7 +128,7 @@ final class StandardAtomGenerator {
                     if (mass != 0 || charge != 0 || hcnt != 0) {
                         return generatePeriodicSymbol(0, hcnt,
                                                       mass, charge,
-                                                      nrad, position);
+                                                      nrad, position, model);
                     }
                 }
                 return generatePseudoSymbol(accessPseudoLabel(pAtom, "?"), position);
@@ -149,7 +150,7 @@ final class StandardAtomGenerator {
 
             return generatePeriodicSymbol(number, unboxSafely(atom.getImplicitHydrogenCount(), 0),
                                           unboxSafely(mass, -1), unboxSafely(atom.getFormalCharge(), 0),
-                                          container.getConnectedSingleElectronsCount(atom), position);
+                                          container.getConnectedSingleElectronsCount(atom), position, model);
         }
     }
 
@@ -371,11 +372,28 @@ final class StandardAtomGenerator {
      * @param position  placement of hydrogen
      * @return laid out atom symbol
      */
-    AtomSymbol generatePeriodicSymbol(final int number, final int hydrogens, final int mass, final int charge,
-                                      final int unpaired, HydrogenPosition position) {
+    AtomSymbol generatePeriodicSymbol(final int number, final int hydrogens, int mass, final int charge,
+                                      final int unpaired, HydrogenPosition position,
+                                      RendererModel opts) {
 
-        TextOutline element = number == 0 ? new TextOutline("*", font)
-                                          : new TextOutline(Elements.ofNumber(number).symbol(), font);
+        final String label;
+        switch (number) {
+            case 0:
+                label = "*";
+                break;
+            case 1:
+                if (mass == 2 && opts.get(DeuteriumSymbol.class)) {
+                    label = "D";
+                    mass = 0;
+                } else {
+                    label = Elements.ofNumber(number).symbol();
+                }
+                break;
+            default:
+                label = Elements.ofNumber(number).symbol();
+                break;
+        }
+        TextOutline element = new TextOutline(label, font);
         TextOutline hydrogenAdjunct = defaultHydrogenLabel;
 
         // the hydrogen count, charge, and mass adjuncts are script size
