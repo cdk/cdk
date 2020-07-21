@@ -1109,6 +1109,17 @@ public final class DepictionGenerator {
                          true);
     }
 
+
+    /**
+     * Indicate whether <sup>2</sup>H should be rendered as 'D'. Default: true.
+     * @param v the value
+     * @return new generator for method chaining
+     */
+    public DepictionGenerator withDeuteriumSymbol(boolean v) {
+        return withParam(StandardGenerator.DeuteriumSymbol.class,
+                         v);
+    }
+
     /**
      * Low-level option method to set a rendering model parameter.
      *
