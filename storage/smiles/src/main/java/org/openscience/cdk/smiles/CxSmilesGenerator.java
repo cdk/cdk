@@ -348,6 +348,7 @@ public class CxSmilesGenerator {
         if (numSgroups > 0) {
             boolean firstSgH = true;
             if (state.mysgroups != null) {
+                state.mysgroups.sort(Comparator.comparingInt(o -> o.id));
                 for (CxSgroup sgroup : state.mysgroups) {
                     if (sgroup.children.isEmpty())
                         continue;
@@ -358,7 +359,9 @@ public class CxSmilesGenerator {
                     }
                     sb.append(sgroup.id).append(':');
                     boolean first = true;
-                    for (CxSgroup child : sgroup.children) {
+                    List<CxSgroup> children = new ArrayList<>(sgroup.children);
+                    children.sort(Comparator.comparingInt(o -> o.id));
+                    for (CxSgroup child : children) {
                         if (child.id < 0)
                             continue;
                         if (!first)

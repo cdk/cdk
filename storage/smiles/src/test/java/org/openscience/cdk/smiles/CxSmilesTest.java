@@ -401,6 +401,6 @@ public class CxSmilesTest {
         SmilesParser smipar = new SmilesParser(bldr);
         IAtomContainer mol = smipar.parseSmiles("CN1CCCCC1.CO.O |Sg:c:0,1,2,3,4,5,6::,Sg:c:7,8::,Sg:c:9::,Sg:mix:0,1,2,3,4,5,6,7,8,9::,Sg:mix:7,8,9::,SgH:3:4.0,4:2.1|");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
-        assertThat(smigen.create(mol), is("CN1CCCCC1.CO.O |Sg:c:0,1,2,3,4,5,6:c:,Sg:c:7,8:c:,Sg:c:9:c:,Sg:mix:0,1,2,3,4,5,6,7,8,9:mix:,Sg:mix:7,8,9:mix:,SgH:4:2.1,3:4.0|"));
+        assertThat(smigen.create(mol), is("CN1CCCCC1.CO.O |Sg:c:0,1,2,3,4,5,6:c:,Sg:c:7,8:c:,Sg:c:9:c:,Sg:mix:0,1,2,3,4,5,6,7,8,9:mix:,Sg:mix:7,8,9:mix:,SgH:3:0.4,4:1.2|"));
     }
 }
