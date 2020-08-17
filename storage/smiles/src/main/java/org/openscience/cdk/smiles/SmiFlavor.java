@@ -177,12 +177,12 @@ public final class SmiFlavor {
     /**
      * Output data Sgroups.
      */
-    public static final int CxDataSgroups       = 0x200000;
+    public static final int CxDataSgroups       = 0x400000;
 
     /**
      * Output CXSMILES layers.
      */
-    public static final int CxSmiles            = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer | CxLigandOrder | CxDataSgroups;
+    public static final int CxSmiles            = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer | CxLigandOrder;
 
     /**
      * Output CXSMILES layers and coordinates.
