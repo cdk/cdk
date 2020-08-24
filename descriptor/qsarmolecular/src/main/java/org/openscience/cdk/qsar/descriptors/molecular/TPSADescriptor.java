@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -244,8 +245,8 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
         // iterate over all atoms of ac
         for (IAtom atom : ac.atoms()) {
-            if (atom.getSymbol().equals("N") || atom.getSymbol().equals("O") || atom.getSymbol().equals("S")
-                    || atom.getSymbol().equals("P")) {
+            if (atom.getAtomicNumber() == IElement.N || atom.getAtomicNumber() == IElement.O || atom.getAtomicNumber() == IElement.S
+                    || atom.getAtomicNumber() == IElement.P) {
                 int singleBondCount = 0;
                 int doubleBondCount = 0;
                 int tripleBondCount = 0;
@@ -272,7 +273,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
                 // EXPLICIT hydrogens: count the number of hydrogen atoms
                 for (int neighbourIndex = 0; neighbourIndex < numberOfNeighbours; neighbourIndex++)
-                    if (((IAtom) connectedAtoms.get(neighbourIndex)).getSymbol().equals("H")) hCount++;
+                    if (((IAtom) connectedAtoms.get(neighbourIndex)).getAtomicNumber() == IElement.H) hCount++;
                 // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
                 Integer implicitHAtoms = atom.getImplicitHydrogenCount();
                 if (implicitHAtoms == CDKConstants.UNSET) {
