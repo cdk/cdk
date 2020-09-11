@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @cdk.module test-ioformats
@@ -121,12 +121,6 @@ abstract public class ResourceFormatTest {
     @Test
     public void testEquals_null() throws IllegalAccessException, InstantiationException {
         IResourceFormat a = resourceFormat.getClass().newInstance();
-        assertFalse(a.equals(null));
+        Assert.assertNotNull(a);
     }
-
-    @Test
-    public void testIsXMLBased() {
-        Assert.assertNotNull(resourceFormat.isXMLBased());
-    }
-
 }

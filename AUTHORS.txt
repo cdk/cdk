@@ -23,6 +23,7 @@ Thorsten Flügel
 Sambit Gaan
 Jakub Galgonek
 Dan Gezelter
+Marco Glur
 Nimish Gopal
 Saulius Gražulis
 Rajarshi Guha
@@ -52,11 +53,14 @@ Jonty Lawson
 Kevin Lawson
 Daniel Leidert
 Katrin Leinweber
+Xavier Linn
+Qinqing Liu
 Edgar Luttmann
 Todd Martin
 John Mayfield
 Nathanaël Mazuir
 Stephan Michels
+Martin Morissette
 Hirotomo Moriwaki
 Scooter Morris
 Peter Murray-Rust
@@ -69,6 +73,7 @@ Niels Out
 Jerome Pansanel
 Diego Pedrosa
 Julio Peironcely
+Jeffrey Plante
 Tomáš Pluskal
 Chris Pudney
 Syed Asad Rahman
@@ -94,6 +99,7 @@ Gilleain Torrance
 Andreas Truszkowski
 Paul Turner
 Kazuya Ujihara
+Tagir Valeev
 Mark B Vine
 Joerg Wegner
 Yap Chun Wei

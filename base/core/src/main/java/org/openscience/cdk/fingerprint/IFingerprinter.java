@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2005-2019  Egon Willighagen <egonw@users.sf.net>
  * Copyright (C) 2011       Jonathan Alvarsson <jonalv@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -43,7 +43,7 @@ public interface IFingerprinter {
      * Generate a fingerprint type version description in chemfp's FPS format. We
      * report the library version rather than an individual version per fingerprint,
      * although this is awkward as many fingerprint's don't/won't change between releases
-     * and we can not keep comptability we guarantee we document how the fingerprint was
+     * and we can not keep compatibility we guarantee we document how the fingerprint was
      * encoded.
      *
      * <br>

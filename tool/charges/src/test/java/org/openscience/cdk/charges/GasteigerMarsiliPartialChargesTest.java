@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.charges;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -39,6 +40,9 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import java.util.Iterator;
 import java.util.List;
 import java.io.InputStream;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 
 /**
  *  Description of the Class
@@ -123,10 +127,11 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
         addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
-        for (Iterator<IAtom> it = molecule.atoms().iterator(); it.hasNext();)
-            it.next().setCharge(0.0);
+        for (IAtom atom : molecule.atoms())
+            atom.setCharge(0.0);
 
-        Assert.assertNotNull(peoe.assignGasteigerSigmaMarsiliFactors(molecule).length);
+        org.hamcrest.MatcherAssert.assertThat(peoe.assignGasteigerSigmaMarsiliFactors(molecule).length,
+                          is(not(0)));
 
     }
 

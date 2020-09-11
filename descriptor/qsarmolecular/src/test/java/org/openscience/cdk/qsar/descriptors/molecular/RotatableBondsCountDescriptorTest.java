@@ -188,7 +188,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{false, false});
         DescriptorValue result = descriptor.calculate(mol);
-        Assert.assertThat(((IntegerResult) result.getValue()).intValue(), is(4));
+        org.hamcrest.MatcherAssert.assertThat(((IntegerResult) result.getValue()).intValue(), is(4));
     }
 
     @Test
@@ -201,6 +201,6 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{false, true});
         DescriptorValue result = descriptor.calculate(mol);
-        Assert.assertThat(((IntegerResult) result.getValue()).intValue(), is(3));
+        org.hamcrest.MatcherAssert.assertThat(((IntegerResult) result.getValue()).intValue(), is(3));
     }
 }

@@ -111,12 +111,12 @@ public class CMLStackTest extends CDKTestCase {
     @Test
     public void testSize() {
         CMLStack stack = new CMLStack();
-        Assert.assertThat(stack.size(), is(0));
+        org.hamcrest.MatcherAssert.assertThat(stack.size(), is(0));
         stack.push("first");
-        Assert.assertThat(stack.size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(stack.size(), is(1));
         stack.push("second");
-        Assert.assertThat(stack.size(), is(2));
+        org.hamcrest.MatcherAssert.assertThat(stack.size(), is(2));
         stack.push("third");
-        Assert.assertThat(stack.size(), is(3));
+        org.hamcrest.MatcherAssert.assertThat(stack.size(), is(3));
     }
 }

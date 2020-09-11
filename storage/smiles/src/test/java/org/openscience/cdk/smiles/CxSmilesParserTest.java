@@ -34,7 +34,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.hasEntry;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CxSmilesParserTest {
 
@@ -86,6 +86,13 @@ public class CxSmilesParserTest {
     public void atomLabelsTruncated3() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|$;;;Het;$", state), is(-1));
+    }
+
+    @Test
+    public void removeUnderscore() {
+        CxSmilesState state = new CxSmilesState();
+        CxSmilesParser.processCx("|$;;;_R1;$|", state);
+        assertThat(state.atomLabels.get(3), is("R1"));
     }
 
     @Test

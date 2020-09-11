@@ -37,7 +37,7 @@ public class CDKTest {
         String version = CDK.getVersion();
         Assert.assertNotNull(version);
         // see for the expected behavior: http://stackoverflow.com/a/3697482/217943
-        Assert.assertThat("The CDK version in build.props is not properly overwritten by Maven.",
+        org.hamcrest.MatcherAssert.assertThat("The CDK version in build.props is not properly overwritten by Maven.",
                           version,
                           not(containsString("project.version")));
     }

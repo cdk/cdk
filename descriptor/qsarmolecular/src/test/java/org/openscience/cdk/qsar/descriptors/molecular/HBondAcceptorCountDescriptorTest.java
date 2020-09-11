@@ -132,6 +132,6 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
 
         HBondAcceptorCountDescriptor hbond_acceptor_desc = new HBondAcceptorCountDescriptor();
         int actual = ((IntegerResult)hbond_acceptor_desc.calculate(m).getValue()).intValue();
-        Assert.assertThat(actual, CoreMatchers.is(3));
+        org.hamcrest.MatcherAssert.assertThat(actual, CoreMatchers.is(3));
     }
 }

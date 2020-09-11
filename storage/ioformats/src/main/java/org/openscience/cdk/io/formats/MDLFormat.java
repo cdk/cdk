@@ -76,8 +76,10 @@ public class MDLFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && line.length() > 7 && (line.indexOf("2000") == -1) && // MDL Mol V2000 format
-                (line.indexOf("3000") == -1)) // MDL Mol V3000 format
+        if (lineNumber == 4
+            && line.length() > 7
+            && (!line.contains("2000")) && // MDL Mol V2000 format
+            (!line.contains("3000"))) // MDL Mol V3000 format
         {
             // possibly a MDL mol file
             try {
@@ -85,13 +87,11 @@ public class MDLFormat extends SimpleChemFormatMatcher implements IChemFormatMat
                 String bondCountString = line.substring(3, 6).trim();
                 Integer.valueOf(atomCountString);
                 Integer.valueOf(bondCountString);
-                if (line.length() > 6) {
-                    String remainder = line.substring(6).trim();
-                    for (int i = 0; i < remainder.length(); ++i) {
-                        char c = remainder.charAt(i);
-                        if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
-                            return false;
-                        }
+                String remainder = line.substring(6).trim();
+                for (int i = 0; i < remainder.length(); ++i) {
+                    char c = remainder.charAt(i);
+                    if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
+                        return false;
                     }
                 }
             } catch (NumberFormatException nfe) {

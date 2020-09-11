@@ -68,6 +68,6 @@ public class MmffAtomTypeValidationSuiteTest extends AbstractMmffAtomTypeValidat
             }
         }
 
-        Assert.assertThat(mesg, actual, is(expected));
+        org.hamcrest.MatcherAssert.assertThat(mesg, actual, is(expected));
     }
 }

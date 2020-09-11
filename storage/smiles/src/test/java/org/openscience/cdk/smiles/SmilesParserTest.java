@@ -67,7 +67,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -2661,6 +2661,27 @@ public class SmilesParserTest extends CDKTestCase {
     public void notExtendedCis() throws Exception {
         IAtomContainer mol = load("C/C=C=C=C=C\\C");
         assertFalse(mol.stereoElements().iterator().hasNext());
+    }
+
+    @Test
+    public void warnOnDirectionalBonds() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C/C=C/1.C/1");
+    }
+
+    @Test(expected = InvalidSmilesException.class)
+    public void failOnDirectionalBondsWhenStrict() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        smipar.setStrict(true);
+        IAtomContainer mol = smipar.parseSmiles("C/C=C/1.C/1");
+    }
+
+    @Test
+    public void ignoreDoubleBond() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C/C=C(/F)/C");
+        assertThat(mol.stereoElements().iterator().hasNext(),
+                   is(false));
     }
 
     @Test public void extendedTetrahedral7() throws InvalidSmilesException {

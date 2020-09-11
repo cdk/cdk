@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.ALIPHATIC_ELEMENT;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.ALIPHATIC_ORDER;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.AND;

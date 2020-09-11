@@ -285,7 +285,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         Assert.assertEquals("S-[2];[H]{0,3}+=C.*+", atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
         Assert.assertEquals(Hybridization.SP2, atomType.getHybridization());
         Assert.assertTrue(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
-        Assert.assertEquals(5, atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
+        Assert.assertEquals((Integer)5, atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
     }
 
     @Test

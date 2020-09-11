@@ -25,10 +25,8 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -37,7 +35,6 @@ import org.openscience.cdk.graph.AllPairsShortestPaths;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
  *
@@ -57,9 +54,6 @@ public final class ShortestPathWalker {
     /* set of encoded atom paths */
     private final Set<String>    paths;
 
-    /* list of encoded pseudo atoms */
-    private final List<String>   pseudoAtoms;
-
     /* maximum number of shortest paths, when there is more then one path */
     private static final int     MAX_SHORTEST_PATHS = 5;
 
@@ -69,7 +63,6 @@ public final class ShortestPathWalker {
      */
     public ShortestPathWalker(IAtomContainer container) {
         this.container = container;
-        this.pseudoAtoms = new ArrayList<String>(5);
         this.paths = Collections.unmodifiableSet(traverse());
     }
 
@@ -86,7 +79,7 @@ public final class ShortestPathWalker {
      */
     private Set<String> traverse() {
 
-        Set<String> paths = new TreeSet<String>();
+        Set<String> paths = new TreeSet<>();
 
         // All-Pairs Shortest-Paths (APSP)
         AllPairsShortestPaths apsp = new AllPairsShortestPaths(container);
@@ -147,29 +140,16 @@ public final class ShortestPathWalker {
      * @return encoded path
      */
     private String encode(int[] path) {
-
         StringBuilder sb = new StringBuilder(path.length * 3);
-
         for (int i = 0, n = path.length - 1; i <= n; i++) {
-
             IAtom atom = container.getAtom(path[i]);
-
             sb.append(toAtomPattern(atom));
-
-            if (atom instanceof IPseudoAtom) {
-                pseudoAtoms.add(atom.getSymbol());
-                // potential bug, although the atoms are canonical we cannot guarantee the order we will visit them.
-                // sb.append(PeriodicTable.getElementCount() + pseudoAtoms.size());
-            }
-
             // if we are not at the last index, add the connecting bond
             if (i < n) {
                 IBond bond = container.getBond(container.getAtom(path[i]), container.getAtom(path[i + 1]));
                 sb.append(getBondSymbol(bond));
             }
-
         }
-
         return sb.toString();
     }
 

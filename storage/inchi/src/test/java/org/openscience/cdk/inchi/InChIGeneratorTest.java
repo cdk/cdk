@@ -896,7 +896,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         }
     }
 
-    @Test
+    @Test(timeout = 1500)
     public void timeout() throws Exception {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);

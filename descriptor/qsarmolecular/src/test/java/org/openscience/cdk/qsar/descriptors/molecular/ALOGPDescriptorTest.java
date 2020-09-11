@@ -27,6 +27,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -60,16 +61,16 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
         mol.addAtom(c2);
         mol.addAtom(c3);
         mol.addAtom(cl);
-
         mol.addBond(new Bond(c1, c2));
         mol.addBond(new Bond(c2, c3));
         mol.addBond(new Bond(c3, cl));
-
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
+                        .addImplicitHydrogens(mol);
 
         DescriptorValue v = descriptor.calculate(mol);
-        Assert.assertEquals(0.5192, ((DoubleArrayResult) v.getValue()).get(0), 0.0001);
-        Assert.assertEquals(19.1381, ((DoubleArrayResult) v.getValue()).get(2), 0.0001);
+        Assert.assertEquals(1.719, ((DoubleArrayResult) v.getValue()).get(0), 0.01);
+        Assert.assertEquals(20.585, ((DoubleArrayResult) v.getValue()).get(2), 0.01);
     }
 
 }

@@ -23,6 +23,7 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
+import java.io.StringReader;
 import java.util.Iterator;
 
 import org.junit.Assert;
@@ -32,14 +33,16 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * TestCase for the reading MDL RXN files using one test file.
@@ -141,6 +144,38 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLRXNV2000Reader rdr = new MDLRXNV2000Reader(in);) {
             IReaction reaction = rdr.read(new Reaction());
             assertThat(reaction.getAgents().getAtomContainerCount(), is(1));
+        }
+    }
+
+    @Test public void optionalSdfSeparator() throws Exception {
+        String dummyRecord = "ethanol\n" +
+                       "  Mrv1810 09251921392D          \n" +
+                       "\n" +
+                       "  3  2  0  0  0  0            999 V2000\n" +
+                       "    1.9520   -1.1270    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                       "    1.2375   -0.7145    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                       "    2.6664   -0.7145    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                       "  1  2  1  0  0  0  0\n" +
+                       "  1  3  1  0  0  0  0\n" +
+                       "M  END\n" +
+                       "$$$$\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("$RXN\n");
+        sb.append("Test\n\n\n  2  1\n");
+        sb.append("$MOL\n");
+        sb.append(dummyRecord);
+        sb.append("$MOL\n");
+        sb.append(dummyRecord);
+        sb.append("$MOL\n");
+        sb.append(dummyRecord);
+
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLRXNV2000Reader reader = new MDLRXNV2000Reader(new StringReader(sb.toString()))) {
+            IReaction rxn = reader.read(bldr.newInstance(IReaction.class));
+            assertThat(rxn.getReactants().getAtomContainerCount(), is(2));
+            assertThat(rxn.getProducts().getAtomContainerCount(), is(1));
+            assertThat(rxn.getReactants().getAtomContainer(0).getAtomCount(), is(3));
+            assertThat(rxn.getReactants().getAtomContainer(1).getAtomCount(), is(3));
         }
     }
 }

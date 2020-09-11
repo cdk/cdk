@@ -333,26 +333,23 @@ public final class GeometryUtil {
     }
 
     /**
-     * Returns the minimum and maximum X and Y coordinates of the atoms in the
-     * AtomContainer. The output is returned as: <pre>
+     * Returns the minimum and maximum X and Y coordinates of the atoms.
+     * The output is returned as: <pre>
      *   minmax[0] = minX;
      *   minmax[1] = minY;
      *   minmax[2] = maxX;
      *   minmax[3] = maxY;
      * </pre>
-     * See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap
-     * renderingCoordinates) for details on coordinate sets
      *
-     * @param container Description of the Parameter
+     * @param atoms the atoms.
      * @return An four int array as defined above.
      */
-    public static double[] getMinMax(IAtomContainer container) {
+    public static double[] getMinMax(Iterable<IAtom> atoms) {
         double maxX = -Double.MAX_VALUE;
         double maxY = -Double.MAX_VALUE;
         double minX = Double.MAX_VALUE;
         double minY = Double.MAX_VALUE;
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            IAtom atom = container.getAtom(i);
+        for (IAtom atom : atoms) {
             if (atom.getPoint2d() != null) {
                 if (atom.getPoint2d().x > maxX) {
                     maxX = atom.getPoint2d().x;
@@ -374,6 +371,24 @@ public final class GeometryUtil {
         minmax[2] = maxX;
         minmax[3] = maxY;
         return minmax;
+    }
+
+    /**
+     * Returns the minimum and maximum X and Y coordinates of the atoms in the
+     * AtomContainer. The output is returned as: <pre>
+     *   minmax[0] = minX;
+     *   minmax[1] = minY;
+     *   minmax[2] = maxX;
+     *   minmax[3] = maxY;
+     * </pre>
+     * See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap
+     * renderingCoordinates) for details on coordinate sets
+     *
+     * @param container Description of the Parameter
+     * @return An four int array as defined above.
+     */
+    public static double[] getMinMax(IAtomContainer container) {
+        return getMinMax(container.atoms());
     }
 
     /**

@@ -186,21 +186,21 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         // map the existing element a new element
         IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, mapping);
 
-        Assert.assertThat("mapped chiral atom was the same as the original", mapped.getStereoBond(),
+        org.hamcrest.MatcherAssert.assertThat("mapped chiral atom was the same as the original", mapped.getStereoBond(),
                 is(not(sameInstance(original.getStereoBond()))));
-        Assert.assertThat("mapped chiral atom was not the clone", mapped.getStereoBond(), is(sameInstance(c1c2clone)));
+        org.hamcrest.MatcherAssert.assertThat("mapped chiral atom was not the clone", mapped.getStereoBond(), is(sameInstance(c1c2clone)));
 
         IBond[] originalBonds = original.getBonds();
         IBond[] mappedBonds = mapped.getBonds();
 
-        Assert.assertThat("first bond was te same as the original", mappedBonds[0],
+        org.hamcrest.MatcherAssert.assertThat("first bond was te same as the original", mappedBonds[0],
                 is(not(sameInstance(originalBonds[0]))));
-        Assert.assertThat("first mapped bond was not the clone", mappedBonds[0], is(sameInstance(c1o3clone)));
-        Assert.assertThat("second bond was te same as the original", mappedBonds[1],
+        org.hamcrest.MatcherAssert.assertThat("first mapped bond was not the clone", mappedBonds[0], is(sameInstance(c1o3clone)));
+        org.hamcrest.MatcherAssert.assertThat("second bond was te same as the original", mappedBonds[1],
                 is(not(sameInstance(originalBonds[1]))));
-        Assert.assertThat("second mapped bond was not the clone", mappedBonds[1], is(sameInstance(c2o4clone)));
+        org.hamcrest.MatcherAssert.assertThat("second mapped bond was not the clone", mappedBonds[1], is(sameInstance(c2o4clone)));
 
-        Assert.assertThat("stereo was not mapped", mapped.getStereo(), is(original.getStereo()));
+        org.hamcrest.MatcherAssert.assertThat("stereo was not mapped", mapped.getStereo(), is(original.getStereo()));
 
     }
 
@@ -247,7 +247,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         // map the existing element a new element - should through an IllegalArgumentException
         IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
 
-        Assert.assertThat(mapped, is(sameInstance(original)));
+        org.hamcrest.MatcherAssert.assertThat(mapped, is(sameInstance(original)));
     }
 
     @Test

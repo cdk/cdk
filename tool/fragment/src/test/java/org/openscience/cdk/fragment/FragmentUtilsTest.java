@@ -43,7 +43,7 @@ import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Test fragment utils
@@ -80,7 +80,7 @@ public class FragmentUtilsTest extends CDKTestCase {
         Assert.assertEquals(2, uniqueFrags.size());
         // You can put the fragments back together with a ring closure and dot
         // [CH]12CC1.[CH]12CCC1
-        Assert.assertThat(uniqueFrags, hasItems("[CH]1CC1", "[CH]1CCC1"));
+        org.hamcrest.MatcherAssert.assertThat(uniqueFrags, hasItems("[CH]1CC1", "[CH]1CCC1"));
     }
 
     @Test

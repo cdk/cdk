@@ -54,18 +54,10 @@ public class JniInChIInputAdapter extends JniInchiInput {
 
     private static boolean isTimeoutOptions(String op) {
         if (op == null || op.length() < 2) return false;
-        int pos = 0;
-        int len = op.length();
-        if (op.charAt(pos) == 'W')
-            pos++;
-        while (pos < len && Character.isDigit(op.charAt(pos)))
-            pos++;
-        if (pos < len && op.charAt(pos) == '.')
-            pos++;
-        while (pos < len && Character.isDigit(op.charAt(pos)))
-            pos++;
-        return pos == len;
+        return op.charAt(0) == 'W';
+
     }
+
 
     private static String checkOptions(final String ops) throws JniInchiException {
         if (ops == null) {
@@ -91,10 +83,14 @@ public class JniInChIInputAdapter extends JniInchiInput {
                     sbOptions.append(" ");
                 }
             } else if (isTimeoutOptions(op)) {
-                sbOptions.append(FLAG_CHAR).append(op);
-                hasUserSpecifiedTimeout = true;
-                if (tok.hasMoreTokens()) {
-                    sbOptions.append(" ");
+                final double time = Math.ceil(Double.parseDouble(op.substring(1)));
+                // fix #653: safer to use whole seconds, rounded to next bigger integer
+                if (time >= 0.0) {
+                    sbOptions.append(FLAG_CHAR).append(String.format("W%.0f", time));
+                    hasUserSpecifiedTimeout = true;
+                    if (tok.hasMoreTokens()) {
+                        sbOptions.append(" ");
+                    }
                 }
             }
             // 1,5 tautomer option
@@ -123,7 +119,6 @@ public class JniInChIInputAdapter extends JniInchiInput {
 
         return sbOptions.toString();
     }
-
 
     private static String checkOptions(List<INCHI_OPTION> ops) throws JniInchiException {
         if (ops == null) {

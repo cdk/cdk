@@ -460,7 +460,6 @@ public class PathTools {
         }
         dist[atomContainer.indexOf(start)] = 0;
 
-        List<IAtom> sList = new ArrayList<IAtom>();
         List<Integer> qList = new ArrayList<Integer>();
         for (int i = 0; i < natom; i++)
             qList.add(i);
@@ -477,8 +476,7 @@ public class PathTools {
                     index = tmp;
                 }
             }
-            qList.remove(qList.indexOf(index));
-            sList.add(atomContainer.getAtom(index));
+            qList.remove((Integer)index);
             if (index == endNumber) break;
 
             // relaxation

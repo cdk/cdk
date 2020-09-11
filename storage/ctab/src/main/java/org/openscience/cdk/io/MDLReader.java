@@ -449,7 +449,7 @@ public class MDLReader extends DefaultChemObjectReader {
                             int massDiff = Integer.parseInt(massDiffString);
                             if (massDiff != 0) {
                                 IIsotope major = Isotopes.getInstance().getMajorIsotope(element);
-                                atom.setAtomicNumber(major.getAtomicNumber() + massDiff);
+                                atom.setMassNumber(major.getMassNumber() + massDiff);
                             }
                         } catch (NumberFormatException | IOException exception) {
                             logger.error("Could not parse mass difference field");

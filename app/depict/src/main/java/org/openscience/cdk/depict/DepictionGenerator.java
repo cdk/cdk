@@ -43,6 +43,8 @@ import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.standard.SelectionVisibility;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator;
+import org.openscience.cdk.renderer.generators.standard.StandardGenerator.DelocalisedDonutsBondDisplay;
+import org.openscience.cdk.renderer.generators.standard.StandardGenerator.ForceDelocalisedBondDisplay;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
@@ -54,8 +56,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * A high-level API for depicting molecules and reactions.
@@ -337,6 +342,8 @@ public final class DepictionGenerator {
         List<LayoutBackup> layoutBackups = new ArrayList<>();
         int molId = 0;
         for (IAtomContainer mol : mols) {
+            if (mol == null)
+                throw new NullPointerException("Null molecule provided!");
             setIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
             layoutBackups.add(new LayoutBackup(mol));
         }
@@ -410,7 +417,7 @@ public final class DepictionGenerator {
      */
     public Depiction depict(IReaction rxn) throws CDKException {
 
-        ensure2dLayout(rxn); // can reorder components!
+        ensure2dLayout(rxn); // can reorder components if align is enabled!
 
         final Color fgcol = getParameterValue(StandardGenerator.AtomColor.class).getAtomColor(rxn.getBuilder()
                                                                                                  .newInstance(IAtom.class, "C"));
@@ -507,14 +514,28 @@ public final class DepictionGenerator {
      */
     private Map<IChemObject, Color> makeHighlightAtomMap(List<IAtomContainer> reactants,
                                                          List<IAtomContainer> products) {
+
+        // only highlight atom-maps that appear in both the reactant+product
+        Set<Integer> reactantMapIdxs = new HashSet<>();
+        Set<Integer> productMapIdxs = new HashSet<>();
+        for (IAtomContainer mol : reactants) {
+            for (IAtom atom : mol.atoms())
+                reactantMapIdxs.add(accessAtomMap(atom));
+        }
+        for (IAtomContainer mol : products) {
+            for (IAtom atom : mol.atoms())
+                productMapIdxs.add(accessAtomMap(atom));
+        }
+
         Map<IChemObject, Color> colorMap = new HashMap<>();
         Map<Integer, Color> mapToColor = new HashMap<>();
+        Map<Integer, IAtom> amap = new TreeMap<>();
         int colorIdx = -1;
         for (IAtomContainer mol : reactants) {
             int prevPalletIdx = colorIdx;
             for (IAtom atom : mol.atoms()) {
                 int mapidx = accessAtomMap(atom);
-                if (mapidx > 0) {
+                if (mapidx > 0 && productMapIdxs.contains(mapidx)) {
                     if (prevPalletIdx == colorIdx) {
                         colorIdx++; // select next color
                         if (colorIdx >= atomMapColors.length)
@@ -523,6 +544,7 @@ public final class DepictionGenerator {
                     Color color = atomMapColors[colorIdx];
                     colorMap.put(atom, color);
                     mapToColor.put(mapidx, color);
+                    amap.put(mapidx, atom);
                 }
             }
             if (colorIdx > prevPalletIdx) {
@@ -540,17 +562,29 @@ public final class DepictionGenerator {
         for (IAtomContainer mol : products) {
             for (IAtom atom : mol.atoms()) {
                 int mapidx = accessAtomMap(atom);
-                if (mapidx > 0) {
+                if (mapidx > 0 && reactantMapIdxs.contains(mapidx)) {
                     colorMap.put(atom, mapToColor.get(mapidx));
                 }
             }
-            for (IBond bond : mol.bonds()) {
-                IAtom a1 = bond.getBegin();
-                IAtom a2 = bond.getEnd();
-                Color c1 = colorMap.get(a1);
-                Color c2 = colorMap.get(a2);
-                if (c1 != null && c1 == c2)
-                    colorMap.put(bond, c1);
+            for (IBond pBnd : mol.bonds()) {
+                IAtom pBeg = pBnd.getBegin();
+                IAtom pEnd = pBnd.getEnd();
+                Color c1 = colorMap.get(pBeg);
+                Color c2 = colorMap.get(pEnd);
+                if (c1 != null && c1 == c2) {
+                    IAtom rBeg = amap.get(accessAtomMap(pBeg));
+                    IAtom rEnd = amap.get(accessAtomMap(pEnd));
+                    if (rBeg != null && rEnd != null) {
+                        IBond rBnd = rBeg.getBond(rEnd);
+                        if (rBnd != null &&
+                            ((pBnd.isAromatic() && rBnd.isAromatic()) ||
+                              rBnd.getOrder() == pBnd.getOrder())) {
+                            colorMap.put(pBnd, c1);
+                        } else {
+                            colorMap.remove(rBnd);
+                        }
+                    }
+                }
             }
         }
 
@@ -977,8 +1011,15 @@ public final class DepictionGenerator {
      */
     public DepictionGenerator withHighlight(Iterable<? extends IChemObject> chemObjs, Color color) {
         DepictionGenerator copy = new DepictionGenerator(this);
-        for (IChemObject chemObj : chemObjs)
-            copy.highlight.put(chemObj, color);
+        for (IChemObject chemObj : chemObjs) {
+            if (chemObj instanceof IAtomContainer) {
+                for (IAtom atom : ((IAtomContainer) chemObj).atoms())
+                    copy.highlight.put(atom, color);
+                for (IBond bond : ((IAtomContainer) chemObj).bonds())
+                    copy.highlight.put(bond, color);
+            }
+            else copy.highlight.put(chemObj, color);
+        }
         return copy;
     }
 
@@ -1061,6 +1102,36 @@ public final class DepictionGenerator {
     public DepictionGenerator withFillToFit() {
         return withParam(BasicSceneGenerator.FitToScreen.class,
                          true);
+    }
+
+    /**
+     * When aromaticity is set on bonds, display this in the diagram. IUPAC
+     * recommends depicting kekulé structures to avoid ambiguity but it's common
+     * practice to render delocalised rings "donuts" or "life buoys". With fused
+     * rings this can be somewhat confusing as you end up with three lines at
+     * the fusion point. <br>
+     * By default small rings are renders as donuts with dashed bonds used
+     * otherwise. You can use dashed bonds always by turning off the
+     * {@link DelocalisedDonutsBondDisplay}.
+     *
+     * @return new generator for method chaining
+     * @see ForceDelocalisedBondDisplay
+     * @see DelocalisedDonutsBondDisplay
+     */
+    public DepictionGenerator withAromaticDisplay() {
+        return withParam(ForceDelocalisedBondDisplay.class,
+                         true);
+    }
+
+
+    /**
+     * Indicate whether <sup>2</sup>H should be rendered as 'D'. Default: true.
+     * @param v the value
+     * @return new generator for method chaining
+     */
+    public DepictionGenerator withDeuteriumSymbol(boolean v) {
+        return withParam(StandardGenerator.DeuteriumSymbol.class,
+                         v);
     }
 
     /**

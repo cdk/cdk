@@ -215,7 +215,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     seq.addChemModel(model);
                 } else {
                     logger.debug("Format seems broken. Skipping these lines:");
-                    while (!line.startsWith("frame:") && input.ready() && line != null) {
+                    while (line != null && !line.startsWith("frame:") && input.ready()) {
                         line = input.readLine();
                         logger.debug(lineNumber++ + ": ", line);
                     }

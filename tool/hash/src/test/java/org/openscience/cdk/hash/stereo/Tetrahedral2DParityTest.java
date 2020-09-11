@@ -67,7 +67,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{0, 0, 0, -1};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(CLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(CLOCKWISE));
     }
 
     /**
@@ -84,7 +84,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{0, 0, 0, 1};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(ANTICLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(ANTICLOCKWISE));
     }
 
     /**
@@ -102,7 +102,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{0, 0, 0, 0}; // no wedge/hatch bonds
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(NONE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(NONE));
     }
 
     /**
@@ -120,7 +120,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{1, 1, 1, 0}; // no wedge/hatch bonds
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(CLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(CLOCKWISE));
     }
 
     /**
@@ -138,7 +138,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{-1, -1, -1, 0}; // no wedge/hatch bonds
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(ANTICLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(ANTICLOCKWISE));
     }
 
     /**
@@ -156,7 +156,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{1, 1, 1, 1}; // no wedge/hatch bonds
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(NONE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(NONE));
     }
 
     /**
@@ -174,7 +174,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{-1, -1, -1, -1}; // no wedge/hatch bonds
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(NONE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(NONE));
     }
 
     /**
@@ -191,7 +191,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{1, 0, 0, 0};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(CLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(CLOCKWISE));
     }
 
     /**
@@ -208,7 +208,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{1, 1, 1, 0};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(CLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(CLOCKWISE));
     }
 
     /**
@@ -225,7 +225,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{-1, 0, 0, 0};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(ANTICLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(ANTICLOCKWISE));
     }
 
     /**
@@ -242,7 +242,7 @@ public class Tetrahedral2DParityTest {
         };
         int[] elev = new int[]{-1, -1, -1, 0};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
-        Assert.assertThat(parity.parity(), is(ANTICLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(ANTICLOCKWISE));
     }
 
 }

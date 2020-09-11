@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.graph.InitialCyclesTest.anthracene;
 import static org.openscience.cdk.graph.InitialCyclesTest.bicyclo;
 import static org.openscience.cdk.graph.InitialCyclesTest.k4;

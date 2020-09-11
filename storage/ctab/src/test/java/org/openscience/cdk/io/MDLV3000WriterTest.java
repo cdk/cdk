@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -48,9 +49,10 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MDLV3000WriterTest {
 
@@ -444,6 +446,26 @@ public class MDLV3000WriterTest {
             mdlw.write(mol);
         }
         assertThat(sw.toString(), containsString("3D"));
+    }
+
+    @Test
+    public void writeCustomTitle() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer mol = builder.newAtomContainer();
+        IAtom atom = builder.newAtom();
+        atom.setSymbol("C");
+        atom.setImplicitHydrogenCount(4);
+        atom.setPoint3d(new Point3d(0.5, 0.5, 0.1));
+        mol.addAtom(atom);
+        StringWriter sw = new StringWriter();
+        try (MDLV3000Writer mdlw = new MDLV3000Writer(sw)) {
+            Properties sdfWriterProps = new Properties();
+            sdfWriterProps.put(MDLV2000Writer.OptProgramName, "FakeNews");
+            mdlw.addChemObjectIOListener(new PropertiesListener(sdfWriterProps));
+            mdlw.customizeJob();
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(), containsString("FakeNews"));
     }
 
     private String writeToStr(IAtomContainer mol) throws IOException, CDKException {

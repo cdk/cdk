@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IBond;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 
 /**

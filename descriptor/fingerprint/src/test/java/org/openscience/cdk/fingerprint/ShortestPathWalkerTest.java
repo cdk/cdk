@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author John May

@@ -417,6 +417,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     String orderString = tokenizer.nextToken();
                     int order = Integer.parseInt(orderString);
                     if (order >= 4) {
+                        bond.setOrder(IBond.Order.UNSET);
                         logger.warn("Query order types are not supported (yet). File a bug if you need it");
                     } else {
                         bond.setOrder(BondManipulator.createBondOrder((double) order));
@@ -469,7 +470,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                     } else if (configuration == 1) {
                                         bond.setStereo(IBond.Stereo.UP);
                                     } else if (configuration == 2) {
-                                        bond.setStereo((IBond.Stereo) CDKConstants.UNSET);
+                                        bond.setStereo(IBond.Stereo.UP_OR_DOWN);
                                     } else if (configuration == 3) {
                                         bond.setStereo(IBond.Stereo.DOWN);
                                     }
@@ -548,10 +549,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     options = parseOptions(exhaustStringTokenizer(tokenizer));
                 }
 
+                Sgroup sgroup = new Sgroup();
                 // now interpret line
                 if (type.startsWith("SUP")) {
+                    sgroup.setType(SgroupType.CtabAbbreviation);
                     Iterator<String> keys = options.keySet().iterator();
-                    int atomID = -1;
                     String label = "";
                     while (keys.hasNext()) {
                         String key = keys.next();
@@ -559,8 +561,16 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         try {
                             if (key.equals("ATOMS")) {
                                 StringTokenizer atomsTokenizer = new StringTokenizer(value);
-                                Integer.parseInt(atomsTokenizer.nextToken()); // should be 1, int atomCount =
-                                atomID = Integer.parseInt(atomsTokenizer.nextToken());
+                                int nExpected = Integer.parseInt(atomsTokenizer.nextToken());
+                                while (atomsTokenizer.hasMoreTokens()) {
+                                    sgroup.addAtom(readData.getAtom(Integer.parseInt(atomsTokenizer.nextToken())-1));
+                                }
+                            } else if (key.equals("XBONDS")) {
+                                StringTokenizer xbonds = new StringTokenizer(value);
+                                int nExpected = Integer.parseInt(xbonds.nextToken());
+                                while (xbonds.hasMoreTokens()) {
+                                    sgroup.addBond(readData.getBond(Integer.parseInt(xbonds.nextToken())-1));
+                                }
                             } else if (key.equals("LABEL")) {
                                 label = value;
                             } else {
@@ -573,18 +583,16 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                             logger.debug(exception);
                             throw new CDKException(error, exception);
                         }
-                        if (atomID != -1 && label.length() > 0) {
-                            IAtom original = readData.getAtom(atomID - 1);
-                            IAtom replacement = original;
-                            if (!(original instanceof IPseudoAtom)) {
-                                replacement = readData.getBuilder().newInstance(IPseudoAtom.class,
-                                                                                original);
-                            }
-                            ((IPseudoAtom) replacement).setLabel(label);
-                            if (!replacement.equals(original))
-                                AtomContainerManipulator.replaceAtomByAtom(readData, original, replacement);
+                        if (!sgroup.getAtoms().isEmpty() && label.length() > 0) {
+                            sgroup.setSubscript(label);
                         }
                     }
+                    List<Sgroup> sgroups = readData.getProperty(CDKConstants.CTAB_SGROUPS);
+                    if (sgroups == null)
+                        sgroups = new ArrayList<>();
+                    sgroups.add(sgroup);
+                    readData.setProperty(CDKConstants.CTAB_SGROUPS,
+                                         sgroups);
                 } else {
                     logger.warn("Skipping unrecognized SGROUP type: " + type);
                 }

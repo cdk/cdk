@@ -26,6 +26,7 @@ package org.openscience.cdk.smiles;
 import org.openscience.cdk.smiles.CxSmilesState.PolymerSgroup;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -187,7 +188,7 @@ public class CxSmilesGenerator {
         // 2D/3D Coordinates
         if (SmiFlavor.isSet(opts, SmiFlavor.CxCoordinates) &&
             state.atomCoords != null && !state.atomCoords.isEmpty()) {
-            DecimalFormat fmt = new DecimalFormat("#.##");
+            DecimalFormat fmt = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.ROOT));
             if (sb.length() > 2) sb.append(',');
             sb.append('(');
             for (int i = 0; i < ordering.length; i++) {
@@ -216,14 +217,7 @@ public class CxSmilesGenerator {
             List<Map.Entry<Integer, List<Integer>>> multicenters = new ArrayList<>(state.positionVar.entrySet());
 
             // consistent output order
-            Collections.sort(multicenters,
-                             new Comparator<Map.Entry<Integer, List<Integer>>>() {
-                                 @Override
-                                 public int compare(Map.Entry<Integer, List<Integer>> a,
-                                                    Map.Entry<Integer, List<Integer>> b) {
-                                     return comp.compare(a.getKey(), b.getKey());
-                                 }
-                             });
+            multicenters.sort((a, b) -> comp.compare(a.getKey(), b.getKey()));
 
             for (int i = 0; i < multicenters.size(); i++) {
                 if (i != 0) sb.append(',');
@@ -231,8 +225,30 @@ public class CxSmilesGenerator {
                 sb.append(ordering[e.getKey()]);
                 sb.append(':');
                 List<Integer> vals = new ArrayList<>(e.getValue());
-                Collections.sort(vals, comp);
+                vals.sort(comp);
                 appendIntegers(ordering, '.', sb, vals);
+            }
+
+        }
+
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxLigandOrder) &&
+            state.ligandOrdering != null && !state.ligandOrdering.isEmpty()) {
+
+            if (sb.length() > 2) sb.append(',');
+            sb.append("LO");
+            sb.append(':');
+
+            List<Map.Entry<Integer, List<Integer>>> ligandorderings = new ArrayList<>(state.ligandOrdering.entrySet());
+
+            // consistent output order
+            ligandorderings.sort((a, b) -> comp.compare(a.getKey(), b.getKey()));
+
+            for (int i = 0; i < ligandorderings.size(); i++) {
+                if (i != 0) sb.append(',');
+                Map.Entry<Integer, List<Integer>> e = ligandorderings.get(i);
+                sb.append(ordering[e.getKey()]);
+                sb.append(':');
+                appendIntegers(ordering, '.', sb, e.getValue());
             }
 
         }

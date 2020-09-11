@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -48,7 +49,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CxSmilesTest {
 
@@ -376,6 +377,22 @@ public class CxSmilesTest {
         IAtomContainer mol = smipar.parseSmiles("c1ccccc1O |$_AV:0;1;2;3;4;5;6$|");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.CxAtomValue);
         assertThat(smigen.create(mol), is("OC=1C=CC=CC1 |$_AV:6;5;0;1;2;3;4$|"));
+    }
+
+    @Test public void roundTripLigandOrdering() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("Cl[*](Br)I |$;_R1;;$,LO:1:0.2.3|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
+        assertThat(smigen.create(mol), is("Cl*(Br)I |$;R1$,LO:1:0.2.3|"));
+    }
+
+    @Test public void canonLigandOrdering() throws CDKException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        SmilesParser smipar = new SmilesParser(bldr);
+        IAtomContainer mol = smipar.parseSmiles("Cl[*](I)Br |$;_R1;;$,LO:1:0.2.3|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical|SmiFlavor.CxSmiles);
+        assertThat(smigen.create(mol), is("Cl*(Br)I |$;R1$,LO:1:0.3.2|"));
     }
 
 }

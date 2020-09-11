@@ -22,6 +22,7 @@
  *  */
 package org.openscience.cdk.io;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -30,10 +31,12 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -43,7 +46,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * TestCase for the reading MDL V3000 mol files using one test file.
@@ -142,6 +145,29 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             IAtomContainer container = reader.read(new org.openscience.cdk.AtomContainer(0, 0, 0, 0));
             assertThat(container.getSingleElectronCount(), is(1));
             assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(3));
+        }
+    }
+
+    @Test public void issue602() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("issue602.mol"))) {
+            IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            assertThat(mol.getAtomCount(), CoreMatchers.is(31));
+        }
+    }
+
+    /**
+     * @cdk.bug https://github.com/cdk/cdk/issues/664
+     *
+     * MDLV3000Reader does not yet support queries. Parsed query bonds (order >= 4) should be set to IBond.Order.UNSET
+     * to avoid NPE in valence calculation.
+     */
+    @Test public void reading_query_bond_should_not_npe() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("v3000Query.mol"))) {
+            IAtomContainer container = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            for (IBond bond: container.bonds()) {
+                assertNotNull(bond.getOrder());
+            }
+            assertThat(container.getBond(4).getOrder(), is(IBond.Order.UNSET));
         }
     }
 }

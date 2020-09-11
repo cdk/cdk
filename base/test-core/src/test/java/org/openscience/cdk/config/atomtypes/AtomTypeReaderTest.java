@@ -118,8 +118,8 @@ public class AtomTypeReaderTest extends CDKTestCase {
 
         Assert.assertEquals(0, atomType.getFormalCharge().intValue());
         Assert.assertEquals(IAtomType.Hybridization.SP1, atomType.getHybridization());
-        Assert.assertEquals(0, atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
-        Assert.assertEquals(2, atomType.getProperty(CDKConstants.PI_BOND_COUNT));
+        Assert.assertEquals(0, (int)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
+        Assert.assertEquals(2, (int)atomType.getProperty(CDKConstants.PI_BOND_COUNT));
     }
 
     @Test
@@ -157,7 +157,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
         Assert.assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
         Assert.assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
 
-        Assert.assertEquals(3, atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
-        Assert.assertEquals(3, atomType.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));
+        Assert.assertEquals((Integer)3, atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
+        Assert.assertEquals((Integer)3, atomType.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));
     }
 }

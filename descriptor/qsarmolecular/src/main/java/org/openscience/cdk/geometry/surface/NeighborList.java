@@ -22,9 +22,12 @@ package org.openscience.cdk.geometry.surface;
 
 import org.openscience.cdk.interfaces.IAtom;
 
+import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Creates a list of atoms neighboring each atom in the molecule.
@@ -41,97 +44,99 @@ import java.util.List;
  */
 public class NeighborList {
 
-    HashMap<String, List> boxes;
-    double                boxSize;
-    IAtom[]               atoms;
+    Map<Key, List<Integer>> boxes;
+    double                  boxSize;
+    IAtom[]                 atoms;
 
-    public NeighborList(IAtom[] atoms, double radius) {
-        this.atoms = atoms;
-        this.boxes = new HashMap<String, List>();
-        this.boxSize = 2 * radius;
-        for (int i = 0; i < atoms.length; i++) {
-            String key = getKeyString(atoms[i]);
+    /**
+     * Custom key class for looking up items in the map.
+     */
+    private final class Key {
+        private final int x, y, z;
 
-            if (this.boxes.containsKey(key)) {
-                List arl = this.boxes.get(key);
-                arl.add(i);
-                this.boxes.put(key, arl);
-            } else {
-                this.boxes.put(key, new ArrayList());
-            }
+        public Key(IAtom atom) {
+            double x = atom.getPoint3d().x;
+            double y = atom.getPoint3d().y;
+            double z = atom.getPoint3d().z;
+            this.x = (int) (Math.floor(x / boxSize));
+            this.y = (int) (Math.floor(y / boxSize));
+            this.z = (int) (Math.floor(z / boxSize));
+        }
+
+        public Key(int x, int y, int z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Key key = (Key) o;
+            return x == key.x &&
+                   y == key.y &&
+                   z == key.z;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(x, y, z);
         }
     }
 
-    private String getKeyString(IAtom atom) {
-        double x = atom.getPoint3d().x;
-        double y = atom.getPoint3d().y;
-        double z = atom.getPoint3d().z;
-
-        int k1, k2, k3;
-        k1 = (int) (Math.floor(x / boxSize));
-        k2 = (int) (Math.floor(y / boxSize));
-        k3 = (int) (Math.floor(z / boxSize));
-
-        String key = Integer.toString(k1) + " " + Integer.toString(k2) + " " + Integer.toString(k3) + " ";
-        return (key);
-    }
-
-    private int[] getKeyArray(IAtom atom) {
-        double x = atom.getPoint3d().x;
-        double y = atom.getPoint3d().y;
-        double z = atom.getPoint3d().z;
-
-        int k1, k2, k3;
-        k1 = (int) (Math.floor(x / boxSize));
-        k2 = (int) (Math.floor(y / boxSize));
-        k3 = (int) (Math.floor(z / boxSize));
-
-        int[] ret = {k1, k2, k3};
-        return (ret);
+    public NeighborList(IAtom[] atoms, double radius) {
+        this.atoms = atoms;
+        this.boxes = new HashMap<>();
+        this.boxSize = 2 * radius;
+        for (int i = 0; i < atoms.length; i++) {
+            Key key = new Key(atoms[i]);
+            List<Integer> arl = this.boxes.get(key);
+            if (arl == null)
+                this.boxes.put(key, arl = new ArrayList<>());
+            arl.add(i);
+        }
     }
 
     public int getNumberOfNeighbors(int i) {
         return getNeighbors(i).length;
     }
 
-    public int[] getNeighbors(int ii) {
-        double maxDist2 = this.boxSize * this.boxSize;
-
-        IAtom ai = this.atoms[ii];
-        int[] key = getKeyArray(ai);
-        ArrayList nlist = new ArrayList();
-
-        int[] bval = {-1, 0, 1};
-        for (int i = 0; i < bval.length; i++) {
-            int x = bval[i];
-            for (int j = 0; j < bval.length; j++) {
-                int y = bval[j];
-                for (int k = 0; k < bval.length; k++) {
-                    int z = bval[k];
-
-                    String keyj = Integer.toString(key[0] + x) + " " + Integer.toString(key[1] + y) + " "
-                            + Integer.toString(key[2] + z) + " ";
-                    if (boxes.containsKey(keyj)) {
-                        ArrayList nbrs = (ArrayList) boxes.get(keyj);
-                        for (int l = 0; l < nbrs.size(); l++) {
-                            int i2 = (Integer) nbrs.get(l);
-                            if (i2 != ii) {
-                                IAtom aj = atoms[i2];
-                                double x12 = aj.getPoint3d().x - ai.getPoint3d().x;
-                                double y12 = aj.getPoint3d().y - ai.getPoint3d().y;
-                                double z12 = aj.getPoint3d().z - ai.getPoint3d().z;
-                                double d2 = x12 * x12 + y12 * y12 + z12 * z12;
-                                if (d2 < maxDist2) nlist.add(i2);
+    /**
+     * Get the neighbors that are with the given radius of atom i.
+     * @param i atom index
+     * @return atom indexs within that radius
+     */
+    public int[] getNeighbors(int i) {
+        List<Integer> result   = new ArrayList<>();
+        double        maxDist2 = this.boxSize * this.boxSize;
+        IAtom         atom     = this.atoms[i];
+        Key           key      = new Key(atom);
+        int[]         bval     = {-1, 0, 1};
+        for (int x : bval) {
+            for (int y : bval) {
+                for (int z : bval) {
+                    Key probe = new Key(key.x+x, key.y+y, key.z+z);
+                    List<Integer> nbrs = boxes.get(probe);
+                    if (nbrs != null) {
+                        for (Integer nbr : nbrs) {
+                            if (nbr != i) {
+                                IAtom   anbr = atoms[nbr];
+                                Point3d p1 = anbr.getPoint3d();
+                                Point3d p2 = atom.getPoint3d();
+                                if (p1.distanceSquared(p2) < maxDist2)
+                                    result.add(nbr);
                             }
                         }
                     }
                 }
             }
         }
-        Object[] tmp = nlist.toArray();
-        int[] ret = new int[tmp.length];
-        for (int j = 0; j < tmp.length; j++)
-            ret[j] = (Integer) tmp[j];
+
+        // convert to primitive array
+        int[] ret = new int[result.size()];
+        for (int j = 0; j < ret.length; j++)
+            ret[j] = result.get(j);
         return (ret);
     }
 }

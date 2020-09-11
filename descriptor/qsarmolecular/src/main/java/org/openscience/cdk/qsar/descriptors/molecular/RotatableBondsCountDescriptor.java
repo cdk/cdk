@@ -22,6 +22,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.SpanningTree;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -159,7 +160,7 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
         for (IBond bond : ac.bonds()) {
             IAtom atom0 = bond.getBegin();
             IAtom atom1 = bond.getEnd();
-            if (atom0.getSymbol().equals("H") || atom1.getSymbol().equals("H")) continue;
+            if (atom0.getAtomicNumber() == IElement.H || atom1.getAtomicNumber() == IElement.H) continue;
             if (bond.getOrder() == Order.SINGLE) {
                 if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE))
                         && (BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom1), IBond.Order.TRIPLE))) {
@@ -202,9 +203,9 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
      */
     private boolean isAmide(IAtom atom0, IAtom atom1, IAtomContainer ac) {
 
-        if (atom0.getSymbol().equals("C") && atom1.getSymbol().equals("N")) {
+        if (atom0.getAtomicNumber() == IElement.C && atom1.getAtomicNumber() == IElement.N) {
             for (IAtom neighbor : ac.getConnectedAtomsList(atom0)) {
-                if (neighbor.getSymbol().equals("O")
+                if (neighbor.getAtomicNumber() == IElement.O
                         && ac.getBond(atom0, neighbor).getOrder() == Order.DOUBLE) {
                     return true;
                 }
@@ -217,7 +218,7 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
         List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
         int n = 0;
         for (IAtom anAtom : connectedAtoms)
-            if (anAtom.getSymbol().equals("H")) n++;
+            if (anAtom.getAtomicNumber() == IElement.H) n++;
         return n;
     }
 

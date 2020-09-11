@@ -150,7 +150,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
             Assert.assertNotNull("Attempt to test atom type which is not defined in the " + getAtomTypeListName()
                     + ": " + expectedID, type);
         } catch (NoSuchAtomTypeException exception) {
-            Assert.assertNotNull("Attempt to test atom type which is not defined in the " + getAtomTypeListName()
+            System.err.println("Attempt to test atom type which is not defined in the " + getAtomTypeListName()
                     + ": " + exception.getMessage());
         }
         if (testedAtomTypes.containsKey(expectedID)) {

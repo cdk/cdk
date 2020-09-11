@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  *                    2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
@@ -24,27 +24,12 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import static org.openscience.cdk.CDKConstants.SINGLE_OR_DOUBLE;
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
 import com.google.common.collect.Maps;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -55,9 +40,9 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -73,6 +58,21 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import static org.openscience.cdk.CDKConstants.SINGLE_OR_DOUBLE;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -92,10 +92,42 @@ import javax.vecmath.Point3d;
 public class AtomContainerManipulator {
 
     /**
+     * For use with {@link #getMass(IAtomContainer)}. This option uses the mass
+     * stored on atoms ({@link IAtom#getExactMass()}) or the average mass of the
+     * element when unspecified.
+     */
+    public static final int MolWeight                = 0x1;
+
+    /**
+     * For use with {@link #getMass(IAtomContainer)}. This option ignores the
+     * mass stored on atoms ({@link IAtom#getExactMass()}) and uses the average
+     * mass of each element. This option is primarily provided for backwards
+     * compatibility.
+     */
+    public static final int MolWeightIgnoreSpecified = 0x2;
+
+    /**
+     * For use with {@link #getMass(IAtomContainer)}. This option uses the mass
+     * stored on atoms {@link IAtom#getExactMass()} or the mass of the major
+     * isotope when this is not specified.
+     */
+    public static final int MonoIsotopic             = 0x3;
+
+    /**
+     * For use with {@link #getMass(IAtomContainer)}. This option uses the mass
+     * stored on atoms {@link IAtom#getExactMass()} and then calculates a
+     * distribution for any unspecified atoms and uses the most abundant
+     * distribution. For example C<sub>6</sub>Br<sub>6</sub> would have three
+     * <sup>79</sup>Br and <sup>81</sup>Br because their abundance is 51 and
+     * 49%.
+     */
+    public static final int MostAbundant             = 0x4;
+
+    /**
      * Extract a substructure from an atom container, in the form of a new
      * cloned atom container with only the atoms with indices in atomIndices and
      * bonds that connect these atoms.
-     * 
+     *
      * Note that this may result in a disconnected atom container.
      *
      * @param atomContainer the source container to extract from
@@ -206,102 +238,216 @@ public class AtomContainerManipulator {
         return charge;
     }
 
-    /**
-     * Get the summed exact mass of all atoms in an AtomContainer. It
-     * requires isotope information for all atoms to be set. Either set
-     * this information using the {@link IsotopeFactory}, or use the
-     * {@link MolecularFormulaManipulator#getMajorIsotopeMass(org.openscience.cdk.interfaces.IMolecularFormula)}
-     * method, after converting the {@link IAtomContainer} to a
-     * {@link IMolecularFormula} with the {@link MolecularFormulaManipulator}.
-     *
-     * @param  atomContainer The IAtomContainer to manipulate
-     * @return The summed exact mass of all atoms in this AtomContainer.
-     * @see #getMolecularWeight(IAtomContainer)
-     */
-    public static double getTotalExactMass(IAtomContainer atomContainer) {
-        try {
+    private static boolean hasIsotopeSpecified(IIsotope atom) {
+        return atom.getMassNumber() != null && atom.getMassNumber() != 0;
+    }
 
-            Isotopes isotopes = Isotopes.getInstance();
-            double mass = 0.0;
-            double hExactMass = isotopes.getMajorIsotope(1).getExactMass();
-            for (IAtom atom : atomContainer.atoms()) {
-                if (atom.getImplicitHydrogenCount() == null)
-                    throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");
-                mass += atom.getExactMass();
-                mass += atom.getImplicitHydrogenCount() * hExactMass;
-            }
-            return mass;
-        } catch (IOException e) {
-            throw new RuntimeException("Isotopes definitions could not be loaded", e);
+    private static double getExactMass(IsotopeFactory isofact, IIsotope atom) {
+        if (atom.getExactMass() != null)
+            return atom.getExactMass();
+        else if (atom.getMassNumber() != null)
+            return isofact.getExactMass(getAtomicNum(atom),
+                                        atom.getMassNumber());
+        else
+            return isofact.getMajorIsotopeMass(getAtomicNum(atom));
+    }
+
+    private static double getMassOrAvg(IsotopeFactory isofact, IIsotope atom) {
+        if (!hasIsotopeSpecified(atom))
+            return isofact.getNaturalMass(atom);
+        return getExactMass(isofact, atom);
+    }
+
+    public static final Comparator<IIsotope> NAT_ABUN_COMP = new Comparator<IIsotope>() {
+        @Override
+        public int compare(IIsotope o1, IIsotope o2) {
+            return -Double.compare(o1.getNaturalAbundance(),
+                                   o2.getNaturalAbundance());
         }
+    };
+
+    private static double getDistMass(IsotopeFactory isofact,
+                                      IIsotope[] isos, int idx, int count) {
+        if (count == 0)
+            return 0;
+        double frac = 100d;
+        double res  = 0;
+        for (int i = 0; i < idx; i++)
+            frac -= isos[i].getNaturalAbundance();
+        double p    = isos[idx].getNaturalAbundance() / frac;
+        if (p >= 1.0)
+            return count * isos[idx].getExactMass();
+        double kMin = (count + 1) * (1 - p) - 1;
+        double kMax = (count + 1) * (1 - p);
+        if ((int) Math.ceil(kMin) == (int) Math.floor(kMax)) {
+            int k = (int) kMax;
+            res = (count - k) * getExactMass(isofact,
+                                             isos[idx]);
+            res += getDistMass(isofact, isos, idx + 1, k);
+        }
+        return res;
+    }
+
+    private static int getImplHCount(IAtom atom) {
+        Integer implh = atom.getImplicitHydrogenCount();
+        if (implh == null)
+            throw new IllegalArgumentException("An atom had 'null' implicit hydrogens!");
+        return implh;
+    }
+
+    private static int getAtomicNum(IElement atom) {
+        Integer atno = atom.getAtomicNumber();
+        if (atno == null)
+            throw new IllegalArgumentException("An atom had 'null' atomic number!");
+        return atno;
     }
 
     /**
-     * Returns the molecular mass of the IAtomContainer. For the calculation it
-     * uses the masses of the isotope mixture using natural abundances.
+     * Calculate the mass of a molecule, this function takes an optional
+     * 'mass flavour' that switches the computation type. The key distinction
+     * is how specified/unspecified isotopes are handled. A specified isotope
+     * is an atom that has either {@link IAtom#setMassNumber(Integer)}
+     * or {@link IAtom#setExactMass(Double)} set to non-null and non-zero.
+     * <br>
+     * The flavours are:
+     * <br>
+     * <ul>
+     *     <li>{@link #MolWeight} (default) - uses the exact mass of each
+     *     atom when an isotope is specified, if not specified the average mass
+     *     of the element is used.</li>
+     *     <li>{@link #MolWeightIgnoreSpecified} - uses the average mass of each
+     *     element, ignoring any isotopic/exact mass specification</li>
+     *     <li>{@link #MonoIsotopic} - uses the exact mass of each
+     *     atom when an isotope is specified, if not specified the major isotope
+     *     mass for that element is used.</li>
+     *     <li>{@link #MostAbundant} - uses the exact mass of each atom when
+     *     specified, if not specified a distribution is calculated and the
+     *     most abundant isotope pattern is used.</li>
+     * </ul>
      *
-     * @param atomContainer
-     * @cdk.keyword mass, molecular
-     * @see #getMolecularWeight(IAtomContainer)
+     * @param mol molecule to compute mass for
+     * @param flav flavor
+     * @return the mass of the molecule
+     * @see #getMass(IAtomContainer, int)
+     * @see #MolWeight
+     * @see #MolWeightIgnoreSpecified
+     * @see #MonoIsotopic
+     * @see #MostAbundant
      */
-    public static double getNaturalExactMass(IAtomContainer atomContainer) {
+    public static double getMass(IAtomContainer mol, int flav) {
+
+        final Isotopes isofact;
         try {
-            Isotopes isotopes = Isotopes.getInstance();
-            double hydgrogenMass = isotopes.getNaturalMass(Elements.HYDROGEN);
-
-            double mass = 0.0;
-            for (final IAtom atom : atomContainer.atoms()) {
-
-                if (atom.getAtomicNumber() == null)
-                    throw new IllegalArgumentException("an atom had with unknown (null) atomic number");
-                if (atom.getImplicitHydrogenCount() == null)
-                    throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");
-
-                mass += isotopes.getNaturalMass(Elements.ofNumber(atom.getAtomicNumber()).toIElement());
-                mass += hydgrogenMass * atom.getImplicitHydrogenCount();
-            }
-            return mass;
-
+            isofact = Isotopes.getInstance();
         } catch (IOException e) {
-            throw new RuntimeException("Isotopes definitions could not be loaded", e);
+            throw new IllegalStateException("Could not load Isotopes!");
         }
-    }
 
-    /**
-     * Calculate the molecular weight of a molecule.
-     *
-     * @param mol the molecule
-     * @return the molecular weight
-     */
-    public static double getMolecularWeight(IAtomContainer mol) {
-        try {
-            Isotopes isotopes = Isotopes.getInstance();
-            double hmass = isotopes.getNaturalMass(Elements.HYDROGEN);
-            double mw    = 0.0;
-            for (final IAtom atom : mol.atoms()) {
-                if (atom.getAtomicNumber() == null || atom.getAtomicNumber() == 0)
-                    throw new IllegalArgumentException("An atom had with unknown (null) atomic number");
-                if (atom.getImplicitHydrogenCount() == null)
-                    throw new IllegalArgumentException("An atom had with unknown (null) implicit hydrogens");
-                mw += hmass * atom.getImplicitHydrogenCount();
-                if (atom.getMassNumber() == null)
-                    mw += isotopes.getNaturalMass(atom);
-                else if (atom.getExactMass() != null)
-                    mw += atom.getExactMass();
-                else {
-                    IIsotope isotope = isotopes.getIsotope(atom.getSymbol(), atom.getMassNumber());
-                    if (isotope == null)
-                        mw += isotopes.getNaturalMass(atom);
+        double mass = 0;
+        int    hcnt = 0;
+
+        switch (flav & 0xf) {
+            case MolWeight:
+                for (IAtom atom : mol.atoms()) {
+                    mass += getMassOrAvg(isofact, atom);
+                    hcnt += getImplHCount(atom);
+                }
+                mass += hcnt * isofact.getNaturalMass(1);
+                break;
+            case MolWeightIgnoreSpecified:
+                for (IAtom atom : mol.atoms()) {
+                    mass += isofact.getNaturalMass(getAtomicNum(atom));
+                    hcnt += getImplHCount(atom);
+                }
+                mass += hcnt * isofact.getNaturalMass(1);
+                break;
+            case MonoIsotopic:
+                for (IAtom atom : mol.atoms()) {
+                    mass += getExactMass(isofact, atom);
+                    hcnt += getImplHCount(atom);
+                }
+                mass += hcnt * isofact.getMajorIsotopeMass(1);
+                break;
+            case MostAbundant:
+                int[] mf = new int[128];
+                for (IAtom atom : mol.atoms()) {
+                    if (hasIsotopeSpecified(atom))
+                        mass += getExactMass(isofact, atom);
                     else
-                        mw += isotope.getExactMass();
+                        mf[getAtomicNum(atom)]++;
+                    mf[1] += atom.getImplicitHydrogenCount();
                 }
 
-            }
-            return mw;
-
-        } catch (IOException e) {
-            throw new RuntimeException("Isotopes definitions could not be loaded", e);
+                for (int atno = 0; atno < mf.length; atno++) {
+                    if (mf[atno] == 0)
+                        continue;
+                    IIsotope[] isotopes = isofact.getIsotopes(atno);
+                    Arrays.sort(isotopes, NAT_ABUN_COMP);
+                    mass += getDistMass(isofact, isotopes, 0, mf[atno]);
+                }
+                break;
         }
+        return mass;
+    }
+
+    /**
+     * Calculate the mass of a molecule, this function takes an optional
+     * 'mass flavour' that switches the computation type. The key distinction
+     * is how specified/unspecified isotopes are handled. A specified isotope
+     * is an atom that has either {@link IAtom#setMassNumber(Integer)}
+     * or {@link IAtom#setExactMass(Double)} set to non-null and non-zero.
+     * <br>
+     * The flavours are:
+     * <br>
+     * <ul>
+     *     <li>{@link #MolWeight} (default) - uses the exact mass of each
+     *     atom when an isotope is specified, if not specified the average mass
+     *     of the element is used.</li>
+     *     <li>{@link #MolWeightIgnoreSpecified} - uses the average mass of each
+     *     element, ignoring any isotopic/exact mass specification</li>
+     *     <li>{@link #MonoIsotopic} - uses the exact mass of each
+     *     atom when an isotope is specified, if not specified the major isotope
+     *     mass for that element is used.</li>
+     *     <li>{@link #MostAbundant} - uses the exact mass of each atom when
+     *     specified, if not specified a distribution is calculated and the
+     *     most abundant isotope pattern is used.</li>
+     * </ul>
+     *
+     * @param mol molecule to compute mass for
+     * @return the mass of the molecule
+     * @see #getMass(IAtomContainer, int)
+     * @see #MolWeight
+     * @see #MolWeightIgnoreSpecified
+     * @see #MonoIsotopic
+     * @see #MostAbundant
+     */
+    public static double getMass(IAtomContainer mol) {
+        return getMass(mol, MolWeight);
+    }
+
+    /**
+     * @deprecated uses {@link #getMass(IAtomContainer, int)} and
+     * {@link #MonoIsotopic}
+     */
+    public static double getTotalExactMass(IAtomContainer mol) {
+        return getMass(mol, MonoIsotopic);
+    }
+
+    /**
+     * @deprecated uses {@link #getMass(IAtomContainer, int)} and
+     * {@link #MolWeightIgnoreSpecified}. You probably want
+     * {@link #MolWeight}!
+     */
+    public static double getNaturalExactMass(IAtomContainer mol) {
+        return getMass(mol, MolWeightIgnoreSpecified);
+    }
+
+    /**
+     * @deprecated use {@link #getMass(IAtomContainer, int)} and
+     * {@link #MolWeight}
+     */
+    public static double getMolecularWeight(IAtomContainer mol) {
+        return getMass(mol, MolWeight);
     }
 
     /**
@@ -790,6 +936,7 @@ public class AtomContainerManipulator {
 
         for (final IBond bond : org.bonds()) {
             if (remaining > 0 && (hydrogens.contains(bond.getBegin()) || hydrogens.contains(bond.getEnd()))) {
+                bondsToHydrogens.add(bond);
                 remaining--;
                 continue;
             }

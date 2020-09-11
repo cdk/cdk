@@ -108,6 +108,18 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(9, m.getAtomCount());
         Assert.assertEquals(9, m.getBondCount());
     }
+    
+    @Test
+    public void testMassDiff() throws Exception {
+        String mdl = "deuterium.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1\n"
+                + "    0.0000    0.0000    0.0000 H  +1  0  0  0  0\n";
+        try (MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT)) {
+            IAtomContainer mol = reader.read(new AtomContainer());
+            IAtom atom = mol.getAtom(0);
+            Assert.assertEquals(1, atom.getAtomicNumber().intValue());
+            Assert.assertEquals(2, atom.getMassNumber().intValue());
+        }
+    }
 
     /**
      * @cdk.bug 1542467

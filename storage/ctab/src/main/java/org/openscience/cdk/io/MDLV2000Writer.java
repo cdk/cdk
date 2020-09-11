@@ -42,6 +42,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -115,6 +116,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public static final String OptWriteAromaticBondTypes    = "WriteAromaticBondTypes";
     public static final String OptWriteQueryFormatValencies = "WriteQueryFormatValencies";
     public static final String OptWriteDefaultProperties    = "WriteDefaultProperties";
+    public static final String OptProgramName               = "ProgramName";
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
 
@@ -206,6 +208,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private BooleanIOSetting writeQueryFormatValencies;
 
     private BooleanIOSetting writeDefaultProps;
+
+    private StringIOSetting programNameOpt;
 
     private BufferedWriter writer;
 
@@ -336,6 +340,18 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writeMolecule(bigPile);
     }
 
+    private String getProgName() {
+        String progname = programNameOpt.getSetting();
+        if (progname == null)
+            return "        ";
+        else if (progname.length() > 8)
+            return progname.substring(0, 8);
+        else if (progname.length() < 8)
+            return String.format("%-8s", progname);
+        else
+            return progname;
+    }
+
     /**
      * Writes a Molecule to an OutputStream in MDL sdf format.
      *
@@ -364,7 +380,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
          * program input, internal registry number (R) if input through MDL
          * form. A blank line can be substituted for line 2.
          */
-        writer.write("  CDK     ");
+        writer.write("  ");
+        writer.write(getProgName());
         writer.write(new SimpleDateFormat("MMddyyHHmm").format(System.currentTimeMillis()));
         if (dim != 0) {
             writer.write(Integer.toString(dim));
@@ -495,7 +512,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     last--;
                 }
                 // matches BIOVIA syntax
-                if (last >= 2 && last < atomprops.length)
+                if (last >= 2 && last < 5)
                     last = 5;
             }
             for (int i = 2; i <= last; i++)
@@ -615,7 +632,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         line.append("0");
                 }
                 if (writeDefaultProps.isSet())
-                    line.append("  0  0  0 ");
+                    line.append("  0  0  0");
                 line.append('\n');
                 writer.write(line.toString());
             }
@@ -895,11 +912,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         sgroups = new ArrayList<>(sgroups);
 
         // remove non-ctab Sgroups
-        Iterator<Sgroup> iter = sgroups.iterator();
-        while (iter.hasNext()) {
-            if (iter.next().getType() == SgroupType.ExtMulticenter)
-                iter.remove();
-        }
+        sgroups.removeIf(sgroup -> !sgroup.getType().isCtabStandard());
 
         for (List<Sgroup> wrapSgroups : wrap(sgroups, 8)) {
             // Declare the SGroup type
@@ -1166,6 +1179,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                                                             IOSetting.Importance.LOW,
                                                             "Write trailing zero's on atom/bond property blocks even if they're not used.",
                                                             "true"));
+        programNameOpt = addSetting(new StringIOSetting(OptProgramName,
+                                                        IOSetting.Importance.LOW,
+                                                        "Program name to write at the top of the molfile header, should be exactly 8 characters long",
+                                                        "CDK"));
     }
 
     /**

@@ -55,7 +55,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
 
@@ -85,7 +85,7 @@ public class HashCodeScenariosTest {
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
 
-        Assert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
     }
 
     /**
@@ -105,7 +105,7 @@ public class HashCodeScenariosTest {
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
 
-        Assert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
     }
 
     /**
@@ -124,7 +124,7 @@ public class HashCodeScenariosTest {
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
 
-        Assert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
     }
 
     /**
@@ -145,7 +145,7 @@ public class HashCodeScenariosTest {
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
 
-        Assert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
     }
 
     /**
@@ -166,7 +166,7 @@ public class HashCodeScenariosTest {
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
 
-        Assert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
     }
 
     /**
@@ -186,7 +186,7 @@ public class HashCodeScenariosTest {
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
 
-        Assert.assertThat(eqMesg(a, b), aHash, is(bHash));
+        org.hamcrest.MatcherAssert.assertThat(eqMesg(a, b), aHash, is(bHash));
     }
 
     /**
@@ -237,12 +237,12 @@ public class HashCodeScenariosTest {
             sHashes.add(stereo.generate(s));
             rHashes.add(stereo.generate(r));
         }
-        Assert.assertThat("all (S)-bromo(chloro)fluoromethane permutation produce a single hash code", sHashes.size(),
+        org.hamcrest.MatcherAssert.assertThat("all (S)-bromo(chloro)fluoromethane permutation produce a single hash code", sHashes.size(),
                 CoreMatchers.is(1));
-        Assert.assertThat("all (R)-bromo(chloro)fluoromethane permutation produce a single hash code", rHashes.size(),
+        org.hamcrest.MatcherAssert.assertThat("all (R)-bromo(chloro)fluoromethane permutation produce a single hash code", rHashes.size(),
                 CoreMatchers.is(1));
         sHashes.addAll(rHashes);
-        Assert.assertThat(sHashes.size(), CoreMatchers.is(2));
+        org.hamcrest.MatcherAssert.assertThat(sHashes.size(), CoreMatchers.is(2));
     }
 
     /**
@@ -303,7 +303,7 @@ public class HashCodeScenariosTest {
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
 
-        Assert.assertThat(eqMesg(a, b), aHash, is(bHash));
+        org.hamcrest.MatcherAssert.assertThat(eqMesg(a, b), aHash, is(bHash));
     }
 
     /**
@@ -323,12 +323,12 @@ public class HashCodeScenariosTest {
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
 
-        Assert.assertThat(eqMesg(a, b), aHash, is(bHash));
+        org.hamcrest.MatcherAssert.assertThat(eqMesg(a, b), aHash, is(bHash));
 
         MoleculeHashGenerator perturbed = new HashGeneratorMaker().elemental().depth(6).perturbed().molecular();
         aHash = perturbed.generate(a);
         bHash = perturbed.generate(b);
-        Assert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
     }
 
     /**
@@ -350,11 +350,11 @@ public class HashCodeScenariosTest {
 
         long aHash = nonperturbed.generate(a);
         long bHash = nonperturbed.generate(b);
-        Assert.assertThat(eqMesg(a, b), aHash, is(bHash));
+        org.hamcrest.MatcherAssert.assertThat(eqMesg(a, b), aHash, is(bHash));
 
         aHash = perturbed.generate(a);
         bHash = perturbed.generate(b);
-        Assert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
 
         AtomHashGenerator perturbedAtomic = new HashGeneratorMaker().elemental().depth(3).perturbed().atomic();
         long[] aHashes = perturbedAtomic.generate(a);
@@ -394,12 +394,12 @@ public class HashCodeScenariosTest {
         long cHash = generator.generate(c);
         long dHash = generator.generate(d);
 
-        Assert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
-        Assert.assertThat(nonEqMesg(a, c), aHash, is(not(cHash)));
-        Assert.assertThat(nonEqMesg(a, d), aHash, is(not(dHash)));
-        Assert.assertThat(nonEqMesg(a, c), bHash, is(not(cHash)));
-        Assert.assertThat(nonEqMesg(b, d), bHash, is(not(dHash)));
-        Assert.assertThat(nonEqMesg(c, d), cHash, is(not(dHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, c), aHash, is(not(cHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, d), aHash, is(not(dHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, c), bHash, is(not(cHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(b, d), bHash, is(not(dHash)));
+        org.hamcrest.MatcherAssert.assertThat(nonEqMesg(c, d), cHash, is(not(dHash)));
 
     }
 

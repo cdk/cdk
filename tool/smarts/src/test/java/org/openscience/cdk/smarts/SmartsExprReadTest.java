@@ -42,7 +42,7 @@ import org.openscience.cdk.smarts.Smarts;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 
@@ -948,5 +948,39 @@ public class SmartsExprReadTest {
         assertThat(expr, is(or(expr(RING_SMALLEST, 5),
                                or(expr(RING_SMALLEST, 6),
                                   expr(RING_SMALLEST, 7)))));
+    }
+
+    @Test
+    public void supportInsaturatedByDefault() {
+        Expr expr = getAtomExpr("[i]");
+        assertThat(expr, is(expr(UNSATURATED)));
+    }
+
+    @Test
+    public void supportHGt() {
+        Expr expr = getAtomExpr("[H>1]");
+        assertThat(expr, is(and(expr(TOTAL_H_COUNT, 0).negate(),
+                                expr(TOTAL_H_COUNT, 1).negate())));
+    }
+
+    @Test
+    public void supportHLt() {
+        Expr expr = getAtomExpr("[H<2]");
+        assertThat(expr, is(or(expr(TOTAL_H_COUNT, 0),
+                               expr(TOTAL_H_COUNT, 1))));
+    }
+
+    @Test
+    public void supportDGt() {
+        Expr expr = getAtomExpr("[D>1]");
+        assertThat(expr, is(and(expr(DEGREE, 0).negate(),
+                                expr(DEGREE, 1).negate())));
+    }
+
+    @Test
+    public void supportDLt() {
+        Expr expr = getAtomExpr("[D<2]");
+        assertThat(expr, is(or(expr(DEGREE, 0),
+                               expr(DEGREE, 1))));
     }
 }

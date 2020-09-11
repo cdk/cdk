@@ -114,6 +114,6 @@ public class DescriptorValueTest extends CDKTestCase {
         DoubleResult doubleVal = new DoubleResult(0.7);
         DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"},
                 new CDKException("A test exception"));
-        Assert.assertThat(value.getException(), is(instanceOf(CDKException.class)));
+        org.hamcrest.MatcherAssert.assertThat(value.getException(), is(instanceOf(CDKException.class)));
     }
 }

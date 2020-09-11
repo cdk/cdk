@@ -18,28 +18,6 @@
  */
 package org.openscience.cdk.renderer.visitor;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.font.TextAttribute;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ArrowElement;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
@@ -64,6 +42,25 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.ArrowHeadWidt
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UseAntiAliasing;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Implementation of the {@link IDrawVisitor} interface for the AWT
  * widget toolkit, allowing molecules to be rendered with toolkits based on
@@ -86,7 +83,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      */
     private RendererModel                   rendererModel;
 
-    private final Map<Integer, BasicStroke> strokeMap = new HashMap<Integer, BasicStroke>();
+    private final Map<Integer, BasicStroke> strokeMap = new HashMap<>();
 
     /**
      * Returns the current {@link RendererModel}.
@@ -105,8 +102,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     public Map<Integer, BasicStroke> getStrokeMap() {
         return strokeMap;
     }
-
-    private final Map<TextAttribute, Object> map = new Hashtable<TextAttribute, Object>();
 
     private final float                      minStroke;
 
@@ -152,8 +147,6 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.rendererModel = null;
         this.strokeCache = strokeCache;
         this.minStroke = minStroke;
-
-        map.put(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB);
     }
 
     /**
@@ -222,6 +215,22 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             this.graphics.fillOval(transformX(oval.xCoord) - radius, transformY(oval.yCoord) - radius, diameter,
                     diameter);
         } else {
+            Stroke savedStroke = this.graphics.getStroke();
+
+            // scale the stroke by zoom + scale (both included in the AffineTransform)
+            float width = (float) (oval.stroke * transform.getScaleX());
+            if (width < minStroke) width = minStroke;
+
+            int key = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
+
+            if (strokeCache && strokeMap.containsKey(key)) {
+                this.graphics.setStroke(strokeMap.get(key));
+            } else {
+                BasicStroke stroke = new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+                this.graphics.setStroke(stroke);
+                strokeMap.put(key, stroke);
+            }
+
             this.graphics.drawOval(transformX(oval.xCoord) - radius, transformY(oval.yCoord) - radius, diameter,
                     diameter);
         }
@@ -402,11 +411,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             chargeString = atomSymbol.formalCharge + "+";
         } else if (atomSymbol.formalCharge == -1) {
             chargeString = "-";
-        } else if (atomSymbol.formalCharge < -1) {
+        } else {
             int absCharge = Math.abs(atomSymbol.formalCharge);
             chargeString = absCharge + "-";
-        } else {
-            return;
         }
 
         int xCoord = (int) bounds.getCenterX();
@@ -507,8 +514,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
             @Override
             public int currentSegment(float[] coords) {
-
-                float[] src = path.elements.get(index).points();
+                double[] src = new double[6];
+                path.elements.get(index).points(src);
                 transform.transform(src, 0, coords, 0, src.length / 2);
                 return type(path.elements.get(index).type());
             }
@@ -672,7 +679,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
         if (rendererModel.hasParameter(UseAntiAliasing.class)) {
-            if ((boolean) rendererModel.getParameter(UseAntiAliasing.class).getValue()) {
+            if (rendererModel.getParameter(UseAntiAliasing.class).getValue()) {
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 // g.setStroke(new BasicStroke((int)rendererModel.getBondWidth()));
             }

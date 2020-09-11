@@ -78,11 +78,12 @@ import org.openscience.cdk.interfaces.IStereoElement;
  *  <p>For the FCFP class of fingerprints, atom typing is done using a scheme similar to that described by
  *  Green et al {@cdk.cite Green1994}.</p>
  *  
- *  <p>The fingerprints and their uses have been described in the literature: A.M. Clark, M. Sarker, E. Ekins,
- *  "New target prediction and visualization tools incorporating open source molecular fingerprints for TB Mobile 2.0",
- *  Journal of Cheminformatics, 6:38 (2014).</p>
- *  
- *  	<a href="http://www.jcheminf.com/content/6/1/38">http://www.jcheminf.com/content/6/1/38</a>
+ *  <p>The fingerprints and their uses have been described in Clark et al. {@cdk.cite Clark2014}.
+ *
+ * <br/>
+ * <b>
+ * Important! this fingerprint can not be used for substructure screening.
+ * </b>
  *
  * @author         am.clark
  * @cdk.created    2014-01-01
@@ -918,7 +919,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                 break;
             }
             if (stereo == IBond.Stereo.UP_OR_DOWN) return null; // squiggly line: definitely not
-            Point3d o3d = atom.getPoint3d();
+            Point3d o3d = mol.getBond(bondAdj[aidx][n]).getOther(atom).getPoint3d();
             if (a3d != null && o3d != null && a3d.z != o3d.z) {
                 wedgeOr3D = true;
                 break;

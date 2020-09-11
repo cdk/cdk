@@ -39,7 +39,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -159,7 +159,7 @@ public class StandardAtomGeneratorTest {
         Rectangle2D chargeBounds = positioned.getBounds();
 
         assertThat(chargeBounds.getMinX(), greaterThan(elementBounds.getMinX()));
-        assertThat(chargeBounds.getCenterY(), closeTo(elementBounds.getMinY(), 0.01));
+        assertThat(chargeBounds.getCenterY(), closeTo(localHydrogen.getBounds().getMinY(), 0.01));
     }
 
     @Test
@@ -186,8 +186,9 @@ public class StandardAtomGeneratorTest {
         Rectangle2D hydrogenBounds = localHydrogen.getBounds();
         Rectangle2D chargeBounds = positioned.getBounds();
 
-        assertThat(chargeBounds.getMinX(), greaterThan(hydrogenBounds.getMinX()));
-        assertThat(chargeBounds.getCenterY(), closeTo(hydrogenBounds.getMinY(), 0.01));
+        Rectangle2D elementBounds = element.getBounds();
+        assertThat(chargeBounds.getMinX(), greaterThan(elementBounds.getMinX()));
+        assertThat(chargeBounds.getCenterY(), closeTo(elementBounds.getMinY(), 0.01));
     }
 
     @Test
@@ -207,43 +208,43 @@ public class StandardAtomGeneratorTest {
 
     @Test
     public void generateWithNoAdjuncts() {
-        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 0, 0, HydrogenPosition.Right);
+        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 0, 0, HydrogenPosition.Right, null);
         assertThat(symbol.getOutlines().size(), is(1));
     }
 
     @Test
     public void generateWithHydrogenAdjunct() {
-        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Right);
+        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Right, null);
         assertThat(symbol.getOutlines().size(), is(2));
     }
 
     @Test
     public void generateWithHydrogenAndCountAdjunct() {
-        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Right);
+        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Right, null);
         assertThat(symbol.getOutlines().size(), is(3));
     }
 
     @Test
     public void generateWithMassAdjunct() {
-        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, 15, 0, 0, HydrogenPosition.Right);
+        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, 15, 0, 0, HydrogenPosition.Right, null);
         assertThat(symbol.getOutlines().size(), is(2));
     }
 
     @Test
     public void generateWithChargeAdjunct() {
-        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 1, 0, HydrogenPosition.Right);
+        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 1, 0, HydrogenPosition.Right, null);
         assertThat(symbol.getOutlines().size(), is(2));
     }
 
     @Test
     public void generateWithRadicalAdjunct() {
-        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 0, 1, HydrogenPosition.Right);
+        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 0, 1, HydrogenPosition.Right, null);
         assertThat(symbol.getOutlines().size(), is(2));
     }
 
     @Test
     public void hydrogenDodgesMassLabel() {
-        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, 15, 0, 0, HydrogenPosition.Left);
+        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, 15, 0, 0, HydrogenPosition.Left, null);
         List<Shape> outlines = symbol.getOutlines();
         assertThat(outlines.size(), is(3));
         Shape hydrogenShape = outlines.get(1);
@@ -253,7 +254,7 @@ public class StandardAtomGeneratorTest {
 
     @Test
     public void hydrogenAndHydrogenCountDodgesMassLabel() {
-        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 2, 15, 0, 0, HydrogenPosition.Left);
+        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 2, 15, 0, 0, HydrogenPosition.Left, null);
         List<Shape> outlines = symbol.getOutlines();
         assertThat(outlines.size(), is(4));
         Shape hydrogenShape = outlines.get(1);
@@ -271,7 +272,7 @@ public class StandardAtomGeneratorTest {
 
     @Test
     public void hydrogenCountDodgesElement() {
-        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Left);
+        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Left, null);
         List<Shape> outlines = symbol.getOutlines();
         assertThat(outlines.size(), is(3));
         Shape elementShape = outlines.get(0);
@@ -284,7 +285,7 @@ public class StandardAtomGeneratorTest {
 
     @Test
     public void hydrogenDoesNotNeedToDodge() {
-        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Left);
+        AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Left, null);
         List<Shape> outlines = symbol.getOutlines();
         assertThat(outlines.size(), is(2));
         Shape elementShape = outlines.get(0);
@@ -355,42 +356,42 @@ public class StandardAtomGeneratorTest {
 
     @Test
     public void numberedRgroupSymbol() {
-        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R1", HydrogenPosition.Right);
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R1", HydrogenPosition.Right, null);
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(2));
     }
 
     @Test
     public void RgroupSymbol2A() {
-        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R2a", HydrogenPosition.Right);
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R2a", HydrogenPosition.Right, null);
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(2));
     }
 
     @Test
     public void RgroupSymbolY() {
-        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("Y1a2", HydrogenPosition.Right);
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("Y1a2", HydrogenPosition.Right, null);
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
     }
 
     @Test
     public void RgroupSymbolPrime() {
-        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R'", HydrogenPosition.Right);
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R'", HydrogenPosition.Right, null);
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(2));
     }
 
     @Test
     public void RgroupSymbolNumberedPrime() {
-        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R2'", HydrogenPosition.Right);
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R2'", HydrogenPosition.Right, null);
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(3));
     }
 
     @Test
     public void pseudoSymbol() {
-        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("Protein", HydrogenPosition.Right);
+        AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("Protein", HydrogenPosition.Right, null);
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
     }
@@ -400,7 +401,7 @@ public class StandardAtomGeneratorTest {
         IAtomContainer container = mock(IAtomContainer.class);
         IPseudoAtom atom = mock(IPseudoAtom.class);
         when(atom.getLabel()).thenReturn("R1");
-        AtomSymbol    atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
+        AtomSymbol    atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, null);
         List<Shape>   shapes     = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(2));
     }
@@ -503,13 +504,13 @@ public class StandardAtomGeneratorTest {
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(null);
         when(atom.getSymbol()).thenReturn(null);
-        when(atom.getMassNumber()).thenReturn(12);
+        when(atom.getMassNumber()).thenReturn(0);
         when(atom.getImplicitHydrogenCount()).thenReturn(0);
         when(atom.getFormalCharge()).thenReturn(0);
         AtomSymbol atomSymbol = atomGenerator.generateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
-        assertThat(atomSymbol.elementOutline().text(), is("?"));
+        assertThat(atomSymbol.elementOutline().text(), is("*"));
     }
 
     @Test

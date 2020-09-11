@@ -62,7 +62,7 @@ import java.util.regex.Pattern;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 /**
@@ -836,7 +836,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             mdlw.setWriteAromaticBondTypes(true);
             mdlw.write(mol);
         }
-        assertThat(sw.toString(), containsString("  1  2  4  0  0  0  0 \n"));
+        assertThat(sw.toString(), containsString("  1  2  4  0  0  0  0\n"));
     }
 
     @Test

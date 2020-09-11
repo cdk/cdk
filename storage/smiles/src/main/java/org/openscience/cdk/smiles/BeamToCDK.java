@@ -420,11 +420,17 @@ final class BeamToCDK {
         List<Edge> edges = g.edges(u);
         if (edges.size() == 1)
             return null;
+        Edge first = null;
         for (Edge e : edges) {
             Bond b = e.bond();
-            if (b == Bond.UP || b == Bond.DOWN) return e;
+            if (b == Bond.UP || b == Bond.DOWN) {
+                if (first == null)
+                    first = e;
+                else if (((first.either() == e.either()) == (first.bond() == b)))
+                    return null;
+            }
         }
-        return null;
+        return first;
     }
 
     /**

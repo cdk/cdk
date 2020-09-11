@@ -61,7 +61,8 @@ import java.util.Set;
  */
 final class StandardSgroupGenerator {
 
-    public static final double EQUIV_THRESHOLD = 0.1;
+    public static final double          EQUIV_THRESHOLD = 0.1;
+    public static final char            INTERPUNCT      = '·';
     private final double                stroke;
     private final double                scale;
     private final double                bracketDepth;
@@ -358,11 +359,42 @@ final class StandardSgroupGenerator {
         final StandardGenerator.HighlightStyle style = parameters.get(StandardGenerator.Highlighting.class);
         final double glowWidth = parameters.get(StandardGenerator.OuterGlowWidth.class);
 
-        final Point2d labelCoords = GeometryUtil.get2DCenter(sgroupAtoms);
+        final Point2d labelLocation;
+        if (mol.getAtomCount() == sgroup.getAtoms().size()) {
+            labelLocation = GeometryUtil.get2DCenter(sgroupAtoms);
+        } else {
+            // contraction of part of a fragment, e.g. SALT
+            // here we work out the point we want to place the contract relative
+            // to the SGroup Atoms
+            labelLocation = new Point2d();
+            final Point2d sgrpCenter = GeometryUtil.get2DCenter(sgroupAtoms);
+            final Point2d molCenter  = GeometryUtil.get2DCenter(mol);
+            final double[] minMax    = GeometryUtil.getMinMax(sgroupAtoms);
+            double xDiff = sgrpCenter.x - molCenter.x;
+            double yDiff = sgrpCenter.y - molCenter.y;
+            if (xDiff > 0.1) {
+                labelLocation.x = minMax[0]; // min x
+                label = INTERPUNCT + label;
+            }
+            else if (xDiff < -0.1) {
+                labelLocation.x = minMax[2]; // max x
+                label = label + INTERPUNCT;
+            }
+            else {
+                labelLocation.x = sgrpCenter.x;
+                label = INTERPUNCT + label;
+            }
+            if (yDiff > 0.1)
+                labelLocation.y = minMax[1]; // min y
+            else if (yDiff < -0.1)
+                labelLocation.y = minMax[3]; // max y
+            else
+                labelLocation.y = sgrpCenter.y;
+        }
 
         ElementGroup labelgroup = new ElementGroup();
         for (Shape outline : atomGenerator.generateAbbreviatedSymbol(label, HydrogenPosition.Right)
-                                          .center(labelCoords.x, labelCoords.y)
+                                          .center(labelLocation.x, labelLocation.y)
                                           .resize(1 / scale, 1 / -scale)
                                           .getOutlines()) {
             if (highlight != null && style == StandardGenerator.HighlightStyle.Colored) {
@@ -537,7 +569,7 @@ final class StandardSgroupGenerator {
             if (isUnsignedInt(subscriptSuffix) &&
                 crossingBonds.isEmpty() &&
                 symbols.containsKey(atom)) {
-                TextOutline prefix = new TextOutline('·' + subscriptSuffix, font).resize(1/scale,1/-scale);
+                TextOutline prefix = new TextOutline(INTERPUNCT + subscriptSuffix, font).resize(1/scale,1/-scale);
                 Rectangle2D prefixBounds = prefix.getLogicalBounds();
 
                 AtomSymbol symbol = symbols.get(atom);

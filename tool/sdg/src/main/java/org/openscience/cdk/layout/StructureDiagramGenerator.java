@@ -79,19 +79,25 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Generates 2D coordinates for a molecule for which only connectivity is known
- * or the coordinates have been discarded for some reason. Usage: Create an
- * instance of this class, thereby assigning a molecule, call
- * generateCoordinates() and get your molecule back:
+ * Generates 2D coordinates for a molecule.
+ *
+ * <b>Basic Usage:</b>
+ * If you just want to generate coordinate for a molecule (or reaction) you
+ * can use the following one-liner:
+ * <pre>
+ * new StructureDiagramGenerator().generateCoordinates(molecule);
+ * </pre>
+ * The older versions of the API suggested using the following a
+ * set/generate/get idiom but this performs an unnecessary (in most cases) copy.
  * <pre>
  * StructureDiagramGenerator sdg = new StructureDiagramGenerator();
- * sdg.setMolecule(someMolecule);
+ * sdg.setMolecule(molecule); // cloned!
  * sdg.generateCoordinates();
- * IAtomContainer layedOutMol = sdg.getMolecule();
+ * molecule = sdg.getMolecule();
  * </pre>
- * 
- * <p>The method will fail if the molecule is disconnected. The
- * partitionIntoMolecules(AtomContainer) can help here.
+ * This idiom only needs to be used when 'fixing' parts of an existing
+ * layout with {@link #setMolecule(IAtomContainer, boolean, Set, Set)}
+ * <br/>
  *
  * @author steinbeck
  * @cdk.created 2004-02-02
@@ -104,13 +110,23 @@ import java.util.Set;
  * @cdk.githash
  * @cdk.bug 1536561
  * @cdk.bug 1788686
- * @see org.openscience.cdk.graph.ConnectivityChecker#partitionIntoMolecules(IAtomContainer)
  */
 public class StructureDiagramGenerator {
 
-    public static final double RAD_30 = Math.toRadians(-30);
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
-    public static final double       DEFAULT_BOND_LENGTH = 1.5;
+    static final double DEFAULT_BOND_LENGTH           = 1.5;
+    static final double SGROUP_BRACKET_PADDING_FACTOR = 0.5;
+    private static final Vector2d                   DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
+    private static final IdentityTemplateLibrary    DEFAULT_TEMPLATE_LIBRARY = IdentityTemplateLibrary.loadFromResource("custom-templates.smi")
+                                                                                                   .add(IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi"));
+    private static final double                     RAD_30                   = Math.toRadians(-30);
+    private static final ILoggingTool               logger                   = LoggingToolFactory.createLoggingTool(StructureDiagramGenerator.class);
+
+    public static final Comparator<IAtomContainer> LARGEST_FIRST_COMPARATOR = new Comparator<IAtomContainer>() {
+        @Override
+        public int compare(IAtomContainer o1, IAtomContainer o2) {
+            return Integer.compare(o2.getBondCount(), o1.getBondCount());
+        }
+    };
 
     private IAtomContainer molecule;
     private IRingSet       sssr;
@@ -134,9 +150,7 @@ public class StructureDiagramGenerator {
      */
     private IdentityTemplateLibrary identityLibrary;
 
-    public static  Vector2d                DEFAULT_BOND_VECTOR      = new Vector2d(0, 1);
-    private static IdentityTemplateLibrary DEFAULT_TEMPLATE_LIBRARY = IdentityTemplateLibrary.loadFromResource("custom-templates.smi")
-                                                                                             .add(IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi"));
+
 
 
     /**
@@ -604,6 +618,10 @@ public class StructureDiagramGenerator {
      */
     private void generateCoordinates(Vector2d firstBondVector, boolean isConnected, boolean isSubLayout) throws CDKException {
 
+        // defensive copy, vectors are mutable!
+        if (firstBondVector == DEFAULT_BOND_VECTOR)
+            firstBondVector = new Vector2d(firstBondVector);
+
         final int numAtoms = molecule.getAtomCount();
         final int numBonds = molecule.getBondCount();
         this.firstBondVector = firstBondVector;
@@ -632,7 +650,12 @@ public class StructureDiagramGenerator {
             final IAtomContainerSet frags = ConnectivityChecker.partitionIntoMolecules(molecule);
             if (frags.getAtomContainerCount() > 1) {
                 IAtomContainer rollback = molecule;
-                generateFragmentCoordinates(molecule, toList(frags));
+
+                // large => small (e.g. salt will appear on the right)
+                List<IAtomContainer> fragList = toList(frags);
+                Collections.sort(fragList, LARGEST_FIRST_COMPARATOR);
+                generateFragmentCoordinates(molecule, fragList);
+
                 // don't call set molecule as it wipes x,y coordinates!
                 // this looks like a self assignment but actually the fragment
                 // method changes this.molecule
@@ -876,21 +899,21 @@ public class StructureDiagramGenerator {
         LayoutRefiner refiner = new LayoutRefiner(molecule, afix, bfix);
         refiner.refine();
 
+        // check for attachment points, these override the direction which we rorate structures
+        IAtom begAttach = null;
+        for (IAtom atom : molecule.atoms()) {
+            if (atom instanceof IPseudoAtom && ((IPseudoAtom) atom).getAttachPointNum() == 1) {
+                begAttach = atom;
+                selectOrientation = true;
+                break;
+            }
+        }
+
         // choose the orientation in which to display the structure
         if (selectOrientation) {
-
-            // check for attachment points, these override the direction which we rorate structures
-            IAtom begAttach = null;
-            for (IAtom atom : molecule.atoms()) {
-                if (atom instanceof IPseudoAtom && ((IPseudoAtom) atom).getAttachPointNum() == 1) {
-                    begAttach = atom;
-                    break;
-                }
-            }
-
-            // no attachment point, rorate to maximise horizontal spread etc.
+            // no attachment point, rotate to maximise horizontal spread etc.
             if (begAttach == null) {
-                selectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
+                selectOrientation(molecule, DEFAULT_BOND_LENGTH, 1);
             }
             // use attachment point bond to rotate
             else {
@@ -944,6 +967,35 @@ public class StructureDiagramGenerator {
     }
 
     /**
+     * Calculates a histogram of bond directions, this allows us to select an
+     * orientation that has bonds at nice angles (e.g. 60/120 deg). The limit
+     * parameter is used to quantize the vectors within a range. For example
+     * a limit of 60 will fill the histogram 0..59 and Bond's orientated at 0,
+     * 60, 120 degrees will all be counted in the 0 bucket.
+     *
+     * @param mol molecule
+     * @param counts the histogram is stored here, will be cleared
+     * @param lim wrap angles to the (180 max)
+     * @return number of aligned bonds
+     */
+    private static void calcDirectionHistogram(IAtomContainer mol,
+                                               int[] counts,
+                                               int lim) {
+        if (lim > 180)
+            throw new IllegalArgumentException("limit must be ≤ 180");
+        Arrays.fill(counts, 0);
+        for (IBond bond : mol.bonds()) {
+            Point2d beg = bond.getBegin().getPoint2d();
+            Point2d end = bond.getEnd().getPoint2d();
+            Vector2d vec = new Vector2d(end.x - beg.x, end.y - beg.y);
+            if (vec.x < 0)
+                vec.negate();
+            double angle = Math.PI/2 + Math.atan2(vec.y, vec.x);
+            counts[(int)(Math.round(Math.toDegrees(angle))%lim)]++;
+        }
+    }
+
+    /**
      * Select the global orientation of the layout. We click round at 30 degree increments
      * and select the orientation that a) is the widest or b) has the most bonds aligned to
      * +/- 30 degrees {@cdk.cite Clark06}.
@@ -952,32 +1004,49 @@ public class StructureDiagramGenerator {
      * @param widthDiff parameter at which to consider orientations equally good (wide select)
      * @param alignDiff parameter at which we consider orientations equally good (bond align select)
      */
-    private static void selectOrientation(IAtomContainer mol, double widthDiff, int alignDiff) {
-        double[] minmax = GeometryUtil.getMinMax(mol);
+    private void selectOrientation(IAtomContainer mol, double widthDiff, int alignDiff) {
+
+        int[]    dirhist = new int[180];
+        double[] minmax  = GeometryUtil.getMinMax(mol);
         Point2d pivot = new Point2d(minmax[0] + ((minmax[2] - minmax[0]) / 2),
                                     minmax[1] + ((minmax[3] - minmax[1]) / 2));
 
+        // initial alignment to snapping bonds 60 degrees
+        calcDirectionHistogram(mol, dirhist, 60);
+        int max = 0;
+        for (int i = 1; i < dirhist.length; i++)
+            if (dirhist[i] > dirhist[max])
+                max = i;
+        // only apply if 50% of the bonds are pointing the same 'wrapped'
+        // direction, max=0 means already aligned
+        if (max != 0 && dirhist[max]/(double)mol.getBondCount() > 0.5)
+            GeometryUtil.rotate(mol, pivot, Math.toRadians(60-max));
 
         double maxWidth = minmax[2] - minmax[0];
-        int maxAligned = countAlignedBonds(mol);
+        double begWidth = maxWidth;
+        calcDirectionHistogram(mol, dirhist, 180);
+        int maxAligned = dirhist[60]+dirhist[120];
 
         Point2d[] coords = new Point2d[mol.getAtomCount()];
         for (int i = 0; i < mol.getAtomCount(); i++)
             coords[i] = new Point2d(mol.getAtom(i).getPoint2d());
 
-        final double step = Math.toRadians(30);
-        final int numSteps = (360 / 30) - 1;
-        for (int i = 0; i < numSteps; i++) {
+        double step = Math.PI/3;
+        double tau = 2*Math.PI;
+        double total = 0;
 
+        while (total < tau) {
+
+            total += step;
             GeometryUtil.rotate(mol, pivot, step);
             minmax = GeometryUtil.getMinMax(mol);
 
             double width = minmax[2] - minmax[0];
-            double delta = Math.abs(width - maxWidth);
+            double delta = Math.abs(width - begWidth);
 
             // if this orientation is significantly wider than the
             // best so far select it
-            if (delta > widthDiff && width > maxWidth) {
+            if (delta >= widthDiff && width > maxWidth) {
                 maxWidth = width;
                 for (int j = 0; j < mol.getAtomCount(); j++)
                     coords[j] = new Point2d(mol.getAtom(j).getPoint2d());
@@ -985,7 +1054,8 @@ public class StructureDiagramGenerator {
             // width is not significantly better or worse so check
             // the number of bonds aligned to 30 deg (aesthetics)
             else if (delta <= widthDiff) {
-                int aligned = countAlignedBonds(mol);
+                calcDirectionHistogram(mol, dirhist, 180);
+                int aligned = dirhist[60]+dirhist[120];
                 int alignDelta = aligned - maxAligned;
                 if (alignDelta > alignDiff || (alignDelta == 0 && width > maxWidth)) {
                     maxAligned = aligned;
@@ -999,34 +1069,6 @@ public class StructureDiagramGenerator {
         // set the best coordinates we found
         for (int i = 0; i < mol.getAtomCount(); i++)
             mol.getAtom(i).setPoint2d(coords[i]);
-    }
-
-    /**
-     * Count the number of bonds aligned to 30 degrees.
-     *
-     * @param mol molecule
-     * @return number of aligned bonds
-     */
-    private static int countAlignedBonds(IAtomContainer mol) {
-        final double ref = Math.toRadians(30);
-        final double diff = Math.toRadians(1);
-        int count = 0;
-        for (IBond bond : mol.bonds()) {
-            Point2d beg = bond.getBegin().getPoint2d();
-            Point2d end = bond.getEnd().getPoint2d();
-            if (beg.x > end.x) {
-                Point2d tmp = beg;
-                beg = end;
-                end = tmp;
-            }
-            Vector2d vec = new Vector2d(end.x - beg.x, end.y - beg.y);
-            double angle = Math.atan2(vec.y, vec.x);
-
-            if (Math.abs(angle) - ref < diff) {
-                count++;
-            }
-        }
-        return count;
     }
 
     private final double adjustForHydrogen(IAtom atom, IAtomContainer mol) {
@@ -1134,12 +1176,42 @@ public class StructureDiagramGenerator {
         Set<IAtom> afixbackup = new HashSet<>(afix);
         Set<IBond> bfixbackup = new HashSet<>(bfix);
 
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+
         // generate the sub-layouts
         for (IAtomContainer fragment : frags) {
             setMolecule(fragment, false, afix, bfix);
             generateCoordinates(DEFAULT_BOND_VECTOR, true, true);
             lengthenIonicBonds(ionicBonds, fragment);
-            limits.add(getAprxBounds(fragment));
+            double[] aprxBounds = getAprxBounds(fragment);
+
+            if (sgroups != null && sgroups.size() > 0) {
+                boolean hasBracket = false;
+                for (Sgroup sgroup : sgroups) {
+                    if (!hasBrackets(sgroup))
+                        continue;
+                    boolean contained = true;
+                    Set<IAtom> aset = sgroup.getAtoms();
+                    for (IAtom atom : sgroup.getAtoms()) {
+                        if (!aset.contains(atom))
+                            contained = false;
+                    }
+                    if (contained) {
+                        hasBracket = true;
+                        break;
+                    }
+                }
+
+                if (hasBracket) {
+                    // consider potential Sgroup brackets
+                    aprxBounds[0] -= SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                    aprxBounds[1] -= SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                    aprxBounds[2] += SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                    aprxBounds[3] += SGROUP_BRACKET_PADDING_FACTOR * bondLength;
+                }
+            }
+
+            limits.add(aprxBounds);
         }
 
         // restore
@@ -2577,6 +2649,12 @@ public class StructureDiagramGenerator {
         return cnt;
     }
 
+    private void updateMinMax(double[] minmax, Point2d p) {
+        minmax[0] = Math.min(p.x, minmax[0]);
+        minmax[1] = Math.min(p.y, minmax[1]);
+        minmax[2] = Math.max(p.x, minmax[2]);
+        minmax[3] = Math.max(p.y, minmax[3]);
+    }
 
     /**
      * Place and update brackets for polymer Sgroups.
@@ -2589,6 +2667,7 @@ public class StructureDiagramGenerator {
 
         // index all crossing bonds
         final Multimap<IBond,Sgroup> bondMap = HashMultimap.create();
+        final Multimap<Sgroup,Sgroup> childMap = HashMultimap.create();
         final Map<IBond,Integer> counter = new HashMap<>();
         for (Sgroup sgroup : sgroups) {
             if (!hasBrackets(sgroup))
@@ -2597,19 +2676,16 @@ public class StructureDiagramGenerator {
                 bondMap.put(bond, sgroup);
                 counter.put(bond, 0);
             }
+            for (Sgroup parent : sgroup.getParents())
+                childMap.put(parent, sgroup);
         }
         sgroups = new ArrayList<>(sgroups);
-        // place child sgroups first
+        // place child sgroups first, or those with less total children
         Collections.sort(sgroups,
                          new Comparator<Sgroup>() {
                              @Override
                              public int compare(Sgroup o1, Sgroup o2) {
-                                 if (o1.getParents().isEmpty() != o2.getParents().isEmpty()) {
-                                     if (o1.getParents().isEmpty())
-                                         return +1;
-                                     return -1;
-                                 }
-                                 return 0;
+                                 return Integer.compare(childMap.get(o1).size(), childMap.get(o2).size());
                              }
                          });
 
@@ -2648,7 +2724,20 @@ public class StructureDiagramGenerator {
                 for (IAtom atom : atoms)
                     tmp.addAtom(atom);
                 double[] minmax = GeometryUtil.getMinMax(tmp);
-                double padding  = 0.7 * bondLength;
+
+                // if a child Sgroup also has brackets, account for that in our
+                // bounds calculation
+                for (Sgroup child : childMap.get(sgroup)) {
+                    List<SgroupBracket> brackets = child.getValue(SgroupKey.CtabBracket);
+                    if (brackets != null) {
+                        for (SgroupBracket bracket : brackets) {
+                            updateMinMax(minmax, bracket.getFirstPoint());
+                            updateMinMax(minmax, bracket.getSecondPoint());
+                        }
+                    }
+                }
+
+                double padding  = SGROUP_BRACKET_PADDING_FACTOR * bondLength;
                 sgroup.addBracket(new SgroupBracket(minmax[0] - padding, minmax[1] - padding,
                                                     minmax[0] - padding, minmax[3] + padding));
                 sgroup.addBracket(new SgroupBracket(minmax[2] + padding, minmax[1] - padding,

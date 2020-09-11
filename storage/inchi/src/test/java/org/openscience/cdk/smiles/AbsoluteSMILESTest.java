@@ -139,7 +139,7 @@ public class AbsoluteSMILESTest {
         for (String input : inputs)
             output.add(sg.create(sp.parseSmiles(input)));
 
-        Assert.assertThat(Joiner.on(".").join(inputs) + " were not canonicalised, outputs were " + output,
+        org.hamcrest.MatcherAssert.assertThat(Joiner.on(".").join(inputs) + " were not canonicalised, outputs were " + output,
                 output.size(), is(1));
 
     }

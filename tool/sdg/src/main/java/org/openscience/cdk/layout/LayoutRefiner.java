@@ -200,7 +200,7 @@ final class LayoutRefiner {
         Set<IntTuple> ringpairs = new HashSet<>();
 
         // score at which to check for crossing bonds
-        final double maybeCrossed = 1 / (2 * 2);
+        final double maybeCrossed = 1.0 / (2 * 2);
 
         final int numAtoms = mol.getAtomCount();
         for (int u = 0; u < numAtoms; u++) {
@@ -265,12 +265,12 @@ final class LayoutRefiner {
                     amax = a1;
                 }
                 if (b1 < b2) {
-                    bmin = a1;
-                    bmax = a2;
+                    bmin = b1;
+                    bmax = b2;
                 }
                 else {
-                    bmin = a2;
-                    bmax = a1;
+                    bmin = b2;
+                    bmax = b1;
                 }
                 int cmp = Integer.compare(amin, bmin);
                 if (cmp != 0) return cmp;

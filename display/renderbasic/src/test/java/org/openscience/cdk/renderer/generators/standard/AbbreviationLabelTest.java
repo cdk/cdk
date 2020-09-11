@@ -32,8 +32,8 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class AbbreviationLabelTest {
@@ -166,6 +166,13 @@ public class AbbreviationLabelTest {
     }
 
     @Test
+    public void hydrateFormatting() {
+        List<String> tokens = new ArrayList<>();
+        assertTrue(AbbreviationLabel.parse("SnCl4.2H2O", tokens));
+        assertThat(tokens, is(Arrays.asList("Sn", "Cl4", ".", "2", "H2", "O")));
+    }
+
+    @Test
     public void nonAbbreviationLabel() {
         List<String> tokens = new ArrayList<>();
         assertFalse(AbbreviationLabel.parse("A Random Label - Don't Reverse", tokens));
@@ -232,6 +239,13 @@ public class AbbreviationLabelTest {
         assertThat(texts.get(2).style, is(0));
         assertThat(texts.get(3).text, is("2"));
         assertThat(texts.get(3).style, is(-1));
+    }
+
+    @Test
+    public void hydrate() {
+        List<String> tokens = new ArrayList<>();
+        AbbreviationLabel.parse("•H2O", tokens);
+        assertThat(tokens, is(Arrays.asList("•", "H2", "O")));
     }
 
     @Test

@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Checks the functionality of the {@link AtomContainer}.

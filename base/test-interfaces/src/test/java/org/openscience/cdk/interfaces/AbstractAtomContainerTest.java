@@ -46,7 +46,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -598,7 +598,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         IBond b1 = container.getBuilder().newBond();
         IBond b2 = container.getBuilder().newBond();
 
-        Assert.assertThat("empty container had stereo elements", container.stereoElements().iterator().hasNext(),
+        org.hamcrest.MatcherAssert.assertThat("empty container had stereo elements", container.stereoElements().iterator().hasNext(),
                 is(false));
 
         List<IStereoElement> dbElements = new ArrayList<IStereoElement>();
@@ -606,18 +606,18 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
                 IDoubleBondStereochemistry.Conformation.TOGETHER));
         container.setStereoElements(dbElements);
         Iterator<IStereoElement> first = container.stereoElements().iterator();
-        Assert.assertThat("container did not have stereo elements", first.hasNext(), is(true));
-        Assert.assertThat("expected element to equal set element (double bond)", first.next(), is(dbElements.get(0)));
-        Assert.assertThat("container had more then one stereo element", first.hasNext(), is(false));
+        org.hamcrest.MatcherAssert.assertThat("container did not have stereo elements", first.hasNext(), is(true));
+        org.hamcrest.MatcherAssert.assertThat("expected element to equal set element (double bond)", first.next(), is(dbElements.get(0)));
+        org.hamcrest.MatcherAssert.assertThat("container had more then one stereo element", first.hasNext(), is(false));
 
         List<IStereoElement> tetrahedralElements = new ArrayList<IStereoElement>();
         tetrahedralElements.add(new TetrahedralChirality(atom, new IAtom[]{a1, a2, a3, a4}, ITetrahedralChirality.Stereo.CLOCKWISE));
         container.setStereoElements(tetrahedralElements);
         Iterator<IStereoElement> second = container.stereoElements().iterator();
-        Assert.assertThat("container did not have stereo elements", second.hasNext(), is(true));
-        Assert.assertThat("expected element to equal set element (tetrahedral)", second.next(),
+        org.hamcrest.MatcherAssert.assertThat("container did not have stereo elements", second.hasNext(), is(true));
+        org.hamcrest.MatcherAssert.assertThat("expected element to equal set element (tetrahedral)", second.next(),
                 is(tetrahedralElements.get(0)));
-        Assert.assertThat("container had more then one stereo element", second.hasNext(), is(false));
+        org.hamcrest.MatcherAssert.assertThat("container had more then one stereo element", second.hasNext(), is(false));
 
     }
 
@@ -3009,7 +3009,7 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         container.removeAtomOnly(c1);
         container.removeAtomOnly(c2);
 
-        Assert.assertThat("atom contains contains no bonds", container.getBondCount(), CoreMatchers.is(1));
+        org.hamcrest.MatcherAssert.assertThat("atom contains contains no bonds", container.getBondCount(), CoreMatchers.is(1));
 
         assertTrue("atom contains contains no atoms but was not empty", container.isEmpty());
 

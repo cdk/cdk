@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -152,7 +153,7 @@ public class RssWriter extends DefaultChemObjectWriter {
             channelElement.appendChild(itemsElement);
             channelElement.addAttribute(new Attribute("rdf:about", NS_RDF, about));
             rdfElement.appendChild(channelElement);
-            List list = new Vector();
+            List<IChemObject> list = new ArrayList<>();
             if (object instanceof IAtomContainerSet) {
                 for (int i = 0; i < ((IAtomContainerSet) object).getAtomContainerCount(); i++) {
                     list.add(((IAtomContainerSet) object).getAtomContainer(i));
@@ -184,7 +185,7 @@ public class RssWriter extends DefaultChemObjectWriter {
                 }
                 if (datemap.get(chemObject) != null) {
                     Element dateElement = new Element("dc:date", NS_DCELEMENTS);
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT);
                     dateElement.appendChild(new Text(formatter.format((Date) datemap.get(chemObject)) + timezone));
                     itemElement.appendChild(dateElement);
                 }
@@ -199,11 +200,11 @@ public class RssWriter extends DefaultChemObjectWriter {
                 }
                 Element root = null;
                 Convertor convertor = new Convertor(true, null);
-                object = (IChemObject) list.get(i);
-                if (object instanceof IAtomContainer) {
-                    root = convertor.cdkAtomContainerToCMLMolecule((IAtomContainer) object);
-                } else if (object instanceof ICrystal) {
+                object = list.get(i);
+                if (object instanceof ICrystal) {
                     root = convertor.cdkCrystalToCMLMolecule((ICrystal) object);
+                } else if (object instanceof IAtomContainer) {
+                    root = convertor.cdkAtomContainerToCMLMolecule((IAtomContainer) object);
                 } else if (object instanceof IAtom) {
                     root = convertor.cdkAtomToCMLAtom(null, (IAtom) object);
                 } else if (object instanceof IBond) {

@@ -59,8 +59,8 @@ public class CIFReaderTest extends ChemObjectIOTest {
         CIFReader cifReader = new CIFReader(in);
         //        try {
         IChemFile chemFile = cifReader.read(new ChemFile());
-        Assert.assertThat(chemFile.getChemSequenceCount(), is(1));
-        Assert.assertThat(chemFile.getChemSequence(0).getChemModelCount(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(chemFile.getChemSequenceCount(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(chemFile.getChemSequence(0).getChemModelCount(), is(1));
         Assert.assertNotNull(chemFile.getChemSequence(0).getChemModel(0).getCrystal());
         //        } finally {
         cifReader.close();

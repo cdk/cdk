@@ -24,7 +24,7 @@
 package org.openscience.cdk.graph;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.graph.InitialCyclesTest.anthracene;
 import static org.openscience.cdk.graph.InitialCyclesTest.bicyclo;
 import static org.openscience.cdk.graph.InitialCyclesTest.cyclophane_even;

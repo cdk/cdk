@@ -23,6 +23,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -40,7 +41,7 @@ import java.util.List;
  * 
  * These decsriptors were described  by Randic ({@cdk.cite RAN84}) and characterize molecular
  * branching. Five descriptors are calculated, based on the implementation in the ADAPT
- * software package. Note that the descriptor is based on identifying <b>all</b> pahs between pairs of
+ * software package. Note that the descriptor is based on identifying <b>all</b> paths between pairs of
  * atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
  * The class returns a <code>DoubleArrayResult</code> containing the five
  * descriptors in the order described below.
@@ -155,6 +156,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
         int natom = local.getAtomCount();
         DoubleArrayResult retval = new DoubleArrayResult();
+        
 
         ArrayList<List<?>> pathList = new ArrayList<List<?>>();
 
@@ -181,7 +183,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         int count = 0;
         for (int i = 0; i < natom; i++) {
             IAtom a = local.getAtom(i);
-            if (a.getSymbol().equalsIgnoreCase("C")) continue;
+            if (a.getAtomicNumber() == IElement.C) continue;
             count++;
             for (int j = 0; j < natom; j++) {
                 IAtom b = local.getAtom(j);
@@ -201,7 +203,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         count = 0;
         for (int i = 0; i < natom; i++) {
             IAtom a = local.getAtom(i);
-            if (!a.getSymbol().equalsIgnoreCase("O")) continue;
+            if (a.getAtomicNumber() != IElement.O) continue;
             count++;
             for (int j = 0; j < natom; j++) {
                 IAtom b = local.getAtom(j);
@@ -221,7 +223,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         count = 0;
         for (int i = 0; i < natom; i++) {
             IAtom a = local.getAtom(i);
-            if (!a.getSymbol().equalsIgnoreCase("N")) continue;
+            if (a.getAtomicNumber() != IElement.N) continue;
             count++;
             for (int j = 0; j < natom; j++) {
                 IAtom b = local.getAtom(j);

@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -178,7 +179,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
             if ((container.getMaximumBondOrder(container.getAtom(i)) != IBond.Order.SINGLE
                     || Math.abs(container.getAtom(i).getFormalCharge()) >= 1
                     || container.getAtom(i).getFlag(CDKConstants.ISAROMATIC)
-                    || container.getAtom(i).getSymbol().equals("N") || container.getAtom(i).getSymbol().equals("O"))
+                    || container.getAtom(i).getAtomicNumber() == IElement.N || container.getAtom(i).getAtomicNumber() == IElement.O)
                     && !container.getAtom(i).getFlag(CDKConstants.VISITED)) {
                 //logger.debug("...... -> Accepted");
                 startSphere = new ArrayList<IAtom>();
@@ -245,7 +246,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
                 nextAtom = ((IBond) bond).getOther(atom);
                 if ((container.getMaximumBondOrder(nextAtom) != IBond.Order.SINGLE
                         || Math.abs(nextAtom.getFormalCharge()) >= 1 || nextAtom.getFlag(CDKConstants.ISAROMATIC)
-                        || nextAtom.getSymbol().equals("N") || nextAtom.getSymbol().equals("O"))
+                        || nextAtom.getAtomicNumber() == IElement.N || nextAtom.getAtomicNumber() == IElement.O)
                         & !nextAtom.getFlag(CDKConstants.VISITED)) {
                     //logger.debug("BDS> AtomNr:"+container.indexOf(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
                     path.add(nextAtom);

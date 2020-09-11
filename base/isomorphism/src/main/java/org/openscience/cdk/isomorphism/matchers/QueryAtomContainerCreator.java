@@ -18,10 +18,19 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
+import org.openscience.cdk.AtomRef;
+import org.openscience.cdk.BondRef;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IStereoElement;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Utilities for creating queries from 'real' molecules. Note that most of this
@@ -102,9 +111,9 @@ public class QueryAtomContainerCreator {
         }
         Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
-            IBond bond = bonds.next();
-            int index1 = container.indexOf(bond.getBegin());
-            int index2 = container.indexOf(bond.getEnd());
+            IBond bond   = bonds.next();
+            int   index1 = container.indexOf(bond.getBegin());
+            int   index2 = container.indexOf(bond.getEnd());
             if (bond.isAromatic()) {
                 QueryBond qbond = new QueryBond(queryContainer.getAtom(index1),
                                                 queryContainer.getAtom(index2),
@@ -135,7 +144,7 @@ public class QueryAtomContainerCreator {
      *                           Expr.Type.ORDER);
      * </pre>
      *
-     * @param container The AtomContainer that stands as model
+     * @param container   The AtomContainer that stands as model
      * @param aromaticity option flag
      * @return The new QueryAtomContainer created from container.
      */
@@ -160,7 +169,7 @@ public class QueryAtomContainerCreator {
      * QueryAtomContainer.create(container);
      * </pre>
      *
-     * @param container The AtomContainer that stands as model
+     * @param container   The AtomContainer that stands as model
      * @param aromaticity option flag
      * @return The new QueryAtomContainer created from container.
      */
@@ -189,5 +198,69 @@ public class QueryAtomContainerCreator {
                                          Expr.Type.ELEMENT,
                                          Expr.Type.IS_AROMATIC,
                                          Expr.Type.ALIPHATIC_ORDER);
+    }
+
+    static boolean isSimpleHydrogen(Expr expr) {
+        switch (expr.type()) {
+            case ELEMENT:
+            case ALIPHATIC_ELEMENT:
+                return expr.value() == 1;
+            default:
+                return false;
+        }
+    }
+
+    public static IAtomContainer suppressQueryHydrogens(IAtomContainer mol) {
+
+        // pre-checks
+        for (IAtom atom : mol.atoms()) {
+            if (!(AtomRef.deref(atom) instanceof QueryAtom))
+                throw new IllegalArgumentException("Non-query atoms found!");
+        }
+        for (IBond bond : mol.bonds()) {
+            if (!(BondRef.deref(bond) instanceof QueryBond))
+                throw new IllegalArgumentException("Non-query bonds found!");
+        }
+
+        Map<IChemObject,IChemObject> plainHydrogens = new HashMap<>();
+        for (IAtom atom : mol.atoms()) {
+            int hcnt = 0;
+            for (IAtom nbor : mol.getConnectedAtomsList(atom)) {
+                QueryAtom qnbor = (QueryAtom) AtomRef.deref(nbor);
+                if (mol.getConnectedBondsCount(nbor) == 1 &&
+                    isSimpleHydrogen(qnbor.getExpression())) {
+                    hcnt++;
+                    plainHydrogens.put(nbor, atom);
+                }
+            }
+            if (hcnt > 0) {
+                QueryAtom qatom = (QueryAtom) AtomRef.deref(atom);
+                Expr e = qatom.getExpression();
+                Expr hexpr = new Expr();
+                for (int i = 0; i < hcnt; i++)
+                    hexpr.and(new Expr(Expr.Type.TOTAL_H_COUNT, i).negate());
+                e.and(hexpr);
+            }
+        }
+
+        // nothing to do
+        if (plainHydrogens.isEmpty())
+            return mol;
+
+        IAtomContainer res = new QueryAtomContainer(mol.getBuilder());
+        for (IAtom atom : mol.atoms()) {
+            if (!plainHydrogens.containsKey(atom))
+                res.addAtom(atom);
+        }
+        for (IBond bond : mol.bonds()) {
+            if (!plainHydrogens.containsKey(bond.getBegin()) &&
+                !plainHydrogens.containsKey(bond.getEnd()))
+                res.addBond(bond);
+        }
+        for (IStereoElement se : mol.stereoElements()) {
+            res.addStereoElement(se.map(plainHydrogens));
+        }
+
+        return res;
     }
 }

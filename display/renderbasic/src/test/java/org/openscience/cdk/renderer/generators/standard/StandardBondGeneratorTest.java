@@ -25,14 +25,18 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
+import javax.vecmath.Point2d;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.renderer.generators.standard.StandardBondGenerator.RingBondOffsetComparator;
 
 public class StandardBondGeneratorTest {
@@ -57,6 +61,31 @@ public class StandardBondGeneratorTest {
         // 4 bonds should point to the five member ring
         assertThat(nSize5, is(4));
         assertThat(nSize6, is(6));
+    }
+
+    @Test
+    public void metalRingPreference() throws Exception {
+
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("C1[Fe]C=CC2=C1C=CN2");
+        for (IAtom atom : mol.atoms())
+            atom.setPoint2d(new Point2d(0,0));
+        Map<IBond, IAtomContainer> ringMap = StandardBondGenerator.ringPreferenceMap(mol);
+
+        int nSize5 = 0, nSize6 = 0;
+        for (IBond bond : mol.bonds()) {
+            IAtomContainer ring = ringMap.get(bond);
+            // exocyclic bond
+            if (ring == null) continue;
+            int size = ring.getAtomCount();
+            if (size == 5) nSize5++;
+            if (size == 6) nSize6++;
+        }
+
+        // 5 bonds should point to the six member ring
+        // 5 bonds should point to the five member ring
+        assertThat(nSize5, is(5));
+        assertThat(nSize6, is(5));
     }
 
     @Test

@@ -186,7 +186,7 @@ public class MoleculeBuilder {
         else if ("chloro".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
             if (addPos < 0) {
-                addAtom("Cl", currentMolecule.isEmpty() ? null : currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
+                addAtom("Cl", currentMolecule.isEmpty() ? null : currentMolecule.getAtom(0), IBond.Order.SINGLE, 0);
             } else {
                 addAtom("Cl", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }

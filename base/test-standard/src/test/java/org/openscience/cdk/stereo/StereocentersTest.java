@@ -370,6 +370,7 @@ public class StereocentersTest {
     public void phosphorus_v5_neutral_reject_h_on_terminal() throws Exception {
         none("P(=N)(N)(C)CC");
         none("P(=O)(O)(C)CC");
+        none("P(=O)([O-])(C)CC");
         none("P(=S)(S)(C)CC");
         none("P(=[Se])([SeH])(C)C");
         none("P(=[Te])([TeH])(C)C");

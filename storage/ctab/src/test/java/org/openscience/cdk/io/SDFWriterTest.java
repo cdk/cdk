@@ -27,6 +27,7 @@ import java.io.StringWriter;
 import java.util.Collections;
 import java.util.Properties;
 
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -47,7 +48,7 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 import static org.junit.Assert.assertFalse;
@@ -211,7 +212,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.write(molecule);
 
         sdfWriter.close();
-        Assert.assertThat(writer.toString(), Matchers.containsString("> <http://not_valid_com>"));
+        org.hamcrest.MatcherAssert.assertThat(writer.toString(), Matchers.containsString("> <http://not_valid_com>"));
     }
 
     @Test
@@ -344,5 +345,58 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         String out = sw.toString();
         assertFalse(out.contains("> <two>"));
         assertFalse(out.contains("> <one>"));
+    }
+
+    @Test
+    public void setProgramName() {
+        StringWriter sw = new StringWriter();
+        try (SDFWriter sdfw = new SDFWriter(sw)) {
+            sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
+                .setSetting("false");
+            sdfw.getSetting(MDLV2000Writer.OptProgramName)
+                .setSetting("Bioclipse");
+
+            sdfw.write(TestMoleculeFactory.make123Triazole());
+
+            sdfw.getSetting(SDFWriter.OptAlwaysV3000)
+                .setSetting("true");
+
+            sdfw.write(TestMoleculeFactory.make123Triazole());
+        } catch (IOException | CDKException e) {
+            e.printStackTrace();
+        }
+        String sdf = sw.toString();
+        for (String mol : sdf.split("\\$\\$\\$\\$", 2)) {
+            assertThat(mol, CoreMatchers.containsString("Bioclip"));
+        }
+    }
+
+    @Test
+    public void optionallyTruncateLongProperties() {
+        StringWriter sw = new StringWriter();
+        try (SDFWriter sdfw = new SDFWriter(sw)) {
+            sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
+                .setSetting("false");
+            sdfw.getSetting(SDFWriter.OptTruncateLongData)
+                .setSetting("true");
+            IAtomContainer mol = TestMoleculeFactory.make123Triazole();
+            mol.setProperty("MyLongField",
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                            "ThisIsAVeryLongFieldThatShouldBeWrapped");
+            sdfw.write(mol);
+        } catch (IOException | CDKException e) {
+            e.printStackTrace();
+        }
+        String sdf = sw.toString();
+        assertThat(sdf,
+                   CoreMatchers.containsString("ThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisI\n"));
     }
 }

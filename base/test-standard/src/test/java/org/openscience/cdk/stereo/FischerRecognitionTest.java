@@ -79,7 +79,7 @@ public class FischerRecognitionTest {
                                                                bondMap,
                                                                Stereocenters.of(m));
         List<IStereoElement> elements = recogniser.recognise(Collections.singleton(Projection.Fischer));
-        Assert.assertThat(elements.size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(elements.size(), is(1));
         assertTetrahedralCenter(elements.get(0),
                                 m.getAtom(1),
                                 ANTI_CLOCKWISE,
@@ -114,7 +114,7 @@ public class FischerRecognitionTest {
                                                                bondMap,
                                                                Stereocenters.of(m));
         List<IStereoElement> elements = recogniser.recognise(Collections.singleton(Projection.Fischer));
-        Assert.assertThat(elements.size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(elements.size(), is(1));
         assertTetrahedralCenter(elements.get(0),
                                 m.getAtom(1),
                                 ANTI_CLOCKWISE,
@@ -147,7 +147,7 @@ public class FischerRecognitionTest {
                                                                bondMap,
                                                                Stereocenters.of(m));
         List<IStereoElement> elements = recogniser.recognise(Collections.singleton(Projection.Fischer));
-        Assert.assertThat(elements.size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(elements.size(), is(1));
         assertTetrahedralCenter(elements.get(0),
                                 m.getAtom(1),
                                 ANTI_CLOCKWISE,
@@ -191,7 +191,7 @@ public class FischerRecognitionTest {
                                                                Stereocenters.of(m));
         List<IStereoElement> elements = recogniser.recognise(Collections.singleton(Projection.Fischer));
 
-        Assert.assertThat(elements.size(), is(4));
+        org.hamcrest.MatcherAssert.assertThat(elements.size(), is(4));
         assertTetrahedralCenter(elements.get(0),
                                 m.getAtom(1),
                                 ANTI_CLOCKWISE,
@@ -234,7 +234,7 @@ public class FischerRecognitionTest {
                                                                       expected[3],
                                                                       expected[0]}
                                                          );
-        Assert.assertThat(expected, is(actual));
+        org.hamcrest.MatcherAssert.assertThat(expected, is(actual));
     }
 
     /**
@@ -263,7 +263,7 @@ public class FischerRecognitionTest {
                                                                       expected[3],
                                                                       expected[0]}
                                                          );
-        Assert.assertThat(expected, is(actual));
+        org.hamcrest.MatcherAssert.assertThat(expected, is(actual));
     }
 
     @Test public void createCenterWithFourNeighbors() {
@@ -284,12 +284,12 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertThat(element.getChiralAtom(), is(sameInstance(focus)));
-        Assert.assertThat(element.getStereo(), is(ANTI_CLOCKWISE));
-        Assert.assertThat(element.getLigands()[0], is(sameInstance(north)));
-        Assert.assertThat(element.getLigands()[1], is(sameInstance(east)));
-        Assert.assertThat(element.getLigands()[2], is(sameInstance(south)));
-        Assert.assertThat(element.getLigands()[3], is(sameInstance(west)));
+        org.hamcrest.MatcherAssert.assertThat(element.getChiralAtom(), is(sameInstance(focus)));
+        org.hamcrest.MatcherAssert.assertThat(element.getStereo(), is(ANTI_CLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[0], is(sameInstance(north)));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[1], is(sameInstance(east)));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[2], is(sameInstance(south)));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[3], is(sameInstance(west)));
     }
 
     @Test public void createCenterWithThreeNeighbors_right() {
@@ -308,12 +308,12 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertThat(element.getChiralAtom(), is(sameInstance(focus)));
-        Assert.assertThat(element.getStereo(), is(ANTI_CLOCKWISE));
-        Assert.assertThat(element.getLigands()[0], is(sameInstance(north)));
-        Assert.assertThat(element.getLigands()[1], is(sameInstance(east)));
-        Assert.assertThat(element.getLigands()[2], is(sameInstance(south)));
-        Assert.assertThat(element.getLigands()[3], is(sameInstance(focus)));
+        org.hamcrest.MatcherAssert.assertThat(element.getChiralAtom(), is(sameInstance(focus)));
+        org.hamcrest.MatcherAssert.assertThat(element.getStereo(), is(ANTI_CLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[0], is(sameInstance(north)));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[1], is(sameInstance(east)));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[2], is(sameInstance(south)));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[3], is(sameInstance(focus)));
     }
 
     @Test public void createCenterWithThreeNeighbors_left() {
@@ -332,12 +332,12 @@ public class FischerRecognitionTest {
 
         ITetrahedralChirality element = FischerRecognition.newTetrahedralCenter(focus,
                                                                                 bonds);
-        Assert.assertThat(element.getChiralAtom(), is(sameInstance(focus)));
-        Assert.assertThat(element.getStereo(), is(ANTI_CLOCKWISE));
-        Assert.assertThat(element.getLigands()[0], is(sameInstance(north)));
-        Assert.assertThat(element.getLigands()[1], is(sameInstance(focus)));
-        Assert.assertThat(element.getLigands()[2], is(sameInstance(south)));
-        Assert.assertThat(element.getLigands()[3], is(sameInstance(west)));
+        org.hamcrest.MatcherAssert.assertThat(element.getChiralAtom(), is(sameInstance(focus)));
+        org.hamcrest.MatcherAssert.assertThat(element.getStereo(), is(ANTI_CLOCKWISE));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[0], is(sameInstance(north)));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[1], is(sameInstance(focus)));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[2], is(sameInstance(south)));
+        org.hamcrest.MatcherAssert.assertThat(element.getLigands()[3], is(sameInstance(west)));
     }
 
     @Test public void doNotCreateCenterWhenNorthIsMissing() {
@@ -610,11 +610,11 @@ public class FischerRecognitionTest {
                                         IAtom focus,
                                         Stereo winding,
                                         IAtom ... neighbors) {
-        Assert.assertThat(element, is(instanceOf(ITetrahedralChirality.class)));
+        org.hamcrest.MatcherAssert.assertThat(element, is(instanceOf(ITetrahedralChirality.class)));
         ITetrahedralChirality actual = (ITetrahedralChirality) element;
-        Assert.assertThat(actual.getChiralAtom(), is(sameInstance(focus)));
-        Assert.assertThat(actual.getStereo(), is(winding));
-        Assert.assertThat(actual.getLigands(), is(neighbors));
+        org.hamcrest.MatcherAssert.assertThat(actual.getChiralAtom(), is(sameInstance(focus)));
+        org.hamcrest.MatcherAssert.assertThat(actual.getStereo(), is(winding));
+        org.hamcrest.MatcherAssert.assertThat(actual.getLigands(), is(neighbors));
     }
 
     static IAtom atom(String symbol, int h, double x, double y) {

@@ -71,7 +71,7 @@ public class DebugElementTest extends AbstractElementTest {
         Assert.assertEquals("R", e.getSymbol());
         // and it should not throw exceptions
         Assert.assertNotNull(e.getAtomicNumber());
-        Assert.assertThat(e.getAtomicNumber(), is(0));
+        org.hamcrest.MatcherAssert.assertThat(e.getAtomicNumber(), is(0));
     }
 
     @Test

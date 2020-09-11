@@ -75,9 +75,13 @@ import java.util.Map;
  * which was {@code [#6](~[#6])(~[#6])(~[#6])([H])} and is rewritten as
  * {@code [#6H1](~[#6])(~[#6])(~[#6])}.
  * 
- *
+ * <br/>
  * <b>Warning - this class is not thread-safe and uses stores intermediate steps
  * internally. Please use a separate instance of the class for each thread.</b>
+ * <br/>
+ * <b>
+ * Important! this fingerprint can not be used for substructure screening.
+ * </b>
  *
  * @author Rajarshi Guha
  * @cdk.keyword fingerprint

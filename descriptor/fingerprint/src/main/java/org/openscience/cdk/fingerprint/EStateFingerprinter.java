@@ -49,6 +49,10 @@ import java.util.Map;
  * filtering. It is possible for some keys to match substructures and not match
  * the superstructures. Some keys check for hydrogen counts which may not be
  * preserved in a superstructure.</b>
+ * <br/>
+ * <b>
+ * Important! this fingerprint can not be used for substructure screening.
+ * </b>
  *
  * @author Rajarhi Guha
  * @cdk.created 2008-07-23

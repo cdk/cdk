@@ -25,6 +25,7 @@ package org.openscience.cdk.layout;
 
 import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -381,7 +382,8 @@ public class AtomPlacer {
             nextAtom.setFlag(CDKConstants.ISPLACED, true);
             boolean trans = false;
 
-            if (prevBond != null && isColinear(atom, molecule.getConnectedBondsList(atom))) {
+            if (prevBond != null &&
+                isColinear(atom, molecule.getConnectedBondsList(atom))) {
 
                 int atomicNumber = atom.getAtomicNumber();
                 int charge = atom.getFormalCharge();
@@ -417,6 +419,20 @@ public class AtomPlacer {
         }
     }
 
+    private boolean isTerminalD4(IAtom atom) {
+        List<IBond> bonds = molecule.getConnectedBondsList(atom);
+        if (bonds.size() != 4)
+            return false;
+        int nonD1 = 0;
+        for (IBond bond : bonds) {
+            if (molecule.getConnectedBondsCount(bond.getOther(atom)) != 1) {
+                if (++nonD1 > 1)
+                    return false;
+            }
+        }
+        return true;
+    }
+
     /**
      *  Returns the next bond vector needed for drawing an extended linear chain of
      *  atoms. It assumes an angle of 120 deg for a nice chain layout and
@@ -448,7 +464,13 @@ public class AtomPlacer {
 
         double angle = GeometryUtil.getAngle(previousAtom.getPoint2d().x - atom.getPoint2d().x,
                 previousAtom.getPoint2d().y - atom.getPoint2d().y);
-        double addAngle = Math.toRadians(120);
+        double addAngle;
+
+        if (isTerminalD4(atom))
+            addAngle = Math.toRadians(45);
+        else
+            addAngle = Math.toRadians(120);
+
         if (!trans) addAngle = Math.toRadians(60);
         if (isColinear(atom, molecule.getConnectedBondsList(atom))) addAngle = Math.toRadians(180);
 
@@ -941,6 +963,11 @@ public class AtomPlacer {
      * -N=[N+]=N
      */
     static boolean isColinear(IAtom atom, Iterable<IBond> bonds) {
+
+        if (Elements.isMetal(atom)) {
+            return FluentIterable.from(bonds).size() == 2;
+        }
+
         int numSgl = atom.getImplicitHydrogenCount() == null ? 0 : atom.getImplicitHydrogenCount();
         int numDbl = 0;
         int numTpl = 0;

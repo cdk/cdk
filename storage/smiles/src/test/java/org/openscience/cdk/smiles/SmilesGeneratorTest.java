@@ -360,7 +360,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
                 smiles1);
         define(mol1, clockwise(mol1, 1, 0, 2, 4, 8), anticlockwise(mol1, 2, 1, 3, 7, 1));
         String smiles3 = sg.create(mol1);
-        Assert.assertThat(smiles1, is(not(smiles3)));
+        org.hamcrest.MatcherAssert.assertThat(smiles1, is(not(smiles3)));
     }
 
     /**
@@ -698,7 +698,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
         String smiles1 = sg.create(mol1);
         String smiles2 = sg.create(mol2);
-        Assert.assertThat(smiles1, is(not(smiles2)));
+        org.hamcrest.MatcherAssert.assertThat(smiles1, is(not(smiles2)));
     }
 
     /**
@@ -723,7 +723,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
         String smiles1 = sg.create(mol1);
         String smiles2 = sg.create(mol2);
-        Assert.assertThat(smiles1, is(not(smiles2)));
+        org.hamcrest.MatcherAssert.assertThat(smiles1, is(not(smiles2)));
     }
 
     /**
@@ -848,7 +848,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
         String moleculeSmile1 = sg.create(mol1);
         String moleculeSmile2 = sg.create(mol2);
-        Assert.assertThat(moleculeSmile1, is(not(moleculeSmile2)));
+        org.hamcrest.MatcherAssert.assertThat(moleculeSmile1, is(not(moleculeSmile2)));
     }
 
     /**

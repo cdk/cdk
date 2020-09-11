@@ -44,7 +44,7 @@ public interface IBond extends IElectronContainer {
 
         private final Integer bondedElectronPairs;
 
-        private Order(Integer bondedElectronPairs) {
+        Order(Integer bondedElectronPairs) {
             this.bondedElectronPairs = bondedElectronPairs;
         }
 
@@ -129,6 +129,54 @@ public interface IBond extends IElectronContainer {
          * by the 2D and/or 3D coordinates.
          */
         E_Z_BY_COORDINATES
+    }
+
+    /**
+     * Bond display style, controlling how bonds appear in a 2D depiction.
+     */
+    enum Display {
+        /** A solid line (default). */
+        Solid,
+        /** A dashed line. */
+        Dash,
+        /** A hashed line (bold dashed). */
+        Hash,
+        /** A bold line. */
+        Bold,
+        /** A wavy line. */
+        Wavy,
+        /** A dotted line. */
+        Dot,
+        /**
+         * Display as a hashed wedge, with the narrow end
+         * towards the begin atom of the bond ({@link IBond#getBegin()}).
+         */
+        WedgedHashBegin,
+        /**
+         * Display as a hashed wedge, with the narrow end
+         * towards the end atom of the bond ({@link IBond#getEnd()}).
+         */
+        WedgedHashEnd,
+        /**
+         * Display as a bold wedge, with the narrow end
+         * towards the begin atom of the bond ({@link IBond#getBegin()}).
+         */
+        WedgeBegin,
+        /**
+         * Display as a bold wedge, with the narrow end
+         * towards the end atom of the bond ({@link IBond#getEnd()}).
+         */
+        WedgeEnd,
+        /**
+         * Display as an arrow (e.g. co-ordination bond), the arrow points
+         * to the begin ({@link IBond#getBegin()}) atom.
+         */
+        ArrowBeg,
+        /**
+         * Display as an arrow (e.g. co-ordination bond), the arrow points
+         * to the end ({@link IBond#getEnd()}) atom.
+         */
+        ArrowEnd
     }
 
     /**
@@ -270,12 +318,26 @@ public interface IBond extends IElectronContainer {
     IBond.Stereo getStereo();
 
     /**
-     * Sets the stereo descriptor for this bond.
+     * Sets the stereo descriptor for this bond. Note this function will
+     * also modify the bond display style.
      *
      * @param stereo The stereo descriptor to be assigned to this bond.
      * @see #getStereo
+     * @see #setDisplay(Display)
      */
     void setStereo(IBond.Stereo stereo);
+
+    /**
+     * Access the bond display style.
+     * @return the bond display
+     */
+    IBond.Display getDisplay();
+
+    /**
+     * Set the bond display style.
+     * @param display the display
+     */
+    void setDisplay(IBond.Display display);
 
     /**
      * Returns the geometric 2D center of the bond.

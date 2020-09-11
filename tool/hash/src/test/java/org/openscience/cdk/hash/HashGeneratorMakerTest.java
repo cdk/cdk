@@ -37,7 +37,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.openscience.cdk.hash.BasicAtomEncoder.ATOMIC_NUMBER;
@@ -56,40 +56,40 @@ public class HashGeneratorMakerTest {
     public void testElemental() {
         AtomHashGenerator generator = new HashGeneratorMaker().depth(0).elemental().atomic();
         List<AtomEncoder> encoders = getEncoders((BasicAtomHashGenerator) generator);
-        Assert.assertThat(encoders.size(), is(1));
-        Assert.assertThat(encoders.get(0), is((AtomEncoder) ATOMIC_NUMBER));
+        org.hamcrest.MatcherAssert.assertThat(encoders.size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(encoders.get(0), is((AtomEncoder) ATOMIC_NUMBER));
     }
 
     @Test
     public void testIsotopic() {
         AtomHashGenerator generator = new HashGeneratorMaker().depth(0).isotopic().atomic();
         List<AtomEncoder> encoders = getEncoders((BasicAtomHashGenerator) generator);
-        Assert.assertThat(encoders.size(), is(1));
-        Assert.assertThat(encoders.get(0), is((AtomEncoder) MASS_NUMBER));
+        org.hamcrest.MatcherAssert.assertThat(encoders.size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(encoders.get(0), is((AtomEncoder) MASS_NUMBER));
     }
 
     @Test
     public void testCharged() {
         AtomHashGenerator generator = new HashGeneratorMaker().depth(0).charged().atomic();
         List<AtomEncoder> encoders = getEncoders((BasicAtomHashGenerator) generator);
-        Assert.assertThat(encoders.size(), is(1));
-        Assert.assertThat(encoders.get(0), is((AtomEncoder) FORMAL_CHARGE));
+        org.hamcrest.MatcherAssert.assertThat(encoders.size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(encoders.get(0), is((AtomEncoder) FORMAL_CHARGE));
     }
 
     @Test
     public void testRadical() {
         AtomHashGenerator generator = new HashGeneratorMaker().depth(0).radical().atomic();
         List<AtomEncoder> encoders = getEncoders((BasicAtomHashGenerator) generator);
-        Assert.assertThat(encoders.size(), is(1));
-        Assert.assertThat(encoders.get(0), is((AtomEncoder) FREE_RADICALS));
+        org.hamcrest.MatcherAssert.assertThat(encoders.size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(encoders.get(0), is((AtomEncoder) FREE_RADICALS));
     }
 
     @Test
     public void testOrbital() {
         AtomHashGenerator generator = new HashGeneratorMaker().depth(0).orbital().atomic();
         List<AtomEncoder> encoders = getEncoders((BasicAtomHashGenerator) generator);
-        Assert.assertThat(encoders.size(), is(1));
-        Assert.assertThat(encoders.get(0), is((AtomEncoder) ORBITAL_HYBRIDIZATION));
+        org.hamcrest.MatcherAssert.assertThat(encoders.size(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(encoders.get(0), is((AtomEncoder) ORBITAL_HYBRIDIZATION));
     }
 
     @Test

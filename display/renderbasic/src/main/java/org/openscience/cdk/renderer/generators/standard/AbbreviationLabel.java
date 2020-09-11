@@ -104,7 +104,7 @@ final class AbbreviationLabel {
                                                              "Oct", "Octyl",
                                                              "PAB", "Pentyl", "Ph", "Phenyl", "Pivaloyl", "PMB", "Pro", "Propargyl", "Propyl", "Pv",
                                                              "R", "SEM",
-                                                             "T", "TBDMS", "Trt", "TBDPS", "TES", "Tf", "THP", "THPO", "TIPS", "TMS", "Tos", "Tol", "Tosyl", "Tr", "Troc",
+                                                             "T", "TBS", "TBDMS", "Trt", "TBDPS", "TES", "Tf", "THP", "THPO", "TIPS", "TMS", "Tos", "Tol", "Tosyl", "Tr", "Troc",
                                                              "Vinyl", "Voc", "Z"};
 
     private static Trie PREFIX_TRIE = new Trie();
@@ -191,9 +191,17 @@ final class AbbreviationLabel {
                 continue;
             }
 
-            if (c == '/' || c == '·') {
+            // separators
+            if (c == '/' || c == '·' || c == '.' || c == '•' || c == '=') {
                 tokens.add(Character.toString(c));
                 i++;
+
+                int beg = i;
+                while (i < label.length() && isDigit(label.charAt(i))) {
+                    i++;
+                }
+                if (i > beg)
+                    tokens.add(label.substring(beg, i));
                 continue;
             }
 
@@ -381,9 +389,6 @@ final class AbbreviationLabel {
      * @return normalised character
      */
     private static char norm(char c) {
-        // if character is out of scope don't
-        if (c > 128)
-            return 0;
         switch (c) {
             case '\u002d': // hyphen
             case '\u2012': // figure dash
@@ -414,6 +419,8 @@ final class AbbreviationLabel {
         if (i == string.length())
             return best;
         final char c = norm(string.charAt(i));
+        if (c > 128)
+            return best;
         return findPrefix(trie.children[c], string, i + 1, best);
     }
 

@@ -390,15 +390,15 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
 
         IRingSet ringSet = (IRingSet) newChemObject();
 
-        Assert.assertThat("new ringset should be empty", ringSet.isEmpty(), is(true));
+        org.hamcrest.MatcherAssert.assertThat("new ringset should be empty", ringSet.isEmpty(), is(true));
 
         ringSet.addAtomContainer(ringSet.getBuilder().newInstance(IAtomContainer.class));
 
-        Assert.assertThat("ringset with an atom container should not be empty", ringSet.isEmpty(), is(not(true)));
+        org.hamcrest.MatcherAssert.assertThat("ringset with an atom container should not be empty", ringSet.isEmpty(), is(not(true)));
 
         ringSet.removeAllAtomContainers();
 
-        Assert.assertThat("ringset with removed atom containers should be empty", ringSet.isEmpty(), is(true));
+        org.hamcrest.MatcherAssert.assertThat("ringset with removed atom containers should be empty", ringSet.isEmpty(), is(true));
 
     }
 
