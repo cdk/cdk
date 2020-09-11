@@ -259,7 +259,6 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                         reader.setReader(new StringReader(buffer.toString()));
                         molecule = reader.read(builder.newAtomContainer());
                     } catch (Exception exception) {
-                        exception.printStackTrace();
                         logger.error("Error while reading next molecule: " + exception.getMessage());
                         logger.debug(exception);
                     }
