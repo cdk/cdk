@@ -206,7 +206,7 @@ final class StandardSgroupGenerator {
 
         final Set<IBond> crossing = sgroup.getBonds();
         final Set<IAtom> atoms = sgroup.getAtoms();
-        final Set<IAtom> parentAtoms = sgroup.getValue(SgroupKey.CtabParentAtomList);
+        final Collection<IAtom> parentAtoms = sgroup.getValue(SgroupKey.CtabParentAtomList);
 
         for (IBond bond : container.bonds()) {
             if (parentAtoms.contains(bond.getBegin()) && parentAtoms.contains(bond.getEnd()))

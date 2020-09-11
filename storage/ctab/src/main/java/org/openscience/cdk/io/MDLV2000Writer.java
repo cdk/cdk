@@ -1030,7 +1030,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write('\n');
                         break;
                     case CtabParentAtomList:
-                        Set<IAtom> parentAtomList = sgroup.getValue(key);
+                        Collection<IAtom> parentAtomList = sgroup.getValue(key);
                         for (List<IAtom> atoms : wrap(parentAtomList, 15)) {
                             writer.write("M  SPA ");
                             writer.write(formatMDLInt(id, 3));
