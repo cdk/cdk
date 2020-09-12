@@ -416,6 +416,9 @@
         <contributor>
             <name>Daniel Zaharevitz</name>
         </contributor>
+        <contributor>
+            <name>Daniel Katzel</name>
+        </contributor>
     </contributors>
     <!-- Plugin repository (EBI) is required for cdk-build-utils and
          ojdcheck to build the javadoc. -->
