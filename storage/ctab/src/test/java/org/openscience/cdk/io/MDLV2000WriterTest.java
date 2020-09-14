@@ -47,6 +47,9 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import javax.vecmath.Point2d;
@@ -54,7 +57,9 @@ import javax.vecmath.Point3d;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -970,5 +975,30 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
                                               + "  1  5  1  0\n"
                                               + "M  END"));
         }
+    }
+
+    @Test
+    public void writeParentAtomSgroupAsList() throws Exception{
+        IAtomContainer mol  = builder.newAtomContainer();
+        IAtom          atom = builder.newAtom();
+        atom.setSymbol("C");
+        mol.addAtom(atom);
+        // build multiple group Sgroup
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabMultipleGroup);
+        sgroup.addAtom(atom);
+        List<IAtom> patoms = new ArrayList<>();
+
+            patoms.add(atom);
+
+        sgroup.putValue(SgroupKey.CtabParentAtomList, patoms);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                Collections.singletonList(sgroup));
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(), containsString("SPA   1  1"));
+
     }
 }

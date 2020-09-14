@@ -74,6 +74,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1256,7 +1257,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 case M_SPA:
                     sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
                     count  = readMolfileInt(line, 10);
-                    Set<IAtom> parentAtomList = sgroup.getValue(SgroupKey.CtabParentAtomList);
+                    Collection<IAtom> parentAtomList = sgroup.getValue(SgroupKey.CtabParentAtomList);
                     if (parentAtomList == null) {
                         sgroup.putValue(SgroupKey.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
                     }
