@@ -696,8 +696,8 @@ public final class Stereocenters {
         visit[container.indexOf(atom)] = true;
         for (IBond bond : container.getConnectedBondsList(atom)) {
             IAtom nbr = bond.getOther(atom);
-                if (!visit[container.indexOf(nbr)])
-                    visitPart(visit, nbr);
+            if (!visit[container.indexOf(nbr)])
+                visitPart(visit, nbr);
         }
     }
 
