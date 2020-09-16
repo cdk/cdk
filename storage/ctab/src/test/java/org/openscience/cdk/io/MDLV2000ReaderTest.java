@@ -1877,4 +1877,13 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
         assertThat(sw.toString(), containsString("M  SAL   1  2   2   3"));
     }
+
+    @Test
+    public void checkFuseBondWithFewerBondsThanAtoms() throws IOException, CDKException {
+        try (InputStream in = getClass().getResourceAsStream("potentialLateFuse.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(in)) {
+            IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            assertThat(mol.getAtomCount(), is(108));
+        }
+    }
 }
