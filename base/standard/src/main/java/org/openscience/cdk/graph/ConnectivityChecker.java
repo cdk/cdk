@@ -19,9 +19,9 @@
  */
 package org.openscience.cdk.graph;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -32,6 +32,8 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
 /**
@@ -93,7 +95,10 @@ public class ConnectivityChecker {
                 maxComponentIndex = component;
 
         IAtomContainer[] containers = new IAtomContainer[maxComponentIndex + 1];
-        Map<IAtom, IAtomContainer> componentsMap = new HashMap<IAtom, IAtomContainer>(2 * container.getAtomCount());
+        Map<IAtom, IAtomContainer> componentsMap = new HashMap<>(2 * container.getAtomCount());
+        Map<IAtom, IAtom> componentAtomMap = new HashMap<>(2 * container.getAtomCount());
+        Map<IBond, IBond> componentBondMap = new HashMap<>(2 * container.getBondCount());
+
 
         for (int i = 1; i < containers.length; i++)
             containers[i] = container.getBuilder().newInstance(IAtomContainer.class);
@@ -101,15 +106,22 @@ public class ConnectivityChecker {
         IAtomContainerSet containerSet = container.getBuilder().newInstance(IAtomContainerSet.class);
 
         for (int i = 0; i < container.getAtomCount(); i++) {
-            componentsMap.put(container.getAtom(i), containers[components[i]]);
-            containers[components[i]].addAtom(container.getAtom(i));
+            IAtom origAtom = container.getAtom(i);
+            IAtomContainer newContainer = containers[components[i]];
+            componentsMap.put(origAtom, newContainer);
+            newContainer.addAtom(origAtom);
+            //the atom should always be added so this should be safe
+            componentAtomMap.put(origAtom, newContainer.getAtom(newContainer.getAtomCount()-1));
         }
 
         for (IBond bond : container.bonds()) {
             IAtomContainer begComp = componentsMap.get(bond.getBegin());
             IAtomContainer endComp = componentsMap.get(bond.getEnd());
-            if (begComp == endComp)
+            if (begComp == endComp) {
                 begComp.addBond(bond);
+                //bond should always be added so this should be safe
+                componentBondMap.put(bond, begComp.getBond(begComp.getBondCount()-1));
+            }
         }
 
         for (ISingleElectron electron : container.singleElectrons())
@@ -130,10 +142,85 @@ public class ConnectivityChecker {
                 throw new IllegalStateException("New stereo element not using an atom/bond for focus?");
             }
         }
+        //add SGroups
+        List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
 
+        if(sgroups !=null){
+            Map<Sgroup, Sgroup> old2NewSgroupMap = new HashMap<>();
+            List<Sgroup>[] newSgroups = new List[containers.length];
+            for(Sgroup sgroup : sgroups){
+                Iterator<IAtom> iter =sgroup.getAtoms().iterator();
+                if(!iter.hasNext()){
+                   continue;
+                }
+                int componentIndex = getComponentIndexFor(components, containers,iter.next());
+                boolean allMatch=componentIndex>=0;
+                while(allMatch && iter.hasNext()){
+                    //if component index for some atoms
+                    //don't match then the sgroup is split across components
+                    //so ignore it for now?
+                    allMatch = (componentIndex == getComponentIndexFor(components,containers, iter.next()));
+                }
+                if(allMatch && componentIndex >=0){
+                    Sgroup cpy = new Sgroup();
+                    List<Sgroup> newComponentSgroups = newSgroups[componentIndex];
+                    if(newComponentSgroups ==null){
+                        newComponentSgroups = newSgroups[componentIndex] = new ArrayList<>();
+                    }
+                    newComponentSgroups.add(cpy);
+                    old2NewSgroupMap.put(sgroup, cpy);
+                    for (IAtom atom : sgroup.getAtoms()) {
+                       cpy.addAtom(componentAtomMap.get(atom));
+
+                    }
+                    for (IBond bond : sgroup.getBonds()) {
+                        IBond newBond = componentBondMap.get(bond);
+                        if(newBond!=null) {
+                            cpy.addBond(newBond);
+                        }
+                    }
+
+                    for (SgroupKey key : sgroup.getAttributeKeys())
+                        cpy.putValue(key, sgroup.getValue(key));
+
+                }
+            }
+            //finally update parents
+            for(Sgroup sgroup : sgroups){
+                Sgroup newSgroup = old2NewSgroupMap.get(sgroup);
+                if(newSgroup !=null){
+                    for (Sgroup parent : sgroup.getParents()){
+                        Sgroup newParent = old2NewSgroupMap.get(parent);
+                        if(newParent !=null){
+                            newSgroup.addParent(newParent);
+                        }
+                    }
+                }
+            }
+            for(int i=1; i< containers.length; i++){
+                List<Sgroup> sg = newSgroups[i];
+                if(sg !=null){
+                    containers[i].setProperty(CDKConstants.CTAB_SGROUPS, sg);
+                }
+            }
+        }
         for (int i = 1; i < containers.length; i++)
             containerSet.addAtomContainer(containers[i]);
 
         return containerSet;
+    }
+
+    private static int getComponentIndexFor(int[] components, IAtomContainer[] containers, IAtom atom) {
+        int aIndex = atom.getIndex();
+        if(aIndex >= 0) {
+            return components[aIndex];
+        }
+        //if index isn't known check each container
+        for (int i = 1; i < containers.length; i++){
+            if(containers[i].contains(atom)){
+                return i;
+            }
+        }
+        return -1;
     }
 }
