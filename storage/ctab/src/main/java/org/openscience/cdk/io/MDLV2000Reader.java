@@ -979,7 +979,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                             QueryAtom ref = (QueryAtom)AtomRef.deref(atom);
                             ref.setExpression(expr);
                         } else {
-                            container.setAtom(index, new QueryAtom(expr));
+                            QueryAtom queryAtom = new QueryAtom(expr);
+                            //keep coordinates from old atom
+                            queryAtom.setPoint2d(atom.getPoint2d());
+                            queryAtom.setPoint3d(atom.getPoint3d());
+                            container.setAtom(index, queryAtom);
                         }
                     }
                     break;
