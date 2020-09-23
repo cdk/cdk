@@ -487,4 +487,11 @@ public class SmartsExprWriteTest {
         Smarts.parse(mol, "O1.[S@]=1(C)CC");
         assertThat(Smarts.generate(mol), is("O=[S@@](C)CC"));
     }
+
+    @Test public void ringClosures() {
+        String sma = "C12=C3C4=C5C1=C1C6=C7C2=C2C8=C3C3=C9C4=C4C%10=C5C5=C1C1=C6C6=C%11C7=C2C2=C7C8=C3C3=C8C9=C4C4=C9C%10=C5C5=C1C1=C6C6=C%11C2=C2C7=C3C3=C8C4=C4C9=C5C1=C1C6=C2C3=C41";
+        QueryAtomContainer mol = new QueryAtomContainer(null);
+        Smarts.parse(mol, sma);
+        assertThat(Smarts.generate(mol), is("C12C3C4=C5C=2C2=C6C7=C1C1=C8C=3C3=C9C4=C4C%10=C5C5=C2C2=C6C6=C%11C7=C1C1=C7C8=C3C3=C8C9=C4C4=C9C%10=C5C5=C2C2=C6C6=C%11C1=C1C7=C3C3C8=C4C4=C9C5=C2C2C6=C1C=3C4=2"));
+    }
 }
