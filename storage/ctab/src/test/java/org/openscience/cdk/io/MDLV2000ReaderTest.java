@@ -1886,4 +1886,14 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             assertThat(mol.getAtomCount(), is(108));
         }
     }
+    @Test
+    public void atomlistWithAtomContainer() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_notatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
+            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+        }
+    }
 }
