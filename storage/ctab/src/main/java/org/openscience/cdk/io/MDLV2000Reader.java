@@ -520,17 +520,26 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
             }
 
-            // sanity check that we have a decent molecule, query bonds mean we
+            // sanity check that we have a decent molecule, query bonds or query atoms mean we
             // don't have a hydrogen count for atoms and stereo perception isn't
             // currently possible
             if (!(outputContainer instanceof IQueryAtomContainer) && !isQuery &&
                 addStereoElements.isSet() && hasX && hasY) {
-                if (hasZ) { // has 3D coordinates
-                    outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
-                            .createAll());
-                } else if (!forceReadAs3DCoords.isSet()) { // has 2D coordinates (set as 2D coordinates)
-                    outputContainer.setStereoElements(StereoElementFactory.using2DCoordinates(outputContainer)
-                            .createAll());
+                //ALS property could have changed an atom into a QueryAtom
+                for(IAtom atom : outputContainer.atoms()){
+                    if (AtomRef.deref(atom) instanceof QueryAtom) {
+                        isQuery=true;
+                        break;
+                    }
+                }
+                if(!isQuery) {
+                    if (hasZ) { // has 3D coordinates
+                        outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
+                                .createAll());
+                    } else if (!forceReadAs3DCoords.isSet()) { // has 2D coordinates (set as 2D coordinates)
+                        outputContainer.setStereoElements(StereoElementFactory.using2DCoordinates(outputContainer)
+                                .createAll());
+                    }
                 }
             }
 
@@ -970,7 +979,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                             QueryAtom ref = (QueryAtom)AtomRef.deref(atom);
                             ref.setExpression(expr);
                         } else {
-                            container.setAtom(index, new QueryAtom(expr));
+                            QueryAtom queryAtom = new QueryAtom(expr);
+                            //keep coordinates from old atom
+                            queryAtom.setPoint2d(atom.getPoint2d());
+                            queryAtom.setPoint3d(atom.getPoint3d());
+                            container.setAtom(index, queryAtom);
                         }
                     }
                     break;

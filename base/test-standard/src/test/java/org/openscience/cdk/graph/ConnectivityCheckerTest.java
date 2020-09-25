@@ -21,23 +21,20 @@ package org.openscience.cdk.graph;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.LonePair;
-import org.openscience.cdk.SingleElectron;
+import org.openscience.cdk.*;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -227,6 +224,32 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     public void testNoAtomsIsConnected() {
         IAtomContainer container = new AtomContainer();
         Assert.assertTrue("Molecule appears not to be connected", ConnectivityChecker.isConnected(container));
+    }
+
+    @Test
+    public void copySgroups() throws Exception {
+        String filename = "data/mdl/sgroup-split.mol";
+        try(InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+        ){
+            ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
+            List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+            IAtomContainer ac = cList.get(0);
+            IAtomContainerSet containerSet = ConnectivityChecker.partitionIntoMolecules(ac);
+            Assert.assertEquals(2, containerSet.getAtomContainerCount());
+            IAtomContainer container1 = containerSet.getAtomContainer(0);
+            IAtomContainer container2 = containerSet.getAtomContainer(1);
+            IAtomContainer h2o = container1.getAtomCount()<=3? container1 : container2;
+            Assert.assertNull( h2o.getProperty(CDKConstants.CTAB_SGROUPS));
+            IAtomContainer otherContainer = h2o == container1? container2: container1;
+            List<Sgroup> sgroups = otherContainer.getProperty(CDKConstants.CTAB_SGROUPS);
+            Assert.assertEquals(1, sgroups.size());
+            Sgroup sgroup = sgroups.get(0);
+            Assert.assertEquals(SgroupType.CtabStructureRepeatUnit, sgroup.getType());
+            Set<IAtom> atoms = sgroup.getAtoms();
+            Assert.assertEquals(2, atoms.size());
+
+        }
     }
 
 }
