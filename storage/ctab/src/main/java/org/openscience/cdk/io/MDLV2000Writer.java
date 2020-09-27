@@ -52,7 +52,6 @@ import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
-import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -486,15 +485,17 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     }
                 }
 
-            }else if(container.getAtom(f) instanceof IQueryAtom){
+            } else if(container.getAtom(f) instanceof IQueryAtom) {
                 QueryAtom queryAtom = (QueryAtom) AtomRef.deref(container.getAtom(f));
                 Expr expr = queryAtom.getExpression();
-                String symbol = getSymbolForAtomExpression(expr);
-                line.append(formatMDLString(symbol, 3));
-                if("L".equals(symbol)){
+                if(isValidAtomListExpression(expr)){
+                    line.append(formatMDLString("L", 3));
                     atomLists.add(container.getAtom(f));
+                }else{
+                    line.append(formatMDLString(container.getAtom(f).getSymbol(), 3));
                 }
             } else {
+
                 line.append(formatMDLString(container.getAtom(f).getSymbol(), 3));
             }
 
@@ -795,16 +796,28 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write('\n');
         writer.flush();
     }
-    private static String getSymbolForAtomExpression(Expr exp){
-        List<Expr> elist = new ArrayList<>();
-        getLeafNodes(exp, elist);
-        if(!elist.isEmpty() && elist.stream()
-                .allMatch(ex->ex.type().equals(Expr.Type.ELEMENT))){
-            return "L";
+    private static boolean isValidAtomListExpression(Expr exp){
+
+        Expr rootToCheck;
+        if(Expr.Type.NOT==exp.type()){
+            rootToCheck = exp.left();
+        }else if(Expr.Type.OR==exp.type()){
+            rootToCheck = exp;
         }else{
-            return "A";
+            //not a list
+            return false;
         }
+        Set<Expr.Type> allowedTypes = EnumSet.of(Expr.Type.ELEMENT, Expr.Type.ALIPHATIC_ELEMENT, Expr.Type.AROMATIC_ELEMENT);
+
+        return allOrsOfAllowedTypes(rootToCheck, allowedTypes);
     }
+    private static boolean allOrsOfAllowedTypes(Expr expr, Set<Expr.Type> allowedTypes){
+        if(expr.type() == Expr.Type.OR){
+            return allOrsOfAllowedTypes(expr.left(), allowedTypes) && allOrsOfAllowedTypes(expr.right(), allowedTypes);
+        }
+        return allowedTypes.contains(expr.type());
+    }
+
     private static List<String> getAtomList(Expr exp){
         List<Expr> elist = new ArrayList<>();
         getLeafNodes(exp, elist);
