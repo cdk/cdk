@@ -408,7 +408,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write(line.toString());
         writer.write('\n');
 
-        Set<IAtom> atomLists = new LinkedHashSet<>();
+        //map of ALS atoms to write and their indexes  since some atom getIndex() can return -1
+        Map<IAtom, Integer> atomLists = new LinkedHashMap<>();
         // write Atom block
         for (int f = 0; f < container.getAtomCount(); f++) {
             IAtom atom = container.getAtom(f);
@@ -490,7 +491,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 Expr expr = queryAtom.getExpression();
                 if(isValidAtomListExpression(expr)){
                     line.append(formatMDLString("L", 3));
-                    atomLists.add(container.getAtom(f));
+                    atomLists.put(container.getAtom(f), f);
                 }else{
                     line.append(formatMDLString(container.getAtom(f).getSymbol(), 3));
                 }
@@ -767,15 +768,15 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             }
         }
         //write atom lists
-        for(IAtom a : atomLists){
-            QueryAtom qa = (QueryAtom) AtomRef.deref(a);
+        for(Map.Entry<IAtom, Integer> entry : atomLists.entrySet()){
+            QueryAtom qa = (QueryAtom) AtomRef.deref(entry.getKey());
             //atom lists are limited to just a list of ELEMENTS OR'ed together
             //with the whole expression possibly negated
 
             Expr expression = qa.getExpression();
             List<String> elements=getAtomList(expression);
             writer.write("M  ALS ");
-            writer.write(formatMDLInt(a.getIndex()+1, 3));
+            writer.write(formatMDLInt(entry.getValue()+1, 3));
             writer.write(formatMDLInt(elements.size(), 3));
             //root expression type is either OR or NOT
             if(expression.type() == Expr.Type.NOT){
