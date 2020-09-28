@@ -26,14 +26,7 @@ package org.openscience.cdk.io;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -1000,5 +993,37 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         }
         assertThat(sw.toString(), containsString("SPA   1  1"));
 
+    }
+
+    @Test
+    public void roundTripWithNotAtomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_notatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            StringWriter sw = new StringWriter();
+            try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+                mdlw.write(mol);
+            }
+            String writtenMol = sw.toString();
+            //                                              M  ALS   1  3 F F  N  O
+            assertThat(writtenMol, containsString("M  ALS   1  3 T F   N   O"));
+        }
+    }
+    @Test
+    public void roundTripWithAtomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_atomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            StringWriter sw = new StringWriter();
+            try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+                mdlw.write(mol);
+            }
+            String writtenMol = sw.toString();
+            assertThat(writtenMol, containsString("M  ALS   1  3 F F   N   O"));
+        }
     }
 }

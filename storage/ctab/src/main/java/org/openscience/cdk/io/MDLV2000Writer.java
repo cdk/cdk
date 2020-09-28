@@ -24,7 +24,9 @@
  */
 package org.openscience.cdk.io;
 
+import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,11 +46,12 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.isomorphism.matchers.Expr;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupBracket;
 import org.openscience.cdk.sgroup.SgroupKey;
-import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -63,19 +66,10 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Writes MDL molfiles, which contains a single molecule (see {@cdk.cite DAL92}).
@@ -414,6 +408,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write(line.toString());
         writer.write('\n');
 
+        Set<IAtom> atomLists = new LinkedHashSet<>();
         // write Atom block
         for (int f = 0; f < container.getAtomCount(); f++) {
             IAtom atom = container.getAtom(f);
@@ -490,7 +485,17 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     }
                 }
 
+            } else if(container.getAtom(f) instanceof IQueryAtom) {
+                QueryAtom queryAtom = (QueryAtom) AtomRef.deref(container.getAtom(f));
+                Expr expr = queryAtom.getExpression();
+                if(isValidAtomListExpression(expr)){
+                    line.append(formatMDLString("L", 3));
+                    atomLists.add(container.getAtom(f));
+                }else{
+                    line.append(formatMDLString(container.getAtom(f).getSymbol(), 3));
+                }
             } else {
+
                 line.append(formatMDLString(container.getAtom(f).getSymbol(), 3));
             }
 
@@ -761,6 +766,28 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
             }
         }
+        //write atom lists
+        for(IAtom a : atomLists){
+            QueryAtom qa = (QueryAtom) AtomRef.deref(a);
+            //atom lists are limited to just a list of ELEMENTS OR'ed together
+            //with the whole expression possibly negated
+
+            Expr expression = qa.getExpression();
+            List<String> elements=getAtomList(expression);
+            writer.write("M  ALS ");
+            writer.write(formatMDLInt(a.getIndex()+1, 3));
+            writer.write(formatMDLInt(elements.size(), 3));
+            //root expression type is either OR or NOT
+            if(expression.type() == Expr.Type.NOT){
+                writer.write(" T ");
+            }else {
+                writer.write(" F ");
+            }
+            for(String symbol : elements){
+                writer.write(formatMDLString(symbol, 4));
+            }
+            writer.write('\n');
+        }
 
         writeSgroups(container, writer, atomindex);
 
@@ -769,7 +796,46 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write('\n');
         writer.flush();
     }
+    private static boolean isValidAtomListExpression(Expr exp){
 
+        Expr rootToCheck;
+        if(Expr.Type.NOT==exp.type()){
+            rootToCheck = exp.left();
+        }else if(Expr.Type.OR==exp.type()){
+            rootToCheck = exp;
+        }else{
+            //not a list
+            return false;
+        }
+        Set<Expr.Type> allowedTypes = EnumSet.of(Expr.Type.ELEMENT, Expr.Type.ALIPHATIC_ELEMENT, Expr.Type.AROMATIC_ELEMENT);
+
+        return allOrsOfAllowedTypes(rootToCheck, allowedTypes);
+    }
+    private static boolean allOrsOfAllowedTypes(Expr expr, Set<Expr.Type> allowedTypes){
+        if(expr.type() == Expr.Type.OR){
+            return allOrsOfAllowedTypes(expr.left(), allowedTypes) && allOrsOfAllowedTypes(expr.right(), allowedTypes);
+        }
+        return allowedTypes.contains(expr.type());
+    }
+
+    private static List<String> getAtomList(Expr exp){
+        List<Expr> elist = new ArrayList<>();
+        getLeafNodes(exp, elist);
+        return elist.stream().map(expr->Elements.ofNumber(expr.value()).symbol())
+                    .collect(Collectors.toList());
+
+    }
+
+    private static void getLeafNodes(Expr exr, List<Expr> elist){
+        if(exr.type().equals(Expr.Type.OR) || exr.type().equals(Expr.Type.AND)){
+            getLeafNodes(exr.left(), elist);
+            getLeafNodes(exr.right(), elist);
+        }else if(exr.type().equals(Expr.Type.NOT)){
+            getLeafNodes(exr.left(), elist);
+        }else{
+            elist.add(exr);
+        }
+    }
     // 0 = uncharged or value other than these, 1 = +3, 2 = +2, 3 = +1,
     // 4 = doublet radical, 5 = -1, 6 = -2, 7 = -3
     private int determineCharge(IAtomContainer mol, IAtom atom) {
