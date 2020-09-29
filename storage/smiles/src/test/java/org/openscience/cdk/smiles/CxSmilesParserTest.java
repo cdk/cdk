@@ -189,15 +189,15 @@ public class CxSmilesParserTest {
     @Test public void multiAtomSRU() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|Sg:n:1,2,3:m:ht|", state), is(not(-1)));
-        assertThat(state.sgroups,
-                   hasItem(new CxSmilesState.PolymerSgroup("n", Arrays.asList(1, 2, 3), "m", "ht")));
+        assertThat(state.mysgroups,
+                   hasItem(new CxSmilesState.CxPolymerSgroup("n", Arrays.asList(1, 2, 3), "m", "ht")));
     }
 
     @Test public void dataSgroups() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|SgD::cdk&#58;ReactionConditions:Heat&#10;Hv|", state), is(not(-1)));
-        assertThat(state.dataSgroups,
-                   hasItem(new CxSmilesState.DataSgroup(new ArrayList<Integer>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
+        assertThat(state.mysgroups,
+                   hasItem(new CxSmilesState.CxDataSgroup(new ArrayList<Integer>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
     }
 
     @Test public void unescape() {
@@ -217,6 +217,24 @@ public class CxSmilesParserTest {
     @Test public void relativeStereoReaction() {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|r:2,4,5|", state), is(not(-1)));
+    }
+
+    @Test public void sgroupHierarchy() {
+        String cxsmilayers = "|Sg:c:0,1,2,3,4,5,6::,Sg:c:7,8::,Sg:c:9::,Sg:mix:0,1,2,3,4,5,6,7,8,9::,Sg:mix:7,8,9::,SgH:3:4.0,4:2.1|";
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
+    }
+
+    @Test public void cxSmiLay() {
+        String cxsmilayers = "|Sg:c:0,1,2,3,4,5,6::,Sg:c:7,8::,Sg:c:9::,Sg:mix:0,1,2,3,4,5,6,7,8,9::,Sg:mix:7,8,9::,SgD::RATIO:1/3::,SgD::RATIO:2/3::,SgD::WEIGHT_PERCENT:15::%,SgH:3:4.0,0:7,4:2.1,1:5,2:6|";
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
+    }
+
+    @Test public void cxSmiLay2() {
+        String cxsmilayers = "|Sg:c:0,1,2::,Sg:c:3::,Sg:mix:0,1,2,3::,SgH:2:1.0|";
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
     }
 
     /**

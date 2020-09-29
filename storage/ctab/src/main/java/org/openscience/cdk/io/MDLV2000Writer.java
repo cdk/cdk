@@ -66,7 +66,19 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -978,8 +990,17 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // going to modify
         sgroups = new ArrayList<>(sgroups);
 
+
         // remove non-ctab Sgroups
         sgroups.removeIf(sgroup -> !sgroup.getType().isCtabStandard());
+
+        List<Map.Entry<Sgroup,Sgroup>> parentList = new ArrayList<>();
+
+        // collect parents
+        for (Sgroup sgroup : sgroups) {
+            for (Sgroup parent : sgroup.getParents())
+                parentList.add(new AbstractMap.SimpleEntry<>(sgroup, parent));
+        }
 
         for (List<Sgroup> wrapSgroups : wrap(sgroups, 8)) {
             // Declare the SGroup type
@@ -990,6 +1011,19 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 writer.write(formatMDLInt(1 + sgroups.indexOf(sgroup), 3));
                 writer.write(' ');
                 writer.write(sgroup.getType().getKey());
+            }
+            writer.write('\n');
+        }
+
+        // Sgroup Parent List
+        for (List<Map.Entry<Sgroup,Sgroup>> parents : wrap(parentList, 8)) {
+            writer.write("M  SPL");
+            writer.write(formatMDLInt(parents.size(), 3));
+            for (Map.Entry<Sgroup,Sgroup> e : parents) {
+                writer.write(' ');
+                writer.write(formatMDLInt(1+sgroups.indexOf(e.getKey()), 3));
+                writer.write(' ');
+                writer.write(formatMDLInt(1+sgroups.indexOf(e.getValue()), 3));
             }
             writer.write('\n');
         }
@@ -1018,19 +1052,6 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 for (IBond bond : bonds) {
                     writer.write(' ');
                     writer.write(formatMDLInt(1+container.indexOf(bond), 3));
-                }
-                writer.write('\n');
-            }
-
-            // Sgroup Parent List
-            for (List<Sgroup> parents : wrap(sgroup.getParents(), 8)) {
-                writer.write("M  SPL");
-                writer.write(formatMDLInt(parents.size(), 3));
-                for (Sgroup parent : parents) {
-                    writer.write(' ');
-                    writer.write(formatMDLInt(id, 3));
-                    writer.write(' ');
-                    writer.write(formatMDLInt(1 + sgroups.indexOf(parent), 3));
                 }
                 writer.write('\n');
             }
@@ -1118,6 +1139,60 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(' ');
                         writer.write(formatMDLInt(compNumber, 3));
                         writer.write('\n');
+                        break;
+                    case Data:
+                        String data = sgroup.getValue(SgroupKey.Data);
+                        if (data == null)
+                            break;
+                        // replace CR/LF with space
+                        data = data.replaceAll("[\r\n]", " ");
+                        while (data.length() > 69) {
+                            writer.write("M  SCD ");
+                            writer.write(formatMDLInt(id, 3));
+                            writer.write(' ');
+                            writer.write(data.substring(0, 69));
+                            writer.write('\n');
+                            data = data.substring(69);
+                        }
+                        writer.write("M  SED ");
+                        writer.write(formatMDLInt(id, 3));
+                        writer.write(' ');
+                        writer.write(data);
+                        writer.write('\n');
+                        break;
+                    case DataFieldName:
+                        char[] pad = new char[30];
+                        Arrays.fill(pad, ' ');
+                        String name = sgroup.getValue(SgroupKey.DataFieldName);
+                        String fmt = sgroup.getValue(SgroupKey.DataFieldFormat);
+                        String units = sgroup.getValue(SgroupKey.DataFieldUnits);
+                        if (name == null)
+                            break;
+                        if (name.length() > 30)
+                            name = name.substring(0, 30);
+                        writer.write("M  SDT ");
+                        writer.write(formatMDLInt(id, 3));
+                        writer.write(' ');
+                        writer.write(name);
+                        writer.write(pad, 0, 30-name.length());
+                        if (fmt != null && fmt.length()>0 &&
+                            (fmt.charAt(0) == 'N' ||
+                             fmt.charAt(0) == 'F' ||
+                             fmt.charAt(0) == 'T')) {
+                            writer.write(fmt.charAt(0) + " ");
+                        } else {
+                            writer.write("  ");
+                        }
+                        if (units != null) {
+                            if (units.length() > 20)
+                                units = units.substring(0, 20);
+                            writer.write(units);
+                        }
+                        writer.write('\n');
+                        break;
+                    case DataFieldFormat:
+                    case DataFieldUnits:
+                        // written as part of the field name
                         break;
                 }
             }
