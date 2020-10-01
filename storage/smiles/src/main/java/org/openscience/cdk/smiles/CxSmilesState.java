@@ -24,8 +24,11 @@
 package org.openscience.cdk.smiles;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Light-weight intermediate data-structure for transferring information CDK to/from
@@ -40,8 +43,7 @@ final class CxSmilesState {
     Map<Integer, Radical>       atomRads    = null;
     Map<Integer, List<Integer>> ligandOrdering = null;
     Map<Integer, List<Integer>> positionVar = null;
-    List<PolymerSgroup>         sgroups     = null;
-    List<DataSgroup>            dataSgroups = null;
+    List<CxSgroup>              mysgroups   = null;
     boolean                     coordFlag   = false;
 
     enum Radical {
@@ -54,15 +56,20 @@ final class CxSmilesState {
         TrivalentQuartet
     }
 
-    static final class DataSgroup {
-        final List<Integer> atoms;
+    static class CxSgroup {
+        Set<CxSgroup> children = new HashSet<>();
+        List<Integer> atoms = new ArrayList<>();
+        int id = -1;
+    }
+
+    static final class CxDataSgroup extends CxSgroup {
         final String       field;
         final String       value;
         final String       operator;
         final String       unit;
         final String       tag;
 
-        public DataSgroup(List<Integer> atoms, String field, String value, String operator, String unit, String tag) {
+        public CxDataSgroup(List<Integer> atoms, String field, String value, String operator, String unit, String tag) {
             this.atoms = atoms;
             this.field = field;
             this.value = value;
@@ -76,7 +83,7 @@ final class CxSmilesState {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            DataSgroup that = (DataSgroup) o;
+            CxDataSgroup that = (CxDataSgroup) o;
 
             if (atoms != null ? !atoms.equals(that.atoms) : that.atoms != null) return false;
             if (field != null ? !field.equals(that.field) : that.field != null) return false;
@@ -111,16 +118,15 @@ final class CxSmilesState {
         }
     }
 
-    static final class PolymerSgroup {
+    static final class CxPolymerSgroup extends CxSgroup {
         final String        type;
-        final List<Integer> atomset;
         final String        subscript;
         final String        supscript;
 
-        PolymerSgroup(String type, List<Integer> atomset, String subscript, String supscript) {
+        CxPolymerSgroup(String type, List<Integer> atomset, String subscript, String supscript) {
             assert type != null && atomset != null;
             this.type = type;
-            this.atomset = new ArrayList<>(atomset);
+            this.atoms = new ArrayList<>(atomset);
             this.subscript = subscript;
             this.supscript = supscript;
         }
@@ -130,28 +136,24 @@ final class CxSmilesState {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            PolymerSgroup that = (PolymerSgroup) o;
+            CxPolymerSgroup that = (CxPolymerSgroup) o;
 
             return type.equals(that.type) &&
-                   atomset.equals(that.atomset) &&
+                   atoms.equals(that.atoms) &&
                    subscript.equals(that.subscript) &&
                    supscript.equals(that.supscript);
         }
 
         @Override
         public int hashCode() {
-            int result = type.hashCode();
-            result = 31 * result + atomset.hashCode();
-            result = 31 * result + subscript.hashCode();
-            result = 31 * result + supscript.hashCode();
-            return result;
+            return Objects.hash(type, atoms, subscript, supscript, children);
         }
 
         @Override
         public String toString() {
             return "PolymerSgroup{" +
                    "type='" + type + '\'' +
-                   ", atomset=" + atomset +
+                   ", atomset=" + atoms +
                    ", subscript='" + subscript + '\'' +
                    ", supscript='" + supscript + '\'' +
                    '}';

@@ -458,7 +458,8 @@ public class AtomPlacer {
         final Point2d a = previousAtom.getPoint2d();
         final Point2d b = atom.getPoint2d();
 
-        if (isColinear(atom, molecule.getConnectedBondsList(atom))) {
+        List<IBond> bonds = molecule.getConnectedBondsList(atom);
+        if (isColinear(atom, bonds)) {
             return new Vector2d(b.x-a.x, b.y-a.y);
         }
 
@@ -468,11 +469,15 @@ public class AtomPlacer {
 
         if (isTerminalD4(atom))
             addAngle = Math.toRadians(45);
-        else
+        else if (isColinear(atom, bonds))
+            addAngle = Math.toRadians(180);
+        else if (Elements.isMetal(atom))
+            addAngle = (2 * Math.PI) / bonds.size();
+        else {
             addAngle = Math.toRadians(120);
-
-        if (!trans) addAngle = Math.toRadians(60);
-        if (isColinear(atom, molecule.getConnectedBondsList(atom))) addAngle = Math.toRadians(180);
+            if (!trans)
+                addAngle = Math.toRadians(60);
+        }
 
         angle += addAngle;
         Vector2d vec1 = new Vector2d(Math.cos(angle), Math.sin(angle));

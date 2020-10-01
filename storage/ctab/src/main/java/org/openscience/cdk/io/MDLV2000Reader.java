@@ -1294,6 +1294,70 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                     break;
 
+                // Data Sgroup Field Description
+                // M  SDT sss ffffffffffffffffffffffffffffffgghhhhhhhhhhhhhhhhhhhhiijjj...
+                // 0123456789012345678901234567890123456789012345678901234567890123456789
+                //           1         2         3         4         5         6
+                // 7  sss:       Index of data Sgroup
+                // 11 fff...fff: 30 character field name - no blanks, commas, or hyphens for MACCS-II
+                // 41 gg:        Field type - F=formatted, N=numberic, T=text (ignored)
+                // 43 hhh...hhh: 20-character field units or format
+                // 63 ii:        Nonblank if data line is a query rather than Sgroup data, MQ= MACCS-II query,
+                //               IQ= ISIS query, PQ = program name code query
+                // 65 jjj...:    Data query operator
+                case M_SDT:
+                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
+                    if (length < 11)
+                        break;
+                    String name = line.substring(11, Math.min(41, length))
+                                      .trim();
+                    sgroup.putValue(SgroupKey.DataFieldName, name);
+                    if (length < 41)
+                        break;
+                    String fmt = line.substring(41, Math.min(43, length))
+                                     .trim();
+                    if (fmt.length() == 1 &&
+                        fmt.charAt(0) != 'F' && fmt.charAt(0) != 'N' &&
+                        fmt.charAt(0) != 'T')
+                        handleError("Invalid Data Sgroup field format: " + fmt);
+                    if (!fmt.isEmpty())
+                        sgroup.putValue(SgroupKey.DataFieldFormat, fmt);
+                    if (length < 43)
+                        break;
+                    String units = line.substring(43, Math.min(63, length))
+                                       .trim();
+                    if (!units.isEmpty())
+                        sgroup.putValue(SgroupKey.DataFieldUnits, units);
+                    // We don't handle data group queries
+                    break;
+
+                // Data Sgroup Display Info
+                case M_SDD:
+                    // TODO
+                    break;
+
+                // Data Sgroup Data
+                // M  SCD sss d...
+                // M  SED sss d...
+                // 0123456789012345...
+                //           1
+                //
+                // d...: Line of data for data Sgroup sss (69 chars per line, columns 12-80)
+                //
+                // SCD where C = Continue, SED where E = End
+                // Formally multi-line data should have one or more SCD's and
+                // end with an SED. Single line data just has a single SED
+                case M_SCD:
+                case M_SED:
+                    // we could be more strict and raise an error if we see an
+                    // SCD after SED...
+                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
+                    String data = line.substring(11, Math.min(79,length));
+                    String curr = sgroup.getValue(SgroupKey.Data);
+                    if (curr != null) data = curr + data;
+                    sgroup.putValue(SgroupKey.Data, data);
+                    break;
+
                 // M  END
                 //
                 // This entry goes at the end of the properties block and is required for molfiles which contain a
@@ -2305,10 +2369,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         /** Data Sgroup Display Information [Sgroup]. */
         M_SDD,
 
-        /** Data Sgroup Data. */
+        /** Data Sgroup Data Continue. */
         M_SCD,
 
-        /** Data Sgroup Data. */
+        /** Data Sgroup Data End. */
         M_SED,
 
         /** Sgroup Hierarchy Information. */

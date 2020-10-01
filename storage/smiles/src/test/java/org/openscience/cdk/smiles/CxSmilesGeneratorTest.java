@@ -73,9 +73,9 @@ public class CxSmilesGeneratorTest {
     @Test
     public void sgroups() {
         CxSmilesState state = new CxSmilesState();
-        state.sgroups = new ArrayList<>(1);
-        state.sgroups.add(new CxSmilesState.PolymerSgroup("n", Arrays.asList(2,3), "n", "ht"));
-        state.sgroups.add(new CxSmilesState.PolymerSgroup("n", Arrays.asList(5), "m", "ht"));
+        state.mysgroups = new ArrayList<>(1);
+        state.mysgroups.add(new CxSmilesState.CxPolymerSgroup("n", Arrays.asList(2,3), "n", "ht"));
+        state.mysgroups.add(new CxSmilesState.CxPolymerSgroup("n", Arrays.asList(5), "m", "ht"));
         assertThat(CxSmilesGenerator.generate(state, SmiFlavor.CxPolymer, new int[0], new int[]{7, 6, 5, 4, 3, 2, 1, 0}),
                    is(" |Sg:n:2:m:ht,Sg:n:4,5:n:ht|"));
     }

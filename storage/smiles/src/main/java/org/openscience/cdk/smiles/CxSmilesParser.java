@@ -215,8 +215,8 @@ final class CxSmilesParser {
 
     private static boolean processDataSgroups(CharIter iter, CxSmilesState state) {
 
-        if (state.dataSgroups == null)
-            state.dataSgroups = new ArrayList<>(4);
+        if (state.mysgroups == null)
+            state.mysgroups = new ArrayList<>(4);
 
         final List<Integer> atomset = new ArrayList<>();
         if (!processIntList(iter, COMMA_SEPARATOR, atomset))
@@ -237,7 +237,7 @@ final class CxSmilesParser {
         final String value = unescape(iter.substr(beg, iter.pos));
 
         if (!iter.nextIf(':')) {
-            state.dataSgroups.add(new CxSmilesState.DataSgroup(atomset, field, value, "", "", ""));
+            state.mysgroups.add(new CxSmilesState.CxDataSgroup(atomset, field, value, "", "", ""));
             return true;
         }
 
@@ -247,7 +247,7 @@ final class CxSmilesParser {
         final String operator = unescape(iter.substr(beg, iter.pos));
 
         if (!iter.nextIf(':')) {
-            state.dataSgroups.add(new CxSmilesState.DataSgroup(atomset, field, value, operator, "", ""));
+            state.mysgroups.add(new CxSmilesState.CxDataSgroup(atomset, field, value, operator, "", ""));
             return true;
         }
 
@@ -257,7 +257,7 @@ final class CxSmilesParser {
         final String unit = unescape(iter.substr(beg, iter.pos));
 
         if (!iter.nextIf(':')) {
-            state.dataSgroups.add(new CxSmilesState.DataSgroup(atomset, field, value, operator, unit, ""));
+            state.mysgroups.add(new CxSmilesState.CxDataSgroup(atomset, field, value, operator, unit, ""));
             return true;
         }
 
@@ -266,7 +266,7 @@ final class CxSmilesParser {
             iter.next();
         final String tag = unescape(iter.substr(beg, iter.pos));
 
-        state.dataSgroups.add(new CxSmilesState.DataSgroup(atomset, field, value, operator, unit, tag));
+        state.mysgroups.add(new CxSmilesState.CxDataSgroup(atomset, field, value, operator, unit, tag));
 
         return true;
     }
@@ -279,8 +279,8 @@ final class CxSmilesParser {
      * @return parse was a success (or not)
      */
     private static boolean processPolymerSgroups(CharIter iter, CxSmilesState state) {
-        if (state.sgroups == null)
-            state.sgroups = new ArrayList<>();
+        if (state.mysgroups == null)
+            state.mysgroups = new ArrayList<>();
         int beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
@@ -308,18 +308,20 @@ final class CxSmilesParser {
             subscript = keyword;
 
         // "In the superscript only connectivity and flip information is allowed.", default
-        // appears to be "eu" either/unspecified
+        // appears to be "eu" either/unspecified for SRU
         if (!iter.nextIf(':'))
             return false;
         beg = iter.pos;
         while (iter.hasNext() && !isSgroupDelim(iter.curr()))
             iter.next();
         supscript = unescape(iter.substr(beg, iter.pos));
-        if (supscript.isEmpty())
+        if (supscript.isEmpty() &&
+            !keyword.equals("c")&&!keyword.equals("mix")&&
+            !keyword.equals("f")&&!keyword.equals("mod"))
             supscript = "eu";
 
         if (iter.nextIf(',') || iter.curr() == '|') {
-            state.sgroups.add(new CxSmilesState.PolymerSgroup(keyword, atomset, subscript, supscript));
+            state.mysgroups.add(new CxSmilesState.CxPolymerSgroup(keyword, atomset, subscript, supscript));
             return true;
         }
         // not supported: crossing bond info (difficult to work out from doc) and bracket orientation
@@ -493,6 +495,12 @@ final class CxSmilesParser {
                     else if (iter.nextIf("gD:")) {
                         if (!processDataSgroups(iter, state))
                             return -1;
+                        if (iter.nextIf(','))
+                            break;
+                    }
+                    else if (iter.nextIf("gH:")) {
+                        if (!processSgroupsHierarchy(iter, state))
+                            return -1;
                     }
                     else {
                         return -1;
@@ -542,6 +550,42 @@ final class CxSmilesParser {
 
         return -1;
     }
+
+
+    private static boolean processSgroupsHierarchy(CharIter iter, CxSmilesState state) {
+        int nsgroups = 0;
+        if (state.mysgroups != null)
+            nsgroups += state.mysgroups.size();
+        if (nsgroups == 0)
+            return false; // may not be written yet
+        for (;;) {
+            int parent = processUnsignedInt(iter);
+            if (parent < 0)
+                return false;
+            if (!iter.nextIf(':'))
+                return false;
+            List<Integer> children = new ArrayList<>();
+            processIntList(iter, '.', children);
+            if (parent < state.mysgroups.size()) {
+                for (Integer child : children) {
+                    if (child < nsgroups) {
+                        state.mysgroups.get(parent).children
+                            .add(state.mysgroups.get(child));
+                    } else
+                        return false; // missing Sgroup
+                }
+            } else {
+                return false; // missing Sgroup
+            }
+            if (iter.curr() == '|')
+                return true;
+            if (!iter.nextIf(','))
+                return false;
+            if (!isDigit(iter.curr()))
+                return true;
+        }
+    }
+
 
     private static boolean isDigit(char c) {
         return c >= '0' && c <= '9';
