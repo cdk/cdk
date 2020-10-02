@@ -413,15 +413,29 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // write Counts line
         line.append(formatMDLInt(container.getAtomCount(), 3));
         line.append(formatMDLInt(container.getBondCount(), 3));
-        line.append("  0  0");
+
+
+        //find all the atoms that should be atom lists
+        Map<Integer, IAtom> atomLists = new LinkedHashMap<>();
+
+        for (int f = 0; f < container.getAtomCount(); f++) {
+            if (container.getAtom(f) instanceof IQueryAtom) {
+                QueryAtom queryAtom = (QueryAtom) AtomRef.deref(container.getAtom(f));
+                Expr expr = queryAtom.getExpression();
+                if (isValidAtomListExpression(expr)) {
+                    atomLists.put(f, container.getAtom(f));
+                }
+            }
+        }
+        //write number of atom lists
+        line.append(formatMDLInt(atomLists.size(), 3));
+        line.append("  0");
         // we mark all stereochemistry to absolute for now
         line.append(atomstereo.isEmpty() ? "  0" : "  1");
         line.append("  0  0  0  0  0999 V2000");
         writer.write(line.toString());
         writer.write('\n');
 
-        //map of ALS atoms to write and their indexes  since some atom getIndex() can return -1
-        Map<IAtom, Integer> atomLists = new LinkedHashMap<>();
         // write Atom block
         for (int f = 0; f < container.getAtomCount(); f++) {
             IAtom atom = container.getAtom(f);
@@ -498,15 +512,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     }
                 }
 
-            } else if(container.getAtom(f) instanceof IQueryAtom) {
-                QueryAtom queryAtom = (QueryAtom) AtomRef.deref(container.getAtom(f));
-                Expr expr = queryAtom.getExpression();
-                if(isValidAtomListExpression(expr)){
-                    line.append(formatMDLString("L", 3));
-                    atomLists.put(container.getAtom(f), f);
-                }else{
-                    line.append(formatMDLString(container.getAtom(f).getSymbol(), 3));
-                }
+            } else if(atomLists.containsKey(f)) {
+                line.append(formatMDLString("L", 3));
             } else {
 
                 line.append(formatMDLString(container.getAtom(f).getSymbol(), 3));
@@ -780,27 +787,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             }
         }
         //write atom lists
-        for(Map.Entry<IAtom, Integer> entry : atomLists.entrySet()){
-            QueryAtom qa = (QueryAtom) AtomRef.deref(entry.getKey());
-            //atom lists are limited to just a list of ELEMENTS OR'ed together
-            //with the whole expression possibly negated
-
-            Expr expression = qa.getExpression();
-            List<String> elements=getAtomList(expression);
-            writer.write("M  ALS ");
-            writer.write(formatMDLInt(entry.getValue()+1, 3));
-            writer.write(formatMDLInt(elements.size(), 3));
-            //root expression type is either OR or NOT
-            if(expression.type() == Expr.Type.NOT){
-                writer.write(" T ");
-            }else {
-                writer.write(" F ");
-            }
-            for(String symbol : elements){
-                writer.write(formatMDLString(symbol, 4));
-            }
-            writer.write('\n');
-        }
+        writeAtomLists(atomLists, writer);
 
         writeSgroups(container, writer, atomindex);
 
@@ -809,6 +796,58 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write('\n');
         writer.flush();
     }
+
+    private static void writeAtomLists(Map<Integer, IAtom> atomLists, BufferedWriter writer) throws IOException {
+        //write out first as the legacy atom list way and then as the M  ALS way
+        //since there should only be a few lines to write each way
+        //it's easier to write them out in one pass through our Map
+        // and save the lines to write into temp Lists to write out at the end.
+        List<String> legacyLines = new ArrayList<>(atomLists.size());
+        List<String> alsLines = new ArrayList<>(atomLists.size());
+
+        for(Map.Entry<Integer, IAtom> entry : atomLists.entrySet()){
+            QueryAtom qa = (QueryAtom) AtomRef.deref(entry.getValue());
+            //atom lists are limited to just a list of ELEMENTS OR'ed together
+            //with the whole expression possibly negated
+
+            Expr expression = qa.getExpression();
+            List<String> elements=getAtomList(expression);
+            StringBuilder legacyBuilder = new StringBuilder(80);
+            StringBuilder alsBuilder = new StringBuilder(80);
+            alsBuilder.append("M  ALS ");
+            alsBuilder.append(formatMDLInt(entry.getKey()+1, 3));
+            alsBuilder.append(formatMDLInt(elements.size(), 3));
+
+            legacyBuilder.append(formatMDLInt(entry.getKey()+1, 3));
+            //root expression type is either OR or NOT
+            if(expression.type() == Expr.Type.NOT){
+                alsBuilder.append(" T ");
+                legacyBuilder.append(" T    ");
+            }else {
+                alsBuilder.append(" F ");
+                legacyBuilder.append(" F    ");
+            }
+            for(String symbol : elements){
+                alsBuilder.append(formatMDLString(symbol, 4));
+            }
+            legacyBuilder.append(formatMDLInt(elements.size(), 1));
+            for(Integer atomicNumber : getAtomListNumbers(expression)){
+                legacyBuilder.append(" ").append(formatMDLInt(atomicNumber, 3));
+            }
+            alsBuilder.append('\n');
+            legacyBuilder.append('\n');
+
+            alsLines.add(alsBuilder.toString());
+            legacyLines.add(legacyBuilder.toString());
+        }
+        for(String line: legacyLines){
+            writer.write(line);
+        }
+        for(String line: alsLines){
+            writer.write(line);
+        }
+    }
+
     private static boolean isValidAtomListExpression(Expr exp){
 
         Expr rootToCheck;
@@ -836,6 +875,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         getLeafNodes(exp, elist);
         return elist.stream().map(expr->Elements.ofNumber(expr.value()).symbol())
                     .collect(Collectors.toList());
+
+    }
+    private static List<Integer> getAtomListNumbers(Expr exp){
+        List<Expr> elist = new ArrayList<>();
+        getLeafNodes(exp, elist);
+        return elist.stream().map(Expr::value)
+                .collect(Collectors.toList());
 
     }
 
