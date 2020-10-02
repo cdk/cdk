@@ -417,11 +417,12 @@ final class StandardAtomGenerator {
 
         // when the hydrogen label is positioned to the left we may need to nudge it
         // over to account for the hydrogen count and/or the mass adjunct colliding
-        // with the element label
+        // with the element label, we also need to move the charge too '+H3N'
         if (position == Left) {
             final double nudgeX = hydrogenXDodge(hydrogens, mass, element, hydrogenAdjunct, hydrogenCount, massAdjunct);
             hydrogenAdjunct = hydrogenAdjunct.translate(nudgeX, 0);
             hydrogenCount = hydrogenCount.translate(nudgeX, 0);
+            chargeAdjunct = chargeAdjunct.translate(nudgeX, 0);
         }
 
         final List<TextOutline> adjuncts = new ArrayList<TextOutline>(4);
