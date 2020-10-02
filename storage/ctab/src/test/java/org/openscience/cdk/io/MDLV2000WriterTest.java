@@ -1008,8 +1008,9 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
                 mdlw.write(mol);
             }
             String writtenMol = sw.toString();
-            //                                              M  ALS   1  3 F F  N  O
-            assertThat(writtenMol, containsString("M  ALS   1  3 T F   N   O"));
+            assertThat(writtenMol, containsString(
+                    "  1 T    3   9   7   8\n" +
+                    "M  ALS   1  3 T F   N   O"));
         }
     }
     @Test
@@ -1024,7 +1025,32 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
                 mdlw.write(mol);
             }
             String writtenMol = sw.toString();
-            assertThat(writtenMol, containsString("M  ALS   1  3 F F   N   O"));
+
+            assertThat(writtenMol, containsString(
+                    "  1 F    3   9   7   8\n"+
+                    "M  ALS   1  3 F F   N   O"));
+        }
+    }
+    @Test
+    public void roundTripWithMultipleLegacyAtomLists() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_manylegacyatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            StringWriter sw = new StringWriter();
+            try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+                mdlw.write(mol);
+            }
+            String writtenMol = sw.toString();
+
+            assertThat(writtenMol, containsString(
+                            "  4 F    2   8   7\n" +
+                            "  5 F    2   7   8\n" +
+                            "  6 F    2   7   8\n"+
+                            "M  ALS   4  2 F O   N   \n" +
+                            "M  ALS   5  2 F N   O   \n" +
+                            "M  ALS   6  2 F N   O"));
         }
     }
 

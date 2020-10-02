@@ -943,6 +943,45 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     if (group == null) return;
                     break;
 
+                // Newer programs use the M ALS item in the properties block in place of the atom list
+                // block. The atom list block is retained for compatibility, but information in an M ALS item
+                // supersedes atom list block information.
+                // aaa kSSSSn 111 222 333 444 555
+                // 0123456789012345
+                // aaa = number of atom (L) where list is attached
+                // k = T = [NOT] list, = F = normal list
+                // n = number of entries in list; maximum is 5
+                // 111...555 = atomic number of each atom on the list
+                // S = space
+                case LEGACY_ATOM_LIST:
+                    index = readUInt(line, 0, 3)-1;
+                {
+                    boolean negate = line.charAt(3) == 'T' ||
+                            line.charAt(4) == 'T';
+                    Expr expr = new Expr(Expr.Type.TRUE);
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 11; i < line.length(); i+=4) {
+                        int atomicNumber = readUInt(line, i, 3);
+                        expr.or(new Expr(Expr.Type.ELEMENT, atomicNumber));
+
+                    }
+
+                    if (negate)
+                        expr.negate();
+                    IAtom atom = container.getAtom(index);
+                    if (AtomRef.deref(atom) instanceof QueryAtom) {
+                        QueryAtom ref = (QueryAtom)AtomRef.deref(atom);
+                        ref.setExpression(expr);
+                    } else {
+                        QueryAtom queryAtom = new QueryAtom(expr);
+                        //keep coordinates from old atom
+                        queryAtom.setPoint2d(atom.getPoint2d());
+                        queryAtom.setPoint3d(atom.getPoint3d());
+                        container.setAtom(index, queryAtom);
+                    }
+                }
+                break;
+
                 // M  ALS aaannn e 11112222 ...
                 // 012345678901234567
                 // aaa:  atom index
@@ -2394,11 +2433,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         M_END,
 
         /** Non-property header. */
-        UNKNOWN;
+        UNKNOWN,
+        /** old atom list superseded by {@link #M_ALS} */
+        LEGACY_ATOM_LIST;
 
         /** Index of 'M XXX' properties for quick lookup. */
         private static final Map<String, PropertyKey> mSuffix = new HashMap<String, PropertyKey>(60);
 
+        private static Pattern LEGACY_ATOM_LIST_PATTERN = Pattern.compile("^[0-9 ][0-9 ][0-9 ] [T|F]");
         static {
             for (PropertyKey p : values()) {
                 if (p.name().charAt(0) == 'M') mSuffix.put(p.name().substring(2, 5), p);
@@ -2431,6 +2473,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     PropertyKey property = mSuffix.get(line.substring(3, 6));
                     if (property != null) return property;
                     return UNKNOWN;
+            }
+            Matcher matcher = LEGACY_ATOM_LIST_PATTERN.matcher(line);
+            if(matcher.find()){
+                return LEGACY_ATOM_LIST;
             }
             return UNKNOWN;
         }
