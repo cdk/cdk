@@ -1850,6 +1850,20 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             assertThat(expr, is(expected));
         }
     }
+    @Test public void legacyAtomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_legacyatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
+            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
+            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            QueryAtom           queryAtom = (QueryAtom) deref;
+            Expr expr = queryAtom.getExpression();
+            Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
+                    .or(new Expr(Expr.Type.ELEMENT, 7)) // N
+                    .or(new Expr(Expr.Type.ELEMENT, 8)); // O
+            assertThat(expr, is(expected));
+        }
+    }
 
     @Test public void notatomList() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("query_notatomlist.mol");
@@ -1862,6 +1876,21 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
                                    .or(new Expr(Expr.Type.ELEMENT, 7)) // N
                                    .or(new Expr(Expr.Type.ELEMENT, 8)); // O
+            expected = expected.negate();
+            assertThat(expr, is(expected));
+        }
+    }
+    @Test public void legacynotatomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_legacynotatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
+            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
+            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            QueryAtom           queryAtom = (QueryAtom) deref;
+            Expr expr = queryAtom.getExpression();
+            Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
+                    .or(new Expr(Expr.Type.ELEMENT, 7)) // N
+                    .or(new Expr(Expr.Type.ELEMENT, 8)); // O
             expected = expected.negate();
             assertThat(expr, is(expected));
         }
