@@ -3116,6 +3116,8 @@ public final class Smarts {
                 if (isRingClose(bond)) {
                     Integer rnum = rnums.get(bond);
                     sb.append(generate(bond.getOther(atom), ((QueryBond) BondRef.deref(bond))));
+                    if (rnum >= 10)
+                        sb.append('%');
                     sb.append(rnum);
                     rvisit[rnum] = false;
                     rnums.remove(bond);
@@ -3124,6 +3126,8 @@ public final class Smarts {
                 // ring open
                 else if (isRingOpen(bond)) {
                     int rnum = nextRingNum();
+                    if (rnum >= 10)
+                        sb.append('%');
                     sb.append(rnum);
                     rnums.put(bond, rnum);
                     rbonds.remove(bond);

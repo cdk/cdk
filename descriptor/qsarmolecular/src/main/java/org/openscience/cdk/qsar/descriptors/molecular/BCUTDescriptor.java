@@ -27,6 +27,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -344,7 +345,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         // find number of heavy atoms
         int nheavy = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            if (!molecule.getAtom(i).getSymbol().equals("H")) nheavy++;
+            if (molecule.getAtom(i).getAtomicNumber() != IElement.H) nheavy++;
         }
 
         if (nheavy == 0) return getDummyDescriptorValue(new CDKException("No heavy atoms in the molecule"));
@@ -355,7 +356,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         counter = 0;
         try {
             for (int i = 0; i < molecule.getAtomCount(); i++) {
-                if (molecule.getAtom(i).getSymbol().equals("H")) continue;
+                if (molecule.getAtom(i).getAtomicNumber() == IElement.H) continue;
                 diagvalue[counter] = Isotopes.getInstance().getMajorIsotope(molecule.getAtom(i).getSymbol())
                         .getExactMass();
                 counter++;
@@ -392,7 +393,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         }
         counter = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            if (molecule.getAtom(i).getSymbol().equals("H")) continue;
+            if (molecule.getAtom(i).getAtomicNumber() == IElement.H) continue;
             diagvalue[counter] = molecule.getAtom(i).getCharge();
             counter++;
         }
@@ -409,7 +410,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         Polarizability pol = new Polarizability();
         counter = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            if (molecule.getAtom(i).getSymbol().equals("H")) continue;
+            if (molecule.getAtom(i).getAtomicNumber() == IElement.H) continue;
             diagvalue[counter] = pol.calculateGHEffectiveAtomPolarizability(molecule, molecule.getAtom(i), false,
                     topoDistance);
             counter++;

@@ -56,8 +56,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -513,6 +515,18 @@ public final class DepictionGenerator {
     private Map<IChemObject, Color> makeHighlightAtomMap(List<IAtomContainer> reactants,
                                                          List<IAtomContainer> products) {
 
+        // only highlight atom-maps that appear in both the reactant+product
+        Set<Integer> reactantMapIdxs = new HashSet<>();
+        Set<Integer> productMapIdxs = new HashSet<>();
+        for (IAtomContainer mol : reactants) {
+            for (IAtom atom : mol.atoms())
+                reactantMapIdxs.add(accessAtomMap(atom));
+        }
+        for (IAtomContainer mol : products) {
+            for (IAtom atom : mol.atoms())
+                productMapIdxs.add(accessAtomMap(atom));
+        }
+
         Map<IChemObject, Color> colorMap = new HashMap<>();
         Map<Integer, Color> mapToColor = new HashMap<>();
         Map<Integer, IAtom> amap = new TreeMap<>();
@@ -521,7 +535,7 @@ public final class DepictionGenerator {
             int prevPalletIdx = colorIdx;
             for (IAtom atom : mol.atoms()) {
                 int mapidx = accessAtomMap(atom);
-                if (mapidx > 0) {
+                if (mapidx > 0 && productMapIdxs.contains(mapidx)) {
                     if (prevPalletIdx == colorIdx) {
                         colorIdx++; // select next color
                         if (colorIdx >= atomMapColors.length)
@@ -548,7 +562,7 @@ public final class DepictionGenerator {
         for (IAtomContainer mol : products) {
             for (IAtom atom : mol.atoms()) {
                 int mapidx = accessAtomMap(atom);
-                if (mapidx > 0) {
+                if (mapidx > 0 && reactantMapIdxs.contains(mapidx)) {
                     colorMap.put(atom, mapToColor.get(mapidx));
                 }
             }
@@ -1107,6 +1121,17 @@ public final class DepictionGenerator {
     public DepictionGenerator withAromaticDisplay() {
         return withParam(ForceDelocalisedBondDisplay.class,
                          true);
+    }
+
+
+    /**
+     * Indicate whether <sup>2</sup>H should be rendered as 'D'. Default: true.
+     * @param v the value
+     * @return new generator for method chaining
+     */
+    public DepictionGenerator withDeuteriumSymbol(boolean v) {
+        return withParam(StandardGenerator.DeuteriumSymbol.class,
+                         v);
     }
 
     /**

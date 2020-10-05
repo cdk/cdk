@@ -31,7 +31,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.iterator.IteratingSDFReader;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.AtomContainer;
@@ -152,6 +152,22 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("issue602.mol"))) {
             IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(mol.getAtomCount(), CoreMatchers.is(31));
+        }
+    }
+
+    /**
+     * @cdk.bug https://github.com/cdk/cdk/issues/664
+     *
+     * MDLV3000Reader does not yet support queries. Parsed query bonds (order >= 4) should be set to IBond.Order.UNSET
+     * to avoid NPE in valence calculation.
+     */
+    @Test public void reading_query_bond_should_not_npe() throws Exception {
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("v3000Query.mol"))) {
+            IAtomContainer container = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            for (IBond bond: container.bonds()) {
+                assertNotNull(bond.getOrder());
+            }
+            assertThat(container.getBond(4).getOrder(), is(IBond.Order.UNSET));
         }
     }
 }

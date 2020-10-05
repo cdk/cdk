@@ -23,6 +23,7 @@ Thorsten Flügel
 Sambit Gaan
 Jakub Galgonek
 Dan Gezelter
+Marco Glur
 Nimish Gopal
 Saulius Gražulis
 Rajarshi Guha
@@ -42,6 +43,7 @@ Nina Jeliazkova
 Geert Josten
 Klas Jönsson
 Dmitry Katsubo
+Danny Katzel
 Jules Kerssemakers
 Joos Kiener
 Anatoli Krassavine
@@ -55,6 +57,7 @@ Katrin Leinweber
 Xavier Linn
 Qinqing Liu
 Edgar Luttmann
+Jean Marois
 Todd Martin
 John Mayfield
 Nathanaël Mazuir

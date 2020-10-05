@@ -23,17 +23,11 @@
  */
 package org.openscience.cdk.io;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -47,6 +41,9 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupKey;
+import org.openscience.cdk.sgroup.SgroupType;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import javax.vecmath.Point2d;
@@ -54,7 +51,9 @@ import javax.vecmath.Point3d;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -720,7 +719,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("M  STY  3   1 COM   2 COM   3 MIX"));
-            assertThat(output, containsString("M  SPL  1   1   3"));
+            assertThat(output, containsString("M  SPL  2   1   3   2   3"));
         }
     }
 
@@ -970,5 +969,109 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
                                               + "  1  5  1  0\n"
                                               + "M  END"));
         }
+    }
+
+    @Test
+    public void writeParentAtomSgroupAsList() throws Exception{
+        IAtomContainer mol  = builder.newAtomContainer();
+        IAtom          atom = builder.newAtom();
+        atom.setSymbol("C");
+        mol.addAtom(atom);
+        // build multiple group Sgroup
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabMultipleGroup);
+        sgroup.addAtom(atom);
+        List<IAtom> patoms = new ArrayList<>();
+
+            patoms.add(atom);
+
+        sgroup.putValue(SgroupKey.CtabParentAtomList, patoms);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                Collections.singletonList(sgroup));
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mol);
+        }
+        assertThat(sw.toString(), containsString("SPA   1  1"));
+
+    }
+
+    @Test
+    public void roundTripWithNotAtomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_notatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            StringWriter sw = new StringWriter();
+            try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+                mdlw.write(mol);
+            }
+            String writtenMol = sw.toString();
+            assertThat(writtenMol, containsString(
+                    "  1 T    3   9   7   8\n" +
+                    "M  ALS   1  3 T F   N   O"));
+        }
+    }
+    @Test
+    public void roundTripWithAtomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_atomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            StringWriter sw = new StringWriter();
+            try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+                mdlw.write(mol);
+            }
+            String writtenMol = sw.toString();
+
+            assertThat(writtenMol, containsString(
+                    "  1 F    3   9   7   8\n"+
+                    "M  ALS   1  3 F F   N   O"));
+        }
+    }
+    @Test
+    public void roundTripWithMultipleLegacyAtomLists() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_manylegacyatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+
+            StringWriter sw = new StringWriter();
+            try (MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+                mdlw.write(mol);
+            }
+            String writtenMol = sw.toString();
+
+            assertThat(writtenMol, containsString(
+                            "  4 F    2   8   7\n" +
+                            "  5 F    2   7   8\n" +
+                            "  6 F    2   7   8\n"+
+                            "M  ALS   4  2 F O   N   \n" +
+                            "M  ALS   5  2 F N   O   \n" +
+                            "M  ALS   6  2 F N   O"));
+        }
+    }
+
+    @Test
+    public void dataSgroupRoundTrip() {
+      String path = "/data/mdl/hbr_acoh_mix.mol";
+      try (InputStream in = getClass().getResourceAsStream(path)) {
+        MDLV2000Reader     mdlr    = new MDLV2000Reader(in);
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        IAtomContainer     mol     = mdlr.read(builder.newAtomContainer());
+        try (StringWriter sw = new StringWriter();
+             MDLV2000Writer writer = new MDLV2000Writer(sw)) {
+          writer.write(mol);
+          String output = sw.toString();
+          assertThat(output,
+                     CoreMatchers.containsString("M  SDT   3 WEIGHT_PERCENT                N %"));
+          assertThat(output,
+                     CoreMatchers.containsString("M  SED   3 33%"));
+        }
+      } catch (IOException | CDKException e) {
+        Assert.fail(e.getMessage());
+      }
     }
 }

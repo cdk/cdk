@@ -32,6 +32,8 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.generators.standard.AbbreviationLabel.FormattedText;
+import org.openscience.cdk.renderer.generators.standard.StandardGenerator.DeuteriumSymbol;
+import org.openscience.cdk.renderer.generators.standard.StandardGenerator.PseudoFontStyle;
 
 import java.awt.Font;
 import java.awt.geom.Rectangle2D;
@@ -124,13 +126,11 @@ final class StandardAtomGenerator {
                     int charge  = unboxSafely(pAtom.getFormalCharge(), 0);
                     int hcnt    = unboxSafely(pAtom.getImplicitHydrogenCount(), 0);
                     int nrad = container.getConnectedSingleElectronsCount(atom);
-                    if (mass != 0 || charge != 0 || hcnt != 0) {
-                        return generatePeriodicSymbol(0, hcnt,
-                                                      mass, charge,
-                                                      nrad, position);
-                    }
+                    return generatePeriodicSymbol(0, hcnt,
+                                                  mass, charge,
+                                                  nrad, position, model);
                 }
-                return generatePseudoSymbol(accessPseudoLabel(pAtom, "?"), position);
+                return generatePseudoSymbol(accessPseudoLabel(pAtom, "?"), position, model);
             }
             else
                 return null; // attach point drawn in bond generator
@@ -149,7 +149,7 @@ final class StandardAtomGenerator {
 
             return generatePeriodicSymbol(number, unboxSafely(atom.getImplicitHydrogenCount(), 0),
                                           unboxSafely(mass, -1), unboxSafely(atom.getFormalCharge(), 0),
-                                          container.getConnectedSingleElectronsCount(atom), position);
+                                          container.getConnectedSingleElectronsCount(atom), position, model);
         }
     }
 
@@ -158,10 +158,16 @@ final class StandardAtomGenerator {
      *
      * @return the atom symbol
      */
-    AtomSymbol generatePseudoSymbol(String label, HydrogenPosition position) {
+    AtomSymbol generatePseudoSymbol(String label, HydrogenPosition position, RendererModel model) {
 
-        final Font italicFont = font.deriveFont(Font.BOLD)
-                                    .deriveFont(Font.ITALIC);
+        final Font stylisedFont;
+        if (model != null && model.get(PseudoFontStyle.class) != 0) {
+            Integer style = model.get(PseudoFontStyle.class);
+            stylisedFont = font.deriveFont(style);
+        } else {
+            stylisedFont = font;
+        }
+
         List<TextOutline> outlines = new ArrayList<>(3);
 
         int beg = 0;
@@ -176,7 +182,7 @@ final class StandardAtomGenerator {
                 pos++;
 
         if (pos > beg) {
-            outlines.add(new TextOutline(label.substring(beg, pos), italicFont));
+            outlines.add(new TextOutline(label.substring(beg, pos), stylisedFont));
             beg = pos;
             // 2a etc.
             while (pos < len && isDigit(label.charAt(pos)))
@@ -185,7 +191,7 @@ final class StandardAtomGenerator {
                 pos++;
 
             if (pos > beg) {
-                TextOutline outline = new TextOutline(label.substring(beg, pos), italicFont);
+                TextOutline outline = new TextOutline(label.substring(beg, pos), stylisedFont);
                 outline = outline.resize(scriptSize, scriptSize);
                 outline = positionSuperscript(outlines.get(0), outline);
                 outlines.add(outline);
@@ -220,7 +226,7 @@ final class StandardAtomGenerator {
             }
 
             if (pos < len) {
-                return new AtomSymbol(new TextOutline(label, italicFont), Collections.<TextOutline>emptyList());
+                return new AtomSymbol(new TextOutline(label, stylisedFont), Collections.<TextOutline>emptyList());
             } else {
                 TextOutline outline = null;
                 TextOutline ref = outlines.get(outlines.size()-1);
@@ -254,7 +260,7 @@ final class StandardAtomGenerator {
             return new AtomSymbol(outlines.get(0),
                                   outlines.subList(1, outlines.size()));
         } else {
-            return new AtomSymbol(new TextOutline(label, italicFont), Collections.<TextOutline>emptyList());
+            return new AtomSymbol(new TextOutline(label, stylisedFont), Collections.<TextOutline>emptyList());
         }
     }
 
@@ -371,11 +377,30 @@ final class StandardAtomGenerator {
      * @param position  placement of hydrogen
      * @return laid out atom symbol
      */
-    AtomSymbol generatePeriodicSymbol(final int number, final int hydrogens, final int mass, final int charge,
-                                      final int unpaired, HydrogenPosition position) {
+    AtomSymbol generatePeriodicSymbol(final int number, final int hydrogens, int mass, final int charge,
+                                      final int unpaired, HydrogenPosition position,
+                                      RendererModel opts) {
 
-        TextOutline element = number == 0 ? new TextOutline("*", font)
-                                          : new TextOutline(Elements.ofNumber(number).symbol(), font);
+        Font myfont = font;
+        final String label;
+        switch (number) {
+            case 0:
+                label = "*";
+                myfont = font.deriveFont(Font.BOLD);
+                break;
+            case 1:
+                if (mass == 2 && opts.get(DeuteriumSymbol.class)) {
+                    label = "D";
+                    mass = 0;
+                } else {
+                    label = Elements.ofNumber(number).symbol();
+                }
+                break;
+            default:
+                label = Elements.ofNumber(number).symbol();
+                break;
+        }
+        TextOutline element = new TextOutline(label, myfont);
         TextOutline hydrogenAdjunct = defaultHydrogenLabel;
 
         // the hydrogen count, charge, and mass adjuncts are script size
@@ -392,11 +417,12 @@ final class StandardAtomGenerator {
 
         // when the hydrogen label is positioned to the left we may need to nudge it
         // over to account for the hydrogen count and/or the mass adjunct colliding
-        // with the element label
+        // with the element label, we also need to move the charge too '+H3N'
         if (position == Left) {
             final double nudgeX = hydrogenXDodge(hydrogens, mass, element, hydrogenAdjunct, hydrogenCount, massAdjunct);
             hydrogenAdjunct = hydrogenAdjunct.translate(nudgeX, 0);
             hydrogenCount = hydrogenCount.translate(nudgeX, 0);
+            chargeAdjunct = chargeAdjunct.translate(nudgeX, 0);
         }
 
         final List<TextOutline> adjuncts = new ArrayList<TextOutline>(4);

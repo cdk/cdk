@@ -74,6 +74,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -519,17 +520,26 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
             }
 
-            // sanity check that we have a decent molecule, query bonds mean we
+            // sanity check that we have a decent molecule, query bonds or query atoms mean we
             // don't have a hydrogen count for atoms and stereo perception isn't
             // currently possible
             if (!(outputContainer instanceof IQueryAtomContainer) && !isQuery &&
                 addStereoElements.isSet() && hasX && hasY) {
-                if (hasZ) { // has 3D coordinates
-                    outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
-                            .createAll());
-                } else if (!forceReadAs3DCoords.isSet()) { // has 2D coordinates (set as 2D coordinates)
-                    outputContainer.setStereoElements(StereoElementFactory.using2DCoordinates(outputContainer)
-                            .createAll());
+                //ALS property could have changed an atom into a QueryAtom
+                for(IAtom atom : outputContainer.atoms()){
+                    if (AtomRef.deref(atom) instanceof QueryAtom) {
+                        isQuery=true;
+                        break;
+                    }
+                }
+                if(!isQuery) {
+                    if (hasZ) { // has 3D coordinates
+                        outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
+                                .createAll());
+                    } else if (!forceReadAs3DCoords.isSet()) { // has 2D coordinates (set as 2D coordinates)
+                        outputContainer.setStereoElements(StereoElementFactory.using2DCoordinates(outputContainer)
+                                .createAll());
+                    }
                 }
             }
 
@@ -933,6 +943,45 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     if (group == null) return;
                     break;
 
+                // Newer programs use the M ALS item in the properties block in place of the atom list
+                // block. The atom list block is retained for compatibility, but information in an M ALS item
+                // supersedes atom list block information.
+                // aaa kSSSSn 111 222 333 444 555
+                // 0123456789012345
+                // aaa = number of atom (L) where list is attached
+                // k = T = [NOT] list, = F = normal list
+                // n = number of entries in list; maximum is 5
+                // 111...555 = atomic number of each atom on the list
+                // S = space
+                case LEGACY_ATOM_LIST:
+                    index = readUInt(line, 0, 3)-1;
+                {
+                    boolean negate = line.charAt(3) == 'T' ||
+                            line.charAt(4) == 'T';
+                    Expr expr = new Expr(Expr.Type.TRUE);
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 11; i < line.length(); i+=4) {
+                        int atomicNumber = readUInt(line, i, 3);
+                        expr.or(new Expr(Expr.Type.ELEMENT, atomicNumber));
+
+                    }
+
+                    if (negate)
+                        expr.negate();
+                    IAtom atom = container.getAtom(index);
+                    if (AtomRef.deref(atom) instanceof QueryAtom) {
+                        QueryAtom ref = (QueryAtom)AtomRef.deref(atom);
+                        ref.setExpression(expr);
+                    } else {
+                        QueryAtom queryAtom = new QueryAtom(expr);
+                        //keep coordinates from old atom
+                        queryAtom.setPoint2d(atom.getPoint2d());
+                        queryAtom.setPoint3d(atom.getPoint3d());
+                        container.setAtom(index, queryAtom);
+                    }
+                }
+                break;
+
                 // M  ALS aaannn e 11112222 ...
                 // 012345678901234567
                 // aaa:  atom index
@@ -969,7 +1018,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                             QueryAtom ref = (QueryAtom)AtomRef.deref(atom);
                             ref.setExpression(expr);
                         } else {
-                            container.setAtom(index, new QueryAtom(expr));
+                            QueryAtom queryAtom = new QueryAtom(expr);
+                            //keep coordinates from old atom
+                            queryAtom.setPoint2d(atom.getPoint2d());
+                            queryAtom.setPoint3d(atom.getPoint3d());
+                            container.setAtom(index, queryAtom);
                         }
                     }
                     break;
@@ -1256,7 +1309,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 case M_SPA:
                     sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
                     count  = readMolfileInt(line, 10);
-                    Set<IAtom> parentAtomList = sgroup.getValue(SgroupKey.CtabParentAtomList);
+                    Collection<IAtom> parentAtomList = sgroup.getValue(SgroupKey.CtabParentAtomList);
                     if (parentAtomList == null) {
                         sgroup.putValue(SgroupKey.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
                     }
@@ -1278,6 +1331,70 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         sgroup.putValue(SgroupKey.CtabComponentNumber,
                                         readMolfileInt(line, st+4));
                     }
+                    break;
+
+                // Data Sgroup Field Description
+                // M  SDT sss ffffffffffffffffffffffffffffffgghhhhhhhhhhhhhhhhhhhhiijjj...
+                // 0123456789012345678901234567890123456789012345678901234567890123456789
+                //           1         2         3         4         5         6
+                // 7  sss:       Index of data Sgroup
+                // 11 fff...fff: 30 character field name - no blanks, commas, or hyphens for MACCS-II
+                // 41 gg:        Field type - F=formatted, N=numberic, T=text (ignored)
+                // 43 hhh...hhh: 20-character field units or format
+                // 63 ii:        Nonblank if data line is a query rather than Sgroup data, MQ= MACCS-II query,
+                //               IQ= ISIS query, PQ = program name code query
+                // 65 jjj...:    Data query operator
+                case M_SDT:
+                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
+                    if (length < 11)
+                        break;
+                    String name = line.substring(11, Math.min(41, length))
+                                      .trim();
+                    sgroup.putValue(SgroupKey.DataFieldName, name);
+                    if (length < 41)
+                        break;
+                    String fmt = line.substring(41, Math.min(43, length))
+                                     .trim();
+                    if (fmt.length() == 1 &&
+                        fmt.charAt(0) != 'F' && fmt.charAt(0) != 'N' &&
+                        fmt.charAt(0) != 'T')
+                        handleError("Invalid Data Sgroup field format: " + fmt);
+                    if (!fmt.isEmpty())
+                        sgroup.putValue(SgroupKey.DataFieldFormat, fmt);
+                    if (length < 43)
+                        break;
+                    String units = line.substring(43, Math.min(63, length))
+                                       .trim();
+                    if (!units.isEmpty())
+                        sgroup.putValue(SgroupKey.DataFieldUnits, units);
+                    // We don't handle data group queries
+                    break;
+
+                // Data Sgroup Display Info
+                case M_SDD:
+                    // TODO
+                    break;
+
+                // Data Sgroup Data
+                // M  SCD sss d...
+                // M  SED sss d...
+                // 0123456789012345...
+                //           1
+                //
+                // d...: Line of data for data Sgroup sss (69 chars per line, columns 12-80)
+                //
+                // SCD where C = Continue, SED where E = End
+                // Formally multi-line data should have one or more SCD's and
+                // end with an SED. Single line data just has a single SED
+                case M_SCD:
+                case M_SED:
+                    // we could be more strict and raise an error if we see an
+                    // SCD after SED...
+                    sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
+                    String data = line.substring(11, Math.min(79,length));
+                    String curr = sgroup.getValue(SgroupKey.Data);
+                    if (curr != null) data = curr + data;
+                    sgroup.putValue(SgroupKey.Data, data);
                     break;
 
                 // M  END
@@ -2291,10 +2408,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         /** Data Sgroup Display Information [Sgroup]. */
         M_SDD,
 
-        /** Data Sgroup Data. */
+        /** Data Sgroup Data Continue. */
         M_SCD,
 
-        /** Data Sgroup Data. */
+        /** Data Sgroup Data End. */
         M_SED,
 
         /** Sgroup Hierarchy Information. */
@@ -2316,11 +2433,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         M_END,
 
         /** Non-property header. */
-        UNKNOWN;
+        UNKNOWN,
+        /** old atom list superseded by {@link #M_ALS} */
+        LEGACY_ATOM_LIST;
 
         /** Index of 'M XXX' properties for quick lookup. */
         private static final Map<String, PropertyKey> mSuffix = new HashMap<String, PropertyKey>(60);
 
+        private static Pattern LEGACY_ATOM_LIST_PATTERN = Pattern.compile("^[0-9 ][0-9 ][0-9 ] [T|F]");
         static {
             for (PropertyKey p : values()) {
                 if (p.name().charAt(0) == 'M') mSuffix.put(p.name().substring(2, 5), p);
@@ -2353,6 +2473,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     PropertyKey property = mSuffix.get(line.substring(3, 6));
                     if (property != null) return property;
                     return UNKNOWN;
+            }
+            Matcher matcher = LEGACY_ATOM_LIST_PATTERN.matcher(line);
+            if(matcher.find()){
+                return LEGACY_ATOM_LIST;
             }
             return UNKNOWN;
         }

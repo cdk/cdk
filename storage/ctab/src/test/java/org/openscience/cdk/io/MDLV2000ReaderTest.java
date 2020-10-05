@@ -1835,6 +1835,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
+
     @Test public void atomList() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("query_atomlist.mol");
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
@@ -1846,6 +1847,20 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
                 .or(new Expr(Expr.Type.ELEMENT, 7)) // N
                 .or(new Expr(Expr.Type.ELEMENT, 8)); // O
+            assertThat(expr, is(expected));
+        }
+    }
+    @Test public void legacyAtomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_legacyatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
+            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
+            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            QueryAtom           queryAtom = (QueryAtom) deref;
+            Expr expr = queryAtom.getExpression();
+            Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
+                    .or(new Expr(Expr.Type.ELEMENT, 7)) // N
+                    .or(new Expr(Expr.Type.ELEMENT, 8)); // O
             assertThat(expr, is(expected));
         }
     }
@@ -1865,6 +1880,21 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             assertThat(expr, is(expected));
         }
     }
+    @Test public void legacynotatomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_legacynotatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
+            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
+            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            QueryAtom           queryAtom = (QueryAtom) deref;
+            Expr expr = queryAtom.getExpression();
+            Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
+                    .or(new Expr(Expr.Type.ELEMENT, 7)) // N
+                    .or(new Expr(Expr.Type.ELEMENT, 8)); // O
+            expected = expected.negate();
+            assertThat(expr, is(expected));
+        }
+    }
 
     @Test public void sgroupsAbbrRoundTrip() throws IOException, CDKException {
         StringWriter sw = new StringWriter();
@@ -1876,5 +1906,56 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             mdlw.write(mol);
         }
         assertThat(sw.toString(), containsString("M  SAL   1  2   2   3"));
+    }
+
+    @Test
+    public void checkFuseBondWithFewerBondsThanAtoms() throws IOException, CDKException {
+        try (InputStream in = getClass().getResourceAsStream("potentialLateFuse.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(in)) {
+            IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            assertThat(mol.getAtomCount(), is(108));
+        }
+    }
+
+    @Test
+    public void atomlistWithAtomContainer() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_notatomlist.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+
+            IAtomContainer mol   = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            IAtom          deref = AtomRef.deref(mol.getAtom(0));
+            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+        }
+    }
+
+    @Test
+    public void dataSgroup() {
+        String path = "/data/mdl/hbr_acoh_mix.mol";
+        try (InputStream in = getClass().getResourceAsStream(path)) {
+            MDLV2000Reader     mdlr     = new MDLV2000Reader(in);
+            IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+            IAtomContainer mol = mdlr.read(builder.newAtomContainer());
+            List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+            Sgroup dataSgroup = null;
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getType() == SgroupType.CtabData) {
+                    dataSgroup = sgroup;
+                    break;
+                }
+            }
+            assertNotNull(dataSgroup);
+            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldName),
+                       CoreMatchers.is("WEIGHT_PERCENT"));
+            // note it looks like MDL/Accelys/BIOVIA simply omit units/format
+            // but check we pass it okay
+            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldUnits),
+                       CoreMatchers.is("%"));
+            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldFormat),
+                       CoreMatchers.is("N"));
+            assertThat(dataSgroup.<String>getValue(SgroupKey.Data),
+                       CoreMatchers.is("33%"));
+        } catch (IOException | CDKException e) {
+            e.printStackTrace();
+        }
     }
 }

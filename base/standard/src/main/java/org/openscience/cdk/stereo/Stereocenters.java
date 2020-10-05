@@ -716,7 +716,7 @@ public final class Stereocenters {
         if (getRingDegree(container.indexOf(beg)) < 3 &&
             getRingDegree(container.indexOf(end)) < 3)
             return false;
-        boolean[] avisit = new boolean[container.getBondCount()];
+        boolean[] avisit = new boolean[container.getAtomCount()];
         avisit[container.indexOf(beg)] = true;
         avisit[container.indexOf(end)] = true;
         int count = 0;

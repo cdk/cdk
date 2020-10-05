@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -281,7 +282,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 			if (bondCount > 0) {
 				IAtom neighbour = atom.bonds().iterator().next().getOther(atom);
 				int numNeighbours = neighbour.getBondCount();
-				if (neighbour.getSymbol().equals("C")) {
+				if (neighbour.getAtomicNumber() == IElement.C) {
 					if (carbonylConjugated(neighbour))
 						toadd = 51;
 					else {

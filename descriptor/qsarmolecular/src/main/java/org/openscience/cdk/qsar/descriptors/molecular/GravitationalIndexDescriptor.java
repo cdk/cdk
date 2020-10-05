@@ -27,6 +27,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -220,7 +221,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
                 return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
             }
 
-            if (b.getBegin().getSymbol().equals("H") || b.getEnd().getSymbol().equals("H")) continue;
+            if (b.getBegin().getAtomicNumber() == IElement.H || b.getEnd().getAtomicNumber() == IElement.H) continue;
 
             mass1 = factory.getMajorIsotope(b.getBegin().getSymbol()).getMassNumber();
             mass2 = factory.getMajorIsotope(b.getEnd().getSymbol()).getMassNumber();
@@ -242,7 +243,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         // all pairs
         ArrayList<Integer> x = new ArrayList<Integer>();
         for (int i = 0; i < container.getAtomCount(); i++) {
-            if (!container.getAtom(i).getSymbol().equals("H")) x.add(i);
+            if (container.getAtom(i).getAtomicNumber() != IElement.H) x.add(i);
         }
         int npair = x.size() * (x.size() - 1) / 2;
         pair[] p = new pair[npair];

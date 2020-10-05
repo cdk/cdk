@@ -168,6 +168,9 @@
             <name>Thorsten Flügel</name>
         </contributor>
         <contributor>
+            <name>Marco Glur</name>
+        </contributor>
+        <contributor>
             <name>Nimish Gopal</name>
         </contributor>
         <contributor>
@@ -222,6 +225,9 @@
             <name>Dmitry Katsubo</name>
         </contributor>
         <contributor>
+            <name>Danny Katzel</name>
+        </contributor>
+        <contributor>
             <name>Jules Kerssemakers</name>
         </contributor>
         <contributor>
@@ -259,6 +265,9 @@
         </contributor>
         <contributor>
             <name>Edgar Luttmann</name>
+        </contributor>
+        <contributor>
+            <name>Jean Marois</name>
         </contributor>
         <contributor>
             <name>Todd Martin</name>
@@ -412,6 +421,9 @@
         </contributor>
         <contributor>
             <name>Daniel Zaharevitz</name>
+        </contributor>
+        <contributor>
+            <name>Daniel Katzel</name>
         </contributor>
     </contributors>
     <!-- Plugin repository (EBI) is required for cdk-build-utils and

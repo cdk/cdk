@@ -25,6 +25,7 @@ import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -123,9 +124,9 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
 
             for (int k = 0; k < 5; k++) {
                 for (int i = 0; i < natom; i++) {
-                    if (molecule.getAtom(i).getSymbol().equals("H")) continue;
+                    if (molecule.getAtom(i).getAtomicNumber() == IElement.H) continue;
                     for (int j = 0; j < natom; j++) {
-                        if (molecule.getAtom(j).getSymbol().equals("H")) continue;
+                        if (molecule.getAtom(j).getAtomicNumber() == IElement.H) continue;
                         if (distancematrix[i][j] == k) {
                             polarizabilitySum[k] += w[i] * w[j];
                         } else
