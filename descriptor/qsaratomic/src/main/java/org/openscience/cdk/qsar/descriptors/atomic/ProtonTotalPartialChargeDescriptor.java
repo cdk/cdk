@@ -22,6 +22,7 @@ import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -145,7 +146,7 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
         protonPartialCharge.add(localAtom.getCharge());
         int hydrogenNeighbors = 0;
         for (IAtom neighboor : neighboors) {
-            if (neighboor.getSymbol().equals("H")) {
+            if (neighboor.getAtomicNumber() == IElement.H) {
                 hydrogenNeighbors++;
                 protonPartialCharge.add(neighboor.getCharge());
             }

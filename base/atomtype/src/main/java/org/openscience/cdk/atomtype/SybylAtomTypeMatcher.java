@@ -32,6 +32,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
+
 
 /**
  * Atom Type matcher for Sybyl atom types. It uses the {@link CDKAtomTypeMatcher}
