@@ -32,6 +32,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * @cdk.module test-signature
@@ -142,7 +143,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         for (IAtom a : molecule.atoms()) {
             int count = 0;
             for (IAtom connected : molecule.getConnectedAtomsList(a)) {
-                if (connected.getSymbol().equals("C")) {
+                if (connected.getAtomicNumber() == IElement.C) {
                     count++;
                 }
             }

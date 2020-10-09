@@ -25,6 +25,7 @@ import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -150,7 +151,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
         }
         List<IAtom> neighboor = mol.getConnectedAtomsList(clonedAtom);
         IAtom neighbour0 = (IAtom) neighboor.get(0);
-        if (atom.getSymbol().equals("H")) {
+        if (atom.getAtomicNumber() == IElement.H) {
             //logger.debug("aromatic proton");
             if (neighbour0.getFlag(CDKConstants.ISAROMATIC)) {
                 isProtonInAromaticSystem = 1;

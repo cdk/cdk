@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
-
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  *  <p>Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6
@@ -1032,7 +1032,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         bondSum = new int[na];
         for (int n = 0; n < na; n++)
             if (amask[n]) {
-                aliphatic[n] = mol.getAtom(n).getSymbol().equals("C");
+                aliphatic[n] = mol.getAtom(n).getAtomicNumber() == IElement.C;
                 bondSum[n] = hcount[n];
             }
 
@@ -1048,8 +1048,8 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             if (o == 2) {
                 hasDouble[a1] = true;
                 hasDouble[a2] = true;
-                if (mol.getAtom(a1).getSymbol().equals("O")) isOxide[a2] = true;
-                if (mol.getAtom(a2).getSymbol().equals("O")) isOxide[a1] = true;
+                if (mol.getAtom(a1).getAtomicNumber() == IElement.O) isOxide[a2] = true;
+                if (mol.getAtom(a2).getAtomicNumber() == IElement.O) isOxide[a1] = true;
             }
             if (o != 1) {
                 aliphatic[a1] = false;
@@ -1119,7 +1119,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         }
         if (countC != 1 || countN != 4 || ndbl != 2) return;
         for (int n = 0; n < 5; n++)
-            if (mol.getAtom(ring[n]).getSymbol().equals("N")) tetrazole[ring[n]] = true;
+            if (mol.getAtom(ring[n]).getAtomicNumber() == IElement.N) tetrazole[ring[n]] = true;
     }
 
     // hydrogen bond donor
@@ -1137,7 +1137,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             // of amides, which are consider nonacidic
             for (int n = 0; n < atomAdj[aidx].length; n++)
                 if (isOxide[atomAdj[aidx][n]]) {
-                    if (!mol.getAtom(atomAdj[aidx][n]).getSymbol().equals("C") || !el.equals("N")) return false;
+                    if (mol.getAtom(atomAdj[aidx][n]).getAtomicNumber() != IElement.C || !el.equals("N")) return false;
                 }
             return true;
         } else if (el.equals("S")) {
@@ -1163,7 +1163,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         if (!lonePair[aidx] || mol.getAtom(aidx).getFormalCharge() > 0) return false;
 
         // basic nitrogens do not qualify
-        if (atom.getSymbol().equals("N")) {
+        if (atom.getAtomicNumber() == IElement.N) {
             boolean basic = true;
             for (int n = 0; n < atomAdj[aidx].length; n++)
                 if (!aliphatic[atomAdj[aidx][n]]) {
@@ -1243,7 +1243,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                     amine = false;
                     break;
                 }
-                if (!mol.getAtom(a).getSymbol().equals("N")) continue;
+                if (mol.getAtom(a).getAtomicNumber() != IElement.N) continue;
                 if (bondOrderBioType(bondAdj[aidx][n]) == 2)
                     imine = true;
                 else if (hcount[a] == 1) amine = true;
@@ -1277,7 +1277,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             for (int n = 0; n < atomAdj[aidx].length; n++)
                 if (bondOrderBioType(bondAdj[aidx][n]) == 1) {
                     final int a = atomAdj[aidx][n];
-                    if (mol.getAtom(a).getSymbol().equals("O") && hcount[a] > 0) return true;
+                    if (mol.getAtom(a).getAtomicNumber() == IElement.O && hcount[a] > 0) return true;
                 }
         }
 
