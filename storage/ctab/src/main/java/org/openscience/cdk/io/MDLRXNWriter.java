@@ -33,6 +33,9 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -68,6 +71,10 @@ import java.util.Set;
  */
 public class MDLRXNWriter extends DefaultChemObjectWriter {
 
+    public static final String OptWriteAgents = "WriteAgents";
+
+    private BooleanIOSetting writeAgents;
+
     private BufferedWriter      writer;
     private static ILoggingTool logger   = LoggingToolFactory.createLoggingTool(MDLRXNWriter.class);
     private int                 reactionNumber;
@@ -89,6 +96,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
         } catch (Exception exc) {
         }
         this.reactionNumber = 1;
+        initIOSettings();
     }
 
     /**
@@ -103,6 +111,13 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 
     public MDLRXNWriter() {
         this(new StringWriter());
+    }
+
+    private void initIOSettings() {
+        writeAgents = addSetting(new BooleanIOSetting(OptWriteAgents,
+                                                      IOSetting.Importance.LOW,
+                                                      "Output agents in the RXN file",
+                                                      "true"));
     }
 
     @Override
@@ -198,7 +213,9 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     private void writeReaction(IReaction reaction) throws CDKException {
         int reactantCount = reaction.getReactantCount();
         int productCount = reaction.getProductCount();
-        if (reactantCount <= 0 || productCount <= 0) {
+        int agentCount = reaction.getAgents().getAtomContainerCount();
+        if (reactantCount + productCount + agentCount == 0) {
+            // JWM: an empty record is still valid though..?!?
             throw new CDKException("Either no reactants or no products present.");
         }
 
@@ -230,6 +247,8 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             line = "";
             line += formatMDLInt(reactantCount, 3);
             line += formatMDLInt(productCount, 3);
+            if (agentCount > 0 && writeAgents.isSet())
+                line += formatMDLInt(agentCount, 3);
             writer.write(line);
             writer.write('\n');
 
@@ -242,6 +261,8 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             }
             writeAtomContainerSet(reaction.getReactants());
             writeAtomContainerSet(reaction.getProducts());
+            if (agentCount > 0 && writeAgents.isSet())
+                writeAtomContainerSet(reaction.getAgents());
 
             //write sdfields, if any
             if (rdFields != null) {
