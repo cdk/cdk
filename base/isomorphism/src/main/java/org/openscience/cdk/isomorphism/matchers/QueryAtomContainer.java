@@ -1816,6 +1816,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             }
 
             QueryAtom qatom = new QueryAtom(expr);
+            qatom.setIsInRing(atom.isInRing());
 
             // backward compatibility for naughty methods that are expecting
             // these to be set for a query!
@@ -1873,6 +1874,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             QueryBond qbond = new QueryBond((IAtom) mapping.get(bond.getBegin()),
                                             (IAtom) mapping.get(bond.getEnd()),
                                             expr);
+            qbond.setIsInRing(bond.isInRing());
             // backward compatibility for naughty methods that are expecting
             // these to be set for a query!
             if (optset.contains(Expr.Type.ALIPHATIC_ORDER) ||
