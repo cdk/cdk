@@ -628,4 +628,14 @@ class ImmutableHydrogen implements IAtom {
     public IBond getBond(IAtom atom) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public int getMapIdx() {
+      return 0;
+    }
+
+    @Override
+    public void setMapIdx(int mapidx) {
+
+    }
 }

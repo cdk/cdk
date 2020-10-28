@@ -522,6 +522,19 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
         return stringContent.toString();
     }
 
+    public int getMapIdx() {
+      Integer mapidx = getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+      if (mapidx == null)
+        return 0;
+      return mapidx;
+    }
+
+    public void setMapIdx(int mapidx) {
+      if (mapidx < 0)
+        throw new IllegalArgumentException("setMapIdx(val) value must be >= 0");
+      setProperty(CDKConstants.ATOM_ATOM_MAPPING, mapidx);
+    }
+
     /**
      * Clones this atom object and its content.
      *

@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * @cdk.module  isomorphism
+ * @cdk.module isomorphism
  * @cdk.githash
  */
 public class QueryAtom extends QueryChemObject implements IQueryAtom {
@@ -43,101 +43,113 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(QueryAtom.class);
 
     /**
-     *  The partial charge of the atom.
-     *
+     * The partial charge of the atom.
+     * <p>
      * The default value is {@link CDKConstants#UNSET} and serves to provide a check whether the charge has been
      * set or not
      */
-    protected Double                  charge               = (Double) CDKConstants.UNSET;
+    protected Double charge = (Double) CDKConstants.UNSET;
 
     /**
-     *  A 2D point specifying the location of this atom in a 2D coordinate
-     *  space.
+     * A 2D point specifying the location of this atom in a 2D coordinate
+     * space.
      */
-    protected Point2d                 point2d              = (Point2d) CDKConstants.UNSET;
+    protected Point2d point2d = (Point2d) CDKConstants.UNSET;
 
     /**
-     *  A 3 point specifying the location of this atom in a 3D coordinate
-     *  space.
+     * A 3 point specifying the location of this atom in a 3D coordinate
+     * space.
      */
-    protected Point3d                 point3d              = (Point3d) CDKConstants.UNSET;
+    protected Point3d point3d = (Point3d) CDKConstants.UNSET;
 
     /**
-     *  A 3 point specifying the location of this atom in a crystal unit cell.
+     * A 3 point specifying the location of this atom in a crystal unit cell.
      */
-    protected Point3d                 fractionalPoint3d    = (Point3d) CDKConstants.UNSET;
+    protected Point3d fractionalPoint3d = (Point3d) CDKConstants.UNSET;
 
     /**
-     *  The number of implicitly bound hydrogen atoms for this atom.
+     * The number of implicitly bound hydrogen atoms for this atom.
      */
-    protected Integer                 hydrogenCount        = (Integer) CDKConstants.UNSET;
+    protected Integer hydrogenCount = (Integer) CDKConstants.UNSET;
 
     /**
-     *  A stereo parity descriptor for the stereochemistry of this atom.
+     * A stereo parity descriptor for the stereochemistry of this atom.
      */
-    protected Integer                 stereoParity         = (Integer) CDKConstants.UNSET;
+    protected Integer stereoParity = (Integer) CDKConstants.UNSET;
 
     /**
-     *  The maximum bond order allowed for this atom type.
+     * The maximum bond order allowed for this atom type.
      */
-    IBond.Order                       maxBondOrder         = null;
+    IBond.Order maxBondOrder = null;
     /**
-     *  The maximum sum of all bond orders allowed for this atom type.
+     * The maximum sum of all bond orders allowed for this atom type.
      */
-    Double                            bondOrderSum         = (Double) CDKConstants.UNSET;
+    Double bondOrderSum = (Double) CDKConstants.UNSET;
 
     /**
      * The covalent radius of this atom type.
      */
-    Double                            covalentRadius       = (Double) CDKConstants.UNSET;
+    Double covalentRadius = (Double) CDKConstants.UNSET;
 
     /**
-     *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
-     *
-     *  Note that some constructors e.g. ({@link org.openscience.cdk.silent.AtomType#AtomType(String)} and
+     * The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
+     * <p>
+     * Note that some constructors e.g. ({@link org.openscience.cdk.silent.AtomType#AtomType(String)} and
      * {@link org.openscience.cdk.silent.AtomType#AtomType(String, String)} ) will explicitly set this field to 0
      */
-    protected Integer                 formalCharge         = (Integer) CDKConstants.UNSET;
+    protected Integer formalCharge = (Integer) CDKConstants.UNSET;
 
     /**
      * The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET
      * as default.
      */
-    protected IAtomType.Hybridization hybridization        = (Hybridization) CDKConstants.UNSET;
+    protected IAtomType.Hybridization hybridization = (Hybridization) CDKConstants.UNSET;
 
     /**
-     *  The electron Valency of this atom with CDKConstants.UNSET as default.
+     * The electron Valency of this atom with CDKConstants.UNSET as default.
      */
-    protected Integer                 electronValency      = (Integer) CDKConstants.UNSET;
+    protected Integer electronValency = (Integer) CDKConstants.UNSET;
 
     /**
      * The formal number of neighbours this atom type can have with CDKConstants_UNSET
      * as default. This includes explicitely and implicitely connected atoms, including
      * implicit hydrogens.
      */
-    protected Integer                 formalNeighbourCount = (Integer) CDKConstants.UNSET;
+    protected Integer formalNeighbourCount = (Integer) CDKConstants.UNSET;
 
     /**
      * String representing the identifier for this atom type with null as default.
      */
-    private String                    identifier           = (String) CDKConstants.UNSET;
+    private String identifier = (String) CDKConstants.UNSET;
 
-    /** Exact mass of this isotope. */
-    public Double                     exactMass;
+    /**
+     * Exact mass of this isotope.
+     */
+    public Double exactMass;
 
-    /** Natural abundance of this isotope. */
-    public Double                     naturalAbundance;
+    /**
+     * Natural abundance of this isotope.
+     */
+    public Double naturalAbundance;
 
-    /** The mass number for this isotope. */
-    private Integer                   massNumber;
+    /**
+     * The mass number for this isotope.
+     */
+    private Integer massNumber;
 
-    /** The element symbol for this element as listed in the periodic table. */
-    protected String                  symbol;
+    /**
+     * The element symbol for this element as listed in the periodic table.
+     */
+    protected String symbol;
 
-    /** The atomic number for this element giving their position in the periodic table. */
-    protected Integer                 atomicNumber         = (Integer) CDKConstants.UNSET;
+    /**
+     * The atomic number for this element giving their position in the periodic table.
+     */
+    protected Integer atomicNumber = (Integer) CDKConstants.UNSET;
 
-    /** Atom Expression */
+    /**
+     * Atom Expression
+     */
     private Expr expr = new Expr(Expr.Type.TRUE);
 
     public QueryAtom(String symbol, IChemObjectBuilder builder) {
@@ -190,11 +202,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Sets the partial charge of this atom.
+     * Sets the partial charge of this atom.
      *
-     * @param  charge  The partial charge
-     *
-     * @see    #getCharge
+     * @param charge The partial charge
+     * @see #getCharge
      */
     @Override
     public void setCharge(Double charge) {
@@ -203,13 +214,12 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Returns the partial charge of this atom.
-     *
+     * Returns the partial charge of this atom.
+     * <p>
      * If the charge has not been set the return value is Double.NaN
      *
      * @return the charge of this atom
-     *
-     * @see    #setCharge
+     * @see #setCharge
      */
     @Override
     public Double getCharge() {
@@ -217,11 +227,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Sets the number of implicit hydrogen count of this atom.
+     * Sets the number of implicit hydrogen count of this atom.
      *
-     * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom.
-     *
-     * @see    #getImplicitHydrogenCount
+     * @param hydrogenCount The number of hydrogen atoms bonded to this atom.
+     * @see #getImplicitHydrogenCount
      */
     @Override
     public void setImplicitHydrogenCount(Integer hydrogenCount) {
@@ -230,11 +239,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Returns the hydrogen count of this atom.
+     * Returns the hydrogen count of this atom.
      *
-     * @return    The hydrogen count of this atom.
-     *
-     * @see       #setImplicitHydrogenCount
+     * @return The hydrogen count of this atom.
+     * @see #setImplicitHydrogenCount
      */
     @Override
     public Integer getImplicitHydrogenCount() {
@@ -242,14 +250,12 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-    *
-    * Sets a point specifying the location of this
-    * atom in a 2D space.
-    *
-    * @param  point2d  A point in a 2D plane
-    *
-    * @see    #getPoint2d
-    */
+     * Sets a point specifying the location of this
+     * atom in a 2D space.
+     *
+     * @param point2d A point in a 2D plane
+     * @see #getPoint2d
+     */
     @Override
     public void setPoint2d(Point2d point2d) {
         this.point2d = point2d;
@@ -257,13 +263,11 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *
      * Sets a point specifying the location of this
      * atom in 3D space.
      *
-     * @param  point3d  A point in a 3-dimensional space
-     *
-     * @see    #getPoint3d
+     * @param point3d A point in a 3-dimensional space
+     * @see #getPoint3d
      */
     @Override
     public void setPoint3d(Point3d point3d) {
@@ -275,10 +279,9 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * Sets a point specifying the location of this
      * atom in a Crystal unit cell.
      *
-     * @param  point3d  A point in a 3d fractional unit cell space
-     *
-     * @see    #getFractionalPoint3d
-     * @see    org.openscience.cdk.Crystal
+     * @param point3d A point in a 3d fractional unit cell space
+     * @see #getFractionalPoint3d
+     * @see org.openscience.cdk.Crystal
      */
     @Override
     public void setFractionalPoint3d(Point3d point3d) {
@@ -289,10 +292,9 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     /**
      * Sets the stereo parity for this atom.
      *
-     * @param  stereoParity  The stereo parity for this atom
-     *
-     * @see    org.openscience.cdk.CDKConstants for predefined values.
-     * @see    #getStereoParity
+     * @param stereoParity The stereo parity for this atom
+     * @see org.openscience.cdk.CDKConstants for predefined values.
+     * @see #getStereoParity
      */
     @Override
     public void setStereoParity(Integer stereoParity) {
@@ -304,9 +306,8 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * Returns a point specifying the location of this
      * atom in a 2D space.
      *
-     * @return    A point in a 2D plane. Null if unset.
-     *
-     * @see       #setPoint2d
+     * @return A point in a 2D plane. Null if unset.
+     * @see #setPoint2d
      */
     @Override
     public Point2d getPoint2d() {
@@ -317,9 +318,8 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * Returns a point specifying the location of this
      * atom in a 3D space.
      *
-     * @return    A point in 3-dimensional space. Null if unset.
-     *
-     * @see       #setPoint3d
+     * @return A point in 3-dimensional space. Null if unset.
+     * @see #setPoint3d
      */
     @Override
     public Point3d getPoint3d() {
@@ -330,10 +330,9 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * Returns a point specifying the location of this
      * atom in a Crystal unit cell.
      *
-     * @return    A point in 3d fractional unit cell space. Null if unset.
-     *
-     * @see       #setFractionalPoint3d
-     * @see       org.openscience.cdk.CDKConstants for predefined values.
+     * @return A point in 3d fractional unit cell space. Null if unset.
+     * @see #setFractionalPoint3d
+     * @see org.openscience.cdk.CDKConstants for predefined values.
      */
     @Override
     public Point3d getFractionalPoint3d() {
@@ -341,13 +340,12 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Returns the stereo parity of this atom. It uses the predefined values
-     *  found in CDKConstants.
+     * Returns the stereo parity of this atom. It uses the predefined values
+     * found in CDKConstants.
      *
-     * @return    The stereo parity for this atom
-     *
-     * @see       org.openscience.cdk.CDKConstants
-     * @see       #setStereoParity
+     * @return The stereo parity for this atom
+     * @see org.openscience.cdk.CDKConstants
+     * @see #setStereoParity
      */
     @Override
     public Integer getStereoParity() {
@@ -355,11 +353,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Sets the if attribute of the AtomType object.
+     * Sets the if attribute of the AtomType object.
      *
-     * @param  identifier  The new AtomTypeID value. Null if unset.
-     *
-     * @see    #getAtomTypeName
+     * @param identifier The new AtomTypeID value. Null if unset.
+     * @see #getAtomTypeName
      */
     @Override
     public void setAtomTypeName(String identifier) {
@@ -368,11 +365,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Sets the MaxBondOrder attribute of the AtomType object.
+     * Sets the MaxBondOrder attribute of the AtomType object.
      *
-     * @param  maxBondOrder  The new MaxBondOrder value
-     *
-     * @see       #getMaxBondOrder
+     * @param maxBondOrder The new MaxBondOrder value
+     * @see #getMaxBondOrder
      */
     @Override
     public void setMaxBondOrder(IBond.Order maxBondOrder) {
@@ -381,11 +377,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Sets the the exact bond order sum attribute of the AtomType object.
+     * Sets the the exact bond order sum attribute of the AtomType object.
      *
-     * @param  bondOrderSum  The new bondOrderSum value
-     *
-     * @see       #getBondOrderSum
+     * @param bondOrderSum The new bondOrderSum value
+     * @see #getBondOrderSum
      */
     @Override
     public void setBondOrderSum(Double bondOrderSum) {
@@ -394,11 +389,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Gets the id attribute of the AtomType object.
+     * Gets the id attribute of the AtomType object.
      *
-     * @return    The id value
-     *
-     * @see       #setAtomTypeName
+     * @return The id value
+     * @see #setAtomTypeName
      */
     @Override
     public String getAtomTypeName() {
@@ -406,11 +400,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Gets the MaxBondOrder attribute of the AtomType object.
+     * Gets the MaxBondOrder attribute of the AtomType object.
      *
-     * @return    The MaxBondOrder value
-     *
-     * @see       #setMaxBondOrder
+     * @return The MaxBondOrder value
+     * @see #setMaxBondOrder
      */
     @Override
     public IBond.Order getMaxBondOrder() {
@@ -418,11 +411,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Gets the bondOrderSum attribute of the AtomType object.
+     * Gets the bondOrderSum attribute of the AtomType object.
      *
-     * @return    The bondOrderSum value
-     *
-     * @see       #setBondOrderSum
+     * @return The bondOrderSum value
+     * @see #setBondOrderSum
      */
     @Override
     public Double getBondOrderSum() {
@@ -430,11 +422,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Sets the formal charge of this atom.
+     * Sets the formal charge of this atom.
      *
-     * @param  charge  The formal charge
-     *
-     * @see    #getFormalCharge
+     * @param charge The formal charge
+     * @see #getFormalCharge
      */
     @Override
     public void setFormalCharge(Integer charge) {
@@ -443,11 +434,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Returns the formal charge of this atom.
+     * Returns the formal charge of this atom.
      *
      * @return the formal charge of this atom
-     *
-     * @see    #setFormalCharge
+     * @see #setFormalCharge
      */
     @Override
     public Integer getFormalCharge() {
@@ -457,9 +447,8 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     /**
      * Sets the formal neighbour count of this atom.
      *
-     * @param  count  The neighbour count
-     *
-     * @see    #getFormalNeighbourCount
+     * @param count The neighbour count
+     * @see #getFormalNeighbourCount
      */
     @Override
     public void setFormalNeighbourCount(Integer count) {
@@ -471,8 +460,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * Returns the formal neighbour count of this atom.
      *
      * @return the formal neighbour count of this atom
-     *
-     * @see    #setFormalNeighbourCount
+     * @see #setFormalNeighbourCount
      */
     @Override
     public Integer getFormalNeighbourCount() {
@@ -480,11 +468,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Sets the hybridization of this atom.
+     * Sets the hybridization of this atom.
      *
-     * @param  hybridization  The hybridization
-     *
-     * @see    #getHybridization
+     * @param hybridization The hybridization
+     * @see #getHybridization
      */
     @Override
     public void setHybridization(IAtomType.Hybridization hybridization) {
@@ -493,11 +480,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Returns the hybridization of this atom.
+     * Returns the hybridization of this atom.
      *
      * @return the hybridization of this atom
-     *
-     * @see    #setHybridization
+     * @see #setHybridization
      */
     @Override
     public IAtomType.Hybridization getHybridization() {
@@ -505,11 +491,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Sets the NaturalAbundance attribute of the Isotope object.
+     * Sets the NaturalAbundance attribute of the Isotope object.
      *
-     * @param  naturalAbundance  The new NaturalAbundance value
-     *
-     * @see       #getNaturalAbundance
+     * @param naturalAbundance The new NaturalAbundance value
+     * @see #getNaturalAbundance
      */
     @Override
     public void setNaturalAbundance(Double naturalAbundance) {
@@ -518,11 +503,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Sets the ExactMass attribute of the Isotope object.
+     * Sets the ExactMass attribute of the Isotope object.
      *
-     * @param  exactMass  The new ExactMass value
-     *
-     * @see       #getExactMass
+     * @param exactMass The new ExactMass value
+     * @see #getExactMass
      */
     @Override
     public void setExactMass(Double exactMass) {
@@ -531,9 +515,9 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Gets the NaturalAbundance attribute of the Isotope object.
+     * Gets the NaturalAbundance attribute of the Isotope object.
      *
-     *  <p>Once instantiated all field not filled by passing parameters
+     * <p>Once instantiated all field not filled by passing parameters
      * to the constructor are null. Isotopes can be configured by using
      * the IsotopeFactory.configure() method:
      * </p>
@@ -543,9 +527,8 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      *   if.configure(isotope);
      * </pre>
      *
-     * @return    The NaturalAbundance value
-     *
-     * @see       #setNaturalAbundance
+     * @return The NaturalAbundance value
+     * @see #setNaturalAbundance
      */
     @Override
     public Double getNaturalAbundance() {
@@ -553,8 +536,8 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Gets the ExactMass attribute of the Isotope object.
-     *  <p>Once instantiated all field not filled by passing parameters
+     * Gets the ExactMass attribute of the Isotope object.
+     * <p>Once instantiated all field not filled by passing parameters
      * to the constructor are null. Isotopes can be configured by using
      * the IsotopeFactory.configure() method:
      * </p>
@@ -564,9 +547,8 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      *   if.configure(isotope);
      * </pre>
      *
-     * @return    The ExactMass value
-     *
-     * @see       #setExactMass
+     * @return The ExactMass value
+     * @see #setExactMass
      */
     @Override
     public Double getExactMass() {
@@ -587,8 +569,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * </pre>
      *
      * @return The atomic mass of this element
-     *
-     * @see    #setMassNumber(Integer)
+     * @see #setMassNumber(Integer)
      */
     @Override
     public Integer getMassNumber() {
@@ -598,9 +579,8 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     /**
      * Sets the atomic mass of this element.
      *
-     * @param   massNumber The atomic mass to be assigned to this element
-     *
-     * @see    #getMassNumber
+     * @param massNumber The atomic mass to be assigned to this element
+     * @see #getMassNumber
      */
     @Override
     public void setMassNumber(Integer massNumber) {
@@ -621,8 +601,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * </pre>
      *
      * @return The atomic number of this element
-     *
-     * @see    #setAtomicNumber
+     * @see #setAtomicNumber
      */
     @Override
     public Integer getAtomicNumber() {
@@ -632,9 +611,8 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     /**
      * Sets the atomic number of this element.
      *
-     * @param   atomicNumber The atomic mass to be assigned to this element
-     *
-     * @see    #getAtomicNumber
+     * @param atomicNumber The atomic mass to be assigned to this element
+     * @see #getAtomicNumber
      */
     @Override
     public void setAtomicNumber(Integer atomicNumber) {
@@ -646,8 +624,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * Returns the element symbol of this element.
      *
      * @return The element symbol of this element. Null if unset.
-     *
-     * @see    #setSymbol
+     * @see #setSymbol
      */
     @Override
     public String getSymbol() {
@@ -658,8 +635,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * Sets the element symbol of this element.
      *
      * @param symbol The element symbol to be assigned to this atom
-     *
-     * @see    #getSymbol
+     * @see #getSymbol
      */
     @Override
     public void setSymbol(String symbol) {
@@ -671,7 +647,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * Sets the covalent radius for this AtomType.
      *
      * @param radius The covalent radius for this AtomType
-     * @see    #getCovalentRadius
+     * @see #getCovalentRadius
      */
     @Override
     public void setCovalentRadius(Double radius) {
@@ -683,7 +659,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * Returns the covalent radius for this AtomType.
      *
      * @return The covalent radius for this AtomType
-     * @see    #setCovalentRadius
+     * @see #setCovalentRadius
      */
     @Override
     public Double getCovalentRadius() {
@@ -691,11 +667,10 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Sets the the exact electron valency of the AtomType object.
+     * Sets the the exact electron valency of the AtomType object.
      *
-     * @param  valency  The new valency value
+     * @param valency The new valency value
      * @see #getValency
-     *
      */
     @Override
     public void setValency(Integer valency) {
@@ -704,43 +679,72 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
     }
 
     /**
-     *  Gets the the exact electron valency of the AtomType object.
+     * Gets the the exact electron valency of the AtomType object.
      *
      * @return The valency value
      * @see #setValency
-     *
      */
     @Override
     public Integer getValency() {
         return this.electronValency;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isAromatic() {
         return getFlag(CDKConstants.ISAROMATIC);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setIsAromatic(boolean arom) {
         setFlag(CDKConstants.ISAROMATIC, arom);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isInRing() {
         return getFlag(CDKConstants.ISINRING);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setIsInRing(boolean ring) {
         setFlag(CDKConstants.ISINRING, ring);
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getMapIdx() {
+        Integer mapidx = getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+        if (mapidx == null)
+            return 0;
+        return mapidx;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMapIdx(int mapidx) {
+        if (mapidx < 0)
+            throw new IllegalArgumentException("setMapIdx(val) value must be >= 0");
+        setProperty(CDKConstants.ATOM_ATOM_MAPPING, mapidx);
+    }
+
+    /**
      * Set the atom-expression predicate for this query atom.
+     *
      * @param expr the expression
      */
     public void setExpression(Expr expr) {
@@ -749,6 +753,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
 
     /**
      * Get the atom-expression predicate for this query atom.
+     *
      * @return the expression
      */
     public Expr getExpression() {
@@ -813,7 +818,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      *
      * @param type the expr type
      */
-    public QueryAtom (Expr.Type type) {
+    public QueryAtom(Expr.Type type) {
         this(new Expr(type));
     }
 
@@ -826,7 +831,7 @@ public class QueryAtom extends QueryChemObject implements IQueryAtom {
      * }</pre>
      *
      * @param type the expr type
-     * @param val the expr value
+     * @param val  the expr value
      */
     public QueryAtom(Expr.Type type, int val) {
         this(new Expr(type, val));
