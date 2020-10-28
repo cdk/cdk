@@ -1776,9 +1776,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             if (optset.contains(TOTAL_DEGREE))
                 expr.and(new Expr(DEGREE,
                                   atom.getBondCount() + atom.getImplicitHydrogenCount()));
-            if (optset.contains(IS_IN_RING) ||
-                optset.contains(IS_IN_CHAIN))
-                expr.and(new Expr(atom.isInRing() ? IS_IN_RING : IS_IN_CHAIN));
+            if (optset.contains(IS_IN_RING) && atom.isInRing())
+                expr.and(new Expr(IS_IN_RING));
+            if (optset.contains(IS_IN_CHAIN) && !atom.isInRing())
+              expr.and(new Expr(IS_IN_CHAIN));
             if (optset.contains(IMPL_H_COUNT))
                 expr.and(new Expr(IMPL_H_COUNT));
             if (optset.contains(RING_BOND_COUNT)) {
