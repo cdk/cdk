@@ -1202,8 +1202,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 // Sgroup Bond List [Sgroup]
                 // M  SBL sssn15 bbb ...
                 // bbb: Bonds in Sgroup sss.
-                // (For data Sgroups, bbb’s are the containment bonds, for all other
-                //  Sgroup types, bbb’s are crossing bonds.)
+                // (For data Sgroups, bbb's are the containment bonds, for all other
+                //  Sgroup types, bbb's are crossing bonds.)
                 case M_SBL:
                     sgroup = ensureSgroup(sgroups, readMolfileInt(line, 7));
                     count = readMolfileInt(line, 10);
