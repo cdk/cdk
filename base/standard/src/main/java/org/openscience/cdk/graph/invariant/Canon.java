@@ -280,6 +280,9 @@ public final class Canon {
             System.arraycopy(nextVs, 0, currVs, 0, nnu);
         }
 
+        if(symmetry == null)
+            symmetry = new long[0];
+
         return symmetry;
     }
 
@@ -341,7 +344,8 @@ public final class Canon {
             int expH = 0;
             int elem = atomicNumber(atom);
             int chg = charge(atom);
-
+            int mass = atom.getMassNumber() != null ? atom.getMassNumber() : 0;
+            
             // count non-suppressed (explicit) hydrogens
             for (int w : graph[v])
                 if (atomicNumber(container.getAtom(w)) == 1) expH++;
@@ -358,7 +362,9 @@ public final class Canon {
             label |= Math.abs(chg) & 0x3;
             label <<= 4; // hydrogen count <= 15 (4 bits)
             label |= impH + expH & 0xf;
-
+            label <<= 10;
+            label |= mass;
+            
             labels[v] = label;
         }
         return labels;

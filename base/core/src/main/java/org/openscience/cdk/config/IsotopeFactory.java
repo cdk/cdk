@@ -215,7 +215,30 @@ public abstract class IsotopeFactory {
             if (major != null)
                 this.majorIsotope[elem] = major;
             else
-                logger.error("Could not find major isotope for: ", elem);
+        	switch(elem) {
+	            // return InChI variant
+	            case 43:return getIsotope("Tc", 98);
+	            case 61:return getIsotope("Pm", 145);
+	            case 84:return getIsotope("Po", 209);
+	            case 85:return getIsotope("At", 210);
+	            case 86:return getIsotope("Rn", 222);
+	            case 87:return getIsotope("Fr", 223);
+	            case 88:return getIsotope("Ra", 226);
+	            case 89:return getIsotope("Ac", 227);
+	            case 93:return getIsotope("Np", 237);
+	            case 94:return getIsotope("Pu", 244);
+	            case 95:return getIsotope("Am", 243);
+	            case 96:return getIsotope("Cm", 247);
+	            case 97:return getIsotope("Bk", 247);
+	            case 98:return getIsotope("Cf", 251);
+	            case 99:return getIsotope("Es", 252);
+	            case 100:return getIsotope("Fm", 257);
+	            case 101:return getIsotope("Md", 258);
+	            case 102:return getIsotope("No", 259);
+	            case 103:return getIsotope("Lr", 260);
+	            case 104:return getIsotope("Rf", 261);
+	            default: logger.error("Could not find major isotope for: ", elem);
+	        }
         }
         return clone(major);
     }

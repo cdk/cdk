@@ -46,6 +46,7 @@ import java.util.Set;
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN;
 import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN_INVERTED;
+import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
@@ -285,7 +286,7 @@ public abstract class StereoElementFactory {
                         IBond bond = bondMap.get(v, w);
                         if (w > v && bond.getOrder() == IBond.Order.DOUBLE) {
                             if (centers.elementType(w) == Stereocenters.Type.Tricoordinate
-                                && centers.isStereocenter(w) && !isInSmallRing(bond, 7)) {
+                        	&& centers.isStereocenter(w) /*&& !isInSmallRing(bond, 7)*/) {
                                 IStereoElement element = createGeometric(v, w, centers);
                                 if (element != null) elements.add(element);
                             }
@@ -795,6 +796,7 @@ public abstract class StereoElementFactory {
                 if (w == v) continue;
                 if (bond.getOrder() != IBond.Order.SINGLE) continue;
                 if (isUnspecified(bond)) return null;
+                if (n == 2) return null;
                 neighbors[n] = container.getAtom(w);
                 elevation[n] = elevationOf(terminals[0], bond);
                 n++;
@@ -806,6 +808,7 @@ public abstract class StereoElementFactory {
                 IBond bond = bondMap.get(t1, w);
                 if (bond.getOrder() != IBond.Order.SINGLE) continue;
                 if (isUnspecified(bond)) return null;
+                if (n == 4) return null;
                 neighbors[n] = container.getAtom(w);
                 elevation[n] = elevationOf(terminals[1], bond);
                 n++;
@@ -831,6 +834,10 @@ public abstract class StereoElementFactory {
             if ((dbs.size() & 0x1) == 0)
                 return null;
 
+            for(IBond bond : dbs)
+        	if(bond.getStereo() == E_OR_Z)
+        	    return null;
+            
             IBond   focus    = dbs.get(dbs.size()/2);
             IBond[] carriers = new IBond[2];
             int     config   = 0;
@@ -1208,6 +1215,9 @@ public abstract class StereoElementFactory {
             IAtom focus = container.getAtom(v);
 
             if (hasUnspecifiedParity(focus)) return null;
+            
+            if(container.getConnectedBondsCount(focus) != 2)
+        	return null;
 
             IAtom[] terminals = ExtendedTetrahedral.findTerminalAtoms(container, focus);
             IAtom[] neighbors = new IAtom[4];

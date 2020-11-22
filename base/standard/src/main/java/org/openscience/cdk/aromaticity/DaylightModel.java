@@ -99,6 +99,7 @@ final class DaylightModel extends ElectronDonation {
             atomIndex.put(a, i);
             degree[i] = checkNotNull(a.getImplicitHydrogenCount(),
                     "Aromaticity model requires implicit hydrogen count is set.");
+            bondOrderSum[i] = degree[i];
         }
 
         // for each bond we increase the degree count and check for cyclic and
@@ -141,7 +142,7 @@ final class DaylightModel extends ElectronDonation {
 
             // abnormal valence, usually indicated a radical. these cause problems
             // with kekulisations
-            int bondedValence = bondOrderSum[i] + container.getAtom(i).getImplicitHydrogenCount();
+            int bondedValence = bondOrderSum[i];
             if (!normal(element, charge, bondedValence)) {
                 electrons[i] = -1;
             }
