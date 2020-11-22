@@ -286,7 +286,7 @@ public abstract class StereoElementFactory {
                         IBond bond = bondMap.get(v, w);
                         if (w > v && bond.getOrder() == IBond.Order.DOUBLE) {
                             if (centers.elementType(w) == Stereocenters.Type.Tricoordinate
-                        	&& centers.isStereocenter(w) /*&& !isInSmallRing(bond, 7)*/) {
+                                && centers.isStereocenter(w) /*&& !isInSmallRing(bond, 7)*/) {
                                 IStereoElement element = createGeometric(v, w, centers);
                                 if (element != null) elements.add(element);
                             }
@@ -834,8 +834,8 @@ public abstract class StereoElementFactory {
             if ((dbs.size() & 0x1) == 0)
                 return null;
 
-            for(IBond bond : dbs)
-        	if(bond.getStereo() == E_OR_Z)
+            for (IBond bond : dbs)
+        	if (bond.getStereo() == E_OR_Z)
         	    return null;
             
             IBond   focus    = dbs.get(dbs.size()/2);
@@ -1216,7 +1216,7 @@ public abstract class StereoElementFactory {
 
             if (hasUnspecifiedParity(focus)) return null;
             
-            if(container.getConnectedBondsCount(focus) != 2)
+            if (container.getConnectedBondsCount(focus) != 2)
         	return null;
 
             IAtom[] terminals = ExtendedTetrahedral.findTerminalAtoms(container, focus);

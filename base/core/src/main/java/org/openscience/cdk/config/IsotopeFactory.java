@@ -215,7 +215,7 @@ public abstract class IsotopeFactory {
             if (major != null)
                 this.majorIsotope[elem] = major;
             else
-        	switch(elem) {
+                switch(elem) {
 	            // return InChI variant
 	            case 43:return getIsotope("Tc", 98);
 	            case 61:return getIsotope("Pm", 145);

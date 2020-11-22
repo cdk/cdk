@@ -746,7 +746,7 @@ public final class Cycles {
             /** {@inheritDoc} */
             @Override
             int[][] apply(int[][] graph, int length) throws Intractable {
-        	final int threshold = 3072; // see. AllRingsFinder.Threshold.Pubchem_994
+                final int threshold = 3072; // see. AllRingsFinder.Threshold.Pubchem_994
                 AllCycles ac = new AllCycles(graph, Math.min(length, graph.length), threshold);
                 if (!ac.completed())
                     throw new Intractable("A large number of cycles were being generated and the"
@@ -807,7 +807,7 @@ public final class Cycles {
             /** {@inheritDoc} */
             @Override
             int[][] apply(int[][] graph, int length) throws Intractable {
-        	final int threshold = 3072; // see. AllRingsFinder.Threshold.Pubchem_994
+                final int threshold = 3072; // see. AllRingsFinder.Threshold.Pubchem_994
                 AllCycles ac = new AllCycles(graph, Math.min(length, graph.length), threshold);
 
                 return ac.completed() ? ac.paths() : VERTEX_SHORT.apply(graph, length);

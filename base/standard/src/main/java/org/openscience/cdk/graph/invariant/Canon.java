@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
  *
@@ -280,7 +280,7 @@ public final class Canon {
             System.arraycopy(nextVs, 0, currVs, 0, nnu);
         }
 
-        if(symmetry == null)
+        if (symmetry == null)
             symmetry = new long[0];
 
         return symmetry;
