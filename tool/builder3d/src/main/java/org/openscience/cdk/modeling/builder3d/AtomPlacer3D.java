@@ -34,6 +34,7 @@ import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -664,6 +665,6 @@ public class AtomPlacer3D {
      * @return      True if the atom is non-hydrogen
      */
     boolean isHeavyAtom(IAtom atom) {
-        return !atom.getSymbol().equals("H");
+        return atom.getAtomicNumber() != IElement.H;
     }
 }

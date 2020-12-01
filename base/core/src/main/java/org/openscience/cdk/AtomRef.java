@@ -442,6 +442,17 @@ public class AtomRef extends ChemObjectRef implements IAtom {
         atom.setIsInRing(ring);
     }
 
+
+    @Override
+    public int getMapIdx() {
+      return atom.getMapIdx();
+    }
+
+    @Override
+    public void setMapIdx(int mapidx) {
+      atom.setMapIdx(mapidx);
+    }
+
     @Override
     public int hashCode() {
         return atom.hashCode();

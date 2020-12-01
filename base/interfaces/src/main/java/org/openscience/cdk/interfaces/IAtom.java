@@ -257,6 +257,20 @@ public interface IAtom extends IAtomType {
     void setIsInRing(boolean ring);
 
     /**
+     * Access the map index for this atom.
+     *
+     * @return the map index (0 if not set)
+     */
+    int getMapIdx();
+
+    /**
+     * Set the map index for this atom.
+     *
+     * @param mapidx the new map index
+     */
+    void setMapIdx(int mapidx);
+
+    /**
      * {@inheritDoc}
      */
     @Override

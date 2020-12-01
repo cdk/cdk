@@ -37,6 +37,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  *  A set of static utility classes for geometric calculations on Atoms.
@@ -91,15 +92,15 @@ public class AtomTetrahedralLigandPlacer3D {
         int nwanted = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             refAtom = atomContainer.getAtom(i);
-            if (!refAtom.getSymbol().equals("H") && hasUnsetNeighbour(refAtom, atomContainer)) {
+            if (refAtom.getAtomicNumber() != IElement.H && hasUnsetNeighbour(refAtom, atomContainer)) {
                 IAtomContainer noCoords = getUnsetAtomsInAtomContainer(refAtom, atomContainer);
                 IAtomContainer withCoords = getPlacedAtomsInAtomContainer(refAtom, atomContainer);
                 if (withCoords.getAtomCount() > 0) {
                     atomC = getPlacedHeavyAtomInAtomContainer(withCoords.getAtom(0), refAtom, atomContainer);
                 }
-                if (refAtom.getFormalNeighbourCount() == 0 && refAtom.getSymbol().equals("C")) {
+                if (refAtom.getFormalNeighbourCount() == 0 && refAtom.getAtomicNumber() == IElement.C) {
                     nwanted = noCoords.getAtomCount();
-                } else if (refAtom.getFormalNeighbourCount() == 0 && !refAtom.getSymbol().equals("C")) {
+                } else if (refAtom.getFormalNeighbourCount() == 0 && refAtom.getAtomicNumber() != IElement.C) {
                     nwanted = 4;
                 } else {
                     nwanted = refAtom.getFormalNeighbourCount() - withCoords.getAtomCount();
@@ -872,7 +873,7 @@ public class AtomTetrahedralLigandPlacer3D {
         IAtom atom = null;
         for (int i = 0; i < atoms.size(); i++) {
             IAtom curAtom = (IAtom) atoms.get(i);
-            if (curAtom.getFlag(CDKConstants.ISPLACED) && !curAtom.getSymbol().equals("H") && !Objects.equals(curAtom, atomB)) {
+            if (curAtom.getFlag(CDKConstants.ISPLACED) && curAtom.getAtomicNumber() != IElement.H && !Objects.equals(curAtom, atomB)) {
                 return curAtom;
             }
         }

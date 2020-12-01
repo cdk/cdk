@@ -30,8 +30,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
+
 
 import java.io.IOException;
 import java.util.BitSet;
@@ -181,7 +183,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
 
         private boolean isCarbonOnlyRing(IAtomContainer ring) {
             for (IAtom ringAtom : ring.atoms()) {
-                if (!ringAtom.getSymbol().equals("C")) return false;
+                if (ringAtom.getAtomicNumber() != IElement.C) return false;
             }
             return true;
         }
@@ -201,7 +203,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
         private int countNitrogenInRing(IAtomContainer ring) {
             int c = 0;
             for (IAtom ringAtom : ring.atoms()) {
-                if (ringAtom.getSymbol().equals("N")) c++;
+                if (ringAtom.getAtomicNumber() == IElement.N) c++;
             }
             return c;
         }
@@ -209,7 +211,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
         private int countHeteroInRing(IAtomContainer ring) {
             int c = 0;
             for (IAtom ringAtom : ring.atoms()) {
-                if (!ringAtom.getSymbol().equals("C") && !ringAtom.getSymbol().equals("H")) c++;
+                if (ringAtom.getAtomicNumber() != IElement.C && ringAtom.getAtomicNumber() != IElement.H) c++;
             }
             return c;
         }

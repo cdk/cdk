@@ -25,10 +25,8 @@ package org.openscience.cdk.isomorphism;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.Expr;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.isomorphism.matchers.*;
 
 import java.util.Collections;
 
@@ -81,10 +79,12 @@ import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
  */
 public class DfPattern extends Pattern {
 
-    private final IQueryAtomContainer query;
-    private final DfState             state;
+    private final IAtomContainer src;
+    private final IAtomContainer query;
+    private final DfState state;
 
-    private DfPattern(IQueryAtomContainer query) {
+    private DfPattern(IAtomContainer src, IAtomContainer query) {
+        this.src = src;
         this.query = query;
         determineFilters(query);
         state = new DfState(query);
@@ -94,9 +94,9 @@ public class DfPattern extends Pattern {
         if (atom.getContainer() == null) {
             throw new IllegalArgumentException(
                     "This API can only be used with the option " +
-                    "CdkUseLegacyAtomContainer=false (default). The atoms in " +
-                    "the molecule provided do not know about their parent " +
-                    "molecule"
+                            "CdkUseLegacyAtomContainer=false (default). The atoms in " +
+                            "the molecule provided do not know about their parent " +
+                            "molecule"
             );
         }
     }
@@ -123,12 +123,12 @@ public class DfPattern extends Pattern {
     @Override
     public Mappings matchAll(IAtomContainer mol) {
         if (mol.getAtomCount() < query.getAtomCount())
-            return new Mappings(query, mol, Collections.<int[]>emptySet());
+            return new Mappings(src, mol, Collections.<int[]>emptySet());
         if (mol.getAtomCount() > 0)
             checkCompatibleAPI(mol.getAtom(0));
         DfState local = new DfState(state);
         local.setMol(mol);
-        return filter(new Mappings(query, mol, local), query, mol);
+        return filter(new Mappings(src, mol, local), query, mol);
     }
 
     /**
@@ -171,15 +171,29 @@ public class DfPattern extends Pattern {
      * @see QueryAtomContainer#create(IAtomContainer, Expr.Type...)
      */
     public static DfPattern findSubstructure(IAtomContainer query) {
-        if (query instanceof IQueryAtomContainer)
-            return new DfPattern((IQueryAtomContainer) query);
-        else
-            return new DfPattern(QueryAtomContainer.create(query,
+        // if one or more atoms/bonds is not a query atom/bond we need to convert
+        // out input to a query molecule using some sensible defaults. Note any existing
+        // query atom/bonds will be copied
+        if (!isCompleteQuery(query)) {
+            return new DfPattern(query,
+                                 QueryAtomContainer.create(query,
                                                            ALIPHATIC_ELEMENT,
                                                            AROMATIC_ELEMENT,
                                                            SINGLE_OR_AROMATIC,
                                                            ALIPHATIC_ORDER,
                                                            STEREOCHEMISTRY));
+        } else {
+            return new DfPattern(query, query);
+        }
     }
 
+    private static boolean isCompleteQuery(IAtomContainer query) {
+        for (IAtom atom : query.atoms())
+            if (!(atom instanceof IQueryAtom))
+                return false;
+        for (IBond bond : query.bonds())
+            if (!(bond instanceof IQueryBond))
+                return false;
+        return true;
+    }
 }

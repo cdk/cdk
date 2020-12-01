@@ -27,6 +27,7 @@ import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -147,7 +148,7 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
                         false), NAMES, e);
             }
         }
-        if (atom.getSymbol().equals("H")) {
+        if (atom.getAtomicNumber() == IElement.H) {
             if (acold != clonedAtomContainer) {
                 acold = clonedAtomContainer;
                 acSet = ConjugatedPiSystemsDetector.detect(mol);

@@ -14,6 +14,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -52,7 +53,7 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             //			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
             //			System.out.println("  charge: " + mol.getAtom(i).getCharge());
-            if (mol.getAtom(i).getSymbol().equals("H")) {
+            if (mol.getAtom(i).getAtomicNumber() == IElement.H) {
                 hNumber++;
                 //secondly perform calculation on it.
                 DescriptorValue dv = descriptor.calculate(mol.getAtom(i), mol);

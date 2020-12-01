@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -171,7 +172,7 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
         IAtom clonedAtom = varAtomContainer.getAtom(atomPosition);
 
         DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(ghr_desc_length);
-        if (!atom.getSymbol().equals("H")) {
+        if (atom.getAtomicNumber() != IElement.H) {
             return getDummyDescriptorValue(new CDKException("Invalid atom specified"));
         }
 
@@ -434,16 +435,16 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
             if (atom1.getFlag(CDKConstants.ISINRING)) {
                 counter += 1;
             } else {
-                if (atom1.getSymbol().equals("H"))
+                if (atom1.getAtomicNumber() == IElement.H)
                     counter += 1;
                 else
                     counter += 0;
             }
         }
-        if (atom0.getSymbol().equals("N") && atom1.getSymbol().equals("C")) {
+        if (atom0.getAtomicNumber() == IElement.N && atom1.getAtomicNumber() == IElement.C) {
             if (getIfACarbonIsDoubleBondedToAnOxygen(mol, atom1)) counter += 1;
         }
-        if (atom0.getSymbol().equals("C") && atom1.getSymbol().equals("N")) {
+        if (atom0.getAtomicNumber() == IElement.C && atom1.getAtomicNumber() == IElement.N) {
             if (getIfACarbonIsDoubleBondedToAnOxygen(mol, atom0)) counter += 1;
         }
         if (counter > 0) isBondNotRotatable = true;
@@ -457,7 +458,7 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
         int counter = 0;
         for (int nei = 0; nei < neighToCarbon.size(); nei++) {
             IAtom neighbour = neighToCarbon.get(nei);
-            if (neighbour.getSymbol().equals("O")) {
+            if (neighbour.getAtomicNumber() == IElement.O) {
                 tmpBond = mol.getBond(neighbour, carbonAtom);
                 if (tmpBond.getOrder() == IBond.Order.DOUBLE) counter += 1;
             }
