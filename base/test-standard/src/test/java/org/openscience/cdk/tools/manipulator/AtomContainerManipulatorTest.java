@@ -1394,4 +1394,20 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertThat(AtomContainerManipulator.getMass(mol, MostAbundant),
                    closeTo(4731.154, 0.001));
     }
+
+    // can't put these test in cdk-formula since we can't access SMILES and it's a bit verbose
+    // to construct the molecules as needed
+    @Test public void getFormulaMultiattach() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[Ru]([P](CCC1=CC=CC=C1)(C2CCCCC2)C3CCCCC3)(Cl)(Cl)*.C1(=CC=C(C=C1)C(C)C)C |m:24:25.26.27.28.29.30|");
+        String mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(mol));
+        assertThat(mf, CoreMatchers.is("C30H45Cl2PRu"));
+    }
+
+    @Test public void getFormulaAttach() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("*c1cc(*)ccc1 |$_AP1;;;;R;$|");
+        String mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(mol));
+        assertThat(mf, CoreMatchers.is("C6H5R"));
+    }
 }
