@@ -1408,6 +1408,6 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("*c1cc(*)ccc1 |$_AP1;;;;R;$|");
         String mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(mol));
-        assertThat(mf, CoreMatchers.is("C6H5R"));
+        assertThat(mf, CoreMatchers.is("C6H4R"));
     }
 }
