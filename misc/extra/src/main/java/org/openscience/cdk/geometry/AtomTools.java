@@ -406,31 +406,31 @@ public class AtomTools {
      *    (i) 1 points  required; if A, B, C, D coplanar, no points.
      *       else vector is resultant of BA, CA, DA
      *
-     * @param aPoint to which substituents are added
-     * @param bPoint first ligand of A
-     * @param cPoint second ligand of A
-     * @param dPoint third ligand of A
+     * @param focus to which substituents are added
+     * @param aNbor first ligand of A
+     * @param bNbor second ligand of A
+     * @param cNbor third ligand of A
      * @param length A-X length
      *
      * @return Point3d nwanted points (or null if failed (coplanar))
      */
-    public static Point3d calculate3DCoordinates3(Point3d aPoint, Point3d bPoint, Point3d cPoint, Point3d dPoint,
+    public static Point3d calculate3DCoordinates3(Point3d focus, Point3d aNbor, Point3d bNbor, Point3d cNbor,
             double length) {
-        Vector3d v1 = new Vector3d(aPoint);
-        v1.sub(bPoint);
-        Vector3d v2 = new Vector3d(aPoint);
-        v2.sub(cPoint);
-        Vector3d v3 = new Vector3d(aPoint);
-        v3.sub(dPoint);
-        Vector3d v = new Vector3d(bPoint);
-        v.add(cPoint);
-        v.add(dPoint);
+        Vector3d v1 = new Vector3d(focus);
+        v1.sub(aNbor);
+        Vector3d v2 = new Vector3d(focus);
+        v2.sub(bNbor);
+        Vector3d v3 = new Vector3d(focus);
+        v3.sub(cNbor);
+        Vector3d v = new Vector3d(v1);
+        v.add(v2);
+        v.add(v3);
         if (v.length() < 0.00001) {
             return null;
         }
         v.normalize();
         v.scale(length);
-        Point3d point = new Point3d(aPoint);
+        Point3d point = new Point3d(focus);
         point.add(v);
         return point;
     }
