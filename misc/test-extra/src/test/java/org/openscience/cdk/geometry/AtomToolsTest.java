@@ -8,13 +8,11 @@ package org.openscience.cdk.geometry;
 
 import org.hamcrest.number.IsCloseTo;
 import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import javax.vecmath.Point3d;
-import java.io.IOException;
 import java.io.StringReader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 public class AtomToolsTest {
 
     @Test
-    public void calculate3DCoordinates3() {
+    public void calculate3DCoordinates3() throws Exception {
         String molfile = "\n" +
                 "  Mrv1810 12152010123D          \n" +
                 "\n" +
@@ -47,8 +45,6 @@ public class AtomToolsTest {
             assertThat(newP.x, IsCloseTo.closeTo(2.0160, 0.001));
             assertThat(newP.y, IsCloseTo.closeTo(-0.6871, 0.001));
             assertThat(newP.z, IsCloseTo.closeTo(-1.1901, 0.001));
-        } catch (IOException | CDKException e) {
-            e.printStackTrace();
         }
     }
 }
