@@ -21,12 +21,14 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -34,6 +36,8 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.InputStream;
 
 import static org.hamcrest.Matchers.is;
 
@@ -50,6 +54,22 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     @Before
     public void setUp() throws Exception {
         setDescriptor(RotatableBondsCountDescriptor.class);
+    }
+
+    @Test
+    public void testAlanine() throws Exception {
+        String filename = "data/mdl/alanine.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, IChemObjectReader.Mode.STRICT);
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
+        IChemSequence seq = chemFile.getChemSequence(0);
+        IChemModel model = seq.getChemModel(0);
+        IAtomContainerSet som = model.getMoleculeSet();
+        IAtomContainer mol = som.getAtomContainer(0);
+
+        Object[] params = {true, false};
+        descriptor.setParameters(params);
+        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     @Test

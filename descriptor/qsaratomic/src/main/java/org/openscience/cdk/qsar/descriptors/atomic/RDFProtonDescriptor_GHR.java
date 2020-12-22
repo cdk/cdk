@@ -415,7 +415,7 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
                 LOGGER.debug("RDF gr distance prob.: " + sum + " at distance " + ghr);
             }
         } else {
-            return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
+            return getDummyDescriptorValue(new CDKException("Not atoms found. Will not compute"));
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues,
                 getDescriptorNames());

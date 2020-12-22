@@ -427,7 +427,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
                 LOGGER.debug("RDF gr-topol distance prob.: " + sum + " at distance " + ghrt);
             }
         } else {
-            return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
+            return getDummyDescriptorValue(new CDKException("No atoms in the 7 spheres. Will not compute"));
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues,
                 getDescriptorNames());

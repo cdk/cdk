@@ -34,6 +34,35 @@ public class RDFProtonDescriptor_GSRTest extends AtomicDescriptorTest {
     }
 
     @Test
+    public void testAlanine() throws Exception {
+        String filename = "data/mdl/alanine.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
+        IChemSequence seq = chemFile.getChemSequence(0);
+        IChemModel model = seq.getChemModel(0);
+        IAtomContainerSet som = model.getMoleculeSet();
+        IAtomContainer mol = som.getAtomContainer(0);
+
+
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            //			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
+            if (mol.getAtom(i).getAtomicNumber() == IElement.H) {
+                //secondly perform calculation on it.
+                RDFProtonDescriptor_GSR descriptor = new RDFProtonDescriptor_GSR();
+                DescriptorValue dv = descriptor.calculate(mol.getAtom(i), mol);
+                Assert.assertNull(dv.getException());
+
+                IDescriptorResult result = dv.getValue();
+                Assert.assertNotNull(result);
+
+                Assert.assertEquals(dv.getNames().length, result.length());
+            }
+
+        }
+    }
+
+    @Test
     public void testExample1() throws Exception {
         //firstly read file to molecule
         String filename = "data/mdl/hydroxyamino.mol";

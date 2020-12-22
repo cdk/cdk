@@ -473,7 +473,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
                 LOGGER.debug("RDF g3r prob.: " + sum + " at distance " + g3r);
             }
         } else {
-            return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
+            return getDummyDescriptorValue(new CDKException("No bonds in cyclohexane type rings. Will not compute"));
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues,
                 getDescriptorNames());
