@@ -66,8 +66,9 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         IChemModel model = seq.getChemModel(0);
         IAtomContainerSet som = model.getMoleculeSet();
         IAtomContainer mol = som.getAtomContainer(0);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
 
-        Object[] params = {true, false};
+        Object[] params = {false, false};
         descriptor.setParameters(params);
         Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
