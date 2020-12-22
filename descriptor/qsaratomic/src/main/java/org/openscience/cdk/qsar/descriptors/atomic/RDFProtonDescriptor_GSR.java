@@ -444,7 +444,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
                 LOGGER.debug("RDF gSr prob.: " + sum + " at distance " + ghs);
             }
         } else {
-            return getDummyDescriptorValue(new CDKException("No rotatable bonds found. Will not compute the RDF descriptor for this atom"));
+            return getDummyDescriptorValue(new CDKException("No non-rotatable bonds found. Will not compute the RDF descriptor for this atom"));
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues,
                 getDescriptorNames());
