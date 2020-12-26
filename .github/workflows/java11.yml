@@ -1,4 +1,4 @@
-name: Java8 build
+name: Java 11 build
 
 on:
   push:
