@@ -19,3 +19,5 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn clean test -q
+    - name: push JaCoCo stats to codecov.io
+      run: bash <(curl -s https://codecov.io/bash)
