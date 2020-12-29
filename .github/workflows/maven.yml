@@ -1,4 +1,4 @@
-name: Java8 build
+name: build
 
 on:
   push:
@@ -10,12 +10,16 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ 8, 11, 14 ]
+    name: Java ${{ matrix.java }}
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
+    - name: Set up Java
       uses: actions/setup-java@v1
       with:
-        java-version: 1.8
+        java-version: ${{ matrix.java }}
     - name: Build with Maven
       run: mvn clean test -q
