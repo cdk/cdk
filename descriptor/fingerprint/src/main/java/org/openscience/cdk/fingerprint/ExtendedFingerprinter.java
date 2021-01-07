@@ -1,4 +1,4 @@
-/* Copyright (C) 2002-2007  Stefan Kuhn <shk3@users.sf.net>
+/* Copyright (C) 2002-2007,2020  Stefan Kuhn <shk3@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -29,28 +30,35 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
+import java.util.BitSet;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Generates an extended fingerprint for a given {@link IAtomContainer}, that
- * extends the {@link Fingerprinter} with additional bits describing ring
- * features.
+ * extends the {@link Fingerprinter} with additional (25) bits describing ring
+ * features and isotopic masses.
  *
- * @author         shk3
- * @cdk.created    2006-01-13
- * @cdk.keyword    fingerprint
- * @cdk.keyword    similarity
- * @cdk.module     fingerprint
+ * <i>JWM Comment: It's better to actually just hash the rings over the entire
+ * length simply using a different seed.
+ * The original version of the class used non-unique SSSR which of course
+ * doesn't work for substructure screening so this fingerprint can only
+ * be used for similarity.</i>
+ *
+ * @author shk3
+ * @cdk.created 2006-01-13
+ * @cdk.keyword fingerprint
+ * @cdk.keyword similarity
+ * @cdk.module fingerprint
  * @cdk.githash
- *
- * @see            org.openscience.cdk.fingerprint.Fingerprinter
+ * @see org.openscience.cdk.fingerprint.Fingerprinter
  */
-public class ExtendedFingerprinter extends Fingerprinter implements IFingerprinter {
+public class ExtendedFingerprinter implements IFingerprinter {
 
-    private final int     RESERVED_BITS = 25;
+    // number of bits to hash rings into
+    private final int RESERVED_BITS = 25;
 
-    private Fingerprinter fingerprinter = null;
+    private final Fingerprinter fingerprinter;
 
     /**
      * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
@@ -69,8 +77,8 @@ public class ExtendedFingerprinter extends Fingerprinter implements IFingerprint
      * the given size, using a generation algorithm with the given search
      * depth.
      *
-     * @param  size        The desired size of the fingerprint
-     * @param  searchDepth The desired depth of search
+     * @param size        The desired size of the fingerprint
+     * @param searchDepth The desired depth of search
      */
     public ExtendedFingerprinter(int size, int searchDepth) {
         this.fingerprinter = new Fingerprinter(size - RESERVED_BITS, searchDepth);
@@ -84,15 +92,17 @@ public class ExtendedFingerprinter extends Fingerprinter implements IFingerprint
      * (referring to smallest set of smallest rings) and bits which tell if
      * there is a fused ring system with 1,2...8 or more rings in it
      *
-     *@param container The AtomContainer for which a Fingerprint is generated
-     *@return a bit fingerprint for the given <code>IAtomContainer</code>.
+     * @param container The AtomContainer for which a Fingerprint is generated
+     * @return a bit fingerprint for the given <code>IAtomContainer</code>.
      */
     @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
         return this.getBitFingerprint(container, null, null);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
@@ -108,14 +118,14 @@ public class ExtendedFingerprinter extends Fingerprinter implements IFingerprint
      * a smallesSetOfSmallestRings. The List must be a list of all ring
      * systems in the molecule.
      *
-     * @param     atomContainer The AtomContainer for which a Fingerprint is
-     *                          generated
-     * @param     ringSet       An SSSR RingSet of ac (if not available, use
-     *                          getExtendedFingerprint(AtomContainer ac),
-     *                          which does the calculation)
-     * @param     rslist        A list of all ring systems in ac
-     * @exception CDKException  for example if input can not be cloned.
+     * @param atomContainer The AtomContainer for which a Fingerprint is
+     *                      generated
+     * @param ringSet       A SSSR RingSet of ac (if not available, use
+     *                      getExtendedFingerprint(AtomContainer ac),
+     *                      which does the calculation)
+     * @param rslist        A list of all ring systems in ac
      * @return a BitSet representing the fingerprint
+     * @throws CDKException for example if input can not be cloned.
      */
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer, IRingSet ringSet, List<IRingSet> rslist)
             throws CDKException {
@@ -144,7 +154,7 @@ public class ExtendedFingerprinter extends Fingerprinter implements IFingerprint
         for (int i = 0; i < rslist.size(); i++) {
             if (((IRingSet) rslist.get(i)).getAtomContainerCount() > maximumringsystemsize)
 
-            maximumringsystemsize = ((IRingSet) rslist.get(i)).getAtomContainerCount();
+                maximumringsystemsize = ((IRingSet) rslist.get(i)).getAtomContainerCount();
         }
         for (int i = 0; i < maximumringsystemsize && i < 9; i++) {
             fingerprint.set(size - 8 + i - 3);
@@ -152,16 +162,58 @@ public class ExtendedFingerprinter extends Fingerprinter implements IFingerprint
         return fingerprint;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getSize() {
         return fingerprinter.getSize() + RESERVED_BITS;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public String getVersionDescription() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("CDK-")
+                .append(getClass().getSimpleName())
+                .append("/")
+                .append(CDK.getVersion()); // could version fingerprints separately
+        for (Map.Entry<String, String> param : this.fingerprinter.getParameters()) {
+            sb.append(' ').append(param.getKey()).append('=').append(param.getValue());
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public BitSet getFingerprint(IAtomContainer mol) throws CDKException {
+        return getBitFingerprint(mol).asBitSet();
+    }
+
+    /**
+     * Set the pathLimit for the base daylight/path fingerprint. If too many paths are generated from a single atom
+     * an exception is thrown.
+     * @param pathLimit the number of paths to generate from a node
+     * @see Fingerprinter
+     */
+    public void setPathLimit(int pathLimit) {
+        this.fingerprinter.setPathLimit(pathLimit);
+    }
+
+    /**
+     * Set the hashPseudoAtoms for the base daylight/path fingerprint. This indicates whether pseudo-atoms should be
+     * hashed, for substructure screening this is not desirable - but this fingerprint uses SSSR so can't be used for
+     * substructure screening regardless.
+     * @param hashPseudoAtoms the number of paths to generate from a node
+     * @see Fingerprinter
+     */
+    public void setHashPseudoAtoms(boolean hashPseudoAtoms) {
+        this.fingerprinter.setHashPseudoAtoms(hashPseudoAtoms);
+    }
 }
