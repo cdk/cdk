@@ -73,14 +73,8 @@ public class CASNumber {
             String part1 = matcher.group(1);
             String part2 = matcher.group(2);
             String part3 = matcher.group(3);
-            int part1value = Integer.parseInt(part1);
-            if (part1value < 50) {
-                overall = false;
-                // CAS numbers start at 50-00-0
-            } else {
-                int digit = CASNumber.calculateCheckDigit(part1, part2);
-                overall = overall && (digit == Integer.parseInt(part3));
-            }
+            int digit = CASNumber.calculateCheckDigit(part1, part2);
+            overall = overall && (digit == Integer.parseInt(part3));
         }
 
         return overall;
