@@ -130,11 +130,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
                 }
 
                 hasNext = true;
-                final String suffix = suffix(line);
-
                 nextMolecule = readSmiles(line);
-                nextMolecule.setTitle(suffix);
-
             } catch (Exception exception) {
                 logger.error("Unexpected problem: ", exception.getMessage());
                 logger.debug(exception);
@@ -156,7 +152,9 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
     private String suffix(final String line) {
         for (int i = 0; i < line.length(); i++) {
             char c = line.charAt(i);
-            if (c == ' ' || c == '\t') return line.substring(i + 1);
+            if (c == ' ' || c == '\t') {
+                return line.substring(i + 1);
+            }
         }
         return "";
     }
@@ -174,6 +172,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
             logger.error("Error while reading the SMILES from: " + line + ", ", e);
             final IAtomContainer empty = builder.newInstance(IAtomContainer.class, 0, 0, 0, 0);
             empty.setProperty(BAD_SMILES_INPUT, line);
+            empty.setTitle(suffix(line));
             return empty;
         }
     }
