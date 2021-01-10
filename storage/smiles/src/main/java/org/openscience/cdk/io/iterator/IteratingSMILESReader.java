@@ -133,8 +133,6 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
                 final String suffix = suffix(line);
 
                 nextMolecule = readSmiles(line);
-                nextMolecule.setTitle(suffix);
-
             } catch (Exception exception) {
                 logger.error("Unexpected problem: ", exception.getMessage());
                 logger.debug(exception);
