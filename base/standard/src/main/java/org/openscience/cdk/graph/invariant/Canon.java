@@ -280,6 +280,9 @@ public final class Canon {
             System.arraycopy(nextVs, 0, currVs, 0, nnu);
         }
 
+        if (symmetry == null)
+            symmetry = new long[0];
+
         return symmetry;
     }
 
