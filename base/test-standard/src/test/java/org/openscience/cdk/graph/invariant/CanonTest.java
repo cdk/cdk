@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.graph.invariant;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.GraphUtil;
@@ -34,7 +33,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.xmlcml.euclid.Int;
 
 import java.util.Comparator;
 
@@ -132,6 +130,15 @@ public class CanonTest {
         IAtomContainer m = smi("B1[H]B[H]1");
         boolean[] mask = Canon.terminalHydrogens(m, GraphUtil.toAdjList(m));
         assertThat(mask, is(new boolean[]{false, false, false, false}));
+    }
+
+    @Test
+    public void isotopeFlavor() throws Exception {
+        IAtomContainer m = smi("CC[13CH3]");
+        long[] symmetry = Canon.symmetry(m, GraphUtil.toAdjList(m), CanonOpts.Default);
+        assertThat(symmetry, is(new long[]{1,3,1}));
+        long[] symmetry2 = Canon.symmetry(m, GraphUtil.toAdjList(m), CanonOpts.AtomicMass);
+        assertThat(symmetry2, is(new long[]{1,2,3}));
     }
 
     @Test

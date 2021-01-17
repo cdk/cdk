@@ -33,7 +33,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -112,12 +111,31 @@ public final class Canon {
      *
      * @param container structure
      * @param g         adjacency list graph representation
+     * @param opts      canonical generation options see {@link CanonOpts}
+     * @return the canonical labelling
+     * @see EquivalentClassPartitioner
+     * @see InChINumbersTools
+     */
+    public static long[] label(IAtomContainer container, int[][] g, int opts) {
+        return label(container, g, basicInvariants(container, g, opts));
+    }
+
+    /**
+     * Compute the canonical labels for the provided structure. The labelling
+     * does not consider isomer information or stereochemistry. The current
+     * implementation does not fully distinguish all structure topologies
+     * but in practise performs well in the majority of cases. A complete
+     * canonical labelling can be obtained using the {@link InChINumbersTools}
+     * but is computationally much more expensive.
+     *
+     * @param container structure
+     * @param g         adjacency list graph representation
      * @return the canonical labelling
      * @see EquivalentClassPartitioner
      * @see InChINumbersTools
      */
     public static long[] label(IAtomContainer container, int[][] g) {
-        return label(container, g, basicInvariants(container, g));
+        return label(container, g, CanonOpts.Default);
     }
 
     /**
@@ -182,12 +200,31 @@ public final class Canon {
      *
      * @param container structure
      * @param g         adjacency list graph representation
+     * @param opts      canonical generation options see {@link CanonOpts}
      * @return symmetry classes
      * @see EquivalentClassPartitioner
      */
-    public static long[] symmetry(IAtomContainer container, int[][] g) {
-        return new Canon(g, basicInvariants(container, g), terminalHydrogens(container, g), true).symmetry;
+    public static long[] symmetry(IAtomContainer container, int[][] g, int opts) {
+        return new Canon(g, basicInvariants(container, g, opts), terminalHydrogens(container, g), true).symmetry;
     }
+
+    /**
+     * Compute the symmetry classes for the provided structure. There are known
+     * examples where symmetry is incorrectly found. The {@link
+     * EquivalentClassPartitioner} gives more accurate symmetry perception but
+     * this method is very quick and in practise successfully portions the
+     * majority of chemical structures.
+     *
+     * @param container structure
+     * @param g         adjacency list graph representation
+     * @return symmetry classes
+     * @see EquivalentClassPartitioner
+     * @see #basicInvariants(IAtomContainer, int[][], int)
+     */
+    public static long[] symmetry(IAtomContainer container, int[][] g) {
+        return symmetry(container, g, CanonOpts.Default);
+    }
+
 
     /**
      * Internal - refine invariants to a canonical labelling and
@@ -305,6 +342,18 @@ public final class Canon {
     }
 
     /**
+     * See {@link #basicInvariants(IAtomContainer, int[][], int)}.
+     * @param container an atom container to generate labels for
+     * @param graph     graph representation (adjacency list)
+
+     * @return the initial invariants
+     * @see #basicInvariants(IAtomContainer, int[][], int)
+     */
+    public static long[] basicInvariants(IAtomContainer container, int[][] graph) {
+        return basicInvariants(container, graph, CanonOpts.Default);
+    }
+
+    /**
      * Generate the initial invariants for each atom in the {@code container}.
      * The labels use the invariants described in {@cdk.cite WEI89}. 
      *
@@ -328,11 +377,12 @@ public final class Canon {
      *
      * @param container an atom container to generate labels for
      * @param graph     graph representation (adjacency list)
+     * @param flav      bit mask canon flavor (see {@link CanonOpts})
      * @return initial invariants
      * @throws NullPointerException an atom had unset atomic number, hydrogen
      *                              count or formal charge
      */
-    public static long[] basicInvariants(IAtomContainer container, int[][] graph) {
+    public static long[] basicInvariants(IAtomContainer container, int[][] graph, int flav) {
 
         long[] labels = new long[graph.length];
 
@@ -362,6 +412,16 @@ public final class Canon {
             label <<= 4; // hydrogen count <= 15 (4 bits)
             label |= impH + expH & 0xf;
 
+            // atomic mass to split ties (if flavour requested), we can't do this
+            // by default because "unique" smiles doesn't include the isotopic mass
+            // so splitting on something that doesn't appear in the output would not
+            // function correctly
+            // n.b. the comparator based invariants are much more flexible still
+            if ((flav & CanonOpts.AtomicMass) != 0 && atom.getMassNumber() != null) {
+                label <<= 10;
+                label |= atom.getMassNumber();
+            }
+            
             labels[v] = label;
         }
         return labels;
