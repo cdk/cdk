@@ -494,7 +494,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private Order getMaximumBondOrder(List<IBond> connectedBonds) {
     	IBond.Order max = IBond.Order.SINGLE;
     	for (IBond bond : connectedBonds) {
-            if (bond.getOrder().numeric() > max.numeric())
+            if (bond.getOrder() != null && bond.getOrder().numeric() > max.numeric())
             	max = bond.getOrder();
         }
         return max;
