@@ -261,8 +261,12 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 case 1: // 2
                     rad = MDLV2000Writer.SPIN_MULTIPLICITY.Monovalent.getValue();
                     break;
-                case 2: // 1 or 3? Information loss as to which
-                    rad = MDLV2000Writer.SPIN_MULTIPLICITY.DivalentSinglet.getValue();
+                case 2:
+                    MDLV2000Writer.SPIN_MULTIPLICITY spinMultiplicity = atom.getProperty(CDKConstants.SPIN_MULTIPLICITY);
+                    if (spinMultiplicity != null)
+                        rad = spinMultiplicity.getValue();
+                    else // 1 or 3? Information loss as to which
+                        rad = MDLV2000Writer.SPIN_MULTIPLICITY.DivalentSinglet.getValue();
                     break;
             }
 

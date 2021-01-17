@@ -1073,6 +1073,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         index = readMolfileInt(line, st) - 1;
                         int value = readMolfileInt(line, st + 4);
                         SPIN_MULTIPLICITY multiplicity = SPIN_MULTIPLICITY.ofValue(value);
+                        
+                        container.getAtom(offset + index).setProperty(CDKConstants.SPIN_MULTIPLICITY, multiplicity);
 
                         for (int e = 0; e < multiplicity.getSingleElectrons(); e++)
                             container.addSingleElectron(offset + index);

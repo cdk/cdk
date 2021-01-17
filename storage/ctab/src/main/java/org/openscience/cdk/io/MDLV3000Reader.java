@@ -343,8 +343,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                     }
                                     break;
                                 case "RAD":
-                                    int numElectons = MDLV2000Writer.SPIN_MULTIPLICITY.ofValue(Integer.parseInt(value))
-                                                                                      .getSingleElectrons();
+                                    MDLV2000Writer.SPIN_MULTIPLICITY spinMultiplicity = MDLV2000Writer.SPIN_MULTIPLICITY.ofValue(Integer.parseInt(value));
+                                    int numElectons = spinMultiplicity.getSingleElectrons();
+                                    atom.setProperty(CDKConstants.SPIN_MULTIPLICITY, spinMultiplicity);
                                     while (numElectons-- > 0) {
                                         readData.addSingleElectron(readData.getBuilder().newInstance(ISingleElectron.class, atom));
                                     }
