@@ -286,20 +286,20 @@ public class MmffAromaticTypeMappingTest {
     public void intractableNumberOfCycles() throws Exception {
 
         // to ensure intractable cycles are handled we create a complete graph
-        // where every vertex is attached to every other vertex. K8 is sufficient
-        // to trigger an abort when finding cycles
+        // where every vertex is attached to every other vertex. K9 is sufficient
+        // to trigger an abort when finding cycles for setting PubChem_994
         IAtomContainer container = Mockito.mock(IAtomContainer.class);
-        int[][] graphK8 = new int[8][7];
+        int[][] graphK9 = new int[9][8];
 
-        for (int i = 0; i < graphK8.length; i++) {
+        for (int i = 0; i < graphK9.length; i++) {
             int n = 0;
-            for (int j = 0; j < graphK8.length; j++) {
+            for (int j = 0; j < graphK9.length; j++) {
                 if (i == j) continue;
-                graphK8[i][n++] = j;
+                graphK9[i][n++] = j;
             }
         }
 
-        assertThat(MmffAromaticTypeMapping.cyclesOfSizeFiveOrSix(container, graphK8).length, is(0));
+        assertThat(MmffAromaticTypeMapping.cyclesOfSizeFiveOrSix(container, graphK9).length, is(0));
     }
 
     @Test

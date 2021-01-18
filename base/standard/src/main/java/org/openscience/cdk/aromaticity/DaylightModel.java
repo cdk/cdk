@@ -85,7 +85,7 @@ final class DaylightModel extends ElectronDonation {
         // - this avoids costly operations such as looking up connected
         // bonds on each atom at the cost of memory
         int[] degree = new int[n];
-        int[] bondOrderSum = new int[n];
+        int[] valence = new int[n];
         int[] nCyclicPiBonds = new int[n];
         int[] exocyclicPiBond = new int[n];
         int[] electrons = new int[n];
@@ -97,8 +97,10 @@ final class DaylightModel extends ElectronDonation {
         for (int i = 0; i < n; i++) {
             IAtom a = container.getAtom(i);
             atomIndex.put(a, i);
-            degree[i] = checkNotNull(a.getImplicitHydrogenCount(),
-                    "Aromaticity model requires implicit hydrogen count is set.");
+            int implH = checkNotNull(a.getImplicitHydrogenCount(),
+                                     "Aromaticity model requires implicit hydrogen count is set.");
+            degree[i] = implH;
+            valence[i] = implH;
         }
 
         // for each bond we increase the degree count and check for cyclic and
@@ -128,8 +130,8 @@ final class DaylightModel extends ElectronDonation {
                 case SINGLE:
                 case TRIPLE:
                 case QUADRUPLE:
-                    bondOrderSum[u] += order.numeric();
-                    bondOrderSum[v] += order.numeric();
+                    valence[u] += order.numeric();
+                    valence[v] += order.numeric();
             }
         }
 
@@ -141,7 +143,7 @@ final class DaylightModel extends ElectronDonation {
 
             // abnormal valence, usually indicated a radical. these cause problems
             // with kekulisations
-            int bondedValence = bondOrderSum[i] + container.getAtom(i).getImplicitHydrogenCount();
+            int bondedValence = valence[i];
             if (!normal(element, charge, bondedValence)) {
                 electrons[i] = -1;
             }
@@ -170,7 +172,7 @@ final class DaylightModel extends ElectronDonation {
             // here is we count the number free valence electrons but also
             // check if the bonded valence is okay (i.e. not a radical)
             else if (charge <= 0 && charge > -3) {
-                if (valence(element, charge) - bondOrderSum[i] >= 2)
+                if (valence(element, charge) - valence[i] >= 2)
                     electrons[i] = 2;
                 else
                     electrons[i] = -1;

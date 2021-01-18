@@ -694,7 +694,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         if (container.getSingleElectronCount() > 0) {
             Map<Integer, SPIN_MULTIPLICITY> atomIndexSpinMap = new LinkedHashMap<Integer, SPIN_MULTIPLICITY>();
             for (int i = 0; i < container.getAtomCount(); i++) {
-                int eCount = container.getConnectedSingleElectronsCount(container.getAtom(i));
+                IAtom atom = container.getAtom(i);
+                int eCount = container.getConnectedSingleElectronsCount(atom);
                 switch (eCount) {
                     case 0:
                         continue;
@@ -702,8 +703,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.Monovalent);
                         break;
                     case 2:
-                        // information loss, divalent but singlet or triplet?
-                        atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.DivalentSinglet);
+                        SPIN_MULTIPLICITY multiplicity = atom.getProperty(CDKConstants.SPIN_MULTIPLICITY);
+                        if (multiplicity != null)
+                            atomIndexSpinMap.put(i, multiplicity);
+                        else {
+                            // information loss, divalent but singlet or triplet?
+                            atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.DivalentSinglet);
+                        }
                         break;
                     default:
                         logger.debug("Invalid number of radicals found: " + eCount);

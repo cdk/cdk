@@ -704,6 +704,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 hcount = readMolfileInt(line, 42);
             case 42: // sss: stereo parity
                 parity = toInt(line.charAt(41));
+            // case 40: SAChem: I don't think this can happen in a valid molfile, maybe with a trailing tab?
             case 39: // ccc: charge
                 charge = toCharge(line.charAt(38));
             case 36: // dd: mass difference
@@ -1072,6 +1073,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         index = readMolfileInt(line, st) - 1;
                         int value = readMolfileInt(line, st + 4);
                         SPIN_MULTIPLICITY multiplicity = SPIN_MULTIPLICITY.ofValue(value);
+                        
+                        container.getAtom(offset + index).setProperty(CDKConstants.SPIN_MULTIPLICITY, multiplicity);
 
                         for (int e = 0; e < multiplicity.getSingleElectrons(); e++)
                             container.addSingleElectron(offset + index);
