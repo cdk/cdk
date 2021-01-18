@@ -622,8 +622,6 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     }
 
-    // XXX: information loss, CDK does not distinquish between divalence
-    //      singlet and triplet and only stores the unpaired electrons
     @Test
     public void testSingleTripletRadical() throws Exception {
 
@@ -641,7 +639,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         String[] lines = sw.toString().split("\n");
 
         assertThat("incorrect file length", lines.length, is(9));
-        assertThat("incorrect radical output", lines[7], is("M  RAD  1   2   1"));
+        assertThat("incorrect radical output", lines[7], is("M  RAD  1   2   3"));
     }
 
     @Test
