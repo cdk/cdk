@@ -156,4 +156,17 @@ public class SMILESWriterTest extends ChemObjectIOTest {
         assertThat(wtr.toString(), not(containsString("mol 1")));
         assertThat(wtr.toString(), not(containsString("mol 2")));
     }
+    
+    @Test
+    public void testWriteSmiFlavor() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol1 = smipar.parseSmiles("c1ccccc1");
+        StringWriter wtr = new StringWriter();
+        try (SMILESWriter smigen = new SMILESWriter(wtr)) {
+        	smigen.setFlavor(SmiFlavor.InChILabelling);  
+        	smigen.write(mol1);
+        }
+        String[] lines = wtr.toString().split("\n");
+        assertThat(wtr.toString(), containsString("C=1C=CC=CC1"));
+    }
 }
