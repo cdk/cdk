@@ -86,7 +86,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 
     public void setFlavor(int flav) {
         try {
-            flavorSetting.setSetting(Integer.toBinaryString(flav));
+            flavorSetting.setSetting(Integer.toString(flav)); 
         } catch (CDKException e) {
             // ignored
         }
