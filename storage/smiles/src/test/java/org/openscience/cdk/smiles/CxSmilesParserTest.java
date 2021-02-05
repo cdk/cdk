@@ -26,15 +26,24 @@ package org.openscience.cdk.smiles;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Test;
+import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.junit.Assert.assertTrue;
 
 public class CxSmilesParserTest {
 
@@ -236,6 +245,116 @@ public class CxSmilesParserTest {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
     }
+
+    @Test public void stereogroups_and1() {
+        String cxsmilayers = "|&1:0,1|";
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
+        Map<Integer,Integer> expected = new HashMap<>();
+        expected.put(0, IStereoElement.GRP_AND1);
+        expected.put(1, IStereoElement.GRP_AND1);
+        assertThat(state.stereoGrps, is(expected));
+    }
+
+    @Test public void stereogroups_or1() {
+        String cxsmilayers = "|o1:0,1|";
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
+        Map<Integer,Integer> expected = new HashMap<>();
+        expected.put(0, IStereoElement.GRP_OR1);
+        expected.put(1, IStereoElement.GRP_OR1);
+        assertThat(state.stereoGrps, is(expected));
+    }
+
+    @Test public void stereogroups_or1_and1() {
+        String cxsmilayers = "|o1:0,1,&5:6|";
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
+        Map<Integer,Integer> expected = new HashMap<>();
+        expected.put(0, IStereoElement.GRP_OR1);
+        expected.put(1, IStereoElement.GRP_OR1);
+        expected.put(6, IStereoElement.GRP_AND5);
+        assertThat(state.stereoGrps, is(expected));
+    }
+
+    @Test public void stereogroups_rac() {
+        String cxsmilayers = "|r|";
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
+        assertTrue(state.racemic);
+    }
+
+    @Test public void stereogroups_racFrags() {
+        String cxsmilayers = "|r:1,2|";
+        CxSmilesState state = new CxSmilesState();
+        assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
+        assertThat(state.racemicFrags, is(Arrays.asList(1, 2)));
+    }
+
+    @Test public void loadAnd1() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("CC[C@H](O)[C@H](O)CCCCCC |&1:2|");
+        Iterable<IStereoElement> iter = mol.stereoElements();
+        assertTrue(iter.iterator().hasNext());
+        for (IStereoElement<?,?> se : iter) {
+            IAtom focus = (IAtom)se.getFocus();
+            if (focus.getIndex() == 2) {
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+            } else {
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));
+            }
+        }
+    }
+
+    @Test public void loadRacGlobal() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("CC[C@H](O)[C@H](O)CCCCCC |r|");
+        Iterable<IStereoElement> iter = mol.stereoElements();
+        assertTrue(iter.iterator().hasNext());
+        for (IStereoElement<?,?> se : iter) {
+            assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+        }
+    }
+
+    @Test public void loadRacComponents() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction rxn = smipar.parseReactionSmiles("c1ccccc1[C@H](O)C>>CC[C@H](O)[C@H](O)CCCCCC |r:1|");
+        for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
+            Iterable<IStereoElement> iter = mol.stereoElements();
+            assertTrue(iter.iterator().hasNext());
+            for (IStereoElement<?, ?> se : iter) {
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));
+            }
+        }
+        for (IAtomContainer mol : rxn.getProducts().atomContainers()) {
+            Iterable<IStereoElement> iter = mol.stereoElements();
+            assertTrue(iter.iterator().hasNext());
+            for (IStereoElement<?, ?> se : iter) {
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+            }
+        }
+    }
+
+    @Test public void loadRacComponentsWithFragGrouping() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction rxn = smipar.parseReactionSmiles("c1ccccc1[C@H](O)C>[Na+].[Cl-]>CC[C@H](O)[C@H](O)CCCCCC |f:1.2,r:3|");
+        for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
+            Iterable<IStereoElement> iter = mol.stereoElements();
+            assertTrue(iter.iterator().hasNext());
+            for (IStereoElement<?, ?> se : iter) {
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));
+            }
+        }
+        for (IAtomContainer mol : rxn.getProducts().atomContainers()) {
+            Iterable<IStereoElement> iter = mol.stereoElements();
+            assertTrue(iter.iterator().hasNext());
+            for (IStereoElement<?, ?> se : iter) {
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+            }
+        }
+    }
+
+
 
     /**
      * Custom matcher for checking an array of doubles closely matches (epsilon=0.01)

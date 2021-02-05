@@ -42,7 +42,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -77,11 +76,18 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -1956,6 +1962,71 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                        CoreMatchers.is("33%"));
         } catch (IOException | CDKException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testNoChiralFlag() throws Exception {
+        final String input = "\n" +
+                "  Mrv1810 02052112282D          \n" +
+                "\n" +
+                "  7  7  0  0  0  0            999 V2000\n" +
+                "   -1.1468    6.5972    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.8613    6.1847    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.8613    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.1468    4.9472    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4323    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4323    6.1847    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.1468    7.4222    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0  0\n" +
+                "  2  3  1  0  0  0  0\n" +
+                "  3  4  1  0  0  0  0\n" +
+                "  4  5  1  0  0  0  0\n" +
+                "  5  6  1  0  0  0  0\n" +
+                "  1  6  1  0  0  0  0\n" +
+                "  1  7  1  1  0  0  0\n" +
+                "M  END\n";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input))) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Iterable<IStereoElement> iter = mol.stereoElements();
+            assertTrue(iter.iterator().hasNext());
+            for (IStereoElement<?,?> se : iter) {
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+            }
+        }
+    }
+
+    @Test
+    public void testChiralFlag() throws Exception {
+        final String input = "\n" +
+                "  Mrv1810 02052112282D          \n" +
+                "\n" +
+                "  7  7  0  0  1  0            999 V2000\n" +
+                "   -1.1468    6.5972    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.8613    6.1847    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.8613    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.1468    4.9472    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4323    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4323    6.1847    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.1468    7.4222    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0  0\n" +
+                "  2  3  1  0  0  0  0\n" +
+                "  3  4  1  0  0  0  0\n" +
+                "  4  5  1  0  0  0  0\n" +
+                "  5  6  1  0  0  0  0\n" +
+                "  1  6  1  0  0  0  0\n" +
+                "  1  7  1  1  0  0  0\n" +
+                "M  END\n";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input))) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Iterable<IStereoElement> iter = mol.stereoElements();
+            assertTrue(iter.iterator().hasNext());
+            for (IStereoElement<?,?> se : iter) {
+                // Grp Abs is actually just 0
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));
+            }
         }
     }
 }

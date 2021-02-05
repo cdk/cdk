@@ -23,7 +23,10 @@
 
 package org.openscience.cdk.smiles;
 
+import org.openscience.cdk.interfaces.IStereoElement;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -466,11 +469,25 @@ final class CxSmilesParser {
                             return -1;
                     }
                     break;
-                case 'r': // relative stereochemistry ignored
+                case '&': // &1, &2 etc
+                    if (!processStereoGrps(state, iter, IStereoElement.GRP_AND))
+                        return -1;
+                    break;
+                case 'o': // o1, o2 etc
+                    if (!processStereoGrps(state, iter, IStereoElement.GRP_OR))
+                        return -1;
+                    break;
+                case 'a': // abs etc
+                    if (!processStereoGrps(state, iter, IStereoElement.GRP_ABS))
+                        return -1;
+                    break;
+                case 'r': // relative (actually racemic) stereochemistry ignored
                     if (iter.nextIf(':')) {
-                        if (!skipIntList(iter, COMMA_SEPARATOR))
+                        state.racemicFrags = new ArrayList<>();
+                        if (!processIntList(iter, ',', state.racemicFrags))
                             return -1;
                     } else {
+                        state.racemic = true;
                         if (!iter.nextIf(',') && iter.curr() != '|')
                             return -1;
                     }
@@ -550,6 +567,27 @@ final class CxSmilesParser {
 
         return -1;
     }
+
+    private static boolean processStereoGrps(CxSmilesState state, CharIter iter, int grp) {
+        if (grp != IStereoElement.GRP_ABS) {
+            int num = processUnsignedInt(iter);
+            if (num < 0)
+                return false; // no number found of &1, o1
+            grp |= num << IStereoElement.GRP_NUM_SHIFT;
+        }
+        if (!iter.nextIf(':'))
+            return false;
+        List<Integer> idxs = new ArrayList<>();
+        if (!processIntList(iter, ',', idxs))
+            return false;
+        if (state.stereoGrps == null)
+            state.stereoGrps = new HashMap<>();
+        for (Integer idx : idxs) {
+            state.stereoGrps.put(idx, grp);
+        }
+        return true;
+    }
+
 
 
     private static boolean processSgroupsHierarchy(CharIter iter, CxSmilesState state) {
