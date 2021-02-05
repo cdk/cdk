@@ -112,10 +112,18 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
         value = getConfigClass() | cfg;
     }
 
+    /**
+     * Access the stereo group in, this is present when this stereo element is racemic (AND) or relative (OR).
+     * @return the group info
+     */
     public int getGroupInfo() {
         return value & IStereoElement.GRP_MASK;
     }
 
+    /**
+     * Set the group info for this stereo center.
+     * @param grp the group info
+     */
     public void setGrpConfig(int grp) {
         value &= ~IStereoElement.GRP_MASK;
         value |= (grp & IStereoElement.GRP_MASK);
