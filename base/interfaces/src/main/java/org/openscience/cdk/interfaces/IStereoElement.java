@@ -71,6 +71,46 @@ import java.util.Map;
  *     <li>{@link #HBPY9}: Heptagonal Bipyramidal</li>
  * </ul>
  *
+ * <b><u>Stereo Groups (Enhanced stereo):</u></b>
+ * Stereochemistry group information, aka "enhanced stereochemistry" in V3000 MOLFile etc allows you to specify
+ * racemic and unknown enantiomers. In V2000 MOLfile the if chiral flag was 0 it indicates the structure was a mixture
+ * of enantiomers. V3000 extended this concept to not only encode mixtures (and enantiomer) but also unknown
+ * stereochemistry (or enantiomer) and to be per chiral centre. Reading an MDLV2000 molfile a chiral flag of 0 is
+ * equivalent to setting all stereocentres to {@link #GRP_AND1}. This information can also be encoded in CXSMILES. By
+ * default all stereocentres are {@link #GRP_ABS}.
+ *
+ * The stereo group information is stored in the high bytes of the stereo configuration. You can access the basic
+ * information as follows:
+ * <pre>{@code
+ * int grpconfig = stereo.getGroupInfo();
+ * if (grpconfig & IStereoElement.GRP_AND1) {
+ *     // group is AND1
+ * } else if (config & IStereoElement.GRP_OR1) {
+ *     // group is OR1
+ * }
+ * }</pre>
+ *
+ * You can also unpack the various parts of the information manually.
+ *
+ * <pre>{@code
+ * int grpconfig = stereo.getGroupInfo();
+ * switch (grpconfig & IStereoElement.GRP_TYPE_MASK) {
+ *   case IStereoElement.GRP_ABS:
+ *   break;
+ *   case IStereoElement.GRP_AND:
+ *   break;
+ *   case IStereoElement.GRP_OR:
+ *   break;
+ * }
+ *
+ * // the group number 1, 2, 3, 4 is a little more tricky, you can mask off the value as
+ * // follows but it's shifted up into position
+ * int num = grpconfig & IStereoElement.GRP_NUM_MASK;
+ *
+ * // to get the number 1, 2, 3, etc you can simply shift it down as follows
+ * int num_act = grpconfig >>> IStereoElement.GRP_NUM_SHIFT;
+ * }</pre>
+ *
  * @cdk.module interfaces
  * @cdk.githash
  *
@@ -174,6 +214,43 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
     /** Square Planar Configutation in Z Shape */
     public static final int SPZ = SP | 3;
 
+    /** Mask for the stereo group information */
+    public static final int GRP_MASK      = 0xff_0000;
+    /** Mask for the stereo group type information, GRP_ABS, GRP_AND, GRP_OR */
+    public static final int GRP_TYPE_MASK = 0x03_0000;
+    /** Mask for the stereo group number information, 0x0 .. 0xf (1..15) */
+    public static final int GRP_NUM_MASK   = 0xfc_0000;
+    public static final int GRP_NUM_SHIFT  = 18; // Integer.numberOfTrailingZeros(0xfc_0000);
+
+    /** Stereo group type ABS (absolute) */
+    public static final int GRP_ABS  = 0x00_0000;
+    /** Stereo group type AND (and enantiomer) */
+    public static final int GRP_AND  = 0x01_0000;
+    /** Stereo group type OR (or enantiomer) */
+    public static final int GRP_OR   = 0x02_0000;
+
+    /** Convenience field for testing if the stereo is group AND1 (&amp;1). */
+    public static final int GRP_AND1 = GRP_AND | (1 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group AND2 (&amp;2). */
+    public static final int GRP_AND2 = GRP_AND | (2 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group AND3 (&amp;3). */
+    public static final int GRP_AND3 = GRP_AND | (3 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group AND4 (&amp;4). */
+    public static final int GRP_AND4 = GRP_AND | (4 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group AND5 (&amp;5). */
+    public static final int GRP_AND5 = GRP_AND | (5 << GRP_NUM_SHIFT);
+
+    /** Convenience field for testing if the stereo is group OR1 (&amp;1). */
+    public static final int GRP_OR1  = GRP_OR | (1 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group OR2 (&amp;2). */
+    public static final int GRP_OR2  = GRP_OR | (2 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group OR3 (&amp;3). */
+    public static final int GRP_OR3  = GRP_OR | (3 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group OR4 (&amp;4). */
+    public static final int GRP_OR4  = GRP_OR | (4 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group OR5 (&amp;5). */
+    public static final int GRP_OR5  = GRP_OR | (5 << GRP_NUM_SHIFT);
+
     /**
      * The focus atom or bond at the 'centre' of the stereo-configuration.
      * @return the focus
@@ -209,6 +286,18 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
      * @return the configuration
      */
     int getConfig();
+
+    /**
+     * Access the stereo group information - see class doc.
+     * @return the group info
+     */
+    int getGroupInfo();
+
+    /**
+     * Set the stereo group information - see class doc.
+     * @param grp the group info
+     */
+    void setGrpConfig(int grp);
 
     /**
      * Does the stereo element contain the provided atom.
