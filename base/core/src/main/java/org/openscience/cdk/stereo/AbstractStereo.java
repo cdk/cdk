@@ -113,16 +113,14 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
     }
 
     /**
-     * Access the stereo group in, this is present when this stereo element is racemic (AND) or relative (OR).
-     * @return the group info
+     * {@inheritDoc}
      */
     public int getGroupInfo() {
         return value & IStereoElement.GRP_MASK;
     }
 
     /**
-     * Set the group info for this stereo center.
-     * @param grp the group info
+     * {@inheritDoc}
      */
     public void setGrpConfig(int grp) {
         value &= ~IStereoElement.GRP_MASK;
