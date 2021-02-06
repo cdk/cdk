@@ -123,8 +123,8 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
      * {@inheritDoc}
      */
     public void setGroupInfo(int grp) {
-        value &= ~IStereoElement.GRP_MASK;
-        value |= (grp & IStereoElement.GRP_MASK);
+        value &= ~IStereoElement.GRP_MASK; // clear existing hit bits
+        value |= (grp & IStereoElement.GRP_MASK); // set the new value ensure low bits aren't overwritten
     }
 
     /**
