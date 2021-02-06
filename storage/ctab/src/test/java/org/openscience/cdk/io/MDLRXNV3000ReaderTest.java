@@ -210,7 +210,7 @@ public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLRXNV3000Reader mdlr = new MDLRXNV3000Reader(new StringReader(rxnfile))) {
             IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
             IReaction reaction = mdlr.read(bldr.newInstance(IReaction.class));
-            Assert.assertEquals(1, reaction.getReactantCount());
+            Assert.assertEquals(2, reaction.getReactantCount());
             Assert.assertEquals(1, reaction.getProductCount());
             Assert.assertEquals(2, reaction.getAgents().getAtomContainerCount());
         }
