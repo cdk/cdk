@@ -32,10 +32,12 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.AtomContainer;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -45,8 +47,9 @@ import java.io.StringReader;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * TestCase for the reading MDL V3000 mol files using one test file.
@@ -168,6 +171,167 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
                 assertNotNull(bond.getOrder());
             }
             assertThat(container.getBond(4).getOrder(), is(IBond.Order.UNSET));
+        }
+    }
+
+    @Test
+    public void testNoChiralFlag() throws Exception {
+        final String input = "\n" +
+                "  Mrv1810 02052112362D          \n" +
+                "\n" +
+                "  0  0  0     0  0            999 V3000\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 7 7 0 0 0\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
+                "M  V30 2 C -3.4743 11.5447 0 0\n" +
+                "M  V30 3 C -3.4743 10.0047 0 0\n" +
+                "M  V30 4 C -2.1407 9.2347 0 0\n" +
+                "M  V30 5 C -0.807 10.0047 0 0\n" +
+                "M  V30 6 N -0.807 11.5447 0 0\n" +
+                "M  V30 7 O -2.1407 13.8548 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 1 2 3\n" +
+                "M  V30 3 1 3 4\n" +
+                "M  V30 4 1 4 5\n" +
+                "M  V30 5 1 5 6\n" +
+                "M  V30 6 1 1 6\n" +
+                "M  V30 7 1 1 7 CFG=1\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 END CTAB\n" +
+                "M  END\n";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input))) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Iterable<IStereoElement> iter = mol.stereoElements();
+            assertTrue(iter.iterator().hasNext());
+            for (IStereoElement<?,?> se : iter) {
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
+            }
+        }
+    }
+
+    @Test
+    public void testChiralFlag() throws Exception {
+        final String input = "\n" +
+                "  Mrv1810 02052112362D          \n" +
+                "\n" +
+                "  0  0  0     0  0            999 V3000\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 7 7 0 0 1\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
+                "M  V30 2 C -3.4743 11.5447 0 0\n" +
+                "M  V30 3 C -3.4743 10.0047 0 0\n" +
+                "M  V30 4 C -2.1407 9.2347 0 0\n" +
+                "M  V30 5 C -0.807 10.0047 0 0\n" +
+                "M  V30 6 N -0.807 11.5447 0 0\n" +
+                "M  V30 7 O -2.1407 13.8548 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 1 2 3\n" +
+                "M  V30 3 1 3 4\n" +
+                "M  V30 4 1 4 5\n" +
+                "M  V30 5 1 5 6\n" +
+                "M  V30 6 1 1 6\n" +
+                "M  V30 7 1 1 7 CFG=1\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 END CTAB\n" +
+                "M  END\n";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input))) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Iterable<IStereoElement> iter = mol.stereoElements();
+            assertTrue(iter.iterator().hasNext());
+            for (IStereoElement<?,?> se : iter) {
+                // Grp Abs is actually just 0
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));
+            }
+        }
+    }
+
+    @Test
+    public void testStereoRac1() throws Exception {
+        final String input = "\n" +
+                "  Mrv1810 02052113162D          \n" +
+                "\n" +
+                "  0  0  0     0  0            999 V3000\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 7 7 0 0 0\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
+                "M  V30 2 C -3.4743 11.5447 0 0\n" +
+                "M  V30 3 C -3.4743 10.0047 0 0\n" +
+                "M  V30 4 C -2.1407 9.2347 0 0\n" +
+                "M  V30 5 C -0.807 10.0047 0 0\n" +
+                "M  V30 6 N -0.807 11.5447 0 0\n" +
+                "M  V30 7 O -2.1407 13.8548 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 1 2 3\n" +
+                "M  V30 3 1 3 4\n" +
+                "M  V30 4 1 4 5\n" +
+                "M  V30 5 1 5 6\n" +
+                "M  V30 6 1 1 6\n" +
+                "M  V30 7 1 1 7 CFG=1\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 BEGIN COLLECTION\n" +
+                "M  V30 MDLV30/STERAC1 ATOMS=(1 1)\n" +
+                "M  V30 END COLLECTION\n" +
+                "M  V30 END CTAB\n" +
+                "M  END";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input))) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            Iterable<IStereoElement> iter = mol.stereoElements();
+            assertTrue(iter.iterator().hasNext());
+            for (IStereoElement<?,?> se : iter) {
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
+            }
+        }
+    }
+
+    @Test
+    public void testStereoRel1() throws Exception {
+        final String input = "\n" +
+                "  Mrv1810 02052113162D          \n" +
+                "\n" +
+                "  0  0  0     0  0            999 V3000\n" +
+                "M  V30 BEGIN CTAB\n" +
+                "M  V30 COUNTS 7 7 0 0 0\n" +
+                "M  V30 BEGIN ATOM\n" +
+                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
+                "M  V30 2 C -3.4743 11.5447 0 0\n" +
+                "M  V30 3 C -3.4743 10.0047 0 0\n" +
+                "M  V30 4 C -2.1407 9.2347 0 0\n" +
+                "M  V30 5 C -0.807 10.0047 0 0\n" +
+                "M  V30 6 N -0.807 11.5447 0 0\n" +
+                "M  V30 7 O -2.1407 13.8548 0 0\n" +
+                "M  V30 END ATOM\n" +
+                "M  V30 BEGIN BOND\n" +
+                "M  V30 1 1 1 2\n" +
+                "M  V30 2 1 2 3\n" +
+                "M  V30 3 1 3 4\n" +
+                "M  V30 4 1 4 5\n" +
+                "M  V30 5 1 5 6\n" +
+                "M  V30 6 1 1 6\n" +
+                "M  V30 7 1 1 7 CFG=1\n" +
+                "M  V30 END BOND\n" +
+                "M  V30 BEGIN COLLECTION\n" +
+                "M  V30 MDLV30/STEREL1 ATOMS=(1 1)\n" +
+                "M  V30 END COLLECTION\n" +
+                "M  V30 END CTAB\n" +
+                "M  END";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input))) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            for (IStereoElement<?,?> se : mol.stereoElements()) {
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_REL1));
+            }
         }
     }
 }

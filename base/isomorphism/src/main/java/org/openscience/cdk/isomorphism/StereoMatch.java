@@ -73,6 +73,14 @@ final class StereoMatch implements Predicate<int[]> {
     private final int[]               queryStereoIndices, targetStereoIndices;
 
     /**
+     * Indicates the stereo group config for a given atom idx, 0=unsed, 1=stored, -1=inverted.
+     * Initially all entries start as 0, if we hit a stereo-element in a group &1, &2, or1, or2
+     * then we check if we have already "set" the group, if not then we "set" the group to make
+     * the first element match, this means we may choose to flip the group to be the enantiomer.
+     */
+    private int[] groupConfigAdjust;
+
+    /**
      * Create a predicate for checking mappings between a provided
      * {@code query} and {@code target}.
      *
@@ -105,6 +113,10 @@ final class StereoMatch implements Predicate<int[]> {
 
         // n.b. not true for unspecified queries e.g. [C@?H](*)(*)*
         if (queryStereoIndices.length > targetStereoIndices.length) return false;
+
+        // reset augment group config if it was initialised
+        if (groupConfigAdjust != null)
+            Arrays.fill(groupConfigAdjust, 0);
 
         for (final int u : queryStereoIndices) {
             switch (queryTypes[u]) {
@@ -143,6 +155,24 @@ final class StereoMatch implements Predicate<int[]> {
 
         int p = permutationParity(us) * parity(queryElement.getStereo());
         int q = permutationParity(vs) * parity(targetElement.getStereo());
+
+        int groupInfo = targetElement.getGroupInfo();
+        if (groupInfo != 0) {
+            if (groupConfigAdjust == null)
+                groupConfigAdjust = new int[target.getAtomCount()];
+
+            // 'set' the group either to be 'as stored' or 'flipped'
+            if (groupConfigAdjust[v] == 0) {
+                int adjust = p == q ? +1 : -1;
+                for (int idx : targetStereoIndices) {
+                    if (targetElements[idx].getGroupInfo() == groupInfo)
+                        groupConfigAdjust[idx] = adjust;
+                }
+            }
+
+            // make the adjustment
+            q *= groupConfigAdjust[v];
+        }
 
         return p == q;
     }

@@ -74,6 +74,14 @@ final class QueryStereoFilter implements Predicate<int[]> {
     private final int[]               queryStereoIndices, targetStereoIndices;
 
     /**
+     * Indicates the stereo group config for a given atom idx, 0=unsed, 1=stored, -1=inverted.
+     * Initially all entries start as 0, if we hit a stereo-element in a group &1, &2, or1, or2
+     * then we check if we have already "set" the group, if not then we "set" the group to make
+     * the first element match, this means we may choose to flip the group to be the enantiomer.
+     */
+    private int[] groupConfigAdjust;
+
+    /**
      * Create a predicate for checking mappings between a provided
      * {@code query} and {@code target}.
      *
@@ -108,6 +116,11 @@ final class QueryStereoFilter implements Predicate<int[]> {
      */
     @Override
     public boolean apply(final int[] mapping) {
+
+        // reset augment group config if it was initialised
+        if (groupConfigAdjust != null)
+            Arrays.fill(groupConfigAdjust, 0);
+
         for (final int u : queryStereoIndices) {
             switch (queryTypes[u]) {
                 case Tetrahedral:
@@ -175,6 +188,41 @@ final class QueryStereoFilter implements Predicate<int[]> {
         int parity = permutationParity(us)
                      * permutationParity(vs)
                      * parity(targetElement.getStereo());
+
+        int groupInfo = targetElement.getGroupInfo();
+
+        if (groupInfo != 0) {
+            if (groupConfigAdjust == null)
+                groupConfigAdjust = new int[target.getAtomCount()];
+
+            // initialise the group
+            if (groupConfigAdjust[v] == 0) {
+
+                boolean leftOk = ((QueryAtom) queryAtom).getExpression().matches(targetAtom, IStereoElement.LEFT);
+                boolean rghtOk = ((QueryAtom) queryAtom).getExpression().matches(targetAtom, IStereoElement.RIGHT);
+
+                // Note: [C@,Si@@] can not happen since the target atom can't be both
+                // but [C;@,@@] can in which case we can't 'set' the group based on this
+                // element so wait till we find the next one
+                if (leftOk && rghtOk) {
+                    return true;
+                }
+
+                int adjust = 1;
+                if ((parity == -1 && !leftOk) || (parity == 1 && !rghtOk))
+                    adjust = -1;
+
+                for (int idx : targetStereoIndices) {
+                    if (targetElements[idx].getGroupInfo() == groupInfo) {
+                        groupConfigAdjust[idx] = adjust;
+                    }
+                }
+
+            }
+
+            // make the adjustment
+            parity *= groupConfigAdjust[v];
+        }
 
         if (parity < 0)
             return ((QueryAtom) queryAtom).getExpression()

@@ -26,9 +26,7 @@ package org.openscience.cdk.smiles;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -40,6 +38,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.sgroup.SgroupType;
@@ -48,6 +47,7 @@ import org.openscience.cdk.smiles.CxSmilesState.CxPolymerSgroup;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import uk.ac.ebi.beam.Graph;
 
 import javax.vecmath.Point2d;
@@ -57,7 +57,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -78,7 +77,7 @@ import java.util.Set;
  * </blockquote>
  *
  * <b>Reading Aromatic SMILES</b>
- *
+ * <p>
  * Aromatic SMILES are automatically kekulised producing a structure with
  * assigned bond orders. The aromatic specification on the atoms is maintained
  * from the SMILES even if the structures are not considered aromatic. For
@@ -95,7 +94,7 @@ import java.util.Set;
  * <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.
  *
  * <b>Unsupported Features</b>
- *
+ * <p>
  * The following features are not supported by this parser. <ul> <li>variable
  * order of bracket atom attributes, '[C-H]', '[CH@]' are considered invalid.
  * The predefined order required by this parser follows the <a
@@ -107,7 +106,7 @@ import java.util.Set;
  * <li>octahedral stereochemistry</li> </ul>
  *
  * <b>Atom Class</b>
- *
+ * <p>
  * The atom class is stored as the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
  * property.
  *
@@ -122,7 +121,6 @@ import java.util.Set;
  *
  * </pre>
  * </blockquote>
- *
  *
  * @author Christoph Steinbeck
  * @author Egon Willighagen
@@ -144,7 +142,7 @@ public final class SmilesParser {
     /**
      * Direct converter from Beam to CDK.
      */
-    private final BeamToCDK          beamToCDK;
+    private final BeamToCDK beamToCDK;
 
     /**
      * Kekulise the molecule on load. Generally this is a good idea as a
@@ -153,12 +151,12 @@ public final class SmilesParser {
      * bond orders (if possible) using an efficient algorithm from the
      * underlying Beam library (soon to be added to CDK).
      */
-    private boolean                  kekulise = true;
+    private boolean kekulise = true;
 
     /**
      * Whether the parser is in strict mode or not.
      */
-    private boolean                  strict = false;
+    private boolean strict = false;
 
     /**
      * Create a new SMILES parser which will create {@link IAtomContainer}s with
@@ -194,7 +192,7 @@ public final class SmilesParser {
         if (!smiles.contains(">"))
             throw new InvalidSmilesException("Not a reaction SMILES: " + smiles);
 
-        final int first  = smiles.indexOf('>');
+        final int first = smiles.indexOf('>');
         final int second = smiles.indexOf('>', first + 1);
 
         if (second < 0)
@@ -264,12 +262,12 @@ public final class SmilesParser {
             Set<String> warnings = new HashSet<>();
             Graph g = Graph.parse(smiles, strict, warnings);
             for (String warning : warnings)
-              logger.warn(warning);
+                logger.warn(warning);
 
             // convert the Beam object model to the CDK - note exception thrown
             // if a kekule structure could not be assigned.
             IAtomContainer mol = beamToCDK.toAtomContainer(kekulise ? g.kekule() : g,
-                                                           kekulise);
+                    kekulise);
 
             if (!isRxnPart) {
                 try {
@@ -379,39 +377,60 @@ public final class SmilesParser {
      * Handle fragment grouping of a reaction that specifies certain disconnected components
      * are actually considered a single molecule. Normally used for salts, [Na+].[OH-].
      *
-     * @param rxn reaction
+     * @param rxn     reaction
      * @param cxstate state
      */
     private void handleFragmentGrouping(IReaction rxn, CxSmilesState cxstate) {
+
+        if (cxstate.fragGroups == null && cxstate.racemicFrags == null)
+            return; // nothing to do here
+
+        final int reactant = 1;
+        final int agent = 2;
+        final int product = 3;
+
+        List<IAtomContainer> fragMap = new ArrayList<>();
+        Map<IAtomContainer, Integer> roleMap = new HashMap<>();
+
+        for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
+            fragMap.add(mol);
+            roleMap.put(mol, reactant);
+        }
+        for (IAtomContainer mol : rxn.getAgents().atomContainers()) {
+            fragMap.add(mol);
+            roleMap.put(mol, agent);
+        }
+        for (IAtomContainer mol : rxn.getProducts().atomContainers()) {
+            fragMap.add(mol);
+            roleMap.put(mol, product);
+        }
+
+        if (cxstate.racemicFrags != null) {
+            for (Integer grp : cxstate.racemicFrags) {
+                if (grp >= fragMap.size())
+                    continue;
+                IAtomContainer mol = fragMap.get(grp);
+                if (mol == null)
+                    continue;
+                for (IStereoElement<?, ?> e : mol.stereoElements()) {
+                    // maybe also Al and AT?
+                    if (e.getConfigClass() == IStereoElement.TH) {
+                        e.setGroupInfo(IStereoElement.GRP_RAC1);
+                    }
+                }
+            }
+        }
+
         // repartition/merge fragments
         if (cxstate.fragGroups != null) {
-
-            final int reactant = 1;
-            final int agent    = 2;
-            final int product  = 3;
-
-            // note we don't use a list for fragmap as the indexes need to stay consistent
-            Map<Integer,IAtomContainer> fragMap = new LinkedHashMap<>();
-            Map<IAtomContainer,Integer> roleMap = new HashMap<>();
-
-            for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
-                fragMap.put(fragMap.size(), mol);
-                roleMap.put(mol, reactant);
-            }
-            for (IAtomContainer mol : rxn.getAgents().atomContainers()) {
-                fragMap.put(fragMap.size(), mol);
-                roleMap.put(mol, agent);
-            }
-            for (IAtomContainer mol : rxn.getProducts().atomContainers()) {
-                fragMap.put(fragMap.size(), mol);
-                roleMap.put(mol, product);
-            }
 
             // check validity of group
             boolean invalid = false;
             Set<Integer> visit = new HashSet<>();
 
             for (List<Integer> grouping : cxstate.fragGroups) {
+                if (grouping.get(0) >= fragMap.size())
+                    continue;
                 IAtomContainer dest = fragMap.get(grouping.get(0));
                 if (dest == null)
                     continue;
@@ -420,6 +439,8 @@ public final class SmilesParser {
                 for (int i = 1; i < grouping.size(); i++) {
                     if (!visit.add(grouping.get(i)))
                         invalid = true;
+                    if (grouping.get(i) >= fragMap.size())
+                        continue;
                     IAtomContainer src = fragMap.get(grouping.get(i));
                     if (src != null) {
                         dest.add(src);
@@ -432,7 +453,7 @@ public final class SmilesParser {
                 rxn.getReactants().removeAllAtomContainers();
                 rxn.getAgents().removeAllAtomContainers();
                 rxn.getProducts().removeAllAtomContainers();
-                for (IAtomContainer mol : fragMap.values()) {
+                for (IAtomContainer mol : fragMap) {
                     switch (roleMap.get(mol)) {
                         case reactant:
                             rxn.getReactants().addAtomContainer(mol);
@@ -544,7 +565,7 @@ public final class SmilesParser {
             }
         }
 
-        Multimap<IAtomContainer, Sgroup>    sgroupMap    = HashMultimap.create();
+        Multimap<IAtomContainer, Sgroup> sgroupMap = HashMultimap.create();
         Map<CxSmilesState.CxSgroup, Sgroup> sgroupRemap = new HashMap<>();
 
         // positional-variation
@@ -595,7 +616,7 @@ public final class SmilesParser {
             for (CxSmilesState.CxSgroup cxsgroup : cxstate.mysgroups) {
                 if (!(cxsgroup instanceof CxPolymerSgroup))
                     continue;
-                CxPolymerSgroup psgroup = (CxPolymerSgroup)cxsgroup;
+                CxPolymerSgroup psgroup = (CxPolymerSgroup) cxsgroup;
                 Sgroup sgroup = new Sgroup();
 
                 Set<IAtom> atomset = new HashSet<>();
@@ -724,7 +745,7 @@ public final class SmilesParser {
                     if (mol != null)
                         sgroupMap.put(mol, cdkSgroup);
                     else if (chemObj instanceof IAtomContainer)
-                        sgroupMap.put((IAtomContainer)chemObj, cdkSgroup);
+                        sgroupMap.put((IAtomContainer) chemObj, cdkSgroup);
                 }
             }
         }
@@ -739,6 +760,42 @@ public final class SmilesParser {
                     if (cdkChild == null)
                         continue;
                     cdkChild.addParent(cdkParent);
+                }
+            }
+        }
+
+        // IMPORTANT: state.racemicComps is handled in the fragment grouping step
+        if (cxstate.racemic) {
+            if (chemObj instanceof IAtomContainer) {
+                for (IStereoElement<?, ?> e : ((IAtomContainer) chemObj).stereoElements()) {
+                    // maybe also Al and AT?
+                    if (e.getConfigClass() == IStereoElement.TH) {
+                        e.setGroupInfo(IStereoElement.GRP_RAC1);
+                    }
+                }
+            } else if (chemObj instanceof IReaction) {
+                for (IAtomContainer mol : ReactionManipulator.getAllAtomContainers((IReaction) chemObj)) {
+                    for (IStereoElement<?, ?> e : mol.stereoElements()) {
+                        // maybe also Al and AT?
+                        if (e.getConfigClass() == IStereoElement.TH) {
+                            e.setGroupInfo(IStereoElement.GRP_RAC1);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        if (cxstate.stereoGrps != null) {
+            for (Map.Entry<Integer, Integer> e : cxstate.stereoGrps.entrySet()) {
+                IAtom atm = atoms.get(e.getKey());
+                IAtomContainer mol = atomToMol.get(atm);
+                for (IStereoElement<?, ?> stereo : ((IAtomContainer) chemObj).stereoElements()) {
+                    // maybe also Al and AT?
+                    if (stereo.getConfigClass() == IStereoElement.TH &&
+                            stereo.getFocus().equals(atm)) {
+                        stereo.setGroupInfo(e.getValue());
+                    }
                 }
             }
         }
