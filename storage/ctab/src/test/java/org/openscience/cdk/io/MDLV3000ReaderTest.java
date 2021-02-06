@@ -208,7 +208,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             Iterable<IStereoElement> iter = mol.stereoElements();
             assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?,?> se : iter) {
-                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
             }
         }
     }
@@ -290,7 +290,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             Iterable<IStereoElement> iter = mol.stereoElements();
             assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?,?> se : iter) {
-                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
             }
         }
     }
@@ -330,7 +330,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input))) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
             for (IStereoElement<?,?> se : mol.stereoElements()) {
-                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_OR1));
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_REL1));
             }
         }
     }

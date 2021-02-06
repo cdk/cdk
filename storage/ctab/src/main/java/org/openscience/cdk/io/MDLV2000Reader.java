@@ -549,7 +549,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             if (chiral == 0) {
                 for (IStereoElement<?,?> se : outputContainer.stereoElements()) {
                     if (se.getConfigClass() == IStereoElement.TH) {
-                        se.setGroupInfo(IStereoElement.GRP_AND1);
+                        se.setGroupInfo(IStereoElement.GRP_RAC1);
                     }
                 }
             }

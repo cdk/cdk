@@ -233,13 +233,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 if (!chiral) {
                     int max = 0;
                     for (Integer val : stereoflags.values()) {
-                        if ((val&IStereoElement.GRP_TYPE_MASK) == IStereoElement.GRP_AND) {
+                        if ((val&IStereoElement.GRP_TYPE_MASK) == IStereoElement.GRP_RAC) {
                             int num = val >>> IStereoElement.GRP_NUM_SHIFT;
                             if (num > max)
                                 max = num;
                         }
                     }
-                    defaultRacGrp = IStereoElement.GRP_AND | (((max + 1) << IStereoElement.GRP_NUM_SHIFT));
+                    defaultRacGrp = IStereoElement.GRP_RAC | (((max + 1) << IStereoElement.GRP_NUM_SHIFT));
                 }
 
                 for (IStereoElement<?, ?> se : readData.stereoElements()) {
@@ -260,7 +260,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // Tetrahedral stereo as AND1 (&1)
                 for (IStereoElement<?, ?> se : readData.stereoElements()) {
                     if (se.getConfigClass() == IStereoElement.TH) {
-                        se.setGroupInfo(IStereoElement.GRP_AND1);
+                        se.setGroupInfo(IStereoElement.GRP_RAC1);
                     }
                 }
             }
@@ -330,9 +330,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             if (command.startsWith("END COLLECTION"))
                 break;
             else if (command.startsWith("MDLV30/STERAC")) {
-                parseStereoGroup(flags, command, IStereoElement.GRP_AND);
+                parseStereoGroup(flags, command, IStereoElement.GRP_RAC);
             } else if (command.startsWith("MDLV30/STEREL")) {
-                parseStereoGroup(flags, command, IStereoElement.GRP_OR);
+                parseStereoGroup(flags, command, IStereoElement.GRP_REL);
             } else if (command.startsWith("MDLV30/STEABS")) {
                 parseStereoGroup(flags, command, IStereoElement.GRP_ABS);
             }

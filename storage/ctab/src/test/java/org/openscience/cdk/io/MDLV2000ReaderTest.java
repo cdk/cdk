@@ -1992,7 +1992,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             Iterable<IStereoElement> iter = mol.stereoElements();
             assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?,?> se : iter) {
-                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
             }
         }
     }

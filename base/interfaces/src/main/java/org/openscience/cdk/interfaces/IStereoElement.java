@@ -76,16 +76,16 @@ import java.util.Map;
  * racemic and unknown enantiomers. In V2000 MOLfile if the chiral flag is 0 it indicates the structure is a mixture
  * of enantiomers. V3000 extended this concept to not only encode mixtures (and enantiomer) but also unknown
  * stereochemistry (or enantiomer) and to be per chiral centre allow representation of any epimers.
- * Reading an MDLV2000 molfile a chiral flag of 0 is equivalent to setting all stereocentres to {@link #GRP_AND1}.
+ * Reading an MDLV2000 molfile a chiral flag of 0 is equivalent to setting all stereocentres to {@link #GRP_RAC1}.
  * This information can also be encoded in CXSMILES. By default all stereocentres are {@link #GRP_ABS}.
  *
  * The stereo group information is stored in the high bytes of the stereo configuration. You can access the basic
  * information as follows:
  * <pre>{@code
  * int grpconfig = stereo.getGroupInfo();
- * if (grpconfig & IStereoElement.GRP_AND1) {
- *     // group is AND1
- * } else if (config & IStereoElement.GRP_OR1) {
+ * if (grpconfig & IStereoElement.GRP_RAC1) {
+ *     // group is RAC1
+ * } else if (config & IStereoElement.GRP_REL1) {
  *     // group is OR1
  * }
  * }</pre>
@@ -222,34 +222,37 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
     int GRP_NUM_MASK   = 0xfc_0000;
     int GRP_NUM_SHIFT  = 18; // Integer.numberOfTrailingZeros(0xfc_0000);
 
-    /** Stereo group type ABS (absolute) */
-    int GRP_ABS  = 0x00_0000;
-    /** Stereo group type AND (and enantiomer) */
-    int GRP_AND  = 0x01_0000;
-    /** Stereo group type OR (or enantiomer) */
-    int GRP_OR   = 0x02_0000;
+    /** Absolute stereo group, the exact stereo configuration of this atom is known. */
+    int GRP_ABS = 0x00_0000;
+    /** Racemic stereo group type, the stereo configuration of this atom is a mixture of R/S. An atom can be  */
+    int GRP_RAC = 0x01_0000;
+    /**
+     * Relative stereo group type, the stereo configuration of this atom is unknown but is relative to another
+     * atom in the same group.
+     */
+    int GRP_REL = 0x02_0000;
 
-    /** Convenience field for testing if the stereo is group AND1 (&amp;1). */
-    int GRP_AND1 = GRP_AND | (1 << GRP_NUM_SHIFT);
-    /** Convenience field for testing if the stereo is group AND2 (&amp;2). */
-    int GRP_AND2 = GRP_AND | (2 << GRP_NUM_SHIFT);
-    /** Convenience field for testing if the stereo is group AND3 (&amp;3). */
-    int GRP_AND3 = GRP_AND | (3 << GRP_NUM_SHIFT);
-    /** Convenience field for testing if the stereo is group AND4 (&amp;4). */
-    int GRP_AND4 = GRP_AND | (4 << GRP_NUM_SHIFT);
-    /** Convenience field for testing if the stereo is group AND5 (&amp;5). */
-    int GRP_AND5 = GRP_AND | (5 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group RAC1 (&amp;1). */
+    int GRP_RAC1 = GRP_RAC | (1 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group RAC2 (&amp;2). */
+    int GRP_RAC2 = GRP_RAC | (2 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group RAC3 (&amp;3). */
+    int GRP_RAC3 = GRP_RAC | (3 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group RAC4 (&amp;4). */
+    int GRP_RAC4 = GRP_RAC | (4 << GRP_NUM_SHIFT);
+    /** Convenience field for testing if the stereo is group RAC5 (&amp;5). */
+    int GRP_RAC5 = GRP_RAC | (5 << GRP_NUM_SHIFT);
 
     /** Convenience field for testing if the stereo is group OR1 (&amp;1). */
-    int GRP_OR1  = GRP_OR | (1 << GRP_NUM_SHIFT);
+    int GRP_REL1  = GRP_REL | (1 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group OR2 (&amp;2). */
-    int GRP_OR2  = GRP_OR | (2 << GRP_NUM_SHIFT);
+    int GRP_REL2  = GRP_REL | (2 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group OR3 (&amp;3). */
-    int GRP_OR3  = GRP_OR | (3 << GRP_NUM_SHIFT);
+    int GRP_REL3  = GRP_REL | (3 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group OR4 (&amp;4). */
-    int GRP_OR4  = GRP_OR | (4 << GRP_NUM_SHIFT);
+    int GRP_REL4  = GRP_REL | (4 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group OR5 (&amp;5). */
-    int GRP_OR5  = GRP_OR | (5 << GRP_NUM_SHIFT);
+    int GRP_REL5  = GRP_REL | (5 << GRP_NUM_SHIFT);
 
     /**
      * The focus atom or bond at the 'centre' of the stereo-configuration.

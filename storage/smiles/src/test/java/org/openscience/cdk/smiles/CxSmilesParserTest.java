@@ -251,8 +251,8 @@ public class CxSmilesParserTest {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
         Map<Integer,Integer> expected = new HashMap<>();
-        expected.put(0, IStereoElement.GRP_AND1);
-        expected.put(1, IStereoElement.GRP_AND1);
+        expected.put(0, IStereoElement.GRP_RAC1);
+        expected.put(1, IStereoElement.GRP_RAC1);
         assertThat(state.stereoGrps, is(expected));
     }
 
@@ -261,8 +261,8 @@ public class CxSmilesParserTest {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
         Map<Integer,Integer> expected = new HashMap<>();
-        expected.put(0, IStereoElement.GRP_OR1);
-        expected.put(1, IStereoElement.GRP_OR1);
+        expected.put(0, IStereoElement.GRP_REL1);
+        expected.put(1, IStereoElement.GRP_REL1);
         assertThat(state.stereoGrps, is(expected));
     }
 
@@ -271,9 +271,9 @@ public class CxSmilesParserTest {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx(cxsmilayers, state), is(not(-1)));
         Map<Integer,Integer> expected = new HashMap<>();
-        expected.put(0, IStereoElement.GRP_OR1);
-        expected.put(1, IStereoElement.GRP_OR1);
-        expected.put(6, IStereoElement.GRP_AND5);
+        expected.put(0, IStereoElement.GRP_REL1);
+        expected.put(1, IStereoElement.GRP_REL1);
+        expected.put(6, IStereoElement.GRP_RAC5);
         assertThat(state.stereoGrps, is(expected));
     }
 
@@ -299,7 +299,7 @@ public class CxSmilesParserTest {
         for (IStereoElement<?,?> se : iter) {
             IAtom focus = (IAtom)se.getFocus();
             if (focus.getIndex() == 2) {
-                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
             } else {
                 assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));
             }
@@ -312,7 +312,7 @@ public class CxSmilesParserTest {
         Iterable<IStereoElement> iter = mol.stereoElements();
         assertTrue(iter.iterator().hasNext());
         for (IStereoElement<?,?> se : iter) {
-            assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+            assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
         }
     }
 
@@ -330,7 +330,7 @@ public class CxSmilesParserTest {
             Iterable<IStereoElement> iter = mol.stereoElements();
             assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?, ?> se : iter) {
-                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
             }
         }
     }
@@ -349,7 +349,7 @@ public class CxSmilesParserTest {
             Iterable<IStereoElement> iter = mol.stereoElements();
             assertTrue(iter.iterator().hasNext());
             for (IStereoElement<?, ?> se : iter) {
-                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_AND1));
+                assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
             }
         }
     }

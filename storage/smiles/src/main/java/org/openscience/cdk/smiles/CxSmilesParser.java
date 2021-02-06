@@ -470,11 +470,11 @@ final class CxSmilesParser {
                     }
                     break;
                 case '&': // &1, &2 etc
-                    if (!processStereoGrps(state, iter, IStereoElement.GRP_AND))
+                    if (!processStereoGrps(state, iter, IStereoElement.GRP_RAC))
                         return -1;
                     break;
                 case 'o': // o1, o2 etc
-                    if (!processStereoGrps(state, iter, IStereoElement.GRP_OR))
+                    if (!processStereoGrps(state, iter, IStereoElement.GRP_REL))
                         return -1;
                     break;
                 case 'a': // abs etc

@@ -415,7 +415,7 @@ public final class SmilesParser {
                 for (IStereoElement<?, ?> e : mol.stereoElements()) {
                     // maybe also Al and AT?
                     if (e.getConfigClass() == IStereoElement.TH) {
-                        e.setGroupInfo(IStereoElement.GRP_AND1);
+                        e.setGroupInfo(IStereoElement.GRP_RAC1);
                     }
                 }
             }
@@ -770,7 +770,7 @@ public final class SmilesParser {
                 for (IStereoElement<?, ?> e : ((IAtomContainer) chemObj).stereoElements()) {
                     // maybe also Al and AT?
                     if (e.getConfigClass() == IStereoElement.TH) {
-                        e.setGroupInfo(IStereoElement.GRP_AND1);
+                        e.setGroupInfo(IStereoElement.GRP_RAC1);
                     }
                 }
             } else if (chemObj instanceof IReaction) {
@@ -778,7 +778,7 @@ public final class SmilesParser {
                     for (IStereoElement<?, ?> e : mol.stereoElements()) {
                         // maybe also Al and AT?
                         if (e.getConfigClass() == IStereoElement.TH) {
-                            e.setGroupInfo(IStereoElement.GRP_AND1);
+                            e.setGroupInfo(IStereoElement.GRP_RAC1);
                         }
                     }
                 }

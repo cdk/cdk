@@ -389,10 +389,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                     // generate the label &1, or1
                     String label = null;
                     switch ((groupInfo & IStereoElement.GRP_TYPE_MASK)) {
-                        case IStereoElement.GRP_AND:
+                        case IStereoElement.GRP_RAC:
                             label = "&";
                             break;
-                        case IStereoElement.GRP_OR:
+                        case IStereoElement.GRP_REL:
                             label = "or";
                             break;
                         case IStereoElement.GRP_ABS:
@@ -435,9 +435,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
         }
         switch ((ref_grp & IStereoElement.GRP_TYPE_MASK)) {
-            case IStereoElement.GRP_AND:
+            case IStereoElement.GRP_RAC:
                 return "and enantiomer";
-            case IStereoElement.GRP_OR:
+            case IStereoElement.GRP_REL:
                 return "or enantiomer";
         }
         return null;
