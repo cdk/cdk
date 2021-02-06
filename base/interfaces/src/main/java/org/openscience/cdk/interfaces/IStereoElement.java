@@ -73,11 +73,11 @@ import java.util.Map;
  *
  * <b><u>Stereo Groups (Enhanced stereo):</u></b>
  * Stereochemistry group information, aka "enhanced stereochemistry" in V3000 MOLFile etc allows you to specify
- * racemic and unknown enantiomers. In V2000 MOLfile the if chiral flag was 0 it indicates the structure was a mixture
+ * racemic and unknown enantiomers. In V2000 MOLfile if the chiral flag is 0 it indicates the structure is a mixture
  * of enantiomers. V3000 extended this concept to not only encode mixtures (and enantiomer) but also unknown
- * stereochemistry (or enantiomer) and to be per chiral centre. Reading an MDLV2000 molfile a chiral flag of 0 is
- * equivalent to setting all stereocentres to {@link #GRP_AND1}. This information can also be encoded in CXSMILES. By
- * default all stereocentres are {@link #GRP_ABS}.
+ * stereochemistry (or enantiomer) and to be per chiral centre allow representation of any epimers.
+ * Reading an MDLV2000 molfile a chiral flag of 0 is equivalent to setting all stereocentres to {@link #GRP_AND1}.
+ * This information can also be encoded in CXSMILES. By default all stereocentres are {@link #GRP_ABS}.
  *
  * The stereo group information is stored in the high bytes of the stereo configuration. You can access the basic
  * information as follows:
