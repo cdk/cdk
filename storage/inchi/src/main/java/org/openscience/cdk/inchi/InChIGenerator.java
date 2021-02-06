@@ -258,12 +258,20 @@ public class InChIGenerator {
 
             // Check if radical
             int count = atomContainer.getConnectedSingleElectronsCount(atom);
-            if (count == 0) {
-                // TODO - how to check whether singlet or undefined multiplicity
-            } else if (count == 1) {
+            if (count == 1) {
                 iatom.setRadical(INCHI_RADICAL.DOUBLET);
             } else if (count == 2) {
-                iatom.setRadical(INCHI_RADICAL.TRIPLET);
+                Enum spin = atom.getProperty(CDKConstants.SPIN_MULTIPLICITY);
+                if (spin != null) {
+                    // cdk-ctab:SPIN_MULTIPLICITY not accessible by can access via Enum API although
+                    // a little brittle
+                    if (spin.name().equals("DivalentSinglet"))
+                        iatom.setRadical(INCHI_RADICAL.SINGLET);
+                    else
+                        iatom.setRadical(INCHI_RADICAL.TRIPLET);
+                } else {
+                    iatom.setRadical(INCHI_RADICAL.TRIPLET);
+                }
             } else {
                 throw new CDKException("Unrecognised radical type");
             }
