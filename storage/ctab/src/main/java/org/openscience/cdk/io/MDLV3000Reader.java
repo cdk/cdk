@@ -251,16 +251,16 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         continue;
                     Integer grpinfo = stereoflags.get(idx);
                     if (grpinfo != null)
-                        se.setGrpConfig(grpinfo);
+                        se.setGroupInfo(grpinfo);
                     else if (!chiral)
-                        se.setGrpConfig(defaultRacGrp);
+                        se.setGroupInfo(defaultRacGrp);
                 }
             } else if (!chiral) {
                 // chiral flag not set which means this molecule is this stereoisomer "and" the enantiomer, mark all
                 // Tetrahedral stereo as AND1 (&1)
                 for (IStereoElement<?, ?> se : readData.stereoElements()) {
                     if (se.getConfigClass() == IStereoElement.TH) {
-                        se.setGrpConfig(IStereoElement.GRP_AND1);
+                        se.setGroupInfo(IStereoElement.GRP_AND1);
                     }
                 }
             }

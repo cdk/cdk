@@ -297,7 +297,7 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
      * Set the stereo group information - see class doc.
      * @param grp the group info
      */
-    void setGrpConfig(int grp);
+    void setGroupInfo(int grp);
 
     /**
      * Does the stereo element contain the provided atom.

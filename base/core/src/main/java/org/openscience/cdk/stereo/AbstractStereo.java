@@ -122,7 +122,7 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
     /**
      * {@inheritDoc}
      */
-    public void setGrpConfig(int grp) {
+    public void setGroupInfo(int grp) {
         value &= ~IStereoElement.GRP_MASK;
         value |= (grp & IStereoElement.GRP_MASK);
     }
