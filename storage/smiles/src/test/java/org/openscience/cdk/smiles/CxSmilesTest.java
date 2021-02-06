@@ -392,7 +392,7 @@ public class CxSmilesTest {
         IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
         SmilesParser       smipar = new SmilesParser(bldr);
         IAtomContainer     mol    = smipar.parseSmiles("Cl[*](I)Br |$;_R1;;$,LO:1:0.2.3|");
-        SmilesGenerator    smigen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.CxSmiles);
+        SmilesGenerator    smigen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.CxLigandOrder | SmiFlavor.CxAtomLabel);
         assertThat(smigen.create(mol), is("Cl*(Br)I |$;R1$,LO:1:0.3.2|"));
     }
 

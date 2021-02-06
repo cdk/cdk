@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SDFFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -342,7 +343,29 @@ public class SDFWriter extends DefaultChemObjectWriter {
             return true;
         if (container.getBondCount() > 999)
             return true;
-        // check for positional variation, this can be output in base V3000 and not V2000
+
+        // enhanced stereo check, if every tetrahedral element is Absolute (ABS) or in the same Racemic (RAC) group then
+        // we can use V2000
+        boolean init     = false;
+        int     grp      = 0;
+        for (IStereoElement<?,?> se : container.stereoElements()) {
+            if (se.getConfigClass() == IStereoElement.TH) {
+                if (!init) {
+                    init = true;
+                    grp = se.getGroupInfo();
+                } else if (grp != se.getGroupInfo()) {
+                    // >1 group types e.g. &1 &2, &1 or1 etc, use V3000
+                    return true;
+                }
+            }
+        }
+
+        // original V2000 didn't distinguish racemic and relative stereo (flag=0) however
+        // MDL/Accelrys/BIOVIA decided these should be read as racemic, so even if all
+        if ((grp & IStereoElement.GRP_TYPE_MASK) == IStereoElement.GRP_REL)
+            return true;
+
+        // check for positional variation, this can be output in V3000 and not V2000
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups != null) {
             for (Sgroup sgroup : sgroups)

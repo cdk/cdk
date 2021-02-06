@@ -180,9 +180,14 @@ public final class SmiFlavor {
     public static final int CxDataSgroups       = 0x400000;
 
     /**
+     * Output enhanced stereo.
+     */
+    public static final int CxEnhancedStereo    = 0x800000 | StereoTetrahedral;
+
+    /**
      * Output CXSMILES layers.
      */
-    public static final int CxSmiles            = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer | CxLigandOrder;
+    public static final int CxSmiles            = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer | CxLigandOrder | CxEnhancedStereo;
 
     /**
      * Output CXSMILES layers and coordinates.
