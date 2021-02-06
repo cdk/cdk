@@ -359,6 +359,26 @@ public abstract class SubstructureTest {
         assertMatch(sma("O1.[S@]=1(C)CC"), smi("O=[S@@](C)CC"), 1);
     }
 
+    @Test
+    public void stereoGroups() throws Exception {
+        assertMatch(sma("C[C@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@H](O)CC |r|"), 1);
+        assertMatch(sma("C[C@@H](O)[C@@H](O)CC"), smi("C[C@H](O)[C@H](O)CC |r|"), 1);
+        assertMatch(sma("C[C@H](O)[C@H](O)CC"), smi("C[C@@H](O)[C@@H](O)CC |r|"), 1);
+        assertMatch(sma("C[C@@H](O)[C@@H](O)CC"), smi("C[C@@H](O)[C@@H](O)CC |r|"), 1);
+        assertMismatch(sma("C[C@H](O)[C@@H](O)CC"), smi("C[C@H](O)[C@H](O)CC |r|"));
+        assertMismatch(sma("C[C@@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@H](O)CC |r|"));
+        assertMismatch(sma("C[C@H](O)[C@@H](O)CC"), smi("C[C@@H](O)[C@@H](O)CC |r|"));
+        assertMismatch(sma("C[C@@H](O)[C@H](O)CC"), smi("C[C@@H](O)[C@@H](O)CC |r|"));
+    }
+
+    @Test
+    public void stereoGroupsQuery() throws Exception {
+        assertMatch(sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@H](O)[C@H](O)CC |r|"), 1);
+        assertMatch(sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@@H](O)[C@@H](O)[C@@H](O)CC |r|"), 1);
+        assertMismatch(sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@@H](O)[C@H](O)CC |r|"));
+        assertMismatch(sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@H](O)[C@@H](O)CC |r|"));
+    }
+
     // doesn't matter if the match takes place but it should not cause and error
     // if the query is larger than the target
     @Test
