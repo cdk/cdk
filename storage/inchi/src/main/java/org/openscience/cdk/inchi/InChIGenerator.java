@@ -272,7 +272,7 @@ public class InChIGenerator {
                 } else {
                     iatom.setRadical(INCHI_RADICAL.TRIPLET);
                 }
-            } else {
+            } else if (count != 0) {
                 throw new CDKException("Unrecognised radical type");
             }
         }
