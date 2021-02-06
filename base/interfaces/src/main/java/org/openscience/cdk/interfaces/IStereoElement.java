@@ -121,13 +121,13 @@ import java.util.Map;
 public interface IStereoElement<F extends IChemObject, C extends IChemObject>
     extends ICDKObject {
 
-    public static final int CLS_MASK = 0xff_00;
-    public static final int CFG_MASK = 0x00_ff;
+    int CLS_MASK = 0xff_00;
+    int CFG_MASK = 0x00_ff;
 
-    public static final int LEFT        = 0x00_01;
-    public static final int RIGHT       = 0x00_02;
-    public static final int OPPOSITE    = LEFT;
-    public static final int TOGETHER    = RIGHT;
+    int LEFT        = 0x00_01;
+    int RIGHT       = 0x00_02;
+    int OPPOSITE    = LEFT;
+    int TOGETHER    = RIGHT;
 
     /*
      * Important! The forth nibble of the stereo-class defines the number of
@@ -136,120 +136,120 @@ public interface IStereoElement<F extends IChemObject, C extends IChemObject>
      */
 
     /** Geometric CisTrans (e.g. but-2-ene) */
-    public static final int CT   = 0x21_00;
+    int CT   = 0x21_00;
 
     /** Tetrahedral (T-4) (e.g. butan-2-ol)*/
-    public static final int TH   = 0x42_00;
+    int TH   = 0x42_00;
 
     /** ExtendedTetrahedral a.k.a. allene (e.g. 2,3-pentadiene) */
-    public static final int AL   = 0x43_00;
+    int AL   = 0x43_00;
 
     /** ExtendedCisTrans a.k.a. cumulene (e.g. hexa-2,3,4-triene) */
-    public static final int CU   = 0x22_00;
+    int CU   = 0x22_00;
 
     /** Atropisomeric (e.g. BiNAP) */
-    public static final int AT   = 0x44_00;
+    int AT   = 0x44_00;
 
     /** Square Planar (SP-4) (e.g. cisplatin) */
-    public static final int SP   = 0x45_00;
+    int SP   = 0x45_00;
 
     /** Square Pyramidal (SPY-5) */
-    public static final int SPY  = 0x51_00;
+    int SPY  = 0x51_00;
 
     /** Trigonal Bipyramidal (TBPY-5) */
-    public static final int TBPY = 0x52_00;
+    int TBPY = 0x52_00;
 
     /** Octahedral (OC-6) */
-    public static final int OC   = 0x61_00;
+    int OC   = 0x61_00;
 
     /** Pentagonal Bipyramidal (PBPY-7) */
-    public static final int PBPY = 0x71_00;
+    int PBPY = 0x71_00;
 
     /** Hexagonal Bipyramidal (HBPY-8) */
-    public static final int HBPY8 = 0x81_00;
+    int HBPY8 = 0x81_00;
 
     /** Heptagonal Bipyramidal (HBPY-9) */
-    public static final int HBPY9 = 0x91_00;
+    int HBPY9 = 0x91_00;
 
     /** Geometric CisTrans (e.g. but-2-ene) */
-    public static final int CisTrans              = CT;
+    int CisTrans              = CT;
 
     /** Tetrahedral (T-4) (e.g. butan-2-ol)*/
-    public static final int Tetrahedral           = TH;
+    int Tetrahedral           = TH;
 
     /** ExtendedTetrahedral (e.g. 2,3-pentadiene) */
-    public static final int Allenal               = AL;
+    int Allenal               = AL;
 
     /** Cumulene */
-    public static final int Cumulene              = CU;
+    int Cumulene              = CU;
 
     /** Atropisomeric (e.g. BiNAP) */
-    public static final int Atropisomeric         = AT;
+    int Atropisomeric         = AT;
 
     /** Square Planar (SP-4) (e.g. cisplatin) */
-    public static final int SquarePlanar          = SP;
+    int SquarePlanar          = SP;
 
     /** Square Pyramidal (SPY-5) */
-    public static final int SquarePyramidal       = SPY;
+    int SquarePyramidal       = SPY;
 
     /** Trigonal Bipyramidal (TBPY-5) */
-    public static final int TrigonalBipyramidal   = TBPY;
+    int TrigonalBipyramidal   = TBPY;
 
     /** Octahedral (OC-6) */
-    public static final int Octahedral            = OC;
+    int Octahedral            = OC;
 
     /** Pentagonal Bipyramidal (PBPY-7) */
-    public static final int PentagonalBipyramidal = PBPY;
+    int PentagonalBipyramidal = PBPY;
 
     /** Hexagonal Bipyramidal (HBPY-8) */
-    public static final int HexagonalBipyramidal  = HBPY8;
+    int HexagonalBipyramidal  = HBPY8;
 
     /** Heptagonal Bipyramidal (HBPY-9) */
-    public static final int HeptagonalBipyramidal = HBPY9;
+    int HeptagonalBipyramidal = HBPY9;
 
     /** Square Planar Configutation in U Shape */
-    public static final int SPU = SP | 1;
+    int SPU = SP | 1;
     /** Square Planar Configutation in 4 Shape */
-    public static final int SP4 = SP | 2;
+    int SP4 = SP | 2;
     /** Square Planar Configutation in Z Shape */
-    public static final int SPZ = SP | 3;
+    int SPZ = SP | 3;
 
     /** Mask for the stereo group information */
-    public static final int GRP_MASK      = 0xff_0000;
+    int GRP_MASK      = 0xff_0000;
     /** Mask for the stereo group type information, GRP_ABS, GRP_AND, GRP_OR */
-    public static final int GRP_TYPE_MASK = 0x03_0000;
+    int GRP_TYPE_MASK = 0x03_0000;
     /** Mask for the stereo group number information, 0x0 .. 0xf (1..15) */
-    public static final int GRP_NUM_MASK   = 0xfc_0000;
-    public static final int GRP_NUM_SHIFT  = 18; // Integer.numberOfTrailingZeros(0xfc_0000);
+    int GRP_NUM_MASK   = 0xfc_0000;
+    int GRP_NUM_SHIFT  = 18; // Integer.numberOfTrailingZeros(0xfc_0000);
 
     /** Stereo group type ABS (absolute) */
-    public static final int GRP_ABS  = 0x00_0000;
+    int GRP_ABS  = 0x00_0000;
     /** Stereo group type AND (and enantiomer) */
-    public static final int GRP_AND  = 0x01_0000;
+    int GRP_AND  = 0x01_0000;
     /** Stereo group type OR (or enantiomer) */
-    public static final int GRP_OR   = 0x02_0000;
+    int GRP_OR   = 0x02_0000;
 
     /** Convenience field for testing if the stereo is group AND1 (&amp;1). */
-    public static final int GRP_AND1 = GRP_AND | (1 << GRP_NUM_SHIFT);
+    int GRP_AND1 = GRP_AND | (1 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group AND2 (&amp;2). */
-    public static final int GRP_AND2 = GRP_AND | (2 << GRP_NUM_SHIFT);
+    int GRP_AND2 = GRP_AND | (2 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group AND3 (&amp;3). */
-    public static final int GRP_AND3 = GRP_AND | (3 << GRP_NUM_SHIFT);
+    int GRP_AND3 = GRP_AND | (3 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group AND4 (&amp;4). */
-    public static final int GRP_AND4 = GRP_AND | (4 << GRP_NUM_SHIFT);
+    int GRP_AND4 = GRP_AND | (4 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group AND5 (&amp;5). */
-    public static final int GRP_AND5 = GRP_AND | (5 << GRP_NUM_SHIFT);
+    int GRP_AND5 = GRP_AND | (5 << GRP_NUM_SHIFT);
 
     /** Convenience field for testing if the stereo is group OR1 (&amp;1). */
-    public static final int GRP_OR1  = GRP_OR | (1 << GRP_NUM_SHIFT);
+    int GRP_OR1  = GRP_OR | (1 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group OR2 (&amp;2). */
-    public static final int GRP_OR2  = GRP_OR | (2 << GRP_NUM_SHIFT);
+    int GRP_OR2  = GRP_OR | (2 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group OR3 (&amp;3). */
-    public static final int GRP_OR3  = GRP_OR | (3 << GRP_NUM_SHIFT);
+    int GRP_OR3  = GRP_OR | (3 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group OR4 (&amp;4). */
-    public static final int GRP_OR4  = GRP_OR | (4 << GRP_NUM_SHIFT);
+    int GRP_OR4  = GRP_OR | (4 << GRP_NUM_SHIFT);
     /** Convenience field for testing if the stereo is group OR5 (&amp;5). */
-    public static final int GRP_OR5  = GRP_OR | (5 << GRP_NUM_SHIFT);
+    int GRP_OR5  = GRP_OR | (5 << GRP_NUM_SHIFT);
 
     /**
      * The focus atom or bond at the 'centre' of the stereo-configuration.
