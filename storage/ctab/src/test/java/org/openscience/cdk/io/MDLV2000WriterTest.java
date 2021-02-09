@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -50,6 +51,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,6 +64,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 /**
@@ -452,9 +455,6 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         writer.write(molecule);
         writer.close();
 
-
-        System.out.println(sw.toString());
-
         Assert.assertTrue(sw.toString().contains(
             "   -1.1749    0.1436    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0"));
 
@@ -622,8 +622,6 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     }
 
-    // XXX: information loss, CDK does not distinquish between divalence
-    //      singlet and triplet and only stores the unpaired electrons
     @Test
     public void testSingleTripletRadical() throws Exception {
 
@@ -641,7 +639,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         String[] lines = sw.toString().split("\n");
 
         assertThat("incorrect file length", lines.length, is(9));
-        assertThat("incorrect radical output", lines[7], is("M  RAD  1   2   1"));
+        assertThat("incorrect radical output", lines[7], is("M  RAD  1   2   3"));
     }
 
     @Test
@@ -957,7 +955,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
             assertThat(output, containsString("\n"
-                                              + "  5  4  0  0  1  0  0  0  0  0999 V2000\n"
+                                              + "  5  4  0  0  0  0  0  0  0  0999 V2000\n"
                                               + "    0.0000    0.0000    0.0000 C   0  0  1  0  0  0\n"
                                               + "    0.0000    0.0000    0.0000 C   0  0\n"
                                               + "    0.0000    0.0000    0.0000 C   0  0\n"
@@ -1073,5 +1071,65 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
       } catch (IOException | CDKException e) {
         Assert.fail(e.getMessage());
       }
+    }
+
+    @Test
+    public void testNoChiralFlag() throws Exception {
+        final String input = "\n" +
+                "  Mrv1810 02052112282D          \n" +
+                "\n" +
+                "  7  7  0  0  0  0            999 V2000\n" +
+                "   -1.1468    6.5972    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.8613    6.1847    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.8613    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.1468    4.9472    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4323    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4323    6.1847    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.1468    7.4222    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0  0\n" +
+                "  2  3  1  0  0  0  0\n" +
+                "  3  4  1  0  0  0  0\n" +
+                "  4  5  1  0  0  0  0\n" +
+                "  5  6  1  0  0  0  0\n" +
+                "  1  6  1  0  0  0  0\n" +
+                "  1  7  1  1  0  0  0\n" +
+                "M  END\n";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input));
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mdlr.read(bldr.newAtomContainer()));
+        }
+        assertThat(sw.toString(), containsString("  7  7  0  0  0  0"));
+    }
+
+    @Test
+    public void testChiralFlag() throws Exception {
+        final String input = "\n" +
+                "  Mrv1810 02052112282D          \n" +
+                "\n" +
+                "  7  7  0  0  1  0            999 V2000\n" +
+                "   -1.1468    6.5972    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.8613    6.1847    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.8613    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.1468    4.9472    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4323    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4323    6.1847    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.1468    7.4222    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0  0\n" +
+                "  2  3  1  0  0  0  0\n" +
+                "  3  4  1  0  0  0  0\n" +
+                "  4  5  1  0  0  0  0\n" +
+                "  5  6  1  0  0  0  0\n" +
+                "  1  6  1  0  0  0  0\n" +
+                "  1  7  1  1  0  0  0\n" +
+                "M  END\n";
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        StringWriter sw = new StringWriter();
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input));
+             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+            mdlw.write(mdlr.read(bldr.newAtomContainer()));
+        }
+        assertThat(sw.toString(), containsString("  7  7  0  0  1  0"));
     }
 }

@@ -23,30 +23,21 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
+import java.util.*;
+
 /**
  * Class with convenience methods that provide methods to manipulate
  * {@link IMolecularFormula}'s. For example:
@@ -245,13 +236,16 @@ public class MolecularFormulaManipulator {
     }
 
     private static void appendElement(StringBuilder sb, Integer mass, int elem, int count) {
+        String symbol = Elements.ofNumber(elem).symbol();
+        if (symbol.isEmpty())
+            symbol = "R";
         if (mass != null)
             sb.append('[')
               .append(mass)
               .append(']')
-              .append(Elements.ofNumber(elem).symbol());
+              .append(symbol);
         else
-            sb.append(Elements.ofNumber(elem).symbol());
+            sb.append(symbol);
         if (count != 0)
             sb.append(count);
     }
@@ -1092,14 +1086,40 @@ public class MolecularFormulaManipulator {
      * @see                      #getMolecularFormula(IAtomContainer)
      */
     public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer, IMolecularFormula formula) {
+
+        // mark multi-center attachments to be excluded from the formula
+        Set<IAtom> mattach = null;
+        List<Sgroup> sgroups = atomContainer.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getType() == SgroupType.ExtMulticenter) {
+                    for (IBond bond : sgroup.getBonds()) {
+                        for (IAtom atom : sgroup.getAtoms()) {
+                            if (bond.contains(atom)) {
+                                if (mattach == null)
+                                    mattach = new HashSet<>();
+                                mattach.add(atom);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (mattach == null)
+            mattach = Collections.emptySet();
+
         int charge = 0;
         int hcnt   = 0;
-        for (IAtom iAtom : atomContainer.atoms()) {
-            formula.addIsotope(iAtom);
-            if (iAtom.getFormalCharge() != null)
-                charge += iAtom.getFormalCharge();
-            if (iAtom.getImplicitHydrogenCount() != null)
-                hcnt += iAtom.getImplicitHydrogenCount();
+        for (IAtom atm : atomContainer.atoms()) {
+            if ((atm instanceof IPseudoAtom && ((IPseudoAtom) atm).getAttachPointNum() != 0))
+                continue;
+            if (mattach.contains(atm))
+                continue;
+            formula.addIsotope(atm);
+            if (atm.getFormalCharge() != null)
+                charge += atm.getFormalCharge();
+            if (atm.getImplicitHydrogenCount() != null)
+                hcnt += atm.getImplicitHydrogenCount();
             }
         if (hcnt != 0) {
             IAtom hAtom = atomContainer.getBuilder().newInstance(IAtom.class, "H");

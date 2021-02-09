@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
 import org.openscience.cdk.smiles.CxSmilesState.CxPolymerSgroup;
@@ -928,6 +929,40 @@ public final class SmilesGenerator {
                     if (cxParent == null)
                         continue;
                     cxParent.children.add(cxChild);
+                }
+            }
+        }
+
+        // enhanced stereo
+        {
+            Map<Integer,Integer> stereoGrps = new HashMap<>();
+            boolean init  = false;
+            boolean mixed = false;
+            int     grp  = 0;
+            for (IStereoElement<?, ?> se : mol.stereoElements()) {
+                if (se.getConfigClass() == IStereoElement.TH) {
+                    IAtom focus = (IAtom) se.getFocus();
+                    stereoGrps.put(atomidx.get(focus), se.getGroupInfo());
+                    if (!init) {
+                        grp = se.getGroupInfo();
+                        init = true;
+                    } else if (grp != se.getGroupInfo()) {
+                        mixed = true;
+                    }
+                }
+            }
+
+            if (init) {
+                if (mixed) {
+                    state.stereoGrps = stereoGrps;
+                } else {
+                    int grpType = grp & IStereoElement.GRP_TYPE_MASK;
+                    if (grpType == IStereoElement.GRP_RAC)
+                        state.racemic = true;
+                    else if (grpType == IStereoElement.GRP_ABS)
+                        state.racemic = false;
+                    else
+                        state.stereoGrps = stereoGrps;
                 }
             }
         }

@@ -1,4 +1,5 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ *                    2020  Egon Willighagen <egon.willighagen@gmail.com>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -38,6 +39,7 @@ public class CASNumberTest extends CDKTestCase {
     @Test
     public void testValidNumbers() {
         // valid cas numbers
+        Assert.assertTrue(CASNumber.isValid("36-88-4"));
         Assert.assertTrue(CASNumber.isValid("50-00-0")); // formaldehyde
         Assert.assertTrue(CASNumber.isValid("548-00-5"));
         Assert.assertTrue(CASNumber.isValid("2622-26-6"));
@@ -57,12 +59,6 @@ public class CASNumberTest extends CDKTestCase {
         Assert.assertFalse(CASNumber.isValid("50-00-7"));
         Assert.assertFalse(CASNumber.isValid("50-00-8"));
         Assert.assertFalse(CASNumber.isValid("50-00-9"));
-    }
-
-    @Test
-    public void testLargerThanFirst() {
-        // valid format, but wrong number, the first is 50-00-0
-        Assert.assertFalse(CASNumber.isValid("3-21-4"));
     }
 
     @Test

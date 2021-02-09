@@ -430,8 +430,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         //write number of atom lists
         line.append(formatMDLInt(atomLists.size(), 3));
         line.append("  0");
-        // we mark all stereochemistry to absolute for now
-        line.append(atomstereo.isEmpty() ? "  0" : "  1");
+        line.append(getChiralFlag(atomstereo.values()) ? "  1" : "  0");
         line.append("  0  0  0  0  0999 V2000");
         writer.write(line.toString());
         writer.write('\n');
@@ -618,7 +617,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                             case UNSET:
                                 if (bond.isAromatic()) {
                                     if (!writeAromaticBondTypes.isSet())
-                                        throw new CDKException("Bond at idx " + container.indexOf(bond) + " was an unspecific aromatic bond which should only be used for querie in Molfiles. These can be written if desired by enabling the option 'WriteAromaticBondTypes'.");
+                                        throw new CDKException("Bond at idx " + container.indexOf(bond) + " was an unspecific aromatic bond which should only be used for queries in Molfiles. These can be written if desired by enabling the option 'WriteAromaticBondTypes'.");
                                     bondType = 4;
                                 }
                                 break;
@@ -694,7 +693,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         if (container.getSingleElectronCount() > 0) {
             Map<Integer, SPIN_MULTIPLICITY> atomIndexSpinMap = new LinkedHashMap<Integer, SPIN_MULTIPLICITY>();
             for (int i = 0; i < container.getAtomCount(); i++) {
-                int eCount = container.getConnectedSingleElectronsCount(container.getAtom(i));
+                IAtom atom = container.getAtom(i);
+                int eCount = container.getConnectedSingleElectronsCount(atom);
                 switch (eCount) {
                     case 0:
                         continue;
@@ -702,8 +702,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.Monovalent);
                         break;
                     case 2:
-                        // information loss, divalent but singlet or triplet?
-                        atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.DivalentSinglet);
+                        SPIN_MULTIPLICITY multiplicity = atom.getProperty(CDKConstants.SPIN_MULTIPLICITY);
+                        if (multiplicity != null)
+                            atomIndexSpinMap.put(i, multiplicity);
+                        else {
+                            // information loss, divalent but singlet or triplet?
+                            atomIndexSpinMap.put(i, SPIN_MULTIPLICITY.DivalentSinglet);
+                        }
                         break;
                     default:
                         logger.debug("Invalid number of radicals found: " + eCount);
@@ -796,6 +801,40 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         writer.write('\n');
         writer.flush();
     }
+
+    /**
+     * Determines the chiral flag, a molecule is chiral if all it's tetrahedral stereocenters are marked as absolute.
+     * This function also checks if there is enhanced stereochemistry that cannot be emitted (without information loss)
+     * in V2000.
+     *
+     * @param stereo tetrahedral stereo
+     * @return the chiral status
+     */
+    static boolean getChiralFlag(Iterable<? extends IStereoElement> stereo) {
+        boolean chiral = true;
+        int seenGrpInfo = 0;
+        int numTetrahedral = 0;
+        for (IStereoElement tc : stereo) {
+            if (tc.getConfigClass() != IStereoElement.TH)
+                continue;
+            numTetrahedral++;
+            if (tc.getGroupInfo() != IStereoElement.GRP_ABS) {
+                if (seenGrpInfo == 0) {
+                    seenGrpInfo = tc.getGroupInfo();
+                } else if (seenGrpInfo != tc.getGroupInfo()) {
+                    // we could check for racemic only but V2000 originally didn't differentiate between relative
+                    // or racemic so providing they're all the same it's okay. But we should warn if there is something
+                    // more complicated
+                    logger.warn("Molecule has enhanced stereochemistry that cannot be represented in V2000");
+                }
+                chiral = false;
+            }
+        }
+        if (numTetrahedral == 0)
+            chiral = false;
+        return chiral;
+    }
+
 
     private static void writeAtomLists(Map<Integer, IAtom> atomLists, BufferedWriter writer) throws IOException {
         //write out first as the legacy atom list way and then as the M  ALS way

@@ -45,6 +45,9 @@ final class CxSmilesState {
     Map<Integer, List<Integer>> positionVar = null;
     List<CxSgroup>              mysgroups   = null;
     boolean                     coordFlag   = false;
+    boolean                     racemic     = false;
+    List<Integer> racemicFrags = null;
+    Map<Integer,Integer> stereoGrps = null;
 
     enum Radical {
         Monovalent,

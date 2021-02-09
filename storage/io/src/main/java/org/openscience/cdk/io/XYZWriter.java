@@ -148,7 +148,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
             writer.write(s1, 0, s1.length());
             writer.write('\n');
 
-            String s2 = null; // FIXME: add some interesting comment
+            String s2 = mol.getTitle();
             if (s2 != null) {
                 writer.write(s2, 0, s2.length());
             }

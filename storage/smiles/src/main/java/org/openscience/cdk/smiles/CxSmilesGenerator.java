@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.smiles;
 
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.smiles.CxSmilesState.CxDataSgroup;
 import org.openscience.cdk.smiles.CxSmilesState.CxPolymerSgroup;
@@ -189,6 +190,67 @@ public class CxSmilesGenerator {
                 sb.append(";");
             }
             sb.append('$');
+        }
+
+        if (SmiFlavor.isSet(opts, SmiFlavor.CxEnhancedStereo)) {
+            if (state.racemic) {
+                if (sb.length() > 2)
+                    sb.append(',');
+                sb.append("r");
+            } else {
+                if (state.racemicFrags != null) {
+                    if (sb.length() > 2)
+                        sb.append(',');
+                    sb.append("r:");
+                    sb.append(state.racemicFrags.get(0));
+                    for (int i=1; i<state.racemicFrags.size(); i++) {
+                        sb.append(',').append(state.racemicFrags.get(i));
+                    }
+                }
+                if (state.stereoGrps != null) {
+                    // collect the indexes by group
+                    Map<Integer,List<Integer>> grpToIdxs = new TreeMap<>();
+                    for (Map.Entry<Integer,Integer> e : state.stereoGrps.entrySet()) {
+                        Integer idx = e.getKey();
+                        Integer grp = e.getValue();
+                        grpToIdxs.computeIfAbsent(grp, k -> new ArrayList<>())
+                                 .add(idx);
+                    }
+
+                    // make sure we have a consistent ordering
+                    List<Map.Entry<Integer, List<Integer>>> entries = new ArrayList<>(grpToIdxs.entrySet());
+                    for (Map.Entry<Integer,List<Integer>> e : entries)
+                        e.getValue().sort(invComp);
+                    entries.sort((o1, o2) -> invComp.compare(o1.getValue().get(0), o2.getValue().get(0)));
+
+                    int numRac = 0;
+                    int numRel = 0;
+
+                    // write the stereo groups
+                    for (Map.Entry<Integer,List<Integer>> e : entries) {
+                        if (sb.length() > 2)
+                            sb.append(',');
+                        int grpInfo = e.getKey();
+                        switch (grpInfo & IStereoElement.GRP_TYPE_MASK) {
+                            case IStereoElement.GRP_ABS:
+                                sb.append("a");
+                                break;
+                            case IStereoElement.GRP_RAC:
+                                sb.append("&");
+                                sb.append(++numRac);
+                                break;
+                            case IStereoElement.GRP_REL:
+                                sb.append("o");
+                                sb.append(++numRel);
+                                break;
+                            default:
+                                throw new IllegalStateException("Unexpected stereo group");
+                        }
+                        sb.append(":");
+                        appendIntegers(invorder, ',', sb, e.getValue());
+                    }
+                }
+            }
         }
 
         // 2D/3D Coordinates

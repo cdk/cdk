@@ -60,11 +60,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -261,8 +261,12 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
                 case 1: // 2
                     rad = MDLV2000Writer.SPIN_MULTIPLICITY.Monovalent.getValue();
                     break;
-                case 2: // 1 or 3? Information loss as to which
-                    rad = MDLV2000Writer.SPIN_MULTIPLICITY.DivalentSinglet.getValue();
+                case 2:
+                    MDLV2000Writer.SPIN_MULTIPLICITY spinMultiplicity = atom.getProperty(CDKConstants.SPIN_MULTIPLICITY);
+                    if (spinMultiplicity != null)
+                        rad = spinMultiplicity.getValue();
+                    else // 1 or 3? Information loss as to which
+                        rad = MDLV2000Writer.SPIN_MULTIPLICITY.DivalentSinglet.getValue();
                     break;
             }
 
@@ -670,6 +674,8 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
             if (sgroup.getType().isCtabStandard())
                 numSgroups++;
 
+        int chiralFlag = getChiralFlag(mol.stereoElements());
+
         writer.write("BEGIN CTAB\n");
         writer.write("COUNTS ")
               .write(mol.getAtomCount())
@@ -677,7 +683,9 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
               .write(mol.getBondCount())
               .write(' ')
               .write(numSgroups)
-              .write(" 0 0\n");
+              .write(" 0")
+              .write(chiralFlag == 1 ? " 1" : " 0")
+              .write("\n");
 
         // fast lookup atom indexes, MDL indexing starts at 1
         Map<IChemObject, Integer> idxs = new HashMap<>();
@@ -700,12 +708,55 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         writeAtomBlock(mol, atoms, idxs, atomToStereo);
         writeBondBlock(mol, idxs);
         writeSgroupBlock(sgroups, idxs);
+        if (chiralFlag > 1)
+            writeEnhancedStereo(mol, idxs);
 
         writer.write("END CTAB\n");
         writer.writeDirect("M  END\n");
         writer.writer.flush();
     }
 
+    private void writeEnhancedStereo(IAtomContainer mol, Map<IChemObject, Integer> idxs) throws IOException {
+        // group together
+        Map<Integer,List<IAtom>> groups = new TreeMap<>();
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            if (se.getConfigClass() == IStereoElement.TH) {
+               groups.computeIfAbsent(se.getGroupInfo(), e -> new ArrayList<>())
+                       .add((IAtom)se.getFocus());
+            }
+        }
+        writer.write("BEGIN COLLECTION\n");
+        int numRel = 0;
+        int numRac = 0;
+        for (Map.Entry<Integer,List<IAtom>> e : groups.entrySet()) {
+            int grpInfo = e.getKey();
+            List<IAtom> atoms = e.getValue();
+            writer.write("MDLV30/STE");
+            switch (grpInfo & IStereoElement.GRP_TYPE_MASK) {
+                case IStereoElement.GRP_ABS:
+                    writer.write("ABS");
+                    break;
+                case IStereoElement.GRP_RAC:
+                    writer.write("RAC");
+                    writer.write(++numRac);
+                    break;
+                case IStereoElement.GRP_REL:
+                    writer.write("REL");
+                    writer.write(++numRel);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected ");
+            }
+            writer.write(" ATOMS=(");
+            writer.write(idxs.get(atoms.get(0)));
+            for (int i=1; i<atoms.size(); i++) {
+                writer.write(' ');
+                writer.write(idxs.get(atoms.get(i)));
+            }
+            writer.write(")\n");
+        }
+        writer.write("END COLLECTION\n");
+    }
 
     /**
      * Writes a molecule to the V3000 format. {@inheritDoc}
@@ -952,5 +1003,31 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         for (IOSetting setting : getSettings()) {
             fireIOSettingQuestion(setting);
         }
+    }
+
+    /**
+     * Determines the chiral flag, a molecule is chiral if all it's tetrahedral stereocenters are marked as absolute.
+     *
+     * @param stereo tetrahedral stereo
+     * @return the chiral status, 0=not chiral, 1=chiral (all abs), 2=enhanced
+     */
+    static int getChiralFlag(Iterable<? extends IStereoElement> stereo) {
+        boolean init     = false;
+        int     grp      = 0;
+        for (IStereoElement<?,?> se : stereo) {
+            if (se.getConfigClass() == IStereoElement.TH) {
+                if (!init) {
+                    init = true;
+                    grp = se.getGroupInfo();
+                } else if (grp != se.getGroupInfo()) {
+                    return 2; // mixed
+                }
+            }
+        }
+        if (!init)
+            return 0;
+        if (grp == IStereoElement.GRP_ABS)
+            return 1;
+        return 2;
     }
 }

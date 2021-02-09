@@ -424,6 +424,10 @@ public class CDKConstants {
      */
     public static final String      CTAB_SGROUPS                 = "cdk:CtabSgroups";
 
+    /**
+     * Enumeration of all valid radical values.
+     */
+    public static final String      SPIN_MULTIPLICITY            = "cdk:SpinMultiplicity";
 
     /**
      * Property for reaction objects where the conditions of reactions can be placed.

@@ -43,13 +43,13 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.isomorphism.matchers.Expr;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
@@ -383,6 +383,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             int nAtoms = readMolfileInt(line, 0);
             int nBonds = readMolfileInt(line, 3);
+            int chiral = readMolfileInt(line, 13);
 
             final IAtom[] atoms = new IAtom[nAtoms];
             final IBond[] bonds = new IBond[nBonds];
@@ -539,6 +540,16 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     } else if (!forceReadAs3DCoords.isSet()) { // has 2D coordinates (set as 2D coordinates)
                         outputContainer.setStereoElements(StereoElementFactory.using2DCoordinates(outputContainer)
                                 .createAll());
+                    }
+                }
+            }
+
+            // chiral flag not set which means this molecule is this stereoisomer "and" the enantiomer, mark all
+            // Tetrahedral stereo as AND1 (&1)
+            if (chiral == 0) {
+                for (IStereoElement<?,?> se : outputContainer.stereoElements()) {
+                    if (se.getConfigClass() == IStereoElement.TH) {
+                        se.setGroupInfo(IStereoElement.GRP_RAC1);
                     }
                 }
             }
@@ -704,6 +715,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 hcount = readMolfileInt(line, 42);
             case 42: // sss: stereo parity
                 parity = toInt(line.charAt(41));
+            // case 40: SAChem: I don't think this can happen in a valid molfile, maybe with a trailing tab?
             case 39: // ccc: charge
                 charge = toCharge(line.charAt(38));
             case 36: // dd: mass difference
@@ -1072,6 +1084,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         index = readMolfileInt(line, st) - 1;
                         int value = readMolfileInt(line, st + 4);
                         SPIN_MULTIPLICITY multiplicity = SPIN_MULTIPLICITY.ofValue(value);
+                        
+                        container.getAtom(offset + index).setProperty(CDKConstants.SPIN_MULTIPLICITY, multiplicity);
 
                         for (int e = 0; e < multiplicity.getSingleElectrons(); e++)
                             container.addSingleElectron(offset + index);

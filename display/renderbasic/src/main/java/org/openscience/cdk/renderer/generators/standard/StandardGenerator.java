@@ -25,13 +25,13 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 import org.openscience.cdk.renderer.color.IAtomColorer;
@@ -52,9 +52,7 @@ import org.openscience.cdk.sgroup.SgroupType;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -72,16 +70,16 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  * diagram. These are generated together allowing the bonds to drawn cleanly without overlap. The
  * generate is heavily based on ideas documented in {@cdk.cite Brecher08} and {@cdk.cite Clark13}.
  *
- * 
+ *
  *
  * Atom symbols are provided as {@link GeneralPath} outlines. This allows the depiction to be
  * independent of the system used to view the diagram (primarily important for vector graphic
- * depictions). The font used to generate the diagram must be provided to the constructor. 
+ * depictions). The font used to generate the diagram must be provided to the constructor.
  *
  * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. The style of
  * highlight is set with the {@link Highlighting} parameter.
  *
- * 
+ *
  *
  * The <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki
  * page</a> provides extended details of using and configuring this generator.
@@ -221,6 +219,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                     stroke);
         IRenderingElement donuts = donutGenerator.generate();
 
+        String enantiomerText = determineEnantiomerText(container);
+        if (enantiomerText == null) {
+            // no global 'enantiomer text' add them per atom if exists
+            addStereoGroupAnnotations(container);
+        }
+
         AtomSymbol[] symbols = generateAtomSymbols(container, symbolRemap,
                                                    visibility, parameters,
                                                    annotations, foreground,
@@ -308,31 +312,31 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 middleLayer.add(MarkedElement.markupAtom(symbolElements, atom));
             }
         }
-        
+
         if (style == HighlightStyle.OuterGlowWhiteEdge) {
 	        for (int i = 0; i < container.getAtomCount(); i++) {
 	            IAtom atom = container.getAtom(i);
-	
+
 	            if (isHidden(atom))
 	                continue;
-	
+
 	            Color highlight = getHighlightColor(atom, parameters);
 	            Color color = highlight != null ? highlight : coloring.getAtomColor(atom);
 
 	            if (symbols[i] == null) {
 	                continue;
 	            }
-	
+
 	            ElementGroup symbolElements = new ElementGroup();
 	            for (Shape shape : symbols[i].getOutlines()) {
 	                GeneralPath path = GeneralPath.shapeOf(shape, color);
 	                symbolElements.add(path);
 	            }
-	
+
 	            if (highlight != null && !highlight.equals(Color.WHITE)) {
 	            	backLayer.add(MarkedElement.markup(outerGlow(symbolElements, Color.WHITE, 10*stroke, stroke), "outerglow"));
 	            }
-	        }  
+	        }
         }
 
         // Add the Sgroups display elements to the front layer
@@ -348,7 +352,95 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         group.add(middleLayer);
         group.add(frontLayer);
 
+        // maybe move somewhere else (e.g. annotations)
+        Bounds bounds = new Bounds();
+        bounds.add(group);
+
+        if (enantiomerText != null) {
+            TextOutline chiralInfo = new TextOutline(enantiomerText, font).resize(1 / scale, -1 / scale);
+            if (chiralInfo.getBounds().getWidth() > bounds.width()) {
+                // position center right
+                double centerY = (bounds.minY + bounds.maxY) / 2;
+                chiralInfo = chiralInfo.translate(bounds.maxX - (chiralInfo.getBounds().getMinX() - (10*stroke)),
+                                                  centerY - (chiralInfo.getBounds().getCenterY()));
+            } else {
+                // position bottom right corner
+                chiralInfo = chiralInfo.translate(bounds.maxX - ((chiralInfo.getBounds().getMaxX() + chiralInfo.getCenter().getX()) / 2),
+                                                  bounds.minY - (chiralInfo.getBounds().getMaxY() + (5*stroke)));
+            }
+            group.add(GeneralPath.shapeOf(chiralInfo.getOutline(), foreground));
+        }
+
+
         return MarkedElement.markupMol(group, container);
+    }
+
+    /**
+     * Adds &1 and or1 to each atom in the those stereo groups.
+     * @param container the container
+     */
+    private void addStereoGroupAnnotations(IAtomContainer container) {
+        for (IStereoElement<?,?> se : container.stereoElements()) {
+            // tetrahedral only
+            if (se.getConfigClass() == IStereoElement.TH) {
+                int groupInfo = se.getGroupInfo();
+                if (groupInfo != 0) {
+
+                    // generate the label &1, or1
+                    String label = null;
+                    switch ((groupInfo & IStereoElement.GRP_TYPE_MASK)) {
+                        case IStereoElement.GRP_RAC:
+                            label = "&";
+                            break;
+                        case IStereoElement.GRP_REL:
+                            label = "or";
+                            break;
+                        case IStereoElement.GRP_ABS:
+                            continue;
+                    }
+                    label += Integer.toString(groupInfo >> IStereoElement.GRP_NUM_SHIFT);
+
+                    // attach it to the central atom
+                    IAtom focus = (IAtom) se.getFocus();
+                    String annotation = focus.getProperty(StandardGenerator.ANNOTATION_LABEL);
+                    if (annotation == null)
+                        annotation = label;
+                    else
+                        annotation += ";" + label;
+                    focus.setProperty(StandardGenerator.ANNOTATION_LABEL,
+                                      annotation);
+                }
+            }
+        }
+    }
+
+    /**
+     * Determines the text to enantiomer text to display next to the structure, "and enantiomer" for racemic mixtures
+     * or "or enantiomer" for relative stereochemistry. These are generated if all grouped stereo is in the same group,
+     * i.e. all &1, all or1, all &2 etc.
+     *
+     * @param container the molecule
+     * @return the text
+     */
+    private String determineEnantiomerText(IAtomContainer container) {
+        int ref_grp = 0;
+        for (IStereoElement<?, ?> elem : container.stereoElements()) {
+            if (elem.getConfigClass() == IStereoElement.TH) {
+                if (elem.getGroupInfo() == 0)
+                    return null;
+                if (ref_grp == 0)
+                    ref_grp = elem.getGroupInfo();
+                else if (ref_grp != elem.getGroupInfo())
+                    return null;
+            }
+        }
+        switch ((ref_grp & IStereoElement.GRP_TYPE_MASK)) {
+            case IStereoElement.GRP_RAC:
+                return "and enantiomer";
+            case IStereoElement.GRP_REL:
+                return "or enantiomer";
+        }
+        return null;
     }
 
     private Color getColorOfAtom(Map<IAtom, String> symbolRemap, IAtomColorer coloring, Color foreground,

@@ -101,7 +101,7 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
      */
     @Override
     public int getConfig() {
-        return value;
+        return value & 0xffff;
     }
 
     /**
@@ -110,6 +110,21 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
     @Override
     public void setConfigOrder(int cfg) {
         value = getConfigClass() | cfg;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int getGroupInfo() {
+        return value & IStereoElement.GRP_MASK;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setGroupInfo(int grp) {
+        value &= ~IStereoElement.GRP_MASK; // clear existing hit bits
+        value |= (grp & IStereoElement.GRP_MASK); // set the new value ensure low bits aren't overwritten
     }
 
     /**

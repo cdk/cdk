@@ -795,6 +795,7 @@ public abstract class StereoElementFactory {
                 if (w == v) continue;
                 if (bond.getOrder() != IBond.Order.SINGLE) continue;
                 if (isUnspecified(bond)) return null;
+                if (n == 2) return null;
                 neighbors[n] = container.getAtom(w);
                 elevation[n] = elevationOf(terminals[0], bond);
                 n++;
@@ -806,6 +807,7 @@ public abstract class StereoElementFactory {
                 IBond bond = bondMap.get(t1, w);
                 if (bond.getOrder() != IBond.Order.SINGLE) continue;
                 if (isUnspecified(bond)) return null;
+                if (n == 4) return null;
                 neighbors[n] = container.getAtom(w);
                 elevation[n] = elevationOf(terminals[1], bond);
                 n++;
@@ -1208,6 +1210,9 @@ public abstract class StereoElementFactory {
             IAtom focus = container.getAtom(v);
 
             if (hasUnspecifiedParity(focus)) return null;
+            
+            if (container.getConnectedBondsCount(focus) != 2)
+        	    return null;
 
             IAtom[] terminals = ExtendedTetrahedral.findTerminalAtoms(container, focus);
             IAtom[] neighbors = new IAtom[4];
