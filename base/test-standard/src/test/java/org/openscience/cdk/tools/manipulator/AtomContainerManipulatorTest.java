@@ -47,6 +47,7 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.silent.PseudoAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.TetrahedralChirality;
@@ -1290,6 +1291,18 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     @Test
+    public void keepStereoGroup() throws Exception {
+        assertRemoveH("C[C@]([H])(O)CC |o1:1|",
+                      "C[C@H](O)CC |o1:1|");
+    }
+
+    @Test
+    public void keepStereoGroup2() throws Exception {
+        assertAddH("C[C@H](O)CC |o1:1|",
+                   "C([C@](O[H])(C(C([H])([H])[H])([H])[H])[H])([H])([H])[H] |o1:1|");
+    }
+
+    @Test
     public void molecularWeight() throws InvalidSmilesException, IOException {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("[13CH4]CO");
@@ -1331,7 +1344,16 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer m = smipar.parseSmiles(smiIn);
 
-        String smiAct = new SmilesGenerator().create(AtomContainerManipulator.removeHydrogens(m));
+        String smiAct = new SmilesGenerator(SmiFlavor.Default).create(AtomContainerManipulator.removeHydrogens(m));
+
+        assertThat(smiAct, is(smiExp));
+    }
+
+    static void assertAddH(String smiIn, String smiExp) throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer m = smipar.parseSmiles(smiIn);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(m);
+        String smiAct = new SmilesGenerator(SmiFlavor.Default).create(m);
 
         assertThat(smiAct, is(smiExp));
     }
