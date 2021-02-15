@@ -657,7 +657,9 @@ public class AtomContainerManipulator {
 
                 if (hydrogen != null) {
                     replaceAtom(carriers, focus, hydrogen);
-                    stereos.add(new TetrahedralChirality(focus, carriers, tc.getStereo()));
+                    TetrahedralChirality newStereo = new TetrahedralChirality(focus, carriers, tc.getStereo());
+                    newStereo.setGroupInfo(tc.getGroupInfo());
+                    stereos.add(newStereo);
                 } else {
                     stereos.add(stereo);
                 }
@@ -967,7 +969,9 @@ public class AtomContainerManipulator {
                 if (!updated) {
                     elements.add(tc);
                 } else {
-                    elements.add(new TetrahedralChirality(focus, neighbors, tc.getStereo()));
+                    TetrahedralChirality e = new TetrahedralChirality(focus, neighbors, tc.getStereo());
+                    e.setGroupInfo(tc.getGroupInfo());
+                    elements.add(e);
                 }
             } else if (se instanceof ExtendedTetrahedral) {
                 ExtendedTetrahedral tc = (ExtendedTetrahedral) se;
