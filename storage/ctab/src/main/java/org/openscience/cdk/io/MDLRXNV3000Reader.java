@@ -24,8 +24,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
+import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -177,6 +179,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
         int reactantCount = 0;
         int productCount = 0;
+        int agentCount = 0;
         boolean foundCOUNTS = false;
         while (isReady() && !foundCOUNTS) {
             String command = readCommand();
@@ -188,6 +191,12 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                     logger.info("Expecting " + reactantCount + " reactants in file");
                     productCount = Integer.valueOf(tokenizer.nextToken()).intValue();
                     logger.info("Expecting " + productCount + " products in file");
+                    if (tokenizer.hasMoreTokens()) {
+                        agentCount = Integer.valueOf(tokenizer.nextToken()).intValue();
+                        logger.info("Expecting " + agentCount + " products in file");
+                        if (mode == Mode.STRICT && agentCount > 0)
+                            throw new CDKException("RXN files uses agent count extension");
+                    }
                 } catch (Exception exception) {
                     logger.debug(exception);
                     throw new CDKException("Error while counts line of RXN file", exception);
@@ -198,30 +207,56 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             }
         }
 
+        readMols(builder, reaction, ReactionRole.Reactant, reactantCount);
+        readMols(builder, reaction, ReactionRole.Product, productCount);
+        readMols(builder, reaction, ReactionRole.Agent, agentCount);
+
+        return reaction;
+    }
+
+    private void readMols(IChemObjectBuilder builder, IReaction reaction, ReactionRole role, int count) throws CDKException {
+        if (count == 0)
+            return;
+        String command = readCommand();
+        if (!command.equals("BEGIN " + role.name().toUpperCase(Locale.ROOT)))
+            throw new CDKException("Expected start of " + role + "s  but got: " + command);
+
+        StringBuilder molFile = new StringBuilder();
+
         // now read the reactants
-        for (int i = 1; i <= reactantCount; i++) {
-            StringBuffer molFile = new StringBuffer();
-            String announceMDLFileLine = readCommand();
-            if (!announceMDLFileLine.equals("BEGIN REACTANT")) {
-                String error = "Excepted start of reactant, but found: " + announceMDLFileLine;
+        for (int i = 0; i < count; i++) {
+            molFile.setLength(0);
+            command = readCommand();
+            if (!command.endsWith("BEGIN CTAB")) {
+                String error = "Excepted start of " + role + " CTAB, but found: " + command;
                 logger.error(error);
                 throw new CDKException(error);
             }
             String molFileLine = "";
-            while (!molFileLine.endsWith("END REACTANT")) {
-                molFileLine = readLine();
-                molFile.append(molFileLine);
-                molFile.append('\n');
-            };
+            while ((molFileLine = readLine()) != null) {
+                molFile.append(molFileLine).append('\n');
+                if (molFileLine.endsWith("END CTAB"))
+                    break;
+            }
 
             try {
                 // read MDL molfile content
                 MDLV3000Reader reader = new MDLV3000Reader(new StringReader(molFile.toString()), super.mode);
-                IAtomContainer reactant = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
+                IAtomContainer mol = reader.read(builder.newAtomContainer());
                 reader.close();
 
-                // add reactant
-                reaction.addReactant(reactant);
+                switch (role) {
+                    case Reactant:
+                        reaction.addReactant(mol);
+                        break;
+                    case Agent:
+                        reaction.addAgent(mol);
+                        break;
+                    case Product:
+                        reaction.addProduct(mol);
+                        break;
+                }
+
             } catch (IllegalArgumentException | CDKException | IOException exception) {
                 String error = "Error while reading reactant: " + exception.getMessage();
                 logger.error(error);
@@ -230,39 +265,9 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             }
         }
 
-        // now read the products
-        for (int i = 1; i <= productCount; i++) {
-            StringBuffer molFile = new StringBuffer();
-            String announceMDLFileLine = readCommand();
-            if (!announceMDLFileLine.equals("BEGIN PRODUCT")) {
-                String error = "Excepted start of product, but found: " + announceMDLFileLine;
-                logger.error(error);
-                throw new CDKException(error);
-            }
-            String molFileLine = "";
-            while (!molFileLine.endsWith("END PRODUCT")) {
-                molFileLine = readLine();
-                molFile.append(molFileLine);
-                molFile.append('\n');
-            };
-
-            try {
-                // read MDL molfile content
-                MDLV3000Reader reader = new MDLV3000Reader(new StringReader(molFile.toString()));
-                IAtomContainer product = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
-                reader.close();
-
-                // add product
-                reaction.addProduct(product);
-            } catch (IllegalArgumentException | CDKException | IOException exception) {
-                String error = "Error while reading product: " + exception.getMessage();
-                logger.error(error);
-                logger.debug(exception);
-                throw new CDKException(error, exception);
-            }
-        }
-
-        return reaction;
+        command = readCommand();
+        if (!command.equals("END " + role.name().toUpperCase(Locale.ROOT)))
+            throw new CDKException("Expected end of " + role + "s  but got: " + command);
     }
 
     private boolean isReady() throws CDKException {
