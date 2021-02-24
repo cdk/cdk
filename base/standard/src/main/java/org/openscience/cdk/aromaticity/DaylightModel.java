@@ -67,6 +67,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 final class DaylightModel extends ElectronDonation {
 
+    private static final int WILDCARD   = 0;
     private static final int CARBON     = 6;
     private static final int NITROGEN   = 7;
     private static final int OXYGEN     = 8;
@@ -172,7 +173,9 @@ final class DaylightModel extends ElectronDonation {
             // here is we count the number free valence electrons but also
             // check if the bonded valence is okay (i.e. not a radical)
             else if (charge <= 0 && charge > -3) {
-                if (valence(element, charge) - valence[i] >= 2)
+                if (element == WILDCARD)
+                    electrons[i] = 2;
+                else if (valence(element, charge) - valence[i] >= 2)
                     electrons[i] = 2;
                 else
                     electrons[i] = -1;
@@ -216,6 +219,7 @@ final class DaylightModel extends ElectronDonation {
      */
     private static int exocyclicContribution(int element, int otherElement, int charge, int nCyclic) {
         switch (element) {
+            case WILDCARD:
             case CARBON:
                 return otherElement != CARBON ? 0 : 1;
             case NITROGEN:
@@ -241,6 +245,7 @@ final class DaylightModel extends ElectronDonation {
      */
     private static boolean aromaticElement(int element) {
         switch (element) {
+            case WILDCARD:
             case CARBON:
             case NITROGEN:
             case OXYGEN:
@@ -263,6 +268,8 @@ final class DaylightModel extends ElectronDonation {
      */
     private static boolean normal(int element, int charge, int valence) {
         switch (element) {
+            case WILDCARD:
+                return true;
             case CARBON:
                 if (charge == -1 || charge == +1) return valence == 3;
                 return charge == 0 && valence == 4;
