@@ -256,4 +256,13 @@ public class InChIToStructureTest extends CDKTestCase {
         }
         assertThat(dCount, is(5));
     }
+
+    @Test
+    public void isotope() throws Exception{
+        InChIToStructure parse = new InChIToStructure("InChI=1S/HI/h1H/p-1/i1-6",
+                SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = parse.getAtomContainer();
+        assertThat(mol.getAtomCount(), is(1));
+        assertThat(mol.getAtom(0).getMassNumber(), is(121));
+    }
 }

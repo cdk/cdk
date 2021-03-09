@@ -179,7 +179,9 @@ abstract class AbstractStereo<F extends IChemObject, C extends IChemObject>
         // no change, return self
         if (newfocus == focus && newcarriers == carriers)
             return this;
-        return create(newfocus, newcarriers, value);
+        IStereoElement<F, C> se = create(newfocus, newcarriers, value);
+        se.setGroupInfo(getGroupInfo());
+        return se;
     }
 
     protected abstract IStereoElement<F,C> create(F focus, List<C> carriers, int cfg);

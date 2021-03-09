@@ -197,6 +197,16 @@ public class DaylightModelTest {
         test(smiles("[P]1[P][P][P][P]1"), -1, -1, -1, -1, -1);
     }
 
+    @Test
+    public void wildcardIndoleLike() throws Exception {
+        test(smiles("*1C=CC=C1"), 2, 1, 1, 1, 1);
+    }
+
+    @Test
+    public void wildcardBenzeneLike() throws Exception {
+        test(smiles("*1=CC=CC=C1"), 1, 1, 1, 1, 1, 1);
+    }
+
     /**
      * A 3 valent nitrogen cation should be aromatic, otherwise when we make it
      * lower case we can not convert it back.
