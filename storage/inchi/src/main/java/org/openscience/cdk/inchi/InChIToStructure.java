@@ -181,7 +181,7 @@ public class InChIToStructure {
             int isotopicMass = iAt.getIsotopicMass();
 
             if (isotopicMass != 0) {
-                if (ISOTOPIC_SHIFT_FLAG == (isotopicMass & ISOTOPIC_SHIFT_FLAG)) {
+                if (0 != (isotopicMass & ISOTOPIC_SHIFT_FLAG)) {
                     try {
                         int massNumber = Isotopes.getInstance().getMajorIsotope(cAt.getAtomicNumber()).getMassNumber();
                         cAt.setMassNumber(massNumber + (isotopicMass - ISOTOPIC_SHIFT_FLAG));
