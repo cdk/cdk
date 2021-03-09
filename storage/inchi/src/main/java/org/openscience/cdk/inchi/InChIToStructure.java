@@ -98,6 +98,13 @@ public class InChIToStructure {
 
     // magic number - indicates isotope mass is relative
     private static final int          ISOTOPIC_SHIFT_FLAG = 10000;
+    /**
+     * JNI-Inchi uses the magic number {#link ISOTOPIC_SHIFT_FLAG} plus the
+     * (possibly negative) relative mass. So any isotope value
+     * coming back from jni-inchi greater than this threshold value
+     * should be treated as a relative mass.
+     */
+    private static final int ISOTOPIC_SHIFT_THRESHOLD = ISOTOPIC_SHIFT_FLAG - 100;
 
     /**
      * Constructor. Generates CDK AtomContainer from InChI.
@@ -181,7 +188,7 @@ public class InChIToStructure {
             int isotopicMass = iAt.getIsotopicMass();
 
             if (isotopicMass != 0) {
-                if (ISOTOPIC_SHIFT_FLAG == (isotopicMass & ISOTOPIC_SHIFT_FLAG)) {
+                if (isotopicMass > ISOTOPIC_SHIFT_THRESHOLD) {
                     try {
                         int massNumber = Isotopes.getInstance().getMajorIsotope(cAt.getAtomicNumber()).getMassNumber();
                         cAt.setMassNumber(massNumber + (isotopicMass - ISOTOPIC_SHIFT_FLAG));
