@@ -99,6 +99,8 @@ public class InChIToStructure {
     // magic number - indicates isotope mass is relative
     private static final int          ISOTOPIC_SHIFT_FLAG = 10000;
 
+    private static final int ISOTOPIC_SHIFT_RANGE = ISOTOPIC_SHIFT_FLAG - 100;
+
     /**
      * Constructor. Generates CDK AtomContainer from InChI.
      * @param inchi
@@ -181,7 +183,7 @@ public class InChIToStructure {
             int isotopicMass = iAt.getIsotopicMass();
 
             if (isotopicMass != 0) {
-                if (0 != (isotopicMass & ISOTOPIC_SHIFT_FLAG)) {
+                if (isotopicMass > ISOTOPIC_SHIFT_RANGE) {
                     try {
                         int massNumber = Isotopes.getInstance().getMajorIsotope(cAt.getAtomicNumber()).getMassNumber();
                         cAt.setMassNumber(massNumber + (isotopicMass - ISOTOPIC_SHIFT_FLAG));
