@@ -790,7 +790,7 @@ public final class SmilesParser {
             for (Map.Entry<Integer, Integer> e : cxstate.stereoGrps.entrySet()) {
                 IAtom atm = atoms.get(e.getKey());
                 IAtomContainer mol = atomToMol.get(atm);
-                for (IStereoElement<?, ?> stereo : ((IAtomContainer) chemObj).stereoElements()) {
+                for (IStereoElement<?, ?> stereo : mol.stereoElements()) {
                     // maybe also Al and AT?
                     if (stereo.getConfigClass() == IStereoElement.TH &&
                             stereo.getFocus().equals(atm)) {
