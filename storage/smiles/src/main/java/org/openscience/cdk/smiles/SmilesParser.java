@@ -346,26 +346,32 @@ public final class SmilesParser {
 
                 final Map<IAtom, IAtomContainer> atomToMol = new HashMap<>(100);
                 final List<IAtom> atoms = new ArrayList<>();
+
+                // collect atom offsets before handling fragment groups
+                for (IAtomContainer mol : rxn.getReactants().atomContainers())
+                    for (IAtom atom : mol.atoms())
+                        atoms.add(atom);
+                for (IAtomContainer mol : rxn.getAgents().atomContainers())
+                    for (IAtom atom : mol.atoms())
+                        atoms.add(atom);
+                for (IAtomContainer mol : rxn.getProducts().atomContainers())
+                    for (IAtom atom : mol.atoms())
+                        atoms.add(atom);
+
                 handleFragmentGrouping(rxn, cxstate);
 
                 // merge all together
                 for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
-                    for (IAtom atom : mol.atoms()) {
-                        atoms.add(atom);
+                    for (IAtom atom : mol.atoms())
                         atomToMol.put(atom, mol);
-                    }
                 }
                 for (IAtomContainer mol : rxn.getAgents().atomContainers()) {
-                    for (IAtom atom : mol.atoms()) {
-                        atoms.add(atom);
+                    for (IAtom atom : mol.atoms())
                         atomToMol.put(atom, mol);
-                    }
                 }
                 for (IAtomContainer mol : rxn.getProducts().atomContainers()) {
-                    for (IAtom atom : mol.atoms()) {
-                        atoms.add(atom);
+                    for (IAtom atom : mol.atoms())
                         atomToMol.put(atom, mol);
-                    }
                 }
 
                 assignCxSmilesInfo(rxn.getBuilder(), rxn, atoms, atomToMol, cxstate);
