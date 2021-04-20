@@ -300,11 +300,19 @@ final class BeamToCDK {
                     List<Edge> edges = new ArrayList<>();
                     edges.add(e);
                     Edge f = findCumulatedEdge(g, v, e);
+                    int beg = v;
                     while (f != null) {
                         edges.add(f);
                         v = f.other(v);
                         f = findCumulatedEdge(g, v, f);
+                        if (beg == v) {
+                            beg = -1;
+                            break;
+                        }
                     }
+                    // cumulated loop
+                    if (beg < 0)
+                        continue;
                     // only odd number of cumulated bonds here, otherwise is
                     // extended tetrahedral
                     if ((edges.size() & 0x1) == 0)
