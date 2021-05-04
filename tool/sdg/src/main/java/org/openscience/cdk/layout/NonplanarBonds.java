@@ -258,7 +258,8 @@ final class NonplanarBonds {
             dest.normalize();
 
             // close enough, give it a little bump to be perfect
-            if (curr.dot(dest) >= 0.97) {
+            double dot = curr.dot(dest);
+            if (dot >= 0.97) {
                 rotate(end.getPoint2d(), bP, cos, sin);
                 return true;
             }
@@ -289,12 +290,18 @@ final class NonplanarBonds {
             curr.normalize();
 
             // did we get close?
-            boolean okay = curr.dot(dest) >= 0.97;
+            double newdot = curr.dot(dest);
+            boolean okay = newdot >= 0.97;
 
             // hard snap to expected position
             if (okay) {
                 theta = Math.atan2(curr.y, curr.x) - Math.atan2(dest.y, dest.x);
                 rotate(end.getPoint2d(), bP, Math.cos(theta), Math.sin(theta));
+            } else if (newdot < dot) {
+                // reflect it back
+                GeometryUtil.reflect(visit.keySet(),
+                                     reflectBond.getBegin().getPoint2d(),
+                                     reflectBond.getEnd().getPoint2d());
             }
 
             return okay;
@@ -523,7 +530,7 @@ final class NonplanarBonds {
         if (bonds.size() == 5) {
 
             // check for trans- pairing which we can't lay out at the moment
-            if (rnums.get(0).equals(rnums.get(4)))
+            if (rnums.get(0) != 0 && rnums.get(0).equals(rnums.get(4)))
                 return SPIRO_REJECT;
 
             // rotate such that there is a spiro (or no rings) in position 1/2 in the plane, these are laid out
@@ -557,9 +564,9 @@ final class NonplanarBonds {
         if (bonds.size() == 6) {
 
             // check for trans- pairings which we can't lay out at the moment
-            if (rnums.get(0).equals(rnums.get(5)) ||
-                rnums.get(1).equals(rnums.get(3)) ||
-                rnums.get(2).equals(rnums.get(4)))
+            if (rnums.get(0) != 0 && rnums.get(0).equals(rnums.get(5)) ||
+                rnums.get(1) != 0 && rnums.get(1).equals(rnums.get(3)) ||
+                rnums.get(2) != 0 && rnums.get(2).equals(rnums.get(4)))
                 return SPIRO_REJECT;
 
             // rotate such that there is a spiro (or no rings) in position 2/3 in the plane, these are laid out
