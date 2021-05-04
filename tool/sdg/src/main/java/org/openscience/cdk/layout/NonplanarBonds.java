@@ -294,14 +294,15 @@ final class NonplanarBonds {
             boolean okay = newdot >= 0.97;
 
             // hard snap to expected position
-            if (okay) {
+            if (newdot > dot) {
                 theta = Math.atan2(curr.y, curr.x) - Math.atan2(dest.y, dest.x);
                 rotate(end.getPoint2d(), bP, Math.cos(theta), Math.sin(theta));
             } else if (newdot < dot) {
-                // reflect it back
+                // reflect it back then snap
                 GeometryUtil.reflect(visit.keySet(),
                                      reflectBond.getBegin().getPoint2d(),
                                      reflectBond.getEnd().getPoint2d());
+                rotate(end.getPoint2d(), bP, Math.cos(theta), Math.sin(theta));
             }
 
             return okay;
