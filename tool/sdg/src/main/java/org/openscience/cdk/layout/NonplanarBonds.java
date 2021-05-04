@@ -26,6 +26,7 @@ package org.openscience.cdk.layout;
 
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.GraphUtil;
@@ -50,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -221,16 +223,84 @@ final class NonplanarBonds {
         return cpy;
     }
 
+    // moves multiple bonds into angles
+    private boolean snapBondsToPosition(IAtom beg, List<IBond> bonds, double ... angles) {
+        Point2d p       = beg.getPoint2d();
+        Point2d ref     = new Point2d(p.x, p.y+1);
+        if (angles.length != bonds.size())
+            throw new IllegalArgumentException();
+        boolean res = true;
+        for (int i = 0; i < bonds.size(); i++) {
+            if (!snapBondToPosition(beg, bonds.get(i), getRotated(ref, p, Math.toRadians(angles[i]))))
+                res = false;
+        }
+        return res;
+    }
+
     // tP=target point
-    private void snapBondToPosition(IAtom beg, IBond bond, Point2d tP) {
-        IAtom end = bond.getOther(beg);
-        Point2d bP = beg.getPoint2d();
-        Point2d eP = end.getPoint2d();
+    private boolean snapBondToPosition(IAtom beg, IBond bond, Point2d tP) {
+        IAtom    end = bond.getOther(beg);
+        Point2d  bP = beg.getPoint2d();
+        Point2d  eP = end.getPoint2d();
         Vector2d curr = new Vector2d(eP.x-bP.x, eP.y-bP.y);
         Vector2d dest = new Vector2d(tP.x-bP.x, tP.y-bP.y);
+
         double theta = Math.atan2(curr.y, curr.x) - Math.atan2(dest.y, dest.x);
+
         double sin = Math.sin(theta);
         double cos = Math.cos(theta);
+
+        // if the bond is already visited it is in a ring with another atom, if it's
+        // spiro with the central atom (beg) we may be able to flip into position
+        if (bond.getFlag(CDKConstants.VISITED)) {
+
+            curr.normalize();
+            dest.normalize();
+
+            // close enough, give it a little bump to be perfect
+            if (curr.dot(dest) >= 0.97) {
+                rotate(end.getPoint2d(), bP, cos, sin);
+                return true;
+            }
+
+            Map<IAtom,Integer> visit = new HashMap<>();
+            visit.put(beg, 1);
+            floodFill(visit, end, 1);
+            IBond reflectBond = null;
+            for (IAtom atom : visit.keySet()) {
+                IBond tmp = atom.getBond(beg);
+                if (tmp != null && BondRef.deref(tmp) != BondRef.deref(bond)) {
+                    if (reflectBond != null)
+                        return false; // not spiro...
+                    reflectBond = tmp;
+                }
+            }
+
+            // should not be possible but if so just indicate we should rollback
+            if (reflectBond == null)
+                return false;
+
+            // reflect the atoms we collected around the other bond
+            GeometryUtil.reflect(visit.keySet(),
+                                 reflectBond.getBegin().getPoint2d(),
+                                 reflectBond.getEnd().getPoint2d());
+
+            curr = new Vector2d(eP.x-bP.x, eP.y-bP.y);
+            curr.normalize();
+
+            // did we get close?
+            boolean okay = curr.dot(dest) >= 0.97;
+
+            // hard snap to expected position
+            if (okay) {
+                theta = Math.atan2(curr.y, curr.x) - Math.atan2(dest.y, dest.x);
+                rotate(end.getPoint2d(), bP, Math.cos(theta), Math.sin(theta));
+            }
+
+            return okay;
+        }
+
+        beg.setFlag(CDKConstants.VISITED, true);
         bond.setFlag(CDKConstants.VISITED, true);
         Deque<IAtom> queue = new ArrayDeque<>();
         queue.add(end);
@@ -239,40 +309,62 @@ final class NonplanarBonds {
             if (!atom.getFlag(CDKConstants.VISITED)) {
                 rotate(atom.getPoint2d(), bP, cos, sin);
                 atom.setFlag(CDKConstants.VISITED, true);
+                for (IBond b : container.getConnectedBondsList(atom))
+                    if (!b.getFlag(CDKConstants.VISITED)) {
+                        queue.add(b.getOther(atom));
+                        b.setFlag(CDKConstants.VISITED, true);
+                    }
             }
-            for (IBond b : container.getConnectedBondsList(atom))
-                if (!b.getFlag(CDKConstants.VISITED)) {
-                    queue.add(b.getOther(atom));
-                    b.setFlag(CDKConstants.VISITED, true);
-                }
+        }
+        return true;
+    }
+
+    private void floodFill(Map<IAtom,Integer> visit, IAtom beg, int num) {
+        Deque<IAtom> queue = new ArrayDeque<>();
+        visit.put(beg, num);
+        queue.add(beg);
+        while (!queue.isEmpty()) {
+            IAtom atm = queue.poll();
+            visit.put(atm, num);
+            for (IBond bnd : atm.bonds()) {
+                IAtom nbr = bnd.getOther(atm);
+                if (visit.get(nbr) == null)
+                    queue.add(nbr);
+            }
         }
     }
 
     private void modifyAndLabel(SquarePlanar se) {
+        IAtom       focus = se.getFocus();
         List<IAtom> atoms = se.normalize().getCarriers();
         List<IBond> bonds = new ArrayList<>(4);
-        double blen = 0;
+
+        int                 rcount = 0;
+        Map<IAtom, Integer> rmap   = new HashMap<>();
+        List<Integer>       rnums  = new ArrayList<>(4);
+        rmap.put(focus, 0);
+
         for (IAtom atom : atoms) {
             IBond bond = container.getBond(se.getFocus(), atom);
-            // can't handled these using this method!
-            if (bond.isInRing())
-                return;
+            if (bond.isInRing()) {
+                if (!rmap.containsKey(atom))
+                    floodFill(rmap, atom, ++rcount);
+                rnums.add(rmap.get(atom));
+            } else
+                rnums.add(0);
             bonds.add(bond);
-            blen += GeometryUtil.getLength2D(bond);
         }
-        blen /= bonds.size();
-        IAtom focus = se.getFocus();
-        Point2d fp = focus.getPoint2d();
+
+        if (rcount > 0 &&
+                checkAndHandleRingSystems(bonds, rnums) == SPIRO_REJECT)
+            return;
 
         for (IAtom atom : container.atoms())
             atom.setFlag(CDKConstants.VISITED, false);
         for (IBond bond : container.bonds())
             bond.setFlag(CDKConstants.VISITED, false);
-        Point2d ref = new Point2d(fp.x, fp.y+blen);
-        snapBondToPosition(focus, bonds.get(0), getRotated(ref, fp, Math.toRadians(-60)));
-        snapBondToPosition(focus, bonds.get(1), getRotated(ref, fp, Math.toRadians(60)));
-        snapBondToPosition(focus, bonds.get(2), getRotated(ref, fp, Math.toRadians(120)));
-        snapBondToPosition(focus, bonds.get(3), getRotated(ref, fp, Math.toRadians(-120)));
+
+        snapBondsToPosition(focus, bonds, -60, 60, 120, -120);
         setBondDisplay(bonds.get(0), focus, DOWN);
         setBondDisplay(bonds.get(1), focus, DOWN);
         setBondDisplay(bonds.get(2), focus, UP);
@@ -293,82 +385,248 @@ final class NonplanarBonds {
     }
 
     private void modifyAndLabel(TrigonalBipyramidal se) {
+
+        IAtom       focus = se.getFocus();
         List<IAtom> atoms = se.normalize().getCarriers();
-        List<IBond> bonds = new ArrayList<>(4);
-        double blen = 0;
+        List<IBond> bonds = new ArrayList<>(5);
+
+        int                 rcount = 0;
+        Map<IAtom, Integer> rmap   = new HashMap<>();
+        List<Integer>       rnums  = new ArrayList<>(4);
+        rmap.put(focus, 0);
+
         for (IAtom atom : atoms) {
             IBond bond = container.getBond(se.getFocus(), atom);
-            // can't handled these using this method!
-            if (bond.isInRing())
-                return;
+            if (bond.isInRing()) {
+                if (!rmap.containsKey(atom))
+                    floodFill(rmap, atom, ++rcount);
+                rnums.add(rmap.get(atom));
+            } else
+                rnums.add(0);
             bonds.add(bond);
-            blen += GeometryUtil.getLength2D(bond);
         }
-        blen /= bonds.size();
-        IAtom focus = se.getFocus();
-        Point2d fp = focus.getPoint2d();
+
+        int res = SPIRO_ACCEPT;
+        if (rcount > 0 && (res = checkAndHandleRingSystems(bonds, rnums)) == SPIRO_REJECT)
+            return;
+
         for (IAtom atom : container.atoms())
             atom.setFlag(CDKConstants.VISITED, false);
         for (IBond bond : container.bonds())
             bond.setFlag(CDKConstants.VISITED, false);
-        Point2d ref = new Point2d(fp.x, fp.y+blen);
 
         // Optional but have a look at the equatorial ligands
         // and maybe invert the image based on the permutation
         // parity of their atomic numbers.
-        boolean mirror = doMirror(atoms.subList(1,4));
+        boolean mirror = res == SPIRO_MIRROR || rcount == 0 && doMirror(atoms.subList(1,4));
 
         if (mirror) {
-            snapBondToPosition(focus, bonds.get(0), getRotated(ref, fp, Math.toRadians(0)));
-            snapBondToPosition(focus, bonds.get(3), getRotated(ref, fp, Math.toRadians(-60)));
-            snapBondToPosition(focus, bonds.get(2), getRotated(ref, fp, Math.toRadians(90)));
-            snapBondToPosition(focus, bonds.get(1), getRotated(ref, fp, Math.toRadians(-120)));
-            snapBondToPosition(focus, bonds.get(4), getRotated(ref, fp, Math.toRadians(180)));
-            setBondDisplay(bonds.get(1), focus, UP);
-            setBondDisplay(bonds.get(3), focus, DOWN);
+            snapBondsToPosition(focus, bonds, 0, -60, 90, -120, 180);
         } else {
-            snapBondToPosition(focus, bonds.get(0), getRotated(ref, fp, Math.toRadians(0)));
-            snapBondToPosition(focus, bonds.get(1), getRotated(ref, fp, Math.toRadians(60)));
-            snapBondToPosition(focus, bonds.get(2), getRotated(ref, fp, Math.toRadians(-90)));
-            snapBondToPosition(focus, bonds.get(3), getRotated(ref, fp, Math.toRadians(120)));
-            snapBondToPosition(focus, bonds.get(4), getRotated(ref, fp, Math.toRadians(180)));
-            setBondDisplay(bonds.get(1), focus, DOWN);
-            setBondDisplay(bonds.get(3), focus, UP);
+            snapBondsToPosition(focus, bonds, 0, 60, -90, 120, 180);
         }
+        setBondDisplay(bonds.get(1), focus, DOWN);
+        setBondDisplay(bonds.get(3), focus, UP);
     }
 
     private void modifyAndLabel(Octahedral oc) {
+        IAtom       focus = oc.getFocus();
         List<IAtom> atoms = oc.normalize().getCarriers();
-        List<IBond> bonds = new ArrayList<>(4);
+        List<IBond> bonds = new ArrayList<>(6);
+
+        // determine which ring sets our bonds are in, if they are in spiro
+        // we can shuffle around, if more complex we can't
+        int                 rcount = 0;
+        Map<IAtom, Integer> rmap   = new HashMap<>();
+        rmap.put(focus, 0);
+        List<Integer>       rnums  = new ArrayList<>(6);
 
         double blen = 0;
         for (IAtom atom : atoms) {
             IBond bond = container.getBond(oc.getFocus(), atom);
-            // can't handled these using this method!
-            if (bond.isInRing())
-                return;
+            if (bond.isInRing()) {
+                if (!rmap.containsKey(atom))
+                    floodFill(rmap, atom, ++rcount);
+                rnums.add(rmap.get(atom));
+            } else {
+                rnums.add(0);
+            }
             bonds.add(bond);
             blen += GeometryUtil.getLength2D(bond);
         }
-        blen /= bonds.size();
-        IAtom focus = oc.getFocus();
-        Point2d fp = focus.getPoint2d();
+
+        int res = SPIRO_ACCEPT;
+        if (rcount > 0 &&
+            (res = checkAndHandleRingSystems(bonds, rnums)) == SPIRO_REJECT)
+            return;
+
         for (IAtom atom : container.atoms())
             atom.setFlag(CDKConstants.VISITED, false);
         for (IBond bond : container.bonds())
             bond.setFlag(CDKConstants.VISITED, false);
-        Point2d ref = new Point2d(fp.x, fp.y+blen);
 
-        snapBondToPosition(focus, bonds.get(0), getRotated(ref, fp, Math.toRadians(0)));
-        snapBondToPosition(focus, bonds.get(1), getRotated(ref, fp, Math.toRadians(60)));
-        snapBondToPosition(focus, bonds.get(2), getRotated(ref, fp, Math.toRadians(-60)));
-        snapBondToPosition(focus, bonds.get(3), getRotated(ref, fp, Math.toRadians(-120)));
-        snapBondToPosition(focus, bonds.get(4), getRotated(ref, fp, Math.toRadians(120)));
-        snapBondToPosition(focus, bonds.get(5), getRotated(ref, fp, Math.toRadians(180)));
+        if (res == SPIRO_MIRROR) {
+            snapBondsToPosition(focus, bonds, 0, -60, 60, 120, -120, 180);
+        } else {
+            snapBondsToPosition(focus, bonds, 0, 60, -60, -120, 120, 180);
+        }
+
         setBondDisplay(bonds.get(1), focus, DOWN);
         setBondDisplay(bonds.get(2), focus, DOWN);
         setBondDisplay(bonds.get(3), focus, UP);
         setBondDisplay(bonds.get(4), focus, UP);
+    }
+
+
+    private static int SPIRO_REJECT = 0;
+    private static int SPIRO_ACCEPT = 1;
+    private static int SPIRO_MIRROR = 2;
+
+    /**
+     * This is complicated, we have a set of bonds and the rings they belong to. We move the bonds around such that
+     * we can depict them in a nice way given the constraints of the geometry.
+     *
+     * @param bonds the bonds
+     * @param rnums the ring membership
+     * @return the status
+     */
+    private int checkAndHandleRingSystems(List<IBond> bonds, List<Integer> rnums) {
+
+        if (!isSpiro(rnums))
+            return SPIRO_REJECT;
+
+        // square planar
+        if (bonds.size() == 4) {
+
+            // check for trans- pairings which we can't lay out at the moment
+            if (rnums.get(0).equals(rnums.get(2)) || rnums.get(1).equals(rnums.get(3)))
+                return SPIRO_REJECT;
+
+            // rotate such that there is a spiro (or no rings) in position 1/2 in the plane, these are laid out
+            // adjacent so is the only place we can nicely place the spiro
+            int rotate;
+            if (rnums.get(1).equals(rnums.get(2)))
+                rotate = 0; // don't rotate
+            else if (rnums.get(2).equals(rnums.get(3)))
+                rotate = 1;
+            else if (rnums.get(3).equals(rnums.get(0)))
+                rotate = 2;
+            else
+                rotate = 0;
+            for (int i = 0; i < rotate; i++) {
+                rotate(bonds, 0, 4);
+                rotate(rnums, 0, 4);
+            }
+        }
+
+        // TBPY
+        if (bonds.size() == 5) {
+
+            // check for trans- pairing which we can't lay out at the moment
+            if (rnums.get(0).equals(rnums.get(4)))
+                return SPIRO_REJECT;
+
+            // rotate such that there is a spiro (or no rings) in position 1/2 in the plane, these are laid out
+            // adjacent so is the only place we can nicely place the spiro
+            int rotate;
+            if (rnums.get(1) != 0 && rnums.get(1).equals(rnums.get(3)) ||
+                rnums.get(2) == 0 && !rnums.get(1).equals(rnums.get(3)))
+                rotate = 0; // don't rotate
+            else if (rnums.get(2) != 0 && rnums.get(2).equals(rnums.get(1)) ||
+                     rnums.get(3) == 0 && !rnums.get(2).equals(rnums.get(1)))
+                rotate = 1;
+            else if (rnums.get(3) != 0 && rnums.get(3).equals(rnums.get(2)) ||
+                     rnums.get(1) == 0 && !rnums.get(3).equals(rnums.get(2)))
+                rotate = 2;
+            else
+                rotate = 0;
+            for (int i = 0; i < rotate; i++) {
+                rotate(bonds, 1, 3);
+                rotate(rnums, 1, 3);
+            }
+
+            if ((!rnums.get(0).equals(0) && rnums.get(0).equals(rnums.get(3)) ||
+                    (!rnums.get(1).equals(0) && rnums.get(1).equals(rnums.get(4))))) {
+                swap(bonds, 1, 3);
+                swap(rnums, 1, 3);
+                return SPIRO_MIRROR;
+            }
+        }
+
+        // octahedral
+        if (bonds.size() == 6) {
+
+            // check for trans- pairings which we can't lay out at the moment
+            if (rnums.get(0).equals(rnums.get(5)) ||
+                rnums.get(1).equals(rnums.get(3)) ||
+                rnums.get(2).equals(rnums.get(4)))
+                return SPIRO_REJECT;
+
+            // rotate such that there is a spiro (or no rings) in position 2/3 in the plane, these are laid out
+            // adjacent so is the only place we can nicely place the spiro
+            int rotate;
+            if (rnums.get(2).equals(rnums.get(3)))
+                rotate = 0; // don't rotate
+            else if (rnums.get(3).equals(rnums.get(4)))
+                rotate = 1;
+            else if (rnums.get(4).equals(rnums.get(1)))
+                rotate = 2;
+            else if (rnums.get(1).equals(rnums.get(2)))
+                rotate = 3;
+            else
+                return SPIRO_REJECT;
+
+            for (int i = 0; i < rotate; i++) {
+                rotate(bonds, 1, 4);
+                rotate(rnums, 1, 4);
+            }
+
+            // now check the vertical axis, they should be pair 0,1 and 4,5 since again
+            // those are adjacent and allow us to depict nicely
+            if ((!rnums.get(0).equals(0) && rnums.get(0).equals(rnums.get(4))) ||
+                (!rnums.get(1).equals(0) && rnums.get(1).equals(rnums.get(5)))) {
+                swap(bonds, 1, 4);
+                swap(rnums, 1, 4);
+                return SPIRO_MIRROR;
+            }
+
+            return SPIRO_ACCEPT;
+        }
+
+        return SPIRO_ACCEPT;
+    }
+
+    /**
+     * Ensures out rings are only spiro by inspecting the ring set numbers. This is the case if we have &ge; 3 of a
+     * given number in the list.
+     * <pre>
+     *     [0,0,1,2,1,2] => yes
+     *     [0,0,1,0,1,0] => yes - 0 is not in a ring
+     *     [0,0,1,1,1,0] => no
+     * </pre>
+     * @param rnums rnums
+     * @return only spiro
+     */
+    private boolean isSpiro(List<Integer> rnums) {
+        // invariant the max number is < the total in the list
+        int[] counts = new int[1+rnums.size()];
+        for (Integer rnum : rnums) {
+            if (rnum != 0 && ++counts[rnum] > 2)
+                return false;
+        }
+        return true;
+    }
+
+    private <T> void rotate(List<T> l, int off, int len) {
+        for (int i = 0; i < (len-1); i++) {
+            swap(l, off + i, off + ((i + 1) % 4));
+        }
+    }
+
+    private <T> void swap(List<T> l, int i, int j) {
+         T tmp = l.get(i);
+         l.set(i, l.get(j));
+         l.set(j, tmp);
     }
 
     private IBond.Stereo flip(IBond.Stereo disp) {

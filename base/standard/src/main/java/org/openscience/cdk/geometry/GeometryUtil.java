@@ -47,6 +47,7 @@ import javax.vecmath.Vector3d;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -253,6 +254,39 @@ public final class GeometryUtil {
             point.y = relativex * sintheta + relativey * costheta + center.y;
         }
     }
+
+    /**
+     * Reflect a collection of atoms in the line formed by the two specified points (beg,end).
+     *
+     * @param atoms the atoms
+     * @param beg the begin point of a line
+     * @param end the end point of a line
+     */
+    public static void reflect(Collection<IAtom> atoms, Point2d beg, Point2d end) {
+        double dx = end.x - beg.x;
+        double dy = end.y - beg.y;
+
+        double a = (dx * dx - dy * dy) / (dx * dx + dy * dy);
+        double b = 2 * dx * dy / (dx * dx + dy * dy);
+        for (IAtom atom : atoms) {
+            Point2d p = atom.getPoint2d();
+            double x = a * (p.x - beg.x) + b * (p.y - beg.y) + beg.x;
+            double y = b * (p.x - beg.x) - a * (p.y - beg.y) + beg.y;
+            p.x = x;
+            p.y = y;
+        }
+    }
+
+    /**
+     * Reflect a collection of atoms in the line formed by the specified bond.
+     *
+     * @param atoms the atoms
+     * @param bond the bond at which to reflect
+     */
+    public static void reflect(Collection<IAtom> atoms, IBond bond) {
+        reflect(atoms, bond.getBegin().getPoint2d(), bond.getEnd().getPoint2d());
+    }
+
 
     /**
      * Rotates a 3D point about a specified line segment by a specified angle.
@@ -1683,22 +1717,30 @@ public final class GeometryUtil {
      * @throws java.lang.IllegalArgumentException unset coordinates or no bonds
      */
     public static double getBondLengthMedian(final IAtomContainer container) {
-        if (container.getBondCount() == 0) throw new IllegalArgumentException("Container has no bonds.");
-        int nBonds = 0;
-        double[] lengths = new double[container.getBondCount()];
-        for (int i = 0; i < container.getBondCount(); i++) {
-            final IBond bond = container.getBond(i);
+        return getBondLengthMedian(container.bonds(), container.getBondCount());
+    }
+
+    public static double getBondLengthMedian(final Iterable<IBond> bonds, int cap) {
+        Iterator<IBond> iter = bonds.iterator();
+        if (!iter.hasNext()) throw new IllegalArgumentException("No bonds");
+        int count = 0;
+        double[] lengths = new double[cap];
+        while (iter.hasNext()) {
+            final IBond bond  = iter.next();
             final IAtom atom1 = bond.getBegin();
             final IAtom atom2 = bond.getEnd();
             Point2d p1 = atom1.getPoint2d();
             Point2d p2 = atom2.getPoint2d();
             if (p1 == null || p2 == null)
                 throw new IllegalArgumentException("An atom has no 2D coordinates.");
-            if (p1.x != p2.x || p1.y != p2.y)
-                lengths[nBonds++] = p1.distance(p2);
+            if (p1.x != p2.x || p1.y != p2.y) {
+                if (count == lengths.length)
+                    lengths = Arrays.copyOf(lengths, count);
+                lengths[count++] = p1.distance(p2);
+            }
         }
-        Arrays.sort(lengths, 0, nBonds);
-        return lengths[nBonds / 2];
+        Arrays.sort(lengths, 0, count);
+        return lengths[count / 2];
     }
 
     /**
