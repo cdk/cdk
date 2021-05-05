@@ -274,6 +274,52 @@ public final class GeometryUtil {
             double y = b * (p.x - beg.x) - a * (p.y - beg.y) + beg.y;
             p.x = x;
             p.y = y;
+
+            // flip any bond displays that have end points in the set
+            for (IBond bond : atom.bonds()) {
+
+                // only flip once
+                if (!bond.getAtom(0).equals(atom))
+                    continue;
+
+                IBond.Display flipped = null;
+                IBond.Stereo  flippedStereo = null;
+                switch (bond.getDisplay()) {
+                    case WedgeBegin:
+                        flipped = IBond.Display.WedgedHashBegin;
+                        flippedStereo = IBond.Stereo.DOWN;
+                        break;
+                    case WedgeEnd:
+                        flipped = IBond.Display.WedgedHashEnd;
+                        flippedStereo = IBond.Stereo.DOWN_INVERTED;
+                        break;
+                    case WedgedHashBegin:
+                        flipped = IBond.Display.WedgeBegin;
+                        flippedStereo = IBond.Stereo.UP;
+                        break;
+                    case WedgedHashEnd:
+                        flipped = IBond.Display.WedgeEnd;
+                        flippedStereo = IBond.Stereo.UP_INVERTED;
+                        break;
+                    case Bold:
+                        flipped = IBond.Display.Hash;
+                        break;
+                    case Hash:
+                        flipped = IBond.Display.Bold;
+                        break;
+                }
+
+                if (flipped == null)
+                    continue;
+
+                IAtom nbor = bond.getOther(atom);
+                // lookup depends on provided collection... but we
+                // only do that if there was a bond display to flip
+                if (atoms.contains(nbor)) {
+                    bond.setStereo(flippedStereo); // wish this was cleaner
+                    bond.setDisplay(flipped);
+                }
+            }
         }
     }
 
@@ -1720,6 +1766,13 @@ public final class GeometryUtil {
         return getBondLengthMedian(container.bonds(), container.getBondCount());
     }
 
+    /**
+     * Calculate the median bond length of some bonds.
+     *
+     * @param bonds the bonds
+     * @return median bond length
+     * @throws java.lang.IllegalArgumentException unset coordinates or no bonds
+     */
     public static double getBondLengthMedian(final Iterable<IBond> bonds, int cap) {
         Iterator<IBond> iter = bonds.iterator();
         if (!iter.hasNext()) throw new IllegalArgumentException("No bonds");

@@ -23,6 +23,7 @@
 
 package org.openscience.cdk.geometry;
 
+import org.hamcrest.number.IsCloseTo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -41,13 +42,22 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.isomorphism.AtomMappingTools;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -878,6 +888,64 @@ public class GeometryUtilTest extends CDKTestCase {
             container.addBond(i, i+1, IBond.Order.SINGLE);
         }
         assertThat(GeometryUtil.getBondLengthMedian(container), is(1d));
+    }
+
+    @Test public void testBasicReflection() {
+        IAtomContainer container = SilentChemObjectBuilder.getInstance().newAtomContainer();
+        container.addAtom(atomAt(new Point2d(-1, 1)));
+        container.addAtom(atomAt(new Point2d(-1, -1)));
+        container.addAtom(atomAt(new Point2d(1, 1)));
+        container.addAtom(atomAt(new Point2d(1, -1)));
+        assertThat(container.getAtom(0).getPoint2d().x, IsCloseTo.closeTo(-1, 0.001));
+        assertThat(container.getAtom(0).getPoint2d().y, IsCloseTo.closeTo(1, 0.001));
+        assertThat(container.getAtom(3).getPoint2d().x, IsCloseTo.closeTo(1, 0.001));
+        assertThat(container.getAtom(3).getPoint2d().y, IsCloseTo.closeTo(-1, 0.001));
+        GeometryUtil.reflect(Arrays.asList(container.getAtom(0),
+                container.getAtom(3)),
+                new Point2d(-1,-1), new Point2d(1,1));
+        assertThat(container.getAtom(0).getPoint2d().x, IsCloseTo.closeTo(1, 0.001));
+        assertThat(container.getAtom(0).getPoint2d().y, IsCloseTo.closeTo(-1, 0.001));
+        assertThat(container.getAtom(3).getPoint2d().x, IsCloseTo.closeTo(-1, 0.001));
+        assertThat(container.getAtom(3).getPoint2d().y, IsCloseTo.closeTo(1, 0.001));
+    }
+
+    @Test public void testBasicReflectionBonds() throws IOException, CDKException {
+        String molfile = "\n" +
+                "  Mrv1810 05052109112D          \n" +
+                "\n" +
+                " 10 10  0  0  0  0            999 V2000\n" +
+                "   -1.5138   -0.0596    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -2.2282   -0.4722    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -2.2282   -1.2972    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.5138   -1.7097    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.7993   -1.2972    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.7993   -0.4722    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.5138    0.7654    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.7993    1.1779    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.7993    2.0029    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.0848    0.7654    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0  0\n" +
+                "  2  3  1  0  0  0  0\n" +
+                "  3  4  1  0  0  0  0\n" +
+                "  4  5  1  0  0  0  0\n" +
+                "  5  6  1  0  0  0  0\n" +
+                "  1  6  1  0  0  0  0\n" +
+                "  7  8  1  0  0  0  0\n" +
+                "  8  9  1  0  0  0  0\n" +
+                "  8 10  1  1  0  0  0\n" +
+                "  1  7  2  0  0  0  0\n" +
+                "M  END\n";
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(molfile))) {
+            IAtomContainer mol = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            List<IAtom> atoms = new ArrayList<>();
+            atoms.add(mol.getAtom(6));
+            atoms.add(mol.getAtom(7));
+            atoms.add(mol.getAtom(8));
+            atoms.add(mol.getAtom(9));
+            GeometryUtil.reflect(atoms, mol.getBond(9));
+            assertThat(mol.getBond(8).getDisplay(), is(IBond.Display.WedgedHashBegin));
+            assertThat(mol.getBond(8).getStereo(), is(IBond.Stereo.DOWN));
+        }
     }
 
     private IAtom atomAt(Point2d p) {
