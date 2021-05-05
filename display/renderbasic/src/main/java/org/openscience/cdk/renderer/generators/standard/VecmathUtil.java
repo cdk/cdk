@@ -338,7 +338,15 @@ final class VecmathUtil {
         for (int i = 0; i < vectors.size(); i++) {
             double extent = extents[(i + 1) % vectors.size()] - extents[i];
             if (extent < 0) extent += TAU;
-            if (extent > max) {
+            double delta = extent - max;
+            // is significantly better?
+            if (delta > 0.01) {
+                max = extent;
+                index = i;
+            }
+            // not significantly better -> put is left/right aligned
+            else if ((extents[i] < TAU && extents[i]+extent > TAU) ||
+                       (extents[i] < Math.PI && extents[i]+extent > Math.PI)) {
                 max = extent;
                 index = i;
             }
