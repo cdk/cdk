@@ -212,6 +212,7 @@ public class StereocentersTest {
         none("[NH4+]");
     }
 
+
     /**
      * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
      * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
@@ -789,6 +790,8 @@ public class StereocentersTest {
         none("N1(CCCC2)CCCC12");
         // adjacent to fused (but not fused)
         tetrahedral("N1(c(cccc3)c32)CC2CC1");
+
+        none("[N]2([Mn+]1)=CC=CC3=C2C2=[N]1C=CC=C2C=C3");
     }
 
     // assert the first atom of the SMILES is accepted as a tetrahedral center

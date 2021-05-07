@@ -527,7 +527,8 @@ public final class Stereocenters {
                 if (x == 4 && h == 0 && (q == 0 && v == 5 || q == 1 && v == 4))
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
                 // note: bridgehead not allowed by InChI but makes sense
-                return x == 3 && h == 0 && (isBridgeHead(i) || inThreeMemberRing(i)) ? Type.Tetracoordinate : Type.None;
+                return x == 3 && h == 0 && v == 3 && q == 0 &&
+                        (isBridgeHead(i) || inThreeMemberRing(i)) ? Type.Tetracoordinate : Type.None;
 
             case 14: // silicon
                 if (v != 4 || q != 0) return Type.None;
