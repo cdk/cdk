@@ -512,6 +512,12 @@ public class BeamToCDKTest {
                      "caffeine compound");
     }
 
+    /** GitHub Issue #723 */
+    @Test public void cumulatedCycle() throws Exception {
+        assertEquals(convert("C=1(=N(=C=1)(CC)CC)/N=C(/N1CCC(C2=CC=CC#C2)(CN2C(=NC3=C2C=CC=C3)C)CC1)\\NCC").getBondCount(),
+                     39);
+    }
+
     IAtomContainer convert(String smi) throws IOException {
         BeamToCDK g2c = new BeamToCDK(SilentChemObjectBuilder.getInstance());
         Graph g = Graph.fromSmiles(smi);

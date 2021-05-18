@@ -220,8 +220,8 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
     public static IChemObjectBuilder getInstance() {
         IChemObjectBuilder result = instance;
         if (result == null) {
-            result = instance;
             synchronized (LOCK) {
+                result = instance;
                 if (result == null) {
                     instance = result = new SilentChemObjectBuilder();
                 }

@@ -1387,6 +1387,19 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
                    closeTo(4729.147, 0.001));
     }
 
+    @Test public void getMassBadIsotopes() throws InvalidSmilesException {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        IAtomContainer mol = new SmilesParser(bldr).parseSmiles("[24cH]1[24cH][24cH][24cH][24cH][24cH]1");
+        assertThat(AtomContainerManipulator.getMass(mol, MolWeight),
+                closeTo(150.0476, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MolWeightIgnoreSpecified),
+                closeTo(78.1120, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MonoIsotopic),
+                closeTo(150.0469, 0.001));
+        assertThat(AtomContainerManipulator.getMass(mol, MostAbundant),
+                closeTo(150.0469, 0.001));
+    }
+
     @Test public void getMassCranbinSpecIsotopes() {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         IAtomContainer mol =

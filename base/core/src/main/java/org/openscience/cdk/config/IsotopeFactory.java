@@ -230,7 +230,7 @@ public abstract class IsotopeFactory {
 
     /**
      * Get the mass of the most abundant (major) isotope, if there is no
-     * major isotopes 0 is returned.
+     * major isotopes 2*elem is returned.
      *
      * @param elem the atomic number
      * @return the major isotope mass
@@ -239,11 +239,17 @@ public abstract class IsotopeFactory {
         if (this.majorIsotope[elem] != null)
             return this.majorIsotope[elem].getExactMass();
         IIsotope major = getMajorIsotope(elem);
-        return major != null ? major.getExactMass() : 0;
+        if (major == null) {
+            logger.warn("No major isotope for elem" + elem);
+            return 2*elem;
+        }
+        return major.getExactMass();
     }
 
     /**
-     * Get the exact mass of a specified isotope for an atom.
+     * Get the exact mass of a specified isotope for an atom. If there is no isotope with that
+     * mass number then it is returned.
+     *
      * @param atomicNumber atomic number
      * @param massNumber the mass number
      * @return the exact mass
@@ -255,7 +261,7 @@ public abstract class IsotopeFactory {
             if (isotope.getMassNumber().equals(massNumber))
                 return isotope.getExactMass();
         }
-        return 0;
+        return massNumber;
     }
 
     private IIsotope clone(IIsotope isotope) {

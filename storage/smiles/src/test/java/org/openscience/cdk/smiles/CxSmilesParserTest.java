@@ -26,19 +26,24 @@ package org.openscience.cdk.smiles;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -354,7 +359,16 @@ public class CxSmilesParserTest {
         }
     }
 
-
+    @Test public void atomOrderingWithNonContiguousFragments() throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction rxn = smipar.parseReactionSmiles("C.*.C>> |$;R1;$,f:0.2|");
+        List<IAtomContainer> mols = ReactionManipulator.getAllAtomContainers(rxn);
+        assertThat(mols.get(0).getAtomCount(), is(2));
+        assertThat(mols.get(1).getAtomCount(), is(1));
+        assertThat(mols.get(1).getAtom(0), is(instanceOf(IPseudoAtom.class)));
+        assertThat(((IPseudoAtom)mols.get(1).getAtom(0)).getLabel(),
+                is("R1"));
+    }
 
     /**
      * Custom matcher for checking an array of doubles closely matches (epsilon=0.01)

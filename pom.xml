@@ -5,7 +5,7 @@
     <artifactId>cdk</artifactId>
     <name>cdk</name>
     <description>Modular library for Cheminformatics</description>
-    <version>2.4-SNAPSHOT</version>
+    <version>2.6-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://sourceforge.net/projects/cdk/</url>
     <modules>
@@ -460,7 +460,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>29.0-jre</version>
+                <version>30.0-jre</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>

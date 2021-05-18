@@ -255,8 +255,14 @@ final class IdentityTemplateLibrary {
                 String coord = strs[i];
                 int first  = coord.indexOf(',');
                 int second = coord.indexOf(',', first+1);
-                points[i] = new Point2d(Double.parseDouble(coord.substring(0, first)),
-                                        Double.parseDouble(coord.substring(first + 1, second)));
+                String x = coord.substring(0, first);
+                String y = coord.substring(first + 1, second);
+                if (x.isEmpty())
+                    x = "0";
+                if (y.isEmpty())
+                    y = "0";
+                points[i] = new Point2d(Double.parseDouble(x),
+                                        Double.parseDouble(y));
             }
             return points;
         } else {
