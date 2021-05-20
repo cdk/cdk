@@ -217,8 +217,8 @@ public class BondTools {
 
         if (container.getBond(atom, parent) != null) {
             if (container.getBond(atom, parent).getOrder() == Order.DOUBLE
-                    && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N")))
-                    && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N")))) {
+                    && (lengthAtom == 3 || (lengthAtom == 2 && "N".equals(atom.getSymbol())))
+                    && (lengthParent == 3 || (lengthParent == 2 && "N".equals(parent.getSymbol())))) {
                 List<IAtom> atoms = container.getConnectedAtomsList(atom);
                 IAtom one = null;
                 IAtom two = null;
@@ -230,9 +230,9 @@ public class BondTools {
                     }
                 }
                 String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
-                if ((one != null && two == null && atom.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(
+                if ((one != null && two == null && "N".equals(atom.getSymbol()) && Math.abs(giveAngleBothMethods(
                         parent, atom, one, true)) > Math.PI / 10)
-                        || (!atom.getSymbol().equals("N") && one != null && two != null && !morgannumbers[container
+                        || (!"N".equals(atom.getSymbol()) && one != null && two != null && !morgannumbers[container
                                 .indexOf(one)].equals(morgannumbers[container.indexOf(two)]))) {
                     return (true);
                 } else {
@@ -264,7 +264,7 @@ public class BondTools {
 
         int lengthAtom = container.getConnectedAtomsList(a).size() + hcount;
 
-        if (lengthAtom != 3 && (lengthAtom != 2 && !(a.getSymbol().equals("N")))) {
+        if (lengthAtom != 3 && (lengthAtom != 2 && !"N".equals(a.getSymbol()))) {
             return (false);
         }
         List<IAtom> atoms = container.getConnectedAtomsList(a);
@@ -286,11 +286,11 @@ public class BondTools {
         }
         String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
         if (one != null
-                && ((!a.getSymbol().equals("N")
+                && ((!"N".equals(a.getSymbol())
                         && two != null
                         && !morgannumbers[container.indexOf(one)].equals(morgannumbers[container
                                 .indexOf(two)]) && doubleBond && doubleBondConfiguration[container.indexOf(container.getBond(
-                        a, nextAtom))]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(
+                        a, nextAtom))]) || (doubleBond && "N".equals(a.getSymbol()) && Math.abs(giveAngleBothMethods(
                         nextAtom, a, parent, true)) > Math.PI / 10))) {
             return (true);
         } else {
@@ -559,7 +559,7 @@ public class BondTools {
                         up++;
                     } else if (stereo == IBond.Stereo.DOWN) {
                         down++;
-                    } else if (stereo == IBond.Stereo.NONE && conAtom.getSymbol().equals("H")) {
+                    } else if (stereo == IBond.Stereo.NONE && "H".equals(conAtom.getSymbol())) {
                         h = conAtom;
                         hs++;
                     } else {

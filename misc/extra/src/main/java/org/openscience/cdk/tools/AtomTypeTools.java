@@ -229,7 +229,7 @@ public class AtomTypeTools {
 
         int ncount = 0;
         for (int i = 0; i < ring.getAtomCount(); i++) {
-            if (ring.getAtom(i).getSymbol().equals("N")) {
+            if ("N".equals(ring.getAtom(i).getSymbol())) {
                 ncount = ncount + 1;
             }
         }

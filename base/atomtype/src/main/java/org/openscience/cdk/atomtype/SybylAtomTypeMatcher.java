@@ -142,7 +142,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         if (neighbors.size() != 1) return false;
         IBond neighbor = neighbors.get(0);
         IAtom neighborAtom = neighbor.getOther(atom);
-        if (neighborAtom.getSymbol().equals("C")) {
+        if ("C".equals(neighborAtom.getSymbol())) {
             if (neighbor.getOrder() == IBond.Order.SINGLE) {
                 if (countAttachedBonds(atomContainer, neighborAtom, IBond.Order.DOUBLE, "O") == 1) return true;
             } else if (neighbor.getOrder() == IBond.Order.DOUBLE) {
@@ -171,7 +171,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
                 if (bond.getAtomCount() == 2 && bond.contains(atom)) {
                     if (symbol != null) {
                         IAtom neighbor = bond.getOther(atom);
-                        if (neighbor.getSymbol().equals(symbol)) {
+                        if (symbol.equals(neighbor.getSymbol())) {
                             doubleBondedAtoms++;
                         }
                     } else {

@@ -273,9 +273,9 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
             boolean succeeded = newSaturate(bonds, atomContainer);
             for (int i = 0; i < bonds.length; i++) {
                 if (bonds[i].getOrder() == IBond.Order.DOUBLE && bonds[i].getFlag(CDKConstants.ISAROMATIC)
-                        && (bonds[i].getBegin().getSymbol().equals("N") && bonds[i].getEnd().getSymbol().equals("N"))) {
+                        && ("N".equals(bonds[i].getBegin().getSymbol()) && "N".equals(bonds[i].getEnd().getSymbol()))) {
                     int atomtohandle = 0;
-                    if (bonds[i].getBegin().getSymbol().equals("N")) atomtohandle = 1;
+                    if ("N".equals(bonds[i].getBegin().getSymbol())) atomtohandle = 1;
                     List<IBond> bondstohandle = atomContainer.getConnectedBondsList(bonds[i].getAtom(atomtohandle));
                     for (int k = 0; k < bondstohandle.size(); k++) {
                         IBond bond = bondstohandle.get(k);
@@ -611,7 +611,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         int missingHydrogen = 0;
         if (atom instanceof IPseudoAtom) {
             // don't figure it out... it simply does not lack H's
-        } else if (atom.getAtomicNumber() != null && atom.getAtomicNumber() == 1 || atom.getSymbol().equals("H")) {
+        } else if (atom.getAtomicNumber() != null && atom.getAtomicNumber() == 1 || "H".equals(atom.getSymbol())) {
             missingHydrogen = (int) (1 - bondOrderSum - singleElectronSum - atom.getFormalCharge());
         } else {
             logger.info("Calculating number of missing hydrogen atoms");

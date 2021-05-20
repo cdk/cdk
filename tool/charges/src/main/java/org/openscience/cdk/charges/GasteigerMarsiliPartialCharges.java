@@ -169,13 +169,13 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
                 atom2 = ac.indexOf(bond.getEnd());
 
                 if (gasteigerFactors[STEP_SIZE * atom1 + atom1 + 4] >= gasteigerFactors[STEP_SIZE * atom2 + atom2 + 4]) {
-                    if (ac.getAtom(atom2).getSymbol().equals("H")) {
+                    if ("H".equals(ac.getAtom(atom2).getSymbol())) {
                         deoc = DEOC_HYDROGEN;
                     } else {
                         deoc = gasteigerFactors[STEP_SIZE * atom2 + atom2 + 3];
                     }
                 } else {
-                    if (ac.getAtom(atom1).getSymbol().equals("H")) {
+                    if ("H".equals(ac.getAtom(atom1).getSymbol())) {
                         deoc = DEOC_HYDROGEN;
                     } else {
                         deoc = gasteigerFactors[STEP_SIZE * atom1 + atom1 + 3];
