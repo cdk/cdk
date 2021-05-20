@@ -38,6 +38,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -172,7 +173,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
             } else
             // OK, the matcher did find something. Now, let's see of the
             // atom type properties are consistent with those of the atom
-            if (!atom.getSymbol().equals(matched.getSymbol())) {
+            if (!Objects.equals(atom.getSymbol(),matched.getSymbol())) {
                 // OK, OK, that's very basic indeed, but why not
                 results.failed++;
                 System.out.println("Symbol does not match: " + results.tested + " in file " + filename);

@@ -186,7 +186,7 @@ final class MmffAtomTypeMatcher {
      */
     private void assignHydrogenTypes(IAtomContainer container, String[] symbs, int[][] graph) {
         for (int v = 0; v < graph.length; v++) {
-            if (container.getAtom(v).getSymbol().equals("H") && graph[v].length == 1) {
+            if ("H".equals(container.getAtom(v).getSymbol()) && graph[v].length == 1) {
                 int w = graph[v][0];
                 symbs[v] = this.hydrogenMap.get(symbs[w]);
             }

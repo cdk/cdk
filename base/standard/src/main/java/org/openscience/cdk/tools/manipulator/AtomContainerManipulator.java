@@ -618,7 +618,7 @@ public class AtomContainerManipulator {
         Map<IAtom, IAtom> hNeighbor = Maps.newHashMapWithExpectedSize(atomContainer.getAtomCount());
 
         for (IAtom atom : atomContainer.atoms()) {
-            if (!atom.getSymbol().equals("H")) {
+            if (!"H".equals(atom.getSymbol())) {
                 Integer hCount = atom.getImplicitHydrogenCount();
                 if (hCount != null) {
                     for (int i = 0; i < hCount; i++) {
@@ -748,7 +748,7 @@ public class AtomContainerManipulator {
                             if (bondStereo != null && bondStereo != IBond.Stereo.NONE) addToRemove = false;
                             IAtom neighboursNeighbour = bond.getOther(neighbour);
                             // remove in any case if the hetero atom is connected to more than one hydrogen
-                            if (neighboursNeighbour.getSymbol().equals("H") && !neighboursNeighbour.equals(atom)) {
+                            if ("H".equals(neighboursNeighbour.getSymbol()) && !neighboursNeighbour.equals(atom)) {
                                 addToRemove = true;
                                 break;
                             }
@@ -1183,7 +1183,7 @@ public class AtomContainerManipulator {
         if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() != 0) return false;
         // molecule hydrogen
         List<IAtom> neighbors = container.getConnectedAtomsList(atom);
-        if (neighbors.size() == 1 && (neighbors.get(0).getSymbol().equals("H") ||
+        if (neighbors.size() == 1 && ("H".equals(neighbors.get(0).getSymbol()) ||
                                       neighbors.get(0) instanceof IPseudoAtom)) return false;
         // what about bridging hydrogens?
         // hydrogens with atom-atom mapping?
@@ -1595,7 +1595,7 @@ public class AtomContainerManipulator {
     public static List<IAtom> getHeavyAtoms(IAtomContainer container) {
         List<IAtom> newAc = new ArrayList<IAtom>();
         for (int f = 0; f < container.getAtomCount(); f++) {
-            if (!container.getAtom(f).getSymbol().equals("H")) {
+            if (!"H".equals(container.getAtom(f).getSymbol())) {
                 newAc.add(container.getAtom(f));
             }
         }

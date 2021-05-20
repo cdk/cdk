@@ -1025,7 +1025,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	if (connectedBonds.size() < 1) return false;
         for (IBond bond : connectedBonds) {
         	IAtom neighbor = bond.getOther(atom);
-            if (neighbor.getSymbol().equals("C")) {
+            if ("C".equals(neighbor.getSymbol())) {
                 if (countAttachedDoubleBonds(atomContainer.getConnectedBondsList(neighbor), neighbor, "O") == 1) return true;
             }
         }
@@ -1036,7 +1036,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	if (connectedBonds.size() < 1) return false;
         for (IBond bond : connectedBonds) {
         	IAtom neighbor = bond.getOther(atom);
-            if (neighbor.getSymbol().equals("C")) {
+            if ("C".equals(neighbor.getSymbol())) {
                 if (countAttachedDoubleBonds(atomContainer.getConnectedBondsList(neighbor), neighbor, "S") == 1) return true;
             }
         }
@@ -1047,7 +1047,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         int count = 0;
         for (IBond bond : connectedBonds) {
         	IAtom aAtom = bond.getOther(atom);
-            if (aAtom.getSymbol().equals("H")) {
+            if ("H".equals(aAtom.getSymbol())) {
                 count++;
             }
         }
@@ -1063,7 +1063,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private List<IBond> heavyBonds(final List<IBond> bonds) {
         final List<IBond> heavy = new ArrayList<IBond>(bonds.size());
         for (final IBond bond : bonds) {
-            if (!(bond.getBegin().getSymbol().equals("H") && bond.getEnd().getSymbol().equals("H"))) {
+            if (!("H".equals(bond.getBegin().getSymbol()) && "H".equals(bond.getEnd().getSymbol()))) {
                 heavy.add(bond);
             }
         }
@@ -2458,7 +2458,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 if (bond.getAtomCount() == 2) {
                     if (symbol != null) {
                         // if other atom is of the given element (by its symbol)
-                        if (bond.getOther(atom).getSymbol().equals(symbol)) {
+                        if (symbol.equals(bond.getOther(atom).getSymbol())) {
                             doubleBondedAtoms++;
                         }
                     } else {

@@ -531,7 +531,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                         for (int k = 0; k < ati.getBondCount(); k++) {
                             IAtom a0 = ati.getBond(k).getBegin();
                             IAtom a1 = ati.getBond(k).getEnd();
-                            if (!a0.getSymbol().equals("H") || !a1.getSymbol().equals("H"))
+                            if (!"H".equals(a0.getSymbol()) || !"H".equals(a1.getSymbol()))
                                 if ((a0.getID().equals(ac.getBond(i).getBegin().getID()) && a1.getID().equals(
                                         ac.getBond(i).getEnd().getID()))
                                         || (a1.getID().equals(ac.getBond(i).getBegin().getID()) && a0.getID().equals(

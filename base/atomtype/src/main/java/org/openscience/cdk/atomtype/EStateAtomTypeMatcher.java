@@ -78,7 +78,7 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
             for (int j = 0; j <= attachedAtoms.size() - 1; j++) {
                 IAtom attached = (IAtom) attachedAtoms.get(j);
                 IBond b = atomContainer.getBond(atom, attached);
-                if (attached.getSymbol().equals("H")) NumHAtoms++;
+                if ("H".equals(attached.getSymbol())) NumHAtoms++;
 
                 if (atom.getFlag(CDKConstants.ISAROMATIC) && attached.getFlag(CDKConstants.ISAROMATIC)) {
 
