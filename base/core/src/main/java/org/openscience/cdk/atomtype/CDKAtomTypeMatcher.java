@@ -552,7 +552,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private boolean isCharged(IAtom atom) {
-        return atom.getFormalCharge() != 0 && atom.getFormalCharge() != 0;
+        return atom.getFormalCharge() != null && atom.getFormalCharge() != 0;
     }
 
     private boolean isCharge(IAtom atom, int q) {
