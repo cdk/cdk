@@ -1483,4 +1483,19 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         roundtrip("[2H]2+2", "[[2]H2]2+");
         roundtrip("H+", "[H]+");
     }
+
+    @Test public void atomCountIsSafeForOverflow() {
+        // max integer
+        assertFormulaContainsExactlyAtoms(getMolecularFormula("H2147483647", builder), Integer.MAX_VALUE);
+        // overflow to negative
+        assertFormulaContainsExactlyAtoms(getMolecularFormula("H2147483648", builder), 1);
+        // overflow to zero
+        assertFormulaContainsExactlyAtoms(getMolecularFormula("H4294967296", builder), 1);
+        // double overflow back to positive (2)
+        assertFormulaContainsExactlyAtoms(getMolecularFormula("H4294967298", builder), 1);
+    }
+
+    private void assertFormulaContainsExactlyAtoms(IMolecularFormula formula, int atomCount){
+        Assert.assertEquals(atomCount, MolecularFormulaManipulator.getAtomCount(formula));
+    }
 }

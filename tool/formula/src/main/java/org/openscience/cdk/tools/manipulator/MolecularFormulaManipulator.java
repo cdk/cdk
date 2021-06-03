@@ -652,8 +652,18 @@ public class MolecularFormulaManipulator {
                 return -1;
             }
             int res = c - '0';
-            while (isDigit(c = next()))
-                res = (10 * res) + (c - '0');
+            boolean overflowDetected = false;
+            while (isDigit(c = next())) {
+                if (!overflowDetected) {
+                    int test = (10 * res) + (c - '0');
+                    if (test > res) {
+                        res = test;
+                    } else {
+                        overflowDetected = true;
+                        res = -1;
+                    }
+                }
+            }
             if (c != '\0')
                 pos--;
             return res;
