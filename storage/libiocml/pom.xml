@@ -23,9 +23,9 @@
             <artifactId>xom</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.xml-cml</groupId>
+            <groupId>org.blueobelisk</groupId>
             <artifactId>cmlxom</artifactId>
-            <version>3.1</version>
+            <version>3.2</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
